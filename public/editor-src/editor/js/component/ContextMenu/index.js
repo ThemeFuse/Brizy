@@ -6,7 +6,7 @@ import React, {
   useMemo,
   useRef
 } from "react";
-import { contextMenu } from "react-contexify";
+import { useContextMenu } from "react-contexify";
 import { rolesHOC } from "visual/component/Roles";
 import { renderHOC } from "visual/providers/RenderProvider/renderHOC";
 import { ContextMenuExtendContext } from "./ContextMenuExtend";
@@ -20,13 +20,43 @@ const meta = {
 
 // this component is needed to avoid ContextMenuProvider to render a wrapper div  because that breaks our layout
 const ContextMenuWrapper = forwardRef(({ id, children }, wrapperRef) => {
+  const { show } = useContextMenu({ id });
+
   const handleContextMenu = useCallback(
     (e) => {
       if (!e.shiftKey) {
-        contextMenu.show({
-          id,
-          event: e
-        });
+        const iframe = parent.document.querySelector("#brz-ed-iframe");
+
+        const currentTargetBounding = e.currentTarget.getBoundingClientRect();
+        const iframeBounding = iframe.getBoundingClientRect();
+
+        const menuBounding =
+          window.parent.document
+            .querySelector(".contexify")
+            ?.getBoundingClientRect() ?? null;
+
+        if (
+          menuBounding &&
+          menuBounding.height + currentTargetBounding.y > window.innerHeight
+        ) {
+          show({
+            id,
+            event: e,
+            position: {
+              x: e.clientX + iframeBounding.x,
+              y: currentTargetBounding.y - menuBounding.height
+            }
+          });
+        } else {
+          show({
+            id,
+            event: e,
+            position: {
+              x: e.clientX + iframeBounding.x,
+              y: currentTargetBounding.y
+            }
+          });
+        }
       }
     },
     [id]

@@ -1,7 +1,6 @@
 import { ElementModel } from "visual/component/Elements/Types";
 import type { StylesProps as Props } from "visual/editorComponents/Form2/Form2Steps/types";
 import { WithRenderContext } from "visual/providers/RenderProvider";
-import { configSelector } from "visual/redux/selectors";
 import { getColor } from "visual/utils/color";
 import {
   cssStyleBgColor,
@@ -64,9 +63,10 @@ export function cssStyleElementForm2FlexBasisPercent({
   v,
   device,
   state,
+  getConfig,
   store
 }: CSSValue): string {
-  const width = styleSizeWidth({ v, device, state, store });
+  const width = styleSizeWidth({ v, device, state, getConfig, store });
 
   return width === undefined ? "" : `flex-basis:${width}%;`;
 }
@@ -75,12 +75,14 @@ export function cssStyleElementForm2SubmitWidth({
   v,
   device,
   state,
+  getConfig,
   store
 }: CSSValue): string {
   const submitWidth = styleSizeWidth({
     v,
     device,
     state,
+    getConfig,
     store,
     prefix: "submit"
   });
@@ -94,11 +96,12 @@ export function cssStyleElementForm2InputHeight({
   v,
   device,
   state,
+  getConfig,
   store
 }: CSSValue): string {
   const dvv = (key: string) => defaultValueValue({ v, key, device, state });
   const type = dvv("type");
-  const height = styleSizeHeight({ v, device, state, store });
+  const height = styleSizeHeight({ v, device, state, getConfig, store });
 
   if (height === undefined || type === undefined) {
     return "";
@@ -113,19 +116,27 @@ export function cssStyleElementForm2FieldsLabelAlign({
   v,
   device,
   state,
+  getConfig,
   store
 }: CSSValue): string {
-  return cssStyleTextAlign({ v, device, state, store, prefix: "label" });
+  return cssStyleTextAlign({
+    v,
+    device,
+    state,
+    getConfig,
+    store,
+    prefix: "label"
+  });
 }
 
 export function cssStyleElementForm2Margin({
   v,
   device,
   state,
-  store
+  getConfig
 }: CSSValue): string {
   const dvv = (key: string) => defaultValueValue({ v, key, device, state });
-  const config = configSelector(store.getState());
+  const config = getConfig();
   const padding = dvv("padding");
 
   return padding === undefined || isStory(config)
@@ -137,10 +148,10 @@ export function cssStyleElementForm2Padding({
   v,
   device,
   state,
-  store
+  getConfig
 }: CSSValue): string {
   const dvv = (key: string) => defaultValueValue({ v, key, device, state });
-  const config = configSelector(store.getState());
+  const config = getConfig();
   const padding = dvv("padding");
   const suffix = dvv("paddingSuffix");
 
@@ -177,12 +188,14 @@ export function cssStyleElementForm2FieldsLabelFontFamily({
   v,
   device,
   store,
+  getConfig,
   renderContext
 }: CSSValue & WithRenderContext): string {
   return cssStyleTypography2FontFamily({
     v,
     device,
     store,
+    getConfig,
     prefix: "label",
     renderContext
   });
@@ -191,30 +204,52 @@ export function cssStyleElementForm2FieldsLabelFontFamily({
 export function cssStyleElementForm2FieldsLabelFontSize({
   v,
   device,
+  getConfig,
   store
 }: CSSValue): string {
-  return cssStyleTypography2FontSize({ v, device, store, prefix: "label" });
+  return cssStyleTypography2FontSize({
+    v,
+    device,
+    store,
+    getConfig,
+    prefix: "label"
+  });
 }
 
 export function cssStyleElementForm2FieldsLabelLineHeight({
   v,
   device,
+  getConfig,
   store
 }: CSSValue): string {
-  return cssStyleTypography2LineHeight({ v, device, store, prefix: "label" });
+  return cssStyleTypography2LineHeight({
+    v,
+    device,
+    store,
+    getConfig,
+    prefix: "label"
+  });
 }
 
 export function cssStyleElementForm2FieldsLabelFontWeight({
   v,
   device,
+  getConfig,
   store
 }: CSSValue): string {
-  return cssStyleTypography2FontWeight({ v, device, store, prefix: "label" });
+  return cssStyleTypography2FontWeight({
+    v,
+    device,
+    store,
+    getConfig,
+    prefix: "label"
+  });
 }
 
 export function cssStyleElementForm2FieldsLabelLetterSpacing({
   v,
   device,
+  getConfig,
   store
 }: CSSValue): string {
   return cssStyleTypography2LetterSpacing({
@@ -222,6 +257,7 @@ export function cssStyleElementForm2FieldsLabelLetterSpacing({
     device,
     state: NORMAL,
     store,
+    getConfig,
     prefix: "label"
   });
 }
@@ -229,12 +265,14 @@ export function cssStyleElementForm2FieldsLabelLetterSpacing({
 export function cssStyleElementForm2FieldsLabelFontVariation({
   v,
   device,
+  getConfig,
   store
 }: CSSValue): string {
   return cssStyleTypography2FontVariation({
     v,
     device,
     store,
+    getConfig,
     prefix: "label"
   });
 }
@@ -244,28 +282,43 @@ export function cssStyleElementForm2FieldsLabelPadding({
   device,
   state
 }: CSSValue): string {
-  return cssStylePaddingFourFields({ v, device, state, prefix: "label" });
+  return cssStylePaddingFourFields({
+    v,
+    device,
+    state,
+    prefix: "label"
+  });
 }
 
 export function cssStyleElementForm2FieldsCheckboxColor({
   v,
   device,
   state,
+  getConfig,
   store
 }: CSSValue): string {
-  return cssStyleColor({ v, device, state, store, prefix: "checkboxColor" });
+  return cssStyleColor({
+    v,
+    device,
+    state,
+    getConfig,
+    store,
+    prefix: "checkboxColor"
+  });
 }
 
 export function cssStyleElementForm2FieldsCheckboxFontFamily({
   v,
   device,
   store,
+  getConfig,
   renderContext
 }: CSSValue & WithRenderContext): string {
   return cssStyleTypography2FontFamily({
     v,
     device,
     store,
+    getConfig,
     prefix: "checkbox",
     renderContext
   });
@@ -274,20 +327,29 @@ export function cssStyleElementForm2FieldsCheckboxFontFamily({
 export function cssStyleElementForm2FieldsCheckboxFontSize({
   v,
   device,
+  getConfig,
   store
 }: CSSValue): string {
-  return cssStyleTypography2FontSize({ v, device, store, prefix: "checkbox" });
+  return cssStyleTypography2FontSize({
+    v,
+    device,
+    store,
+    getConfig,
+    prefix: "checkbox"
+  });
 }
 
 export function cssStyleElementForm2FieldsCheckboxFontWeight({
   v,
   device,
+  getConfig,
   store
 }: CSSValue): string {
   return cssStyleTypography2LineHeight({
     v,
     device,
     store,
+    getConfig,
     prefix: "checkbox"
   });
 }
@@ -295,12 +357,14 @@ export function cssStyleElementForm2FieldsCheckboxFontWeight({
 export function cssStyleElementForm2FieldsCheckboxLetterSpacing({
   v,
   device,
+  getConfig,
   store
 }: CSSValue): string {
   return cssStyleTypography2FontWeight({
     v,
     device,
     store,
+    getConfig,
     prefix: "checkbox"
   });
 }
@@ -308,6 +372,7 @@ export function cssStyleElementForm2FieldsCheckboxLetterSpacing({
 export function cssStyleElementForm2FieldsCheckboxLineHeight({
   v,
   device,
+  getConfig,
   store
 }: CSSValue): string {
   return cssStyleTypography2LetterSpacing({
@@ -315,6 +380,7 @@ export function cssStyleElementForm2FieldsCheckboxLineHeight({
     device,
     state: NORMAL,
     store,
+    getConfig,
     prefix: "checkbox"
   });
 }
@@ -322,12 +388,14 @@ export function cssStyleElementForm2FieldsCheckboxLineHeight({
 export function cssStyleElementForm2FieldsCheckboxFontVariation({
   v,
   device,
+  getConfig,
   store
 }: CSSValue): string {
   return cssStyleTypography2FontVariation({
     v,
     device,
     store,
+    getConfig,
     prefix: "checkbox"
   });
 }
@@ -336,18 +404,34 @@ export function cssStyleElementForm2FieldsSelectColor({
   v,
   device,
   state,
+  getConfig,
   store
 }: CSSValue): string {
-  return cssStyleColor({ v, device, state, store, prefix: "selectColor" });
+  return cssStyleColor({
+    v,
+    device,
+    state,
+    getConfig,
+    store,
+    prefix: "selectColor"
+  });
 }
 
 export function cssStyleElementForm2FieldsSelectBgColor({
   v,
   device,
   state,
+  getConfig,
   store
 }: CSSValue): string {
-  return cssStyleBgColor({ v, device, state, store, prefix: "selectBg" });
+  return cssStyleBgColor({
+    v,
+    device,
+    state,
+    getConfig,
+    store,
+    prefix: "selectBg"
+  });
 }
 
 export function cssStyleElementForm2FieldsBorderRequired({
@@ -366,36 +450,68 @@ export function cssStyleElementForm2FieldsSelectChoiceBgColor({
   v,
   device,
   state,
+  getConfig,
   store
 }: CSSValue): string {
-  return cssStyleBgColor({ v, device, state, store, prefix: "selectBg" });
+  return cssStyleBgColor({
+    v,
+    device,
+    state,
+    getConfig,
+    store,
+    prefix: "selectBg"
+  });
 }
 
 export function cssStyleElementForm2FieldsSelectBorder({
   v,
   device,
   state,
+  getConfig,
   store
 }: CSSValue): string {
-  return cssStyleBorder({ v, device, state, store, prefix: "select" });
+  return cssStyleBorder({
+    v,
+    device,
+    state,
+    getConfig,
+    store,
+    prefix: "select"
+  });
 }
 
 export function cssStyleElementForm2FieldsSelectBorderRadius({
   v,
   device,
   state,
+  getConfig,
   store
 }: CSSValue): string {
-  return cssStyleBorderRadius({ v, device, state, store, prefix: "select" });
+  return cssStyleBorderRadius({
+    v,
+    device,
+    state,
+    getConfig,
+    store,
+    prefix: "select"
+  });
 }
 
 export function cssStyleElementForm2FieldsSelectBoxShadow({
   v,
   device,
   state,
+  getConfig,
   store
 }: CSSValue): string {
-  return cssStyleBoxShadow({ v, device, state, store, prefix: "select" });
+  return cssStyleBoxShadow({
+    v,
+    device,
+    state,
+    getConfig,
+    store,
+    prefix: "select"
+  });
 }
 
 export function cssStyleElementForm2FieldColumns({
@@ -436,21 +552,31 @@ export function cssStyleElementForm2FieldsLabelTextTransform({
   v,
   device,
   state,
-  store
-}: CSSValue): string {
-  return cssStyleTextTransforms({ v, device, state, store, prefix: "label" });
-}
-
-export function cssStyleElementForm2FieldsCheckboxTextTransform({
-  v,
-  device,
-  state,
+  getConfig,
   store
 }: CSSValue): string {
   return cssStyleTextTransforms({
     v,
     device,
     state,
+    getConfig,
+    store,
+    prefix: "label"
+  });
+}
+
+export function cssStyleElementForm2FieldsCheckboxTextTransform({
+  v,
+  device,
+  state,
+  getConfig,
+  store
+}: CSSValue): string {
+  return cssStyleTextTransforms({
+    v,
+    device,
+    state,
+    getConfig,
     store,
     prefix: "checkbox"
   });
@@ -476,14 +602,23 @@ export function cssStyleElementForm2MSNumberColor({
   v,
   device,
   state,
+  getConfig,
   store
 }: CSSValue): string {
-  return cssStyleColor({ v, device, state, store, prefix: "numberColor" });
+  return cssStyleColor({
+    v,
+    device,
+    state,
+    getConfig,
+    store,
+    prefix: "numberColor"
+  });
 }
 
 export function cssStyleElementForm2MSActiveNumberColor({
   v,
   device,
+  getConfig,
   store
 }: CSSValue): string {
   return cssStyleColor({
@@ -491,6 +626,7 @@ export function cssStyleElementForm2MSActiveNumberColor({
     device,
     state: ACTIVE,
     store,
+    getConfig,
     prefix: "numberColor"
   });
 }
@@ -499,14 +635,23 @@ export function cssStyleElementForm2MSTextColor({
   v,
   device,
   state,
+  getConfig,
   store
 }: CSSValue): string {
-  return cssStyleColor({ v, device, state, store, prefix: "textColor" });
+  return cssStyleColor({
+    v,
+    device,
+    state,
+    getConfig,
+    store,
+    prefix: "textColor"
+  });
 }
 
 export function cssStyleElementForm2MSActiveTextColor({
   v,
   device,
+  getConfig,
   store
 }: CSSValue): string {
   return cssStyleColor({
@@ -514,6 +659,7 @@ export function cssStyleElementForm2MSActiveTextColor({
     device,
     state: ACTIVE,
     store,
+    getConfig,
     prefix: "textColor"
   });
 }
@@ -523,7 +669,12 @@ export function cssStyleElementForm2MSNumberPadding({
   device,
   state
 }: CSSValue): string {
-  return cssStylePaddingFourFields({ v, device, state, prefix: "step" });
+  return cssStylePaddingFourFields({
+    v,
+    device,
+    state,
+    prefix: "step"
+  });
 }
 
 export function cssStyleElementFomr2MSDividerMargin({
@@ -562,11 +713,11 @@ export function cssStyleElementFomr2MSDividerMargin({
 export function cssStyleElementFomr2MSDivider({
   v,
   device,
-  store
+  getConfig
 }: CSSValue): string {
   const dvv = (key: string) =>
     defaultValueValue({ v, key, device, state: "normal" });
-  const config = configSelector(store.getState());
+  const config = getConfig();
 
   const dividerWidth = dvv("dividerWidth");
 
@@ -588,6 +739,7 @@ export function cssStyleElementForm2MSProgressBgColor({
   v,
   device,
   state,
+  getConfig,
   store,
   props
 }: CSSValue<ElementModel, Props>): string {
@@ -595,13 +747,21 @@ export function cssStyleElementForm2MSProgressBgColor({
 
   if (viewType !== "progressBar") return "";
 
-  return cssStyleBgColor({ v, device, state, store, prefix: "progressBg" });
+  return cssStyleBgColor({
+    v,
+    device,
+    state,
+    getConfig,
+    store,
+    prefix: "progressBg"
+  });
 }
 
 export function cssStyleElementForm2MSProgressBoxShadow({
   v,
   device,
   state,
+  getConfig,
   store,
   props
 }: CSSValue<ElementModel, Props>): string {
@@ -609,16 +769,24 @@ export function cssStyleElementForm2MSProgressBoxShadow({
 
   if (viewType !== "progressBar") return "";
 
-  return cssStyleBoxShadow({ v, device, store, state });
+  return cssStyleBoxShadow({ v, device, store, getConfig, state });
 }
 
 export function cssStyleElementForm2MSProgressColor({
   v,
   device,
   state,
+  getConfig,
   store
 }: CSSValue): string {
-  return cssStyleBgColor({ v, device, state, store, prefix: "progress" });
+  return cssStyleBgColor({
+    v,
+    device,
+    state,
+    getConfig,
+    store,
+    prefix: "progress"
+  });
 }
 
 export function cssStyleElementForm2MSProgressHeight({
@@ -647,7 +815,7 @@ export function cssStyleElementForm2MSProgressMargin({
   v,
   device,
   state,
-  store
+  getConfig
 }: CSSValue): string {
   const {
     paddingTop,
@@ -669,7 +837,7 @@ export function cssStyleElementForm2MSProgressMargin({
     return "";
   }
 
-  const config = configSelector(store.getState());
+  const config = getConfig();
   if (isStory(config)) {
     return `margin:0 0 ${paddingBottom}${paddingBottomSuffix} 0;`;
   }
@@ -683,17 +851,19 @@ export function cssStyleElementForm2MSProgressMargin({
 export function cssStyleElementForm2MSActiveBorder({
   v,
   device,
+  getConfig,
   store
 }: CSSValue): string {
-  return cssStyleBorder({ v, device, store, state: ACTIVE });
+  return cssStyleBorder({ v, device, store, getConfig, state: ACTIVE });
 }
 
 export function cssStyleElementForm2MSActiveBg({
   v,
   device,
+  getConfig,
   store
 }: CSSValue): string {
-  return cssStyleBgColor({ v, device, state: ACTIVE, store });
+  return cssStyleBgColor({ v, device, getConfig, state: ACTIVE, store });
 }
 
 export function cssStyleElementForm2MSDividerIndent({
@@ -710,9 +880,10 @@ export function cssStyleElementForm2MSDividerIndent({
 export function cssStyleElementForm2MSActiveBoxShadow({
   v,
   device,
+  getConfig,
   store
 }: CSSValue): string {
-  return cssStyleBoxShadow({ v, device, state: ACTIVE, store });
+  return cssStyleBoxShadow({ v, device, getConfig, state: ACTIVE, store });
 }
 
 export function cssStyleElementsForm2MSTextSpacing({
@@ -730,12 +901,14 @@ export function cssStyleElementForm2MSCustomIconColor({
   v,
   device,
   state,
+  getConfig,
   store
 }: CSSValue): string {
   return cssStyleCustomIconColor({
     v,
     device,
     state,
+    getConfig,
     store,
     prefix: "numberColor"
   });
@@ -744,6 +917,7 @@ export function cssStyleElementForm2MSCustomIconColor({
 export function cssStyleElementForm2MSActiveCustomIconColor({
   v,
   device,
+  getConfig,
   store
 }: CSSValue): string {
   return cssStyleCustomIconColor({
@@ -751,6 +925,7 @@ export function cssStyleElementForm2MSActiveCustomIconColor({
     device,
     state: ACTIVE,
     store,
+    getConfig,
     prefix: "numberColor"
   });
 }

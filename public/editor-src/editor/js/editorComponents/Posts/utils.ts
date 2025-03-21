@@ -36,7 +36,8 @@ export function archiveQuery(v: V): CloudArchiveQuery {
       Union.readWithChoices<CloudArchiveQuery["order_by"]>([
         "id",
         "random",
-        "title"
+        "title",
+        "publishDate"
       ])(orderBy) ?? "id",
     order:
       Union.readWithChoices<CloudArchiveQuery["order"]>(["ASC", "DESC"])(
@@ -82,7 +83,8 @@ export function postsQuery(v: V): CloudPostsQuery {
       Union.readWithChoices<CloudPostsQuery["order_by"]>([
         "id",
         "random",
-        "title"
+        "title",
+        "publishDate"
       ])(orderBy) ?? "id",
     order:
       Union.readWithChoices<CloudPostsQuery["order"]>(["ASC", "DESC"])(order) ??

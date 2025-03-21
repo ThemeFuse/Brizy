@@ -6,8 +6,9 @@ import { Value } from ".";
 
 export function style(data: DynamicStylesProps<Value>): OutputStyle {
   const { renderContext } = data.contexts;
+
   const styles = {
-    ".brz &&:hover": {
+    ".brz &&": {
       standart: [
         "cssStyleTypography2FontFamily",
         "cssStyleTypography2FontWeight",
@@ -16,14 +17,18 @@ export function style(data: DynamicStylesProps<Value>): OutputStyle {
         "cssStyleTypography2LetterSpacing",
         "cssStyleTypography2FontVariation",
         "cssStyleTextTransforms",
+        "cssStyleBorderRadius",
+        "cssStyleElementTranslationAlign",
+        "cssStyleSizeWidth",
+        "cssStyleSizeHeight"
+      ]
+    },
+    ".brz &&:hover": {
+      standart: [
         "cssStyleColor",
         "cssStyleBgColor",
         "cssStyleBorder",
-        "cssStyleBorderRadius",
-        "cssStyleBoxShadow",
-        "cssStyleSizeWidth",
-        "cssStyleSizeHeight",
-        "cssStyleElementTranslationAlign"
+        "cssStyleBoxShadow"
       ],
       interval: [
         "cssStyleHoverTransition",
@@ -42,7 +47,7 @@ export function style(data: DynamicStylesProps<Value>): OutputStyle {
   };
 
   const styleSelectView = {
-    ".brz &&:hover .brz-span": {
+    ".brz && .brz-span": {
       standart: [
         "cssStyleTypography2FontFamily",
         "cssStyleTypography2FontWeight",
@@ -54,22 +59,25 @@ export function style(data: DynamicStylesProps<Value>): OutputStyle {
       ]
     },
     // #region select css
+    ".brz &&": {
+      standart: [
+        "cssStyleElementTranslationAlign",
+        "cssStyleBorderRadius",
+        "cssStyleSizeHeight",
+        "cssStyleSizeWidth"
+      ]
+    },
     ".brz &&:hover": {
       standart: [
         "cssStyleColor",
         "cssStyleBgColor",
         "cssStyleBorder",
-        "cssStyleBoxShadow",
-        "cssStyleElementTranslationAlign",
-        "cssStyleBorderRadius"
+        "cssStyleBoxShadow"
       ],
       interval: [
         "cssStyleHoverTransition",
         "cssStylePropertyHoverTransitionColor"
       ]
-    },
-    ".brz &&": {
-      standart: ["cssStyleSizeHeight", "cssStyleSizeWidth"]
     },
     ".brz && .select2-selection .select2-selection__rendered .brz-translation__select-item .brz-span":
       {
@@ -102,22 +110,24 @@ export function style(data: DynamicStylesProps<Value>): OutputStyle {
           "cssStyleElementTranslationFlagSize"
         ]
       },
+    ".brz && .select2-dropdown": {
+      standart: ["cssStyleElementTranslationWidth"]
+    },
     ".brz && .select2-dropdown:hover": {
-      standart: [
-        "cssStyleElementTranslationBoxShadow",
-        "cssStyleElementTranslationWidth"
-      ],
+      standart: ["cssStyleElementTranslationBoxShadow"],
       interval: [
         "cssStyleHoverTransition",
         "cssStylePropertyHoverTransitionColor"
       ]
     },
+    ".brz && .select2-results__options .select2-results__option": {
+      standart: ["cssStyleSizeHeight"]
+    },
     ".brz && .select2-results__options .select2-results__option:hover": {
       standart: [
         "cssStyleElementTranslationColor",
         "cssStyleElementTranslationBgColor",
-        "cssStyleElementTranslationBorder",
-        "cssStyleSizeHeight"
+        "cssStyleElementTranslationBorder"
       ],
       interval: [
         "cssStyleHoverTransition",
@@ -145,21 +155,25 @@ export function styleDropdown(data: DynamicStylesProps<Value>): OutputStyle {
         "cssStylePropertyHoverTransitionColor"
       ]
     },
+    ".brz && .brz-translation__select-list .brz-translation__select-item": {
+      standart: [
+        "cssStyleTypography2FontFamily",
+        "cssStyleTypography2FontWeight",
+        "cssStyleTypography2FontSize",
+        "cssStyleTypography2LineHeight",
+        "cssStyleTypography2LetterSpacing",
+        "cssStyleTypography2FontVariation",
+        "cssStyleTextTransforms",
+        "cssStyleSizeHeight",
+        "cssStyleElementTranslationAlign"
+      ]
+    },
     ".brz && .brz-translation__select-list .brz-translation__select-item:hover":
       {
         standart: [
-          "cssStyleTypography2FontFamily",
-          "cssStyleTypography2FontWeight",
-          "cssStyleTypography2FontSize",
-          "cssStyleTypography2LineHeight",
-          "cssStyleTypography2LetterSpacing",
-          "cssStyleTypography2FontVariation",
-          "cssStyleTextTransforms",
           "cssStyleElementTranslationColor",
           "cssStyleElementTranslationBgColor",
-          "cssStyleElementTranslationBorder",
-          "cssStyleSizeHeight",
-          "cssStyleElementTranslationAlign"
+          "cssStyleElementTranslationBorder"
         ],
         interval: [
           "cssStyleHoverTransition",

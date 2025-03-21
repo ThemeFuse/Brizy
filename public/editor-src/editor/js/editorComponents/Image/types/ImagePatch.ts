@@ -6,6 +6,7 @@ import { prop } from "visual/utils/object/get";
 import { defaultValueKey } from "visual/utils/onChange";
 import { readWithParser } from "visual/utils/reader/readWithParser";
 import * as Str from "visual/utils/string/specs";
+import { MValue } from "visual/utils/value";
 import { Unit } from "../types";
 
 export interface ImagePatch {
@@ -16,8 +17,19 @@ export interface ImagePatch {
   alt?: string;
 }
 
+export interface HoverImagePatch {
+  hoverImageExtension: string;
+  hoverImageHeight: number;
+  hoverImageSrc: string;
+  hoverImageWidth: number;
+}
+
 export interface ImageDCPatch {
   imagePopulation: string;
+}
+
+export interface HoverImageDCPatch {
+  hoverImagePopulation: string;
 }
 
 export interface SizeTypePatch {
@@ -43,6 +55,13 @@ interface FromImageElementModel extends ElementModel {
   alt: unknown | undefined;
 }
 
+interface FromHoverImageElementModel extends ElementModel {
+  hoverImageSrc: MValue<unknown>;
+  hoverImageExtension: MValue<unknown>;
+  hoverImageHeight: MValue<unknown>;
+  hoverImageWidth: MValue<unknown>;
+}
+
 export const fromImageElementModel = readWithParser<
   FromImageElementModel,
   ImagePatch
@@ -52,6 +71,16 @@ export const fromImageElementModel = readWithParser<
   imageHeight: mPipe(prop("imageHeight"), Num.read),
   imageWidth: mPipe(prop("imageWidth"), Num.read),
   alt: optional(mPipe(prop("alt"), Str.read))
+});
+
+export const fromHoverImageElementModel = readWithParser<
+  FromHoverImageElementModel,
+  HoverImagePatch
+>({
+  hoverImageSrc: mPipe(prop("hoverImageSrc"), Str.read),
+  hoverImageExtension: mPipe(prop("hoverImageExtension"), Str.read),
+  hoverImageHeight: mPipe(prop("hoverImageHeight"), Num.read),
+  hoverImageWidth: mPipe(prop("hoverImageWidth"), Num.read)
 });
 
 interface FromImageDCElementModel extends ElementModel {

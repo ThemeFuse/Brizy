@@ -4,17 +4,13 @@ import { Value } from "./type";
 
 export function style(data: DynamicStylesProps<Value>) {
   const styles = {
-    ".brz &&:hover": {
+    ".brz &&": {
       standart: ["cssStyleSizeMaxWidth", "cssStyleElementForm2FlexBasisPercent"]
     },
-
-    ".brz &&:hover .brz-textarea": {
+    ".brz && .brz-textarea": {
       standart: ["cssStyleElementForm2InputHeight"]
     },
-    ".brz && .brz-forms2__checkbox-option": {
-      standart: ["cssStyleElementForm2FieldColumns"]
-    },
-    ".brz && .brz-forms2__radio-option": {
+    ".brz && .brz-forms2__checkbox-option, .brz && .brz-forms2__radio-option": {
       standart: ["cssStyleElementForm2FieldColumns"]
     }
   };

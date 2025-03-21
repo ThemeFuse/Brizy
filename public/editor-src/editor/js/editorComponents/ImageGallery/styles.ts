@@ -1,25 +1,21 @@
 import { isView } from "visual/providers/RenderProvider";
 import { DynamicStylesProps } from "visual/types";
 import { renderStyles } from "visual/utils/cssStyle";
-import { OutputStyle } from "visual/utils/cssStyle/types";
+import { OutputStyle, Styles } from "visual/utils/cssStyle/types";
 import type { Value } from "./types";
 
 export function style(data: DynamicStylesProps<Value>): OutputStyle {
   const { renderContext } = data.contexts;
-  const styles: {
-    [k: string]: {
-      interval?: string[];
-      standart?: string[];
-    };
-  } = {
-    ".brz &&:hover": {
+
+  const styles: Styles = {
+    ".brz &&": {
       standart: [
         "cssStyleElementImageGalleryWidth",
         "cssStyleElementImageGalleryMargin",
         "cssStyleElementImageGalleryGridItemsSpacing"
       ]
     },
-    ".brz &&:hover .brz-image__gallery-item": {
+    ".brz && .brz-image__gallery-item": {
       standart: [
         "cssStyleElementImageGalleryItemWidth",
         "cssStyleElementImageGalleryItemPadding"
@@ -28,12 +24,11 @@ export function style(data: DynamicStylesProps<Value>): OutputStyle {
     ".brz &&.brz-image__gallery-grid .brz-image__gallery-item": {
       standart: ["cssStyleElementImageGalleryGridAspectRatio"]
     },
-    ".brz &&.brz-image__gallery-with-thumb .brz-image__gallery-item:hover .brz-image":
+    ".brz &&.brz-image__gallery-with-thumb .brz-image__gallery-item .brz-image, .brz &&.brz-image__gallery-with-thumb .brz-image__gallery-item .brz-ed-image__wrapper":
       {
         standart: ["cssStyleElementImageGalleryBorderRadiusThumbnail"]
       },
-
-    ".brz && .brz-image__gallery-item:hover .brz-picture": {
+    ".brz && .brz-image__gallery-item .brz-picture": {
       standart: [
         ...(isView(renderContext)
           ? [
@@ -47,17 +42,12 @@ export function style(data: DynamicStylesProps<Value>): OutputStyle {
       ]
     },
 
-    ".brz &&.brz-image__gallery-with-thumb .brz-image__gallery-item:hover .brz-picture:after":
+    ".brz &&.brz-image__gallery-with-thumb .brz-image__gallery-item .brz-picture:after":
       {
         standart: ["cssStyleElementImageGalleryBorderRadiusThumbnail"]
       },
 
-    ".brz &&.brz-image__gallery-with-thumb .brz-image__gallery-item:hover .brz-ed-image__wrapper":
-      {
-        standart: ["cssStyleElementImageGalleryBorderRadiusThumbnail"]
-      },
-
-    ".brz && .brz-image__gallery-item:hover .brz-ed-image__wrapper": {
+    ".brz && .brz-image__gallery-item .brz-ed-image__wrapper": {
       standart: [
         "cssStyleElementImageGalleryBigImageImagesMaskShape",
         "cssStyleElementImageGalleryBigImageImagesMaskSize",
@@ -72,13 +62,8 @@ export function style(data: DynamicStylesProps<Value>): OutputStyle {
 }
 
 export function styleForFilter(data: DynamicStylesProps<Value>): OutputStyle {
-  const styles: {
-    [k: string]: {
-      interval?: string[];
-      standart?: string[];
-    };
-  } = {
-    ".brz &&:hover": {
+  const styles: Styles = {
+    ".brz &&": {
       standart: [
         "cssStyleElementImageGalleryFilterAfterSpacing",
         "cssStyleElementImageGalleryFilterHorizontalAlign"
@@ -110,13 +95,16 @@ export function styleForFilter(data: DynamicStylesProps<Value>): OutputStyle {
         "cssStyleElementImageGalleryBorderRadius"
       ]
     },
+    ".brz && .brz-image__gallery-filter__item--style-1:not(.brz-image__gallery-filter__item--active)":
+      {
+        standart: ["cssStyleElementImageGalleryBorderRadius"]
+      },
     ".brz && .brz-image__gallery-filter__item--style-1:not(.brz-image__gallery-filter__item--active):hover":
       {
         standart: [
           "cssStyleElementImageGalleryFilterBgColor",
           "cssStyleElementImageGalleryFilterBorder",
-          "cssStyleElementImageGalleryFilterBoxShadow",
-          "cssStyleElementImageGalleryBorderRadius"
+          "cssStyleElementImageGalleryFilterBoxShadow"
         ],
         interval: [
           "cssStyleHoverTransition",
@@ -136,14 +124,18 @@ export function styleForFilter(data: DynamicStylesProps<Value>): OutputStyle {
           "cssStylePropertyHoverTransitionColor"
         ]
       },
-    ".brz &&.brz-image__gallery-filter--style-2:hover": {
+    ".brz &&.brz-image__gallery-filter--style-2": {
       standart: [
         "cssStyleElementAccordionFilterPaddingFourFields",
-        "cssStyleElementImageGalleryFilterBgColor",
-        "cssStyleElementImageGalleryFilterBorder",
-        "cssStyleElementImageGalleryFilterBoxShadow",
         "cssStyleDisplayInlineFlex",
         "cssStyleElementImageGalleryBorderRadius"
+      ]
+    },
+    ".brz &&.brz-image__gallery-filter--style-2:hover": {
+      standart: [
+        "cssStyleElementImageGalleryFilterBgColor",
+        "cssStyleElementImageGalleryFilterBorder",
+        "cssStyleElementImageGalleryFilterBoxShadow"
       ],
       interval: [
         "cssStyleHoverTransition",
@@ -164,13 +156,8 @@ export function styleForFilter(data: DynamicStylesProps<Value>): OutputStyle {
 }
 
 export function styleBigImage(data: DynamicStylesProps<Value>): OutputStyle {
-  const styles: {
-    [k: string]: {
-      interval?: string[];
-      standart?: string[];
-    };
-  } = {
-    ".brz &&:hover": {
+  const styles: Styles = {
+    ".brz &&": {
       standart: [
         "cssStyleElementImageGalleryBigImageSpacing",
         "cssStyleElementImageGalleryBigImageWidth"
@@ -182,12 +169,7 @@ export function styleBigImage(data: DynamicStylesProps<Value>): OutputStyle {
 }
 
 export function styleWrapper(data: DynamicStylesProps<Value>): OutputStyle {
-  const styles: {
-    [k: string]: {
-      interval?: string[];
-      standart?: string[];
-    };
-  } = {
+  const styles: Styles = {
     ".brz && .brz-image__gallery-container": {
       standart: ["cssStyleElementImageGalleryBigImageStyle"]
     }

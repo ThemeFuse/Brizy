@@ -1,5 +1,5 @@
 import { ModelType } from "visual/component/Elements/Types";
-import { Config } from "visual/global/Config/InitConfig";
+import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { RenderType } from "visual/providers/RenderProvider";
 import { hydrate } from "visual/redux/actions";
 import { createStore } from "visual/redux/store";
@@ -12,6 +12,8 @@ import {
   getCSSObjects
 } from "../index";
 import { CSS, GeneratedCSS, Option } from "../types";
+
+const getConfig = (): ConfigCommon => ({}) as ConfigCommon;
 
 export const heightOptionWithStyle: Option<"slider"> = {
   id: "height",
@@ -123,14 +125,6 @@ export const heightElementModel = {
   heightSuffix: "px"
 };
 
-beforeAll(() => {
-  // @ts-expect-error: Mock ConfigCommon
-  new Config({
-    config: mockDataForReduxStore.config,
-    id: mockDataForReduxStore.configId
-  });
-});
-
 describe("Testing getCSSObjects that should return { selector, css } objects", () => {
   const store = createStore();
   store.dispatch(
@@ -146,7 +140,8 @@ describe("Testing getCSSObjects that should return { selector, css } objects", (
         currentModel: ModelType.Default,
         model: { vd: {}, vs: {}, v: {} },
         options: [],
-        store
+        store,
+        getConfig
       })
     ).toStrictEqual(emptyCSS);
   });
@@ -172,7 +167,8 @@ describe("Testing getCSSObjects that should return { selector, css } objects", (
           { ...borderOptionWithSelector, selector: "{{WRAPPER}}" },
           backgroundOptionWithSelector
         ],
-        store
+        store,
+        getConfig
       })
     ).toStrictEqual({
       ...emptyCSS,
@@ -209,7 +205,8 @@ describe("Testing getCSSObjects that should return { selector, css } objects", (
             states: [NORMAL, HOVER]
           },
           { ...backgroundOptionWithSelector, states: [NORMAL, HOVER] }
-        ]
+        ],
+        getConfig
       })
     ).toStrictEqual({
       ...emptyCSS,
@@ -248,7 +245,8 @@ describe("Testing getCSSObjects that should return { selector, css } objects", (
         store,
         currentModel: ModelType.Default,
         model: { vd: model, vs: model, v: model },
-        options: [borderOptionWithSelector, backgroundOptionWithSelector]
+        options: [borderOptionWithSelector, backgroundOptionWithSelector],
+        getConfig
       })
     ).toStrictEqual({
       ...emptyCSS,
@@ -268,7 +266,8 @@ describe("Testing getCSSObjects that should return { selector, css } objects", (
         store,
         currentModel: ModelType.Default,
         model: { vd: model, vs: model, v: model },
-        options: [heightOptionWithStyle]
+        options: [heightOptionWithStyle],
+        getConfig
       })
     ).toStrictEqual({
       ...emptyCSS,
@@ -293,7 +292,8 @@ describe("Testing getCSSObjects that should return { selector, css } objects", (
         store,
         currentModel: ModelType.Default,
         model: { vd: model, vs: model, v: model },
-        options: [heightOptionWithStyle, widthOptionWithStyle]
+        options: [heightOptionWithStyle, widthOptionWithStyle],
+        getConfig
       })
     ).toStrictEqual({
       ...emptyCSS,
@@ -331,7 +331,8 @@ describe("Testing getCSSObjects that should return { selector, css } objects", (
               }
             })
           } as Option<"slider">
-        ]
+        ],
+        getConfig
       })
     ).toStrictEqual({
       ...emptyCSS,
@@ -353,7 +354,8 @@ describe("Testing getCSSObjects that should return { selector, css } objects", (
         model: { vd: model, vs: model, v: model },
         options: [
           { ...heightOptionWithStyle, selector: "{{WRAPPER}} .brz-test" }
-        ]
+        ],
+        getConfig
       })
     ).toStrictEqual({
       ...emptyCSS,
@@ -395,7 +397,8 @@ describe("Testing getCSSObjects that should return { selector, css } objects", (
           },
           { ...widthOptionWithStyle, states: [NORMAL, HOVER, ACTIVE] },
           { ...fontSizeOptionWithStyle, states: [NORMAL, HOVER, ACTIVE] }
-        ]
+        ],
+        getConfig
       })
     ).toStrictEqual({
       ...emptyCSS,
@@ -448,6 +451,7 @@ describe("Testing getCSSObjects that should return { selector, css } objects", (
       getCSSObjects({
         renderContext,
         store,
+        getConfig,
         currentModel: ModelType.Default,
         model: { vd: model, vs: model, v: model },
         options: [
@@ -533,6 +537,7 @@ describe("Testing getCSSObjects that should return { selector, css } objects", (
       getCSSObjects({
         renderContext,
         store,
+        getConfig,
         currentModel: ModelType.Default,
         model: { vd: model, vs: model, v: model },
         options: [
@@ -568,6 +573,7 @@ describe("Testing getCSSObjects that should return { selector, css } objects", (
       getCSSObjects({
         renderContext,
         store,
+        getConfig,
         currentModel: ModelType.Rules,
         model: {
           vd: borderElementModel,
@@ -597,6 +603,7 @@ describe("Testing getCSSObjects that should return { selector, css } objects", (
       getCSSObjects({
         renderContext,
         store,
+        getConfig,
         currentModel: ModelType.Custom,
         model: {
           vd: borderElementModel,
@@ -623,6 +630,7 @@ describe("Testing getCSSObjects that should return { selector, css } objects", (
       getCSSObjects({
         renderContext,
         store,
+        getConfig,
         currentModel: ModelType.Custom,
         model: {
           vd: borderElementModel,
@@ -648,6 +656,7 @@ describe("Testing getCSSObjects that should return { selector, css } objects", (
       getCSSObjects({
         renderContext,
         store,
+        getConfig,
         currentModel: ModelType.Custom,
         model: {
           vd: borderElementModel,

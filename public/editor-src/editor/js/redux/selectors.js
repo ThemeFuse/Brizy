@@ -2,14 +2,13 @@ import { omit } from "es-toolkit";
 import { produce } from "immer";
 import { createSelector } from "reselect";
 import configRules from "visual/config/rules";
-import { getConfigById } from "visual/global/Config/InitConfig";
 import { getPositions } from "visual/utils/blocks/blocksConditions";
 import { canUseCondition } from "visual/utils/blocks/getAllowedGBIds";
 import { objectTraverse2 } from "visual/utils/object";
 import {
   blocksDataSelector,
   blocksOrderSelector,
-  configIdSelector,
+  configSelector,
   copiedElementSelector,
   currentStyleIdSelector,
   currentStyleSelector,
@@ -59,10 +58,8 @@ export const globalBlocksPositionsSelector = createSelector(
   globalBlocksSelector,
   blocksOrderSelector,
   globalBlocksWithoutPopupsSelector,
-  configIdSelector,
-  (page, globalBlocks, blocksOrder, globalBlocksWithoutPopups, configId) => {
-    const config = getConfigById(configId);
-
+  configSelector,
+  (page, globalBlocks, blocksOrder, globalBlocksWithoutPopups, config) => {
     const newBlocksOrder = blocksOrder.filter((_id) => {
       const globalBlock = globalBlocks[_id];
 
@@ -435,10 +432,8 @@ export const pageBlocksAssembledRawSelector = createSelector(
   pageBlocksSelector,
   globalBlocksSelector,
   screenshotsSelector,
-  configIdSelector,
-  (page, blocks, globalBlocks, screenshots, configId) => {
-    const config = getConfigById(configId);
-
+  configSelector,
+  (page, blocks, globalBlocks, screenshots, config) => {
     const newBlocks = blocks.filter((block) => {
       if (block.type === "GlobalBlock") {
         const { _id } = block.value;

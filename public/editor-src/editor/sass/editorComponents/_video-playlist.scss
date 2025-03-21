@@ -4,6 +4,7 @@
   width: 100%;
   display: inline-block;
   vertical-align: middle;
+  overflow: hidden;
   @include custom-video;
 
   .brz-video-playlist-main__custom-video {

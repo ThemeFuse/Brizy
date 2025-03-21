@@ -1,4 +1,4 @@
-import { EnterRounded } from "@brizy/ui-icons";
+import { EnterRounded } from "@brizy/ui-icons/lib/icons/EnterRounded";
 import { Spacing } from "@brizy/ui/es/Space/utils";
 import { FieldsTheme } from "@brizy/ui/es/utils/getFieldsTheme";
 import { Gutter } from "@brizy/ui/lib/Layout/utils";
@@ -13,10 +13,10 @@ import { Space } from "visual/component/Brizy-ui/Space";
 import { t } from "visual/utils/i18n";
 import { cardSize } from "./constants";
 import { AiActionButton } from "./controls/AiActionButton";
-// import { AiDropdown } from "./controls/AiDropdown";
-// import { data } from "./data/aiText";
 import { getActions } from "./data/aiTextActions";
 
+// import { AiDropdown } from "./controls/AiDropdown";
+// import { data } from "./data/aiText";
 // import { DropdownButtonData } from "./types";
 
 const theme: FieldsTheme = {

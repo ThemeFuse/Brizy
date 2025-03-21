@@ -1,16 +1,17 @@
 import { ElementModel } from "visual/component/Elements/Types";
+import { DynamicStylesProps } from "visual/types";
 import { renderStyles } from "visual/utils/cssStyle";
 import { OutputStyle } from "visual/utils/cssStyle/types";
-import { DynamicStylesProps } from "visual/types";
 
 export function styles(data: DynamicStylesProps<ElementModel>): OutputStyle {
   const styles = {
+    ".brz &&": {
+      standart: ["cssStyleSizeWidth", "cssStyleBorderRadius"]
+    },
     ".brz &&:hover": {
       standart: [
         "cssStyleBgColor",
         "cssStyleBgGradient",
-        "cssStyleSizeWidth",
-        "cssStyleBorderRadius",
         "cssStyleBorder",
         "cssStyleBoxShadow"
       ],
@@ -25,15 +26,14 @@ export function styles(data: DynamicStylesProps<ElementModel>): OutputStyle {
     ".brz &&.brz-search-container--minimal:after": {
       standart: ["cssStyleSizeHeightPercentOnly"]
     },
-    ".brz &&:hover .brz-btn, &&:hover .brz-search-form": {
+    ".brz && .brz-btn, && .brz-search-form": {
       standart: ["cssStyleBorderRadius"]
     },
-    ".brz &&:hover .brz-search-form": {
+    ".brz && .brz-search-form": {
       standart: ["cssStylePaddingBG"]
     },
-    ".brz &&:hover .brz-search, &&:hover .brz-search::placeholder": {
+    ".brz && .brz-search, &&:hover .brz-search::placeholder": {
       standart: [
-        "cssStyleColor",
         "cssStyleTypography3FontFamily",
         "cssStyleTypography3FontSize",
         "cssStyleElementSearchLineHeight",
@@ -41,14 +41,20 @@ export function styles(data: DynamicStylesProps<ElementModel>): OutputStyle {
         "cssStyleTypography3LetterSpacing",
         "cssStyleTypography3FontVariation",
         "cssStyleTypography3TextTransform"
-      ],
+      ]
+    },
+    ".brz &&:hover .brz-search, &&:hover .brz-search::placeholder": {
+      standart: ["cssStyleColor"],
       interval: [
         "cssStyleHoverTransition",
         "cssStylePropertyHoverTransitionColor"
       ]
     },
+    ".brz && .brz-search-form .brz-search-icon__style1": {
+      standart: ["cssStyleTypography3FontSize"]
+    },
     ".brz &&:hover .brz-search-form .brz-search-icon__style1": {
-      standart: ["cssStyleColor", "cssStyleTypography3FontSize"],
+      standart: ["cssStyleColor"],
       interval: [
         "cssStyleHoverTransition",
         "cssStylePropertyHoverTransitionColor"

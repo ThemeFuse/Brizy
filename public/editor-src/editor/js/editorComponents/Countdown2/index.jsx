@@ -295,7 +295,7 @@ class Countdown2 extends EditorComponent {
               ...makeDataAttr({ name: "end", value: date }),
               ...makeDataAttr({ name: "hours", value: hours }),
               ...makeDataAttr({ name: "minutes", value: minutes }),
-              ...makeDataAttr({ name: "timeZone", value: timeZone }),
+              ...makeDataAttr({ name: "timezone", value: timeZone }),
               ...makeDataAttr({ name: "link-type", value: linkType }),
               ...makeDataAttr({ name: "redirect", value: messageRedirect }),
               ...makeDataAttr({

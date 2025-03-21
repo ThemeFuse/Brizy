@@ -28,20 +28,27 @@ export function cssStyleBgImage({
   device,
   state,
   renderContext,
+  getConfig,
   store,
   prefix = ""
 }) {
   const bgImage = isEditor(renderContext)
-    ? styleBgImage({ v, device, state, store, prefix })
-    : styleExportBgImage({ v, device, state, store, prefix });
+    ? styleBgImage({ v, device, state, store, getConfig, prefix })
+    : styleExportBgImage({ v, device, state, store, getConfig, prefix });
 
   return `background-image:${bgImage};`;
 }
 
-export function cssStyleBgImageHover({ v, store, device, renderContext }) {
+export function cssStyleBgImageHover({
+  v,
+  store,
+  device,
+  getConfig,
+  renderContext
+}) {
   const bgImage = isEditor(renderContext)
-    ? styleBgImage({ v, device, store, state: "hover" })
-    : styleExportBgImage({ v, device, store, state: "hover" });
+    ? styleBgImage({ v, device, store, getConfig, state: "hover" })
+    : styleExportBgImage({ v, device, store, getConfig, state: "hover" });
 
   return bgImage ? `content: "";background-image:${bgImage};` : "";
 }
@@ -62,9 +69,10 @@ export function cssStyleBgImagePosition({
   device,
   state,
   store,
+  getConfig,
   prefix = ""
 }) {
-  const bgImage = styleBgImage({ v, device, state, store, prefix });
+  const bgImage = styleBgImage({ v, device, state, store, getConfig, prefix });
   const positionX = styleBgPositionX({ v, device, state, store, prefix });
   const positionY = styleBgPositionY({ v, device, state, store, prefix });
 

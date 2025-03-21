@@ -1,21 +1,24 @@
 import classnames from "classnames";
 import { isT } from "fp-utilities";
-import React, { RefObject } from "react";
+import React, { RefObject, forwardRef } from "react";
 import { connect } from "react-redux";
-import { CSSTransition, TransitionGroup } from "react-transition-group";
+import { TransitionState } from "react-transition-state";
 import ClickOutside from "visual/component/ClickOutside";
-import EditorIcon from "visual/component/EditorIcon";
 import HotKeys from "visual/component/HotKeys";
 import { RightSidebarItems } from "visual/component/RightSidebar/RightSidebarItems";
 import { currentUserRole } from "visual/component/Roles";
 import { filterOptions } from "visual/editorComponents/EditorComponent/utils";
 import { OptionDefinition } from "visual/editorComponents/ToolbarItemType";
+import { useConfig } from "visual/providers/ConfigProvider";
 import { ReduxState } from "visual/redux/types";
 import { DeviceMode } from "visual/types";
 import { targetExceptions } from "../../Options/constants";
-import { ToolbarItems } from "../ToolbarItems";
 import { ToolbarMonitorHandler, monitor } from "../monitor";
 import { setPosition } from "../state";
+import { AnimatedToolbar } from "./components/AnimatedToolbar";
+import { Badge, BadgeProps } from "./components/Badge";
+import { Icon, IconProps } from "./components/Icon";
+import { Toolbar } from "./components/Toolbar";
 import {
   CollapsibleToolbarProps,
   CollapsibleToolbarState,
@@ -38,6 +41,7 @@ class _CollapsibleToolbar
     return [
       ".brz-ed-collapsible__toolbar",
       ".brz-ed-sidebar__right",
+      ".brz-ed-sidebar__addable",
       ".brz-ed-tooltip__content-portal",
       ".brz-ed-popup-integrations",
       ".brz-ed-popup-authorization",
@@ -74,22 +78,17 @@ class _CollapsibleToolbar
   }
 
   getItems = (): OptionDefinition[] => {
-    const device = this.props.device;
-    const role = currentUserRole();
+    const { device, config, getItems: get } = this.props;
+    const role = currentUserRole(config);
 
-    return this.props.getItems().map(filterOptions(device, role)).filter(isT);
+    return get().map(filterOptions(device, role)).filter(isT);
   };
 
   getSidebarItems = (): OptionDefinition[] => {
-    const device = this.props.device;
-    const role = currentUserRole();
+    const { device, config, getSidebarItems: get } = this.props;
+    const role = currentUserRole(config);
 
-    return this.props.getSidebarItems
-      ? this.props
-          .getSidebarItems()
-          .map(filterOptions(device, role))
-          .filter(isT)
-      : [];
+    return get ? get().map(filterOptions(device, role)).filter(isT) : [];
   };
 
   open(): void {
@@ -122,54 +121,31 @@ class _CollapsibleToolbar
     });
   }
 
-  renderBadge(): React.ReactNode {
+  renderBadge = (): React.ReactElement<BadgeProps> | null => {
     const { membership, language, global } = this.props;
+    const canRenderBadge = !(!membership && !global && !language);
 
-    if (!membership && !global && !language) {
-      return null;
-    }
+    return canRenderBadge ? (
+      <Badge membership={membership} language={language} global={global} />
+    ) : null;
+  };
 
-    return (
-      <CSSTransition key="badge" timeout={0}>
-        <div className="brz-ed-collapsible__badge">
-          {global && <EditorIcon icon="nc-global" />}
-          {membership && <EditorIcon icon="nc-user" />}
-          {language && <EditorIcon icon="nc-multi-languages" />}
-        </div>
-      </CSSTransition>
+  renderIcon = (state: TransitionState): React.ReactElement<IconProps> => {
+    return <Icon {...state} onClick={this.handleClick} />;
+  };
+
+  renderToolbar = (
+    ref: RefObject<HTMLDivElement>
+  ): ((state: TransitionState) => React.ReactElement) => {
+    return (state: TransitionState) => (
+      <Toolbar
+        {...state}
+        ref={ref}
+        items={this.getItems()}
+        animation={this.props.animation}
+      />
     );
-  }
-
-  renderIcon(): React.ReactNode {
-    return (
-      <CSSTransition key="icon" classNames="fadeCollapsibleIcon" timeout={200}>
-        <div className="brz-ed-collapsible__icon" onClick={this.handleClick}>
-          <EditorIcon icon="nc-settings" />
-        </div>
-      </CSSTransition>
-    );
-  }
-
-  renderToolbar(ref: RefObject<HTMLDivElement>): React.ReactNode {
-    const { animation = "leftToRight" } = this.props;
-    const animationClassName =
-      animation === "leftToRight"
-        ? "animation-left-right"
-        : "animation-right-left";
-    const items = this.getItems();
-
-    return (
-      <CSSTransition
-        key="toolbar"
-        classNames={animationClassName}
-        timeout={200}
-      >
-        <div className="brz-ed-collapsible__toolbar" ref={ref}>
-          <ToolbarItems items={items} arrow={false} />
-        </div>
-      </CSSTransition>
-    );
-  }
+  };
 
   render(): React.ReactNode {
     const {
@@ -191,10 +167,13 @@ class _CollapsibleToolbar
           exceptions={this.getClickOutSideExceptions()}
         >
           {({ ref }) => (
-            <TransitionGroup className={className}>
-              {this.renderBadge()}
-              {opened ? this.renderToolbar(ref) : this.renderIcon()}
-            </TransitionGroup>
+            <AnimatedToolbar
+              opened={opened}
+              className={className}
+              renderBadge={this.renderBadge}
+              renderToolbar={this.renderToolbar(ref)}
+              renderIcon={this.renderIcon}
+            />
           )}
         </ClickOutside>
         {opened && getSidebarItems && (
@@ -215,12 +194,22 @@ class _CollapsibleToolbar
   }
 }
 
+type FCProps = Omit<PropsWithState, "config">;
+
+const CollapsibleToolbar = forwardRef<_CollapsibleToolbar, FCProps>(
+  (props, ref) => {
+    const config = useConfig();
+
+    return <_CollapsibleToolbar ref={ref} {...props} config={config} />;
+  }
+);
+
 export default connect<
   { device: DeviceMode },
   // eslint-disable-next-line @typescript-eslint/ban-types
   {},
   CollapsibleToolbarProps,
   ReduxState
->((s) => ({ device: s.ui.deviceMode }), null, null, { forwardRef: true })(
-  _CollapsibleToolbar
-);
+>((s) => ({ device: s.ui.deviceMode }), null, null, {
+  forwardRef: true
+})(CollapsibleToolbar);

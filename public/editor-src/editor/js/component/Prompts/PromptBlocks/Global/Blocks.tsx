@@ -123,7 +123,7 @@ export const Blocks = <T extends Thumbnail>(props: Props<T>): ReactElement => {
               <Empty
                 search={currentFilter.search}
                 message={getMessage(messageType)}
-                src={getSrc(messageType)}
+                src={getSrc(messageType, config)}
               />
             ) : (
               <Grid<T>

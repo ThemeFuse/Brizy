@@ -1,5 +1,5 @@
 import classnames from "classnames";
-import React, { ReactNode, RefObject } from "react";
+import React, { ReactElement, ReactNode, RefObject } from "react";
 import { omit } from "timm";
 import BoxResizer from "visual/component/BoxResizer";
 import { Patch } from "visual/component/BoxResizer/types";
@@ -108,9 +108,9 @@ export default class Button extends EditorComponent<Value, Props> {
     v: Value,
     vs: Value,
     vd: Value,
-    content: ReactNode,
+    content: ReactElement,
     refs: (RefObject<HTMLDivElement> | null)[]
-  ): ReactNode {
+  ): ReactElement {
     const { cssClass, customClassName, tabsState, type } = v;
     const device = this.getDeviceMode();
     const state = State.mRead(tabsState);
@@ -175,7 +175,7 @@ export default class Button extends EditorComponent<Value, Props> {
     vd: Value,
     content: ReactNode,
     refs: (RefObject<HTMLDivElement> | null)[]
-  ): ReactNode {
+  ): ReactElement {
     const { actionClosePopup, customClassName, cssClass, tabsState } = v;
     const config = this.getGlobalConfig();
 

@@ -1,5 +1,6 @@
 import { ToolbarItemsProps } from "visual/component/Toolbar/ToolbarItems";
 import { OptionDefinition } from "visual/editorComponents/ToolbarItemType";
+import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { DeviceMode } from "visual/types";
 
 export interface CollapsibleToolbarProps
@@ -12,6 +13,7 @@ export interface CollapsibleToolbarProps
   global: boolean;
   membership: boolean;
   language: boolean;
+  config: ConfigCommon;
   onBeforeOpen?: () => void;
   onBeforeClose?: () => void;
   onOpen?: () => void;

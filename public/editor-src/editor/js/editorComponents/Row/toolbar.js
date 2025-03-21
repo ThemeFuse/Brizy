@@ -1,5 +1,8 @@
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
-import { isBackgroundPointerEnabled } from "visual/global/Config/types/configs/featuresValue";
+import {
+  getEnabledLinkOptions,
+  isBackgroundPointerEnabled
+} from "visual/global/Config/types/configs/featuresValue";
 import { isPopup } from "visual/providers/EditorModeProvider";
 import { getColorToolbar } from "visual/utils/color";
 import { BgRepeat, BgSize } from "visual/utils/containers/types";
@@ -87,6 +90,13 @@ export const getItems = ({ v, device, component, context, editorMode }) => {
   const isExternalImage = dvv("bgImageType") !== ImageType.Internal;
 
   const isPointerEnabled = isBackgroundPointerEnabled(config, "row");
+
+  const {
+    internalLink,
+    linkPopup: linkPopupEnabled,
+    linkAnchor,
+    linkExternal
+  } = getEnabledLinkOptions(config);
 
   return [
     {
@@ -453,6 +463,7 @@ export const getItems = ({ v, device, component, context, editorMode }) => {
             {
               id: "page",
               label: t("Page"),
+              disabled: !internalLink,
               options: [
                 {
                   id: "linkPage",
@@ -469,6 +480,7 @@ export const getItems = ({ v, device, component, context, editorMode }) => {
             {
               id: "external",
               label: t("URL"),
+              disabled: !linkExternal,
               options: [
                 {
                   id: "link",
@@ -496,6 +508,7 @@ export const getItems = ({ v, device, component, context, editorMode }) => {
             {
               id: "anchor",
               label: t("Block"),
+              disabled: !linkAnchor,
               options: [
                 toolbarLinkAnchor({
                   v,
@@ -507,6 +520,7 @@ export const getItems = ({ v, device, component, context, editorMode }) => {
             {
               id: "popup",
               label: t("Popup"),
+              disabled: !linkPopupEnabled,
               options: [
                 {
                   id: "linkPopup",

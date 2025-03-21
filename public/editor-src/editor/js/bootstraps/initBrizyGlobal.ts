@@ -1,6 +1,8 @@
-import Config from "visual/global/Config";
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
-import { isBackgroundPointerEnabled } from "visual/global/Config/types/configs/featuresValue";
+import {
+  getEnabledLinkOptions,
+  isBackgroundPointerEnabled
+} from "visual/global/Config/types/configs/featuresValue";
 import {
   isPopup as isPopupMode,
   isStory as isStoryMode
@@ -14,7 +16,6 @@ import { getDynamicContentOption } from "visual/utils/options";
 import { HOVER, NORMAL } from "visual/utils/stateMode";
 
 global.Brizy = {
-  config: Config,
   addFilter,
   applyFilter,
   t,
@@ -30,6 +31,7 @@ global.Brizy = {
       HOVER
     },
     isBackgroundPointerEnabled,
+    getEnabledLinkOptions,
 
     isPopup,
     isStory,

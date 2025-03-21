@@ -1,3 +1,4 @@
+import { isFunction } from "es-toolkit";
 import { uniqueId } from "es-toolkit/compat";
 import { ReplaySubject, Subject } from "rxjs";
 import { map, withLatestFrom } from "rxjs/operators";
@@ -7,6 +8,7 @@ import {
   FooterRoutes
 } from "visual/libs/Ecwid/types/EcwidConfig";
 import * as EcwidWidget from "visual/libs/Ecwid/types/EcwidWidget";
+import { Literal } from "visual/utils/types/Literal";
 import { EcwidCartCheckoutStep } from "../../editorComponents/Ecwid/EcwidCart/types/Value";
 import {
   EcwidCategoryId,
@@ -102,7 +104,6 @@ declare global {
         };
       };
     };
-    pathBeforeEcwidChange?: string;
   }
 }
 
@@ -137,34 +138,40 @@ declare const Ecwid: {
     page: EcwidPageSlug,
     payload?: Record<string, string | number>
   ) => void;
+  Cart: {
+    addProduct: (id: Literal) => void;
+    clear: VoidFunction;
+  };
   refreshConfig?: VoidFunction;
 };
 
 const defaultConfig: Partial<EcwidConfig> = {
   redirect: {
     fromFooter: [
-      { route: "/my-account", selector: ".footer__link--my-account" },
-      { route: "/my-account", selector: ".footer__link--track-order" },
-      { route: "/favorites", selector: ".footer__link--favorites" },
+      { route: "/account", selector: ".footer__link--my-account" },
+      { route: "/account", selector: ".footer__link--track-order" },
+      { route: "/account/favorites", selector: ".footer__link--favorites" },
       { route: "/cart", selector: ".footer__link--shopping-cart" }
     ],
     fromContent: [
       { route: "/cart", selector: ".details-product-purchase__checkout" },
-      { route: "/favorites", selector: ".favorite-product__button-view" },
+      {
+        route: "/account/favorites",
+        selector: ".favorite-product__button-view"
+      },
       {
         route: "/",
         selector: ".ec-cart--empty .form-control.form-control--done"
       }
     ]
-  },
-  restoreUrl: true
+  }
 };
 
 const footerRoutes: {
   [k in FooterRoutes]: string;
 } = {
-  "/my-account": "/my-account",
-  "/favorites": "/favorites",
+  "/account": "/account",
+  "/account/favorites": "/account/favorites",
   "/cart": "/cart"
 };
 
@@ -173,7 +180,7 @@ const contentRoutes: {
 } = {
   "/cart": "/cart",
   "/thank-you": "/thank-you",
-  "/favorites": "/favorites",
+  "/account/favorites": "/account/favorites",
   "/": "/"
 };
 
@@ -196,7 +203,7 @@ export class EcwidService {
     window.ec.config.storefrontUrls = window.ec.config.storefrontUrls || {};
 
     window.ec.config.storefrontUrls.cleanUrls = true;
-    window.ec.config.baseUrl = "/";
+    window.ec.config.baseUrl = this.config.baseUrl || "/";
 
     window.ec.storefront = { ...window.ec.storefront, ...config };
 
@@ -207,7 +214,13 @@ export class EcwidService {
       )
       .subscribe((widget) => {
         requestAnimationFrame(() => {
+          const fn = widget?.onPageLoad;
+
           Ecwid.openPage(widget.type, widget.args);
+
+          if (isFunction(fn)) {
+            fn();
+          }
         });
       });
 
@@ -264,15 +277,6 @@ export class EcwidService {
 
           window.dispatchEvent(new Event("resize"));
           addListenerToPlaceOrder();
-
-          if (
-            window &&
-            window.pathBeforeEcwidChange &&
-            window.location.pathname !== window.pathBeforeEcwidChange &&
-            this.config.restoreUrl
-          ) {
-            window.history.pushState({}, "", window.pathBeforeEcwidChange);
-          }
 
           if (Array.isArray(this.config.onPageLoadCallbacks)) {
             this.config.onPageLoadCallbacks.forEach((cb) => {
@@ -339,8 +343,6 @@ export class EcwidService {
     node: HTMLElement,
     config?: { clearPrevious?: boolean }
   ) {
-    window.pathBeforeEcwidChange = window.location.pathname;
-
     const el = this.setId(node);
 
     if (config && config.clearPrevious) {
@@ -359,9 +361,9 @@ export class EcwidService {
   public cart(
     node: HTMLElement,
     step?: EcwidCartCheckoutStep,
-    config?: { clearPrevious?: boolean }
+    config?: { clearPrevious?: boolean; onPageLoad?: VoidFunction }
   ) {
-    window.pathBeforeEcwidChange = window.location.pathname;
+    const onPageLoad = config?.onPageLoad;
 
     const el = this.setId(node);
 
@@ -369,12 +371,10 @@ export class EcwidService {
       this.clearWidget(node);
     }
 
-    this.openPage(EcwidWidget.cart(el.id, step), node);
+    this.openPage(EcwidWidget.cart(el.id, step, onPageLoad), node);
   }
 
   public favorites(node: HTMLElement): void {
-    window.pathBeforeEcwidChange = window.location.pathname;
-
     const el = this.setId(node);
 
     this.openPage(EcwidWidget.favorites(el.id), node);
@@ -395,8 +395,6 @@ export class EcwidService {
   }
 
   public myAccount(node: HTMLElement) {
-    window.pathBeforeEcwidChange = window.location.pathname;
-
     const el = this.setId(node);
     this.openPage(EcwidWidget.myAccount(el.id), node);
 
@@ -414,6 +412,14 @@ export class EcwidService {
     window.ec.storefront = { ...window.ec?.storefront, ...config };
 
     Ecwid.refreshConfig?.();
+  }
+
+  public populateCart(id: Literal) {
+    Ecwid.Cart.addProduct(id);
+  }
+
+  public clearCart() {
+    Ecwid.Cart.clear();
   }
 
   private changeRedirectLinks(node: HTMLElement) {

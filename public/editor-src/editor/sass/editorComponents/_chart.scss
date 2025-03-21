@@ -1,0 +1,14 @@
+.brz-chart {
+  &_title {
+    width: 100%;
+    display: flex;
+    margin-bottom: 20px !important;
+  }
+}
+
+.addable--chart{
+ .brz-ed-addable__wrapper  .brz-ui-scrollbar__view{
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+}

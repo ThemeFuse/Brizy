@@ -2,7 +2,7 @@ import * as cheerio from "cheerio";
 import { Type as LinkType } from "visual/component/Link/types/Type";
 import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { SizeType } from "visual/global/Config/types/configs/common";
-import { configSelector, pageDataNoRefsSelector } from "visual/redux/selectors";
+import { pageDataNoRefsSelector } from "visual/redux/selectors";
 import { Store } from "visual/redux/store";
 import { Block } from "visual/types/Block";
 import { customFileUrl } from "visual/utils/customFile";
@@ -31,7 +31,11 @@ const addDataColorAttribute = ($: cheerio.Root, $richText: cheerio.Cheerio) => {
   });
 };
 
-export const changeRichText = (html: string, store: Store): string => {
+export const changeRichText = (
+  html: string,
+  store: Store,
+  config: ConfigCommon
+): string => {
   //@ts-expect-error: cheerio Load() can take 3 args https://cheerio.js.org/docs/api/functions/load
   const $ = cheerio.load(html, null, false);
   const $richText = $.root();
@@ -103,7 +107,6 @@ export const changeRichText = (html: string, store: Store): string => {
 
         $this.replaceWith(link);
       } else if (url) {
-        const config = configSelector(store.getState());
         link.attr(
           "href",
           getLinkContentByType(
@@ -169,7 +172,6 @@ export const changeRichText = (html: string, store: Store): string => {
     const src = $this.attr("data-image_src") ?? "";
     const population = $this.attr("data-image_population");
     const fileName = $this.attr("data-image_file_name") ?? "image";
-    const config = configSelector(store.getState());
 
     const imgUrl = getImageUrl(
       {

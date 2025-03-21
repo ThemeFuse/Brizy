@@ -4,10 +4,9 @@ import { renderStyles } from "visual/utils/cssStyle";
 
 export function style(data: DynamicStylesProps<ElementModel>) {
   const styles = {
-    ".brz &&:hover .brz-starrating-text": {
+    ".brz && .brz-starrating-text": {
       standart: [
         "cssStyleElementStarRatingTextSpacing",
-        "cssStyleColor",
         "cssStyleTypography2FontFamily",
         "cssStyleTypography2FontSize",
         "cssStyleTypography2LineHeight",
@@ -15,16 +14,19 @@ export function style(data: DynamicStylesProps<ElementModel>) {
         "cssStyleTypography2LetterSpacing",
         "cssStyleTypography2FontVariation",
         "cssStyleTextTransforms"
-      ],
+      ]
+    },
+    ".brz &&:hover .brz-starrating-text": {
+      standart: ["cssStyleColor"],
       interval: [
         "cssStyleHoverTransition",
         "cssStylePropertyHoverTransitionColor"
       ]
     },
-    ".brz &&:hover .brz-starrating-icon-wrap": {
+    ".brz && .brz-starrating-icon-wrap": {
       standart: ["cssStyleSizeFontSizeIcon"]
     },
-    ".brz &&:hover .brz-starrating-container .brz-starrating-icon-wrap:not(:last-child)":
+    ".brz && .brz-starrating-container .brz-starrating-icon-wrap:not(:last-child)":
       { standart: ["cssStyleElementStarRatingSpacing"] },
     ".brz &&:hover .brz-starrating-container .brz-starrating-icon-wrap .brz-starrating-color-empty":
       {
@@ -50,13 +52,11 @@ export function style(data: DynamicStylesProps<ElementModel>) {
           "cssStylePropertyHoverTransitionColor"
         ]
       },
+    ".brz && .brz-starrating-style2-container": {
+      standart: ["cssStyleBorderRadius", "cssStyleElementStarRatingDirection"]
+    },
     ".brz &&:hover .brz-starrating-style2-container": {
-      standart: [
-        "cssStyleColor",
-        "cssStyleBgColor",
-        "cssStyleBorderRadius",
-        "cssStyleElementStarRatingDirection"
-      ]
+      standart: ["cssStyleColor", "cssStyleBgColor"]
     },
     ".brz &&:hover .brz-starrating-style2-container .brz-icon-svg-custom": {
       standart: ["cssStyleCustomIconColor"],

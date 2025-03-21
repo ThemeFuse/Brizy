@@ -1,5 +1,5 @@
 import LibsConfig from "visual/bootstraps/libs.json";
-import Conf, { Config, isWp } from "visual/global/Config";
+import { Config, isWp } from "visual/global/Config";
 import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { ExtraFontData } from "visual/types/Fonts";
 import { compileAssetProUrl, compileAssetUrl } from "visual/utils/asset";
@@ -219,27 +219,27 @@ interface Data {
   $root: cheerio.Root;
   fonts: Fonts;
   css: DynamicCSS;
+  config: ConfigCommon;
   extra?: { adobeKitId?: string };
 }
 export const makeStyles = (data: Data): MakeStyles => {
-  const { $root, fonts, css, extra } = data;
+  const { $root, fonts, css, config, extra } = data;
   const { free = [], pro = [] } = LibsConfig;
-  const config = Conf.getAll();
 
   const main: Asset = {
     name: "main",
     score: MAIN_SCORE,
     content: {
       type: "file",
-      url: compileAssetUrl("editor/css/preview.min.css"),
-      attr: withRel({ class: "brz-link brz-link-preview" }, config)
+      url: compileAssetUrl("editor/css/preview.min.css", config),
+      attr: withRel({ class: "brz-link brz-link-preview" }, config as Config)
     },
     pro: false
   };
   const generic: Asset[] = [];
 
   // project fonts
-  const pageFonts = makePageFonts({ fonts, extra, config });
+  const pageFonts = makePageFonts({ fonts, extra, config: config as Config });
 
   // page styles
   const pageStyles = makePageFontsPrefetch(fonts, config);
@@ -291,13 +291,13 @@ export const makeStyles = (data: Data): MakeStyles => {
       score: LIBS_SCORE,
       content: {
         type: "file",
-        url: compileAssetUrl(`editor/css/${name}.min.css`),
+        url: compileAssetUrl(`editor/css/${name}.min.css`, config),
         attr: withRel(
           {
             class: "brz-link brz-link-preview-lib",
             ...makeDataAttr({ name: "group", value: name })
           },
-          config
+          config as Config
         )
       },
       pro: false
@@ -336,7 +336,10 @@ export const makeStyles = (data: Data): MakeStyles => {
       content: {
         type: "file",
         url: compileAssetProUrl(proConfig, "css/preview.pro.min.css"),
-        attr: withRel({ class: "brz-link brz-link-preview-pro" }, config)
+        attr: withRel(
+          { class: "brz-link brz-link-preview-pro" },
+          config as Config
+        )
       },
       pro: true
     };
@@ -358,7 +361,7 @@ export const makeStyles = (data: Data): MakeStyles => {
               class: "brz-link brz-link-preview-lib-pro",
               ...makeDataAttr({ name: "group", value: name })
             },
-            config
+            config as Config
           )
         },
         pro: true

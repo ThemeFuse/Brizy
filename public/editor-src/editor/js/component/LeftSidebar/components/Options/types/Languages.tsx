@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Select from "visual/component/Controls/Select";
 import SelectItem from "visual/component/Controls/Select/SelectItem";
 import { Config } from "visual/global/Config/types";
-import { useConfig } from "visual/global/hooks";
+import { useConfig } from "visual/providers/ConfigProvider";
 import { updateUI } from "visual/redux/actions2";
 import { currentLanguageSelector } from "visual/redux/selectors";
 import { t } from "visual/utils/i18n";

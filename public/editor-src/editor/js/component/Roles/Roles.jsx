@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { currentUserRole } from "./utils";
 
 export class Roles extends Component {
   static defaultProps = {
@@ -8,6 +7,7 @@ export class Roles extends Component {
 
   render() {
     const {
+      currentRole,
       allow,
       children,
       component: Component,
@@ -15,7 +15,7 @@ export class Roles extends Component {
       fallbackComponent: FallbackComponent,
       fallbackRender
     } = this.props;
-    const roleTestPassed = allow.includes(currentUserRole());
+    const roleTestPassed = allow.includes(currentRole);
 
     if (roleTestPassed) {
       if (children) {

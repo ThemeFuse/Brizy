@@ -13,14 +13,16 @@ export default class PromptKeyHelper extends Component {
   };
 
   render() {
-    const { opened, onClose } = this.props;
+    const { opened, config, onClose } = this.props;
 
     const src = isMac
-      ? `${assetUrl("editor/img/mac-keyboard1x.png")} 1x , ${assetUrl(
-          "editor/img/mac-keyboard2x.png"
+      ? `${assetUrl("editor/img/mac-keyboard1x.png", config)} 1x , ${assetUrl(
+          "editor/img/mac-keyboard2x.png",
+          config
         )} 2x`
-      : `${assetUrl("editor/img/pc-keyboard1x.png")} 1x , ${assetUrl(
-          "editor/img/pc-keyboard2x.png"
+      : `${assetUrl("editor/img/pc-keyboard1x.png", config)} 1x , ${assetUrl(
+          "editor/img/pc-keyboard2x.png",
+          config
         )} 2x`;
 
     return (

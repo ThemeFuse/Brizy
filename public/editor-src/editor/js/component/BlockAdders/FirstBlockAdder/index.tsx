@@ -1,8 +1,9 @@
 import React, { ReactElement, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Prompts from "visual/component/Prompts";
+import { PromptTabsId } from "visual/component/Prompts/PromptBlocks/types";
 import { rolesHOC } from "visual/component/Roles";
-import Config from "visual/global/Config";
+import { useConfig } from "visual/providers/ConfigProvider";
 import { setDeviceMode } from "visual/redux/actions2";
 import { deviceModeSelector } from "visual/redux/selectors";
 import { t } from "visual/utils/i18n";
@@ -28,18 +29,22 @@ const FirstBlockAdder = (props: Props): ReactElement => {
   const { onAddBlock, onAddTemplate, onAddGlobalBlock } = props;
   const dispatch = useDispatch();
   const deviceMode = useSelector(deviceModeSelector);
+  const config = useConfig();
 
   const handleOpen = useCallback(() => {
-    const config = Config.getAll();
     const showGlobal = typeof config.api?.globalBlocks?.create === "function";
+    const showSaved = typeof config.api?.savedBlocks?.create === "function";
+    const activeTab = config.ui?.prompts?.blockAdder?.activeTab as PromptTabsId;
 
     if (deviceMode === "desktop") {
       Prompts.open({
         prompt: "blocks",
         mode: "single",
         props: {
+          ...(activeTab ? { activeTab } : {}),
           type: "normal",
           showGlobal,
+          showSaved,
           onChangeBlocks: onAddBlock,
           onChangeGlobal: onAddGlobalBlock,
           onChangeSaved: onAddTemplate,
@@ -49,7 +54,14 @@ const FirstBlockAdder = (props: Props): ReactElement => {
     } else {
       dispatch(setDeviceMode("desktop"));
     }
-  }, [deviceMode, dispatch, onAddBlock, onAddGlobalBlock, onAddTemplate]);
+  }, [
+    deviceMode,
+    config,
+    dispatch,
+    onAddBlock,
+    onAddGlobalBlock,
+    onAddTemplate
+  ]);
 
   const docs = getTextsByDeviceMode();
   const { title, description } = docs[deviceMode];

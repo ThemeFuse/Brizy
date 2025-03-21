@@ -1,8 +1,8 @@
-import React, { MouseEvent, useCallback, useRef } from "react";
+import React, { JSX, MouseEvent, useCallback, useRef } from "react";
 import EditorIcon from "visual/component/EditorIcon";
 import HotKeys from "visual/component/HotKeys";
 import type { Config } from "visual/global/Config/types";
-import { useConfig } from "visual/global/hooks";
+import { useConfig } from "visual/providers/ConfigProvider";
 import { t } from "visual/utils/i18n";
 import { BottomPanelItem } from "./Item";
 

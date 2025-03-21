@@ -11,7 +11,7 @@ import {
   isEcwidCategoryPage,
   isEcwidProductPage
 } from "visual/global/Config/types/configs/Cloud";
-import { useConfig } from "visual/global/hooks";
+import { useConfig } from "visual/providers/ConfigProvider";
 import { isPopup, useEditorMode } from "visual/providers/EditorModeProvider";
 import { pageSelector } from "visual/redux/selectors";
 import {

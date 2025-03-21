@@ -1,6 +1,7 @@
 import cheerio from "cheerio";
 import { ReactElement } from "react";
 import ReactDOMServer from "react-dom/server";
+import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { Sheet } from "visual/providers/StyleProvider/Sheet";
 import {
   defaultFontSelector,
@@ -23,10 +24,11 @@ interface Props {
   store: Store;
   Page: ReactElement;
   sheet: Readonly<Sheet>;
+  config: ConfigCommon;
 }
 
 export const baseToStatic = (props: Props): Output => {
-  const { store, sheet, Page } = props;
+  const { store, sheet, config, Page } = props;
   const reduxState = store.getState();
   const projectDefaultFontId = defaultFontSelector(reduxState);
 
@@ -67,6 +69,7 @@ export const baseToStatic = (props: Props): Output => {
     $root: $pageHTML,
     fonts,
     css: dynamicCss,
+    config,
     extra: { adobeKitId }
   });
 

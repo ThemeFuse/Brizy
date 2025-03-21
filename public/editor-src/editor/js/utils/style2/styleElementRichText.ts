@@ -1,5 +1,4 @@
 import { Num, Str } from "@brizy/readers";
-import { configSelector } from "visual/redux/selectors";
 import { getColor } from "visual/utils/color";
 import { defaultValueValue } from "visual/utils/onChange";
 import { CSSValue } from "./types";
@@ -8,11 +7,11 @@ import { gradientCssDeclaration } from "./utils";
 export function styleElementRichTextGradient({
   v,
   device,
-  store,
+  getConfig,
   state = "normal"
 }: CSSValue): string {
   const dvv = (key: string) => defaultValueValue({ v, key, device, state });
-  const config = configSelector(store.getState());
+  const config = getConfig();
 
   const colorType = Str.read(dvv("colorType"));
   const gradientType = Str.read(dvv("gradientType"));
@@ -55,11 +54,11 @@ export function styleElementRichTextGradient({
 export function styleElementRichTextDCGradient({
   v,
   device,
-  store,
+  getConfig,
   state = "normal"
 }: CSSValue): string {
   const dvv = (key: string) => defaultValueValue({ v, key, device, state });
-  const config = configSelector(store.getState());
+  const config = getConfig();
 
   const colorType = Str.read(dvv("bgColorType"));
   const gradientType = Str.read(dvv("gradientType"));
@@ -106,11 +105,11 @@ export function styleElementRichTextDCGradient({
 export function styleElementRichTextDCGradientBackground({
   v,
   device,
-  store,
+  getConfig,
   state = "normal"
 }: CSSValue): string {
   const dvv = (key: string) => defaultValueValue({ v, key, device, state });
-  const config = configSelector(store.getState());
+  const config = getConfig();
 
   const colorType = Str.read(dvv("textBgColorType"));
   const gradientType = Str.read(dvv("textGradientType"));

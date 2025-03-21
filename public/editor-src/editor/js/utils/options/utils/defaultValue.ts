@@ -1,17 +1,23 @@
 import { OptionName, OptionValue } from "visual/component/Options/types";
+import { defaultValue as addable } from "visual/utils/options/Addable/converters";
+import { defaultValue as advancedSettings } from "visual/utils/options/AdvancedSettings/converters";
 import { defaultValue as ai } from "visual/utils/options/AiText/converters";
 import { defaultValue as alert } from "visual/utils/options/Alert/converters";
 import { defaultValue as animation } from "visual/utils/options/Animation/converters";
 import { defaultValue as backgroundColor } from "visual/utils/options/BackgroundColor/converters";
+import { defaultValue as blockThumbnail } from "visual/utils/options/BlockThumbnail/converters";
 import { defaultValue as border } from "visual/utils/options/Border/converters";
 import { defaultValue as boxShadow } from "visual/utils/options/BoxShadow/converters";
 import { defaultValue as button } from "visual/utils/options/Button/converters";
+import { defaultValue as checkGroup } from "visual/utils/options/CheckGroup/converters";
 import { defaultValue as codeMirror } from "visual/utils/options/CodeMirror/converters";
+import { defaultValue as colorPaletteEditor } from "visual/utils/options/ColorPaletteEditor/converters";
 import { defaultValue as colorPicker } from "visual/utils/options/ColorPicker/converters";
 import { defaultValue as corners } from "visual/utils/options/Corners/converters";
 import { defaultValue as editableSelect } from "visual/utils/options/EditableSelect/converters";
 import { defaultValue as fileUpload } from "visual/utils/options/FileUpload/converters";
 import { defaultValue as filters } from "visual/utils/options/Filters/converters";
+import { defaultValue as fontStyleEditor } from "visual/utils/options/FontStyleEditor/converters";
 import { defaultValue as formApps } from "visual/utils/options/FormApps/converters";
 import { defaultValue as gallery } from "visual/utils/options/Gallery/converters";
 import { defaultValue as galleryForGallery } from "visual/utils/options/GalleryForGallery/converters";
@@ -34,30 +40,25 @@ import { defaultValue as padding } from "visual/utils/options/Padding/converters
 import { defaultValue as paypal } from "visual/utils/options/PayPal/converters";
 import { defaultValue as popover } from "visual/utils/options/Popover/converters";
 import { defaultValue as population } from "visual/utils/options/Population/converters";
+import { defaultValue as popupCondition } from "visual/utils/options/PopupCondition/converters";
 import { defaultValue as promptAddPopup } from "visual/utils/options/PromptAddPopup/converters";
 import { defaultValue as radioGroup } from "visual/utils/options/RadioGroup/converters";
 import { defaultValue as range } from "visual/utils/options/Range/converters";
 import { defaultValue as savedBlock } from "visual/utils/options/SavedBlock/converters";
 import { defaultValue as select } from "visual/utils/options/Select/converters";
+import { defaultValue as showOnDevice } from "visual/utils/options/ShowOnDevice/converters";
 import { defaultValue as sidebarTabs } from "visual/utils/options/SidebarTabs/converters";
 import { defaultValue as slider } from "visual/utils/options/Slider/converters";
 import { defaultValue as stateMode } from "visual/utils/options/StateMode/converters";
 import { defaultValue as _switch } from "visual/utils/options/Switch/converters";
+import { defaultValue as symbols } from "visual/utils/options/Symbols/converters";
 import { defaultValue as tabs } from "visual/utils/options/Tabs/converters";
 import { defaultValue as textShadow } from "visual/utils/options/TextShadow/converters";
 import { defaultValue as textarea } from "visual/utils/options/Textarea/converters";
 import { defaultValue as toggle } from "visual/utils/options/Toggle/converters";
 import { defaultValue as toggleButton } from "visual/utils/options/ToggleButton/converters";
-import { defaultValue as fontStyleEditor } from "visual/utils/options/FontStyleEditor/converters";
 import { defaultValue as transform } from "visual/utils/options/Transform/converters";
 import { defaultValue as typography } from "visual/utils/options/Typography/converters";
-import { defaultValue as popupCondition } from "visual/utils/options/PopupCondition/converters";
-import { defaultValue as showOnDevice } from "visual/utils/options/ShowOnDevice/converters";
-import { defaultValue as checkGroup } from "visual/utils/options/CheckGroup/converters";
-import { defaultValue as colorPaletteEditor } from "visual/utils/options/ColorPaletteEditor/converters";
-import { defaultValue as blockThumbnail } from "visual/utils/options/BlockThumbnail/converters";
-import { defaultValue as symbols } from "visual/utils/options/Symbols/converters";
-import { defaultValue as advancedSettings } from "visual/utils/options/AdvancedSettings/converters";
 
 type DefaultValues = {
   [K in OptionName]: OptionValue<K>;
@@ -124,7 +125,8 @@ export const defaultValues: DefaultValues = {
   checkGroup: checkGroup,
   showOnDevice: showOnDevice,
   advancedSettings: advancedSettings,
-  symbols
+  symbols,
+  addable
 };
 
 export function applyDefaultValueToOption<T>(values: T, type: OptionName): T {

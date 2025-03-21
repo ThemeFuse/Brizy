@@ -256,7 +256,7 @@ class Blocks extends Component<Props> {
   }
 
   renderEmpty(): ReactElement {
-    const { type, types, onImport } = this.props;
+    const { type, types, config, onImport } = this.props;
     const { search } = this.currentFilter;
     const activeType = this.getActiveType(types);
     const style = {
@@ -291,7 +291,7 @@ class Blocks extends Component<Props> {
               <img
                 key={activeType}
                 style={style}
-                src={assetUrl(gifImg)}
+                src={assetUrl(gifImg, config)}
                 className="brz-ed-popup-two-blocks__grid-clear-image-saved"
                 alt="Saved"
               />

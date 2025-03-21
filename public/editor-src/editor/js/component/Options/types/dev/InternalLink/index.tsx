@@ -10,7 +10,7 @@ import React, {
 import { Control } from "visual/component/Controls/InternalLink";
 import { Status } from "visual/component/Controls/InternalLink/types";
 import { ToastNotification } from "visual/component/Notifications";
-import { useConfig } from "visual/global/hooks";
+import { useConfig } from "visual/providers/ConfigProvider";
 import { read } from "visual/utils/reader/string";
 import { Literal } from "visual/utils/types/Literal";
 import { ActionTypes, State, reducer } from "./reducer";
@@ -30,7 +30,7 @@ export const InternalLink = ({
   const api = globalConfig.api;
 
   const { handler, choices } = useMemo(() => {
-    const { handler } = api?.collectionItems?.searchCollectionItems ?? {};
+    const { handler } = api?.collectionItems?.getCollectionItems ?? {};
 
     const choices = getCollectionChoices(api);
     return { handler, choices };
@@ -135,10 +135,7 @@ export const InternalLink = ({
           ToastNotification.error(errMsg);
         };
 
-        handler(res, rej, {
-          collectionId: postType,
-          search
-        });
+        handler(res, rej, { id: postType, search, populationPermalink: "1" });
       }
     }, 1000);
 

@@ -1,13 +1,12 @@
 import { RefCallback, useEffect, useReducer, useRef } from "react";
-import { Config } from "../models/Config";
-import { HtmlOutputType } from "../models/common";
+import { EditorConfig } from "../models/Config";
 import { useLoadEditor } from "../useLoadEditor";
 import { reducer } from "./reducer";
 import { ActionKind, BuilderGlobal, Instance, State } from "./types";
 
-export const useEditor = <T extends Element, H extends HtmlOutputType>(
+export const useEditor = <T extends Element>(
   token: string,
-  config: Config<H>
+  config: EditorConfig
 ): {
   state: State;
   instance: Instance | undefined;
@@ -19,7 +18,7 @@ export const useEditor = <T extends Element, H extends HtmlOutputType>(
   });
   const nodeRef = useRef<T | null>(null);
   const builderInstance = useRef<Instance>();
-  const builderGlobal = useRef<BuilderGlobal<H>>();
+  const builderGlobal = useRef<BuilderGlobal>();
 
   const setNodeRef: RefCallback<T | null> = (node) => {
     nodeRef.current = node;

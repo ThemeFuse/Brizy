@@ -7,7 +7,7 @@ import type { Value } from "./index";
 export function styleWrapper(data: DynamicStylesProps<Value>): OutputStyle {
   const { renderContext } = data.contexts;
   const styles: Styles = {
-    ".brz &&:hover": {
+    ".brz &&": {
       interval: [
         "cssStyleDisplayFlex",
         "cssStyleVisibleMode|||preview",
@@ -34,7 +34,7 @@ export function styleWrapper(data: DynamicStylesProps<Value>): OutputStyle {
 
   if (isEditor(renderContext)) {
     styles[
-      ".brz &&:hover > *:not(.brz-ed-border__inner):not(.brz-ed-border__button)"
+      ".brz && > *:not(.brz-ed-border__inner):not(.brz-ed-border__button)"
     ] = {
       interval: ["cssStyleVisibleMode|||editor"]
     };
@@ -45,7 +45,7 @@ export function styleWrapper(data: DynamicStylesProps<Value>): OutputStyle {
 
 export function styleAnimation(data: DynamicStylesProps<Value>): OutputStyle {
   const styles: Styles = {
-    ".brz &&:hover": {
+    ".brz &&": {
       standart: ["cssStyleAnimationAll"]
     }
   };

@@ -5,9 +5,9 @@ import { Value } from "./types/Value";
 function descriptionPosition(v: "besideImage" | "belowImage"): boolean {
   switch (v) {
     case "besideImage":
-      return false;
-    case "belowImage":
       return true;
+    case "belowImage":
+      return false;
   }
 }
 

@@ -7,6 +7,7 @@ export function cssStyleElementCarouselColorDots({
   v,
   device,
   store,
+  getConfig,
   state
 }: CSSValue): string {
   return cssStyleColor({
@@ -14,6 +15,7 @@ export function cssStyleElementCarouselColorDots({
     device,
     store,
     state,
+    getConfig,
     prefix: "sliderDotsColor"
   });
 }
@@ -22,6 +24,7 @@ export function cssStyleElementCarouselColorArrow({
   v,
   device,
   store,
+  getConfig,
   state
 }: CSSValue): string {
   return cssStyleColor({
@@ -29,6 +32,7 @@ export function cssStyleElementCarouselColorArrow({
     device,
     store,
     state,
+    getConfig,
     prefix: "sliderArrowsColor"
   });
 }

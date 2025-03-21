@@ -1,7 +1,4 @@
-import {
-  WithRenderContext,
-  isView
-} from "visual/providers/RenderProvider";
+import { WithRenderContext, isView } from "visual/providers/RenderProvider";
 import {
   cssStyleSizeHeight,
   cssStyleSizeMaxWidthPrefixEmpty,
@@ -37,6 +34,7 @@ export function cssStyleSizeProgressBarMaxWidthPercent({
   device,
   state,
   store,
+  getConfig,
   renderContext
 }: CSSValue & WithRenderContext): string {
   if (isView(renderContext)) {
@@ -48,6 +46,7 @@ export function cssStyleSizeProgressBarMaxWidthPercent({
     v,
     device,
     state,
+    getConfig,
     store,
     prefix: "percentage"
   });
@@ -56,6 +55,7 @@ export function cssStyleSizeProgressBarMaxWidthPercent({
 export function cssStyleSizeProgressBarStyle1Height({
   v,
   device,
+  getConfig,
   state,
   store
 }: CSSValue): string {
@@ -63,6 +63,7 @@ export function cssStyleSizeProgressBarStyle1Height({
     v,
     device,
     state,
+    getConfig,
     store,
     prefix: "style1"
   });
@@ -72,6 +73,7 @@ export function cssStyleSizeProgressBarStyle2Height({
   v,
   device,
   state,
+  getConfig,
   store
 }: CSSValue): string {
   return cssStyleSizeHeight({
@@ -79,6 +81,7 @@ export function cssStyleSizeProgressBarStyle2Height({
     device,
     state,
     store,
+    getConfig,
     prefix: "style2"
   });
 }

@@ -1,4 +1,5 @@
 import React from "react";
+import { setBgPopulationVars } from "visual/component/Background/utils";
 import { useRender } from "visual/providers/RenderProvider";
 import {
   deviceStateValueByKey,
@@ -18,6 +19,13 @@ const toNormal =
 const getMediaProps = (v) => {
   const normalKeyValue = toNormal(v);
   let opacityKeyValue;
+
+  if (v.bgColorType === "none") {
+    return {
+      media: false,
+      opacity: false
+    };
+  }
 
   if (v.bgColorType === "solid") {
     opacityKeyValue = makeKeyByStateDevice(v, "bgColorOpacity").reduce(
@@ -79,7 +87,6 @@ const BackgroundContainer = ({ value, meta, children }) => {
   const { renderType } = useRender();
 
   const { media, opacity } = getMediaProps(value);
-  const bg = value.bg || value.hoverBg;
 
   let props = {
     opacity,
@@ -90,12 +97,7 @@ const BackgroundContainer = ({ value, meta, children }) => {
     border: getBorder(value),
     shapeTop: validateKeyByProperty(value, "shapeTopType", "none"),
     shapeBottom: validateKeyByProperty(value, "shapeBottomType", "none"),
-    ...(media &&
-      bg && {
-        style: {
-          "--brz-background-image": `url('${bg}')`
-        }
-      })
+    ...(media && { style: setBgPopulationVars(value) })
   };
   const currentMedia = media && getMedia(value);
 

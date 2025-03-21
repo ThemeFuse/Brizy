@@ -5,7 +5,6 @@ import {
   blocksOrderRawSelector,
   blocksOrderSelector,
   changedGBIdsSelector,
-  configSelector,
   globalBlocksAssembledSelector,
   globalBlocksInPageSelector,
   globalBlocksPositionsSelector
@@ -69,11 +68,15 @@ export const globalBlocks: RGlobalBlocks = (state = {}, action, allState) => {
 
     case "ADD_GLOBAL_BLOCK": {
       const { _id } = action.payload.block.value;
-      const config = configSelector(allState);
 
       return {
         ...state,
-        [_id]: changeRule(state[_id], true, allState?.page, config)
+        [_id]: changeRule(
+          state[_id],
+          true,
+          allState?.page,
+          action.payload.config
+        )
       };
     }
 
@@ -109,10 +112,9 @@ export const globalBlocks: RGlobalBlocks = (state = {}, action, allState) => {
     // last slide - then instead of REMOVE_BLOCK action we get
     // UPDATE_GLOBAL_BLOCK - with payload.data.value = null
     case "UPDATE_GLOBAL_BLOCK": {
-      const { uid, data, title = "", tags = "" } = action.payload;
+      const { uid, data, title = "", tags = "", config } = action.payload;
 
       if (data.value === null && !isPopup(state[uid].data)) {
-        const config = configSelector(allState);
         const globalBlock = changeRule(
           state[uid],
           false,
@@ -134,13 +136,12 @@ export const globalBlocks: RGlobalBlocks = (state = {}, action, allState) => {
     }
 
     case ActionTypes.REMOVE_BLOCK: {
-      const { index } = action.payload;
+      const { index, config } = action.payload;
       const blocks = blocksOrderSelector(allState);
       const globalBlockIds = Object.keys(state);
       const _id = blocks[index];
 
       if (globalBlockIds.includes(blocks[index]) && !isPopup(state[_id].data)) {
-        const config = configSelector(allState);
         const globalBlock = changeRule(
           state[_id],
           false,
@@ -157,8 +158,7 @@ export const globalBlocks: RGlobalBlocks = (state = {}, action, allState) => {
     }
 
     case "MAKE_GLOBAL_BLOCK_TO_BLOCK": {
-      const { fromBlockId } = action.payload;
-      const config = configSelector(allState);
+      const { fromBlockId, config } = action.payload;
 
       const globalBlock = changeRule(
         state[fromBlockId],
@@ -174,7 +174,7 @@ export const globalBlocks: RGlobalBlocks = (state = {}, action, allState) => {
     }
 
     case "REORDER_BLOCKS": {
-      const { oldIndex, newIndex } = action.payload;
+      const { oldIndex, newIndex, config } = action.payload;
       const pageBlocksIds: string[] = blocksOrderSelector(allState);
       const globalBlockIds: string[] = Object.keys(state);
 
@@ -203,8 +203,6 @@ export const globalBlocks: RGlobalBlocks = (state = {}, action, allState) => {
           oldPositionAlignment === "center" &&
           (newPositionAlignment === "top" || newPositionAlignment === "bottom")
         ) {
-          const config = configSelector(allState);
-
           const allowedGBIds: string[] = getAllowedGBIds({
             pageBlocksIds: blocksOrderRawSelector(allState),
             globalBlocks: state,
@@ -232,8 +230,8 @@ export const globalBlocks: RGlobalBlocks = (state = {}, action, allState) => {
     }
 
     case ActionTypes.REMOVE_BLOCKS: {
+      const { config } = action.payload;
       const pageBlocksIds = blocksOrderSelector(allState);
-      const config = configSelector(allState);
       const globalBlockIds = Object.keys(state);
       const gbIds = intersection(pageBlocksIds, globalBlockIds);
 
@@ -246,9 +244,8 @@ export const globalBlocks: RGlobalBlocks = (state = {}, action, allState) => {
       });
     }
     case "UPDATE_BLOCKS": {
-      const { blocks } = action.payload;
+      const { blocks, config } = action.payload;
       const prevIds = blocksOrderSelector(allState);
-      const config = configSelector(allState);
       const nextIds = blocks.map((block) => block.value._id);
 
       const gbIds = difference(prevIds, nextIds);
@@ -280,7 +277,10 @@ export const globalBlocks: RGlobalBlocks = (state = {}, action, allState) => {
       const allGlobalBlocks: GlobalBlocks =
         globalBlocksAssembledSelector(allState);
 
-      const globalBlocksInPage = globalBlocksInPageSelector(allState);
+      const globalBlocksInPage = globalBlocksInPageSelector(
+        allState,
+        action.payload.config
+      );
 
       const changedGlobalBlocksIds = changedGBIdsSelector(allState);
       const changedGBData = changedGlobalBlocksIds.reduce(
@@ -290,7 +290,10 @@ export const globalBlocks: RGlobalBlocks = (state = {}, action, allState) => {
         {}
       );
 
-      const positions = globalBlocksPositionsSelector(allState);
+      const positions = globalBlocksPositionsSelector(
+        allState,
+        action.payload.config
+      );
 
       return Object.entries(allGlobalBlocks).reduce((acc, [key, block]) => {
         acc[key] = produce(block, (draft) => {

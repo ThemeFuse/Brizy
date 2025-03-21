@@ -2,7 +2,7 @@
 @import "../../variables";
 
 .brz-ed-control__number-unit {
-  margin-left: $space__between__controls;
+  margin-inline-start: $space__between__controls;
   flex: 0;
   display: flex;
   justify-content: space-between;
@@ -29,7 +29,7 @@
 
   &__unit {
     flex: none;
-    margin-left: 5px;
+    margin-inline-start: 5px;
     color: $options__label-color;
     cursor: pointer;
 
@@ -40,7 +40,7 @@
 
   .brz-ed-control__multiSelect.brz-ed-control__multiSelect--size-medium.brz-slider__select.brz-ed-control__select-single {
     min-width: 25px;
-    margin-left: 3px;
+    margin-inline-start: 3px;
   }
   .brz-ed-control__multiSelect--value-container.brz-ed-control__multiSelect--value-container {
     padding: 0;

@@ -1,4 +1,5 @@
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
+import { getEnabledLinkOptions } from "visual/global/Config/types/configs/featuresValue";
 import { isPopup } from "visual/providers/EditorModeProvider";
 import { getColorToolbar } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
@@ -41,6 +42,14 @@ export function getItems({ v, device, component, context, editorMode }) {
     options: component.context.dynamicContent.config,
     type: DCTypes.link
   });
+
+  const {
+    internalLink,
+    linkPopup: linkPopupEnabled,
+    linkAnchor,
+    linkExternal
+  } = getEnabledLinkOptions(config);
+
   return [
     {
       id: "popoverTypography",
@@ -176,6 +185,7 @@ export function getItems({ v, device, component, context, editorMode }) {
             {
               id: "page",
               label: t("Page"),
+              disabled: !internalLink,
               options: [
                 {
                   id: "linkPage",
@@ -192,6 +202,7 @@ export function getItems({ v, device, component, context, editorMode }) {
             {
               id: "external",
               label: t("URL"),
+              disabled: !linkExternal,
               options: [
                 {
                   id: "link",
@@ -222,6 +233,7 @@ export function getItems({ v, device, component, context, editorMode }) {
             {
               id: "anchor",
               label: t("Block"),
+              disabled: !linkAnchor,
               options: [
                 toolbarLinkAnchor({
                   v,
@@ -234,6 +246,7 @@ export function getItems({ v, device, component, context, editorMode }) {
             {
               id: "popup",
               label: t("Popup"),
+              disabled: !linkPopupEnabled,
               options: [
                 {
                   id: "linkPopup",

@@ -4,7 +4,8 @@ import { Popover as Control } from "visual/component/Controls/Popover";
 import { ToolbarItem } from "visual/component/Controls/Popover/types";
 import Options from "visual/component/Options";
 import { targetExceptions } from "visual/component/Options/constants";
-import { useConfig, usePro } from "visual/global/hooks";
+import { usePro } from "visual/global/hooks";
+import { useConfig } from "visual/providers/ConfigProvider";
 import { FCP } from "visual/utils/react/types";
 import { ToolbarItems } from "./ToolbarItem";
 import { Props } from "./types";
@@ -23,7 +24,12 @@ export const Popover: FCP<Props, ReactElement | null> = ({
     [toolbar]
   );
   const clickOutsideExceptions = useMemo(
-    () => [".brz-ed-fixed", ...targetExceptions, ...toolbarExceptions],
+    () => [
+      ".brz-ed-fixed",
+      ".brz-ed-sidebar__addable",
+      ...targetExceptions,
+      ...toolbarExceptions
+    ],
     [toolbarExceptions]
   );
 

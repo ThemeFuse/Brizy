@@ -5,6 +5,7 @@ import {
 import { GetItems } from "visual/editorComponents/EditorComponent/types";
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
+import { getEnabledLinkOptions } from "visual/global/Config/types/configs/featuresValue";
 import { isPopup, isStory } from "visual/providers/EditorModeProvider";
 import { getColorToolbar } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
@@ -47,6 +48,13 @@ export const getItems: GetItems<Value> = ({
   const isLoadTrigger = dvv("trigger") === TriggerType.OnLoad;
 
   const _isAutoplay = dvv("autoplay") === "off";
+
+  const {
+    internalLink,
+    linkPopup: linkPopupEnabled,
+    linkAnchor,
+    linkExternal
+  } = getEnabledLinkOptions(component.getGlobalConfig());
 
   return [
     {
@@ -219,6 +227,7 @@ export const getItems: GetItems<Value> = ({
             {
               id: "page",
               label: t("Page"),
+              disabled: !internalLink,
               options: [
                 {
                   id: "linkPage",
@@ -235,6 +244,7 @@ export const getItems: GetItems<Value> = ({
             {
               id: "external",
               label: t("URL"),
+              disabled: !linkExternal,
               options: [
                 {
                   id: "link",
@@ -262,6 +272,7 @@ export const getItems: GetItems<Value> = ({
             {
               id: "anchor",
               label: t("Block"),
+              disabled: !linkAnchor,
               options: [
                 // @ts-expect-error: old
                 toolbarLinkAnchor({ v, disabled: _isPopup || _isStory })
@@ -270,6 +281,7 @@ export const getItems: GetItems<Value> = ({
             {
               id: "popup",
               label: t("Popup"),
+              disabled: !linkPopupEnabled,
               options: [
                 {
                   id: "linkPopup",

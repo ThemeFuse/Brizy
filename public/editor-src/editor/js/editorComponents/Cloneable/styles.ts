@@ -1,17 +1,14 @@
 import { ElementModel } from "visual/component/Elements/Types";
-import { isEditor } from "visual/providers/RenderProvider";
+import { isEditor, isView } from "visual/providers/RenderProvider";
 import { DynamicStylesProps } from "visual/types";
 import { renderStyles } from "visual/utils/cssStyle";
-import { OutputStyle } from "visual/utils/cssStyle/types";
+import { OutputStyle, Styles } from "visual/utils/cssStyle/types";
 
 export function style(data: DynamicStylesProps<ElementModel>): OutputStyle {
-  const styles: {
-    [k: string]: {
-      interval?: string[];
-      standart?: string[];
-    };
-  } = {
-    ".brz &&:hover": {
+  const { renderContext } = data.contexts;
+
+  const styles: Styles = {
+    ".brz &&": {
       interval: [
         "cssStyleDisplayFlex",
         "cssStyleVisibleMode|||preview",
@@ -23,6 +20,15 @@ export function style(data: DynamicStylesProps<ElementModel>): OutputStyle {
       standart: ["cssStyleZIndex", "cssStylePositionRelative", "cssStyleMargin"]
     }
   };
+
+  if (isView(renderContext)) {
+    styles[".brz &&"].standart?.push(
+      "cssStyleFlexHorizontalAlign",
+      "cssStylePaddingFourFields",
+      "cssStyleElementCloneableGap"
+    );
+  }
+
   return renderStyles({ ...data, styles });
 }
 
@@ -30,13 +36,9 @@ export function styleContainer(
   data: DynamicStylesProps<ElementModel>
 ): OutputStyle {
   const { renderContext } = data.contexts;
-  const styles: {
-    [k: string]: {
-      interval?: string[];
-      standart?: string[];
-    };
-  } = {
-    ".brz &&:hover": {
+
+  const styles: Styles = {
+    ".brz &&": {
       standart: [
         "cssStyleFlexHorizontalAlign",
         "cssStylePaddingFourFields",
@@ -46,7 +48,7 @@ export function styleContainer(
   };
 
   if (isEditor(renderContext)) {
-    styles[".brz &&:hover"].interval = ["cssStyleVisibleMode|||editor"];
+    styles[".brz &&"].interval = ["cssStyleVisibleMode|||editor"];
   }
 
   return renderStyles({ ...data, styles });
@@ -55,13 +57,8 @@ export function styleContainer(
 export function styleAnimation(
   data: DynamicStylesProps<ElementModel>
 ): OutputStyle {
-  const styles: {
-    [k: string]: {
-      interval?: string[];
-      standart?: string[];
-    };
-  } = {
-    ".brz &&:hover": {
+  const styles: Styles = {
+    ".brz &&": {
       standart: ["cssStyleAnimationAll"]
     }
   };

@@ -3,11 +3,12 @@ export interface RedirectConfig {
   fromContent: Array<{ route: ContentRoutes; selector: string }>;
 }
 
-export type FooterRoutes = "/my-account" | "/favorites" | "/cart";
+export type FooterRoutes = "/account" | "/account/favorites" | "/cart";
 
-export type ContentRoutes = "/cart" | "/thank-you" | "/favorites" | "/";
+export type ContentRoutes = "/cart" | "/thank-you" | "/account/favorites" | "/";
 
 export interface EcwidConfig {
+  baseUrl?: string;
   // Products
   product_list_show_frame?: boolean;
   product_list_image_aspect_ratio?: string;
@@ -60,7 +61,6 @@ export interface EcwidConfig {
   onPageLoaded?: VoidFunction;
 
   redirect?: RedirectConfig;
-  restoreUrl?: boolean;
 
   // Cart & Checkout
   shopping_cart_show_qty_inputs?: boolean;

@@ -6,7 +6,7 @@ const parallaxInitClassName = "brz-bg-image-parallax--init";
 
 // Parallax
 (function ($, window, document) {
-  var pluginName = "parallax";
+  var pluginName = "brzParallax";
   var dataKey = "plugin_" + pluginName;
 
   function Plugin(elem, settings) {

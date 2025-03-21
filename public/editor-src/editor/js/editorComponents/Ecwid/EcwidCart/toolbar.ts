@@ -37,6 +37,17 @@ export const getItems: GetItems<Value> = ({ v, device }) => {
           }
         },
         {
+          id: "prefilledCart",
+          label: t("Pre-filled cart"),
+          type: "switch",
+          devices: "desktop",
+          helper: {
+            content: t(
+              "This option does not affect your cart in preview. This option is only required to allow you to customize the cart element in different states."
+            )
+          }
+        },
+        {
           id: "collapseDesktop",
           label: t("Collapse"),
           type: "switch",

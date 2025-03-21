@@ -1,5 +1,5 @@
 import cn from "classnames";
-import React, { HTMLAttributes, forwardRef } from "react";
+import React, { HTMLAttributes, ReactElement, forwardRef } from "react";
 import {
   makeEndPlaceholder,
   makeStartPlaceholder
@@ -10,6 +10,7 @@ interface Props {
   id?: string;
   wrapInPlaceholder?: boolean;
   attr?: HTMLAttributes<HTMLElement>;
+  children: ReactElement;
 }
 
 export const NavContainer = forwardRef<HTMLElement, Props>((props, ref) => {

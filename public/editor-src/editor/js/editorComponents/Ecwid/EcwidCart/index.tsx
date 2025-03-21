@@ -110,13 +110,17 @@ export class EcwidCart extends EditorComponent<Value> {
     ) {
       const v = this.getValue();
       const cnf = valueToEciwdConfig(v);
-      const { step } = v;
+      const { step, prefilledCart } = v;
 
       this.ecwid = EcwidService.init(config.modules.shop.storeId, {
         ...cnf,
         prefetchScripts: true
       });
-      this.ecwid.cart(this.containerRef.current, step);
+
+      this.ecwid.cart(this.containerRef.current, step, {
+        onPageLoad: () => this.handleCartContent(prefilledCart)
+      });
+
       this.initialStep = step;
     }
   }
@@ -125,8 +129,11 @@ export class EcwidCart extends EditorComponent<Value> {
     const v = this.getValue();
     const newConfig = valueToEciwdConfig(v);
     const oldConfig = this.ecwid?.getConfig();
-    const { step: prevStep = this.initialStep } = prevProps.dbValue;
-    const { step } = v;
+    const {
+      step: prevStep = this.initialStep,
+      prefilledCart: prevPrefilledCart
+    } = prevProps.dbValue;
+    const { step, prefilledCart } = v;
 
     if (prevStep !== step && this.containerRef.current) {
       this?.ecwid?.cart(this.containerRef.current, step, {
@@ -136,6 +143,27 @@ export class EcwidCart extends EditorComponent<Value> {
 
     if (!oldConfig || !eq(oldConfig, newConfig)) {
       this.ecwid?.updateConfig(newConfig);
+    }
+
+    if (prevPrefilledCart !== prefilledCart) {
+      this.handleCartContent(prefilledCart);
+    }
+  }
+
+  handleCartContent(prefilledCart: "on" | "off") {
+    const config = this.getGlobalConfig();
+
+    const defaultProductId = config?.modules?.shop?.defaultProductId;
+
+    if (defaultProductId) {
+      switch (prefilledCart) {
+        case "on":
+          this.ecwid?.populateCart(defaultProductId);
+          break;
+        case "off":
+          this.ecwid?.clearCart();
+          break;
+      }
     }
   }
 

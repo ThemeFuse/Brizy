@@ -65,7 +65,15 @@ const needRenderMedia = (data: NeedMedia): boolean =>
     "boxShadow",
     "opacity",
     "slideshow"
-  ].some((k: string) => data[k]);
+  ].some((k: string) => {
+    const v = data[k];
+
+    if (k === "boxShadow" && v) {
+      return v !== "none";
+    }
+
+    return v;
+  });
 
 class Background extends Component<Props> {
   isUnMounted = false;

@@ -49,9 +49,8 @@ export function style(data: DynamicStylesProps<ElementModel>) {
     },
 
     //style2
-    ".brz &&:hover > .brz-switcher__nav2": {
+    ".brz && > .brz-switcher__nav2": {
       standart: [
-        "cssStyleColor",
         "cssStyleTypography3FontFamily",
         "cssStyleTypography3FontSize",
         "cssStyleTypography3LineHeight",
@@ -60,25 +59,28 @@ export function style(data: DynamicStylesProps<ElementModel>) {
         "cssStyleElementSwitcherNavSpacing"
       ]
     },
-    ".brz &&:hover > .brz-switcher__nav2 .brz-switcher__nav2--control": {
+    ".brz &&:hover > .brz-switcher__nav2": {
+      standart: ["cssStyleColor"]
+    },
+    ".brz && > .brz-switcher__nav2 .brz-switcher__nav2--control": {
       standart: [
         "cssStyleTypography3FontFamily",
         "cssStyleTypography3FontSize",
         "cssStyleTypography3LineHeight",
         "cssStyleTypography3FontWeight",
         "cssStyleTypography3LetterSpacing",
-        "cssStyleBgColor",
-        "cssStyleBorder",
         "cssStyleBorderRadius",
-        "cssStyleBoxShadow",
         "cssStyleElementSwitcherNav2Height",
         "cssStyleElementSwitcherNav2Width"
       ]
     },
-    ".brz &&:hover .brz-switcher__nav2--button": {
+    ".brz &&:hover > .brz-switcher__nav2 .brz-switcher__nav2--control": {
+      standart: ["cssStyleBgColor", "cssStyleBorder", "cssStyleBoxShadow"]
+    },
+    ".brz && .brz-switcher__nav2--button": {
       standart: ["cssStyleElementSwitcherBtnIconPosition"]
     },
-    ".brz &&:hover .brz-switcher__nav2--button .brz-icon-svg": {
+    ".brz && .brz-switcher__nav2--button .brz-icon-svg": {
       standart: [
         "cssStyleElementSwitcherBtnSpacing",
         "cssStyleSizeFontSizeIcon"
@@ -87,18 +89,21 @@ export function style(data: DynamicStylesProps<ElementModel>) {
     ".brz &&:hover .brz-switcher__nav2--button .brz-icon-svg-custom": {
       standart: ["cssStyleCustomIconColor"]
     },
-    ".brz &&:hover > .brz-switcher__nav2 .brz-switcher__nav2--control:before": {
-      standart: ["cssStyleBorderRadius", "cssStyleElementSwitcherNavBeforeBg"]
+    ".brz && > .brz-switcher__nav2 .brz-switcher__nav2--control:before": {
+      standart: ["cssStyleBorderRadius"]
     },
-    ".brz &&:hover > .brz-switcher__nav2 .brz-switcher__nav2__item--active .brz-switcher__nav2__item":
+    ".brz &&:hover > .brz-switcher__nav2 .brz-switcher__nav2--control:before": {
+      standart: ["cssStyleElementSwitcherNavBeforeBg"]
+    },
+    ".brz && > .brz-switcher__nav2 .brz-switcher__nav2__item--active .brz-switcher__nav2__item":
       {
         standart: ["cssStyleElementSwitcherActiveTextColor"]
       },
-    ".brz &&:hover > .brz-switcher__nav2 .brz-switcher__nav2__item--active .brz-icon-svg":
+    ".brz && > .brz-switcher__nav2 .brz-switcher__nav2__item--active .brz-icon-svg":
       {
         standart: ["cssStyleElementSwitcherActiveTextColor"]
       },
-    ".brz &&:hover > .brz-switcher__nav2 .brz-switcher__nav2__item--active .brz-icon-svg-custom":
+    ".brz && > .brz-switcher__nav2 .brz-switcher__nav2__item--active .brz-icon-svg-custom":
       {
         standart: ["cssStyleElementSwitcherActiveCustomIconColor"]
       }
@@ -109,7 +114,7 @@ export function style(data: DynamicStylesProps<ElementModel>) {
 
 export function styleAnimation(data: DynamicStylesProps<ElementModel>) {
   const styles = {
-    ".brz &&:hover": {
+    ".brz &&": {
       standart: ["cssStyleAnimationAll"]
     }
   };

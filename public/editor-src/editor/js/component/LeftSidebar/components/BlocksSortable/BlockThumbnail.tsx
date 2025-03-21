@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import EditorIcon from "visual/component/EditorIcon";
+import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { Block } from "visual/types/Block";
 import { blockThumbnailData } from "visual/utils/blocks";
 import { t } from "visual/utils/i18n";
@@ -9,6 +10,7 @@ import { MValue } from "visual/utils/value";
 interface Props {
   blockData: Block;
   screenshot: string;
+  config: ConfigCommon;
 }
 
 interface State {
@@ -55,9 +57,13 @@ export default class BlockThumbnail extends Component<Props, State> {
 
   preloadThumbnail(blockData: Block) {
     let canceled = false;
-    const { screenshot } = this.props;
+    const { screenshot, config } = this.props;
 
-    const { url } = blockThumbnailData(blockData, screenshot);
+    const { url } = blockThumbnailData({
+      block: blockData,
+      screenshot,
+      config
+    });
 
     preloadImage(url).then(() => {
       if (this.mounted && !canceled) {
@@ -74,12 +80,12 @@ export default class BlockThumbnail extends Component<Props, State> {
 
   render() {
     const { blockData, imageFetched, showSpinner } = this.state;
-    const { screenshot } = this.props;
+    const { screenshot, config } = this.props;
     const {
       url,
       width: thumbnailWidth,
       height: thumbnailHeight
-    } = blockThumbnailData(blockData, screenshot);
+    } = blockThumbnailData({ block: blockData, screenshot, config });
 
     const resizedThumbnailWidth = 175; // this is from css. 185px - (10px border)
     const resizedThumbnailHeight =

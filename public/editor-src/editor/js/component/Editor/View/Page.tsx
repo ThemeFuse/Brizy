@@ -1,8 +1,8 @@
-import React, { useMemo } from "react";
+import React, { useCallback, useMemo } from "react";
 import { useSelector, useStore } from "react-redux";
 import { RootContainer } from "visual/component/RootContainer";
 import EditorGlobal from "visual/global/Editor";
-import { useConfig } from "visual/global/hooks";
+import { useConfig } from "visual/providers/ConfigProvider";
 import { EditorComponentProvider } from "visual/providers/EditorComponentProvider";
 import { useEditorMode } from "visual/providers/EditorModeProvider";
 import { pageBlocksRawSelector } from "visual/redux/selectors";
@@ -21,6 +21,8 @@ export const Page = (): JSX.Element => {
   const pageId = getPageId(config);
   const dbValue = useMemo(() => ({ items: pageBlocks }), [pageBlocks]);
 
+  const getGlobalConfig = useCallback(() => config, [config]);
+
   if (!BasePage) {
     return <div>{t("Missing Page Components")}</div>;
   }
@@ -35,6 +37,7 @@ export const Page = (): JSX.Element => {
           reduxStore={store}
           renderContext="view"
           editorMode={mode}
+          getGlobalConfig={getGlobalConfig}
         />
       </EditorComponentProvider>
     </RootContainer>

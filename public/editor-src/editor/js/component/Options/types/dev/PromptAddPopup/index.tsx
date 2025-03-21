@@ -8,7 +8,7 @@ import { PromptBlockTemplate } from "visual/component/Prompts/PromptBlocks/types
 import { hideToolbar } from "visual/component/Toolbar";
 import { SectionPopup2Instances } from "visual/editorComponents/SectionPopup2/instances";
 import { SectionPopupInstances } from "visual/editorComponents/SectionPopup/instances";
-import { useConfig } from "visual/global/hooks";
+import { useConfig } from "visual/providers/ConfigProvider";
 import {
   FontsPayload,
   addFonts,
@@ -66,7 +66,8 @@ export const PromptAddPopup: FCC<Props> = ({
             updateGlobalBlock({
               uid: _id,
               data: deepMerge(globalBlock, { value: { popupId } }),
-              meta: { is_autosave: 0 }
+              meta: { is_autosave: 0 },
+              config: globalConfig
             })
           );
         }
@@ -89,7 +90,7 @@ export const PromptAddPopup: FCC<Props> = ({
         popups: newPopups
       });
     },
-    [globalBlocks, popups, onChange, dispatch]
+    [globalConfig, globalBlocks, popups, onChange, dispatch]
   );
 
   const handleAddSavedBlock = useCallback(

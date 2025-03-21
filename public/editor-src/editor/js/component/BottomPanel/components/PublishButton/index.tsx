@@ -1,5 +1,5 @@
 import { match } from "fp-utilities";
-import React, { Component, ReactElement } from "react";
+import React, { Component, JSX, ReactElement } from "react";
 import { ConnectedProps, connect } from "react-redux";
 import HotKeys from "visual/component/HotKeys";
 import { ToastNotification } from "visual/component/Notifications";
@@ -9,7 +9,6 @@ import {
   getPromptPageArticleHeadTitle,
   getPromptPageRulesHeadTitle
 } from "visual/component/Prompts/utils";
-import { Config } from "visual/global/Config/InitConfig";
 import {
   Shopify,
   isCMS,
@@ -20,6 +19,7 @@ import {
 import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { isWp } from "visual/global/Config/types/configs/WP";
 import { getShopifyTemplate } from "visual/global/Config/types/shopify/ShopifyTemplate";
+import { useConfig } from "visual/providers/ConfigProvider";
 import {
   EditorMode,
   EditorModeContext,
@@ -33,7 +33,6 @@ import {
   updatePageStatus
 } from "visual/redux/actions2";
 import {
-  configIdSelector,
   extraFontStylesSelector,
   pageDataNoRefsSelector2,
   pageSelector,
@@ -54,7 +53,7 @@ import {
   shopifyUnpublishPage
 } from "visual/utils/api";
 import { SelectedItem } from "visual/utils/api/types";
-import { SYNC_ERROR } from "visual/utils/errors";
+import { ErrorCodes } from "visual/utils/errors";
 import { t } from "visual/utils/i18n";
 import { isNumber } from "visual/utils/math";
 import { browserSupports, makeNodeScreenshot } from "visual/utils/screenshots";
@@ -82,19 +81,18 @@ const mapState = (
   state: ReduxState
 ): {
   page: Page;
-  pageData: Page["data"];
+  getPageData: (config: ConfigCommon) => Page["data"];
   extraFontStyles: ReduxState["extraFontStyles"];
   storeWasChanged: StoreChanged;
   currentStyle: Style;
-  configId: ReduxState["configId"];
 } => {
   return {
     page: pageSelector(state),
-    pageData: pageDataNoRefsSelector2(state),
+    getPageData: (config: ConfigCommon) =>
+      pageDataNoRefsSelector2(state, config),
     extraFontStyles: extraFontStylesSelector(state),
     storeWasChanged: storeWasChangedSelector(state),
-    currentStyle: state.currentStyle,
-    configId: configIdSelector(state)
+    currentStyle: state.currentStyle
   };
 };
 const mapDispatch = {
@@ -105,16 +103,18 @@ const mapDispatch = {
 };
 const PublishConnector = connect(mapState, mapDispatch);
 
-type Props = ConnectedProps<typeof PublishConnector>;
+interface Props extends ConnectedProps<typeof PublishConnector> {
+  config: ConfigCommon;
+}
 
-type State = {
+interface State {
   updateLoading: boolean;
   layoutLoading: boolean;
   draftLoading: boolean;
   [key: string]: boolean;
-};
+}
 
-class PublishButton extends Component<Props, State> {
+class _PublishButton extends Component<Props, State> {
   state = {
     updateLoading: false,
     layoutLoading: false,
@@ -346,7 +346,8 @@ class PublishButton extends Component<Props, State> {
     return (this[loading] = this.props
       .updatePageStatus({
         status: "publish",
-        editorMode: editorMode
+        editorMode: editorMode,
+        config: this.props.config
       })
       .then(() => {
         this.props.fetchPageSuccess();
@@ -379,7 +380,8 @@ class PublishButton extends Component<Props, State> {
     return (this[loading] = this.props
       .updatePageStatus({
         status: pageStatus,
-        editorMode: editorMode
+        editorMode: editorMode,
+        config: this.props.config
       })
       .then(() => {
         this.props.fetchPageSuccess();
@@ -397,8 +399,10 @@ class PublishButton extends Component<Props, State> {
   }
 
   handleSavePage = async (): Promise<void> => {
-    const { pageData, extraFontStyles, currentStyle } = this.props;
+    const { getPageData, extraFontStyles, currentStyle } = this.props;
     const config = this.getConfig();
+
+    const pageData = getPageData(config);
 
     if (this.state.layoutLoading || pageData.items.length === 0) {
       return;
@@ -473,7 +477,9 @@ class PublishButton extends Component<Props, State> {
   };
 
   handleClearPage = (): void => {
-    this.props.removeBlocks();
+    this.props.removeBlocks({
+      config: this.props.config
+    });
   };
 
   getSaveAndPublishOption(editorMode: EditorMode) {
@@ -502,7 +508,7 @@ class PublishButton extends Component<Props, State> {
 
                 if (!canSync) {
                   updateError({
-                    code: SYNC_ERROR,
+                    code: ErrorCodes.SYNC_ERROR,
                     data: syncErrorData
                   });
                   break;
@@ -535,7 +541,10 @@ class PublishButton extends Component<Props, State> {
                   await this.handlePublish("saveAndPublishLoading", editorMode);
 
                   if (!canSync) {
-                    updateError({ code: SYNC_ERROR, data: syncErrorData });
+                    updateError({
+                      code: ErrorCodes.SYNC_ERROR,
+                      data: syncErrorData
+                    });
                     break;
                   }
 
@@ -568,7 +577,10 @@ class PublishButton extends Component<Props, State> {
                   await this.handlePublish("saveAndPublishLoading", editorMode);
 
                   if (!canSync) {
-                    updateError({ code: SYNC_ERROR, data: syncErrorData });
+                    updateError({
+                      code: ErrorCodes.SYNC_ERROR,
+                      data: syncErrorData
+                    });
                     break;
                   }
 
@@ -731,7 +743,7 @@ class PublishButton extends Component<Props, State> {
   }
 
   getConfig() {
-    return Config.get(this.props.configId) as Shopify;
+    return this.props.config as Shopify;
   }
 
   getValuesByConfig() {
@@ -746,5 +758,11 @@ class PublishButton extends Component<Props, State> {
     };
   }
 }
+
+const PublishButton = (props: Omit<Props, "config">): JSX.Element => {
+  const config = useConfig();
+
+  return <_PublishButton {...props} config={config} />;
+};
 
 export default PublishConnector(PublishButton);

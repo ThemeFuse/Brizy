@@ -1,3 +1,4 @@
+import { Literal } from "../common";
 import { FontFamilyType } from "./Fonts";
 
 export type PaletteType =
@@ -12,17 +13,7 @@ export type PaletteType =
 
 export type TextScripts = "" | "super" | "sub";
 
-export interface FontTransform {
-  bold: boolean;
-  italic: boolean;
-  underline: boolean;
-  strike: boolean;
-  uppercase: boolean;
-  lowercase: boolean;
-  script?: TextScripts;
-}
-
-export interface FontStyle extends FontTransform {
+export interface FontStyle {
   id: string;
   title: string;
   fontFamily: string;
@@ -54,6 +45,15 @@ export interface FontStyle extends FontTransform {
   fontSizeSuffix?: string;
   tabletFontSizeSuffix?: string;
   mobileFontSizeSuffix?: string;
+
+  bold?: boolean;
+  italic?: boolean;
+  underline?: boolean;
+  strike?: boolean;
+  uppercase?: boolean;
+  lowercase?: boolean;
+  script?: TextScripts;
+  [k: string]: Literal | boolean | undefined;
 }
 
 export interface Palette {

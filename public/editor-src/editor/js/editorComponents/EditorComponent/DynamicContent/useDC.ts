@@ -1,5 +1,5 @@
 import { useContext, useEffect, useMemo, useReducer, useRef } from "react";
-import { useConfig } from "visual/global/hooks";
+import { useConfig } from "visual/providers/ConfigProvider";
 import { isView, useRender } from "visual/providers/RenderProvider";
 import { EditorComponentContext } from "../EditorComponentContext";
 import { DCApiProxyInstance } from "./DCApiProxyInstance";

@@ -4,22 +4,22 @@ import { renderStyles } from "visual/utils/cssStyle";
 
 export function style(data: DynamicStylesProps<ElementModel>) {
   const styles = {
-    ".brz &&:hover > div > .brz-metas": {
+    ".brz && > div > .brz-metas": {
       standart: ["cssStyleElementWOOProductMetaType"]
     },
     ".brz &&:hover > div > .brz-metas > .brz-wooproductmeta__container:not(:first-child)":
       {
         standart: ["cssStyleElementWOOProductMetaDividers"]
       },
-    ".brz &&:hover > div > .brz-metas > .brz-wooproductmeta__container:not(:last-child)":
+    ".brz && > div > .brz-metas > .brz-wooproductmeta__container:not(:last-child)":
       {
         standart: ["cssStyleElementWOOProductMetaRightSpacingInline"]
       },
-    ".brz &&:hover > div > .brz-metas > .brz-wooproductmeta__container > .brz-wooproductmeta__item":
+    ".brz && > div > .brz-metas > .brz-wooproductmeta__container > .brz-wooproductmeta__item":
       {
         standart: ["cssStyleElementWOOProductMetaTopSpacing"]
       },
-    ".brz &&:hover > div > .brz-metas > .brz-wooproductmeta__container > .brz-wooproductmeta__item-category":
+    ".brz && > div > .brz-metas > .brz-wooproductmeta__container > .brz-wooproductmeta__item-category":
       {
         standart: [
           "cssStyleElementWOOProductMetaCategoryFontFamily",
@@ -28,11 +28,14 @@ export function style(data: DynamicStylesProps<ElementModel>) {
           "cssStyleElementWOOProductMetaCategoryFontWeight",
           "cssStyleElementWOOProductMetaCategoryLetterSpacing",
           "cssStyleElementWOOProductMetaCategoryFontVariation",
-          "cssStyleElementWOOProductMetaCategoryTextTransform",
-          "cssStyleElementWOOProductMetaCategoryColor"
+          "cssStyleElementWOOProductMetaCategoryTextTransform"
         ]
       },
-    ".brz &&:hover > div > .brz-metas > .brz-wooproductmeta__container > .brz-wooproductmeta__item-value":
+    ".brz &&:hover > div > .brz-metas > .brz-wooproductmeta__container > .brz-wooproductmeta__item-category":
+      {
+        standart: ["cssStyleElementWOOProductMetaCategoryColor"]
+      },
+    ".brz && > div > .brz-metas > .brz-wooproductmeta__container > .brz-wooproductmeta__item-value":
       {
         standart: [
           "cssStyleElementWOOProductMetaValueFontFamily",
@@ -42,9 +45,12 @@ export function style(data: DynamicStylesProps<ElementModel>) {
           "cssStyleElementWOOProductMetaValueLetterSpacing",
           "cssStyleElementWOOProductMetaValueFontVariation",
           "cssStyleElementWOOProductMetaValueTextTransform",
-          "cssStyleElementWOOProductMetaRightSpacing",
-          "cssStyleElementWOOProductMetaValueColor"
+          "cssStyleElementWOOProductMetaRightSpacing"
         ]
+      },
+    ".brz &&:hover > div > .brz-metas > .brz-wooproductmeta__container > .brz-wooproductmeta__item-value":
+      {
+        standart: ["cssStyleElementWOOProductMetaValueColor"]
       }
   };
 

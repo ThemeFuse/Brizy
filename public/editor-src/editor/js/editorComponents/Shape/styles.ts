@@ -1,18 +1,18 @@
 import { ElementModel } from "visual/component/Elements/Types";
-import { renderStyles } from "visual/utils/cssStyle";
 import { DynamicStylesProps } from "visual/types";
-
+import { renderStyles } from "visual/utils/cssStyle";
 
 export function style(data: DynamicStylesProps<ElementModel>) {
   const styles = {
-    ".brz &&:hover": {
+    ".brz &&": {
       standart: ["cssStyleSizeWidth"]
     },
-
+    ".brz &&:before": {
+      standart: ["cssStyleBorderRadius"]
+    },
     ".brz &&:hover:before": {
       standart: [
         "cssStyleBorder",
-        "cssStyleBorderRadius",
         "cssStyleBoxShadow",
         "cssStyleBgColor",
         "cssStyleBgGradient"
@@ -20,7 +20,7 @@ export function style(data: DynamicStylesProps<ElementModel>) {
       interval: ["cssStyleHoverTransition"]
     },
 
-    ".brz &&:hover:after": {
+    ".brz &&:after": {
       standart: ["cssStyleSizeHeightPercentOnly"]
     }
   };

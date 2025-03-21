@@ -52,6 +52,7 @@ export interface Props {
   onNext: VoidFunction;
   config: ConfigCommon;
   editorMode: EditorMode;
+  defaultFilter?: Filter;
 }
 
 interface State {
@@ -242,7 +243,7 @@ export default class List extends Component<Props, State> {
   };
 
   renderList(data: StoriesWithThumbs | LayoutsWithThumbs): ReactElement {
-    const { showSidebar, showSearch, config } = this.props;
+    const { showSearch, config, defaultFilter: _defaultFilter } = this.props;
     const blocks = this.getLayoutData(data);
 
     const countersSectionBlocks: { [k: string]: number } = {};
@@ -274,11 +275,13 @@ export default class List extends Component<Props, State> {
 
     const _isStory = isStory(this.props.editorMode);
 
+    const showSidebar = categories.length > 1;
+
     return (
       <DataFilter<Data, Filter>
         data={blocks}
         filterFn={this.filterFn}
-        defaultFilter={defaultFilter}
+        defaultFilter={_defaultFilter ?? defaultFilter}
       >
         {(filteredThumbnails, currentFilter, setFilter): ReactElement => (
           <>

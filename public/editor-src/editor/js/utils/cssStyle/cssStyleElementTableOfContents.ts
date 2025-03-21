@@ -25,27 +25,51 @@ export function cssStyleElementTOCHeaderBgColor({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
-  return cssStyleBgColor({ v, device, state, store, prefix: "titleBg" });
+  return cssStyleBgColor({
+    v,
+    device,
+    state,
+    store,
+    getConfig,
+    prefix: "titleBg"
+  });
 }
 
 export function cssStyleElementTOCTitleColor({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
-  return cssStyleColor({ v, device, state, store, prefix: "titleColor" });
+  return cssStyleColor({
+    v,
+    device,
+    state,
+    store,
+    getConfig,
+    prefix: "titleColor"
+  });
 }
 
 export function cssStyleElementTOCHeaderBorder({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
-  return cssStyleBorder({ v, device, state, store, prefix: "header" });
+  return cssStyleBorder({
+    v,
+    device,
+    state,
+    store,
+    getConfig,
+    prefix: "header"
+  });
 }
 
 export function cssStyleElementTOCHeaderPadding({
@@ -78,9 +102,17 @@ export function cssStyleElementTOCBodyMarkerColor({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
-  return cssStyleColor({ v, device, state, store, prefix: "markerColor" });
+  return cssStyleColor({
+    v,
+    device,
+    state,
+    store,
+    getConfig,
+    prefix: "markerColor"
+  });
 }
 
 export function cssStyleElementTOCBodyMarkerSize({
@@ -107,30 +139,48 @@ export function cssStyleElementTOCBodyBgColor({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
-  return cssStyleBgColor({ v, device, state, store, prefix: "bodyBg" });
+  return cssStyleBgColor({
+    v,
+    device,
+    state,
+    store,
+    getConfig,
+    prefix: "bodyBg"
+  });
 }
 
 export function cssStyleElementTOCBodyColor({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
-  return cssStyleColor({ v, device, state, store, prefix: "bodyColor" });
+  return cssStyleColor({
+    v,
+    device,
+    state,
+    store,
+    getConfig,
+    prefix: "bodyColor"
+  });
 }
 
 export function cssStyleElementTOCBodyFontFamily({
   v,
   device,
   store,
+  getConfig,
   renderContext
 }: CSSValue & WithRenderContext): string {
   return cssStyleTypography2FontFamily({
     v,
     device,
     store,
+    getConfig,
     prefix: "body",
     renderContext
   });
@@ -139,38 +189,61 @@ export function cssStyleElementTOCBodyFontFamily({
 export function cssStyleElementTOCBodyFontSize({
   v,
   device,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
-  return cssStyleTypography2FontSize({ v, device, store, prefix: "body" });
+  return cssStyleTypography2FontSize({
+    v,
+    device,
+    store,
+    getConfig,
+    prefix: "body"
+  });
 }
 
 export function cssStyleElementTOCBodyLineHeight({
   v,
   device,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
-  return cssStyleTypography2LineHeight({ v, device, store, prefix: "body" });
+  return cssStyleTypography2LineHeight({
+    v,
+    device,
+    store,
+    getConfig,
+    prefix: "body"
+  });
 }
 
 export function cssStyleElementTOCBodyFontWeight({
   v,
   device,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
-  return cssStyleTypography2FontWeight({ v, device, store, prefix: "body" });
+  return cssStyleTypography2FontWeight({
+    v,
+    device,
+    store,
+    getConfig,
+    prefix: "body"
+  });
 }
 
 export function cssStyleElementTOCBodyLetterSpacing({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
   return cssStyleTypography2LetterSpacing({
     v,
     device,
     state,
     store,
+    getConfig,
     prefix: "body"
   });
 }
@@ -178,25 +251,41 @@ export function cssStyleElementTOCBodyLetterSpacing({
 export function cssStyleElementTOCBodyFontVariation({
   v,
   device,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
-  return cssStyleTypography2FontVariation({ v, device, store, prefix: "body" });
+  return cssStyleTypography2FontVariation({
+    v,
+    device,
+    store,
+    getConfig,
+    prefix: "body"
+  });
 }
 
 export function cssStyleElementTOCBodyTextTransform({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
-  return cssStyleTextTransforms({ v, device, state, store, prefix: "body" });
+  return cssStyleTextTransforms({
+    v,
+    device,
+    state,
+    store,
+    getConfig,
+    prefix: "body"
+  });
 }
 
 export function cssStyleElementTOCBodyBorder({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
-  return cssStyleBorder({ v, device, state, store, prefix: "body" });
+  return cssStyleBorder({ v, device, state, store, getConfig, prefix: "body" });
 }

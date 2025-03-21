@@ -1,5 +1,5 @@
 import React from "react";
-import { useConfig } from "visual/global/hooks";
+import { useConfig } from "visual/providers/ConfigProvider";
 import { Shortcodes } from "visual/types";
 import { t } from "visual/utils/i18n";
 import { Control, Props } from "./Control";

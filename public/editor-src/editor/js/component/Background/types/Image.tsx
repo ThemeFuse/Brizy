@@ -3,7 +3,7 @@ import jQuery from "jquery";
 import { ReactElement, RefObject, useRef } from "react";
 import { useStore } from "react-redux";
 import { isWp } from "visual/global/Config";
-import { useConfig } from "visual/global/hooks";
+import { useConfig } from "visual/providers/ConfigProvider";
 import { RenderType, isEditor } from "visual/providers/RenderProvider";
 import { deviceModeSelector } from "visual/redux/selectors";
 import "../lib/jquery.parallax.js";
@@ -11,13 +11,13 @@ import { useLayoutEffect } from "../utils";
 
 const destroyParallax = (node: HTMLElement): void => {
   if (node.parentElement) {
-    jQuery(node.parentElement).parallax("destroy");
+    jQuery(node.parentElement).brzParallax("destroy");
   }
 };
 
 const initParallax = (node: HTMLElement, wheelIgnoreClass?: string[]): void => {
   if (node.parentElement) {
-    jQuery(node.parentElement).parallax({
+    jQuery(node.parentElement).brzParallax({
       bgClass: "brz-bg-image", // WARNING: intentionally not `brz-bg-image-parallax`
       wheelIgnoreClass: [
         "brz-ed-container-plus",
