@@ -64,8 +64,7 @@ class Brizy_Admin_Popups_Main {
 		if ( empty( $headHtml ) ) {
 			return;
 		}
-		$content = apply_filters( 'brizy_content', $headHtml, Brizy_Editor_Project::get(), null, 'head' );
-		echo do_shortcode( $content );
+		echo do_shortcode( $headHtml );
 	}
 
 	public function wpFooterAppendPopupHtml() {
@@ -73,8 +72,7 @@ class Brizy_Admin_Popups_Main {
 		if ( empty( $bodyHtml ) ) {
 			return;
 		}
-		$content = apply_filters( 'brizy_content', $bodyHtml, Brizy_Editor_Project::get(), null, 'footer' );
-		echo do_shortcode( $content );
+		echo do_shortcode( $bodyHtml );
 	}
 
 	public function bodyClassFrontend( $classes ) {
@@ -170,7 +168,10 @@ class Brizy_Admin_Popups_Main {
 			if ( ! $brizyPopup->get_compiled_html() ) {
 				continue;
 			}
-			$content .= "\n\n<!-- POPUP BODY -->\n{$brizyPopup->get_compiled_html()}\n<!-- POPUP BODY END-->\n\n";
+
+			$popupContent = apply_filters( 'brizy_content', $brizyPopup->get_compiled_html(), Brizy_Editor_Project::get(), null, $context );
+
+			$content .= "\n\n<!-- POPUP BODY -->\n{$popupContent}\n<!-- POPUP BODY END-->\n\n";
 		}
 
 		return $content;
