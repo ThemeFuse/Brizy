@@ -44,6 +44,7 @@ export interface CollectionItemRule extends AllRule {
   appliedFor: number | null;
   entityType: string;
   mode: "reference" | "specific";
+  entityValues: Array<string | number>;
 }
 
 export interface ApiCollectionItemRule {
