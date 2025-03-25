@@ -12,6 +12,7 @@ class Brizy_Editor_Editor_ModuleGroups_ContentProvider implements Brizy_Editor_E
 		return [
 			new Brizy_Editor_Editor_ModuleGroups_ModuleGroup( __( 'content', 'brizy' ), [
 				"IconText",
+				"AnimatedHeadline",
 				"Lottie",
 				"Embed",
 				"StarRating",
