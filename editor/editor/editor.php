@@ -192,6 +192,7 @@ class Brizy_Editor_Editor_Editor {
 			'imageSizes'      => $this->getImgSizes(),
 			'moduleGroups'    => [],
 			'l10n'            => $this->getTexts(),
+            'isRTL'           => strpos(get_locale(), 'ar') === 0,
 			'membership'      => true,
 			'elements'        => [
 				'image' => [ 'zoom' => true ],
