@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="<?php echo get_locale(); ?>" dir="<?php echo is_rtl() ? 'rtl' : 'ltr'; ?>">
     <head>
         <title><?php echo $page_title; ?></title>
         <meta charset="utf-8">
@@ -19,7 +19,7 @@
 
             if (browser && browser === "safari") {
                 const regexPattern = /version\/(\d+\.\d+)/i;
-                const matches = userAgent.match(regexPattern);  
+                const matches = userAgent.match(regexPattern);
                 const version = matches ? matches[1] : null;
                 if (version && Number(version) <= 16.3) {
                     alert("Please update Safari browser to the latest version");
