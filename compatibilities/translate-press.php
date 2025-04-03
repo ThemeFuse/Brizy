@@ -13,20 +13,7 @@ class Brizy_Compatibilities_TranslatePress {
 		add_action( 'brizy_create_editor_config_after',  [ $this, 'rmFilterTrpHomeUrl' ] );
 		add_action( 'brizy_before_send_asset',           [ $this, 'clearBufferBeforeSendImg' ] );
 		add_filter( 'trp_enable_dynamic_translation',    [ $this, 'trp_enable_dynamic_translation' ] );
-        add_action( 'home_url',                          [ $this, 'fix_double_slashes' ] );
 	}
-
-    public function fix_double_slashes( $url ) {
-        if ( strpos( $_SERVER['REQUEST_URI'], 'sitemap.xml' ) !== false ) {
-            return $url;
-        }
-
-        if ( strpos( $url, '//' ) !== false ) {
-            return preg_replace( '#([^:])//+#', '$1/', $url );
-        }
-
-        return $url;
-    }
 
 	public function brizy_toolbar_link( $url, $post ) {
 
