@@ -1310,6 +1310,17 @@ class Brizy_Editor_Editor_Editor {
 				'classes'       => array_values( array_filter( $item->classes ) ),
 				'xfn'           => get_post_meta( $item->ID, '_menu_item_xfn', true ),
 			);
+
+            $object_type    = get_post_meta( $item->ID, '_menu_item_object', true );
+            $brz_post_types = Brizy_Editor::get()->supported_post_types();
+            if ( in_array( $object_type, $brz_post_types ) ) {
+                $object_id = get_post_meta( $item->ID, '_menu_item_object_id', true );
+                $post      = get_post( $object_id );
+                if ( $post && Brizy_Editor_Entity::isBrizyEnabled( $post->ID ) ) {
+                    $item_value['editorUrl'] = admin_url( 'post.php?' . 'action=in-front-editor&post=' . $object_id );
+                }
+            }
+
 			$an_item               = (object) array(
 				'type' => 'MenuItem',
 			);
