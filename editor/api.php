@@ -966,7 +966,7 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 		$search  = $this->param( 'search' );
 		$include = $this->param( 'include' );
 
-		$args['fields'] = $this->param( 'fields' ) ? $this->param( 'fields' ) : [ 'ID', 'display_name' ];
+		$args['fields'] = [ 'ID', 'display_name' ];
 
 		if ( $this->param( 'roles' ) && is_array( $this->param( 'roles' ) ) ) {
 			$args['role__in'] = $this->param( 'roles' );
@@ -981,21 +981,11 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 			$args['include'] = $include;
 		}
 
-		$users = get_users( $args );
-
 		$users = array_map(
 			function ( $user ) {
-				$user->ID = (int) $user->ID;
-
-				return [
-					'ID'              => $user->ID,
-					'display_name'    => $user->display_name,
-					'user_nicename'   => $user->user_nicename,
-					'user_email'      => $user->user_email,
-					'user_registered' => $user->user_registered,
-				];
+				return (array)$user;
 			},
-			$users
+			get_users( $args )
 		);
 
 		$this->success( $users );
