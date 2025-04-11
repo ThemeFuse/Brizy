@@ -1317,7 +1317,7 @@ class Brizy_Editor_Editor_Editor {
                 $object_id = get_post_meta( $item->ID, '_menu_item_object_id', true );
                 $post      = get_post( $object_id );
                 if ( $post && Brizy_Editor_Entity::isBrizyEnabled( $post->ID ) ) {
-                    $item_value['editorUrl'] = admin_url( 'post.php?' . 'action=in-front-editor&post=' . $object_id );
+                    $item_value['editorUrl'] = Brizy_Editor_Entity::getEditUrl($post->ID);
                 }
             }
 
