@@ -1,3 +1,4 @@
+import { ResponseWithBody } from "@/types/Response";
 import { Num, Obj, Str } from "@brizy/readers";
 import { match } from "fp-utilities";
 import { Dictionary } from "../types/utils";
@@ -73,4 +74,34 @@ export const getErrorMessage = (e: unknown): MValue<ErrorResponse> => {
     return e as unknown as ErrorResponse;
   }
   return undefined;
+};
+
+const reqStatus = (res: any) => {
+  if (res.success) {
+    return res;
+  } else {
+    const { data } = res;
+    return {
+      ...res,
+      status: data.code || res.status
+    };
+  }
+};
+
+export const parseJSON = <T>(res: Response): Promise<ResponseWithBody<T>> => {
+  return res
+    .json()
+    .then((json) => ({
+      ...json,
+      status: res.status,
+      ok: res.ok,
+      data: json.data || null
+    }))
+    .then(reqStatus)
+    .catch(() => {
+      throw {
+        status: 500,
+        data: "Server Error"
+      };
+    });
 };
