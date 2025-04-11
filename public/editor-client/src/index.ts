@@ -1,7 +1,10 @@
+import { authorisation } from "@/authorisation";
 import { authors } from "@/authors";
+import { form } from "@/form";
 import { shortcodeContent } from "@/shortcodeContent";
 import { sidebars } from "@/sidebars";
 import { terms } from "@/terms";
+import get from "lodash/get";
 import merge from "lodash/merge";
 import set from "lodash/set";
 import { doAiRequest } from "./aiText";
@@ -48,6 +51,7 @@ if (!config) {
 }
 
 const api = {
+  authorisation,
   ...(config.api.openAIUrl ? { textAI: { handler: doAiRequest } } : {}),
   media: {
     addMedia,
@@ -148,4 +152,8 @@ if (window.__VISUAL_CONFIG__) {
     ["integrations", "fonts", "upload"],
     uploadedFonts
   );
+
+  const existingForm = get(window.__VISUAL_CONFIG__, ["integrations", "form"]);
+  const updatedForm = merge({}, existingForm, form);
+  set(window.__VISUAL_CONFIG__, ["integrations", "form"], updatedForm);
 }

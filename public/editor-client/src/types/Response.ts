@@ -5,3 +5,7 @@ export interface ResponseWithBody<T> {
   ok: boolean;
   data: T;
 }
+
+export interface SuccessResponse {
+  success: true;
+}
