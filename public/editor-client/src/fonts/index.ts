@@ -1,9 +1,16 @@
-import { addAdobeAccount, getAdobeFont } from "../api";
+import { UploadFont } from "@/types/Fonts";
+import {
+  addAdobeAccount,
+  deleteFont,
+  FontsData,
+  getAdobeFont,
+  getUploadedFonts,
+  uploadFont
+} from "../api";
 import { AdobeFonts } from "../types/AdobeFonts";
+import { Response } from "../types/Response";
 import { t } from "../utils/i18n";
 import { Fonts, KitData } from "./types";
-import { FontsData, getUploadedFonts } from "../api";
-import { Response } from "../types/Response";
 
 const convertDataToLocal = (mockTypeKitData: KitData): Fonts => {
   const families = mockTypeKitData.kit.families.map((family) => ({
@@ -50,6 +57,26 @@ export const uploadedFonts = {
       res(r);
     } catch (e) {
       rej(`Fonts Error: ${e}`);
+    }
+  },
+  async upload(
+    res: Response<UploadFont>,
+    rej: Response<string>,
+    formData: FormData
+  ) {
+    try {
+      const fonts = await uploadFont(formData);
+      res(fonts);
+    } catch {
+      rej(t("Failed to upload font"));
+    }
+  },
+  async delete(res: Response<string>, rej: Response<string>, fontId: string) {
+    try {
+      await deleteFont(fontId);
+      res(fontId);
+    } catch {
+      rej(t("Failed to delete font"));
     }
   }
 };
