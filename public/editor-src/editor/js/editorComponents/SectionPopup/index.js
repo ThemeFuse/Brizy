@@ -248,7 +248,7 @@ class SectionPopup extends EditorComponent {
           v,
           vs,
           vd,
-          store: this.getReduxState(),
+          store: this.getReduxStore(),
           contexts: this.getContexts()
         })
       )
@@ -308,7 +308,7 @@ class SectionPopup extends EditorComponent {
           v,
           vs,
           vd,
-          store: this.getReduxState(),
+          store: this.getReduxStore(),
           contexts: this.getContexts()
         })
       )

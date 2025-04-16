@@ -165,7 +165,10 @@ class ThirdParty extends EditorComponent<Value, Props> {
 
   render(): ReactNode {
     const { thirdPartyId } = this.getValue();
-    const v = this.getValue();
+
+    // IMPORTANT!!!
+    // The getValue method should be called after the getComponent method because at the first we should
+    // initialise the component and then get the value
 
     if (isEditor(this.props.renderContext)) {
       const { editor } = this.getComponent(thirdPartyId) ?? {};
@@ -175,10 +178,13 @@ class ThirdParty extends EditorComponent<Value, Props> {
       }
 
       if (this.componentConfig) {
+        const v = this.getValue();
         return this.renderToolbars((toolbarRefs) =>
           this.renderForEdit(v, editor, toolbarRefs)
         );
       }
+
+      const v = this.getValue();
       return this.renderForEdit(v, editor);
     }
 
@@ -189,7 +195,7 @@ class ThirdParty extends EditorComponent<Value, Props> {
         return `Missing Third Party Component: ${thirdPartyId}`;
       }
 
-      return this.renderForEdit(v, view);
+      return this.renderForEdit(this.getValue(), view);
     }
   }
 

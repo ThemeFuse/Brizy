@@ -14,6 +14,29 @@ const normalizeWeights = (weights) => {
   );
 };
 
+const ADOBE_WEIGHTS = {
+  n1: 100,
+  n2: 200,
+  n3: 300,
+  n4: 400,
+  n5: 500,
+  n6: 600,
+  n7: 700,
+  n8: 800,
+  n9: 900
+};
+
+const normalizeAdobeWeights = (weights) => {
+  const result = new Set([400]);
+
+  for (const weight of weights) {
+    const value = ADOBE_WEIGHTS[weight];
+    if (!isNaN(value)) result.add(value);
+  }
+
+  return Array.from(result).sort((a, b) => a - b);
+};
+
 const tripId = (str) => str.toLowerCase().replace(/\s+/g, "_");
 
 export const findFonts = (fonts = [], fontId = "", type = "google") => {
@@ -63,7 +86,7 @@ export const getAdobeFontDetails = (font) => {
     id: tripId(family),
     title: family,
     family: `'${family}', ${category}`,
-    weights: normalizeWeights(variants),
+    weights: normalizeAdobeWeights(variants),
 
     // Extra Data
     ...(brizyId && { brizyId }),

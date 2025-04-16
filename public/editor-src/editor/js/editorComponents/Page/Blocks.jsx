@@ -1,6 +1,5 @@
 import React from "react";
 import { connect } from "react-redux";
-import { isView } from "visual/providers/RenderProvider";
 import {
   FirstBlockAdder,
   LastBlockAdder,
@@ -10,6 +9,7 @@ import HotKeys from "visual/component/HotKeys";
 import Prompts from "visual/component/Prompts";
 import { hideToolbar } from "visual/component/Toolbar";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
+import { isView } from "visual/providers/RenderProvider";
 import {
   addBlock,
   addGlobalBlock,
@@ -83,11 +83,13 @@ class Blocks extends EditorArrayComponent {
     const config = this.getGlobalConfig();
     const showGlobal = typeof config.api?.globalBlocks?.create === "function";
     const showSaved = typeof config.api?.savedBlocks?.create === "function";
+    const activeTab = config.ui?.prompts?.blockAdder?.activeTab;
 
     Prompts.open({
       prompt: "blocks",
       mode: "single",
       props: {
+        ...(activeTab ? { activeTab } : {}),
         type: "normal",
         showGlobal,
         showSaved,

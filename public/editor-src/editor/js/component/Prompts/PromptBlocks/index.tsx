@@ -11,6 +11,7 @@ import ReactDOM from "react-dom";
 import EditorIcon from "visual/component/EditorIcon";
 import HelpIcon from "visual/component/HelpIcon";
 import Fixed from "visual/component/Prompts/Fixed";
+import { getDefaultFilter } from "visual/component/Prompts/PromptBlocks/Layouts/utils";
 import {
   ConfigCommon,
   HelpVideos
@@ -64,12 +65,12 @@ interface Tab<ID extends PromptTabsId, T extends BlockMetaType> {
 }
 
 const getTabs = <T extends BlockMetaType>(
-  config: ConfigCommon["api"],
+  config: ConfigCommon,
   type: BlockMetaType,
   editorMode: EditorMode
 ): Array<Tab<PromptTabsId, T>> => {
   const { defaultLayouts, defaultStories, defaultKits, defaultPopups } =
-    config ?? {};
+    config?.api ?? {};
 
   const hasDefaultLayouts =
     !!defaultLayouts?.getMeta && !!defaultLayouts?.getData;
@@ -102,7 +103,13 @@ const getTabs = <T extends BlockMetaType>(
       title: defaultLayouts?.label ?? t("Layouts"),
       icon: "nc-pages",
       renderTab(props): ReactElement {
-        return <Layouts {...props} type="layouts" />;
+        return (
+          <Layouts
+            {...props}
+            defaultFilter={getDefaultFilter(config)}
+            type="layouts"
+          />
+        );
       }
     });
   }
@@ -137,7 +144,7 @@ const getTabs = <T extends BlockMetaType>(
       return <Global {...props} />;
     }
   };
-  const { savedLayouts, savedBlocks, savedPopups } = config ?? {};
+  const { savedLayouts, savedBlocks, savedPopups } = config?.api ?? {};
   const hasLayout = savedLayouts?.get && savedLayouts?.getByUid;
   const hasBlock = savedBlocks?.get && savedBlocks?.getByUid;
   const hasPopup = savedPopups?.get && savedPopups?.getByUid;
@@ -219,11 +226,7 @@ class PromptBlocks<T extends BlockMetaType> extends Component<
 
   mounted = false;
 
-  tabs = getTabs<T>(
-    this.props.config?.api,
-    this.props.type,
-    this.props.editorMode
-  );
+  tabs = getTabs<T>(this.props.config, this.props.type, this.props.editorMode);
 
   state: PromptBlocksState = {
     currentTab: this.props.activeTab || "blocks",

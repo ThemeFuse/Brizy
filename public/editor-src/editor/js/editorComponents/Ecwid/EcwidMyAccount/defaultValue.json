@@ -37,7 +37,7 @@
 
       "footerTypographyFontFamily": "lato",
 
-      "termsTypographyFontFamily":  "lato"
+      "termsTypographyFontFamily": "lato"
     },
 
     "parentBgColorType": "solid",
@@ -46,9 +46,9 @@
     "parentBgColorOpacity": 1,
     "parentBgColorPalette": "",
 
-    "termsColorHex":  "#000000",
+    "termsColorHex": "#000000",
     "termsColorOpacity": 1,
-    "termsColorPalette": "",
+    "termsColorPalette": "color7",
 
     "parentGradientActivePointer": "startPointer",
     "parentGradientStartPointer": 0,
@@ -62,7 +62,7 @@
     "parentGradientLinearDegree": 90,
     "parentGradientRadialDegree": 90,
 
-    "titleTypographyFontStyle": "",
+    "titleTypographyFontStyle": "heading3",
     "titleTypographyFontFamilyType": "google",
     "titleTypographyFontSize": 30,
     "titleTypographyFontSizeSuffix": "px",
@@ -79,7 +79,7 @@
     "titleTypographyUppercase": false,
     "titleTypographyLowercase": false,
 
-    "termsTypographyFontStyle": "",
+    "termsTypographyFontStyle": "paragraph",
     "termsTypographyFontFamilyType": "google",
     "termsTypographyFontSize": 14,
     "termsTypographyFontSizeSuffix": "px",
@@ -98,7 +98,7 @@
 
     "titleColorHex": "#000000",
     "titleColorOpacity": 1,
-    "titleColorPalette": "",
+    "titleColorPalette": "color2",
 
     "titleSpacing": 5,
     "titleSpacingSuffix": "px",
@@ -106,7 +106,7 @@
     "titleHorizontalAlign": "left",
     "termsHorizontalAlign": "left",
 
-    "accountTitleTypographyFontStyle": "",
+    "accountTitleTypographyFontStyle": "heading5",
     "accountTitleTypographyFontFamilyType": "google",
     "accountTitleTypographyFontSize": 20,
     "accountTitleTypographyFontSizeSuffix": "px",
@@ -125,14 +125,14 @@
 
     "accountTitleColorHex": "#000000",
     "accountTitleColorOpacity": 1,
-    "accountTitleColorPalette": "",
+    "accountTitleColorPalette": "color2",
 
     "accountTitleSpacing": 5,
     "accountTitleSpacingSuffix": "px",
 
     "accountTitleHorizontalAlign": "left",
 
-    "connectTypographyFontStyle": "",
+    "connectTypographyFontStyle": "paragraph",
     "connectTypographyFontFamilyType": "google",
     "connectTypographyFontSize": 14,
     "connectTypographyFontSizeSuffix": "px",
@@ -149,7 +149,7 @@
     "connectTypographyUppercase": false,
     "connectTypographyLowercase": false,
 
-    "connectLinkTypographyFontStyle": "",
+    "connectLinkTypographyFontStyle": "paragraph",
     "connectLinkTypographyFontFamilyType": "google",
     "connectLinkTypographyFontSize": 14,
     "connectLinkTypographyFontSizeSuffix": "px",
@@ -167,16 +167,16 @@
     "connectLinkTypographyLowercase": false,
 
     "connectColorHex": "#000000",
-    "connectColorOpacity": 0.8,
-    "connectColorPalette": "",
+    "connectColorOpacity": 0.7,
+    "connectColorPalette": "color7",
 
     "connectLinkColorHex": "#000000",
     "connectLinkColorOpacity": 1,
-    "connectLinkColorPalette": "",
+    "connectLinkColorPalette": "color7",
 
     "connectLinkHorizontalAlign": "left",
 
-    "productsTypographyFontStyle": "",
+    "productsTypographyFontStyle": "heading5",
     "productsTypographyFontFamilyType": "google",
     "productsTypographyFontSize": 20,
     "productsTypographyFontSizeSuffix": "px",
@@ -195,9 +195,9 @@
 
     "productsColorHex": "#000000",
     "productsColorOpacity": 1,
-    "productsColorPalette": "",
+    "productsColorPalette": "color2",
 
-    "shopTitleTypographyFontStyle": "",
+    "shopTitleTypographyFontStyle": "heading5",
     "shopTitleTypographyFontFamilyType": "google",
     "shopTitleTypographyFontSize": 20,
     "shopTitleTypographyFontSizeSuffix": "px",
@@ -216,14 +216,14 @@
 
     "shopTitleColorHex": "#000000",
     "shopTitleColorOpacity": 1,
-    "shopTitleColorPalette": "",
+    "shopTitleColorPalette": "color2",
 
     "shopTitleHorizontalAlign": "left",
 
     "shopTitleSpacing": 5,
     "shopTitleSpacingSuffix": "px",
 
-    "summaryLinkTypographyFontStyle": "",
+    "summaryLinkTypographyFontStyle": "paragraph",
     "summaryLinkTypographyFontFamilyType": "google",
     "summaryLinkTypographyFontSize": 14,
     "summaryLinkTypographyFontSizeSuffix": "px",
@@ -242,7 +242,7 @@
 
     "summaryLinkColorHex": "#000000",
     "summaryLinkColorOpacity": 1,
-    "summaryLinkColorPalette": "",
+    "summaryLinkColorPalette": "color7",
 
     "summaryLinkHorizontalAlign": "left",
 
@@ -314,7 +314,7 @@
     "userSpacing": 10,
     "userSpacingSuffix": "px",
 
-    "emptyTypographyFontStyle": "",
+    "emptyTypographyFontStyle": "paragraph",
     "emptyTypographyFontFamilyType": "google",
     "emptyTypographyFontSize": 14,
     "emptyTypographyFontSizeSuffix": "px",
@@ -333,11 +333,11 @@
 
     "emptyColorHex": "#000000",
     "emptyColorOpacity": 1,
-    "emptyColorPalette": "",
+    "emptyColorPalette": "color7",
 
     "emptyHorizontalAlign": "left",
 
-    "title2TypographyFontStyle": "",
+    "title2TypographyFontStyle": "heading3",
     "title2TypographyFontFamilyType": "google",
     "title2TypographyFontSize": 30,
     "title2TypographyFontSizeSuffix": "px",
@@ -356,14 +356,14 @@
 
     "title2ColorHex": "#000000",
     "title2ColorOpacity": 1,
-    "title2ColorPalette": "",
+    "title2ColorPalette": "color2",
 
     "title2HorizontalAlign": "left",
 
     "title2Spacing": 5,
     "title2SpacingSuffix": "px",
 
-    "descriptionTypographyFontStyle": "",
+    "descriptionTypographyFontStyle": "paragraph",
     "descriptionTypographyFontFamilyType": "google",
     "descriptionTypographyFontSize": 14,
     "descriptionTypographyFontSizeSuffix": "px",
@@ -382,7 +382,7 @@
 
     "descriptionColorHex": "#000000",
     "descriptionColorOpacity": 1,
-    "descriptionColorPalette": "",
+    "descriptionColorPalette": "color7",
 
     "descriptionHorizontalAlign": "left",
 
@@ -475,7 +475,7 @@
     "inputBorderBottomRightRadiusSuffix": "px",
     "inputBorderBottomLeftRadiusSuffix": "px",
 
-    "agreementTypographyFontStyle": "",
+    "agreementTypographyFontStyle": "paragraph",
     "agreementTypographyFontFamilyType": "google",
     "agreementTypographyFontSize": 14,
     "agreementTypographyFontSizeSuffix": "px",
@@ -494,7 +494,7 @@
 
     "agreementColorHex": "#000000",
     "agreementColorOpacity": 1,
-    "agreementColorPalette": "",
+    "agreementColorPalette": "color7",
 
     "agreementHorizontalAlign": "left",
 
@@ -509,7 +509,7 @@
     "buttonWidth": 100,
     "buttonWidthSuffix": "%",
 
-    "buttonTypographyFontStyle": "",
+    "buttonTypographyFontStyle": "button",
     "buttonTypographyFontFamilyType": "google",
     "buttonTypographyFontSize": 18,
     "buttonTypographyFontSizeSuffix": "px",
@@ -638,7 +638,7 @@
     "footerIconCustomSize": 48,
     "footerIconCustomSizeSuffix": "px",
 
-    "footerTypographyFontStyle": "",
+    "footerTypographyFontStyle": "paragraph",
     "footerTypographyFontFamilyType": "google",
     "footerTypographyFontSize": 16,
     "footerTypographyFontSizeSuffix": "px",
@@ -657,11 +657,11 @@
 
     "footerColorHex": "#000000",
     "footerColorOpacity": 1,
-    "footerColorPalette": "",
+    "footerColorPalette": "color7",
 
     "footerIconColorHex": "#000000",
     "footerIconColorOpacity": 1,
-    "footerIconColorPalette": "",
+    "footerIconColorPalette": "color3",
 
     "footerSpacing": 20,
     "footerSpacingSuffix": "px",

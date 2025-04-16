@@ -17,6 +17,7 @@ export interface Value extends ElementModel {
   skuDisplay: Switch;
   weightDisplay: Switch;
   collapseDesktop: Switch;
+  prefilledCart: Switch;
 
   step: EcwidCartCheckoutStep;
 }

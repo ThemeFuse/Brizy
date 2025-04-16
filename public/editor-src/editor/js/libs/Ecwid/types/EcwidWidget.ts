@@ -6,6 +6,7 @@ export interface Base<T extends EcwidPageSlug, P extends {}> {
   type: T;
   id: string;
   args: P;
+  onPageLoad?: VoidFunction;
 }
 
 // region Products
@@ -34,10 +35,15 @@ export const product = (id: string, productId: EcwidProductId): Product => ({
 // region Cart
 export type Cart = Base<EcwidCartCheckoutStep, {}>;
 
-export const cart = (id: string, step?: EcwidCartCheckoutStep): Cart => ({
+export const cart = (
+  id: string,
+  step?: EcwidCartCheckoutStep,
+  onPageLoad?: VoidFunction
+): Cart => ({
   id,
   type: step ?? EcwidCartCheckoutStep.Cart,
-  args: {}
+  args: {},
+  onPageLoad
 });
 // endregion
 
