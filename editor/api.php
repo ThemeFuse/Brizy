@@ -981,12 +981,15 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 			$args['include'] = $include;
 		}
 
-		$users = array_map(
-			function ( $user ) {
-				return (array)$user;
-			},
-			get_users( $args )
-		);
+        $users = array_map(
+            function ( $user ) {
+                return [
+                    'ID'           => $user->ID,
+                    'display_name' => $user->display_name,
+                ];
+            },
+            get_users( $args )
+        );
 
 		$this->success( $users );
 	}
