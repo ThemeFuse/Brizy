@@ -282,7 +282,9 @@ class SectionItem extends EditorComponent {
           const globalBlocks = blocksDataSelector(this.getReduxState());
           const blockData = globalBlocks[itemData.value._id];
 
-          popupId = blockData.value.popupId;
+          if (blockData) {
+            popupId = blockData.value.popupId;
+          }
         }
 
         return {

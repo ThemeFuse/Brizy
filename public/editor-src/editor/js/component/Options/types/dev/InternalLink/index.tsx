@@ -30,7 +30,7 @@ export const InternalLink = ({
   const api = globalConfig.api;
 
   const { handler, choices } = useMemo(() => {
-    const { handler } = api?.collectionItems?.searchCollectionItems ?? {};
+    const { handler } = api?.collectionItems?.getCollectionItems ?? {};
 
     const choices = getCollectionChoices(api);
     return { handler, choices };
@@ -135,10 +135,7 @@ export const InternalLink = ({
           ToastNotification.error(errMsg);
         };
 
-        handler(res, rej, {
-          collectionId: postType,
-          search
-        });
+        handler(res, rej, { id: postType, search, populationPermalink: "1" });
       }
     }, 1000);
 
