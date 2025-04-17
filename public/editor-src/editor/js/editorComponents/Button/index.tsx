@@ -284,7 +284,9 @@ export default class Button extends EditorComponent<Value, Props> {
           const globalBlockId = itemData.value._id;
           const blockData = globalBlocks[globalBlockId];
 
-          popupId = blockData.value.popupId;
+          if (blockData) {
+            popupId = blockData.value.popupId;
+          }
 
           newMeta = {
             ...newMeta,

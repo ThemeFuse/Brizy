@@ -685,11 +685,14 @@ class RichText extends EditorComponent<Value, Record<string, unknown>, State> {
             globalBlockId
           ];
 
+          if (blockData) {
+            popupId = blockData.value.popupId;
+          }
+
           newMeta = {
             ...newMeta,
             globalBlockId
           };
-          popupId = blockData.value.popupId;
         }
 
         return {

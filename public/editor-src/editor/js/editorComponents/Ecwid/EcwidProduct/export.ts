@@ -22,7 +22,9 @@ export const fn: ExportFunction = ($node) => {
     const _productId = productId ?? defaultProductId;
 
     if (_productId && storeId) {
-      EcwidService.init(storeId, cfg ?? {}).product(_productId, node);
+      const _cfg = cfg ? { ...cfg, baseUrl: "/product" } : {};
+
+      EcwidService.init(storeId, _cfg).product(_productId, node);
     }
   });
 };

@@ -1575,12 +1575,17 @@ export class EcwidProduct extends EditorComponent<Value> {
       )
     );
 
-    const configProductId = isEcwidShop(shop)
-      ? Num.read(shop.productId) ?? Num.read(shop.defaultProductId)
-      : undefined;
+    const productIdPlaceholder = makePlaceholder({
+      content: "{{brizy_dc_collection_item_field}}",
+      attr: {
+        slug: "id"
+      }
+    });
 
     const productId =
-      Str.read(modelProductId) === "auto" ? configProductId : modelProductId;
+      Str.read(modelProductId) === "auto"
+        ? productIdPlaceholder
+        : modelProductId;
 
     const storeId = makePlaceholder({
       content: "{{ecwid_store_id}}"

@@ -3,7 +3,7 @@ import Config from "visual/global/Config";
 import { compileAssetProUrl, compileAssetUrl } from "visual/utils/asset";
 import { makeDataAttr } from "visual/utils/i18n/attribute";
 import { Asset, AssetLibsMap, ScriptsFree, ScriptsPro } from "./index";
-import { LIBS_SCORE, MAIN_INIT_SCORE, MAIN_SCORE } from "./scores";
+import { LIBS_SCORE, MAIN_SCORE } from "./scores";
 
 type MakeScripts = {
   free: ScriptsFree;
@@ -31,25 +31,12 @@ export const makeScripts = ($doc: cheerio.Root): MakeScripts => {
       type: "file",
       url: compileAssetUrl("editor/js/preview.min.js"),
       attr: {
-        class: "brz-script brz-script-preview"
+        class: "brz-script brz-script-preview",
+        defer: "true"
       }
     },
     pro: false
   };
-
-  // added emit init.dom
-  generic.push({
-    name: "initMain",
-    score: MAIN_INIT_SCORE,
-    content: {
-      type: "inline",
-      content: `document.addEventListener('DOMContentLoaded', () => window.Brz.emit("init.dom", jQuery(document.body)));`,
-      attr: {
-        class: "brz-script brz-script-emit"
-      }
-    },
-    pro: false
-  });
 
   // libs
   free.forEach((lib) => {
@@ -65,6 +52,7 @@ export const makeScripts = ($doc: cheerio.Root): MakeScripts => {
         url: compileAssetUrl(`editor/js/${name}.min.js`),
         attr: {
           class: "brz-script brz-script-preview-lib",
+          defer: "true",
           ...makeDataAttr({ name: "group", value: name })
         }
       },
@@ -106,7 +94,8 @@ export const makeScripts = ($doc: cheerio.Root): MakeScripts => {
         type: "file",
         url: compileAssetProUrl(proConfig, "js/preview.pro.min.js"),
         attr: {
-          class: "brz-script brz-script-preview-pro"
+          class: "brz-script brz-script-preview-pro",
+          defer: "true"
         }
       },
       pro: true
@@ -125,6 +114,7 @@ export const makeScripts = ($doc: cheerio.Root): MakeScripts => {
           url: compileAssetProUrl(proConfig, `js/${name}.pro.min.js`),
           attr: {
             class: `brz-script brz-script-preview-lib-pro`,
+            defer: "true",
             ...makeDataAttr({ name: "group", value: name })
           }
         },

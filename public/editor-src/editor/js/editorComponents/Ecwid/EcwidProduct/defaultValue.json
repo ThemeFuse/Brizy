@@ -177,9 +177,9 @@
     "productBoxShadowVertical": 0,
     "productBoxShadowHorizontal": 0,
 
-    "titleTypographyFontStyle": "",
+    "titleTypographyFontStyle": "heading3",
     "titleTypographyFontFamilyType": "google",
-    "titleTypographyFontSize": 18,
+    "titleTypographyFontSize": 30,
     "titleTypographyFontSizeSuffix": "px",
     "titleTypographyFontWeight": 700,
     "titleTypographyLetterSpacing": 1.3,
@@ -196,16 +196,16 @@
 
     "titleColorHex": "#000000",
     "titleColorOpacity": 1,
-    "titleColorPalette": "",
+    "titleColorPalette": "color2",
 
     "titleHorizontalAlign": "left",
 
     "titleSpacing": 10,
     "titleSpacingSuffix": "px",
 
-    "title2TypographyFontStyle": "",
+    "title2TypographyFontStyle": "heading5",
     "title2TypographyFontFamilyType": "google",
-    "title2TypographyFontSize": 16,
+    "title2TypographyFontSize": 50,
     "title2TypographyFontSizeSuffix": "px",
     "title2TypographyFontWeight": 400,
     "title2TypographyLetterSpacing": 1.3,
@@ -222,14 +222,14 @@
 
     "title2ColorHex": "#000000",
     "title2ColorOpacity": 1,
-    "title2ColorPalette": "",
+    "title2ColorPalette": "color2",
 
     "title2HorizontalAlign": "left",
 
     "title2Spacing": 10,
     "title2SpacingSuffix": "px",
 
-    "SKUTypographyFontStyle": "",
+    "SKUTypographyFontStyle": "subtitle",
     "SKUTypographyFontFamilyType": "google",
     "SKUTypographyFontSize": 12,
     "SKUTypographyFontSizeSuffix": "px",
@@ -255,7 +255,7 @@
     "SKUSpacing": 10,
     "SKUSpacingSuffix": "px",
 
-    "priceTypographyFontStyle": "",
+    "priceTypographyFontStyle": "heading5",
     "priceTypographyFontFamilyType": "google",
     "priceTypographyFontSize": 18,
     "priceTypographyFontSizeSuffix": "px",
@@ -274,14 +274,14 @@
 
     "priceColorHex": "#000000",
     "priceColorOpacity": 1,
-    "priceColorPalette": "",
+    "priceColorPalette": "color2",
 
     "priceHorizontalAlign": "left",
 
     "priceSpacing": 10,
     "priceSpacingSuffix": "px",
 
-    "sizeTypographyFontStyle": "",
+    "sizeTypographyFontStyle": "heading5",
     "sizeTypographyFontFamilyType": "google",
     "sizeTypographyFontSize": 16,
     "sizeTypographyFontSizeSuffix": "px",
@@ -300,14 +300,14 @@
 
     "sizeColorHex": "#000000",
     "sizeColorOpacity": 1,
-    "sizeColorPalette": "",
+    "sizeColorPalette": "color2",
 
     "sizeHorizontalAlign": "left",
 
     "sizeSpacing": 10,
     "sizeSpacingSuffix": "px",
 
-    "inStockTypographyFontStyle": "",
+    "inStockTypographyFontStyle": "heading5",
     "inStockTypographyFontFamilyType": "google",
     "inStockTypographyFontSize": 18,
     "inStockTypographyFontSizeSuffix": "px",
@@ -326,14 +326,14 @@
 
     "inStockColorHex": "#000000",
     "inStockColorOpacity": 1,
-    "inStockColorPalette": "",
+    "inStockColorPalette": "color2",
 
     "inStockHorizontalAlign": "left",
 
     "inStockSpacing": 10,
     "inStockSpacingSuffix": "px",
 
-    "detailsTypographyFontStyle": "",
+    "detailsTypographyFontStyle": "heading5",
     "detailsTypographyFontFamilyType": "google",
     "detailsTypographyFontSize": 18,
     "detailsTypographyFontSizeSuffix": "px",
@@ -352,14 +352,14 @@
 
     "detailsColorHex": "#000000",
     "detailsColorOpacity": 1,
-    "detailsColorPalette": "",
+    "detailsColorPalette": "color2",
 
     "detailsHorizontalAlign": "left",
 
     "detailsSpacing": 10,
     "detailsSpacingSuffix": "px",
 
-    "descriptionTypographyFontStyle": "",
+    "descriptionTypographyFontStyle": "paragraph",
     "descriptionTypographyFontFamilyType": "google",
     "descriptionTypographyFontSize": 16,
     "descriptionTypographyFontSizeSuffix": "px",
@@ -378,7 +378,7 @@
 
     "descriptionColorHex": "#000000",
     "descriptionColorOpacity": 1,
-    "descriptionColorPalette": "",
+    "descriptionColorPalette": "color7",
 
     "descriptionHorizontalAlign": "left",
 
@@ -393,7 +393,7 @@
     "buttonWidth": 100,
     "buttonWidthSuffix": "%",
 
-    "buttonTypographyFontStyle": "",
+    "buttonTypographyFontStyle": "button",
     "buttonTypographyFontFamilyType": "google",
     "buttonTypographyFontSize": 18,
     "buttonTypographyFontSizeSuffix": "px",
@@ -485,7 +485,7 @@
     "checkoutWidth": 100,
     "checkoutWidthSuffix": "%",
 
-    "checkoutTypographyFontStyle": "",
+    "checkoutTypographyFontStyle": "button",
     "checkoutTypographyFontFamilyType": "google",
     "checkoutTypographyFontSize": 18,
     "checkoutTypographyFontSizeSuffix": "px",
@@ -577,7 +577,7 @@
     "addToBagWidth": 100,
     "addToBagWidthSuffix": "%",
 
-    "addToBagTypographyFontStyle": "",
+    "addToBagTypographyFontStyle": "button",
     "addToBagTypographyFontFamilyType": "google",
     "addToBagTypographyFontSize": 18,
     "addToBagTypographyFontSizeSuffix": "px",
@@ -666,7 +666,7 @@
     "checkboxCustomSize": 24,
     "checkboxCustomSizeSuffix": "px",
 
-    "checkboxTypographyFontStyle": "",
+    "checkboxTypographyFontStyle": "button",
     "checkboxTypographyFontFamilyType": "google",
     "checkboxTypographyFontSize": 14,
     "checkboxTypographyFontSizeSuffix": "px",
@@ -753,7 +753,7 @@
     "checkboxRightSpacing": 10,
     "checkboxRightSpacingSuffix": "px",
 
-    "shareTitleTypographyFontStyle": "",
+    "shareTitleTypographyFontStyle": "heading5",
     "shareTitleTypographyFontFamilyType": "google",
     "shareTitleTypographyFontSize": 16,
     "shareTitleTypographyFontSizeSuffix": "px",
@@ -772,7 +772,7 @@
 
     "shareTitleColorHex": "#000000",
     "shareTitleColorOpacity": 1,
-    "shareTitleColorPalette": "",
+    "shareTitleColorPalette": "color2",
 
     "shareTitleHorizontalAlign": "left",
 
@@ -795,7 +795,7 @@
     "favoriteIconCustomSize": 24,
     "favoriteIconCustomSizeSuffix": "px",
 
-    "favoriteTypographyFontStyle": "",
+    "favoriteTypographyFontStyle": "button",
     "favoriteTypographyFontFamilyType": "google",
     "favoriteTypographyFontSize": 18,
     "favoriteTypographyFontSizeSuffix": "px",
@@ -899,7 +899,7 @@
     "favoritedIconCustomSize": 24,
     "favoritedIconCustomSizeSuffix": "px",
 
-    "favoritedTypographyFontStyle": "",
+    "favoritedTypographyFontStyle": "button",
     "favoritedTypographyFontFamilyType": "google",
     "favoritedTypographyFontSize": 18,
     "favoritedTypographyFontSizeSuffix": "px",
@@ -998,7 +998,7 @@
     "viewFavoritesIconCustomSize": 24,
     "viewFavoritesIconCustomSizeSuffix": "px",
 
-    "viewFavoritesTypographyFontStyle": "",
+    "viewFavoritesTypographyFontStyle": "button",
     "viewFavoritesTypographyFontFamilyType": "google",
     "viewFavoritesTypographyFontSize": 18,
     "viewFavoritesTypographyFontSizeSuffix": "px",
@@ -1096,7 +1096,7 @@
     "shareButtonsIconCustomSize": 24,
     "shareButtonsIconCustomSizeSuffix": "px",
 
-    "shareButtonsTypographyFontStyle": "",
+    "shareButtonsTypographyFontStyle": "button",
     "shareButtonsTypographyFontFamilyType": "google",
     "shareButtonsTypographyFontSize": 14,
     "shareButtonsTypographyFontSizeSuffix": "px",
@@ -1125,7 +1125,7 @@
 
     "shareButtonsBgColorHex": "#666666",
     "shareButtonsBgColorOpacity": 0.2,
-    "shareButtonsBgColorPalette": "color7",
+    "shareButtonsBgColorPalette": "color3",
 
     "shareButtonsGradientColorHex": "#009900",
     "shareButtonsGradientColorOpacity": 0.8,
@@ -1285,7 +1285,7 @@
     "thumbSpacing": 10,
     "thumbSpacingSuffix": "px",
 
-    "flagLabelTypographyFontStyle": "",
+    "flagLabelTypographyFontStyle": "paragraph",
     "flagLabelTypographyFontFamilyType": "google",
     "flagLabelTypographyFontSize": 14,
     "flagLabelTypographyFontSizeSuffix": "px",
@@ -1315,7 +1315,7 @@
     "flagLabelSpacing": 20,
     "flagLabelSpacingSuffix": "px",
 
-    "radioTypographyFontStyle": "",
+    "radioTypographyFontStyle": "paragraph",
     "radioTypographyFontFamilyType": "google",
     "radioTypographyFontSize": 16,
     "radioTypographyFontSizeSuffix": "px",
@@ -1334,12 +1334,12 @@
 
     "radioBgColorHex": "#000000",
     "radioBgColorOpacity": 1,
-    "radioBgColorPalette": "",
+    "radioBgColorPalette": "color7",
 
     "radioSpacing": 10,
     "radioSpacingSuffix": "px",
 
-    "checkbox2TypographyFontStyle": "",
+    "checkbox2TypographyFontStyle": "paragraph",
     "checkbox2TypographyFontFamilyType": "google",
     "checkbox2TypographyFontSize": 16,
     "checkbox2TypographyFontSizeSuffix": "px",
@@ -1358,7 +1358,7 @@
 
     "checkbox2BgColorHex": "#000000",
     "checkbox2BgColorOpacity": 1,
-    "checkbox2BgColorPalette": "",
+    "checkbox2BgColorPalette": "color7",
 
     "checkbox2Spacing": 10,
     "checkbox2SpacingSuffix": "px",
@@ -1814,7 +1814,7 @@
     "filesSpacing": 10,
     "filesSpacingSuffix": "px",
 
-    "attributeTypographyFontStyle": "",
+    "attributeTypographyFontStyle": "paragraph",
     "attributeTypographyFontFamilyType": "google",
     "attributeTypographyFontSize": 16,
     "attributeTypographyFontSizeSuffix": "px",
@@ -1833,14 +1833,14 @@
 
     "attributeColorHex": "#000000",
     "attributeColorOpacity": 1,
-    "attributeColorPalette": "",
+    "attributeColorPalette": "color7",
 
     "attributeHorizontalAlign": "left",
 
     "attributeSpacing": 10,
     "attributeSpacingSuffix": "px",
 
-    "showMoreTypographyFontStyle": "",
+    "showMoreTypographyFontStyle": "paragraph",
     "showMoreTypographyFontFamilyType": "google",
     "showMoreTypographyFontSize": 16,
     "showMoreTypographyFontSizeSuffix": "px",
@@ -1859,7 +1859,7 @@
 
     "showMoreColorHex": "#1a7ac4",
     "showMoreColorOpacity": 1,
-    "showMoreColorPalette": "",
+    "showMoreColorPalette": "color7",
 
     "showMoreHorizontalAlign": "left",
 
@@ -1871,7 +1871,7 @@
     "footerIconCustomSize": 24,
     "footerIconCustomSizeSuffix": "px",
 
-    "footerTypographyFontStyle": "",
+    "footerTypographyFontStyle": "paragraph",
     "footerTypographyFontFamilyType": "google",
     "footerTypographyFontSize": 16,
     "footerTypographyFontSizeSuffix": "px",
@@ -1890,11 +1890,11 @@
 
     "footerColorHex": "#000000",
     "footerColorOpacity": 1,
-    "footerColorPalette": "",
+    "footerColorPalette": "color7",
 
     "footerIconColorHex": "#000000",
     "footerIconColorOpacity": 1,
-    "footerIconColorPalette": "",
+    "footerIconColorPalette": "color3",
 
     "footerSpacing": 20,
     "footerSpacingSuffix": "px",
@@ -1905,7 +1905,7 @@
     "qtyWidth": 100,
     "qtyWidthSuffix": "px",
 
-    "qtyTypographyFontStyle": "",
+    "qtyTypographyFontStyle": "heading5",
     "qtyTypographyFontFamilyType": "google",
     "qtyTypographyFontSize": 18,
     "qtyTypographyFontSizeSuffix": "px",
@@ -1924,7 +1924,7 @@
 
     "qtyColorHex": "#000000",
     "qtyColorOpacity": 1,
-    "qtyColorPalette": "",
+    "qtyColorPalette": "color2",
 
     "qtyBgColorType": "solid",
 
@@ -1997,7 +1997,7 @@
     "subtitleColorOpacity": 0.8,
     "subtitleColorPalette": "",
 
-    "subtitleTypographyFontStyle": "",
+    "subtitleTypographyFontStyle": "subtitle",
     "subtitleTypographyFontFamilyType": "google",
     "subtitleTypographyFontSize": 13,
     "subtitleTypographyFontSizeSuffix": "px",
@@ -2120,9 +2120,9 @@
 
     "wholesaleTitleColorHex": "#000000",
     "wholesaleTitleColorOpacity": 0.8,
-    "wholesaleTitleColorPalette": "",
+    "wholesaleTitleColorPalette": "color7",
 
-    "wholesaleTitleTypographyFontStyle": "",
+    "wholesaleTitleTypographyFontStyle": "paragraph",
     "wholesaleTitleTypographyFontFamilyType": "google",
     "wholesaleTitleTypographyFontSize": 16,
     "wholesaleTitleTypographyFontSizeSuffix": "px",
