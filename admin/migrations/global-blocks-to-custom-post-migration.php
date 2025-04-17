@@ -57,7 +57,7 @@ class Brizy_Admin_Migrations_GlobalBlocksToCustomPostMigration implements Brizy_
 
 				if ( $post ) {
 					$brizyPost = Brizy_Editor_Block::get( $post, $uid );
-					$brizyPost->set_editor_data( json_encode( $data ) );
+					$brizyPost->setEditorData( json_encode( $data ) );
 					$brizyPost->set_uses_editor( true );
 					$brizyPost->set_needs_compile( true );
 					$brizyPost->saveStorage();
@@ -75,7 +75,7 @@ class Brizy_Admin_Migrations_GlobalBlocksToCustomPostMigration implements Brizy_
 
 				if ( $post ) {
 					$brizyPost = Brizy_Editor_Block::get( $post );
-					$brizyPost->set_editor_data( json_encode( $data ) );
+					$brizyPost->setEditorData( json_encode( $data ) );
 					$brizyPost->set_uses_editor( true );
 					$brizyPost->set_needs_compile( true );
 					$brizyPost->saveStorage();

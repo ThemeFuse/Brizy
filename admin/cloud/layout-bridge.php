@@ -106,7 +106,7 @@ class Brizy_Admin_Cloud_LayoutBridge extends Brizy_Admin_Cloud_AbstractBridge
                 if (isset($layout['meta'])) {
                     $brizyPost->setMeta($layout['meta']);
                 }
-                $brizyPost->set_editor_data($layout['data']);
+                $brizyPost->setEditorData($layout['data']);
                 $brizyPost->set_uses_editor(true);
                 $brizyPost->set_needs_compile(true);
                 $brizyPost->saveStorage();
