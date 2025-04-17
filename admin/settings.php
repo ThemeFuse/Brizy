@@ -532,7 +532,7 @@ class Brizy_Admin_Settings {
 			}
 			$offset += 100;
 		}
-		Brizy_Editor_Post::mark_all_for_compilation();
+		Brizy_Editor_Post::markAllForCompilation();
 		wp_send_json_success( [ 'message' => __( 'The replacement was successful', 'brizy' ) ] );
 	}
 }

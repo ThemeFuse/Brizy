@@ -93,6 +93,7 @@ abstract class Brizy_Editor_Entity extends Brizy_Admin_Serializable {
 
 
 	/**
+	 * @deprecated us isBrizyEnabled
 	 * @return bool
 	 */
 	public function uses_editor() {

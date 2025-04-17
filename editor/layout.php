@@ -106,7 +106,7 @@ class Brizy_Editor_Layout extends Brizy_Editor_Post {
 		}
 
 		if ( in_array( 'data', $fields ) ) {
-			$global['data'] = $this->get_editor_data(true);
+			$global['data'] = $this->getEditorData(true);
 		}
 
 		if ( in_array( 'meta', $fields ) ) {

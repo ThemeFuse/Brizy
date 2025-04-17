@@ -106,7 +106,7 @@ class Brizy_Admin_Cloud_BlockBridge extends Brizy_Admin_Cloud_AbstractBridge
                 if (isset($block['meta'])) {
                     $brizyPost->setMeta($block['meta']);
                 }
-                $brizyPost->set_editor_data($block['data']);
+                $brizyPost->setEditorData($block['data']);
                 $brizyPost->set_uses_editor(true);
                 $brizyPost->set_needs_compile(true);
                 $brizyPost->setDataVersion(1);

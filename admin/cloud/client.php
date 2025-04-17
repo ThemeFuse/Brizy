@@ -393,7 +393,7 @@ class Brizy_Admin_Cloud_Client extends WP_Http
             'container' => $this->brizyProject->getCloudContainer(),
             'meta' => $block->getMeta(),
             'media' => $block->getMedia(),
-            'data' => $block->get_editor_data(true),
+            'data' => $block->getEditorData(true),
             'uid' => $block->getUid(),
             'dataVersion' => 1
         );
@@ -489,7 +489,7 @@ class Brizy_Admin_Cloud_Client extends WP_Http
         $cloudBlockData = array(
             'container' => $this->brizyProject->getCloudContainer(),
             'meta' => $popup->getMeta(),
-            'data' => $popup->get_editor_data(true),
+            'data' => $popup->getEditorData(true),
             'is_autosave' => 0,
             'uid' => $popup->getUid(),
             'dataVersion' => 1
@@ -592,7 +592,7 @@ class Brizy_Admin_Cloud_Client extends WP_Http
             'container' => $this->brizyProject->getCloudContainer(),
             'meta' => $layout->getMeta(),
             'media' => $layout->getMedia(),
-            'data' => $layout->get_editor_data(true),
+            'data' => $layout->getEditorData(true),
             'uid' => $layout->getUid(),
             'dataVersion' => 1
         );

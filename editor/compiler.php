@@ -31,7 +31,7 @@ class Brizy_Editor_Compiler {
 
 	public function compilePost( Brizy_Editor_Post $post, $editorConfig ) {
 		$this->urlBuilder->set_post_id( $post->getWpPostId() );
-		$editor_data    = $post->get_editor_data( true );
+		$editor_data    = $post->getEditorData( true );
 		$compilerParam  = $this->compilerParams( $editor_data, $editorConfig );
 		$httpClient     = new Brizy_Editor_Http_Client();
 		$compilerResult = $httpClient->request( $this->compilerUrl, array( 'body' => $compilerParam ), 'POST' )->get_response_body();
@@ -58,13 +58,16 @@ class Brizy_Editor_Compiler {
 
 		$currentCompiler = preg_replace( "/((beta\d?)?-wp)$/", "", $post->get_compiler_version() );
 		$v2              = preg_replace( "/((beta\d?)?-wp)$/", "", BRIZY_MINIMUM_COMPILER_VERSION );
-
-		if(BRIZY_EDITOR_VERSION=='dev') {
+		if ( BRIZY_EDITOR_VERSION == 'dev' ) {
 			$v2 = BRIZY_EDITOR_VERSION;
+			// force recompile if the post does not have sections
+			// usually this will be needed only in dev mode.
+			if ( empty( $post->getCompiledSections() ) ) {
+				return true;
+			}
 		}
-
 		if ( version_compare( $currentCompiler, $v2, "<" ) ) {
-            return true;
+			return true;
 		}
 
 		return false;
@@ -77,18 +80,12 @@ class Brizy_Editor_Compiler {
 	}
 
 	private function updatePost( Brizy_Editor_Post $post, $pageData ) {
-		$post->set_compiled_html( $pageData['html'] );
-		$assets  = $pageData['assets'];
-		$scripts = [
-			'free' => $assets['freeScripts'],
-			'pro'  => ( isset( $assets['proScripts'] ) ? $assets['proScripts'] : [] ),
-		];
-		$styles  = [
-			'free' => $assets['freeStyles'],
-			'pro'  => ( isset( $assets['proStyles'] ) ? $assets['proStyles'] : [] ),
-		];
-		$post->setCompiledScripts( $scripts );
-		$post->setCompiledStyles( $styles );
+
+		$section_manager = $post->getCompiledSectionManager();
+		$section_manager->merge( $pageData );
+		$post->setCompiledSections($section_manager->asJson());
+		$post->setCompiledScripts( [] );
+		$post->setCompiledStyles( [] );
 		$post->set_needs_compile( false );
 		$post->set_compiler( Brizy_Editor_Post::COMPILER_BROWSER );
 		$post->set_compiler_version( BRIZY_EDITOR_VERSION );
