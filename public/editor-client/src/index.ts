@@ -1,13 +1,14 @@
 import { authors } from "@/authors";
-import { terms } from "@/terms";
 import { shortcodeContent } from "@/shortcodeContent";
 import { sidebars } from "@/sidebars";
+import { terms } from "@/terms";
 import merge from "lodash/merge";
 import set from "lodash/set";
 import { doAiRequest } from "./aiText";
 import { autoSave } from "./autoSave";
 import { getCollectionItems } from "./collectionItems/getCollectionItems";
 import { searchCollectionItems } from "./collectionItems/searchCollectionItems";
+import { getCollectionTypesInfo } from "./collectionTypes/getCollectionTypesInfo";
 import { loadCollectionTypes } from "./collectionTypes/loadCollectionTypes";
 import { getConfig } from "./config";
 import { addFile } from "./customFile/addFile";
@@ -76,7 +77,8 @@ const api = {
     getCollectionItems
   },
   collectionTypes: {
-    loadCollectionTypes
+    loadCollectionTypes,
+    getCollectionTypesInfo
   },
   screenshots: screenshots(),
   fonts: {

@@ -192,6 +192,7 @@ class Brizy_Editor_Editor_Editor {
 			'imageSizes'      => $this->getImgSizes(),
 			'moduleGroups'    => [],
 			'l10n'            => $this->getTexts(),
+            'isRTL'           => is_rtl(),
 			'membership'      => true,
 			'elements'        => [
 				'image' => [ 'zoom' => true ],
@@ -1309,6 +1310,17 @@ class Brizy_Editor_Editor_Editor {
 				'classes'       => array_values( array_filter( $item->classes ) ),
 				'xfn'           => get_post_meta( $item->ID, '_menu_item_xfn', true ),
 			);
+
+            $object_type    = get_post_meta( $item->ID, '_menu_item_object', true );
+            $brz_post_types = Brizy_Editor::get()->supported_post_types();
+            if ( in_array( $object_type, $brz_post_types ) ) {
+                $object_id = get_post_meta( $item->ID, '_menu_item_object_id', true );
+                $post      = get_post( $object_id );
+                if ( $post && Brizy_Editor_Entity::isBrizyEnabled( $post->ID ) ) {
+                    $item_value['editorUrl'] = Brizy_Editor_Entity::getEditUrl($post->ID);
+                }
+            }
+
 			$an_item               = (object) array(
 				'type' => 'MenuItem',
 			);
@@ -1743,7 +1755,10 @@ class Brizy_Editor_Editor_Editor {
 			'symbolList'                    => $pref . Brizy_Admin_Symbols_Api::LIST_ACTION,
 			'getDynamicContentPlaceholders' => $pref . Brizy_Editor_API::AJAX_GET_DYNAMIC_CONTENT,
 			'adobeFontsUrl'                 => $pref . Brizy_Editor_API::AJAX_GET_ADOBE_FONTS,
-		);
+            'getAccountProperties'          => $pref . BrizyPro_Forms_ApiExtender::AJAX_GET_ACCOUNT_PROPERTIES,
+            'createIntegrationGroup'        => $pref . BrizyPro_Forms_ApiExtender::AJAX_CREATE_GROUP,
+            'authenticateIntegration'       => $pref . BrizyPro_Forms_ApiExtender::AJAX_AUTHENTICATE_INTEGRATION,
+        );
 
 		return $actions;
 	}

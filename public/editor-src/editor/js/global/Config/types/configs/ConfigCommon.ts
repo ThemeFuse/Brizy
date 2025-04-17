@@ -432,8 +432,8 @@ export interface API {
         rej: Response<string>,
         extra: {
           id: string;
-          fields?: string;
-          status?: string;
+          search?: string;
+          populationPermalink?: "1" | "0";
           extraChoices?: ChoiceSync;
         }
       ) => void;
@@ -801,6 +801,17 @@ interface _ConfigCommon<Mode> {
     };
 
     //#endregion Elements
+
+    //#region Prompts
+
+    prompts?: {
+      blockAdder?: {
+        activeTab?: string;
+        category?: string;
+      };
+    };
+
+    //#endregion
   };
 
   //#endregion
