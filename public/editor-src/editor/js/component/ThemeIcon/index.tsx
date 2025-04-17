@@ -1,7 +1,7 @@
 import cn from "classnames";
 import React, { useMemo } from "react";
 import { IconTypes } from "visual/config/icons/Type";
-import { useConfig } from "visual/global/hooks";
+import { useConfig } from "visual/providers/ConfigProvider";
 import { RenderFor } from "visual/providers/RenderProvider/RenderFor";
 import { makePlaceholder } from "visual/utils/dynamicContent";
 import { compileTemplateIconUrl, templateIconUrl } from "visual/utils/icons";

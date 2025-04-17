@@ -65,7 +65,7 @@ export const getProjectStyles = (
     getClassName
   );
 
-  const globalStyleColorPalette = makeGlobalStylesColorPalette(globalPalette);
+  const globalStyleColorPalette = makeGlobalStylesColorPalette(globalPalette, config);
 
   return `${richTextColorPalette}${globalStyleColorPalette}${typographyStyles}`;
 };

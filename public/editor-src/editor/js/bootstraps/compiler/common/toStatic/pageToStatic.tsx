@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import EditorGlobal from "visual/global/Editor";
+import { useConfig } from "visual/providers/ConfigProvider";
 import { EditorMode } from "visual/providers/EditorModeProvider";
 import { ServerStyleSheet } from "visual/providers/StyleProvider/ServerStyleSheet";
 import { pageBlocksRawSelector } from "visual/redux/selectors";
@@ -21,6 +22,9 @@ const RenderPage = (props: { store: Store; editorMode: EditorMode }) => {
   const { store, editorMode } = props;
   const { Page: BasePage } = EditorGlobal.getComponents();
 
+  const config = useConfig();
+  const getGlobalConfig = useCallback(() => config, [config]);
+
   if (!BasePage) {
     throw Error("Missing Page Components", EditorGlobal.getComponents());
   }
@@ -40,6 +44,7 @@ const RenderPage = (props: { store: Store; editorMode: EditorMode }) => {
         reduxState={reduxState}
         renderContext="view"
         editorMode={editorMode}
+        getGlobalConfig={getGlobalConfig}
       />
     </>
   );
@@ -62,5 +67,5 @@ export const pageToStatic = (props: Props): Output => {
     </Providers>
   );
 
-  return baseToStatic({ Page, sheet: sheet.instance, store });
+  return baseToStatic({ Page, sheet: sheet.instance, store, config });
 };

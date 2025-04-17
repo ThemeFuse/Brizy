@@ -23,11 +23,13 @@ export function handlePublish({
   action,
   state,
   oldState,
-  config,
+  getConfig,
   apiHandler,
   editorMode
 }: Data) {
   if (action.type === PUBLISH) {
+    const config = getConfig();
+    
     const { onSuccess = noop, onError = noop } = action.meta ?? {};
 
     const oldProject = projectSelector(oldState);
@@ -108,6 +110,26 @@ export function handlePublish({
           allApi.push(
             onUpdate({
               ..._data,
+              onDone: action.payload.res
+            })
+          );
+          break;
+        }
+        case "externalForce": {
+          allApi.push(
+            onUpdate({
+              config,
+              is_autosave: 0,
+              needToCompile: {
+                project,
+                page,
+                globalBlocks: Object.values(globalBlocks)
+              },
+              state: {
+                project,
+                page,
+                globalBlocks: Object.values(globalBlocks)
+              },
               onDone: action.payload.res
             })
           );

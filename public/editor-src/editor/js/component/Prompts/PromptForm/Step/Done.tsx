@@ -8,6 +8,7 @@ type Props = {
 
 class Done extends Component<Props> {
   static contextType = Context;
+  declare context: React.ContextType<typeof Context>;
 
   handleClose = (): void => {
     this.props.onClose();

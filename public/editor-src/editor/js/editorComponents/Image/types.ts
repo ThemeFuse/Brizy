@@ -88,17 +88,30 @@ export type V = {
   linkExternalType: string;
   linkPopup: string;
   linkUpload: string;
+  hoverImageSrc: string;
+  hoverImageWidth: number;
+  hoverImageHeight: number;
+  hoverPositionX: number;
+  hoverPositionY: number;
+  hoverHeight: number;
+  hoverImageExtension: string;
+  hoverImage: string;
+  hoverImageFileName: string;
 
   [others: string]: unknown;
 };
 
 export type Patch = { [key: string]: number };
 
-type GetResponsiveUrls = (imageSizes: ImageSizes) => {
+export type GetResponsiveUrls = (imageSizes: ImageSizes) => {
   desktopSrc: string;
+  hoverDesktopSrc: string;
   tabletSrc: string;
+  hoverTabletSrc: string;
   mobileSrc: string;
+  hoverMobileSrc: string;
   sourceSrc: string;
+  hoverSourceSrc: string;
 };
 
 export type ImageProps = {
@@ -111,9 +124,10 @@ export type ImageProps = {
   componentId: string;
   meta: Meta;
   wrapperSizes: WrapperSizes;
-  getResponsiveUrls: GetResponsiveUrls;
   renderContext: RenderType;
   editorMode: EditorMode;
+  // INFO: this function is passed only in preview
+  getResponsiveUrls?: GetResponsiveUrls;
   extraAttributes?: React.HTMLAttributes<HTMLImageElement>;
   children: ReactNode;
   onChange: (arg0: Patch) => void;
@@ -127,6 +141,25 @@ export type ImageProps = {
 
   linkProps?: LinkProps;
 };
+
+export type HoverImageCommonProps = Pick<
+  ImageProps,
+  | "v"
+  | "vs"
+  | "vd"
+  | "_id"
+  | "componentId"
+  | "meta"
+  | "extraAttributes"
+  | "getResponsiveUrls"
+  | "store"
+  | "renderContext"
+  | "editorMode"
+>;
+
+export interface HoverSvgImageProps extends HoverImageCommonProps {
+  hoverImageSrc: string;
+}
 
 export type Device = "desktop" | "tablet" | "mobile";
 

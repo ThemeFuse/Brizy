@@ -7,6 +7,15 @@ interface Props extends DynamicStylesProps<ElementModel> {
   props: ElementProps;
 }
 
+const hoverTransitionCSSFn = "cssStyleHoverTransition";
+
+const hoverImagesSizesCSSStyleFns = [
+  "cssStyleElementImageHoverWidthWrapper",
+  "cssStyleElementImageHoverHeightWrapper",
+  "cssStyleElementImageHoverMarginLeft",
+  "cssStyleElementImageHoverMarginTop"
+];
+
 export function styleHover(data: Props): OutputStyle {
   const styles: Styles = {
     ".brz &&.brz-hover-animation__container": {
@@ -19,40 +28,52 @@ export function styleHover(data: Props): OutputStyle {
 
 export function style(data: Props): OutputStyle {
   const styles: Styles = {
-    ".brz &&:hover:not(.brz-image--hovered)": {
+    ".brz &&:not(.brz-image--hovered)": {
       standart: ["cssStyleElementImageMaxWidthPreview"]
+    },
+    ".brz &&": {
+      standart: [
+        "cssStyleElementImageHeightPreview",
+        "cssStyleBorderRadius|||preview",
+        "cssStyleBlendMode"
+      ]
     },
     ".brz &&:hover": {
       standart: [
-        "cssStyleElementImageHeightPreview",
         "cssStyleElementImageBoxShadow|||preview",
         "cssStyleBorder|||preview",
-        "cssStyleBorderRadius|||preview",
-        "cssStyleMaskDropShadow",
-        "cssStyleBlendMode"
+        "cssStyleMaskDropShadow"
       ],
-      interval: ["cssStyleHoverTransition", "cssStylePropertyHoverTransition"]
+      interval: [hoverTransitionCSSFn, "cssStylePropertyHoverTransition"]
+    },
+    ".brz && .brz-picture:after": {
+      standart: ["cssStyleBorderRadius|||preview"]
     },
     ".brz &&:hover .brz-picture:after": {
       standart: [
         "cssStyleElementImageBoxShadow|||preview",
         "cssStyleBgColor|||preview",
-        "cssStyleBgGradient|||preview",
-        "cssStyleBorderRadius|||preview"
+        "cssStyleBgGradient|||preview"
       ],
-      interval: ["cssStyleHoverTransition", "cssStylePropertyHoverTransition"]
+      interval: [hoverTransitionCSSFn, "cssStylePropertyHoverTransition"]
     },
-    ".brz &&:hover .brz-picture": {
+    ".brz && .brz-picture": {
       standart: [
-        "cssStyleElementImageFilter|||preview",
         "cssStyleMaskShape",
         "cssStyleMaskCustomShape",
         "cssStyleMaskSize",
         "cssStyleMaskPosition",
         "cssStyleMaskRepeat"
-      ],
-      interval: ["cssStyleHoverTransition", "cssStylePropertyHoverTransition"]
-    }
+      ]
+    },
+    ".brz &&:hover .brz-picture": {
+      standart: ["cssStyleElementImageFilter|||preview"],
+      interval: [hoverTransitionCSSFn, "cssStylePropertyHoverTransition"]
+    },
+    ".brz &&.brz-image--withHover img.brz-img, .brz &&.brz-image--withHover img.dynamic-image, .brz &&.brz-image--withHover .brz-img__hover":
+      {
+        interval: [hoverTransitionCSSFn]
+      }
   };
 
   return renderStyles({ ...data, styles });
@@ -60,13 +81,17 @@ export function style(data: Props): OutputStyle {
 
 export function styleContent(data: Props): OutputStyle {
   const styles: Styles = {
-    ".brz &&:hover": {
+    ".brz &&": {
       standart: [
         "cssStyleElementImageMaxWidthEditor",
         "cssStyleElementImageHeightEditor",
         "cssStyleBlendMode|||editor"
       ]
-    }
+    },
+    ".brz &&.brz-image--withHover img.brz-img, .brz &&.brz-image--withHover img.dynamic-image, .brz &&.brz-image--withHover .brz-img__hover":
+      {
+        interval: [hoverTransitionCSSFn]
+      }
   };
 
   return renderStyles({ ...data, styles });
@@ -74,29 +99,36 @@ export function styleContent(data: Props): OutputStyle {
 
 export function styleWrapper(data: Props): OutputStyle {
   const { v } = data;
+
   const { maskShape = "none" } = v;
+
   const styles: Styles = {
-    ".brz &&:hover": {
+    ".brz &&": {
       standart: [
-        "cssStyleElementImageFilter|||editor",
         "cssStyleElementImageWidthWrapper",
         "cssStyleElementImageHeightWrapper|||editor",
         "cssStyleElementImagePosition",
-        ...(maskShape === "none"
-          ? [
-              "cssStyleBorder|||editor",
-              "cssStyleBorderRadius|||editor",
-              "cssStyleElementImageBoxShadow|||editor",
-              "cssStyleBlendMode|||editor"
-            ]
-          : []),
         "cssStyleMaskShape",
         "cssStyleMaskCustomShape",
         "cssStyleMaskSize",
         "cssStyleMaskPosition",
-        "cssStyleMaskRepeat"
+        "cssStyleMaskRepeat",
+        ...(maskShape === "none"
+          ? ["cssStyleBorderRadius|||editor", "cssStyleBlendMode|||editor"]
+          : [])
+      ]
+    },
+    ".brz &&:hover": {
+      standart: [
+        "cssStyleElementImageFilter|||editor",
+        ...(maskShape === "none"
+          ? [
+              "cssStyleBorder|||editor",
+              "cssStyleElementImageBoxShadow|||editor"
+            ]
+          : [])
       ],
-      interval: ["cssStyleHoverTransition", "cssStylePropertyHoverTransition"]
+      interval: [hoverTransitionCSSFn, "cssStylePropertyHoverTransition"]
     },
     ".brz &&:hover:after": {
       standart: [
@@ -104,7 +136,7 @@ export function styleWrapper(data: Props): OutputStyle {
         "cssStyleBgColor|||editor",
         "cssStyleBgGradient|||editor"
       ],
-      interval: ["cssStyleHoverTransition", "cssStylePropertyHoverTransition"]
+      interval: [hoverTransitionCSSFn, "cssStylePropertyHoverTransition"]
     }
   };
 
@@ -115,14 +147,16 @@ export function styleWrapperContainer(
   data: DynamicStylesProps<ElementModel>
 ): OutputStyle {
   const styles: Styles = {
+    ".brz &&": {
+      standart: ["cssStyleBorderRadius|||editor"]
+    },
     ".brz &&:hover": {
       standart: [
-        "cssStyleBorderRadius|||editor",
         "cssStyleBorder|||editor",
         "cssStyleElementImageBoxShadow|||editor",
         "cssStyleMaskDropShadow"
       ],
-      interval: ["cssStyleHoverTransition", "cssStylePropertyHoverTransition"]
+      interval: [hoverTransitionCSSFn, "cssStylePropertyHoverTransition"]
     }
   };
 
@@ -131,7 +165,7 @@ export function styleWrapperContainer(
 
 export function styleImage(data: Props): OutputStyle {
   const styles: Styles = {
-    ".brz &&:hover": {
+    ".brz &&": {
       standart: [
         "cssStyleElementImageWidthWrapper",
         "cssStyleElementImageHeightWrapper",
@@ -144,16 +178,37 @@ export function styleImage(data: Props): OutputStyle {
   return renderStyles({ ...data, styles });
 }
 
+export function styleHoverImage(data: Props): OutputStyle {
+  const styles = {
+    ".brz &&:not(.brz-img__hover-preview):not(.brz-img__hover-population), .brz &&.brz-img__hover-gif.brz-img__hover-preview":
+      {
+        standart: hoverImagesSizesCSSStyleFns
+      }
+  };
+
+  return renderStyles({ ...data, styles });
+}
+
 export function stylePicture(data: Props): OutputStyle {
   const styles: Styles = {
-    ".brz &&:hover": {
+    ".brz &&": {
       standart: ["cssStyleElementImagePictureSizePreview"]
     },
-    ".brz &&:hover > .brz-img": {
+    ".brz && > .brz-img": {
       standart: [
         "cssStyleElementImagePosition",
         "cssStyleElementImageSizePreview"
       ]
+    }
+  };
+
+  return renderStyles({ ...data, styles });
+}
+
+export function styleSvgHoverWrapper(data: Omit<Props, "props">): OutputStyle {
+  const styles = {
+    ".brz &&:hover": {
+      interval: [hoverTransitionCSSFn]
     }
   };
 

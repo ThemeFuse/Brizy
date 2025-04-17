@@ -1,7 +1,7 @@
 import { isEditor } from "visual/providers/RenderProvider";
 import { DynamicStylesProps } from "visual/types";
 import { renderStyles } from "visual/utils/cssStyle";
-import { OutputStyle } from "visual/utils/cssStyle/types";
+import { OutputStyle, Styles } from "visual/utils/cssStyle/types";
 import { Value } from "./types";
 
 export function style(data: DynamicStylesProps<Value>): OutputStyle {
@@ -9,28 +9,28 @@ export function style(data: DynamicStylesProps<Value>): OutputStyle {
     v,
     contexts: { renderContext }
   } = data;
+
   const { visibleMonth = 1 } = v;
-  const styles: {
-    [k: string]: {
-      interval?: string[];
-      standart?: string[];
-    };
-  } = {
-    ".brz &&:hover .brz-ministryBrands.brz-eventCalendar": {
+
+  const styles: Styles = {
+    ".brz && .brz-ministryBrands.brz-eventCalendar": {
       standart: [
         "cssStylePaddingBG",
         "cssStyleBorderRadius",
+        "cssStyleElementMinistryEventCalendarTableSpacing"
+      ]
+    },
+    ".brz &&:hover .brz-ministryBrands.brz-eventCalendar": {
+      standart: [
         "cssStylementOfMinistryBrandsParentBgColor",
         "cssStylementOfMinistryBrandsParentBgGradient",
         "cssStylementOfMinistryBrandsParentBorder",
-        "cssStylementOfMinistryBrandsParentBoxShadow",
-        "cssStyleElementMinistryEventCalendarTableSpacing"
+        "cssStylementOfMinistryBrandsParentBoxShadow"
       ],
       interval: ["cssStyleHoverTransition"]
     },
-    ".brz &&:hover .brz-eventCalendar-table": {
-      standart: ["cssStyleElementMinistryEventCalendarTableSpacing"],
-      interval: ["cssStyleHoverTransition"]
+    ".brz && .brz-eventCalendar-table": {
+      standart: ["cssStyleElementMinistryEventCalendarTableSpacing"]
     },
     ".brz && .brz-eventCalendar-pagination a": {
       standart: ["cssStyleElementMinistryEventCalendarArrowSize"]
@@ -248,7 +248,7 @@ export function style(data: DynamicStylesProps<Value>): OutputStyle {
         interval: ["cssStyleHoverTransition"]
       },
 
-    ".brz &&:hover .brz-eventCalendar-row-weekdays th": {
+    ".brz && .brz-eventCalendar-row-weekdays th": {
       standart: ["cssStyleElementMinistryEventCalendarWeekdaysAlign"],
       interval: ["cssStyleHoverTransition"]
     },
@@ -260,39 +260,47 @@ export function style(data: DynamicStylesProps<Value>): OutputStyle {
       standart: ["cssStyleElementMinistryEventCalendarTableBorder"],
       interval: ["cssStyleHoverTransition"]
     },
-    ".brz && .brz-eventCalendar-pagination:hover": {
+    ".brz && .brz-eventCalendar-pagination": {
       standart: [
         "cssStyleElementOfMinistryBrandsPaginationTypography",
-        "cssStyleElementOfMinistryBrandsPaginationColor",
         "cssStyleElementMinistryEventCalendarPaginationAlign"
-      ],
+      ]
+    },
+    ".brz && .brz-eventCalendar-pagination:hover": {
+      standart: ["cssStyleElementOfMinistryBrandsPaginationColor"],
       interval: ["cssStyleHoverTransition"]
     },
     ".brz && .brz-eventCalendar-pagination .brz-eventCalendar-heading": {
       standart: ["cssStyleElementMinistryEventCalendarPaginationSpacing"]
     },
-    ".brz && tr.brz-eventCalendar-row-weekdays th span:hover": {
+    ".brz && tr.brz-eventCalendar-row-weekdays th span": {
       standart: [
         "cssStyleElementMinistryEventCalendarWeekdaysTypography",
-        "cssStyleElementMinistryEventCalendarWeekdaysColor",
         "cssStyleElementMinistryEventCalendarWeekdaysAlign"
-      ],
+      ]
+    },
+    ".brz && tr.brz-eventCalendar-row-weekdays th span:hover": {
+      standart: ["cssStyleElementMinistryEventCalendarWeekdaysColor"],
       interval: ["cssStyleHoverTransition"]
     },
-    ".brz && .brz-eventCalendar-day:hover .brz-eventCalendar-day-number": {
+    ".brz && .brz-eventCalendar-day .brz-eventCalendar-day-number": {
       standart: ["cssStyleElementMinistryEventCalendarDayAlign"],
       interval: ["cssStyleHoverTransition"]
     },
-    ".brz && .brz-eventCalendar-day:hover .brz-eventCalendar-day-number span": {
+    ".brz && .brz-eventCalendar-day .brz-eventCalendar-day-number span": {
       standart: [
         "cssStyleElementMinistryEventCalendarDayTypography",
-        "cssStyleElementMinistryEventCalendarDayColor",
         "cssStyleElementMinistryEventCalendarDayWidth",
         "cssStyleElementMinistryEventCalendarDayHeight",
+        "cssStyleElementMinistryEventCalendarDayBorderRadius"
+      ]
+    },
+    ".brz && .brz-eventCalendar-day:hover .brz-eventCalendar-day-number span": {
+      standart: [
+        "cssStyleElementMinistryEventCalendarDayColor",
         "cssStyleElementMinistryEventCalendarDayBgColor",
         "cssStyleElementMinistryEventCalendarDayBgGradient",
         "cssStyleElementMinistryEventCalendarDayBorder",
-        "cssStyleElementMinistryEventCalendarDayBorderRadius",
         "cssStyleElementMinistryEventCalendarDayBoxShadow"
       ],
       interval: ["cssStyleHoverTransition"]
@@ -300,19 +308,19 @@ export function style(data: DynamicStylesProps<Value>): OutputStyle {
     ".brz && .brz-eventCalendar-links": {
       standart: ["cssStyleElementMinistryEventCalendarTitleAlign"]
     },
+    ".brz && .brz-eventCalendar-links li .brz-eventCalendar-title": {
+      standart: ["cssStyleElementOfMinistryBrandsTitleTypography"]
+    },
     ".brz && .brz-eventCalendar-links li .brz-eventCalendar-title:hover": {
-      standart: [
-        "cssStyleElementOfMinistryBrandsTitleTypography",
-        "cssStyleElementOfMinistryBrandsTitleColor"
-      ],
+      standart: ["cssStyleElementOfMinistryBrandsTitleColor"],
       interval: ["cssStyleHoverTransition"]
+    },
+    ".brz && .brz-eventCalendar-links .brz-eventCalendar__event-start-time": {
+      standart: ["cssStyleElementMinistryEventCalendarEventStartTimeTypography"]
     },
     ".brz && .brz-eventCalendar-links .brz-eventCalendar__event-start-time:hover":
       {
-        standart: [
-          "cssStyleElementMinistryEventCalendarEventStartTimeTypography",
-          "cssStyleElementMinistryEventCalendarEventStartTimeColor"
-        ],
+        standart: ["cssStyleElementMinistryEventCalendarEventStartTimeColor"],
         interval: ["cssStyleHoverTransition"]
       },
     ".brz &&:hover .brz-eventCalendar-day-np": {
@@ -323,10 +331,10 @@ export function style(data: DynamicStylesProps<Value>): OutputStyle {
       ],
       interval: ["cssStyleHoverTransition"]
     },
-    ".brz &&:hover .brz-eventCalendar__subscribe__container": {
+    ".brz && .brz-eventCalendar__subscribe__container": {
       standart: ["cssStyleElementMinistryEventCalendarSubscribeToCalendarAlign"]
     },
-    ".brz &&:hover .brz-eventCalendar__subscribe .brz-icon-svg": {
+    ".brz && .brz-eventCalendar__subscribe .brz-icon-svg": {
       standart: [
         "cssStyleSizeFontSizeIcon",
         "cssStyleElementMinistryEventCalendarIconMargin",
@@ -337,18 +345,22 @@ export function style(data: DynamicStylesProps<Value>): OutputStyle {
       standart: ["cssStyleElementMinistryEventCalendarCustomIconColor"],
       interval: ["cssStyleHoverTransition"]
     },
-    ".brz && .brz-eventCalendar__subscribe:hover": {
+    ".brz && .brz-eventCalendar__subscribe": {
       standart: [
         "cssStyleElementMinistryEventCalendarSubscribeToCalendarTypography",
-        "cssStyleElementMinistryEventCalendarSubscribeToCalendarColor",
-        "cssStyleElementMinistryEventCalendarSubscribeToCalendarBgColor",
-        "cssStyleElementMinistryEventCalendarSubscribeToCalendarBgGradient",
-        "cssStyleElementMinistryEventCalendarSubscribeToCalendarBorder",
-        "cssStyleElementMinistryEventCalendarSubscribeToCalendarBoxShadow",
         "cssStyleElementMinistryEventCalendarSubscribeToCalendarWidth",
         "cssStyleElementMinistryEventCalendarSubscribeToCalendarHeight",
         "cssStyleElementMinistryEventCalendarIconPosition",
         "cssStyleElementMinistryEventCalendarSubscribeToCalendarBorderRadius"
+      ]
+    },
+    ".brz && .brz-eventCalendar__subscribe:hover": {
+      standart: [
+        "cssStyleElementMinistryEventCalendarSubscribeToCalendarColor",
+        "cssStyleElementMinistryEventCalendarSubscribeToCalendarBgColor",
+        "cssStyleElementMinistryEventCalendarSubscribeToCalendarBgGradient",
+        "cssStyleElementMinistryEventCalendarSubscribeToCalendarBorder",
+        "cssStyleElementMinistryEventCalendarSubscribeToCalendarBoxShadow"
       ],
       interval: ["cssStyleElementMinistryEventCalendarHoverTransition"]
     }

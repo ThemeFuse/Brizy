@@ -13,15 +13,16 @@ export { objectFromEntries } from "./fromEntries";
  *
  * @param {function} f
  * @param {*} value
+ * @param {object=} parentOption
  * @return {*}
  */
-export const map = (f, value) => {
+export const map = (f, value, parentOption) => {
   if (Array.isArray(value)) {
-    return value.map(f);
+    return value.map((opt) => f(opt, parentOption));
   }
 
   if (value && typeof value === "object") {
-    return mapValues(value, f);
+    return mapValues(value, (opt) => f(opt, value));
   }
 
   return value;

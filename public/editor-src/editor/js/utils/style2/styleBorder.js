@@ -1,4 +1,3 @@
-import { configSelector } from "visual/redux/selectors";
 import { getColor } from "visual/utils/color";
 import { defaultValueValue } from "visual/utils/onChange";
 import { capByPrefix } from "visual/utils/string";
@@ -16,11 +15,11 @@ export function styleBorderStyle({ v, device, state, prefix = "" }) {
   return dvv(capByPrefix(border, "style"));
 }
 
-export function styleBorderColor({ v, device, state, store, prefix = "" }) {
+export function styleBorderColor({ v, device, state, prefix = "", getConfig }) {
   state = getState(v, state);
 
   const dvv = (key) => defaultValueValue({ v, key, device, state });
-  const config = configSelector(store.getState());
+  const config = getConfig();
   const border = capByPrefix(prefix, "border");
 
   const colorHex = dvv(capByPrefix(border, "colorHex"));

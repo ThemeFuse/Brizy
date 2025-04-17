@@ -1,6 +1,6 @@
+import { DynamicStylesProps } from "visual/types";
 import { renderStyles } from "visual/utils/cssStyle";
 import { OutputStyle } from "visual/utils/cssStyle/types";
-import { DynamicStylesProps } from "visual/types";
 
 export function style<T>(data: DynamicStylesProps<T>): OutputStyle {
   const styles: {
@@ -24,7 +24,7 @@ export function style<T>(data: DynamicStylesProps<T>): OutputStyle {
           "cssStylePropertyHoverTransitionColor"
         ]
       },
-    ".brz && > .brz-accordion__item:hover": {
+    ".brz && > .brz-accordion__item": {
       standart: ["cssStyleBorderRadius"]
     },
     ".brz && > .brz-accordion__item.brz-accordion__item--active": {
@@ -73,7 +73,7 @@ export function style<T>(data: DynamicStylesProps<T>): OutputStyle {
     ".brz && > .brz-accordion__item:not(:last-child)": {
       standart: ["cssStyleElementAccordionSpacing"]
     },
-    ".brz &&:hover > .brz-accordion__item > .brz-accordion__content > .brz-accordion__item-content":
+    ".brz && > .brz-accordion__item > .brz-accordion__content > .brz-accordion__item-content":
       {
         standart: [
           "cssStylePaddingFourFields",
@@ -116,7 +116,7 @@ export function style<T>(data: DynamicStylesProps<T>): OutputStyle {
           "cssStyleElementAccordionFilterShadow"
         ]
       },
-    ".brz && > .brz-accordion__filter-wrapper > .brz-accordion__filter > .brz-accordion__filter__item--style-1:hover":
+    ".brz && > .brz-accordion__filter-wrapper > .brz-accordion__filter > .brz-accordion__filter__item--style-1":
       {
         standart: [
           "cssStyleElementAccordionFilterPaddingFourFields",
@@ -160,7 +160,7 @@ export function styleAnimation<T>(data: DynamicStylesProps<T>): OutputStyle {
       standart?: string[];
     };
   } = {
-    ".brz &&:hover": {
+    ".brz &&": {
       standart: ["cssStyleAnimationAll"]
     }
   };

@@ -4,6 +4,7 @@ import {
   Choice,
   ChoicesAsync
 } from "visual/component/Options/types/dev/Select/types";
+import { RuleList } from "visual/component/Prompts/PromptConditions/Rules/types";
 import {
   EkklesiaFieldMap,
   EkklesiaKeys,
@@ -19,7 +20,9 @@ import { Shopify, isCloud } from "visual/global/Config/types/configs/Cloud";
 import {
   AutoSave,
   ConditionalTypesData,
-  ConfigCommon
+  ConfigCommon,
+  MenuSimple,
+  Sidebar
 } from "visual/global/Config/types/configs/ConfigCommon";
 import { Block as APIGlobalBlock } from "visual/global/Config/types/configs/blocks/GlobalBlocks";
 import {
@@ -77,6 +80,11 @@ import {
   AdobeFonts,
   BlogSourceItem,
   CollectionSourceItem,
+  GetAuthors,
+  GetPostTaxonomies,
+  GetPosts,
+  GetTerms,
+  GetTermsBy,
   PostsSources,
   Rule as PublishRule,
   SelectedItem,
@@ -1385,6 +1393,268 @@ export function sendHeartBeatTakeOver(api: Config["api"]): Promise<unknown> {
       takeOverHandler(res, rej);
     } else {
       rej(t("Missing takeOver handler inside config api"));
+    }
+  });
+}
+
+//#endregion
+
+//#region GetMenus
+
+export const getMenus = (
+  config: ConfigCommon["api"]
+): Promise<MenuSimple[]> => {
+  return new Promise((res, rej) => {
+    const { menu } = config ?? {};
+
+    const getMenu = menu?.getMenus?.handler;
+
+    if (!getMenu) {
+      rej(t("API: No getMenus found."));
+    } else {
+      getMenu(res, rej);
+    }
+  });
+};
+
+//#endregion
+
+//#region Featured Image
+export async function updateFeaturedImage(
+  attachmentId: string,
+  config: ConfigCommon
+): Promise<unknown> {
+  return new Promise((res, rej) => {
+    const { api } = config ?? {};
+
+    const updateImage = api?.featuredImage?.updateFeaturedImage;
+
+    if (!updateImage) {
+      rej(t("API: No Update Featured Image found."));
+    } else {
+      updateImage(res, rej, attachmentId);
+    }
+  });
+}
+
+export async function updateFeaturedImageFocalPoint(
+  attachmentId: string,
+  pointX: string,
+  pointY: string,
+  config: ConfigCommon
+): Promise<unknown> {
+  return new Promise((res, rej) => {
+    const { api } = config ?? {};
+
+    const updateFeaturedImageFocalPoint =
+      api?.featuredImage?.updateFeaturedImageFocalPoint;
+
+    if (!updateFeaturedImageFocalPoint) {
+      rej(t("API: No Update Featured Image Focal Point found."));
+    } else {
+      updateFeaturedImageFocalPoint(res, rej, { attachmentId, pointX, pointY });
+    }
+  });
+}
+
+export async function removeFeaturedImage(
+  config: ConfigCommon
+): Promise<unknown> {
+  return new Promise((res, rej) => {
+    const { api } = config ?? {};
+
+    const removeFeaturedImage = api?.featuredImage?.removeFeaturedImage;
+
+    if (!removeFeaturedImage) {
+      rej(t("API: No Remove Featured Image found."));
+    } else {
+      removeFeaturedImage(res, rej);
+    }
+  });
+}
+
+//#endregion
+
+//#region Shortcode Content
+
+export async function shortcodeContent(
+  shortcode: string,
+  config: ConfigCommon
+): Promise<unknown> {
+  return new Promise((res, rej) => {
+    const { api } = config ?? {};
+
+    const handler = api?.shortcodeContent?.handler;
+
+    if (!handler) {
+      rej(t("API: No shortcodeContent found."));
+    } else {
+      handler(res, rej, shortcode);
+    }
+  });
+}
+
+//#endregion
+
+export const getAuthors: GetAuthors = ({
+  include = [],
+  search = "",
+  abortSignal,
+  config
+}) => {
+  return new Promise((res, rej) => {
+    const { api } = config;
+
+    const _getAuthors = api?.authors?.getAuthors;
+
+    if (!_getAuthors) {
+      rej(t("API: No authors found."));
+    } else {
+      _getAuthors(res, rej, {
+        include,
+        search,
+        abortSignal
+      });
+    }
+  });
+};
+
+//# region Posts
+
+export const getPosts: GetPosts = async ({
+  include,
+  search = "",
+  postType,
+  excludePostType,
+  abortSignal,
+  config
+}) => {
+  return new Promise((res, rej) => {
+    const { api } = config;
+
+    const handler = api?.posts?.getPosts;
+
+    if (!handler) {
+      rej(t("API: No posts found."));
+    } else {
+      handler(res, rej, {
+        include,
+        search,
+        postType,
+        excludePostType,
+        abortSignal
+      });
+    }
+  });
+};
+
+export const getPostTaxonomies: GetPostTaxonomies = async ({
+  taxonomy,
+  abortSignal,
+  config
+}) => {
+  return new Promise((res, rej) => {
+    const { api } = config;
+
+    const handler = api?.posts?.getPostTaxonomies;
+
+    if (!handler) {
+      rej(t("API: No posts taxonomies found."));
+    } else {
+      handler(res, rej, {
+        taxonomy,
+        abortSignal
+      });
+    }
+  });
+};
+
+//#endregion
+
+//# region Terms
+
+export const getTerms: GetTerms = async (taxonomy, config) => {
+  return new Promise((res, rej) => {
+    const { api } = config;
+
+    const handler = api?.terms?.getTerms;
+
+    if (!handler) {
+      rej(t("API: No terms found."));
+    } else {
+      handler(res, rej, taxonomy);
+    }
+  });
+};
+
+export const getTermsBy: GetTermsBy = async ({
+  include = [],
+  search = "",
+  abortSignal,
+  config
+}) => {
+  return new Promise((res, rej) => {
+    const { api } = config;
+
+    const handler = api?.terms?.getTermsBy;
+
+    if (!handler) {
+      rej(t("API: No terms found."));
+    } else {
+      handler(res, rej, { include, search, abortSignal });
+    }
+  });
+};
+
+//#endregion
+
+//#region Rules
+
+export function getRulesList(config: ConfigCommon): Promise<Array<Rule>> {
+  return new Promise((res, rej) => {
+    const { conditions } = config.api?.popupConditions ?? {};
+
+    const getRules = conditions?.getRuleList;
+
+    if (!getRules) {
+      rej(t("API: No rules list found."));
+    } else {
+      getRules(res, rej);
+    }
+  });
+}
+
+export function getGroupList(
+  type: "block" | "popup",
+  config: ConfigCommon
+): Promise<Array<RuleList[]>> {
+  return new Promise((res, rej) => {
+    const { conditions } = config.api?.popupConditions ?? {};
+
+    const handler = conditions?.getGroupList;
+
+    if (!handler) {
+      rej(t("API: No group list found."));
+    } else {
+      handler(res, rej, type);
+    }
+  });
+}
+
+//#endregion
+
+//#region Sidebars
+
+export async function getSidebars(config: ConfigCommon): Promise<Sidebar[]> {
+  return new Promise((res, rej) => {
+    const { api } = config;
+
+    const _getSidebars = api?.sidebars?.getSidebars;
+
+    if (!_getSidebars) {
+      rej(t("API: No sidebars found."));
+    } else {
+      _getSidebars(res, rej);
     }
   });
 }

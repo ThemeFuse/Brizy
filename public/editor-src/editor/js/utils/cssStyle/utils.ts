@@ -4,6 +4,7 @@ import { produce } from "immer";
 import { CSSProperties } from "react";
 import { ElementModel, ModelType } from "visual/component/Elements/Types";
 import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
+import { GetConfig } from "visual/providers/ConfigProvider/types";
 import { RenderType } from "visual/providers/RenderProvider";
 import { Store } from "visual/redux/store";
 import { getOptionModelWithDesktopDefaults } from "visual/utils/options/utils/fromElementModel";
@@ -80,7 +81,8 @@ export const getCSSObjectFromStyle = ({
   option,
   store,
   state = NORMAL,
-  renderContext
+  renderContext,
+  getConfig
 }: {
   v: ElementModel;
   initialV?: ElementModel;
@@ -89,6 +91,7 @@ export const getCSSObjectFromStyle = ({
   store: Store;
   renderContext: RenderType;
   state?: State;
+  getConfig: GetConfig;
 }): MValue<OutputOptionStyle> => {
   const { id, type, style } = option;
 
@@ -111,7 +114,8 @@ export const getCSSObjectFromStyle = ({
         store,
         optionModel: model,
         extraData: { device: breakpoint, state },
-        renderContext
+        renderContext,
+        getConfig
       })
     });
 
@@ -125,7 +129,8 @@ export const getCSSFromSelector = ({
   option,
   store,
   state = NORMAL,
-  renderContext
+  renderContext,
+  getConfig
 }: {
   v: ElementModel;
   breakpoint: BreakpointsNames;
@@ -133,6 +138,7 @@ export const getCSSFromSelector = ({
   store: Store;
   state?: State;
   renderContext: RenderType;
+  getConfig: GetConfig;
 }): MValue<string> => {
   const { id, type } = option;
 
@@ -145,7 +151,8 @@ export const getCSSFromSelector = ({
         device: breakpoint as ResponsiveMode,
         state,
         store,
-        id
+        id,
+        getConfig
       }
     });
 
@@ -398,7 +405,8 @@ export const getNewGeneratesCSSfromStyle = ({
   state,
   store,
   allCSS,
-  renderContext
+  renderContext,
+  getConfig
 }: {
   v: ElementModel;
   breakpoint: BreakpointsNames;
@@ -407,6 +415,7 @@ export const getNewGeneratesCSSfromStyle = ({
   store: Store;
   allCSS: CSS;
   renderContext: RenderType;
+  getConfig: GetConfig;
 }): MValue<CSS> => {
   const cssObject = getCss({
     v,
@@ -414,7 +423,8 @@ export const getNewGeneratesCSSfromStyle = ({
     option,
     state,
     renderContext,
-    store
+    store,
+    getConfig
   });
 
   if (Obj.length(cssObject) > 0) {
@@ -436,7 +446,8 @@ export const getNewGeneratesCSSfromSelector = ({
   state,
   store,
   allCSS,
-  renderContext
+  renderContext,
+  getConfig
 }: {
   v: ElementModel;
   breakpoint: BreakpointsNames;
@@ -445,6 +456,7 @@ export const getNewGeneratesCSSfromSelector = ({
   store: Store;
   allCSS: CSS;
   renderContext: RenderType;
+  getConfig: GetConfig;
 }): MValue<CSS> => {
   const suffix = state === HOVER ? ":hover" : state === ACTIVE ? ".active" : "";
 
@@ -454,7 +466,8 @@ export const getNewGeneratesCSSfromSelector = ({
     option,
     state,
     store,
-    renderContext
+    renderContext,
+    getConfig
   });
 
   const _selector = Str.read(option.selector);
@@ -528,4 +541,16 @@ export const readTextTransformValue = (
   }
 
   return Str.read(value);
+};
+
+export const rtlAlign = (align: string) => {
+  switch (align) {
+    case "left":
+      return "start";
+    case "center":
+      return "center";
+    case "right":
+      return "end";
+  }
+  return align;
 };

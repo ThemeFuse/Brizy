@@ -7,7 +7,7 @@ export function styleContent(
   data: DynamicStylesProps<ElementModel>
 ): OutputStyle {
   const styles = {
-    ".brz &&:hover": {
+    ".brz &&": {
       standart: ["cssStyleSizeWidth", "cssStyleSizeMinHeightPx"]
     },
     ".brz &&:hover .brz-audio-progress": {
@@ -17,21 +17,27 @@ export function styleContent(
         "cssStylePropertyHoverTransitionColor"
       ]
     },
+    ".brz &&:before": {
+      standart: ["cssStyleBorderRadius"]
+    },
     ".brz &&:hover:before": {
-      standart: ["cssStyleBorder", "cssStyleBorderRadius", "cssStyleBoxShadow"],
+      standart: ["cssStyleBorder", "cssStyleBoxShadow"],
       interval: [
         "cssStyleHoverTransition",
         "cssStylePropertyHoverTransitionColor"
       ]
+    },
+    ".brz && .brz-soundCloud-content": {
+      standart: ["cssStyleBorderRadius"]
     },
     ".brz &&:hover .brz-soundCloud-content": {
-      standart: ["cssStyleBorderRadius", "cssStyleBgColor"],
+      standart: ["cssStyleBgColor"],
       interval: [
         "cssStyleHoverTransition",
         "cssStylePropertyHoverTransitionColor"
       ]
     },
-    ".brz &&:hover iframe": {
+    ".brz && iframe": {
       standart: ["cssStyleSizeHeight", "cssStylePaddingBG"]
     }
   };
@@ -42,21 +48,21 @@ export function styleWrapperAudio(
   data: DynamicStylesProps<ElementModel>
 ): OutputStyle {
   const styles = {
-    ".brz &&:hover": {
+    ".brz &&": {
       standart: [
         "cssStyleBorderRadius",
-        "cssStyleBoxShadow",
-        "cssStyleBorder",
-        "cssStyleBgColor",
         "cssStyleDisplayFlex",
         "cssStylePaddingBG"
-      ],
+      ]
+    },
+    ".brz &&:hover": {
+      standart: ["cssStyleBoxShadow", "cssStyleBorder", "cssStyleBgColor"],
       interval: [
         "cssStyleHoverTransition",
         "cssStylePropertyHoverTransitionColor"
       ]
     },
-    ".brz &&:hover .brz-audio__cover::before": {
+    ".brz && .brz-audio__cover::before": {
       standart: [
         "cssStyleElementVideoCoverSrc",
         "cssStyleElementVideoCoverPosition",
@@ -74,8 +80,11 @@ export function styleWrapperAudio(
         "cssStylePropertyHoverTransitionColor"
       ]
     },
+    ".brz && .brz-audio-slider:before": {
+      standart: ["cssStyleBorderRadius"]
+    },
     ".brz &&:hover .brz-audio-slider:before": {
-      standart: ["cssStyleBg2Color", "cssStyleBorderRadius"],
+      standart: ["cssStyleBg2Color"],
       interval: [
         "cssStyleHoverTransition",
         "cssStylePropertyHoverTransitionColor"
@@ -89,7 +98,7 @@ export function styleControls(
   data: DynamicStylesProps<ElementModel>
 ): OutputStyle {
   const styles = {
-    ".brz &&:hover": {
+    ".brz &&": {
       standart: [
         "cssStyleDisplayFlex",
         "cssStyleElementMediaPadding",
@@ -109,8 +118,11 @@ export function styleControls(
 
 export function styleIcon(data: DynamicStylesProps<ElementModel>): OutputStyle {
   const styles = {
+    ".brz &&": {
+      standart: ["cssStyleSizeFontSizeIcon"]
+    },
     ".brz &&:hover": {
-      standart: ["cssStyleSizeFontSizeIcon", "cssStyleColor"],
+      standart: ["cssStyleColor"],
       interval: [
         "cssStyleHoverTransition",
         "cssStylePropertyHoverTransitionColor"

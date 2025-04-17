@@ -6,12 +6,12 @@ import { Switch } from "visual/component/Controls/Switch";
 import { OptionLabel } from "visual/component/OptionLabel";
 import { OptionWrapper } from "visual/component/OptionWrapper";
 import { t } from "visual/utils/i18n";
+import { sliderSizeClassName } from "visual/utils/options/utils/sliderSizeClassName";
 import { FCC } from "visual/utils/react/types";
 import * as Degree from "../Degree";
 import { OnChange } from "../types";
 import { EffectProps } from "../types/EffectProps";
 import { Rotate as V } from "../types/Rotate";
-import { sliderSizeClassName } from "visual/utils/options/utils/sliderSizeClassName";
 
 const units: Unit<"°">[] = [
   {
@@ -81,22 +81,22 @@ export const Rotate: FCC<EffectProps<V>> = ({ value, onChange }) => {
   );
 
   const onChangeRotate = useCallback(
-    ({ number }) => onRotateChange(number),
+    ({ number }: { number: number }) => onRotateChange(number),
     [onRotateChange]
   );
 
   const onChangeRotateX = useCallback(
-    ({ number }) => onRotateXChange(number),
+    ({ number }: { number: number }) => onRotateXChange(number),
     [onRotateXChange]
   );
 
   const onChangeRotateY = useCallback(
-    ({ number }) => onRotateYChange(number),
+    ({ number }: { number: number }) => onRotateYChange(number),
     [onRotateYChange]
   );
 
   const onChangeRotatePerspective = useCallback(
-    ({ number }) => onRotatePerspectiveChange(number),
+    ({ number }: { number: number }) => onRotatePerspectiveChange(number),
     [onRotatePerspectiveChange]
   );
 

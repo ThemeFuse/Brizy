@@ -10,7 +10,7 @@
     &-spinner {
       position: absolute;
       top: 50%;
-      left: 50%;
+      inset-inline-start: 50%;
       transform: translate(-50%, -50%);
     }
 
@@ -39,7 +39,7 @@
       }
 
       &-prev-button {
-        margin-right: 10px;
+        margin-inline-end: 10px;
 
         svg {
           transform: rotate(180deg);
@@ -54,8 +54,8 @@
 
           &-text {
             position: absolute;
-            right: 0;
-            margin-right: 10px;
+            inset-inline-end: 0;
+            margin-inline-end: 10px;
           }
         }
       }
@@ -85,11 +85,11 @@
         position: relative;
 
         &:first-child.brz-form-ms-indicator:first-child {
-          padding-left: 0;
+          padding-inline-start: 0;
         }
 
         &:last-child.brz-form-ms-indicator:last-child {
-          padding-right: 0;
+          padding-inline-end: 0;
         }
 
         &-number,
@@ -175,7 +175,7 @@
   }
 
   .brz-forms2__field {
-    text-align: left;
+    text-align: start;
   }
 
   .brz-forms2__field-label {
@@ -200,14 +200,14 @@
     flex-wrap: nowrap;
     justify-content: space-between;
     padding-bottom: 1.2em;
-    padding-right: 10px;
+    padding-inline-end: 10px;
     max-width: 100%;
 
     .brz-forms2__radio-option-name {
       overflow-wrap: break-word;
-      margin-right: auto;
+      margin-inline-end: auto;
       max-width: 97%;
-      margin-left: 10px;
+      margin-inline-start: 10px;
     }
 
     input.brz-input {
@@ -246,12 +246,12 @@
     flex-wrap: nowrap;
     justify-content: space-between;
     padding-bottom: 1.2em;
-    padding-right: 10px;
+    padding-inline-end: 10px;
     max-width: 100%;
 
     .brz-forms2__checkbox-option-name {
-      margin-left: 10px;
-      margin-right: auto;
+      margin-inline-start: 10px;
+      margin-inline-end: auto;
       overflow-wrap: break-word;
       max-width: 97%;
     }
@@ -400,8 +400,8 @@
     }
 
     .brz-span {
-      margin-left: 10px;
-      margin-right: auto;
+      margin-inline-start: 10px;
+      margin-inline-end: auto;
     }
 
     .brz-input {
@@ -520,13 +520,13 @@
         font-size: inherit;
         font-weight: normal;
         color: inherit;
-        margin-right: 0;
-        margin-left: 8px;
+        margin-inline-end: 0;
+        margin-inline-start: 8px;
       }
     }
 
     &-selection__clear {
-      margin-right: 14px;
+      margin-inline-end: 14px;
     }
 
     &-search__field {
@@ -655,7 +655,7 @@
     }
 
     &-prev-month {
-      left: 10px;
+      inset-inline-start: 10px;
     }
 
     &-months .flatpickr-prev-month,
@@ -726,7 +726,7 @@
     &-time input {
       font-size: 15px;
       font-weight: 700;
-      text-align: left;
+      text-align: start;
       text-indent: 12px;
     }
 
@@ -783,7 +783,7 @@
     height: 100%;
     display: flex;
     align-items: center;
-    padding-right: 1.5em;
+    padding-inline-end: 1.5em;
     cursor: pointer;
 
     .brz-span {
@@ -803,7 +803,7 @@
     cursor: pointer;
     position: absolute;
     top: 50%;
-    right: 24px;
+    inset-inline-end: 24px;
     transform: translateY(-50%);
     font-size: 1.5em;
   }
@@ -824,7 +824,7 @@
     padding: 0.5em;
     position: absolute;
     top: 50%;
-    right: 24px;
+    inset-inline-end: 24px;
     transform: translateY(-50%);
     outline: none !important;
   }

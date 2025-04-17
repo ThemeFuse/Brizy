@@ -3,6 +3,7 @@ import type { EcwidStoreId } from "visual/global/Ecwid/types";
 import { EcwidService } from "visual/libs/Ecwid";
 import type { EcwidConfig } from "visual/libs/Ecwid/types/EcwidConfig";
 import type { ExportFunction } from "visual/types";
+import { ECWID_SLUG_PREFIX } from "visual/utils/ecwid";
 import { parseFromString } from "visual/utils/string";
 import { blockClicksBySelectors } from "./utils";
 
@@ -28,6 +29,7 @@ export const fn: ExportFunction = ($node) => {
       if (storeId) {
         EcwidService.init(storeId, {
           ...cfg,
+          baseUrl: ECWID_SLUG_PREFIX,
           onPageLoaded
         }).favorites(node);
       }

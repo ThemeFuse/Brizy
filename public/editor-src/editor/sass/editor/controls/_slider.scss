@@ -183,7 +183,7 @@ $slider-handle-icon: 7px; // 7
   height: 14px;
   padding: 5px 0;
   width: calc(100% - 18px);
-  margin-left: math.div($slider-handle-size, 2);
+  margin-inline-start: math.div($slider-handle-size, 2);
   border-radius: $slider-horizontal-height;
   touch-action: none;
   box-sizing: border-box;
@@ -202,7 +202,7 @@ $slider-handle-icon: 7px; // 7
   height: $slider-horizontal-height;
   background-color: $slider__control-bg;
   border-radius: $slider-horizontal-height;
-  left: -9px;
+  inset-inline-start: -9px;
 }
 
 .rc-slider-track {

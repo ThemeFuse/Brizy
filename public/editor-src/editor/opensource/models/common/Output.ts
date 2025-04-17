@@ -1,4 +1,5 @@
-import { HtmlOutputType } from ".";
+import { Page } from "../Page";
+import { Project } from "../Project";
 
 //#region Assets
 
@@ -104,30 +105,7 @@ export interface ScriptsPro {
 
 //#region Page
 
-export interface Scripts {
-  attr?: Record<string, string | boolean>;
-  html?: string;
-}
-
-interface Style {
-  type: "style";
-  attr: Record<string, string>;
-  html: string;
-}
-
-interface Link {
-  type: "link";
-  attr: Record<string, string>;
-}
-
-export type Styles = Style | Link;
-
-export interface Assets {
-  styles: Array<Styles>;
-  scripts: Array<Scripts>;
-}
-
-export interface PageJsonOutput {
+export interface PageOutput {
   html: string;
   assets: {
     freeStyles: StylesFree;
@@ -137,77 +115,27 @@ export interface PageJsonOutput {
   };
 }
 
-export interface PageHtmlOutput {
-  html: string;
-  styles: Array<string>;
-  scripts: Array<string>;
+export interface PageDataOutput extends Page {
+  compiled?: PageOutput;
 }
-
-export type PageCompiled = {
-  html: PageHtmlOutput;
-  json: PageJsonOutput;
-};
-
-export type PageData<T extends HtmlOutputType> = {
-  [key: string]: unknown;
-  compiled?: PageCompiled[T];
-};
-
-export interface PageJsonCompiledOutput extends Assets {
-  html: string;
-}
-
-type PageCompiledOutput = {
-  html: PageHtmlOutput;
-  json: PageJsonCompiledOutput;
-};
-
-export type PageDataOutput<T extends HtmlOutputType> = {
-  [k: string]: unknown;
-  compiled?: PageCompiledOutput[T];
-};
 
 //#endregion
 
 //#region Project
 
-interface ProjectHtmlOutput {
-  styles: Array<string>;
-}
-
-interface ProjectJsonOutput {
+interface ProjectOutput {
   styles: Array<Asset>;
 }
 
-export type ProjectCompiled = {
-  html: ProjectHtmlOutput;
-  json: ProjectJsonOutput;
-};
-
-export type ProjectData<T extends HtmlOutputType> = {
-  [key: string]: unknown;
-  compiled?: ProjectCompiled[T];
-};
-
-export interface ProjectJsonCompiledOutput {
-  styles: Array<Styles>;
+export interface ProjectDataOutput extends Project {
+  compiled?: ProjectOutput;
 }
-
-type ProjectCompiledOutput = {
-  html: ProjectHtmlOutput;
-  json: ProjectJsonCompiledOutput;
-};
-
-export type ProjectDataOutput<T extends HtmlOutputType> = {
-  [k: string]: unknown;
-  compiled?: ProjectCompiledOutput[T];
-};
 
 //#endregion
 
-export interface Output<T extends HtmlOutputType> {
-  pageData: PageDataOutput<T>;
-  projectData: ProjectDataOutput<T>;
+export interface Output {
+  pageData: PageDataOutput;
+  projectData: ProjectDataOutput;
   error?: string;
   popupSettings?: {
     verticalAlign: "top" | "bottom" | "center";

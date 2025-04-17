@@ -1,7 +1,7 @@
 import { RenderOptions, queries, render, within } from "@testing-library/react";
 import React, { ReactElement, ReactNode } from "react";
 import { Provider } from "react-redux";
-import { Config } from "visual/global/Config/InitConfig";
+import { ConfigProvider } from "visual/providers/ConfigProvider";
 import { RenderProvider, RenderType } from "visual/providers/RenderProvider";
 import * as customQueries from "./custom-queries";
 import { config, store } from "./mocks";
@@ -24,12 +24,13 @@ interface Options extends Omit<RenderOptions, "wrapper"> {
 
 function renderWithProviders(ui: ReactElement, options?: Options) {
   const { renderContext = "editor", ...rest } = options ?? {};
+
   const Wrapper = ({ children }: { children: ReactNode }) => (
-    <Config id="mockvisual" config={config}>
+    <ConfigProvider config={config}>
       <Provider store={store}>
         <RenderProvider renderType={renderContext}>{children}</RenderProvider>
       </Provider>
-    </Config>
+    </ConfigProvider>
   );
 
   return { store, ...render(ui, { wrapper: Wrapper, ...rest }) };

@@ -12,6 +12,7 @@ import {
 } from "visual/editorComponents/EditorComponent/types";
 import Editor from "visual/global/Editor";
 import { isEditor, isView } from "visual/providers/RenderProvider";
+import { DeviceMode } from "visual/types";
 import { WithClassName } from "visual/types/attributes";
 import { I18n } from "visual/utils/i18n";
 import { attachRefs } from "visual/utils/react";
@@ -172,7 +173,6 @@ class ThirdParty extends EditorComponent<Value, Props> {
 
     if (isEditor(this.props.renderContext)) {
       const { editor } = this.getComponent(thirdPartyId) ?? {};
-
       if (!editor) {
         return `Missing Third Party Component: ${thirdPartyId}`;
       }
@@ -190,7 +190,6 @@ class ThirdParty extends EditorComponent<Value, Props> {
 
     if (isView(this.props.renderContext)) {
       const { view } = this.getComponent(thirdPartyId) ?? {};
-
       if (!view) {
         return `Missing Third Party Component: ${thirdPartyId}`;
       }
@@ -202,7 +201,7 @@ class ThirdParty extends EditorComponent<Value, Props> {
   // @ts-expect-error: Props
   renderForEdit(
     v: Record<string, unknown>,
-    Component: ComponentType,
+    Component: ComponentType<{ device?: DeviceMode }>,
     toolbarsRef: RefObject<HTMLDivElement>[] = []
   ): ReactNode {
     const { customCSS } = v;
@@ -214,6 +213,8 @@ class ThirdParty extends EditorComponent<Value, Props> {
       toolbars,
       sidebars
     });
+
+    const device = this.getDeviceMode();
 
     const className = classNames(thirdPartyClassName, wrapperClassName);
     const _customCSS = Str.read(customCSS) ?? "";
@@ -227,7 +228,7 @@ class ThirdParty extends EditorComponent<Value, Props> {
               ref: (el) => attachRefs(el, [cssRef, ...toolbarsRef])
             })}
           >
-            <Component {...v} />
+            <Component {...v} device={device} />
           </Wrapper>
         )}
       </CustomCSS>

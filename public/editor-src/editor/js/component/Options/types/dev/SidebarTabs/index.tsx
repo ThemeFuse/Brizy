@@ -6,12 +6,14 @@ import { getCurrentTooltip } from "visual/component/Controls/Tooltip";
 import Options from "visual/component/Options";
 import { Props as OptionProps } from "visual/component/Options/Type";
 import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
-import { useConfig, usePro } from "visual/global/hooks";
+import { usePro } from "visual/global/hooks";
+import { useConfig } from "visual/providers/ConfigProvider";
 import { updateUI } from "visual/redux/actions2";
 import { uiSelector } from "visual/redux/selectors";
 import { WithClassName, WithId } from "visual/types/attributes";
 import { always, pipe } from "visual/utils/fp";
 import { prop } from "visual/utils/object/get";
+import { Literal } from "visual/utils/types/Literal";
 import { nextAlign } from "./utils";
 
 export interface Tab {
@@ -19,14 +21,16 @@ export interface Tab {
   title: string;
 }
 
+type OptionTab = {
+  title?: string;
+  label?: string;
+  position?: number;
+  options?: ToolbarItemType[];
+} & WithId<Literal> &
+  WithClassName;
+
 export interface Props extends OptionProps<undefined> {
-  tabs: (WithId<string> &
-    WithClassName & {
-      title?: string;
-      label?: string;
-      position?: number;
-      options: ToolbarItemType[];
-    })[];
+  tabs: OptionTab[];
 }
 
 const selector = pipe(uiSelector, prop("rightSidebar"));
@@ -76,14 +80,14 @@ export const SidebarTabs = ({ tabs, toolbar }: Props): ReactElement => {
     [dispatch, alignment, isOpen, lock, activeTab, type]
   );
   const onChange = useCallback(
-    (x0: string) =>
+    (x0: Literal) =>
       pipe(
-        (activeTab: string) =>
+        (activeTab: Literal) =>
           updateUI("rightSidebar", {
             alignment,
             isOpen,
             lock,
-            activeTab,
+            activeTab: `${activeTab}`,
             type
           }),
         dispatch
@@ -92,7 +96,7 @@ export const SidebarTabs = ({ tabs, toolbar }: Props): ReactElement => {
   );
 
   return (
-    <Control<string>
+    <Control<Literal>
       value={activeTab ?? tabs[0]?.id}
       onChange={onChange}
       align={alignment}

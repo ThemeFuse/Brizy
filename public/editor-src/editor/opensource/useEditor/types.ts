@@ -1,5 +1,4 @@
-import { Config } from "../models/Config";
-import { HtmlOutputType } from "../models/common";
+import { EditorConfig } from "../models/Config";
 
 export enum ActionKind {
   idle = "idle",
@@ -27,18 +26,14 @@ export interface API {
 
 type CB = (api: API) => void;
 
-export type Init<T extends HtmlOutputType> = (
-  token: string,
-  config: Config<T>,
-  cb: CB
-) => void;
+export type Init = (token: string, config: EditorConfig, cb: CB) => void;
 
-export type Builder<T extends HtmlOutputType> = {
-  init: Init<T>;
+export type Builder = {
+  init: Init;
 };
 
 export type Instance = {
   save: VoidFunction;
 };
 
-export type BuilderGlobal<T extends HtmlOutputType> = Builder<T>;
+export type BuilderGlobal = Builder;

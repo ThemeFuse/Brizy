@@ -78,28 +78,33 @@ export function cssStyleAnimationAll({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
   return `${cssStyleAnimation({
     v,
     device,
     store,
-    state
+    state,
+    getConfig
   })} ${cssStyleAnimationDuration({
     v,
     device,
     store,
-    state
+    state,
+    getConfig
   })} ${cssStyleAnimationDelay({
     v,
     device,
     store,
-    state
+    state,
+    getConfig
   })} ${cssStyleAnimationIterationCount({
     v,
     device,
     store,
-    state
+    state,
+    getConfig
   })}
   `;
 }

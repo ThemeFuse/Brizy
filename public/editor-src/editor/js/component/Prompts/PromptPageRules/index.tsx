@@ -29,7 +29,7 @@ import {
   ShopifyTemplate,
   getShopifyTemplate
 } from "visual/global/Config/types/shopify/ShopifyTemplate";
-import { useConfig } from "visual/global/hooks";
+import { useConfig } from "visual/providers/ConfigProvider";
 import {
   updateError,
   updatePageLayout,
@@ -43,7 +43,7 @@ import {
 } from "visual/utils/api";
 import { SelectedItem } from "visual/utils/api/types";
 import { isNonEmptyArray } from "visual/utils/array/types";
-import { SYNC_ERROR } from "visual/utils/errors";
+import { ErrorCodes } from "visual/utils/errors";
 import { t } from "visual/utils/i18n";
 import * as Obj from "visual/utils/reader/object";
 import { Button } from "../common/Button";
@@ -101,8 +101,8 @@ export const PromptPageRules = (props: Props): JSX.Element => {
 
       const _items = optionAll ? without(items, optionAll) : items;
 
-      dispatch(updatePageLayout(layout));
-      dispatch(updatePageTitle(title));
+      dispatch(updatePageLayout({ layout, config: _config }));
+      dispatch(updatePageTitle({ title, config: _config }));
 
       return onSave()
         .then(() => {
@@ -120,7 +120,7 @@ export const PromptPageRules = (props: Props): JSX.Element => {
         })
         .then(() => undefined);
     },
-    [dispatch, onSave, onAfterSave, page, modules]
+    [dispatch, onSave, onAfterSave, page, modules, _config]
   );
   const getData = useCallback(async () => {
     if (_isShopify) {
@@ -199,7 +199,7 @@ export const PromptPageRules = (props: Props): JSX.Element => {
             } else {
               dispatch(
                 updateError({
-                  code: SYNC_ERROR,
+                  code: ErrorCodes.SYNC_ERROR,
                   data: {
                     upgradeToProUrl:
                       configCommon?.modules?.shop?.upgradeToProUrl

@@ -12,19 +12,16 @@ import { readApiKey } from "./utils";
 
 export type ApiKeys = Record<string, unknown>;
 
-interface App extends AppData {
-  data: Record<string, unknown>;
-}
-
 interface Props {
   formId: string;
   formFields: FormField[];
-  app: App;
+  app: AppData;
   apiKeys: ApiKeys[];
   config: ConfigCommon;
-  onChange: (id: string, appData: App["data"]) => void;
+  onChange: (id: string, appData: AppData["data"]) => void;
   onChangePrev: (prevStage?: string) => void;
   onChangeNext: (nextState?: string) => void;
+  onClose?: VoidFunction;
 }
 
 interface State {
@@ -44,13 +41,14 @@ class Smtp extends Component<Props, State> {
 
   getDefaultValue(): Record<string, unknown> {
     const {
-      app: { data },
+      app: { data = {} },
       apiKeys
     } = this.props;
 
     return apiKeys.reduce(
       (acc, { name }) => ({
         ...acc,
+        // @ts-expect-error: No index signature with a parameter of type data[property]
         [`${name}`]: data[Str.read(name) ?? ""] || ""
       }),
       {}
@@ -82,6 +80,13 @@ class Smtp extends Component<Props, State> {
       onChangeNext
     } = this.props;
     const { apiKeyValue } = this.state;
+
+    if (!appData) {
+      this.setState({
+        error: t("Missing app data")
+      });
+      return;
+    }
 
     this.setState({
       nextLoading: true,

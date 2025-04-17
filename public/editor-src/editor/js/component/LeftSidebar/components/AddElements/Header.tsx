@@ -5,7 +5,7 @@ import {
   TooltipIcon
 } from "visual/component/Controls/LeftSidebar/AddElements";
 import { HelpVideos } from "visual/global/Config/types/configs/ConfigCommon";
-import { useConfig } from "visual/global/hooks";
+import { useConfig } from "visual/providers/ConfigProvider";
 import { t } from "visual/utils/i18n";
 
 export interface Props {

@@ -1,4 +1,3 @@
-import { configSelector } from "visual/redux/selectors";
 import { getColor } from "visual/utils/color";
 import { defaultValueValue } from "visual/utils/onChange";
 import { capByPrefix } from "visual/utils/string";
@@ -15,11 +14,17 @@ export function styleBoxShadowType({ v, device, state, prefix = "" }) {
   return dvv(capByPrefix(prefix, "boxShadow"));
 }
 
-export function styleBoxShadowColor({ v, device, state, store, prefix = "" }) {
+export function styleBoxShadowColor({
+  v,
+  device,
+  state,
+  getConfig,
+  prefix = ""
+}) {
   state = getState(v, state);
 
   const dvv = (key) => defaultValueValue({ v, key, device, state });
-  const config = configSelector(store.getState());
+  const config = getConfig();
 
   const boxShadow = capByPrefix(prefix, "boxShadow");
   const colorHex = dvv(capByPrefix(boxShadow, "colorHex"));

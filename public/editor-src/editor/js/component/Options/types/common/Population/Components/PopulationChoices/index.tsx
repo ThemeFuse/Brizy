@@ -9,7 +9,7 @@ import React, {
 } from "react";
 import { ToastNotification } from "visual/component/Notifications";
 import Options from "visual/component/Options";
-import { useConfig } from "visual/global/hooks";
+import { useConfig } from "visual/providers/ConfigProvider";
 import { getDynamicContentPlaceholders } from "visual/utils/api/common";
 import { t } from "visual/utils/i18n";
 import {

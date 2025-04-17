@@ -6,15 +6,19 @@
   &--fadeInDown {
     animation-name: brz-ed-fadeInDown;
   }
+
   &--fadeInUp {
     animation-name: brz-ed-fadeInUp;
   }
+
   &--fadeIn {
     animation-name: brz-ed-fadeIn;
   }
+
   &--fadeInLeft {
     animation-name: brz-ed-fadeInLeft;
   }
+
   &--spin {
     animation-name: brz-ed-spin;
     animation-duration: 1s;
@@ -24,19 +28,16 @@
 }
 
 // React Animation
-.brz-ed-fade-enter {
-  opacity: 0.01;
-}
-.brz-ed-fade-enter.brz-ed-fade-enter-active {
-  opacity: 1;
+.brz-ed-fade {
   transition: opacity 150ms ease-in;
-}
-.brz-ed-fade-exit {
-  opacity: 1;
-}
-.brz-ed-fade-exit.brz-ed-fade-exit-active {
-  opacity: 0.01;
-  transition: opacity 150ms ease-in;
+
+  &.preEnter {
+    opacity: 0.01;
+  }
+
+  &.exiting {
+    opacity: 0.01;
+  }
 }
 
 // Fix to access toolbar column/row

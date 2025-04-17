@@ -1,5 +1,8 @@
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
-import { isBackgroundPointerEnabled } from "visual/global/Config/types/configs/featuresValue";
+import {
+  getEnabledLinkOptions,
+  isBackgroundPointerEnabled
+} from "visual/global/Config/types/configs/featuresValue";
 import { isPopup } from "visual/providers/EditorModeProvider";
 import { getColorToolbar } from "visual/utils/color";
 import { BgRepeat, BgSize } from "visual/utils/containers/types";
@@ -21,7 +24,14 @@ import { capitalize } from "visual/utils/string";
 import { read as readString } from "visual/utils/string/specs";
 import { toolbarLinkAnchor } from "visual/utils/toolbar";
 
-export const getItems = ({ v, device, component, context, state, editorMode }) => {
+export const getItems = ({
+  v,
+  device,
+  component,
+  context,
+  state,
+  editorMode
+}) => {
   const config = component.getGlobalConfig();
 
   const _isPopup = isPopup(editorMode);
@@ -86,6 +96,13 @@ export const getItems = ({ v, device, component, context, state, editorMode }) =
   const linkPopup = dvv("linkPopup");
   const deviceCapitalize = capitalize(device);
 
+  const {
+    internalLink,
+    linkPopup: linkPopupEnabled,
+    linkAnchor,
+    linkExternal
+  } = getEnabledLinkOptions(config);
+
   return [
     {
       id: `showOn${deviceCapitalize}`,
@@ -144,7 +161,7 @@ export const getItems = ({ v, device, component, context, state, editorMode }) =
                     disableSizes: isExternalImage,
                     pointer: !isExternalImage && isPointerEnabled
                   },
-                  disabled: image,
+                  disabled: image
                 },
                 {
                   label: t("Image"),
@@ -157,7 +174,7 @@ export const getItems = ({ v, device, component, context, state, editorMode }) =
                   config: {
                     disableSizes: isExternalImage,
                     pointer: !isExternalImage && isPointerEnabled
-                  },
+                  }
                 },
                 {
                   id: "bgSize",
@@ -449,6 +466,7 @@ export const getItems = ({ v, device, component, context, state, editorMode }) =
             {
               id: "page",
               label: t("Page"),
+              disabled: !internalLink,
               options: [
                 {
                   id: "linkPage",
@@ -465,6 +483,7 @@ export const getItems = ({ v, device, component, context, state, editorMode }) =
             {
               id: "external",
               label: t("URL"),
+              disabled: !linkExternal,
               options: [
                 {
                   id: "link",
@@ -492,6 +511,7 @@ export const getItems = ({ v, device, component, context, state, editorMode }) =
             {
               id: "anchor",
               label: t("Block"),
+              disabled: !linkAnchor,
               options: [
                 toolbarLinkAnchor({
                   v,
@@ -504,6 +524,7 @@ export const getItems = ({ v, device, component, context, state, editorMode }) =
             {
               id: "popup",
               label: t("Popup"),
+              disabled: !linkPopupEnabled,
               options: [
                 {
                   id: "linkPopup",

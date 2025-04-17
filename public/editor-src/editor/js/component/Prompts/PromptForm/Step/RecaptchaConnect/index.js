@@ -79,7 +79,7 @@ class RecaptchaConnect extends Component {
       const { data } = app;
 
       if (data) {
-        const { status } = await deleteAccount(data.id);
+        const { status } = await deleteAccount(data.id, config);
 
         if (status !== 200) {
           this.setState({

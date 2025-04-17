@@ -5,7 +5,7 @@ import * as Option from "visual/component/Options/Type";
 import Prompts from "visual/component/Prompts";
 import { currentUserRole } from "visual/component/Roles";
 import { LeftSidebarOptionsIds } from "visual/global/Config/types/configs/ConfigCommon";
-import { useConfig } from "visual/global/hooks";
+import { useConfig } from "visual/providers/ConfigProvider";
 import { isStory, useEditorMode } from "visual/providers/EditorModeProvider";
 import { setDeviceMode, updateUI } from "visual/redux/actions2";
 import {
@@ -251,7 +251,7 @@ export const Typography = ({
 
   const fontAddFunc = isAddNewFontDisabled
     ? undefined
-    : currentUserRole() === "admin"
+    : currentUserRole(globalConfig) === "admin"
       ? openFontsUploader
       : undefined;
 

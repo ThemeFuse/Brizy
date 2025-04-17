@@ -1,4 +1,4 @@
-const coreJSVersion = "3.38";
+const coreJSVersion = "3.41";
 
 exports.editor = (options) => {
   return {
@@ -33,7 +33,7 @@ exports.export = (options) => {
   const clonedEnv = JSON.parse(JSON.stringify(env));
   const clonedJsc = JSON.parse(JSON.stringify(jsc));
 
-  clonedEnv.targets = "node 18";
+  clonedEnv.targets = "node 20";
 
   clonedJsc.minify = {
     ...clonedJsc.minify,

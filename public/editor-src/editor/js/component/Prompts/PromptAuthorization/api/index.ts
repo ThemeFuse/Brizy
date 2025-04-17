@@ -8,10 +8,14 @@ export const signIn = (
 ): Promise<Response> => {
   const apiUrl = config?.urls?.api;
 
-  return request(`${apiUrl}/sign_ins`, {
-    method: "POST",
-    body: new URLSearchParams(data)
-  });
+  return request(
+    `${apiUrl}/sign_ins`,
+    {
+      method: "POST",
+      body: new URLSearchParams(data)
+    },
+    config
+  );
 };
 
 export const signUp = (
@@ -21,14 +25,18 @@ export const signUp = (
   const apiUrl = config?.urls?.api;
   const { email, password, confirmPassword } = data;
 
-  return request(`${apiUrl}/sign_ups`, {
-    method: "POST",
-    body: new URLSearchParams({
-      email,
-      new_password: password,
-      confirm_password: confirmPassword
-    })
-  });
+  return request(
+    `${apiUrl}/sign_ups`,
+    {
+      method: "POST",
+      body: new URLSearchParams({
+        email,
+        new_password: password,
+        confirm_password: confirmPassword
+      })
+    },
+    config
+  );
 };
 
 export const recoveryEmail = (
@@ -37,10 +45,14 @@ export const recoveryEmail = (
 ): Promise<Response> => {
   const apiUrl = config?.urls?.api;
 
-  return request(`${apiUrl}/recover_passwords`, {
-    method: "POST",
-    body: new URLSearchParams(email)
-  });
+  return request(
+    `${apiUrl}/recover_passwords`,
+    {
+      method: "POST",
+      body: new URLSearchParams(email)
+    },
+    config
+  );
 };
 
 export const logout = (config: ConfigCommon): Promise<Response> => {

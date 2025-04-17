@@ -1,27 +1,25 @@
 import { isStory } from "visual/providers/EditorModeProvider";
 import { DynamicStylesProps } from "visual/types";
 import { renderStyles } from "visual/utils/cssStyle";
-import { OutputStyle } from "visual/utils/cssStyle/types";
+import { OutputStyle, Styles } from "visual/utils/cssStyle/types";
 import { Value } from "./types";
 
 export function style(data: DynamicStylesProps<Value>): OutputStyle {
   const { v, contexts } = data;
+
   const { maskShape = "none" } = v;
+
   const _isStory = isStory(contexts.mode);
 
-  const styles: {
-    [k: string]: {
-      interval?: string[];
-      standart?: string[];
-    };
-  } = {
-    ".brz &&:hover .brz-eventLayout--view ul": {
+  const styles: Styles = {
+    ".brz && .brz-eventLayout--view ul": {
       standart: ["cssStyleElementEventLayoutTabAlign"]
+    },
+    ".brz && .brz-eventLayout": {
+      standart: ["cssStylePaddingBG", "cssStyleBorderRadius"]
     },
     ".brz &&:hover .brz-eventLayout": {
       standart: [
-        "cssStylePaddingBG",
-        "cssStyleBorderRadius",
         "cssStylementOfMinistryBrandsParentBgColor",
         "cssStylementOfMinistryBrandsParentBgGradient",
         "cssStylementOfMinistryBrandsParentBorder",
@@ -32,12 +30,16 @@ export function style(data: DynamicStylesProps<Value>): OutputStyle {
         "cssStylePropertyHoverTransitionColor"
       ]
     },
-    ".brz && .brz-ministryBrands__item--media:hover": {
+    ".brz && .brz-ministryBrands__item--media": {
       standart: [
         "cssStyleElementOfMinistryBrandsImageWidth",
         "cssStyleElementOfMinistryBrandsImagePadding",
+        "cssStyleMinistryElementMediaBorderRadius"
+      ]
+    },
+    ".brz && .brz-ministryBrands__item--media:hover": {
+      standart: [
         "cssStyleElementOfMinistryBrandsImgBorder",
-        "cssStyleMinistryElementMediaBorderRadius",
 
         ...(maskShape === "none"
           ? ["cssStyleElementOfMinistryBrandsImgBoxShadow"]
@@ -48,31 +50,38 @@ export function style(data: DynamicStylesProps<Value>): OutputStyle {
         "cssStylePropertyHoverTransitionColor"
       ]
     },
-    ".brz && .brz-ministryBrands__item--media:hover::after": {
+    ".brz && .brz-ministryBrands__item--media::after": {
       standart: [
-        "cssStyleElementOfMinistryBrandsImgBgColor",
-        "cssStyleElementOfMinistryBrandsImgBgGradient",
         "cssStyleMaskShape",
         "cssStyleMaskCustomShape",
         "cssStyleMaskSize",
         "cssStyleMaskPosition",
         "cssStyleMaskRepeat"
+      ]
+    },
+    ".brz && .brz-ministryBrands__item--media:hover::after": {
+      standart: [
+        "cssStyleElementOfMinistryBrandsImgBgColor",
+        "cssStyleElementOfMinistryBrandsImgBgGradient"
       ],
       interval: [
         "cssStyleHoverTransition",
         "cssStylePropertyHoverTransitionColor"
       ]
     },
-    ".brz && :is(.brz-eventLayout--featured__preview, .brz-ministryBrands__item--media:hover :is(iframe, video,img))":
+    ".brz && :is(.brz-eventLayout--featured__preview, .brz-ministryBrands__item--media :is(iframe, video,img))":
       {
         standart: [
-          "cssStyleElementOfMinistryBrandsImgFilters",
           "cssStyleMaskShape",
           "cssStyleMaskCustomShape",
           "cssStyleMaskSize",
           "cssStyleMaskPosition",
           "cssStyleMaskRepeat"
-        ],
+        ]
+      },
+    ".brz && :is(.brz-eventLayout--featured__preview, .brz-ministryBrands__item--media:hover :is(iframe, video,img))":
+      {
+        standart: ["cssStyleElementOfMinistryBrandsImgFilters"],
         interval: [
           "cssStyleHoverTransition",
           "cssStylePropertyEventLayoutHoverTransition"
@@ -105,10 +114,12 @@ export function style(data: DynamicStylesProps<Value>): OutputStyle {
         "cssStyleElementMinistryBrandsMetaItemDatePadding"
       ]
     },
+    ".brz && .brz-eventLayout--view li:not(.brz-eventLayout--view-active)": {
+      standart: ["cssStyleElementEventLayoutViewTypography"]
+    },
     ".brz && .brz-eventLayout--view li:hover:not(.brz-eventLayout--view-active)":
       {
         standart: [
-          "cssStyleElementEventLayoutViewTypography",
           "cssStyleElementEventLayoutViewBgColor",
           "cssStyleElementEventLayoutViewBgGradient",
           "cssStyleElementEventLayoutViewColor",
@@ -119,7 +130,7 @@ export function style(data: DynamicStylesProps<Value>): OutputStyle {
           "cssStylePropertyHoverTransitionColor"
         ]
       },
-    ".brz && li.brz-eventLayout--view-active:hover": {
+    ".brz && li.brz-eventLayout--view-active": {
       standart: [
         "cssStyleElementEventLayoutViewTypography",
         "cssStyleElementEventLayoutViewColorActive",
@@ -142,13 +153,17 @@ export function style(data: DynamicStylesProps<Value>): OutputStyle {
         "cssStylePropertyHoverTransitionColor"
       ]
     },
-
-    ".brz && .brz-eventLayout--filters .brz-eventLayout--filters-form-selectWrapper:hover":
+    ".brz && .brz-eventLayout--filters .brz-eventLayout--filters-form-selectWrapper":
       {
         standart: [
           "cssStyleMinistryElementFiltersTypography",
+          "cssStyleMinistryElementFiltersBorderRadius"
+        ]
+      },
+    ".brz && .brz-eventLayout--filters .brz-eventLayout--filters-form-selectWrapper:hover":
+      {
+        standart: [
           "cssStyleMinistryElementFiltersBorder",
-          "cssStyleMinistryElementFiltersBorderRadius",
           "cssStyleMinistryElementFiltersInputBgColor",
           "cssStyleMinistryElementFiltersInputGradientColor",
           "cssStyleMinistryElementFiltersInputColor"
@@ -174,20 +189,22 @@ export function style(data: DynamicStylesProps<Value>): OutputStyle {
           "cssStylePropertyHoverTransitionColor"
         ]
       },
+    ".brz && .brz-eventLayout--filters input": {
+      standart: ["cssStyleMinistryElementFiltersTypography"]
+    },
     ".brz && .brz-eventLayout--filters input:hover": {
-      standart: [
-        "cssStyleMinistryElementFiltersTypography",
-        "cssStyleMinistryElementFiltersInputColor"
-      ],
+      standart: ["cssStyleMinistryElementFiltersInputColor"],
       interval: [
         "cssStyleHoverTransition",
         "cssStylePropertyHoverTransitionColor"
       ]
     },
+    ".brz && .brz-eventLayout--filters fieldset ": {
+      standart: ["cssStyleMinistryElementFiltersBorderRadius"]
+    },
     ".brz && .brz-eventLayout--filters fieldset:hover ": {
       standart: [
         "cssStyleMinistryElementFiltersBorder",
-        "cssStyleMinistryElementFiltersBorderRadius",
         "cssStyleMinistryElementFiltersInputBgColor",
         "cssStyleMinistryElementFiltersInputGradientColor"
       ],
@@ -210,11 +227,11 @@ export function style(data: DynamicStylesProps<Value>): OutputStyle {
         "cssStylePropertyHoverTransitionColor"
       ]
     },
+    ".brz && .brz-eventLayout--featured__item-title": {
+      standart: ["cssStyleElementOfMinistryBrandsTitleTypography"]
+    },
     ".brz && .brz-eventLayout--featured__item-title:hover": {
-      standart: [
-        "cssStyleElementOfMinistryBrandsTitleColor",
-        "cssStyleElementOfMinistryBrandsTitleTypography"
-      ],
+      standart: ["cssStyleElementOfMinistryBrandsTitleColor"],
       interval: [
         "cssStyleHoverTransition",
         "cssStylePropertyHoverTransitionColor"
@@ -227,21 +244,21 @@ export function style(data: DynamicStylesProps<Value>): OutputStyle {
         "cssStylePropertyHoverTransitionColor"
       ]
     },
+    ".brz && .brz-eventLayout--featured__item p": {
+      standart: ["cssStyleElementOfMinistryBrandsDateTypography"]
+    },
     ".brz && .brz-eventLayout--featured__item p:hover": {
-      standart: [
-        "cssStyleElementOfMinistryBrandsDateTypography",
-        "cssStyleElementOfMinistryBrandsDateColor"
-      ],
+      standart: ["cssStyleElementOfMinistryBrandsDateColor"],
       interval: [
         "cssStyleHoverTransition",
         "cssStylePropertyHoverTransitionColor"
       ]
     },
+    ".brz && .brz-eventLayout--featured__preview > div > span": {
+      standart: ["cssStyleElementOfMinistryBrandsPreviewTypography"]
+    },
     ".brz && .brz-eventLayout--featured__preview > div > span:hover": {
-      standart: [
-        "cssStyleElementOfMinistryBrandsPreviewTypography",
-        "cssStyleElementOfMinistryBrandsPreviewColor"
-      ],
+      standart: ["cssStyleElementOfMinistryBrandsPreviewColor"],
       interval: [
         "cssStyleHoverTransition",
         "cssStylePropertyEventLayoutHoverTransition"
@@ -269,29 +286,31 @@ export function style(data: DynamicStylesProps<Value>): OutputStyle {
         "cssStylePropertyHoverTransitionColor"
       ]
     },
+    ".brz && .brz-eventLayout--list-item__grouping-day": {
+      standart: ["cssStyleElementEventLayoutGroupingDayTypography"]
+    },
     ".brz && .brz-eventLayout--list-item__grouping-day:hover": {
-      standart: [
-        "cssStyleElementEventLayoutGroupingDayTypography",
-        "cssStyleElementEventLayoutGroupingDayColor"
-      ],
+      standart: ["cssStyleElementEventLayoutGroupingDayColor"],
       interval: [
         "cssStyleHoverTransition",
         "cssStylePropertyHoverTransitionColor"
       ]
     },
+    ".brz && .brz-eventLayout--list-item__grouping-date": {
+      standart: ["cssStyleElementEventLayoutGroupingDateTypography"]
+    },
     ".brz && .brz-eventLayout--list-item__grouping-date:hover": {
-      standart: [
-        "cssStyleElementEventLayoutGroupingDateTypography",
-        "cssStyleElementEventLayoutGroupingDateColor"
-      ],
+      standart: ["cssStyleElementEventLayoutGroupingDateColor"],
       interval: [
         "cssStyleHoverTransition",
         "cssStylePropertyHoverTransitionColor"
       ]
+    },
+    ".brz && .brz-eventLayout--list-item__content-date": {
+      standart: ["cssStyleElementEventLayoutListItemDateTypography"]
     },
     ".brz && .brz-eventLayout--list-item__content-date:hover": {
       standart: [
-        "cssStyleElementEventLayoutListItemDateTypography",
         "cssStyleElementEventLayoutListItemDateColor",
         "cssStyleElementEventLayoutListItemDateBackgroundColor",
         "cssStyleElementEventLayoutListItemDateBackgroundGradient"
@@ -301,35 +320,39 @@ export function style(data: DynamicStylesProps<Value>): OutputStyle {
         "cssStylePropertyHoverTransitionColor"
       ]
     },
+    ".brz && .brz-eventLayout--list-item__content__heading": {
+      standart: ["cssStyleElementEventLayoutListItemTitleTypography"]
+    },
     ".brz && .brz-eventLayout--list-item__content__heading:hover": {
-      standart: [
-        "cssStyleElementEventLayoutListItemTitleTypography",
-        "cssStyleElementEventLayoutListItemTitleColor"
-      ],
+      standart: ["cssStyleElementEventLayoutListItemTitleColor"],
       interval: [
         "cssStyleHoverTransition",
         "cssStylePropertyHoverTransitionColor"
       ]
     },
+    ".brz && .brz-eventLayout--list-item__content__meta": {
+      standart: ["cssStyleElementEventLayoutListItemMetaTypography"]
+    },
     ".brz && .brz-eventLayout--list-item__content__meta:hover": {
-      standart: [
-        "cssStyleElementEventLayoutListItemMetaTypography",
-        "cssStyleElementEventLayoutListItemMetaColor"
-      ],
+      standart: ["cssStyleElementEventLayoutListItemMetaColor"],
       interval: [
         "cssStyleHoverTransition",
         "cssStylePropertyHoverTransitionColor"
+      ]
+    },
+    ".brz && .brz-ministryBrands__item--meta--button": {
+      standart: [
+        "cssStyleElementMinistryBrandsButtonsTypography",
+        "cssStyleElementMinistryBrandsButtonsBorderRadius"
       ]
     },
     ".brz && .brz-ministryBrands__item--meta--button:hover": {
       standart: [
-        "cssStyleElementMinistryBrandsButtonsTypography",
         "cssStyleElementMinistryBrandsButtonsBgColor",
         "cssStyleElementMinistryBrandsButtonsBgGradient",
         "cssStyleElementMinistryBrandsButtonsColor",
         "cssStyleElementMinistryBrandsButtonsBoxShadow",
-        "cssStyleElementMinistryBrandsButtonsBorder",
-        "cssStyleElementMinistryBrandsButtonsBorderRadius"
+        "cssStyleElementMinistryBrandsButtonsBorder"
       ],
       interval: ["cssStyleMinistryBrandsButtonsHoverTransition"]
     },
@@ -340,31 +363,31 @@ export function style(data: DynamicStylesProps<Value>): OutputStyle {
           : ["cssStyleElementMinistryBrandsButtonsSize"])
       ]
     },
+    ".brz && .brz-eventLayout--calendar-heading": {
+      standart: ["cssStyleElementEventLayoutCalendarHeadingTypography"]
+    },
     ".brz && .brz-eventLayout--calendar-heading:hover": {
-      standart: [
-        "cssStyleElementEventLayoutCalendarHeadingTypography",
-        "cssStyleElementEventLayoutCalendarHeadingColor"
-      ],
+      standart: ["cssStyleElementEventLayoutCalendarHeadingColor"],
       interval: [
         "cssStyleHoverTransition",
         "cssStylePropertyHoverTransitionColor"
       ]
+    },
+    ".brz && .brz-eventLayout--calendar-day": {
+      standart: ["cssStyleElementEventLayoutCalendarDaysTypography"]
     },
     ".brz && .brz-eventLayout--calendar-day:hover": {
-      standart: [
-        "cssStyleElementEventLayoutCalendarDaysTypography",
-        "cssStyleElementEventLayoutCalendarDaysBorder"
-      ],
+      standart: ["cssStyleElementEventLayoutCalendarDaysBorder"],
       interval: [
         "cssStyleHoverTransition",
         "cssStylePropertyHoverTransitionColor"
       ]
     },
+    ".brz && .brz-eventLayout--calendar-day li span": {
+      standart: ["cssStyleElementEventLayoutCalendarEventsTypography"]
+    },
     ".brz && .brz-eventLayout--calendar-day li span:hover": {
-      standart: [
-        "cssStyleElementEventLayoutCalendarEventsTypography",
-        "cssStyleElementEventLayoutCalendarEventsColor"
-      ],
+      standart: ["cssStyleElementEventLayoutCalendarEventsColor"],
       interval: [
         "cssStyleHoverTransition",
         "cssStylePropertyHoverTransitionColor"

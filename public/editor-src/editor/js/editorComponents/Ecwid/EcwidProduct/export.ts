@@ -3,6 +3,7 @@ import { EcwidProductId, EcwidStoreId } from "visual/global/Ecwid/types";
 import { EcwidService } from "visual/libs/Ecwid";
 import { EcwidConfig } from "visual/libs/Ecwid/types/EcwidConfig";
 import { ExportFunction } from "visual/types";
+import { ECWID_SLUG_PREFIX } from "visual/utils/ecwid";
 import * as Num from "visual/utils/reader/number";
 import { parseFromString } from "visual/utils/string";
 
@@ -22,7 +23,7 @@ export const fn: ExportFunction = ($node) => {
     const _productId = productId ?? defaultProductId;
 
     if (_productId && storeId) {
-      const _cfg = cfg ? { ...cfg, baseUrl: "/product" } : {};
+      const _cfg = cfg ? { ...cfg, baseUrl: ECWID_SLUG_PREFIX } : {};
 
       EcwidService.init(storeId, _cfg).product(_productId, node);
     }

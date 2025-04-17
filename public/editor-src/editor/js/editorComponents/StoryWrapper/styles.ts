@@ -5,7 +5,7 @@ import { DynamicStylesProps } from "visual/types";
 
 export function styleWrapper(data: DynamicStylesProps<ElementModel>): OutputStyle {
   const styles = {
-    ".brz &&:hover": {
+    ".brz &&": {
       interval: [
         "cssStyleDisplayFlex",
         "cssStyleZIndexStory",

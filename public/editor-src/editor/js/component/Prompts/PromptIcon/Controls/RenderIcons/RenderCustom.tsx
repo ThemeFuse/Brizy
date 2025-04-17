@@ -3,7 +3,7 @@ import React, { useMemo } from "react";
 import { PromiseComponent } from "visual/component/PromiseComponent";
 import { TypeId } from "visual/config/icons/Type";
 import { getTypeIcons } from "visual/config/icons/icons";
-import { useConfig } from "visual/global/hooks";
+import { useConfig } from "visual/providers/ConfigProvider";
 import { FCC } from "visual/utils/react/types";
 import { CustomIcon } from "../CustomIcon";
 import { normalizeCustomIcons } from "../CustomIcon/utils";

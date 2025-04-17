@@ -57,7 +57,6 @@ export interface Prop {
     removeFeaturedImage: string;
     getSidebars: string;
     shortcodeContent: string;
-    getMenus: string;
     getFonts: string;
     getAttachmentUid: string;
     getRuleGroupList: string;

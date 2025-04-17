@@ -65,6 +65,8 @@ class FacebookConnect extends Component {
     } else {
       const { data, group, id: service } = app;
       const [appId] = keysValue;
+      const { config } = this.props;
+
       const isValidate = await validation(appId);
 
       if (!isValidate) {
@@ -78,7 +80,7 @@ class FacebookConnect extends Component {
       }
 
       if (data && data.id) {
-        const { status } = await deleteAccount(data.id);
+        const { status } = await deleteAccount(data.id, config);
 
         if (status !== 200) {
           this.setState({
@@ -88,11 +90,14 @@ class FacebookConnect extends Component {
         }
       }
 
-      const { status } = await addAccount({
-        service,
-        group,
-        ...apiKeyValue
-      });
+      const { status } = await addAccount(
+        {
+          service,
+          group,
+          ...apiKeyValue
+        },
+        config
+      );
 
       if (status !== 200) {
         this.setState({

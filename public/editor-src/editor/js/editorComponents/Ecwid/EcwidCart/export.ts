@@ -3,6 +3,7 @@ import { EcwidStoreId } from "visual/global/Ecwid/types";
 import { EcwidService } from "visual/libs/Ecwid";
 import type { EcwidConfig } from "visual/libs/Ecwid/types/EcwidConfig";
 import { ExportFunction } from "visual/types";
+import { ECWID_SLUG_PREFIX } from "visual/utils/ecwid";
 import { parseFromString } from "visual/utils/string";
 
 export const fn: ExportFunction = ($node) => {
@@ -12,7 +13,9 @@ export const fn: ExportFunction = ($node) => {
     const cfg = config ? parseFromString<EcwidConfig>(config) : {};
 
     if (storeId) {
-      EcwidService.init(storeId, cfg ?? {}).cart(node);
+      EcwidService.init(storeId, { ...cfg, baseUrl: ECWID_SLUG_PREFIX }).cart(
+        node
+      );
     }
   });
 };

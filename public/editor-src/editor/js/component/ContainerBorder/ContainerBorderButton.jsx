@@ -1,9 +1,8 @@
 import classnames from "classnames";
 import React, { Component } from "react";
-import { CSSTransition } from "react-transition-group";
-import EditorIcon from "visual/component/EditorIcon";
 import { makeAttr, makeDataAttr } from "visual/utils/i18n/attribute";
 import { attachRefs } from "visual/utils/react";
+import { BorderButtonIcon } from "./BorderButtonIcon";
 
 class ContainerBorderButton extends Component {
   static defaultProps = {
@@ -23,31 +22,14 @@ class ContainerBorderButton extends Component {
     }
   }
 
-  renderIcon() {
-    const { icon, activeIcon } = this.props;
-    const { active } = this.state;
-
-    if (!activeIcon) {
-      return <EditorIcon icon={icon} />;
-    }
-
-    return (
-      <CSSTransition in={active} timeout={150} classNames="brz-ed-fade">
-        {active ? (
-          <EditorIcon kre="activeIcon" icon={activeIcon} />
-        ) : (
-          <EditorIcon key="icon" icon={icon} />
-        )}
-      </CSSTransition>
-    );
-  }
-
   render() {
     const {
       innerRef,
       className: className_,
       position,
-      containerRef
+      containerRef,
+      icon,
+      activeIcon
     } = this.props;
     const { active } = this.state;
 
@@ -68,7 +50,7 @@ class ContainerBorderButton extends Component {
           value: this.props[makeAttr("sortable-handle")]
         })}
       >
-        {this.renderIcon()}
+        <BorderButtonIcon icon={icon} activeIcon={activeIcon} active={active} />
       </div>
     );
   }

@@ -6,7 +6,7 @@ import { setIn } from "timm";
 import { isEcwidShop } from "visual/global/Config/types/configs/Base";
 import { isCMS, isCloud } from "visual/global/Config/types/configs/Cloud";
 import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
-import { useConfig } from "visual/global/hooks";
+import { useConfig } from "visual/providers/ConfigProvider";
 import { Categories } from "visual/libs/EcwidSdk/categories";
 import { Products } from "visual/libs/EcwidSdk/products";
 import {

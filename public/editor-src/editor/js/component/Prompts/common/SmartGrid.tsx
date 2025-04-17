@@ -1,4 +1,10 @@
-import React, { ReactElement, Ref, forwardRef, useCallback } from "react";
+import React, {
+  ReactElement,
+  Ref,
+  RefCallback,
+  forwardRef,
+  useCallback
+} from "react";
 import Scrollbars from "react-custom-scrollbars";
 import {
   FixedSizeGrid,
@@ -34,9 +40,10 @@ const CustomScrollbars = ({
   style,
   children
 }: CustomScrollbars): ReactElement => {
-  const refSetter = useCallback(
+  const refSetter = useCallback<RefCallback<Scrollbars>>(
     (scrollbarsRef) => {
       if (scrollbarsRef) {
+        // @ts-expect-error: react-custom-scrollbars
         forwardedRef(scrollbarsRef.view);
       } else {
         forwardedRef(null);
@@ -64,20 +71,21 @@ const CustomScrollbarsVirtualList = forwardRef(
 CustomScrollbarsVirtualList.displayName = "CustomScrollbarsVirtualList";
 
 const CustomInnerElementType = (gutter: number): ReactElementType => {
-  const InnerElement: ReactElementType = forwardRef(
-    ({ style, ...rest }, ref) => (
-      <div
-        ref={ref}
-        style={{
-          ...style,
-          paddingLeft: gutter,
-          paddingTop: gutter,
-          marginBottom: gutter
-        }}
-        {...rest}
-      />
-    )
-  );
+  const InnerElement: ReactElementType = forwardRef<
+    HTMLDivElement,
+    { style: CSSStyleRule }
+  >(({ style, ...rest }, ref) => (
+    <div
+      ref={ref}
+      style={{
+        ...style,
+        paddingLeft: gutter,
+        paddingTop: gutter,
+        marginBottom: gutter
+      }}
+      {...rest}
+    />
+  ));
 
   InnerElement.displayName = "InnerElement";
 

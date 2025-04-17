@@ -4,7 +4,8 @@ import { getOptions } from "visual/component/ConditionsComponent";
 import { Switch as Control } from "visual/component/Controls/Switch";
 import { ToastNotification } from "visual/component/Notifications";
 import Prompts from "visual/component/Prompts";
-import { useConfig } from "visual/global/hooks";
+import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import { useConfig } from "visual/providers/ConfigProvider";
 import {
   makeGlobalBlockToPopup,
   makeGlobalToNormalBlock,
@@ -37,26 +38,29 @@ import { getOpenedPopupId, openPopupById } from "./popupHandlers";
 import { Component, OpenPromptCondition, Selector } from "./types";
 import { createScreenshot, getBlockType } from "./utils";
 
-const selector = (state: ReduxState): Selector => ({
-  extraFontStyles: extraFontStylesSelector(state),
-  pageBlocks: pageBlocksDataSelector(state),
-  globalBlocks: globalBlocksAssembled2Selector(state),
-  blocksData: blocksDataSelector(state),
-  page: pageSelector(state)
-});
+const selector =
+  (config: ConfigCommon) =>
+  (state: ReduxState): Selector => ({
+    extraFontStyles: extraFontStylesSelector(state),
+    pageBlocks: pageBlocksDataSelector(state, config),
+    globalBlocks: globalBlocksAssembled2Selector(state),
+    blocksData: blocksDataSelector(state),
+    page: pageSelector(state)
+  });
 
 export const GlobalBlockOption: Component = ({
   className,
   label,
   config
 }): ReactElement => {
+  const globalConfig = useConfig();
+
   const { extraFontStyles, pageBlocks, globalBlocks, page } = useSelector(
-    selector,
+    selector(globalConfig),
     shallowEqual
   );
   const dispatch = useDispatch();
   const switchKey = useRef(uuid(4));
-  const globalConfig = useConfig();
   const [loading, setLoading] = useState(false);
   const portalRef = useRef<HTMLElement | null>(null);
 
@@ -246,7 +250,9 @@ export const GlobalBlockOption: Component = ({
             break;
           }
           case "normal": {
-            dispatch(makeGlobalToNormalBlock(data));
+            dispatch(
+              makeGlobalToNormalBlock({ ...data, config: globalConfig })
+            );
             break;
           }
         }

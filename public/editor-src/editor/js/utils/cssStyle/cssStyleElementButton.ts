@@ -20,27 +20,51 @@ export function cssStyleElementButtonIconPosition({
   v,
   device,
   store,
-  state
+  state,
+  getConfig
 }: CSSValue): string {
-  return cssStyleIconPosition({ v, device, store, state, prefix: "icon" });
+  return cssStyleIconPosition({
+    v,
+    device,
+    store,
+    getConfig,
+    state,
+    prefix: "icon"
+  });
 }
 
 export function cssStyleElementButtonIconMargin({
   v,
   device,
   store,
+  getConfig,
   state
 }: CSSValue): string {
-  return cssStyleIconMargin({ v, device, store, state, prefix: "icon" });
+  return cssStyleIconMargin({
+    v,
+    device,
+    store,
+    getConfig,
+    state,
+    prefix: "icon"
+  });
 }
 
 export function cssStyleElementButtonIconStrokeWidth({
   v,
   device,
   store,
+  getConfig,
   state
 }: CSSValue): string {
-  return cssStyleStrokeWidth({ v, device, store, state, prefix: "icon" });
+  return cssStyleStrokeWidth({
+    v,
+    device,
+    store,
+    getConfig,
+    state,
+    prefix: "icon"
+  });
 }
 
 export function cssStyleElementButtonSizeForStory(): string {
@@ -83,15 +107,23 @@ export function cssStyleElementButtonSize({
 export function cssStyleElementButtonBgColorStateNORMAL({
   v,
   device,
+  getConfig,
   store
 }: CSSValue): string {
-  return cssStyleElementButtonBgColor({ v, device, store, state: NORMAL });
+  return cssStyleElementButtonBgColor({
+    v,
+    device,
+    getConfig,
+    store,
+    state: NORMAL
+  });
 }
 
 export function cssStyleElementButtonBgColor({
   v,
   device,
   state,
+  getConfig,
   store
 }: CSSValue): string {
   const dvv = (key: string): unknown =>
@@ -100,7 +132,7 @@ export function cssStyleElementButtonBgColor({
 
   switch (fillType) {
     case "filled":
-      return cssStyleBgColor({ v, device, store, state });
+      return cssStyleBgColor({ v, device, getConfig, store, state });
     case "outline":
       return "background-color: transparent!important;";
     case "default": {
@@ -115,9 +147,17 @@ export function cssStyleElementButtonBgGradientStateNORMAL({
   v,
   device,
   store,
+  getConfig,
   prefix
 }: CSSValue): string {
-  return cssStyleBgGradient({ v, device, store, state: NORMAL, prefix });
+  return cssStyleBgGradient({
+    v,
+    device,
+    getConfig,
+    store,
+    state: NORMAL,
+    prefix
+  });
 }
 
 export function cssStyleElementButtonBgGradient({
@@ -125,6 +165,7 @@ export function cssStyleElementButtonBgGradient({
   device,
   store,
   state,
+  getConfig,
   prefix
 }: CSSValue): string {
   const dvv = (key: string): unknown => defaultValueValue({ v, key, device });
@@ -132,7 +173,7 @@ export function cssStyleElementButtonBgGradient({
 
   switch (fillType) {
     case "filled":
-      return cssStyleBgGradient({ v, device, store, state, prefix });
+      return cssStyleBgGradient({ v, device, store, getConfig, state, prefix });
     case "outline":
     case "default":
       return "background: transparent;";
@@ -145,6 +186,7 @@ export function cssStyleElementButtonBorderStory({
   v,
   device,
   state,
+  getConfig,
   store
 }: CSSValue): string {
   const dvv = (key: string): unknown =>
@@ -154,7 +196,7 @@ export function cssStyleElementButtonBorderStory({
   switch (fillType) {
     case "filled":
     case "outline":
-      return cssStyleBorder({ v, device, state, store });
+      return cssStyleBorder({ v, device, getConfig, state, store });
     case "default": {
       return "border: 0; border-radius: 0!important;";
     }
@@ -195,10 +237,10 @@ export const cssStyleElementButtonBgBlendColor = ({
   v,
   device,
   state,
-  store,
+  getConfig,
   prefix = "bg"
 }: CSSValue): string => {
-  const hex = styleBgColorHex({ v, device, store, state, prefix });
+  const hex = styleBgColorHex({ v, device, getConfig, state, prefix });
 
   return `background-color: rgba(${hex}, 1);`;
 };
@@ -208,6 +250,7 @@ export function cssStyleElementButtonBgBlendGradient({
   device,
   state,
   store,
+  getConfig,
   prefix
 }: CSSValue): string {
   const dvv = (key: string): unknown => defaultValueValue({ v, key, device });
@@ -215,7 +258,14 @@ export function cssStyleElementButtonBgBlendGradient({
 
   switch (fillType) {
     case "filled":
-      return cssStyleBgBlendGradient({ v, device, store, state, prefix });
+      return cssStyleBgBlendGradient({
+        v,
+        device,
+        store,
+        getConfig,
+        state,
+        prefix
+      });
     case "outline":
     case "default":
       return "background: transparent;";
@@ -229,8 +279,16 @@ export function cssStyleBgBlendGradient({
   device,
   state,
   store,
+  getConfig,
   prefix
 }: CSSValue): string {
-  const bgGradient = styleBgBlendGradient({ v, device, state, store, prefix });
+  const bgGradient = styleBgBlendGradient({
+    v,
+    device,
+    state,
+    getConfig,
+    store,
+    prefix
+  });
   return `background-image:${bgGradient};`;
 }

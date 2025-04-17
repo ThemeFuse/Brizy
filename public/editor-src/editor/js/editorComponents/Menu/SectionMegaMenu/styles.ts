@@ -7,15 +7,18 @@ export function styleSection(
   data: DynamicStylesProps<ElementModel>
 ): OutputStyle {
   const styles = {
-    ".brz &&:hover": {
+    ".brz &&": {
       interval: [
         "cssStyleDisplayBlock",
         "cssStyleVisibleMode|||preview",
         "cssStyleVisibleEditorDisplayNoneOrBlock|||editor"
       ]
     },
+    ".brz && > .brz-bg": {
+      standart: ["cssStyleBorderRadius"]
+    },
     ".brz &&:hover > .brz-bg": {
-      standart: ["cssStyleBorder", "cssStyleBorderRadius", "cssStyleBoxShadow"],
+      standart: ["cssStyleBorder", "cssStyleBoxShadow"],
       interval: ["cssStyleHoverTransition", "cssStylePropertyHoverTransition"]
     },
     ".brz &&:hover > .brz-bg > .brz-bg-image": {
@@ -33,7 +36,7 @@ export function styleSection(
       standart: ["cssStyleBgColor", "cssStyleBgGradient"],
       interval: ["cssStyleHoverTransition", "cssStylePropertyHoverTransition"]
     },
-    ".brz &&:hover > .brz-bg-content": {
+    ".brz && > .brz-bg-content": {
       standart: [
         "cssStylePaddingFourFields",
         "cssStylePaddingRightLeftForEditor"
@@ -48,7 +51,7 @@ export function styleContainer(
   data: DynamicStylesProps<ElementModel>
 ): OutputStyle {
   const styles = {
-    ".brz &&:hover": {
+    ".brz &&": {
       interval: ["cssStyleVisibleMode|||editor"],
       standart: [
         "cssStylePaddingFourFields",

@@ -194,7 +194,8 @@ class Variation extends Component {
     const { status, data } = await createFont({
       id: uuid(),
       name: fontName,
-      files
+      files,
+      config: this.props.config
     });
 
     if (status !== 200) {

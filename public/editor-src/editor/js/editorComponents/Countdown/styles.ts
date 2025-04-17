@@ -5,9 +5,8 @@ import { OutputStyle } from "visual/utils/cssStyle/types";
 
 export function style(data: DynamicStylesProps<ElementModel>): OutputStyle {
   const styles = {
-    ".brz &&:hover": {
+    ".brz &&": {
       standart: [
-        "cssStyleColor",
         "cssStyleSizeWidth",
         "cssStyleTypography2FontFamily",
         "cssStyleTypography2FontSize",
@@ -18,7 +17,9 @@ export function style(data: DynamicStylesProps<ElementModel>): OutputStyle {
         "cssStyleTextTransforms"
       ]
     },
-
+    ".brz &&:hover": {
+      standart: ["cssStyleColor"]
+    },
     ".brz &&:hover .brz-countdown__label": {
       standart: ["cssStyleTypographyElementCountdownLabelFontSize"]
     }

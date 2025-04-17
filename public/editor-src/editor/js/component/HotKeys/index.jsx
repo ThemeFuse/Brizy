@@ -3,7 +3,6 @@ import React from "react";
 import { getIn } from "timm";
 import { rolesHOC } from "visual/component/Roles";
 import { symbolsToItems } from "visual/editorComponents/Menu/utils";
-import Config from "visual/global/Config";
 import {
   copiedElementNoRefsSelector,
   pageDataNoRefsSelector
@@ -13,6 +12,7 @@ import {
   getClosestParent,
   mapModels
 } from "visual/utils/models";
+import { useConfig } from "../../providers/ConfigProvider";
 import HotKeysPlugin from "./HotKeysPlugin";
 
 const keyNamesShortKeys = {
@@ -60,14 +60,14 @@ const getShortKeysByShortcuts = (types) => {
 
 const HotKeysContext = React.createContext({});
 
-class HotKeys extends React.Component {
+class _HotKeys extends React.Component {
   static contextType = HotKeysContext;
 
   contextValue = {
     getParentContextMenuItems: this.getItems
   };
 
-  handleFilterItems(items, state) {
+  handleFilterItems(menuData = [], items, state) {
     // It's hack only for shortcodes. We calculate current active shortcode and return his callback
     if (items.length && items[0].id.startsWith("key-helper")) {
       // this enables toolbar's escape handler to work properly inside SectionPopup.
@@ -93,7 +93,7 @@ class HotKeys extends React.Component {
     const activeElementPath = createFullModelPath(data, [activeElementId]);
     const copiedPath = [...activeElementPath];
 
-    const _data = attachMenu(data);
+    const _data = attachMenu(data, menuData);
 
     // this condition for this cases:
     // wrapper -> cloneable
@@ -107,7 +107,7 @@ class HotKeys extends React.Component {
       if (currentActiveContainerValue && copiedElement.value) {
         const { value: currentCopiedContainerValue } = getClosestParent(
           copiedElement.path,
-          attachMenu(copiedElement.value),
+          attachMenu(copiedElement.value, menuData),
           ({ type }) => type === "Wrapper" || type === "Cloneable"
         );
 
@@ -199,7 +199,7 @@ class HotKeys extends React.Component {
   };
 
   render() {
-    const { children, id } = this.props;
+    const { children, id, menuData } = this.props;
     const items = this.getItems();
 
     return (
@@ -210,12 +210,18 @@ class HotKeys extends React.Component {
           id={id}
           shouldKeyDownHandle={this.shouldShortCutHandle}
           shouldKeyUpHandle={this.shouldShortCutHandle}
-          filterItems={this.handleFilterItems}
+          filterItems={(...args) => this.handleFilterItems(menuData, ...args)}
         />
       </HotKeysContext.Provider>
     );
   }
 }
+
+export const HotKeys = (props) => {
+  const { menuData } = useConfig();
+
+  return <_HotKeys {...props} menuData={menuData} />;
+};
 
 export default rolesHOC({
   allow: ["admin"],
@@ -223,17 +229,15 @@ export default rolesHOC({
   fallbackComponent: ({ children }) => children || null
 });
 
-function attachMenu(value) {
-  const menusConfig = Config.get("menuData");
-
+function attachMenu(value, menuData) {
   return mapModels((block) => {
     const { type, value } = block;
 
     if (type === "Menu") {
       const { menuSelected: dbMenuSelected, symbols = {} } = value;
-      const menuSelected = dbMenuSelected || menusConfig[0].id;
+      const menuSelected = dbMenuSelected || menuData[0].id;
       const menuConfig =
-        menusConfig.find((menu) => menu.id === menuSelected) || {};
+        menuData.find((menu) => menu.id === menuSelected) || {};
 
       return produce(block, (draft) => {
         draft.value.items = symbolsToItems(menuConfig.items || [], symbols);

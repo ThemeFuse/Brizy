@@ -1,17 +1,12 @@
-import { renderStyles } from "visual/utils/cssStyle";
-import { Value } from ".";
-import { OutputStyle } from "visual/utils/cssStyle/types";
 import { DynamicStylesProps } from "visual/types";
+import { renderStyles } from "visual/utils/cssStyle";
+import { OutputStyle } from "visual/utils/cssStyle/types";
+import { Value } from ".";
 
 export function style(data: DynamicStylesProps<Value>): OutputStyle {
   const styles = {
-    ".brz &&:hover": {
+    ".brz &&": {
       standart: [
-        "cssStyleColor",
-        "cssStyleElementButtonBgColor",
-        "cssStyleBgGradient",
-        "cssStyleBoxShadow",
-        "cssStyleBorder",
         "cssStyleBorderRadiusType",
         "cssStyleTypography2FontFamily",
         "cssStyleTypography2FontSize",
@@ -22,6 +17,15 @@ export function style(data: DynamicStylesProps<Value>): OutputStyle {
         "cssStyleTextTransforms",
         "cssStyleElementShopifyAddToCartSize",
         "cssStyleElementButtonIconPosition"
+      ]
+    },
+    ".brz &&:hover": {
+      standart: [
+        "cssStyleColor",
+        "cssStyleElementButtonBgColor",
+        "cssStyleBgGradient",
+        "cssStyleBoxShadow",
+        "cssStyleBorder"
       ],
       interval: [
         "cssStyleHoverTransition",

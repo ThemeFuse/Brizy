@@ -32,6 +32,7 @@ export function cssStyleElementWOOProductMetaCategoryFontFamily({
   v,
   device,
   store,
+  getConfig,
   prefix = "category",
   renderContext
 }) {
@@ -41,6 +42,7 @@ export function cssStyleElementWOOProductMetaCategoryFontFamily({
         device,
         prefix,
         store,
+        getConfig,
         renderContext
       })};`
     : "";
@@ -50,12 +52,14 @@ export function cssStyleElementWOOProductMetaCategoryFontSize({
   v,
   device,
   store,
+  getConfig,
   prefix = "category"
 }) {
   return `font-size:${styleTypography2FontSize({
     v,
     device,
     store,
+    getConfig,
     prefix
   })}px;`;
 }
@@ -64,12 +68,14 @@ export function cssStyleElementWOOProductMetaCategoryLineHeight({
   v,
   device,
   store,
+  getConfig,
   prefix = "category"
 }) {
   return `line-height:${styleTypography2LineHeight({
     v,
     device,
     store,
+    getConfig,
     prefix
   })};`;
 }
@@ -78,12 +84,14 @@ export function cssStyleElementWOOProductMetaCategoryFontWeight({
   v,
   device,
   store,
+  getConfig,
   prefix = "category"
 }) {
   return `font-weight:${styleTypography2FontWeight({
     v,
     device,
     store,
+    getConfig,
     prefix
   })};`;
 }
@@ -92,12 +100,14 @@ export function cssStyleElementWOOProductMetaCategoryLetterSpacing({
   v,
   device,
   store,
+  getConfig,
   prefix = "category"
 }) {
   return `letter-spacing:${styleTypography2LetterSpacing({
     v,
     device,
     store,
+    getConfig,
     prefix
   })}px;`;
 }
@@ -105,6 +115,7 @@ export function cssStyleElementWOOProductMetaCategoryLetterSpacing({
 export function cssStyleElementWOOProductMetaCategoryFontVariation({
   v,
   device,
+  getConfig,
   store,
   prefix = "category"
 }) {
@@ -112,6 +123,7 @@ export function cssStyleElementWOOProductMetaCategoryFontVariation({
     v,
     device,
     store,
+    getConfig,
     prefix
   });
 }
@@ -121,6 +133,7 @@ export function cssStyleElementWOOProductMetaCategoryTextTransform({
   device,
   store,
   state,
+  getConfig,
   prefix = "category"
 }) {
   return cssStyleTextTransforms({
@@ -128,6 +141,7 @@ export function cssStyleElementWOOProductMetaCategoryTextTransform({
     device,
     store,
     state,
+    getConfig,
     prefix
   });
 }
@@ -136,6 +150,7 @@ export function cssStyleElementWOOProductMetaValueFontFamily({
   v,
   device,
   store,
+  getConfig,
   prefix = "value",
   renderContext
 }) {
@@ -144,6 +159,7 @@ export function cssStyleElementWOOProductMetaValueFontFamily({
         v,
         device,
         store,
+        getConfig,
         prefix,
         renderContext
       })};`
@@ -153,6 +169,7 @@ export function cssStyleElementWOOProductMetaValueFontFamily({
 export function cssStyleElementWOOProductMetaValueFontSize({
   v,
   device,
+  getConfig,
   store,
   prefix = "value"
 }) {
@@ -160,6 +177,7 @@ export function cssStyleElementWOOProductMetaValueFontSize({
     v,
     device,
     store,
+    getConfig,
     prefix
   })}px;`;
 }
@@ -167,6 +185,7 @@ export function cssStyleElementWOOProductMetaValueFontSize({
 export function cssStyleElementWOOProductMetaValueLineHeight({
   v,
   device,
+  getConfig,
   store,
   prefix = "value"
 }) {
@@ -174,6 +193,7 @@ export function cssStyleElementWOOProductMetaValueLineHeight({
     v,
     device,
     store,
+    getConfig,
     prefix
   })};`;
 }
@@ -181,6 +201,7 @@ export function cssStyleElementWOOProductMetaValueLineHeight({
 export function cssStyleElementWOOProductMetaValueFontWeight({
   v,
   device,
+  getConfig,
   store,
   prefix = "value"
 }) {
@@ -188,6 +209,7 @@ export function cssStyleElementWOOProductMetaValueFontWeight({
     v,
     device,
     store,
+    getConfig,
     prefix
   })};`;
 }
@@ -196,12 +218,14 @@ export function cssStyleElementWOOProductMetaValueLetterSpacing({
   v,
   device,
   store,
+  getConfig,
   prefix = "value"
 }) {
   return `letter-spacing:${styleTypography2LetterSpacing({
     v,
     device,
     store,
+    getConfig,
     prefix
   })}px;`;
 }
@@ -209,6 +233,7 @@ export function cssStyleElementWOOProductMetaValueLetterSpacing({
 export function cssStyleElementWOOProductMetaValueFontVariation({
   v,
   device,
+  getConfig,
   store,
   prefix = "value"
 }) {
@@ -216,6 +241,7 @@ export function cssStyleElementWOOProductMetaValueFontVariation({
     v,
     device,
     store,
+    getConfig,
     prefix
   });
 }
@@ -224,6 +250,7 @@ export function cssStyleElementWOOProductMetaValueTextTransform({
   v,
   device,
   store,
+  getConfig,
   state,
   prefix = "value"
 }) {
@@ -231,16 +258,28 @@ export function cssStyleElementWOOProductMetaValueTextTransform({
     v,
     device,
     store,
+    getConfig,
     state,
     prefix
   });
 }
 
-export function cssStyleElementWOOProductMetaTopSpacing({ v, device, state }) {
-  const spacing = styleElementWOOProductMetaTopSpacing({ v, device, state });
+export function cssStyleElementWOOProductMetaTopSpacing({
+  v,
+  device,
+  getConfig,
+  state
+}) {
+  const spacing = styleElementWOOProductMetaTopSpacing({
+    v,
+    device,
+    getConfig,
+    state
+  });
   const type = styleElementWOOProductMetaType({
     v,
     device,
+    getConfig,
     state
   });
 
@@ -254,12 +293,19 @@ export function cssStyleElementWOOProductMetaTopSpacing({ v, device, state }) {
 export function cssStyleElementWOOProductMetaRightSpacing({
   v,
   device,
+  getConfig,
   state
 }) {
-  const spacing = styleElementWOOProductMetaRightSpacing({ v, device, state });
+  const spacing = styleElementWOOProductMetaRightSpacing({
+    v,
+    device,
+    getConfig,
+    state
+  });
   const type = styleElementWOOProductMetaType({
     v,
     device,
+    getConfig,
     state
   });
 
@@ -273,12 +319,19 @@ export function cssStyleElementWOOProductMetaRightSpacing({
 export function cssStyleElementWOOProductMetaRightSpacingInline({
   v,
   device,
+  getConfig,
   state
 }) {
-  const spacing = styleElementWOOProductMetaRightSpacing({ v, device, state });
+  const spacing = styleElementWOOProductMetaRightSpacing({
+    v,
+    device,
+    getConfig,
+    state
+  });
   const type = styleElementWOOProductMetaType({
     v,
     device,
+    getConfig,
     state
   });
 
@@ -292,6 +345,7 @@ export function cssStyleElementWOOProductMetaRightSpacingInline({
 export function cssStyleElementWOOProductMetaCategoryColor({
   v,
   device,
+  getConfig,
   store,
   state
 }) {
@@ -300,6 +354,7 @@ export function cssStyleElementWOOProductMetaCategoryColor({
     device,
     state,
     store,
+    getConfig,
     prefix: "categoryColor"
   });
 }
@@ -308,12 +363,14 @@ export function cssStyleElementWOOProductMetaValueColor({
   v,
   device,
   store,
+  getConfig,
   state
 }) {
   return cssStyleColor({
     v,
     device,
     store,
+    getConfig,
     prefix: "valueColor",
     state
   });
@@ -323,10 +380,12 @@ export function cssStyleElementWOOProductMetaDividers({
   v,
   device,
   state,
+  getConfig,
   store
 }) {
   const type = styleElementWOOProductMetaType({
     v,
+    getConfig,
     device,
     state
   });
@@ -335,6 +394,7 @@ export function cssStyleElementWOOProductMetaDividers({
     v,
     device,
     state,
+    getConfig,
     store,
     prefix: "dividersColor"
   });

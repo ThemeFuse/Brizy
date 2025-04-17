@@ -26,6 +26,7 @@ import { uuid } from "visual/utils/uuid";
 import {
   FontStyleEditorData,
   FontStyleEditorItem,
+  ModelType,
   Props,
   Styles
 } from "./types";
@@ -204,7 +205,10 @@ export const FontStyleEditor: FCC<Props> = ({ value, label, onChange }) => {
   );
 
   const getToolbarItems = useCallback(
-    (el: FontStyleEditorData, onChange): OptionDefinition[] => [
+    (
+      el: FontStyleEditorData,
+      onChange: (f: ModelType) => void
+    ): OptionDefinition[] => [
       {
         id: "toolbarTypography",
         type: "popover",
@@ -236,14 +240,14 @@ export const FontStyleEditor: FCC<Props> = ({ value, label, onChange }) => {
 
   const getToolbarItemsCallback = useCallback(
     (el: FontStyleEditorData): OptionDefinition[] =>
-      getToolbarItems(el, (newValue: FontStyleEditorItem) =>
+      getToolbarItems(el, (newValue: ModelType) =>
         handleChange(el.id, newValue)
       ),
     [getToolbarItems, handleChange]
   );
 
   const handleChangeCallback = useCallback(
-    (id) => (newValue: Partial<FontStyleEditorItem>) =>
+    (id: string) => (newValue: Partial<FontStyleEditorItem>) =>
       handleChange(id, newValue),
     [handleChange]
   );

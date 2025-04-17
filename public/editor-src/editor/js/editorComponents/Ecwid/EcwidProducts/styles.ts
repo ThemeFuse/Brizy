@@ -1,7 +1,7 @@
-import { renderStyles } from "visual/utils/cssStyle";
-import { Value } from "./types/Value";
-import { OutputStyle } from "visual/utils/cssStyle/types";
 import { DynamicStylesProps } from "visual/types";
+import { renderStyles } from "visual/utils/cssStyle";
+import { OutputStyle } from "visual/utils/cssStyle/types";
+import { Value } from "./types/Value";
 
 export function style(data: DynamicStylesProps<Value>): OutputStyle {
   const styles = {
@@ -93,44 +93,60 @@ export function style(data: DynamicStylesProps<Value>): OutputStyle {
           "cssStyleElementEcwidProductsSortingDisplay"
         ]
       },
-    "#ecwid_html #ecwid_body && .ecwid .ec-storefront-v2 div .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .ec-grid .grid__sort.ec-text-muted .form-control.form-control--select-inline.grid-sort__item.grid-sort__item--sortby:hover .form-control__select option":
+    "#ecwid_html #ecwid_body && .ecwid .ec-storefront-v2 div .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .ec-grid .grid__sort.ec-text-muted .form-control.form-control--select-inline.grid-sort__item.grid-sort__item--sortby .form-control__select option":
       {
         standart: [
           "cssStyleElementEcwidProductsSortingTypography",
+          "cssStyleElementEcwidProductsSortingBorderRadius",
+          "cssStyleElementEcwidProductsSortingSize"
+        ]
+      },
+    "#ecwid_html #ecwid_body && .ecwid .ec-storefront-v2 div .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .ec-grid .grid__sort.ec-text-muted .form-control.form-control--select-inline.grid-sort__item.grid-sort__item--sortby:hover .form-control__select option":
+      {
+        standart: [
           "cssStyleElementEcwidProductsSortingColor",
           "cssStyleElementEcwidProductsSortingBgColor",
           "cssStyleElementEcwidProductsSortingBgGradient",
           "cssStyleElementEcwidProductsSortingBorder",
-          "cssStyleElementEcwidProductsSortingBorderRadius",
-          "cssStyleElementEcwidProductsSortingBoxShadow",
-          "cssStyleElementEcwidProductsSortingSize"
+          "cssStyleElementEcwidProductsSortingBoxShadow"
         ],
         interval: [
           "cssStyleHoverTransition",
           "cssStylePropertyHoverTransitionElementEcwid"
+        ]
+      },
+    "#ecwid_html #ecwid_body && .ecwid .ec-storefront-v2 div .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .ec-grid .grid__sort.ec-text-muted .form-control.form-control--select-inline.grid-sort__item.grid-sort__item--sortby label":
+      {
+        standart: [
+          "cssStyleElementEcwidProductsSortingSpacingRight",
+          "cssStyleElementEcwidProductsSortingTypography"
         ]
       },
     "#ecwid_html #ecwid_body && .ecwid .ec-storefront-v2 div .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .ec-grid .grid__sort.ec-text-muted .form-control.form-control--select-inline.grid-sort__item.grid-sort__item--sortby:hover label":
       {
-        standart: [
-          "cssStyleElementEcwidProductsSortingSpacingRight",
-          "cssStyleElementEcwidProductsSortingColor",
-          "cssStyleElementEcwidProductsSortingTypography"
-        ],
+        standart: ["cssStyleElementEcwidProductsSortingColor"],
         interval: [
           "cssStyleHoverTransition",
           "cssStylePropertyHoverTransitionElementEcwid"
         ]
       },
+    "#ecwid_html #ecwid_body && .ecwid .ec-storefront-v2 div .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .ec-grid .grid__sort.ec-text-muted .form-control.form-control--select-inline.grid-sort__item.grid-sort__item--sortby .form-control__arrow":
+      {
+        standart: ["cssStyleElementEcwidProductsSortingTypography"]
+      },
     "#ecwid_html #ecwid_body && .ecwid .ec-storefront-v2 div .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .ec-grid .grid__sort.ec-text-muted .form-control.form-control--select-inline.grid-sort__item.grid-sort__item--sortby:hover .form-control__arrow:hover":
       {
-        standart: [
-          "cssStyleElementEcwidProductsSortingColor",
-          "cssStyleElementEcwidProductsSortingTypography"
-        ],
+        standart: ["cssStyleElementEcwidProductsSortingColor"],
         interval: [
           "cssStyleHoverTransition",
           "cssStylePropertyHoverTransitionElementEcwid"
+        ]
+      },
+    "#ecwid_html #ecwid_body && .ecwid .ec-storefront-v2 div .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .ec-grid .grid__sort.ec-text-muted .form-control.form-control--select-inline.grid-sort__item.grid-sort__item--sortby":
+      {
+        standart: [
+          "cssStyleElementEcwidProductsSortingBorderRadius",
+          "cssStyleElementEcwidProductsSortingSize"
         ]
       },
     "#ecwid_html #ecwid_body && .ecwid .ec-storefront-v2 div .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .ec-grid .grid__sort.ec-text-muted .form-control.form-control--select-inline.grid-sort__item.grid-sort__item--sortby:hover":
@@ -139,9 +155,7 @@ export function style(data: DynamicStylesProps<Value>): OutputStyle {
           "cssStyleElementEcwidProductsSortingBgColor",
           "cssStyleElementEcwidProductsSortingBgGradient",
           "cssStyleElementEcwidProductsSortingBorder",
-          "cssStyleElementEcwidProductsSortingBorderRadius",
-          "cssStyleElementEcwidProductsSortingBoxShadow",
-          "cssStyleElementEcwidProductsSortingSize"
+          "cssStyleElementEcwidProductsSortingBoxShadow"
         ],
         interval: [
           "cssStyleHoverTransition",
@@ -155,7 +169,7 @@ export function style(data: DynamicStylesProps<Value>): OutputStyle {
           "cssStyleElementEcwidProductsGallerySize"
         ]
       },
-    "#ecwid_html #ecwid_body && .ecwid .ec-storefront-v2 div .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .ec-grid .grid__wrap .grid__wrap-inner .grid__products .grid-product .grid-product__wrap .grid-product__wrap-inner .grid-product__image:hover .grid-product__image-wrap .grid-product__label .ec-label":
+    "#ecwid_html #ecwid_body && .ecwid .ec-storefront-v2 div .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .ec-grid .grid__wrap .grid__wrap-inner .grid__products .grid-product .grid-product__wrap .grid-product__wrap-inner .grid-product__image .grid-product__image-wrap .grid-product__label .ec-label":
       {
         standart: [
           "cssStyleElementEcwidProductsGalleryLabelDisplay",
@@ -166,7 +180,7 @@ export function style(data: DynamicStylesProps<Value>): OutputStyle {
           "cssStylePropertyHoverTransitionElementEcwid"
         ]
       },
-    "#ecwid_html #ecwid_body && .ecwid .ec-storefront-v2 div .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .ec-grid .grid__wrap .grid__wrap-inner .grid__products .grid-product .grid-product__wrap .grid-product__wrap-inner .grid-product__image:hover .grid-product__image-wrap .grid-product__label .ec-label .label__text":
+    "#ecwid_html #ecwid_body && .ecwid .ec-storefront-v2 div .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .ec-grid .grid__wrap .grid__wrap-inner .grid__products .grid-product .grid-product__wrap .grid-product__wrap-inner .grid-product__image .grid-product__image-wrap .grid-product__label .ec-label .label__text":
       { standart: ["cssStyleElementEcwidProductsLabelTypography"] },
     "#ecwid_html #ecwid_body && .ecwid .ec-storefront-v2 div .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .ec-grid .grid__wrap .grid__wrap-inner .grid__products .grid-product .grid-product__wrap .grid-product__wrap-inner .grid-product__sku.ec-text-muted":
       {
@@ -186,16 +200,21 @@ export function style(data: DynamicStylesProps<Value>): OutputStyle {
       },
     "#ecwid_html #ecwid_body && .ecwid .ec-storefront-v2 div .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .ec-grid .grid__wrap .grid__wrap-inner .grid__products .grid-product .grid-product__wrap .grid-product__wrap-inner .grid-product__button.grid-product__buy-now .form-control.form-control--button":
       { standart: ["cssStyleElementEcwidCartButtonWidth"] },
-    "#ecwid_html #ecwid_body && .ecwid .ec-storefront-v2 div .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .ec-grid .grid__wrap .grid__wrap-inner .grid__products .grid-product .grid-product__wrap .grid-product__wrap-inner .grid-product__button.grid-product__buy-now .form-control.form-control--button .form-control__button:hover":
+    "#ecwid_html #ecwid_body && .ecwid .ec-storefront-v2 div .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .ec-grid .grid__wrap .grid__wrap-inner .grid__products .grid-product .grid-product__wrap .grid-product__wrap-inner .grid-product__button.grid-product__buy-now .form-control.form-control--button .form-control__button":
       {
         standart: [
           "cssStyleElementEcwidCartButtonSize",
+          "cssStyleElementEcwidCartButtonBorderRadius"
+        ]
+      },
+    "#ecwid_html #ecwid_body && .ecwid .ec-storefront-v2 div .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .ec-grid .grid__wrap .grid__wrap-inner .grid__products .grid-product .grid-product__wrap .grid-product__wrap-inner .grid-product__button.grid-product__buy-now .form-control.form-control--button .form-control__button:hover":
+      {
+        standart: [
           "cssStyleElementEcwidCartButtonColor",
           "cssStyleElementEcwidCartButtonBgColor",
           "cssStyleElementEcwidCartButtonBgGradient",
           "cssStyleElementEcwidCartButtonBorder",
-          "cssStyleElementEcwidCartButtonBoxShadow",
-          "cssStyleElementEcwidCartButtonBorderRadius"
+          "cssStyleElementEcwidCartButtonBoxShadow"
         ],
         interval: [
           "cssStyleHoverTransition",
@@ -209,16 +228,21 @@ export function style(data: DynamicStylesProps<Value>): OutputStyle {
       { standart: ["cssStyleElementEcwidCartButtonSpacing"] },
     "#ecwid_html #ecwid_body && .ecwid .ec-storefront-v2 div .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .ec-grid .grid__wrap .grid__wrap-inner .grid__products .grid-product .grid-product__wrap .grid-product__wrap-inner .grid-product__image .grid-product__hover-wrap .grid-product__button-hover.grid-product__buy-now .form-control.form-control--button":
       { standart: ["cssStyleElementEcwidCartButtonWidth"] },
-    "#ecwid_html #ecwid_body && .ecwid .ec-storefront-v2 div .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .ec-grid .grid__wrap .grid__wrap-inner .grid__products .grid-product .grid-product__wrap .grid-product__wrap-inner .grid-product__image .grid-product__hover-wrap .grid-product__button-hover.grid-product__buy-now .form-control.form-control--button .form-control__button:hover":
+    "#ecwid_html #ecwid_body && .ecwid .ec-storefront-v2 div .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .ec-grid .grid__wrap .grid__wrap-inner .grid__products .grid-product .grid-product__wrap .grid-product__wrap-inner .grid-product__image .grid-product__hover-wrap .grid-product__button-hover.grid-product__buy-now .form-control.form-control--button .form-control__button":
       {
         standart: [
           "cssStyleElementEcwidCartButtonSize",
+          "cssStyleElementEcwidCartButtonBorderRadius"
+        ]
+      },
+    "#ecwid_html #ecwid_body && .ecwid .ec-storefront-v2 div .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .ec-grid .grid__wrap .grid__wrap-inner .grid__products .grid-product .grid-product__wrap .grid-product__wrap-inner .grid-product__image .grid-product__hover-wrap .grid-product__button-hover.grid-product__buy-now .form-control.form-control--button .form-control__button:hover":
+      {
+        standart: [
           "cssStyleElementEcwidCartButtonColor",
           "cssStyleElementEcwidCartButtonBgColor",
           "cssStyleElementEcwidCartButtonBgGradient",
           "cssStyleElementEcwidCartButtonBorder",
-          "cssStyleElementEcwidCartButtonBoxShadow",
-          "cssStyleElementEcwidCartButtonBorderRadius"
+          "cssStyleElementEcwidCartButtonBoxShadow"
         ],
         interval: [
           "cssStyleHoverTransition",
@@ -253,14 +277,19 @@ export function style(data: DynamicStylesProps<Value>): OutputStyle {
       },
     "#ecwid_html #ecwid_body && .ecwid .ec-storefront-v2 div .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .ec-pager .pager__body.pager__body--has-next":
       { standart: ["cssStyleElementEcwidProductsPaginationSpacing"] },
-    "#ecwid_html #ecwid_body && .ecwid .ec-storefront-v2 div .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .ec-pager .pager__body.pager__body--has-next .pager__pages .ec-link.ec-link--muted.pager__number:hover":
+    "#ecwid_html #ecwid_body && .ecwid .ec-storefront-v2 div .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .ec-pager .pager__body.pager__body--has-next .pager__pages .ec-link.ec-link--muted.pager__number":
       {
         standart: [
           "cssStyleElementEcwidProductsPaginationTypography",
+          "cssStyleElementPostsPaginationBorderRadius"
+        ]
+      },
+    "#ecwid_html #ecwid_body && .ecwid .ec-storefront-v2 div .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .ec-pager .pager__body.pager__body--has-next .pager__pages .ec-link.ec-link--muted.pager__number:hover":
+      {
+        standart: [
           "cssStyleElementPostsPaginationColor",
           "cssStyleElementPostsPaginationBgColor",
-          "cssStyleElementPostsPaginationBorder",
-          "cssStyleElementPostsPaginationBorderRadius"
+          "cssStyleElementPostsPaginationBorder"
         ],
         interval: [
           "cssStyleHoverTransition",
@@ -276,12 +305,13 @@ export function style(data: DynamicStylesProps<Value>): OutputStyle {
           "cssStyleElementPostsPaginationBorderRadius"
         ]
       },
+    "#ecwid_html #ecwid_body && .ecwid .ec-storefront-v2 div .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .ec-pager .pager__body.pager__body--has-next .ec-link":
+      {
+        standart: ["cssStyleElementEcwidProductsPaginationTypography"]
+      },
     "#ecwid_html #ecwid_body && .ecwid .ec-storefront-v2 div .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .ec-pager .pager__body.pager__body--has-next .ec-link:hover":
       {
-        standart: [
-          "cssStyleElementEcwidProductsPaginationTypography",
-          "cssStyleElementPostsPaginationColor"
-        ],
+        standart: ["cssStyleElementPostsPaginationColor"],
         interval: [
           "cssStyleHoverTransition",
           "cssStylePropertyHoverTransitionElementEcwid"

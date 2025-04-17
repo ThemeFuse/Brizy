@@ -1,7 +1,7 @@
 import React, { ComponentType, ReactElement } from "react";
 import { ElementModel } from "visual/component/Elements/Types";
 import Link from "visual/component/Link";
-import { useConfig } from "visual/global/hooks";
+import { useConfig } from "visual/providers/ConfigProvider";
 import { getLinkData } from "visual/utils/models/link";
 import { read } from "visual/utils/reader/object";
 

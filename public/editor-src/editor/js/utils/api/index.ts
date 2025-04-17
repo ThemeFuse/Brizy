@@ -1,10 +1,8 @@
 import { ChoicesAsync } from "visual/component/Options/types/dev/MultiSelect2/types";
 import { ChoicesSync } from "visual/component/Options/types/dev/Select/types";
-import Config from "visual/global/Config";
 import { isShopifyShop } from "visual/global/Config/types/configs/Base";
 import { isCloud } from "visual/global/Config/types/configs/Cloud";
 import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
-
 
 export * from "./cms";
 export * from "./cms/popup";
@@ -72,7 +70,20 @@ export {
   updatePopupRules,
   updateSavedBlock,
   updateSavedLayout,
-  updateSavedPopup
+  updateSavedPopup,
+  getMenus,
+  updateFeaturedImage,
+  updateFeaturedImageFocalPoint,
+  removeFeaturedImage,
+  shortcodeContent,
+  getAuthors,
+  getPosts,
+  getPostTaxonomies,
+  getTerms,
+  getTermsBy,
+  getRulesList,
+  getGroupList,
+  getSidebars
 } from "./common";
 export { makeFormEncode, makeUrl, parseJSON } from "./utils";
 
@@ -81,9 +92,8 @@ export { makeFormEncode, makeUrl, parseJSON } from "./utils";
 export function request(
   url: string,
   config: RequestInit = {},
-  _globalConfig?: ConfigCommon
+  globalConfig: ConfigCommon
 ): Promise<Response> {
-  const globalConfig = _globalConfig ?? Config.getAll();
   const { tokenV1, editorVersion } = globalConfig;
 
   if (TARGET === "Cloud-localhost") {
@@ -115,30 +125,12 @@ export const getMetafields = (
 ): Promise<ChoicesSync> => {
   const metafields =
     isCloud(config) && isShopifyShop(config.modules?.shop)
-      ? config?.modules?.shop?.api?.metafieldsLoad?.handler
+      ? config?.modules?.shop?.api?.getMetafields?.handler
       : undefined;
 
   return new Promise((res, rej) => {
     if (typeof metafields === "function") {
-      metafields(res, rej, { sourceType });
-    } else {
-      rej("Missing api handler in config");
-    }
-  });
-};
-
-export const getBlogPostMeta = (
-  sourceType: string,
-  config: ConfigCommon
-): Promise<ChoicesSync> => {
-  const blogPostsMeta =
-    isCloud(config) && isShopifyShop(config.modules?.shop)
-      ? config?.modules?.shop?.api?.blogPostMetaLoad?.handler
-      : undefined;
-
-  return new Promise((res, rej) => {
-    if (typeof blogPostsMeta === "function") {
-      blogPostsMeta(res, rej, { sourceType });
+      metafields(res, rej, { slug: sourceType });
     } else {
       rej("Missing api handler in config");
     }

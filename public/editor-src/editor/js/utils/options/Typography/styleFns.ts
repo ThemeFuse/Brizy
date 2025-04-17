@@ -1,7 +1,6 @@
 import { Num, Str } from "@brizy/readers";
 import { OptionValue } from "visual/component/Options/types";
 import { WithRenderContext } from "visual/providers/RenderProvider";
-import { configSelector } from "visual/redux/selectors";
 import { ReduxState } from "visual/redux/types";
 import { Fonts } from "visual/types/Fonts";
 import { FontFamilyType } from "visual/types/Fonts";
@@ -40,14 +39,15 @@ export function styleTypographyFontFamily({
   prefix = "",
   fontsData,
   store,
-  renderContext
+  renderContext,
+  getConfig
 }: CSSValue & WithRenderContext): string {
   const dvv = (key: string) => defaultValueValue({ v, key, device, state });
   const fontFamilyKey = capByPrefix(prefix, "fontFamily");
   const fontFamilyTypeKey = capByPrefix(prefix, "fontFamilyType");
   const fontStyleKey = capByPrefix(prefix, "fontStyle");
   const fontStyle = dvv(fontStyleKey);
-  const config = configSelector(store.getState());
+  const config = getConfig();
 
   const { fonts } = fontsData;
 
@@ -86,11 +86,12 @@ export function styleTypographyFontSize({
   device,
   state,
   prefix = "",
-  store
+  store,
+  getConfig
 }: CSSValue): Positive | string {
   const dvk = (key: string) => defaultValueKey({ key, device, state });
   const dvv = (key: string) => defaultValueValue({ v, key, device, state });
-  const config = configSelector(store.getState());
+  const config = getConfig();
   const fontStyleKey = capByPrefix(prefix, "fontStyle");
   const fontSizeKey = capByPrefix(prefix, "fontSize");
   const fontStyle = dvv(fontStyleKey);
@@ -150,11 +151,12 @@ export function styleTypographyLineHeight({
   device,
   state,
   prefix = "",
-  store
+  store,
+  getConfig
 }: CSSValue): Positive | string {
   const dvk = (key: string) => defaultValueKey({ key, device, state });
   const dvv = (key: string) => defaultValueValue({ v, key, device, state });
-  const config = configSelector(store.getState());
+  const config = getConfig();
   const fontStyleKey = capByPrefix(prefix, "fontStyle");
   const lineHeightKey = capByPrefix(prefix, "lineHeight");
   const fontStyle = dvv(fontStyleKey);
@@ -186,11 +188,12 @@ export function styleTypographyFontWeight({
   device,
   state,
   prefix = "",
-  store
+  store,
+  getConfig
 }: CSSValue): Weight | string {
   const dvk = (key: string) => defaultValueKey({ key, device, state });
   const dvv = (key: string) => defaultValueValue({ v, key, device, state });
-  const config = configSelector(store.getState());
+  const config = getConfig();
   const fontStyleKey = capByPrefix(prefix, "fontStyle");
   const fontWeightKey = capByPrefix(prefix, "fontWeight");
   const fontStyle = dvv(fontStyleKey);
@@ -222,11 +225,12 @@ export function styleTypographyLetterSpacing({
   device,
   state,
   prefix = "",
-  store
+  store,
+  getConfig
 }: CSSValue): string {
   const dvk = (key: string) => defaultValueKey({ key, device, state });
   const dvv = (key: string) => defaultValueValue({ v, key, device, state });
-  const config = configSelector(store.getState());
+  const config = getConfig();
   const fontStyleKey = capByPrefix(prefix, "fontStyle");
   const fontStyle = dvv(fontStyleKey);
   const letterSpacingKey = capByPrefix(prefix, "letterSpacing");
@@ -255,10 +259,11 @@ export function styleTypography2FontVariation({
   device,
   state,
   prefix = "",
-  store
+  store,
+  getConfig
 }: CSSValue): string {
   const dvv = (key: string) => defaultValueValue({ v, key, device, state });
-  const config = configSelector(store.getState());
+  const config = getConfig();
   const fontStyleKey = capByPrefix(prefix, "fontStyle");
   const variableFontWeightKey = capByPrefix(prefix, "variableFontWeight");
   const fontWidthKey = capByPrefix(prefix, "fontWidth");
@@ -297,10 +302,11 @@ export function styleTextTransformBold({
   device,
   state,
   prefix = "",
-  store
+  store,
+  getConfig
 }: CSSValue) {
   const dvv = (key: string) => defaultValueValue({ v, device, state, key });
-  const config = configSelector(store.getState());
+  const config = getConfig();
   const boldKey = capByPrefix(prefix, "bold");
 
   const fontStyleKey = capByPrefix(prefix, "fontStyle");
@@ -330,10 +336,11 @@ export function styleTextTransformItalic({
   device,
   state,
   prefix = "",
-  store
+  store,
+  getConfig
 }: CSSValue) {
   const dvv = (key: string) => defaultValueValue({ v, device, state, key });
-  const config = configSelector(store.getState());
+  const config = getConfig();
   const italicKey = capByPrefix(prefix, "italic");
 
   const fontStyleKey = capByPrefix(prefix, "fontStyle");
@@ -363,10 +370,11 @@ export function styleTextTransformTextDecoration({
   device,
   state,
   prefix = "",
-  store
+  store,
+  getConfig
 }: CSSValue) {
   const dvv = (key: string) => defaultValueValue({ v, device, state, key });
-  const config = configSelector(store.getState());
+  const config = getConfig();
   const underlineKey = capByPrefix(prefix, "underline");
   const strikeKey = capByPrefix(prefix, "strike");
   const textDecorationKey = capByPrefix(prefix, "textDecoration");
@@ -399,10 +407,11 @@ export function styleTextTransformUpperLowerCase({
   device,
   state,
   prefix = "",
-  store
+  store,
+  getConfig
 }: CSSValue) {
   const dvv = (key: string) => defaultValueValue({ v, device, state, key });
-  const config = configSelector(store.getState());
+  const config = getConfig();
   const uppercaseKey = capByPrefix(prefix, "uppercase");
   const lowercaseKey = capByPrefix(prefix, "lowercase");
 
@@ -416,7 +425,9 @@ export function styleTextTransformUpperLowerCase({
     config
   });
   const value =
-    (dvv(uppercaseKey) && "uppercase") || (dvv(lowercaseKey) && "lowercase");
+    (dvv(uppercaseKey) && "uppercase") ||
+    (dvv(lowercaseKey) && "lowercase") ||
+    "";
 
   return (
     globalSize ??

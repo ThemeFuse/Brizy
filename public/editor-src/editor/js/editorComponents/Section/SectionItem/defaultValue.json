@@ -22,6 +22,7 @@
     "bgPositionY": 50,
     "bgPositionX": 50,
     "bgPopulation": "",
+    "hoverBgPopulation": null,
     "bgPopulationEntityType": "",
     "bgPopulationEntityId": "",
     "bgImageExtension": "",

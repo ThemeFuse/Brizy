@@ -1,5 +1,5 @@
 import LibsConfig from "visual/bootstraps/libs.json";
-import Config from "visual/global/Config";
+import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { compileAssetProUrl, compileAssetUrl } from "visual/utils/asset";
 import { makeDataAttr } from "visual/utils/i18n/attribute";
 import { Asset, AssetLibsMap, ScriptsFree, ScriptsPro } from "./index";
@@ -14,12 +14,14 @@ type MakeScripts = {
 // generic => contain [initMain]
 // libsMap => contain all groups[libs] js
 // libsSelectors = contain all libs selector found in page
-export const makeScripts = ($doc: cheerio.Root): MakeScripts => {
+export const makeScripts = (
+  $doc: cheerio.Root,
+  config: ConfigCommon
+): MakeScripts => {
   const { free = [], pro = [] } = LibsConfig;
   const generic: Asset[] = [];
   const libsSelectors = new Set<string>();
   const libsMap: AssetLibsMap[] = [];
-  const config = Config.getAll();
 
   const { pro: proConfig } = config;
 
@@ -29,7 +31,7 @@ export const makeScripts = ($doc: cheerio.Root): MakeScripts => {
     score: MAIN_SCORE,
     content: {
       type: "file",
-      url: compileAssetUrl("editor/js/preview.min.js"),
+      url: compileAssetUrl("editor/js/preview.min.js", config),
       attr: {
         class: "brz-script brz-script-preview",
         defer: "true"
@@ -49,7 +51,7 @@ export const makeScripts = ($doc: cheerio.Root): MakeScripts => {
       score: LIBS_SCORE,
       content: {
         type: "file",
-        url: compileAssetUrl(`editor/js/${name}.min.js`),
+        url: compileAssetUrl(`editor/js/${name}.min.js`, config),
         attr: {
           class: "brz-script brz-script-preview-lib",
           defer: "true",

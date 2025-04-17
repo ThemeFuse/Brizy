@@ -101,6 +101,7 @@ declare global {
         baseUrl?: string;
         storefrontUrls?: {
           cleanUrls?: boolean;
+          slugsWithoutIds?: boolean;
         };
       };
     };
@@ -203,6 +204,7 @@ export class EcwidService {
     window.ec.config.storefrontUrls = window.ec.config.storefrontUrls || {};
 
     window.ec.config.storefrontUrls.cleanUrls = true;
+    window.ec.config.storefrontUrls.slugsWithoutIds = true;
     window.ec.config.baseUrl = this.config.baseUrl || "/";
 
     window.ec.storefront = { ...window.ec.storefront, ...config };

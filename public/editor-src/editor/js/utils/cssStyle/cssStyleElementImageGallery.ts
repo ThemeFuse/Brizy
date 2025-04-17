@@ -31,7 +31,8 @@ export function cssStyleElementImageGalleryWidth({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
   const dvv = (key: string): unknown =>
     defaultValueValue({ v, key, device, state });
@@ -50,6 +51,7 @@ export function cssStyleElementImageGalleryWidth({
       device,
       state,
       store,
+      getConfig,
       prefix: "thumb"
     });
     const width = cssStyleSizeWidth({
@@ -57,6 +59,7 @@ export function cssStyleElementImageGalleryWidth({
       device,
       state,
       store,
+      getConfig,
       prefix: "thumb"
     });
 
@@ -230,56 +233,98 @@ export function cssStyleElementImageGalleryFilterColor({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
-  return cssStyleColor({ v, device, state, store, prefix: "filterColor" });
+  return cssStyleColor({
+    v,
+    device,
+    state,
+    store,
+    getConfig,
+    prefix: "filterColor"
+  });
 }
 
 export function cssStyleElementImageGalleryFilterBgColor({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
-  return cssStyleBgColor({ v, device, state, store, prefix: "filterBg" });
+  return cssStyleBgColor({
+    v,
+    device,
+    state,
+    store,
+    getConfig,
+    prefix: "filterBg"
+  });
 }
 
 export function cssStyleElementImageGalleryFilterBoxShadow({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
-  return cssStyleBoxShadow({ v, device, state, store, prefix: "filter" });
+  return cssStyleBoxShadow({
+    v,
+    device,
+    state,
+    store,
+    getConfig,
+    prefix: "filter"
+  });
 }
 
 export function cssStyleElementImageGalleryFilterBorder({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
-  return cssStyleBorder({ v, device, state, store, prefix: "filter" });
+  return cssStyleBorder({
+    v,
+    device,
+    state,
+    store,
+    getConfig,
+    prefix: "filter"
+  });
 }
 
 export function cssStyleElementImageGalleryBorderRadius({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
-  return cssStyleBorderRadius({ v, device, state, store, prefix: "filter" });
+  return cssStyleBorderRadius({
+    v,
+    device,
+    state,
+    store,
+    getConfig,
+    prefix: "filter"
+  });
 }
 
 export function cssStyleElementImageGallery3FontFamily({
   v,
   device,
   store,
+  getConfig,
   renderContext
 }: CSSValue & WithRenderContext): string {
   return cssStyleTypography2FontFamily({
     v,
     device,
+    getConfig,
     store,
     prefix: "filter",
     renderContext
@@ -289,31 +334,53 @@ export function cssStyleElementImageGallery3FontFamily({
 export function cssStyleElementImageGallery3FontSize({
   v,
   device,
+  getConfig,
   store
 }: CSSValue): string {
-  return cssStyleTypography2FontSize({ v, device, store, prefix: "filter" });
+  return cssStyleTypography2FontSize({
+    v,
+    device,
+    store,
+    getConfig,
+    prefix: "filter"
+  });
 }
 
 export function cssStyleElementImageGallery3LineHeight({
   v,
   device,
+  getConfig,
   store
 }: CSSValue): string {
-  return cssStyleTypography2LineHeight({ v, device, store, prefix: "filter" });
+  return cssStyleTypography2LineHeight({
+    v,
+    device,
+    store,
+    getConfig,
+    prefix: "filter"
+  });
 }
 
 export function cssStyleElementImageGallery3FontWeight({
   v,
   device,
+  getConfig,
   store
 }: CSSValue): string {
-  return cssStyleTypography2FontWeight({ v, device, store, prefix: "filter" });
+  return cssStyleTypography2FontWeight({
+    v,
+    device,
+    store,
+    getConfig,
+    prefix: "filter"
+  });
 }
 
 export function cssStyleElementImageGallery3LetterSpacing({
   v,
   state,
   device,
+  getConfig,
   store
 }: CSSValue): string {
   return cssStyleTypography2LetterSpacing({
@@ -321,6 +388,7 @@ export function cssStyleElementImageGallery3LetterSpacing({
     state,
     device,
     store,
+    getConfig,
     prefix: "filter"
   });
 }
@@ -328,12 +396,14 @@ export function cssStyleElementImageGallery3LetterSpacing({
 export function cssStyleElementImageGallery3FontVariation({
   v,
   device,
+  getConfig,
   store
 }: CSSValue): string {
   return cssStyleTypography2FontVariation({
     v,
     device,
     store,
+    getConfig,
     prefix: "filter"
   });
 }
@@ -342,13 +412,15 @@ export function cssStyleElementImageGalleryFilterTextTransform({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
   return cssStyleTextTransforms({
     v,
     device,
     state,
     store,
+    getConfig,
     prefix: "filter"
   });
 }
@@ -356,13 +428,15 @@ export function cssStyleElementImageGalleryFilterTextTransform({
 export function cssStyleElementImageGalleryFilterActiveColor({
   v,
   device,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
   return cssStyleColor({
     v,
     device,
     state: "active",
     store,
+    getConfig,
     prefix: "filterColor"
   });
 }
@@ -370,13 +444,15 @@ export function cssStyleElementImageGalleryFilterActiveColor({
 export function cssStyleElementImageGalleryFilterActiveBgColor({
   v,
   device,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
   return cssStyleBgColor({
     v,
     device,
     state: "active",
     store,
+    getConfig,
     prefix: "filterBg"
   });
 }
@@ -384,13 +460,15 @@ export function cssStyleElementImageGalleryFilterActiveBgColor({
 export function cssStyleElementImageGalleryFilterActiveBorder({
   v,
   device,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
   return cssStyleBorder({
     v,
     device,
     state: "active",
     store,
+    getConfig,
     prefix: "filter"
   });
 }
@@ -398,13 +476,15 @@ export function cssStyleElementImageGalleryFilterActiveBorder({
 export function cssStyleElementImageGalleryFilterActiveShadow({
   v,
   device,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
   return cssStyleBoxShadow({
     v,
     device,
     state: "active",
     store,
+    getConfig,
     prefix: "filter"
   });
 }
@@ -423,7 +503,8 @@ export function cssStyleElementImageGalleryBigImageSpacing({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
   const thumbStyle = Str.read(v.thumbStyle) ?? "";
 
@@ -435,6 +516,7 @@ export function cssStyleElementImageGalleryBigImageSpacing({
     state,
     store,
     direction: thumbStyle,
+    getConfig,
     prefix: "bigImage"
   });
 }
@@ -478,18 +560,34 @@ export function cssStyleElementImageGalleryBigImageBorder({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
-  return cssStyleBorder({ v, device, state, store, prefix: "bigImage" });
+  return cssStyleBorder({
+    v,
+    device,
+    getConfig,
+    state,
+    store,
+    prefix: "bigImage"
+  });
 }
 
 export function cssStyleElementImageGalleryBigImageBoxShadow({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
-  return cssStyleBoxShadow({ v, device, state, store, prefix: "bigImage" });
+  return cssStyleBoxShadow({
+    v,
+    device,
+    state,
+    store,
+    getConfig,
+    prefix: "bigImage"
+  });
 }
 
 export function cssStyleElementImageGalleryBigImageWidth({
@@ -509,58 +607,100 @@ export function cssStyleElementImageGalleryBorderRadiusThumbnail({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
-  return cssStyleBorderRadius({ v, device, state, store, prefix: "thumbnail" });
+  return cssStyleBorderRadius({
+    v,
+    device,
+    state,
+    store,
+    getConfig,
+    prefix: "thumbnail"
+  });
 }
 
 export function cssStyleElementImageGalleryBigImageImagesMaskShape({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
-  return cssStyleMaskShape({ v, device, state, store, prefix: "images" });
+  return cssStyleMaskShape({
+    v,
+    device,
+    state,
+    store,
+    getConfig,
+    prefix: "images"
+  });
 }
 
 export function cssStyleElementImageGalleryBigImageImagesMaskSize({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
-  return cssStyleMaskSize({ v, device, state, store, prefix: "images" });
+  return cssStyleMaskSize({
+    v,
+    device,
+    state,
+    store,
+    getConfig,
+    prefix: "images"
+  });
 }
 
 export function cssStyleElementImageGalleryBigImageImagesMaskRepeat({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
-  return cssStyleMaskRepeat({ v, device, state, store, prefix: "images" });
+  return cssStyleMaskRepeat({
+    v,
+    device,
+    state,
+    store,
+    getConfig,
+    prefix: "images"
+  });
 }
 
 export function cssStyleElementImageGalleryBigImageImagesMaskPosition({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
-  return cssStyleMaskPosition({ v, device, state, store, prefix: "images" });
+  return cssStyleMaskPosition({
+    v,
+    device,
+    state,
+    store,
+    getConfig,
+    prefix: "images"
+  });
 }
 
 export function cssStyleElementImageGalleryBigImageOverlay({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
   return cssStyleBgColor({
     v,
     device,
     state,
     store,
+    getConfig,
     prefix: "bigImageOverlayBg"
   });
 }
@@ -569,7 +709,15 @@ export function cssStyleElementImageGalleryBigImageImagesCustomMask({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }: CSSValue) {
-  return cssStyleMaskCustomShape({ v, device, state, store, prefix: "images" });
+  return cssStyleMaskCustomShape({
+    v,
+    device,
+    state,
+    store,
+    getConfig,
+    prefix: "images"
+  });
 }

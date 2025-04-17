@@ -86,6 +86,17 @@ export function cssStyleElementImageWidthWrapper({ v, device, props = {} }) {
   return "width: 100%;";
 }
 
+export function cssStyleElementImageHoverWidthWrapper({ v, props = {} }) {
+  const sizeType = getSizeType(v, "desktop");
+
+  if (sizeType === "custom" || isSvgOrGif(v, "desktop")) {
+    const { width } = props["desktop"];
+    return isNullish(width) ? "" : `width: ${width}px;`;
+  }
+
+  return "width: 100%;";
+}
+
 export function cssStyleElementImageHeightWrapper({ v, device, props = {} }) {
   const sizeType = getSizeType(v, device);
 
@@ -103,6 +114,27 @@ export function cssStyleElementImageHeightWrapper({ v, device, props = {} }) {
       return "height: 100%;";
     }
     return "height: auto;";
+  }
+
+  const paddingTop = roundTo((height / width) * 100, 4);
+
+  return `height: auto;padding-top: ${paddingTop}%;`;
+}
+
+export function cssStyleElementImageHoverHeightWrapper({ v, props = {} }) {
+  const sizeType = getSizeType(v, "desktop");
+
+  if (sizeType === "custom" || isSvgOrGif(v, "desktop")) {
+    const { height } = props["desktop"];
+    return isNullish(height) ? "" : `height: ${height}px;`;
+  }
+
+  const dvv = (key) => defaultValueValue({ v, device: "desktop", key });
+  const src = dvv("hoverImageSrc");
+  const { width, height } = props["desktop"];
+
+  if (src || isNullish(width) || isNullish(height)) {
+    return "height: 100%;";
   }
 
   const paddingTop = roundTo((height / width) * 100, 4);
@@ -136,6 +168,22 @@ export function cssStyleElementImageMarginLeft({ v, device, props = {} }) {
   return "margin-left: auto;";
 }
 
+export function cssStyleElementImageHoverMarginLeft({ v, props = {} }) {
+  const { marginLeft } = props["desktop"];
+
+  if (isNullish(marginLeft)) {
+    return "";
+  }
+
+  const sizeType = getSizeType(v, "desktop");
+
+  if (sizeType === "custom" || isSvgOrGif(v, "desktop")) {
+    return `margin-left: ${marginLeft}px;`;
+  }
+
+  return "margin-left: auto;";
+}
+
 export function cssStyleElementImageMarginTop({ v, device, props = {} }) {
   const { marginTop } = props[device];
 
@@ -146,6 +194,22 @@ export function cssStyleElementImageMarginTop({ v, device, props = {} }) {
   const sizeType = getSizeType(v, device);
 
   if (sizeType === "custom" || isSvgOrGif(v, device)) {
+    return `margin-top: ${marginTop}px;`;
+  }
+
+  return "margin-top: auto;";
+}
+
+export function cssStyleElementImageHoverMarginTop({ v, props = {} }) {
+  const { marginTop } = props["desktop"];
+
+  if (isNullish(marginTop)) {
+    return "";
+  }
+
+  const sizeType = getSizeType(v, "desktop");
+
+  if (sizeType === "custom" || isSvgOrGif(v, "desktop")) {
     return `margin-top: ${marginTop}px;`;
   }
 
@@ -188,7 +252,7 @@ export function cssStyleElementImageFilter({
   return cssStyleFilter({ v, device, state, prefix });
 }
 
-export function cssStyleElementImageBoxShadow({ v, device, state, store }) {
+export function cssStyleElementImageBoxShadow({ v, device, state, getConfig, store }) {
   const dvv = (key) => defaultValueValue({ v, key, device, state });
 
   const maskShape = dvv("maskShape");
@@ -197,6 +261,6 @@ export function cssStyleElementImageBoxShadow({ v, device, state, store }) {
     return "";
   }
   return maskShape === "none"
-    ? cssStyleBoxShadow({ v, device, state, store })
+    ? cssStyleBoxShadow({ v, device, state, getConfig, store })
     : "";
 }
