@@ -45,6 +45,7 @@ interface Actions {
   getPostObjects: string;
 
   searchPosts: string;
+  getPostTaxonomies: string;
 
   createBlockScreenshot: string;
   updateBlockScreenshot: string;
@@ -62,6 +63,23 @@ interface Actions {
   heartBeat: string;
   takeOver: string;
   getFonts: string;
+  getMenus: string;
+
+  setFeaturedImage: string;
+  setFeaturedImageFocalPoint: string;
+  removeFeaturedImage: string;
+
+  shortcodeContent: string;
+
+  getUsers: string;
+
+  getTerms: string;
+  getTermsBy: string;
+
+  getRuleList: string;
+  getRuleGroupList: string;
+
+  getSidebars: string;
 }
 
 interface ProjectStatus {
@@ -292,6 +310,10 @@ const actionsReader = parseStrict<PLUGIN_ENV["actions"], Actions>({
     mPipe(Obj.readKey("searchPosts"), Str.read),
     throwOnNullish("Invalid actions: searchPosts")
   ),
+  getPostTaxonomies: pipe(
+    mPipe(Obj.readKey("getPostTaxonomies"), Str.read),
+    throwOnNullish("Invalid actions: getPostTaxonomies")
+  ),
   createBlockScreenshot: pipe(
     mPipe(Obj.readKey("createBlockScreenshot"), Str.read),
     throwOnNullish("Invalid actions: createBlockScreenshot")
@@ -347,6 +369,50 @@ const actionsReader = parseStrict<PLUGIN_ENV["actions"], Actions>({
   getFonts: pipe(
     mPipe(Obj.readKey("getFonts"), Str.read),
     throwOnNullish("Invalid actions: getFonts")
+  ),
+  getMenus: pipe(
+    mPipe(Obj.readKey("getMenus"), Str.read),
+    throwOnNullish("Invalid actions: getMenus")
+  ),
+  setFeaturedImage: pipe(
+    mPipe(Obj.readKey("setFeaturedImage"), Str.read),
+    throwOnNullish("Invalid actions: setFeaturedImage")
+  ),
+  setFeaturedImageFocalPoint: pipe(
+    mPipe(Obj.readKey("setFeaturedImageFocalPoint"), Str.read),
+    throwOnNullish("Invalid actions: setFeaturedImageFocalPoint")
+  ),
+  removeFeaturedImage: pipe(
+    mPipe(Obj.readKey("removeFeaturedImage"), Str.read),
+    throwOnNullish("Invalid actions: removeFeaturedImage")
+  ),
+  shortcodeContent: pipe(
+    mPipe(Obj.readKey("shortcodeContent"), Str.read),
+    throwOnNullish("Invalid actions: shortcodeContent")
+  ),
+  getUsers: pipe(
+    mPipe(Obj.readKey("getUsers"), Str.read),
+    throwOnNullish("Invalid actions: getUsers")
+  ),
+  getTerms: pipe(
+    mPipe(Obj.readKey("getTerms"), Str.read),
+    throwOnNullish("Invalid actions: getTerms")
+  ),
+  getTermsBy: pipe(
+    mPipe(Obj.readKey("getTermsBy"), Str.read),
+    throwOnNullish("Invalid actions: getTermsBy")
+  ),
+  getRuleList: pipe(
+    mPipe(Obj.readKey("getRuleList"), Str.read),
+    throwOnNullish("Invalid actions: getRuleList")
+  ),
+  getRuleGroupList: pipe(
+    mPipe(Obj.readKey("getRuleGroupList"), Str.read),
+    throwOnNullish("Invalid actions: getRuleGroupList")
+  ),
+  getSidebars: pipe(
+    mPipe(Obj.readKey("getSidebars"), Str.read),
+    throwOnNullish("Invalid actions: getSidebars")
   )
 });
 

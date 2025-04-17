@@ -1,3 +1,4 @@
+import { MenuSimple } from "@/menu/types";
 import { Action } from "./AiText";
 import { AutoSave } from "./AutoSave";
 import { ChoicesSync } from "./Choices";
@@ -200,6 +201,12 @@ export interface VISUAL_CONFIG {
     handler?: DCHandler;
   };
   //#endregion
+
+  menu?: {
+    getMenus?: {
+      handler: (res: Response<MenuSimple[]>, rej: Response<string>) => void;
+    };
+  };
 }
 
 declare global {

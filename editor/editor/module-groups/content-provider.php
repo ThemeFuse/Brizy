@@ -28,7 +28,8 @@ class Brizy_Editor_Editor_ModuleGroups_ContentProvider implements Brizy_Editor_E
 				"Timeline",
 				"Login",
 				"Flipbox",
-				"Paypal"
+				"Paypal",
+				"Chart"
 			], 400 ),
 		];
 	}
