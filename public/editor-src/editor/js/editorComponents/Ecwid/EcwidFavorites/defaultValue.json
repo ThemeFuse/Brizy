@@ -32,7 +32,7 @@
     "parentGradientLinearDegree": 90,
     "parentGradientRadialDegree": 90,
 
-    "titleTypographyFontStyle": "",
+    "titleTypographyFontStyle": "heading3",
     "titleTypographyFontFamilyType": "google",
     "titleTypographyFontSize": 30,
     "titleTypographyFontSizeSuffix": "px",
@@ -51,7 +51,7 @@
 
     "titleColorHex": "#000000",
     "titleColorOpacity": 1,
-    "titleColorPalette": "",
+    "titleColorPalette": "color2",
 
     "titleSpacing": 0,
     "titleSpacingSuffix": "px",
@@ -116,7 +116,7 @@
     "imageSpacing": 5,
     "imageSpacingSuffix": "px",
 
-    "title2TypographyFontStyle": "",
+    "title2TypographyFontStyle": "paragraph",
     "title2TypographyFontFamilyType": "google",
     "title2TypographyFontSize": 16,
     "title2TypographyFontSizeSuffix": "px",
@@ -135,14 +135,14 @@
 
     "title2ColorHex": "#000000",
     "title2ColorOpacity": 1,
-    "title2ColorPalette": "",
+    "title2ColorPalette": "color7",
 
     "title2HorizontalAlign": "center",
 
     "title2Spacing": 10,
     "title2SpacingSuffix": "px",
 
-    "priceTypographyFontStyle": "",
+    "priceTypographyFontStyle": "heading5",
     "priceTypographyFontFamilyType": "google",
     "priceTypographyFontSize": 22,
     "priceTypographyFontSizeSuffix": "px",
@@ -161,7 +161,7 @@
 
     "priceColorHex": "#000000",
     "priceColorOpacity": 1,
-    "priceColorPalette": "",
+    "priceColorPalette": "color2",
 
     "priceSpacing": 20,
     "priceSpacingSuffix": "px",
@@ -180,7 +180,7 @@
 
     "buttonBgColorHex": "#f2f2f2",
     "buttonBgColorOpacity": 1,
-    "buttonBgColorPalette": "",
+    "buttonBgColorPalette": "color3",
 
     "buttonGradientActivePointer": "startPointer",
     "buttonGradientStartPointer": 0,
@@ -194,7 +194,7 @@
     "buttonGradientLinearDegree": 90,
     "buttonGradientRadialDegree": 90,
 
-    "buttonTypographyFontStyle": "",
+    "buttonTypographyFontStyle": "button",
     "buttonTypographyFontFamilyType": "google",
     "buttonTypographyFontSize": 14,
     "buttonTypographyFontSizeSuffix": "px",
@@ -222,7 +222,7 @@
     "buttonBoxShadowVertical": 0,
     "buttonBoxShadowHorizontal": 0,
 
-    "footerTypographyFontStyle": "",
+    "footerTypographyFontStyle": "paragraph",
     "footerTypographyFontFamilyType": "google",
     "footerTypographyFontSize": 16,
     "footerTypographyFontSizeSuffix": "px",
@@ -246,22 +246,22 @@
 
     "footerColorHex": "#757575",
     "footerColorOpacity": 1,
-    "footerColorPalette": "",
+    "footerColorPalette": "color7",
 
     "footerIconColorHex": "#757575",
     "footerIconColorOpacity": 1,
-    "footerIconColorPalette": "",
+    "footerIconColorPalette": "color3",
 
     "footerSpacing": 20,
     "footerSpacingSuffix": "px",
 
     "titleColorEmptyHex": "#000000",
     "titleColorEmptyOpacity": 1,
-    "titleColorEmptyPalette": "",
+    "titleColorEmptyPalette": "color7",
 
     "titleHorizontalAlignEmpty": "left",
 
-    "titleTypographyEmptyFontStyle": "",
+    "titleTypographyEmptyFontStyle": "paragraph",
     "titleTypographyEmptyFontFamilyType": "google",
     "titleTypographyEmptyFontSize": 15,
     "titleTypographyEmptyFontSizeSuffix": "px",

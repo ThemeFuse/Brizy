@@ -1,21 +1,24 @@
 import React, { ReactElement, useCallback } from "react";
 import Prompts from "visual/component/Prompts";
+import { PromptTabsId } from "visual/component/Prompts/PromptBlocks/types";
 import { rolesHOC } from "visual/component/Roles";
-import Config from "visual/global/Config";
+import { useConfig } from "visual/global/hooks";
 import { Middle as Control } from "../Controls/Middle";
 import { Props } from "./types";
 
 const MiddleBlockAdder = (props: Props): ReactElement => {
   const { onAddBlock, onAddTemplate, onAddGlobalBlock } = props;
+  const config = useConfig();
 
   const handleOpen = useCallback(() => {
-    const config = Config.getAll();
     const showGlobal = typeof config.api?.globalBlocks?.create === "function";
+    const activeTab = config.ui?.prompts?.blockAdder?.activeTab as PromptTabsId;
 
     Prompts.open({
       prompt: "blocks",
       mode: "single",
       props: {
+        ...(activeTab ? { activeTab } : {}),
         type: "normal",
         showGlobal,
         onChangeBlocks: onAddBlock,
@@ -24,7 +27,7 @@ const MiddleBlockAdder = (props: Props): ReactElement => {
         onChangeGlobal: onAddGlobalBlock
       }
     });
-  }, [onAddBlock, onAddGlobalBlock, onAddTemplate]);
+  }, [config, onAddBlock, onAddGlobalBlock, onAddTemplate]);
 
   return <Control onClick={handleOpen} />;
 };
