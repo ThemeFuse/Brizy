@@ -129,14 +129,15 @@ if (window.__VISUAL_CONFIG__) {
   set(window.__VISUAL_CONFIG__, ["elements", "menu"], getMenu(config));
 
   // Dynamic Content
-  if (window.__VISUAL_CONFIG__.dynamicContent) {
-    set(window.__VISUAL_CONFIG__.dynamicContent, ["handler"], placeholders);
-    set(
-      window.__VISUAL_CONFIG__.dynamicContent,
-      ["getPlaceholderData"],
-      placeholderData
-    );
-  }
+
+  window.__VISUAL_CONFIG__.dynamicContent ??= {};
+
+  set(window.__VISUAL_CONFIG__.dynamicContent, ["handler"], placeholders);
+  set(
+    window.__VISUAL_CONFIG__.dynamicContent,
+    ["getPlaceholderData"],
+    placeholderData
+  );
 
   set(
     window.__VISUAL_CONFIG__,
