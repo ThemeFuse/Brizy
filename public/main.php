@@ -43,7 +43,6 @@ class Brizy_Public_Main {
 		}
 
 		return self::$instance[ $wpPostId ] = new self( $post );
-		return self::$instance[ $wpPostId ] = new self( $post );
 	}
 
 	public function editMode() {

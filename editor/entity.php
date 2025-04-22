@@ -79,6 +79,8 @@ abstract class Brizy_Editor_Entity extends Brizy_Admin_Serializable {
 
 		switch ( $type ) {
 
+			case Brizy_Admin_Stories_Main::CP_STORY:
+				return Brizy_Editor_Story::get( $postId, $uid );
 			case Brizy_Admin_Blocks_Main::CP_GLOBAL:
 			case Brizy_Admin_Blocks_Main::CP_SAVED:
 				return Brizy_Editor_Block::get( $postId, $uid );
