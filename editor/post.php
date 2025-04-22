@@ -947,6 +947,7 @@ SQL;
             $p->title = $postTitle;
             $p->uid = self::create_uid($p->ID, $p->uid);
             $p->ID = (int)$p->ID;
+            $p->permalink  = "{{brizy_dc_permalink post_id=\"{$p->ID}\"}}";
         }
 
         return $posts;
