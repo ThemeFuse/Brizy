@@ -150,6 +150,12 @@ class Brizy_Editor_Block extends Brizy_Editor_Post {
 			}
 		}
 		$global['compiler'] = $this->get_compiler();
+		$global['blocks'] = array_map( function ( $block ) {
+			unset( $block['assets'] );
+			$block['html'] = '';
+
+			return $block;
+		}, $this->getCompiledSectionManager()->getSections() );
 
 		return $global;
 	}

@@ -21,10 +21,17 @@ class Brizy_Editor_CompiledSectionManager {
 				$block['html']   = $this->getSection( $block['id'] )['html'];
 				$block['assets'] = $this->getSection( $block['id'] )['assets'];
 			}
-
 			$block['html'] = Brizy_SiteUrlReplacer::hideSiteUrl( $this->sanitizeHtml( $block['html'] ) );
 		}
 		$this->data['blocks'] = $compiledSections['blocks'];
+	}
+
+	public function getSections() {
+		if ( isset( $this->data['blocks'] ) ) {
+			return $this->data['blocks'];
+		}
+
+		return [];
 	}
 
 	private function getSection( $id ) {
@@ -45,10 +52,10 @@ class Brizy_Editor_CompiledSectionManager {
 		}
 	}
 
-	private function updateSection( $id, $html,$assets ) {
+	private function updateSection( $id, $html, $assets ) {
 		foreach ( (array) $this->data['blocks'] as $i => &$block ) {
 			if ( $block['id'] == $id ) {
-				$block['html'] = $html;
+				$block['html']   = $html;
 				$block['assets'] = $assets;
 			}
 		}
@@ -78,8 +85,8 @@ class Brizy_Editor_CompiledSectionManager {
 	 * @return string
 	 */
 	public function getHtml() {
-		$classStr = implode( ' ', $this->data['rootClassNames']?:[] );
-		$attribs  = $this->data['rootAttributes']?:[];
+		$classStr = implode( ' ', $this->data['rootClassNames'] ?: [] );
+		$attribs  = $this->data['rootAttributes'] ?: [];
 		$attrStr  = array_reduce( array_keys( $attribs ),                       // We pass in the array_keys instead of the array here
 			function ( $carry, $key ) use ( $attribs ) {    // ... then we 'use' the actual array here
 				return $carry . ' ' . $key . '="' . htmlspecialchars( $attribs[ $key ] ) . '"';
@@ -89,9 +96,9 @@ class Brizy_Editor_CompiledSectionManager {
 		return "<div class=\"{$classStr}\" {$attrStr}>{{ brizy_dc_global_blocks position=\"top\" }} {$html} {{ brizy_dc_global_blocks position=\"bottom\" }}</div>";
 	}
 
-	public function wrapHtml($content) {
-		$classStr = implode( ' ', $this->data['rootClassNames']?:[] );
-		$attribs  = $this->data['rootAttributes']?:[];
+	public function wrapHtml( $content ) {
+		$classStr = implode( ' ', $this->data['rootClassNames'] ?: [] );
+		$attribs  = $this->data['rootAttributes'] ?: [];
 		$attrStr  = array_reduce( array_keys( $attribs ),                       // We pass in the array_keys instead of the array here
 			function ( $carry, $key ) use ( $attribs ) {    // ... then we 'use' the actual array here
 				return $carry . ' ' . $key . '="' . htmlspecialchars( $attribs[ $key ] ) . '"';

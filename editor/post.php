@@ -214,6 +214,11 @@ class Brizy_Editor_Post extends Brizy_Editor_Entity {
 			'template'    => get_page_template_slug( $p_id ),
 			'url'         => esc_url( apply_filters( 'the_permalink', get_permalink( $p_id ), $this->getWpPost() ) ),
 			'compiler'    => $this->get_compiler(),
+			'blocks'      => array_map( function ( $block ) {
+				unset( $block['assets'] );
+				$block['html'] = '';
+				return $block;
+			}, $this->getCompiledSectionManager()->getSections() )
 		);
 
 		return $data;
