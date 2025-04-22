@@ -177,15 +177,18 @@ class Brizy_Public_AssetEnqueueManager {
 
 			}
 		}
-		foreach ( $this->styles as $i => $asset ) {
-			if ( $asset->getType() == Asset::TYPE_INLINE ) {
 
-				$handleStr = 'inline-handle-' . $i;
-				wp_register_style( $handleStr, false );
-				wp_enqueue_style( $handleStr );
-				wp_add_inline_style( $handleStr, $asset->getContent() );
-			}
+		$collectInline = array_filter($this->styles, function( $asset ) {  return $asset->getType() == Asset::TYPE_INLINE ; } );
+		if ( count( $collectInline ) > 0 ) {
+			$handleStr = 'inline-handle-' . md5( count( $collectInline ) );
+			wp_register_style( $handleStr, false );
+			$assetStr = array_reduce( $collectInline, function ( $assetStr, $asset ) {
+				return $assetStr . "\n\n" . $asset->getContent();
+			}, '' );
+			wp_enqueue_style( $handleStr );
+			wp_add_inline_style( $handleStr, $assetStr );
 		}
+
 	}
 
 	public function enqueueScripts() {
