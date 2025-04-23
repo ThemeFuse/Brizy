@@ -1755,10 +1755,9 @@ class Brizy_Editor_Editor_Editor {
 			'symbolList'                    => $pref . Brizy_Admin_Symbols_Api::LIST_ACTION,
 			'getDynamicContentPlaceholders' => $pref . Brizy_Editor_API::AJAX_GET_DYNAMIC_CONTENT,
 			'adobeFontsUrl'                 => $pref . Brizy_Editor_API::AJAX_GET_ADOBE_FONTS,
-            'getAccountProperties'          => $pref . BrizyPro_Forms_ApiExtender::AJAX_GET_ACCOUNT_PROPERTIES,
-            'createIntegrationGroup'        => $pref . BrizyPro_Forms_ApiExtender::AJAX_CREATE_GROUP,
-            'authenticateIntegration'       => $pref . BrizyPro_Forms_ApiExtender::AJAX_AUTHENTICATE_INTEGRATION,
-        );
+		);
+
+		$actions = apply_filters('brizy_editor_api_actions', $actions);
 
 		return $actions;
 	}
