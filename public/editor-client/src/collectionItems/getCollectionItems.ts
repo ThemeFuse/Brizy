@@ -14,10 +14,21 @@ export const getCollectionItems = {
 
       const items = [
         ...(extra?.extraChoices ?? []),
-        ...data.posts.map(({ ID, title }: { ID: string; title: string }) => ({
-          value: `${ID}`,
-          title
-        }))
+        ...data.posts.map(
+          ({
+            ID,
+            title,
+            permalink
+          }: {
+            ID: string;
+            title: string;
+            permalink: string;
+          }) => ({
+            value: `${ID}`,
+            title,
+            populationPermalink: permalink
+          })
+        )
       ];
 
       res(items);
