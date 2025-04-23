@@ -51,7 +51,6 @@ abstract class Brizy_Content_Placeholders_ImageAttribute extends Brizy_Content_P
 	 * @return int|mixed|null|string
 	 */
 	protected function getAttachmentIdByPlaceholderName( $placeholderName, Brizy_Content_Context $context, \BrizyPlaceholders\ContentPlaceholder $contentPlaceholder  ) {
-
 		$provider = $context->getProvider();
 
 		if ( ! $provider ) {
@@ -67,8 +66,17 @@ abstract class Brizy_Content_Placeholders_ImageAttribute extends Brizy_Content_P
 			return 0;
 		}
 
-		if ( $placeholder instanceof BrizyPro_Content_Placeholders_Image ) {
-			$attachmentId = $placeholder->getAttachmentId( $context, $contentPlaceholder );
+        if ( $placeholder instanceof BrizyPro_Content_Placeholders_Image ) {
+            if ( $entity = $this->getEntity( $contentPlaceholder ) ) {
+                $context = new Brizy_Content_Context(
+                    $context->getProject(),
+                    $entity,
+                    $context->getParentContext(),
+                    $context->getParentPlaceholder()
+                );
+                $context->setProvider( $provider );
+            }
+            $attachmentId = $placeholder->getAttachmentId( $context, $contentPlaceholder );
 		} else {
 			$attachmentId = $placeholder->getValue( $context, $contentPlaceholder );
 		}

@@ -36,7 +36,8 @@ export const getUniqueKitCategories = (collections: CatTypes[]): Categories[] =>
       collections.map((collection: CatTypes) => collection.categories),
     (categories) => categories.map((category) => category.split(",")),
     flatten,
-    (categories2) => categories2.map((category2) => category2.trim()),
+    (categories2) =>
+      categories2.map((category2) => category2.trim().toLowerCase()),
     uniq,
     (allCats) => allCats.filter((cat) => cat && cat.length),
     (cats) =>
@@ -52,7 +53,7 @@ export const getUniqueKitTypes = (collections: Kit[]): KitType[] =>
     (collections: Kit[]) => collections.map((collection) => collection.theme),
     (types) => types.map((type) => type.split(",")),
     flatten,
-    (types2) => types2.map((type2) => type2.toLowerCase()),
+    (types2) => types2.map((type2) => type2.trim().toLowerCase()),
     uniq,
     (allTypes) => allTypes.filter((type) => type && type.length),
     (uni) =>
@@ -88,12 +89,16 @@ export const converterKit = (
       theme
     }) => ({
       id: slug,
-      cat: categories.split(",").map((item) => item.trim().toLowerCase()),
+      cat: categories
+        .split(",")
+        .map((item) => item.trim().toLowerCase())
+        .filter((item) => item.length),
       title: slug,
       type: theme
         .split(",")
         .map((item) => item.trim())
-        .map((i1) => i1.toLowerCase()),
+        .map((i1) => i1.toLowerCase())
+        .filter((item) => item.length),
       keywords: keywords ?? "",
       thumbnailHeight,
       thumbnailWidth,

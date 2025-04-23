@@ -394,11 +394,18 @@ class Brizy_Editor_Editor_Editor {
 
 
 	private function getApiConfigFields( $config, $context ) {
-		$aConfig = [
+        $homeUrl        = home_url();
+        $separatorParam = parse_url($homeUrl, PHP_URL_QUERY) !== null ? '&' : '/?';
+
+        $aConfig = [
 			'api' => [
 				'media'             => [
-					'mediaResizeUrl' => home_url(),
-					'imagePatterns'  => json_decode( '{ "full": "{{ [baseUrl] }}/?' . Brizy_Editor::prefix( '_media' ) . '={{ [fileName] }}&' . Brizy_Editor::prefix( '_crop' ) . '={{ iW%3D[iW] }}%26{{ iH%3D[iH] }}%26{{ oX%3D[oX]  }}%26{{ oY%3D[oY] }}%26{{ cW%3D[cW] }}%26{{ cH%3D[cH] }}", "original": "{{ [baseUrl] }}/?' . Brizy_Editor::prefix( '_media' ) . '={{ [fileName] }}&' . Brizy_Editor::prefix( '_crop' ) . '={{ [sizeType] }}", "split": "{{ [baseUrl] }}/?' . Brizy_Editor::prefix( '_media' ) . '={{ [fileName] }}&' . Brizy_Editor::prefix( '_crop' ) . '={{ iW%3D[iW] }}%26{{ iH%3D[iH] }}" }' ),
+					'mediaResizeUrl' => $homeUrl,
+					'imagePatterns'  => json_decode( '{
+					    "full":     "{{ [baseUrl] }}' . $separatorParam . Brizy_Editor::prefix( '_media' ) . '={{ [fileName] }}&' . Brizy_Editor::prefix( '_crop' ) . '={{ iW%3D[iW] }}%26{{ iH%3D[iH] }}%26{{ oX%3D[oX]  }}%26{{ oY%3D[oY] }}%26{{ cW%3D[cW] }}%26{{ cH%3D[cH] }}",
+					    "original": "{{ [baseUrl] }}' . $separatorParam . Brizy_Editor::prefix( '_media' ) . '={{ [fileName] }}&' . Brizy_Editor::prefix( '_crop' ) . '={{ [sizeType] }}",
+					    "split":    "{{ [baseUrl] }}' . $separatorParam . Brizy_Editor::prefix( '_media' ) . '={{ [fileName] }}&' . Brizy_Editor::prefix( '_crop' ) . '={{ iW%3D[iW] }}%26{{ iH%3D[iH] }}"
+					}' ),
 				],
 				'customFile'        => [
 					'fileUrl' => home_url( '?' . Brizy_Editor::prefix( '_attachment' ) . '=' ),

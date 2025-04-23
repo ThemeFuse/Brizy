@@ -233,7 +233,7 @@ class Brizy_Content_Providers_FreeProvider extends Brizy_Content_Providers_Abstr
 		$this->registerPlaceholder( new Brizy_Content_Placeholders_Simple( '', 'random_id', function ( Brizy_Content_Context $context, ContentPlaceholder $contentPlaceholder ) {
 			$key = $contentPlaceholder->getAttribute( 'key' );
 			if ( $key  ) {
-			    static $ids = [];
+			    $ids = $context->getRecursiveRandomIds()?:[];
 			    if(isset( $ids[ $key ] ))
 			    {
                     return $ids[ $key ];
