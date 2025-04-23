@@ -97,8 +97,8 @@ class Brizy_Editor_CompiledSectionManager {
 	}
 
 	public function wrapHtml( $content ) {
-		$classStr = implode( ' ', $this->data['rootClassNames'] ?: [] );
-		$attribs  = $this->data['rootAttributes'] ?: [];
+		$classStr = implode( ' ', isset( $this->data['rootClassNames'] ) ? $this->data['rootClassNames'] : [] );
+		$attribs  = isset( $this->data['rootAttributes'] ) ? $this->data['rootAttributes'] : [];
 		$attrStr  = array_reduce( array_keys( $attribs ),                       // We pass in the array_keys instead of the array here
 			function ( $carry, $key ) use ( $attribs ) {    // ... then we 'use' the actual array here
 				return $carry . ' ' . $key . '="' . htmlspecialchars( $attribs[ $key ] ) . '"';

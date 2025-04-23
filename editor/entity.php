@@ -89,7 +89,7 @@ abstract class Brizy_Editor_Entity extends Brizy_Admin_Serializable {
 			case 'page':
 			case 'post':
 			case Brizy_Admin_Popups_Main::CP_POPUP:
-				return Brizy_Editor_Post::get( $postId, $uid );
+				return Brizy_Editor_Popup::get( $postId, $uid );
 		}
 	}
 
