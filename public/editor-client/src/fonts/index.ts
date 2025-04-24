@@ -1,27 +1,16 @@
-import { addAdobeAccount, getAdobeFont } from "../api";
+import { FontFile, UploadFont } from "@/types/Fonts";
+import {
+  addAdobeAccount,
+  deleteFont,
+  FontsData,
+  getAdobeFont,
+  getUploadedFonts,
+  uploadFont
+} from "../api";
 import { AdobeFonts } from "../types/AdobeFonts";
-import { t } from "../utils/i18n";
-import { Fonts, KitData } from "./types";
-import { FontsData, getUploadedFonts } from "../api";
 import { Response } from "../types/Response";
-
-const convertDataToLocal = (mockTypeKitData: KitData): Fonts => {
-  const families = mockTypeKitData.kit.families.map((family) => ({
-    id: family.id,
-    family: family.name,
-    category: family.slug,
-    kind: "webfonts#webfont",
-    subsets: [family.css_names[0]],
-    variants: family.variations
-  }));
-
-  return {
-    kit: {
-      id: mockTypeKitData.kit.id,
-      families
-    }
-  };
-};
+import { t } from "../utils/i18n";
+import { convertDataToLocal, convertFilesToFormData } from "./utils";
 
 export const adobeFont = (): AdobeFonts => {
   return {
@@ -50,6 +39,35 @@ export const uploadedFonts = {
       res(r);
     } catch (e) {
       rej(`Fonts Error: ${e}`);
+    }
+  },
+  async upload(
+    res: Response<UploadFont>,
+    rej: Response<string>,
+    { files, name, id }: { files: FontFile; name: string; id: string }
+  ) {
+    try {
+      const fontFormData = convertFilesToFormData(files);
+      fontFormData.append("family", name);
+      fontFormData.append("id", id);
+
+      const fonts = await uploadFont(fontFormData);
+      res(fonts);
+    } catch {
+      rej(t("Failed to upload font"));
+    }
+  },
+  async delete(res: Response<string>, rej: Response<string>, fontId: string) {
+    try {
+      const success = await deleteFont(fontId);
+
+      if (!success) {
+        throw new Error(t("Failed to delete font"));
+      }
+
+      res(fontId);
+    } catch {
+      rej(t("Failed to delete font"));
     }
   }
 };

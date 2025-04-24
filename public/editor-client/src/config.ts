@@ -63,6 +63,8 @@ interface Actions {
   heartBeat: string;
   takeOver: string;
   getFonts: string;
+  createFont: string;
+  deleteFont: string;
   getMenus: string;
 
   setFeaturedImage: string;
@@ -369,6 +371,14 @@ const actionsReader = parseStrict<PLUGIN_ENV["actions"], Actions>({
   getFonts: pipe(
     mPipe(Obj.readKey("getFonts"), Str.read),
     throwOnNullish("Invalid actions: getFonts")
+  ),
+  createFont: pipe(
+    mPipe(Obj.readKey("createFont"), Str.read),
+    throwOnNullish("Invalid actions: createFont")
+  ),
+  deleteFont: pipe(
+    mPipe(Obj.readKey("deleteFont"), Str.read),
+    throwOnNullish("Invalid actions: deleteFont")
   ),
   getMenus: pipe(
     mPipe(Obj.readKey("getMenus"), Str.read),
