@@ -127,6 +127,11 @@ if (window.__VISUAL_CONFIG__) {
     set(window.__VISUAL_CONFIG__, ["elements", "posts", "handler"], posts);
   }
   set(window.__VISUAL_CONFIG__, ["elements", "menu"], getMenu(config));
+  set(
+    window.__VISUAL_CONFIG__,
+    ["elements", "menuSimple", "getPlaceholderData"],
+    placeholderData
+  );
 
   // Dynamic Content
   if (window.__VISUAL_CONFIG__.dynamicContent) {
