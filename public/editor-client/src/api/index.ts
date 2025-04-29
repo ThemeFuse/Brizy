@@ -15,8 +15,8 @@ import {
 } from "@/defaultTemplates/utils";
 import { MenuSimple } from "@/menu/types";
 import { GetPostsProps, GetPostTaxonomiesProps } from "@/posts/types";
-import { GetTermsByProps } from "@/terms/types";
 import { Sidebar } from "@/sidebars/types";
+import { GetTermsByProps } from "@/terms/types";
 import {
   APIPopup,
   DefaultBlock,
@@ -31,6 +31,7 @@ import {
   Style
 } from "@/types/DefaultTemplate";
 import { ConfigDCItem } from "@/types/DynamicContent";
+import { UploadFont } from "@/types/Fonts";
 import { GlobalBlock } from "@/types/GlobalBlocks";
 import { IconUploadData } from "@/types/Icon";
 import { Page } from "@/types/Page";
@@ -1234,6 +1235,69 @@ export async function getUploadedFonts() {
   const response = await r.json();
 
   return response.data;
+}
+
+export async function uploadFont(formData: FormData): Promise<UploadFont> {
+  const config = getConfig();
+
+  if (!config) {
+    throw new Error(t("Invalid __BRZ_PLUGIN_ENV__"));
+  }
+
+  const {
+    hash,
+    url: _url,
+    editorVersion: version,
+    actions: { createFont }
+  } = config;
+
+  const url = makeUrl(_url, {
+    action: createFont,
+    version,
+    hash
+  });
+
+  const r = await request(url, { method: "POST", body: formData });
+
+  if (!r.ok) {
+    throw new Error("Failed to upload font");
+  }
+
+  const responseData: UploadFont = (await r.json()).data;
+
+  return responseData;
+}
+
+export async function deleteFont(fontId: string): Promise<boolean> {
+  const config = getConfig();
+
+  if (!config) {
+    throw new Error(t("Invalid __BRZ_PLUGIN_ENV__"));
+  }
+
+  const {
+    hash,
+    url: _url,
+    editorVersion: version,
+    actions: { deleteFont }
+  } = config;
+
+  const url = makeUrl(_url, {
+    action: deleteFont,
+    version,
+    hash,
+    id: fontId
+  });
+
+  const r = await request(url, { method: "POST" });
+
+  if (!r.ok) {
+    throw new Error("Failed to delete font");
+  }
+
+  const { success } = await r.json();
+
+  return success;
 }
 
 //#endregion
