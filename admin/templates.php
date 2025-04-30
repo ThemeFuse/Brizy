@@ -442,10 +442,6 @@ class Brizy_Admin_Templates
                     Brizy_Logger::instance()->exception($e);
                 }
 
-                if ($pid) {
-                    $this->pid = $pid;
-                }
-
                 remove_filter('the_content', 'wpautop');
                 remove_filter('the_content', 'wptexturize');
                 remove_filter('the_content', 'shortcode_unautop');
