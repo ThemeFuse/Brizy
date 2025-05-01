@@ -217,7 +217,10 @@ class Brizy_Admin_Blocks_Main {
 			}
 		}
 
-		return array_merge( $matching_blocks, $this->findReferencedInGlobalBlocks( $matching_blocks ), $referenced );
+		return array_reduce( array_merge( $matching_blocks, $this->findReferencedInGlobalBlocks( $matching_blocks ), $referenced ), function ( $result, $object ) {
+			$result[ $object->getUid() ] = $object;
+			return $result;
+		}, [] );
 	}
 
 	private function getTemplateRuleMatches( WP_Post $template ) {
