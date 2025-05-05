@@ -218,7 +218,9 @@ class Brizy_Admin_Blocks_Main {
 		}
 
 		return array_reduce( array_merge( $matching_blocks, $this->findReferencedInGlobalBlocks( $matching_blocks ), $referenced ), function ( $result, $object ) {
-			$result[ $object->getUid() ] = $object;
+			if($object) {
+				$result[ $object->getUid() ] = $object;
+			}
 			return $result;
 		}, [] );
 	}
