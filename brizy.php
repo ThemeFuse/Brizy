@@ -24,7 +24,7 @@ define( 'BRIZY_MINIMUM_PRO_VERSION', '2.4.15' );
 define( 'BRIZY_MINIMUM_COMPILER_VERSION', '315-wp' );
 define( 'BRIZY_RECOMPILE_TAG', 1746602822 );
 define( 'BRIZY_EDITOR_VERSION', BRIZY_DEVELOPMENT ? 'dev' : '315-beta8-wp' );
-define( 'BRIZY_SYNC_VERSION', '314' );
+define( 'BRIZY_SYNC_VERSION', '315-beta8' );
 define( 'BRIZY_FILE', __FILE__ );
 define( 'BRIZY_PLUGIN_BASE', plugin_basename( BRIZY_FILE ) );
 define( 'BRIZY_PLUGIN_PATH', dirname( BRIZY_FILE ) );
