@@ -40,7 +40,11 @@ export const changedGBIds: RChangedGBIds = (state = [], action, allState) => {
       return state;
     }
     case ActionTypes.REMOVE_BLOCKS: {
-      const GBInPages = globalBlocksInPageSelector(allState);
+      const GBInPages = globalBlocksInPageSelector(
+        allState,
+        action.payload.config
+      );
+
       const GBIdsInPages = Object.keys(GBInPages);
       const newState = state;
 

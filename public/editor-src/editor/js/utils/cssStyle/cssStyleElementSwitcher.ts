@@ -6,13 +6,13 @@ import {
   cssStyleSizeWidth
 } from "visual/utils/cssStyle";
 import { defaultValueValue } from "visual/utils/onChange";
+import { ACTIVE } from "visual/utils/stateMode";
 import {
   styleElementSwitcherSize,
   styleElementSwitcherSpacing
 } from "visual/utils/style2";
 import { Reader } from "visual/utils/types/Type";
 import { CSSValue } from "../style2/types";
-import { ACTIVE } from "visual/utils/stateMode";
 
 type IconPositionType = "left" | "top" | "bottom" | "right";
 
@@ -87,12 +87,14 @@ export function cssStyleElementSwitcherNav2Height({
   v,
   device,
   state,
+  getConfig,
   store
 }: CSSValue): string {
   return cssStyleSizeSizeHeight({
     v,
     device,
     state,
+    getConfig,
     store,
     prefix: "navStyle2"
   });
@@ -101,9 +103,17 @@ export function cssStyleElementSwitcherNav2Height({
 export function cssStyleElementSwitcherNavBeforeBg({
   v,
   device,
+  getConfig,
   store
 }: CSSValue): string {
-  return cssStyleBgColor({ v, device, state: "active", store, prefix: "bg" });
+  return cssStyleBgColor({
+    v,
+    device,
+    state: "active",
+    getConfig,
+    store,
+    prefix: "bg"
+  });
 }
 
 export function cssStyleElementSwitcherNavSpacing({
@@ -118,19 +128,29 @@ export function cssStyleElementSwitcherNavSpacing({
 export function cssStyleElementSwitcherActiveTextColor({
   v,
   device,
+  getConfig,
   store
 }: CSSValue): string {
-  return cssStyleColor({ v, device, state: "active", store, prefix: "color" });
+  return cssStyleColor({
+    v,
+    device,
+    state: "active",
+    getConfig,
+    store,
+    prefix: "color"
+  });
 }
 
 export function cssStyleElementSwitcherActiveCustomIconColor({
   v,
   device,
+  getConfig,
   store
 }: CSSValue): string {
   return cssStyleCustomIconColor({
     v,
     device,
+    getConfig,
     state: ACTIVE,
     store
   });
@@ -140,7 +160,15 @@ export function cssStyleElementSwitcherWidth({
   v,
   device,
   state,
+  getConfig,
   store
 }: CSSValue): string {
-  return cssStyleSizeWidth({ v, device, state, store, prefix: "navStyle1" });
+  return cssStyleSizeWidth({
+    v,
+    device,
+    state,
+    store,
+    getConfig,
+    prefix: "navStyle1"
+  });
 }

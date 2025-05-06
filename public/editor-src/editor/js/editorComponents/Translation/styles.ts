@@ -6,8 +6,9 @@ import { Value } from ".";
 
 export function style(data: DynamicStylesProps<Value>): OutputStyle {
   const { renderContext } = data.contexts;
+
   const styles = {
-    ".brz &&:hover": {
+    ".brz &&": {
       standart: [
         "cssStyleTypography2FontFamily",
         "cssStyleTypography2FontWeight",
@@ -16,18 +17,20 @@ export function style(data: DynamicStylesProps<Value>): OutputStyle {
         "cssStyleTypography2LetterSpacing",
         "cssStyleTypography2FontVariation",
         "cssStyleTextTransforms",
+        "cssStyleBorderRadius",
+        "cssStyleElementTranslationAlign",
+        "cssStyleSizeWidth",
+        "cssStyleSizeHeight",
+        "cssStyleHoverTransition",
+        "cssStylePropertyHoverTransitionColor"
+      ]
+    },
+    ".brz &&:hover": {
+      standart: [
         "cssStyleColor",
         "cssStyleBgColor",
         "cssStyleBorder",
-        "cssStyleBorderRadius",
-        "cssStyleBoxShadow",
-        "cssStyleSizeWidth",
-        "cssStyleSizeHeight",
-        "cssStyleElementTranslationAlign"
-      ],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
+        "cssStyleBoxShadow"
       ]
     },
     ".brz && .brz-span": {
@@ -42,7 +45,7 @@ export function style(data: DynamicStylesProps<Value>): OutputStyle {
   };
 
   const styleSelectView = {
-    ".brz &&:hover .brz-span": {
+    ".brz && .brz-span": {
       standart: [
         "cssStyleTypography2FontFamily",
         "cssStyleTypography2FontWeight",
@@ -54,22 +57,21 @@ export function style(data: DynamicStylesProps<Value>): OutputStyle {
       ]
     },
     // #region select css
+    ".brz &&": {
+      standart: [
+        "cssStyleElementTranslationAlign",
+        "cssStyleBorderRadius",
+        "cssStyleSizeHeight",
+        "cssStyleSizeWidth"
+      ]
+    },
     ".brz &&:hover": {
       standart: [
         "cssStyleColor",
         "cssStyleBgColor",
         "cssStyleBorder",
-        "cssStyleBoxShadow",
-        "cssStyleElementTranslationAlign",
-        "cssStyleBorderRadius"
-      ],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
+        "cssStyleBoxShadow"
       ]
-    },
-    ".brz &&": {
-      standart: ["cssStyleSizeHeight", "cssStyleSizeWidth"]
     },
     ".brz && .select2-selection .select2-selection__rendered .brz-translation__select-item .brz-span":
       {
@@ -102,32 +104,33 @@ export function style(data: DynamicStylesProps<Value>): OutputStyle {
           "cssStyleElementTranslationFlagSize"
         ]
       },
+    ".brz && .select2-dropdown": {
+      standart: ["cssStyleElementTranslationWidth"]
+    },
     ".brz && .select2-dropdown:hover": {
-      standart: [
-        "cssStyleElementTranslationBoxShadow",
-        "cssStyleElementTranslationWidth"
-      ],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
-      ]
+      standart: ["cssStyleElementTranslationBoxShadow"]
+    },
+    ".brz && .select2-results__options .select2-results__option": {
+      standart: ["cssStyleSizeHeight"]
     },
     ".brz && .select2-results__options .select2-results__option:hover": {
       standart: [
         "cssStyleElementTranslationColor",
         "cssStyleElementTranslationBgColor",
-        "cssStyleElementTranslationBorder",
-        "cssStyleSizeHeight"
-      ],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
+        "cssStyleElementTranslationBorder"
       ]
     },
     ".brz && .select2-dropdown .select2-results__option ": {
       standart: ["cssStyleElementTranslationAlign"]
-    }
+    },
     // #endregion
+    ".brz &&, .brz && .select2-dropdown, .brz && .select2-results__options .select2-results__option":
+      {
+        standart: [
+          "cssStyleHoverTransition",
+          "cssStylePropertyHoverTransitionColor"
+        ]
+      }
   };
 
   return renderStyles({
@@ -139,31 +142,27 @@ export function style(data: DynamicStylesProps<Value>): OutputStyle {
 export function styleDropdown(data: DynamicStylesProps<Value>): OutputStyle {
   const styles = {
     ".brz && .brz-translation__select-list:hover": {
-      standart: ["cssStyleElementTranslationBoxShadow"],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
+      standart: ["cssStyleElementTranslationBoxShadow"]
+    },
+    ".brz && .brz-translation__select-list .brz-translation__select-item": {
+      standart: [
+        "cssStyleTypography2FontFamily",
+        "cssStyleTypography2FontWeight",
+        "cssStyleTypography2FontSize",
+        "cssStyleTypography2LineHeight",
+        "cssStyleTypography2LetterSpacing",
+        "cssStyleTypography2FontVariation",
+        "cssStyleTextTransforms",
+        "cssStyleSizeHeight",
+        "cssStyleElementTranslationAlign"
       ]
     },
     ".brz && .brz-translation__select-list .brz-translation__select-item:hover":
       {
         standart: [
-          "cssStyleTypography2FontFamily",
-          "cssStyleTypography2FontWeight",
-          "cssStyleTypography2FontSize",
-          "cssStyleTypography2LineHeight",
-          "cssStyleTypography2LetterSpacing",
-          "cssStyleTypography2FontVariation",
-          "cssStyleTextTransforms",
           "cssStyleElementTranslationColor",
           "cssStyleElementTranslationBgColor",
-          "cssStyleElementTranslationBorder",
-          "cssStyleSizeHeight",
-          "cssStyleElementTranslationAlign"
-        ],
-        interval: [
-          "cssStyleHoverTransition",
-          "cssStylePropertyHoverTransitionColor"
+          "cssStyleElementTranslationBorder"
         ]
       },
     ".brz && .brz-translation__select-list .brz-translation__select-item .brz-span":
@@ -173,6 +172,13 @@ export function styleDropdown(data: DynamicStylesProps<Value>): OutputStyle {
         standart: [
           "cssStyleElementTranslationFlagSize",
           "cssStyleElementTranslationFlagSpacing"
+        ]
+      },
+    ".brz && .brz-translation__select-list, .brz && .brz-translation__select-list .brz-translation__select-item":
+      {
+        standart: [
+          "cssStyleHoverTransition",
+          "cssStylePropertyHoverTransitionColor"
         ]
       }
   };

@@ -1,7 +1,8 @@
 import { ElementModel } from "visual/component/Elements/Types";
 import * as LinkType from "visual/component/Link/types/Type";
+import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { RenderType, isEditor } from "visual/providers/RenderProvider";
-import { configSelector, pageDataNoRefsSelector } from "visual/redux/selectors";
+import { pageDataNoRefsSelector } from "visual/redux/selectors";
 import { Store } from "visual/redux/store";
 import { customFileUrl } from "visual/utils/customFile";
 import {
@@ -89,7 +90,8 @@ export const getHref = (
   type: Type,
   _href: string,
   store: Store,
-  renderContext: RenderType
+  renderContext: RenderType,
+  config: ConfigCommon
 ): string => {
   let href;
 
@@ -118,7 +120,6 @@ export const getHref = (
       break;
     }
     case "upload": {
-      const config = configSelector(store.getState());
       href = customFileUrl(_href, config) ?? "";
       break;
     }

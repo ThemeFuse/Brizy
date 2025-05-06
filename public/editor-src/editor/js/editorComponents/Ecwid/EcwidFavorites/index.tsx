@@ -6,6 +6,8 @@ import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import { EcwidService } from "visual/libs/Ecwid";
 import { eq } from "visual/libs/Ecwid/types/EcwidConfig";
 import { makePlaceholder } from "visual/utils/dynamicContent";
+import { getEcwidShopPathPlaceholder } from "visual/utils/ecwid";
+import { makeAttr } from "visual/utils/i18n/attribute";
 import { attachRefs } from "visual/utils/react";
 import { encodeToString } from "visual/utils/string";
 import { uuidWithPlaceholderUuid } from "visual/utils/uuid";
@@ -306,6 +308,10 @@ export class EcwidFavorites extends EditorComponent<Value> {
       content: "{{ecwid_store_id}}"
     });
 
+    const attr = {
+      [makeAttr("shop-path")]: getEcwidShopPathPlaceholder()
+    };
+
     return (
       <Wrapper
         {...this.makeWrapperProps({
@@ -316,6 +322,7 @@ export class EcwidFavorites extends EditorComponent<Value> {
           className="brz-ecwid-favorites"
           data-store-id={storeId}
           data-storefront={encodeToString(cnf)}
+          {...attr}
         />
       </Wrapper>
     );

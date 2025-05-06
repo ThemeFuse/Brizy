@@ -1,5 +1,6 @@
 import { Arr, Json, Num, Obj, Str } from "@brizy/readers";
 import { mPipe, match, optional, parseStrict } from "fp-utilities";
+import { BlockHtmlWithId } from "visual/types/Block";
 import { GlobalBlock } from "visual/types/GlobalBlock";
 import {
   AllRule,
@@ -116,6 +117,7 @@ type GBPosition = GlobalBlock["position"];
 type GBStatus = GlobalBlock["status"];
 type GBRules = GlobalBlock["rules"];
 type GBDependency = ArrayType<GlobalBlock["dependencies"]>;
+type GBBlocks = GlobalBlock["blocks"];
 
 const parseMeta = parseStrict<Record<string, unknown>, GBMeta>({
   // @ts-expect-error: Type "normal" | "popup" is not assignable to type "normal
@@ -134,6 +136,20 @@ const parseMeta = parseStrict<Record<string, unknown>, GBMeta>({
   _thumbnailHeight: optional(pipe(Obj.readKey("_thumbnailHeight"), Num.read)),
   _thumbnailTime: optional(pipe(Obj.readKey("_thumbnailTime"), Num.read))
 });
+
+const parseBlocks = (v: unknown): MValue<BlockHtmlWithId> => {
+  const b = Obj.read(v);
+
+  if (b && Str.is(b.id) && Str.is(b.html)) {
+    return {
+      id: b.id,
+      // @ts-expect-error: Type 'string' is not assignable to type '""'.
+      html: b.html
+    };
+  }
+
+  return undefined;
+};
 
 export const parseGlobalBlock = (
   globalBlock: Record<string, unknown>
@@ -174,6 +190,13 @@ export const parseGlobalBlock = (
       Obj.readKey("dependencies"),
       Arr.readWithItemReader(Str.read),
       onNullish([] as Array<GBDependency>)
+    ),
+    blocks: optional(
+      mPipe(
+        Obj.readKey("blocks"),
+        Arr.readWithItemReader(parseBlocks),
+        onNullish([] as GBBlocks)
+      )
     )
   });
 
@@ -221,6 +244,7 @@ export const parseGlobalBlocksToRecord = (block: unknown): BlockRecord => {
         rules,
         position,
         tags,
+        blocks,
         dependencies
       } = globalBlock;
       switch (meta.type) {
@@ -235,6 +259,7 @@ export const parseGlobalBlocksToRecord = (block: unknown): BlockRecord => {
             rules,
             position,
             tags,
+            blocks,
             dependencies
           };
           break;
@@ -250,6 +275,7 @@ export const parseGlobalBlocksToRecord = (block: unknown): BlockRecord => {
             rules,
             position,
             tags,
+            blocks,
             dependencies
           };
           break;

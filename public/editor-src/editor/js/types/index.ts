@@ -1,14 +1,10 @@
 import { ElementModel } from "editor/js/component/Elements/Types";
 import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import { GetConfig } from "visual/providers/ConfigProvider/types";
 import { EditorMode } from "visual/providers/EditorModeProvider";
 import { RenderType } from "visual/providers/RenderProvider";
 import { Store } from "visual/redux/store";
-import {
-  HEART_BEAT_ERROR,
-  PROJECT_DATA_VERSION_ERROR,
-  PROJECT_LOCKED_ERROR,
-  SYNC_ERROR
-} from "visual/utils/errors";
+import { ErrorCodes } from "visual/utils/errors";
 import { Block } from "./Block";
 import { BlockMetaType } from "./GlobalBlock";
 import { PageCommon } from "./Page";
@@ -89,15 +85,18 @@ export type DeviceMode = "desktop" | "tablet" | "mobile";
 
 // style
 
+export interface StylesContexts {
+  renderContext: RenderType;
+  mode: EditorMode;
+  getConfig: GetConfig;
+}
+
 export interface DynamicStylesProps<V> {
   v: V;
   vs: V;
   vd: V;
   store: Store;
-  contexts: {
-    renderContext: RenderType;
-    mode: EditorMode;
-  };
+  contexts: StylesContexts;
 }
 
 // Shortcodes
@@ -148,27 +147,35 @@ export type CollectionItemId = string & {
 // endregion
 
 //#region Error
+interface ProjectUnlocked {
+  locked: false;
+  lockedBy: false;
+}
+
+export interface ProjectLocked {
+  locked: true;
+  lockedBy: { user_email: string };
+}
+
+export type ProjectLockStatus = ProjectLocked | ProjectUnlocked;
 
 type ProjectLockError = {
-  code: typeof PROJECT_LOCKED_ERROR;
-  data: {
-    locked: boolean;
-    lockedBy: boolean | { user_email: string };
-  };
+  code: typeof ErrorCodes.PROJECT_LOCKED_ERROR;
+  data: ProjectLockStatus;
 };
 
 type ProjectDataError = {
-  code: typeof PROJECT_DATA_VERSION_ERROR;
+  code: typeof ErrorCodes.PROJECT_DATA_VERSION_ERROR;
   data: string;
 };
 
 type HeartBeatError = {
-  code: typeof HEART_BEAT_ERROR;
-  data: string;
+  code: typeof ErrorCodes.HEART_BEAT_ERROR;
+  data: ProjectLocked | { statusText: string };
 };
 
 type SyncError = {
-  code: typeof SYNC_ERROR;
+  code: typeof ErrorCodes.SYNC_ERROR;
   data: {
     upgradeToProUrl?: string;
   };

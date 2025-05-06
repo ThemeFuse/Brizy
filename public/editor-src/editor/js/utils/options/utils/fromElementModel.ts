@@ -2,21 +2,28 @@ import { ElementModel } from "visual/component/Elements/Types";
 import { FromElementModel } from "visual/component/Options/Type";
 import type { OptionName, OptionValue } from "visual/component/Options/types";
 import { createOptionId } from "visual/editorComponents/EditorComponent/utils";
+import { Store } from "visual/redux/store";
 import { BreakpointsNames } from "visual/utils/breakpoints/types";
 import { defaultValueValue } from "visual/utils/onChange";
+import { fromElementModel as addable } from "visual/utils/options/Addable/converters";
+import { fromElementModel as advancedSettings } from "visual/utils/options/AdvancedSettings/converters";
 import { fromElementModel as ai } from "visual/utils/options/AiText/converters";
 import { fromElementModel as alert } from "visual/utils/options/Alert/converters";
 import { fromElementModel as animation } from "visual/utils/options/Animation/converters";
 import { fromElementModel as backgroundColor } from "visual/utils/options/BackgroundColor/converters";
+import { fromElementModel as blockThumbnail } from "visual/utils/options/BlockThumbnail/converters";
 import { fromElementModel as border } from "visual/utils/options/Border/converters";
 import { fromElementModel as boxShadow } from "visual/utils/options/BoxShadow/converters";
 import { fromElementModel as button } from "visual/utils/options/Button/converters";
+import { fromElementModel as checkGroup } from "visual/utils/options/CheckGroup/converters";
 import { fromElementModel as codeMirror } from "visual/utils/options/CodeMirror/converters";
+import { fromElementModel as colorPaletteEditor } from "visual/utils/options/ColorPaletteEditor/converters";
 import { fromElementModel as colorPicker } from "visual/utils/options/ColorPicker/converters";
 import { fromElementModel as corners } from "visual/utils/options/Corners/converters";
 import { fromElementModel as editableSelect } from "visual/utils/options/EditableSelect/converters";
 import { fromElementModel as fileUpload } from "visual/utils/options/FileUpload/converters";
 import { fromElementModel as filters } from "visual/utils/options/Filters/converters";
+import { fromElementModel as fontStyleEditor } from "visual/utils/options/FontStyleEditor/converters";
 import { fromElementModel as formApps } from "visual/utils/options/FormApps/converters";
 import { fromElementModel as gallery } from "visual/utils/options/Gallery/converters";
 import { fromElementModel as galleryForGallery } from "visual/utils/options/GalleryForGallery/converters";
@@ -39,39 +46,33 @@ import { fromElementModel as padding } from "visual/utils/options/Padding/conver
 import { fromElementModel as paypal } from "visual/utils/options/PayPal/converters";
 import { fromElementModel as popover } from "visual/utils/options/Popover/converters";
 import { fromElementModel as population } from "visual/utils/options/Population/converters";
+import { fromElementModel as popupCondition } from "visual/utils/options/PopupCondition/converters";
 import { fromElementModel as predefinedPopulation } from "visual/utils/options/PredefinedPopulation/converters";
 import { fromElementModel as promptAddPopup } from "visual/utils/options/PromptAddPopup/converters";
 import { fromElementModel as radioGroup } from "visual/utils/options/RadioGroup/converters";
 import { fromElementModel as range } from "visual/utils/options/Range/converters";
 import { fromElementModel as savedBlock } from "visual/utils/options/SavedBlock/converters";
-import { fromElementModel as checkGroup } from "visual/utils/options/CheckGroup/converters";
 import { fromElementModel as select } from "visual/utils/options/Select/converters";
+import { fromElementModel as showOnDevice } from "visual/utils/options/ShowOnDevice/converters";
 import { fromElementModel as sidebarTabs } from "visual/utils/options/SidebarTabs/converters";
 import { fromElementModel as sidebarTabsButton } from "visual/utils/options/SidebarTabsButton/converters";
 import { fromElementModel as slider } from "visual/utils/options/Slider/converters";
 import { fromElementModel as stateMode } from "visual/utils/options/StateMode/converters";
 import { fromElementModel as _switch } from "visual/utils/options/Switch/converters";
+import { fromElementModel as symbols } from "visual/utils/options/Symbols/converters";
 import { fromElementModel as tabs } from "visual/utils/options/Tabs/converters";
 import { fromElementModel as textShadow } from "visual/utils/options/TextShadow/converters";
 import { fromElementModel as textarea } from "visual/utils/options/Textarea/converters";
 import { fromElementModel as toggle } from "visual/utils/options/Toggle/converters";
-import { fromElementModel as showOnDevice } from "visual/utils/options/ShowOnDevice/converters";
 import { fromElementModel as toggleButton } from "visual/utils/options/ToggleButton/converters";
 import { fromElementModel as transform } from "visual/utils/options/Transform/converters";
 import { fromElementModel as typography } from "visual/utils/options/Typography/converters";
-import { fromElementModel as blockThumbnail } from "visual/utils/options/BlockThumbnail/converters";
-import { fromElementModel as popupCondition } from "visual/utils/options/PopupCondition/converters";
-import { fromElementModel as fontStyleEditor } from "visual/utils/options/FontStyleEditor/converters";
-import { fromElementModel as colorPaletteEditor } from "visual/utils/options/ColorPaletteEditor/converters";
-import { fromElementModel as advancedSettings } from "visual/utils/options/AdvancedSettings/converters";
 import { read as readObject, replaceNullish } from "visual/utils/reader/object";
 import { DESKTOP } from "visual/utils/responsiveMode";
 import { NORMAL, State } from "visual/utils/stateMode";
 import { Literal } from "visual/utils/types/Literal";
 import { MValue } from "visual/utils/value";
 import { applyDefaultValueToOption } from "./defaultValue";
-import { fromElementModel as symbols } from "visual/utils/options/Symbols/converters";
-import { Store } from "visual/redux/store";
 
 type FromElementModelFns = {
   [K in OptionName]: FromElementModel<K>;
@@ -138,7 +139,8 @@ const fns: FromElementModelFns = {
   checkGroup: checkGroup,
   advancedSettings: advancedSettings,
   blockThumbnail: blockThumbnail,
-  symbols
+  symbols,
+  addable
 };
 
 /**

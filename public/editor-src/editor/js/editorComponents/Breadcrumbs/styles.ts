@@ -1,16 +1,11 @@
 import { DynamicStylesProps } from "visual/types";
 import { renderStyles } from "visual/utils/cssStyle";
-import { OutputStyle } from "visual/utils/cssStyle/types";
+import { OutputStyle, Styles } from "visual/utils/cssStyle/types";
 import type { Value } from "./types";
 
 export const style = (data: DynamicStylesProps<Value>): OutputStyle => {
-  const styles: {
-    [k: string]: {
-      interval?: string[];
-      standart?: string[];
-    };
-  } = {
-    ".brz && .brz-ui-ed-breadcrumbs li:hover": {
+  const styles: Styles = {
+    ".brz && .brz-ui-ed-breadcrumbs li": {
       standart: [
         "cssStyleSizeTextSpacing",
         "cssStyleTypography2FontFamily",
@@ -20,12 +15,10 @@ export const style = (data: DynamicStylesProps<Value>): OutputStyle => {
         "cssStyleTypography2LetterSpacing",
         "cssStyleTypography2FontVariation",
         "cssStyleTextTransforms"
-      ],
-      interval: ["cssStyleHoverTransition"]
+      ]
     },
     ".brz && .brz-ui-ed-breadcrumbs li:not(li:last-child):hover": {
-      standart: ["cssStyleColor"],
-      interval: ["cssStyleHoverTransition"]
+      standart: ["cssStyleColor"]
     },
     ".brz && .brz-ui-ed-breadcrumbs .brz-ui-ed-breadcrumb-separator svg": {
       standart: ["cssStyleElementBreadcrumbsColorArrows"]
@@ -33,6 +26,10 @@ export const style = (data: DynamicStylesProps<Value>): OutputStyle => {
     ".brz && .brz-ui-ed-breadcrumbs li:has(.brz-ui-ed-breadcrumb-link):nth-last-child(-n+2) ":
       {
         standart: ["cssStyleElementBreadcrumbsColorActive"]
+      },
+    ".brz && .brz-ui-ed-breadcrumbs li, .brz && .brz-ui-ed-breadcrumbs li:not(li:last-child)":
+      {
+        standart: ["cssStyleHoverTransition"]
       }
   };
 

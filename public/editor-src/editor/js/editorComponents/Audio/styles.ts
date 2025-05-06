@@ -7,33 +7,34 @@ export function styleContent(
   data: DynamicStylesProps<ElementModel>
 ): OutputStyle {
   const styles = {
-    ".brz &&:hover": {
+    ".brz &&": {
       standart: ["cssStyleSizeWidth", "cssStyleSizeMinHeightPx"]
     },
     ".brz &&:hover .brz-audio-progress": {
-      standart: ["cssStyleBg2Color"],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
-      ]
+      standart: ["cssStyleBg2Color"]
+    },
+    ".brz &&:before": {
+      standart: ["cssStyleBorderRadius"]
     },
     ".brz &&:hover:before": {
-      standart: ["cssStyleBorder", "cssStyleBorderRadius", "cssStyleBoxShadow"],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
-      ]
+      standart: ["cssStyleBorder", "cssStyleBoxShadow"]
+    },
+    ".brz && .brz-soundCloud-content": {
+      standart: ["cssStyleBorderRadius"]
     },
     ".brz &&:hover .brz-soundCloud-content": {
-      standart: ["cssStyleBorderRadius", "cssStyleBgColor"],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
-      ]
+      standart: ["cssStyleBgColor"]
     },
-    ".brz &&:hover iframe": {
+    ".brz && iframe": {
       standart: ["cssStyleSizeHeight", "cssStylePaddingBG"]
-    }
+    },
+    ".brz && .brz-audio-progress, .brz &&:before, .brz && .brz-soundCloud-content":
+      {
+        standart: [
+          "cssStyleHoverTransition",
+          "cssStylePropertyHoverTransitionColor"
+        ]
+      }
   };
   return renderStyles({ ...data, styles });
 }
@@ -42,21 +43,17 @@ export function styleWrapperAudio(
   data: DynamicStylesProps<ElementModel>
 ): OutputStyle {
   const styles = {
-    ".brz &&:hover": {
+    ".brz &&": {
       standart: [
         "cssStyleBorderRadius",
-        "cssStyleBoxShadow",
-        "cssStyleBorder",
-        "cssStyleBgColor",
         "cssStyleDisplayFlex",
         "cssStylePaddingBG"
-      ],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
       ]
     },
-    ".brz &&:hover .brz-audio__cover::before": {
+    ".brz &&:hover": {
+      standart: ["cssStyleBoxShadow", "cssStyleBorder", "cssStyleBgColor"]
+    },
+    ".brz && .brz-audio__cover::before": {
       standart: [
         "cssStyleElementVideoCoverSrc",
         "cssStyleElementVideoCoverPosition",
@@ -68,19 +65,21 @@ export function styleWrapperAudio(
       standart: ["cssStyleColor"]
     },
     ".brz &&:hover > .brz-audio-controls > .brz-audio-total-time": {
-      standart: ["cssStyleColor"],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
-      ]
+      standart: ["cssStyleColor"]
+    },
+    ".brz && .brz-audio-slider:before": {
+      standart: ["cssStyleBorderRadius"]
     },
     ".brz &&:hover .brz-audio-slider:before": {
-      standart: ["cssStyleBg2Color", "cssStyleBorderRadius"],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
-      ]
-    }
+      standart: ["cssStyleBg2Color"]
+    },
+    ".brz &&, .brz && > .brz-audio-controls > .brz-audio-total-time, .brz && .brz-audio-slider:before":
+      {
+        standart: [
+          "cssStyleHoverTransition",
+          "cssStylePropertyHoverTransitionColor"
+        ]
+      }
   };
   return renderStyles({ ...data, styles });
 }
@@ -89,7 +88,7 @@ export function styleControls(
   data: DynamicStylesProps<ElementModel>
 ): OutputStyle {
   const styles = {
-    ".brz &&:hover": {
+    ".brz &&": {
       standart: [
         "cssStyleDisplayFlex",
         "cssStyleElementMediaPadding",
@@ -109,12 +108,15 @@ export function styleControls(
 
 export function styleIcon(data: DynamicStylesProps<ElementModel>): OutputStyle {
   const styles = {
-    ".brz &&:hover": {
-      standart: ["cssStyleSizeFontSizeIcon", "cssStyleColor"],
-      interval: [
+    ".brz &&": {
+      standart: [
+        "cssStyleSizeFontSizeIcon",
         "cssStyleHoverTransition",
         "cssStylePropertyHoverTransitionColor"
       ]
+    },
+    ".brz &&:hover": {
+      standart: ["cssStyleColor"]
     }
   };
 

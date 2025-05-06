@@ -2,7 +2,7 @@ import classNames from "classnames";
 import React, { ReactElement, useMemo } from "react";
 import { WithValue } from "visual/types/attributes";
 import { Props as TabProps } from "../Tabs2/Tab";
-import { Props as TabListProps, TabList } from "../Tabs2/TabList";
+import { TabList, Props as TabListProps } from "../Tabs2/TabList";
 import { Icon } from "./Icon";
 import { Align, Locked } from "./types";
 import { alignIcon, alignTitle, lockedIcon, lockedTitle } from "./utils";
@@ -47,7 +47,7 @@ export function RightSidebarTabs<T>({
   );
 
   return (
-    <div className={"brz-ed-control__right-sidebar-tabs"}>
+    <div className="brz-ed-control__right-sidebar-tabs">
       <div className="brz-ed-control__right-sidebar-tabs__header">
         <TabList<T>
           onChange={onChange}

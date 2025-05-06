@@ -1,12 +1,7 @@
 import { noop, once } from "es-toolkit";
 import { produce } from "immer";
-import { StoreChanged } from "visual/redux/types";
 import { onChange } from "visual/utils/api";
-import {
-  HEART_BEAT_ERROR,
-  PROJECT_DATA_VERSION_ERROR,
-  PROJECT_LOCKED_ERROR
-} from "visual/utils/errors";
+import { ErrorCodes } from "visual/utils/errors";
 import { t } from "visual/utils/i18n";
 import {
   ADD_BLOCK,
@@ -24,13 +19,11 @@ import {
   ADD_GLOBAL_POPUP,
   ActionTypes,
   DELETE_FONTS,
-  PUBLISH,
   UPDATE_CURRENT_KIT_ID,
   UPDATE_DEFAULT_FONT,
   UPDATE_DISABLED_ELEMENTS,
   UPDATE_EXTRA_FONT_STYLES,
-  updateError,
-  updateStoreWasChanged
+  updateError
 } from "../../actions2";
 import { historySelector } from "../../history/selectors";
 import { REDO, UNDO } from "../../history/types";
@@ -54,7 +47,7 @@ import {
   pollingSendHeartBeat
 } from "./utils";
 
-export default ({ config, editorMode }) =>
+export default ({ getConfig, editorMode }) =>
   (store) =>
   (next) => {
     const apiHandler = apiCatch.bind(null, store.dispatch);
@@ -65,22 +58,33 @@ export default ({ config, editorMode }) =>
       next(action);
 
       const state = store.getState();
-      handlePublish({
+
+      const data = {
         action,
+        store,
         state,
         oldState,
-        config,
+        getConfig,
         apiHandler,
         editorMode
-      });
-      handleProject({ action, state, oldState, config, apiHandler });
-      handlePage({ action, state, config, apiHandler });
-      handleGlobalBlocks({ action, state, oldState, config, apiHandler });
-      handleHeartBeat({ action, state, config, apiHandler });
+      };
+      handlePublish(data);
+      handleProject(data);
+      handlePage(data);
+      handleGlobalBlocks(data);
+      handleHeartBeat({ action, state, getConfig, apiHandler });
     };
   };
 
-function handleProject({ action, state, oldState, config, apiHandler }) {
+function handleProject({
+  action,
+  state,
+  store,
+  oldState,
+  getConfig,
+  apiHandler
+}) {
+  const config = getConfig();
   const apiAutoSave = debouncedApiAutoSave(config.autoSaveInterval);
 
   switch (action.type) {
@@ -105,6 +109,7 @@ function handleProject({ action, state, oldState, config, apiHandler }) {
       const page = pageSelector(state);
       const data = {
         config,
+        store,
         needToCompile: {
           project
         },
@@ -137,6 +142,7 @@ function handleProject({ action, state, oldState, config, apiHandler }) {
           draft.data.styles = styles;
         });
         const data = {
+          store,
           config,
           needToCompile: {
             project
@@ -166,6 +172,7 @@ function handleProject({ action, state, oldState, config, apiHandler }) {
       const page = pageSelector(state);
       const data = {
         config,
+        store,
         needToCompile: {
           project
         },
@@ -191,6 +198,7 @@ function handleProject({ action, state, oldState, config, apiHandler }) {
       const page = pageSelector(state);
       const data = {
         config,
+        store,
         needToCompile: {
           project
         },
@@ -231,7 +239,9 @@ function handleProject({ action, state, oldState, config, apiHandler }) {
   }
 }
 
-function handlePage({ action, state, config }) {
+function handlePage({ action, store, state, getConfig }) {
+  const config = getConfig();
+
   const apiAutoSave = debouncedApiAutoSave(config.autoSaveInterval);
   switch (action.type) {
     case MAKE_BLOCK_TO_GLOBAL_BLOCK:
@@ -264,6 +274,7 @@ function handlePage({ action, state, config }) {
       const { syncSuccess = noop, syncFail = noop } = action.meta || {};
       const project = projectSelector(state);
       const data = {
+        store,
         config,
         needToCompile: {
           page
@@ -313,12 +324,14 @@ const startHeartBeat = (apiHandler, config) => {
 
 const startHeartBeatOnce = once(startHeartBeat);
 
-function handleHeartBeat({ action, state, config, apiHandler }) {
+function handleHeartBeat({ action, state, getConfig, apiHandler }) {
+  const config = getConfig();
   const { sendHandler } = config.api.heartBeat ?? {};
 
   if (action.type === ActionTypes.UPDATE_ERROR || action.type === HYDRATE) {
     const error = errorSelector(state);
-    const projectUnLocked = !error || error.code !== PROJECT_LOCKED_ERROR;
+    const projectUnLocked =
+      !error || error.code !== ErrorCodes.PROJECT_LOCKED_ERROR;
 
     if (projectUnLocked && typeof sendHandler === "function") {
       startHeartBeatOnce(apiHandler, config);
@@ -329,24 +342,20 @@ function handleHeartBeat({ action, state, config, apiHandler }) {
 function apiCatch(next, p, action, onSuccess = noop, onError = noop) {
   return p
     .then((r) => {
-      if (action?.type === PUBLISH) {
-        next(updateStoreWasChanged(StoreChanged.unchanged));
-      }
-
       onSuccess(r);
     })
     .catch((r) => {
       if (r && r.heartBeat) {
         next(
           updateError({
-            code: HEART_BEAT_ERROR,
+            code: ErrorCodes.HEART_BEAT_ERROR,
             data: r.data
           })
         );
       } else {
         next(
           updateError({
-            code: PROJECT_DATA_VERSION_ERROR,
+            code: ErrorCodes.PROJECT_DATA_VERSION_ERROR,
             data: t(
               "This page needs a refresh. You’ve probably updated this page (or another page) in a different tab or browser."
             )

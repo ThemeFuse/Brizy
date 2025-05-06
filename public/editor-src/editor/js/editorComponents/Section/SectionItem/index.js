@@ -29,6 +29,7 @@ import { defaultValueValue } from "visual/utils/onChange";
 import { handleLinkChange } from "visual/utils/patch/Link";
 import { attachRefs } from "visual/utils/react";
 import { DESKTOP, MOBILE, TABLET } from "visual/utils/responsiveMode";
+import { currentUserRole } from "../../../component/Roles";
 import defaultValue from "./defaultValue.json";
 import Items from "./items";
 import * as sidebarConfig from "./sidebar";
@@ -337,6 +338,7 @@ class SectionItem extends EditorComponent {
                 className={classNameSectionContent}
               >
                 <Roles
+                  currentRole={currentUserRole(this.getGlobalConfig())}
                   allow={["admin"]}
                   fallbackRender={() => this.renderItems(v, vs, vd)}
                 >

@@ -1,33 +1,28 @@
-
+import { DynamicStylesProps } from "visual/types";
 import { renderStyles } from "visual/utils/cssStyle";
 import type { OutputStyle } from "visual/utils/cssStyle/types";
 import type { Styles } from "visual/utils/cssStyle/types";
 import type { Value } from "./types";
-import { DynamicStylesProps } from "visual/types";
 
-export function style(data:DynamicStylesProps<Value>): OutputStyle {
+export function style(data: DynamicStylesProps<Value>): OutputStyle {
   const styles: Styles = {
+    ".brz &&": {
+      standart: ["cssStyleSizeWidth"]
+    },
     ".brz &&:hover": {
-      standart: ["cssStyleSizeWidth", "cssStyleBoxShadow"],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStyleElementTOCPropertyHoverTransition"
-      ]
+      standart: ["cssStyleBoxShadow"]
+    },
+    ".brz && .brz-toc-header": {
+      standart: ["cssStyleElementTOCHeaderPadding"]
     },
     ".brz && .brz-toc-header:hover": {
       standart: [
         "cssStyleElementTOCHeaderBgColor",
-        "cssStyleElementTOCHeaderBorder",
-        "cssStyleElementTOCHeaderPadding"
-      ],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStyleElementTOCPropertyHoverTransition"
+        "cssStyleElementTOCHeaderBorder"
       ]
     },
-    ".brz && .brz-toc-header:hover .brz-toc-title": {
+    ".brz && .brz-toc-header .brz-toc-title": {
       standart: [
-        "cssStyleElementTOCTitleColor",
         "cssStyleTypography2FontFamily",
         "cssStyleTypography2FontSize",
         "cssStyleTypography2LineHeight",
@@ -35,15 +30,13 @@ export function style(data:DynamicStylesProps<Value>): OutputStyle {
         "cssStyleTypography2LetterSpacing",
         "cssStyleTypography2FontVariation",
         "cssStyleTextTransforms"
-      ],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStyleElementTOCPropertyHoverTransition"
       ]
     },
-    ".brz && .brz-toc-body__list:hover": {
+    ".brz && .brz-toc-header:hover .brz-toc-title": {
+      standart: ["cssStyleElementTOCTitleColor"]
+    },
+    ".brz && .brz-toc-body__list": {
       standart: [
-        "cssStyleElementTOCBodyBgColor",
         "cssStyleElementTOCBodyFontFamily",
         "cssStyleElementTOCBodyFontSize",
         "cssStyleElementTOCBodyLineHeight",
@@ -52,56 +45,42 @@ export function style(data:DynamicStylesProps<Value>): OutputStyle {
         "cssStyleElementTOCBodyFontVariation",
         "cssStyleElementTOCBodyTextTransform",
         "cssStyleElementTOCWordWrap"
-      ],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStyleElementTOCPropertyHoverTransition"
       ]
+    },
+    ".brz && .brz-toc-body__list:hover": {
+      standart: ["cssStyleElementTOCBodyBgColor"]
     },
     ".brz && .brz-toc-body__list .brz-li:hover": {
-      standart: ["cssStyleElementTOCBodyColor"],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStyleElementTOCPropertyHoverTransition"
-      ]
+      standart: ["cssStyleElementTOCBodyColor"]
     },
     ".brz &&.brz-toc--opened .brz-toc-body:hover": {
-      standart: ["cssStyleElementTOCBodyBorder"],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStyleElementTOCPropertyHoverTransition"
-      ]
+      standart: ["cssStyleElementTOCBodyBorder"]
     },
     ".brz && .brz-toc-body__list, .brz && .brz-toc-message": {
       standart: ["cssStyleElementTOCBodyPadding"]
     },
+    ".brz && .brz-toc-body li .brz-toc-body__list-marker": {
+      standart: ["cssStyleElementTOCBodyMarkerSize"]
+    },
     ".brz && .brz-toc-body li:hover .brz-toc-body__list-marker": {
-      standart: [
-        "cssStyleElementTOCBodyMarkerSize",
-        "cssStyleElementTOCBodyMarkerColor"
-      ],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStyleElementTOCPropertyHoverTransition"
-      ]
+      standart: ["cssStyleElementTOCBodyMarkerColor"]
+    },
+    ".brz && .brz-toc-body li::marker": {
+      standart: ["cssStyleElementTOCBodyMarkerSize"]
     },
     ".brz && .brz-toc-body li:hover::marker": {
-      standart: [
-        "cssStyleElementTOCBodyMarkerSize",
-        "cssStyleElementTOCBodyMarkerColor"
-      ],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStyleElementTOCPropertyHoverTransition"
-      ]
+      standart: ["cssStyleElementTOCBodyMarkerColor"]
     },
     ".brz && .brz-toc-header:hover .brz-toc-icon-wrapper": {
-      standart: ["cssStyleElementTOCTitleColor"],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStyleElementTOCPropertyHoverTransition"
-      ]
-    }
+      standart: ["cssStyleElementTOCTitleColor"]
+    },
+    ".brz && .brz-toc-header .brz-toc-icon-wrapper, .brz && .brz-toc-body li::marker, .brz && .brz-toc-body li .brz-toc-body__list-marker, .brz &&, .brz && .brz-toc-header, .brz && .brz-toc-header .brz-toc-title, .brz && .brz-toc-body__list, .brz && .brz-toc-body__list .brz-li, .brz &&.brz-toc--opened .brz-toc-body":
+      {
+        standart: [
+          "cssStyleHoverTransition",
+          "cssStyleElementTOCPropertyHoverTransition"
+        ]
+      }
   };
 
   return renderStyles({ ...data, styles });

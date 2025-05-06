@@ -3,6 +3,7 @@ import {
   cssStyleBoxShadow,
   cssStyleColor,
   cssStylePaddingFourFields,
+  cssStyleTextAlign,
   cssStyleTextShadow2,
   cssStyleTextTransforms,
   cssStyleTypography2FontFamily,
@@ -12,11 +13,7 @@ import {
   cssStyleTypography2LetterSpacing,
   cssStyleTypography2LineHeight
 } from "visual/utils/cssStyle";
-import {
-  styleAlignHorizontal,
-  styleBgColor,
-  styleColor
-} from "visual/utils/style2";
+import { styleBgColor, styleColor } from "visual/utils/style2";
 import { readIconSize } from "visual/utils/types/Type";
 import { defaultValueValue } from "../onChange";
 import { CSSValue } from "../style2/types";
@@ -25,9 +22,17 @@ export function cssStyleAlertContainerShadow({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
-  return cssStyleBoxShadow({ v, device, state, store, prefix: "container" });
+  return cssStyleBoxShadow({
+    v,
+    device,
+    state,
+    store,
+    getConfig,
+    prefix: "container"
+  });
 }
 
 //#region close button
@@ -87,14 +92,14 @@ export function cssStyleElementAlertCloseButtonBgColor({
   v,
   device,
   state,
-  store
+  getConfig
 }: CSSValue): string {
   const closeBgColor = styleBgColor({
     v,
     device,
     prefix: "closeBg",
     state,
-    store
+    getConfig
   });
 
   return closeBgColor ? `background-color:${closeBgColor};` : "";
@@ -104,13 +109,13 @@ export function cssStyleElementAlertCloseButtonColor({
   v,
   device,
   state,
-  store
+  getConfig
 }: CSSValue): string {
   const closeColor = styleColor({
     v,
     device,
     state,
-    store,
+    getConfig,
     prefix: "closeColor"
   });
 
@@ -149,7 +154,7 @@ export function cssStyleElementAlertCloseButtonPosition({
   const closeHorizontalPosition = dvv("closeHorizontalPosition");
   const closeVerticalPosition = dvv("closeVerticalPosition");
 
-  return `top:${closeVerticalPosition}px;right:${closeHorizontalPosition}px;`;
+  return `top:${closeVerticalPosition}px;inset-inline-end:${closeHorizontalPosition}px;`;
 }
 
 //#endregion
@@ -159,47 +164,63 @@ export function cssStyleElementAlertTitleAlign({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
-  const contentAlign = styleAlignHorizontal({
+  return cssStyleTextAlign({
     v,
     device,
     state,
     store,
+    getConfig,
     prefix: "title"
   });
-
-  return contentAlign ? `text-align:${contentAlign};` : "";
 }
 
 export function cssStyleElementAlertTitleShadow({
   v,
   state,
-  store,
-  device
+  device,
+  getConfig
 }: CSSValue): string {
-  return cssStyleTextShadow2({ v, state, device, store, prefix: "title" });
+  return cssStyleTextShadow2({
+    v,
+    state,
+    device,
+    prefix: "title",
+    getConfig
+  });
 }
 
 export function cssStyleElementAlertTitleColor({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
-  return cssStyleColor({ v, device, state, store, prefix: "titleColor" });
+  return cssStyleColor({
+    v,
+    device,
+    state,
+    store,
+    getConfig,
+    prefix: "titleColor"
+  });
 }
 
 export function cssStyleElementAlertTitleFontFamily({
   v,
   device,
   store,
+  getConfig,
   renderContext
 }: CSSValue & WithRenderContext): string {
   return cssStyleTypography2FontFamily({
     v,
     device,
     store,
+    getConfig,
     prefix: "title",
     renderContext
   });
@@ -208,30 +229,52 @@ export function cssStyleElementAlertTitleFontFamily({
 export function cssStyleElementAlertTitleFontSize({
   v,
   device,
+  getConfig,
   store
 }: CSSValue): string {
-  return cssStyleTypography2FontSize({ v, device, store, prefix: "title" });
+  return cssStyleTypography2FontSize({
+    v,
+    device,
+    store,
+    getConfig,
+    prefix: "title"
+  });
 }
 
 export function cssStyleElementAlertTitleLineHeight({
   v,
   device,
+  getConfig,
   store
 }: CSSValue): string {
-  return cssStyleTypography2LineHeight({ v, device, store, prefix: "title" });
+  return cssStyleTypography2LineHeight({
+    v,
+    device,
+    store,
+    getConfig,
+    prefix: "title"
+  });
 }
 
 export function cssStyleElementAlertTitleFontWeight({
   v,
   device,
+  getConfig,
   store
 }: CSSValue): string {
-  return cssStyleTypography2FontWeight({ v, device, store, prefix: "title" });
+  return cssStyleTypography2FontWeight({
+    v,
+    device,
+    store,
+    getConfig,
+    prefix: "title"
+  });
 }
 
 export function cssStyleElementAlertTitleLetterSpacing({
   v,
   device,
+  getConfig,
   state,
   store
 }: CSSValue): string {
@@ -239,6 +282,7 @@ export function cssStyleElementAlertTitleLetterSpacing({
     v,
     device,
     state,
+    getConfig,
     store,
     prefix: "title"
   });
@@ -247,11 +291,13 @@ export function cssStyleElementAlertTitleLetterSpacing({
 export function cssStyleElementAlertTitleFontVariation({
   v,
   device,
+  getConfig,
   store
 }: CSSValue): string {
   return cssStyleTypography2FontVariation({
     v,
     device,
+    getConfig,
     store,
     prefix: "title"
   });
@@ -261,9 +307,17 @@ export function cssStyleElementAlertTitleTextTransform({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
-  return cssStyleTextTransforms({ v, device, state, store, prefix: "title" });
+  return cssStyleTextTransforms({
+    v,
+    device,
+    state,
+    store,
+    getConfig,
+    prefix: "title"
+  });
 }
 
 //#endregion
@@ -300,31 +354,31 @@ export function cssStyleElementAlertDescriptionAlign({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
-  const contentAlign = styleAlignHorizontal({
+  return cssStyleTextAlign({
     v,
     device,
     state,
     store,
+    getConfig,
     prefix: "description"
   });
-
-  return contentAlign ? `text-align:${contentAlign};` : "";
 }
 
 export function cssStyleElementAlertDescriptionShadow({
   v,
   state,
-  store,
-  device
+  device,
+  getConfig
 }: CSSValue): string {
   return cssStyleTextShadow2({
     v,
     state,
     device,
-    store,
-    prefix: "description"
+    prefix: "description",
+    getConfig
   });
 }
 
@@ -332,21 +386,31 @@ export function cssStyleElementAlertDescriptionColor({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
-  return cssStyleColor({ v, device, state, store, prefix: "descriptionColor" });
+  return cssStyleColor({
+    v,
+    device,
+    state,
+    store,
+    getConfig,
+    prefix: "descriptionColor"
+  });
 }
 
 export function cssStyleElementAlertDescriptionFontFamily({
   v,
   device,
   store,
+  getConfig,
   renderContext
 }: CSSValue & WithRenderContext): string {
   return cssStyleTypography2FontFamily({
     v,
     device,
     store,
+    getConfig,
     prefix: "description",
     renderContext
   });
@@ -355,11 +419,13 @@ export function cssStyleElementAlertDescriptionFontFamily({
 export function cssStyleElementAlertDescriptionFontSize({
   v,
   device,
+  getConfig,
   store
 }: CSSValue): string {
   return cssStyleTypography2FontSize({
     v,
     device,
+    getConfig,
     store,
     prefix: "description"
   });
@@ -368,11 +434,13 @@ export function cssStyleElementAlertDescriptionFontSize({
 export function cssStyleElementAlertDescriptionLineHeight({
   v,
   device,
+  getConfig,
   store
 }: CSSValue): string {
   return cssStyleTypography2LineHeight({
     v,
     device,
+    getConfig,
     store,
     prefix: "description"
   });
@@ -381,11 +449,13 @@ export function cssStyleElementAlertDescriptionLineHeight({
 export function cssStyleElementAlertDescriptionFontWeight({
   v,
   device,
+  getConfig,
   store
 }: CSSValue): string {
   return cssStyleTypography2FontWeight({
     v,
     device,
+    getConfig,
     store,
     prefix: "description"
   });
@@ -395,12 +465,14 @@ export function cssStyleElementAlertDescriptionLetterSpacing({
   v,
   device,
   store,
+  getConfig,
   state
 }: CSSValue): string {
   return cssStyleTypography2LetterSpacing({
     v,
     device,
     store,
+    getConfig,
     state,
     prefix: "description"
   });
@@ -409,12 +481,14 @@ export function cssStyleElementAlertDescriptionLetterSpacing({
 export function cssStyleElementAlertDescriptionFontVariation({
   v,
   device,
+  getConfig,
   store
 }: CSSValue): string {
   return cssStyleTypography2FontVariation({
     v,
     device,
     store,
+    getConfig,
     prefix: "description"
   });
 }
@@ -423,13 +497,15 @@ export function cssStyleElementAlertDescriptionTextTransform({
   v,
   device,
   store,
-  state
+  state,
+  getConfig
 }: CSSValue): string {
   return cssStyleTextTransforms({
     v,
     device,
     store,
     state,
+    getConfig,
     prefix: "description"
   });
 }

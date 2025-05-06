@@ -1,18 +1,13 @@
-import { renderStyles } from "visual/utils/cssStyle";
-import { Value } from "./types";
-import { OutputStyle } from "visual/utils/cssStyle/types";
 import { DynamicStylesProps } from "visual/types";
+import { renderStyles } from "visual/utils/cssStyle";
+import { OutputStyle, Styles } from "visual/utils/cssStyle/types";
+import { Value } from "./types";
 
 export function style(data: DynamicStylesProps<Value>): OutputStyle {
   const { v } = data;
   const { maskShape = "none" } = v;
 
-  const styles: {
-    [k: string]: {
-      interval?: string[];
-      standart?: string[];
-    };
-  } = {
+  const styles: Styles = {
     ".brz && .brz-ministryBrands.brz-groupSlider": {
       standart: ["cssStylePaddingBG"]
     },
@@ -22,83 +17,83 @@ export function style(data: DynamicStylesProps<Value>): OutputStyle {
         "cssStyleElementMinistryGroupSliderSlidesToShow"
       ]
     },
-    ".brz && .brz-ministryBrands__item--media:hover": {
+    ".brz && .brz-ministryBrands__item--media": {
       standart: [
         "cssStyleElementOfMinistryBrandsImageWidth",
         "cssStyleElementOfMinistryBrandsImagePadding",
+        "cssStyleMinistryElementMediaBorderRadius"
+      ]
+    },
+    ".brz && .brz-ministryBrands__item--media:hover": {
+      standart: [
         "cssStyleElementOfMinistryBrandsImgBorder",
-        "cssStyleMinistryElementMediaBorderRadius",
         ...(maskShape === "none"
           ? ["cssStyleElementOfMinistryBrandsImgBoxShadow"]
           : ["cssStyleElementOfMinistryBrandsImgMaskShadow"])
-      ],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
+      ]
+    },
+    ".brz && .brz-ministryBrands__item--media::after": {
+      standart: [
+        "cssStyleMaskShape",
+        "cssStyleMaskCustomShape",
+        "cssStyleMaskSize",
+        "cssStyleMaskPosition",
+        "cssStyleMaskRepeat"
       ]
     },
     ".brz && .brz-ministryBrands__item--media:hover::after": {
       standart: [
         "cssStyleElementOfMinistryBrandsImgBgColor",
-        "cssStyleElementOfMinistryBrandsImgBgGradient",
+        "cssStyleElementOfMinistryBrandsImgBgGradient"
+      ]
+    },
+    ".brz && .brz-ministryBrands__item--media :is(img, video, iframe)": {
+      standart: [
         "cssStyleMaskShape",
         "cssStyleMaskCustomShape",
         "cssStyleMaskSize",
         "cssStyleMaskPosition",
         "cssStyleMaskRepeat"
-      ],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
       ]
     },
     ".brz && .brz-ministryBrands__item--media:hover :is(img, video, iframe)": {
+      standart: ["cssStyleElementOfMinistryBrandsImgFilters"]
+    },
+    ".brz && .brz-groupSlider-swiper-slide .brz-groupSlider-info": {
       standart: [
-        "cssStyleElementOfMinistryBrandsImgFilters",
-        "cssStyleMaskShape",
-        "cssStyleMaskCustomShape",
-        "cssStyleMaskSize",
-        "cssStyleMaskPosition",
-        "cssStyleMaskRepeat"
-      ],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
+        "cssStyleBorderRadius",
+        "cssStyleElementMinistryGroupSliderItemsAlign",
+        "cssStyleElementMinistryGroupSliderMetaSpacing"
       ]
     },
     ".brz && .brz-groupSlider-swiper-slide .brz-groupSlider-info:hover": {
       standart: [
-        "cssStyleBorderRadius",
         "cssStylementOfMinistryBrandsParentBgColor",
         "cssStylementOfMinistryBrandsParentBgGradient",
         "cssStylementOfMinistryBrandsParentBorder",
-        "cssStylementOfMinistryBrandsParentBoxShadow",
-        "cssStyleElementMinistryGroupSliderItemsAlign"
-      ],
-      interval: ["cssStyleHoverTransition"]
+        "cssStylementOfMinistryBrandsParentBoxShadow"
+      ]
     },
     ".brz && .brz-groupSlider-swiper-slide .brz-groupSlider-info .brz-ministryBrands__item--media":
       {
         standart: ["cssStyleElementMinistryGroupSliderItemsImageAlign"]
       },
     ".brz && .brz-slick-slider__dots li.slick-active": {
-      standart: ["cssStyleElementMinistryGroupSliderDotsColorColorActive"],
-      interval: ["cssStyleHoverTransition"]
+      standart: ["cssStyleElementMinistryGroupSliderDotsColorColorActive"]
     },
     ".brz && .brz-slick-slider__dots li:not(.slick-active):hover": {
-      standart: ["cssStyleElementMinistryGroupSliderDotsColorColor"],
-      interval: ["cssStyleHoverTransition"]
+      standart: ["cssStyleElementMinistryGroupSliderDotsColorColor"]
     },
-    ".brz &&:hover .brz-ministryBrands__meta--icons": {
+    ".brz && .brz-ministryBrands__meta--icons": {
       standart: ["cssStyleElementOfMinistryBrandsMetaIconsSpacing"]
     },
+    ".brz && .brz-groupSlider-swiper-slide .brz-groupSlider-info .brz-groupSlider_heading":
+      {
+        standart: ["cssStyleElementOfMinistryBrandsTitleTypography"]
+      },
     ".brz && .brz-groupSlider-swiper-slide .brz-groupSlider-info .brz-groupSlider_heading:hover":
       {
-        standart: [
-          "cssStyleElementOfMinistryBrandsTitleTypography",
-          "cssStyleElementOfMinistryBrandsTitleColor"
-        ],
-        interval: ["cssStyleHoverTransition"]
+        standart: ["cssStyleElementOfMinistryBrandsTitleColor"]
       },
     ".brz && .brz-ministryBrands__item--meta-title": {
       standart: [
@@ -148,66 +143,74 @@ export function style(data: DynamicStylesProps<Value>): OutputStyle {
         "cssStyleElementMinistryBrandsMetaItemResourceLinkPadding"
       ]
     },
+    ".brz && .brz-groupSlider-swiper-slide .brz-groupSlider-info .brz-groupSlider_meta":
+      {
+        standart: ["cssStyleElementMinistryGroupSliderMetaTypography"]
+      },
     ".brz && .brz-groupSlider-swiper-slide .brz-groupSlider-info .brz-groupSlider_meta:hover":
       {
-        standart: [
-          "cssStyleElementMinistryGroupSliderMetaTypography",
-          "cssStyleElementOfMinistryBrandsMetaColor"
-        ],
-        interval: ["cssStyleHoverTransition"]
+        standart: ["cssStyleElementOfMinistryBrandsMetaColor"]
       },
     ".brz && .brz-groupSlider-info .brz-groupSlider_meta--link": {
       standart: ["cssStyleElementMinistryGroupSliderMetaTypography"]
     },
     ".brz && .brz-groupSlider-info .brz-groupSlider_meta--link > .brz-ministryBrands__meta--icons:hover":
       {
-        standart: ["cssStyleElementOfMinistryBrandsMetaColor"],
-        interval: ["cssStyleHoverTransition"]
+        standart: ["cssStyleElementOfMinistryBrandsMetaColor"]
       },
     ".brz && .brz-groupSlider-info .brz-groupSlider_meta--link a:hover": {
-      standart: ["cssStyleElementOfMinistryBrandsMetaLinksColor"],
-      interval: ["cssStyleHoverTransition"]
+      standart: ["cssStyleElementOfMinistryBrandsMetaLinksColor"]
     },
-    ".brz && .brz-groupSlider-swiper-slide .brz-groupSlider-info": {
-      standart: ["cssStyleElementMinistryGroupSliderMetaSpacing"]
+    ".brz && .brz-groupSlider-swiper-slide .brz-groupSlider-info p": {
+      standart: ["cssStyleElementMinistryGroupSliderMetaTypography"]
     },
     ".brz && .brz-groupSlider-swiper-slide .brz-groupSlider-info p:hover": {
+      standart: ["cssStyleElementOfMinistryBrandsMetaColor"]
+    },
+    ".brz && .brz-swiper-arrow_prev": {
       standart: [
-        "cssStyleElementMinistryGroupSliderMetaTypography",
-        "cssStyleElementOfMinistryBrandsMetaColor"
-      ],
-      interval: ["cssStyleHoverTransition"]
+        "cssStyleElementMinistryGroupSliderArrowSize",
+        "cssStyleElementMinistryGroupSliderArrowSpacingLeft"
+      ]
     },
     ".brz && .brz-swiper-arrow_prev:hover": {
+      standart: ["cssStyleElementMinistryGroupSliderArrowColor"]
+    },
+    ".brz && .brz-swiper-arrow_next": {
       standart: [
         "cssStyleElementMinistryGroupSliderArrowSize",
-        "cssStyleElementMinistryGroupSliderArrowColor",
-        "cssStyleElementMinistryGroupSliderArrowSpacingLeft"
-      ],
-      interval: ["cssStyleHoverTransition"]
+        "cssStyleElementMinistryGroupSliderArrowSpacingRight"
+      ]
     },
     ".brz && .brz-swiper-arrow_next:hover": {
-      standart: [
-        "cssStyleElementMinistryGroupSliderArrowSize",
-        "cssStyleElementMinistryGroupSliderArrowColor",
-        "cssStyleElementMinistryGroupSliderArrowSpacingRight"
-      ],
-      interval: ["cssStyleHoverTransition"]
+      standart: ["cssStyleElementMinistryGroupSliderArrowColor"]
     },
-    ".brz && .brz-groupSlider-swiper-slide .brz-groupSlider-info .brz-groupSlider_detail_button .brz-button:hover":
+    ".brz && .brz-groupSlider-swiper-slide .brz-groupSlider-info .brz-groupSlider_detail_button .brz-button":
       {
         standart: [
           "cssStyleElementMinistryGroupSliderButtonSize",
           "cssStyleElementMinistryGroupSliderButtonWidth",
           "cssStyleElementMinistryGroupSliderButtonTypography",
+          "cssStyleElementMinistryBrandsButtonsBorderRadius"
+        ]
+      },
+    ".brz && .brz-groupSlider-swiper-slide .brz-groupSlider-info .brz-groupSlider_detail_button .brz-button:hover":
+      {
+        standart: [
           "cssStyleElementMinistryGroupSliderButtonColor",
           "cssStyleElementMinistryGroupSliderButtonBgColor",
           "cssStyleElementMinistryGroupSliderButtonBgGradient",
           "cssStyleElementMinistryGroupSliderButtonBorder",
-          "cssStyleElementMinistryBrandsButtonsBorderRadius",
           "cssStyleElementMinistryGroupSliderButtonBoxShadow"
         ],
         interval: ["cssStyleMinistryBrandsButtonsHoverTransition"]
+      },
+    ".brz && .brz-ministryBrands__item--media, .brz && .brz-ministryBrands__item--media::after, .brz && .brz-ministryBrands__item--media :is(img, video, iframe), .brz && .brz-groupSlider-swiper-slide .brz-groupSlider-info, .brz && .brz-slick-slider__dots li:not(.slick-active), .brz && .brz-groupSlider-swiper-slide .brz-groupSlider-info .brz-groupSlider_heading, .brz && .brz-groupSlider-swiper-slide .brz-groupSlider-info .brz-groupSlider_meta, .brz && .brz-groupSlider-info .brz-groupSlider_meta--link > .brz-ministryBrands__meta--icons, .brz && .brz-groupSlider-info .brz-groupSlider_meta--link a, .brz && .brz-groupSlider-swiper-slide .brz-groupSlider-info p, .brz && .brz-swiper-arrow_prev, .brz && .brz-swiper-arrow_next":
+      {
+        standart: [
+          "cssStyleHoverTransition",
+          "cssStylePropertyHoverTransitionColor"
+        ]
       }
   };
 

@@ -9,13 +9,15 @@ export function cssStyleElementStarRatingRatingColor({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }) {
   return cssStyleColor({
     v,
     device,
     state,
     store,
+    getConfig,
     prefix: "ratingColor"
   });
 }
@@ -24,13 +26,15 @@ export function cssStyleElementStarRatingRatingBackgroundColor({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }) {
   return cssStyleColor({
     v,
     device,
     state,
     store,
+    getConfig,
     prefix: "ratingBackgroundColor"
   });
 }
@@ -48,16 +52,13 @@ export function cssStyleElementStarRatingTextSpacing({ v, device }) {
   const dvv = (key) => defaultValueValue({ key, v, device });
   const spacing = dvv("spacing");
   const label = dvv("label");
-  const ratingStyle = dvv("ratingStyle");
 
   switch (label) {
     case "on": {
-      return `margin-right: ${spacing}px;`;
+      return `margin-inline-end: ${spacing}px;`;
     }
     case "on-right": {
-      return ratingStyle === "style-2"
-        ? `margin-right: ${spacing}px; margin-left: 0;`
-        : `margin-left: ${spacing}px; margin-right: 0;`;
+      return `margin-inline-start: ${spacing}px; margin-inline-end: 0;`;
     }
     case "off": {
       return "margin: 0;";
@@ -79,13 +80,15 @@ export function cssStyleElementStarRatingCustomIconColor({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }) {
   return cssStyleCustomIconColor({
     v,
     device,
     state,
     store,
+    getConfig,
     prefix: "ratingColor"
   });
 }

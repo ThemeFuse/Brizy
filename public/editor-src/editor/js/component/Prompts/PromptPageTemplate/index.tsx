@@ -27,7 +27,7 @@ import {
   isShopify
 } from "visual/global/Config/types/configs/Cloud";
 import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
-import { useConfig } from "visual/global/hooks";
+import { useConfig } from "visual/providers/ConfigProvider";
 import {
   updateError,
   updatePageIsHomePage,
@@ -37,7 +37,7 @@ import {
 import { Layout } from "visual/types/Layout";
 import { shopifySyncPage } from "visual/utils/api";
 import { isNonEmptyArray } from "visual/utils/array/types";
-import { SYNC_ERROR } from "visual/utils/errors";
+import { ErrorCodes } from "visual/utils/errors";
 import { t } from "visual/utils/i18n";
 import { Button } from "../common/Button";
 import { Content } from "../common/Content";
@@ -74,9 +74,14 @@ export const PromptPageTemplate = (props: Props): ReactElement => {
 
   const handleSave = useCallback(
     ({ title, layout, isHomePage }: Valid): Promise<void> => {
-      dispatch(updatePageLayout(layout));
-      dispatch(updatePageTitle(title));
-      dispatch(updatePageIsHomePage(isHomePage ? pageId : null));
+      dispatch(updatePageLayout({ layout, config: _config }));
+      dispatch(updatePageTitle({ title, config: _config }));
+      dispatch(
+        updatePageIsHomePage({
+          isHomePage: isHomePage ? pageId : null,
+          config: _config
+        })
+      );
 
       return onSave()
         .then(() => {
@@ -94,7 +99,7 @@ export const PromptPageTemplate = (props: Props): ReactElement => {
         })
         .then(() => undefined);
     },
-    [dispatch, onSave, onAfterSave, pageId, modules, page]
+    [dispatch, onSave, onAfterSave, pageId, modules, page, _config]
   );
   const getData = useCallback(async () => {
     if (_isShopify) {
@@ -143,7 +148,7 @@ export const PromptPageTemplate = (props: Props): ReactElement => {
           } else {
             dispatch(
               updateError({
-                code: SYNC_ERROR,
+                code: ErrorCodes.SYNC_ERROR,
                 data: {
                   upgradeToProUrl: configCommon?.modules?.shop?.upgradeToProUrl
                 }

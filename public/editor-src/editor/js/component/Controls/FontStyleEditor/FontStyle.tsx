@@ -42,7 +42,7 @@ export const FontStyleItem = (value: FontStyleProps): JSX.Element => {
   }, []);
 
   const handleTextChange = useCallback(
-    (title) => {
+    (title: string) => {
       onChange({ title });
     },
     [onChange]

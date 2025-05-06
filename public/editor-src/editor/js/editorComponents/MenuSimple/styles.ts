@@ -1,19 +1,14 @@
 import { ElementModel } from "visual/component/Elements/Types";
-import { renderStyles } from "visual/utils/cssStyle";
-import { OutputStyle } from "visual/utils/cssStyle/types";
 import { DynamicStylesProps } from "visual/types";
+import { renderStyles } from "visual/utils/cssStyle";
+import { OutputStyle, Styles } from "visual/utils/cssStyle/types";
 
 export function style(data: DynamicStylesProps<ElementModel>): OutputStyle {
-  const styles: {
-    [k: string]: {
-      interval?: string[];
-      standart?: string[];
-    };
-  } = {
-    ".brz &&:hover": {
+  const styles: Styles = {
+    ".brz &&": {
       standart: ["cssStyleElementMenuSimpleWidth"]
     },
-    ".brz &&:hover .menu": {
+    ".brz && .menu": {
       standart: [
         "cssStyleTypography2FontFamily",
         "cssStyleTypography2FontSize",
@@ -22,8 +17,7 @@ export function style(data: DynamicStylesProps<ElementModel>): OutputStyle {
         "cssStyleTypography2LetterSpacing",
         "cssStyleTypography2FontVariation",
         "cssStyleTextTransforms"
-      ],
-      interval: ["cssStyleHoverTransition"]
+      ]
     },
     ".brz && .menu .menu-item a:hover": {
       standart: ["cssStyleColor"]

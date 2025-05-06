@@ -9,6 +9,7 @@ import React, {
   useRef
 } from "react";
 import { useStore } from "react-redux";
+import { useConfig } from "visual/providers/ConfigProvider";
 import { useRender } from "visual/providers/RenderProvider";
 import { WithClassName } from "visual/types/attributes";
 import { makeDataAttr } from "visual/utils/i18n/attribute";
@@ -30,6 +31,7 @@ type Props = PropsWithChildren<
     attr?: JSX.IntrinsicAttributes;
     id?: string;
     draggable?: boolean;
+    ariaLabel?: string;
   }
 >;
 
@@ -45,11 +47,14 @@ const _Link = (
     slide = {},
     attr = {},
     id = "",
-    draggable
+    draggable,
+    ariaLabel
   }: Props,
   ref: Ref<HTMLAnchorElement>
 ): ReactElement => {
   const store = useStore();
+  const config = useConfig();
+
   const innerRef = useRef<HTMLAnchorElement>();
   const { renderType } = useRender();
   const _className = classNames(
@@ -57,7 +62,7 @@ const _Link = (
     { "brz-anchor": type === "anchor" },
     className
   );
-  const _href = getHref(type, mRead(href), store, renderType);
+  const _href = getHref(type, mRead(href), store, renderType, config);
   const _target = getTarget(type, target);
   const attrs = getAttr(attr);
   const _rel = getRel(mRead(rel));
@@ -90,6 +95,7 @@ const _Link = (
         attachRef(v, innerRef || null);
       }}
       {...(id && { id })}
+      {...(ariaLabel && { "aria-label": ariaLabel })}
       draggable={draggable}
     >
       {children}

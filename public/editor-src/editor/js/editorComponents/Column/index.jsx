@@ -22,6 +22,7 @@ import EditorComponent from "visual/editorComponents/EditorComponent";
 import { shouldRenderPopup } from "visual/editorComponents/tools/Popup";
 import { isEditor } from "visual/providers/RenderProvider";
 import { blocksDataSelector, deviceModeSelector } from "visual/redux/selectors";
+import { isPro, isRTL } from "visual/utils/env";
 import { getContainerW } from "visual/utils/meta";
 import { getCSSId } from "visual/utils/models/cssId";
 import { getLinkData } from "visual/utils/models/link";
@@ -36,6 +37,7 @@ import * as State from "visual/utils/stateMode";
 import { parseCustomAttributes } from "visual/utils/string/parseCustomAttributes";
 import * as Str from "visual/utils/string/specs";
 import { styleSizeWidth } from "visual/utils/style2";
+import { currentUserRole } from "../../component/Roles";
 import Items from "./Items";
 import ColumnResizer from "./components/ColumnResizer";
 import contextMenuConfig from "./contextMenu";
@@ -248,7 +250,7 @@ class Column extends EditorComponent {
     const { isFirst } = row.item;
     const isInnerRow = this.isInnerRow();
 
-    if (isFirst && position === "left") {
+    if (isFirst && position === "start") {
       return null;
     }
 
@@ -260,6 +262,7 @@ class Column extends EditorComponent {
         onResizeStart={this.handleResizeStart}
         onResize={this.handleResize}
         onResizeEnd={this.handleResizeEnd}
+        isRTL={isRTL(this.getGlobalConfig())}
       />
     );
   }
@@ -342,6 +345,8 @@ class Column extends EditorComponent {
     const id = getCSSId(v);
     const isInnerRow = this.isInnerRow();
 
+    const config = this.getGlobalConfig();
+
     const classNameColumn = classnames(
       "brz-columns",
       { "brz-columns__posts": posts },
@@ -365,7 +370,11 @@ class Column extends EditorComponent {
     const { animationId, hoverName, options, isHidden } = this.getHoverData(v);
     const content = (
       <ScrollMotion
-        options={makeOptionValueToMotion({ v, store })}
+        options={makeOptionValueToMotion({
+          v,
+          store,
+          isPro: isPro(config)
+        })}
         className="brz-columns__scroll-effect"
       >
         <HoverAnimation
@@ -423,11 +432,12 @@ class Column extends EditorComponent {
                           }}
                         >
                           <Roles
+                            currentRole={currentUserRole(config)}
                             allow={["admin"]}
                             fallbackRender={() => content}
                           >
-                            {this.renderResizer("left")}
-                            {this.renderResizer("right")}
+                            {this.renderResizer("start")}
+                            {this.renderResizer("end")}
                             <ToolbarExtend onEscape={this.handleToolbarEscape}>
                               {content}
                             </ToolbarExtend>
@@ -490,7 +500,11 @@ class Column extends EditorComponent {
             animationClass={animationClassName}
           >
             <ScrollMotion
-              options={makeOptionValueToMotion({ v, store })}
+              options={makeOptionValueToMotion({
+                v,
+                store,
+                isPro: isPro(this.getGlobalConfig())
+              })}
               className="brz-columns__scroll-effect"
             >
               <HoverAnimation

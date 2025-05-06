@@ -1,82 +1,75 @@
 import { isStory } from "visual/providers/EditorModeProvider";
 import { DynamicStylesProps } from "visual/types";
 import { renderStyles } from "visual/utils/cssStyle";
-import { OutputStyle } from "visual/utils/cssStyle/types";
+import { OutputStyle, Styles } from "visual/utils/cssStyle/types";
 import { Value } from "./types";
 
 export function style(data: DynamicStylesProps<Value>): OutputStyle {
   const { v, contexts } = data;
+
   const { maskShape = "none" } = v;
+
   const _isStory = isStory(contexts.mode);
 
-  const styles: {
-    [k: string]: {
-      interval?: string[];
-      standart?: string[];
-    };
-  } = {
-    ".brz &&:hover .brz-eventLayout--view ul": {
+  const styles: Styles = {
+    ".brz && .brz-eventLayout--view ul": {
       standart: ["cssStyleElementEventLayoutTabAlign"]
+    },
+    ".brz && .brz-eventLayout": {
+      standart: ["cssStylePaddingBG", "cssStyleBorderRadius"]
     },
     ".brz &&:hover .brz-eventLayout": {
       standart: [
-        "cssStylePaddingBG",
-        "cssStyleBorderRadius",
         "cssStylementOfMinistryBrandsParentBgColor",
         "cssStylementOfMinistryBrandsParentBgGradient",
         "cssStylementOfMinistryBrandsParentBorder",
         "cssStylementOfMinistryBrandsParentBoxShadow"
-      ],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
+      ]
+    },
+    ".brz && .brz-ministryBrands__item--media": {
+      standart: [
+        "cssStyleElementOfMinistryBrandsImageWidth",
+        "cssStyleElementOfMinistryBrandsImagePadding",
+        "cssStyleMinistryElementMediaBorderRadius"
       ]
     },
     ".brz && .brz-ministryBrands__item--media:hover": {
       standart: [
-        "cssStyleElementOfMinistryBrandsImageWidth",
-        "cssStyleElementOfMinistryBrandsImagePadding",
         "cssStyleElementOfMinistryBrandsImgBorder",
-        "cssStyleMinistryElementMediaBorderRadius",
 
         ...(maskShape === "none"
           ? ["cssStyleElementOfMinistryBrandsImgBoxShadow"]
           : ["cssStyleElementOfMinistryBrandsImgMaskShadow"])
-      ],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
       ]
     },
-    ".brz && .brz-ministryBrands__item--media:hover::after": {
+    ".brz && .brz-ministryBrands__item--media::after": {
       standart: [
-        "cssStyleElementOfMinistryBrandsImgBgColor",
-        "cssStyleElementOfMinistryBrandsImgBgGradient",
         "cssStyleMaskShape",
         "cssStyleMaskCustomShape",
         "cssStyleMaskSize",
         "cssStyleMaskPosition",
         "cssStyleMaskRepeat"
-      ],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
       ]
     },
-    ".brz && :is(.brz-eventLayout--featured__preview, .brz-ministryBrands__item--media:hover :is(iframe, video,img))":
+    ".brz && .brz-ministryBrands__item--media:hover::after": {
+      standart: [
+        "cssStyleElementOfMinistryBrandsImgBgColor",
+        "cssStyleElementOfMinistryBrandsImgBgGradient"
+      ]
+    },
+    ".brz && :is(.brz-eventLayout--featured__preview, .brz-ministryBrands__item--media :is(iframe, video,img))":
       {
         standart: [
-          "cssStyleElementOfMinistryBrandsImgFilters",
           "cssStyleMaskShape",
           "cssStyleMaskCustomShape",
           "cssStyleMaskSize",
           "cssStyleMaskPosition",
           "cssStyleMaskRepeat"
-        ],
-        interval: [
-          "cssStyleHoverTransition",
-          "cssStylePropertyEventLayoutHoverTransition"
         ]
+      },
+    ".brz && :is(.brz-eventLayout--featured__preview, .brz-ministryBrands__item--media:hover :is(iframe, video,img))":
+      {
+        standart: ["cssStyleElementOfMinistryBrandsImgFilters"]
       },
     ".brz && .brz-eventLayout--featured": {
       standart: ["cssStyleElementOfMinistryBrandsColumnsNumberWithSpacing"]
@@ -105,231 +98,160 @@ export function style(data: DynamicStylesProps<Value>): OutputStyle {
         "cssStyleElementMinistryBrandsMetaItemDatePadding"
       ]
     },
+    ".brz && .brz-eventLayout--view li:not(.brz-eventLayout--view-active)": {
+      standart: ["cssStyleElementEventLayoutViewTypography"]
+    },
     ".brz && .brz-eventLayout--view li:hover:not(.brz-eventLayout--view-active)":
       {
         standart: [
-          "cssStyleElementEventLayoutViewTypography",
           "cssStyleElementEventLayoutViewBgColor",
           "cssStyleElementEventLayoutViewBgGradient",
           "cssStyleElementEventLayoutViewColor",
           "cssStyleElementEventLayoutViewBorder"
-        ],
-        interval: [
-          "cssStyleHoverTransition",
-          "cssStylePropertyHoverTransitionColor"
         ]
       },
-    ".brz && li.brz-eventLayout--view-active:hover": {
+    ".brz && li.brz-eventLayout--view-active": {
       standart: [
         "cssStyleElementEventLayoutViewTypography",
         "cssStyleElementEventLayoutViewColorActive",
         "cssStyleElementEventLayoutViewBgColorActive",
         "cssStyleElementEventLayoutViewBgGradientActive",
         "cssStyleElementEventLayoutViewBorderActive"
-      ],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
       ]
     },
     ".brz && .brz-eventLayout--filters:hover": {
       standart: [
         "cssStyleMinistryElementFiltersBgColor",
         "cssStyleMinistryElementFiltersBgGradient"
-      ],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
       ]
     },
-
-    ".brz && .brz-eventLayout--filters .brz-eventLayout--filters-form-selectWrapper:hover":
+    ".brz && .brz-eventLayout--filters .brz-eventLayout--filters-form-selectWrapper":
       {
         standart: [
           "cssStyleMinistryElementFiltersTypography",
+          "cssStyleMinistryElementFiltersBorderRadius"
+        ]
+      },
+    ".brz && .brz-eventLayout--filters .brz-eventLayout--filters-form-selectWrapper:hover":
+      {
+        standart: [
           "cssStyleMinistryElementFiltersBorder",
-          "cssStyleMinistryElementFiltersBorderRadius",
           "cssStyleMinistryElementFiltersInputBgColor",
           "cssStyleMinistryElementFiltersInputGradientColor",
           "cssStyleMinistryElementFiltersInputColor"
-        ],
-        interval: [
-          "cssStyleHoverTransition",
-          "cssStylePropertyHoverTransitionColor"
         ]
       },
     ".brz && .brz-eventLayout--filters .brz-eventLayout--filters-form-selectWrapper:hover::after":
       {
-        standart: ["cssStyleMinistryElementFiltersInputColor"],
-        interval: [
-          "cssStyleHoverTransition",
-          "cssStylePropertyHoverTransitionColor"
-        ]
+        standart: ["cssStyleMinistryElementFiltersInputColor"]
       },
     ".brz && .brz-eventLayout--filters .brz-eventLayout--filters-form-selectWrapper:hover select option":
       {
-        standart: ["cssStyleMinistryElementFiltersInputBgColor"],
-        interval: [
-          "cssStyleHoverTransition",
-          "cssStylePropertyHoverTransitionColor"
-        ]
+        standart: ["cssStyleMinistryElementFiltersInputBgColor"]
       },
-    ".brz && .brz-eventLayout--filters input:hover": {
-      standart: [
-        "cssStyleMinistryElementFiltersTypography",
-        "cssStyleMinistryElementFiltersInputColor"
-      ],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
-      ]
+    ".brz && .brz-eventLayout--filters input": {
+      standart: ["cssStyleMinistryElementFiltersTypography"]
     },
-    ".brz && .brz-eventLayout--filters fieldset:hover ": {
+    ".brz && .brz-eventLayout--filters input:hover": {
+      standart: ["cssStyleMinistryElementFiltersInputColor"]
+    },
+    ".brz && .brz-eventLayout--filters fieldset ": {
+      standart: ["cssStyleMinistryElementFiltersBorderRadius"]
+    },
+    ".brz && .brz-eventLayout--filters fieldset:hover": {
       standart: [
         "cssStyleMinistryElementFiltersBorder",
-        "cssStyleMinistryElementFiltersBorderRadius",
         "cssStyleMinistryElementFiltersInputBgColor",
         "cssStyleMinistryElementFiltersInputGradientColor"
-      ],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
       ]
     },
     ".brz && .brz-eventLayout--filters fieldset:hover input::placeholder": {
-      standart: ["cssStyleMinistryElementFiltersInputColor"],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
-      ]
+      standart: ["cssStyleMinistryElementFiltersInputColor"]
     },
     ".brz && .brz-eventLayout--filters fieldset:hover button": {
-      standart: ["cssStyleMinistryElementFiltersInputColor"],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
-      ]
+      standart: ["cssStyleMinistryElementFiltersInputColor"]
+    },
+    ".brz && .brz-eventLayout--featured__item-title": {
+      standart: ["cssStyleElementOfMinistryBrandsTitleTypography"]
     },
     ".brz && .brz-eventLayout--featured__item-title:hover": {
-      standart: [
-        "cssStyleElementOfMinistryBrandsTitleColor",
-        "cssStyleElementOfMinistryBrandsTitleTypography"
-      ],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
-      ]
+      standart: ["cssStyleElementOfMinistryBrandsTitleColor"]
     },
     ".brz && .brz-eventLayout--featured__item-title a:hover": {
-      standart: ["cssStyleElementOfMinistryBrandsTitleColor"],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
-      ]
+      standart: ["cssStyleElementOfMinistryBrandsTitleColor"]
+    },
+    ".brz && .brz-eventLayout--featured__item p": {
+      standart: ["cssStyleElementOfMinistryBrandsDateTypography"]
     },
     ".brz && .brz-eventLayout--featured__item p:hover": {
-      standart: [
-        "cssStyleElementOfMinistryBrandsDateTypography",
-        "cssStyleElementOfMinistryBrandsDateColor"
-      ],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
-      ]
+      standart: ["cssStyleElementOfMinistryBrandsDateColor"]
+    },
+    ".brz && .brz-eventLayout--featured__preview > div > span": {
+      standart: ["cssStyleElementOfMinistryBrandsPreviewTypography"]
     },
     ".brz && .brz-eventLayout--featured__preview > div > span:hover": {
-      standart: [
-        "cssStyleElementOfMinistryBrandsPreviewTypography",
-        "cssStyleElementOfMinistryBrandsPreviewColor"
-      ],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyEventLayoutHoverTransition"
-      ]
+      standart: ["cssStyleElementOfMinistryBrandsPreviewColor"]
     },
     ".brz && .brz-eventLayout__pagination span": {
       standart: [
         "cssStyleElementEventLayoutListPaginationTypography",
         "cssStyleElementEventLayoutListPaginationColor",
         "cssStyleElementEventLayoutListPaginationSpacing"
-      ],
-      interval: ["cssStyleHoverTransition"]
+      ]
     },
     ".brz && .brz-eventLayout__pagination a:hover": {
-      standart: ["cssStyleElementEventLayoutListPaginationArrowsColor"],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
-      ]
+      standart: ["cssStyleElementEventLayoutListPaginationArrowsColor"]
     },
     ".brz && .brz-eventLayout--list-item__title:hover": {
-      standart: ["cssStyleElementEventLayoutListTitleBorderBottom"],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
-      ]
+      standart: ["cssStyleElementEventLayoutListTitleBorderBottom"]
+    },
+    ".brz && .brz-eventLayout--list-item__grouping-day": {
+      standart: ["cssStyleElementEventLayoutGroupingDayTypography"]
     },
     ".brz && .brz-eventLayout--list-item__grouping-day:hover": {
-      standart: [
-        "cssStyleElementEventLayoutGroupingDayTypography",
-        "cssStyleElementEventLayoutGroupingDayColor"
-      ],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
-      ]
+      standart: ["cssStyleElementEventLayoutGroupingDayColor"]
+    },
+    ".brz && .brz-eventLayout--list-item__grouping-date": {
+      standart: ["cssStyleElementEventLayoutGroupingDateTypography"]
     },
     ".brz && .brz-eventLayout--list-item__grouping-date:hover": {
-      standart: [
-        "cssStyleElementEventLayoutGroupingDateTypography",
-        "cssStyleElementEventLayoutGroupingDateColor"
-      ],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
-      ]
+      standart: ["cssStyleElementEventLayoutGroupingDateColor"]
+    },
+    ".brz && .brz-eventLayout--list-item__content-date": {
+      standart: ["cssStyleElementEventLayoutListItemDateTypography"]
     },
     ".brz && .brz-eventLayout--list-item__content-date:hover": {
       standart: [
-        "cssStyleElementEventLayoutListItemDateTypography",
         "cssStyleElementEventLayoutListItemDateColor",
         "cssStyleElementEventLayoutListItemDateBackgroundColor",
         "cssStyleElementEventLayoutListItemDateBackgroundGradient"
-      ],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
       ]
+    },
+    ".brz && .brz-eventLayout--list-item__content__heading": {
+      standart: ["cssStyleElementEventLayoutListItemTitleTypography"]
     },
     ".brz && .brz-eventLayout--list-item__content__heading:hover": {
-      standart: [
-        "cssStyleElementEventLayoutListItemTitleTypography",
-        "cssStyleElementEventLayoutListItemTitleColor"
-      ],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
-      ]
+      standart: ["cssStyleElementEventLayoutListItemTitleColor"]
+    },
+    ".brz && .brz-eventLayout--list-item__content__meta": {
+      standart: ["cssStyleElementEventLayoutListItemMetaTypography"]
     },
     ".brz && .brz-eventLayout--list-item__content__meta:hover": {
+      standart: ["cssStyleElementEventLayoutListItemMetaColor"]
+    },
+    ".brz && .brz-ministryBrands__item--meta--button": {
       standart: [
-        "cssStyleElementEventLayoutListItemMetaTypography",
-        "cssStyleElementEventLayoutListItemMetaColor"
-      ],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
+        "cssStyleElementMinistryBrandsButtonsTypography",
+        "cssStyleElementMinistryBrandsButtonsBorderRadius"
       ]
     },
     ".brz && .brz-ministryBrands__item--meta--button:hover": {
       standart: [
-        "cssStyleElementMinistryBrandsButtonsTypography",
         "cssStyleElementMinistryBrandsButtonsBgColor",
         "cssStyleElementMinistryBrandsButtonsBgGradient",
         "cssStyleElementMinistryBrandsButtonsColor",
         "cssStyleElementMinistryBrandsButtonsBoxShadow",
-        "cssStyleElementMinistryBrandsButtonsBorder",
-        "cssStyleElementMinistryBrandsButtonsBorderRadius"
+        "cssStyleElementMinistryBrandsButtonsBorder"
       ],
       interval: ["cssStyleMinistryBrandsButtonsHoverTransition"]
     },
@@ -340,45 +262,29 @@ export function style(data: DynamicStylesProps<Value>): OutputStyle {
           : ["cssStyleElementMinistryBrandsButtonsSize"])
       ]
     },
+    ".brz && .brz-eventLayout--calendar-heading": {
+      standart: ["cssStyleElementEventLayoutCalendarHeadingTypography"]
+    },
     ".brz && .brz-eventLayout--calendar-heading:hover": {
-      standart: [
-        "cssStyleElementEventLayoutCalendarHeadingTypography",
-        "cssStyleElementEventLayoutCalendarHeadingColor"
-      ],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
-      ]
+      standart: ["cssStyleElementEventLayoutCalendarHeadingColor"]
+    },
+    ".brz && .brz-eventLayout--calendar-day": {
+      standart: ["cssStyleElementEventLayoutCalendarDaysTypography"]
     },
     ".brz && .brz-eventLayout--calendar-day:hover": {
-      standart: [
-        "cssStyleElementEventLayoutCalendarDaysTypography",
-        "cssStyleElementEventLayoutCalendarDaysBorder"
-      ],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
-      ]
+      standart: ["cssStyleElementEventLayoutCalendarDaysBorder"]
+    },
+    ".brz && .brz-eventLayout--calendar-day li span": {
+      standart: ["cssStyleElementEventLayoutCalendarEventsTypography"]
     },
     ".brz && .brz-eventLayout--calendar-day li span:hover": {
-      standart: [
-        "cssStyleElementEventLayoutCalendarEventsTypography",
-        "cssStyleElementEventLayoutCalendarEventsColor"
-      ],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
-      ]
+      standart: ["cssStyleElementEventLayoutCalendarEventsColor"]
     },
     ".brz && .brz-eventLayout--calendar-day__number span:hover": {
       standart: [
         "cssStyleElementEventLayoutCalendarDaysBgColor",
         "cssStyleElementEventLayoutCalendarDaysBgGradient",
         "cssStyleElementEventLayoutCalendarDaysColor"
-      ],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
       ]
     },
     ".brz && .brz-eventLayout--calendar-day-np:hover": {
@@ -386,26 +292,27 @@ export function style(data: DynamicStylesProps<Value>): OutputStyle {
         "cssStyleElementEventLayoutCalendarDaysBgColor",
         "cssStyleElementEventLayoutCalendarDaysBgGradient",
         "cssStyleElementEventLayoutCalendarDaysBorder"
-      ],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
       ]
     },
     ".brz && .brz-eventLayout-results-heading": {
       standart: [
         "cssStyleElementMinistryResultsHeadingTypography",
         "cssStyleElementMinistryResultsHeadingColor"
-      ],
-      interval: ["cssStyleHoverTransition"]
+      ]
     },
     ".brz && .brz-eventLayout-no-results": {
       standart: [
         "cssStyleElementMinistryNoResultsParagraphTypography",
         "cssStyleElementMinistryNoResultsParagraphColor"
-      ],
-      interval: ["cssStyleHoverTransition"]
-    }
+      ]
+    },
+    ".brz && .brz-eventLayout, .brz && .brz-ministryBrands__item--media, .brz && .brz-ministryBrands__item--media::after, .brz && :is(.brz-eventLayout--featured__preview, .brz-ministryBrands__item--media :is(iframe, video,img)), .brz && .brz-eventLayout--view li:not(.brz-eventLayout--view-active), .brz && .brz-eventLayout--filters, .brz && .brz-eventLayout--filters .brz-eventLayout--filters-form-selectWrapper, .brz && .brz-eventLayout--filters .brz-eventLayout--filters-form-selectWrapper::after, .brz && .brz-eventLayout--filters .brz-eventLayout--filters-form-selectWrapper select option, .brz && .brz-eventLayout--filters input, .brz && .brz-eventLayout--filters fieldset, .brz && .brz-eventLayout--filters fieldset input::placeholder, .brz && .brz-eventLayout--filters fieldset button, .brz && .brz-eventLayout--featured__item-title, .brz && .brz-eventLayout--featured__item-title a, .brz && .brz-eventLayout--featured__item p, .brz && .brz-eventLayout--featured__preview > div > span, .brz && .brz-eventLayout__pagination span, .brz && .brz-eventLayout__pagination a, .brz && .brz-eventLayout--list-item__title, .brz && .brz-eventLayout--list-item__grouping-day, .brz && .brz-eventLayout--list-item__grouping-date, .brz && .brz-eventLayout--list-item__content-date, .brz && .brz-eventLayout--list-item__content__heading, .brz && .brz-eventLayout--list-item__content__meta, .brz && .brz-eventLayout--calendar-heading, .brz && .brz-eventLayout--calendar-day, .brz && .brz-eventLayout--calendar-day li span, .brz && .brz-eventLayout--calendar-day__number span, .brz && .brz-eventLayout--calendar-day-np, .brz && .brz-eventLayout-results-heading, .brz && .brz-eventLayout-no-results":
+      {
+        standart: [
+          "cssStyleHoverTransition",
+          "cssStylePropertyHoverTransitionColor"
+        ]
+      }
   };
 
   return renderStyles({ ...data, styles });

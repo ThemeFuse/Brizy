@@ -13,7 +13,7 @@ import {
   FileUploadData,
   Response
 } from "visual/global/Config/types/configs/common";
-import { useConfig } from "visual/global/hooks";
+import { useConfig } from "visual/providers/ConfigProvider";
 import { t } from "visual/utils/i18n";
 import {
   Actions,

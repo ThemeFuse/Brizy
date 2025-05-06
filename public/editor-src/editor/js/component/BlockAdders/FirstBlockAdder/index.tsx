@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Prompts from "visual/component/Prompts";
 import { PromptTabsId } from "visual/component/Prompts/PromptBlocks/types";
 import { rolesHOC } from "visual/component/Roles";
-import { useConfig } from "visual/global/hooks";
+import { useConfig } from "visual/providers/ConfigProvider";
 import { setDeviceMode } from "visual/redux/actions2";
 import { deviceModeSelector } from "visual/redux/selectors";
 import { t } from "visual/utils/i18n";
@@ -34,6 +34,7 @@ const FirstBlockAdder = (props: Props): ReactElement => {
   const handleOpen = useCallback(() => {
     const showGlobal = typeof config.api?.globalBlocks?.create === "function";
     const activeTab = config.ui?.prompts?.blockAdder?.activeTab as PromptTabsId;
+    const showSaved = typeof config.api?.savedBlocks?.create === "function";
 
     if (deviceMode === "desktop") {
       Prompts.open({
@@ -43,6 +44,7 @@ const FirstBlockAdder = (props: Props): ReactElement => {
           ...(activeTab ? { activeTab } : {}),
           type: "normal",
           showGlobal,
+          showSaved,
           onChangeBlocks: onAddBlock,
           onChangeGlobal: onAddGlobalBlock,
           onChangeSaved: onAddTemplate,

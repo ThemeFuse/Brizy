@@ -6,11 +6,18 @@ import { merge } from "timm";
 import { TextEditor } from "visual/component/Controls/TextEditor";
 import CustomCSS from "visual/component/CustomCSS";
 import Toolbar from "visual/component/Toolbar";
-import EditorComponent, { Props as NextProps } from "visual/editorComponents/EditorComponent";
+import EditorComponent, {
+  Props as NextProps
+} from "visual/editorComponents/EditorComponent";
 import { ComponentsMeta } from "visual/editorComponents/EditorComponent/types";
 import { SizeType } from "visual/global/Config/types/configs/common";
 import { isEditor, isView } from "visual/providers/RenderProvider";
-import { GalleryIsotope, GalleryIsotopeType, GalleryJustified, GalleryJustifiedType } from "visual/types/global";
+import {
+  GalleryIsotope,
+  GalleryIsotopeType,
+  GalleryJustified,
+  GalleryJustifiedType
+} from "visual/types/global";
 import { addFilter, applyFilter } from "visual/utils/filters";
 import { isFunction } from "visual/utils/function";
 import { getImageUrl } from "visual/utils/image";
@@ -24,7 +31,21 @@ import EditorArrayComponent from "../EditorArrayComponent";
 import { readSizeType, readUnit } from "../Image/utils";
 import { Wrapper } from "../tools/Wrapper";
 import defaultValue from "./defaultValue.json";
-import { patchOnBigImageAsCurrLayout, patchOnBigImageAsPrevLayout, patchOnBigImageChange, patchOnBigImageImagesThumbSizeChange, patchOnBigImageLayout, patchOnColumnChange, patchOnGridAspectRationAndColumnChange, patchOnGridItemsChange, patchOnGridLayout, patchOnJustifiedLayout, patchOnLightBox, patchOnMasonryLayout, patchOnThumbStyleChange } from "./imageGalleryChange";
+import {
+  patchOnBigImageAsCurrLayout,
+  patchOnBigImageAsPrevLayout,
+  patchOnBigImageChange,
+  patchOnBigImageImagesThumbSizeChange,
+  patchOnBigImageLayout,
+  patchOnColumnChange,
+  patchOnGridAspectRationAndColumnChange,
+  patchOnGridItemsChange,
+  patchOnGridLayout,
+  patchOnJustifiedLayout,
+  patchOnLightBox,
+  patchOnMasonryLayout,
+  patchOnThumbStyleChange
+} from "./imageGalleryChange";
 import Items from "./items";
 import * as sidebarExtendImage from "./sidebarExtendImage";
 import * as sidebarExtendParentConfig from "./sidebarExtendParent";
@@ -34,9 +55,15 @@ import * as toolbarExtendImage from "./toolbarExtendImage";
 import * as toolbarExtendParent from "./toolbarExtendParent";
 import * as toolbarFilterConfig from "./toolbarFilter";
 import type { Meta, Patch, Props, Value } from "./types";
-import { JustifySettings, breakpoints, getSpacing, imagesSrc, makeOptionValueToSettings, multiUpload } from "./utils";
+import {
+  JustifySettings,
+  breakpoints,
+  getSpacing,
+  imagesSrc,
+  makeOptionValueToSettings,
+  multiUpload
+} from "./utils";
 import { arrangeGridByTags } from "./utils.export";
-
 
 class ImageGallery extends EditorComponent<Value, Props> {
   static defaultValue = defaultValue;
@@ -89,6 +116,10 @@ class ImageGallery extends EditorComponent<Value, Props> {
   }
 
   componentDidMount(): void {
+    if (isView(this.props.renderContext)) {
+      return;
+    }
+
     const toolbarExtend = this.makeToolbarPropsFromConfig2(
       toolbarExtendParent,
       sidebarExtendParentConfig,

@@ -7,9 +7,9 @@ import { UPDATE_GB_RULES } from "../actions";
 import { historyReducerEnhancer } from "../history/reducers";
 import { authorized } from "./authorized";
 import { blocksData } from "./blocksData";
+import { blocksHtml } from "./blocksHtml";
 import { blocksOrder } from "./blocksOrder";
 import { changedGBIds } from "./changedGBIds";
-import { configId } from "./config";
 import { copiedElement } from "./copiedElement";
 import { currentStyle } from "./currentStyle";
 import { currentStyleId } from "./currentStyleId";
@@ -47,7 +47,7 @@ export default historyReducerEnhancer(
       ui,
       storeWasChanged,
       extraStyles,
-      configId
+      blocksHtml
     },
     {
       screenshots

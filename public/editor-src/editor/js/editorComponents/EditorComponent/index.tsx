@@ -15,18 +15,13 @@ import {
   ToolbarItemType
 } from "visual/editorComponents/ToolbarItemType";
 import { Props as WrapperProps } from "visual/editorComponents/tools/Wrapper";
-import { getConfigById } from "visual/global/Config/InitConfig";
 import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import Editor from "visual/global/Editor";
 import * as GlobalState from "visual/global/StateMode";
 import { EditorMode } from "visual/providers/EditorModeProvider";
 import { RenderType, isView } from "visual/providers/RenderProvider";
 import { createCache, createSheet } from "visual/providers/StyleProvider/Sheet";
-import {
-  configIdSelector,
-  deviceModeSelector,
-  rulesSelector
-} from "visual/redux/selectors";
+import { deviceModeSelector, rulesSelector } from "visual/redux/selectors";
 import { Store } from "visual/redux/store";
 import { ReduxState } from "visual/redux/types";
 import {
@@ -155,6 +150,7 @@ export class EditorComponent<
   static defaultValue: ElementDefaultValue = {};
   static experimentalDynamicContent = false;
   static contextType = EditorComponentContext;
+  declare context: React.ContextType<typeof EditorComponentContext>;
   componentConfig: ConfigGetter | undefined;
   _initialToolbarsConfig: ToolbarConfig[] | undefined;
   _defaultToolbarValues: Record<string, unknown> | undefined;
@@ -177,7 +173,8 @@ export class EditorComponent<
   getContexts() {
     return {
       renderContext: this.props.renderContext,
-      mode: this.props.editorMode
+      mode: this.props.editorMode,
+      getConfig: this.getGlobalConfig
     };
   }
 
@@ -279,10 +276,9 @@ export class EditorComponent<
     return this.props.reduxDispatch;
   }
 
-  getGlobalConfig(): ConfigCommon {
-    const configId = configIdSelector(this.getReduxState());
-    return getConfigById(configId);
-  }
+  getGlobalConfig = (): ConfigCommon => {
+    return this.props.getGlobalConfig();
+  };
 
   processToolbarValues(): void {
     if (!this.componentConfig?.getConfig) {
@@ -492,21 +488,24 @@ export class EditorComponent<
       model,
       store,
       options: defaultOptions,
-      renderContext: this.props.renderContext
+      renderContext: this.props.renderContext,
+      getConfig: this.getGlobalConfig
     });
     const rulesCSSObj = getCSSObjects({
       currentModel: ModelType.Rules,
       model,
       store,
       options: rulesOptions,
-      renderContext: this.props.renderContext
+      renderContext: this.props.renderContext,
+      getConfig: this.getGlobalConfig
     });
     const customCSSObj = getCSSObjects({
       currentModel: ModelType.Custom,
       model,
       store,
       options: customOptions,
-      renderContext: this.props.renderContext
+      renderContext: this.props.renderContext,
+      getConfig: this.getGlobalConfig
     });
 
     const css: [
@@ -776,7 +775,10 @@ export class EditorComponent<
     this.patchValue(patch as Partial<Model<M>>);
 
   makeWrapperProps = (props: Partial<WrapperProps<P>>): WrapperProps<P> => {
-    const extend = this.props.wrapperExtend ?? ({} as WrapperProps<P>);
+    const { renderContext, editorMode, getGlobalConfig, meta, wrapperExtend } =
+      this.props;
+
+    const extend = wrapperExtend ?? ({} as WrapperProps<P>);
     const className = classNames(extend.className, props.className);
     const attributes = {
       ...(extend.attributes || {}),
@@ -790,7 +792,7 @@ export class EditorComponent<
       attributes,
       id: this.getId(),
       componentId: this.getComponentId(),
-      meta: this.props.meta,
+      meta,
       ...this.getValue2(),
       // ! is it ok to use here type assertion - as Partial<Model<M>> ?!
       onChange: this.bindPatchValue,
@@ -798,8 +800,9 @@ export class EditorComponent<
         attachRef(v, extend.ref || null);
         attachRef(v, props.ref || null);
       },
-      renderContext: this.props.renderContext,
-      editorMode: this.props.editorMode
+      renderContext,
+      editorMode,
+      getGlobalConfig
     };
   };
 
@@ -807,6 +810,8 @@ export class EditorComponent<
     bindWithKey,
     ...otherProps
   }: { bindWithKey: keyof M } & { [key: string]: unknown }): unknown {
+    const { renderContext, editorMode, getGlobalConfig } = this.props;
+
     if (process.env.NODE_ENV === "development") {
       if (!(bindWithKey in this.getDefaultValue())) {
         /* eslint-disable no-console */
@@ -833,9 +838,10 @@ export class EditorComponent<
       reduxState: this.getReduxState(),
       reduxStore: this.getReduxStore(),
       reduxDispatch: this.getReduxDispatch(),
-      renderContext: this.props.renderContext,
-      editorMode: this.props.editorMode,
-      onChange: onChange
+      renderContext,
+      editorMode,
+      getGlobalConfig,
+      onChange
     };
   }
 
@@ -877,7 +883,6 @@ export class EditorComponent<
 
         const getKey = getElementModelKeyFn({ device, state, option });
         const states = GlobalState.getStates(this.props.editorMode);
-        option = bindStateToOption(states, option, device);
 
         //TODO: Remove `inDev` and `defaultOnChange` after migrating all option to the new format
         const isDev = inDevelopment(type);
@@ -899,6 +904,8 @@ export class EditorComponent<
 
           option.value = optionModel;
         }
+
+        option = bindStateToOption(states, option, device);
 
         const elementModel = toElementModel<typeof type>(type, getKey);
 

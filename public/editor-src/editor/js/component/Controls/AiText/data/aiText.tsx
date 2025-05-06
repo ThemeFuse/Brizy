@@ -1,4 +1,4 @@
-import { Microphone } from "@brizy/ui-icons";
+import { Microphone } from "@brizy/ui-icons/lib/icons/Microphone";
 import React from "react";
 import { Icon } from "visual/component/Brizy-ui/Icon";
 import { DropdownButtonData } from "visual/component/Controls/AiText/types";

@@ -1,7 +1,7 @@
 import classNames from "classnames";
 import React, { useCallback, useMemo } from "react";
 import { ImageSetter } from "visual/component/Controls/ImageSetter";
-import { useConfig } from "visual/global/hooks";
+import { useConfig } from "visual/providers/ConfigProvider";
 import { t } from "visual/utils/i18n";
 import { ImageType } from "visual/utils/image/types";
 import { Component } from "./Types";

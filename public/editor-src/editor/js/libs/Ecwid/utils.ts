@@ -74,10 +74,16 @@ export const replaceContentLink = (
     const button = node.querySelector(`${selector} >  button`);
 
     if (button) {
-      button.addEventListener("click", (e) => {
-        window.location.replace(url);
-        e.stopPropagation();
-      });
+      button.addEventListener(
+        "click",
+        (e) => {
+          e.stopPropagation();
+          e.preventDefault();
+
+          window.location.replace(url);
+        },
+        true
+      );
     }
   }
 };

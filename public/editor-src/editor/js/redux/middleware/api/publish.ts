@@ -23,11 +23,14 @@ export function handlePublish({
   action,
   state,
   oldState,
-  config,
+  getConfig,
   apiHandler,
-  editorMode
+  editorMode,
+  store
 }: Data) {
   if (action.type === PUBLISH) {
+    const config = getConfig();
+
     const { onSuccess = noop, onError = noop } = action.meta ?? {};
 
     const oldProject = projectSelector(oldState);
@@ -101,13 +104,40 @@ export function handlePublish({
       };
       switch (action.payload.type) {
         case "internal": {
-          allApi.push(apiPublish(_data));
+          allApi.push(
+            apiPublish({
+              store,
+              is_autosave: _data.is_autosave,
+              config: _data.config,
+              needToCompile: _data.needToCompile
+            })
+          );
           break;
         }
         case "external": {
           allApi.push(
             onUpdate({
-              ..._data,
+              store,
+              onDone: action.payload.res,
+              is_autosave: _data.is_autosave,
+              config: _data.config,
+              needToCompile: _data.needToCompile
+            })
+          );
+          break;
+        }
+        case "externalForce": {
+          // TODO: Needs to be reviewed because current implementation may not be correct
+          allApi.push(
+            onUpdate({
+              config,
+              is_autosave: 0,
+              needToCompile: {
+                project,
+                page,
+                globalBlocks: Object.values(globalBlocks)
+              },
+              store,
               onDone: action.payload.res
             })
           );

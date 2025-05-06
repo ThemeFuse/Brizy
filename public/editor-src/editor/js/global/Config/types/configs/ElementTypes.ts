@@ -7,6 +7,7 @@ export enum ElementTypes {
   Icon = "Icon",
   Spacer = "Spacer",
   Map = "Map",
+  AnimatedHeadline = "AnimatedHeadline",
   FormField = "FormField",
   FormFields = "FormFields",
   Form2 = "Form2",
@@ -176,7 +177,8 @@ export enum ElementTypes {
   Form2FieldItems = "Form2FieldItems",
   InstagramFeed = "InstagramFeed",
   GlobalBlock = "GlobalBlock",
-  LinkedinFeed = "LinkedinFeed"
+  LinkedinFeed = "LinkedinFeed",
+  Chart = "Chart"
 }
 
 export const readElementType = checkValue2(ElementTypes);

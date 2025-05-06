@@ -12,6 +12,8 @@ import { EcwidService } from "visual/libs/Ecwid";
 import { eq } from "visual/libs/Ecwid/types/EcwidConfig";
 import { isView } from "visual/providers/RenderProvider";
 import { makePlaceholder } from "visual/utils/dynamicContent";
+import { getEcwidShopPathPlaceholder } from "visual/utils/ecwid";
+import { makeAttr } from "visual/utils/i18n/attribute";
 import { attachRefs } from "visual/utils/react";
 import { encodeToString } from "visual/utils/string";
 import { MValue } from "visual/utils/value";
@@ -1434,12 +1436,17 @@ export class EcwidCart extends EditorComponent<Value> {
       content: "{{ecwid_store_id}}"
     });
 
+    const attr = {
+      [makeAttr("shop-path")]: getEcwidShopPathPlaceholder()
+    };
+
     return (
       <Wrapper {...this.makeWrapperProps({ className })}>
         <div
           className="brz-ecwid-cart"
           data-store-id={storeId}
           data-storefront={encodeToString(cnf)}
+          {...attr}
         />
       </Wrapper>
     );

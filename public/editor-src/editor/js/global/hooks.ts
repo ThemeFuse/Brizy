@@ -1,10 +1,6 @@
-import { useSelector } from "react-redux";
-import { configSelector } from "visual/redux/selectors";
-import { isPro } from "visual/utils/env";
-import { ConfigCommon } from "./Config/types/configs/ConfigCommon";
-
-export function useConfig(): ConfigCommon {
-  return useSelector(configSelector);
-}
+import { useConfig } from "visual/providers/ConfigProvider";
+import { isPro, isRTL } from "visual/utils/env";
 
 export const usePro = (): boolean => isPro(useConfig());
+
+export const useIsRTL = (): boolean => isRTL(useConfig());

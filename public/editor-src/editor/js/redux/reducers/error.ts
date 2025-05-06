@@ -1,6 +1,6 @@
 import { ActionTypes, ReduxAction } from "visual/redux/actions2";
 import { ReduxState } from "visual/redux/types";
-import { PROJECT_LOCKED_ERROR } from "visual/utils/errors";
+import { ErrorCodes } from "visual/utils/errors";
 
 type Error = ReduxState["error"];
 type RError = (s: Error, a: ReduxAction, f: ReduxState) => Error;
@@ -18,7 +18,7 @@ export const error: RError = (state = errorDefault, action) => {
 
       if (projectStatus.locked) {
         return {
-          code: PROJECT_LOCKED_ERROR,
+          code: ErrorCodes.PROJECT_LOCKED_ERROR,
           data: projectStatus
         };
       }

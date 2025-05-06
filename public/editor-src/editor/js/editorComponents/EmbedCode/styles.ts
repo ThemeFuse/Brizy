@@ -13,21 +13,28 @@ export function style(data: DynamicStylesProps<Value>): OutputStyle {
     : ["cssStyleSizeWidth", "cssStyleCustomHeight"];
 
   const styles: Styles = {
-    ".brz &&:hover": {
+    ".brz &&": {
       standart: sizeFns
     },
+    ".brz &&:before": {
+      standart: [
+        "cssStyleBorderRadius",
+        "cssStyleHoverTransition",
+        "cssStylePropertyHoverTransition"
+      ]
+    },
     ".brz &&:hover:before": {
-      standart: ["cssStyleBoxShadow", "cssStyleBorder", "cssStyleBorderRadius"],
-      interval: ["cssStyleHoverTransition", "cssStylePropertyHoverTransition"]
+      standart: ["cssStyleBoxShadow", "cssStyleBorder"]
     },
     ".brz && .brz-embed-content": {
       standart: [
         "cssStylePaddingBG",
-        "cssStyleBgColor",
-        "cssStyleBgGradient",
-        "cssStyleElementEmbedCodeOverflow",
-        "cssStyleBorderRadius"
+        "cssStyleBorderRadius",
+        "cssStyleElementEmbedCodeOverflow"
       ]
+    },
+    ".brz &&:hover .brz-embed-content": {
+      standart: ["cssStyleBgColor", "cssStyleBgGradient"]
     }
   };
 

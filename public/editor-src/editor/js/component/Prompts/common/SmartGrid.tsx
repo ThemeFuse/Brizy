@@ -1,10 +1,17 @@
-import React, { ReactElement, Ref, forwardRef, useCallback } from "react";
+import React, {
+  ReactElement,
+  Ref,
+  RefCallback,
+  forwardRef,
+  useCallback
+} from "react";
 import Scrollbars from "react-custom-scrollbars";
 import {
   FixedSizeGrid,
   GridChildComponentProps,
   ReactElementType
 } from "react-window";
+import { useIsRTL } from "visual/global/hooks";
 
 type RefType = (r: Ref<ReactElement>) => void;
 
@@ -34,9 +41,10 @@ const CustomScrollbars = ({
   style,
   children
 }: CustomScrollbars): ReactElement => {
-  const refSetter = useCallback(
+  const refSetter = useCallback<RefCallback<Scrollbars>>(
     (scrollbarsRef) => {
       if (scrollbarsRef) {
+        // @ts-expect-error: react-custom-scrollbars
         forwardedRef(scrollbarsRef.view);
       } else {
         forwardedRef(null);
@@ -64,20 +72,21 @@ const CustomScrollbarsVirtualList = forwardRef(
 CustomScrollbarsVirtualList.displayName = "CustomScrollbarsVirtualList";
 
 const CustomInnerElementType = (gutter: number): ReactElementType => {
-  const InnerElement: ReactElementType = forwardRef(
-    ({ style, ...rest }, ref) => (
-      <div
-        ref={ref}
-        style={{
-          ...style,
-          paddingLeft: gutter,
-          paddingTop: gutter,
-          marginBottom: gutter
-        }}
-        {...rest}
-      />
-    )
-  );
+  const InnerElement: ReactElementType = forwardRef<
+    HTMLDivElement,
+    { style: CSSStyleRule }
+  >(({ style, ...rest }, ref) => (
+    <div
+      ref={ref}
+      style={{
+        ...style,
+        paddingLeft: gutter,
+        paddingTop: gutter,
+        marginBottom: gutter
+      }}
+      {...rest}
+    />
+  ));
 
   InnerElement.displayName = "InnerElement";
 
@@ -85,6 +94,7 @@ const CustomInnerElementType = (gutter: number): ReactElementType => {
 };
 
 const SmartGrid = (props: SmartGridProps): ReactElement => {
+  const isRTL = useIsRTL();
   const {
     height,
     width,
@@ -110,6 +120,7 @@ const SmartGrid = (props: SmartGridProps): ReactElement => {
       initialScrollTop={initialScrollTop}
       outerElementType={CustomScrollbarsVirtualList}
       innerElementType={CustomInnerElementType(gutter)}
+      direction={isRTL ? "rtl" : "ltr"}
     >
       {renderItem}
     </FixedSizeGrid>

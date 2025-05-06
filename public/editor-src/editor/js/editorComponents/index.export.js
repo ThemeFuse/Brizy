@@ -8,7 +8,7 @@ export * from "./Ecwid/export";
 export { default as Form } from "./Form/export.js";
 export { default as Form2 } from "./Form2/export.ts";
 export { default as FileUpload } from "./Form2/Form2Field/types/FileUpload/export.js";
-export { default as Image } from "./Image/export.js";
+export { default as Image } from "./Image/export.ts";
 export { default as Login } from "./Login/export";
 export { default as Map } from "./Map/export.ts";
 export * from "./MinistryBrands/index.export";

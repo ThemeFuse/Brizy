@@ -1,7 +1,7 @@
+import { DynamicStylesProps } from "visual/types";
 import { renderStyles } from "visual/utils/cssStyle";
 import type { OutputStyle, Styles } from "visual/utils/cssStyle/types";
 import type { Value } from "./types";
-import { DynamicStylesProps } from "visual/types";
 
 export function style(data: DynamicStylesProps<Value>): OutputStyle {
   const styles: Styles = {
@@ -11,21 +11,25 @@ export function style(data: DynamicStylesProps<Value>): OutputStyle {
     ".brz && .brz-paypal-text": {
       standart: ["getAllCssStyleTypography"]
     },
+    ".brz && .brz-paypal-button": {
+      standart: [
+        "cssStyleElementPaypalIconPosition",
+        "cssStyleBorderRadius",
+        "cssStyleSizeWidth",
+        "cssStyleSizeHeight",
+        "cssStyleHoverTransition"
+      ]
+    },
     ".brz &&:hover .brz-paypal-button": {
       standart: [
         "cssStyleBgColor",
         "cssStyleBorder",
-        "cssStyleBorderRadius",
         "cssStyleBoxShadow",
-        "cssStyleElementPaypalIconPosition",
         "cssStyleBgGradient",
-        "cssStyleSizeWidth",
-        "cssStyleSizeHeight",
-        "cssStyleColor"
-      ],
-      interval: ["cssStyleHoverTransition"]
-    },
 
+        "cssStyleColor"
+      ]
+    },
     ".brz && .brz-paypal-icon": {
       standart: ["cssStyleSizeFontSizeIcon", "cssStyleElementPaypalBtnSpacing"]
     }

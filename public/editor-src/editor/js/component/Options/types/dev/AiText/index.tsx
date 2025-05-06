@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { AiText } from "visual/component/Controls/AiText";
 import { ToastNotification } from "visual/component/Notifications";
-import { useConfig } from "visual/global/hooks";
+import { useConfig } from "visual/providers/ConfigProvider";
 import { sendToAi } from "visual/utils/api/common";
 import { t } from "visual/utils/i18n";
 import {

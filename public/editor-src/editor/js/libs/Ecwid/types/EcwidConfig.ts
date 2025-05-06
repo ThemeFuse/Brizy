@@ -3,9 +3,17 @@ export interface RedirectConfig {
   fromContent: Array<{ route: ContentRoutes; selector: string }>;
 }
 
-export type FooterRoutes = "/account" | "/account/favorites" | "/cart";
+export type FooterRoutes =
+  | `${string}/account`
+  | `${string}/account/favorites`
+  | `${string}/cart`
+  | `${string}/search`;
 
-export type ContentRoutes = "/cart" | "/thank-you" | "/account/favorites" | "/";
+export type ContentRoutes =
+  | `${string}/cart`
+  | `${string}/thank-you`
+  | `${string}/account/favorites`
+  | "/";
 
 export interface EcwidConfig {
   baseUrl?: string;

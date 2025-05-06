@@ -2,6 +2,7 @@ import React, { Component, ReactElement } from "react";
 import { ConnectedProps, connect } from "react-redux";
 import Tooltip from "visual/component/Controls/Tooltip";
 import { ToastNotification } from "visual/component/Notifications";
+import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { isPopup, isStory } from "visual/providers/EditorModeProvider";
 import { deleteGlobalBlock, updateGlobalBlock } from "visual/redux/actions2";
 import {
@@ -28,7 +29,8 @@ import { Props, State, StateToProps, Thumbnail } from "./types";
 
 const mapState = (state: ReduxState): StateToProps => ({
   globalBlocks: globalBlocksAssembledSelector(state),
-  globalBlocksInPage: globalBlocksInPageSelector(state),
+  getGlobalBlocksInPage: (config: ConfigCommon) =>
+    globalBlocksInPageSelector(state, config),
   projectFonts: fontsSelector(state)
 });
 
@@ -46,21 +48,24 @@ class Global<T extends BlockMetaType> extends Component<_Props<T>> {
   };
 
   getBlocks(): Array<Thumbnail> {
-    const { type, globalBlocks, globalBlocksInPage, config } = this.props;
+    const { type, globalBlocks, getGlobalBlocksInPage, config } = this.props;
+    const globalBlocksInPage = getGlobalBlocksInPage(config);
+
     const blocks = Object.values(globalBlocks).filter(
       ({ data, meta = {} }) => !data.deleted && meta.type === type
     );
     const { screenshot } = config.urls ?? {};
 
     return blocks.map((block) => {
-      const { url, width, height } = blockThumbnailData(
-        {
+      const { url, width, height } = blockThumbnailData({
+        block: {
           type: "",
           value: {},
           meta: block.meta
         },
-        screenshot
-      );
+        screenshot,
+        config
+      });
 
       const { uid, title = t("Untitled"), tags } = block;
       const inactive = type === "normal" && !!globalBlocksInPage[uid];
@@ -106,14 +111,18 @@ class Global<T extends BlockMetaType> extends Component<_Props<T>> {
   };
 
   handleUpdate = (thumbnailData: Thumbnail): void => {
-    const globalBlock = this.props.globalBlocks[thumbnailData.uid];
+    const { config, getGlobalBlocksInPage } = this.props;
+
+    const globalBlocks = getGlobalBlocksInPage(config);
+    const globalBlock = globalBlocks[thumbnailData.uid];
 
     if (globalBlock) {
       this.props.updateGlobalBlock({
         uid: globalBlock.uid,
         data: globalBlock.data,
         title: thumbnailData.title,
-        tags: thumbnailData.tags
+        tags: thumbnailData.tags,
+        config
       });
     } else {
       ToastNotification.error(t("Error updating global block"));

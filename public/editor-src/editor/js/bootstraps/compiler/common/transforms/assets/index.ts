@@ -1,3 +1,4 @@
+import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { AdobeFont, GoogleFont, UploadedFont } from "visual/types/Fonts";
 import { makeScripts } from "./makeScripts";
 import { makeStyles } from "./makeStyles";
@@ -111,12 +112,17 @@ interface CSS {
   cssText: string;
 }
 
-export type DynamicCSS = Array<CSS>;
+export type DynamicCSS = {
+  default: Array<CSS>;
+  rules: Array<CSS>;
+  custom: Array<CSS>;
+};
 
 interface Data {
   $root: cheerio.Root;
   fonts: Fonts;
   css: DynamicCSS;
+  config: ConfigCommon;
   extra?: { adobeKitId?: string };
 }
 
@@ -129,7 +135,10 @@ type GetAssets = (data: Data) => {
 
 export const getAssets: GetAssets = (data) => {
   const { free: freeStyles, pro: proStyles } = makeStyles(data);
-  const { free: freeScripts, pro: proScripts } = makeScripts(data.$root);
+  const { free: freeScripts, pro: proScripts } = makeScripts(
+    data.$root,
+    data.config
+  );
 
   return {
     freeStyles,

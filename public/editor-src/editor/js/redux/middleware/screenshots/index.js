@@ -28,12 +28,13 @@ import {
 } from "visual/utils/api";
 import { createFullModelPath } from "visual/utils/models";
 import { findDeep } from "visual/utils/object";
+import { makeTaskQueue } from "visual/utils/queue/taskQueue";
 import {
   isScreenshotSupported,
   makeNodeScreenshot
 } from "visual/utils/screenshots";
 import { ActionTypes } from "../../actions2";
-import { debounceAdvanced, makeTaskQueue } from "./utils";
+import { debounceAdvanced } from "./utils";
 
 const TASK_QUEUE_INTERVAL = 2000;
 const DEBOUNCE_INTERVAL = 2000;
@@ -52,21 +53,23 @@ const blockIsInThePage = (blockId, store) =>
 const isDesktopMode = (store) =>
   deviceModeSelector(store.getState()) === "desktop";
 
-export default (config) => (store) => (next) => (action) => {
+export default (getConfig) => (store) => (next) => (action) => {
   const prevState = store.getState();
   next(action);
+
+  const config = getConfig();
 
   (async () => {
     const screenshotsSupported = await isScreenshotSupported(config);
 
     if (screenshotsSupported) {
-      screenshotMiddleware({ prevState, store, config, next, action });
+      screenshotMiddleware({ prevState, store, getConfig, next, action });
     }
   })();
 };
 
 function screenshotMiddleware(data) {
-  const { prevState, store, config, next, action } = data;
+  const { prevState, store, getConfig, next, action } = data;
 
   if (action.type === UPDATE_UI && action.key === "deviceMode") {
     if (action.value === "desktop") {
@@ -83,7 +86,7 @@ function screenshotMiddleware(data) {
     action.type === UPDATE_EXTRA_FONT_STYLES ||
     action.type === ActionTypes.IMPORT_TEMPLATE
   ) {
-    allBlocksDebounced(store, config, next);
+    allBlocksDebounced(store, getConfig, next);
   }
 
   if (!isDesktopMode(store)) {
@@ -108,16 +111,17 @@ function screenshotMiddleware(data) {
       };
     }
 
-    changedBlocksDebounced(prevState, store, config, next, options);
+    changedBlocksDebounced(prevState, store, getConfig, next, options);
   }
 }
 
-function allBlocks(store, config, next) {
+function allBlocks(store, getConfig, next) {
   const changedBlocks = {
     page: new Set(),
     global: new Set()
   };
 
+  const config = getConfig();
   const currState = store.getState();
 
   // collect page blocks
@@ -142,12 +146,13 @@ function allBlocks(store, config, next) {
 
 const allBlocksDebounced = debounce(allBlocks, DEBOUNCE_INTERVAL);
 
-function changedBlocks(prevState, store, config, next, options) {
+function changedBlocks(prevState, store, getConfig, next, options) {
   const changedBlocks = {
     page: new Set(),
     global: new Set()
   };
 
+  const config = getConfig();
   const currState = store.getState();
 
   // collect changed page blocks

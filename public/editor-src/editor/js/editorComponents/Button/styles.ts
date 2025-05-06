@@ -22,10 +22,9 @@ export function style(data: BaseData): OutputStyle {
   const type = dvv("type");
   const submitType = type === "submit";
 
-  const styles = {
-    ".brz &&.brz-btn:hover": {
+  const styles: Styles = {
+    ".brz &&.brz-btn": {
       standart: [
-        "cssStyleDisplayFlex",
         "cssStyleTypography2FontFamily",
         "cssStyleTypographyFontWeight",
         "cssStyleTypographyFontSize",
@@ -33,21 +32,24 @@ export function style(data: BaseData): OutputStyle {
         "cssStyleTypographyLetterSpacing",
         "cssStyleTypography2FontVariation",
         "cssStyleTextTransforms",
-        "cssStyleColor",
-        ...(hasSizing && _isEditor && !submitType ? [] : ["cssStyleBorder"]),
         "cssStyleBorderRadiusType",
-        "cssStyleBoxShadow",
         "cssStylePaddingFourFields",
         "cssStyleElementButtonIconPosition",
-        "cssStyleSizeWidth",
         "cssStyleSizeHeightPxOnly",
         ...(_isStory
           ? ["cssStyleElementButtonSizeForStory"]
-          : ["cssStyleElementButtonSize"])
+          : ["cssStyleElementButtonSize"]),
+        "cssStyleSizeWidth"
+      ]
+    },
+    ".brz &&.brz-btn:hover": {
+      standart: [
+        "cssStyleDisplayFlex",
+        "cssStyleColor",
+        ...(hasSizing && _isEditor && !submitType ? [] : ["cssStyleBorder"]),
+        "cssStyleBoxShadow"
       ],
       interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor",
         "cssStyleVisibleMode|||editor",
         "cssStyleVisibleMode|||preview",
         "cssStyleVisibleEditorDisplayNoneOrFlex|||editor"
@@ -60,48 +62,43 @@ export function style(data: BaseData): OutputStyle {
       ]
     },
     ".brz &&.brz-btn:hover .brz-icon-svg-custom": {
-      standart: ["cssStyleCustomIconColor"],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
-      ]
+      standart: ["cssStyleCustomIconColor"]
     },
     ".brz &&.brz-btn.brz-btn-submit:hover": {
       standart: [
         "cssStyleColor",
         "cssStyleElementButtonBgColor",
         "cssStyleElementButtonBgGradient"
-      ],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
       ]
     },
-    ".brz &&:hover:after": {
+    ".brz &&:after": {
       standart:
         (hasSizing && _isEditor) || submitType
           ? []
           : ["cssStyleSizeHeightPercentOnly"]
     },
-    ".brz &&:hover > .brz-ed-box__resizer": {
+    ".brz && > .brz-ed-box__resizer": {
       standart: _isEditor
         ? ["cssStyleDisplayFlex", "cssStyleElementButtonIconPosition"]
         : []
     },
-    ".brz &&:hover .brz-btn--story-container": {
+    ".brz && .brz-btn--story-container": {
       standart: [
         "cssStyleElementButtonBorderStory",
         "cssStyleElementButtonIconPosition",
         "cssStyleBorderRadiusType"
-      ],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
       ]
     },
-    ".brz &&:hover .brz-btn--story-container:after": {
+    ".brz && .brz-btn--story-container:after": {
       standart: ["cssStyleSizeHeightPercentOnly"]
-    }
+    },
+    ".brz &&.brz-btn, .brz &&.brz-btn .brz-icon-svg-custom, .brz &&.brz-btn.brz-btn-submit":
+      {
+        standart: [
+          "cssStyleHoverTransition",
+          "cssStylePropertyHoverTransitionColor"
+        ]
+      }
   };
 
   return renderStyles({ ...baseData, styles });
@@ -109,7 +106,7 @@ export function style(data: BaseData): OutputStyle {
 
 export function styleIcon(data: DynamicStylesProps<Value>): OutputStyle {
   const styles = {
-    ".brz &&:hover": {
+    ".brz &&": {
       standart: [
         "cssStyleSizeFontSizeIcon",
         "cssStyleElementButtonIconMargin",
@@ -130,20 +127,22 @@ export function styleButtonFillAnimation(
         standart: [
           "cssStyleElementButtonBgColorStateNORMAL",
           "cssStyleElementButtonBgGradientStateNORMAL"
-        ],
-        interval: ["cssStyleButtonHoverTransitionDuration"]
+        ]
       },
     ".brz &&.brz-btn--hover:not(.brz-btn--hover-in):before, .brz &&.brz-btn--hover-in":
       {
         standart: [
           "cssStyleElementButtonBgBlendColor",
           "cssStyleElementButtonBgBlendGradient"
-        ],
-        interval: ["cssStyleButtonHoverTransitionDuration"]
+        ]
       },
     ".brz &&.brz-back-pulse:before:hover": {
       interval: ["cssStyleButtonHoverAnimationDuration"]
-    }
+    },
+    ".brz &&.brz-btn--hover:not(.brz-btn--hover-in), .brz &&.brz-btn--hover-in:before, .brz &&.brz-btn--hover:not(.brz-btn--hover-in):before, .brz &&.brz-btn--hover-in":
+      {
+        standart: ["cssStyleButtonHoverTransitionDuration"]
+      }
   };
 
   return renderStyles({ ...data, styles });

@@ -1,7 +1,7 @@
 import { ElementModel } from "visual/component/Elements/Types";
+import { DynamicStylesProps } from "visual/types";
 import { renderStyles } from "visual/utils/cssStyle";
 import { OutputStyle } from "visual/utils/cssStyle/types";
-import { DynamicStylesProps } from "visual/types";
 
 export function styles(data: DynamicStylesProps<ElementModel>): OutputStyle {
   const styles = {
@@ -11,24 +11,23 @@ export function styles(data: DynamicStylesProps<ElementModel>): OutputStyle {
     ".brz && .brz-protected-form": {
       standart: ["cssStyleElementProtectedPageInputSpacing"]
     },
-    ".brz &&:hover .brz-protected-form__input": {
+    ".brz && .brz-protected-form__input": {
       standart: [
         "cssStyleBorderRadius",
-        "cssStyleBorder",
-        "cssStyleBoxShadow",
         "cssStyleElementProtectedPageInputWidth",
-        "cssStyleElementProtectedPageInputHeight",
-        "cssStyleBgColor",
-        "cssStyleBgGradient"
-      ],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
+        "cssStyleElementProtectedPageInputHeight"
       ]
     },
-    ".brz &&:hover .brz-input": {
+    ".brz &&:hover .brz-protected-form__input": {
       standart: [
-        "cssStyleColor",
+        "cssStyleBorder",
+        "cssStyleBoxShadow",
+        "cssStyleBgColor",
+        "cssStyleBgGradient"
+      ]
+    },
+    ".brz && .brz-input": {
+      standart: [
         "cssStyleTypography3FontFamily",
         "cssStyleTypography3FontSize",
         "cssStyleTypography3LineHeight",
@@ -36,26 +35,24 @@ export function styles(data: DynamicStylesProps<ElementModel>): OutputStyle {
         "cssStyleTypography3LetterSpacing",
         "cssStyleTypography3FontVariation",
         "cssStyleTypography3TextTransform"
-      ],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
       ]
+    },
+    ".brz &&:hover .brz-input": {
+      standart: ["cssStyleColor"]
     },
     ".brz &&:hover .brz-input::placeholder": {
-      standart: ["cssStyleColor"],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
-      ]
+      standart: ["cssStyleColor"]
     },
     ".brz &&:hover .brz-input:-webkit-autofill": {
-      standart: ["cssStyleElementProtectedPageAutocompleteColor"],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
-      ]
-    }
+      standart: ["cssStyleElementProtectedPageAutocompleteColor"]
+    },
+    ".brz && .brz-protected-form__input, .brz && .brz-input, .brz && .brz-input::placeholder, .brz && .brz-input:-webkit-autofill":
+      {
+        standart: [
+          "cssStyleHoverTransition",
+          "cssStylePropertyHoverTransitionColor"
+        ]
+      }
   };
 
   return renderStyles({ ...data, styles });

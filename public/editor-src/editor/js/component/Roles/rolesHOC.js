@@ -1,5 +1,6 @@
 import { isFunction } from "es-toolkit";
 import React, { forwardRef } from "react";
+import { useConfig } from "../../providers/ConfigProvider";
 import { currentUserRole } from "./utils";
 
 export const rolesHOC = ({
@@ -10,7 +11,10 @@ export const rolesHOC = ({
   fallbackRender
 }) => {
   function rolesHOC(props, ref) {
-    const roleTestPassed = allow.includes(currentUserRole());
+    const config = useConfig();
+    const currentRole = currentUserRole(config);
+
+    const roleTestPassed = allow.includes(currentRole);
 
     if (roleTestPassed) {
       if (Component) {

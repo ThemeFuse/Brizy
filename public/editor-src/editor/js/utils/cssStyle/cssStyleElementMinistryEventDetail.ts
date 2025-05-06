@@ -14,13 +14,15 @@ export const cssStyleElementMinistryEventDetailSubscribeEventButtonColor = ({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }: CSSValue): string => {
   return cssStyleColor({
     v,
     device,
     state,
     store,
+    getConfig,
     prefix: "subscribeEventButtonColor"
   });
 };
@@ -31,6 +33,7 @@ export const cssStyleElementMinistryEventDetailSubscribeEventButtonTypography =
     device,
     state,
     store,
+    getConfig,
     renderContext
   }: CSSValue & WithRenderContext): string => {
     return getAllCssStyleTypography({
@@ -38,6 +41,7 @@ export const cssStyleElementMinistryEventDetailSubscribeEventButtonTypography =
       device,
       state,
       store,
+      getConfig,
       prefix: "subscribeEventButtonTypography",
       renderContext
     });
@@ -47,35 +51,39 @@ export const cssStyleElementMinistryEventDetailSubscribeEventButtonBgColor = ({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }: CSSValue): string => {
   return cssStyleElementMinistryBrandsButtonsBgColor({
     v,
     device,
     state,
     store,
+    getConfig,
     prefix: "subscribeEventButton"
   });
 };
 
 export const cssStyleElementMinistryEventDetailSubscribeEventButtonBgGradient =
-  ({ v, device, state, store }: CSSValue): string => {
+  ({ v, device, state, store, getConfig }: CSSValue): string => {
     return cssStyleElementMinistryBrandsButtonsBgGradient({
       v,
       device,
       state,
       store,
+      getConfig,
       prefix: "subscribeEventButton"
     });
   };
 
 export const cssStyleElementMinistryEventDetailSubscribeEventButtonBoxShadow =
-  ({ v, device, state, store }: CSSValue): string => {
+  ({ v, device, state, store, getConfig }: CSSValue): string => {
     return cssStyleBoxShadow({
       v,
       device,
       state,
       store,
+      getConfig,
       prefix: "subscribeEventButton"
     });
   };
@@ -84,13 +92,15 @@ export const cssStyleElementMinistryEventDetailSubscribeEventButtonBorder = ({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }: CSSValue): string => {
   return cssStyleBorder({
     v,
     device,
     state,
     store,
+    getConfig,
     prefix: "subscribeEventButton"
   });
 };
@@ -99,13 +109,15 @@ export function cssStyleElementMinistryBrandsSubscribeEventSize({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
   return cssStyleElementButtonSize({
     v,
     device,
     state,
     store,
+    getConfig,
     prefix: "subscribeEventButton"
   });
 }

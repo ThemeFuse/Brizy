@@ -4,7 +4,7 @@ import {
   ElementModel,
   ElementModelType
 } from "visual/component/Elements/Types";
-import { MenuData } from "visual/global/Config/types/configs/ConfigCommon";
+import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { globalBlocksAssembledSelector } from "visual/redux/selectors";
 import { Store } from "visual/redux/store";
 import { setIds } from "visual/utils/models";
@@ -178,8 +178,10 @@ export default function changeValueAfterDND(
   oldValue: ElementModelType,
   _fromTo: FromTo,
   store: Store,
-  menuData: MValue<MenuData[]>
+  config: ConfigCommon
 ): ElementModelType {
+  const { menuData } = config;
+
   const { getState, dispatch } = store;
   const globalBlocks = globalBlocksAssembledSelector(getState());
   const oldValueWithoutGB = attachMenu({
@@ -200,7 +202,7 @@ export default function changeValueAfterDND(
   }
 
   value = detachMenu(value);
-  value = detachGlobalBlocks(value, dispatch);
+  value = detachGlobalBlocks(value, dispatch, config);
 
   return value;
 }

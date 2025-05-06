@@ -7,11 +7,12 @@ export interface EditorComponentContextValue {
     itemId: string;
     config?: DCGroup<"wp"> | DCGroup<"cloud">;
   };
-  sheet?: Readonly<Sheet>;
+  sheet: Readonly<Sheet>;
 }
 
 export const EditorComponentContext =
   React.createContext<EditorComponentContextValue>({
+    sheet: new Sheet(),
     dynamicContent: {
       itemId: "",
       config: undefined

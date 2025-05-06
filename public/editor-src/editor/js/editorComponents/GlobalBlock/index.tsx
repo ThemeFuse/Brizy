@@ -69,7 +69,8 @@ class GlobalBlock extends EditorComponent<Value, Props> {
           meta: {
             ...meta,
             sourceBlockId: this.getId()
-          }
+          },
+          config: this.getGlobalConfig()
         })
       );
     }
@@ -108,6 +109,7 @@ class GlobalBlock extends EditorComponent<Value, Props> {
 
     if (Component) {
       return (
+        // @ts-expect-error: Types of property component are incompatible.
         <Component
           {...this.props}
           {...otherData}
@@ -124,6 +126,7 @@ class GlobalBlock extends EditorComponent<Value, Props> {
       const NotFoundComponent = Editor.getNotFoundComponent();
 
       return (
+        //@ts-expect-error: need to transfer notFoundComponent in TS
         <NotFoundComponent
           {...this.props}
           meta={meta}
@@ -132,7 +135,6 @@ class GlobalBlock extends EditorComponent<Value, Props> {
           reduxState={this.getReduxState()}
           reduxDispatch={this.getReduxDispatch()}
           onChange={this.handleComponentChange}
-          //@ts-expect-error: need to transfer notFoundComponent in TS
           componentId={type}
         />
       );

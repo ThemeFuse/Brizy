@@ -2,6 +2,7 @@
 .brz-countdown2 {
   display: flex;
   flex-direction: column;
+  direction: ltr;
 
   &__item {
     display: flex;

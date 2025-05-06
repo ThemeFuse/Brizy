@@ -13,9 +13,17 @@ export function cssStyleElementTranslationFlagSize({
   v,
   device,
   state,
+  getConfig,
   store
 }: CSSValue): string {
-  return cssStyleSizeWidthHeight({ v, device, state, store, prefix: "flag" });
+  return cssStyleSizeWidthHeight({
+    v,
+    device,
+    state,
+    getConfig,
+    store,
+    prefix: "flag"
+  });
 }
 
 export function cssStyleElementTranslationFlagSpacing({
@@ -26,7 +34,7 @@ export function cssStyleElementTranslationFlagSpacing({
   const flagSpacing = dvv("flagSpacing");
   const flagSpacingSuffix = dvv("flagSpacingSuffix");
 
-  return `margin-right: ${flagSpacing}${flagSpacingSuffix};`;
+  return `margin-inline-end: ${flagSpacing}${flagSpacingSuffix};`;
 }
 // #endregion
 
@@ -39,7 +47,7 @@ export function cssStyleElementTranslationTextSpacing({
   const textSpacing = dvv("textSpacing");
   const textSpacingSuffix = dvv("textSpacingSuffix");
 
-  return `margin-right: ${textSpacing}${textSpacingSuffix};`;
+  return `margin-inline-end: ${textSpacing}${textSpacingSuffix};`;
 }
 // #endregion
 
@@ -48,9 +56,9 @@ export function cssStyleElementTranslationPreviewArrowColorClosed({
   v,
   device,
   state,
-  store
+  getConfig
 }: CSSValue): string {
-  const color = styleColor({ v, device, state, store });
+  const color = styleColor({ v, device, state, getConfig });
 
   return `border-color: ${color} transparent transparent transparent;`;
 }
@@ -58,9 +66,9 @@ export function cssStyleElementTranslationPreviewArrowColorOpen({
   v,
   device,
   state,
-  store
+  getConfig
 }: CSSValue): string {
-  const color = styleColor({ v, device, state, store });
+  const color = styleColor({ v, device, state, getConfig });
 
   return `border-color: transparent transparent ${color} transparent;`;
 }
@@ -69,36 +77,68 @@ export function cssStyleElementTranslationColor({
   v,
   device,
   state,
+  getConfig,
   store
 }: CSSValue): string {
-  return cssStyleColor({ v, device, state, store, prefix: "selectColor" });
+  return cssStyleColor({
+    v,
+    device,
+    state,
+    getConfig,
+    store,
+    prefix: "selectColor"
+  });
 }
 
 export function cssStyleElementTranslationBgColor({
   v,
   device,
   state,
+  getConfig,
   store
 }: CSSValue): string {
-  return cssStyleBgColor({ v, device, state, store, prefix: "selectBg" });
+  return cssStyleBgColor({
+    v,
+    device,
+    state,
+    getConfig,
+    store,
+    prefix: "selectBg"
+  });
 }
 
 export function cssStyleElementTranslationBorder({
   v,
   device,
   state,
+  getConfig,
   store
 }: CSSValue): string {
-  return cssStyleBorder({ v, device, state, store, prefix: "select" });
+  return cssStyleBorder({
+    v,
+    device,
+    state,
+    getConfig,
+    store,
+    prefix: "select"
+  });
 }
 
 export function cssStyleElementTranslationBoxShadow({
   v,
   device,
   state,
+  getConfig,
   store
 }: CSSValue): string {
-  return cssStyleBoxShadow({ v, device, state, store, prefix: "select" });
+  return cssStyleBoxShadow({
+    v,
+    device,
+    state,
+    getConfig,
+    store,
+    prefix: "select"
+  });
 }
 // #endregion
 
@@ -117,12 +157,14 @@ export function cssStyleElementTranslationAlign({
   v,
   device,
   state,
+  getConfig,
   store
 }: CSSValue): string {
   return cssStyleFlexHorizontalAlign({
     v,
     device,
     state,
+    getConfig,
     store,
     prefix: "select"
   });

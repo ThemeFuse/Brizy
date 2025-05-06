@@ -7,6 +7,7 @@ import ContainerBorder from "visual/component/ContainerBorder";
 import CustomCSS from "visual/component/CustomCSS";
 import PaddingResizer from "visual/component/PaddingResizer";
 import { Roles } from "visual/component/Roles";
+import { currentUserRole } from "visual/component/Roles";
 import { CollapsibleToolbar, ToolbarExtend } from "visual/component/Toolbar";
 import {
   minWInBoxedPage,
@@ -269,6 +270,7 @@ export default class SectionHeaderStickyItem extends EditorComponent {
                 className={this.getSectionClassName(v, vs, vd)}
               >
                 <Roles
+                  currentRole={currentUserRole(this.getGlobalConfig())}
                   allow={["admin"]}
                   fallbackRender={() => this.renderItems(v, vs, vd)}
                 >

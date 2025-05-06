@@ -6,6 +6,7 @@ export function cssStyleBgGradient({
   device,
   state,
   store,
+  getConfig,
   prefix
 }: CSSValue): string {
   const bgGradient = styleBgGradient({
@@ -13,6 +14,7 @@ export function cssStyleBgGradient({
     device,
     state,
     store,
+    getConfig,
     prefix
   });
   return `background-image:${bgGradient};`;

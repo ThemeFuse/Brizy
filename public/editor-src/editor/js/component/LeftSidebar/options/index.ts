@@ -16,8 +16,7 @@ import { getBaseDrawer } from "../components/AddElements";
 import { getBlocksSortable } from "../components/BlocksSortable";
 import { custom } from "../components/Custom";
 import { getDevicesModes } from "../components/DeviceModes";
-import { Settings } from "../components/Settings";
-import { Styling } from "../components/Styling";
+import { getStyling } from "../components/Styling";
 import { getMoreOptions } from "./moreOptions";
 import { getPageSettings } from "./pageSettings";
 
@@ -82,9 +81,10 @@ const getItems = ({
     [LeftSidebarOptionsIds.addElements]: getBaseDrawer,
     [LeftSidebarOptionsIds.reorderBlock]: getBlocksSortable({
       helpIcon,
-      disabled: _isPopup || _isStory
+      disabled: _isPopup || _isStory,
+      config
     }),
-    [LeftSidebarOptionsIds.globalStyle]: Styling,
+    [LeftSidebarOptionsIds.globalStyle]: getStyling(),
     [LeftSidebarOptionsIds.collaboration]: {
       id: LeftSidebarOptionsIds.collaboration,
       type: "link",
@@ -101,7 +101,6 @@ const getItems = ({
       disabled: pageSettingsOptions.length === 0,
       options: pageSettingsOptions
     },
-    [LeftSidebarOptionsIds.settings]: Settings,
     [LeftSidebarOptionsIds.more]: {
       id: LeftSidebarOptionsIds.more,
       icon: "nc-back",

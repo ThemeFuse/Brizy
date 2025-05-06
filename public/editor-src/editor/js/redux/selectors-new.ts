@@ -5,12 +5,11 @@ import {
   ElementModel,
   ElementModelType
 } from "visual/component/Elements/Types";
-import { getConfigById } from "visual/global/Config/InitConfig";
-import { isShopifyPage } from "visual/global/Config/types/configs/Cloud";
+import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { FontKeyTypes } from "visual/redux/actions2";
 import { ReduxState, StoreChanged } from "visual/redux/types";
 import { Authorized, SyncAllowed } from "visual/types";
-import { Block } from "visual/types/Block";
+import { Block, BlocksHTML } from "visual/types/Block";
 import { Font } from "visual/types/Fonts";
 import { GlobalBlock, GlobalBlockPopup } from "visual/types/GlobalBlock";
 import { NonEmptyArray } from "visual/utils/array/types";
@@ -23,6 +22,13 @@ import { objectFromEntries, objectTraverse2 } from "visual/utils/object";
 import { MValue } from "visual/utils/value";
 
 //#region === 0 DEPENDENCIES ===
+
+// this selector is used solely to config parameter that are unrelated to the redux store
+// and to maintain memoization
+export const configSelector = (
+  _: ReduxState,
+  config: ConfigCommon
+): ConfigCommon => config;
 
 export const stateSelector = (state: ReduxState): ReduxState => state;
 
@@ -94,14 +100,13 @@ export const currentStyleSelector = (
 export const errorSelector = (state: ReduxState): ReduxState["error"] =>
   state.error;
 
-export const configIdSelector = (state: ReduxState): ReduxState["configId"] =>
-  state.configId;
+export const blocksHtmlSelector = (
+  state: ReduxState
+): ReduxState["blocksHtml"] => state.blocksHtml;
 
 //#endregion
 
 //#region === 1 DEPENDENCIES ===
-export const configSelector = createSelector(configIdSelector, getConfigById);
-
 export const pageDataSelector = createSelector(
   pageSelector,
   (page) => page.data || {}
@@ -193,16 +198,9 @@ export const leftSidebarSelector = createSelector(
   (ui) => ui.leftSidebar
 );
 
-export const pageLayout = createSelector(
-  pageSelector,
-  configSelector,
-  (page, config) => {
-    if (isShopifyPage(page, config)) {
-      return page.layout;
-    }
-
-    return undefined;
-  }
+export const drawerContentTypeSelector = createSelector(
+  leftSidebarSelector,
+  (leftSidebar) => leftSidebar.drawerContentType
 );
 
 //#endregion
@@ -301,6 +299,34 @@ export const pageBlocksRawSelector = createSelector(
   }
 );
 
+// Retrieve all blocksHTML of all normal blocks, including globalBlocks between normal blocks,
+// excluding the top & bottom globalBlocks.
+// Used when publishing and preparing block HTML for the page.
+// Middle global blocks are replaced with a placeholder.
+export const blocksHtmlRawSelector = createSelector(
+  pageBlocksRawSelector,
+  blocksHtmlSelector,
+  (blockOrders, blocksHtml) => {
+    return blockOrders.map((block) => {
+      const blockId = block.value._id;
+      const html = blocksHtml.blocks[blockId];
+
+      if (block.type === "GlobalBlock") {
+        return {
+          id: blockId,
+          ...html,
+          html: `{{ brizy_dc_global_block uid="${blockId}" }}`
+        };
+      }
+
+      return {
+        id: blockId,
+        ...html
+      };
+    });
+  }
+);
+
 //#endregion
 
 //#region === 4 DEPENDENCIES ===
@@ -351,7 +377,8 @@ export const pageBlocksDataSelector = createSelector(
 // Retrieve all blocks from the page, including their global blocks with data.
 // Included new screenshots data used inside LeftSidebar
 export const pageBlocksDataAssembledSelector = createSelector(
-  pageBlocksDataSelector,
+  (state: ReduxState, config: ConfigCommon) =>
+    pageBlocksDataSelector(state, config),
   screenshotsSelector,
   (blocksOrder, screenshots) => {
     return blocksOrder.map((data) => {
@@ -409,8 +436,9 @@ export const globalBlocksInPageRawSelector = createSelector(
 // Retrieve all global popups from page, including their data.
 // Used when try to compile page with node
 export const globalPopupsInPageSelector = createSelector(
-  pageBlocksDataSelector,
-  globalBlocksSelector,
+  (state: ReduxState, config: ConfigCommon) =>
+    pageBlocksDataSelector(state, config),
+  globalBlocksAssembled2Selector,
   (page, globalBlocks) => {
     const popups = new Map<string, GlobalBlockPopup>();
     objectTraverse2(page, (obj: Record<string, unknown>) => {
@@ -428,6 +456,35 @@ export const globalPopupsInPageSelector = createSelector(
     });
 
     return [...popups].map(([, data]) => data);
+  }
+);
+
+// Retrieve the IDs of all globalBlocks from current page,
+// including global popups
+export const globalBlocksIdsInPageSelector = createSelector(
+  (s: ReduxState, c: ConfigCommon) => globalPopupsInPageSelector(s, c),
+  blocksOrderSelector,
+  globalBlocksSelector,
+  (popups, blocksOrder, globalBlocks) => {
+    const blocksIds = blocksOrder.filter((id) => globalBlocks[id]);
+    const popupsIds = popups.map((popup) => popup.uid);
+    return Array.from(new Set([...blocksIds, ...popupsIds]));
+  }
+);
+
+// Retrieve HTML of all globalBlocks with globalPopups from the current page,
+// used when compiling the page inside the browser.
+export const globalBlocksHTMLInPageSelector = createSelector(
+  globalBlocksIdsInPageSelector,
+  blocksHtmlSelector,
+  (blocks, blocksHtml) => {
+    return blocks.reduce(
+      (acc, uid) => {
+        acc[uid] = blocksHtml.blocks[uid];
+        return acc;
+      },
+      {} as Record<string, BlocksHTML>
+    );
   }
 );
 
@@ -491,7 +548,8 @@ export const pageDataDraftBlocksSelector = createSelector(
 // This is used for the Publish button when trying to save the layout.
 export const pageDataNoRefsSelector2 = createSelector(
   pageDataSelector,
-  pageBlocksDataSelector,
+  (state: ReduxState, config: ConfigCommon) =>
+    pageBlocksDataSelector(state, config),
   (pageData, pageBlocks) =>
     produce(pageData, (draft) => {
       draft.items = pageBlocks;

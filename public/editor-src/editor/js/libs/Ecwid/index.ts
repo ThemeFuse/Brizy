@@ -29,16 +29,21 @@ import {
 let triedTimes = 0;
 let linksWasChanged = false;
 
-const myAccountRedirects = () => {
+const myAccountRedirects = (baseUrl: string) => {
   const node = document.querySelector<HTMLElement>(
     ".ec-store__account-page .ec-footer"
   );
 
   if (node && node.children.length > 0) {
-    replaceFooterLink(node, ".footer__link--my-account", "/my-account");
-    replaceFooterLink(node, ".footer__link--favorites", "/favorites");
-    replaceFooterLink(node, ".footer__link--track-order", "/my-account");
-    replaceFooterLink(node, ".footer__link--shopping-cart", "/cart");
+    replaceFooterLink(node, ".footer__link--my-account", `${baseUrl}/account`);
+    replaceFooterLink(
+      node,
+      ".footer__link--favorites",
+      `${baseUrl}/account/favorites`
+    );
+    replaceFooterLink(node, ".footer__link--track-order", `${baseUrl}/account`);
+    replaceFooterLink(node, ".footer__link--shopping-cart", `${baseUrl}/cart`);
+    replaceFooterLink(node, ".footer__link--all-products", `${baseUrl}/search`);
 
     linksWasChanged = true;
   }
@@ -64,14 +69,17 @@ const shoppingBagRedirects = () => {
   }
 };
 
-const observerCallback = (componentType: "myAccount" | "shoppingBag") => {
+const observerCallback = (
+  componentType: "myAccount" | "shoppingBag",
+  baseUrl: string
+) => {
   if (linksWasChanged || triedTimes >= 10) {
     return true;
   }
 
   switch (componentType) {
     case "myAccount": {
-      myAccountRedirects();
+      myAccountRedirects(baseUrl);
       break;
     }
     case "shoppingBag": {
@@ -83,8 +91,10 @@ const observerCallback = (componentType: "myAccount" | "shoppingBag") => {
   triedTimes++;
 };
 
-const observer = (componentType: "myAccount" | "shoppingBag") =>
-  new MutationObserver(() => observerCallback(componentType));
+const observer = (
+  componentType: "myAccount" | "shoppingBag",
+  baseUrl: string
+) => new MutationObserver(() => observerCallback(componentType, baseUrl));
 
 declare global {
   interface Window {
@@ -101,6 +111,7 @@ declare global {
         baseUrl?: string;
         storefrontUrls?: {
           cleanUrls?: boolean;
+          slugsWithoutIds?: boolean;
         };
       };
     };
@@ -131,6 +142,9 @@ declare const Ecwid: {
   OnPageLoaded: {
     add: (fn: (page: PageType) => void | boolean) => void;
   };
+  OnCartChanged: {
+    add: (fn: (cart: unknown) => void | boolean) => void;
+  };
   OnPageSwitch: {
     add: (fn: (page: PageType) => void | boolean) => void;
   };
@@ -145,18 +159,37 @@ declare const Ecwid: {
   refreshConfig?: VoidFunction;
 };
 
-const defaultConfig: Partial<EcwidConfig> = {
+const getDefaultConfig = (baseUrl: string): Partial<EcwidConfig> => ({
   redirect: {
     fromFooter: [
-      { route: "/account", selector: ".footer__link--my-account" },
-      { route: "/account", selector: ".footer__link--track-order" },
-      { route: "/account/favorites", selector: ".footer__link--favorites" },
-      { route: "/cart", selector: ".footer__link--shopping-cart" }
+      {
+        route: `${baseUrl}/account`,
+        selector: ".footer__link--my-account"
+      },
+      {
+        route: `${baseUrl}/account`,
+        selector: ".footer__link--track-order"
+      },
+      {
+        route: `${baseUrl}/account/favorites`,
+        selector: ".footer__link--favorites"
+      },
+      {
+        route: `${baseUrl}/cart`,
+        selector: ".footer__link--shopping-cart"
+      },
+      {
+        route: `${baseUrl}/search`,
+        selector: ".footer__link--all-products"
+      }
     ],
     fromContent: [
-      { route: "/cart", selector: ".details-product-purchase__checkout" },
       {
-        route: "/account/favorites",
+        route: `${baseUrl}/cart`,
+        selector: ".details-product-purchase__checkout"
+      },
+      {
+        route: `${baseUrl}/account/favorites`,
         selector: ".favorite-product__button-view"
       },
       {
@@ -165,24 +198,21 @@ const defaultConfig: Partial<EcwidConfig> = {
       }
     ]
   }
-};
+});
 
-const footerRoutes: {
-  [k in FooterRoutes]: string;
-} = {
-  "/account": "/account",
-  "/account/favorites": "/account/favorites",
-  "/cart": "/cart"
-};
+const getFooterRoutes = (baseUrl: string) => ({
+  [`${baseUrl}/account`]: `${baseUrl}/account`,
+  [`${baseUrl}/account/favorites`]: `${baseUrl}/account/favorites`,
+  [`${baseUrl}/cart`]: `${baseUrl}/cart`,
+  [`${baseUrl}/search`]: `${baseUrl}/search`
+});
 
-const contentRoutes: {
-  [k in ContentRoutes]: string;
-} = {
-  "/cart": "/cart",
-  "/thank-you": "/thank-you",
-  "/account/favorites": "/account/favorites",
+const getContentRoutes = (baseUrl: string) => ({
+  [`${baseUrl}/cart`]: `${baseUrl}/cart`,
+  [`${baseUrl}/thank-you`]: `${baseUrl}/thank-you`,
+  [`${baseUrl}/account/favorites`]: `${baseUrl}/account/favorites`,
   "/": "/"
-};
+});
 
 export class EcwidService {
   private $load: ReplaySubject<void>;
@@ -196,13 +226,14 @@ export class EcwidService {
   ) {
     this.$load = new ReplaySubject();
     this.$widgets = new Subject();
-    this.config = { ...defaultConfig, ...config };
+    this.config = { ...getDefaultConfig(config.baseUrl ?? ""), ...config };
 
     window.ec = window.ec || {};
     window.ec.config = window.ec.config || {};
     window.ec.config.storefrontUrls = window.ec.config.storefrontUrls || {};
 
     window.ec.config.storefrontUrls.cleanUrls = true;
+    window.ec.config.storefrontUrls.slugsWithoutIds = true;
     window.ec.config.baseUrl = this.config.baseUrl || "/";
 
     window.ec.storefront = { ...window.ec.storefront, ...config };
@@ -284,6 +315,12 @@ export class EcwidService {
                 cb();
               }
             });
+          }
+        });
+
+        Ecwid.OnCartChanged.add(() => {
+          if (this.config.redirect && node) {
+            this.changeRedirectLinks(node);
           }
         });
       };
@@ -386,7 +423,7 @@ export class EcwidService {
       Ecwid.init();
 
       if (node) {
-        observer("shoppingBag").observe(node, {
+        observer("shoppingBag", this.config.baseUrl ?? "").observe(node, {
           attributes: true,
           subtree: true
         });
@@ -399,7 +436,7 @@ export class EcwidService {
     this.openPage(EcwidWidget.myAccount(el.id), node);
 
     if (this.config.redirect) {
-      observer("myAccount").observe(node, {
+      observer("myAccount", this.config.baseUrl ?? "").observe(node, {
         attributes: true,
         subtree: true
       });
@@ -424,6 +461,10 @@ export class EcwidService {
 
   private changeRedirectLinks(node: HTMLElement) {
     if (this.config.redirect) {
+      const baseUrl = this.config.baseUrl ?? "";
+      const contentRoutes = getContentRoutes(baseUrl);
+      const footerRoutes = getFooterRoutes(baseUrl);
+
       if (this.config.redirect.fromContent) {
         requestAnimationFrame(() => {
           this.config.redirect?.fromContent.forEach(({ route, selector }) => {

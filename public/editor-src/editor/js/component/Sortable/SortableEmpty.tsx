@@ -52,7 +52,9 @@ const Sortable = (props: Props) => {
   const store = useStore();
   const dispatch = useDispatch();
   const nodeRef = useRef<HTMLDivElement>(null);
-  const handleBeforeStart = useCallback(
+  const handleBeforeStart = useCallback<
+    Required<SortablePluginOptions>["onBeforeStart"]
+  >(
     (e) => {
       const deviceMode = deviceModeSelector(store.getState());
 
@@ -119,7 +121,6 @@ const Sortable = (props: Props) => {
   const handleEmptyClick = useCallback(() => {
     dispatch(
       updateUI("leftSidebar", {
-        isOpen: true,
         drawerContentType: LeftSidebarOptionsIds.addElements
       })
     );

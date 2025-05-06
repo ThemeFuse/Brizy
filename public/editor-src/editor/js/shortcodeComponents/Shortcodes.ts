@@ -8,6 +8,7 @@ import getArchive from "./Archive";
 import getAssetsPosts from "./AssetsPosts";
 import getAudio from "./Audio";
 import getButton from "./Button";
+import getChart from "./Chart";
 import getColumns from "./Columns";
 import getCountdown2 from "./Countdown2";
 import getCounter from "./Counter";
@@ -86,6 +87,7 @@ import getWOOPages from "./WOOPages";
 import getWPCustomShortcode from "./WPCustomShortcode";
 import getFeaturedImage from "./WPFeaturedImage";
 import getWPSidebar from "./WPSidebar";
+import AnimatedHeadline from "./pro/AnimatedHeadline";
 import getBreadcrumbs from "./pro/Breadcrumbs";
 import getCalendly from "./pro/Calendly";
 import getCarousel from "./pro/Carousel";
@@ -171,6 +173,7 @@ export function getProShortCodes(
     Audio: false,
     VideoPlaylist: true,
     Flipbox: true,
+    Chart: true,
 
     IconText: false,
     Lottie: true,
@@ -183,6 +186,7 @@ export function getProShortCodes(
     Calendly: true,
     TableOfContents: true,
     Carousel: true,
+    AnimatedHeadline: true,
     Tabs: false,
     Accordion: false,
     Switcher: true,
@@ -341,6 +345,7 @@ export const ShortCodesKeywords: Record<string, string> = {
   Switcher: "switcher toggle on-off",
   Table: "table data spreadsheet",
   Timeline: "timeline chronology events",
+  Chart: "chart pie graph diagram data visualization analytics statistics",
 
   StoryButton: "story button narrative action interactive",
   StoryIcon: "story icon narrative symbol graphic",
@@ -490,6 +495,7 @@ export function getSampleShortCodes(config: ConfigCommon) {
     Audio: getAudio(),
     VideoPlaylist: getVideoPlaylist(),
     Paypal: getPaypal(),
+    AnimatedHeadline,
 
     IconText: getIconText(),
     Lottie: getLottie(config),
@@ -508,6 +514,7 @@ export function getSampleShortCodes(config: ConfigCommon) {
     Table: getTable(),
     Timeline: getTimeline(),
     Flipbox: getFlipbox(),
+    Chart: getChart(),
 
     StoryButton: getStoryButton(),
     StoryIcon: getStoryIcon(),

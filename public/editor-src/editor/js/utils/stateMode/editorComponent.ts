@@ -1,3 +1,4 @@
+import { GroupBase } from "visual/component/Options/types/dev/Addable/types";
 import {
   GenericToolbarItemType,
   OptionDefinition,
@@ -7,6 +8,7 @@ import { filter } from "visual/utils/options/filter";
 import { reduce } from "visual/utils/options/reduce";
 import { DESKTOP, ResponsiveMode } from "visual/utils/responsiveMode";
 import * as State from "visual/utils/stateMode/index";
+import { camelCase } from "visual/utils/string";
 
 /**
  * Check if the item or it's inner items supports 2 or more state modes.
@@ -77,6 +79,26 @@ export const bindStateToOption = <T extends OptionDefinition | ToolbarItemType>(
             : tab.options
         }))
       };
+    case "addable": {
+      const {
+        id: addableId,
+        value,
+        shape
+      } = option as OptionDefinition<"addable">;
+
+      return {
+        ...option,
+        optionGroups: value.value.map(({ id: groupId, title }: GroupBase) => ({
+          id: groupId,
+          title,
+          options: shape.map((shape) => ({
+            ...shape,
+            id: camelCase([addableId, groupId, shape.id])
+          }))
+        }))
+      };
+    }
+
     default:
       return option;
   }

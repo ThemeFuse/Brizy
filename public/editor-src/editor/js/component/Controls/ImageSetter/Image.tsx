@@ -4,7 +4,7 @@ import {
   Props
 } from "visual/component/Controls/ImageSetter/types";
 import { SizeType } from "visual/global/Config/types/configs/common";
-import { useConfig } from "visual/global/hooks";
+import { useConfig } from "visual/providers/ConfigProvider";
 import { getImageUrl, imageWrapperSize } from "visual/utils/image";
 import Draggable from "./Draggable";
 

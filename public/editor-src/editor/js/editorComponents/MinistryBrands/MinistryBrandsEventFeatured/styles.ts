@@ -1,40 +1,42 @@
 import { isStory } from "visual/providers/EditorModeProvider";
 import { DynamicStylesProps } from "visual/types";
 import { renderStyles } from "visual/utils/cssStyle";
-import { OutputStyle } from "visual/utils/cssStyle/types";
+import { OutputStyle, Styles } from "visual/utils/cssStyle/types";
 import { Value } from "./types";
 
 export function style(data: DynamicStylesProps<Value>): OutputStyle {
   const { v, contexts } = data;
+
   const { maskShape = "none" } = v;
+
   const _isStory = isStory(contexts.mode);
 
-  const styles: {
-    [k: string]: {
-      interval?: string[];
-      standart?: string[];
-    };
-  } = {
+  const styles: Styles = {
+    ".brz && .brz-eventFeatured": {
+      standart: ["cssStylePaddingBG", "cssStyleBorderRadius"]
+    },
     ".brz &&:hover .brz-eventFeatured": {
       standart: [
-        "cssStylePaddingBG",
         "cssStylementOfMinistryBrandsParentBgColor",
         "cssStylementOfMinistryBrandsParentBgGradient",
         "cssStylementOfMinistryBrandsParentBorder",
-        "cssStylementOfMinistryBrandsParentBoxShadow",
-        "cssStyleBorderRadius"
+        "cssStylementOfMinistryBrandsParentBoxShadow"
       ],
       interval: [
         "cssStyleHoverTransition",
         "cssStylePropertyHoverTransitionColor"
       ]
     },
-    ".brz && .brz-ministryBrands__item--media:hover": {
+    ".brz && .brz-ministryBrands__item--media": {
       standart: [
         "cssStyleElementOfMinistryBrandsImageWidth",
         "cssStyleElementOfMinistryBrandsImagePadding",
+        "cssStyleMinistryElementMediaBorderRadius"
+      ]
+    },
+    ".brz && .brz-ministryBrands__item--media:hover": {
+      standart: [
         "cssStyleElementOfMinistryBrandsImgBorder",
-        "cssStyleMinistryElementMediaBorderRadius",
         ...(maskShape === "none"
           ? ["cssStyleElementOfMinistryBrandsImgBoxShadow"]
           : ["cssStyleElementOfMinistryBrandsImgMaskShadow"])
@@ -44,36 +46,42 @@ export function style(data: DynamicStylesProps<Value>): OutputStyle {
         "cssStylePropertyHoverTransitionColor"
       ]
     },
+    ".brz && .brz-ministryBrands__item--media::after": {
+      standart: [
+        "cssStyleMaskShape",
+        "cssStyleMaskCustomShape",
+        "cssStyleMaskSize",
+        "cssStyleMaskPosition",
+        "cssStyleMaskRepeat"
+      ]
+    },
     ".brz && .brz-ministryBrands__item--media:hover::after": {
       standart: [
         "cssStyleElementOfMinistryBrandsImgBgColor",
-        "cssStyleElementOfMinistryBrandsImgBgGradient",
+        "cssStyleElementOfMinistryBrandsImgBgGradient"
+      ],
+      interval: [
+        "cssStyleHoverTransition",
+        "cssStylePropertyHoverTransitionColor"
+      ]
+    },
+    ".brz && .brz-ministryBrands__item--media :is(img, video, iframe)": {
+      standart: [
         "cssStyleMaskShape",
         "cssStyleMaskCustomShape",
         "cssStyleMaskSize",
         "cssStyleMaskPosition",
         "cssStyleMaskRepeat"
-      ],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
       ]
     },
     ".brz && .brz-ministryBrands__item--media:hover :is(img, video, iframe)": {
-      standart: [
-        "cssStyleElementOfMinistryBrandsImgFilters",
-        "cssStyleMaskShape",
-        "cssStyleMaskCustomShape",
-        "cssStyleMaskSize",
-        "cssStyleMaskPosition",
-        "cssStyleMaskRepeat"
-      ],
+      standart: ["cssStyleElementOfMinistryBrandsImgFilters"],
       interval: [
         "cssStyleHoverTransition",
         "cssStylePropertyHoverTransitionColor"
       ]
     },
-    ".brz &&:hover .brz-eventFeatured__item": {
+    ".brz && .brz-eventFeatured__item": {
       standart: [
         "cssStyleElementOfMinistryBrandsHorizontalAlign",
         "cssStyleElementOfMinistryBrandsSpacing"
@@ -163,7 +171,7 @@ export function style(data: DynamicStylesProps<Value>): OutputStyle {
       ]
     },
 
-    ".brz &&:hover .brz-ministryBrands__meta--icons": {
+    ".brz && .brz-ministryBrands__meta--icons": {
       standart: ["cssStyleElementOfMinistryBrandsMetaIconsSpacing"]
     },
     ".brz && .brz-eventFeatured__item--meta--link > .brz-ministryBrands__meta--icons:hover":
@@ -175,25 +183,25 @@ export function style(data: DynamicStylesProps<Value>): OutputStyle {
       standart: ["cssStyleColor"],
       interval: ["cssStyleHoverTransition"]
     },
-    ".brz && :is(.brz-eventFeatured__item--meta, .brz-eventFeatured__item--meta--link):hover":
+    ".brz && :is(.brz-eventFeatured__item--meta, .brz-eventFeatured__item--meta--link)":
       {
         standart: ["getAllCssStyleTypography"]
       },
+    ".brz && .brz-eventFeatured__item--meta--title": {
+      standart: ["cssStyleElementOfMinistryBrandsTitleTypography"]
+    },
     ".brz && .brz-eventFeatured__item--meta--title:hover": {
-      standart: [
-        "cssStyleElementOfMinistryBrandsTitleColor",
-        "cssStyleElementOfMinistryBrandsTitleTypography"
-      ],
+      standart: ["cssStyleElementOfMinistryBrandsTitleColor"],
       interval: ["cssStyleHoverTransition"]
+    },
+    ".brz && .brz-eventFeatured__item--meta--date": {
+      standart: ["cssStyleElementOfMinistryBrandsDateTypography"]
     },
     ".brz && .brz-eventFeatured__item--meta--date:hover": {
-      standart: [
-        "cssStyleElementOfMinistryBrandsDateTypography",
-        "cssStyleElementOfMinistryBrandsDateColor"
-      ],
+      standart: ["cssStyleElementOfMinistryBrandsDateColor"],
       interval: ["cssStyleHoverTransition"]
     },
-    ".brz && :is(.brz-eventFeatured__item--meta--preview, .brz-eventFeatured__item--meta--preview *):hover":
+    ".brz && :is(.brz-eventFeatured__item--meta--preview, .brz-eventFeatured__item--meta--preview *)":
       {
         standart: ["cssStyleElementOfMinistryBrandsPreviewTypography"],
         interval: ["cssStyleHoverTransition"]
@@ -208,15 +216,19 @@ export function style(data: DynamicStylesProps<Value>): OutputStyle {
         standart: ["cssStyleElementOfMinistryBrandsMetaLinksColor"],
         interval: ["cssStyleHoverTransition"]
       },
+    ".brz && .brz-ministryBrands__item--meta--button": {
+      standart: [
+        "cssStyleElementMinistryBrandsButtonsTypography",
+        "cssStyleElementMinistryBrandsButtonsBorderRadius"
+      ]
+    },
     ".brz && .brz-ministryBrands__item--meta--button:hover": {
       standart: [
         "cssStyleElementMinistryBrandsButtonsBgColor",
         "cssStyleElementMinistryBrandsButtonsBgGradient",
         "cssStyleElementMinistryBrandsButtonsBoxShadow",
         "cssStyleElementMinistryBrandsButtonsBorder",
-        "cssStyleElementMinistryBrandsButtonsColor",
-        "cssStyleElementMinistryBrandsButtonsTypography",
-        "cssStyleElementMinistryBrandsButtonsBorderRadius"
+        "cssStyleElementMinistryBrandsButtonsColor"
       ],
       interval: ["cssStyleMinistryBrandsButtonsHoverTransition"]
     },
@@ -227,15 +239,19 @@ export function style(data: DynamicStylesProps<Value>): OutputStyle {
           : ["cssStyleElementMinistryBrandsButtonsSize"])
       ]
     },
+    ".brz && .brz-ministryBrands__item--meta--register-button": {
+      standart: [
+        "cssStyleElementMinistryBrandsRegisterButtonTypography",
+        "cssStyleElementMinistryBrandsButtonsBorderRadius"
+      ]
+    },
     ".brz && .brz-ministryBrands__item--meta--register-button:hover": {
       standart: [
         "cssStyleElementMinistryBrandsRegisterButtonBgColor",
         "cssStyleElementMinistryBrandsRegisterButtonBgGradient",
         "cssStyleElementMinistryBrandsRegisterButtonBoxShadow",
         "cssStyleElementMinistryBrandsRegisterButtonBorder",
-        "cssStyleElementMinistryBrandsRegisterButtonColor",
-        "cssStyleElementMinistryBrandsRegisterButtonTypography",
-        "cssStyleElementMinistryBrandsButtonsBorderRadius"
+        "cssStyleElementMinistryBrandsRegisterButtonColor"
       ],
       interval: ["cssStyleMinistryBrandsButtonsHoverTransition"]
     },

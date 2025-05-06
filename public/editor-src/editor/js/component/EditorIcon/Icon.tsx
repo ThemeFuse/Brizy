@@ -1,6 +1,9 @@
+import { Chart } from "@brizy/builder-icons/src/Icons/Chart";
+import { AnimatedHeadline } from "@brizy/builder-icons/src/Icons/AnimatedHeadline";
 import { InstagramFeed } from "@brizy/builder-icons/src/Icons/InstagramFeed";
 import { LinkedinFeed } from "@brizy/builder-icons/src/Icons/LinkedinFeed";
 import { PayPal } from "@brizy/builder-icons/src/Icons/PayPal";
+import { Reorder } from "@brizy/builder-icons/src/Icons/Reorder";
 import { ShopifyList } from "@brizy/builder-icons/src/Icons/ShopifyList";
 import { ShopifyMeta } from "@brizy/builder-icons/src/Icons/ShopifyMeta";
 import { ShopifyMetafield } from "@brizy/builder-icons/src/Icons/ShopifyMetafield";
@@ -70,7 +73,10 @@ const Icons = {
   "t2-star-shapes": StarShapes,
   "t2-paypal": PayPal,
   "t2-instagram-feed": InstagramFeed,
-  "t2-linkedin-feed": LinkedinFeed
+  "t2-linkedin-feed": LinkedinFeed,
+  "t2-reorder": Reorder,
+  "t2-chart": Chart,
+  "t2-animated-headline": AnimatedHeadline
 };
 
 export type IconNames = keyof typeof Icons;

@@ -5,12 +5,17 @@ import EditorIcon from "visual/component/EditorIcon";
 interface Props {
   icon: string;
   overlayText: string;
+  onClick?: VoidFunction;
 }
 
-export const TooltipIcon = ({ icon, overlayText }: Props): JSX.Element => (
+export const TooltipIcon = ({
+  icon,
+  overlayText,
+  onClick
+}: Props): JSX.Element => (
   <Tooltip
     overlay={
-      <div className="brz-ed-sidebar__elements--icon--tooltip">
+      <div className="brz-ed-sidebar-drawer__head__icon__tooltip">
         {overlayText}
       </div>
     }
@@ -18,6 +23,6 @@ export const TooltipIcon = ({ icon, overlayText }: Props): JSX.Element => (
     size="auto"
     placement="bottom"
   >
-    <EditorIcon icon={icon} />
+    <EditorIcon icon={icon} onClick={onClick} />
   </Tooltip>
 );

@@ -1,13 +1,13 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { ElementModel } from "visual/component/Elements/Types";
 import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import EditorGlobal from "visual/global/Editor";
+import { useConfig } from "visual/providers/ConfigProvider";
 import { EditorMode } from "visual/providers/EditorModeProvider";
 import { ServerStyleSheet } from "visual/providers/StyleProvider/ServerStyleSheet";
 import { Store } from "visual/redux/store";
 import { GlobalBlockNormal } from "visual/types/GlobalBlock";
 import { Providers } from "../controls/Providers";
-import { Root } from "../controls/Root";
 import { baseToStatic } from "./baseToStatic";
 import { GlobalBlockStatic } from "./types";
 
@@ -28,6 +28,9 @@ const RenderPage = (props: {
   const { store, editorMode, dbValue } = props;
   const { Page: BasePage } = EditorGlobal.getComponents();
 
+  const config = useConfig();
+  const getGlobalConfig = useCallback(() => config, [config]);
+
   if (!BasePage) {
     throw Error("Missing Page Components", EditorGlobal.getComponents());
   }
@@ -43,6 +46,7 @@ const RenderPage = (props: {
         reduxState={reduxState}
         renderContext="view"
         editorMode={editorMode}
+        getGlobalConfig={getGlobalConfig}
       />
     </>
   );
@@ -68,15 +72,21 @@ export const globalBlocksToStatic = (props: Props): GlobalBlocksOutput => {
         config={config}
         editorMode={editorMode}
       >
-        <Root type="block">
-          <RenderPage store={store} dbValue={dbValue} editorMode={editorMode} />
-        </Root>
+        <RenderPage store={store} dbValue={dbValue} editorMode={editorMode} />
       </Providers>
     );
 
     try {
-      const output = baseToStatic({ Page, store, sheet: sheet.instance });
-      outputs.push({ uid: block.uid, ...output });
+      const output = baseToStatic({
+        Page,
+        store,
+        sheet: sheet.instance,
+        config
+      });
+      outputs.push({
+        uid: block.uid,
+        blocks: [{ id: block.uid, ...output }]
+      });
     } catch (e) {
       console.error("Fail to compile globalBLock", e);
     }

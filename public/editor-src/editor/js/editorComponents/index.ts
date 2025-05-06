@@ -2,11 +2,13 @@ import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import Accordion from "./Accordion";
 import AccordionItem from "./Accordion/AccordionItem";
 import Alert from "./Alert";
+import AnimatedHeadline from "./AnimatedHeadline";
 import Audio from "./Audio";
 import Breadcrumbs from "./Breadcrumbs";
 import Button from "./Button";
 import Calendly from "./Calendly";
 import Carousel from "./Carousel";
+import Chart from "./Chart";
 import Cloneable from "./Cloneable";
 import Column from "./Column";
 import Countdown from "./Countdown";
@@ -122,6 +124,7 @@ function getShortcodes(_config: ConfigCommon) {
     SectionFooter,
     Row,
     Column,
+    AnimatedHeadline,
     Form,
     FormFields,
     FormField,
@@ -204,6 +207,7 @@ function getShortcodes(_config: ConfigCommon) {
     Paypal,
     InstagramFeed,
     LinkedinFeed,
+    Chart,
 
     // DC
     PostTitle,
@@ -227,6 +231,7 @@ function getShortcodes(_config: ConfigCommon) {
     Leadific
   };
 }
+
 export default getShortcodes;
 
 export { NotFound as NotFoundComponent } from "./NotFound";

@@ -1,38 +1,37 @@
-import { renderStyles } from "visual/utils/cssStyle";
-import { Value } from "./types";
-import { OutputStyle } from "visual/utils/cssStyle/types";
 import { DynamicStylesProps } from "visual/types";
+import { renderStyles } from "visual/utils/cssStyle";
+import { OutputStyle, Styles } from "visual/utils/cssStyle/types";
+import { Value } from "./types";
 
 export function style(data: DynamicStylesProps<Value>): OutputStyle {
-  const styles: {
-    [k: string]: {
-      interval?: string[];
-      standart?: string[];
-    };
-  } = {
-    ".brz &&:hover": {
+  const styles: Styles = {
+    ".brz &&": {
       standart: [
-        "cssStyleColor",
-        "cssStyleBorder",
-        "cssStyleBoxShadow",
         "cssStyleFontSizeIconOldOption",
-        "cssStyleElementIconBgColor",
-        "cssStyleElementIconBgGradient",
         "cssStyleElementIconPadding",
-        "cssStyleStrokeWidth",
-        "cssStyleBorderRadiusType"
+        "cssStyleBorderRadiusType",
+        "cssStyleStrokeWidth"
       ],
       interval: [
-        "cssStyleHoverTransition",
-        "cssStyleElementIconPropertyHoverTransition",
         "cssStyleVisibleMode|||editor",
         "cssStyleVisibleMode|||preview",
         "cssStyleVisibleEditorDisplayNoneOrFlex|||editor"
       ]
     },
+    ".brz &&:hover": {
+      standart: [
+        "cssStyleColor",
+        "cssStyleBorder",
+        "cssStyleBoxShadow",
+        "cssStyleElementIconBgColor",
+        "cssStyleElementIconBgGradient"
+      ]
+    },
     ".brz &&:hover .brz-icon-svg-custom": {
-      standart: ["cssStyleCustomIconColor"],
-      interval: [
+      standart: ["cssStyleCustomIconColor"]
+    },
+    ".brz &&, .brz && .brz-icon-svg-custom": {
+      standart: [
         "cssStyleHoverTransition",
         "cssStyleElementIconPropertyHoverTransition"
       ]
@@ -42,13 +41,8 @@ export function style(data: DynamicStylesProps<Value>): OutputStyle {
 }
 
 export function styleWrapper(data: DynamicStylesProps<Value>): OutputStyle {
-  const styles: {
-    [k: string]: {
-      interval?: string[];
-      standart?: string[];
-    };
-  } = {
-    ".brz &&:hover": {
+  const styles: Styles = {
+    ".brz &&": {
       standart: ["cssStyleElementIconSizeStory"]
     }
   };

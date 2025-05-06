@@ -1,9 +1,15 @@
+import { prepareHTML } from "visual/bootstraps/compiler/common/utils/prepareHTML";
 import { ChoicesSync } from "visual/component/Options/types/dev/InternalLink/types";
 import { ChoicesSync as ChoiceSync } from "visual/component/Options/types/dev/MultiSelect2/types";
 import {
   Choice,
   ChoicesAsync
 } from "visual/component/Options/types/dev/Select/types";
+import { RuleList } from "visual/component/Prompts/PromptConditions/Rules/types";
+import {
+  FontFile,
+  UploadFont
+} from "visual/component/Prompts/PromptFonts/api/types";
 import {
   EkklesiaFieldMap,
   EkklesiaKeys,
@@ -14,12 +20,16 @@ import {
   ConfigDCItem,
   DCTypes
 } from "visual/global/Config/types/DynamicContent";
+import { GetCollectionItem_collectionItem as CollectionItem } from "visual/global/Config/types/GetCollectionItem";
+import { CollectionTypesInfo } from "visual/global/Config/types/Posts";
 import { isShopifyShop } from "visual/global/Config/types/configs/Base";
 import { Shopify, isCloud } from "visual/global/Config/types/configs/Cloud";
 import {
   AutoSave,
   ConditionalTypesData,
-  ConfigCommon
+  ConfigCommon,
+  MenuSimple,
+  Sidebar
 } from "visual/global/Config/types/configs/ConfigCommon";
 import { Block as APIGlobalBlock } from "visual/global/Config/types/configs/blocks/GlobalBlocks";
 import {
@@ -59,6 +69,7 @@ import {
   EkklesiaExtra,
   EkklesiaFields
 } from "visual/global/Config/types/configs/modules/ekklesia/Ekklesia";
+import { Store } from "visual/redux/store";
 import { SavedBlock, SavedLayout } from "visual/types";
 import { UploadedFont } from "visual/types/Fonts";
 import {
@@ -71,18 +82,21 @@ import { Project } from "visual/types/Project";
 import { Rule } from "visual/types/Rule";
 import { FontStyle, Palette } from "visual/types/Style";
 import { Dictionary } from "visual/types/utils";
-import { GetCollectionItem_collectionItem as CollectionItem } from "visual/utils/api/cms/graphql/types/GetCollectionItem";
 import {
   AdobeAddAccount,
   AdobeFonts,
   BlogSourceItem,
   CollectionSourceItem,
+  GetAuthors,
+  GetPostTaxonomies,
+  GetPosts,
+  GetTerms,
+  GetTermsBy,
   PostsSources,
   Rule as PublishRule,
   SelectedItem,
   UploadIconData
 } from "visual/utils/api/types";
-import { getCompile } from "visual/utils/compiler";
 import { t } from "visual/utils/i18n";
 import {
   editorRuleToApiRule,
@@ -114,7 +128,7 @@ interface Publish {
   is_autosave: 1 | 0;
   config: ConfigCommon;
   needToCompile: Partial<CompileData>;
-  state: CompileData;
+  store: Store;
 }
 
 export function publish(data: Publish): Promise<void> {
@@ -125,10 +139,15 @@ export function publish(data: Publish): Promise<void> {
     if (!handler) {
       rej(t("API: No publish handler found."));
     } else {
-      (async () => {
-        const output = await getCompile(data);
-        handler(res, rej, { ...output, is_autosave });
-      })();
+      const output = prepareHTML({
+        config: data.config,
+        globalBlocks: data.needToCompile.globalBlocks,
+        page: data.needToCompile.page,
+        project: data.needToCompile.project,
+        store: data.store
+      });
+
+      handler(res, rej, { ...output, is_autosave });
     }
   });
 }
@@ -166,7 +185,7 @@ export function autoSave(data: Save, config: ConfigCommon): Promise<void> {
 interface OnChange {
   config: ConfigCommon;
   needToCompile: Partial<CompileData>;
-  state: CompileData;
+  store: Store;
 }
 
 export function onChange(data: OnChange): Promise<void> {
@@ -176,7 +195,13 @@ export function onChange(data: OnChange): Promise<void> {
 
     if (typeof onChange === "function") {
       (async () => {
-        const output = await getCompile(data);
+        const output = prepareHTML({
+          config: data.config,
+          globalBlocks: data.needToCompile.globalBlocks,
+          page: data.needToCompile.page,
+          project: data.needToCompile.project,
+          store: data.store
+        });
         onChange(output);
         res();
       })();
@@ -785,6 +810,36 @@ export function getUploadedFonts(
   });
 }
 
+export function uploadFont(
+  data: { files: FontFile; name: string; id: string },
+  config: ConfigCommon
+): Promise<UploadFont> {
+  const { upload } = config.integrations?.fonts?.upload ?? {};
+
+  return new Promise((res, rej) => {
+    if (typeof upload === "function") {
+      upload(res, rej, data);
+    } else {
+      rej(t("Missing uploadFonts handler inside api config"));
+    }
+  });
+}
+
+export function deleteFont(
+  fontId: string,
+  config: ConfigCommon
+): Promise<string> {
+  const { delete: deleteHandler } = config.integrations?.fonts?.upload ?? {};
+
+  return new Promise((res, rej) => {
+    if (typeof deleteHandler === "function") {
+      deleteHandler(res, rej, fontId);
+    } else {
+      rej(t("Missing deleteFonts handler inside api config"));
+    }
+  });
+}
+
 //#endregion
 
 //#region  collections
@@ -873,6 +928,19 @@ export function getCollectionSourceItemsById(
     }
   });
 }
+
+export const getCollectionTypesInfo = (
+  config: ConfigCommon
+): Promise<CollectionTypesInfo> => {
+  const get = config?.api?.collectionTypes?.getCollectionTypesInfo?.handler;
+  return new Promise((res, rej) => {
+    if (typeof get === "function") {
+      get(res, rej);
+    } else {
+      rej(t("Missing api collection types info handler in config"));
+    }
+  });
+};
 
 //#endregion
 
@@ -1363,6 +1431,28 @@ export function getDynamicContent() {
   };
 }
 
+export function getMenuSimpleDynamicContent() {
+  return ({
+    placeholders,
+    signal,
+    config
+  }: {
+    placeholders: Dictionary<string[]>;
+    signal?: AbortSignal;
+    config: ConfigCommon;
+  }): Promise<Dictionary<string[]>> => {
+    const handler = config.elements?.menuSimple?.getPlaceholderData;
+
+    return new Promise((res, rej) => {
+      if (typeof handler === "function") {
+        handler(res, rej, { placeholders, signal });
+      } else {
+        rej(t("Missing menuSimple dynamicContent inside api Config"));
+      }
+    });
+  };
+}
+
 //#endregion
 
 //# region Project HeartBeat
@@ -1385,6 +1475,268 @@ export function sendHeartBeatTakeOver(api: Config["api"]): Promise<unknown> {
       takeOverHandler(res, rej);
     } else {
       rej(t("Missing takeOver handler inside config api"));
+    }
+  });
+}
+
+//#endregion
+
+//#region GetMenus
+
+export const getMenus = (
+  config: ConfigCommon["api"]
+): Promise<MenuSimple[]> => {
+  return new Promise((res, rej) => {
+    const { menu } = config ?? {};
+
+    const getMenu = menu?.getMenus?.handler;
+
+    if (!getMenu) {
+      rej(t("API: No getMenus found."));
+    } else {
+      getMenu(res, rej);
+    }
+  });
+};
+
+//#endregion
+
+//#region Featured Image
+export async function updateFeaturedImage(
+  attachmentId: string,
+  config: ConfigCommon
+): Promise<unknown> {
+  return new Promise((res, rej) => {
+    const { api } = config ?? {};
+
+    const updateImage = api?.featuredImage?.updateFeaturedImage;
+
+    if (!updateImage) {
+      rej(t("API: No Update Featured Image found."));
+    } else {
+      updateImage(res, rej, attachmentId);
+    }
+  });
+}
+
+export async function updateFeaturedImageFocalPoint(
+  attachmentId: string,
+  pointX: string,
+  pointY: string,
+  config: ConfigCommon
+): Promise<unknown> {
+  return new Promise((res, rej) => {
+    const { api } = config ?? {};
+
+    const updateFeaturedImageFocalPoint =
+      api?.featuredImage?.updateFeaturedImageFocalPoint;
+
+    if (!updateFeaturedImageFocalPoint) {
+      rej(t("API: No Update Featured Image Focal Point found."));
+    } else {
+      updateFeaturedImageFocalPoint(res, rej, { attachmentId, pointX, pointY });
+    }
+  });
+}
+
+export async function removeFeaturedImage(
+  config: ConfigCommon
+): Promise<unknown> {
+  return new Promise((res, rej) => {
+    const { api } = config ?? {};
+
+    const removeFeaturedImage = api?.featuredImage?.removeFeaturedImage;
+
+    if (!removeFeaturedImage) {
+      rej(t("API: No Remove Featured Image found."));
+    } else {
+      removeFeaturedImage(res, rej);
+    }
+  });
+}
+
+//#endregion
+
+//#region Shortcode Content
+
+export async function shortcodeContent(
+  shortcode: string,
+  config: ConfigCommon
+): Promise<unknown> {
+  return new Promise((res, rej) => {
+    const { api } = config ?? {};
+
+    const handler = api?.shortcodeContent?.handler;
+
+    if (!handler) {
+      rej(t("API: No shortcodeContent found."));
+    } else {
+      handler(res, rej, shortcode);
+    }
+  });
+}
+
+//#endregion
+
+export const getAuthors: GetAuthors = ({
+  include = [],
+  search = "",
+  abortSignal,
+  config
+}) => {
+  return new Promise((res, rej) => {
+    const { api } = config;
+
+    const _getAuthors = api?.authors?.getAuthors;
+
+    if (!_getAuthors) {
+      rej(t("API: No authors found."));
+    } else {
+      _getAuthors(res, rej, {
+        include,
+        search,
+        abortSignal
+      });
+    }
+  });
+};
+
+//# region Posts
+
+export const getPosts: GetPosts = async ({
+  include,
+  search = "",
+  postType,
+  excludePostType,
+  abortSignal,
+  config
+}) => {
+  return new Promise((res, rej) => {
+    const { api } = config;
+
+    const handler = api?.posts?.getPosts;
+
+    if (!handler) {
+      rej(t("API: No posts found."));
+    } else {
+      handler(res, rej, {
+        include,
+        search,
+        postType,
+        excludePostType,
+        abortSignal
+      });
+    }
+  });
+};
+
+export const getPostTaxonomies: GetPostTaxonomies = async ({
+  taxonomy,
+  abortSignal,
+  config
+}) => {
+  return new Promise((res, rej) => {
+    const { api } = config;
+
+    const handler = api?.posts?.getPostTaxonomies;
+
+    if (!handler) {
+      rej(t("API: No posts taxonomies found."));
+    } else {
+      handler(res, rej, {
+        taxonomy,
+        abortSignal
+      });
+    }
+  });
+};
+
+//#endregion
+
+//# region Terms
+
+export const getTerms: GetTerms = async (taxonomy, config) => {
+  return new Promise((res, rej) => {
+    const { api } = config;
+
+    const handler = api?.terms?.getTerms;
+
+    if (!handler) {
+      rej(t("API: No terms found."));
+    } else {
+      handler(res, rej, taxonomy);
+    }
+  });
+};
+
+export const getTermsBy: GetTermsBy = async ({
+  include = [],
+  search = "",
+  abortSignal,
+  config
+}) => {
+  return new Promise((res, rej) => {
+    const { api } = config;
+
+    const handler = api?.terms?.getTermsBy;
+
+    if (!handler) {
+      rej(t("API: No terms found."));
+    } else {
+      handler(res, rej, { include, search, abortSignal });
+    }
+  });
+};
+
+//#endregion
+
+//#region Rules
+
+export function getRulesList(config: ConfigCommon): Promise<Array<Rule>> {
+  return new Promise((res, rej) => {
+    const { conditions } = config.api?.popupConditions ?? {};
+
+    const getRules = conditions?.getRuleList;
+
+    if (!getRules) {
+      rej(t("API: No rules list found."));
+    } else {
+      getRules(res, rej);
+    }
+  });
+}
+
+export function getGroupList(
+  type: "block" | "popup",
+  config: ConfigCommon
+): Promise<Array<RuleList[]>> {
+  return new Promise((res, rej) => {
+    const { conditions } = config.api?.popupConditions ?? {};
+
+    const handler = conditions?.getGroupList;
+
+    if (!handler) {
+      rej(t("API: No group list found."));
+    } else {
+      handler(res, rej, type);
+    }
+  });
+}
+
+//#endregion
+
+//#region Sidebars
+
+export async function getSidebars(config: ConfigCommon): Promise<Sidebar[]> {
+  return new Promise((res, rej) => {
+    const { api } = config;
+
+    const _getSidebars = api?.sidebars?.getSidebars;
+
+    if (!_getSidebars) {
+      rej(t("API: No sidebars found."));
+    } else {
+      _getSidebars(res, rej);
     }
   });
 }

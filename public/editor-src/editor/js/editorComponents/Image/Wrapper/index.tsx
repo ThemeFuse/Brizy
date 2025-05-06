@@ -1,9 +1,14 @@
 /* eslint-disable @typescript-eslint/no-use-before-define */
+import { Num } from "@brizy/readers";
 import classnames from "classnames";
 import React, { useCallback } from "react";
 import BoxResizer from "visual/component/BoxResizer";
-import { getSizeType } from "visual/editorComponents/Image/utils";
+import {
+  calcWrapperSizes,
+  getSizeType
+} from "visual/editorComponents/Image/utils";
 import { SizeType } from "visual/global/Config/types/configs/common";
+import { useConfig } from "visual/providers/ConfigProvider";
 import { useEditorMode } from "visual/providers/EditorModeProvider";
 import { useRender } from "visual/providers/RenderProvider";
 import { useCSS } from "visual/providers/StyleProvider/useCSS";
@@ -36,6 +41,8 @@ const Image: FCC<ImageProps> = (props) => {
   const { points, restrictions } = useResizerPoints({ ...props, context });
   const { renderType } = useRender();
   const { mode } = useEditorMode();
+  const config = useConfig();
+
   const modelClassName = useCSS({
     // hard to explain, but because styles are generated from props in this case
     // we can't rely on the usual way of using css(),
@@ -54,7 +61,8 @@ const Image: FCC<ImageProps> = (props) => {
       store,
       contexts: {
         renderContext: renderType,
-        mode
+        mode,
+        getConfig: () => config
       }
     })
   });
@@ -66,8 +74,8 @@ const Image: FCC<ImageProps> = (props) => {
   );
 
   const handleOnResize = useCallback(
-    (patch: Patch) => {
-      onChange(resizerTransformPatch(patch, v));
+    (patch: Patch, meta: Meta) => {
+      onChange(resizerTransformPatch(patch, v, meta));
     },
     [onChange, v]
   );
@@ -81,7 +89,8 @@ const Image: FCC<ImageProps> = (props) => {
       store,
       contexts: {
         renderContext: renderType,
-        mode
+        mode,
+        getConfig: () => config
       }
     })
   });
@@ -98,7 +107,7 @@ const Image: FCC<ImageProps> = (props) => {
       points={points}
       meta={meta}
       value={resizerTransformValue(v, meta)}
-      onChange={handleOnResize}
+      onChange={(patch: Patch) => handleOnResize(patch, meta)}
       onStart={onStart}
       onEnd={onEnd}
     >
@@ -150,21 +159,69 @@ const Image: FCC<ImageProps> = (props) => {
     };
   }
 
-  function resizerTransformPatch(patch: Patch, v: V): Patch {
+  function resizerTransformPatch(patch: Patch, v: V, meta: Meta): Patch {
+    const { desktopW: containerWidth } = meta;
+    const {
+      imageWidth,
+      imageHeight,
+      width,
+      height,
+      widthSuffix,
+      heightSuffix,
+      hoverImageWidth,
+      hoverImageHeight,
+      hoverHeight,
+      elementPosition,
+      offsetY,
+      size
+    } = v;
+
+    const w = patch.width ?? width;
+    const h = patch.height ?? height;
+
+    const wrapperSize = calcWrapperSizes(
+      {
+        width: w,
+        height: h,
+        imageWidth,
+        imageHeight,
+        widthSuffix,
+        heightSuffix,
+        size
+      },
+      containerWidth
+    );
+
+    const newHoverWrapperSizes = calcWrapperSizes(
+      {
+        imageWidth: hoverImageWidth,
+        imageHeight: hoverImageHeight,
+        width: w,
+        height: Num.read(hoverHeight) ?? h,
+        widthSuffix,
+        heightSuffix,
+        size
+      },
+      containerWidth
+    );
+
+    const newHoverCH =
+      (wrapperSize.height * (hoverHeight || 100)) / newHoverWrapperSizes.height;
+
     const isAbsoluteOrFixed =
-      v.elementPosition === "absolute" || v.elementPosition === "fixed";
+      elementPosition === "absolute" || elementPosition === "fixed";
 
     let newPatch = {};
     if (isAbsoluteOrFixed) {
-      const ratio = v.imageWidth / v.imageHeight;
+      const ratio = imageWidth / imageHeight;
 
       newPatch = {
-        offsetY: patch.offsetY || v.offsetY,
+        offsetY: patch.offsetY || offsetY,
         height: patch.height * ratio
       };
     }
 
-    return { ...patch, ...newPatch };
+    return { ...patch, ...newPatch, hoverHeight: newHoverCH };
   }
 };
 

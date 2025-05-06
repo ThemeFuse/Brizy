@@ -3,20 +3,19 @@ import React, { JSX, MouseEvent, useCallback, useMemo, useState } from "react";
 import Scrollbars from "react-custom-scrollbars";
 import { useDispatch, useSelector } from "react-redux";
 import EditorIcon from "visual/component/EditorIcon";
-import { useConfig } from "visual/global/hooks";
+import { useConfig } from "visual/providers/ConfigProvider";
 import { deleteFont, updateDefaultFont } from "visual/redux/actions2";
 import {
   defaultFontSelector,
   unDeletedFontsSelector
 } from "visual/redux/selectors";
 import { Font, UploadedFont } from "visual/types/Fonts";
-import { pendingRequest } from "visual/utils/api";
+import { deleteFont as apiDeleteFont, pendingRequest } from "visual/utils/api";
 import { fontTransform } from "visual/utils/fonts/transform";
 import { FONT_INITIAL } from "visual/utils/fonts/utils";
 import { t } from "visual/utils/i18n";
 import { Circle } from "./Circle";
 import { Tooltip } from "./Tooltip";
-import { deleteFont as apiDeleteFont } from "./api";
 import { FontTypes } from "./types";
 import { sortFonts } from "./utils";
 

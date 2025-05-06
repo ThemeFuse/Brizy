@@ -113,6 +113,8 @@ export const getItems: GetItems = ({
     units: [{ value: "s", title: "s" }]
   };
 
+  const isDisabledInternalLink = !config.ui?.features?.internalLink;
+
   return [
     {
       id: "toolbarCurrentElement",
@@ -545,12 +547,14 @@ export const getItems: GetItems = ({
                 {
                   id: "linkPage",
                   type: "internalLink",
-                  label: t("Find Page")
+                  label: t("Find Page"),
+                  disabled: isDisabledInternalLink
                 },
                 {
                   id: "linkInternalBlank",
                   label: t("Open In New Tab"),
-                  type: "switch"
+                  type: "switch",
+                  disabled: isDisabledInternalLink
                 }
               ]
             },

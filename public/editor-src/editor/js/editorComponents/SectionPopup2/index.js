@@ -8,6 +8,7 @@ import CustomCSS from "visual/component/CustomCSS";
 import EditorIcon from "visual/component/EditorIcon";
 import HotKeys from "visual/component/HotKeys";
 import { Roles } from "visual/component/Roles";
+import { currentUserRole } from "visual/component/Roles";
 import { SortableZIndex } from "visual/component/Sortable/SortableZIndex";
 import { ThemeIcon } from "visual/component/ThemeIcon";
 import Toolbar, {
@@ -87,7 +88,10 @@ class SectionPopup2 extends EditorComponent {
   }
 
   componentDidMount() {
-    this.popupsContainer.appendChild(this.el);
+    if (this.popupsContainer) {
+      this.popupsContainer.appendChild(this.el);
+    }
+
     Instances.set(this.instanceKey, this);
   }
 
@@ -97,9 +101,11 @@ class SectionPopup2 extends EditorComponent {
   }
 
   componentWillUnmount() {
-    this.popupsContainer.removeChild(this.el);
-    this.popupsContainer = null;
-    this.el = null;
+    if (this.popupsContainer) {
+      this.popupsContainer.removeChild(this.el);
+      this.popupsContainer = null;
+      this.el = null;
+    }
 
     document.documentElement.classList.remove("brz-ow-hidden");
     Instances.delete(this.instanceKey);
@@ -351,6 +357,7 @@ class SectionPopup2 extends EditorComponent {
                   </button>
                 )}
                 <Roles
+                  currentRole={currentUserRole(this.getGlobalConfig())}
                   allow={["admin"]}
                   fallbackRender={() => this.renderItems(v, vs, vd)}
                 >

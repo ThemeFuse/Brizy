@@ -4,28 +4,22 @@ import { renderStyles } from "visual/utils/cssStyle";
 
 export function style(data: DynamicStylesProps<ElementModel>) {
   const styles = {
-    ".brz &&:hover form:not(.variations_form)": {
-      standart: [
-        "cssStyleElementWOOAddToCartInputPosition",
-        "cssStyleElementWOOAddToCartInputAlign"
-      ]
-    },
-    ".brz &&:hover form.variations_form .variations_button": {
-      standart: [
-        "cssStyleElementWOOAddToCartInputPosition",
-        "cssStyleElementWOOAddToCartInputAlign"
-      ]
-    },
-    ".brz && form.cart .quantity:hover": {
+    ".brz && form:not(.variations_form), .brz && form.variations_form .variations_button":
+      {
+        standart: [
+          "cssStyleElementWOOAddToCartInputPosition",
+          "cssStyleElementWOOAddToCartInputAlign"
+        ]
+      },
+    ".brz && form.cart .quantity": {
       standart: [
         "cssStyleElementWOOAddToCartInputWidth",
         "cssStyleElementWOOAddToCartInputHeight",
         "cssStyleElementWOOAddToCartSpacing"
       ]
     },
-    ".brz &&:hover input[type=number].input-text": {
+    ".brz &&: input[type=number].input-text": {
       standart: [
-        "cssStyleElementWOOAddToCartInputColor",
         "cssStyleElementWOOAddToCartInputFontFamily",
         "cssStyleElementWOOAddToCartInputFontSize",
         "cssStyleElementWOOAddToCartInputLineHeight",
@@ -33,26 +27,22 @@ export function style(data: DynamicStylesProps<ElementModel>) {
         "cssStyleElementWOOAddToCartInputLetterSpacing",
         "cssStyleElementWOOAddToCartInputFontVariation",
         "cssStyleElementWOOAddToCartInputTextTransform",
-        "cssStyleElementWOOAddToCartInputRadius",
+        "cssStyleElementWOOAddToCartInputRadius"
+      ]
+    },
+    ".brz &&:hover input[type=number].input-text": {
+      standart: [
+        "cssStyleElementWOOAddToCartInputColor",
         "cssStyleElementWOOAddToCartInputBg",
         "cssStyleElementWOOAddToCartInputBorder",
         "cssStyleElementWOOAddToCartInputBoxShadow"
-      ],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
       ]
     },
     ".brz &&:hover input[type=number].input-text::placeholder": {
-      standart: ["cssStyleElementWOOAddToCartInputColor"],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
-      ]
+      standart: ["cssStyleElementWOOAddToCartInputColor"]
     },
-    ".brz &&:hover .single_variation": {
+    ".brz && .single_variation": {
       standart: [
-        "cssStyleElementWOOAddToCartValueColor",
         "cssStyleElementWOOAddToCartValueFontFamily",
         "cssStyleElementWOOAddToCartValueFontSize",
         "cssStyleElementWOOAddToCartValueLineHeight",
@@ -60,21 +50,15 @@ export function style(data: DynamicStylesProps<ElementModel>) {
         "cssStyleElementWOOAddToCartValueLetterSpacing",
         "cssStyleElementWOOAddToCartValueFontVariation",
         "cssStyleElementWOOAddToCartValueTextTransform"
-      ],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
       ]
     },
-    ".brz &&:hover button[type=submit].single_add_to_cart_button.single_add_to_cart_button":
+    ".brz &&:hover .single_variation": {
+      standart: ["cssStyleElementWOOAddToCartValueColor"]
+    },
+    ".brz && button[type=submit].single_add_to_cart_button.single_add_to_cart_button":
       {
         standart: [
           "cssStyleElementWOOAddToCartBorderRadius",
-          "cssStyleElementWOOAddToCartButtonColor",
-          "cssStyleBgColor",
-          "cssStyleBgGradient",
-          "cssStyleElementWOOAddToCartBorder",
-          "cssStyleBoxShadow",
           "cssStyleElementWOOAddToCartSize",
           "cssStyleTypography3FontFamily",
           "cssStyleTypography3FontSize",
@@ -83,15 +67,20 @@ export function style(data: DynamicStylesProps<ElementModel>) {
           "cssStyleTypography3LetterSpacing",
           "cssStyleTypography3FontVariation",
           "cssStyleTypography3TextTransform"
-        ],
-        interval: [
-          "cssStyleHoverTransition",
-          "cssStylePropertyHoverTransitionColor"
         ]
       },
-    ".brz &&:hover td label": {
+    ".brz &&:hover button[type=submit].single_add_to_cart_button.single_add_to_cart_button":
+      {
+        standart: [
+          "cssStyleElementWOOAddToCartButtonColor",
+          "cssStyleBgColor",
+          "cssStyleBgGradient",
+          "cssStyleElementWOOAddToCartBorder",
+          "cssStyleBoxShadow"
+        ]
+      },
+    ".brz && td label": {
       standart: [
-        "cssStyleElementWOOAddToCartLabelColor",
         "cssStyleElementWOOAddToCartLabelFontFamily",
         "cssStyleElementWOOAddToCartLabelFontSize",
         "cssStyleElementWOOAddToCartLabelLineHeight",
@@ -99,31 +88,27 @@ export function style(data: DynamicStylesProps<ElementModel>) {
         "cssStyleElementWOOAddToCartLabelLetterSpacing",
         "cssStyleElementWOOAddToCartLabelFontVariation",
         "cssStyleElementWOOAddToCartLabelTextTransform"
-      ],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
+      ]
+    },
+    ".brz &&:hover td label": {
+      standart: ["cssStyleElementWOOAddToCartLabelColor"]
+    },
+    ".brz && th label": {
+      standart: [
+        "cssStyleElementWOOAddToCartLabelFontFamily",
+        "cssStyleElementWOOAddToCartLabelFontSize",
+        "cssStyleElementWOOAddToCartLabelLineHeight",
+        "cssStyleElementWOOAddToCartLabelFontWeight",
+        "cssStyleElementWOOAddToCartLabelLetterSpacing",
+        "cssStyleElementWOOAddToCartLabelFontVariation",
+        "cssStyleElementWOOAddToCartLabelTextTransform"
       ]
     },
     ".brz &&:hover th label": {
-      standart: [
-        "cssStyleElementWOOAddToCartLabelColor",
-        "cssStyleElementWOOAddToCartLabelFontFamily",
-        "cssStyleElementWOOAddToCartLabelFontSize",
-        "cssStyleElementWOOAddToCartLabelLineHeight",
-        "cssStyleElementWOOAddToCartLabelFontWeight",
-        "cssStyleElementWOOAddToCartLabelLetterSpacing",
-        "cssStyleElementWOOAddToCartLabelFontVariation",
-        "cssStyleElementWOOAddToCartLabelTextTransform"
-      ],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
-      ]
+      standart: ["cssStyleElementWOOAddToCartLabelColor"]
     },
-    ".brz &&:hover td.value .reset_variations": {
+    ".brz && td.value .reset_variations": {
       standart: [
-        "cssStyleElementWOOAddToCartClearColor",
         "cssStyleElementWOOAddToCartClearFontFamily",
         "cssStyleElementWOOAddToCartClearFontSize",
         "cssStyleElementWOOAddToCartClearLineHeight",
@@ -131,56 +116,45 @@ export function style(data: DynamicStylesProps<ElementModel>) {
         "cssStyleElementWOOAddToCartClearLetterSpacing",
         "cssStyleElementWOOAddToCartClearFontVariation",
         "cssStyleElementWOOAddToCartClearTextTransform"
-      ],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
       ]
     },
-
+    ".brz &&:hover td.value .reset_variations": {
+      standart: ["cssStyleElementWOOAddToCartClearColor"]
+    },
     ".brz &&:hover table": {
       standart: [
         "cssStyleElementWOOAddToCartTableMargin",
         "cssStyleElementWOOAddToCartTableBoxShadow"
-      ],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
       ]
     },
     ".brz &&:hover .label, .woocommerce-grouped-product-list-item": {
       standart: ["cssStyleElementWOOAddToCartLabelBg"]
     },
     ".brz &&:hover table td": {
-      standart: ["cssStyleElementWOOAddToCartTableBorder"],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
+      standart: ["cssStyleElementWOOAddToCartTableBorder"]
+    },
+    ".brz && td.value select": {
+      standart: [
+        "cssStyleElementWOOAddToCartValueFontFamily",
+        "cssStyleElementWOOAddToCartValueFontSize",
+        "cssStyleElementWOOAddToCartValueLineHeight",
+        "cssStyleElementWOOAddToCartValueFontWeight",
+        "cssStyleElementWOOAddToCartValueLetterSpacing",
+        "cssStyleElementWOOAddToCartValueFontVariation",
+        "cssStyleElementWOOAddToCartValueTextTransform"
       ]
     },
     ".brz &&:hover td.value select": {
       standart: [
         "cssStyleElementWOOAddToCartTableBorder",
-        "cssStyleElementWOOAddToCartValueColor",
-        "cssStyleElementWOOAddToCartValueFontFamily",
-        "cssStyleElementWOOAddToCartValueFontSize",
-        "cssStyleElementWOOAddToCartValueLineHeight",
-        "cssStyleElementWOOAddToCartValueFontWeight",
-        "cssStyleElementWOOAddToCartValueLetterSpacing",
-        "cssStyleElementWOOAddToCartValueFontVariation",
-        "cssStyleElementWOOAddToCartValueTextTransform"
-      ],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
+        "cssStyleElementWOOAddToCartValueColor"
       ]
     },
     ".brz &&:hover .value": {
       standart: ["cssStyleElementWOOAddToCartTableBg"]
     },
-    ".brz &&:hover td.woocommerce-grouped-product-list-item__price": {
+    ".brz && td.woocommerce-grouped-product-list-item__price": {
       standart: [
-        "cssStyleElementWOOAddToCartValueColor",
         "cssStyleElementWOOAddToCartValueFontFamily",
         "cssStyleElementWOOAddToCartValueFontSize",
         "cssStyleElementWOOAddToCartValueLineHeight",
@@ -188,12 +162,18 @@ export function style(data: DynamicStylesProps<ElementModel>) {
         "cssStyleElementWOOAddToCartValueLetterSpacing",
         "cssStyleElementWOOAddToCartValueFontVariation",
         "cssStyleElementWOOAddToCartValueTextTransform"
-      ],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
       ]
-    }
+    },
+    ".brz &&:hover td.woocommerce-grouped-product-list-item__price": {
+      standart: ["cssStyleElementWOOAddToCartValueColor"]
+    },
+    ".brz && td.woocommerce-grouped-product-list-item__price, .brz && td.value select, .brz && table td, .brz && table, .brz && td.value .reset_variations, .brz && th label, .brz && td label, .brz && input[type=number].input-text, .brz && input[type=number].input-text::placeholder, .brz && .single_variation, .brz && button[type=submit].single_add_to_cart_button.single_add_to_cart_button":
+      {
+        standart: [
+          "cssStyleHoverTransition",
+          "cssStylePropertyHoverTransitionColor"
+        ]
+      }
   };
 
   return renderStyles({ ...data, styles });

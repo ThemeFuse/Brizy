@@ -5,24 +5,22 @@ import { OutputStyle } from "visual/utils/cssStyle/types";
 
 export function style(data: DynamicStylesProps<ElementModel>): OutputStyle {
   const styles = {
-    ".brz &&:hover": {
+    ".brz &&": {
       standart: ["cssStyleSizeWidth", "cssStyleSizeMinHeightPx"]
     },
+    ".brz &&:before, .brz && .brz-soundCloud-content": {
+      standart: ["cssStyleBorderRadius"]
+    },
     ".brz &&:hover:before": {
-      standart: ["cssStyleBorder", "cssStyleBorderRadius", "cssStyleBoxShadow"],
-      interval: [
+      standart: ["cssStyleBorder", "cssStyleBoxShadow"]
+    },
+    ".brz && iframe": { standart: ["cssStyleSizeHeight"] },
+    ".brz &&:before": {
+      standart: [
         "cssStyleHoverTransition",
         "cssStylePropertyHoverTransitionColor"
       ]
-    },
-    ".brz &&:hover .brz-soundCloud-content": {
-      standart: ["cssStyleBorderRadius"],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
-      ]
-    },
-    ".brz &&:hover iframe": { standart: ["cssStyleSizeHeight"] }
+    }
   };
 
   return renderStyles({ ...data, styles });

@@ -6,9 +6,9 @@ import { setIn } from "timm";
 import { isEcwidShop } from "visual/global/Config/types/configs/Base";
 import { isCMS, isCloud } from "visual/global/Config/types/configs/Cloud";
 import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
-import { useConfig } from "visual/global/hooks";
 import { Categories } from "visual/libs/EcwidSdk/categories";
 import { Products } from "visual/libs/EcwidSdk/products";
+import { useConfig } from "visual/providers/ConfigProvider";
 import {
   CollectionItemRule,
   CollectionTypeRule,
@@ -35,6 +35,8 @@ import { isOneOf } from "visual/utils/fp/isOneOf";
 import { t } from "visual/utils/i18n";
 import { CmsListItem, RuleList, RuleListItem } from "./types";
 import {
+  convertCustomerGroupIdToValue,
+  convertCustomerIdToValue,
   convertIdToValue,
   disableAlreadyUsedRules,
   getRefsById,
@@ -183,7 +185,7 @@ export default function useRuleList(
             title: t("Specific User"),
             value: CUSTOMER_TYPE,
             mode: "specific",
-            items: convertIdToValue(customerTypes)
+            items: convertCustomerIdToValue(customerTypes)
           });
         }
 
@@ -192,7 +194,7 @@ export default function useRuleList(
             title: t("Roles"),
             value: CUSTOMER_TYPE,
             mode: "reference",
-            items: convertIdToValue(groups)
+            items: convertCustomerGroupIdToValue(groups)
           });
         }
 

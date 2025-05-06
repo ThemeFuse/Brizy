@@ -8,6 +8,8 @@ const __MOCKED_VISUAL_CONFIG__ = {
   }
 } as unknown as ConfigCommon;
 
+const jestGetConfig = () => __MOCKED_VISUAL_CONFIG__;
+
 export const mockDataForReduxStore = {
   project: {
     data: {
@@ -338,16 +340,13 @@ export const mockDataForReduxStore = {
       ]
     }
   },
-  configId: "mockvisual",
   config: __MOCKED_VISUAL_CONFIG__,
   editorMode: "page"
 };
 
-const initialState = {
-  configId: "mockvisual"
-};
+const initialState = {};
 
-function configIdReducer(state = initialState, action: Action) {
+function reducer(state = initialState, action: Action) {
   switch (action.type) {
     default:
       return state;
@@ -355,6 +354,6 @@ function configIdReducer(state = initialState, action: Action) {
 }
 
 // TODO: in future meybe we need to use store instance with structure like our real production store
-const store = createStore(configIdReducer);
+const store = createStore(reducer);
 
-export { store, __MOCKED_VISUAL_CONFIG__ as config };
+export { store, __MOCKED_VISUAL_CONFIG__ as config, jestGetConfig };

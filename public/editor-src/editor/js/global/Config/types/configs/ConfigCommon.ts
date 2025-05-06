@@ -8,7 +8,12 @@ import {
   ChoicesAsync,
   ChoicesSync
 } from "visual/component/Options/types/dev/Select/types";
+import { RuleList } from "visual/component/Prompts/PromptConditions/Rules/types";
 import { Ref } from "visual/component/Prompts/PromptConditions/Rules/utils/api";
+import {
+  FontFile,
+  UploadFont
+} from "visual/component/Prompts/PromptFonts/api/types";
 import { ConfigTab as PromptFormTab } from "visual/component/Prompts/PromptForm/types";
 import { FormInputTypesName } from "visual/editorComponents/Form2/Form2Field/types";
 import {
@@ -17,7 +22,10 @@ import {
   EkklesiaParams
 } from "visual/editorComponents/MinistryBrands/utils/types";
 import { VideoTypes } from "visual/editorComponents/Video/types";
-import { DynamicContent } from "visual/global/Config/types/DynamicContent";
+import {
+  DynamicContent,
+  GetPlaceholderData
+} from "visual/global/Config/types/DynamicContent";
 import { ImageDataSize } from "visual/global/Config/types/ImageSize";
 import { PostTypesTax } from "visual/global/Config/types/PostTypesTax";
 import { Taxonomy } from "visual/global/Config/types/Taxonomy";
@@ -29,7 +37,6 @@ import { Page, PageCommon } from "visual/types/Page";
 import { Project } from "visual/types/Project";
 import { Rule } from "visual/types/Rule";
 import { FontStyle, Palette } from "visual/types/Style";
-import { GetCollectionItem_collectionItem as CollectionItem } from "visual/utils/api/cms/graphql/types/GetCollectionItem";
 import {
   AdobeAddAccount,
   AdobeFonts,
@@ -37,6 +44,8 @@ import {
   PostsSources
 } from "visual/utils/api/types";
 import { Literal } from "visual/utils/types/Literal";
+import { GetCollectionItem_collectionItem as CollectionItem } from "../../types/GetCollectionItem";
+import { CollectionTypesInfo } from "../../types/Posts";
 import { Pro } from "../Pro";
 import { User } from "../User";
 import type { Compiler } from "./Compiler";
@@ -103,7 +112,9 @@ export enum Mode {
   external_story = "external_story",
   internal_story = "internal_story",
 
-  template = "template"
+  template = "template",
+
+  archive = "archive"
 }
 
 export interface MenuItem {
@@ -136,7 +147,6 @@ export enum LeftSidebarOptionsIds {
   collaboration = "collaboration",
   deviceMode = "deviceMode",
   pageSettings = "pageSettings",
-  settings = "settings",
   more = "more"
 }
 
@@ -166,7 +176,6 @@ interface LeftSidebarCommonOption extends LeftSidebarOptionBase {
     | LeftSidebarOptionsIds.collaboration
     | LeftSidebarOptionsIds.deviceMode
     | LeftSidebarOptionsIds.pageSettings
-    | LeftSidebarOptionsIds.settings
     | LeftSidebarOptionsIds.more;
 }
 
@@ -206,12 +215,22 @@ export interface PublishedProject extends Project {
   compiled?: ProjectOutput;
 }
 
+type BlockOutput = Partial<Output> & {
+  id: string;
+};
+
 export type PublishedPage = Page & {
-  compiled?: Output;
+  compiled?: {
+    rootClassNames?: Array<string>;
+    rootAttributes?: Record<string, string | boolean>;
+    blocks: Array<BlockOutput>;
+  };
 };
 
 export interface PublishedGlobalBlock extends APIGlobalBlock {
-  compiled?: Output;
+  compiled?: {
+    blocks: Array<BlockOutput>;
+  };
 }
 
 export interface PublishData {
@@ -236,18 +255,45 @@ export interface OnChange {
 
 export interface Theme {
   colors: {
-    "--primary-dark"?: string;
-    "--secondary-dark"?: string;
-    "--tertiary-dark"?: string;
-    "--primary-white"?: string;
-    "--secondary-white"?: string;
-    "--tertiary-white"?: string;
-    "--primary-gray"?: string;
-    "--secondary-gray"?: string;
-    "--tertiary-gray"?: string;
-    "--active-color"?: string;
-    "--light-gray"?: string;
+    "--ui-main-color"?: string; // UI main color
+    "--active-color"?: string; // Highlight color
+    "--icons-color"?: string; // Icons color
+    "--toolbars-icons-separators"?: string; // Toolbar icons separators
+
+    "--sidebars-background"?: string; // Sidebars left and right background
+    "--sidebar-header"?: string; // Sidebars left and right headers
+    "--sidebar-separators"?: string; // Sidebars separators
+    "--borders"?: string; // Borders for the elements in the left sidebar
+
+    "--inputs-bg"?: string; // All inputs background
+    "--input-placeholder-text"?: string; // Placeholder default text in inputs
+    "--text-labels"?: string; // Text labels
+
+    "--column-lvl1-border"?: string; // Border for the lvl 1 column in the editor (optional)
+    "--column-lvl2-border"?: string; // Border for the lvl 2 column in the editor (optional)
+    "--row-and-default-elements-border"?: string; // Border for the row and default elements in the editor (optional)
+    "--draggable-block-padding-bg"?: string; // Block top and bottom draggable padding in editor (optional)
+
+    "--ui-shadows"?: string; // UI shadows for toolbars and sidebars
   };
+}
+
+export interface MenuSimple {
+  count: number;
+  description: string;
+  filter: string;
+  name: string;
+  parent: number;
+  slug: string;
+  taxonomy: string;
+  term_group: number;
+  term_id: number;
+  term_taxonomy_id: number;
+}
+
+export interface Sidebar {
+  id: string;
+  title: string;
 }
 
 export interface Video {
@@ -315,10 +361,21 @@ export interface ConditionCollectionType extends ColllectionBase {
   fields: RefById[];
 }
 
+export interface Customer {
+  id: string;
+  firstName: string;
+  lastName: string;
+}
+
+export interface CustomerGroup {
+  id: string;
+  name: string;
+}
+
 export interface ConditionalTypesData {
   collectionTypes: ConditionCollectionType[];
-  customers: ColllectionBase[];
-  customerGroups: ColllectionBase[];
+  customers: Customer[];
+  customerGroups: CustomerGroup[];
 }
 
 export interface API {
@@ -475,6 +532,12 @@ export interface API {
         rej: Response<string>
       ) => void;
     };
+    getCollectionTypesInfo: {
+      handler: (
+        res: Response<CollectionTypesInfo>,
+        rej: Response<string>
+      ) => void;
+    };
   };
 
   // SavedBlocks
@@ -516,6 +579,12 @@ export interface API {
         res: Response<Array<Rule>>,
         rej: Response<string>,
         extra: { rules: Array<Rule>; dataVersion: number }
+      ) => void;
+      getRuleList?: (res: Response<Array<Rule>>, rej: Response<string>) => void;
+      getGroupList?: (
+        res: Response<Array<RuleList[]>>,
+        rej: Response<string>,
+        type: "block" | "popup"
       ) => void;
     };
   };
@@ -571,6 +640,113 @@ export interface API {
       extra: ScreenshotData & { id: string }
     ) => void;
   };
+
+  menu?: {
+    getMenus?: {
+      handler: (res: Response<MenuSimple[]>, rej: Response<string>) => void;
+    };
+  };
+
+  featuredImage?: {
+    updateFeaturedImage?: (
+      res: Response<{ uid: string }>,
+      rej: Response<string>,
+      attachmentId: string
+    ) => void;
+    updateFeaturedImageFocalPoint?: (
+      res: Response<[]>,
+      rej: Response<string>,
+      data: {
+        attachmentId: string;
+        pointX: string;
+        pointY: string;
+      }
+    ) => void;
+    removeFeaturedImage?: (
+      res: Response<undefined>,
+      rej: Response<string>
+    ) => void;
+  };
+
+  shortcodeContent?: {
+    handler: (
+      res: Response<string>,
+      rej: Response<string>,
+      shortcode: string
+    ) => void;
+  };
+
+  authors?: {
+    getAuthors?: (
+      res: Response<{ ID: number; display_name: string }[]>,
+      rej: Response<string>,
+      props: { search?: string; include?: string[]; abortSignal?: AbortSignal }
+    ) => void;
+  };
+
+  posts?: {
+    getPosts?: (
+      res: Response<{ ID: number; title: string; permalink: string }[]>,
+      rej: Response<string>,
+      data: {
+        search?: string;
+        include?: string[];
+        postType?: string[];
+        excludePostType?: string[];
+        abortSignal?: AbortSignal;
+      }
+    ) => void;
+    getPostTaxonomies?: (
+      res: Response<
+        {
+          name: string;
+          label: string;
+          public: boolean;
+          hierarchical: boolean;
+          labels: { name: string; singular_name: string };
+        }[]
+      >,
+      rej: Response<string>,
+      data: {
+        taxonomy: string;
+        abortSignal?: AbortSignal;
+      }
+    ) => void;
+  };
+
+  terms?: {
+    getTerms: (
+      res: Response<
+        {
+          name: string;
+          term_id: number;
+          slug: string;
+        }[]
+      >,
+      rej: Response<string>,
+      taxonomy: string
+    ) => void;
+    getTermsBy: (
+      res: Response<
+        {
+          term_id: number;
+          name: string;
+          taxonomy: string;
+          taxonomy_name: string;
+        }[]
+      >,
+      rej: Response<string>,
+      data: {
+        include?: [string, string][];
+        search?: string;
+        abortSignal?: AbortSignal;
+      }
+    ) => void;
+  };
+
+  sidebars?: {
+    getSidebars?: (res: Response<Sidebar[]>, rej: Response<string>) => void;
+  };
 }
 
 interface _ConfigCommon<Mode> {
@@ -605,7 +781,7 @@ interface _ConfigCommon<Mode> {
 
   user?: User;
 
-  branding: {
+  branding?: {
     name: string;
   };
   editorVersion: string;
@@ -616,10 +792,10 @@ interface _ConfigCommon<Mode> {
    */
   mode: Mode;
 
-  taxonomies: Taxonomy[]; // is this property common or just wp?
-  postTypesTaxs: PostTypesTax[]; // is this property common or just wp?
+  taxonomies?: Taxonomy[]; // is this property common or just wp?
+  postTypesTaxs?: PostTypesTax[]; // is this property common or just wp?
 
-  imageSizes: ImageDataSize[];
+  imageSizes?: ImageDataSize[];
 
   multilanguage?: boolean;
   membership?: boolean;
@@ -647,6 +823,8 @@ interface _ConfigCommon<Mode> {
 
   pro?: Pro;
 
+  isRTL?: boolean;
+
   //#endregion
 
   //#region Third Party
@@ -666,6 +844,15 @@ interface _ConfigCommon<Mode> {
       imagePointer?: boolean;
       imageZoom?: boolean;
       backgroundPointer?: boolean;
+      internalLink?: boolean;
+      linkUpload?: boolean;
+      link?: {
+        internalLink?: boolean;
+        linkExternal?: boolean;
+        linkUpload?: boolean;
+        linkAnchor?: boolean;
+        linkPopup?: boolean;
+      };
     };
 
     //#endregion Features
@@ -843,6 +1030,20 @@ interface _ConfigCommon<Mode> {
     fonts?: {
       upload?: {
         get(res: Response<Array<UploadedFont>>, rej: Response<string>): void;
+        upload(
+          res: Response<UploadFont>,
+          rej: Response<string>,
+          data: {
+            files: FontFile;
+            name: string;
+            id: string;
+          }
+        ): void;
+        delete(
+          res: Response<string>,
+          rej: Response<string>,
+          fontId: string
+        ): void;
       };
     };
   };
@@ -865,6 +1066,12 @@ interface _ConfigCommon<Mode> {
   // OnUpdate are triggered outside the editor when
   // the thirty party app want to update the page
   onUpdate: (res: Response<PublishData>, config?: ConfigCommon) => void;
+
+  // `OnCompile` is triggered from outside the editor
+  // when a third-party app wants to compile the page, ignoring
+  // comparisons between the initial data and modified data.
+  // `OnCompile` forces the page, project to compile, bypassing state comparisons.
+  onCompile: (res: Response<PublishData>) => void;
 
   //#endregion
 
@@ -1062,6 +1269,9 @@ interface _ConfigCommon<Mode> {
       onOpen?: VoidFunction;
       createMenuLabel?: string;
     };
+    menuSimple?: {
+      getPlaceholderData?: GetPlaceholderData;
+    };
   };
 
   //#endregion
@@ -1099,21 +1309,12 @@ interface _ConfigCommon<Mode> {
       api?: {
         //#region shopify api handlers
 
-        metafieldsLoad?: {
+        getMetafields?: {
           handler: (
             res: Response<ChoicesSync>,
             rej: Response<string>,
             args: {
-              sourceType: string;
-            }
-          ) => void;
-        };
-        blogPostMetaLoad?: {
-          handler: (
-            res: Response<ChoicesSync>,
-            rej: Response<string>,
-            args: {
-              sourceType: string;
+              slug: string;
             }
           ) => void;
         };

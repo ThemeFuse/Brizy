@@ -21,8 +21,9 @@ import classnames from "classnames";
 import React from "react";
 import { connect } from "react-redux";
 import EditorIcon from "visual/component/EditorIcon";
+import { Scrollbar } from "visual/component/Scrollbar";
 import { LeftSidebarOptionsIds } from "visual/global/Config/types/configs/ConfigCommon";
-import { useConfig } from "visual/global/hooks";
+import { useConfig } from "visual/providers/ConfigProvider";
 import { removeBlock, reorderBlocks } from "visual/redux/actions2";
 import {
   globalBlocksSelector,
@@ -36,7 +37,9 @@ const DragHandle = ({ item }) => {
   const config = useConfig();
   const { screenshot } = config.urls;
 
-  return <BlockThumbnail blockData={item} screenshot={screenshot} />;
+  return (
+    <BlockThumbnail blockData={item} screenshot={screenshot} config={config} />
+  );
 };
 
 const SortableItem = ({ item, onRemove, id }) => {
@@ -126,7 +129,7 @@ const SortableList = ({
   );
 };
 
-class DrawerComponent extends React.Component {
+class _DrawerComponent extends React.Component {
   state = {
     blocks: [],
     isSorting: false
@@ -200,7 +203,9 @@ class DrawerComponent extends React.Component {
         };
       },
       () => {
-        this.props.dispatch(reorderBlocks({ oldIndex, newIndex }));
+        this.props.dispatch(
+          reorderBlocks({ oldIndex, newIndex, config: this.props.config })
+        );
       }
     );
   };
@@ -210,7 +215,9 @@ class DrawerComponent extends React.Component {
       value: { _id }
     } = this.state.blocks[index];
 
-    this.props.dispatch(removeBlock({ index, id: _id }));
+    this.props.dispatch(
+      removeBlock({ index, id: _id, config: this.props.config })
+    );
   };
 
   render() {
@@ -234,18 +241,28 @@ class DrawerComponent extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => ({
-  pageBlocks: pageBlocksDataAssembledSelector(state),
+const DrawerComponent = (props) => {
+  const config = useConfig();
+
+  return (
+    <Scrollbar theme="dark">
+      <_DrawerComponent {...props} config={config} />
+    </Scrollbar>
+  );
+};
+
+const getMapStateToProps = (config) => (state) => ({
+  pageBlocks: pageBlocksDataAssembledSelector(state, config),
   globalBlocks: globalBlocksSelector(state),
   page: pageSelector(state)
 });
 
-export const getBlocksSortable = ({ helpIcon, disabled }) => ({
+export const getBlocksSortable = ({ helpIcon, disabled, config }) => ({
   id: LeftSidebarOptionsIds.reorderBlock,
   type: "drawer",
   icon: "nc-reorder",
   withHelpIcon: helpIcon,
   disabled,
   drawerTitle: t("Reorder Blocks"),
-  drawerComponent: connect(mapStateToProps)(DrawerComponent)
+  drawerComponent: connect(getMapStateToProps(config))(DrawerComponent)
 });

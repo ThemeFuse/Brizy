@@ -78,21 +78,31 @@ export function cssStyleSectionColorDots({
   v,
   device,
   state,
-  store
-}: CSSValue): string {
-  return cssStyleColor({ v, device, state, store, prefix: "sliderDotsColor" });
-}
-
-export function cssStyleSectionColorArrows({
-  v,
-  device,
-  state,
+  getConfig,
   store
 }: CSSValue): string {
   return cssStyleColor({
     v,
     device,
     state,
+    getConfig,
+    store,
+    prefix: "sliderDotsColor"
+  });
+}
+
+export function cssStyleSectionColorArrows({
+  v,
+  device,
+  state,
+  getConfig,
+  store
+}: CSSValue): string {
+  return cssStyleColor({
+    v,
+    device,
+    state,
+    getConfig,
     store,
     prefix: "sliderArrowsColor"
   });

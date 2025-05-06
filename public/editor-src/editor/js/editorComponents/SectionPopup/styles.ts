@@ -10,8 +10,11 @@ export function styleCloseButton(
     ".brz && > .brz-popup__close:hover": {
       standart: ["cssStyleColor"]
     },
+    ".brz && > .brz-bg": {
+      standart: ["cssStyleBorderRadius"]
+    },
     ".brz &&:hover > .brz-bg": {
-      standart: ["cssStyleBorder", "cssStyleBorderRadius"]
+      standart: ["cssStyleBorder"]
     },
     ".brz &&:hover > .brz-bg > .brz-bg-image": {
       standart: ["cssStyleBgImage", "cssStyleFilter", "cssStyleBgImagePosition"]
@@ -31,9 +34,11 @@ export function styleContainer(
   data: DynamicStylesProps<ElementModel>
 ): OutputStyle {
   const styles = {
-    ".brz &&:hover": {
-      standart: ["cssStyleBorderTransparentColor"],
+    ".brz &&": {
       interval: ["cssStyleSizeMaxWidthContainer"]
+    },
+    ".brz &&:hover": {
+      standart: ["cssStyleBorderTransparentColor"]
     }
   };
 
@@ -44,7 +49,7 @@ export function styleContainerWrap(
   data: DynamicStylesProps<ElementModel>
 ): OutputStyle {
   const styles = {
-    ".brz &&:hover": {
+    ".brz &&": {
       standart: ["cssStyleSectionPopupContainerWrap"]
     }
   };

@@ -9,6 +9,7 @@ const getTranslationsMap = () => ({
   VideoPlaylist: t("Playlist"),
   Spacer: t("Spacer"),
   Line: t("Line"),
+  AnimatedHeadline: t("Animated Headline"),
   Map: t("Map"),
   EmbedCode: t("Embed"),
   Form: t("Form"),
@@ -70,6 +71,7 @@ const getTranslationsMap = () => ({
   Paypal: t("Paypal"),
   InstagramFeed: t("Instagram Feed"),
   LinkedinFeed: t("Linkedin Feed"),
+  Chart: t("Chart"),
 
   // WP
   WPSidebar: t("Sidebar"),

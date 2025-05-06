@@ -6,15 +6,17 @@ import { Value } from "./types";
 
 export function styleFormFields(data: DynamicStylesProps<Value>): OutputStyle {
   const styles = {
-    ".brz &&:hover": {
+    ".brz &&": {
       standart: [
-        "cssStyleColor",
         "cssStyleTypography2FontFamily",
         "cssStyleTypography2FontSize",
         "cssStyleTypography2FontWeight",
         "cssStyleTypography2LetterSpacing",
         "cssStyleTypography2FontVariation"
       ]
+    },
+    ".brz &&:hover": {
+      standart: ["cssStyleColor"]
     },
     ".brz && ~ .brz-forms2__alert": {
       standart: ["cssStyleTypography2FontFamily"]
@@ -23,8 +25,11 @@ export function styleFormFields(data: DynamicStylesProps<Value>): OutputStyle {
       standart: ["cssStyleTextTransforms"]
     },
     ".brz &&:hover .brz-forms2__field-label": {
+      standart: ["cssStyleLabelColor"]
+    },
+    ".brz && .brz-forms2__field-label": {
       standart: [
-        "cssStyleLabelColor",
+        "cssStyleElementForm2FieldsLabelPadding",
         "cssStyleElementForm2FieldsLabelFontFamily",
         "cssStyleElementForm2FieldsLabelFontSize",
         "cssStyleElementForm2FieldsLabelFontWeight",
@@ -35,20 +40,21 @@ export function styleFormFields(data: DynamicStylesProps<Value>): OutputStyle {
         "cssStyleElementForm2FieldsLabelTextTransform"
       ]
     },
-    ".brz && .brz-forms2__field-label": {
-      standart: ["cssStyleElementForm2FieldsLabelPadding"]
-    },
+    ".brz && .brz-forms2__field:not(.brz-forms2__radio):not(.brz-forms2__checkbox)":
+      {
+        standart: [
+          "cssStyleBorderRadius",
+          "cssStyleElementForm2FieldsLineHeight"
+        ]
+      },
     ".brz &&:hover .brz-forms2__field:not(.brz-forms2__radio):not(.brz-forms2__checkbox)":
       {
         standart: [
           "cssStyleColor",
           "cssStyleBgColor",
           "cssStyleBorder",
-          "cssStyleBorderRadius",
-          "cssStyleBoxShadow",
-          "cssStyleElementForm2FieldsLineHeight"
-        ],
-        interval: ["cssStyleHoverTransition"]
+          "cssStyleBoxShadow"
+        ]
       },
     ".brz &&.brz-forms2__item--error .brz-forms2__field:not(.brz-forms2__radio):not(.brz-forms2__checkbox)":
       {
@@ -61,9 +67,8 @@ export function styleFormFields(data: DynamicStylesProps<Value>): OutputStyle {
     ".brz && .brz-forms2__field-paragraph": {
       standart: ["cssStyleTypography2LineHeight"]
     },
-    ".brz &&:hover .brz-forms2__radio": {
+    ".brz && .brz-forms2__radio, .brz && .brz-forms2__checkbox": {
       standart: [
-        "cssStyleElementForm2FieldsCheckboxColor",
         "cssStyleElementForm2FieldsCheckboxFontFamily",
         "cssStyleElementForm2FieldsCheckboxFontSize",
         "cssStyleElementForm2FieldsCheckboxFontWeight",
@@ -71,33 +76,25 @@ export function styleFormFields(data: DynamicStylesProps<Value>): OutputStyle {
         "cssStyleElementForm2FieldsCheckboxLineHeight",
         "cssStyleElementForm2FieldsCheckboxFontVariation",
         "cssStyleElementForm2FieldsCheckboxTextTransform"
-      ],
-      interval: ["cssStyleHoverTransition"]
+      ]
     },
-    ".brz &&:hover .brz-forms2__checkbox": {
-      standart: [
-        "cssStyleElementForm2FieldsCheckboxColor",
-        "cssStyleElementForm2FieldsCheckboxFontFamily",
-        "cssStyleElementForm2FieldsCheckboxFontSize",
-        "cssStyleElementForm2FieldsCheckboxFontWeight",
-        "cssStyleElementForm2FieldsCheckboxLetterSpacing",
-        "cssStyleElementForm2FieldsCheckboxLineHeight",
-        "cssStyleElementForm2FieldsCheckboxFontVariation",
-        "cssStyleElementForm2FieldsCheckboxTextTransform"
-      ],
-      interval: ["cssStyleHoverTransition"]
+    ".brz &&:hover .brz-forms2__radio, .brz && .brz-forms2__checkbox": {
+      standart: ["cssStyleElementForm2FieldsCheckboxColor"]
     },
     ".brz && .brz-forms2__checkbox-option-name,.brz-forms2__radio-option-name":
       {
         standart: ["cssStyleElementForm2FieldsCheckboxTextTransform"]
       },
     ".brz &&:hover .brz-forms2__select-item__input": {
-      standart: ["cssStyleColor"],
-      interval: ["cssStyleHoverTransition"]
+      standart: ["cssStyleColor"]
     },
     ".brz && .form-alert": {
       standart: ["cssStyleTypography2FontFamily"]
-    }
+    },
+    ".brz && .brz-forms2__field:not(.brz-forms2__radio):not(.brz-forms2__checkbox), .brz && .brz-forms2__radio, .brz && .brz-forms2__checkbox, .brz && .brz-forms2__select-item__input":
+      {
+        standart: ["cssStyleHoverTransition"]
+      }
   };
 
   return renderStyles({ ...data, styles });
@@ -109,7 +106,7 @@ export function styleFormSelect(data: DynamicStylesProps<Value>): OutputStyle {
     ".brz && .brz-forms2__select-current": {
       standart: ["cssStylePaddingFourFields", "cssStyleElementFieldsInputSize"]
     },
-    ".brz &&:hover .brz-forms2__select-list": {
+    ".brz && .brz-forms2__select-list": {
       standart: [
         "cssStyleTypography2FontFamily",
         "cssStyleTypography2FontSize",
@@ -118,9 +115,13 @@ export function styleFormSelect(data: DynamicStylesProps<Value>): OutputStyle {
         "cssStyleTypography2LetterSpacing",
         "cssStyleTypography2FontVariation",
         "cssStyleTextTransforms",
+        "cssStyleElementForm2FieldsSelectBorderRadius"
+      ]
+    },
+    ".brz &&:hover .brz-forms2__select-list": {
+      standart: [
         "cssStyleElementForm2FieldsSelectColor",
         "cssStyleElementForm2FieldsSelectBgColor",
-        "cssStyleElementForm2FieldsSelectBorderRadius",
         "cssStyleElementForm2FieldsSelectBoxShadow"
       ]
     },
@@ -132,7 +133,7 @@ export function styleFormSelect(data: DynamicStylesProps<Value>): OutputStyle {
     ".brz &&:hover .select2-dropdown": {
       standart: ["cssStyleElementForm2FieldsSelectBoxShadow"]
     },
-    ".brz &&:hover .select2-results__options": {
+    ".brz && .select2-results__options": {
       standart: [
         "cssStyleTypography2FontFamily",
         "cssStyleTypography2FontSize",
@@ -141,9 +142,13 @@ export function styleFormSelect(data: DynamicStylesProps<Value>): OutputStyle {
         "cssStyleTypography2LetterSpacing",
         "cssStyleTypography2FontVariation",
         "cssStyleTextTransforms",
-        "cssStyleElementForm2FieldsSelectColor",
-        "cssStyleElementForm2FieldsSelectBgColor",
         "cssStyleElementForm2FieldsSelectBorderRadius"
+      ]
+    },
+    ".brz &&:hover .select2-results__options": {
+      standart: [
+        "cssStyleElementForm2FieldsSelectColor",
+        "cssStyleElementForm2FieldsSelectBgColor"
       ]
     },
     ".brz &&:hover .select2-results__option": {
@@ -155,9 +160,11 @@ export function styleFormSelect(data: DynamicStylesProps<Value>): OutputStyle {
     ".brz && .select2-selection--multiple": {
       standart: ["cssStylePaddingFourFields", "cssStyleElementFieldsInputSize"]
     },
+    ".brz && .select2-selection--multiple .select2-selection__choice": {
+      standart: ["cssStyleHoverTransition"]
+    },
     ".brz &&:hover .select2-selection--multiple .select2-selection__choice": {
-      standart: ["cssStyleElementForm2FieldsSelectChoiceBgColor"],
-      interval: ["cssStyleHoverTransition"]
+      standart: ["cssStyleElementForm2FieldsSelectChoiceBgColor"]
     }
   };
 

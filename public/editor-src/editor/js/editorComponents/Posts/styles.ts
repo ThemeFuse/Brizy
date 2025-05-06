@@ -32,12 +32,8 @@ export function style(data: DynamicStylesProps<ElementModel>): OutputStyle {
         "cssStyleElementPostsFilterTextTransform"
       ]
     },
-    ".brz && .brz-posts__filter__item--style-1:hover": {
-      standart: ["cssStyleElementPostsFilterPaddingFourFields"],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
-      ]
+    ".brz && .brz-posts__filter__item--style-1": {
+      standart: ["cssStyleElementPostsFilterPaddingFourFields"]
     },
     ".brz && .brz-posts__filter__item--style-1.brz-posts-filter__item--active":
       {
@@ -48,22 +44,21 @@ export function style(data: DynamicStylesProps<ElementModel>): OutputStyle {
           "cssStyleElementPostsFilterActiveShadow"
         ]
       },
+    ".brz && .brz-posts__filter__item--style-1:not(.brz-posts-filter__item--active)":
+      {
+        standart: ["cssStyleElementPostsFilterBorderRadius"]
+      },
     ".brz && .brz-posts__filter__item--style-1:not(.brz-posts-filter__item--active):hover":
       {
         standart: [
           "cssStyleElementPostsFilterBgColor",
           "cssStyleElementPostsFilterBorder",
           "cssStyleElementPostsFilterShadow",
-          "cssStyleElementPostsFilterColor",
-          "cssStyleElementPostsFilterBorderRadius"
+          "cssStyleElementPostsFilterColor"
         ]
       },
-    ".brz && .brz-posts__filter--style-2:hover": {
-      standart: ["cssStyleElementPostsFilterPaddingFourFields"],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
-      ]
+    ".brz && .brz-posts__filter--style-2": {
+      standart: ["cssStyleElementPostsFilterPaddingFourFields"]
     },
     ".brz && .brz-posts__filter__item--style-2.brz-posts-filter__item--active":
       {
@@ -73,14 +68,19 @@ export function style(data: DynamicStylesProps<ElementModel>): OutputStyle {
       {
         standart: ["cssStyleElementPostsFilterColor"]
       },
+    ".brz && .brz-posts__filter--style-2:not(.brz-posts-filter__item--active)":
+      {
+        standart: [
+          "cssStyleElementPostsFilterBorderRadius",
+          "cssStyleDisplayInlineFlex"
+        ]
+      },
     ".brz && .brz-posts__filter--style-2:not(.brz-posts-filter__item--active):hover":
       {
         standart: [
           "cssStyleElementPostsFilterBgColor",
           "cssStyleElementPostsFilterBorder",
-          "cssStyleElementPostsFilterBorderRadius",
-          "cssStyleElementPostsFilterShadow",
-          "cssStyleDisplayInlineFlex"
+          "cssStyleElementPostsFilterShadow"
         ]
       },
 
@@ -88,7 +88,7 @@ export function style(data: DynamicStylesProps<ElementModel>): OutputStyle {
     ".brz && .brz-posts__pagination ul.page-numbers": {
       standart: ["cssStyleElementPostsPaginationSpacing"]
     },
-    ".brz && .brz-posts__pagination ul.page-numbers .page-numbers:hover": {
+    ".brz && .brz-posts__pagination ul.page-numbers .page-numbers": {
       standart: [
         "cssStyleElementPostsPaginationFontFamily",
         "cssStyleElementPostsPaginationFontSize",
@@ -114,6 +114,13 @@ export function style(data: DynamicStylesProps<ElementModel>): OutputStyle {
           "cssStyleElementPostsPaginationActiveColor",
           "cssStyleElementPostsPaginationActiveBgColor",
           "cssStyleElementPostsPaginationActiveBorder"
+        ]
+      },
+    ".brz && .brz-posts__filter__item--style-1, .brz && .brz-posts__filter--style-2":
+      {
+        standart: [
+          "cssStyleHoverTransition",
+          "cssStylePropertyHoverTransitionColor"
         ]
       }
   };

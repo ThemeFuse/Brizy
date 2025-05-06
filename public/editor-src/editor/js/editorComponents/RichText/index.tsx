@@ -1,4 +1,5 @@
 import classNames from "classnames";
+import { isNumber } from "es-toolkit/compat";
 import React, { Fragment, RefObject, createRef } from "react";
 import ReactDOM from "react-dom";
 import { omit } from "timm";
@@ -18,7 +19,7 @@ import Link from "visual/component/Link";
 import { ToastNotification } from "visual/component/Notifications";
 import Placeholder from "visual/component/Placeholder";
 import Toolbar from "visual/component/Toolbar";
-import { PortalToolbar } from "visual/component/Toolbar/PortalToolbar";
+import { PortalToolbarType } from "visual/component/Toolbar/PortalToolbar";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import {
@@ -57,7 +58,7 @@ import * as sidebarConfig from "./sidebar";
 import { style, styleDC } from "./styles";
 import toolbarConfigFn from "./toolbar";
 import { TypographyTags, isTypographyTags, tagId } from "./toolbar/utils";
-import type { Patch, Value } from "./types";
+import type { Patch, PrepopulationData, Value } from "./types";
 import {
   dcItemOptionParser,
   getFilteredPopups,
@@ -82,6 +83,7 @@ interface State {
   population: Formats["population"] | null;
   selectionCoords: Coords | null;
   selectedValue: unknown | null;
+  prepopulationData: PrepopulationData;
 }
 
 type ToolbarOption =
@@ -96,25 +98,42 @@ type ToolbarOption =
 class RichText extends EditorComponent<Value, Record<string, unknown>, State> {
   static defaultValue = defaultValue;
   static experimentalDynamicContent = true;
+
   prepopulation: string | null = null;
+
   state: State = {
     formats: {},
     prepopulation: null,
     population: null,
     selectionCoords: null,
-    selectedValue: null
+    selectedValue: null,
+    prepopulationData: {
+      show: false,
+      index: null
+    }
   };
+
   quillRef = createRef<QuillComponent>();
-  toolbarRef = createRef<PortalToolbar>();
+  toolbarRef = createRef<PortalToolbarType>();
   nodeRef = createRef<HTMLDivElement>();
   toolbarOpen = false;
   tmpPopups: Value["popups"] | null = null;
+
+  setPrepopulationData = (newPrepopulationData: Partial<PrepopulationData>) =>
+    this.setState((state) => ({
+      ...state,
+      prepopulationData: {
+        ...state.prepopulationData,
+        ...newPrepopulationData
+      }
+    }));
 
   renderDC =
     !(
       typeof this.getGlobalConfig().dynamicContent?.getPlaceholderData ===
       "function"
     ) || isView(this.props.renderContext);
+
   // Can be enabled by Config
 
   static get componentId() {
@@ -206,13 +225,20 @@ class RichText extends EditorComponent<Value, Record<string, unknown>, State> {
     return { res, rej, extra };
   };
 
-  handleSelectionChange = (formats: Formats, selectionCoords: Coords) => {
+  handleSelectionChange = (
+    formats: Formats,
+    selectionCoords: Coords,
+    cursorIndex?: number
+  ) => {
     const newState = {
       formats
     };
     const dynamicContentGroups = this.getGlobalConfig().dynamicContent?.groups;
 
-    if (isDCItemHandler(dynamicContentGroups?.richText)) {
+    if (
+      isDCItemHandler(dynamicContentGroups?.richText) &&
+      dynamicContentGroups
+    ) {
       if (selectionCoords && this.state.selectionCoords !== selectionCoords) {
         Object.assign(newState, { selectionCoords });
 
@@ -243,6 +269,19 @@ class RichText extends EditorComponent<Value, Record<string, unknown>, State> {
       });
     }
 
+    const {
+      prepopulationData: { show, index }
+    } = this.state;
+
+    if (show && index && cursorIndex && cursorIndex - 1 !== index) {
+      Object.assign(newState, {
+        prepopulationData: {
+          index: null,
+          show: false
+        }
+      });
+    }
+
     this.setState(newState, () => this.toolbarRef.current?.show());
   };
 
@@ -254,7 +293,11 @@ class RichText extends EditorComponent<Value, Record<string, unknown>, State> {
 
     const dynamicContentGroups = this.getGlobalConfig().dynamicContent?.groups;
 
-    if (isDCItemHandler(dynamicContentGroups?.richText) && formats.population) {
+    if (
+      isDCItemHandler(dynamicContentGroups?.richText) &&
+      formats.population &&
+      dynamicContentGroups
+    ) {
       const { res, rej, extra } = this.handleCustomDCOption(formats);
 
       dynamicContentGroups.richText.handler(res, rej, extra);
@@ -288,10 +331,19 @@ class RichText extends EditorComponent<Value, Record<string, unknown>, State> {
       return;
     }
 
-    const dcOption = getDynamicContentByPlaceholder(
-      this.context.dynamicContent.config,
-      value
-    );
+    const {
+      prepopulationData: { index: cursorIndex }
+    } = this.state;
+
+    this.quillRef.current.formatPrepopulation();
+
+    const finalCursorIndex = this.quillRef.current.getSelectionRange().index;
+
+    const dcConfig = this.context.dynamicContent.config;
+
+    const dcOption = dcConfig
+      ? getDynamicContentByPlaceholder(dcConfig, value)
+      : undefined;
 
     if (dcOption) {
       this.quillRef.current.formatPopulation({
@@ -301,12 +353,29 @@ class RichText extends EditorComponent<Value, Record<string, unknown>, State> {
       });
     }
 
+    const stateData: Partial<PrepopulationData> = {
+      show: false
+    };
+
+    if (isNumber(cursorIndex) && isNumber(finalCursorIndex)) {
+      this.quillRef.current.deleteText(
+        cursorIndex,
+        finalCursorIndex - cursorIndex
+      );
+      stateData.index = null;
+    }
+
     this.quillRef.current.format("prepopulation", null);
+    this.setPrepopulationData(stateData);
   };
 
   handlePopulationClickOutside = () => {
     this.setState({
       prepopulation: null,
+      prepopulationData: {
+        show: false,
+        index: null
+      },
       population: null
     });
   };
@@ -601,18 +670,22 @@ class RichText extends EditorComponent<Value, Record<string, unknown>, State> {
 
     const { left, top, height } = selectionCoords;
     const { label, population: placeholder } = population ?? {};
-    const currentPattern = label ?? prepopulation;
+    const currentPattern = label ?? prepopulation ?? "@";
 
     const style = {
       left,
       width: "130px",
       top: top + height
     };
+    const dcConfig = this.context.dynamicContent.config;
+
     const choices =
-      (getDynamicContentChoices(
-        this.context.dynamicContent.config,
-        DCTypes.richText
-      ) as Array<Choice>) || [];
+      (dcConfig
+        ? (getDynamicContentChoices(
+            dcConfig,
+            DCTypes.richText
+          ) as Array<Choice>)
+        : undefined) || [];
 
     // remove first symbol - # && escape string for use in regexp
     const re = new RegExp(
@@ -754,7 +827,10 @@ class RichText extends EditorComponent<Value, Record<string, unknown>, State> {
   }
 
   renderForEdit(v: Value, vs: Value, vd: Value) {
-    const { prepopulation, population, selectedValue } = this.state;
+    const {
+      selectedValue,
+      prepopulationData: { show }
+    } = this.state;
     const { meta = {} } = this.props;
     const inPopup = Boolean(meta.sectionPopup);
     const inPopup2 = Boolean(meta.sectionPopup2);
@@ -765,6 +841,7 @@ class RichText extends EditorComponent<Value, Record<string, unknown>, State> {
       "delete",
       "clearFormatting"
     ];
+    const isStoryMode = isStory(this.props.editorMode);
 
     const newV = {
       ...v,
@@ -779,8 +856,7 @@ class RichText extends EditorComponent<Value, Record<string, unknown>, State> {
       this.handleChange
     ) as NewToolbarConfig<Value>;
 
-    const showPopulationHelper =
-      !getCurrentTooltip() && (prepopulation || population);
+    const showPopulationHelper = !getCurrentTooltip() && show;
 
     const restrictions = {
       width: {
@@ -790,6 +866,9 @@ class RichText extends EditorComponent<Value, Record<string, unknown>, State> {
         }
       }
     };
+
+    const dynamicContentGroups = this.getGlobalConfig().dynamicContent?.groups;
+    const isDCHandler = isDCItemHandler(dynamicContentGroups?.richText);
 
     let content = (
       <Quill
@@ -808,7 +887,13 @@ class RichText extends EditorComponent<Value, Record<string, unknown>, State> {
         }
         renderContext={this.props.renderContext}
         editorMode={this.props.editorMode}
+        getConfig={this.getGlobalConfig}
         dcGroups={config?.dynamicContent?.groups}
+        textId={v._id}
+        isStoryMode={isStoryMode}
+        isDCHandler={isDCHandler}
+        isListOpen={show}
+        setPrepopulationData={this.setPrepopulationData}
       />
     );
     let toolbarOptions: ToolbarOption = {
@@ -859,7 +944,7 @@ class RichText extends EditorComponent<Value, Record<string, unknown>, State> {
                       }: {
                         ref: RefObject<HTMLDivElement>;
                       }) =>
-                        isStory(this.props.editorMode) ? (
+                        isStoryMode ? (
                           <BoxResizer
                             points={resizerPoints}
                             meta={{
@@ -892,6 +977,8 @@ class RichText extends EditorComponent<Value, Record<string, unknown>, State> {
   }
 
   renderForView(v: Value, vs: Value, vd: Value) {
+    const config = this.getGlobalConfig();
+
     let content = (
       <Quill
         store={this.getReduxStore()}
@@ -899,7 +986,8 @@ class RichText extends EditorComponent<Value, Record<string, unknown>, State> {
         value={v.text}
         renderContext={this.props.renderContext}
         editorMode={this.props.editorMode}
-        dcGroups={this.getGlobalConfig()?.dynamicContent?.groups}
+        getConfig={this.getGlobalConfig}
+        dcGroups={config?.dynamicContent?.groups}
       />
     );
 

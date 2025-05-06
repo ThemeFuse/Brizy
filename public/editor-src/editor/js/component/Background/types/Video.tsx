@@ -1,6 +1,6 @@
 import jQuery from "jquery";
 import React, { ReactElement, RefObject, useMemo, useRef } from "react";
-import { useConfig } from "visual/global/hooks";
+import { useConfig } from "visual/providers/ConfigProvider";
 import { customFileUrl } from "visual/utils/customFile";
 import { videoUrl } from "visual/utils/video";
 import "../lib/jquery.background-video.js";

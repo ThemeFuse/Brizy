@@ -1,24 +1,18 @@
-import { renderStyles } from "visual/utils/cssStyle";
-import type { Value } from "./types";
-import { OutputStyle } from "visual/utils/cssStyle/types";
 import { DynamicStylesProps } from "visual/types";
+import { renderStyles } from "visual/utils/cssStyle";
+import { OutputStyle, Styles } from "visual/utils/cssStyle/types";
+import type { Value } from "./types";
 
 export const style = (data: DynamicStylesProps<Value>): OutputStyle => {
-  const styles: {
-    [k: string]: {
-      interval?: string[];
-      standart?: string[];
-    };
-  } = {
+  const styles: Styles = {
     ".brz &&": {
       standart: ["cssStyleSizeWidth"]
     },
     ".brz && .brz-ui-ed-navigation-title": {
       standart: ["cssStyleElementPostNavigationSpacing"]
     },
-    ".brz && .brz-ui-ed-navigation-title span:hover": {
+    ".brz && .brz-ui-ed-navigation-title span": {
       standart: [
-        "cssStyleElementPostNavigationColorTitle",
         "cssStyleElementPostNavigation2TitleFontFamily",
         "cssStyleElementPostNavigation2TitleFontSize",
         "cssStyleElementPostNavigation2TitleLineHeight",
@@ -26,12 +20,13 @@ export const style = (data: DynamicStylesProps<Value>): OutputStyle => {
         "cssStyleElementPostNavigation2TitleLetterSpacing",
         "cssStyleElementPostNavigation2TitleFontVariation",
         "cssStyleElementPostNavigationTitleTextTransform"
-      ],
-      interval: ["cssStyleHoverTransition"]
+      ]
     },
-    ".brz && .brz-ui-ed-navigation .brz-ui-ed-typography:hover": {
+    ".brz && .brz-ui-ed-navigation-title span:hover": {
+      standart: ["cssStyleElementPostNavigationColorTitle"]
+    },
+    ".brz && .brz-ui-ed-navigation .brz-ui-ed-typography": {
       standart: [
-        "cssStyleElementPostNavigationColorPost",
         "cssStyleElementPostNavigation2PostFontFamily",
         "cssStyleElementPostNavigation2PostFontSize",
         "cssStyleElementPostNavigation2PostLineHeight",
@@ -39,17 +34,24 @@ export const style = (data: DynamicStylesProps<Value>): OutputStyle => {
         "cssStyleElementPostNavigation2PostLetterSpacing",
         "cssStyleElementPostNavigation2PostFontVariation",
         "cssStyleElementPostNavigationPostTextTransform"
-      ],
-      interval: ["cssStyleHoverTransition"]
+      ]
+    },
+    ".brz && .brz-ui-ed-navigation .brz-ui-ed-typography:hover": {
+      standart: ["cssStyleElementPostNavigationColorPost"]
+    },
+    ".brz &&:before": {
+      standart: [
+        "cssStyleSizeHeight",
+        "cssStyleElementPostNavigationShowSeparation"
+      ]
     },
     ".brz &&:hover:before": {
-      standart: [
-        "cssStyleElementPostNavigationShowSeparation",
-        "cssStyleSizeHeight",
-        "cssStyleBgColor"
-      ],
-      interval: ["cssStyleHoverTransition"]
-    }
+      standart: ["cssStyleBgColor"]
+    },
+    ".brz && .brz-ui-ed-navigation-title span, .brz && .brz-ui-ed-navigation .brz-ui-ed-typography, .brz &&:before":
+      {
+        standart: ["cssStyleHoverTransition"]
+      }
   };
 
   return renderStyles({ ...data, styles });

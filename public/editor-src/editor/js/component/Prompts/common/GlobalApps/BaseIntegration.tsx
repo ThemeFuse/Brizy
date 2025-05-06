@@ -206,6 +206,7 @@ class BaseIntegration<
 
   renderApps(): ReactElement {
     const { error, appError } = this.state;
+    const { config } = this.props;
 
     return (
       <>
@@ -215,6 +216,7 @@ class BaseIntegration<
           proExceptions={this.proExceptions}
           error={appError}
           hasDelete={false}
+          config={config}
         />
       </>
     );
@@ -228,7 +230,7 @@ class BaseIntegration<
       connectedApp,
       data
     } = this.state;
-    const { config } = this.props;
+    const { config, formId } = this.props;
 
     const showProgress =
       _showProgress && !stages.find((el) => el.type === stage)?.hideProgress;
@@ -269,6 +271,7 @@ class BaseIntegration<
                     Component && (
                       <Component
                         {...props}
+                        formId={formId}
                         isPro={isPro(config)}
                         config={config}
                         apps={this.appsData}

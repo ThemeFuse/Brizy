@@ -1,4 +1,3 @@
-import { configSelector } from "visual/redux/selectors";
 import { getFontCssStyle } from "visual/utils/fonts/getFontCssStyle";
 import { defaultValueValue } from "visual/utils/onChange";
 import { getOptionFontByGlobal } from "visual/utils/options";
@@ -10,11 +9,12 @@ export function styleTextTransformBold({
   device,
   state,
   store,
+  getConfig,
   prefix = ""
 }: CSSValue) {
   const dvv = (key: string) => defaultValueValue({ v, device, state, key });
   const boldKey = capByPrefix(prefix, "bold");
-  const config = configSelector(store.getState());
+  const config = getConfig();
 
   const fontStyleKey = capByPrefix(prefix, "fontStyle");
   const fontStyle = dvv(fontStyleKey);
@@ -38,10 +38,11 @@ export function styleTextTransformItalic({
   device,
   state,
   store,
+  getConfig,
   prefix = ""
 }: CSSValue) {
   const dvv = (key: string) => defaultValueValue({ v, device, state, key });
-  const config = configSelector(store.getState());
+  const config = getConfig();
   const italicKey = capByPrefix(prefix, "italic");
 
   const fontStyleKey = capByPrefix(prefix, "fontStyle");
@@ -66,10 +67,11 @@ export function styleTextTransformTextDecoration({
   device,
   state,
   store,
+  getConfig,
   prefix = ""
 }: CSSValue) {
   const dvv = (key: string) => defaultValueValue({ v, device, state, key });
-  const config = configSelector(store.getState());
+  const config = getConfig();
   const underlineKey = capByPrefix(prefix, "underline");
   const strikeKey = capByPrefix(prefix, "strike");
   const textDecorationKey = capByPrefix(prefix, "textDecoration");
@@ -102,10 +104,11 @@ export function styleTextTransformUpperLowerCase({
   device,
   state,
   store,
+  getConfig,
   prefix = ""
 }: CSSValue) {
   const dvv = (key: string) => defaultValueValue({ v, device, state, key });
-  const config = configSelector(store.getState());
+  const config = getConfig();
   const uppercaseKey = capByPrefix(prefix, "uppercase");
   const lowercaseKey = capByPrefix(prefix, "lowercase");
 

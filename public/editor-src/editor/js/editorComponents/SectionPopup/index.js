@@ -6,6 +6,7 @@ import ContainerBorder from "visual/component/ContainerBorder";
 import { ContextMenuDisabled } from "visual/component/ContextMenu";
 import CustomCSS from "visual/component/CustomCSS";
 import { Roles } from "visual/component/Roles";
+import { currentUserRole } from "visual/component/Roles";
 import { SortableZIndex } from "visual/component/Sortable/SortableZIndex";
 import { ThemeIcon } from "visual/component/ThemeIcon";
 import { CollapsibleToolbar } from "visual/component/Toolbar";
@@ -67,8 +68,11 @@ class SectionPopup extends EditorComponent {
 
   componentDidMount() {
     this.mounted = true;
-    this.popupsContainer.appendChild(this.el);
     Instances.set(this.instanceKey, this);
+
+    if (this.popupsContainer) {
+      this.popupsContainer.appendChild(this.el);
+    }
   }
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -78,12 +82,14 @@ class SectionPopup extends EditorComponent {
 
   componentWillUnmount() {
     this.mounted = false;
-    this.popupsContainer.removeChild(this.el);
-    this.popupsContainer = null;
-    this.el = null;
-
     document.documentElement.classList.remove("brz-ow-hidden");
     Instances.delete(this.instanceKey);
+
+    if (this.popupsContainer) {
+      this.popupsContainer.removeChild(this.el);
+      this.popupsContainer = null;
+      this.el = null;
+    }
   }
 
   handleValueChange(newValue, meta) {
@@ -277,6 +283,7 @@ class SectionPopup extends EditorComponent {
                   <ThemeIcon name="close-popup" type="editor" />
                 </div>
                 <Roles
+                  currentRole={currentUserRole(this.getGlobalConfig())}
                   allow={["admin"]}
                   fallbackRender={() => this.renderItems(v, vs, vd)}
                 >

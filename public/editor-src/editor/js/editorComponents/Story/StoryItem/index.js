@@ -5,6 +5,7 @@ import Background from "visual/component/Background";
 import ContainerBorder from "visual/component/ContainerBorder";
 import CustomCSS from "visual/component/CustomCSS";
 import { Roles } from "visual/component/Roles";
+import { currentUserRole } from "visual/component/Roles";
 import { CollapsibleToolbar, ToolbarExtend } from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { attachRefs } from "visual/utils/react";
@@ -19,6 +20,8 @@ class StoryItem extends EditorComponent {
     meta: {}
   };
   static defaultValue = defaultValue;
+  static experimentalDynamicContent = true;
+
   collapsibleToolbarRef = React.createRef();
 
   static get componentId() {
@@ -110,6 +113,7 @@ class StoryItem extends EditorComponent {
                 ref={(el) => attachRefs(el, [containerBorderRef, cssRef])}
               >
                 <Roles
+                  currentRole={currentUserRole(this.getGlobalConfig())}
                   allow={["admin"]}
                   fallbackRender={() => this.renderItems(v)}
                 >

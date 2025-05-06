@@ -7,33 +7,33 @@ export function styleSection(
   data: DynamicStylesProps<ElementModel>
 ): OutputStyle {
   const styles = {
-    ".brz &&:hover": {
+    ".brz && > .brz-bg, .brz && > .brz-bg > .brz-bg-image, .brz && > .brz-bg > .brz-bg-color":
+      {
+        standart: ["cssStyleHoverTransition", "cssStylePropertyHoverTransition"]
+      },
+    ".brz &&": {
       interval: [
         "cssStyleDisplayBlock",
         "cssStyleVisibleMode|||preview",
         "cssStyleVisibleEditorDisplayNoneOrBlock|||editor"
       ]
     },
+    ".brz && > .brz-bg": {
+      standart: ["cssStyleBorderRadius"]
+    },
     ".brz &&:hover > .brz-bg": {
-      standart: ["cssStyleBorder", "cssStyleBorderRadius", "cssStyleBoxShadow"],
-      interval: ["cssStyleHoverTransition", "cssStylePropertyHoverTransition"]
+      standart: ["cssStyleBorder", "cssStyleBoxShadow"]
     },
     ".brz &&:hover > .brz-bg > .brz-bg-image": {
-      standart: [
-        "cssStyleBgImage",
-        "cssStyleFilter",
-        "cssStyleBgImagePosition"
-      ],
-      interval: ["cssStyleHoverTransition", "cssStylePropertyHoverTransition"]
+      standart: ["cssStyleBgImage", "cssStyleFilter", "cssStyleBgImagePosition"]
     },
     ".brz &&:hover > .brz-bg > .brz-bg-image:after": {
       standart: ["cssStyleBgImageHover"]
     },
     ".brz &&:hover > .brz-bg > .brz-bg-color": {
-      standart: ["cssStyleBgColor", "cssStyleBgGradient"],
-      interval: ["cssStyleHoverTransition", "cssStylePropertyHoverTransition"]
+      standart: ["cssStyleBgColor", "cssStyleBgGradient"]
     },
-    ".brz &&:hover > .brz-bg-content": {
+    ".brz && > .brz-bg-content": {
       standart: [
         "cssStylePaddingFourFields",
         "cssStylePaddingRightLeftForEditor"
@@ -48,7 +48,7 @@ export function styleContainer(
   data: DynamicStylesProps<ElementModel>
 ): OutputStyle {
   const styles = {
-    ".brz &&:hover": {
+    ".brz &&": {
       interval: ["cssStyleVisibleMode|||editor"],
       standart: [
         "cssStylePaddingFourFields",
