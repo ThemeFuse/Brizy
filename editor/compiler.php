@@ -2,6 +2,8 @@
 
 class Brizy_Editor_Compiler {
 
+	const BRIZY_RECOMPILE_TAG_OPTION = 'brizy-recompile-tag';
+
 	/**
 	 * @var Brizy_Editor_Project
 	 */
@@ -56,8 +58,8 @@ class Brizy_Editor_Compiler {
 
 	public function needsCompile( Brizy_Editor_Post $post ) {
 
-		$currentCompiler = preg_replace( "/((beta\d?)?-wp)$/", "", $post->get_compiler_version() );
-		$v2              = preg_replace( "/((beta\d?)?-wp)$/", "", BRIZY_MINIMUM_COMPILER_VERSION );
+		$currentCompiler = preg_replace( "/((-beta\d+?)?-wp)$/", "", $post->get_compiler_version() );
+		$v2              = preg_replace( "/((-beta\d+?)?-wp)$/", "", BRIZY_MINIMUM_COMPILER_VERSION );
 
 		if(BRIZY_EDITOR_VERSION=='dev') {
 			$v2 = BRIZY_EDITOR_VERSION;
@@ -115,4 +117,16 @@ class Brizy_Editor_Compiler {
 		) );
 	}
 
+	static private function resetCompiledVersion() {
+		global $wpdb;
+		$wpdb->query( "UPDATE {$wpdb->postmeta} SET meta_value='0.0.0' WHERE meta_key = '" . Brizy_Editor_Post::BRIZY_POST_COMPILER_VERSION . "'" );
+	}
+
+	static public function checkRecompileTag() {
+		$currentTag = (int)get_option( self::BRIZY_RECOMPILE_TAG_OPTION, null );
+		if ( $currentTag < BRIZY_RECOMPILE_TAG ) {
+			self::resetCompiledVersion();
+			update_option( self::BRIZY_RECOMPILE_TAG_OPTION, BRIZY_RECOMPILE_TAG );
+		}
+	}
 }
