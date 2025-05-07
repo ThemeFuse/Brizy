@@ -13,7 +13,8 @@ import {
 } from "visual/component/Options/Type";
 import { ToolbarItemsInstance } from "visual/component/Toolbar/ToolbarItems";
 import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
-import { useConfig, usePro } from "visual/global/hooks";
+import { usePro } from "visual/global/hooks";
+import { useConfig } from "visual/providers/ConfigProvider";
 import {
   filterByState,
   itemStates,

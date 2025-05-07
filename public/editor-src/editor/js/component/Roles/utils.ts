@@ -1,4 +1,4 @@
-import Config from "visual/global/Config";
+import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 
-export const currentUserRole = (): string =>
-  Config.getAll().user?.role ?? "admin";
+export const currentUserRole = (config: ConfigCommon): string =>
+  config.user?.role ?? "admin";

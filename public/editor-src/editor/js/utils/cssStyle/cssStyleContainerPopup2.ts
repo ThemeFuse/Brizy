@@ -40,6 +40,7 @@ export function cssStyleContainerPopup2CloseColor({
   v,
   device,
   store,
+  getConfig,
   state
 }: CSSValue): string {
   return cssStyleColor({
@@ -47,6 +48,7 @@ export function cssStyleContainerPopup2CloseColor({
     device,
     store,
     state,
+    getConfig,
     prefix: "closeColor"
   });
 }
@@ -90,6 +92,7 @@ export function cssStyleContainerPopup2CloseBorderRadius({
   v,
   device,
   store,
+  getConfig,
   state
 }: CSSValue): string {
   return cssStyleBorderRadiusType({
@@ -97,6 +100,7 @@ export function cssStyleContainerPopup2CloseBorderRadius({
     device,
     store,
     state,
+    getConfig,
     prefix: "close"
   });
 }
@@ -105,9 +109,15 @@ export function cssStyleContainerPopup2CloseBgColor({
   v,
   device,
   state,
-  store
+  getConfig
 }: CSSValue): string {
-  const bgColor = styleBgColor({ v, device, state, store, prefix: "closeBg" });
+  const bgColor = styleBgColor({
+    v,
+    device,
+    state,
+    getConfig,
+    prefix: "closeBg"
+  });
 
   return bgColor ? `background-color:${bgColor};` : "";
 }
@@ -163,21 +173,37 @@ export function cssStyleContainerPopup2RowFlexVerticalAlign({
   device,
   state,
   store,
+  getConfig,
   prefix = "popupRow"
 }: CSSValue): string {
-  return cssStyleFlexVerticalAlign({ v, device, state, store, prefix });
+  return cssStyleFlexVerticalAlign({
+    v,
+    device,
+    state,
+    store,
+    getConfig,
+    prefix
+  });
 }
 
 export function cssStyleContainerPopup2CustomHeight({
   v,
   device,
   state,
+  getConfig,
   store
 }: CSSValue): string {
   const dvv = (key: string) => defaultValueValue({ v, key, device, state });
   const columnSizeStyle = dvv("columnsHeightStyle");
 
   return columnSizeStyle === "custom2"
-    ? cssStyleSizeHeight({ v, device, state, store, prefix: "columns" })
+    ? cssStyleSizeHeight({
+        v,
+        device,
+        state,
+        store,
+        getConfig,
+        prefix: "columns"
+      })
     : "";
 }

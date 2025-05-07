@@ -7,6 +7,7 @@ import {
 } from "visual/utils/onChange";
 import { videoData } from "visual/utils/video";
 import Background from "./Background";
+import { setBgPopulationVars } from "./utils";
 
 const toNormal =
   (v) =>
@@ -31,10 +32,19 @@ const getMediaProps = (v) => {
       .reduce(normalKeyValue, []);
   }
 
+  const media = opacityKeyValue.some((k) => k < 1);
+
+  if (v.bgColorType === "none") {
+    return {
+      media,
+      opacity: false
+    };
+  }
+
   // Verify if media is less than 1
   // Verify if opacity is greater than 0
   return {
-    media: opacityKeyValue.some((k) => k < 1),
+    media,
     opacity: opacityKeyValue.some((k) => k > 0)
   };
 };
@@ -79,7 +89,6 @@ const BackgroundContainer = ({ value, meta, children }) => {
   const { renderType } = useRender();
 
   const { media, opacity } = getMediaProps(value);
-  const bg = value.bg || value.hoverBg;
 
   let props = {
     opacity,
@@ -90,12 +99,7 @@ const BackgroundContainer = ({ value, meta, children }) => {
     border: getBorder(value),
     shapeTop: validateKeyByProperty(value, "shapeTopType", "none"),
     shapeBottom: validateKeyByProperty(value, "shapeBottomType", "none"),
-    ...(media &&
-      bg && {
-        style: {
-          "--brz-background-image": `url('${bg}')`
-        }
-      })
+    ...(media && { style: setBgPopulationVars(value) })
   };
   const currentMedia = media && getMedia(value);
 

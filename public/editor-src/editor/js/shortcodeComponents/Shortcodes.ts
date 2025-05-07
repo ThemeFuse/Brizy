@@ -8,6 +8,7 @@ import getArchive from "./Archive";
 import getAssetsPosts from "./AssetsPosts";
 import getAudio from "./Audio";
 import getButton from "./Button";
+import getChart from "./Chart";
 import getColumns from "./Columns";
 import getCountdown2 from "./Countdown2";
 import getCounter from "./Counter";
@@ -15,6 +16,7 @@ import getCart from "./Ecwid/Cart";
 import getFavorites from "./Ecwid/Favorites";
 import getMyAccount from "./Ecwid/MyAccount";
 import getProduct from "./Ecwid/Product";
+import getEcwidSearch from "./Ecwid/Search";
 import getShoppingBag from "./Ecwid/ShoppingBag";
 import getForm2 from "./Form2";
 import getIcon from "./Icon";
@@ -171,6 +173,7 @@ export function getProShortCodes(
     Audio: false,
     VideoPlaylist: true,
     Flipbox: true,
+    Chart: true,
 
     IconText: false,
     Lottie: true,
@@ -341,6 +344,7 @@ export const ShortCodesKeywords: Record<string, string> = {
   Switcher: "switcher toggle on-off",
   Table: "table data spreadsheet",
   Timeline: "timeline chronology events",
+  Chart: "chart pie graph diagram data visualization analytics statistics",
 
   StoryButton: "story button narrative action interactive",
   StoryIcon: "story icon narrative symbol graphic",
@@ -508,6 +512,7 @@ export function getSampleShortCodes(config: ConfigCommon) {
     Table: getTable(),
     Timeline: getTimeline(),
     Flipbox: getFlipbox(),
+    Chart: getChart(),
 
     StoryButton: getStoryButton(),
     StoryIcon: getStoryIcon(),
@@ -580,6 +585,7 @@ export function getSampleShortCodes(config: ConfigCommon) {
     Leadific: getLeadific(),
 
     Product: getProduct(),
+    EcwidSearch: getEcwidSearch(),
     PostInfo: getPostInfo(),
     PostNavigation: getPostNavigation(),
     Breadcrumbs: getBreadcrumbs(),

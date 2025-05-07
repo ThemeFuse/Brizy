@@ -70,6 +70,7 @@ const getTranslationsMap = () => ({
   Paypal: t("Paypal"),
   InstagramFeed: t("Instagram Feed"),
   LinkedinFeed: t("Linkedin Feed"),
+  Chart: t("Chart"),
 
   // WP
   WPSidebar: t("Sidebar"),
@@ -102,6 +103,7 @@ const getTranslationsMap = () => ({
   EcwidProducts: t("Products"),
   EcwidShoppingBag: t("Shopping Bag"),
   EcwidFavorites: t("Favorites"),
+  EcwidSearch: t("Filters"),
 
   // Shopify
   AddToCart: t("Add To Cart"),

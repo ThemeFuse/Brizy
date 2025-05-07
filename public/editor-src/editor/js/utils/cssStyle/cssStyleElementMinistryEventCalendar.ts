@@ -31,9 +31,17 @@ export function cssStyleElementMinistryEventCalendarTitleAlign({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
-  return cssStyleTextAlign({ v, device, state, store, prefix: "title" });
+  return cssStyleTextAlign({
+    v,
+    device,
+    state,
+    store,
+    getConfig,
+    prefix: "title"
+  });
 }
 
 export function cssStyleElementMinistryEventCalendarPaginationSpacing({
@@ -54,13 +62,15 @@ export function cssStyleElementMinistryEventCalendarPaginationAlign({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
   return cssStyleFlexHorizontalAlign({
     v,
     device,
     state,
     store,
+    getConfig,
     prefix: "pagination"
   });
 }
@@ -70,6 +80,7 @@ export function cssStyleElementMinistryEventCalendarWeekdaysTypography({
   device,
   state,
   store,
+  getConfig,
   renderContext
 }: CSSValue & WithRenderContext): string {
   return getAllCssStyleTypography({
@@ -77,6 +88,7 @@ export function cssStyleElementMinistryEventCalendarWeekdaysTypography({
     device,
     state,
     store,
+    getConfig,
     prefix: "weekdaysTypography",
     renderContext
   });
@@ -86,18 +98,34 @@ export function cssStyleElementMinistryEventCalendarWeekdaysColor({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
-  return cssStyleColor({ v, device, state, store, prefix: "weekdaysColor" });
+  return cssStyleColor({
+    v,
+    device,
+    state,
+    store,
+    getConfig,
+    prefix: "weekdaysColor"
+  });
 }
 
 export function cssStyleElementMinistryEventCalendarWeekdaysAlign({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
-  return cssStyleTextAlign({ v, device, state, store, prefix: "weekdays" });
+  return cssStyleTextAlign({
+    v,
+    device,
+    state,
+    store,
+    getConfig,
+    prefix: "weekdays"
+  });
 }
 // Event Start Time
 export function cssStyleElementMinistryEventCalendarEventStartTimeTypography({
@@ -105,6 +133,7 @@ export function cssStyleElementMinistryEventCalendarEventStartTimeTypography({
   device,
   state,
   store,
+  getConfig,
   renderContext
 }: CSSValue & WithRenderContext): string {
   return getAllCssStyleTypography({
@@ -112,6 +141,7 @@ export function cssStyleElementMinistryEventCalendarEventStartTimeTypography({
     device,
     state,
     store,
+    getConfig,
     prefix: "eventStartTimeTypography",
     renderContext
   });
@@ -121,13 +151,15 @@ export function cssStyleElementMinistryEventCalendarEventStartTimeColor({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
   return cssStyleColor({
     v,
     device,
     state,
     store,
+    getConfig,
     prefix: "eventStartTimeColor"
   });
 }
@@ -138,6 +170,7 @@ export function cssStyleElementMinistryEventCalendarDayTypography({
   device,
   state,
   store,
+  getConfig,
   renderContext
 }: CSSValue & WithRenderContext): string {
   return getAllCssStyleTypography({
@@ -145,6 +178,7 @@ export function cssStyleElementMinistryEventCalendarDayTypography({
     device,
     state,
     store,
+    getConfig,
     prefix: "dayTypography",
     renderContext
   });
@@ -154,67 +188,110 @@ export function cssStyleElementMinistryEventCalendarDayColor({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
-  return cssStyleColor({ v, device, state, store, prefix: "dayColor" });
+  return cssStyleColor({
+    v,
+    device,
+    state,
+    store,
+    getConfig,
+    prefix: "dayColor"
+  });
 }
 
 export function cssStyleElementMinistryEventCalendarDayBgColor({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
-  return cssStyleBgColor({ v, device, state, store, prefix: "dayBg" });
+  return cssStyleBgColor({
+    v,
+    device,
+    state,
+    store,
+    getConfig,
+    prefix: "dayBg"
+  });
 }
 
 export function cssStyleElementMinistryEventCalendarDayBgGradient({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
-  return cssStyleBgGradient({ v, device, state, store, prefix: "day" });
+  return cssStyleBgGradient({
+    v,
+    device,
+    state,
+    store,
+    getConfig,
+    prefix: "day"
+  });
 }
 
 export function cssStyleElementMinistryEventCalendarDayBorder({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
-  return cssStyleBorder({ v, device, state, store, prefix: "day" });
+  return cssStyleBorder({ v, device, state, store, getConfig, prefix: "day" });
 }
 
 export function cssStyleElementMinistryEventCalendarDayBorderRadius({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
-  return cssStyleBorderRadius({ v, device, state, store, prefix: "day" });
+  return cssStyleBorderRadius({
+    v,
+    device,
+    state,
+    store,
+    getConfig,
+    prefix: "day"
+  });
 }
 
 export function cssStyleElementMinistryEventCalendarDayBoxShadow({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
-  return cssStyleBoxShadow({ v, device, state, store, prefix: "day" });
+  return cssStyleBoxShadow({
+    v,
+    device,
+    state,
+    store,
+    getConfig,
+    prefix: "day"
+  });
 }
 
 export function cssStyleElementMinistryEventCalendarDayAlign({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
   return cssStyleFlexHorizontalAlign({
     v,
     device,
     state,
     store,
+    getConfig,
     prefix: "day"
   });
 }
@@ -223,13 +300,15 @@ export function cssStyleElementMinistryEventCalendarDayWidth({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
   return cssStyleSizeWidth({
     v,
     device,
     state,
     store,
+    getConfig,
     prefix: "day"
   });
 }
@@ -238,13 +317,15 @@ export function cssStyleElementMinistryEventCalendarDayHeight({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
   return cssStyleSizeHeight({
     v,
     device,
     state,
     store,
+    getConfig,
     prefix: "day"
   });
 }
@@ -254,18 +335,34 @@ export function cssStyleElementMinistryEventCalendarEmptyBgColor({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
-  return cssStyleBgColor({ v, device, state, store, prefix: "emptyBg" });
+  return cssStyleBgColor({
+    v,
+    device,
+    state,
+    store,
+    getConfig,
+    prefix: "emptyBg"
+  });
 }
 
 export function cssStyleElementMinistryEventCalendarEmptyBgGradient({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
-  return cssStyleBgGradient({ v, device, state, store, prefix: "empty" });
+  return cssStyleBgGradient({
+    v,
+    device,
+    state,
+    store,
+    getConfig,
+    prefix: "empty"
+  });
 }
 
 // Table
@@ -273,432 +370,816 @@ export function cssStyleElementMinistryEventCalendarEvenBgColor({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
-  return cssStyleBgColor({ v, device, state, store, prefix: "evenBg" });
+  return cssStyleBgColor({
+    v,
+    device,
+    state,
+    store,
+    getConfig,
+    prefix: "evenBg"
+  });
 }
 
 export function cssStyleElementMinistryEventCalendarEvenBgGradient({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
-  return cssStyleBgGradient({ v, device, state, store, prefix: "even" });
+  return cssStyleBgGradient({
+    v,
+    device,
+    state,
+    store,
+    getConfig,
+    prefix: "even"
+  });
 }
 
 export function cssStyleElementMinistryEventCalendarOddBgColor({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
-  return cssStyleBgColor({ v, device, state, store, prefix: "oddBg" });
+  return cssStyleBgColor({
+    v,
+    device,
+    state,
+    store,
+    getConfig,
+    prefix: "oddBg"
+  });
 }
 
 export function cssStyleElementMinistryEventCalendarOddBgGradient({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
-  return cssStyleBgGradient({ v, device, state, store, prefix: "odd" });
+  return cssStyleBgGradient({
+    v,
+    device,
+    state,
+    store,
+    getConfig,
+    prefix: "odd"
+  });
 }
 
 export function cssStyleElementMinistryEventCalendarMonth2EvenBgColor({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
-  return cssStyleBgColor({ v, device, state, store, prefix: "month2EvenBg" });
+  return cssStyleBgColor({
+    v,
+    device,
+    state,
+    store,
+    getConfig,
+    prefix: "month2EvenBg"
+  });
 }
 
 export function cssStyleElementMinistryEventCalendarMonth2EvenBgGradient({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
-  return cssStyleBgGradient({ v, device, state, store, prefix: "month2Even" });
+  return cssStyleBgGradient({
+    v,
+    device,
+    state,
+    store,
+    getConfig,
+    prefix: "month2Even"
+  });
 }
 
 export function cssStyleElementMinistryEventCalendarMonth2OddBgColor({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
-  return cssStyleBgColor({ v, device, state, store, prefix: "month2OddBg" });
+  return cssStyleBgColor({
+    v,
+    device,
+    state,
+    store,
+    getConfig,
+    prefix: "month2OddBg"
+  });
 }
 
 export function cssStyleElementMinistryEventCalendarMonth2OddBgGradient({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
-  return cssStyleBgGradient({ v, device, state, store, prefix: "month2Odd" });
+  return cssStyleBgGradient({
+    v,
+    device,
+    state,
+    store,
+    getConfig,
+    prefix: "month2Odd"
+  });
 }
 
 export function cssStyleElementMinistryEventCalendarMonth3EvenBgColor({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
-  return cssStyleBgColor({ v, device, state, store, prefix: "month3EvenBg" });
+  return cssStyleBgColor({
+    v,
+    device,
+    state,
+    store,
+    getConfig,
+    prefix: "month3EvenBg"
+  });
 }
 
 export function cssStyleElementMinistryEventCalendarMonth3EvenBgGradient({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
-  return cssStyleBgGradient({ v, device, state, store, prefix: "month3Even" });
+  return cssStyleBgGradient({
+    v,
+    device,
+    state,
+    store,
+    getConfig,
+    prefix: "month3Even"
+  });
 }
 
 export function cssStyleElementMinistryEventCalendarMonth3OddBgColor({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
-  return cssStyleBgColor({ v, device, state, store, prefix: "month3OddBg" });
+  return cssStyleBgColor({
+    v,
+    device,
+    state,
+    store,
+    getConfig,
+    prefix: "month3OddBg"
+  });
 }
 
 export function cssStyleElementMinistryEventCalendarMonth3OddBgGradient({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
-  return cssStyleBgGradient({ v, device, state, store, prefix: "month3Odd" });
+  return cssStyleBgGradient({
+    v,
+    device,
+    state,
+    store,
+    getConfig,
+    prefix: "month3Odd"
+  });
 }
 
 export function cssStyleElementMinistryEventCalendarMonth4EvenBgColor({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
-  return cssStyleBgColor({ v, device, state, store, prefix: "month4EvenBg" });
+  return cssStyleBgColor({
+    v,
+    device,
+    state,
+    store,
+    getConfig,
+    prefix: "month4EvenBg"
+  });
 }
 
 export function cssStyleElementMinistryEventCalendarMonth4EvenBgGradient({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
-  return cssStyleBgGradient({ v, device, state, store, prefix: "month4Even" });
+  return cssStyleBgGradient({
+    v,
+    device,
+    state,
+    store,
+    getConfig,
+    prefix: "month4Even"
+  });
 }
 
 export function cssStyleElementMinistryEventCalendarMonth4OddBgColor({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
-  return cssStyleBgColor({ v, device, state, store, prefix: "month4OddBg" });
+  return cssStyleBgColor({
+    v,
+    device,
+    state,
+    store,
+    getConfig,
+    prefix: "month4OddBg"
+  });
 }
 
 export function cssStyleElementMinistryEventCalendarMonth4OddBgGradient({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
-  return cssStyleBgGradient({ v, device, state, store, prefix: "month4Odd" });
+  return cssStyleBgGradient({
+    v,
+    device,
+    state,
+    store,
+    getConfig,
+    prefix: "month4Odd"
+  });
 }
 
 export function cssStyleElementMinistryEventCalendarMonth5EvenBgColor({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
-  return cssStyleBgColor({ v, device, state, store, prefix: "month5EvenBg" });
+  return cssStyleBgColor({
+    v,
+    device,
+    state,
+    store,
+    getConfig,
+    prefix: "month5EvenBg"
+  });
 }
 
 export function cssStyleElementMinistryEventCalendarMonth5EvenBgGradient({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
-  return cssStyleBgGradient({ v, device, state, store, prefix: "month5Even" });
+  return cssStyleBgGradient({
+    v,
+    device,
+    state,
+    store,
+    getConfig,
+    prefix: "month5Even"
+  });
 }
 
 export function cssStyleElementMinistryEventCalendarMonth5OddBgColor({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
-  return cssStyleBgColor({ v, device, state, store, prefix: "month5OddBg" });
+  return cssStyleBgColor({
+    v,
+    device,
+    state,
+    store,
+    getConfig,
+    prefix: "month5OddBg"
+  });
 }
 
 export function cssStyleElementMinistryEventCalendarMonth5OddBgGradient({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
-  return cssStyleBgGradient({ v, device, state, store, prefix: "month5Odd" });
+  return cssStyleBgGradient({
+    v,
+    device,
+    state,
+    store,
+    getConfig,
+    prefix: "month5Odd"
+  });
 }
 
 export function cssStyleElementMinistryEventCalendarMonth6EvenBgColor({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
-  return cssStyleBgColor({ v, device, state, store, prefix: "month6EvenBg" });
+  return cssStyleBgColor({
+    v,
+    device,
+    state,
+    store,
+    getConfig,
+    prefix: "month6EvenBg"
+  });
 }
 
 export function cssStyleElementMinistryEventCalendarMonth6EvenBgGradient({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
-  return cssStyleBgGradient({ v, device, state, store, prefix: "month6Even" });
+  return cssStyleBgGradient({
+    v,
+    device,
+    state,
+    store,
+    getConfig,
+    prefix: "month6Even"
+  });
 }
 
 export function cssStyleElementMinistryEventCalendarMonth6OddBgColor({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
-  return cssStyleBgColor({ v, device, state, store, prefix: "month6OddBg" });
+  return cssStyleBgColor({
+    v,
+    device,
+    state,
+    store,
+    getConfig,
+    prefix: "month6OddBg"
+  });
 }
 
 export function cssStyleElementMinistryEventCalendarMonth6OddBgGradient({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
-  return cssStyleBgGradient({ v, device, state, store, prefix: "month6Odd" });
+  return cssStyleBgGradient({
+    v,
+    device,
+    state,
+    store,
+    getConfig,
+    prefix: "month6Odd"
+  });
 }
 
 export function cssStyleElementMinistryEventCalendarMonth7EvenBgColor({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
-  return cssStyleBgColor({ v, device, state, store, prefix: "month7EvenBg" });
+  return cssStyleBgColor({
+    v,
+    device,
+    state,
+    store,
+    getConfig,
+    prefix: "month7EvenBg"
+  });
 }
 
 export function cssStyleElementMinistryEventCalendarMonth7EvenBgGradient({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
-  return cssStyleBgGradient({ v, device, state, store, prefix: "month7Even" });
+  return cssStyleBgGradient({
+    v,
+    device,
+    state,
+    store,
+    getConfig,
+    prefix: "month7Even"
+  });
 }
 
 export function cssStyleElementMinistryEventCalendarMonth7OddBgColor({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
-  return cssStyleBgColor({ v, device, state, store, prefix: "month7OddBg" });
+  return cssStyleBgColor({
+    v,
+    device,
+    state,
+    store,
+    getConfig,
+    prefix: "month7OddBg"
+  });
 }
 
 export function cssStyleElementMinistryEventCalendarMonth7OddBgGradient({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
-  return cssStyleBgGradient({ v, device, state, store, prefix: "month7Odd" });
+  return cssStyleBgGradient({
+    v,
+    device,
+    state,
+    store,
+    getConfig,
+    prefix: "month7Odd"
+  });
 }
 
 export function cssStyleElementMinistryEventCalendarMonth8EvenBgColor({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
-  return cssStyleBgColor({ v, device, state, store, prefix: "month8EvenBg" });
+  return cssStyleBgColor({
+    v,
+    device,
+    state,
+    store,
+    getConfig,
+    prefix: "month8EvenBg"
+  });
 }
 
 export function cssStyleElementMinistryEventCalendarMonth8EvenBgGradient({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
-  return cssStyleBgGradient({ v, device, state, store, prefix: "month8Even" });
+  return cssStyleBgGradient({
+    v,
+    device,
+    state,
+    store,
+    getConfig,
+    prefix: "month8Even"
+  });
 }
 
 export function cssStyleElementMinistryEventCalendarMonth8OddBgColor({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
-  return cssStyleBgColor({ v, device, state, store, prefix: "month8OddBg" });
+  return cssStyleBgColor({
+    v,
+    device,
+    state,
+    store,
+    getConfig,
+    prefix: "month8OddBg"
+  });
 }
 
 export function cssStyleElementMinistryEventCalendarMonth8OddBgGradient({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
-  return cssStyleBgGradient({ v, device, state, store, prefix: "month8Odd" });
+  return cssStyleBgGradient({
+    v,
+    device,
+    state,
+    store,
+    getConfig,
+    prefix: "month8Odd"
+  });
 }
 
 export function cssStyleElementMinistryEventCalendarMonth9EvenBgColor({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
-  return cssStyleBgColor({ v, device, state, store, prefix: "month9EvenBg" });
+  return cssStyleBgColor({
+    v,
+    device,
+    state,
+    store,
+    getConfig,
+    prefix: "month9EvenBg"
+  });
 }
 
 export function cssStyleElementMinistryEventCalendarMonth9EvenBgGradient({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
-  return cssStyleBgGradient({ v, device, state, store, prefix: "month9Even" });
+  return cssStyleBgGradient({
+    v,
+    device,
+    state,
+    store,
+    getConfig,
+    prefix: "month9Even"
+  });
 }
 
 export function cssStyleElementMinistryEventCalendarMonth9OddBgColor({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
-  return cssStyleBgColor({ v, device, state, store, prefix: "month9OddBg" });
+  return cssStyleBgColor({
+    v,
+    device,
+    state,
+    store,
+    getConfig,
+    prefix: "month9OddBg"
+  });
 }
 
 export function cssStyleElementMinistryEventCalendarMonth9OddBgGradient({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
-  return cssStyleBgGradient({ v, device, state, store, prefix: "month9Odd" });
+  return cssStyleBgGradient({
+    v,
+    device,
+    state,
+    store,
+    getConfig,
+    prefix: "month9Odd"
+  });
 }
 
 export function cssStyleElementMinistryEventCalendarMonth10EvenBgColor({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
-  return cssStyleBgColor({ v, device, state, store, prefix: "month10EvenBg" });
+  return cssStyleBgColor({
+    v,
+    device,
+    state,
+    store,
+    getConfig,
+    prefix: "month10EvenBg"
+  });
 }
 
 export function cssStyleElementMinistryEventCalendarMonth10EvenBgGradient({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
-  return cssStyleBgGradient({ v, device, state, store, prefix: "month10Even" });
+  return cssStyleBgGradient({
+    v,
+    device,
+    state,
+    store,
+    getConfig,
+    prefix: "month10Even"
+  });
 }
 
 export function cssStyleElementMinistryEventCalendarMonth10OddBgColor({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
-  return cssStyleBgColor({ v, device, state, store, prefix: "month10OddBg" });
+  return cssStyleBgColor({
+    v,
+    device,
+    state,
+    store,
+    getConfig,
+    prefix: "month10OddBg"
+  });
 }
 
 export function cssStyleElementMinistryEventCalendarMonth10OddBgGradient({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
-  return cssStyleBgGradient({ v, device, state, store, prefix: "month10Odd" });
+  return cssStyleBgGradient({
+    v,
+    device,
+    state,
+    store,
+    getConfig,
+    prefix: "month10Odd"
+  });
 }
 
 export function cssStyleElementMinistryEventCalendarMonth11EvenBgColor({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
-  return cssStyleBgColor({ v, device, state, store, prefix: "month11EvenBg" });
+  return cssStyleBgColor({
+    v,
+    device,
+    state,
+    store,
+    getConfig,
+    prefix: "month11EvenBg"
+  });
 }
 
 export function cssStyleElementMinistryEventCalendarMonth11EvenBgGradient({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
-  return cssStyleBgGradient({ v, device, state, store, prefix: "month11Even" });
+  return cssStyleBgGradient({
+    v,
+    device,
+    state,
+    store,
+    getConfig,
+    prefix: "month11Even"
+  });
 }
 
 export function cssStyleElementMinistryEventCalendarMonth11OddBgColor({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
-  return cssStyleBgColor({ v, device, state, store, prefix: "month11OddBg" });
+  return cssStyleBgColor({
+    v,
+    device,
+    state,
+    store,
+    getConfig,
+    prefix: "month11OddBg"
+  });
 }
 
 export function cssStyleElementMinistryEventCalendarMonth11OddBgGradient({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
-  return cssStyleBgGradient({ v, device, state, store, prefix: "month11Odd" });
+  return cssStyleBgGradient({
+    v,
+    device,
+    state,
+    store,
+    getConfig,
+    prefix: "month11Odd"
+  });
 }
 
 export function cssStyleElementMinistryEventCalendarMonth12EvenBgColor({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
-  return cssStyleBgColor({ v, device, state, store, prefix: "month12EvenBg" });
+  return cssStyleBgColor({
+    v,
+    device,
+    state,
+    store,
+    getConfig,
+    prefix: "month12EvenBg"
+  });
 }
 
 export function cssStyleElementMinistryEventCalendarMonth12EvenBgGradient({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
-  return cssStyleBgGradient({ v, device, state, store, prefix: "month12Even" });
+  return cssStyleBgGradient({
+    v,
+    device,
+    state,
+    store,
+    getConfig,
+    prefix: "month12Even"
+  });
 }
 
 export function cssStyleElementMinistryEventCalendarMonth12OddBgColor({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
-  return cssStyleBgColor({ v, device, state, store, prefix: "month12OddBg" });
+  return cssStyleBgColor({
+    v,
+    device,
+    state,
+    store,
+    getConfig,
+    prefix: "month12OddBg"
+  });
 }
 
 export function cssStyleElementMinistryEventCalendarMonth12OddBgGradient({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
-  return cssStyleBgGradient({ v, device, state, store, prefix: "month12Odd" });
+  return cssStyleBgGradient({
+    v,
+    device,
+    state,
+    store,
+    getConfig,
+    prefix: "month12Odd"
+  });
 }
 
 export function cssStyleElementMinistryEventCalendarTableSpacing({
@@ -716,9 +1197,17 @@ export function cssStyleElementMinistryEventCalendarTableBorder({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
-  return cssStyleBorder({ v, device, state, store, prefix: "table" });
+  return cssStyleBorder({
+    v,
+    device,
+    state,
+    store,
+    getConfig,
+    prefix: "table"
+  });
 }
 
 export function cssStyleElementMinistryEventCalendarSubscribeToCalendarTypography({
@@ -726,6 +1215,7 @@ export function cssStyleElementMinistryEventCalendarSubscribeToCalendarTypograph
   device,
   state,
   store,
+  getConfig,
   renderContext
 }: CSSValue & WithRenderContext): string {
   return getAllCssStyleTypography({
@@ -733,6 +1223,7 @@ export function cssStyleElementMinistryEventCalendarSubscribeToCalendarTypograph
     device,
     state,
     store,
+    getConfig,
     prefix: "subscribeToCalendarTypography",
     renderContext
   });
@@ -742,13 +1233,15 @@ export function cssStyleElementMinistryEventCalendarSubscribeToCalendarColor({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
   return cssStyleColor({
     v,
     device,
     state,
     store,
+    getConfig,
     prefix: "subscribeToCalendarColor"
   });
 }
@@ -757,13 +1250,15 @@ export function cssStyleElementMinistryEventCalendarSubscribeToCalendarBgColor({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
   return cssStyleElementMinistryBrandsButtonsBgColor({
     v,
     device,
     state,
     store,
+    getConfig,
     prefix: "subscribeToCalendar"
   });
 }
@@ -772,13 +1267,15 @@ export function cssStyleElementMinistryEventCalendarSubscribeToCalendarBgGradien
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
   return cssStyleElementMinistryBrandsButtonsBgGradient({
     v,
     device,
     state,
     store,
+    getConfig,
     prefix: "subscribeToCalendar"
   });
 }
@@ -787,13 +1284,15 @@ export function cssStyleElementMinistryEventCalendarSubscribeToCalendarBorder({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
   return cssStyleBorder({
     v,
     device,
     state,
     store,
+    getConfig,
     prefix: "subscribeToCalendar"
   });
 }
@@ -802,13 +1301,15 @@ export function cssStyleElementMinistryEventCalendarSubscribeToCalendarBoxShadow
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
   return cssStyleBoxShadow({
     v,
     device,
     state,
     store,
+    getConfig,
     prefix: "subscribeToCalendar"
   });
 }
@@ -817,13 +1318,15 @@ export function cssStyleElementMinistryEventCalendarSubscribeToCalendarWidth({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
   return cssStyleSizeWidth({
     v,
     device,
     state,
     store,
+    getConfig,
     prefix: "subscribeToCalendar"
   });
 }
@@ -832,13 +1335,15 @@ export function cssStyleElementMinistryEventCalendarSubscribeToCalendarHeight({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
   return cssStyleSizeHeight({
     v,
     device,
     state,
     store,
+    getConfig,
     prefix: "subscribeToCalendar"
   });
 }
@@ -847,13 +1352,15 @@ export function cssStyleElementMinistryEventCalendarSubscribeToCalendarBorderRad
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
   return cssStyleBorderRadiusType({
     v,
     device,
     state,
     store,
+    getConfig,
     prefix: "subscribeToCalendar"
   });
 }
@@ -862,13 +1369,15 @@ export function cssStyleElementMinistryEventCalendarSubscribeToCalendarAlign({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
   return cssStyleFlexHorizontalAlign({
     v,
     device,
     state,
     store,
+    getConfig,
     prefix: "subscribeToCalendar"
   });
 }
@@ -877,40 +1386,66 @@ export function cssStyleElementMinistryEventCalendarIconPosition({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
-  return cssStyleIconPosition({ v, device, state, store, prefix: "icon" });
+  return cssStyleIconPosition({
+    v,
+    device,
+    state,
+    store,
+    getConfig,
+    prefix: "icon"
+  });
 }
 
 export function cssStyleElementMinistryEventCalendarIconMargin({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
-  return cssStyleIconMargin({ v, device, state, store, prefix: "icon" });
+  return cssStyleIconMargin({
+    v,
+    device,
+    state,
+    store,
+    getConfig,
+    prefix: "icon"
+  });
 }
 
 export function cssStyleElementMinistryEventCalendarIconStrokeWidth({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
-  return cssStyleStrokeWidth({ v, device, state, store, prefix: "icon" });
+  return cssStyleStrokeWidth({
+    v,
+    device,
+    state,
+    store,
+    getConfig,
+    prefix: "icon"
+  });
 }
 
 export function cssStyleElementMinistryEventCalendarArrowColor({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
   return cssStyleColor({
     v,
     device,
     state,
     store,
+    getConfig,
     prefix: "arrowColor"
   });
 }
@@ -919,18 +1454,34 @@ export function cssStyleElementMinistryEventCalendarArrowBorder({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
-  return cssStyleBorder({ v, device, state, store, prefix: "arrow" });
+  return cssStyleBorder({
+    v,
+    device,
+    state,
+    store,
+    getConfig,
+    prefix: "arrow"
+  });
 }
 
 export function cssStyleElementMinistryEventCalendarArrowBoxShadow({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
-  return cssStyleBoxShadow({ v, device, state, store, prefix: "arrow" });
+  return cssStyleBoxShadow({
+    v,
+    device,
+    state,
+    store,
+    getConfig,
+    prefix: "arrow"
+  });
 }
 
 export function cssStyleElementMinistryEventCalendarArrowSize({
@@ -949,13 +1500,15 @@ export function cssStyleElementMinistryEventCalendarHoverTransition({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }: CSSValue) {
   return cssStyleHoverTransition({
     v,
     device,
     state,
     store,
+    getConfig,
     prefix: "subscribeToCalendar"
   });
 }
@@ -964,13 +1517,15 @@ export function cssStyleElementMinistryEventCalendarCustomIconColor({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
   return cssStyleCustomIconColor({
     v,
     device,
     state,
     store,
+    getConfig,
     prefix: "subscribeToCalendarColor"
   });
 }

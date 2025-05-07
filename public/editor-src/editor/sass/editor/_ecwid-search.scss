@@ -1,0 +1,17 @@
+&#ecwid_body {
+  @media screen and (max-width: 767px) {
+    & {
+      overflow: auto !important;
+    }
+  }
+}
+
+.brz-ecwid-search-wrapper {
+  @media screen and (max-width: 767px) {
+    .ec-store {
+      .ec-filters.ec-filters--popup {
+        display: none;
+      }
+    }
+  }
+}

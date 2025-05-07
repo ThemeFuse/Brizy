@@ -34,7 +34,6 @@ import {
 import { historySelector } from "../history/selectors";
 import { REDO, UNDO } from "../history/types";
 import {
-  configSelector,
   currentLanguageSelector,
   currentRoleSelector,
   currentStyleSelector,
@@ -250,7 +249,10 @@ function handleHydrate(callbacks) {
     if (document.getElementById("brz-global-colors") === null) {
       const globalColorStyles = document.createElement("style");
       globalColorStyles.id = "brz-global-colors";
-      globalColorStyles.innerHTML = makeGlobalStylesColorPalette(colorPalette);
+      globalColorStyles.innerHTML = makeGlobalStylesColorPalette(
+        colorPalette,
+        globalConfig
+      );
       document.head.appendChild(globalColorStyles);
     }
 
@@ -278,18 +280,19 @@ function handleFontsChange(callbacks) {
       return;
     }
 
-    const { document, parentDocument } = config;
+    const { document, parentDocument, getConfig } = config;
+
+    const globalConfig = getConfig();
 
     // Generate new Link for new Fonts
     if (action.type !== DELETE_FONTS) {
       const adobeKitId = state?.fonts?.adobe?.id;
-      const config = configSelector(state);
 
       diffFonts(oldState.fonts, state.fonts).forEach(({ type, fonts }) => {
         let href;
 
         if (type === "upload") {
-          href = makeUploadFontsUrl(fonts, config);
+          href = makeUploadFontsUrl(fonts, globalConfig);
         } else if (type === "adobe") {
           if (adobeKitId) href = makeAdobeFontsUrl(adobeKitId);
         } else {
@@ -309,10 +312,10 @@ function handleFontsChange(callbacks) {
 }
 
 function handleStylesChange(callbacks) {
-  callbacks.onAfterNext.push(({ state, store }) => {
+  callbacks.onAfterNext.push(({ state, store, config: _config }) => {
     const { colorPalette, fontStyles: _fontStyles } =
       currentStyleSelector(state);
-    const config = configSelector(state);
+    const config = _config.getConfig();
 
     const richTextColor = document.querySelector("#brz-rich-text-colors");
     const globalColor = document.querySelector("#brz-global-colors");
@@ -326,7 +329,10 @@ function handleStylesChange(callbacks) {
     }
 
     if (globalColor) {
-      globalColor.innerHTML = makeGlobalStylesColorPalette(colorPalette);
+      globalColor.innerHTML = makeGlobalStylesColorPalette(
+        colorPalette,
+        config
+      );
     }
 
     if (globalFontStyles) {
@@ -464,7 +470,7 @@ function handleCopiedElementChange(callbacks) {
 }
 
 function handleHistoryChange(callbacks) {
-  callbacks.onAfterNext.push(({ state, store }) => {
+  callbacks.onAfterNext.push(({ state, store, config: _config }) => {
     const { currSnapshot, prevSnapshot } = historySelector(state);
     const currStyleId = currSnapshot?.currentStyleId;
     const prevStyleId = prevSnapshot?.currentStyleId;
@@ -474,7 +480,7 @@ function handleHistoryChange(callbacks) {
     if (currStyleId !== prevStyleId || currStyle !== prevStyle) {
       const { colorPalette, fontStyles: _fontStyles } =
         currentStyleSelector(state);
-      const config = configSelector(state);
+      const config = _config.getConfig();
 
       const richTextColor = document.querySelector("#brz-rich-text-colors");
       const globalColor = document.querySelector("#brz-global-colors");
@@ -488,7 +494,10 @@ function handleHistoryChange(callbacks) {
       }
 
       if (globalColor) {
-        globalColor.innerHTML = makeGlobalStylesColorPalette(colorPalette);
+        globalColor.innerHTML = makeGlobalStylesColorPalette(
+          colorPalette,
+          config
+        );
       }
 
       if (globalFontStyles) {

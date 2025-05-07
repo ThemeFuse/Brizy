@@ -205,6 +205,8 @@ export * from "./cssStyleElementEcwidProduct";
 export * from "./cssStyleElementEcwidProducts";
 // Element Ecwid Shopping Bag
 export * from "./cssStyleElementEcwidShoppingBag";
+// Element Ecwid Search
+export * from "./cssStyleElementEcwidSearch";
 
 // Ministry Brands
 //

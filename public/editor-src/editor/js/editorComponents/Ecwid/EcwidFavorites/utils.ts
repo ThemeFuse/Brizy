@@ -1,12 +1,6 @@
-import { MouseEvent as ReactMouseEvent } from "react";
 import { EcwidConfig } from "visual/libs/Ecwid/types/EcwidConfig";
 import { onOffToBool } from "visual/utils/boolean";
 import { Value } from "./types";
-
-export const containsNode = (
-  e: ReactMouseEvent<HTMLDivElement, MouseEvent>,
-  selector: string
-): boolean => !!(e.target as HTMLElement | null)?.closest(selector);
 
 export const valueToEciwdConfig = (v: Value): EcwidConfig => ({
   show_footer_menu: onOffToBool(v.footerDisplay),

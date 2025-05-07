@@ -9,6 +9,7 @@ import React, {
   useRef
 } from "react";
 import { useStore } from "react-redux";
+import { useConfig } from "visual/providers/ConfigProvider";
 import { useRender } from "visual/providers/RenderProvider";
 import { WithClassName } from "visual/types/attributes";
 import { makeDataAttr } from "visual/utils/i18n/attribute";
@@ -50,6 +51,8 @@ const _Link = (
   ref: Ref<HTMLAnchorElement>
 ): ReactElement => {
   const store = useStore();
+  const config = useConfig();
+
   const innerRef = useRef<HTMLAnchorElement>();
   const { renderType } = useRender();
   const _className = classNames(
@@ -57,7 +60,7 @@ const _Link = (
     { "brz-anchor": type === "anchor" },
     className
   );
-  const _href = getHref(type, mRead(href), store, renderType);
+  const _href = getHref(type, mRead(href), store, renderType, config);
   const _target = getTarget(type, target);
   const attrs = getAttr(attr);
   const _rel = getRel(mRead(rel));

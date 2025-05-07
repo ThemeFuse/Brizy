@@ -10,21 +10,12 @@ import { Response } from "../../common";
 export interface Shopify {
   type: "shopify";
   api?: {
-    metafieldsLoad?: {
+    getMetafields?: {
       handler: (
         res: Response<ChoicesSync>,
         rej: Response<string>,
         args: {
-          sourceType: string;
-        }
-      ) => void;
-    };
-    blogPostMetaLoad?: {
-      handler: (
-        res: Response<ChoicesSync>,
-        rej: Response<string>,
-        args: {
-          sourceType: string;
+          slug: string;
         }
       ) => void;
     };

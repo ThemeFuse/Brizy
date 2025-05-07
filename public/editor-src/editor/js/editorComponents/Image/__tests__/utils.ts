@@ -9,11 +9,6 @@ import {
   PredefinedCustomSize
 } from "../utils";
 
-// init config before start the tests
-beforeEach(() => {
-  require("visual/bootstraps/initConfig");
-});
-
 export const imageSizes = [
   {
     label: "Original",
@@ -168,7 +163,16 @@ describe("Testing 'Getters Image' functions", () => {
       linkExternalType: "",
       linkPopup: "",
       linkUpload: "",
-      showOriginalImage: "off"
+      showOriginalImage: "off",
+      hoverImageSrc: "",
+      hoverImageWidth: 0,
+      hoverImageHeight: 0,
+      hoverPositionX: 0,
+      hoverPositionY: 0,
+      hoverHeight: 100,
+      hoverImageExtension: "",
+      hoverImage: "",
+      hoverImageFileName: ""
     };
 
     // without population

@@ -1,16 +1,16 @@
 import { isEqual } from "es-toolkit";
-import React from "react";
+import React, { JSX } from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { LabelWithButton } from "visual/component/Controls/LeftSidebar/Styling/LabelWithButton";
 import { ToastNotification } from "visual/component/Notifications";
 import Options from "visual/component/Options";
 import { OnChangeActionTypes } from "visual/component/Options/types/dev/EditableSelect/types";
-import { getConfigById } from "visual/global/Config/InitConfig";
 import {
   ConfigCommon,
   LeftSidebarOptionsIds
 } from "visual/global/Config/types/configs/ConfigCommon";
+import { useConfig } from "visual/providers/ConfigProvider";
 import {
   addNewGlobalStyle,
   editGlobalStyleName,
@@ -26,7 +26,6 @@ import {
   REGENERATED_STYLE_UID
 } from "visual/redux/reducers/currentStyleId";
 import {
-  configIdSelector,
   currentStyleSelector,
   extraFontStylesSelector,
   extraStylesSelector,
@@ -60,7 +59,7 @@ interface State {
   loadingTypography: boolean;
 }
 
-class DrawerComponent extends React.Component<Props, State> {
+class _DrawerComponent extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -290,21 +289,33 @@ class DrawerComponent extends React.Component<Props, State> {
   }
 }
 
-const mapStateToProps = (state: ReduxState): StateProps => ({
+const DrawerComponent = (props: Omit<Props, "config">): JSX.Element => {
+  const config = useConfig();
+
+  return <_DrawerComponent {...props} config={config} />;
+};
+
+const mapStateToProps = (state: ReduxState): Omit<StateProps, "config"> => ({
   styles: stylesSelector(state),
   extraStyles: extraStylesSelector(state),
   currentStyle: currentStyleSelector(state),
-  extraFontStyles: extraFontStylesSelector(state),
-  config: getConfigById(configIdSelector(state))
+  extraFontStyles: extraFontStylesSelector(state)
 });
 const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
   dispatch
 });
 
-export const Styling = {
-  id: LeftSidebarOptionsIds.globalStyle,
-  type: "drawer",
-  icon: "nc-brush",
-  drawerTitle: t("Styling"),
-  drawerComponent: connect(mapStateToProps, mapDispatchToProps)(DrawerComponent)
-};
+export const getStyling = (() => {
+  const drawerComponent = connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(DrawerComponent);
+
+  return () => ({
+    id: LeftSidebarOptionsIds.globalStyle,
+    type: "drawer",
+    icon: "nc-brush",
+    drawerTitle: t("Styling"),
+    drawerComponent
+  });
+})();

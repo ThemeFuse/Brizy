@@ -22,7 +22,7 @@ export default function ($node: JQuery): void {
       readType(item.getAttribute(makeAttr("type"))) ?? ProgressStyle.Style1;
     const value = readNumber(wrapper?.getAttribute("data-progress"));
 
-    if (text && wrapper && value) {
+    if (wrapper && value) {
       animate({ text, wrapper, type, value });
     }
   });

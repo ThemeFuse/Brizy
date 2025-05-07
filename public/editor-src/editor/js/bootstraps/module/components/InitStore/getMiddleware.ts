@@ -1,14 +1,14 @@
 import { Middleware } from "redux";
 import thunk from "redux-thunk";
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import { GetConfig } from "visual/providers/ConfigProvider/types";
 import { EditorMode } from "visual/providers/EditorModeProvider";
 import { api, error, screenshots, sideEffects } from "visual/redux/middleware";
 
 export function getMiddleware({
-  config,
-  editorMode
+  editorMode,
+  getConfig
 }: {
-  config: ConfigCommon;
+  getConfig: GetConfig;
   editorMode: EditorMode;
 }): Array<Middleware> {
   if (typeof window === "undefined") {
@@ -17,9 +17,13 @@ export function getMiddleware({
 
   return [
     thunk,
-    sideEffects({ document, parentDocument: window.parent.document }),
+    sideEffects({
+      document,
+      parentDocument: window.parent.document,
+      getConfig
+    }),
     error,
-    screenshots(config),
-    api({ config, editorMode })
+    screenshots(getConfig),
+    api({ getConfig, editorMode })
   ];
 }

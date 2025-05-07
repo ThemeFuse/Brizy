@@ -1,19 +1,19 @@
+import { Str } from "@brizy/readers";
 import { flattenDeep } from "es-toolkit";
 import { isT } from "fp-utilities";
 import { makeUrl, parseJSON } from "visual/component/Prompts/common/utils";
-import Config from "visual/global/Config";
 import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { VariationFont } from "visual/types/Fonts";
 import { request } from "visual/utils/api";
 import { CreateFont, UploadFont } from "../api/types";
 import { getFontVariation, normalizeFonts } from "./utils";
 
-export const createFont = async ({ id, name, files }: CreateFont) => {
-  const { api } = Config.get("urls");
-  const { id: containerId } = Config.get("container");
+export const createFont = async ({ id, name, files, config }: CreateFont) => {
+  const { api } = config.urls ?? {};
+  const { id: containerId } = config.container;
   const formData = new FormData();
 
-  formData.append("container", containerId);
+  formData.append("container", Str.read(containerId) ?? "");
   formData.append("uid", id);
   formData.append("family", name);
 
@@ -32,10 +32,14 @@ export const createFont = async ({ id, name, files }: CreateFont) => {
     )
   ).filter(isT);
 
-  return request(`${api}/fonts`, {
-    method: "POST",
-    body: formData
-  })
+  return request(
+    `${api}/fonts`,
+    {
+      method: "POST",
+      body: formData
+    },
+    config
+  )
     .then((v) => parseJSON<UploadFont>(v))
     .then((res) => normalizeFonts(res, variations));
 };

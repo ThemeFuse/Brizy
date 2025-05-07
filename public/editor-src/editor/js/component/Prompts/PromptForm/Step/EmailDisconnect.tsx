@@ -1,6 +1,6 @@
 import React, { ReactElement, useCallback, useContext, useState } from "react";
 import { IntegrationType } from "visual/component/Prompts/PromptForm/api/types";
-import { useConfig } from "visual/global/hooks";
+import { useConfig } from "visual/providers/ConfigProvider";
 import { pendingRequest } from "visual/utils/api";
 import { t } from "visual/utils/i18n";
 import { Context } from "../../common/GlobalApps/Context";

@@ -8,11 +8,11 @@ export function styleForm(data: DynamicStylesProps<Value>): OutputStyle {
   const _isStory = isStory(data.contexts.mode);
 
   const styles: Styles = {
-    ".brz &&:hover": {
+    ".brz &&": {
       standart: [...(_isStory ? ["cssStyleSizeWidthStoryOnly"] : [])]
     },
 
-    ".brz &&:hover .brz-form": {
+    ".brz && .brz-form": {
       standart: ["cssStyleElementForm2Margin"]
     },
 
@@ -20,11 +20,11 @@ export function styleForm(data: DynamicStylesProps<Value>): OutputStyle {
       standart: ["cssStyleElementForm2Padding"]
     },
 
-    ".brz &&:hover .brz-forms2__item-button": {
+    ".brz && .brz-forms2__item-button": {
       standart: ["cssStyleMarginAlign", "cssStyleElementForm2SubmitWidth"]
     },
 
-    ".brz &&:hover .brz-forms2-story .brz-btn:before, .brz && .brz-form-ms-buttons--story .brz-btn:before":
+    ".brz && .brz-forms2-story .brz-btn:before, .brz && .brz-form-ms-buttons--story .brz-btn:before":
       {
         standart: ["cssStyleElementForm2StoryButtonHeight"]
       },

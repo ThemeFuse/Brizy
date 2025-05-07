@@ -1,6 +1,7 @@
 import { produce } from "immer";
 import { ElementModel, ModelType } from "visual/component/Elements/Types";
 import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
+import { GetConfig } from "visual/providers/ConfigProvider/types";
 import { RenderType } from "visual/providers/RenderProvider";
 import { Store } from "visual/redux/store";
 import { DESKTOP } from "visual/utils/responsiveMode";
@@ -22,7 +23,8 @@ export const getCSSObjects = ({
   model,
   store,
   options,
-  renderContext
+  renderContext,
+  getConfig
 }: {
   options: ToolbarItemType[];
   currentModel: ModelType;
@@ -33,6 +35,7 @@ export const getCSSObjects = ({
     v: ElementModel;
   };
   renderContext: RenderType;
+  getConfig: GetConfig;
 }): CSS => {
   const initialAcc: CSS = {
     desktop: [],
@@ -64,7 +67,8 @@ export const getCSSObjects = ({
           store,
           state: NORMAL,
           allCSS: acc,
-          renderContext
+          renderContext,
+          getConfig
         });
 
         if (normalCSS) {
@@ -80,7 +84,8 @@ export const getCSSObjects = ({
               store,
               state: HOVER,
               allCSS: acc,
-              renderContext
+              renderContext,
+              getConfig
             });
 
             if (hoverCSS) {
@@ -96,7 +101,8 @@ export const getCSSObjects = ({
               store,
               state: ACTIVE,
               allCSS: acc,
-              renderContext
+              renderContext,
+              getConfig
             });
 
             if (activeCSS) {
@@ -117,7 +123,8 @@ export const getCSSObjects = ({
           store,
           state: NORMAL,
           allCSS: acc,
-          renderContext
+          renderContext,
+          getConfig
         });
 
         Object.assign(acc, normalCSS);
@@ -131,7 +138,8 @@ export const getCSSObjects = ({
               store,
               state: HOVER,
               allCSS: acc,
-              renderContext
+              renderContext,
+              getConfig
             });
 
             Object.assign(acc, hoverCSS);
@@ -145,7 +153,8 @@ export const getCSSObjects = ({
               store,
               state: ACTIVE,
               allCSS: acc,
-              renderContext
+              renderContext,
+              getConfig
             });
 
             Object.assign(acc, activeCSS);

@@ -23,7 +23,7 @@ export interface Props<T extends BlockMetaType> {
 
 export interface StateToProps {
   globalBlocks: ReduxState["globalBlocks"];
-  globalBlocksInPage: ReduxState["globalBlocks"];
+  getGlobalBlocksInPage: (config: ConfigCommon) => ReduxState["globalBlocks"];
   projectFonts: ReduxState["fonts"];
 }
 

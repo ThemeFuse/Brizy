@@ -22,54 +22,95 @@ export function cssStyleElementEcwidShoppingBagIconBorderRadius({
   v,
   device,
   state,
+  getConfig,
   store
 }: CSSValue): string {
-  return cssStyleBorderRadius({ v, device, state, store, prefix: "icon" });
+  return cssStyleBorderRadius({
+    v,
+    device,
+    state,
+    getConfig,
+    store,
+    prefix: "icon"
+  });
 }
 
 export function cssStyleElementEcwidShoppingBagIconColor({
   v,
   device,
   state,
+  getConfig,
   store
 }: CSSValue): string {
-  return cssStyleColor({ v, device, state, store, prefix: "iconColor" });
+  return cssStyleColor({
+    v,
+    device,
+    state,
+    getConfig,
+    store,
+    prefix: "iconColor"
+  });
 }
 
 export function cssStyleElementEcwidShoppingBagIconBgColor({
   v,
   device,
   state,
+  getConfig,
   store
 }: CSSValue): string {
-  return cssStyleBgColor({ v, device, state, store, prefix: "iconBg" });
+  return cssStyleBgColor({
+    v,
+    device,
+    state,
+    getConfig,
+    store,
+    prefix: "iconBg"
+  });
 }
 
 export function cssStyleElementEcwidShoppingBagIconBorder({
   v,
   device,
   state,
+  getConfig,
   store
 }: CSSValue): string {
-  return cssStyleBorder({ v, device, state, store, prefix: "icon" });
+  return cssStyleBorder({ v, device, state, getConfig, store, prefix: "icon" });
 }
 
 export function cssStyleElementEcwidShoppingBagIconBoxShadow({
   v,
   device,
   state,
+  getConfig,
   store
 }: CSSValue): string {
-  return cssStyleBoxShadow({ v, device, state, store, prefix: "icon" });
+  return cssStyleBoxShadow({
+    v,
+    device,
+    state,
+    getConfig,
+    store,
+    prefix: "icon"
+  });
 }
 
 export function cssStyleElementEcwidShoppingBagIconBgGradient({
   v,
   device,
   state,
+  getConfig,
   store
 }: CSSValue): string {
-  return cssStyleBgGradient({ v, device, state, store, prefix: "icon" });
+  return cssStyleBgGradient({
+    v,
+    device,
+    state,
+    getConfig,
+    store,
+    prefix: "icon"
+  });
 }
 
 export function cssStyleElementEcwidShoppingBagIconDisplay({
@@ -93,25 +134,49 @@ export function cssStyleElementEcwidShoppingBagIconSizes({
   v,
   device,
   state,
+  getConfig,
   store
 }: CSSValue): string {
-  return cssStyleSizeIconSizes({ v, device, state, store, prefix: "icon" });
+  return cssStyleSizeIconSizes({
+    v,
+    device,
+    state,
+    getConfig,
+    store,
+    prefix: "icon"
+  });
 }
 
 export function cssStyleElementEcwidShoppingBagIconPositionTop({
   v,
   device,
   state,
+  getConfig,
   store
 }: CSSValue): string {
-  return cssStylePositionTop({ v, device, state, store, prefix: "icon" });
+  return cssStylePositionTop({
+    v,
+    device,
+    state,
+    getConfig,
+    store,
+    prefix: "icon"
+  });
 }
 
 export function cssStyleElementEcwidShoppingBagIconPositionLeft({
   v,
   device,
   state,
+  getConfig,
   store
 }: CSSValue): string {
-  return cssStylePositionLeft({ v, device, state, store, prefix: "icon" });
+  return cssStylePositionLeft({
+    v,
+    device,
+    state,
+    getConfig,
+    store,
+    prefix: "icon"
+  });
 }

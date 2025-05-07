@@ -1,11 +1,12 @@
 import { Arr, Bool, Str } from "@brizy/readers";
 import classnames from "classnames";
 import { mPipe, or } from "fp-utilities";
-import React from "react";
+import React, { useCallback } from "react";
 import { addFirst, getIn, setIn } from "timm";
 import { RootContainer } from "visual/component/RootContainer";
 import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import EditorGlobal from "visual/global/Editor";
+import { useConfig } from "visual/providers/ConfigProvider";
 import { EditorMode } from "visual/providers/EditorModeProvider";
 import { ServerStyleSheet } from "visual/providers/StyleProvider/ServerStyleSheet";
 import {
@@ -63,6 +64,9 @@ const RenderPage = (props: {
   const { store, editorMode, className } = props;
   const { PagePopup } = EditorGlobal.getComponents();
 
+  const config = useConfig();
+  const getGlobalConfig = useCallback(() => config, [config]);
+
   if (!PagePopup) {
     throw Error("Missing PagePopup Components", EditorGlobal.getComponents());
   }
@@ -80,6 +84,7 @@ const RenderPage = (props: {
         reduxState={reduxState}
         renderContext="view"
         editorMode={editorMode}
+        getGlobalConfig={getGlobalConfig}
       />
     </>
   );
@@ -144,7 +149,7 @@ export const popupToStatic = (props: Props): Output => {
     </Providers>
   );
 
-  const output = baseToStatic({ store, Page, sheet: sheet.instance });
+  const output = baseToStatic({ store, Page, sheet: sheet.instance, config });
 
   if (isInternal) {
     return output;

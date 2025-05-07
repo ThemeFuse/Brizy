@@ -96,9 +96,11 @@ class SmtpFields extends Component<
   BaseIntegrationContext
 > {
   static contextType = Context;
+  declare context: React.ContextType<typeof Context>;
 
   render(): ReactElement {
     return (
+      // @ts-expect-error: formFields already added from context
       <Smtp
         {...this.props}
         {...this.context}

@@ -3,9 +3,17 @@ export interface RedirectConfig {
   fromContent: Array<{ route: ContentRoutes; selector: string }>;
 }
 
-export type FooterRoutes = "/account" | "/account/favorites" | "/cart";
+export type FooterRoutes =
+  | `${string}/account`
+  | `${string}/account/favorites`
+  | `${string}/cart`
+  | `${string}/search`;
 
-export type ContentRoutes = "/cart" | "/thank-you" | "/account/favorites" | "/";
+export type ContentRoutes =
+  | `${string}/cart`
+  | `${string}/thank-you`
+  | `${string}/account/favorites`
+  | "/";
 
 export interface EcwidConfig {
   baseUrl?: string;
@@ -91,6 +99,7 @@ export interface EcwidConfig {
   product_details_position_save_for_later?: number;
   product_details_position_share_buttons?: number;
   product_details_layout?: string;
+  product_filters_position_search_page?: "LEFT" | "RIGHT";
 
   prefetchScripts?: boolean;
   onPageLoadCallbacks?: VoidFunction[];

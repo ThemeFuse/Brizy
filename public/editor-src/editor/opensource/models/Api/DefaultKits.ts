@@ -1,9 +1,16 @@
 import { Style } from "../Project/Style";
-import { Response } from "../common";
+import { Literal, Response } from "../common";
 import { Block, Categories } from "../common/Block";
 
 interface BlockWithThumbs extends Block {
   thumbnailSrc: string;
+}
+
+interface Type {
+  id: Literal;
+  name: string;
+  title: string;
+  icon: string;
 }
 
 interface KitsThumbs {
@@ -12,7 +19,7 @@ interface KitsThumbs {
   id: string;
   name: string;
   styles: Array<Style>;
-  types: Array<Record<string, unknown>>;
+  types: Array<Type>;
 }
 
 export type KitItem = {

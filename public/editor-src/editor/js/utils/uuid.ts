@@ -18,7 +18,7 @@ const getUid = once(() => uuid(4));
 export const uidByConfig = (config: ConfigCommon): string => {
   const projectId = config.projectData?.id ?? getUid();
   const pageId = config.pageData?.id ?? getUid();
-  return Base64.encode(`${projectId}-${pageId}`).replace("=", "");
+  return Base64.encode(`${projectId}-${pageId}`).replace(/=/g, "");
 };
 
 export const uuidWithPlaceholderUuid = () => {

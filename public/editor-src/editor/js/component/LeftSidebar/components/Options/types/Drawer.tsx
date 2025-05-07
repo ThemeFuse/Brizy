@@ -3,6 +3,7 @@ import ReactDOM from "react-dom";
 import { ConnectedProps, connect } from "react-redux";
 import { Dispatch } from "redux";
 import { currentUserRole } from "visual/component/Roles";
+import { useConfig } from "visual/providers/ConfigProvider";
 import { ActionUpdateUI, updateUI } from "visual/redux/actions2";
 import { ReduxState } from "visual/redux/types";
 import { DeviceMode } from "visual/types";
@@ -62,7 +63,7 @@ const _Drawer = ({
   ) as HTMLElement;
 
   if (isClosed) {
-    content = <DrawerAnimation unmountOnExit={true} />;
+    content = <DrawerAnimation exit={true} />;
   } else if (!showDrawer) {
     return null;
   }
@@ -88,8 +89,10 @@ const DrawerWrapper = ({ ...props }: DrawerWrapperProps) => {
     onDrawerContentTypeChange
   } = props;
 
+  const config = useConfig();
+
   const show =
-    currentUserRole() === "admin" &&
+    currentUserRole(config) === "admin" &&
     (!showInDeviceModes || showInDeviceModes.includes(deviceMode)) &&
     !disabled;
 

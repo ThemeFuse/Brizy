@@ -9,13 +9,15 @@ export function cssStyleElementStarRatingRatingColor({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }) {
   return cssStyleColor({
     v,
     device,
     state,
     store,
+    getConfig,
     prefix: "ratingColor"
   });
 }
@@ -24,13 +26,15 @@ export function cssStyleElementStarRatingRatingBackgroundColor({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }) {
   return cssStyleColor({
     v,
     device,
     state,
     store,
+    getConfig,
     prefix: "ratingBackgroundColor"
   });
 }
@@ -79,13 +83,15 @@ export function cssStyleElementStarRatingCustomIconColor({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }) {
   return cssStyleCustomIconColor({
     v,
     device,
     state,
     store,
+    getConfig,
     prefix: "ratingColor"
   });
 }

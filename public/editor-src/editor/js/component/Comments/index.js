@@ -12,7 +12,7 @@ class Comments extends React.Component {
   };
 
   renderForEdit() {
-    const { appId, type, data, renderContext } = this.props;
+    const { appId, type, data, config, renderContext } = this.props;
 
     return type === "facebook" ? (
       <Facebook
@@ -26,12 +26,12 @@ class Comments extends React.Component {
     ) : type === "disqus" ? (
       <Disqus.DiscussionEmbed {...data} />
     ) : (
-      <WPComments {...data} renderContext={renderContext} />
+      <WPComments {...data} config={config} renderContext={renderContext} />
     );
   }
 
   renderForView() {
-    const { appId, type, data, renderContext } = this.props;
+    const { appId, type, data, config, renderContext } = this.props;
 
     return type === "facebook" ? (
       <Facebook
@@ -43,7 +43,7 @@ class Comments extends React.Component {
     ) : type === "disqus" ? (
       <div id="disqus_thread" {...data}></div>
     ) : (
-      <WPComments {...data} renderContext={renderContext} />
+      <WPComments {...data} config={config} renderContext={renderContext} />
     );
   }
 

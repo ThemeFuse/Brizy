@@ -1,4 +1,5 @@
-import { Extend, Shorten } from "@brizy/ui-icons";
+import { Extend } from "@brizy/ui-icons/lib/icons/Extend";
+import { Shorten } from "@brizy/ui-icons/lib/icons/Shorten";
 import { Spacing } from "@brizy/ui/es/Space/utils";
 import { IconsName } from "@brizy/ui/lib/EditorIcon/types";
 import React from "react";

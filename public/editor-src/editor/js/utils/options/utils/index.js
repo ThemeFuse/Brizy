@@ -17,12 +17,14 @@ export const isOption = (object) => hasProps(["id", "type"], object);
 /**
  * Maps a function over a nested options structure
  *
- * @param {function(o:object):object} f
+ * @param {function(o:*, parentOption:*):*} f
  * @param option
+ * @param {*=}parentOption
  * @return {*}
  */
-export const optionMap = (f, option) => {
+
+export const optionMap = (f, option, parentOption) => {
   return isOption(option)
-    ? map(optionMap.bind(null, f), f(option))
-    : map(optionMap.bind(null, f), option);
+    ? map(optionMap.bind(null, f), f(option, parentOption), parentOption)
+    : map(optionMap.bind(null, f), option, parentOption);
 };

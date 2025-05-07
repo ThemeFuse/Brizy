@@ -7,7 +7,7 @@ import {
 } from "swiper/react";
 import { SwiperOptions } from "swiper/types/swiper-options";
 import { SizeType } from "visual/global/Config/types/configs/common";
-import { useConfig } from "visual/global/hooks";
+import { useConfig } from "visual/providers/ConfigProvider";
 import { getImageUrl } from "visual/utils/image";
 import { read as readString } from "visual/utils/reader/string";
 import { Effect, KenEffect, Transition } from "../../type";

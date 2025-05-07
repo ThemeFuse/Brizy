@@ -110,6 +110,9 @@ export default {
   "wrapper-ecwid-favorites": {
     showToolbar: "on"
   },
+  "wrapper-ecwid-search": {
+    showToolbar: "on"
+  },
   "column--carousel": {
     width: 100
   },

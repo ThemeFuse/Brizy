@@ -20,7 +20,7 @@ export default class Group extends React.Component {
     if (meta.depth === 0 && meta.index === 0) {
       return (
         <React.Fragment>
-          <Item key="title" className="react-contexify--title">
+          <Item key="title" className="contexify-title">
             {icon && <EditorIcon icon={icon} />} {title}
           </Item>
           <Items data={items} meta={{ ...itemsMeta, isInSubMenu: false }} />
@@ -28,11 +28,7 @@ export default class Group extends React.Component {
       );
     } else {
       return (
-        <Submenu
-          className="react-contexify__item__submenu"
-          label={title}
-          arrow=""
-        >
+        <Submenu className="contexify_item_submenu" label={title} arrow="">
           <Items data={items} meta={{ ...itemsMeta, isInSubMenu: true }} />
         </Submenu>
       );

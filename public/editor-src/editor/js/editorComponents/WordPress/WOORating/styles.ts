@@ -1,11 +1,14 @@
 import { ElementModel } from "visual/component/Elements/Types";
-import { renderStyles } from "visual/utils/cssStyle";
 import { DynamicStylesProps } from "visual/types";
+import { renderStyles } from "visual/utils/cssStyle";
 
 export function style(data: DynamicStylesProps<ElementModel>) {
   const styles = {
+    ".brz && .star-rating": {
+      standart: ["cssStyleElementWOORatingSize"]
+    },
     ".brz && .star-rating:hover": {
-      standart: ["cssStyleElementWOORatingSize", "cssStyleColor"],
+      standart: ["cssStyleColor"],
       interval: [
         "cssStyleHoverTransition",
         "cssStylePropertyHoverTransitionColor"
@@ -18,10 +21,9 @@ export function style(data: DynamicStylesProps<ElementModel>) {
         "cssStylePropertyHoverTransitionColor"
       ]
     },
-    ".brz && .woocommerce-review-link:hover": {
+    ".brz && .woocommerce-review-link": {
       standart: [
         "cssStyleElementWOORatingSpacing",
-        "cssStyleElementWOORatingTextColor",
         "cssStyleTypography3FontFamily",
         "cssStyleTypography3FontSize",
         "cssStyleTypography3LineHeight",
@@ -29,7 +31,10 @@ export function style(data: DynamicStylesProps<ElementModel>) {
         "cssStyleTypography3LetterSpacing",
         "cssStyleTypography3FontVariation",
         "cssStyleTypography3TextTransform"
-      ],
+      ]
+    },
+    ".brz && .woocommerce-review-link:hover": {
+      standart: ["cssStyleElementWOORatingTextColor"],
       interval: [
         "cssStyleHoverTransition",
         "cssStylePropertyHoverTransitionColor"

@@ -1,6 +1,5 @@
 import { Num, Str } from "@brizy/readers";
 import { ElementModel } from "visual/component/Elements/Types";
-import { configSelector } from "visual/redux/selectors";
 import { getColor } from "visual/utils/color";
 import { State } from "visual/utils/stateMode";
 import { styleState } from "visual/utils/style";
@@ -16,8 +15,8 @@ export function cssStyleDropShadow({
   v,
   device,
   state,
-  store,
-  prefix = ""
+  prefix = "",
+  getConfig
 }: CSSValue): string {
   state = getState(v, state);
 
@@ -51,7 +50,7 @@ export function cssStyleDropShadow({
     return "";
   }
 
-  const config = configSelector(store.getState());
+  const config = getConfig();
 
   const dropShadowColor = getColor(
     dropShadowColorPalette,

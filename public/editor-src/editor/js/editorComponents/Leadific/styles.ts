@@ -1,7 +1,7 @@
-import { renderStyles } from "visual/utils/cssStyle";
-import { Value } from "./types";
-import { OutputStyle } from "visual/utils/cssStyle/types";
 import { DynamicStylesProps } from "visual/types";
+import { renderStyles } from "visual/utils/cssStyle";
+import { OutputStyle } from "visual/utils/cssStyle/types";
+import { Value } from "./types";
 
 export function style(data: DynamicStylesProps<Value>): OutputStyle {
   const styles: {
@@ -10,16 +10,14 @@ export function style(data: DynamicStylesProps<Value>): OutputStyle {
       standart?: string[];
     };
   } = {
-    ".brz &&:hover": {
+    ".brz &&": {
       standart: ["cssStyleFlexHorizontalAlign"]
     },
+    ".brz && .brz-leadific__content": {
+      standart: ["getAllCssStyleTypography"]
+    },
     ".brz &&:hover .brz-leadific__content": {
-      standart: [
-        "getAllCssStyleTypography",
-        "cssStyleColor",
-        "cssStyleStrokeText",
-        "cssStyleTextShadow2"
-      ],
+      standart: ["cssStyleColor", "cssStyleStrokeText", "cssStyleTextShadow2"],
       interval: ["cssStyleHoverTransition"]
     }
   };

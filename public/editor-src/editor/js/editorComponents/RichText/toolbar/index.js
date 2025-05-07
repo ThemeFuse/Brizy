@@ -1,4 +1,5 @@
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
+import { getEnabledLinkOptions } from "visual/global/Config/types/configs/featuresValue";
 import { isPopup, isStory } from "visual/providers/EditorModeProvider";
 import { t } from "visual/utils/i18n";
 import { getDynamicContentOption } from "visual/utils/options";
@@ -103,7 +104,15 @@ const getItems =
       !!v.textPopulation ||
       typeof config?.api?.textAI?.handler !== "function";
 
-    const proEnabled = !!config.pro;
+    const {
+      internalLink,
+      linkPopup: linkPopupEnabled,
+      linkAnchor,
+      linkExternal,
+      linkUpload
+    } = getEnabledLinkOptions(config);
+
+    const isDisabledLinkUpload = !config.pro || !linkUpload;
 
     return [
       {
@@ -544,6 +553,7 @@ const getItems =
               {
                 id: "page",
                 label: t("Page"),
+                disabled: !internalLink,
                 options: [
                   {
                     id: "linkPage",
@@ -558,7 +568,6 @@ const getItems =
                     id: "linkInternalBlank",
                     label: t("Open In New Tab"),
                     type: "switch",
-                    disabled: device !== "desktop",
                     ...(v.textPopulation
                       ? {}
                       : {
@@ -571,6 +580,7 @@ const getItems =
               {
                 id: "external",
                 label: t("URL"),
+                disabled: !linkExternal,
                 options: [
                   {
                     id: "link",
@@ -621,6 +631,7 @@ const getItems =
               {
                 id: "anchor",
                 label: t("Block"),
+                disabled: !linkAnchor,
                 options: [
                   {
                     ...toolbarLinkAnchor({ v }),
@@ -643,7 +654,7 @@ const getItems =
                     id: "linkUpload",
                     label: t("File"),
                     type: "fileUpload",
-                    disabled: !proEnabled || device !== "desktop",
+                    disabled: isDisabledLinkUpload,
                     ...(v.textPopulation
                       ? {}
                       : {
@@ -656,6 +667,7 @@ const getItems =
               {
                 id: "popup",
                 label: t("Popup"),
+                disabled: !linkPopupEnabled,
                 options: [
                   {
                     id: "linkPopup",

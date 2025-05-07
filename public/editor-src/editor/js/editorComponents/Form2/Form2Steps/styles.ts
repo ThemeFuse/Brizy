@@ -1,16 +1,15 @@
 import { ElementModel } from "visual/component/Elements/Types";
+import type { DynamicStylesProps } from "visual/types";
 import { renderStyles } from "visual/utils/cssStyle";
 import type { OutputStyle, Styles } from "visual/utils/cssStyle/types";
 import type { StylesProps } from "./types";
-import type { DynamicStylesProps } from "visual/types";
-
 
 interface Style extends DynamicStylesProps<ElementModel> {
   props: StylesProps;
 }
 export function style(data: Style): OutputStyle {
   const styles: Styles = {
-    ".brz &&:hover": {
+    ".brz &&": {
       standart: [
         "cssStyleElementForm2MSIndicatorsAlign",
         "cssStyleElementForm2MSIndicatorsSpacing"
@@ -75,10 +74,12 @@ export function style(data: Style): OutputStyle {
         "cssStyleElementFomr2MSDivider"
       ]
     },
+    ".brz && .brz-form-ms-progress-bar": {
+      standart: ["cssStyleElementForm2MSProgressHeight"]
+    },
     ".brz &&:hover .brz-form-ms-progress-bar": {
       standart: [
         "cssStyleElementForm2MSProgressColor",
-        "cssStyleElementForm2MSProgressHeight",
         "cssStyleElementForm2MSTextColor"
       ]
     },

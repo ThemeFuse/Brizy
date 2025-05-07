@@ -10,9 +10,22 @@ export function style(data: DynamicStylesProps<ElementModel>) {
     ".brz && .brz-navigation-title": {
       standart: ["cssStyleElementPostNavigationSpacing"]
     },
-    ".brz && .brz-navigation-title .brz-span:hover": {
+    ".brz && .brz-navigation-title .brz-span": {
       standart: [
-        "cssStyleElementPostNavigationColorTitle",
+        "cssStyleElementPostNavigation2TitleFontFamily",
+        "cssStyleElementPostNavigation2TitleFontSize",
+        "cssStyleElementPostNavigation2TitleLineHeight",
+        "cssStyleElementPostNavigation2TitleFontWeight",
+        "cssStyleElementPostNavigation2TitleLetterSpacing",
+        "cssStyleElementPostNavigation2TitleFontVariation",
+        "cssStyleElementPostNavigationTitleTextTransform"
+      ]
+    },
+    ".brz && .brz-navigation-title .brz-span:hover": {
+      standart: ["cssStyleElementPostNavigationColorTitle"]
+    },
+    ".brz && .brz-navigation-title .brz-a:not(.brz-btn)[href]": {
+      standart: [
         "cssStyleElementPostNavigation2TitleFontFamily",
         "cssStyleElementPostNavigation2TitleFontSize",
         "cssStyleElementPostNavigation2TitleLineHeight",
@@ -23,20 +36,10 @@ export function style(data: DynamicStylesProps<ElementModel>) {
       ]
     },
     ".brz && .brz-navigation-title .brz-a:not(.brz-btn)[href]:hover": {
-      standart: [
-        "cssStyleElementPostNavigationColorTitle",
-        "cssStyleElementPostNavigation2TitleFontFamily",
-        "cssStyleElementPostNavigation2TitleFontSize",
-        "cssStyleElementPostNavigation2TitleLineHeight",
-        "cssStyleElementPostNavigation2TitleFontWeight",
-        "cssStyleElementPostNavigation2TitleLetterSpacing",
-        "cssStyleElementPostNavigation2TitleFontVariation",
-        "cssStyleElementPostNavigationTitleTextTransform"
-      ]
+      standart: ["cssStyleElementPostNavigationColorTitle"]
     },
-    ".brz && .brz-navigation .brz-a:not(.brz-btn)[href]:hover": {
+    ".brz && .brz-navigation .brz-a:not(.brz-btn)[href]": {
       standart: [
-        "cssStyleElementPostNavigationColorPost",
         "cssStyleElementPostNavigation2PostFontFamily",
         "cssStyleElementPostNavigation2PostFontSize",
         "cssStyleElementPostNavigation2PostLineHeight",
@@ -46,12 +49,17 @@ export function style(data: DynamicStylesProps<ElementModel>) {
         "cssStyleElementPostNavigationPostTextTransform"
       ]
     },
-    ".brz &&:hover:before": {
+    ".brz && .brz-navigation .brz-a:not(.brz-btn)[href]:hover": {
+      standart: ["cssStyleElementPostNavigationColorPost"]
+    },
+    ".brz &&:before": {
       standart: [
         "cssStyleElementPostNavigationShowSeparation",
-        "cssStyleSizeHeight",
-        "cssStyleBgColor"
+        "cssStyleSizeHeight"
       ]
+    },
+    ".brz &&:hover:before": {
+      standart: ["cssStyleBgColor"]
     }
   };
 

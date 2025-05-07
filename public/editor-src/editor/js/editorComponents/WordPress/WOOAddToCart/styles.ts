@@ -4,28 +4,22 @@ import { renderStyles } from "visual/utils/cssStyle";
 
 export function style(data: DynamicStylesProps<ElementModel>) {
   const styles = {
-    ".brz &&:hover form:not(.variations_form)": {
-      standart: [
-        "cssStyleElementWOOAddToCartInputPosition",
-        "cssStyleElementWOOAddToCartInputAlign"
-      ]
-    },
-    ".brz &&:hover form.variations_form .variations_button": {
-      standart: [
-        "cssStyleElementWOOAddToCartInputPosition",
-        "cssStyleElementWOOAddToCartInputAlign"
-      ]
-    },
-    ".brz && form.cart .quantity:hover": {
+    ".brz && form:not(.variations_form), .brz && form.variations_form .variations_button":
+      {
+        standart: [
+          "cssStyleElementWOOAddToCartInputPosition",
+          "cssStyleElementWOOAddToCartInputAlign"
+        ]
+      },
+    ".brz && form.cart .quantity": {
       standart: [
         "cssStyleElementWOOAddToCartInputWidth",
         "cssStyleElementWOOAddToCartInputHeight",
         "cssStyleElementWOOAddToCartSpacing"
       ]
     },
-    ".brz &&:hover input[type=number].input-text": {
+    ".brz &&: input[type=number].input-text": {
       standart: [
-        "cssStyleElementWOOAddToCartInputColor",
         "cssStyleElementWOOAddToCartInputFontFamily",
         "cssStyleElementWOOAddToCartInputFontSize",
         "cssStyleElementWOOAddToCartInputLineHeight",
@@ -33,7 +27,12 @@ export function style(data: DynamicStylesProps<ElementModel>) {
         "cssStyleElementWOOAddToCartInputLetterSpacing",
         "cssStyleElementWOOAddToCartInputFontVariation",
         "cssStyleElementWOOAddToCartInputTextTransform",
-        "cssStyleElementWOOAddToCartInputRadius",
+        "cssStyleElementWOOAddToCartInputRadius"
+      ]
+    },
+    ".brz &&:hover input[type=number].input-text": {
+      standart: [
+        "cssStyleElementWOOAddToCartInputColor",
         "cssStyleElementWOOAddToCartInputBg",
         "cssStyleElementWOOAddToCartInputBorder",
         "cssStyleElementWOOAddToCartInputBoxShadow"
@@ -50,9 +49,8 @@ export function style(data: DynamicStylesProps<ElementModel>) {
         "cssStylePropertyHoverTransitionColor"
       ]
     },
-    ".brz &&:hover .single_variation": {
+    ".brz && .single_variation": {
       standart: [
-        "cssStyleElementWOOAddToCartValueColor",
         "cssStyleElementWOOAddToCartValueFontFamily",
         "cssStyleElementWOOAddToCartValueFontSize",
         "cssStyleElementWOOAddToCartValueLineHeight",
@@ -60,21 +58,19 @@ export function style(data: DynamicStylesProps<ElementModel>) {
         "cssStyleElementWOOAddToCartValueLetterSpacing",
         "cssStyleElementWOOAddToCartValueFontVariation",
         "cssStyleElementWOOAddToCartValueTextTransform"
-      ],
+      ]
+    },
+    ".brz &&:hover .single_variation": {
+      standart: ["cssStyleElementWOOAddToCartValueColor"],
       interval: [
         "cssStyleHoverTransition",
         "cssStylePropertyHoverTransitionColor"
       ]
     },
-    ".brz &&:hover button[type=submit].single_add_to_cart_button.single_add_to_cart_button":
+    ".brz && button[type=submit].single_add_to_cart_button.single_add_to_cart_button":
       {
         standart: [
           "cssStyleElementWOOAddToCartBorderRadius",
-          "cssStyleElementWOOAddToCartButtonColor",
-          "cssStyleBgColor",
-          "cssStyleBgGradient",
-          "cssStyleElementWOOAddToCartBorder",
-          "cssStyleBoxShadow",
           "cssStyleElementWOOAddToCartSize",
           "cssStyleTypography3FontFamily",
           "cssStyleTypography3FontSize",
@@ -83,15 +79,24 @@ export function style(data: DynamicStylesProps<ElementModel>) {
           "cssStyleTypography3LetterSpacing",
           "cssStyleTypography3FontVariation",
           "cssStyleTypography3TextTransform"
+        ]
+      },
+    ".brz &&:hover button[type=submit].single_add_to_cart_button.single_add_to_cart_button":
+      {
+        standart: [
+          "cssStyleElementWOOAddToCartButtonColor",
+          "cssStyleBgColor",
+          "cssStyleBgGradient",
+          "cssStyleElementWOOAddToCartBorder",
+          "cssStyleBoxShadow"
         ],
         interval: [
           "cssStyleHoverTransition",
           "cssStylePropertyHoverTransitionColor"
         ]
       },
-    ".brz &&:hover td label": {
+    ".brz && td label": {
       standart: [
-        "cssStyleElementWOOAddToCartLabelColor",
         "cssStyleElementWOOAddToCartLabelFontFamily",
         "cssStyleElementWOOAddToCartLabelFontSize",
         "cssStyleElementWOOAddToCartLabelLineHeight",
@@ -99,31 +104,35 @@ export function style(data: DynamicStylesProps<ElementModel>) {
         "cssStyleElementWOOAddToCartLabelLetterSpacing",
         "cssStyleElementWOOAddToCartLabelFontVariation",
         "cssStyleElementWOOAddToCartLabelTextTransform"
-      ],
+      ]
+    },
+    ".brz &&:hover td label": {
+      standart: ["cssStyleElementWOOAddToCartLabelColor"],
       interval: [
         "cssStyleHoverTransition",
         "cssStylePropertyHoverTransitionColor"
+      ]
+    },
+    ".brz && th label": {
+      standart: [
+        "cssStyleElementWOOAddToCartLabelFontFamily",
+        "cssStyleElementWOOAddToCartLabelFontSize",
+        "cssStyleElementWOOAddToCartLabelLineHeight",
+        "cssStyleElementWOOAddToCartLabelFontWeight",
+        "cssStyleElementWOOAddToCartLabelLetterSpacing",
+        "cssStyleElementWOOAddToCartLabelFontVariation",
+        "cssStyleElementWOOAddToCartLabelTextTransform"
       ]
     },
     ".brz &&:hover th label": {
-      standart: [
-        "cssStyleElementWOOAddToCartLabelColor",
-        "cssStyleElementWOOAddToCartLabelFontFamily",
-        "cssStyleElementWOOAddToCartLabelFontSize",
-        "cssStyleElementWOOAddToCartLabelLineHeight",
-        "cssStyleElementWOOAddToCartLabelFontWeight",
-        "cssStyleElementWOOAddToCartLabelLetterSpacing",
-        "cssStyleElementWOOAddToCartLabelFontVariation",
-        "cssStyleElementWOOAddToCartLabelTextTransform"
-      ],
+      standart: ["cssStyleElementWOOAddToCartLabelColor"],
       interval: [
         "cssStyleHoverTransition",
         "cssStylePropertyHoverTransitionColor"
       ]
     },
-    ".brz &&:hover td.value .reset_variations": {
+    ".brz && td.value .reset_variations": {
       standart: [
-        "cssStyleElementWOOAddToCartClearColor",
         "cssStyleElementWOOAddToCartClearFontFamily",
         "cssStyleElementWOOAddToCartClearFontSize",
         "cssStyleElementWOOAddToCartClearLineHeight",
@@ -131,13 +140,15 @@ export function style(data: DynamicStylesProps<ElementModel>) {
         "cssStyleElementWOOAddToCartClearLetterSpacing",
         "cssStyleElementWOOAddToCartClearFontVariation",
         "cssStyleElementWOOAddToCartClearTextTransform"
-      ],
+      ]
+    },
+    ".brz &&:hover td.value .reset_variations": {
+      standart: ["cssStyleElementWOOAddToCartClearColor"],
       interval: [
         "cssStyleHoverTransition",
         "cssStylePropertyHoverTransitionColor"
       ]
     },
-
     ".brz &&:hover table": {
       standart: [
         "cssStyleElementWOOAddToCartTableMargin",
@@ -158,10 +169,8 @@ export function style(data: DynamicStylesProps<ElementModel>) {
         "cssStylePropertyHoverTransitionColor"
       ]
     },
-    ".brz &&:hover td.value select": {
+    ".brz && td.value select": {
       standart: [
-        "cssStyleElementWOOAddToCartTableBorder",
-        "cssStyleElementWOOAddToCartValueColor",
         "cssStyleElementWOOAddToCartValueFontFamily",
         "cssStyleElementWOOAddToCartValueFontSize",
         "cssStyleElementWOOAddToCartValueLineHeight",
@@ -169,6 +178,12 @@ export function style(data: DynamicStylesProps<ElementModel>) {
         "cssStyleElementWOOAddToCartValueLetterSpacing",
         "cssStyleElementWOOAddToCartValueFontVariation",
         "cssStyleElementWOOAddToCartValueTextTransform"
+      ]
+    },
+    ".brz &&:hover td.value select": {
+      standart: [
+        "cssStyleElementWOOAddToCartTableBorder",
+        "cssStyleElementWOOAddToCartValueColor"
       ],
       interval: [
         "cssStyleHoverTransition",
@@ -178,9 +193,8 @@ export function style(data: DynamicStylesProps<ElementModel>) {
     ".brz &&:hover .value": {
       standart: ["cssStyleElementWOOAddToCartTableBg"]
     },
-    ".brz &&:hover td.woocommerce-grouped-product-list-item__price": {
+    ".brz && td.woocommerce-grouped-product-list-item__price": {
       standart: [
-        "cssStyleElementWOOAddToCartValueColor",
         "cssStyleElementWOOAddToCartValueFontFamily",
         "cssStyleElementWOOAddToCartValueFontSize",
         "cssStyleElementWOOAddToCartValueLineHeight",
@@ -188,7 +202,10 @@ export function style(data: DynamicStylesProps<ElementModel>) {
         "cssStyleElementWOOAddToCartValueLetterSpacing",
         "cssStyleElementWOOAddToCartValueFontVariation",
         "cssStyleElementWOOAddToCartValueTextTransform"
-      ],
+      ]
+    },
+    ".brz &&:hover td.woocommerce-grouped-product-list-item__price": {
+      standart: ["cssStyleElementWOOAddToCartValueColor"],
       interval: [
         "cssStyleHoverTransition",
         "cssStylePropertyHoverTransitionColor"

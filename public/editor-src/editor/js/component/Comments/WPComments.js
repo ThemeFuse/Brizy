@@ -1,10 +1,10 @@
 import classnames from "classnames";
+import { Base64 } from "js-base64";
 import React, { Component } from "react";
 import { DynamicContentHelper } from "visual/editorComponents/WordPress/common/DynamicContentHelper";
 import { isEditor } from "visual/providers/RenderProvider";
 import { makePlaceholder } from "visual/utils/dynamicContent";
 import { getDataSkin } from "./getDataSkin";
-import { Base64 } from "js-base64";
 
 class WPComments extends Component {
   static defaultProps = {
@@ -162,8 +162,8 @@ class WPComments extends Component {
   }
 
   renderForEdit() {
-    const { skin, review } = this.props;
-    const comments = getDataSkin()[skin];
+    const { skin, review, config } = this.props;
+    const comments = getDataSkin(config)[skin];
 
     const commentType = review === "true" ? "review" : "comment";
     const reviewText =

@@ -1,4 +1,3 @@
-import { configSelector } from "visual/redux/selectors";
 import { makeStylePaletteCSSVar } from "visual/utils/color";
 import {
   styleShapeBottomFlip,
@@ -16,13 +15,13 @@ import {
 } from "visual/utils/style2";
 import { defaultValueValue } from "../onChange";
 
-export function cssStyleShapeTopType({ v, device, state, store }) {
+export function cssStyleShapeTopType({ v, device, state, getConfig }) {
   const dvv = (key) => defaultValueValue({ v, key, device, state });
   const shapeTopType = styleShapeTopType({ v, device, state });
   const shapeTopSvg = styleShapeTopSvg({ v, device, state });
   const shapeTopColorPalette = dvv("shapeTopColorPalette");
   const shapeTopColorOpacity = dvv("shapeTopColorOpacity");
-  const config = configSelector(store.getState());
+  const config = getConfig();
 
   const shape = shapeTopColorPalette
     ? `background-color: rgba(var(${makeStylePaletteCSSVar(
@@ -60,13 +59,13 @@ export function cssStyleShapeTopIndex({ v, device, state }) {
   return `z-index: ${shapeTopIndex};`;
 }
 
-export function cssStyleShapeBottomType({ v, device, state, store }) {
+export function cssStyleShapeBottomType({ v, device, state, getConfig }) {
   const dvv = (key) => defaultValueValue({ v, key, device, state });
   const shapeBottomType = styleShapeBottomType({ v, device, state });
   const shapeBottomSvg = styleShapeBottomSvg({ v, device, state });
   const shapeBottomColorPalette = dvv("shapeBottomColorPalette");
   const shapeBottomColorOpacity = dvv("shapeBottomColorOpacity");
-  const config = configSelector(store.getState());
+  const config = getConfig();
   const shape = shapeBottomColorPalette
     ? `background-color: rgba(var(${makeStylePaletteCSSVar(
         shapeBottomColorPalette,

@@ -15,13 +15,13 @@ export function cssStyleElementMenuSimpleColorBars({
   v,
   device,
   state,
-  store
+  getConfig
 }: CSSValue): string {
   const color = styleColor({
     v,
     device,
     state,
-    store
+    getConfig
   });
 
   return `background-color: ${color};`;

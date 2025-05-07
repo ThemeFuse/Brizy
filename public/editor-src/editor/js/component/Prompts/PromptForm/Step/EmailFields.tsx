@@ -1,10 +1,7 @@
 import React, { Component, ReactElement } from "react";
 import { t } from "visual/utils/i18n";
 import { Context } from "../../common/GlobalApps/Context";
-import {
-  BaseIntegrationContext,
-  FormField
-} from "../../common/GlobalApps/type";
+import { FormField } from "../../common/GlobalApps/type";
 import { HelperCopy } from "./common/HelperToolip";
 import Smtp from "./common/Smtp";
 
@@ -47,15 +44,13 @@ type Props = {
   onClose: () => void;
 };
 
-class EmailFields extends Component<
-  Props,
-  Record<string, never>,
-  BaseIntegrationContext
-> {
+class EmailFields extends Component<Props, Record<string, never>> {
   static contextType = Context;
+  declare context: React.ContextType<typeof Context>;
 
   render(): ReactElement {
     return (
+      // @ts-expect-error: formFields already added from context
       <Smtp
         {...this.context}
         apiKeys={getApiKeys(this.props.isPro)}

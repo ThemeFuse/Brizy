@@ -1,14 +1,13 @@
-import { configSelector } from "visual/redux/selectors";
 import { getColor } from "visual/utils/color";
 import { defaultValueValue } from "visual/utils/onChange";
 import { styleState } from "visual/utils/style";
 
-export function styleBorderColor({ v, device, state, store }) {
+export function styleBorderColor({ v, device, state, getConfig }) {
   const isHover = styleState({ v, state }) === "hover";
 
   const dvv = (key) => defaultValueValue({ v, key, device, state });
   const dvvH = (key) => defaultValueValue({ v, key, device, state: "hover" });
-  const config = configSelector(store.getState());
+  const config = getConfig();
 
   const borderColorHex = dvv("borderColorHex");
   const borderColorPalette = dvv("borderColorPalette");

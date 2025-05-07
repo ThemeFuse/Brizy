@@ -1,7 +1,7 @@
 import { SimpleValue } from "visual/component/Options/Type";
 import { ElementModelValue } from "../../types/Value";
 
-interface State {
+export interface State {
   isOpen: boolean;
   placeholder: string;
   entityType: SimpleValue<string>;
@@ -14,7 +14,8 @@ export enum ActionTypes {
   SET_ENTITY_TYPE,
   SET_ENTITY_ID,
   SET_PLACEHOLDER,
-  SET_IS_ENTITY_TYPE_LOADED
+  SET_IS_ENTITY_TYPE_LOADED,
+  SET_BULK
 }
 
 interface SET_VISIBILITY {
@@ -42,12 +43,24 @@ interface SET_IS_ENTITY_TYPE_LOADED {
   payload: boolean;
 }
 
+interface SET_BULK {
+  type: ActionTypes.SET_BULK;
+  payload: {
+    isOpen?: boolean;
+    placeholder?: string;
+    entityType?: SimpleValue<string>;
+    entityId?: ElementModelValue;
+    isEntityTypeLoaded?: boolean;
+  };
+}
+
 export type Action =
   | SET_VISIBILITY
   | SET_ENTITY_TYPE
   | SET_ENTITY_ID
   | SET_PLACEHOLDER
-  | SET_IS_ENTITY_TYPE_LOADED;
+  | SET_IS_ENTITY_TYPE_LOADED
+  | SET_BULK;
 
 export const reducer = (state: State, action: Action): State => {
   switch (action.type) {
@@ -83,6 +96,10 @@ export const reducer = (state: State, action: Action): State => {
         ...state,
         isEntityTypeLoaded: action.payload
       };
+    }
+
+    case ActionTypes.SET_BULK: {
+      return { ...state, ...action.payload };
     }
 
     default:

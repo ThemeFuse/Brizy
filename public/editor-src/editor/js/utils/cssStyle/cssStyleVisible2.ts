@@ -1,5 +1,4 @@
 import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
-import { configSelector } from "visual/redux/selectors";
 import * as Arr from "visual/utils/array";
 import { Role, getMembershipRoles } from "visual/utils/membership";
 import {
@@ -120,12 +119,12 @@ function cssStyleShowEditorSection(
   return `display: ${_cssRoles} ${_cssLangs} ${display}${closeParentheses};`;
 }
 
-export function cssStyleShowBlock({ v, store }: CSSValue<Value>): string {
-  const config = configSelector(store.getState());
+export function cssStyleShowBlock({ v, getConfig }: CSSValue<Value>): string {
+  const config = getConfig();
   return cssStyleShowEditorSection(v, "block", config);
 }
 
-export function cssStyleShowFlex({ v, store }: CSSValue<Value>): string {
-  const config = configSelector(store.getState());
+export function cssStyleShowFlex({ v, getConfig }: CSSValue<Value>): string {
+  const config = getConfig();
   return cssStyleShowEditorSection(v, "flex", config);
 }

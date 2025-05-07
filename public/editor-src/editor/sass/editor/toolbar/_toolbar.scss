@@ -27,12 +27,12 @@
     font-size: $toolbar-font-size;
     line-height: 1;
     color: $toolbar__item-color;
-    border-left: 1px solid $toolbar-border;
-    margin-left: -1px;
+    border-inline-start: 1px solid $toolbar-border;
+    margin-inline-start: -1px;
     transition: 0.15s linear color;
 
     &:first-child {
-      border-left-color: transparent;
+      border-inline-start-color: transparent;
     }
 
     &:hover .brz-ed-tooltip__content {
@@ -212,97 +212,47 @@
 
 // Toolbar Animation
 .brz-ed-collapsible__toolbar {
-
   // Toolbar Animation right to left
-  &.animation-right-left-enter {
+  &.animation-right-left {
     overflow: hidden;
 
     .brz-ed-toolbar {
-      transform: translate3d(96px, 0, 0);
-    }
-  }
-
-  &.animation-right-left-enter-active {
-    overflow: hidden;
-
-    .brz-ed-toolbar {
-      transform: translate3d(0, 0, 0);
       transition: transform 150ms linear;
     }
-  }
 
-  &.animation-right-left-exit {
-    overflow: hidden;
-
-    .brz-ed-toolbar {
-      transform: translate3d(0, 0, 0);
-      transition: transform 150ms linear;
+    &.preEnter {
+      .brz-ed-toolbar {
+        transform: translate3d(96px, 0, 0);
+      }
     }
-  }
 
-  &.animation-right-left-exit-active {
-    overflow: hidden;
-
-    .brz-ed-toolbar {
-      transform: translate3d(96px, 0, 0);
-      transition: transform 150ms linear;
+    &.exiting {
+      .brz-ed-toolbar {
+        transform: translate3d(96px, 0, 0);
+      }
     }
   }
 
   // Toolbar Animation left to right
-  &.animation-left-right-enter {
+  &.animation-left-right {
     overflow: hidden;
 
     .brz-ed-toolbar {
-      transform: translate3d(-96px, 0, 0);
-    }
-  }
-
-  &.animation-left-right-enter-active {
-    overflow: hidden;
-
-    .brz-ed-toolbar {
-      transform: translate3d(0, 0, 0);
       transition: transform 150ms linear;
     }
-  }
 
-  &.animation-left-right-exit {
-    overflow: hidden;
+    &.preEnter {
+      .brz-ed-toolbar {
+        transform: translate3d(-96px, 0, 0);
+      }
+    }
 
-    .brz-ed-toolbar {
-      transform: translate3d(0, 0, 0);
-      transition: transform 150ms linear;
+    &.exiting {
+      .brz-ed-toolbar {
+        transform: translate3d(-96px, 0, 0);
+      }
     }
   }
-
-  &.animation-left-right-exit-active {
-    overflow: hidden;
-
-    .brz-ed-toolbar {
-      transform: translate3d(-96px, 0, 0);
-      transition: transform 150ms linear;
-    }
-  }
-}
-
-// Icon Animation
-.fadeCollapsibleIcon-enter {
-  opacity: 0.01;
-}
-
-.fadeCollapsibleIcon-enter.fadeCollapsibleIcon-enter-active {
-  opacity: 1;
-  transition: opacity 150ms ease-in;
-}
-
-.fadeCollapsibleIcon-exit {
-  opacity: 1;
-}
-
-.fadeCollapsibleIcon-exit.fadeCollapsibleIcon-exit-active {
-  opacity: 0.01;
-  transition: opacity 150ms ease-in;
 }
 
 // Mobile

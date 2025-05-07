@@ -6,6 +6,7 @@ import getFavorites from "./Favorites";
 import getMyAccount from "./MyAccount";
 import getProduct from "./Product";
 import getShoppingBag from "./ShoppingBag";
+import getSearch from "./Search"
 
 const pro = (c: ConfigCommon): boolean => getDaysLeft(c) <= 0;
 
@@ -13,6 +14,7 @@ function config(): Shortcode[] {
   return [
     { component: getCart(), pro },
     { component: getProduct(), pro },
+    { component: getSearch(), pro },
     // remove later
     // { component: Products, pro: false },
     { component: getShoppingBag(), pro },

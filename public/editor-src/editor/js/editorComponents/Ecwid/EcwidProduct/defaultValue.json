@@ -359,6 +359,9 @@
     "detailsSpacing": 10,
     "detailsSpacingSuffix": "px",
 
+    "detailsTopSpacing": 10,
+    "detailsTopSpacingSuffix": "px",
+
     "descriptionTypographyFontStyle": "paragraph",
     "descriptionTypographyFontFamilyType": "google",
     "descriptionTypographyFontSize": 16,

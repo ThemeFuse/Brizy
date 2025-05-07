@@ -11,6 +11,7 @@ import SortableHandle from "visual/component/Sortable/SortableHandle";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { Draggable } from "visual/editorComponents/tools/Draggable";
 import { getContainerSizes } from "visual/editorComponents/tools/Draggable/utils";
+import { isPro } from "visual/utils/env";
 import { getWrapperContainerW } from "visual/utils/meta";
 import { getCSSId } from "visual/utils/models/cssId";
 import {
@@ -158,7 +159,7 @@ export default class Cloneable extends EditorComponent {
   };
 
   renderContent(v, vs, vd) {
-    const { className, customCSS } = v;
+    const { className } = v;
 
     const classNameContainer = classnames(
       "brz-d-xs-flex brz-flex-xs-wrap",
@@ -178,7 +179,11 @@ export default class Cloneable extends EditorComponent {
 
     const { minItems, maxItems, blockType } = v;
     const store = this.getReduxStore();
-    const motion = makeOptionValueToMotion({ v, store });
+    const motion = makeOptionValueToMotion({
+      v,
+      store,
+      isPro: isPro(this.getGlobalConfig())
+    });
     const itemsProps = this.makeSubcomponentProps({
       blockType,
       minItems,
@@ -199,11 +204,7 @@ export default class Cloneable extends EditorComponent {
       onSortableEnd: this.handleSortableEnd
     });
 
-    return (
-      <CustomCSS selector={this.getId()} css={customCSS}>
-        {({ ref: cssRef }) => <Items {...itemsProps} containerRef={cssRef} />}
-      </CustomCSS>
-    );
+    return <Items {...itemsProps} />;
   }
 
   containerSize = () => {
@@ -217,7 +218,7 @@ export default class Cloneable extends EditorComponent {
 
   renderForEdit(v, vs, vd) {
     const { showBorder, propsClassName } = this.props;
-    const { customClassName, cssClass, customAttributes } = v;
+    const { customClassName, cssClass, customAttributes, customCSS } = v;
     const id = getCSSId(v);
 
     const animationClassName = this.getAnimationClassName(v, vs, vd);
@@ -278,32 +279,40 @@ export default class Cloneable extends EditorComponent {
                             button: ContainerBorderButton,
                             border: ContainerBorderBorder
                           }) => (
-                            <Animation
-                              ref={(v) => {
-                                attachRefs(v, [
-                                  containerBorderRef,
-                                  contextMenuRef,
-                                  ref || null
-                                ]);
-                              }}
-                              component={"div"}
-                              componentProps={{
-                                ...parseCustomAttributes(customAttributes),
-                                ...containerBorderAttr,
-                                ...(id && { id }),
-                                ...extraAttr,
-                                className: classnames(
-                                  className,
-                                  draggableClassName
-                                )
-                              }}
-                              animationId={this.getId()}
-                              animationClass={animationClassName}
+                            <CustomCSS
+                              selectorName={this.getId()}
+                              css={customCSS}
                             >
-                              {this.renderContent(v, vs, vd)}
-                              {ContainerBorderButton}
-                              {ContainerBorderBorder}
-                            </Animation>
+                              {({ ref: customCSSRef }) => (
+                                <Animation
+                                  ref={(v) => {
+                                    attachRefs(v, [
+                                      containerBorderRef,
+                                      contextMenuRef,
+                                      customCSSRef,
+                                      ref || null
+                                    ]);
+                                  }}
+                                  component={"div"}
+                                  componentProps={{
+                                    ...parseCustomAttributes(customAttributes),
+                                    ...containerBorderAttr,
+                                    ...(id && { id }),
+                                    ...extraAttr,
+                                    className: classnames(
+                                      className,
+                                      draggableClassName
+                                    )
+                                  }}
+                                  animationId={this.getId()}
+                                  animationClass={animationClassName}
+                                >
+                                  {this.renderContent(v, vs, vd)}
+                                  {ContainerBorderButton}
+                                  {ContainerBorderBorder}
+                                </Animation>
+                              )}
+                            </CustomCSS>
                           )}
                         </ContainerBorder>
                       )}
@@ -330,31 +339,37 @@ export default class Cloneable extends EditorComponent {
           y: Position.getVOffset(this.dvv) ?? 0
         })}
       >
-        {(ref, draggableClassName) => {
+        {(draggableRef, draggableClassName) => {
           return (
-            <Animation
-              ref={ref}
-              component={"div"}
-              componentProps={{
-                ...parseCustomAttributes(customAttributes),
-                ...(id && { id }),
-                className: classnames(className, draggableClassName)
-              }}
-              animationId={this.getId()}
-              animationClass={animationClassName}
-            >
-              {showBorder ? (
-                <ContainerBorder
-                  ref={this.containerBorder}
-                  color="grey"
-                  borderStyle="dotted"
+            <CustomCSS selectorName={this.getId()} css={customCSS}>
+              {({ ref: customCSSRef }) => (
+                <Animation
+                  ref={(v) => {
+                    attachRefs(v, [customCSSRef, draggableRef || null]);
+                  }}
+                  component={"div"}
+                  componentProps={{
+                    ...parseCustomAttributes(customAttributes),
+                    ...(id && { id }),
+                    className: classnames(className, draggableClassName)
+                  }}
+                  animationId={this.getId()}
+                  animationClass={animationClassName}
                 >
-                  {this.renderContent(v, vs, vd)}
-                </ContainerBorder>
-              ) : (
-                this.renderContent(v, vs, vd)
+                  {showBorder ? (
+                    <ContainerBorder
+                      ref={this.containerBorder}
+                      color="grey"
+                      borderStyle="dotted"
+                    >
+                      {this.renderContent(v, vs, vd)}
+                    </ContainerBorder>
+                  ) : (
+                    this.renderContent(v, vs, vd)
+                  )}
+                </Animation>
               )}
-            </Animation>
+            </CustomCSS>
           );
         }}
       </Draggable>
@@ -362,7 +377,7 @@ export default class Cloneable extends EditorComponent {
   }
 
   renderForView(v, vs, vd) {
-    const { customClassName, cssClass, customAttributes } = v;
+    const { customClassName, cssClass, customAttributes, customCSS } = v;
     const {
       propsClassName,
       meta: { sectionPopup, sectionPopup2 }
@@ -373,6 +388,7 @@ export default class Cloneable extends EditorComponent {
 
     const className = classnames(
       "brz-wrapper-clone",
+      "brz-flex-xs-wrap",
       this.css(
         this.getComponentId(),
         this.getId(),
@@ -395,15 +411,20 @@ export default class Cloneable extends EditorComponent {
     };
 
     return (
-      <Animation
-        iterationCount={sectionPopup || sectionPopup2 ? Infinity : 1}
-        component={"div"}
-        componentProps={componentProps}
-        animationId={this.getId()}
-        animationClass={animationClassName}
-      >
-        {this.renderContent(v, vs, vd)}
-      </Animation>
+      <CustomCSS selectorName={this.getId()} css={customCSS}>
+        {({ ref }) => (
+          <Animation
+            ref={ref}
+            iterationCount={sectionPopup || sectionPopup2 ? Infinity : 1}
+            component={"div"}
+            componentProps={componentProps}
+            animationId={this.getId()}
+            animationClass={animationClassName}
+          >
+            {this.renderContent(v, vs, vd)}
+          </Animation>
+        )}
+      </CustomCSS>
     );
   }
 

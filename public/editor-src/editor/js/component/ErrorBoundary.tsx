@@ -6,11 +6,12 @@ import React, {
   MouseEvent,
   ReactNode
 } from "react";
-import Config from "visual/global/Config";
+import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { RenderType, isEditor } from "visual/providers/RenderProvider";
 import { t } from "visual/utils/i18n";
 
 type ErrorBoundaryProps = {
+  config: ConfigCommon;
   onRemove: () => void;
   children: ReactNode;
   renderContext: RenderType;
@@ -42,7 +43,7 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
   };
 
   renderForEdit(): ReactNode {
-    const urls = Config.get("urls");
+    const urls = this.props.config.urls;
     const { errorInfo, error } = this.state;
     const style: CSSProperties = {
       minHeight: "200px",
@@ -71,7 +72,7 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
               {t("You can")}
               <a
                 className="brz-a"
-                href={urls.support}
+                href={urls?.support}
                 target="_blank"
                 rel="noopener noreferrer"
                 style={linkStyle}

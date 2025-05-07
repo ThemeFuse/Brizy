@@ -10,7 +10,7 @@
   }
   &__field-label .brz-input {
     top: 0;
-    left: 0;
+    inset-inline-start: 0;
     width: 100%;
     height: 100%;
     text-align: inherit;
@@ -37,7 +37,7 @@
     position: absolute;
     z-index: z("forms-select");
     top: 100%;
-    left: 0;
+    inset-inline-start: 0;
     width: 100%;
     background-color: #fff;
   }
@@ -108,7 +108,7 @@
   &__checkbox-option-icon,
   &__radio-option-icon {
     position: absolute;
-    right: 5px;
+    inset-inline-end: 5px;
     text-align: center;
     font-size: 13px;
     display: flex;
@@ -130,7 +130,7 @@
     .brz-input {
       position: absolute;
       top: 0;
-      left: 0;
+      inset-inline-start: 0;
       width: 100%;
       height: 100%;
     }

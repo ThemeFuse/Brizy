@@ -3,7 +3,7 @@ import classnames from "classnames";
 import { noop } from "es-toolkit";
 import React, { CSSProperties, MouseEvent, RefObject, forwardRef } from "react";
 import { Config } from "visual/global/Config";
-import { useConfig } from "visual/global/hooks";
+import { useConfig } from "visual/providers/ConfigProvider";
 import { RenderFor } from "visual/providers/RenderProvider/RenderFor";
 import { editorIconUrl } from "visual/utils/icons";
 import type { IconNames } from "./Icon";
@@ -51,7 +51,7 @@ const _EditorIcon = forwardRef<HTMLDivElement, Props>((props, ref) => {
       style={style}
       ref={ref as RefObject<SVGSVGElement>}
     >
-      <use xlinkHref={editorIconUrl({ icon, url: editorIcons })} />
+      <use xlinkHref={editorIconUrl({ icon, url: editorIcons }, config)} />
     </svg>
   );
 });

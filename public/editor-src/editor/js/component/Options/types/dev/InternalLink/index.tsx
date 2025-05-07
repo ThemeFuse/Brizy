@@ -10,7 +10,7 @@ import React, {
 import { Control } from "visual/component/Controls/InternalLink";
 import { Status } from "visual/component/Controls/InternalLink/types";
 import { ToastNotification } from "visual/component/Notifications";
-import { useConfig } from "visual/global/hooks";
+import { useConfig } from "visual/providers/ConfigProvider";
 import { read } from "visual/utils/reader/string";
 import { Literal } from "visual/utils/types/Literal";
 import { ActionTypes, State, reducer } from "./reducer";

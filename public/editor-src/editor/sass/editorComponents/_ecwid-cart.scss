@@ -91,10 +91,6 @@
                               color: initial !important;
                             }
                           }
-
-                          &__select {
-                            pointer-events: none;
-                          }
                         }
 
                         .ec-link:active {
@@ -302,6 +298,10 @@
       .ec-cart__products-inner {
         .ec-cart__item {
           .ec-cart-item__wrap .ec-cart-item__title {
+            pointer-events: none !important;
+          }
+
+          .ec-cart-item__image {
             pointer-events: none !important;
           }
         }
