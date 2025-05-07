@@ -332,7 +332,6 @@ class Brizy_Editor_Post extends Brizy_Editor_Entity {
 
 	/**
 	 * @return void
-	 * @deprecated
 	 */
 	public function compile_page() {
 		try {

@@ -93,6 +93,8 @@ class Brizy_Editor {
 		// do not remove this! we force the project creation here.
 		$project = Brizy_Editor_Project::get();
 
+		Brizy_Editor_Compiler::checkRecompileTag();
+
 		Brizy_Admin_Flash::instance()->initialize(); // initialize flash
 
 		add_action( 'init', array( $this, 'registerCustomPostTemplates' ), - 4000 );
