@@ -44,7 +44,6 @@ class Brizy_Content_Placeholders_GlobalBlock extends Brizy_Content_Placeholders_
 			if ( ! $block ) {
 				return '';
 			}
-			$block->compilePage();
 			$content = self::$cache[ $uid ] = $this->returnBlockContent( $block );
 		}
 

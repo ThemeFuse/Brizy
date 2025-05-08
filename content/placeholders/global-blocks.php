@@ -56,11 +56,11 @@ class Brizy_Content_Placeholders_GlobalBlocks extends Brizy_Content_Placeholders
 		$content = "";
 		foreach ( $blocks as $block ) {
 
-			$block->compilePage();
 			/**
 			 * @var
 			 */
 			$sectionSet = $block->getCompiledSectionManager();
+
 			$html       = $sectionSet->buildHtml();
 			if ( empty( $html ) ) {
 				continue;
