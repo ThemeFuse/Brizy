@@ -873,7 +873,7 @@ class Brizy_Editor_Post extends Brizy_Editor_Entity
                     isset($storage_post['editor_version']) ? $storage_post['editor_version'] : BRIZY_EDITOR_VERSION
                 );
                 $this->set_compiler_version(
-                    isset($storage_post['compiler_version']) ? $storage_post['compiler_version'] : BRIZY_EDITOR_VERSION
+                    get_metadata('post', $this->getWpPostId(), self::BRIZY_POST_COMPILER_VERSION, true) ?: BRIZY_EDITOR_VERSION
                 );
                 $this->set_plugin_version(
                     isset($storage_post['plugin_version']) ? $storage_post['plugin_version'] : null
