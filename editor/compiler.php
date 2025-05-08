@@ -58,8 +58,8 @@ class Brizy_Editor_Compiler {
 
 	public function needsCompile( Brizy_Editor_Post $post ) {
 
-		$currentCompiler = preg_replace( "/((beta\d?)?-wp)$/", "", $post->get_compiler_version() );
-		$v2              = preg_replace( "/((beta\d?)?-wp)$/", "", BRIZY_MINIMUM_COMPILER_VERSION );
+		$currentCompiler = preg_replace( "/((-beta\d?)?-wp)$/", "", $post->get_compiler_version() );
+		$v2              = preg_replace( "/((-beta\d?)?-wp)$/", "", BRIZY_MINIMUM_COMPILER_VERSION );
 		if ( BRIZY_EDITOR_VERSION == 'dev' ) {
 			$v2 = BRIZY_EDITOR_VERSION;
 			// force recompile if the post does not have sections
