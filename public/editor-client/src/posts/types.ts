@@ -19,6 +19,22 @@ export interface Posts {
     rej: Response<string>,
     data: GetPostTaxonomiesProps
   ) => void;
+  getRulePostsGroupList: (
+    res: Response<
+      {
+        title: string;
+        value: number;
+        items?: {
+          title: string;
+          value: number;
+          groupValue: string;
+          status?: "publish" | "draft" | "pending";
+        }[];
+      }[]
+    >,
+    rej: Response<string>,
+    data: GetRulePostsGroupListProps
+  ) => void;
 }
 
 export interface GetPostsProps {
@@ -32,4 +48,8 @@ export interface GetPostsProps {
 export interface GetPostTaxonomiesProps {
   taxonomy: string;
   abortSignal?: AbortSignal;
+}
+
+interface GetRulePostsGroupListProps {
+  postType: string;
 }

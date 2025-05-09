@@ -74,3 +74,18 @@ export const getErrorMessage = (e: unknown): MValue<ErrorResponse> => {
   }
   return undefined;
 };
+
+export const getResponseData = async (res: Response) => {
+  const jsonData = await res.json();
+
+  if (jsonData.success) {
+    return jsonData;
+  }
+
+  const { data } = jsonData;
+
+  return {
+    ...data,
+    status: data.code ?? res.status
+  };
+};
