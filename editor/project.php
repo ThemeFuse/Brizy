@@ -850,7 +850,6 @@ class Brizy_Editor_Project extends Brizy_Editor_Entity
      */
     public function setMetaValue($key, $value)
     {
-
         wp_raise_memory_limit('image');
 
         if (is_null($key)) {
@@ -858,30 +857,28 @@ class Brizy_Editor_Project extends Brizy_Editor_Entity
         }
 
         if ($key == 'brizy-license-key') {
-            $this->setLicenseKey($value);
+            return $this->setLicenseKey($value);
         }
         if ($key == 'brizy-cloud-token') {
-            $this->setCloudToken($value);
+            return $this->setCloudToken($value);
         }
         if ($key == 'brizy-cloud-account-id') {
-            $this->setCloudAccountId($value);
+            return $this->setCloudAccountId($value);
         }
         if ($key == 'brizy-cloud-project') {
-            $this->setCloudProject($value);
+            return $this->setCloudProject($value);
         }
 
         if ($key == 'brizy-cloud-container') {
-            $this->setCloudContainer($value);
+            return $this->setCloudContainer($value);
         }
 
         if ($key == 'image-optimizer-settings') {
-            $this->setImageOptimizerSettings($value);
+            return $this->setImageOptimizerSettings($value);
         }
 
         return $this->$key = $value;
-
     }
-
 
     /**
      * @param $key

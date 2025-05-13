@@ -96,7 +96,7 @@ class Brizy_Admin_Cloud_PopupBridge extends Brizy_Admin_Cloud_AbstractBridge
                 $brizyPost = Brizy_Editor_Popup::get($post, $popup['uid']);
                 $brizyPost->setMeta($popup['meta']);
                 $brizyPost->setCloudId($popup['id']);
-                $brizyPost->set_editor_data($popup['data']);
+                $brizyPost->setEditorData($popup['data']);
                 $brizyPost->set_uses_editor(true);
                 $brizyPost->set_needs_compile(true);
                 $brizyPost->setDataVersion(1);

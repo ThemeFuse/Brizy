@@ -91,14 +91,14 @@ class Brizy_Compatibilities_WPML {
 			return;
 		}
 
-		Brizy_Editor_Post::mark_all_for_compilation();
+		Brizy_Editor_Post::markAllForCompilation();
 	}
 
 	/**
 	 * On sync menus recompile everything again
 	 */
 	public function syncMenus() {
-		Brizy_Editor_Post::mark_all_for_compilation();
+		Brizy_Editor_Post::markAllForCompilation();
 	}
 
 	/**

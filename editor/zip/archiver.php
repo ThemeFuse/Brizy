@@ -92,7 +92,7 @@ class Brizy_Editor_Zip_Archiver implements Brizy_Editor_Zip_ArchiverInterface
             'title' => $block->getTitle(),
             'meta' => $block->getMeta(),
             'media' => $block->getMedia(),
-            'data' => $block->get_editor_data(true),
+            'data' => $block->getEditorData(true),
             'editorVersion' => $this->syncVersion,
             'files' => [
                 'images' => [],
@@ -203,7 +203,7 @@ class Brizy_Editor_Zip_Archiver implements Brizy_Editor_Zip_ArchiverInterface
          */
         $block = $this->getManager($entityClass)->createEntity(md5(random_bytes(10)), 'publish');
         $block->set_needs_compile(true);
-        $block->set_editor_data($this->sanitizeJson($data->data));
+        $block->setEditorData($this->sanitizeJson($data->data));
         $block->setMeta($data->meta);
 
         if (isset($data->title)) {

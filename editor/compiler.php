@@ -5,7 +5,7 @@ class Brizy_Editor_Compiler
 
     const BRIZY_RECOMPILE_TAG_OPTION = 'brizy-recompile-tag';
 
-    /**
+    const BRIZY_RECOMPILE_TAG_OPTION = 'brizy-recompile-tag';/**
      * @var Brizy_Editor_Project
      */
     private $project;
@@ -36,7 +36,7 @@ class Brizy_Editor_Compiler
     public function compilePost(Brizy_Editor_Post $post, $editorConfig)
     {
         $this->urlBuilder->set_post_id($post->getWpPostId());
-        $editor_data = $post->get_editor_data(true);
+        $editor_data = $post->getEditorData(true);
         $compilerParam = $this->compilerParams($editor_data, $editorConfig);
         $httpClient = new Brizy_Editor_Http_Client();
         $compilerResult = $httpClient->request($this->compilerUrl, array('body' => $compilerParam), 'POST')->get_response_body();
@@ -66,9 +66,12 @@ class Brizy_Editor_Compiler
         $v2 = preg_replace("/((-beta\d+?)?-wp)$/", "", BRIZY_MINIMUM_COMPILER_VERSION);
 
         if (BRIZY_EDITOR_VERSION == 'dev') {
-            $v2 = BRIZY_EDITOR_VERSION;
+            $v2 = BRIZY_EDITOR_VERSION;// force recompile if the post does not have sections
+			// usually this will be needed only in dev mode.
+			if ( empty( $post->getCompiledSections() ) ) {
+				return true;
         }
-
+}
         if (version_compare($currentCompiler, $v2, "<")) {
             return true;
         }
@@ -83,28 +86,21 @@ class Brizy_Editor_Compiler
         $this->project->saveStorage();
     }
 
-    private function updatePost(Brizy_Editor_Post $post, $pageData)
-    {
-        $post->set_compiled_html($pageData['html']);
-        $assets = $pageData['assets'];
-        $scripts = [
-            'free' => $assets['freeScripts'],
-            'pro' => (isset($assets['proScripts']) ? $assets['proScripts'] : []),
-        ];
-        $styles = [
-            'free' => $assets['freeStyles'],
-            'pro' => (isset($assets['proStyles']) ? $assets['proStyles'] : []),
-        ];
-        $post->setCompiledScripts($scripts);
-        $post->setCompiledStyles($styles);
-        $post->set_needs_compile(false);
-        $post->set_compiler(Brizy_Editor_Post::COMPILER_BROWSER);
-        $post->set_compiler_version(BRIZY_EDITOR_VERSION);
-        $post->set_plugin_version(BRIZY_VERSION);
-        $post->set_pro_plugin_version(defined('BRIZY_PRO_VERSION') ? BRIZY_PRO_VERSION : null);
-        $post->savePost();
-        $post->saveStorage();
-    }
+	private function updatePost( Brizy_Editor_Post $post, $pageData ) {
+
+		$section_manager = $post->getCompiledSectionManager();
+		$section_manager->merge( $pageData );
+		$post->setCompiledSections( $section_manager->asJson() );
+		$post->setCompiledScripts( [] );
+		$post->setCompiledStyles( [] );
+		$post->set_needs_compile( false );
+		$post->set_compiler( Brizy_Editor_Post::COMPILER_BROWSER );
+		$post->set_compiler_version( BRIZY_EDITOR_VERSION );
+		$post->set_plugin_version( BRIZY_VERSION );
+		$post->set_pro_plugin_version( defined( 'BRIZY_PRO_VERSION' ) ? BRIZY_PRO_VERSION : null );
+		$post->savePost();
+		$post->saveStorage();
+	}
 
     private function updateGlobalBLocks($globalBlockData)
     {
