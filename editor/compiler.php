@@ -3,6 +3,8 @@
 class Brizy_Editor_Compiler
 {
 
+    const BRIZY_RECOMPILE_TAG_OPTION = 'brizy-recompile-tag';
+
     /**
      * @var Brizy_Editor_Project
      */
@@ -123,4 +125,16 @@ class Brizy_Editor_Compiler
         ));
     }
 
+	static private function resetCompiledVersion() {
+		global $wpdb;
+		$wpdb->query( "UPDATE {$wpdb->postmeta} SET meta_value='0.0.0' WHERE meta_key = '" . Brizy_Editor_Post::BRIZY_POST_COMPILER_VERSION . "'" );
+	}
+
+	static public function checkRecompileTag() {
+		$currentTag = (int)get_option( self::BRIZY_RECOMPILE_TAG_OPTION, null );
+		if ( $currentTag < BRIZY_RECOMPILE_TAG ) {
+			self::resetCompiledVersion();
+			update_option( self::BRIZY_RECOMPILE_TAG_OPTION, BRIZY_RECOMPILE_TAG );
+		}
+	}
 }
