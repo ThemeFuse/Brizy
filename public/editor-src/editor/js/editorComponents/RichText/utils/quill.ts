@@ -4,9 +4,10 @@ import Attributor from "parchment/dist/src/attributor/attributor";
 import ClassAttributor from "parchment/dist/src/attributor/class";
 import StyleAttributor from "parchment/dist/src/attributor/style";
 import Quill from "quill";
+import { GetConfig } from "visual/providers/ConfigProvider/types";
 import { RenderType, isEditor } from "visual/providers/RenderProvider";
-import BackgroundGradient from "./formats/BackgroundGradient";
-import BackgroundImage from "./formats/BackgroundImage";
+import { getBackgroundGradient } from "./formats/BackgroundGradient";
+import { getBackgroundImage } from "./formats/BackgroundImage";
 import BlockColor from "./formats/BlockColor";
 import BlockOpacity from "./formats/BlockOpacity";
 import CustomListItem from "./formats/CustomListItem";
@@ -15,7 +16,7 @@ import Link from "./formats/Link";
 import PlainClipboard from "./formats/PlainClipboard";
 import Population from "./formats/Population";
 import Pre from "./formats/Pre";
-import TextBackgroundGradient from "./formats/TextBackgroundGradient";
+import { getTextBackgroundGradient } from "./formats/TextBackgroundGradient";
 import { blockValues, inlineValues, legacyValues } from "./transforms";
 import { Values } from "./transforms/defaultValues";
 
@@ -23,7 +24,7 @@ type Attributors = ClassAttributor | StyleAttributor | Attributor;
 type P = typeof parchment;
 type Scope = "block" | "inline";
 
-function getQuill(renderContext: RenderType) {
+function getQuill(renderContext: RenderType, getConfig: GetConfig) {
   if (isEditor(renderContext)) {
     const Parchment: P = Quill.import("parchment");
     Quill.debug("error");
@@ -72,7 +73,7 @@ function getQuill(renderContext: RenderType) {
     );
     Quill.register(getParchment("uniq-id", "data-uniq-id", "attribute"));
 
-    Quill.register(BackgroundImage);
+    Quill.register(getBackgroundImage(getConfig));
     Quill.register(Population);
     Quill.register(Link);
     Quill.register(BlockColor);
@@ -80,8 +81,8 @@ function getQuill(renderContext: RenderType) {
     Quill.register(CustomListItem);
     Quill.register(Pre, true);
     Quill.register(DCBlock, true);
-    Quill.register(BackgroundGradient, true);
-    Quill.register(TextBackgroundGradient, true);
+    Quill.register(getBackgroundGradient(getConfig), true);
+    Quill.register(getTextBackgroundGradient(getConfig), true);
 
     Quill.register("modules/clipboard", PlainClipboard, true);
   }

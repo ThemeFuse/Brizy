@@ -17,6 +17,7 @@ export interface BaseIntegrationProps {
   onLoading: (l: boolean) => void;
   onTabUpdate: () => void;
   onClose: () => void;
+  formId?: string;
   config: ConfigCommon;
 }
 
@@ -41,8 +42,12 @@ export interface BaseIntegrationContext {
   stages: AppData["stages"];
   stage: string;
   oldStage: string;
-  onChange: (id: string, data: Record<string, unknown> | null) => void;
-  onChangeNext: (stage: BaseKey) => void;
+  onChange: (
+    id: string,
+    data: Record<string, unknown> | null,
+    next?: VoidFunction
+  ) => void;
+  onChangeNext: (stage?: BaseKey) => void;
   onChangePrev: (stage: BaseKey) => void;
   onConnectApp: (data: AppData) => void;
   onDisconnectApp: (appId: string) => void;
@@ -61,5 +66,15 @@ export type AppData = {
   restrictions?: { [key: string]: unknown };
   descriptions?: string;
   docsUrl?: string;
-  data?: { id?: string };
+  data?: {
+    id: string;
+    formId: string;
+    type: string;
+    confirmationNeeded: boolean;
+    usedList: string;
+    usedFolder: string;
+    fieldsMap: string;
+    usedAccount?: string | null;
+    completed?: boolean;
+  };
 };

@@ -2,9 +2,8 @@ import React, { ReactElement } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Dispatch } from "redux";
 import Prompts from "visual/component/Prompts";
-import { isCloud } from "visual/global/Config/types";
 import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
-import { useConfig } from "visual/global/hooks";
+import { useConfig } from "visual/providers/ConfigProvider";
 import { updatePopupRules } from "visual/redux/actions";
 import { updateGBRules } from "visual/redux/actions2";
 import { globalBlocksSelector } from "visual/redux/selectors";
@@ -84,17 +83,6 @@ export function getOptions(data: OptionsData, config: ConfigCommon): Options {
       const save = popupConditions?.conditions?.save;
 
       if (!isExternalPopup(config) && save) {
-        const asyncGetValue = isCloud(config)
-          ? (): Promise<Rule[]> =>
-              getRulesList(config.page.id, {
-                uri: config?.api?.brizyApiUrl ?? "",
-                authorization: config.tokenV2
-                  ? `${config.tokenV2.token_type} ${config.tokenV2.access_token}`
-                  : undefined
-              })
-          : // @ts-expect-error it's not possible to create normal types because different data is used on Cloud/WP
-            (): Promise<Rule[]> => getRulesList(config);
-
         options.push({
           id: "rules",
           type: "rules",
@@ -102,7 +90,7 @@ export function getOptions(data: OptionsData, config: ConfigCommon): Options {
           label: t("Conditions"),
           title: t("WHERE DO YOU WANT TO DISPLAY IT?"),
           context: "popup",
-          asyncGetValue,
+          asyncGetValue: () => getRulesList(config),
           onChange: (data) => {
             dispatch(updatePopupRules(data));
           }

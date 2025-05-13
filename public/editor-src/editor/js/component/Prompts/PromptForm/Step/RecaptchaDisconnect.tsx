@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { pendingRequest } from "visual/utils/api";
 import { t } from "visual/utils/i18n";
 import { Context } from "../../common/GlobalApps/Context";
@@ -7,6 +8,7 @@ import { deleteAccount } from "../../common/GlobalApps/api";
 
 interface Props {
   descriptions: string;
+  config: ConfigCommon;
   onPrev: Promise<void>;
   onNext: Promise<void>;
 }
@@ -19,6 +21,7 @@ interface State {
 
 class RecaptchaDisconnect extends Component<Props, State> {
   static contextType = Context;
+  declare context: React.ContextType<typeof Context>;
 
   constructor(props: Props) {
     super(props);
@@ -31,12 +34,21 @@ class RecaptchaDisconnect extends Component<Props, State> {
 
   handleNext = async (): Promise<void> => {
     const { app, onChange, onDisconnectApp } = this.context;
+
+    if (!app.data?.id) {
+      this.setState({
+        error: t("Missing app id"),
+        nextLoading: false
+      });
+      return;
+    }
+
     this.setState({
       nextLoading: true,
       error: null
     });
 
-    const { status } = await deleteAccount(app.data.id);
+    const { status } = await deleteAccount(app.data.id, this.props.config);
 
     if (status < 400) {
       onDisconnectApp(app.id);

@@ -1,14 +1,13 @@
-import { configSelector } from "visual/redux/selectors";
 import { getColor } from "visual/utils/color";
 import { defaultValueValue } from "visual/utils/onChange";
 import { styleState } from "visual/utils/style";
 
-export function styleBgColor({ v, device, state, store, prefix = "bg" }) {
+export function styleBgColor({ v, device, state, getConfig, prefix = "bg" }) {
   const isHover = styleState({ v, state }) === "hover";
 
   const dvv = (key) => defaultValueValue({ v, key, device, state });
   const dvvH = (key) => defaultValueValue({ v, key, device, state: "hover" });
-  const config = configSelector(store.getState());
+  const config = getConfig();
 
   const bgColorType = defaultValueValue({
     v,

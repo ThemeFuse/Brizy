@@ -1,14 +1,17 @@
 /* eslint-disable @typescript-eslint/no-use-before-define */
 import classnames from "classnames";
-import React from "react";
-import { isEditor } from "visual/providers/RenderProvider";
+import React, { JSX } from "react";
 import Placeholder from "visual/component/Placeholder";
 import { withLink } from "visual/component/hooks/withLink";
+import { useConfig } from "visual/providers/ConfigProvider";
+import { isEditor } from "visual/providers/RenderProvider";
 import { useCSS } from "visual/providers/StyleProvider/useCSS";
-import { isGIFExtension, isSVGExtension } from "visual/utils/image/utils";
+import { MValue } from "visual/utils/value";
 import { stylePicture } from "../styles";
 import { ImageProps } from "../types";
-import { showOriginalImage } from "../utils";
+import { isAbleToRenderOriginal, showOriginalImage } from "../utils";
+import HoverSimpleImage from "./HoverSimpleImage";
+import HoverSvgImage from "./HoverSvgImage";
 import OriginalImage from "./OriginalImage";
 import Population from "./Population";
 import SimpleImage from "./SimpleImage";
@@ -25,9 +28,12 @@ const Content = (props: ImageProps): JSX.Element => {
     meta,
     store,
     renderContext,
-    editorMode
+    editorMode,
+    getResponsiveUrls
   } = props;
-  const { imageSrc, imageExtension, imagePopulation } = v;
+  const { imageSrc, imagePopulation, hoverImagePopulation, hoverImageSrc } = v;
+  const config = useConfig();
+
   const modelClassName = useCSS({
     // hard to explain, but because styles are generated from props in this case
     // we can't rely on the usual way of using css(),
@@ -46,7 +52,8 @@ const Content = (props: ImageProps): JSX.Element => {
       store,
       contexts: {
         renderContext,
-        mode: editorMode
+        mode: editorMode,
+        getConfig: () => config
       }
     })
   });
@@ -61,20 +68,9 @@ const Content = (props: ImageProps): JSX.Element => {
         modelClassName
       );
 
-  if (_isEditor && imagePopulation) {
-    return meta._dc?.lastCache?.imageSrc ? (
-      <Population v={v} attr={extraAttributes} />
-    ) : (
-      renderPlaceholder()
-    );
-  }
-
-  // imagePopulation is rendering during compilation time as usual Image
-  if (imageSrc || imagePopulation) {
-    const content =
-      isSVGExtension(imageExtension) ||
-      isGIFExtension(imageExtension) ||
-      showOriginalImage(v) ? (
+  const renderImage = () => {
+    if (imageSrc || imagePopulation) {
+      return isAbleToRenderOriginal(v) ? (
         <OriginalImage
           v={v}
           vs={vs}
@@ -85,25 +81,130 @@ const Content = (props: ImageProps): JSX.Element => {
           imageSrc={imageSrc}
         />
       ) : (
-        <SimpleImage
-          {...props}
-          extraAttributes={extraAttributes}
-          gallery={props?.gallery}
+        <SimpleImage {...props} extraAttributes={extraAttributes} />
+      );
+    }
+
+    return <Placeholder icon="img" />;
+  };
+
+  const renderHoverImage = () => {
+    if (_isEditor && hoverImagePopulation) {
+      return (
+        <Population
+          key="population-hover"
+          v={v}
+          attr={extraAttributes}
+          isHover
         />
       );
+    }
 
-    return <picture className={pictureClassName}>{content}</picture>;
+    if (hoverImageSrc || hoverImagePopulation) {
+      return isAbleToRenderOriginal(v, "hover") ? (
+        <HoverSvgImage
+          v={v}
+          vs={vs}
+          vd={vd}
+          _id={_id}
+          componentId={componentId}
+          extraAttributes={extraAttributes}
+          hoverImageSrc={hoverImageSrc}
+          store={store}
+          renderContext={renderContext}
+          editorMode={editorMode}
+          getResponsiveUrls={getResponsiveUrls}
+          meta={meta}
+        />
+      ) : (
+        <HoverSimpleImage
+          v={v}
+          vs={vs}
+          vd={vd}
+          _id={_id}
+          componentId={componentId}
+          meta={meta}
+          store={store}
+          renderContext={renderContext}
+          editorMode={editorMode}
+          getResponsiveUrls={getResponsiveUrls}
+          extraAttributes={extraAttributes}
+        />
+      );
+    }
+
+    return <></>;
+  };
+
+  if (_isEditor && (imagePopulation || hoverImagePopulation)) {
+    const content: {
+      normal: MValue<JSX.Element>;
+      hover: MValue<JSX.Element>;
+    } = {
+      normal: undefined,
+      hover: undefined
+    };
+
+    if (imagePopulation) {
+      if (meta._dc?.lastCache?.imageSrc) {
+        content.normal = (
+          <Population key="population-simple" v={v} attr={extraAttributes} />
+        );
+      } else {
+        content.normal = <Placeholder icon="img" />;
+      }
+    }
+
+    if (hoverImagePopulation && meta._dc?.lastCache?.hoverImage) {
+      content.hover = (
+        <Population
+          key="population-hover"
+          v={v}
+          attr={extraAttributes}
+          isHover
+        />
+      );
+    }
+
+    const hasNormalDC = !!content.normal;
+    const hasHoverDC = !!content.hover;
+
+    if (hasNormalDC && hasHoverDC) {
+      return (
+        <div className="brz-img__hover-population">
+          {content.normal}
+          {content.hover}
+        </div>
+      );
+    }
+
+    const toRender: JSX.Element[] = [];
+
+    if (hasNormalDC) {
+      toRender.push(content.normal as JSX.Element);
+    } else {
+      toRender.push(renderImage());
+    }
+
+    if (hasHoverDC) {
+      toRender.push(
+        <div className="brz-img__hover-population-wrapper">{content.hover}</div>
+      );
+    } else {
+      toRender.push(renderHoverImage());
+    }
+
+    if (toRender.length) {
+      return <picture className={pictureClassName}>{toRender}</picture>;
+    }
   }
 
-  return renderPlaceholder();
-
-  function renderPlaceholder(): JSX.Element {
-    return (
-      <div className={pictureClassName}>
-        <Placeholder icon="img" />
-      </div>
-    );
-  }
+  return (
+    <picture className={pictureClassName}>
+      {renderImage()}
+      {renderHoverImage()}
+    </picture>
+  );
 };
 
 export default withLink(Content);

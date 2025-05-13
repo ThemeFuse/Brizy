@@ -39,7 +39,8 @@ class Blocks extends EditorArrayComponent {
   handleAddGlobalBlock = (data, insertIndex) => {
     const { dispatch } = this.props;
     const meta = { insertIndex };
-    dispatch(addGlobalBlock(data, meta));
+
+    dispatch(addGlobalBlock(data, meta, this.getGlobalConfig()));
   };
 
   handleAddBlock = (data, insertIndex) => {
@@ -57,7 +58,7 @@ class Blocks extends EditorArrayComponent {
     if (index !== -1) {
       const { dispatch } = this.props;
       hideToolbar();
-      dispatch(removeBlock({ index, id }));
+      dispatch(removeBlock({ index, id, config: this.getGlobalConfig() }));
     } else {
       console.error("Invalid block id", id);
     }

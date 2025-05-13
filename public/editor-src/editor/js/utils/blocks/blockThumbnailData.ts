@@ -1,5 +1,6 @@
 import { flowRight } from "es-toolkit";
 import { ElementModelType } from "visual/component/Elements/Types";
+import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { Screenshot } from "visual/types/Screenshot";
 import {
   isAbsoluteUrl,
@@ -22,10 +23,15 @@ type WithScreenshotUrl<T> = T & {
   screenshotUrl: string;
 };
 
-export const blockThumbnailData = (
-  block: Thumbnail,
-  screenshot?: string
-): Data => {
+interface BlockThumbnailData {
+  block: Thumbnail;
+  config: ConfigCommon;
+  screenshot?: string;
+}
+
+export const blockThumbnailData = (args: BlockThumbnailData): Data => {
+  const { block, config, screenshot } = args;
+
   const screenshotData = screenshot
     ? blockScreenshotData(block, screenshot)
     : null;
@@ -38,7 +44,7 @@ export const blockThumbnailData = (
     data = screenshotData;
   } else {
     data = {
-      url: placeholderBlockThumbnailUrl(),
+      url: placeholderBlockThumbnailUrl(config),
       width: 500,
       height: 200
     };

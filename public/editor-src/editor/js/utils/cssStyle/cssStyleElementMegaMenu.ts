@@ -16,6 +16,7 @@ export function cssStyleElementMegaMenuWidth({
   v,
   device,
   state,
+  getConfig,
   store
 }: CSSValue): string {
   const mode = styleElementMenuMode({ v, device, state });
@@ -26,6 +27,7 @@ export function cssStyleElementMegaMenuWidth({
       v,
       device,
       state,
+      getConfig,
       store,
       prefix: "megaMenu"
     });
@@ -47,6 +49,7 @@ export function cssStyleElementMegaMenuOffsetTop({
 export function cssStyleElementMegaMenuHeight({
   v,
   device,
+  getConfig,
   state,
   store
 }: CSSValue): string {
@@ -57,6 +60,7 @@ export function cssStyleElementMegaMenuHeight({
       v,
       device,
       state,
+      getConfig,
       store,
       prefix: "section"
     });

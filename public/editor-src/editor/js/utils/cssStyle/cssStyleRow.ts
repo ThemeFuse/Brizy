@@ -1,10 +1,10 @@
 import {
-  styleElementColumnMinHeightType,
   styleElementColumnMinHeight,
   styleElementColumnMinHeightSuffix,
+  styleElementColumnMinHeightType,
+  styleReverseColumnsJustify,
   styleReverseColumnsRow,
-  styleReverseColumnsWrap,
-  styleReverseColumnsJustify
+  styleReverseColumnsWrap
 } from "visual/utils/style2";
 import { CSSValue } from "visual/utils/style2/types";
 
@@ -27,10 +27,11 @@ export function cssStyleRowReverseColumn({
   v,
   device,
   state,
+  getConfig,
   store
 }: CSSValue): string {
   const flexDirection =
-    styleReverseColumnsRow({ v, device, state, store }) === "on"
+    styleReverseColumnsRow({ v, device, state, store, getConfig }) === "on"
       ? "row-reverse"
       : "row";
   const flexWrap =

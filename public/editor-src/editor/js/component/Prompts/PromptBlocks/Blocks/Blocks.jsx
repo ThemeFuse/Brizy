@@ -65,10 +65,20 @@ class Blocks extends Component {
   }
 
   filterData = (item, currentFilter) => {
-    const typeMatch = item.type.includes(currentFilter.type);
-    const categoryMatch =
+    const filterByType = item.type.length >= 1;
+    const filterByCategory = item.cat.length > 0;
+
+    const typeMatch = !filterByType || item.type.includes(currentFilter.type);
+
+    const isBlank = item.id === "blank";
+
+    const _categoryMatch =
       currentFilter.category === "*" ||
       item.cat.includes(currentFilter.category);
+
+    const categoryMatch = isBlank
+      ? _categoryMatch
+      : !filterByCategory || _categoryMatch;
 
     const searchMatch =
       currentFilter.search === "" ||
@@ -169,7 +179,7 @@ class Blocks extends Component {
     const showImportKit =
       kits.filter(({ id }) => id !== selectedKit).length > 0;
     const showType = types.length > 1;
-    const showCategories = categories.length > 0;
+    const showCategories = categories.length > 1;
 
     return (
       <DataFilter

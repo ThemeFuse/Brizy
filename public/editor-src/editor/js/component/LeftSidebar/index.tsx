@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import ClickOutside from "visual/component/ClickOutside";
 import PointerEvents from "visual/component/PointerEvents";
 import { isCloud } from "visual/global/Config/types";
-import { useConfig } from "visual/global/hooks";
+import { useConfig } from "visual/providers/ConfigProvider";
 import { isStory, useEditorMode } from "visual/providers/EditorModeProvider";
 import { updateUI } from "visual/redux/actions2";
 import {

@@ -1,4 +1,3 @@
-import { configSelector } from "visual/redux/selectors";
 import { getColor } from "visual/utils/color";
 import { defaultValueValue } from "visual/utils/onChange";
 import { styleState } from "visual/utils/style";
@@ -15,7 +14,7 @@ export function cssStyleElementCounterChartWidth({ v }) {
   return `stroke-width: ${strokeWidth} !important;`;
 }
 
-export function cssStyleElementCounterTextShadow({ v, state, store }) {
+export function cssStyleElementCounterTextShadow({ v, state, getConfig }) {
   state = getState(v, state);
 
   const dvv = (key) => defaultValueValue({ v, key, state });
@@ -28,7 +27,7 @@ export function cssStyleElementCounterTextShadow({ v, state, store }) {
   const textShadowVertical = dvv("textShadowVertical");
   const textShadowHorizontal = dvv("textShadowHorizontal");
 
-  const config = configSelector(store.getState());
+  const config = getConfig();
 
   const shadowColor = getColor(
     textShadowColorPalette,

@@ -1,3 +1,4 @@
+import { Obj, Str } from "@brizy/readers";
 import { isEqual } from "es-toolkit";
 import React, {
   ReactElement,
@@ -7,17 +8,16 @@ import React, {
   useRef
 } from "react";
 import { Control } from "visual/component/Controls/Population";
-import { useConfig } from "visual/global/hooks";
+import { useConfig } from "visual/providers/ConfigProvider";
 import { getCollectionItems, getCollectionTypes } from "visual/utils/api";
 import { t } from "visual/utils/i18n";
 import { findDCChoiceByPlaceholder } from "visual/utils/options/Population/utils";
-import * as Str from "visual/utils/reader/string";
 import { auto, isAuto } from "visual/utils/string/specs";
 import { Literal } from "visual/utils/types/Literal";
 import { Choices, OptGroup } from "../../types/Choices";
 import { PopulationMethod } from "../../types/PopulationMethod";
 import { ElementModelValue, Value } from "./../../types/Value";
-import { ActionTypes, reducer } from "./reducer";
+import { ActionTypes, State, reducer } from "./reducer";
 
 export interface Props<T extends Literal> {
   value: T;
@@ -94,10 +94,27 @@ export function PopulationSelect<T extends Literal>({
   useEffect(() => {
     const v = Str.read(value);
 
-    if (v && oldState.current.placeholder !== v) {
-      onPopulationChange(v);
+    const toUpdate: Partial<State> = {};
+
+    if (v !== placeholder) {
+      toUpdate.placeholder = v;
     }
-  }, [value]);
+
+    if (vEntityType !== entityType.value) {
+      toUpdate.entityType = { value: vEntityType };
+    }
+
+    if (vEntityId !== entityId.value) {
+      toUpdate.entityId = { value: vEntityId };
+    }
+
+    if (Obj.length(toUpdate) > 0) {
+      dispatch({ type: ActionTypes.SET_BULK, payload: toUpdate });
+    }
+    // There is no need to add all keys to the dependencies;
+    // I only need to update the data when the prop values change, for example, when switching from normal to hover.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [value, vEntityType, vEntityId]);
 
   useEffect(() => {
     if (!isEqual(oldState.current, state)) {

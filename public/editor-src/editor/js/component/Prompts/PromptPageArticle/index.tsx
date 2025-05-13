@@ -45,7 +45,7 @@ import {
   shopifySyncArticle
 } from "visual/utils/api";
 import { isNonEmptyArray } from "visual/utils/array/types";
-import { SYNC_ERROR } from "visual/utils/errors";
+import { ErrorCodes } from "visual/utils/errors";
 import { t } from "visual/utils/i18n";
 import { Button } from "../common/Button";
 import { Content } from "../common/Content";
@@ -76,8 +76,8 @@ export const PromptPageArticle = (props: Props): ReactElement => {
 
   const handleSave = useCallback(
     ({ selected, title, layout }: Valid): Promise<void> => {
-      dispatch(updatePageLayout(layout));
-      dispatch(updatePageTitle(title));
+      dispatch(updatePageLayout({ layout, config }));
+      dispatch(updatePageTitle({ title, config }));
 
       return onSave()
         .then(() => {
@@ -151,7 +151,7 @@ export const PromptPageArticle = (props: Props): ReactElement => {
           } else {
             dispatch(
               updateError({
-                code: SYNC_ERROR,
+                code: ErrorCodes.SYNC_ERROR,
                 data: {
                   upgradeToProUrl: configCommon?.modules?.shop?.upgradeToProUrl
                 }

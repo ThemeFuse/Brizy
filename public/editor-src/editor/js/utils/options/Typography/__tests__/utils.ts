@@ -1,5 +1,5 @@
 import { OptionValue } from "visual/component/Options/types";
-import { Config } from "visual/global/Config/InitConfig";
+import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { RenderType } from "visual/providers/RenderProvider";
 import { hydrate } from "visual/redux/actions";
 import { createStore } from "visual/redux/store";
@@ -20,6 +20,8 @@ import {
 import { ACTIVE, HOVER, NORMAL } from "visual/utils/stateMode";
 import { getTypographyValues } from "../utils";
 import { nullishValue } from "./css";
+
+const getConfig = (): ConfigCommon => ({}) as ConfigCommon;
 
 const value: OptionValue<"typography"> = {
   fontStyle: "",
@@ -51,9 +53,10 @@ const output = {
   letterSpacing: "0px",
   lineHeight: 1,
   variableFontWeight: '"wght" 400, "wdth" 100, "SOFT" 0',
-  textStyle: "font-style:italic;",
-  textDecoration: "text-decoration:underline line-through;",
-  textTransform: "text-transform:lowercase;"
+  textDecoration: "underline line-through",
+  textTransform: "lowercase",
+  bold: false,
+  italic: true
 };
 
 const mockDataForReduxStore = {
@@ -386,20 +389,11 @@ const mockDataForReduxStore = {
       ]
     }
   },
-  configId: "test",
   config: {
     mode: "page"
   },
   editorMode: "page"
 };
-
-beforeAll(() => {
-  new Config({
-    // @ts-expect-error: Mock ConfigCommon
-    config: mockDataForReduxStore.config,
-    id: mockDataForReduxStore.configId
-  });
-});
 
 describe("Testing getTypographyValues that should return typography values", () => {
   const store = createStore();
@@ -416,7 +410,8 @@ describe("Testing getTypographyValues that should return typography values", () 
         value: nullishValue,
         device: "desktop",
         state: NORMAL,
-        store
+        store,
+        getConfig
       })
     ).toStrictEqual({
       fontStyle: undefined,
@@ -429,9 +424,10 @@ describe("Testing getTypographyValues that should return typography values", () 
       lineHeight: 0,
       variableFontWeight:
         '"wght" undefined, "wdth" undefined, "SOFT" undefined',
-      textStyle: "",
       textDecoration: "",
-      textTransform: ""
+      textTransform: "",
+      bold: false,
+      italic: false
     });
   });
 
@@ -442,7 +438,8 @@ describe("Testing getTypographyValues that should return typography values", () 
         value,
         device: "desktop",
         state: NORMAL,
-        store
+        store,
+        getConfig
       })
     ).toStrictEqual(output);
   });
@@ -454,7 +451,8 @@ describe("Testing getTypographyValues that should return typography values", () 
         value,
         device: "desktop",
         state: HOVER,
-        store
+        store,
+        getConfig
       })
     ).toStrictEqual(output);
   });
@@ -466,7 +464,8 @@ describe("Testing getTypographyValues that should return typography values", () 
         value,
         device: "desktop",
         state: ACTIVE,
-        store
+        store,
+        getConfig
       })
     ).toStrictEqual(output);
   });
@@ -478,19 +477,21 @@ describe("Testing getTypographyValues that should return typography values", () 
         value,
         device: "tablet",
         state: NORMAL,
-        store
+        store,
+        getConfig
       })
     ).toStrictEqual(output);
   });
 
-  test("Tablet", () => {
+  test("Mobile", () => {
     expect(
       getTypographyValues({
         renderContext,
         value,
         device: "mobile",
         state: NORMAL,
-        store
+        store,
+        getConfig
       })
     ).toStrictEqual(output);
   });

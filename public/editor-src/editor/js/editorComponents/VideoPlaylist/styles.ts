@@ -8,38 +8,45 @@ export function styleContents(
   data: DynamicStylesProps<ElementModel>
 ): OutputStyle {
   const { renderContext } = data.contexts;
+
   const _isView = isView(renderContext);
   const _isEditor = isEditor(renderContext);
+
   const styles: Styles = {
+    ".brz &&": {
+      standart: _isView
+        ? ["cssStyleSizeWidth", "cssStyleBorderRadius"]
+        : ["cssStyleSizeWidth"]
+    },
     ".brz &&:hover": {
       standart: _isView
-        ? [
-            "cssStyleSizeWidth",
-            "cssStyleBorder",
-            "cssStyleBorderRadius",
-            "cssStyleBgColor",
-            "cssStyleBoxShadow"
-          ]
-        : ["cssStyleSizeWidth"],
+        ? ["cssStyleBorder", "cssStyleBgColor", "cssStyleBoxShadow"]
+        : [],
       interval: [
         "cssStyleHoverTransition",
         "cssStylePropertyHoverTransitionTransform"
       ]
     },
+    ".brz && .brz-video-playlist__container": {
+      standart: _isEditor ? ["cssStyleBorderRadius"] : []
+    },
     ".brz &&:hover .brz-video-playlist__container": {
       standart: _isEditor
-        ? ["cssStyleBorder", "cssStyleBorderRadius", "cssStyleBgColor"]
+        ? ["cssStyleBorder", "cssStyleBgColor"]
         : ["cssStyleBgColor"],
       interval: [
         "cssStyleHoverTransition",
         "cssStylePropertyHoverTransitionTransform"
       ]
     },
-    ".brz &&:hover .brz-video-playlist-sidebar": {
+    ".brz && .brz-video-playlist-sidebar": {
       standart: ["cssStyleDisplayFlex"]
     },
+    ".brz &&:before": {
+      standart: ["cssStyleBorderRadius"]
+    },
     ".brz &&:hover:before": {
-      standart: ["cssStyleBoxShadow", "cssStyleBorderRadius"],
+      standart: ["cssStyleBoxShadow"],
       interval: [
         "cssStyleHoverTransition",
         "cssStylePropertyHoverTransitionTransform"
@@ -84,7 +91,7 @@ export function styleContents(
           "cssStyleElementVideoPlaylistBorderItemActive"
         ]
       },
-    ".brz &&:hover .brz-video-playlist-video-item": {
+    ".brz && .brz-video-playlist-video-item": {
       standart: [
         "cssStylePaddingFourFields",
         "cssStyleMargin",
@@ -139,20 +146,22 @@ export function styleContents(
       {
         standart: ["cssStyleElementVideoPlaylistItemSubtitleActiveColor"]
       },
-    ".brz &&:hover .brz-video-playlist-video-elem": {
+    ".brz && .brz-video-playlist-video-elem": {
       standart: ["cssStyleElementVideoPlaylistImageSize"]
     },
     ".brz &&:hover .brz-iframe, && .brz-video-playlist__cover:before, .brz && .brz-video-playlist-video-elem":
       { standart: ["cssStyleFilter"] },
+    ".brz && .brz-video-playlist__cover .brz-video-playlist__cover-icon": {
+      standart: [
+        "cssStyleElementVideoIconFontSize",
+        "cssStyleElementVideoIconWidth",
+        "cssStyleElementVideoIconHeight",
+        "cssStyleDisplayFlex"
+      ]
+    },
     ".brz &&:hover .brz-video-playlist__cover .brz-video-playlist__cover-icon":
       {
-        standart: [
-          "cssStyleElementVideoIconFontSize",
-          "cssStyleElementVideoIconWidth",
-          "cssStyleElementVideoIconHeight",
-          "cssStyleBgIconCoverColor",
-          "cssStyleDisplayFlex"
-        ],
+        standart: ["cssStyleBgIconCoverColor"],
         interval: [
           "cssStyleHoverTransition",
           "cssStylePropertyHoverTransitionTransform"
@@ -172,7 +181,7 @@ export function styleContents(
         "cssStylePropertyHoverTransitionTransform"
       ]
     },
-    ".brz && .brz-video-custom-video-controls > .brz-video-custom-controls > .brz-video-custom-current-time:hover":
+    ".brz && .brz-video-custom-video-controls > .brz-video-custom-controls > .brz-video-custom-current-time:hover, .brz && .brz-video-custom-video-controls > .brz-video-custom-controls > .brz-video-custom-total-time:hover, .brz && .brz-video-custom-video-controls > .brz-video-custom-play-pause-btn > .brz-video-custom-play:hover, .brz && .brz-video-custom-video-controls > .brz-video-custom-play-pause-btn > .brz-video-custom-pause:hover, .brz && .brz-video-custom-video-controls > .brz-video-custom-volume .brz-video-custom-mute:hover, .brz && .brz-video-custom-video-controls > .brz-video-custom-volume .brz-video-custom-fullscreen-icon:hover, .brz && .brz-video-custom-video-controls > .brz-video-custom-volume .brz-video-custom-unmute:hover":
       {
         standart: ["cssStyleVideoIconControls"],
         interval: [
@@ -180,71 +189,11 @@ export function styleContents(
           "cssStylePropertyHoverTransitionTransform"
         ]
       },
-    ".brz && .brz-video-custom-video-controls > .brz-video-custom-controls > .brz-video-custom-total-time:hover":
-      {
-        standart: ["cssStyleVideoIconControls"],
-        interval: [
-          "cssStyleHoverTransition",
-          "cssStylePropertyHoverTransitionTransform"
-        ]
-      },
-    ".brz && .brz-video-custom-video-controls > .brz-video-custom-play-pause-btn > .brz-video-custom-play:hover":
-      {
-        standart: [
-          "cssStyleVideoIconControls",
-          "cssStyleElementVideoControlsIconFontSize"
-        ],
-        interval: [
-          "cssStyleHoverTransition",
-          "cssStylePropertyHoverTransitionTransform"
-        ]
-      },
-    ".brz && .brz-video-custom-video-controls > .brz-video-custom-play-pause-btn > .brz-video-custom-pause:hover":
-      {
-        standart: [
-          "cssStyleVideoIconControls",
-          "cssStyleElementVideoControlsIconFontSize"
-        ],
-        interval: [
-          "cssStyleHoverTransition",
-          "cssStylePropertyHoverTransitionTransform"
-        ]
-      },
-    ".brz && .brz-video-custom-video-controls > .brz-video-custom-volume .brz-video-custom-mute:hover":
-      {
-        standart: [
-          "cssStyleVideoIconControls",
-          "cssStyleElementVideoControlsIconFontSize"
-        ],
-        interval: [
-          "cssStyleHoverTransition",
-          "cssStylePropertyHoverTransitionTransform"
-        ]
-      },
-    ".brz && .brz-video-custom-video-controls > .brz-video-custom-volume .brz-video-custom-fullscreen-icon:hover":
-      {
-        standart: [
-          "cssStyleVideoIconControls",
-          "cssStyleElementVideoControlsIconFontSize"
-        ],
-        interval: [
-          "cssStyleHoverTransition",
-          "cssStylePropertyHoverTransitionTransform"
-        ]
-      },
-    ".brz && .brz-video-custom-video-controls > .brz-video-custom-volume .brz-video-custom-unmute:hover":
-      {
-        standart: [
-          "cssStyleVideoIconControls",
-          "cssStyleElementVideoControlsIconFontSize"
-        ],
-        interval: [
-          "cssStyleHoverTransition",
-          "cssStylePropertyHoverTransitionTransform"
-        ]
-      },
+    ".brz && .brz-video-custom-slider:before": {
+      standart: ["cssStyleBorderRadius"]
+    },
     ".brz && .brz-video-custom-slider:hover:before": {
-      standart: ["cssStyleVideoSlider", "cssStyleBorderRadius"],
+      standart: ["cssStyleVideoSlider"],
       interval: [
         "cssStyleHoverTransition",
         "cssStylePropertyHoverTransitionTransform"
@@ -253,13 +202,12 @@ export function styleContents(
     ".brz && .brz-video-custom-slider:hover .brz-video-custom-progress": {
       standart: ["cssStyleVideoSlider"],
       interval: [
-        "cssStyleVideoSlider",
+        "cssStyleHoverTransition",
         "cssStylePropertyHoverTransitionTransform"
       ]
     },
-    ".brz && .brz-video-custom-video-controls:hover": {
+    ".brz && .brz-video-custom-video-controls": {
       standart: [
-        "cssStyleVideoControlsBg",
         "cssStyleElementVideoPlaylistControlsVideoTypography2FontFamily",
         "cssStyleElementVideoPlaylistControlsVideoTypography2FontSize",
         "cssStyleElementVideoPlaylistControlsVideoTypography2LineHeight",
@@ -267,7 +215,10 @@ export function styleContents(
         "cssStyleElementVideoPlaylistControlsVideoTypography2LetterSpacing",
         "cssStyleElementVideoPlaylistControlsVideoTypography2FontVariation",
         "cssStyleElementVideoPlaylistControlsVideoTextTransform"
-      ],
+      ]
+    },
+    ".brz && .brz-video-custom-video-controls:hover": {
+      standart: ["cssStyleVideoControlsBg"],
       interval: [
         "cssStyleHoverTransition",
         "cssStylePropertyHoverTransitionTransform"
@@ -281,15 +232,17 @@ export function styleCover(
   data: DynamicStylesProps<ElementModel>
 ): OutputStyle {
   const styles: Styles = {
-    ".brz &&:hover .brz-video-playlist__cover": {
+    ".brz && .brz-video-playlist__cover": {
       standart: ["cssStyleDisplayFlex"]
     },
-    ".brz &&:hover .brz-video-playlist__cover::before": {
+    ".brz && .brz-video-playlist__cover::before": {
       standart: [
         "cssStyleElementVideoCoverSrc",
-        "cssStyleElementVideoCoverPosition",
-        "cssStyleFilter"
-      ],
+        "cssStyleElementVideoCoverPosition"
+      ]
+    },
+    ".brz &&:hover .brz-video-playlist__cover::before": {
+      standart: ["cssStyleFilter"],
       interval: [
         "cssStyleHoverTransition",
         "cssStylePropertyHoverTransitionTransform"

@@ -1,5 +1,4 @@
 import { noop } from "es-toolkit";
-import { Config } from "visual/global/Config";
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
 import {
   ConfigCommon,
@@ -95,7 +94,8 @@ export const configCommon: ConfigCommon = {
   container: {
     id: 545
   },
-  onUpdate: noop
+  onUpdate: noop,
+  onCompile: noop
 };
 
 interface Resolve {
@@ -955,7 +955,7 @@ describe("testing Cloud getAllowedGBIds", () => {
     entityType: "collectionItem/1",
     entityValues: ["1"]
   };
-  const config: Config = {
+  const config = {
     ...configCommon,
     platform: "cms",
     user: {
@@ -963,7 +963,6 @@ describe("testing Cloud getAllowedGBIds", () => {
       role: "admin" as const,
       isGuest: false
     },
-    // @ts-expect-error: CMS
     cms: cmsCommon,
     urls: urlsCommon,
     project: {
@@ -1601,20 +1600,19 @@ describe("testing Cloud Customer getAllowedGBIds", () => {
     entityValues: ["1"]
   };
 
-  const config: Config = {
+  const config = {
     ...configCommon,
     platform: "cms",
     page: {
-      // @ts-expect-error: Uniq id
       id: "" as const,
       isProtected: false,
       isResetPassPage: false,
-      provider: "customers"
+      provider: "customers" as const
     },
     availableRoles: [{ role: "role-1", name: "admin" }],
     user: {
       isAuthorized: false,
-      role: "admin",
+      role: "admin" as const,
       isGuest: false
     },
     cms: cmsCommon,

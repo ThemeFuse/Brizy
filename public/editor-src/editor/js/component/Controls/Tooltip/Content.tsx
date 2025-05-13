@@ -1,9 +1,9 @@
 import classnames from "classnames";
 import React, { CSSProperties, ReactElement, ReactNode } from "react";
-import { ReactReduxContext } from "react-redux";
 import { Popper } from "react-popper";
-import { getPosition as getToolbarPosition } from "visual/component/Toolbar/state";
+import { ReactReduxContext } from "react-redux";
 import { ToolbarItemsInstance } from "visual/component/Toolbar/ToolbarItems";
+import { getPosition as getToolbarPosition } from "visual/component/Toolbar/state";
 import { deviceModeSelector } from "visual/redux/selectors";
 import { WithClassName } from "visual/types/attributes";
 import { clamp } from "visual/utils/math";
@@ -77,6 +77,7 @@ export class TooltipContent extends React.Component<Props, State> {
   popperUpdateFunctionRef = React.createRef<VoidFunction>();
 
   static contextType = ReactReduxContext;
+  declare context: React.ContextType<typeof ReactReduxContext>;
 
   constructor(props: Props) {
     super(props);
@@ -135,18 +136,20 @@ export class TooltipContent extends React.Component<Props, State> {
     ) {
       return;
     }
-    const viewportWidth = document.documentElement.clientWidth;
-    const viewportHeight = document.documentElement.clientHeight;
-    const pageScroll = document.documentElement.scrollTop;
+
+    const tooltipNode = this.contentRef.current;
+    const doc = tooltipNode.ownerDocument;
+    const viewportWidth = doc.documentElement.clientWidth;
+    const viewportHeight = doc.documentElement.clientHeight;
+    const pageScroll = doc.documentElement.scrollTop;
     // const pageHeight = document.documentElement.scrollHeight;
     const pageHasOverflowHidden =
-      document.documentElement.classList.contains("brz-ow-hidden");
+      doc.documentElement.classList.contains("brz-ow-hidden");
 
     const toolbarPosition = getToolbarPosition();
 
     const toolbarRect = toolbarNode.getBoundingClientRect();
 
-    const tooltipNode = this.contentRef.current;
     const tooltipRect = tooltipNode.getBoundingClientRect();
 
     // Toolbar

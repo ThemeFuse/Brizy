@@ -10,7 +10,7 @@ import { DeviceMode } from "visual/types";
 import { t } from "visual/utils/i18n";
 import { FCC } from "visual/utils/react/types";
 
-const DeviceModeMobile = {
+const DeviceModeMobile = () => ({
   id: "mobile",
   type: "link",
   label: t("Mobile"),
@@ -38,9 +38,9 @@ const DeviceModeMobile = {
       }
     };
   }
-};
+});
 
-const DeviceModeTablet = {
+const DeviceModeTablet = () => ({
   id: "tablet",
   type: "link",
   label: t("Tablet"),
@@ -68,9 +68,9 @@ const DeviceModeTablet = {
       }
     };
   }
-};
+});
 
-const DeviceModeDesktop = {
+const DeviceModeDesktop = () => ({
   id: "desktop",
   type: "link",
   label: t("Desktop"),
@@ -98,11 +98,11 @@ const DeviceModeDesktop = {
       }
     };
   }
-};
-const DeviceModeOptions = [
-  DeviceModeDesktop,
-  DeviceModeTablet,
-  DeviceModeMobile
+});
+const DeviceModeOptions = () => [
+  DeviceModeDesktop(),
+  DeviceModeTablet(),
+  DeviceModeMobile()
 ];
 
 const plusShortcuts = [
@@ -131,7 +131,8 @@ const WithHotKeys: FCC = ({ children }) => {
     (e: React.KeyboardEvent, { keyName }: { keyName: string }) => {
       e.preventDefault();
       const deviceMode = deviceModeSelector(store.getState());
-      let index = DeviceModeOptions.findIndex(({ id }) => id === deviceMode);
+      const deviceModeOptions = DeviceModeOptions();
+      let index = deviceModeOptions.findIndex(({ id }) => id === deviceMode);
 
       if (plusShortcuts.includes(keyName)) {
         index--;
@@ -139,15 +140,15 @@ const WithHotKeys: FCC = ({ children }) => {
         index++;
       }
 
-      if (index === DeviceModeOptions.length) {
+      if (index === deviceModeOptions.length) {
         index = 0;
       } else if (index < 0) {
-        index = DeviceModeOptions.length - 1;
+        index = deviceModeOptions.length - 1;
       }
 
-      dispatch(setDeviceMode(DeviceModeOptions[index].id as DeviceMode));
+      dispatch(setDeviceMode(deviceModeOptions[index].id as DeviceMode));
       setTimeout(() => {
-        UIEvents.emit("deviceMode.change", DeviceModeOptions[index].id);
+        UIEvents.emit("deviceMode.change", deviceModeOptions[index].id);
       }, 300);
     },
     [store, dispatch]
@@ -174,7 +175,7 @@ export function getDevicesModes({ disabled = false }: { disabled: boolean }) {
     id: LeftSidebarOptionsIds.deviceMode,
     type: "popover",
     className: "brz-ed-sidebar__popover--deviceMode",
-    options: DeviceModeOptions,
+    options: DeviceModeOptions(),
     render: DevicesRender,
     disabled,
 

@@ -23,12 +23,14 @@ export function cssStyleElementVideoPlaylistSubTitleVideoTypography2FontFamily({
   v,
   device,
   store,
+  getConfig,
   renderContext
 }: CSSValue & WithRenderContext): string {
   return cssStyleTypography2FontFamily({
     v,
     device,
     store,
+    getConfig,
     renderContext,
     prefix: "subTitle"
   });
@@ -37,20 +39,29 @@ export function cssStyleElementVideoPlaylistSubTitleVideoTypography2FontFamily({
 export function cssStyleElementVideoPlaylistSubTitleVideoTypography2FontSize({
   v,
   device,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
-  return cssStyleTypography2FontSize({ v, device, store, prefix: "subTitle" });
+  return cssStyleTypography2FontSize({
+    v,
+    device,
+    store,
+    getConfig,
+    prefix: "subTitle"
+  });
 }
 
 export function cssStyleElementVideoPlaylistSubTitleVideoTypography2LineHeight({
   v,
   device,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
   return cssStyleTypography2LineHeight({
     v,
     device,
     store,
+    getConfig,
     prefix: "subTitle"
   });
 }
@@ -58,12 +69,14 @@ export function cssStyleElementVideoPlaylistSubTitleVideoTypography2LineHeight({
 export function cssStyleElementVideoPlaylistSubTitleVideoTypography2FontWeight({
   v,
   device,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
   return cssStyleTypography2FontWeight({
     v,
     device,
     store,
+    getConfig,
     prefix: "subTitle"
   });
 }
@@ -72,13 +85,15 @@ export function cssStyleElementVideoPlaylistSubTitleVideoTypography2LetterSpacin
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
   return cssStyleTypography2LetterSpacing({
     v,
     device,
     state,
     store,
+    getConfig,
     prefix: "subTitle"
   });
 }
@@ -86,12 +101,14 @@ export function cssStyleElementVideoPlaylistSubTitleVideoTypography2LetterSpacin
 export function cssStyleElementVideoPlaylistSubTitleVideoTypography2FontVariation({
   v,
   device,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
   return cssStyleTypography2FontVariation({
     v,
     device,
     store,
+    getConfig,
     prefix: "subTitle"
   });
 }
@@ -100,13 +117,15 @@ export function cssStyleElementVideoPlaylistSubTitleVideoTextTransform({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
   return cssStyleTextTransforms({
     v,
     device,
     state,
     store,
+    getConfig,
     prefix: "subTitle"
   });
 }
@@ -115,12 +134,14 @@ export function cssStyleElementVideoPlaylistControlsVideoTypography2FontFamily({
   v,
   device,
   store,
+  getConfig,
   renderContext
 }: CSSValue & WithRenderContext): string {
   return cssStyleTypography2FontFamily({
     v,
     device,
     store,
+    getConfig,
     prefix: "controls",
     renderContext
   });
@@ -129,20 +150,29 @@ export function cssStyleElementVideoPlaylistControlsVideoTypography2FontFamily({
 export function cssStyleElementVideoPlaylistControlsVideoTypography2FontSize({
   v,
   device,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
-  return cssStyleTypography2FontSize({ v, device, store, prefix: "controls" });
+  return cssStyleTypography2FontSize({
+    v,
+    device,
+    store,
+    getConfig,
+    prefix: "controls"
+  });
 }
 
 export function cssStyleElementVideoPlaylistControlsVideoTypography2LineHeight({
   v,
   device,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
   return cssStyleTypography2LineHeight({
     v,
     device,
     store,
+    getConfig,
     prefix: "controls"
   });
 }
@@ -150,12 +180,14 @@ export function cssStyleElementVideoPlaylistControlsVideoTypography2LineHeight({
 export function cssStyleElementVideoPlaylistControlsVideoTypography2FontWeight({
   v,
   device,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
   return cssStyleTypography2FontWeight({
     v,
     device,
     store,
+    getConfig,
     prefix: "controls"
   });
 }
@@ -164,13 +196,15 @@ export function cssStyleElementVideoPlaylistControlsVideoTypography2LetterSpacin
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
   return cssStyleTypography2LetterSpacing({
     v,
     device,
     state,
     store,
+    getConfig,
     prefix: "controls"
   });
 }
@@ -178,12 +212,14 @@ export function cssStyleElementVideoPlaylistControlsVideoTypography2LetterSpacin
 export function cssStyleElementVideoPlaylistControlsVideoTypography2FontVariation({
   v,
   device,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
   return cssStyleTypography2FontVariation({
     v,
     device,
     store,
+    getConfig,
     prefix: "controls"
   });
 }
@@ -192,13 +228,15 @@ export function cssStyleElementVideoPlaylistControlsVideoTextTransform({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
   return cssStyleTextTransforms({
     v,
     device,
     state,
     store,
+    getConfig,
     prefix: "controls"
   });
 }
@@ -207,13 +245,15 @@ export function cssStyleSizeWidthPixel({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
   return cssStyleSizeWidthPrefix({
     v,
     device,
     state,
     store,
+    getConfig,
     prefix: "widthSidebar"
   });
 }
@@ -235,9 +275,10 @@ export function cssStyleElementVideoPlaylistBorderItem({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
-  return cssStyleBorder({ v, device, state, store, prefix: "item" });
+  return cssStyleBorder({ v, device, state, store, getConfig, prefix: "item" });
 }
 
 export function cssStyleSizeWidthVideoBlock({ v, device }: CSSValue): string {
@@ -263,63 +304,113 @@ export function cssStyleCoverIconColor({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
-  return cssStyleColor({ v, device, state, store, prefix: "iconColor" });
+  return cssStyleColor({
+    v,
+    device,
+    state,
+    store,
+    getConfig,
+    prefix: "iconColor"
+  });
 }
 
 export function cssStyleCoverSubTitleColor({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
-  return cssStyleColor({ v, device, state, store, prefix: "subTitleColor" });
+  return cssStyleColor({
+    v,
+    device,
+    state,
+    store,
+    getConfig,
+    prefix: "subTitleColor"
+  });
 }
 
 export function cssStyleBgIconCoverColor({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
-  return cssStyleBgColor({ v, device, state, store, prefix: "iconBg" });
+  return cssStyleBgColor({
+    v,
+    device,
+    state,
+    store,
+    getConfig,
+    prefix: "iconBg"
+  });
 }
 
 export function cssStyleElementVideoPlaylistItemActiveBg({
   v,
   device,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
-  return cssStyleBgColor({ v, device, state: "active", store, prefix: "bg" });
+  return cssStyleBgColor({
+    v,
+    device,
+    state: "active",
+    store,
+    getConfig,
+    prefix: "bg"
+  });
 }
 
 export function cssStyleElementVideoPlaylistBorderItemActive({
   v,
   device,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
-  return cssStyleBorder({ v, device, state: "active", store, prefix: "item" });
+  return cssStyleBorder({
+    v,
+    device,
+    state: "active",
+    store,
+    getConfig,
+    prefix: "item"
+  });
 }
 
 export function cssStyleElementVideoPlaylistItemActiveColor({
   v,
   device,
-  store
-}: CSSValue): string {
-  return cssStyleColor({ v, device, state: "active", store, prefix: "color" });
-}
-
-export function cssStyleElementVideoPlaylistItemSubtitleActiveColor({
-  v,
-  device,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
   return cssStyleColor({
     v,
     device,
     state: "active",
     store,
+    getConfig,
+    prefix: "color"
+  });
+}
+
+export function cssStyleElementVideoPlaylistItemSubtitleActiveColor({
+  v,
+  device,
+  store,
+  getConfig
+}: CSSValue): string {
+  return cssStyleColor({
+    v,
+    device,
+    state: "active",
+    store,
+    getConfig,
     prefix: "subTitleColor"
   });
 }
@@ -356,22 +447,32 @@ export function cssStyleVideoControlsBg({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
-  return cssStyleBgColor({ v, device, state, store, prefix: "controlsBg" });
+  return cssStyleBgColor({
+    v,
+    device,
+    state,
+    store,
+    getConfig,
+    prefix: "controlsBg"
+  });
 }
 
 export function cssStyleVideoIconControls({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
   return cssStyleColor({
     v,
     device,
     state,
     store,
+    getConfig,
     prefix: "iconControlsColor"
   });
 }
@@ -380,22 +481,32 @@ export function cssStyleVideoSlider({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
-  return cssStyleBgColor({ v, device, state, store, prefix: "controlsSlider" });
+  return cssStyleBgColor({
+    v,
+    device,
+    state,
+    store,
+    getConfig,
+    prefix: "controlsSlider"
+  });
 }
 
 export function cssStyleElementVideoControlsIconFontSize({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
   return cssStyleSizeFontSize({
     v,
     device,
     state,
     store,
+    getConfig,
     prefix: "controlsIconCustom"
   });
 }

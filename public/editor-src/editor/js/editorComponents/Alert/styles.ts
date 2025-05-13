@@ -1,34 +1,36 @@
 import { isView } from "visual/providers/RenderProvider";
 import { DynamicStylesProps } from "visual/types";
 import { renderStyles } from "visual/utils/cssStyle";
-import { OutputStyle } from "visual/utils/cssStyle/types";
+import { OutputStyle, Styles } from "visual/utils/cssStyle/types";
 
 export function style<T>(data: DynamicStylesProps<T>): OutputStyle {
   const { renderContext } = data.contexts;
+
   const IS_VIEW = isView(renderContext);
-  const styles: {
-    [k: string]: {
-      interval?: string[];
-      standart?: string[];
-    };
-  } = {
+
+  const styles: Styles = {
+    ".brz &&": {
+      standart: ["cssStyleSizeWidth", "cssStyleBorderRadius"]
+    },
     ".brz &&:hover": {
       standart: [
-        "cssStyleSizeWidth",
         "cssStyleBorder",
         "cssStyleBgColor",
         "cssStyleAlertContainerShadow",
-        "cssStyleBorderRadius",
-        // it is necessary because in preview we don't have <BoxResizer/>
+        // in preview we don't have <BoxResizer/>
         ...(IS_VIEW ? ["cssStyleAlertPadding"] : [])
       ],
       interval: ["cssStyleHoverTransition"]
     },
-    ".brz && .brz-ed-box__resizer": {
-      // it is necessary for the resizer points to stay at the start and end of alert
-      standart: ["cssStyleAlertPadding"]
-    },
-    ".brz &&:hover .brz-alert-title": {
+    ...(!IS_VIEW
+      ? {
+          ".brz && .brz-ed-box__resizer": {
+            // it is necessary for the resizer points to stay at the start and end of alert
+            standart: ["cssStyleAlertPadding"]
+          }
+        }
+      : {}),
+    ".brz && .brz-alert-title": {
       standart: [
         "cssStyleElementAlertTitleFontFamily",
         "cssStyleElementAlertTitleFontSize",
@@ -37,14 +39,18 @@ export function style<T>(data: DynamicStylesProps<T>): OutputStyle {
         "cssStyleElementAlertTitleLetterSpacing",
         "cssStyleElementAlertTitleFontVariation",
         "cssStyleElementAlertTitleTextTransform",
-        "cssStyleElementAlertTitleColor",
         "cssStyleDisplayBlock",
-        "cssStyleElementAlertTitleShadow",
         "cssStyleElementAlertTitleAlign"
+      ]
+    },
+    ".brz &&:hover .brz-alert-title": {
+      standart: [
+        "cssStyleElementAlertTitleColor",
+        "cssStyleElementAlertTitleShadow"
       ],
       interval: ["cssStyleHoverTransition"]
     },
-    ".brz &&:hover .brz-alert-description": {
+    ".brz && .brz-alert-description": {
       standart: [
         "cssStyleElementAlertDescriptionFontFamily",
         "cssStyleElementAlertDescriptionFontSize",
@@ -53,21 +59,29 @@ export function style<T>(data: DynamicStylesProps<T>): OutputStyle {
         "cssStyleElementAlertDescriptionLetterSpacing",
         "cssStyleElementAlertDescriptionFontVariation",
         "cssStyleElementAlertDescriptionTextTransform",
-        "cssStyleElementAlertDescriptionColor",
         "cssStyleDisplayBlock",
-        "cssStyleElementAlertDescriptionShadow",
         "cssStyleElementAlertDescriptionAlign",
         "cssStyleElementAlertDescriptionVisibility",
         "cssStyleElementAlertDescriptionGap"
+      ]
+    },
+    ".brz &&:hover .brz-alert-description": {
+      standart: [
+        "cssStyleElementAlertDescriptionColor",
+        "cssStyleElementAlertDescriptionShadow"
       ],
       interval: ["cssStyleHoverTransition"]
     },
-    ".brz && .brz-alert-close:hover": {
+    ".brz && .brz-alert-close": {
       standart: [
         "cssStyleElementAlertCloseButtonVisibility",
         "cssStyleElementAlertCloseButtonSize",
         "cssStyleElementAlertCloseButtonPosition",
-        "cssStyleElementAlertCloseButtonBorderRadius",
+        "cssStyleElementAlertCloseButtonBorderRadius"
+      ]
+    },
+    ".brz && .brz-alert-close:hover": {
+      standart: [
         "cssStyleElementAlertCloseButtonColor",
         "cssStyleElementAlertCloseButtonBgColor",
         "cssStyleBoxShadow"

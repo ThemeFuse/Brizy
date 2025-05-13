@@ -1,6 +1,6 @@
 import type { OptionName, OptionValue } from "visual/component/Options/types";
+import { GetConfig } from "visual/providers/ConfigProvider/types";
 import { RenderType } from "visual/providers/RenderProvider";
-import { configSelector } from "visual/redux/selectors";
 import { Store } from "visual/redux/store";
 import { BreakpointsNames } from "visual/utils/breakpoints/types";
 import { getTypographyValues } from "visual/utils/options/Typography/utils";
@@ -18,13 +18,15 @@ export const normalizeOptionModel = <T extends OptionName = OptionName>({
   optionModel,
   extraData,
   store,
-  renderContext
+  renderContext,
+  getConfig
 }: {
   type: T;
   optionModel: OptionValue<T>;
   store: Store;
   extraData: { device: BreakpointsNames; state: State };
   renderContext: RenderType;
+  getConfig: GetConfig;
 }): OptionValue<T> => {
   if (type === "typography") {
     const { device, state } = extraData;
@@ -34,7 +36,8 @@ export const normalizeOptionModel = <T extends OptionName = OptionName>({
       state,
       store,
       value: optionModel as OptionValue<"typography">,
-      renderContext
+      renderContext,
+      getConfig
     }) as OptionValue<T>;
   }
 
@@ -52,7 +55,7 @@ export const getCSSByOptionType = <
   data: CSSValue & { id: string };
   renderContext: RenderType;
 }): MValue<string> => {
-  const { id, state, device, v, store } = data;
+  const { id, state, device, v, store, getConfig } = data;
 
   const optionModel = getOptionModel<T>({
     type,
@@ -64,7 +67,7 @@ export const getCSSByOptionType = <
   });
 
   const optionMeta = getOptionMeta(type, optionModel);
-  const config = configSelector(store.getState());
+  const config = getConfig();
 
   return toCSS(
     type,
@@ -75,7 +78,8 @@ export const getCSSByOptionType = <
       optionModel,
       store,
       extraData: { device, state },
-      renderContext
+      renderContext,
+      getConfig
     }),
     meta: optionMeta
   });

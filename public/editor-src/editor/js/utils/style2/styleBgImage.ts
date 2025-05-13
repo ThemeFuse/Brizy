@@ -1,12 +1,11 @@
 import { defaultCrop } from "visual/global/Config/types/configs/common";
-import { configSelector } from "visual/redux/selectors";
 import { getImageUrl } from "visual/utils/image";
 import {
   UNSPLASH_BG_IMAGE_WIDTH,
   isUnsplashImage
 } from "visual/utils/image/utils";
 import { defaultValueValue } from "visual/utils/onChange";
-import { capByPrefix } from "visual/utils/string";
+import { camelCase, capByPrefix } from "visual/utils/string";
 import { styleState } from "visual/utils/style";
 import { CSSValue } from "./types";
 
@@ -14,14 +13,14 @@ export function styleBgImage({
   v,
   device,
   state,
-  store,
+  getConfig,
   prefix = ""
 }: CSSValue): string {
   const isHover = styleState({ v, state });
   const dvv = (key: string) => defaultValueValue({ v, key, device, state });
   const dvvHover = (key: string) =>
     defaultValueValue({ v, key, device, state: "hover" });
-  const config = configSelector(store.getState());
+  const config = getConfig();
 
   const media = dvv("media");
   const bgImageSrc = dvv(capByPrefix(prefix, "bgImageSrc"));
@@ -47,7 +46,7 @@ export function styleBgImage({
   const hover =
     hoverMedia === "image" && (hoverBgImageSrc !== "" || hoverBgPopulation)
       ? hoverBgPopulation
-        ? `var(--brz-background-image)`
+        ? `var(--brz-hoverBackground-image)`
         : `url("${getImageUrl(
             {
               uid: hoverBgImageSrc,
@@ -60,10 +59,16 @@ export function styleBgImage({
           )}")`
       : "none";
 
+  const devicePrefix = device === "desktop" ? "" : device;
+  const hoverPrefix = device === "desktop" && state === "hover" ? "hover" : "";
+  const bgPrefix = camelCase([hoverPrefix, devicePrefix, "background"]);
+
+  const cssVar = `var(--brz-${bgPrefix}-image)`;
+
   const normal =
     media === "image" && (bgImageSrc !== "" || bgPopulation)
       ? bgPopulation
-        ? `var(--brz-background-image)`
+        ? cssVar
         : `url("${getImageUrl(
             {
               uid: bgImageSrc,
@@ -83,11 +88,11 @@ export function styleExportBgImage({
   v,
   device,
   state,
-  store,
+  getConfig,
   prefix = ""
 }: CSSValue): string {
   const dvv = (key: string) => defaultValueValue({ v, key, device, state });
-  const config = configSelector(store.getState());
+  const config = getConfig();
 
   const media = dvv("media");
   const bgImageSrc = dvv(capByPrefix(prefix, "bgImageSrc"));
@@ -99,9 +104,14 @@ export function styleExportBgImage({
     ? { ...defaultCrop, cW: UNSPLASH_BG_IMAGE_WIDTH }
     : undefined;
 
+  const devicePrefix = device === "desktop" ? "" : device;
+  const hoverPrefix = device === "desktop" && state === "hover" ? "hover" : "";
+  const bgPrefix = camelCase([hoverPrefix, devicePrefix, "background"]);
+  const cssVar = `var(--brz-${bgPrefix}-image)`;
+
   return media === "image" && (bgImageSrc !== "" || bgPopulation)
     ? bgPopulation
-      ? `var(--brz-background-image)`
+      ? cssVar
       : `url("${getImageUrl(
           {
             sizeType: bgSizeType,

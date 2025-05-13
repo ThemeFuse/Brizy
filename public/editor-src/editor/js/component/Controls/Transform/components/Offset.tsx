@@ -46,12 +46,12 @@ export const Offset: FCC<EffectProps<V>> = ({ value, onChange }) => {
   );
 
   const onChangeOffsetX = useCallback(
-    ({ number }) => onOffsetXChange(number),
+    ({ number }: { number: number }) => onOffsetXChange(number),
     [onOffsetXChange]
   );
 
   const onChangeOffsetY = useCallback(
-    ({ number }) => onOffsetYChange(number),
+    ({ number }: { number: number }) => onOffsetYChange(number),
     [onOffsetYChange]
   );
 

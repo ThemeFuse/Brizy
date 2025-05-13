@@ -5,10 +5,17 @@ import { keyToDCFallback2Key } from "visual/editorComponents/EditorComponent/Dyn
 import { inDevelopment } from "visual/editorComponents/EditorComponent/utils";
 import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
 
-export const bindPopulation = (option: ToolbarItemType): ToolbarItemType => {
+export const bindPopulation = (
+  option: ToolbarItemType,
+  parentOption?: ToolbarItemType
+): ToolbarItemType => {
   const { population, label, icon, helper, position, ...o } = option;
 
-  if (population === undefined || !inDevelopment(o.type)) {
+  if (
+    population === undefined ||
+    !inDevelopment(o.type) ||
+    parentOption?.type === "addable"
+  ) {
     return option;
   }
 

@@ -24,9 +24,16 @@ export function cssStyleElementVideoIconFontSize({
   v,
   device,
   state,
+  getConfig,
   store
 }: CSSValue): string {
-  const fontSize = styleElementVideoIconFontSize({ v, device, state, store });
+  const fontSize = styleElementVideoIconFontSize({
+    v,
+    device,
+    state,
+    getConfig,
+    store
+  });
 
   return fontSize === undefined ? "" : `font-size:${fontSize}px;`;
 }
@@ -35,27 +42,50 @@ export function cssStyleElementVideoIconWidth({
   v,
   device,
   state,
+  getConfig,
   store
 }: CSSValue): string {
-  return cssStyleSizeSize({ v, device, state, store, prefix: "icon" });
+  return cssStyleSizeSize({
+    v,
+    device,
+    state,
+    store,
+    getConfig,
+    prefix: "icon"
+  });
 }
 
 export function cssStyleElementVideoIconHeight({
   v,
   device,
   state,
+  getConfig,
   store
 }: CSSValue): string {
-  return cssStyleSizeSizeHeight({ v, device, state, store, prefix: "icon" });
+  return cssStyleSizeSizeHeight({
+    v,
+    device,
+    state,
+    store,
+    getConfig,
+    prefix: "icon"
+  });
 }
 
 export function cssStyleElementVideoCoverSrc({
   v,
   device,
   state,
+  getConfig,
   store
 }: CSSValue): string {
-  const coverSrc = styleElementVideoCoverSrc({ v, device, state, store });
+  const coverSrc = styleElementVideoCoverSrc({
+    v,
+    device,
+    state,
+    getConfig,
+    store
+  });
 
   return coverSrc ? `background-image:${coverSrc};` : "";
 }

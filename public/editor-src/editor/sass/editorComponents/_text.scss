@@ -51,7 +51,7 @@
 
   ul li,
   ol li {
-    margin-left: 1em;
+    margin-inline-start: 1em;
   }
 
   ol > li,
@@ -73,7 +73,7 @@
     content: "\2022";
     display: inline-block;
     min-width: 1em;
-    margin-left: -1em;
+    margin-inline-start: -1em;
   }
 
   // ordered list
@@ -84,7 +84,7 @@
   ol li.ql-indent-8:before {
     display: inline-block;
     min-width: 1em;
-    margin-left: -1em;
+    margin-inline-start: -1em;
   }
 
   ol li:before {
@@ -248,7 +248,7 @@
 
   ol,
   ul {
-    margin-left: 1em;
+    margin-inline-start: 1em;
   }
 
   ol ol,
@@ -427,6 +427,20 @@
   &.brz-population-mask__style {
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+  }
+}
+
+// Story rich text
+.brz-story .brz-rich-text {
+  ol, ul {
+    margin-left: 0;
+  }
+}
+
+.story-slider-dot .brz-rich-text {
+  ol, ul {
+    display: flex;
+    flex-direction: column;
   }
 }
 

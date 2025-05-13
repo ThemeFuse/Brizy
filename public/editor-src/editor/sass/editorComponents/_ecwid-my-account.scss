@@ -83,6 +83,22 @@
       .ec-cart__checkout .ec-cart__agreement .ec-link {
         display: block;
       }
+
+      .ec-confirmation {
+        .ec-cart__order {
+          .ec-cart__products {
+            .ec-cart__item {
+              .ec-cart-item-sum.ec-cart-item-sum--cta {
+                display: none !important;
+              }
+            }
+          }
+
+          .ec-confirmation__footer {
+            display: none;
+          }
+        }
+      }
     }
   }
 }

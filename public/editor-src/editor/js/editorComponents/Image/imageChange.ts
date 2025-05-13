@@ -2,6 +2,7 @@ import { mPipe, optional, pass } from "fp-utilities";
 import { ElementModel } from "visual/component/Elements/Types";
 import { EditorComponentContextValue } from "visual/editorComponents/EditorComponent/EditorComponentContext";
 import { DeviceMode } from "visual/types";
+import { isGIFExtension, isSVGExtension } from "visual/utils/image/utils";
 import * as Math from "visual/utils/math";
 import * as Num from "visual/utils/math/number";
 import { prop } from "visual/utils/object/get";
@@ -10,7 +11,9 @@ import { readWithParser } from "visual/utils/reader/readWithParser";
 import { is as isNoEmptyString } from "visual/utils/string/NoEmptyString";
 import * as Str from "visual/utils/string/specs";
 import { isUnit, Unit } from "./types";
+import { MValue } from "visual/utils/value";
 import {
+  HoverImagePatch,
   ImageDCPatch,
   ImagePatch,
   SizeTypePatch,
@@ -30,6 +33,7 @@ import { ImageDataSize } from "visual/global/Config/types/ImageSize";
 export interface Size {
   width: number;
   height: number;
+  hoverHeight?: number;
 }
 
 export interface Patch {
@@ -52,6 +56,11 @@ export interface Patch {
   mobileHeightSuffix: Unit | null;
 }
 
+interface HoverPatch {
+  hoverImageSrc: string;
+  hoverHeight: number;
+}
+
 export interface Value extends Size {
   imageExtension: string;
   size: number;
@@ -67,6 +76,16 @@ export interface Value extends Size {
   mobileHeight?: number;
   mobileWidthSuffix?: Unit;
   mobileHeightSuffix?: Unit;
+  hoverHeight?: number;
+  imageWidth: number;
+  imageHeight: number;
+}
+
+interface HoverValue extends Value {
+  imageWidth: number;
+  imageHeight: number;
+  width: number;
+  height: number;
 }
 
 export interface PatchSize {
@@ -85,6 +104,7 @@ export interface PatchDC {
   heightSuffix?: Unit;
   widthSuffix?: Unit;
   sizeType: string;
+  hoverHeight?: number;
 }
 
 export interface PatchUnit {
@@ -100,6 +120,7 @@ export interface PatchUnit {
   mobileHeight?: number;
   mobileWidthSuffix?: Unit;
   mobileHeightSuffix?: Unit;
+  hoverHeight?: number;
 }
 
 export interface ElementModelToValue extends ElementModel {
@@ -119,10 +140,16 @@ export interface ElementModelToValue extends ElementModel {
   mobileHeight: unknown | undefined;
   mobileWidthSuffix: unknown | undefined;
   mobileHeightSuffix: unknown | undefined;
+  hoverHeight: MValue<unknown>;
+  imageWidth: MValue<unknown>;
+  imageHeight: MValue<unknown>;
 }
 
 export const elementModelToValue = readWithParser<ElementModelToValue, Value>({
+  imageWidth: mPipe(prop("imageWidth"), Num.read),
+  imageHeight: mPipe(prop("imageHeight"), Num.read),
   height: mPipe(prop("height"), Num.read),
+  hoverHeight: optional(mPipe(prop("hoverHeight"), Num.read)),
   width: mPipe(prop("width"), Num.read),
   heightSuffix: mPipe(prop("heightSuffix"), pass(isUnit)),
   widthSuffix: mPipe(prop("widthSuffix"), pass(isUnit)),
@@ -228,6 +255,48 @@ export const patchOnImageChange = (
     tabletHeightSuffix: newTabletHeightSuffix,
     tabletWidth: newTabletWidth,
     tabletWidthSuffix: newTabletWidthSuffix
+  };
+};
+
+export const patchOnHoverImageChange = (
+  cW: number,
+  v: HoverValue,
+  wrapperSizes: Size,
+  hoverPatch: HoverImagePatch
+): HoverPatch => {
+  const { height: wrapperHeight } = wrapperSizes;
+  const {
+    hoverImageExtension,
+    hoverImageHeight,
+    hoverImageSrc,
+    hoverImageWidth
+  } = hoverPatch;
+  const { widthSuffix, heightSuffix, width, hoverHeight, size } = v;
+
+  const { height: newWrapperHeight } = calcWrapperSizes(
+    {
+      imageWidth: Num.read(hoverImageWidth) ?? 0,
+      imageHeight: Num.read(hoverImageHeight) ?? 0,
+      height: Num.read(hoverHeight) ?? 0,
+      widthSuffix,
+      heightSuffix,
+      width,
+      size
+    },
+    cW
+  );
+
+  const hoverH = hoverHeight || 100;
+  const newHoverCH =
+    isSVGExtension(hoverImageExtension) ||
+    isGIFExtension(hoverImageExtension) ||
+    heightSuffix === "%"
+      ? (wrapperHeight * hoverH) / newWrapperHeight
+      : wrapperHeight;
+
+  return {
+    hoverImageSrc: Str.read(hoverImageSrc) ?? "",
+    hoverHeight: Math.roundTo(newHoverCH, 2)
   };
 };
 

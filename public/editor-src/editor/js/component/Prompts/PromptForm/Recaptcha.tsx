@@ -10,12 +10,15 @@ class Recaptcha extends BaseIntegration {
   appsComponent = AppsComponent;
 
   async componentDidMount(): Promise<void> {
-    const { onLoading } = this.props;
+    const { config, onLoading } = this.props;
 
-    const { status, data: accounts } = await getAccounts({
-      group: "recaptcha",
-      services: "recaptcha"
-    });
+    const { status, data: accounts } = await getAccounts(
+      {
+        group: "recaptcha",
+        services: "recaptcha"
+      },
+      config
+    );
 
     const { Integrations } = await import("visual/config/integrations");
     this.appsData = Integrations.recaptcha;

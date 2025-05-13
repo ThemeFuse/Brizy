@@ -59,7 +59,7 @@ export function styleMmMenuClassName(v, menuItem, renderContext) {
 
 export function styleMegaMenu(data) {
   const styles = {
-    ".brz &&:hover": {
+    ".brz&&": {
       standart: ["cssStyleElementMegaMenuWidth"],
       interval: ["cssStyleElementMegaMenuOffsetTop"]
     }

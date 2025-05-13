@@ -126,32 +126,32 @@ $required: var(--required, $red-1);
 // & Tooltip (on alpha range pointer hover)
 $picker2__pointer-border: var(--picker2__pointer-border, $white);
 $picker2__pointer-box-shadow: var(
-  --picker2__pointer-box-shadow,
-  rgba($black, 0.5)
+    --picker2__pointer-box-shadow,
+    rgba($black, 0.5)
 );
 $picker2__pointer_tooltip-color: var(
-  --picker2__pointer_tooltip-color,
-  rgba($white, 0.85)
+    --picker2__pointer_tooltip-color,
+    rgba($white, 0.85)
 );
 $picker2__pointer_tooltip-bg: var(
-  --picker2__pointer_tooltip-bg,
-  rgba($black-1, 0.92)
+    --picker2__pointer_tooltip-bg,
+    rgba($black-1, 0.92)
 );
 $picker2__pointer_tooltip-box-shadow: var(
-  --picker2__pointer_tooltip-box-shadow,
-  rgba($black, 0.5)
+    --picker2__pointer_tooltip-box-shadow,
+    rgba($black, 0.5)
 );
 
 // Gradient Range
 $gradient__range__slider__pointer-border: var(
-  --gradient__range__slider__pointer-border,
-  $white
+    --gradient__range__slider__pointer-border,
+    $white
 );
 
 // Select & options collors
 $picker__select__option-box-shadow: var(
-  --picker__select__option-box-shadow,
-  rgba($black, 0.5)
+    --picker__select__option-box-shadow,
+    rgba($black, 0.5)
 );
 
 // Bottom Color pallete & config Icon
@@ -168,8 +168,8 @@ $picker__input-border: var(--tertiary-white, rgba($white, 0.1));
 
 // Border size input icon
 $border__width__type__icon-color: var(
-  --border__width__type__icon-color,
-  $gray-2
+    --border__width__type__icon-color,
+    $gray-2
 );
 $border__width__type__icon-color--active: var(--active-color, $blue-22);
 
@@ -195,8 +195,8 @@ $popover__tabs_left-color--active: var(--active-color, $blue-21);
 $popover__tabs_left-bg: var(--popover__tabs_left-bg, rgba($blue-24, 0.92));
 $popover__tabs_left-bg--active: var(--secondary-dark, rgba($black-1, 0.92));
 $popover__tabs_left-box-shadow: var(
-  --popover__tabs_left-box-shadow,
-  rgba($black, 0.5)
+    --popover__tabs_left-box-shadow,
+    rgba($black, 0.5)
 );
 
 /// Control Colors
@@ -219,8 +219,8 @@ $control__popup_light-active: var(--active-color, $blue-21);
 
 // Editor Controls(select, input, stepper, etc...)
 $control__dropdown-box-shadow: var(
-  --control__dropdown-box-shadow,
-  rgba($black, 0.1)
+    --control__dropdown-box-shadow,
+    rgba($black, 0.1)
 );
 $control-font-size: 13px;
 $control__arrow-size: 8px;
@@ -251,11 +251,13 @@ $desktop-paddings: 48px;
 // z indexes map
 // $z-indexes is used in functions/_z-index.scss
 $z-indexes: (
+  "sidebar-addable__drag-overlay":1200,
   "select-portal": 1110,
   "brz-ed-fixed": 1100,
   "popup-overlay": 1080,
   "toolbar": 1070,
   "sidebar": 1060,
+  "sidebar-addable":1059,
   "toolbar-collapsible": 1050,
   "section-menu": 1055,
   "section-menu-opened": 1056,
@@ -292,12 +294,12 @@ $sidebar-bg: var(--primary-dark, $black-7);
 $sidebar__item__separator-border: var(--tertiary-white, rgba($white, 0.1));
 $sidebar-box-shadow: var(--sidebar-box-shadow, rgba($black, 0.4));
 $sidebar__content-box-shadow: var(
-  --sidebar__content-box-shadow,
-  rgba($black, 0.3)
+    --sidebar__content-box-shadow,
+    rgba($black, 0.3)
 );
 $sidebar__right_content-box-shadow: var(
-  --sidebar__right_content-box-shadow,
-  rgba($black, 0.3)
+    --sidebar__right_content-box-shadow,
+    rgba($black, 0.3)
 );
 $sidebar__header-bg: var(--tertiary-dark, $gray-12);
 $sidebar__content-bg: var(--primary-dark, $gray-3);
@@ -311,8 +313,8 @@ $right_sidebar__icon-color--hover: var(--active-color, $blue-21);
 $right_sidebar__tooltip-color: var(--right_sidebar__tooltip-color, $white);
 $right_sidebar__tooltip-bg: var(--right_sidebar__tooltip-bg, $gray-5);
 $right_sidebar__tooltip-box-shadow: var(
-  --right_sidebar__tooltip-box-shadow,
-  rgba($black-8, 0.15)
+    --right_sidebar__tooltip-box-shadow,
+    rgba($black-8, 0.15)
 );
 $right_sidebar__tooltip-border: var(--right_sidebar__tooltip-border, $gray-5);
 $right_sidebar__header__tabs-color: var(--primary-white, $white);
@@ -321,20 +323,20 @@ $right_sidebar__header__tabs-bg--active: var(--primary-dark, $black-9);
 
 // Left Sidebar window styling
 $left_sidebar__styling__palette-border: var(
-  --left_sidebar__styling__palette-border,
-  $black-5
+    --left_sidebar__styling__palette-border,
+    $black-5
 );
 $left_sidebar__styling__palette-border--active: var(--active-color, $blue-21);
 $left_sidebar__styling__font-border: var(--tertiary-gray, $gray-13);
 $left_sidebar__styling__font-border--active: var(--active-color, $blue-21);
 $left_sidebar__styling__font__content-color: var(--secondary-gray, $white);
 $left_sidebar__styling__font__icon-color: var(
-  --left_sidebar__styling__font__icon-color,
-  $black-2
+    --left_sidebar__styling__font__icon-color,
+    $black-2
 );
 $left_sidebar__styling__font__icon-bg: var(
-  --left_sidebar__styling__font__icon-bg,
-  $white
+    --left_sidebar__styling__font__icon-bg,
+    $white
 );
 $left_sidebar__styling__add-color: var(--primary-gray, $gray-2);
 $left_sidebar__styling__add-color--hover: var(--active-color, $blue-21);
@@ -346,52 +348,52 @@ $left_sidebar__elements-color--active: var(--active-color, $blue-21);
 $left_sidebar__elements-border: var(--tertiary-gray, $gray-13);
 $left_sidebar__elements__content-color: var(--primary-gray, rgba($white, 0.6));
 $left_sidebar__elements__tooltips-bg: var(
-  --left_sidebar__elements__tooltips-bg,
-  $gray-5
+    --left_sidebar__elements__tooltips-bg,
+    $gray-5
 );
 $left_sidebar__elements__tooltips-color: var(
-  --left_sidebar__elements__tooltips-color,
-  $white
+    --left_sidebar__elements__tooltips-color,
+    $white
 );
 $left_sidebar__elements__tooltips-box-shadow: var(
-  --left_sidebar__elements__tooltips-box-shadow,
-  rgba($black-8, 0.15)
+    --left_sidebar__elements__tooltips-box-shadow,
+    rgba($black-8, 0.15)
 );
 $left_sidebar__elements__tooltips__arrow-border: var(
-  --left_sidebar__elements__tooltips__arrow-border,
-  $transparent
+    --left_sidebar__elements__tooltips__arrow-border,
+    $transparent
 );
 $left_sidebar__elements__tooltips__arrow-border-top-color: var(
-  --left_sidebar__elements__tooltips__arrow-border-top-color,
-  $gray-5
+    --left_sidebar__elements__tooltips__arrow-border-top-color,
+    $gray-5
 );
 $left_sidebar__main__search-border-bottom-color: var(
-  --tertiary-white,
-  rgba($white, 0.1)
+    --tertiary-white,
+    rgba($white, 0.1)
 );
 $left_sidebar__main__search-color: var(--primary-white, $gray-19);
 $left_sidebar__main__search-text-color: var(--secondary-gray, $white);
 $left_sidebar__main__search__placeholder-color: var(--primary-gray, $gray-19);
 $left_sidebar__main__separator__title-color: var(
-  --left_sidebar__main__separator__title-color,
-  $gray-19
+    --left_sidebar__main__separator__title-color,
+    $gray-19
 );
 $left_sidebar__main__separator__line-bg: var(
-  --tertiary-white,
-  rgba($white, 0.1)
+    --tertiary-white,
+    rgba($white, 0.1)
 );
 
 // Sidebar icon
 $icon-color: var(--primary-white, $white);
 $sidebar__edit__checked__icon-color: var(--active-color, $blue-25);
 $sidebar__edit__checked__icon-bg: var(
-  --sidebar__edit__checked__icon-bg,
-  $blue-1
+    --sidebar__edit__checked__icon-bg,
+    $blue-1
 );
 $sidebar__edit__unchecked-bg: var(--sidebar__edit__unchecked-bg, $black);
 $sidebar__edit__unchecked-border: var(
-  --sidebar__edit__unchecked-border,
-  rgba($gray-19, 0.6)
+    --sidebar__edit__unchecked-border,
+    rgba($gray-19, 0.6)
 );
 
 // Right Sidebar
@@ -401,14 +403,14 @@ $sidebar__icon-color: var(--sidebar__icon-color, $gray-19);
 // Sidebar Popover
 $sidebar__popover-bg: var(--primary-dark, $black-7);
 $sidebar__popover-box-shadow: var(
-  --sidebar__popover-box-shadow,
-  rgba($black, 0.5)
+    --sidebar__popover-box-shadow,
+    rgba($black, 0.5)
 );
 $sidebar__popover__item-color: var(--secondary-gray, $white);
 $sidebar__popover__item-color--hover: var(--active-color, $blue-21);
 $sidebar__popover__item-border-bottom-color: var(
-  --tertiary-white,
-  rgba($white, 0.1)
+    --tertiary-white,
+    rgba($white, 0.1)
 );
 $sidebar__popover__arrow-border: var(--primary-dark, $black-7);
 
@@ -444,8 +446,8 @@ $toolbar__item-color--hover: var(--active-color, $blue-21);
 $toolbar__badge-color: var(--toolbar__badge-color, $white);
 $toolbar__badge-bg: var(--toolbar__badge-bg, $blue-21);
 $toolbar__popover_tooltip-color: var(
-  --toolbar__popover_tooltip-color,
-  $blue-21
+    --toolbar__popover_tooltip-color,
+    $blue-21
 );
 
 //Toolbar Code Mirror
@@ -453,114 +455,114 @@ $toolbar__code_mirror-color: var(--toolbar__code_mirror-color, $gray);
 $toolbar__code_mirror-bg: var(--secondary-dark, $black-3);
 $toolbar__code_mirror-text-color: var(--secondary-white, $gray-16);
 $toolbar__code_mirror__cursor-color: var(
-  --toolbar__code_mirror__cursor-color,
-  $gray
+    --toolbar__code_mirror__cursor-color,
+    $gray
 );
 
 //Toolbar code mirror DEFAULT THEME
 $toolbar__code_mirror__header-color: var(
-  --toolbar__code_mirror__header-color,
-  $blue
+    --toolbar__code_mirror__header-color,
+    $blue
 );
 $toolbar__code_mirror__quote-color: var(
-  --toolbar__code_mirror__quote-color,
-  $green-3
+    --toolbar__code_mirror__quote-color,
+    $green-3
 );
 $toolbar__code_mirror__negative-color: var(
-  --toolbar__code_mirror__negative-color,
-  $red-2
+    --toolbar__code_mirror__negative-color,
+    $red-2
 );
 $toolbar__code_mirror__positive-color: var(
-  --toolbar__code_mirror__positive-color,
-  $green-4
+    --toolbar__code_mirror__positive-color,
+    $green-4
 );
 $toolbar__code_mirror__keyword-color: var(
-  --toolbar__code_mirror__keyword-color,
-  $violet
+    --toolbar__code_mirror__keyword-color,
+    $violet
 );
 $toolbar__code_mirror__atom-color: var(
-  --toolbar__code_mirror__atom-color,
-  $violet-1
+    --toolbar__code_mirror__atom-color,
+    $violet-1
 );
 $toolbar__code_mirror__number-color: var(
-  --toolbar__code_mirror__number-color,
-  $green-5
+    --toolbar__code_mirror__number-color,
+    $green-5
 );
 $toolbar__code_mirror__def-color: var(
-  --toolbar__code_mirror__def-color,
-  $blue-13
+    --toolbar__code_mirror__def-color,
+    $blue-13
 );
 $toolbar__code_mirror__variable: var(
-  --toolbar__code_mirror__variable,
-  $yellow-3
+    --toolbar__code_mirror__variable,
+    $yellow-3
 );
 $toolbar__code_mirror__variable__2-color: var(
-  --toolbar__code_mirror__variable__2-color,
-  $blue-14
+    --toolbar__code_mirror__variable__2-color,
+    $blue-14
 );
 $toolbar__code_mirror__variable__3-color: var(
-  --toolbar__code_mirror__variable__3-color,
-  $green-6
+    --toolbar__code_mirror__variable__3-color,
+    $green-6
 );
 $toolbar__code_mirror__comment-color: var(
-  --toolbar__code_mirror__comment-color,
-  $orange-1
+    --toolbar__code_mirror__comment-color,
+    $orange-1
 );
 $toolbar__code_mirror__string-color: var(
-  --toolbar__code_mirror__string-color,
-  $pink-1
+    --toolbar__code_mirror__string-color,
+    $pink-1
 );
 $toolbar__code_mirror__string__2-color: var(
-  --toolbar__code_mirror__string__2-color,
-  $orange-2
+    --toolbar__code_mirror__string__2-color,
+    $orange-2
 );
 $toolbar__code_mirror__meta-color: var(
-  --toolbar__code_mirror__meta-color,
-  $gray-26
+    --toolbar__code_mirror__meta-color,
+    $gray-26
 );
 $toolbar__code_mirror__qualifier-color: var(
-  --toolbar__code_mirror__qualifier-color,
-  $green-10
+    --toolbar__code_mirror__qualifier-color,
+    $green-10
 );
 $toolbar__code_mirror__builtin-color: var(
-  --toolbar__code_mirror__builtin-color,
-  $blue-15
+    --toolbar__code_mirror__builtin-color,
+    $blue-15
 );
 $toolbar__code_mirror__bracket-color: var(
-  --toolbar__code_mirror__bracket-color,
-  $yellow
+    --toolbar__code_mirror__bracket-color,
+    $yellow
 );
 $toolbar__code_mirror__tag-color: var(
-  --toolbar__code_mirror__tag-color,
-  $green-10
+    --toolbar__code_mirror__tag-color,
+    $green-10
 );
 $toolbar__code_mirror__attribute-color: var(
-  --toolbar__code_mirror__attribute-color,
-  $blue-16
+    --toolbar__code_mirror__attribute-color,
+    $blue-16
 );
 $toolbar__code_mirror__hr-color: var(
-  --toolbar__code_mirror__hr-color,
-  $gray-27
+    --toolbar__code_mirror__hr-color,
+    $gray-27
 );
 $toolbar__code_mirror__link-color: var(
-  --toolbar__code_mirror__link-color,
-  $blue-16
+    --toolbar__code_mirror__link-color,
+    $blue-16
 );
 $toolbar__code_mirror__error-color: var(
-  --toolbar__code_mirror__error-color,
-  $pink-2
+    --toolbar__code_mirror__error-color,
+    $pink-2
 );
 $toolbar__code_mirror__invalidchar-color: var(
-  --toolbar__code_mirror__invalidchar-color,
-  $red
+    --toolbar__code_mirror__invalidchar-color,
+    $red
 );
 $toolbar__code_mirror__sizer-border-right-color: var(
-  --toolbar__code_mirror__sizer-border-right-color,
-  $transparent
+    --toolbar__code_mirror__sizer-border-right-color,
+    $transparent
 );
 $toolbar__code_mirror__selected-bg: var(
-  --toolbar__code_mirror__selected-bg,
-  $blue-17
+    --toolbar__code_mirror__selected-bg,
+    $blue-17
 );
 
 // Sizes for toolbar's item
@@ -580,28 +582,28 @@ $bottom_panel__popover-border: var(--tertiary-white, rgba($white, 0.1));
 
 // Right Toolbar
 $right_toolbar__display__condition__icon-color: var(
-  --right_toolbar__display__condition__icon-color,
-  $black-1
+    --right_toolbar__display__condition__icon-color,
+    $black-1
 );
 $right_toolbar__display__condition__icon-bg: var(
-  --right_toolbar__display__condition__icon-bg,
-  $blue-21
+    --right_toolbar__display__condition__icon-bg,
+    $blue-21
 );
 $right_toolbar__display__condition__icon-bg--hover: var(--active-color, $white);
 $right_toolbar__display__condition-color: var(
-  --right_toolbar__display__condition-color,
-  $blue-21
+    --right_toolbar__display__condition-color,
+    $blue-21
 );
 $right_toolbar__display__condition-color--hover: var(--active-color, $white);
 
 // Right toolbar loader
 $right_toolbar__make_global__loader-color: var(
-  --right_toolbar__make_global__loader-color,
-  rgba($white, 0.75)
+    --right_toolbar__make_global__loader-color,
+    rgba($white, 0.75)
 );
 $right_toolbar__make_global__loader-bg: var(
-  --right_toolbar__make_global__loader-bg,
-  rgba($black-1, 0.75)
+    --right_toolbar__make_global__loader-bg,
+    rgba($black-1, 0.75)
 );
 
 // Toolbar Fonts Colors
@@ -609,8 +611,8 @@ $toolbar__fonts-color: var(--secondary-gray, $white);
 $toolbar__fonts-color--active: var(--active-color, $blue-2);
 $toolbar__fonts__add-color: var(--primary-gray, $gray-19);
 $toolbar__fonts__separator-bg: var(
-  --toolbar__fonts__separator-bg,
-  rgba($white, 0.3)
+    --toolbar__fonts__separator-bg,
+    rgba($white, 0.3)
 );
 
 // Popover
@@ -631,36 +633,36 @@ $bottom_toolbar-box-shadow: var(--bottom_toolbar-box-shadow, rgba($black, 0.5));
 $bottom_toolbar__disable-color: var(--secondary-white, $gray-2);
 $bottom_toolbar__btn-color: var(--bottom_toolbar__btn-color, $white);
 $bottom_toolbar__btn-color--hover: var(
-  --bottom_toolbar__btn-color--hover,
-  $white
+    --bottom_toolbar__btn-color--hover,
+    $white
 );
 $bottom_toolbar__btn-bg: var(--primary-white, $blue-1);
 $bottom_toolbar__btn-bg--hover: var(--bottom_toolbar__btn-bg--hover, $blue-4);
 $bottom_toolbar__btn-border: var(--primary-white, $blue-3);
 $bottom_toolbar__btn__disable-bg: var(
-  --bottom_toolbar__btn__disable-bg,
-  $blue-5
+    --bottom_toolbar__btn__disable-bg,
+    $blue-5
 );
 $bottom_toolbar__btn__disable-color: var(
-  --bottom_toolbar__btn__disable-color,
-  rgba($white, 0.35)
+    --bottom_toolbar__btn__disable-color,
+    rgba($white, 0.35)
 );
 $bottom_toolbar__tooltip-color: var(--bottom_toolbar__tooltip-color, $gray-3);
 $bottom_toolbar__tooltip-color--hover: var(
-  --bottom_toolbar__tooltip-color--hover,
-  $black-1
+    --bottom_toolbar__tooltip-color--hover,
+    $black-1
 );
 $bottom_toolbar__tooltip-bg--hover: var(
-  --bottom_toolbar__tooltip-bg--hover,
-  $gray-3
+    --bottom_toolbar__tooltip-bg--hover,
+    $gray-3
 );
 $bottom_toolbar__tooltip__disable-bg: var(
-  --bottom_toolbar__tooltip__disable-bg,
-  $blue-1
+    --bottom_toolbar__tooltip__disable-bg,
+    $blue-1
 );
 $bottom_toolbar__tooltip__disable-color: var(
-  --bottom_toolbar__tooltip__disable-color,
-  $white
+    --bottom_toolbar__tooltip__disable-color,
+    $white
 );
 /// Bottom toolbar "Preview" button use $link-color--hover variable
 
@@ -683,8 +685,8 @@ $focal_point-border--hover: var(--active-color, $gray-18);
 $focal_point__before-bg: var(--focal_point__before-bg, rgba($black, 0.3));
 $focal_point__upload-bg: var(--secondary-dark, $gray-6);
 $focal_point__upload-color: var(
-  --focal_point__upload-color,
-  rgba($gray-7, 0.6)
+    --focal_point__upload-color,
+    rgba($gray-7, 0.6)
 );
 $focal_point__upload-color--hover: var(--active-color, $gray-7);
 $focal_point__delete-color: var(--focal_point__delete-color, $white);
@@ -701,8 +703,8 @@ $focal_point__img-size: $focal_point-width;
 // Styles
 $content__loading-border: var(--content__loading-border, $blue-8);
 $content__loading-border-top: var(
-  --content__loading-border-top,
-  rgba($black-1, 0.9)
+    --content__loading-border-top,
+    rgba($black-1, 0.9)
 );
 $content__loading-size: 20px;
 $content__loading-border-width: 4px;
@@ -714,8 +716,8 @@ $floating__button__blue-bg: var(--floating__button__blue-bg, $blue-1);
 $floating__button__red-bg: var(--floating__button__red-bg, $pink);
 $floating__button__tail-bg: var(--floating__button__tail-bg, $blue-21);
 $floating__button__second__tail-bg: var(
-  --floating__button__tail-bg,
-  rgba($blue-21, 0.8)
+    --floating__button__tail-bg,
+    rgba($blue-21, 0.8)
 );
 
 // Borders
@@ -745,8 +747,8 @@ $options__control-radius: 4px;
 // Controls: Select, Stepper
 $options__control-bg: var(--primary-dark, $gray-1);
 $options__control__placeholder-color: var(
-  --primary-gray,
-  rgba(255, 255, 255, 0.4)
+    --primary-gray,
+    rgba(255, 255, 255, 0.4)
 );
 $options__control-color: var(--secondary-gray, $white);
 
@@ -789,8 +791,8 @@ $switch-box-shadow: var(--switch-box-shadow, rgba($black, 0.38));
 $switch__icon-color: var(--switch__icon-color, rgba($black-6, 0.7));
 $switch__handle-bg: var(--switch__handle-bg, $white);
 $switch__handle-box-shadow: var(
-  --switch__handle-box-shadow,
-  rgba($white, 0.35)
+    --switch__handle-box-shadow,
+    rgba($white, 0.35)
 );
 $switch__handle__line-color: var(--switch__handle__line-color, $blue-9);
 $switch__checked-bg: var(--active-color, $blue-21);
@@ -798,24 +800,24 @@ $switch__checked-bg: var(--active-color, $blue-21);
 // Thumbnail from Block on the image
 $thumbnail__block__item-border--active: var(--active-color, $blue-21);
 $thumbnail__block__item__after-border: var(
-  --thumbnail__block__item__after-border,
-  $transparent
+    --thumbnail__block__item__after-border,
+    $transparent
 );
 $thumbnail__block__item__anchor-color: var(
-  --thumbnail__block__item__anchor-color,
-  $white
+    --thumbnail__block__item__anchor-color,
+    $white
 );
 $thumbnail__block__item__anchor-bg: var(
-  --thumbnail__block__item__anchor-bg,
-  $blue-21
+    --thumbnail__block__item__anchor-bg,
+    $blue-21
 );
 $thumbnail__block__item__anchor__icon-color--hover: var(
-  --thumbnail__block__item__anchor__icon-color--hover,
-  $black-1
+    --thumbnail__block__item__anchor__icon-color--hover,
+    $black-1
 );
 $thumbnail__block__loader-bg: var(
-  --thumbnail__block__loader-bg,
-  rgba($gray-7, 0.6)
+    --thumbnail__block__loader-bg,
+    rgba($gray-7, 0.6)
 );
 
 // Input
@@ -825,52 +827,52 @@ $input__placeholder-color: var(--input__placeholder-color, rgba($blue-23, 0.2));
 
 // Extract Popover tooltip colors
 $popover_tooltips__icon-color: var(
-  --popover_tooltips__icon-color,
-  rgba($gray-2, 0.35)
+    --popover_tooltips__icon-color,
+    rgba($gray-2, 0.35)
 );
 $popover_tooltips__icon-color--hover: var(
-  --popover_tooltips__icon-color--hover,
-  rgba($gray-2, 0.6)
+    --popover_tooltips__icon-color--hover,
+    rgba($gray-2, 0.6)
 );
 $popover_tooltips__helper__overlay-bg: var(
-  --popover_tooltips__helper__overlay-bg,
-  $transparent
+    --popover_tooltips__helper__overlay-bg,
+    $transparent
 );
 $popover_tooltips__helper__overlay-box-shadow: var(
-  --popover_tooltips__helper__overlay-box-shadow,
-  rgba($black, 0.5)
+    --popover_tooltips__helper__overlay-box-shadow,
+    rgba($black, 0.5)
 );
 $popover_tooltips__helper__content-color: var(
-  --popover_tooltips__helper__content-color,
-  rgba($white, 0.8)
+    --popover_tooltips__helper__content-color,
+    rgba($white, 0.8)
 );
 $popover_tooltips__helper__content-bg: var(
-  --popover_tooltips__helper__content-bg,
-  rgba($gray-1, 0.92)
+    --popover_tooltips__helper__content-bg,
+    rgba($gray-1, 0.92)
 );
 
 //Slider control
 $slider__control-bg: var(--slider__control-bg, $blue-21);
 $slider__control__handle-bg: var(--slider__control__handle-bg, $white);
 $slider__control__handle-box-shadow: var(
-  --slider__control__handle-box-shadow,
-  rgba($black, 0.45)
+    --slider__control__handle-box-shadow,
+    rgba($black, 0.45)
 );
 $slider__control__handle-box-shadow--active: var(
-  --slider__control__handle-box-shadow--active,
-  $blue-10
+    --slider__control__handle-box-shadow--active,
+    $blue-10
 );
 $slider__control__handle-box-shadow--focus: var(
-  --slider__control__handle-box-shadow--focus,
-  $blue-11
+    --slider__control__handle-box-shadow--focus,
+    $blue-11
 );
 $slider__control__handle-border--active: var(
-  --slider__control__handle-border--active,
-  $blue-10
+    --slider__control__handle-border--active,
+    $blue-10
 );
 $slider__control__handle__line-color: var(
-  --slider__control__handle__line-color,
-  $blue-21
+    --slider__control__handle__line-color,
+    $blue-21
 );
 
 // Blocks
@@ -881,8 +883,8 @@ $popup__select-bg--hover: var(--popup__select-bg--hover, $white-4);
 $popup__select-border: var(--popup__select-border, $white-5);
 $popup__select-box-shadow: var(--popup__select-box-shadow, rgba($black, 0.2));
 $popup__select__options-box-shadow: var(
-  --popup__select__options-box-shadow,
-  rgba($black, 0.2)
+    --popup__select__options-box-shadow,
+    rgba($black, 0.2)
 );
 $popup__select-font-size: 14px;
 $popup__select-height: 40px;
@@ -893,52 +895,52 @@ $popup__select-border-radius: 4px;
 $popup__header__tabs-bg: var(--popup__header__tabs-bg, $gray-4);
 $popup__header__tabs__item-bg: var(--popup__header__tabs__item-bg, $gray-4);
 $popup__header__tabs__item-bg--hover: var(
-  --popup__header__tabs__item-bg--hover,
-  $black-1
+    --popup__header__tabs__item-bg--hover,
+    $black-1
 );
 $popup__header__tabs__btn-color: var(
-  --popup__header__tabs__btn__close-color,
-  $gray-22
+    --popup__header__tabs__btn__close-color,
+    $gray-22
 );
 $popup__header__tabs__btn-color--hover: var(
-  --popup__header__tabs__btn__close-color--hover,
-  $white
+    --popup__header__tabs__btn__close-color--hover,
+    $white
 );
 $popup__header__tabs__item-color: var(
-  --popup__header__tabs__item-color,
-  rgba($white, 0.5)
+    --popup__header__tabs__item-color,
+    rgba($white, 0.5)
 );
 $popup__header__tabs__item-color--hover: var(
-  --popup__header__tabs__item-color--hover,
-  $white
+    --popup__header__tabs__item-color--hover,
+    $white
 );
 $popup__header__tabs__item__content-heading: var(
-  --popup__header__tabs__item__content-heading,
-  $black-9
+    --popup__header__tabs__item__content-heading,
+    $black-9
 );
 $popup__header__tabs__item-border-right-color: var(
-  --popup__header__tabs__item-border-right-color,
-  rgba($black, 0.7)
+    --popup__header__tabs__item-border-right-color,
+    rgba($black, 0.7)
 );
 $popup__header__tabs__item__before-border-right-color: var(
-  --popup__header__tabs__item__before-border-right-color,
-  rgba($white, 0.05)
+    --popup__header__tabs__item__before-border-right-color,
+    rgba($white, 0.05)
 );
 $popup__header__tabs__item-border-left-color: var(
-  --popup__header__tabs__item-border-left-color,
-  rgba($black, 0.7)
+    --popup__header__tabs__item-border-left-color,
+    rgba($black, 0.7)
 );
 $popup__header__tabs__item__after-border-left-color: var(
-  --popup__header__tabs__item__after-border-left-color,
-  rgba($white, 0.05)
+    --popup__header__tabs__item__after-border-left-color,
+    rgba($white, 0.05)
 );
 
 // Modal Popup Integration Apps
 $popup__apps__item-bg: var(--popup__apps__item-bg, $white);
 $popup__apps__item-border--hover: var(--active-color, $blue-21);
 $popup__apps__item__after-border: var(
-  --popup__apps__item__after-border,
-  $transparent
+    --popup__apps__item__after-border,
+    $transparent
 );
 $popup__apps__item-color: var(--popup__apps__item-color, $gray-23);
 $popup__apps__loading-color: var(--popup__apps__loading-color, $white);
@@ -946,12 +948,12 @@ $popup__apps__loading-bg: var(--popup__apps__loading-bg, $blue-21);
 
 // Popup loading
 $form__email__popup__loading-color: var(
-  --form__email__popup__loading-color,
-  $white
+    --form__email__popup__loading-color,
+    $white
 );
 $form__email__popup__loading-bg: var(
-  --form__email__popup__loading-bg,
-  rgba($black, 0.5)
+    --form__email__popup__loading-bg,
+    rgba($black, 0.5)
 );
 
 // Popup Blocks Layouts
@@ -963,154 +965,166 @@ $popup__fonts__content-bg: var(--popup__fonts__content-bg, $white-6);
 $popup__fonts__item-bg: var(--popup__fonts__item-bg, $white);
 $popup__fonts__item-border--hover: var(--active-color, $blue-21);
 $popup__fonts__item__title-color: var(
-  --popup__fonts__item__title-color,
-  $gray-23
+    --popup__fonts__item__title-color,
+    $gray-23
 );
 $popup__fonts__item-color: var(--popup__fonts__item-color, $black-1);
 $popup__fonts__item__selected-border: var(
-  --popup__fonts__item__selected-border,
-  $green
+    --popup__fonts__item__selected-border,
+    $green
 );
 $popup__fonts__item__selected__icon-bg: var(
-  --popup__fonts__item__selected__icon-bg,
-  $green
+    --popup__fonts__item__selected__icon-bg,
+    $green
 );
 $popup__fonts__icon__delete-bg: var(--popup__fonts__icon__delete-bg, $white);
 $popup__fonts__icon__delete-color: var(
-  --popup__fonts__icon__delete-color,
-  $black-1
+    --popup__fonts__icon__delete-color,
+    $black-1
 );
 $popup__fonts__icon__delete-color--hover: var(
-  --popup__fonts__icon__delete-color--hover,
-  $pink
+    --popup__fonts__icon__delete-color--hover,
+    $pink
 );
 
 // Modal Integration Email template
 $modal_email__template-border-top-color: var(
-  --modal_email__template-border-top-color,
-  rgba($black, 0.1)
+    --modal_email__template-border-top-color,
+    rgba($black, 0.1)
 );
 $modal_email__template__code_mirror-bg: var(
-  --modal_email__template__code_mirror-bg,
-  $white
+    --modal_email__template__code_mirror-bg,
+    $white
 );
 $modal_email__template__code_mirror-color: var(
-  --modal_email__template__code_mirror-color,
-  $black
+    --modal_email__template__code_mirror-color,
+    $black
 );
 $modal_email__template__code_mirror__meta: var(
-  --modal_email__template__code_mirror__meta,
-  $yellow-1
+    --modal_email__template__code_mirror__meta,
+    $yellow-1
 );
 $modal_email__template__code_mirror__number: var(
-  --modal_email__template__code_mirror__number,
-  $blue
+    --modal_email__template__code_mirror__number,
+    $blue
 );
 $modal_email__template__code_mirror__keyword: var(
-  --modal_email__template__code_mirror__keyword,
-  $blue-18
+    --modal_email__template__code_mirror__keyword,
+    $blue-18
 );
 $modal_email__template__code_mirror__atom: var(
-  --modal_email__template__code_mirror__atom,
-  $blue-18
+    --modal_email__template__code_mirror__atom,
+    $blue-18
 );
 $modal_email__template__code_mirror__def: var(
-  --modal_email__template__code_mirror__def,
-  $black
+    --modal_email__template__code_mirror__def,
+    $black
 );
 $modal_email__template__code_mirror__variable: var(
-  --modal_email__template__code_mirror__variable,
-  $black
+    --modal_email__template__code_mirror__variable,
+    $black
 );
 $modal_email__template__code_mirror__property: var(
-  --modal_email__template__code_mirror__property,
-  $black
+    --modal_email__template__code_mirror__property,
+    $black
 );
 $modal_email__template__code_mirror__operator: var(
-  --modal_email__template__code_mirror__operator,
-  $black
+    --modal_email__template__code_mirror__operator,
+    $black
 );
 $modal_email__template__code_mirror__comment: var(
-  --modal_email__template__code_mirror__comment,
-  $gray
+    --modal_email__template__code_mirror__comment,
+    $gray
 );
 $modal_email__template__code_mirror__string: var(
-  --modal_email__template__code_mirror__string,
-  $green-8
+    --modal_email__template__code_mirror__string,
+    $green-8
 );
 $modal_email__template__code_mirror__qualifier: var(
-  --modal_email__template__code_mirror__qualifier,
-  $gray-26
+    --modal_email__template__code_mirror__qualifier,
+    $gray-26
 );
 $modal_email__template__code_mirror__error: var(
-  --modal_email__template__code_mirror__error,
-  $red
+    --modal_email__template__code_mirror__error,
+    $red
 );
 $modal_email__template__code_mirror__attribute: var(
-  --modal_email__template__code_mirror__attribute,
-  $blue
+    --modal_email__template__code_mirror__attribute,
+    $blue
 );
 $modal_email__template__code_mirror__tag: var(
-  --modal_email__template__code_mirror__tag,
-  $blue-18
+    --modal_email__template__code_mirror__tag,
+    $blue-18
 );
 $modal_email__template__code_mirror__link: var(
-  --modal_email__template__code_mirror__link,
-  $blue
+    --modal_email__template__code_mirror__link,
+    $blue
 );
 $modal_email__template__code_mirror__activeline-bg: var(
-  --modal_email__template__code_mirror__activeline-bg,
-  $white-8
+    --modal_email__template__code_mirror__activeline-bg,
+    $white-8
 );
 $modal_email__template__code_mirror__builtin: var(
-  --modal_email__template__code_mirror__builtin,
-  $blue-19
+    --modal_email__template__code_mirror__builtin,
+    $blue-19
 );
 $modal_email__template__code_mirror__bracket: var(
-  --modal_email__template__code_mirror__bracket,
-  $yellow-2
+    --modal_email__template__code_mirror__bracket,
+    $yellow-2
 );
 $modal_email__template__code_mirror__matchingbracket-outline: var(
-  --modal_email__template__code_mirror__matchingbracket-outline,
-  $gray
+    --modal_email__template__code_mirror__matchingbracket-outline,
+    $gray
 );
 $modal_email__template__code_mirror__matchingbracket-color: var(
-  --modal_email__template__code_mirror__matchingbracket-color,
-  $black
+    --modal_email__template__code_mirror__matchingbracket-color,
+    $black
 );
 $modal_email__template__code_mirror__cursor: var(
-  --modal_email__template__code_mirror__cursor,
-  $black
+    --modal_email__template__code_mirror__cursor,
+    $black
 );
 $modal_email__template__code_mirror__hints-color: var(
-  --modal_email__template__code_mirror__hints-color,
-  $gray-28
+    --modal_email__template__code_mirror__hints-color,
+    $gray-28
 );
 $modal_email__template__code_mirror__hints-bg: var(
-  --modal_email__template__code_mirror__hints-bg,
-  $white-3
+    --modal_email__template__code_mirror__hints-bg,
+    $white-3
 );
 $modal_email__template__code_mirror__hints--active: var(
-  --modal_email__template__code_mirror__hints--active,
-  $gray-29
+    --modal_email__template__code_mirror__hints--active,
+    $gray-29
 );
 $modal_email__template__code_mirror__hints-bg--active: var(
-  --modal_email__template__code_mirror__hints-bg--active,
-  $blue-20
+    --modal_email__template__code_mirror__hints-bg--active,
+    $blue-20
 );
 $modal_email__template__integration-color: var(
-  --modal_email__template__integration-color,
-  $gray-23
+    --modal_email__template__integration-color,
+    $gray-23
 );
 $modal_email__template__integration__icon-color: var(
-  --modal_email__template__integration__icon-color,
-  $gray-14
+    --modal_email__template__integration__icon-color,
+    $gray-14
 );
 $modal_email__template__integration__helper-color: var(
-  --modal_email__template__integration__helper-color,
-  $green-7
+    --modal_email__template__integration__helper-color,
+    $green-7
 );
 $modal_email__template__integration__helper__copy-color: var(
-  --modal_email__template__integration__helper__copy-color,
-  rgba($white, 0.6)
+    --modal_email__template__integration__helper__copy-color,
+    rgba($white, 0.6)
 );
+
+
+//#region Addable variables
+$addable-border-color: var(--addable-border-color, $gray-1);
+$addable__sidebar__group--border-color--active:var(--addable__sidebar__group--border-color--active, $blue-21);
+$addable_sidebar__tooltip-color: var(--addable_sidebar__tooltip-color, $white);
+$addable_sidebar__tooltip-bg: var(--addable_sidebar__tooltip-bg, $gray-5);
+$addable__sidebar__add_button__text-color: var(--addable__sidebar__add_button__text-color, $gray-19);
+$addable__sidebar__add_button--active: var(--addable__sidebar__add_button--active, $blue-21);
+$addable__sidebar__head-bg: var(--addable__sidebar__head-bg, $gray-1);
+
+//#endregion

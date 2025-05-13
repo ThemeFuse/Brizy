@@ -33,6 +33,7 @@ export type GenericToolbarItemType<K extends OptionName> = WithId<string> &
     | "devices"
     | "states"
     | "position"
+    | "optionGroups"
     | keyof WithLabel
     | keyof WithHelper
     | keyof WithClassName

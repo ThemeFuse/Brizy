@@ -20,7 +20,7 @@ import { EditorIcon } from "visual/component/EditorIcon";
 import { useThrottleOnChange } from "visual/component/hooks";
 import { SectionPopup2Instances } from "visual/editorComponents/SectionPopup2/instances";
 import { SectionPopupInstances } from "visual/editorComponents/SectionPopup/instances";
-import { useConfig } from "visual/global/hooks";
+import { useConfig } from "visual/providers/ConfigProvider";
 import { Hex, fromRgb } from "visual/utils/color/Hex";
 import { always } from "visual/utils/fp";
 import { browserSupports, makeNodeScreenshot } from "visual/utils/screenshots";

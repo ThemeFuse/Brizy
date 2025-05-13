@@ -42,6 +42,7 @@ export function cssStyleCustomWidth({
   v,
   device,
   state,
+  getConfig,
   store
 }: CSSValue): string {
   const dvv = (key: string): unknown =>
@@ -50,7 +51,7 @@ export function cssStyleCustomWidth({
 
   return elementPosition === "relative"
     ? ""
-    : cssStyleSizeWidth({ v, device, state, store });
+    : cssStyleSizeWidth({ v, device, state, store, getConfig });
 }
 
 export function cssStyleOffset(d: CSSValue): string {

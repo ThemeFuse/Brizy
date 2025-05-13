@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { useSelector, useStore } from "react-redux";
 import { RootContainer } from "visual/component/RootContainer";
 import EditorGlobal from "visual/global/Editor";
-import { useConfig } from "visual/global/hooks";
+import { useConfig } from "visual/providers/ConfigProvider";
 import { EditorComponentProvider } from "visual/providers/EditorComponentProvider";
 import { useEditorMode } from "visual/providers/EditorModeProvider";
 import { pageDataDraftBlocksSelector } from "visual/redux/selectors";
@@ -20,6 +20,8 @@ export const Popup = (): JSX.Element => {
   // @ts-expect-error: ConfigCommon to Config
   const pageId = getPageId(config);
 
+  const getGlobalConfig = useCallback(() => config, [config]);
+
   if (!PagePopup) {
     return <div>{t("Missing PagePopup Components")}</div>;
   }
@@ -34,6 +36,7 @@ export const Popup = (): JSX.Element => {
           reduxStore={store}
           renderContext="view"
           editorMode={mode}
+          getGlobalConfig={getGlobalConfig}
         />
       </EditorComponentProvider>
     </RootContainer>

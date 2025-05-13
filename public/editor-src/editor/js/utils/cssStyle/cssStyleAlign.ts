@@ -4,6 +4,7 @@ import {
 } from "visual/utils/style2";
 import { Reader } from "../reader/types";
 import { CSSValue } from "../style2/types";
+import { rtlAlign } from "./utils";
 
 interface HorizontalAlign {
   left: string;
@@ -57,10 +58,11 @@ export function cssStyleFlexVerticalAlign({
   device,
   state,
   store,
+  getConfig,
   prefix = ""
 }: CSSValue): string {
   const alignItems = readVerticalAlign(
-    styleAlignFlexVerticalAlign({ v, device, state, store, prefix })
+    styleAlignFlexVerticalAlign({ v, device, state, getConfig, store, prefix })
   );
 
   return alignItems ? `align-items:${FlexVerticalAligns[alignItems]};` : "";
@@ -71,10 +73,11 @@ export function cssStyleFlexHorizontalAlign({
   device,
   state,
   store,
+  getConfig,
   prefix = ""
 }: CSSValue): string {
   const alignItems = readHorizontalAlign(
-    styleAlignHorizontal({ v, device, state, store, prefix })
+    styleAlignHorizontal({ v, device, state, getConfig, store, prefix })
   );
 
   return alignItems
@@ -87,15 +90,16 @@ export function cssStyleMarginAlign({
   device,
   state,
   store,
+  getConfig,
   prefix = ""
 }: CSSValue): string {
   const aligns = {
-    left: "margin-right: auto; margin-left: 0;",
-    center: "margin-left: auto; margin-right: auto;",
-    right: "margin-left: auto; margin-right: 0;"
+    left: "margin-inline-end: auto; margin-inline-start: 0;",
+    center: "margin-inline-start: auto; margin-inline-end: auto;",
+    right: "margin-inline-start: auto; margin-inline-end: 0;"
   };
   const alignment = readHorizontalAlign(
-    styleAlignHorizontal({ v, device, state, store, prefix })
+    styleAlignHorizontal({ v, device, state, getConfig, store, prefix })
   );
 
   return alignment ? aligns[alignment] : "";
@@ -106,10 +110,11 @@ export function cssStyleFlexColumnVerticalAlign({
   device,
   state,
   store,
+  getConfig,
   prefix = ""
 }: CSSValue): string {
   const alignItems = readVerticalAlign(
-    styleAlignFlexVerticalAlign({ v, device, state, store, prefix })
+    styleAlignFlexVerticalAlign({ v, device, state, getConfig, store, prefix })
   );
 
   return alignItems ? `justify-content:${FlexVerticalAligns[alignItems]};` : "";
@@ -120,10 +125,11 @@ export function cssStyleFlexColumnHorizontalAlign({
   device,
   state,
   store,
+  getConfig,
   prefix = ""
 }: CSSValue): string {
   const alignItems = readHorizontalAlign(
-    styleAlignHorizontal({ v, device, state, store, prefix })
+    styleAlignHorizontal({ v, device, state, getConfig, store, prefix })
   );
 
   return alignItems ? `align-items:${FlexHorizontalAligns[alignItems]};` : "";
@@ -134,11 +140,19 @@ export function cssStyleTextAlign({
   device,
   state,
   store,
+  getConfig,
   prefix = ""
 }: CSSValue): string {
-  const textAlign = styleAlignHorizontal({ v, device, state, store, prefix });
+  const textAlign = styleAlignHorizontal({
+    v,
+    device,
+    state,
+    getConfig,
+    store,
+    prefix
+  });
 
-  return textAlign ? `text-align:${textAlign};` : "";
+  return textAlign ? `text-align:${rtlAlign(textAlign)};` : "";
 }
 
 export function cssStyleContentAlign({
@@ -146,7 +160,8 @@ export function cssStyleContentAlign({
   device,
   state,
   store,
+  getConfig,
   prefix = "content"
 }: CSSValue): string {
-  return cssStyleTextAlign({ v, device, state, store, prefix });
+  return cssStyleTextAlign({ v, device, state, getConfig, store, prefix });
 }

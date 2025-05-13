@@ -1,16 +1,21 @@
 import { ComponentProps } from "react";
 import { Meta, Props } from "visual/component/Options/Type";
 import { Population } from "visual/component/Options/types/common/Population";
+import { Addable } from "visual/component/Options/types/dev/Addable";
+import { AdvancedSettings } from "visual/component/Options/types/dev/AdvancedSettings";
 import { Animation } from "visual/component/Options/types/dev/Animation";
 import { BackgroundColor } from "visual/component/Options/types/dev/BackgroundColor";
+import { BlockThumbnail } from "visual/component/Options/types/dev/BlockThumbnail";
 import { Border } from "visual/component/Options/types/dev/Border";
 import { BoxShadow } from "visual/component/Options/types/dev/BoxShadow";
 import { Button as ButtonDev } from "visual/component/Options/types/dev/Button";
 import { CheckGroup } from "visual/component/Options/types/dev/CheckGroup";
+import { ColorPaletteEditor } from "visual/component/Options/types/dev/ColorPaletteEditor";
 import { ColorPicker as ColorPickerDev } from "visual/component/Options/types/dev/ColorPicker";
 import { Corners } from "visual/component/Options/types/dev/Corners";
 import { FileUpload as FileUploadDev } from "visual/component/Options/types/dev/FileUpload";
 import { Filters } from "visual/component/Options/types/dev/Filters";
+import { FontStyleEditor } from "visual/component/Options/types/dev/FontStyleEditor";
 import { Gallery } from "visual/component/Options/types/dev/Gallery";
 import { GalleryForGallery } from "visual/component/Options/types/dev/GalleryForGallery";
 import { GbCondition } from "visual/component/Options/types/dev/GbCondition";
@@ -26,7 +31,6 @@ import { Motion } from "visual/component/Options/types/dev/Motion";
 import { MultiSelect } from "visual/component/Options/types/dev/MultiSelect2";
 import { Order } from "visual/component/Options/types/dev/Order";
 import { PayPal } from "visual/component/Options/types/dev/PayPal";
-import { ColorPaletteEditor } from "visual/component/Options/types/dev/ColorPaletteEditor";
 import { PopupCondition } from "visual/component/Options/types/dev/PopupCondition";
 import { PredefinedPopulation } from "visual/component/Options/types/dev/PredefinedPopulation";
 import { Range as RangeDev } from "visual/component/Options/types/dev/Range";
@@ -40,9 +44,6 @@ import { TextShadow } from "visual/component/Options/types/dev/TextShadow";
 import { ToggleButton } from "visual/component/Options/types/dev/ToggleButton";
 import { Transform } from "visual/component/Options/types/dev/Transform";
 import { Typography } from "visual/component/Options/types/dev/Typography";
-import { FontStyleEditor } from "visual/component/Options/types/dev/FontStyleEditor";
-import { AdvancedSettings } from "visual/component/Options/types/dev/AdvancedSettings";
-import { BlockThumbnail } from "visual/component/Options/types/dev/BlockThumbnail";
 import { StateMode } from "./common/StateMode";
 import { Ai } from "./dev/AiText";
 import { Alert } from "./dev/Alert";
@@ -57,10 +58,10 @@ import { Popover as PopoverDev } from "./dev/Popover";
 import { PromptAddPopup } from "./dev/PromptAddPopup";
 import { RadioGroup as RadioGroupDev } from "./dev/RadioGroup";
 import { Slider as SliderDev } from "./dev/Slider";
+import { Symbols } from "./dev/Symbols";
 import { Tabs as TabsDev } from "./dev/Tabs";
 import { Textarea as TextareaDev } from "./dev/Textarea";
 import { Toggle as ToggleDev } from "./dev/Toggle";
-import { Symbols } from "./dev/Symbols";
 
 export const types = {
   aiText: Ai,
@@ -123,7 +124,8 @@ export const types = {
   showOnDevice: ShowOnDevice,
   symbols: Symbols,
   advancedSettings: AdvancedSettings,
-  blockThumbnail: BlockThumbnail
+  blockThumbnail: BlockThumbnail,
+  addable: Addable
 };
 
 export type OptionTypes = typeof types;

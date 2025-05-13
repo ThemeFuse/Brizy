@@ -120,7 +120,9 @@ $dropdown-arrow-size: 7px;
 
       .brz-menu__item {
         padding: 0;
-        transition: background-color 0.2s linear, border-bottom-color 0.2s linear;
+        transition:
+          background-color 0.2s linear,
+          border-bottom-color 0.2s linear;
 
         .brz-a {
           width: 100%;
@@ -335,17 +337,9 @@ $dropdown-arrow-size: 7px;
     transition-delay: 0s;
   }
 
-  .brz-mm-panel {
+  .brz-mm-panels {
     background-repeat: no-repeat;
     background-size: cover;
-
-    &:before {
-      content: "";
-      position: absolute;
-      display: block;
-      width: 100%;
-      height: 100%;
-    }
   }
 }
 
@@ -448,7 +442,9 @@ $dropdown-arrow-size: 7px;
         visibility: visible;
         opacity: 1;
         z-index: z("mega-menu");
-        transition: 0.2s z-index linear, 0.2s opacity linear;
+        transition:
+          0.2s z-index linear,
+          0.2s opacity linear;
       }
     }
 

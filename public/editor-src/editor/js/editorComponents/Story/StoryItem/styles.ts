@@ -11,11 +11,22 @@ export function style(data: Data): OutputStyle {
   const { maskShape = "none" } = data.v;
 
   const styles = {
+    ".brz && > .brz-bg": {
+      standart: ["cssStyleBorderRadius"]
+    },
     ".brz &&:hover > .brz-bg": {
       standart: [
         "cssStyleBorder",
-        "cssStyleBorderRadius",
         ...(maskShape === "none" ? [] : ["cssStyleMaskDropShadow"])
+      ]
+    },
+    ".brz && > .brz-bg > .brz-bg-image": {
+      standart: [
+        "cssStyleMaskShape",
+        "cssStyleMaskCustomShape",
+        "cssStyleMaskSize",
+        "cssStyleMaskPosition",
+        "cssStyleMaskRepeat"
       ]
     },
     ".brz &&:hover > .brz-bg > .brz-bg-image": {
@@ -23,21 +34,14 @@ export function style(data: Data): OutputStyle {
         "cssStyleBgImage",
         "cssStyleFilter",
         "cssStyleBgImagePosition",
-        "cssStyleBgMediaImage",
-        "cssStyleMaskShape",
-        "cssStyleMaskCustomShape",
-        "cssStyleMaskSize",
-        "cssStyleMaskPosition",
-        "cssStyleMaskRepeat"
+        "cssStyleBgMediaImage"
       ]
     },
     ".brz &&:hover > .brz-bg > .brz-bg-image:after": {
       standart: ["cssStyleBgImageHover"]
     },
-    ".brz &&:hover > .brz-bg > .brz-bg-color": {
+    ".brz && > .brz-bg > .brz-bg-color": {
       standart: [
-        "cssStyleBgColor",
-        "cssStyleBgGradient",
         "cssStyleMaskShape",
         "cssStyleMaskCustomShape",
         "cssStyleMaskSize",
@@ -45,11 +49,20 @@ export function style(data: Data): OutputStyle {
         "cssStyleMaskRepeat"
       ]
     },
+    ".brz &&:hover > .brz-bg > .brz-bg-color": {
+      standart: ["cssStyleBgColor", "cssStyleBgGradient"]
+    },
+    ".brz && > .brz-bg > .brz-bg-map": {
+      standart: ["cssStyleBgMediaMap"]
+    },
     ".brz &&:hover > .brz-bg > .brz-bg-map": {
-      standart: ["cssStyleFilter", "cssStyleBgMediaMap"]
+      standart: ["cssStyleFilter"]
+    },
+    ".brz && > .brz-bg > .brz-bg-video": {
+      standart: ["cssStyleBgMediaVideo"]
     },
     ".brz &&:hover > .brz-bg > .brz-bg-video": {
-      standart: ["cssStyleFilter", "cssStyleBgMediaVideo"]
+      standart: ["cssStyleFilter"]
     }
   };
 

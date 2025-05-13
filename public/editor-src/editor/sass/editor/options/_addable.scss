@@ -1,0 +1,128 @@
+@import "../../variables";
+
+.brz-ed-sidebar__addable {
+  //lower than bottom panel
+  z-index: z("sidebar-addable") #{!important};
+  @apply left-[48px] #{!important};
+  &__drag_overlay {
+    z-index: z("sidebar-addable__drag-overlay") #{!important};
+  }
+
+  &--align-left {
+    @apply text-start #{!important};
+    .brz-ed-addable__wrapper {
+      @apply mb-0 pb-[30px];
+    }
+  }
+
+  .brz-ui-scrollbar__view {
+    @apply flex flex-col;
+  }
+
+  &__head {
+    @apply px-[30px] py-[15px];
+    background-color: $addable__sidebar__head-bg;
+
+    .brz-ed-tooltip {
+      @apply m-0;
+      background-color: $addable_sidebar__tooltip-bg;
+
+      &__overlay {
+        @apply shadow-none bg-transparent;
+        .brz-ed-arrow::after {
+          border-bottom-color: $addable_sidebar__tooltip-bg;
+        }
+      }
+    }
+  }
+}
+
+.brz-ed-addable {
+  &__icon-wrapper {
+    @apply flex items-center gap-2 cursor-pointer text-white;
+
+    &:hover {
+      color: $brand__primary;
+    }
+  }
+
+  &__wrapper {
+    @apply flex-grow flex flex-col justify-between pb-0 mb-[90px] gap-[30px];
+    .brz-ui-scrollbar__view {
+      @apply px-[30px] pt-[30px];
+    }
+
+    .brz-ed-addable__items {
+      @apply inline-flex flex-col gap-[10px];
+    }
+
+    .brz-ui-noitems {
+      @apply text-center text-white;
+    }
+  }
+
+  &__group {
+    @apply bg-inherit border-2 border-solid rounded transition-[height,colors];
+    border-color: $addable-border-color;
+
+    &__head {
+      @apply flex flex-row pl-[20px] pr-[16px] h-[45px] gap-[10px];
+      @apply text-white items-center bg-inherit select-none;
+
+      &__drag-pointer {
+        @apply text-[16px] flex cursor-move;
+        &--disabled {
+          @apply cursor-not-allowed;
+        }
+      }
+
+      &__title {
+        @apply flex-grow;
+        input {
+          all: unset;
+          @apply w-full overflow-hidden overflow-ellipsis
+        }
+      }
+
+      &__remove {
+        @apply cursor-pointer shrink-0;
+      }
+
+      &__expand-btn {
+        @apply cursor-pointer transition-transform shrink-0;
+      }
+    }
+
+    &__body {
+      @apply flex flex-col px-3;
+      .brz-ed-option {
+        @apply select-none p-[10px];
+        @apply border-0 border-t-[1px] border-solid border-white border-opacity-10;
+      }
+    }
+
+    &:hover,
+    &--active {
+      background-color: $toolbar-bg;
+    }
+
+    &--expanded {
+      background-color: $toolbar-bg;
+      border-color: $addable__sidebar__group--border-color--active;
+    }
+  }
+
+  //Add new group Button
+  &__add-new {
+    @apply flex flex-row justify-center items-center gap-3 cursor-pointer flex-shrink-0;
+    @apply bg-transparent border-2 border-solid  rounded;
+    @apply mx-[30px] h-[76px] opacity-100 transition-colors;
+    color: $addable__sidebar__add_button__text-color;
+    border-color: $addable-border-color;
+
+    &:hover {
+      border-color: $addable__sidebar__add_button--active;
+      color: $addable__sidebar__add_button--active;
+    }
+  }
+}

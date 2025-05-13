@@ -8,6 +8,7 @@ import CustomCSS from "visual/component/CustomCSS";
 import PaddingResizer from "visual/component/PaddingResizer";
 import { ProBlocked } from "visual/component/ProBlocked";
 import { Roles } from "visual/component/Roles";
+import { currentUserRole } from "visual/component/Roles";
 import { CollapsibleToolbar, ToolbarExtend } from "visual/component/Toolbar";
 import {
   minWInBoxedPage,
@@ -318,6 +319,7 @@ class SectionFooter extends EditorComponent {
                 animationClass={this.getAnimationClassName(v, vs, vd)}
               >
                 <Roles
+                  currentRole={currentUserRole(this.getGlobalConfig())}
                   allow={["admin"]}
                   fallbackRender={() => this.renderItems(v, vs, vd)}
                 >

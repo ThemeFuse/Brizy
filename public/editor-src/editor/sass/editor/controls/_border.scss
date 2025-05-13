@@ -8,13 +8,13 @@
 
   &__width {
     display: flex;
-    margin-left: auto;
+    margin-inline-start: auto;
     align-items: center;
 
     .brz-label {
       word-break: keep-all;
       color: $options__label-color;
-      margin-right: 5px;
+      margin-inline-end: 5px;
     }
 
     input {
@@ -41,7 +41,7 @@
     }
 
     &--active .brz-icon {
-      color: $border__width__type__icon-color--active
+      color: $border__width__type__icon-color--active;
     }
   }
 }

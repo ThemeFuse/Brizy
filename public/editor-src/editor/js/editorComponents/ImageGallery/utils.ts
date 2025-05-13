@@ -97,6 +97,12 @@ export const getSpacing = (v: Value) => {
   };
 };
 
+export const getRowHeight = (v: Value) => ({
+  rowHeight: v.rowHeight,
+  tabletRowHeight: v.tabletRowHeight,
+  mobileRowHeight: v.mobileRowHeight
+});
+
 export const changeImagesData = (
   items: ElementModelType[],
   data: Record<string, unknown>

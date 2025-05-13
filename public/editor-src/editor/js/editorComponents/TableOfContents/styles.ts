@@ -1,33 +1,36 @@
-
+import { DynamicStylesProps } from "visual/types";
 import { renderStyles } from "visual/utils/cssStyle";
 import type { OutputStyle } from "visual/utils/cssStyle/types";
 import type { Styles } from "visual/utils/cssStyle/types";
 import type { Value } from "./types";
-import { DynamicStylesProps } from "visual/types";
 
-export function style(data:DynamicStylesProps<Value>): OutputStyle {
+export function style(data: DynamicStylesProps<Value>): OutputStyle {
   const styles: Styles = {
+    ".brz &&": {
+      standart: ["cssStyleSizeWidth"]
+    },
     ".brz &&:hover": {
-      standart: ["cssStyleSizeWidth", "cssStyleBoxShadow"],
+      standart: ["cssStyleBoxShadow"],
       interval: [
         "cssStyleHoverTransition",
         "cssStyleElementTOCPropertyHoverTransition"
       ]
     },
+    ".brz && .brz-toc-header": {
+      standart: ["cssStyleElementTOCHeaderPadding"]
+    },
     ".brz && .brz-toc-header:hover": {
       standart: [
         "cssStyleElementTOCHeaderBgColor",
-        "cssStyleElementTOCHeaderBorder",
-        "cssStyleElementTOCHeaderPadding"
+        "cssStyleElementTOCHeaderBorder"
       ],
       interval: [
         "cssStyleHoverTransition",
         "cssStyleElementTOCPropertyHoverTransition"
       ]
     },
-    ".brz && .brz-toc-header:hover .brz-toc-title": {
+    ".brz && .brz-toc-header .brz-toc-title": {
       standart: [
-        "cssStyleElementTOCTitleColor",
         "cssStyleTypography2FontFamily",
         "cssStyleTypography2FontSize",
         "cssStyleTypography2LineHeight",
@@ -35,15 +38,17 @@ export function style(data:DynamicStylesProps<Value>): OutputStyle {
         "cssStyleTypography2LetterSpacing",
         "cssStyleTypography2FontVariation",
         "cssStyleTextTransforms"
-      ],
+      ]
+    },
+    ".brz && .brz-toc-header:hover .brz-toc-title": {
+      standart: ["cssStyleElementTOCTitleColor"],
       interval: [
         "cssStyleHoverTransition",
         "cssStyleElementTOCPropertyHoverTransition"
       ]
     },
-    ".brz && .brz-toc-body__list:hover": {
+    ".brz && .brz-toc-body__list": {
       standart: [
-        "cssStyleElementTOCBodyBgColor",
         "cssStyleElementTOCBodyFontFamily",
         "cssStyleElementTOCBodyFontSize",
         "cssStyleElementTOCBodyLineHeight",
@@ -52,7 +57,10 @@ export function style(data:DynamicStylesProps<Value>): OutputStyle {
         "cssStyleElementTOCBodyFontVariation",
         "cssStyleElementTOCBodyTextTransform",
         "cssStyleElementTOCWordWrap"
-      ],
+      ]
+    },
+    ".brz && .brz-toc-body__list:hover": {
+      standart: ["cssStyleElementTOCBodyBgColor"],
       interval: [
         "cssStyleHoverTransition",
         "cssStyleElementTOCPropertyHoverTransition"
@@ -75,21 +83,21 @@ export function style(data:DynamicStylesProps<Value>): OutputStyle {
     ".brz && .brz-toc-body__list, .brz && .brz-toc-message": {
       standart: ["cssStyleElementTOCBodyPadding"]
     },
+    ".brz && .brz-toc-body li .brz-toc-body__list-marker": {
+      standart: ["cssStyleElementTOCBodyMarkerSize"]
+    },
     ".brz && .brz-toc-body li:hover .brz-toc-body__list-marker": {
-      standart: [
-        "cssStyleElementTOCBodyMarkerSize",
-        "cssStyleElementTOCBodyMarkerColor"
-      ],
+      standart: ["cssStyleElementTOCBodyMarkerColor"],
       interval: [
         "cssStyleHoverTransition",
         "cssStyleElementTOCPropertyHoverTransition"
       ]
     },
+    ".brz && .brz-toc-body li::marker": {
+      standart: ["cssStyleElementTOCBodyMarkerSize"]
+    },
     ".brz && .brz-toc-body li:hover::marker": {
-      standart: [
-        "cssStyleElementTOCBodyMarkerSize",
-        "cssStyleElementTOCBodyMarkerColor"
-      ],
+      standart: ["cssStyleElementTOCBodyMarkerColor"],
       interval: [
         "cssStyleHoverTransition",
         "cssStyleElementTOCPropertyHoverTransition"

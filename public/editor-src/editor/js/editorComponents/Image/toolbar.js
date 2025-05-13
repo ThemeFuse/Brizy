@@ -1,6 +1,7 @@
 import { keyToDCFallback2Key } from "visual/editorComponents/EditorComponent/DynamicContent/utils";
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
 import {
+  getEnabledLinkOptions,
   isImagePointerEnabled,
   isImageZoomEnabled
 } from "visual/global/Config/types/configs/featuresValue";
@@ -50,12 +51,14 @@ export default ({
 
 export const getItems =
   ({ property }) =>
-  ({ v, device, component, context, editorMode }) => {
+  ({ v, device, component, context, editorMode, state }) => {
     const config = component.getGlobalConfig();
     const _isStory = isStory(editorMode);
 
     const inPopup = Boolean(component.props.meta.sectionPopup);
     const inPopup2 = Boolean(component.props.meta.sectionPopup2);
+    const inPosts = Boolean(component.props.meta.posts);
+
     const { cW, gallery } = property[device];
 
     const isBigImageFromGallery = Boolean(v?.clonedFromGallery);
@@ -124,6 +127,13 @@ export const getItems =
       isExternalImage ||
       !isZoomEnabled;
 
+    const {
+      internalLink,
+      linkPopup: linkPopupEnabled,
+      linkAnchor,
+      linkExternal
+    } = getEnabledLinkOptions(config);
+
     return [
       {
         id: "toolbarImage",
@@ -148,6 +158,7 @@ export const getItems =
                     id: "image",
                     type: "population",
                     label: t("Image"),
+                    states: inPosts ? [NORMAL] : [NORMAL, HOVER],
                     disabled:
                       ((isSVGExtension(imageExtension) ||
                         isGIFExtension(imageExtension) ||
@@ -176,7 +187,8 @@ export const getItems =
                         edit: device === "desktop",
                         disableSizes:
                           (inGallery && layout === "justified") ||
-                          isExternalImage,
+                          isExternalImage ||
+                          state === "hover",
                         pointer: !isExternalImage && isPointerEnabled
                       }
                     }
@@ -418,6 +430,7 @@ export const getItems =
               {
                 id: "page",
                 label: t("Page"),
+                disabled: !internalLink,
                 options: [
                   {
                     id: "linkPage",
@@ -434,6 +447,7 @@ export const getItems =
               {
                 id: "external",
                 label: t("URL"),
+                disabled: !linkExternal,
                 options: [
                   {
                     id: "link",
@@ -462,6 +476,7 @@ export const getItems =
               {
                 id: "anchor",
                 label: t("Block"),
+                disabled: !linkAnchor,
                 options: [
                   toolbarLinkAnchor({
                     v,
@@ -472,6 +487,7 @@ export const getItems =
               {
                 id: "popup",
                 label: t("Popup"),
+                disabled: !linkPopupEnabled,
                 options: [
                   {
                     id: "linkPopup",

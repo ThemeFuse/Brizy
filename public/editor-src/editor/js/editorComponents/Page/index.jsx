@@ -42,7 +42,7 @@ class Page extends EditorComponent {
       dbValue,
       data,
       store,
-      this.getGlobalConfig().menuData
+      this.getGlobalConfig()
     );
 
     this.props.onChange(newValue);

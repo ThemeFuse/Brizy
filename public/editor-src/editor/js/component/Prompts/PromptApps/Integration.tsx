@@ -22,8 +22,11 @@ class Apps extends BaseIntegration<Props> {
   }
 
   async getData(): Promise<void> {
-    const { group, service } = this.props;
-    const { status, data } = await getAccounts({ group, services: service });
+    const { group, service, config } = this.props;
+    const { status, data } = await getAccounts(
+      { group, services: service },
+      config
+    );
 
     if (data && data.length > 0 && status === 200) {
       const integrationData = data[0];

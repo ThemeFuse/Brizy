@@ -217,7 +217,7 @@ export class MinistryBrandsSermonDetail extends EditorComponent<Value, Props> {
                                                         allowExtend: false
                                                       }
                                                     )}
-                                                    selector=".brz-sermonDetail__item--meta--preview p"
+                                                    selector=".brz-sermonDetail__item--meta--preview"
                                                   >
                                                     {({ ref: previewRef }) => (
                                                       <Toolbar

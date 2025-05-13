@@ -2,13 +2,11 @@ import { noop } from "es-toolkit";
 import React, { Component } from "react";
 import EditorIcon from "visual/component/EditorIcon";
 import { Scrollbar } from "visual/component/Scrollbar";
-import Config from "visual/global/Config";
+import { isPro } from "visual/utils/env";
 import { t } from "visual/utils/i18n";
 import { Context } from "../../Context";
 import Grid from "./Grid";
 import GridItem from "./GridItem";
-
-const ConfigUrls = Config.get("urls");
 
 class AppList extends Component {
   static contextType = Context;
@@ -55,7 +53,7 @@ class AppList extends Component {
         <a
           className="brz-ed-btn brz-ed-btn-width-2 brz-ed-btn-sm brz-ed-btn-icon brz-ed-btn-icon--left brz-ed-btn-rounded brz-ed-btn-pro"
           rel="noopener noreferrer"
-          href={ConfigUrls.upgradeToPro}
+          href={this.props.config.urls?.upgradeToPro}
           target="_blank"
         >
           <EditorIcon icon="nc-lock" />
@@ -66,7 +64,8 @@ class AppList extends Component {
   }
 
   render() {
-    const { apps, proExceptions, error, hasDelete, handleDelete } = this.props;
+    const { apps, proExceptions, error, hasDelete, config, handleDelete } =
+      this.props;
     const { connectedApps } = this.context;
     const { loadingApp } = this.state;
     const isActive = (id) => connectedApps.includes(id);
@@ -85,6 +84,8 @@ class AppList extends Component {
               loading={loadingApp === app.id}
               active={isActive(app.id)}
               isDeletable={hasDelete && isActive(app.id)}
+              upgradeToProUrl={config.urls?.upgradeToPro}
+              projectIsPro={isPro(config)}
               handleDelete={handleDelete}
               onClick={() => {
                 this.handleChangeApp(app);

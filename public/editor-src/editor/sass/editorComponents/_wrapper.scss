@@ -37,22 +37,20 @@
 
 // Wrapper Clone
 .brz-wrapper-clone {
+  align-items: center;
   > div {
-    flex: 1 0 100%;
+    flex-grow: 0;
+    flex-basis: content;
     min-width: 0;
     align-items: center;
+    display: inline-flex;
   }
 
   &__item {
     position: relative;
     min-height: 1px;
     flex-basis: auto;
-    min-width: 0;
-    .brz-text__editor {
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
+
     .brz-icon-svg {
       min-width: 1em;
     }

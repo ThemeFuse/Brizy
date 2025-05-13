@@ -50,20 +50,14 @@ export class ConfigError extends CustomError {
 }
 
 // Error Codes
-
-// polling
-export const HEART_BEAT_ERROR = 1;
-
-// project uses from another user
-export const PROJECT_LOCKED_ERROR = 2;
-
-// project data version
-export const PROJECT_DATA_VERSION_ERROR = 3;
+export enum ErrorCodes {
+  HEART_BEAT_ERROR = 1, // polling
+  PROJECT_LOCKED_ERROR = 2, // project uses from another user
+  PROJECT_DATA_VERSION_ERROR = 3, // project data version
+  SYNC_ERROR = 4 // Shopify sync error
+}
 
 export const IRREPARABLE_ERRORS = [
-  HEART_BEAT_ERROR,
-  PROJECT_DATA_VERSION_ERROR
+  ErrorCodes.HEART_BEAT_ERROR,
+  ErrorCodes.PROJECT_DATA_VERSION_ERROR
 ];
-
-// Shopify sync error
-export const SYNC_ERROR = 4;

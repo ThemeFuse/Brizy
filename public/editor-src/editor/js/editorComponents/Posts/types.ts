@@ -4,6 +4,8 @@ import { Dictionary } from "visual/types/utils";
 
 type Switch = "on" | "off";
 
+type OrderBy = "id" | "title" | "random" | "publishDate";
+
 export type PostsTypes =
   | "posts"
   | "archives"
@@ -98,7 +100,7 @@ export type CloudPostsQuery = {
   include: Dictionary<Array<{ collectionId: string; fieldId?: string }>>;
   exclude: Dictionary<Array<{ collectionId: string; fieldId?: string }>>;
   count: number;
-  order_by: "id" | "title" | "random";
+  order_by: OrderBy;
   order: "ASC" | "DESC";
   offset: number;
   excludeCurrentProduct?: 1;
@@ -107,7 +109,7 @@ export type CloudPostsQuery = {
 export type CloudArchiveQuery = {
   type: "archive";
   count: number;
-  order_by: "id" | "title" | "random";
+  order_by: OrderBy;
   order: "ASC" | "DESC";
   offset: number;
 };

@@ -18,7 +18,7 @@ import Link from "visual/component/Link";
 import { ToastNotification } from "visual/component/Notifications";
 import Placeholder from "visual/component/Placeholder";
 import Toolbar from "visual/component/Toolbar";
-import { PortalToolbar } from "visual/component/Toolbar/PortalToolbar";
+import { PortalToolbarType } from "visual/component/Toolbar/PortalToolbar";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import {
@@ -105,7 +105,7 @@ class RichText extends EditorComponent<Value, Record<string, unknown>, State> {
     selectedValue: null
   };
   quillRef = createRef<QuillComponent>();
-  toolbarRef = createRef<PortalToolbar>();
+  toolbarRef = createRef<PortalToolbarType>();
   nodeRef = createRef<HTMLDivElement>();
   toolbarOpen = false;
   tmpPopups: Value["popups"] | null = null;
@@ -115,6 +115,7 @@ class RichText extends EditorComponent<Value, Record<string, unknown>, State> {
       typeof this.getGlobalConfig().dynamicContent?.getPlaceholderData ===
       "function"
     ) || isView(this.props.renderContext);
+
   // Can be enabled by Config
 
   static get componentId() {
@@ -212,7 +213,10 @@ class RichText extends EditorComponent<Value, Record<string, unknown>, State> {
     };
     const dynamicContentGroups = this.getGlobalConfig().dynamicContent?.groups;
 
-    if (isDCItemHandler(dynamicContentGroups?.richText)) {
+    if (
+      isDCItemHandler(dynamicContentGroups?.richText) &&
+      dynamicContentGroups
+    ) {
       if (selectionCoords && this.state.selectionCoords !== selectionCoords) {
         Object.assign(newState, { selectionCoords });
 
@@ -254,7 +258,11 @@ class RichText extends EditorComponent<Value, Record<string, unknown>, State> {
 
     const dynamicContentGroups = this.getGlobalConfig().dynamicContent?.groups;
 
-    if (isDCItemHandler(dynamicContentGroups?.richText) && formats.population) {
+    if (
+      isDCItemHandler(dynamicContentGroups?.richText) &&
+      formats.population &&
+      dynamicContentGroups
+    ) {
       const { res, rej, extra } = this.handleCustomDCOption(formats);
 
       dynamicContentGroups.richText.handler(res, rej, extra);
@@ -288,10 +296,11 @@ class RichText extends EditorComponent<Value, Record<string, unknown>, State> {
       return;
     }
 
-    const dcOption = getDynamicContentByPlaceholder(
-      this.context.dynamicContent.config,
-      value
-    );
+    const dcConfig = this.context.dynamicContent.config;
+
+    const dcOption = dcConfig
+      ? getDynamicContentByPlaceholder(dcConfig, value)
+      : undefined;
 
     if (dcOption) {
       this.quillRef.current.formatPopulation({
@@ -608,11 +617,15 @@ class RichText extends EditorComponent<Value, Record<string, unknown>, State> {
       width: "130px",
       top: top + height
     };
+    const dcConfig = this.context.dynamicContent.config;
+
     const choices =
-      (getDynamicContentChoices(
-        this.context.dynamicContent.config,
-        DCTypes.richText
-      ) as Array<Choice>) || [];
+      (dcConfig
+        ? (getDynamicContentChoices(
+            dcConfig,
+            DCTypes.richText
+          ) as Array<Choice>)
+        : undefined) || [];
 
     // remove first symbol - # && escape string for use in regexp
     const re = new RegExp(
@@ -765,6 +778,7 @@ class RichText extends EditorComponent<Value, Record<string, unknown>, State> {
       "delete",
       "clearFormatting"
     ];
+    const isStoryMode = isStory(this.props.editorMode);
 
     const newV = {
       ...v,
@@ -808,7 +822,10 @@ class RichText extends EditorComponent<Value, Record<string, unknown>, State> {
         }
         renderContext={this.props.renderContext}
         editorMode={this.props.editorMode}
+        getConfig={this.getGlobalConfig}
         dcGroups={config?.dynamicContent?.groups}
+        textId={v._id}
+        isStoryMode={isStoryMode}
       />
     );
     let toolbarOptions: ToolbarOption = {
@@ -859,7 +876,7 @@ class RichText extends EditorComponent<Value, Record<string, unknown>, State> {
                       }: {
                         ref: RefObject<HTMLDivElement>;
                       }) =>
-                        isStory(this.props.editorMode) ? (
+                        isStoryMode ? (
                           <BoxResizer
                             points={resizerPoints}
                             meta={{
@@ -892,6 +909,8 @@ class RichText extends EditorComponent<Value, Record<string, unknown>, State> {
   }
 
   renderForView(v: Value, vs: Value, vd: Value) {
+    const config = this.getGlobalConfig();
+
     let content = (
       <Quill
         store={this.getReduxStore()}
@@ -899,7 +918,8 @@ class RichText extends EditorComponent<Value, Record<string, unknown>, State> {
         value={v.text}
         renderContext={this.props.renderContext}
         editorMode={this.props.editorMode}
-        dcGroups={this.getGlobalConfig()?.dynamicContent?.groups}
+        getConfig={this.getGlobalConfig}
+        dcGroups={config?.dynamicContent?.groups}
       />
     );
 

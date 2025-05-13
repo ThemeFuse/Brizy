@@ -10,6 +10,7 @@ import {
   DCGroupCloud,
   DCGroups
 } from "visual/global/Config/types/DynamicContent";
+import { GetConfig } from "visual/providers/ConfigProvider/types";
 import { EditorMode, isStory } from "visual/providers/EditorModeProvider";
 import { RenderType, isEditor, isView } from "visual/providers/RenderProvider";
 import { Sheet } from "visual/providers/StyleProvider/Sheet";
@@ -78,6 +79,7 @@ type Props = {
   renderContext: RenderType;
   editorMode: EditorMode;
   dcGroups: MValue<DCGroupCloud | DCGroups>;
+  getConfig: GetConfig;
   initDelay?: number;
   componentId?: string;
   forceUpdate?: boolean;
@@ -86,6 +88,8 @@ type Props = {
   onTextChange?: (text: string) => void;
   isToolbarOpen?: () => boolean;
   onSelectionChange?: (format: Formats, coords: Coords) => void;
+  textId?: string;
+  isStoryMode?: boolean;
 };
 
 export class QuillComponent extends React.Component<Props> {
@@ -108,8 +112,11 @@ export class QuillComponent extends React.Component<Props> {
   constructor(props: Props) {
     super(props);
     this.quillUtils = QuillUtils(this.props.renderContext) as QuillUtils;
-    if (isEditor(this.props.renderContext)) {
-      this.quillClass = GetQuill(this.props.renderContext);
+
+    const { renderContext, getConfig } = this.props;
+
+    if (isEditor(renderContext)) {
+      this.quillClass = GetQuill(renderContext, getConfig);
     }
   }
 
@@ -248,16 +255,40 @@ export class QuillComponent extends React.Component<Props> {
         // TODO: make much less hacky
         if (hasSelectionHandler && range && !isEqual(range, oldRange)) {
           const format = this.getSelectionFormat();
-          this.props.onSelectionChange(format, this.getCoords(range));
+          this.props.onSelectionChange?.(format, this.getCoords(range));
         }
       }
     });
     quill.on("text-change", () => {
+      const { textId, isStoryMode } = this.props;
       const range = quill.selection.savedRange;
       const format = this.getSelectionFormat();
       if (hasSelectionHandler) {
-        this.props.onSelectionChange(format, this.getCoords(range));
+        this.props.onSelectionChange?.(format, this.getCoords(range));
       }
+
+      const container = this.contentEditable.current;
+
+      if (isStoryMode && container) {
+        // This case is only for the Story because the RichText is rendered twice with the same content
+        // (once for the StoryItem, and once for the StoryDot) and only the StoryItem is editable so we need to sync the
+        // content also for the StoryDot
+
+        const duplicatedInstances = instances.filter((instance) => {
+          return (
+            instance.contentEditable.current !== container &&
+            instance.props.textId === textId
+          );
+        });
+
+        duplicatedInstances.forEach((instance) => {
+          if (instance.contentEditable.current) {
+            instance.contentEditable.current.innerHTML = container.innerHTML;
+          }
+          instance.lastUpdatedValue = quill.root.innerHTML;
+        });
+      }
+
       this.save(quill.root.innerHTML);
 
       requestAnimationFrame(() => {
@@ -374,11 +405,9 @@ export class QuillComponent extends React.Component<Props> {
   };
 
   changeRichTextFonts(html: string): string {
-    const { store, sheet } = this.props;
-    if (
-      isEditor(this.props.renderContext) &&
-      typeof this.quillUtils !== "undefined"
-    ) {
+    const { store, sheet, renderContext, editorMode, getConfig } = this.props;
+
+    if (isEditor(renderContext) && typeof this.quillUtils !== "undefined") {
       return this.quillUtils.mapBlockElements(html, ($elem: JQuery) => {
         const uniqId = uuid(5);
 
@@ -400,8 +429,9 @@ export class QuillComponent extends React.Component<Props> {
             $elem.attr("class")?.split(" ") ?? []
           );
           const contexts = {
-            renderContext: this.props.renderContext,
-            mode: this.props.editorMode
+            renderContext,
+            mode: editorMode,
+            getConfig
           };
           const styles = styleHeading({
             v,
@@ -426,12 +456,12 @@ export class QuillComponent extends React.Component<Props> {
   }
 
   render(): ReactNode {
-    const { value, store, renderContext } = this.props;
+    const { value, store, renderContext, getConfig } = this.props;
     let markup = this.changeRichTextFonts(value);
 
     if (isView(renderContext)) {
       try {
-        markup = changeRichText(markup, store);
+        markup = changeRichText(markup, store, getConfig());
       } catch (e) {
         let msg = "Something wen wrong with richText VIEW compilation";
         if (process.env.NODE_ENV === "development") {
@@ -484,15 +514,17 @@ export class QuillComponent extends React.Component<Props> {
 
   getClassName(classList: string[], uniqId: string): string {
     const { v, vs, vd } = classNamesToV2(classList);
-    const { store, sheet } = this.props;
+    const { store, sheet, renderContext, editorMode, getConfig } = this.props;
+
     const styles = styleHeading({
       v,
       vs,
       vd,
       store,
       contexts: {
-        renderContext: this.props.renderContext,
-        mode: this.props.editorMode
+        renderContext,
+        mode: editorMode,
+        getConfig
       }
     });
 

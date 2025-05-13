@@ -178,6 +178,7 @@ class VideoPlaylist extends EditorComponent {
       "brz-video-playlist",
       `brz-video-playlist-${positionItem}`,
       `brz-video-playlist-${positionThumbs}`,
+      "brz-ow-hidden",
       this.css(
         this.getComponentId(),
         this.getId(),

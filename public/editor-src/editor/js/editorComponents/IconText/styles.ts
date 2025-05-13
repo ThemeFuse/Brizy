@@ -1,13 +1,13 @@
-import { renderStyles } from "visual/utils/cssStyle";
 import { ElementModel } from "visual/component/Elements/Types";
-import { OutputStyle } from "visual/utils/cssStyle/types";
 import type { DynamicStylesProps } from "visual/types";
+import { renderStyles } from "visual/utils/cssStyle";
+import { OutputStyle } from "visual/utils/cssStyle/types";
 
 export function style(data: DynamicStylesProps<ElementModel>): OutputStyle {
   const styles = {
-    ".brz &&:hover": { standart: ["cssStyleElementIconBoxFlexDirection"] },
+    ".brz &&": { standart: ["cssStyleElementIconBoxFlexDirection"] },
 
-    ".brz &&:hover .brz-icon__container": {
+    ".brz && .brz-icon__container": {
       standart: ["cssStyleElementIconBoxMargin", "cssStyleFlexVerticalAlign"]
     }
   };

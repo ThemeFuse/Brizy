@@ -11,7 +11,6 @@ import { systemFont } from "visual/utils/fonts/utils";
 import { getUsedModelFontFamily } from "visual/utils/options/getDetailsModelFontFamily";
 import { parseGlobalBlocksToRecord } from "visual/utils/reader/globalBlocks";
 import { getBlocksStylesFonts } from "visual/utils/traverse";
-import { uuid } from "visual/utils/uuid";
 import { readPageData } from "../../../common/adapter";
 import { compileProject } from "../../common/compileProject";
 import { globalBlocksToStatic } from "../../common/toStatic/globalBlocksToStatic";
@@ -63,7 +62,6 @@ export async function bootstrap(config: ConfigCommon): Promise<Static> {
     blocks: { data: blocksFonts },
     system: { data: systemFont }
   });
-  const configId = uuid();
   const editorMode = config.mode;
 
   store.dispatch(
@@ -75,7 +73,6 @@ export async function bootstrap(config: ConfigCommon): Promise<Static> {
       globalBlocks,
       projectStatus: {},
       config,
-      configId,
       editorMode
     })
   );

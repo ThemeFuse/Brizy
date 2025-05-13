@@ -18,49 +18,83 @@ export function cssStyleElementShopifyQuantityButtonWidth({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
-  return cssStyleSizeWidth({ v, device, state, store, prefix: "button" });
+  return cssStyleSizeWidth({
+    v,
+    device,
+    state,
+    store,
+    getConfig,
+    prefix: "button"
+  });
 }
 
 export function cssStyleElementShopifyQuantityInputWidth({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
-  return cssStyleSizeWidth({ v, device, state, store, prefix: "input" });
+  return cssStyleSizeWidth({
+    v,
+    device,
+    state,
+    store,
+    getConfig,
+    prefix: "input"
+  });
 }
 
 export function cssStyleElementShopifyQuantityButtonHeight({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
-  return cssStyleSizeHeight({ v, device, state, store, prefix: "button" });
+  return cssStyleSizeHeight({
+    v,
+    device,
+    state,
+    store,
+    getConfig,
+    prefix: "button"
+  });
 }
 
 export function cssStyleElementShopifyQuantityInputHeight({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
-  return cssStyleSizeHeight({ v, device, state, store, prefix: "input" });
+  return cssStyleSizeHeight({
+    v,
+    device,
+    state,
+    store,
+    getConfig,
+    prefix: "input"
+  });
 }
 
 export function cssStyleElementShopifyQuantityButtonSpacing({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
   return cssStyleSpacing({
     v,
     device,
     state,
     store,
+    getConfig,
     prefix: "button",
     direction: "horizontal"
   });
@@ -71,15 +105,17 @@ export function cssStyleElementShopifyQuantityButtonBgColor({
   device,
   state,
   store,
+  getConfig,
   prefix = "bgButton"
 }: CSSValue): string {
-  const bgColor = styleBgColor({ v, device, state, store, prefix });
+  const bgColor = styleBgColor({ v, device, state, getConfig, prefix });
 
   const bgGradient = styleBgGradient({
     v,
     device,
     state,
-    store
+    store,
+    getConfig
   });
 
   return bgColor === undefined || bgGradient !== "none"
@@ -92,9 +128,10 @@ export function cssStyleElementShopifyQuantityInputBgColor({
   device,
   state,
   store,
+  getConfig,
   prefix = "bgInput"
 }: CSSValue): string {
-  return cssStyleBgColor({ v, device, state, store, prefix });
+  return cssStyleBgColor({ v, device, state, store, getConfig, prefix });
 }
 
 export function cssStyleElementShopifyQuantityButtonBorder({
@@ -102,18 +139,20 @@ export function cssStyleElementShopifyQuantityButtonBorder({
   device,
   state,
   store,
+  getConfig,
   prefix = "button"
 }: CSSValue): string {
-  return cssStyleBorder({ v, device, store, state, prefix });
+  return cssStyleBorder({ v, device, store, getConfig, state, prefix });
 }
 export function cssStyleElementShopifyQuantityInputBorder({
   v,
   device,
   state,
   store,
+  getConfig,
   prefix = "input"
 }: CSSValue): string {
-  return cssStyleBorder({ v, device, store, state, prefix });
+  return cssStyleBorder({ v, device, store, getConfig, state, prefix });
 }
 
 export function cssStyleElementShopifyQuantityButtonBoxShadow({
@@ -121,9 +160,10 @@ export function cssStyleElementShopifyQuantityButtonBoxShadow({
   device,
   state,
   store,
+  getConfig,
   prefix = "button"
 }: CSSValue): string {
-  return cssStyleBoxShadow({ v, device, state, store, prefix });
+  return cssStyleBoxShadow({ v, device, state, store, getConfig, prefix });
 }
 
 export function cssStyleElementShopifyQuantityInputBoxShadow({
@@ -131,9 +171,10 @@ export function cssStyleElementShopifyQuantityInputBoxShadow({
   device,
   state,
   store,
+  getConfig,
   prefix = "input"
 }: CSSValue): string {
-  return cssStyleBoxShadow({ v, device, state, store, prefix });
+  return cssStyleBoxShadow({ v, device, state, store, getConfig, prefix });
 }
 
 export function cssStyleElementShopifyQuantityButtonRadius({
@@ -141,9 +182,10 @@ export function cssStyleElementShopifyQuantityButtonRadius({
   device,
   state,
   store,
+  getConfig,
   prefix = "quantityButton"
 }: CSSValue): string {
-  return cssStyleBorderRadius({ v, device, state, store, prefix });
+  return cssStyleBorderRadius({ v, device, state, store, getConfig, prefix });
 }
 
 export function cssStyleElementShopifyQuantityInputRadius({
@@ -151,18 +193,27 @@ export function cssStyleElementShopifyQuantityInputRadius({
   device,
   state,
   store,
+  getConfig,
   prefix = "quantityInput"
 }: CSSValue): string {
-  return cssStyleBorderRadius({ v, device, state, store, prefix });
+  return cssStyleBorderRadius({ v, device, state, store, getConfig, prefix });
 }
 
 export const cssStyleElementShopifyQuantityIconColor = ({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }: CSSValue): string => {
-  return cssStyleColor({ v, device, state, store, prefix: "buttonIconColor" });
+  return cssStyleColor({
+    v,
+    device,
+    state,
+    store,
+    getConfig,
+    prefix: "buttonIconColor"
+  });
 };
 
 export function cssStyleElementShopifyQuantityIconSize({

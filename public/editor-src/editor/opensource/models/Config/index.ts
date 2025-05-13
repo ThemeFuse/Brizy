@@ -6,17 +6,16 @@ import { Integrations } from "../Integrations";
 import { Menu } from "../Menu";
 import { Page } from "../Page";
 import { Project } from "../Project";
-import { HtmlOutputType } from "../common";
+import { UI } from "../UI";
 import { OnAutoSave } from "../common/OnAutoSave";
 import { OnSave } from "../common/OnSave";
 
-export interface Config<T extends HtmlOutputType> {
+export interface EditorConfig {
   //#region Base
 
   mode: EditorMode;
   projectData: Project;
   pageData: Page;
-  htmlOutputType: T;
 
   pagePreview?: string;
   autoSaveInterval?: number;
@@ -59,11 +58,37 @@ export interface Config<T extends HtmlOutputType> {
 
   //#endregion
 
+  //#region UI
+
+  ui?: UI;
+
+  //#endregion
+
   //#region Events
 
-  onSave?: OnSave<T>;
-  onAutoSave?: OnAutoSave<T>;
+  onSave?: OnSave;
+  onAutoSave?: OnAutoSave;
   onLoad?: VoidFunction;
+
+  //#endregion
+}
+
+export interface PreviewConfig {
+  //#region Menu
+
+  menu?: Menu;
+
+  //#endregion
+
+  //#region Integrations
+
+  integrations?: Integrations;
+
+  //#endregion
+
+  //#region API
+
+  api?: Pick<Api, "media">;
 
   //#endregion
 }

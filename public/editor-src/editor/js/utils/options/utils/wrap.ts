@@ -5,8 +5,11 @@ import {
 import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
 import { bindPopulation } from "visual/utils/options/utils/bindPopulation";
 
-export function wrapOption(t: ToolbarItemType): ToolbarItemType {
-  return bindPopulation(t);
+export function wrapOption(
+  option: ToolbarItemType,
+  parentOption?: ToolbarItemType
+): ToolbarItemType {
+  return bindPopulation(option, parentOption);
 }
 
 export const callGetter =

@@ -48,12 +48,12 @@ export const Skew: FCC<EffectProps<V>> = ({ value, onChange }) => {
   );
 
   const onChangeSkewX = useCallback(
-    ({ number }) => onSkewXChange(number),
+    ({ number }: { number: number }) => onSkewXChange(number),
     [onSkewXChange]
   );
 
   const onChangeSkewY = useCallback(
-    ({ number }) => onSkewYChange(number),
+    ({ number }: { number: number }) => onSkewYChange(number),
     [onSkewYChange]
   );
 

@@ -24,7 +24,7 @@ export default class MenuSimpleWP extends EditorComponent {
   }
 
   componentDidMount() {
-    getMenus(this.getGlobalConfig()).then((menus) => {
+    getMenus(this.getGlobalConfig().api).then((menus) => {
       this.setState({ menus });
 
       const v = this.getValue();

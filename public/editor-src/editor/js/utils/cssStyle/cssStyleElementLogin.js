@@ -56,12 +56,14 @@ export function cssStyleElementLoginLostPasswordTypography2FontFamily({
   v,
   device,
   store,
+  getConfig,
   renderContext
 }) {
   return cssStyleTypography2FontFamily({
     v,
     device,
     store,
+    getConfig,
     prefix: "lost",
     renderContext
   });
@@ -70,50 +72,93 @@ export function cssStyleElementLoginLostPasswordTypography2FontFamily({
 export function cssStyleElementLoginLostPasswordTypography2FontSize({
   v,
   device,
+  getConfig,
   store
 }) {
-  return cssStyleTypography2FontSize({ v, device, store, prefix: "lost" });
+  return cssStyleTypography2FontSize({
+    v,
+    device,
+    store,
+    getConfig,
+    prefix: "lost"
+  });
 }
 
 export function cssStyleElementLoginLostPasswordTypography2LineHeight({
   v,
   device,
+  getConfig,
   store
 }) {
-  return cssStyleTypography2LineHeight({ v, device, store, prefix: "lost" });
+  return cssStyleTypography2LineHeight({
+    v,
+    device,
+    store,
+    getConfig,
+    prefix: "lost"
+  });
 }
 
 export function cssStyleElementLoginLostPasswordTypography2FontVariation({
   v,
   device,
+  getConfig,
   store
 }) {
-  return cssStyleTypography2FontVariation({ v, device, store, prefix: "lost" });
+  return cssStyleTypography2FontVariation({
+    v,
+    device,
+    store,
+    getConfig,
+    prefix: "lost"
+  });
 }
 
 export function cssStyleElementLoginLostPasswordTextTransform({
   v,
   device,
   state,
+  getConfig,
   store
 }) {
-  return cssStyleTextTransforms({ v, device, state, store, prefix: "lost" });
+  return cssStyleTextTransforms({
+    v,
+    device,
+    state,
+    store,
+    getConfig,
+    prefix: "lost"
+  });
 }
 
 export function cssStyleElementLoginLostPasswordTypography2FontWeight({
   v,
   device,
+  getConfig,
   store
 }) {
-  return cssStyleTypography2FontWeight({ v, device, store, prefix: "lost" });
+  return cssStyleTypography2FontWeight({
+    v,
+    device,
+    store,
+    getConfig,
+    prefix: "lost"
+  });
 }
 
 export function cssStyleElementLoginLostPasswordTypography2LetterSpacing({
   v,
   device,
+  getConfig,
   store
 }) {
-  return cssStyleTypography2LetterSpacing({ v, device, store, prefix: "lost" });
+  return cssStyleTypography2LetterSpacing({
+    v,
+    device,
+    store,
+    getConfig,
+    prefix: "lost"
+  });
 }
 
 // Color Lost Password
@@ -121,9 +166,17 @@ export function cssStyleElementLoginLostPasswordColor({
   v,
   device,
   state,
+  getConfig,
   store
 }) {
-  return cssStyleColor({ v, device, state, store, prefix: "lostColor" });
+  return cssStyleColor({
+    v,
+    device,
+    state,
+    store,
+    getConfig,
+    prefix: "lostColor"
+  });
 }
 
 // Align Lost Password
@@ -131,9 +184,17 @@ export function cssStyleElementLoginLostPasswordAlign({
   v,
   device,
   state,
+  getConfig,
   store
 }) {
-  return cssStyleTextAlign({ v, device, state, store, prefix: "lost" });
+  return cssStyleTextAlign({
+    v,
+    device,
+    state,
+    store,
+    getConfig,
+    prefix: "lost"
+  });
 }
 
 // Align Remember me
@@ -141,12 +202,14 @@ export function cssStyleElementLoginRememberMeAlign({
   v,
   device,
   state,
+  getConfig,
   store
 }) {
   return cssStyleFlexHorizontalAlign({
     v,
     device,
     state,
+    getConfig,
     store,
     prefix: "rememberMe"
   });
@@ -157,14 +220,23 @@ export function cssStyleElementLoginAutorizedAlign({
   v,
   device,
   state,
+  getConfig,
   store
 }) {
-  return cssStyleTextAlign({ v, device, state, store, prefix: "autorized" });
+  return cssStyleTextAlign({
+    v,
+    device,
+    state,
+    store,
+    getConfig,
+    prefix: "autorized"
+  });
 }
 
 export function cssStyleElementLoginTextTypography2FontFamily({
   v,
   device,
+  getConfig,
   store,
   renderContext
 }) {
@@ -172,6 +244,7 @@ export function cssStyleElementLoginTextTypography2FontFamily({
     v,
     device,
     store,
+    getConfig,
     prefix: "text",
     renderContext
   });
@@ -180,66 +253,142 @@ export function cssStyleElementLoginTextTypography2FontFamily({
 export function cssStyleElementLoginTextTypography2FontSize({
   v,
   device,
+  getConfig,
   store
 }) {
-  return cssStyleTypography2FontSize({ v, device, store, prefix: "text" });
+  return cssStyleTypography2FontSize({
+    v,
+    device,
+    store,
+    getConfig,
+    prefix: "text"
+  });
 }
 
 export function cssStyleElementLoginTextTypography2LineHeight({
   v,
   device,
+  getConfig,
   store
 }) {
-  return cssStyleTypography2LineHeight({ v, device, store, prefix: "text" });
+  return cssStyleTypography2LineHeight({
+    v,
+    device,
+    store,
+    getConfig,
+    prefix: "text"
+  });
 }
 
 export function cssStyleElementLoginTextTypography2FontWeight({
   v,
   device,
+  getConfig,
   store
 }) {
-  return cssStyleTypography2FontWeight({ v, device, store, prefix: "text" });
+  return cssStyleTypography2FontWeight({
+    v,
+    device,
+    store,
+    getConfig,
+    prefix: "text"
+  });
 }
 
 export function cssStyleElementLoginTextTypography2LetterSpacing({
   v,
   device,
+  getConfig,
   store
 }) {
-  return cssStyleTypography2LetterSpacing({ v, device, store, prefix: "text" });
+  return cssStyleTypography2LetterSpacing({
+    v,
+    device,
+    store,
+    getConfig,
+    prefix: "text"
+  });
 }
 
 export function cssStyleElementLoginTextTypography2FontVariation({
   v,
   device,
+  getConfig,
   store
 }) {
-  return cssStyleTypography2FontVariation({ v, device, store, prefix: "text" });
+  return cssStyleTypography2FontVariation({
+    v,
+    device,
+    store,
+    getConfig,
+    prefix: "text"
+  });
 }
 
-export function cssStyleElementLoginTextTransform({ v, device, state, store }) {
-  return cssStyleTextTransforms({ v, device, state, store, prefix: "text" });
+export function cssStyleElementLoginTextTransform({
+  v,
+  device,
+  state,
+  getConfig,
+  store
+}) {
+  return cssStyleTextTransforms({
+    v,
+    device,
+    state,
+    store,
+    getConfig,
+    prefix: "text"
+  });
 }
 
 // Color Autorized
-export function cssStyleElementLoginTextColor({ v, device, state, store }) {
-  return cssStyleColor({ v, device, state, store, prefix: "textColor" });
+export function cssStyleElementLoginTextColor({
+  v,
+  device,
+  state,
+  getConfig,
+  store
+}) {
+  return cssStyleColor({
+    v,
+    device,
+    state,
+    store,
+    getConfig,
+    prefix: "textColor"
+  });
 }
 
-export function cssStyleElementLoginLinkColor({ v, device, state, store }) {
-  return cssStyleColor({ v, device, state, store, prefix: "linkColor" });
+export function cssStyleElementLoginLinkColor({
+  v,
+  device,
+  state,
+  getConfig,
+  store
+}) {
+  return cssStyleColor({
+    v,
+    device,
+    state,
+    store,
+    getConfig,
+    prefix: "linkColor"
+  });
 }
 
 export function cssStyleElementLoginRegisterInfoTypography2FontFamily({
   v,
   device,
   store,
+  getConfig,
   renderContext
 }) {
   return cssStyleTypography2FontFamily({
     v,
     device,
     store,
+    getConfig,
     prefix: "registerInfo",
     renderContext
   });
@@ -248,12 +397,14 @@ export function cssStyleElementLoginRegisterInfoTypography2FontFamily({
 export function cssStyleElementLoginRegisterInfoTypography2FontSize({
   v,
   device,
+  getConfig,
   store
 }) {
   return cssStyleTypography2FontSize({
     v,
     device,
     store,
+    getConfig,
     prefix: "registerInfo"
   });
 }
@@ -261,12 +412,14 @@ export function cssStyleElementLoginRegisterInfoTypography2FontSize({
 export function cssStyleElementLoginRegisterInfoTypography2LineHeight({
   v,
   device,
+  getConfig,
   store
 }) {
   return cssStyleTypography2LineHeight({
     v,
     device,
     store,
+    getConfig,
     prefix: "registerInfo"
   });
 }
@@ -274,12 +427,14 @@ export function cssStyleElementLoginRegisterInfoTypography2LineHeight({
 export function cssStyleElementLoginRegisterInfoTypography2FontWeight({
   v,
   device,
+  getConfig,
   store
 }) {
   return cssStyleTypography2FontWeight({
     v,
     device,
     store,
+    getConfig,
     prefix: "registerInfo"
   });
 }
@@ -287,11 +442,13 @@ export function cssStyleElementLoginRegisterInfoTypography2FontWeight({
 export function cssStyleElementLoginRegisterInfoTypography2LetterSpacing({
   v,
   device,
+  getConfig,
   store
 }) {
   return cssStyleTypography2LetterSpacing({
     v,
     device,
+    getConfig,
     store,
     prefix: "registerInfo"
   });
@@ -300,12 +457,14 @@ export function cssStyleElementLoginRegisterInfoTypography2LetterSpacing({
 export function cssStyleElementLoginRegisterInfoTypography2FontVariation({
   v,
   device,
+  getConfig,
   store
 }) {
   return cssStyleTypography2FontVariation({
     v,
     device,
     store,
+    getConfig,
     prefix: "registerInfo"
   });
 }
@@ -314,41 +473,65 @@ export function cssStyleElementLoginRegisterInfoTextTransform({
   v,
   device,
   store,
+  getConfig,
   state
 }) {
   return cssStyleTextTransforms({
     v,
     device,
     store,
+    getConfig,
     state,
     prefix: "registerInfo"
   });
 }
 
-export function cssStyleElementRegisterInfoColor({ v, device, state, store }) {
+export function cssStyleElementRegisterInfoColor({
+  v,
+  device,
+  state,
+  getConfig,
+  store
+}) {
   return cssStyleColor({
     v,
     device,
     state,
     store,
+    getConfig,
     prefix: "registerInfoColor"
   });
 }
 
-export function cssStyleElementRegisterInfoAlign({ v, device, store, state }) {
-  return cssStyleTextAlign({ v, device, state, store, prefix: "registerInfo" });
+export function cssStyleElementRegisterInfoAlign({
+  v,
+  device,
+  store,
+  getConfig,
+  state
+}) {
+  return cssStyleTextAlign({
+    v,
+    device,
+    state,
+    store,
+    getConfig,
+    prefix: "registerInfo"
+  });
 }
 
 export function cssStyleElementLoginRegisterLinkTypography2FontFamily({
   v,
   device,
   store,
+  getConfig,
   renderContext
 }) {
   return cssStyleTypography2FontFamily({
     v,
     device,
     store,
+    getConfig,
     prefix: "registerLink",
     renderContext
   });
@@ -357,12 +540,14 @@ export function cssStyleElementLoginRegisterLinkTypography2FontFamily({
 export function cssStyleElementLoginRegisterLinkTypography2FontSize({
   v,
   device,
+  getConfig,
   store
 }) {
   return cssStyleTypography2FontSize({
     v,
     device,
     store,
+    getConfig,
     prefix: "registerLink"
   });
 }
@@ -370,11 +555,13 @@ export function cssStyleElementLoginRegisterLinkTypography2FontSize({
 export function cssStyleElementLoginRegisterLinkTypography2LineHeight({
   v,
   device,
+  getConfig,
   store
 }) {
   return cssStyleTypography2LineHeight({
     v,
     device,
+    getConfig,
     store,
     prefix: "registerLink"
   });
@@ -383,11 +570,13 @@ export function cssStyleElementLoginRegisterLinkTypography2LineHeight({
 export function cssStyleElementLoginRegisterLinkTypography2FontWeight({
   v,
   device,
+  getConfig,
   store
 }) {
   return cssStyleTypography2FontWeight({
     v,
     device,
+    getConfig,
     store,
     prefix: "registerLink"
   });
@@ -396,11 +585,13 @@ export function cssStyleElementLoginRegisterLinkTypography2FontWeight({
 export function cssStyleElementLoginRegisterLinkTypography2LetterSpacing({
   v,
   device,
+  getConfig,
   store
 }) {
   return cssStyleTypography2LetterSpacing({
     v,
     device,
+    getConfig,
     store,
     prefix: "registerLink"
   });
@@ -409,11 +600,13 @@ export function cssStyleElementLoginRegisterLinkTypography2LetterSpacing({
 export function cssStyleElementLoginRegisterLinkTypography2FontVariation({
   v,
   device,
+  getConfig,
   store
 }) {
   return cssStyleTypography2FontVariation({
     v,
     device,
+    getConfig,
     store,
     prefix: "registerLink"
   });
@@ -422,6 +615,7 @@ export function cssStyleElementLoginRegisterLinkTypography2FontVariation({
 export function cssStyleElementLoginRegisterLinkTextTransform({
   v,
   device,
+  getConfig,
   store,
   state
 }) {
@@ -429,6 +623,7 @@ export function cssStyleElementLoginRegisterLinkTextTransform({
     v,
     device,
     store,
+    getConfig,
     state,
     prefix: "registerLink"
   });
@@ -438,6 +633,7 @@ export function cssStyleElementLoginRegisterLinkColor({
   v,
   device,
   store,
+  getConfig,
   state
 }) {
   return cssStyleColor({
@@ -445,6 +641,7 @@ export function cssStyleElementLoginRegisterLinkColor({
     device,
     store,
     state,
+    getConfig,
     prefix: "registerLinkColor"
   });
 }
@@ -453,14 +650,23 @@ export function cssStyleElementLoginRegisterLinkAlign({
   v,
   device,
   store,
+  getConfig,
   state
 }) {
-  return cssStyleTextAlign({ v, device, state, store, prefix: "registerLink" });
+  return cssStyleTextAlign({
+    v,
+    device,
+    state,
+    store,
+    getConfig,
+    prefix: "registerLink"
+  });
 }
 
 export function cssStyleElementLoginLoginLinkTypography2FontFamily({
   v,
   device,
+  getConfig,
   store,
   renderContext
 }) {
@@ -468,6 +674,7 @@ export function cssStyleElementLoginLoginLinkTypography2FontFamily({
     v,
     device,
     store,
+    getConfig,
     prefix: "loginLink",
     renderContext
   });
@@ -476,19 +683,28 @@ export function cssStyleElementLoginLoginLinkTypography2FontFamily({
 export function cssStyleElementLoginLoginLinkTypography2FontSize({
   v,
   device,
+  getConfig,
   store
 }) {
-  return cssStyleTypography2FontSize({ v, device, store, prefix: "loginLink" });
+  return cssStyleTypography2FontSize({
+    v,
+    device,
+    store,
+    getConfig,
+    prefix: "loginLink"
+  });
 }
 
 export function cssStyleElementLoginLoginLinkTypography2LineHeight({
   v,
   device,
+  getConfig,
   store
 }) {
   return cssStyleTypography2LineHeight({
     v,
     device,
+    getConfig,
     store,
     prefix: "loginLink"
   });
@@ -497,11 +713,13 @@ export function cssStyleElementLoginLoginLinkTypography2LineHeight({
 export function cssStyleElementLoginLoginLinkTypography2FontWeight({
   v,
   device,
+  getConfig,
   store
 }) {
   return cssStyleTypography2FontWeight({
     v,
     device,
+    getConfig,
     store,
     prefix: "loginLink"
   });
@@ -510,11 +728,13 @@ export function cssStyleElementLoginLoginLinkTypography2FontWeight({
 export function cssStyleElementLoginLoginLinkTypography2LetterSpacing({
   v,
   device,
+  getConfig,
   store
 }) {
   return cssStyleTypography2LetterSpacing({
     v,
     device,
+    getConfig,
     store,
     prefix: "loginLink"
   });
@@ -523,11 +743,13 @@ export function cssStyleElementLoginLoginLinkTypography2LetterSpacing({
 export function cssStyleElementLoginLoginLinkTypography2FontVariation({
   v,
   device,
+  getConfig,
   store
 }) {
   return cssStyleTypography2FontVariation({
     v,
     device,
+    getConfig,
     store,
     prefix: "loginLink"
   });
@@ -536,11 +758,13 @@ export function cssStyleElementLoginLoginLinkTypography2FontVariation({
 export function cssStyleElementLoginLoginLinkTextTransform({
   v,
   device,
+  getConfig,
   store
 }) {
   return cssStyleTextTransforms({
     v,
     device,
+    getConfig,
     store,
     prefix: "loginLink"
   });
@@ -550,16 +774,32 @@ export function cssStyleElementLoginLoginLinkColor({
   v,
   device,
   state,
+  getConfig,
   store
 }) {
-  return cssStyleColor({ v, device, state, store, prefix: "loginLinkColor" });
+  return cssStyleColor({
+    v,
+    device,
+    state,
+    store,
+    getConfig,
+    prefix: "loginLinkColor"
+  });
 }
 
 export function cssStyleElementLoginLoginLinkAlign({
   v,
   device,
   store,
+  getConfig,
   state
 }) {
-  return cssStyleTextAlign({ v, device, state, store, prefix: "loginLink" });
+  return cssStyleTextAlign({
+    v,
+    device,
+    state,
+    store,
+    getConfig,
+    prefix: "loginLink"
+  });
 }

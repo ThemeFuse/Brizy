@@ -7,9 +7,9 @@ import { Project } from "visual/types/Project";
 type Config = Omit<ConfigCommon, "pageData" | "projectData" | "mode">;
 
 export interface Props {
-  config: Config;
   mode: EditorMode | "popup" | "story"; // popup and story are used in brizy-local
   pageData: PageCommon;
   projectData: Project | Project["data"];
+  config?: Config;
   thirdPartyComponents?: ThirdPartyComponents;
 }

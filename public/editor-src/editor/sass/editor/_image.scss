@@ -5,6 +5,13 @@
   object {
     width: 100% !important;
   }
+
+  &-hide-normal {
+    .brz-img,
+    .dynamic-image {
+      opacity: 0;
+    }
+  }
 }
 .brz-ed-image__content {
   position: relative;

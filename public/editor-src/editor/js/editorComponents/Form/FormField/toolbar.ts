@@ -6,6 +6,7 @@ import { getTypeChoices } from "./utils";
 
 export const getItems: GetItems<Value> = ({ v, device }) => {
   const dvv = (key: string) => defaultValueValue({ v, key, device });
+  const inputTypes = getTypeChoices();
 
   return [
     {
@@ -23,7 +24,7 @@ export const getItems: GetItems<Value> = ({ v, device }) => {
           type: "select",
           position: 10,
           devices: "desktop",
-          choices: getTypeChoices
+          choices: inputTypes
         },
         {
           id: "required",

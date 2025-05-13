@@ -41,8 +41,9 @@ export const fromElementModel: FromElementModel<"backgroundColor"> = (get) => {
     v === "startPointer" ? "start" : v === "finishPointer" ? "end" : v;
 
   return {
-    type: Type.read(get("bgColorType")),
-    tempType: Type.read(get("tempBgColorType")),
+    type: mPipe(() => get("bgColorType"), Type.read)() ?? defaultValue.type,
+    tempType:
+      mPipe(() => get("tempBgColorType"), Type.read)() ?? defaultValue.tempType,
     hex:
       mPipe(() => get("bgColorHex"), Str.read, Hex.fromString)() ??
       defaultValue.hex,

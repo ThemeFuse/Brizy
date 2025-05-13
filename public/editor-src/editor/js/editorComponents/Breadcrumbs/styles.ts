@@ -1,16 +1,11 @@
 import { DynamicStylesProps } from "visual/types";
 import { renderStyles } from "visual/utils/cssStyle";
-import { OutputStyle } from "visual/utils/cssStyle/types";
+import { OutputStyle, Styles } from "visual/utils/cssStyle/types";
 import type { Value } from "./types";
 
 export const style = (data: DynamicStylesProps<Value>): OutputStyle => {
-  const styles: {
-    [k: string]: {
-      interval?: string[];
-      standart?: string[];
-    };
-  } = {
-    ".brz && .brz-ui-ed-breadcrumbs li:hover": {
+  const styles: Styles = {
+    ".brz && .brz-ui-ed-breadcrumbs li": {
       standart: [
         "cssStyleSizeTextSpacing",
         "cssStyleTypography2FontFamily",

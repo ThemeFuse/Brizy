@@ -1,4 +1,3 @@
-import { configSelector } from "visual/redux/selectors";
 import { getImageUrl } from "visual/utils/image";
 import { defaultValueValue } from "visual/utils/onChange";
 import { CSSValue } from "./types";
@@ -48,10 +47,10 @@ export function styleElementVideoCoverSrc({
   v,
   device,
   state,
-  store
+  getConfig
 }: CSSValue): string | undefined {
   const dvv = (key: string) => defaultValueValue({ v, key, device, state });
-  const config = configSelector(store.getState());
+  const config = getConfig();
 
   const src = dvv("coverImageSrc");
   const fileName = dvv("coverImageFileName");
