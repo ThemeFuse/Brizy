@@ -10,13 +10,15 @@ export function cssStyleElementPostInfoColorIcons({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
   return cssStyleColor({
     v,
     device,
     state,
     store,
+    getConfig,
     prefix: "iconsColor"
   });
 }
@@ -25,7 +27,8 @@ export function cssStyleElementPostInfoSpacing({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
   const dvv = (key: string) => defaultValueValue({ v, key, device, state });
   const large = dvv("large");
@@ -36,6 +39,7 @@ export function cssStyleElementPostInfoSpacing({
         device,
         state,
         store,
+        getConfig,
         prefix: "text",
         direction: "right"
       })
@@ -44,6 +48,7 @@ export function cssStyleElementPostInfoSpacing({
         device,
         state,
         store,
+        getConfig,
         prefix: "text",
         direction: "top"
       });
@@ -71,13 +76,15 @@ export function cssStyleElementPostInfoAlign({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
   return cssStyleFlexHorizontalAlign({
     v,
     device,
     state,
     store,
+    getConfig,
     prefix: "content"
   });
 }
@@ -86,7 +93,8 @@ export function cssStyleElementPostInfoSpacingCloud({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
   const dvv = (key: string) => defaultValueValue({ v, key, device, state });
   const orientation = dvv("orientation");
@@ -97,6 +105,7 @@ export function cssStyleElementPostInfoSpacingCloud({
         device,
         state,
         store,
+        getConfig,
         prefix: "text",
         direction: "right"
       })
@@ -105,6 +114,7 @@ export function cssStyleElementPostInfoSpacingCloud({
         device,
         state,
         store,
+        getConfig,
         prefix: "text",
         direction: "top"
       });

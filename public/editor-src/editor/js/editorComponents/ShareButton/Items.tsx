@@ -38,8 +38,8 @@ class ShareButtonItems extends EditorArrayComponent {
               itemIndex === 0
                 ? "prev"
                 : itemIndex === items.length - 1
-                ? "next"
-                : undefined,
+                  ? "next"
+                  : undefined,
             onChange: (v: string) => {
               switch (v) {
                 case "prev":

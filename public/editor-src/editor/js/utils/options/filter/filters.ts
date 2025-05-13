@@ -16,7 +16,10 @@ export const withTabs = <T extends "tabs" | "sidebarTabs">(
   f: (t: ToolbarItemType) => ToolbarItemType | undefined,
   t: GenericToolbarItemType<T>
 ): GenericToolbarItemType<T> | undefined => {
-  const tabs = (t.tabs as Array<{ options?: ToolbarItemType[] }>)
+  const tabs = (
+    t.tabs as Array<{ options?: ToolbarItemType[]; disabled?: boolean }>
+  )
+    ?.filter((tab) => !tab.disabled)
     ?.map((tab) => ({ ...tab, options: tab.options?.map(f).filter(isT) }))
     .filter((tab) => (tab.options?.length ?? 0) > 0);
 

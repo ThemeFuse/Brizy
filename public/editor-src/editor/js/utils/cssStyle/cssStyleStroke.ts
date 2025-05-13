@@ -15,10 +15,10 @@ export function cssStyleStroke({
   v,
   device,
   state,
-  store,
+  getConfig,
   prefix = "strokeColor"
 }: CSSValue): string {
-  const stroke = styleColor({ v, device, state, store, prefix });
+  const stroke = styleColor({ v, device, state, getConfig, prefix });
 
   return stroke === undefined ? "" : `stroke:${stroke};`;
 }
@@ -67,7 +67,7 @@ export function cssStyleStrokeText({
   v,
   device,
   state,
-  store,
+  getConfig,
   prefix = "textStroke"
 }: CSSValue): string {
   const borderStrokeWidth = styleBorderWidthGrouped({
@@ -81,8 +81,8 @@ export function cssStyleStrokeText({
     v,
     device,
     state,
-    store,
-    prefix
+    prefix,
+    getConfig
   });
 
   return borderStrokeWidth === undefined || borderStrokeColor === undefined

@@ -82,12 +82,24 @@ export function cssStyleElementTableAsideAutoWidth({ v, device, state }) {
   return "";
 }
 
-export function cssStyleElementTableEvenBgColor({ v, device, store }) {
-  return cssStyleBgColor({ v, device, state: "active", store, prefix: "bg" });
+export function cssStyleElementTableEvenBgColor({
+  v,
+  device,
+  store,
+  getConfig
+}) {
+  return cssStyleBgColor({
+    v,
+    device,
+    state: "active",
+    store,
+    getConfig,
+    prefix: "bg"
+  });
 }
 
-export function cssStyleElementTableEvenColor({ v, device, store }) {
-  return cssStyleColor({ v, device, state: "active", store });
+export function cssStyleElementTableEvenColor({ v, device, store, getConfig }) {
+  return cssStyleColor({ v, device, state: "active", store, getConfig });
 }
 
 export function cssStyleTablePadding({ v, device, state, prefix = "table" }) {

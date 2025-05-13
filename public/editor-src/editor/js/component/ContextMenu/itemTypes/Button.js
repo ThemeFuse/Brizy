@@ -14,10 +14,8 @@ export default class Button extends React.Component {
 
     return (
       <Item onClick={onChange} disabled={inactive}>
-        <span className="react-contexify__item--title">{title}</span>
-        <span className="react-contexify__item--placeholder">
-          {helperText(meta)}
-        </span>
+        <span className="contexify_item-title">{title}</span>
+        <span className="contexify_item-placeholder">{helperText(meta)}</span>
       </Item>
     );
   }

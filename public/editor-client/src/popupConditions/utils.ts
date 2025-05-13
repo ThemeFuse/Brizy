@@ -42,7 +42,8 @@ const matches = match(
         mode: rule.mode ?? "specific",
         type: rule.type,
         appliedFor: rule.appliedFor,
-        entityType: rule.entityType
+        entityType: rule.entityType,
+        entityValues: rule.entityValues
       };
     }
   ],

@@ -1,7 +1,8 @@
 import { Arr, Bool, Str } from "@brizy/readers";
-import { mPipe } from "fp-utilities";
+import { mPipe, or } from "fp-utilities";
 import { TypographyProps } from "visual/component/Controls/Typography/types/Props";
 import { OptionValue } from "visual/component/Options/types";
+import { GetConfig } from "visual/providers/ConfigProvider/types";
 import { RenderType } from "visual/providers/RenderProvider";
 import { currentStyleSelector } from "visual/redux/selectors";
 import {
@@ -31,18 +32,22 @@ import {
   styleTypographyLineHeight
 } from "./styleFns";
 
+const readBoolOrStr = or(Bool.read, Str.read);
+
 export const getTypographyValues = ({
   device,
   state,
   store,
   value: v,
-  renderContext
+  renderContext,
+  getConfig
 }: {
   device: ResponsiveMode;
   state: State;
   store: Store;
   value: OptionValue<"typography">;
   renderContext: RenderType;
+  getConfig: GetConfig;
 }): TypographyValues => {
   const reduxState = store.getState();
   const fontsData = {
@@ -53,7 +58,7 @@ export const getTypographyValues = ({
   };
 
   const { fontStyle, fontFamilyType } = v;
-  const data = { v, device, state, fontsData, store };
+  const data = { v, device, state, fontsData, store, getConfig };
 
   const fontFamily = styleTypographyFontFamily({
     ...data,
@@ -72,23 +77,13 @@ export const getTypographyValues = ({
 
   const variableFontWeight = styleTypography2FontVariation(data);
 
-  const bold = styleTextTransformBold(data);
-  const boldValue = readTextTransformValue(bold, "bold");
+  const bold = readBoolOrStr(styleTextTransformBold(data)) ?? false;
 
-  const italic = styleTextTransformItalic(data);
-  const textStyle = readTextTransformValue(italic, "italic");
+  const italic = readBoolOrStr(styleTextTransformItalic(data)) ?? false;
 
-  const textDecoration = styleTextTransformTextDecoration(data);
+  const textDecoration = Str.read(styleTextTransformTextDecoration(data)) ?? "";
 
-  const textTransform = styleTextTransformUpperLowerCase(data);
-
-  const _textStyle = textStyle ? `font-style:${textStyle};` : "";
-  const _textDecoration = textDecoration
-    ? `text-decoration:${textDecoration};`
-    : "";
-  const _textTransform = textTransform
-    ? `text-transform:${textTransform};`
-    : "";
+  const textTransform = Str.read(styleTextTransformUpperLowerCase(data)) ?? "";
 
   return {
     fontStyle,
@@ -96,17 +91,18 @@ export const getTypographyValues = ({
     fontFamily,
     fontSize,
     fontSizeSuffix,
-    fontWeight: boldValue || fontWeight,
+    fontWeight,
+    bold,
+    italic,
     lineHeight,
     letterSpacing,
     variableFontWeight,
-    textStyle: _textStyle,
-    textDecoration: _textDecoration,
-    textTransform: _textTransform
+    textDecoration,
+    textTransform
   };
 };
 
-function readTextTransformValue(
+export function readTextTransformValue(
   value: unknown,
   transformKey: string
 ): string | undefined {

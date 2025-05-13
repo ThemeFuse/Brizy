@@ -2,7 +2,6 @@ import { produce } from "immer";
 import { isShopifyPage } from "visual/global/Config/types/configs/Cloud";
 import { isPopup } from "visual/providers/EditorModeProvider";
 import {
-  configSelector,
   middleGlobalBlocksIdSelector,
   pageAssembledRawSelector,
   pageAssembledSelector,
@@ -63,30 +62,33 @@ export const page: RPage = (state, action, fullState) => {
       });
     }
     case "UPDATE_PAGE_LAYOUT": {
-      const config = configSelector(fullState);
+      const { layout, config } = action.payload;
+
       if (isShopifyPage(state, config)) {
         return produce<ShopifyPage>(state, (draft) => {
-          draft.layout.value = action.payload.layout;
+          draft.layout.value = layout;
           draft.dataVersion = draft.dataVersion + 1;
         });
       }
       return state;
     }
     case "UPDATE_PAGE_TITLE": {
-      const config = configSelector(fullState);
+      const { title, config } = action.payload;
+
       if (isShopifyPage(state, config)) {
         return produce<ShopifyPage>(state, (draft) => {
-          draft.title = action.payload;
+          draft.title = title;
           draft.dataVersion = draft.dataVersion + 1;
         });
       }
       return state;
     }
     case "UPDATE_PAGE_IS_HOME_PAGE": {
-      const config = configSelector(fullState);
+      const { isHomePage, config } = action.payload;
+
       if (isShopifyPage(state, config)) {
         return produce<ShopifyPage>(state, (draft) => {
-          draft.layout.isHomePage = action.payload.isHomePage;
+          draft.layout.isHomePage = isHomePage;
           draft.dataVersion = draft.dataVersion + 1;
         });
       }

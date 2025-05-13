@@ -1,3 +1,4 @@
+import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { UploadedFont, VariationFont } from "visual/types/Fonts";
 
 interface FontFile {
@@ -20,6 +21,7 @@ export interface CreateFont {
   id: string;
   name: string;
   files: FontFile;
+  config: ConfigCommon;
 }
 
 interface Font extends UploadedFont {
@@ -32,6 +34,12 @@ export interface Response {
 interface Range {
   min: number;
   max: number;
+}
+
+export enum VariationAxesTags {
+  WGHT = "wght",
+  WDTH = "wdth",
+  SOFT = "SOFT"
 }
 
 export interface VariationAxes {

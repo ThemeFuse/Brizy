@@ -9,6 +9,7 @@ export function convertEcwidWidget(widget: EcwidWidget): {
   switch (widget.type) {
     case "account":
     case "account/favorites":
+    case "search":
     case EcwidCartCheckoutStep.Cart:
     case EcwidCartCheckoutStep.Address:
     case EcwidCartCheckoutStep.Shipping:
@@ -74,10 +75,16 @@ export const replaceContentLink = (
     const button = node.querySelector(`${selector} >  button`);
 
     if (button) {
-      button.addEventListener("click", (e) => {
-        window.location.replace(url);
-        e.stopPropagation();
-      });
+      button.addEventListener(
+        "click",
+        (e) => {
+          e.stopPropagation();
+          e.preventDefault();
+
+          window.location.replace(url);
+        },
+        true
+      );
     }
   }
 };

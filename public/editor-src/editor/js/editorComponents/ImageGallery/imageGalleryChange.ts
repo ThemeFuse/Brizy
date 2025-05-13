@@ -4,6 +4,7 @@ import type {
   ElementModel,
   ElementModelType
 } from "visual/component/Elements/Types";
+import { SizeType } from "visual/global/Config/types/configs/common";
 import { setIds } from "visual/utils/models";
 import * as Num from "visual/utils/reader/number";
 import type { V as ImageValue, Unit } from "../Image/types";
@@ -17,7 +18,6 @@ import {
   mergeLinkType,
   removeHorizontalThumbStyleData
 } from "./utils";
-import { SizeType } from "visual/global/Config/types/configs/common";
 
 export const patchOnColumnChange = (
   columns: number,
@@ -232,7 +232,7 @@ export const patchOnBigImageChange = (newValue: Value): Value => {
     imageExtension,
     imageWidth,
     imageHeight,
-    size
+    size = 0
   } = newValue.items[1].value as Value;
 
   return produce(newValue, (draft) => {

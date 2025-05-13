@@ -49,6 +49,7 @@ export function cssStyleElementPostsPaginationFontFamily({
   device,
   state,
   store,
+  getConfig,
   renderContext
 }) {
   return cssStyleTypography2FontFamily({
@@ -56,6 +57,7 @@ export function cssStyleElementPostsPaginationFontFamily({
     device,
     state,
     store,
+    getConfig,
     prefix: "pagination",
     renderContext
   });
@@ -65,6 +67,7 @@ export function cssStyleElementPostsPaginationFontSize({
   v,
   device,
   state,
+  getConfig,
   store
 }) {
   return cssStyleTypography2FontSize({
@@ -72,6 +75,7 @@ export function cssStyleElementPostsPaginationFontSize({
     device,
     state,
     store,
+    getConfig,
     prefix: "pagination"
   });
 }
@@ -80,6 +84,7 @@ export function cssStyleElementPostsPaginationLineHeight({
   v,
   device,
   state,
+  getConfig,
   store
 }) {
   return cssStyleTypography2LineHeight({
@@ -87,6 +92,7 @@ export function cssStyleElementPostsPaginationLineHeight({
     device,
     state,
     store,
+    getConfig,
     prefix: "pagination"
   });
 }
@@ -95,6 +101,7 @@ export function cssStyleElementPostsPaginationFontWeight({
   v,
   device,
   state,
+  getConfig,
   store
 }) {
   return cssStyleTypography2FontWeight({
@@ -102,6 +109,7 @@ export function cssStyleElementPostsPaginationFontWeight({
     device,
     state,
     store,
+    getConfig,
     prefix: "pagination"
   });
 }
@@ -110,6 +118,7 @@ export function cssStyleElementPostsPaginationLetterSpacing({
   v,
   device,
   state,
+  getConfig,
   store
 }) {
   return cssStyleTypography2LetterSpacing({
@@ -117,6 +126,7 @@ export function cssStyleElementPostsPaginationLetterSpacing({
     device,
     state,
     store,
+    getConfig,
     prefix: "pagination"
   });
 }
@@ -125,6 +135,7 @@ export function cssStyleElementPostsPaginationFontVariation({
   v,
   device,
   state,
+  getConfig,
   store
 }) {
   return cssStyleTypography2FontVariation({
@@ -132,6 +143,7 @@ export function cssStyleElementPostsPaginationFontVariation({
     device,
     state,
     store,
+    getConfig,
     prefix: "pagination"
   });
 }
@@ -140,6 +152,7 @@ export function cssStyleElementPostsPaginationTextTransform({
   v,
   device,
   state,
+  getConfig,
   store
 }) {
   return cssStyleTextTransforms({
@@ -147,6 +160,7 @@ export function cssStyleElementPostsPaginationTextTransform({
     device,
     state,
     store,
+    getConfig,
     prefix: "pagination"
   });
 }
@@ -155,32 +169,57 @@ export function cssStyleElementPostsPaginationColor({
   v,
   device,
   state,
+  getConfig,
   store
 }) {
-  return cssStyleColor({ v, device, state, prefix: "paginationColor", store });
+  return cssStyleColor({
+    v,
+    device,
+    state,
+    getConfig,
+    prefix: "paginationColor",
+    store
+  });
 }
 
 export function cssStyleElementPostsPaginationBgColor({
   v,
   device,
   state,
+  getConfig,
   store
 }) {
-  return cssStyleBgColor({ v, device, state, prefix: "paginationBg", store });
+  return cssStyleBgColor({
+    v,
+    device,
+    state,
+    getConfig,
+    prefix: "paginationBg",
+    store
+  });
 }
 
 export function cssStyleElementPostsPaginationBorder({
   v,
   device,
   state,
+  getConfig,
   store
 }) {
-  return cssStyleBorder({ v, device, state, prefix: "pagination", store });
+  return cssStyleBorder({
+    v,
+    device,
+    state,
+    getConfig,
+    prefix: "pagination",
+    store
+  });
 }
 
 export function cssStyleElementPostsPaginationActiveColor({
   v,
   device,
+  getConfig,
   store
 }) {
   return cssStyleColor({
@@ -188,6 +227,7 @@ export function cssStyleElementPostsPaginationActiveColor({
     device,
     state: ACTIVE,
     store,
+    getConfig,
     prefix: "paginationColor"
   });
 }
@@ -195,6 +235,7 @@ export function cssStyleElementPostsPaginationActiveColor({
 export function cssStyleElementPostsPaginationActiveBgColor({
   v,
   device,
+  getConfig,
   store
 }) {
   return cssStyleBgColor({
@@ -202,6 +243,7 @@ export function cssStyleElementPostsPaginationActiveBgColor({
     device,
     state: ACTIVE,
     store,
+    getConfig,
     prefix: "paginationBg"
   });
 }
@@ -209,6 +251,7 @@ export function cssStyleElementPostsPaginationActiveBgColor({
 export function cssStyleElementPostsPaginationActiveBorder({
   v,
   device,
+  getConfig,
   store
 }) {
   return cssStyleBorder({
@@ -216,6 +259,7 @@ export function cssStyleElementPostsPaginationActiveBorder({
     device,
     state: ACTIVE,
     store,
+    getConfig,
     prefix: "pagination"
   });
 }
@@ -224,6 +268,7 @@ export function cssStyleElementPostsPaginationBorderRadius({
   v,
   device,
   state,
+  getConfig,
   store
 }) {
   return cssStyleBorderRadius({
@@ -231,6 +276,7 @@ export function cssStyleElementPostsPaginationBorderRadius({
     device,
     state,
     store,
+    getConfig,
     prefix: "pagination"
   });
 }
@@ -247,6 +293,7 @@ export function cssStyleElementPostsFilterHorizontalAlign({
   v,
   device,
   state,
+  getConfig,
   store
 }) {
   return cssStyleFlexHorizontalAlign({
@@ -254,6 +301,7 @@ export function cssStyleElementPostsFilterHorizontalAlign({
     device,
     state,
     store,
+    getConfig,
     prefix: "filter"
   });
 }
@@ -283,6 +331,7 @@ export function cssStyleElementPostsFilterFontFamily({
   device,
   state,
   store,
+  getConfig,
   renderContext
 }) {
   return cssStyleTypography2FontFamily({
@@ -290,6 +339,7 @@ export function cssStyleElementPostsFilterFontFamily({
     device,
     state,
     store,
+    getConfig,
     prefix: "filter",
     renderContext
   });
@@ -299,6 +349,7 @@ export function cssStyleElementPostsFilterFontSize({
   v,
   device,
   state,
+  getConfig,
   store
 }) {
   return cssStyleTypography2FontSize({
@@ -306,6 +357,7 @@ export function cssStyleElementPostsFilterFontSize({
     device,
     state,
     store,
+    getConfig,
     prefix: "filter"
   });
 }
@@ -314,6 +366,7 @@ export function cssStyleElementPostsFilterLineHeight({
   v,
   device,
   state,
+  getConfig,
   store
 }) {
   return cssStyleTypography2LineHeight({
@@ -321,6 +374,7 @@ export function cssStyleElementPostsFilterLineHeight({
     device,
     state,
     store,
+    getConfig,
     prefix: "filter"
   });
 }
@@ -329,6 +383,7 @@ export function cssStyleElementPostsFilterFontWeight({
   v,
   device,
   state,
+  getConfig,
   store
 }) {
   return cssStyleTypography2FontWeight({
@@ -336,6 +391,7 @@ export function cssStyleElementPostsFilterFontWeight({
     device,
     state,
     store,
+    getConfig,
     prefix: "filter"
   });
 }
@@ -344,6 +400,7 @@ export function cssStyleElementPostsFilterLetterSpacing({
   v,
   device,
   state,
+  getConfig,
   store
 }) {
   return cssStyleTypography2LetterSpacing({
@@ -351,6 +408,7 @@ export function cssStyleElementPostsFilterLetterSpacing({
     device,
     state,
     store,
+    getConfig,
     prefix: "filter"
   });
 }
@@ -359,6 +417,7 @@ export function cssStyleElementPostsFilterFontVariation({
   v,
   device,
   state,
+  getConfig,
   store
 }) {
   return cssStyleTypography2FontVariation({
@@ -366,6 +425,7 @@ export function cssStyleElementPostsFilterFontVariation({
     device,
     state,
     store,
+    getConfig,
     prefix: "filter"
   });
 }
@@ -374,6 +434,7 @@ export function cssStyleElementPostsFilterTextTransform({
   v,
   device,
   state,
+  getConfig,
   store
 }) {
   return cssStyleTextTransforms({
@@ -381,39 +442,101 @@ export function cssStyleElementPostsFilterTextTransform({
     device,
     state,
     store,
+    getConfig,
     prefix: "filter"
   });
 }
 
-export function cssStyleElementPostsFilterColor({ v, device, state, store }) {
-  return cssStyleColor({ v, device, state, store, prefix: "filterColor" });
+export function cssStyleElementPostsFilterColor({
+  v,
+  device,
+  getConfig,
+  state,
+  store
+}) {
+  return cssStyleColor({
+    v,
+    device,
+    state,
+    store,
+    getConfig,
+    prefix: "filterColor"
+  });
 }
 
-export function cssStyleElementPostsFilterBgColor({ v, device, state, store }) {
-  return cssStyleBgColor({ v, device, state, store, prefix: "filterBg" });
+export function cssStyleElementPostsFilterBgColor({
+  v,
+  device,
+  getConfig,
+  state,
+  store
+}) {
+  return cssStyleBgColor({
+    v,
+    device,
+    state,
+    store,
+    getConfig,
+    prefix: "filterBg"
+  });
 }
 
-export function cssStyleElementPostsFilterBorder({ v, device, state, store }) {
-  return cssStyleBorder({ v, device, state, store, prefix: "filter" });
+export function cssStyleElementPostsFilterBorder({
+  v,
+  device,
+  getConfig,
+  state,
+  store
+}) {
+  return cssStyleBorder({
+    v,
+    device,
+    state,
+    store,
+    getConfig,
+    prefix: "filter"
+  });
 }
 
 export function cssStyleElementPostsFilterBorderRadius({
   v,
   device,
   state,
+  getConfig,
   store
 }) {
-  return cssStyleBorderRadius({ v, device, state, store, prefix: "filter" });
+  return cssStyleBorderRadius({
+    v,
+    device,
+    state,
+    store,
+    getConfig,
+    prefix: "filter"
+  });
 }
 
-export function cssStyleElementPostsFilterShadow({ v, device, state, store }) {
-  return cssStyleBoxShadow({ v, device, state, store, prefix: "filter" });
+export function cssStyleElementPostsFilterShadow({
+  v,
+  device,
+  state,
+  getConfig,
+  store
+}) {
+  return cssStyleBoxShadow({
+    v,
+    device,
+    state,
+    store,
+    getConfig,
+    prefix: "filter"
+  });
 }
 
 export function cssStyleElementPostsFilterPaddingFourFields({
   v,
   device,
   state,
+  getConfig,
   store
 }) {
   return cssStylePaddingFourFields({
@@ -421,40 +544,71 @@ export function cssStyleElementPostsFilterPaddingFourFields({
     device,
     state,
     store,
+    getConfig,
     prefix: "filter"
   });
 }
 
-export function cssStyleElementPostsFilterActiveColor({ v, store, device }) {
+export function cssStyleElementPostsFilterActiveColor({
+  v,
+  store,
+  getConfig,
+  device
+}) {
   return cssStyleColor({
     v,
     device,
     state: ACTIVE,
     store,
+    getConfig,
     prefix: "filterColor"
   });
 }
 
-export function cssStyleElementPostsFilterActiveBgColor({ v, store, device }) {
+export function cssStyleElementPostsFilterActiveBgColor({
+  v,
+  store,
+  getConfig,
+  device
+}) {
   return cssStyleBgColor({
     v,
     device,
     state: ACTIVE,
     store,
+    getConfig,
     prefix: "filterBg"
   });
 }
 
-export function cssStyleElementPostsFilterActiveBorder({ v, store, device }) {
-  return cssStyleBorder({ v, device, state: ACTIVE, store, prefix: "filter" });
+export function cssStyleElementPostsFilterActiveBorder({
+  v,
+  store,
+  getConfig,
+  device
+}) {
+  return cssStyleBorder({
+    v,
+    device,
+    state: ACTIVE,
+    store,
+    getConfig,
+    prefix: "filter"
+  });
 }
 
-export function cssStyleElementPostsFilterActiveShadow({ v, store, device }) {
+export function cssStyleElementPostsFilterActiveShadow({
+  v,
+  store,
+  getConfig,
+  device
+}) {
   return cssStyleBoxShadow({
     v,
     device,
     state: ACTIVE,
     store,
+    getConfig,
     prefix: "filter"
   });
 }

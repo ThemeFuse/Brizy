@@ -16,7 +16,7 @@ import SortableHandle from "visual/component/Sortable/SortableHandle";
 import Toolbar, {
   ToolbarExtend as _ToolbarExtend
 } from "visual/component/Toolbar";
-import { PortalToolbar } from "visual/component/Toolbar/PortalToolbar";
+import { PortalToolbarType } from "visual/component/Toolbar/PortalToolbar";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import {
@@ -59,7 +59,7 @@ type Props = {
 
 export class StoryWrapper extends EditorComponent<Value, Props> {
   static defaultValue = defaultValue;
-  toolbarRef = createRef<PortalToolbar>();
+  toolbarRef = createRef<PortalToolbarType>();
 
   static get componentId(): string {
     return "StoryWrapper";
@@ -71,7 +71,8 @@ export class StoryWrapper extends EditorComponent<Value, Props> {
 
   renderForEdit(v: Value, vs: Value, vd: Value): ReactNode {
     const toolbarExtendFilter =
-      v.showToolbar === "on" || currentUserRole() !== "admin"
+      v.showToolbar === "on" ||
+      currentUserRole(this.getGlobalConfig()) !== "admin"
         ? (toolbarExtendItems: ToolbarItemType[]): ToolbarItemType[] =>
             toolbarExtendItems.filter(
               (item) => item.id !== "duplicate" && item.id !== "remove"

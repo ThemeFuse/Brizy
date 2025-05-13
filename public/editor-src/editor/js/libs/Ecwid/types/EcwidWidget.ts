@@ -65,4 +65,19 @@ export const favorites = (id: string): Favorites => ({
   type: "account/favorites"
 });
 
-export type EcwidWidget = Products | Product | Cart | MyAccount | Favorites;
+export type SearchArgs = Record<string, string | number>;
+type Search = Base<"search", SearchArgs>;
+
+export const search = (id: string, args?: SearchArgs): Search => ({
+  id,
+  args: args ?? {},
+  type: "search"
+});
+
+export type EcwidWidget =
+  | Products
+  | Product
+  | Cart
+  | MyAccount
+  | Favorites
+  | Search;

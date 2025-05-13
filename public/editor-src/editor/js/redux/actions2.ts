@@ -8,7 +8,12 @@ import {
 } from "visual/global/Config/types/configs/ConfigCommon";
 import { EditorMode } from "visual/providers/EditorModeProvider";
 import { fontsSelector } from "visual/redux/selectors";
-import { ActiveElement, Authorized, DeviceMode } from "visual/types";
+import {
+  ActiveElement,
+  Authorized,
+  DeviceMode,
+  ProjectLockStatus
+} from "visual/types";
 import { Block } from "visual/types/Block";
 import {
   AdobeFont,
@@ -60,17 +65,13 @@ export type ActionHydrate = {
   type: "HYDRATE";
   payload: {
     project: Project;
-    projectStatus: {
-      locked: boolean;
-      lockedBy: boolean | { user_email: string };
-    };
+    projectStatus: ProjectLockStatus;
     globalBlocks: ReduxState["globalBlocks"];
     fonts: RFonts;
     page: ReduxState["page"];
     authorized: ReduxState["authorized"];
     syncAllowed: ReduxState["syncAllowed"];
     config: ConfigCommon;
-    configId: string;
     editorMode: EditorMode;
   };
 };
@@ -79,6 +80,7 @@ export type ActionUpdateBlocks = {
   type: "UPDATE_BLOCKS";
   payload: {
     blocks: Block[];
+    config: ConfigCommon;
   };
   meta: {
     is_autosave: 1 | 0;
@@ -94,7 +96,7 @@ export type ActionMakeBlockToGlobalBlock = {
 
 export type ActionMakeGlobalBlockToBlock = {
   type: "MAKE_GLOBAL_BLOCK_TO_BLOCK";
-  payload: { block: Block; fromBlockId: string };
+  payload: { block: Block; fromBlockId: string; config: ConfigCommon };
 };
 
 export type ActionUpdateGlobalBlock = {
@@ -105,6 +107,7 @@ export type ActionUpdateGlobalBlock = {
     data: any;
     title?: string;
     tags?: string;
+    config: ConfigCommon;
   };
   meta: {
     is_autosave: 0 | 1;
@@ -119,6 +122,7 @@ export type ActionAddGlobalBlock = {
     block: Block;
     fonts: FontsPayload;
     extraFontStyles?: ReduxState["extraFontStyles"];
+    config: ConfigCommon;
   };
   meta: {
     insertIndex: number;
@@ -267,11 +271,13 @@ export type ActionRemoveBlock = {
   payload: {
     index: number;
     id: string;
+    config: ConfigCommon;
   };
 };
 
 export type ActionRemoveBlocks = {
   type: ActionTypes.REMOVE_BLOCKS;
+  payload: { config: ConfigCommon };
 };
 
 export type ActionUpdateGBRules = {
@@ -291,6 +297,7 @@ export type ActionReorderBlocks = {
   payload: {
     oldIndex: number;
     newIndex: number;
+    config: ConfigCommon;
   };
 };
 
@@ -345,8 +352,7 @@ export type ReduxAction =
   | EditGlobalStyleName
   | UpdateCurrentStyleId
   | RegenerateColors
-  | RegenerateTypography
-  | UpdateConfigId;
+  | RegenerateTypography;
 
 export type ActionUpdateAuthorized = {
   type: "UPDATE_AUTHORIZATION";
@@ -357,7 +363,10 @@ export type ActionUpdateAuthorized = {
 
 export type ActionUpdatePageTitle = {
   type: "UPDATE_PAGE_TITLE";
-  payload: string;
+  payload: {
+    title: string;
+    config: ConfigCommon;
+  };
 };
 
 //#endregion
@@ -372,6 +381,7 @@ export const PUBLISH = "PUBLISH";
 interface PublishBase {
   status: ReduxState["page"]["status"];
   editorMode: EditorMode;
+  config: ConfigCommon;
 }
 
 interface PublishInternal extends PublishBase {
@@ -383,7 +393,12 @@ interface PublishExternal extends PublishBase {
   res: (data: PublishData) => void;
 }
 
-type PublishPayload = PublishInternal | PublishExternal;
+interface PublishExternalForce extends PublishBase {
+  type: "externalForce";
+  res: (data: PublishData) => void;
+}
+
+type PublishPayload = PublishInternal | PublishExternal | PublishExternalForce;
 
 export type ActionUpdatePageStatus = {
   type: typeof PUBLISH;
@@ -398,6 +413,7 @@ export type ActionUpdatePageLayout = {
   type: "UPDATE_PAGE_LAYOUT";
   payload: {
     layout: ShopifyPage["layout"]["value"];
+    config: ConfigCommon;
   };
 };
 
@@ -405,6 +421,7 @@ export type ActionUpdateIsHomePage = {
   type: "UPDATE_PAGE_IS_HOME_PAGE";
   payload: {
     isHomePage: ShopifyPage["layout"]["isHomePage"];
+    config: ConfigCommon;
   };
 };
 
@@ -470,16 +487,19 @@ export function makeNormalToGlobalBlock({
 
 export function makeGlobalToNormalBlock({
   fromBlockId,
-  block
+  block,
+  config
 }: {
   fromBlockId: string;
   block: Block;
+  config: ConfigCommon;
 }): ActionMakeGlobalBlockToBlock {
   return {
     type: "MAKE_GLOBAL_BLOCK_TO_BLOCK",
     payload: {
       fromBlockId,
-      block
+      block,
+      config
     }
   };
 }
@@ -507,10 +527,12 @@ export function updateGlobalBlock({
   data,
   title,
   tags,
-  meta
+  meta,
+  config
 }: {
   uid: string;
   data: GlobalBlock["data"];
+  config: ConfigCommon;
   title?: string;
   tags?: string;
   meta?: {
@@ -520,7 +542,7 @@ export function updateGlobalBlock({
 }): ActionUpdateGlobalBlock {
   return {
     type: "UPDATE_GLOBAL_BLOCK",
-    payload: { uid, data, title, tags },
+    payload: { uid, data, title, tags, config },
     meta: {
       is_autosave: 1,
       ...meta
@@ -674,9 +696,11 @@ export const updateStoreWasChanged = (
 
 export function updateBlocks({
   blocks,
-  meta = {}
+  meta = {},
+  config
 }: {
   blocks: Block[];
+  config: ConfigCommon;
   meta?: {
     is_autosave?: 0 | 1;
   };
@@ -684,7 +708,8 @@ export function updateBlocks({
   return {
     type: "UPDATE_BLOCKS",
     payload: {
-      blocks
+      blocks,
+      config
     },
     meta: {
       is_autosave: 1,
@@ -699,14 +724,16 @@ export const fetchPageSuccess = (): ActionFetchPageSuccess => ({
 
 type ThunkPublishPage = ({
   status,
-  editorMode
+  editorMode,
+  config
 }: {
   status: ReduxState["page"]["status"];
   editorMode: EditorMode;
+  config: ConfigCommon;
 }) => ThunkAction<Promise<void>, ReduxState, unknown, ActionUpdatePageStatus>;
 
 export const updatePageStatus: ThunkPublishPage =
-  ({ status, editorMode }) =>
+  ({ status, editorMode, config }) =>
   (dispatch): Promise<void> => {
     return new Promise((res, rej) => {
       dispatch({
@@ -714,7 +741,8 @@ export const updatePageStatus: ThunkPublishPage =
         payload: {
           status,
           type: "internal",
-          editorMode
+          editorMode,
+          config
         },
         meta: {
           onSuccess: res,
@@ -724,10 +752,16 @@ export const updatePageStatus: ThunkPublishPage =
     });
   };
 
-export const updatePageLayout = (layout: Layout): ActionUpdatePageLayout => {
+export const updatePageLayout = ({
+  layout,
+  config
+}: {
+  layout: Layout;
+  config: ConfigCommon;
+}): ActionUpdatePageLayout => {
   return {
     type: "UPDATE_PAGE_LAYOUT",
-    payload: { layout }
+    payload: { layout, config }
   };
 };
 
@@ -744,11 +778,15 @@ export function addBlock(
 
 export function addGlobalBlock(
   block: { block: Block; fonts: FontsPayload },
-  meta = { insertIndex: 0 }
+  meta = { insertIndex: 0 },
+  config: ConfigCommon
 ): ActionAddGlobalBlock {
   return {
     type: "ADD_GLOBAL_BLOCK",
-    payload: block,
+    payload: {
+      ...block,
+      config
+    },
     meta
   };
 }
@@ -799,29 +837,36 @@ export function updateGBRules({
 
 export function removeBlock({
   index,
-  id
+  id,
+  config
 }: {
   index: number;
   id: string;
+  config: ConfigCommon;
 }): ActionRemoveBlock {
   return {
     type: ActionTypes.REMOVE_BLOCK,
     payload: {
       index,
-      id
+      id,
+      config
     }
   };
 }
 
-export function removeBlocks(): ActionRemoveBlocks {
+export function removeBlocks(payload: {
+  config: ConfigCommon;
+}): ActionRemoveBlocks {
   return {
-    type: ActionTypes.REMOVE_BLOCKS
+    type: ActionTypes.REMOVE_BLOCKS,
+    payload
   };
 }
 
 export function reorderBlocks(payload: {
   oldIndex: number;
   newIndex: number;
+  config: ConfigCommon;
 }): ActionReorderBlocks {
   return {
     type: "REORDER_BLOCKS",
@@ -861,21 +906,32 @@ export function updateSyncAllowed(
   };
 }
 
-// updatePageTitle
-
-export function updatePageTitle(title: string): ActionUpdatePageTitle {
+export function updatePageTitle({
+  title,
+  config
+}: {
+  title: string;
+  config: ConfigCommon;
+}): ActionUpdatePageTitle {
   return {
     type: "UPDATE_PAGE_TITLE",
-    payload: title
+    payload: {
+      title,
+      config
+    }
   };
 }
 
-export const updatePageIsHomePage = (
-  isHomePage: string | null
-): ActionUpdateIsHomePage => {
+export const updatePageIsHomePage = ({
+  isHomePage,
+  config
+}: {
+  isHomePage: string | null;
+  config: ConfigCommon;
+}): ActionUpdateIsHomePage => {
   return {
     type: "UPDATE_PAGE_IS_HOME_PAGE",
-    payload: { isHomePage }
+    payload: { isHomePage, config }
   };
 };
 
@@ -897,8 +953,7 @@ export enum ActionTypes {
   "REMOVE_BLOCKS" = "REMOVE_BLOCKS",
   "UPDATE_PINNED_ELEMENTS" = "UPDATE_PINNED_ELEMENTS",
   "REGENERATE_COLORS" = "REGENERATE_COLORS",
-  "REGENERATE_TYPOGRAPHY" = "REGENERATE_TYPOGRAPHY",
-  "UPDATE_CONFIG_ID" = "UPDATE_CONFIG_ID"
+  "REGENERATE_TYPOGRAPHY" = "REGENERATE_TYPOGRAPHY"
 }
 
 // templates
@@ -1092,17 +1147,3 @@ export function updateScreenshot({
     meta
   };
 }
-
-interface UpdateConfigId {
-  type: ActionTypes.UPDATE_CONFIG_ID;
-  payload: {
-    configId: string;
-  };
-}
-
-export const updateConfigId = (configId: string): UpdateConfigId => ({
-  type: ActionTypes.UPDATE_CONFIG_ID,
-  payload: {
-    configId
-  }
-});

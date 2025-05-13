@@ -1,6 +1,7 @@
 import { Bool, Num, Str } from "@brizy/readers";
 import classnames from "classnames";
 import { noop } from "es-toolkit";
+import { Base64 } from "js-base64";
 import React, { Fragment } from "react";
 import ResizeAware from "react-resize-aware";
 import { omit } from "timm";
@@ -18,6 +19,7 @@ import { withMigrations } from "visual/editorComponents/tools/withMigrations";
 import { isStory } from "visual/providers/EditorModeProvider";
 import { isEditor, isView } from "visual/providers/RenderProvider";
 import { blocksDataSelector } from "visual/redux/selectors";
+import { makePlaceholder } from "visual/utils/dynamicContent";
 import { imagePopulationUrl } from "visual/utils/image";
 import {
   isGIFExtension,
@@ -37,8 +39,10 @@ import {
   patchOnDCChange as patchOnLinkDCChange
 } from "visual/utils/patch/Link/";
 import { DESKTOP, MOBILE, TABLET } from "visual/utils/responsiveMode";
+import { HOVER } from "visual/utils/stateMode";
 import { SizeType } from "../../global/Config/types/configs/common";
 import { attachRefs } from "../../utils/react";
+import { capByPrefix } from "../../utils/string";
 import { Wrapper } from "../tools/Wrapper";
 import ImageContent from "./Image";
 import ImageWrapper from "./Wrapper";
@@ -46,6 +50,7 @@ import defaultValue from "./defaultValue.json";
 import {
   elementModelToValue,
   patchOnDCChange,
+  patchOnHoverImageChange,
   patchOnImageChange,
   patchOnSizeTypeChange,
   pathOnUnitChange
@@ -105,6 +110,20 @@ class Image extends EditorComponent {
     this.handleResize();
   }
 
+  componentDidUpdate(prevProps) {
+    const device = this.getDeviceMode();
+    const { sizeType: prevSizeType } = prevProps.dbValue;
+    const { sizeType: currentSizeType } = this.getValue();
+
+    if (
+      prevSizeType &&
+      prevSizeType !== currentSizeType &&
+      device === DESKTOP
+    ) {
+      this.updateHoverImageHeight();
+    }
+  }
+
   componentWillUnmount() {
     this.mounted = false;
   }
@@ -114,6 +133,34 @@ class Image extends EditorComponent {
     super.patchValue({ ...patch, ...image }, meta);
   }
 
+  updateHoverImageHeight() {
+    const v = this.getValue();
+    const device = this.getDeviceMode();
+    const containerWidth = this.getContainerSize()[device];
+    const wrapperSize = this.getWrapperSizes(v)["desktop"];
+
+    const {
+      hoverHeight,
+      hoverImageSrc,
+      hoverImageExtension,
+      hoverImageWidth,
+      hoverImageHeight
+    } = v;
+
+    const value = elementModelToValue(v);
+
+    const patch = patchOnHoverImageChange(containerWidth, value, wrapperSize, {
+      hoverImageSrc,
+      hoverImageExtension,
+      hoverImageWidth,
+      hoverImageHeight
+    });
+
+    if (Math.round(hoverHeight) !== Math.round(patch.hoverHeight)) {
+      super.patchValue(patch);
+    }
+  }
+
   handleImageChange(patch) {
     const { imageSizes: cfgImageSizes } = this.getGlobalConfig();
     const device = this.getDeviceMode();
@@ -121,6 +168,7 @@ class Image extends EditorComponent {
     const dvv = (key) => defaultValueValue({ v, device, key });
     const value = elementModelToValue(v);
     const image = ImagePatch.fromImageElementModel(patch);
+    const hoverImage = ImagePatch.fromHoverImageElementModel(patch);
 
     const imageDC = ImagePatch.fromImageDCElementModel(patch);
 
@@ -139,6 +187,24 @@ class Image extends EditorComponent {
       const containerWidth = this.getContainerSize()[device];
 
       return patchOnImageChange(containerWidth, value, wrapperSize, image);
+    }
+
+    if (hoverImage !== undefined) {
+      const { imageExtension } = v;
+
+      const wrapperSize = this.getWrapperSizes(v)["desktop"];
+      const containerWidth = this.getContainerSize()["desktop"];
+
+      if (isSVGExtension(imageExtension) || isGIFExtension(imageExtension)) {
+        wrapperSize.height = wrapperSize.width;
+      }
+
+      return patchOnHoverImageChange(
+        containerWidth,
+        value,
+        wrapperSize,
+        hoverImage
+      );
     }
 
     if (imageDC !== undefined) {
@@ -163,13 +229,25 @@ class Image extends EditorComponent {
 
     const sizeType = dvv("sizeType");
     if (imageSizeType !== undefined && imageSizeType.sizeType !== sizeType) {
-      const containerWidth = this.getContainerSize()[device];
+      const {
+        hoverImageSrc,
+        hoverImageExtension,
+        hoverImageWidth,
+        hoverImageHeight
+      } = v;
 
-      return patchOnSizeTypeChange(
-        containerWidth,
-        imageSizeType,
-        cfgImageSizes
-      );
+      const containerWidth = this.getContainerSize()[device];
+      const wrapperSize = this.getWrapperSizes(v)["desktop"];
+
+      return {
+        ...patchOnSizeTypeChange(containerWidth, imageSizeType, cfgImageSizes),
+        ...patchOnHoverImageChange(containerWidth, value, wrapperSize, {
+          hoverImageSrc,
+          hoverImageExtension,
+          hoverImageWidth,
+          hoverImageHeight
+        })
+      };
     }
 
     if (imageLinkDC) {
@@ -182,6 +260,7 @@ class Image extends EditorComponent {
   handleResize = () => {
     if (!isStory(this.props.editorMode)) {
       this.updateContainerWidth();
+      this.updateHoverImageHeight();
     }
 
     this.props.onResize();
@@ -272,7 +351,43 @@ class Image extends EditorComponent {
   };
 
   getExtraImageProps(v) {
-    return { alt: v.alt };
+    const {
+      alt: alt_,
+      imageSrc,
+      imagePopulation,
+      imagePopulationEntityType: entityType,
+      imagePopulationEntityId: entityId
+    } = v;
+
+    if (imagePopulation) {
+      // prettier-ignore
+      const imagePlaceholder = Base64.encode(imagePopulation.replace(/"/g, "\\\""));
+      return {
+        alt:
+          alt_ ||
+          makePlaceholder({
+            content: "{{ brizy_dc_image_alt }}",
+            attr: { imagePlaceholder, entityType, entityId }
+          }),
+        title: makePlaceholder({
+          content: "{{ brizy_dc_image_title }}",
+          attr: { imagePlaceholder, entityType, entityId }
+        })
+      };
+    }
+
+    return {
+      alt:
+        alt_ ||
+        makePlaceholder({
+          content: "{{ brizy_dc_image_alt }}",
+          attr: { imageSrc }
+        }),
+      title: makePlaceholder({
+        content: "{{ brizy_dc_image_title }}",
+        attr: { imageSrc }
+      })
+    };
   }
 
   getImageUrlsFor(wrapperSizes, imageSizes, device) {
@@ -307,13 +422,60 @@ class Image extends EditorComponent {
     );
   }
 
+  getHoverImageUrlsFor(wrapperSizes, imageSizes) {
+    const v = this.getValue();
+    const { hoverImagePopulation, hoverImage, sizeType } = v;
+    const desktopSizes = wrapperSizes["desktop"];
+
+    let { width: cW, height: cH } = desktopSizes;
+    cW = Math.round(cW);
+    cH = Math.round(cH);
+
+    const dvv = (key) => defaultValueValue({ v, key, device: "desktop" });
+    const hoverGetter = (key) => dvv(capByPrefix("hover", key));
+
+    if (hoverImagePopulation && hoverImage) {
+      const options = { cW, cH };
+      const hoverUrl = imagePopulationUrl(hoverImage, options) || "";
+
+      return {
+        hoverSource: hoverUrl,
+        hoverUrl: `${hoverUrl} 1x, ${imagePopulationUrl(
+          hoverImage,
+          multiplier(options, 2)
+        )} 2x`,
+        isHover: true
+      };
+    } else {
+      const hoverModel = {
+        ...fromElementModel(hoverGetter),
+        sizeType
+      };
+
+      return getCustomImageUrl(
+        fromElementModel(dvv),
+        desktopSizes,
+        imageSizes["desktop"],
+        this.getGlobalConfig(),
+        hoverModel
+      );
+    }
+  }
+
   getResponsiveUrls(wrapperSizes, imageSizes) {
     return {
       desktopSrc: this.getImageUrlsFor(wrapperSizes, imageSizes, "desktop").url,
+      hoverDesktopSrc: this.getHoverImageUrlsFor(wrapperSizes, imageSizes)
+        .hoverUrl,
       tabletSrc: this.getImageUrlsFor(wrapperSizes, imageSizes, "tablet").url,
       mobileSrc: this.getImageUrlsFor(wrapperSizes, imageSizes, "mobile").url,
       sourceSrc: this.getImageUrlsFor(wrapperSizes, imageSizes, "desktop")
-        .source
+        .source,
+      hoverSourceSrc: this.getHoverImageUrlsFor(
+        wrapperSizes,
+        imageSizes,
+        "desktop"
+      ).hoverSource
     };
   }
 
@@ -354,6 +516,8 @@ class Image extends EditorComponent {
     }
 
     const dvv = (key, device) => defaultValueValue({ v, device, key });
+    const dvvH = (key) =>
+      defaultValueValue({ v, device: "desktop", key, state: "hover" });
     const size = dvv("size", DESKTOP);
     const tabletSize = dvv("size", TABLET);
     const mobileSize = dvv("size", MOBILE);
@@ -364,6 +528,16 @@ class Image extends EditorComponent {
       imageExtension,
       width,
       height,
+      widthSuffix,
+      heightSuffix,
+      size
+    };
+    const hoverDesktopValue = {
+      imageWidth: dvvH("imageWidth"),
+      imageHeight: dvvH("imageHeight"),
+      imageExtension: dvvH("imageExtension"),
+      height: dvvH("height"),
+      width,
       widthSuffix,
       heightSuffix,
       size
@@ -392,6 +566,10 @@ class Image extends EditorComponent {
     if (isOriginalSize(sizeType) && !isSvgOfGif) {
       return {
         desktop: calcWrapperOriginalSizes(desktopValue, containerWidth),
+        hoverDesktop: calcWrapperOriginalSizes(
+          hoverDesktopValue,
+          containerWidth
+        ),
         tablet: calcWrapperOriginalSizes(tabletValue, tabletContainerWidth),
         mobile: calcWrapperOriginalSizes(mobileValue, mobileContainerWidth)
       };
@@ -399,6 +577,7 @@ class Image extends EditorComponent {
 
     return {
       desktop: calcWrapperSizes(desktopValue, containerWidth),
+      hoverDesktop: calcWrapperSizes(hoverDesktopValue, containerWidth),
       tablet: calcWrapperSizes(tabletValue, tabletContainerWidth),
       mobile: calcWrapperSizes(mobileValue, mobileContainerWidth)
     };
@@ -647,8 +826,18 @@ class Image extends EditorComponent {
   }
 
   renderForEdit(v, vs, vd) {
-    const { className, actionClosePopup, imageType } = v;
+    const {
+      className,
+      actionClosePopup,
+      imageType,
+      hoverImageSrc,
+      hoverImage,
+      tabsState
+    } = v;
     const config = this.getGlobalConfig();
+
+    const hasHoverImage = !!hoverImageSrc || !!hoverImage;
+
     const { gallery = {} } = this.props.renderer
       ? this.props.renderer
       : { gallery: {} };
@@ -679,7 +868,11 @@ class Image extends EditorComponent {
     const parentClassName = classnames(
       "brz-image",
       isStory(this.props.editorMode) && "brz-image--story",
-      { "brz-story-linked": isStory(this.props.editorMode) && linked },
+      {
+        "brz-story-linked": isStory(this.props.editorMode) && linked,
+        "brz-image--withHover": hasHoverImage,
+        "brz-image-hide-normal": tabsState === HOVER && hasHoverImage
+      },
       this.getLightboxClassName(),
       className,
       {
@@ -802,7 +995,7 @@ class Image extends EditorComponent {
   }
 
   renderForView(v, vs, vd) {
-    const { className, actionClosePopup } = v;
+    const { className, actionClosePopup, hoverImageSrc, hoverImage } = v;
     const config = this.getGlobalConfig();
     const isAbsoluteOrFixed =
       v.elementPosition === "absolute" || v.elementPosition === "fixed";
@@ -832,7 +1025,10 @@ class Image extends EditorComponent {
 
     const parentClassName = classnames(
       "brz-image",
-      { "brz-story-linked": isStory(this.props.editorMode) && linked },
+      {
+        "brz-story-linked": isStory(this.props.editorMode) && linked,
+        "brz-image--withHover": !!hoverImageSrc || !!hoverImage
+      },
       { "brz-image--hovered": hoverName !== "none" },
       isAbsoluteOrFixed && "brz-image--story",
       this.getLightboxClassName(),
@@ -916,5 +1112,4 @@ class Image extends EditorComponent {
   }
 }
 
-export { Image };
 export default withMigrations(Image, migrations);

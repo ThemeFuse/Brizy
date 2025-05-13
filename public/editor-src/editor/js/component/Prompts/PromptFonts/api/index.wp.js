@@ -1,12 +1,12 @@
-import { flatten } from "es-toolkit";
+import { flattenDeep } from "es-toolkit";
+import { isT } from "fp-utilities";
 import { makeUrl, parseJSON } from "visual/component/Prompts/common/utils";
-import Config from "visual/global/Config";
 import { request } from "visual/utils/api/index.wp";
 import { getFontVariation, normalizeFonts } from "./utils";
 
-export const createFont = async ({ id, name, files }) => {
-  const { api } = Config.get("wp");
-  const version = Config.get("editorVersion");
+export const createFont = async ({ id, name, files, config }) => {
+  const { api } = config.wp;
+  const version = config.editorVersion;
   const url = makeUrl(api.url, {
     action: api.createFont,
     hash: api.hash,
@@ -17,7 +17,7 @@ export const createFont = async ({ id, name, files }) => {
   formData.append("id", id);
   formData.append("family", name);
 
-  const variations = flatten(
+  const variations = flattenDeep(
     await Promise.all(
       Object.entries(files).map(async ([type, filesType]) => {
         return Promise.all(
@@ -31,7 +31,7 @@ export const createFont = async ({ id, name, files }) => {
         );
       })
     )
-  ).filter(Boolean);
+  ).filter(isT);
 
   return request(url, {
     method: "POST",
@@ -51,13 +51,9 @@ export const deleteFont = (fontId, config) => {
     id: fontId
   });
 
-  return request(
-    url,
-    {
-      method: "POST"
-    },
-    config
-  )
+  return request(url, {
+    method: "POST"
+  })
     .then(parseJSON)
     .then((res) => res);
 };

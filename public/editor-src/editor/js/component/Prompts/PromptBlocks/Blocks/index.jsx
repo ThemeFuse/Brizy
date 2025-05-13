@@ -30,7 +30,6 @@ import Blocks from "./Blocks";
 
 class BlocksContainer extends Component {
   static defaultProps = {
-    showSidebar: true,
     showSearch: true,
     showType: true, // dark | light
     showCategories: true,
@@ -261,9 +260,15 @@ class BlocksContainer extends Component {
 
   render() {
     const { kits, types, blocks, categories, loading } = this.state;
-    const { showSearch, showSidebar, selectedKit, HeaderSlotLeft, config } =
-      this.props;
+    const { showSearch, selectedKit, HeaderSlotLeft, config } = this.props;
+
     const _isStory = isStory(this.props.editorMode);
+
+    const showSidebar =
+      loading ||
+      types.length > 0 ||
+      categories.filter((cat) => cat.id !== "*").length > 0 ||
+      kits.length > 1;
 
     return (
       <Blocks

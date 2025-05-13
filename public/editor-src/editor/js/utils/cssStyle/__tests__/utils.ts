@@ -1,5 +1,5 @@
 import { CSSProperties } from "react";
-import { Config } from "visual/global/Config/InitConfig";
+import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { RenderType } from "visual/providers/RenderProvider";
 import { hydrate } from "visual/redux/actions";
 import { createStore } from "visual/redux/store";
@@ -49,14 +49,7 @@ import {
 const _undefined = undefined as unknown;
 const _null = null as unknown;
 const _NaN = NaN as unknown;
-
-beforeAll(() => {
-  // @ts-expect-error: Mock ConfigCommon
-  new Config({
-    config: mockDataForReduxStore.config,
-    id: mockDataForReduxStore.configId
-  });
-});
+const getConfig = (): ConfigCommon => ({}) as ConfigCommon;
 
 describe("Testing filterDeviceValues that should filter all CSS by devices in vd or vs or v", () => {
   test("With same values, should return empty array", () => {
@@ -149,7 +142,8 @@ describe("Testing getCSSObjectFromStyle that should return CSSObject or undefine
         store,
         v: {},
         breakpoint: "desktop",
-        option: { id: "asd", type: "slider" }
+        option: { id: "asd", type: "slider" },
+        getConfig
       })
     ).toStrictEqual(undefined);
   });
@@ -160,7 +154,8 @@ describe("Testing getCSSObjectFromStyle that should return CSSObject or undefine
         store,
         v: {},
         breakpoint: "desktop",
-        option: heightOptionWithStyle
+        option: heightOptionWithStyle,
+        getConfig
       })
     ).toStrictEqual({ "{{WRAPPER}}": { height: "0" } });
   });
@@ -171,7 +166,8 @@ describe("Testing getCSSObjectFromStyle that should return CSSObject or undefine
         store,
         v: { height: 20, heightSuffix: "px" },
         breakpoint: "desktop",
-        option: heightOptionWithStyle
+        option: heightOptionWithStyle,
+        getConfig
       })
     ).toStrictEqual({ "{{WRAPPER}}": { height: "20px" } });
   });
@@ -182,7 +178,8 @@ describe("Testing getCSSObjectFromStyle that should return CSSObject or undefine
         store,
         v: { height: 30, heightSuffix: "px", hoverHeight: 50 },
         breakpoint: "desktop",
-        option: heightOptionWithStyle
+        option: heightOptionWithStyle,
+        getConfig
       })
     ).toStrictEqual({ "{{WRAPPER}}": { height: "30px" } });
   });
@@ -193,7 +190,8 @@ describe("Testing getCSSObjectFromStyle that should return CSSObject or undefine
         store,
         v: { height: 40, heightSuffix: "px", activeHeight: 60 },
         breakpoint: "desktop",
-        option: heightOptionWithStyle
+        option: heightOptionWithStyle,
+        getConfig
       })
     ).toStrictEqual({ "{{WRAPPER}}": { height: "40px" } });
   });
@@ -202,6 +200,7 @@ describe("Testing getCSSObjectFromStyle that should return CSSObject or undefine
       getCSSObjectFromStyle({
         renderContext,
         store,
+        getConfig,
         v: {
           height: 10,
           heightSuffix: "px",
@@ -230,7 +229,8 @@ describe("Testing getCSSFromSelector that should return css or undefined", () =>
         store,
         v: {},
         breakpoint: "desktop",
-        option: borderOptionWithSelector
+        option: borderOptionWithSelector,
+        getConfig
       })
     ).toStrictEqual("border: none;");
   });
@@ -242,7 +242,8 @@ describe("Testing getCSSFromSelector that should return css or undefined", () =>
         store,
         v: {},
         breakpoint: "desktop",
-        option: heightOptionWithStyle
+        option: heightOptionWithStyle,
+        getConfig
       })
     ).toStrictEqual(undefined);
   });
@@ -253,7 +254,8 @@ describe("Testing getCSSFromSelector that should return css or undefined", () =>
         store,
         v: borderElementModel,
         breakpoint: "desktop",
-        option: borderOptionWithSelector
+        option: borderOptionWithSelector,
+        getConfig
       })
     ).toStrictEqual("border:5px solid rgba(115, 119, 127, 1);");
   });
@@ -267,7 +269,8 @@ describe("Testing getCSSFromSelector that should return css or undefined", () =>
           hoverBorderColorHex: "#FF0000"
         },
         breakpoint: "desktop",
-        option: borderOptionWithSelector
+        option: borderOptionWithSelector,
+        getConfig
       })
     ).toStrictEqual("border:5px solid rgba(115, 119, 127, 1);");
   });
@@ -786,7 +789,8 @@ describe("Testing getNewGeneratesCSSfromStyle that should return new allCSS obje
         breakpoint: "desktop",
         option: borderOptionWithSelector,
         state: NORMAL,
-        allCSS: mockAllCssObjects
+        allCSS: mockAllCssObjects,
+        getConfig
       })
     ).toStrictEqual(undefined);
   });
@@ -799,7 +803,8 @@ describe("Testing getNewGeneratesCSSfromStyle that should return new allCSS obje
         breakpoint: "desktop",
         option: heightOptionWithStyle,
         state: NORMAL,
-        allCSS: mockAllCssObjects
+        allCSS: mockAllCssObjects,
+        getConfig
       })
     ).toStrictEqual({
       ...mockAllCssObjects,
@@ -815,7 +820,8 @@ describe("Testing getNewGeneratesCSSfromStyle that should return new allCSS obje
         breakpoint: "tablet",
         option: heightOptionWithStyle,
         state: NORMAL,
-        allCSS: mockAllCssObjects
+        allCSS: mockAllCssObjects,
+        getConfig
       })
     ).toStrictEqual({
       ...mockAllCssObjects,
@@ -834,7 +840,8 @@ describe("Testing getNewGeneratesCSSfromStyle that should return new allCSS obje
         breakpoint: "tablet",
         option: heightOptionWithStyle,
         state: HOVER,
-        allCSS: mockAllCssObjects
+        allCSS: mockAllCssObjects,
+        getConfig
       })
     ).toStrictEqual({
       ...mockAllCssObjects,
@@ -850,7 +857,8 @@ describe("Testing getNewGeneratesCSSfromStyle that should return new allCSS obje
         breakpoint: "mobile",
         option: heightOptionWithStyle,
         state: ACTIVE,
-        allCSS: mockAllCssObjects
+        allCSS: mockAllCssObjects,
+        getConfig
       })
     ).toStrictEqual({
       ...mockAllCssObjects,
@@ -876,7 +884,8 @@ describe("Testing getNewGeneratesCSSfromSelector that should return new allCSS o
         breakpoint: "desktop",
         option: heightOptionWithStyle,
         state: NORMAL,
-        allCSS: mockAllCssObjects
+        allCSS: mockAllCssObjects,
+        getConfig
       })
     ).toStrictEqual(undefined);
   });
@@ -889,7 +898,8 @@ describe("Testing getNewGeneratesCSSfromSelector that should return new allCSS o
         breakpoint: "desktop",
         option: borderOptionWithSelector,
         state: NORMAL,
-        allCSS: mockAllCssObjects
+        allCSS: mockAllCssObjects,
+        getConfig
       })
     ).toStrictEqual({
       ...mockAllCssObjects,
@@ -912,7 +922,8 @@ describe("Testing getNewGeneratesCSSfromSelector that should return new allCSS o
         breakpoint: "tablet",
         option: borderOptionWithSelector,
         state: NORMAL,
-        allCSS: mockAllCssObjects
+        allCSS: mockAllCssObjects,
+        getConfig
       })
     ).toStrictEqual({
       ...mockAllCssObjects,
@@ -938,7 +949,8 @@ describe("Testing getNewGeneratesCSSfromSelector that should return new allCSS o
         breakpoint: "tablet",
         option: borderOptionWithSelector,
         state: HOVER,
-        allCSS: mockAllCssObjects
+        allCSS: mockAllCssObjects,
+        getConfig
       })
     ).toStrictEqual({
       ...mockAllCssObjects,
@@ -961,7 +973,8 @@ describe("Testing getNewGeneratesCSSfromSelector that should return new allCSS o
         breakpoint: "mobile",
         option: borderOptionWithSelector,
         state: ACTIVE,
-        allCSS: mockAllCssObjects
+        allCSS: mockAllCssObjects,
+        getConfig
       })
     ).toStrictEqual({
       ...mockAllCssObjects,
@@ -991,7 +1004,8 @@ describe("Testing getNewGeneratesCSSfromSelector that should return new allCSS o
           selector: "{{WRAPPER}} .list:hover .list-item"
         },
         state: HOVER,
-        allCSS: mockAllCssObjects
+        allCSS: mockAllCssObjects,
+        getConfig
       })
     ).toStrictEqual({
       ...mockAllCssObjects,

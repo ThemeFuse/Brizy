@@ -5,22 +5,18 @@ import type { OutputStyle } from "visual/utils/cssStyle/types";
 
 export function style(data: DynamicStylesProps<ElementModel>): OutputStyle {
   const styles = {
-    ".brz &&:hover .brz-reset-psw-form": {
+    ".brz && .brz-reset-psw-form": {
       standart: ["cssStyleDisplayFlex", "cssStyleElementLoginFormMargin"]
     },
-    ".brz &&:hover .brz-reset-psw__item-button": {
+    ".brz && .brz-reset-psw__item-button": {
       standart: [
         "cssStyleDisplayFlex",
         "cssStyleMarginAlign",
         "cssStyleElementForm2SubmitWidth"
       ]
     },
-    ".brz && .brz-reset-psw-form .brz-input:hover": {
+    ".brz && .brz-reset-psw-form .brz-input": {
       standart: [
-        "cssStyleColor",
-        "cssStyleBgColor",
-        "cssStyleBorder",
-        "cssStyleBoxShadow",
         "cssStyleBorderRadius",
         "cssStylePaddingFourFields",
         "cssStyleTypography2FontFamily",
@@ -32,27 +28,37 @@ export function style(data: DynamicStylesProps<ElementModel>): OutputStyle {
         "cssStyleTextTransforms"
       ]
     },
+    ".brz && .brz-reset-psw-form .brz-input:hover": {
+      standart: [
+        "cssStyleColor",
+        "cssStyleBgColor",
+        "cssStyleBorder",
+        "cssStyleBoxShadow"
+      ]
+    },
     ".brz && .brz-reset-psw-form .brz-reset-psw-form__field": {
       standart: ["cssStyleElementLoginFieldPadding"]
     },
     ".brz && .brz-reset-psw-form .brz-reset-psw__field-label": {
-      standart: ["cssStyleElementForm2FieldsLabelPadding"]
+      standart: [
+        "cssStyleElementForm2FieldsLabelPadding",
+        "cssStyleElementForm2FieldsLabelAlign"
+      ]
     },
     ".brz &&:hover .brz-reset-psw-form .brz-reset-psw__field-label": {
-      standart: ["cssStyleLabelColor", "cssStyleElementForm2FieldsLabelAlign"]
+      standart: ["cssStyleLabelColor"]
     },
-    ".brz &&:hover .brz-reset-psw-form .brz-reset-psw__field-label .brz-label":
-      {
-        standart: [
-          "cssStyleElementForm2FieldsLabelFontFamily",
-          "cssStyleElementForm2FieldsLabelFontSize",
-          "cssStyleElementForm2FieldsLabelFontWeight",
-          "cssStyleElementForm2FieldsLabelLetterSpacing",
-          "cssStyleElementForm2FieldsLabelLineHeight",
-          "cssStyleElementForm2FieldsLabelFontVariation",
-          "cssStyleElementForm2FieldsLabelTextTransform"
-        ]
-      }
+    ".brz && .brz-reset-psw-form .brz-reset-psw__field-label .brz-label": {
+      standart: [
+        "cssStyleElementForm2FieldsLabelFontFamily",
+        "cssStyleElementForm2FieldsLabelFontSize",
+        "cssStyleElementForm2FieldsLabelFontWeight",
+        "cssStyleElementForm2FieldsLabelLetterSpacing",
+        "cssStyleElementForm2FieldsLabelLineHeight",
+        "cssStyleElementForm2FieldsLabelFontVariation",
+        "cssStyleElementForm2FieldsLabelTextTransform"
+      ]
+    }
   };
 
   return renderStyles({ ...data, styles });

@@ -2,7 +2,7 @@ import { ElementModel } from "visual/component/Elements/Types";
 import { isEditor } from "visual/providers/RenderProvider";
 import { DynamicStylesProps } from "visual/types";
 import { renderStyles } from "visual/utils/cssStyle";
-import { OutputStyle } from "visual/utils/cssStyle/types";
+import { OutputStyle, Styles } from "visual/utils/cssStyle/types";
 
 export function styleSection(
   data: DynamicStylesProps<ElementModel>
@@ -13,27 +13,32 @@ export function styleSection(
   } = data;
   const { maskShape = "none" } = v;
 
-  const styles: {
-    [k: string]: {
-      interval?: string[];
-      standart?: string[];
-    };
-  } = {
-    ".brz &&:hover": {
+  const isEditorMode = isEditor(renderContext);
+
+  const styles: Styles = {
+    ".brz &&": {
       interval: ["cssStyleVisibleMode|||preview"],
       standart: [
         "cssStylePaddingPreview",
         "cssStylePaddingRightLeftForEditor",
         "cssStyleSectionHeightStyle",
-        "cssStyleDisplayFlex",
         "cssStyleMargin",
         "cssStyleZIndex"
       ]
     },
+    ".brz &&:hover": {
+      interval: [],
+      standart: [
+        "cssStyleDisplayFlex",
+        "cssStyleVisibleEditorDisplayNoneOrFlex|||editor"
+      ]
+    },
+    ".brz && > .brz-bg": {
+      standart: ["cssStyleBorderRadius"]
+    },
     ".brz &&:hover > .brz-bg": {
       standart: [
         "cssStyleBorder",
-        "cssStyleBorderRadius",
         "cssStyleBoxShadowSectionOutset",
         "cssStyleMaskDropShadow"
       ]
@@ -41,28 +46,30 @@ export function styleSection(
     ".brz &&:hover > .brz-bg:after": {
       standart: maskShape === "none" ? ["cssStyleBoxShadowSection"] : []
     },
-    ".brz &&:hover > .brz-bg > .brz-bg-image": {
+    ".brz && > .brz-bg > .brz-bg-image": {
       standart: [
-        "cssStyleBgImage",
-        "cssStyleFilter",
-        "cssStyleBgSize",
-        "cssStyleBgRepeat",
-        "cssStyleBgImagePosition",
-        "cssStyleBgMediaImage",
         "cssStyleMaskShape",
         "cssStyleMaskCustomShape",
         "cssStyleMaskSize",
         "cssStyleMaskPosition",
-        "cssStyleMaskRepeat"
+        "cssStyleMaskRepeat",
+        "cssStyleBgSize",
+        "cssStyleBgRepeat"
+      ]
+    },
+    ".brz &&:hover > .brz-bg > .brz-bg-image": {
+      standart: [
+        "cssStyleBgImage",
+        "cssStyleFilter",
+        "cssStyleBgImagePosition",
+        "cssStyleBgMediaImage"
       ]
     },
     ".brz &&:hover > .brz-bg > .brz-bg-image:after": {
       standart: ["cssStyleBgImageHover"]
     },
-    ".brz &&:hover > .brz-bg > .brz-bg-color": {
+    ".brz && > .brz-bg > .brz-bg-color": {
       standart: [
-        "cssStyleBgColor",
-        "cssStyleBgGradient",
         "cssStyleMaskShape",
         "cssStyleMaskCustomShape",
         "cssStyleMaskSize",
@@ -70,33 +77,36 @@ export function styleSection(
         "cssStyleMaskRepeat"
       ]
     },
-    ".brz &&:hover > .brz-bg > .brz-bg-shape__top": {
+    ".brz &&:hover > .brz-bg > .brz-bg-color": {
+      standart: ["cssStyleBgColor", "cssStyleBgGradient"]
+    },
+    ".brz && > .brz-bg > .brz-bg-shape__top": {
       standart: [
         "cssStyleShapeTopHeight",
         "cssStyleShapeTopFlip",
         "cssStyleShapeTopIndex"
       ]
     },
-    ".brz &&:hover > .brz-bg > .brz-bg-shape__top::after": {
+    ".brz && > .brz-bg > .brz-bg-shape__top::after": {
       standart: ["cssStyleShapeTopType", "cssStyleShapeTopHeight"]
     },
-    ".brz &&:hover > .brz-bg > .brz-bg-shape__bottom": {
+    ".brz && > .brz-bg > .brz-bg-shape__bottom": {
       standart: [
         "cssStyleShapeBottomHeight",
         "cssStyleShapeBottomFlip",
         "cssStyleShapeBottomIndex"
       ]
     },
-    ".brz &&:hover > .brz-bg > .brz-bg-shape__bottom::after": {
+    ".brz && > .brz-bg > .brz-bg-shape__bottom::after": {
       standart: ["cssStyleShapeBottomType", "cssStyleShapeBottomHeight"]
     },
-    ".brz &&:hover > .brz-ed-draggable__padding--top": {
+    ".brz && > .brz-ed-draggable__padding--top": {
       standart: [
         "cssStylePaddingTopForEditorResizer",
         "cssStyleSectionPaddingsForEditorResize"
       ]
     },
-    ".brz &&:hover > .brz-ed-draggable__padding--bottom": {
+    ".brz && > .brz-ed-draggable__padding--bottom": {
       standart: [
         "cssStylePaddingBottomForEditorResizer",
         "cssStyleSectionPaddingsForEditorResize"
@@ -107,20 +117,16 @@ export function styleSection(
     }
   };
 
-  if (isEditor(renderContext)) {
+  if (isEditorMode) {
     styles[".brz &&:hover"].interval?.push("cssStyleShowFlex");
 
     // Added offset for toolbar when uses marginTop in negative value
-    styles[".brz &&:hover .brz-ed-collapsible"] = {
+    styles[".brz && .brz-ed-collapsible"] = {
       standart: ["cssStyleSectionToolbarOffset"]
     };
-    styles[".brz &&:hover"].interval?.push(
-      "cssStyleVisibleEditorDisplayNoneOrFlex"
-    );
-    styles[".brz &&:hover > .brz-bg"].interval = [
-      "cssStyleVisibleMode|||editor"
-    ];
-    styles[".brz &&:hover > .brz-container"] = {
+    styles[".brz &&"].interval?.push("cssStyleVisibleEditorDisplayNoneOrFlex");
+    styles[".brz && > .brz-bg"].interval = ["cssStyleVisibleMode|||editor"];
+    styles[".brz && > .brz-container"] = {
       interval: ["cssStyleVisibleMode|||editor"]
     };
   }
@@ -132,9 +138,11 @@ export function styleContainer(
   data: DynamicStylesProps<ElementModel>
 ): OutputStyle {
   const styles = {
-    ".brz &&:hover": {
-      standart: ["cssStyleBorderTransparentColor"],
+    ".brz &&": {
       interval: ["cssStyleSectionMaxWidth"]
+    },
+    ".brz &&:hover": {
+      standart: ["cssStyleBorderTransparentColor"]
     }
   };
 
@@ -145,7 +153,7 @@ export function styleAnimation(
   data: DynamicStylesProps<ElementModel>
 ): OutputStyle {
   const styles = {
-    ".brz &&:hover": {
+    ".brz &&": {
       standart: ["cssStyleAnimationAll"]
     }
   };

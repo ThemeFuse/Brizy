@@ -27,6 +27,10 @@
   pointer-events: none;
 }
 
+.brz-enabled {
+  pointer-events: all !important;
+}
+
 // Responsive Display flex
 @each $breakpoint in map-keys($grid-breakpoints) {
   @include media-breakpoint-up($breakpoint) {

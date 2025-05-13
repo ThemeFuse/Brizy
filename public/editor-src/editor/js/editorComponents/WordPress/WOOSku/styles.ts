@@ -4,9 +4,8 @@ import { renderStyles } from "visual/utils/cssStyle";
 
 export function style(data: DynamicStylesProps<ElementModel>) {
   const styles = {
-    ".brz &&:hover": {
+    ".brz &&": {
       standart: [
-        "cssStyleColor",
         "cssStyleTypography2FontFamily",
         "cssStyleTypography2FontSize",
         "cssStyleTypography2LineHeight",
@@ -15,6 +14,9 @@ export function style(data: DynamicStylesProps<ElementModel>) {
         "cssStyleTypography2FontVariation",
         "cssStyleTextTransforms"
       ]
+    },
+    ".brz &&:hover": {
+      standart: ["cssStyleColor"]
     }
   };
 

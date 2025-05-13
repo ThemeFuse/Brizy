@@ -3,7 +3,8 @@ import { Group as Control } from "visual/component/Controls/Group";
 import Options from "visual/component/Options";
 import { Props as OptionProps } from "visual/component/Options/Type";
 import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
-import { useConfig, usePro } from "visual/global/hooks";
+import { usePro } from "visual/global/hooks";
+import { useConfig } from "visual/providers/ConfigProvider";
 import { WithClassName } from "visual/types/attributes";
 import { FCP } from "visual/utils/react/types";
 

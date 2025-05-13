@@ -13,12 +13,19 @@ import {
   styleTypography2LineHeight
 } from "visual/utils/style2";
 
-export function cssStyleElementWOOPriceColorSale({ v, device, store, state }) {
+export function cssStyleElementWOOPriceColorSale({
+  v,
+  device,
+  store,
+  state,
+  getConfig
+}) {
   return cssStyleColor({
     v,
     device,
     state,
     store,
+    getConfig,
     prefix: "saleColor"
   });
 }
@@ -27,11 +34,12 @@ export function cssStyleElementWOOPriceSaleFontFamily({
   v,
   device,
   store,
+  getConfig,
   prefix = "sale",
   renderContext
 }) {
   return device === "desktop"
-    ? `font-family:${styleTypography2FontFamily({ v, device, store, prefix, renderContext })};`
+    ? `font-family:${styleTypography2FontFamily({ v, device, store, prefix, renderContext, getConfig })};`
     : "";
 }
 
@@ -39,48 +47,59 @@ export function cssStyleElementWOOPriceSaleFontSize({
   v,
   device,
   store,
+  getConfig,
   prefix = "sale"
 }) {
-  return `font-size:${styleTypography2FontSize({ v, device, store, prefix })}px;`;
+  return `font-size:${styleTypography2FontSize({ v, device, store, prefix, getConfig })}px;`;
 }
 
 export function cssStyleElementWOOPriceSaleLineHeight({
   v,
   device,
   store,
+  getConfig,
   prefix = "sale"
 }) {
-  return `line-height:${styleTypography2LineHeight({ v, device, store, prefix })};`;
+  return `line-height:${styleTypography2LineHeight({ v, device, store, prefix, getConfig })};`;
 }
 
 export function cssStyleElementWOOPriceSaleFontWeight({
   v,
   device,
   store,
+  getConfig,
   prefix = "sale"
 }) {
-  return `font-weight:${styleTypography2FontWeight({ v, device, store, prefix })};`;
+  return `font-weight:${styleTypography2FontWeight({ v, device, store, getConfig, prefix })};`;
 }
 
 export function cssStyleElementWOOPriceSaleLetterSpacing({
   v,
   device,
   store,
+  getConfig,
   prefix = "sale"
 }) {
   return `letter-spacing:${styleTypography2LetterSpacing({
     v,
     device,
     store,
+    getConfig,
     prefix
   })}px;`;
 }
 
-export function cssStyleElementWOOPriceSaleFontVariation({ v, store, device }) {
+export function cssStyleElementWOOPriceSaleFontVariation({
+  v,
+  store,
+  getConfig,
+  device
+}) {
   return cssStyleTypography2FontVariation({
     v,
     device,
     store,
+    getConfig,
     prefix: "sale"
   });
 }
@@ -89,6 +108,7 @@ export function cssStyleElementWOOPriceSaleTextTransform({
   v,
   state,
   store,
+  getConfig,
   device
 }) {
   return cssStyleTextTransforms({
@@ -96,22 +116,29 @@ export function cssStyleElementWOOPriceSaleTextTransform({
     state,
     device,
     store,
+    getConfig,
     prefix: "sale"
   });
 }
 
-export function cssStyleElementWOOPriceColumn({ v, device, state }) {
+export function cssStyleElementWOOPriceColumn({ v, device, getConfig, state }) {
   const column =
-    styleElementWOOPriceColumn({ v, device, state }) === "on"
+    styleElementWOOPriceColumn({ v, device, getConfig, state }) === "on"
       ? "column"
       : "row";
 
   return column === undefined ? "" : `flex-direction: ${column};`;
 }
 
-export function cssStyleElementWOOPriceSpacingFirst({ v, device, state }) {
-  const column = styleElementWOOPriceColumn({ v, device, state });
-  const spacing = styleElementWOOPriceSpacing({ v, device, state }) / 2;
+export function cssStyleElementWOOPriceSpacingFirst({
+  v,
+  device,
+  getConfig,
+  state
+}) {
+  const column = styleElementWOOPriceColumn({ v, device, getConfig, state });
+  const spacing =
+    styleElementWOOPriceSpacing({ v, device, getConfig, state }) / 2;
 
   return spacing === undefined
     ? ""
@@ -120,9 +147,15 @@ export function cssStyleElementWOOPriceSpacingFirst({ v, device, state }) {
       : `margin: 0 ${spacing}px 0 0;`;
 }
 
-export function cssStyleElementWOOPriceSpacingLast({ v, device, state }) {
-  const column = styleElementWOOPriceColumn({ v, device, state });
-  const spacing = styleElementWOOPriceSpacing({ v, device, state }) / 2;
+export function cssStyleElementWOOPriceSpacingLast({
+  v,
+  device,
+  getConfig,
+  state
+}) {
+  const column = styleElementWOOPriceColumn({ v, device, getConfig, state });
+  const spacing =
+    styleElementWOOPriceSpacing({ v, device, getConfig, state }) / 2;
 
   return spacing === undefined
     ? ""

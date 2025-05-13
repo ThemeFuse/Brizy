@@ -33,13 +33,13 @@ import {
 } from "./utils";
 
 class Map extends EditorComponent<Value> {
-  static get componentId(): ElementTypes.Map {
-    return ElementTypes.Map;
-  }
-
   static defaultValue = defaultValue;
   static experimentalDynamicContent = true;
   isWp = isWp(this.getGlobalConfig());
+
+  static get componentId(): ElementTypes.Map {
+    return ElementTypes.Map;
+  }
 
   handleResizerChange = (patch: Patch): void =>
     this.patchValue(resizerTransformPatch(patch));

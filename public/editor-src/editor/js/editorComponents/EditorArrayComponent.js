@@ -558,6 +558,9 @@ export default class EditorArrayComponent extends EditorComponent {
   }
 
   renderItemData(itemData, itemKey, itemIndex, items) {
+    const { renderContext, editorMode, getGlobalConfig } = this.props;
+    const config = this.getGlobalConfig();
+
     const { type, value } = itemData;
     const ItemComponent = Editor.getComponent(type);
 
@@ -589,6 +592,7 @@ export default class EditorArrayComponent extends EditorComponent {
       return (
         <ErrorBoundary
           key={itemKey}
+          config={config}
           onRemove={() => this.removeItem(itemIndex)}
           renderContext={this.props.renderContext}
         >
@@ -600,8 +604,9 @@ export default class EditorArrayComponent extends EditorComponent {
             reduxStore={this.getReduxStore()}
             reduxDispatch={this.getReduxDispatch()}
             onChange={itemOnChange}
-            renderContext={this.props.renderContext}
-            editorMode={this.props.editorMode}
+            renderContext={renderContext}
+            editorMode={editorMode}
+            getGlobalConfig={getGlobalConfig}
           />
         </ErrorBoundary>
       );
@@ -621,6 +626,7 @@ export default class EditorArrayComponent extends EditorComponent {
           componentId={type}
           renderContext={this.props.renderContext}
           editorMode={this.props.editorMode}
+          getGlobalConfig={getGlobalConfig}
         />
       );
     }

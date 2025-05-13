@@ -23,9 +23,8 @@ export function style(data: BaseData): OutputStyle {
   const submitType = type === "submit";
 
   const styles = {
-    ".brz &&.brz-btn:hover": {
+    ".brz &&.brz-btn": {
       standart: [
-        "cssStyleDisplayFlex",
         "cssStyleTypography2FontFamily",
         "cssStyleTypographyFontWeight",
         "cssStyleTypographyFontSize",
@@ -33,17 +32,22 @@ export function style(data: BaseData): OutputStyle {
         "cssStyleTypographyLetterSpacing",
         "cssStyleTypography2FontVariation",
         "cssStyleTextTransforms",
-        "cssStyleColor",
-        ...(hasSizing && _isEditor && !submitType ? [] : ["cssStyleBorder"]),
         "cssStyleBorderRadiusType",
-        "cssStyleBoxShadow",
         "cssStylePaddingFourFields",
         "cssStyleElementButtonIconPosition",
-        "cssStyleSizeWidth",
         "cssStyleSizeHeightPxOnly",
         ...(_isStory
           ? ["cssStyleElementButtonSizeForStory"]
-          : ["cssStyleElementButtonSize"])
+          : ["cssStyleElementButtonSize"]),
+        "cssStyleSizeWidth"
+      ]
+    },
+    ".brz &&.brz-btn:hover": {
+      standart: [
+        "cssStyleDisplayFlex",
+        "cssStyleColor",
+        ...(hasSizing && _isEditor && !submitType ? [] : ["cssStyleBorder"]),
+        "cssStyleBoxShadow"
       ],
       interval: [
         "cssStyleHoverTransition",
@@ -77,18 +81,18 @@ export function style(data: BaseData): OutputStyle {
         "cssStylePropertyHoverTransitionColor"
       ]
     },
-    ".brz &&:hover:after": {
+    ".brz &&:after": {
       standart:
         (hasSizing && _isEditor) || submitType
           ? []
           : ["cssStyleSizeHeightPercentOnly"]
     },
-    ".brz &&:hover > .brz-ed-box__resizer": {
+    ".brz && > .brz-ed-box__resizer": {
       standart: _isEditor
         ? ["cssStyleDisplayFlex", "cssStyleElementButtonIconPosition"]
         : []
     },
-    ".brz &&:hover .brz-btn--story-container": {
+    ".brz && .brz-btn--story-container": {
       standart: [
         "cssStyleElementButtonBorderStory",
         "cssStyleElementButtonIconPosition",
@@ -99,7 +103,7 @@ export function style(data: BaseData): OutputStyle {
         "cssStylePropertyHoverTransitionColor"
       ]
     },
-    ".brz &&:hover .brz-btn--story-container:after": {
+    ".brz && .brz-btn--story-container:after": {
       standart: ["cssStyleSizeHeightPercentOnly"]
     }
   };
@@ -109,7 +113,7 @@ export function style(data: BaseData): OutputStyle {
 
 export function styleIcon(data: DynamicStylesProps<Value>): OutputStyle {
   const styles = {
-    ".brz &&:hover": {
+    ".brz &&": {
       standart: [
         "cssStyleSizeFontSizeIcon",
         "cssStyleElementButtonIconMargin",

@@ -1,4 +1,5 @@
-import { Obj } from "@brizy/readers";
+import { Obj, Str } from "@brizy/readers";
+import { conformsTo } from "es-toolkit/compat";
 import { pass } from "fp-utilities";
 import { isWp } from "visual/global/Config";
 import {
@@ -7,7 +8,7 @@ import {
   LeftSidebarOptionBase,
   LeftSidebarOptionsIds
 } from "visual/global/Config/types/configs/ConfigCommon";
-import { SavedBlock, SavedLayout } from "visual/types";
+import { ProjectLocked, SavedBlock, SavedLayout } from "visual/types";
 import { checkValue2 } from "visual/utils/checkValue";
 import {
   GlobalBlock,
@@ -207,5 +208,18 @@ export const isStyle = (item: unknown): item is Style =>
 
 export const isExtraFontStyle = (item: unknown): item is ExtraFontStyle =>
   isFontStyle(item) && item.deletable === "on";
+
+//#endregion
+
+//#region Error region
+export const isProjectLocked = (p: unknown): p is ProjectLocked => {
+  return (
+    Obj.isObject(p) &&
+    conformsTo(p, {
+      locked: (l) => l === true,
+      lockedBy: (obj) => conformsTo(obj, { user_email: Str.is })
+    })
+  );
+};
 
 //#endregion

@@ -2,7 +2,7 @@ import React, { ReactElement, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Prompts, { PromptsProps } from "visual/component/Prompts";
 import { rolesHOC } from "visual/component/Roles";
-import Config from "visual/global/Config";
+import { useConfig } from "visual/providers/ConfigProvider";
 import { setDeviceMode } from "visual/redux/actions2";
 import { deviceModeSelector } from "visual/redux/selectors";
 import { DeviceMode } from "visual/types";
@@ -41,6 +41,8 @@ const getDeviceTexts = (device: DeviceMode): TextsDevice => {
 const FirstPopupBlockAdder = (props: Props): ReactElement => {
   const { onAddBlock, onAddGlobalPopup } = props;
   const dispatch = useDispatch();
+  const config = useConfig();
+
   const deviceMode = useSelector(deviceModeSelector);
   const { title, description } = getDeviceTexts(deviceMode);
   const icon =
@@ -54,7 +56,6 @@ const FirstPopupBlockAdder = (props: Props): ReactElement => {
 
   const handleOpen = useCallback((): void => {
     if (deviceMode === "desktop") {
-      const config = Config.getAll();
       const showGlobal = typeof config.api?.globalBlocks?.create === "function";
 
       const data: PromptsProps<"popup"> = {
@@ -78,7 +79,7 @@ const FirstPopupBlockAdder = (props: Props): ReactElement => {
     } else {
       dispatch(setDeviceMode("desktop"));
     }
-  }, [deviceMode, dispatch, onAddBlock, onAddGlobalPopup]);
+  }, [deviceMode, config, dispatch, onAddBlock, onAddGlobalPopup]);
 
   return (
     <Control

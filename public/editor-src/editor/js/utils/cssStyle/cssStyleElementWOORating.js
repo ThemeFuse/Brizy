@@ -5,12 +5,13 @@ export function cssStyleElementWOORatingSize({ v, device, store, state }) {
   return cssStyleSizeFontSize({ v, device, store, state, prefix: "rating" });
 }
 
-export function cssStyleElementWOORatingTextColor({ v, device, store, state }) {
+export function cssStyleElementWOORatingTextColor({ v, device, store, getConfig, state }) {
   return cssStyleColor({
     v,
     device,
     store,
     state,
+    getConfig,
     prefix: "textColor"
   });
 }
@@ -28,6 +29,7 @@ export function cssStyleElementWOORatingBgStarColor({
   v,
   device,
   store,
+  getConfig,
   state
 }) {
   return cssStyleColor({
@@ -35,6 +37,7 @@ export function cssStyleElementWOORatingBgStarColor({
     device,
     state,
     store,
+    getConfig,
     prefix: "bgStarColor"
   });
 }

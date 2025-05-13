@@ -1,16 +1,17 @@
+import { ElementModel } from "visual/component/Elements/Types";
 import type { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
 import { getColorToolbar } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
 import type { ResponsiveMode } from "visual/utils/responsiveMode";
 import { HOVER, NORMAL, State } from "visual/utils/stateMode";
-import type { EcwidToolbarCSSData, Value } from "./utils/Value";
+import type { EcwidToolbarCSSData } from "./utils/Value";
 
-export const ecwidToolbarFooter = (
+export const ecwidToolbarFooter = <T extends ElementModel = ElementModel>(
   data?: EcwidToolbarCSSData
 ): {
   getItems: (data: {
-    v: Value;
+    v: T;
     device: ResponsiveMode;
     state: State;
   }) => ToolbarItemType[];

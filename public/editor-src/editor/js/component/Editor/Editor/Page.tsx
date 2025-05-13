@@ -3,7 +3,7 @@ import { useDispatch, useSelector, useStore } from "react-redux";
 import { DraggableOverlay } from "visual/component/DraggableOverlay";
 import { RootContainer } from "visual/component/RootContainer";
 import EditorGlobal from "visual/global/Editor";
-import { useConfig } from "visual/global/hooks";
+import { useConfig } from "visual/providers/ConfigProvider";
 import { EditorComponentProvider } from "visual/providers/EditorComponentProvider";
 import { useEditorMode } from "visual/providers/EditorModeProvider";
 import { updateBlocks } from "visual/redux/actions2";
@@ -13,6 +13,7 @@ import {
 } from "visual/redux/selectors";
 import { t } from "visual/utils/i18n";
 import { areStatesEqual, getPageId } from "../utils";
+import { OnChange } from "./types";
 
 const Page = (): JSX.Element => {
   const dispatch = useDispatch();
@@ -25,11 +26,19 @@ const Page = (): JSX.Element => {
   const modulesGroup = config.dynamicContent?.groups;
   const groups = useMemo(() => modulesGroup, [modulesGroup]);
 
-  const handlePageChange = useCallback(
-    ({ items: blocks }, meta) => {
-      dispatch(updateBlocks({ blocks, meta }));
+  const getGlobalConfig = useCallback(() => config, [config]);
+
+  const handlePageChange = useCallback<OnChange>(
+    (model, meta) => {
+      if (!model) {
+        return;
+      }
+
+      const { items: blocks = [] } = model;
+      // @ts-expect-error: TMP
+      dispatch(updateBlocks({ blocks, meta, config }));
     },
-    [dispatch]
+    [config, dispatch]
   );
 
   const { Page } = EditorGlobal.getComponents();
@@ -51,6 +60,7 @@ const Page = (): JSX.Element => {
           onChange={handlePageChange}
           renderContext="editor"
           editorMode={mode}
+          getGlobalConfig={getGlobalConfig}
         />
         <DraggableOverlay />
       </EditorComponentProvider>

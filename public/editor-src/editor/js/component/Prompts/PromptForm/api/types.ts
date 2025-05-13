@@ -2,7 +2,6 @@ import { ResponseWithBody } from "visual/component/Prompts/common/utils/Request"
 import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { Response } from "visual/utils/api/response";
 
-
 // Forms
 
 export type IntegrationType = {
@@ -77,12 +76,12 @@ export type UpdateIntegration = (
     formId: string;
     id: string;
     type: string;
-    completed: boolean;
     confirmationNeeded: boolean;
-    usedAccount: string;
     usedList: string;
     usedFolder: string;
     fieldsMap: string;
+    usedAccount?: string | null;
+    completed?: boolean;
   },
   config: ConfigCommon
 ) => Promise<IntegrationResponse>;
@@ -167,7 +166,7 @@ export type CreateSmptIntegration = (
 
 export type UpdateSmptIntegration = (
   data: {
-    [k: string]: string | boolean;
+    [k: string]: string | boolean | null;
     formId: string;
     completed: boolean;
   },

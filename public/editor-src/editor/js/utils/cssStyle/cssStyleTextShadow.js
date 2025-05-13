@@ -1,4 +1,3 @@
-import { configSelector } from "visual/redux/selectors";
 import { getColor } from "visual/utils/color";
 import { defaultValueValue } from "visual/utils/onChange";
 import { capByPrefix } from "visual/utils/string";
@@ -21,19 +20,27 @@ export function cssStyleTextShadowSuffixForGlamour({
   device,
   state,
   store,
+  getConfig,
   prefix = ""
 }) {
-  const type = styleTextShadowType({ v, device, state, prefix });
-  const color = styleTextShadowColor({ v, device, state, store, prefix });
-  const blur = styleTextShadowBlur({ v, device, state, prefix });
+  const type = styleTextShadowType({ v, device, state, getConfig, prefix });
+  const color = styleTextShadowColor({
+    v,
+    device,
+    state,
+    store,
+    getConfig,
+    prefix
+  });
+  const blur = styleTextShadowBlur({ v, device, state, getConfig, prefix });
   const horizontal =
     type === "inset"
-      ? styleTextShadowHorizontal({ v, device, state, prefix }) * -1
-      : styleTextShadowHorizontal({ v, device, state, prefix });
+      ? styleTextShadowHorizontal({ v, device, state, getConfig, prefix }) * -1
+      : styleTextShadowHorizontal({ v, device, state, getConfig, prefix });
   const vertical =
     type === "inset"
-      ? styleTextShadowVertical({ v, device, state, prefix }) * -1
-      : styleTextShadowVertical({ v, device, state, prefix });
+      ? styleTextShadowVertical({ v, device, state, getConfig, prefix }) * -1
+      : styleTextShadowVertical({ v, device, state, getConfig, prefix });
 
   if (
     type === "" ||
@@ -48,12 +55,20 @@ export function cssStyleTextShadowSuffixForGlamour({
   }
 }
 
-export function cssStyleTextShadow({ v, device, state, store, prefix = "" }) {
+export function cssStyleTextShadow({
+  v,
+  device,
+  state,
+  store,
+  getConfig,
+  prefix = ""
+}) {
   const shadow = cssStyleTextShadowSuffixForGlamour({
     v,
     device,
     state,
     store,
+    getConfig,
     prefix
   });
 
@@ -61,10 +76,16 @@ export function cssStyleTextShadow({ v, device, state, store, prefix = "" }) {
   else return `text-shadow:${shadow};`;
 }
 
-export function cssStyleTextShadow2({ v, state, device, store, prefix = "" }) {
+export function cssStyleTextShadow2({
+  v,
+  state,
+  device,
+  prefix = "",
+  getConfig
+}) {
   state = getState(v, state);
   const dvv = (key) => defaultValueValue({ v, key, device, state });
-  const config = configSelector(store.getState());
+  const config = getConfig();
 
   const textShadowHex = dvv(capByPrefix(prefix, "textShadowColorHex"));
   const textShadowOpacity = dvv(capByPrefix(prefix, "textShadowColorOpacity"));

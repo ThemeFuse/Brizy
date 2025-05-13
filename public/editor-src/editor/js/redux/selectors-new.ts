@@ -5,8 +5,7 @@ import {
   ElementModel,
   ElementModelType
 } from "visual/component/Elements/Types";
-import { getConfigById } from "visual/global/Config/InitConfig";
-import { isShopifyPage } from "visual/global/Config/types/configs/Cloud";
+import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { FontKeyTypes } from "visual/redux/actions2";
 import { ReduxState, StoreChanged } from "visual/redux/types";
 import { Authorized, SyncAllowed } from "visual/types";
@@ -23,6 +22,13 @@ import { objectFromEntries, objectTraverse2 } from "visual/utils/object";
 import { MValue } from "visual/utils/value";
 
 //#region === 0 DEPENDENCIES ===
+
+// this selector is used solely to config parameter that are unrelated to the redux store
+// and to maintain memoization
+export const configSelector = (
+  _: ReduxState,
+  config: ConfigCommon
+): ConfigCommon => config;
 
 export const stateSelector = (state: ReduxState): ReduxState => state;
 
@@ -94,14 +100,9 @@ export const currentStyleSelector = (
 export const errorSelector = (state: ReduxState): ReduxState["error"] =>
   state.error;
 
-export const configIdSelector = (state: ReduxState): ReduxState["configId"] =>
-  state.configId;
-
 //#endregion
 
 //#region === 1 DEPENDENCIES ===
-export const configSelector = createSelector(configIdSelector, getConfigById);
-
 export const pageDataSelector = createSelector(
   pageSelector,
   (page) => page.data || {}
@@ -191,18 +192,6 @@ export const currentLanguageSelector = createSelector(
 export const leftSidebarSelector = createSelector(
   uiSelector,
   (ui) => ui.leftSidebar
-);
-
-export const pageLayout = createSelector(
-  pageSelector,
-  configSelector,
-  (page, config) => {
-    if (isShopifyPage(page, config)) {
-      return page.layout;
-    }
-
-    return undefined;
-  }
 );
 
 //#endregion
@@ -351,7 +340,8 @@ export const pageBlocksDataSelector = createSelector(
 // Retrieve all blocks from the page, including their global blocks with data.
 // Included new screenshots data used inside LeftSidebar
 export const pageBlocksDataAssembledSelector = createSelector(
-  pageBlocksDataSelector,
+  (state: ReduxState, config: ConfigCommon) =>
+    pageBlocksDataSelector(state, config),
   screenshotsSelector,
   (blocksOrder, screenshots) => {
     return blocksOrder.map((data) => {
@@ -409,7 +399,8 @@ export const globalBlocksInPageRawSelector = createSelector(
 // Retrieve all global popups from page, including their data.
 // Used when try to compile page with node
 export const globalPopupsInPageSelector = createSelector(
-  pageBlocksDataSelector,
+  (state: ReduxState, config: ConfigCommon) =>
+    pageBlocksDataSelector(state, config),
   globalBlocksSelector,
   (page, globalBlocks) => {
     const popups = new Map<string, GlobalBlockPopup>();
@@ -491,7 +482,8 @@ export const pageDataDraftBlocksSelector = createSelector(
 // This is used for the Publish button when trying to save the layout.
 export const pageDataNoRefsSelector2 = createSelector(
   pageDataSelector,
-  pageBlocksDataSelector,
+  (state: ReduxState, config: ConfigCommon) =>
+    pageBlocksDataSelector(state, config),
   (pageData, pageBlocks) =>
     produce(pageData, (draft) => {
       draft.items = pageBlocks;

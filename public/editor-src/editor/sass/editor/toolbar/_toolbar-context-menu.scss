@@ -1,4 +1,4 @@
-.react-contexify {
+.contexify {
   position: fixed;
   background-color: $toolbar-bg;
   background-clip: padding-box;
@@ -27,18 +27,18 @@
     z-index: -1;
   }
 
-  &__wrapper {
+  &_wrapper {
     width: 100%;
     height: auto;
   }
 
-  &--title {
+  &-title {
     height: 40px;
     margin-bottom: 7px;
     border-bottom: 1px solid $brand__options-border;
     pointer-events: none;
 
-    .react-contexify__item__content {
+    .contexify_itemContent {
       color: #9ca7b0;
       justify-content: flex-start;
 
@@ -49,7 +49,7 @@
     }
   }
 
-  &__item {
+  &_item {
     cursor: pointer;
     position: relative;
     padding: 7px 0;
@@ -59,24 +59,24 @@
     transition: all 0.2s linear;
 
     &:hover,
-    &--active,
-    &--selected {
-      & > .react-contexify__item__content {
+    &-active,
+    &-selected {
+      & > .contexify_itemContent {
         background-color: rgba(255, 255, 255, 0.12);
         color: $brand__primary;
       }
 
-      .react-contexify__submenu-arrow {
+      .contexify_submenu-arrow {
         border-color: $brand__primary;
       }
 
-      .react-contexify__submenu {
+      .contexify_submenu {
         pointer-events: initial;
         opacity: 1;
       }
     }
 
-    &__content {
+    &Content {
       width: 100%;
       height: 26px;
       line-height: 26px;
@@ -92,24 +92,24 @@
       align-items: center;
     }
 
-    .react-contexify__item--placeholder {
+    .contexify_item-placeholder {
       color: #9da8b1;
     }
 
     // State
-    &--disabled,
-    &--disabled:hover {
+    &-disabled,
+    &-disabled:hover {
       pointer-events: none;
       cursor: default;
     }
 
-    &--disabled {
-      .react-contexify__item--title {
+    &-disabled {
+      .contexify_item-title {
         color: #9ca7b0;
       }
     }
 
-    &--shortcut {
+    &-shortcut {
       color: #9ca7b0;
       font-weight: normal;
       font-size: 12px;
@@ -118,13 +118,13 @@
       text-transform: capitalize;
     }
 
-    &__submenu {
+    &_submenu {
       height: 40px;
       border-top: 1px solid $brand__options-border;
       margin: 7px 0 -7px 0;
     }
 
-    &__submenu:last-child {
+    &_submenu:last-child {
       margin-bottom: 0;
     }
 
@@ -133,14 +133,14 @@
     }
   }
 
-  &__submenu {
+  &_submenu {
     position: absolute;
     pointer-events: none;
     border-top: 1px solid $toolbar-border;
-    margin-left: 5px;
+    margin-left: 190px;
     margin-right: 5px;
 
-    &-arrow {
+    .contexify_rightSlot {
       position: absolute;
       top: 50%;
       right: 17px;
@@ -156,6 +156,6 @@
 }
 
 // Cloneable
-.brz-wrapper-clone .react-contexify__wrapper {
+.brz-wrapper-clone .contexify_wrapper {
   width: auto;
 }

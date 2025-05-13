@@ -1,13 +1,13 @@
-import { isEqual } from "es-toolkit";
-import React, { MutableRefObject, useMemo, useRef } from "react";
+import { noop } from "es-toolkit";
+import React, { useMemo } from "react";
 import Page from "visual/component/Editor/View";
-import { Config } from "visual/global/Config/InitConfig";
 import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import { ConfigProvider } from "visual/providers/ConfigProvider";
 import { EditorModeProvider } from "visual/providers/EditorModeProvider";
 import { I18nextProvider } from "visual/providers/I18nProvider";
 import { RenderProvider } from "visual/providers/RenderProvider";
 import { StyleProvider } from "visual/providers/StyleProvider";
-import { uuid } from "visual/utils/uuid";
+import { setIds } from "visual/utils/models";
 import { InitStore } from "../components/InitStore";
 import { RegisterParts } from "../components/RegisterParts";
 import { Props } from "./types";
@@ -29,34 +29,52 @@ export const Preview = (props: Props): JSX.Element => {
     [projectData]
   );
   const mode = getMode(_mode);
+
+  const page = useMemo(() => {
+    const pageDataItems = setIds(pageData?.data?.items || [], {
+      keepExistingIds: true
+    });
+
+    return {
+      ...(pageData || {}),
+      data: {
+        ...(pageData?.data || {}),
+        items: pageDataItems
+      }
+    };
+  }, [pageData]);
+
   const config: ConfigCommon = useMemo(() => {
+    const _project = partialConfig?.project ?? {
+      id: project.id
+    };
+    const container = partialConfig?.container ?? {
+      id: 1
+    };
+    const editorVersion = partialConfig?.editorVersion ?? "1";
+    const onUpdate = partialConfig?.onUpdate ?? noop;
+    const onCompile = partialConfig?.onCompile ?? noop;
+
     return {
       ...partialConfig,
+      project: _project,
+      container,
+      editorVersion,
       thirdPartyComponents,
+      onUpdate,
+      onCompile,
       mode,
-      pageData,
+      pageData: page,
       projectData: project
     };
-  }, [partialConfig, mode, pageData, project, thirdPartyComponents]);
-
-  const lastConfig: MutableRefObject<ConfigCommon> = useRef(config);
-  const lastUid = useRef(uuid());
-
-  const configId = useMemo(() => {
-    if (!isEqual(lastConfig.current, config)) {
-      lastConfig.current = config;
-      lastUid.current = uuid();
-    }
-
-    return lastUid.current;
-  }, [config]);
+  }, [partialConfig, mode, page, project, thirdPartyComponents]);
 
   return (
     <I18nextProvider>
       <RenderProvider renderType="view">
-        <Config id={configId} config={config}>
+        <ConfigProvider config={config}>
           <RegisterParts config={config}>
-            <InitStore configId={configId} config={config} editorMode={mode}>
+            <InitStore config={config} editorMode={mode}>
               <EditorModeProvider mode={mode}>
                 <StyleProvider>
                   <Page editorMode={mode} />
@@ -64,7 +82,7 @@ export const Preview = (props: Props): JSX.Element => {
               </EditorModeProvider>
             </InitStore>
           </RegisterParts>
-        </Config>
+        </ConfigProvider>
       </RenderProvider>
     </I18nextProvider>
   );

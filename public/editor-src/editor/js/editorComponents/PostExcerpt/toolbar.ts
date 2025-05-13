@@ -1,6 +1,7 @@
 import { ElementModel } from "visual/component/Elements/Types";
 import type { GetItems } from "visual/editorComponents/EditorComponent/types";
 import { DCGroup, DCTypes } from "visual/global/Config/types/DynamicContent";
+import { getEnabledLinkOptions } from "visual/global/Config/types/configs/featuresValue";
 import { isPopup } from "visual/providers/EditorModeProvider";
 import { getColorToolbar } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
@@ -56,6 +57,12 @@ export const getItems: GetItems<ElementModel> = ({
   });
 
   const linkPopup = dvv("linkPopup");
+  const {
+    internalLink,
+    linkPopup: linkPopupEnabled,
+    linkAnchor,
+    linkExternal
+  } = getEnabledLinkOptions(config);
 
   return [
     {
@@ -177,6 +184,7 @@ export const getItems: GetItems<ElementModel> = ({
             {
               id: "page",
               label: t("Page"),
+              disabled: !internalLink,
               options: [
                 {
                   id: "linkPage",
@@ -193,6 +201,7 @@ export const getItems: GetItems<ElementModel> = ({
             {
               id: "external",
               label: t("URL"),
+              disabled: !linkExternal,
               options: [
                 {
                   id: "link",
@@ -223,6 +232,7 @@ export const getItems: GetItems<ElementModel> = ({
             {
               id: "anchor",
               label: t("Block"),
+              disabled: !linkAnchor,
               options: [
                 {
                   id: "linkAnchor",
@@ -235,6 +245,7 @@ export const getItems: GetItems<ElementModel> = ({
             {
               id: "popup",
               label: t("Popup"),
+              disabled: !linkPopupEnabled,
               options: [
                 {
                   id: "linkPopup",

@@ -3,15 +3,16 @@ import React from "react";
 import { ConnectedProps, connect } from "react-redux";
 import { currentUserRole } from "visual/component/Roles";
 import { isWp } from "visual/global/Config";
-import { getConfigById } from "visual/global/Config/InitConfig";
+import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import { useConfig } from "visual/providers/ConfigProvider";
 import { setDeviceMode } from "visual/redux/actions2";
-import { configIdSelector, deviceModeSelector } from "visual/redux/selectors";
+import { deviceModeSelector, pageSelector } from "visual/redux/selectors";
 import { ReduxState } from "visual/redux/types";
 import { isWPPage } from "visual/types/utils";
 import { Option as OptionData } from "../../options";
 import Option from "./Option";
 
-const fillerOption = (option: OptionData) => {
+const fillerOption = (option: OptionData, currentUserRole: string) => {
   if (!option) {
     return false;
   }
@@ -22,45 +23,37 @@ const fillerOption = (option: OptionData) => {
     return false;
   }
 
-  if (Array.isArray(roles) && !roles.includes(currentUserRole())) {
+  if (Array.isArray(roles) && !roles.includes(currentUserRole)) {
     return false;
   }
 
   return true;
 };
-const mapDevice = (store: ReduxState) => {
-  const config = getConfigById(configIdSelector(store));
-  const isWP = isWp(config);
+const mapStateToProps = (store: ReduxState) => ({
+  deviceMode: deviceModeSelector(store),
+  page: pageSelector(store)
+});
 
-  return {
-    deviceMode: deviceModeSelector(store),
-    configId: configIdSelector(store),
-    templates: isWP ? config.wp.templates : [],
-    isWP: isWP,
-    changeTemplateUrl: config.urls?.changeTemplate,
-    currentTemplate: isWPPage(store.page, config) ? store.page.template : "",
-    featuredImage: isWP ? config.wp.featuredImage : {},
-    page: isWP ? config.wp.page : {}
-  };
-};
-const mapDispatch = { setDeviceMode };
+const mapDispatchToProps = { setDeviceMode };
 
-const connector = connect(mapDevice, mapDispatch);
+const connector = connect(mapStateToProps, mapDispatchToProps);
 
 interface OwnProps {
   className?: string;
   optionClassName?: string;
   data: null | Array<OptionData>;
   meta?: Record<string, unknown>;
+  config: ConfigCommon;
 }
 
 interface Props extends ConnectedProps<typeof connector>, OwnProps {}
 
-class Options extends React.Component<Props> {
+class _Options extends React.Component<Props> {
   static defaultProps: OwnProps = {
     className: "",
     data: null,
-    meta: {}
+    meta: {},
+    config: {} as ConfigCommon
   };
 
   render() {
@@ -70,29 +63,32 @@ class Options extends React.Component<Props> {
       data,
       meta,
       deviceMode,
-      configId,
+      config,
       setDeviceMode,
-      templates,
-      isWP,
-      changeTemplateUrl,
-      currentTemplate,
-      featuredImage,
-      page
+      page: storePage
     } = this.props;
 
-    const globalConfig = getConfigById(configId);
+    if (!data) {
+      return;
+    }
 
     const className = classnames(
       "brz-ed-sidebar__control__options",
       _className
     );
 
-    if (!data) {
-      return;
-    }
+    const isWP = isWp(config);
+
+    const templates = isWP ? config.wp.templates : [];
+    const changeTemplateUrl = config.urls?.changeTemplate;
+    const featuredImage = isWP ? config.wp.featuredImage : {};
+    const page = isWP ? config.wp.page : {};
+    const currentTemplate = isWPPage(storePage, config)
+      ? storePage.template
+      : "";
 
     const options = data
-      .filter(fillerOption)
+      .filter((data) => fillerOption(data, currentUserRole(config)))
       .map((option, index) => (
         <Option
           key={index}
@@ -101,7 +97,7 @@ class Options extends React.Component<Props> {
           meta={meta}
           deviceMode={deviceMode}
           setDeviceMode={setDeviceMode}
-          globalConfig={globalConfig}
+          globalConfig={config}
           templates={templates}
           isWP={isWP}
           changeTemplateUrl={changeTemplateUrl}
@@ -114,5 +110,11 @@ class Options extends React.Component<Props> {
     return <div className={className}>{options}</div>;
   }
 }
+
+export const Options = (props: Omit<Props, "config">): JSX.Element => {
+  const config = useConfig();
+
+  return <_Options {...props} config={config} />;
+};
 
 export default connector(Options);

@@ -72,6 +72,12 @@ onsubmit: "
     { "data-brz-onclick-event": 'console.log(\\"test\\")' }
   ],
 
+  // camelCase
+  [
+    `onClick: 'console.log(\\'test\\')'`,
+    { "data-brz-onclick-event": "console.log(\\'test\\')" }
+  ],
+
   [
     `onclick: 'console.log(\\'test\\')'`,
     { "data-brz-onclick-event": "console.log(\\'test\\')" }

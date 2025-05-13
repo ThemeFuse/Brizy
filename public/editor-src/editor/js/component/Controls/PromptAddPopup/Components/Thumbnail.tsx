@@ -1,6 +1,6 @@
 import React, { ReactElement, useMemo } from "react";
 import EditorIcon from "visual/component/EditorIcon";
-import { useConfig } from "visual/global/hooks";
+import { useConfig } from "visual/providers/ConfigProvider";
 import { Block } from "visual/types/Block";
 import { blockThumbnailData } from "visual/utils/blocks";
 import { t } from "visual/utils/i18n";
@@ -24,8 +24,8 @@ export const Thumbnail: FCC<Props> = ({
   const { screenshot } = config.urls ?? {};
 
   const { width, height, url } = useMemo(
-    () => blockThumbnailData(block, screenshot),
-    [block, screenshot]
+    () => blockThumbnailData({ block, screenshot, config }),
+    [block, screenshot, config]
   );
 
   const { width: wrapperWidth, height: wrapperHeight } = useMemo(

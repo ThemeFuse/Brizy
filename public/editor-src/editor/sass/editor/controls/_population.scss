@@ -83,7 +83,7 @@
     width: 100%;
 
     .brz-control__select--arrow {
-      right: 6px;
+      inset-inline-end: 6px;
     }
   }
 
@@ -165,7 +165,10 @@
 
 .brz-ed-control__grid__column {
   .brz-ed-option.brz-ed-option-type__population {
-    padding: 10px 15px 15px 8px;
+    padding-top: 10px;
+    padding-inline-end: 15px;
+    padding-bottom: 15px;
+    padding-inline-start: 8px ;
   }
 }
 

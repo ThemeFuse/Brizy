@@ -1,13 +1,14 @@
-import Config from "visual/global/Config";
+import { Str } from "@brizy/readers";
+import { WP } from "visual/global/Config";
 import { request } from "visual/utils/api/index.wp";
 import { makeUrl, parseJSON } from "../../../common/utils";
 import { AddAccount, DeleteAccount, GetAccount } from "./type";
 
-export const getAccounts: GetAccount = (data) => {
-  const { api } = Config.get("wp");
-  const version = Config.get("editorVersion");
+export const getAccounts: GetAccount = (data, config) => {
+  const { api } = (config as WP).wp;
+  const version = config.editorVersion;
   const url = makeUrl(api.url, {
-    action: api.getAccounts,
+    action: Str.read(api.getAccounts) ?? "",
     hash: api.hash,
     version,
     ...(data ? data : {})
@@ -21,11 +22,11 @@ export const getAccounts: GetAccount = (data) => {
   }).then((r) => parseJSON<Array<{ group: string; services: string }>>(r));
 };
 
-export const addAccount: AddAccount = (body) => {
-  const { api } = Config.get("wp");
-  const version = Config.get("editorVersion");
+export const addAccount: AddAccount = (body, config) => {
+  const { api } = (config as WP).wp;
+  const version = config.editorVersion;
   const url = makeUrl(api.url, {
-    action: api.addAccount,
+    action: Str.read(api.addAccount) ?? "",
     hash: api.hash,
     version
   });
@@ -41,11 +42,11 @@ export const addAccount: AddAccount = (body) => {
     .then((res) => res);
 };
 
-export const deleteAccount: DeleteAccount = (id) => {
-  const { api } = Config.get("wp");
-  const version = Config.get("editorVersion");
+export const deleteAccount: DeleteAccount = (id, config) => {
+  const { api } = (config as WP).wp;
+  const version = config.editorVersion;
   const url = makeUrl(api.url, {
-    action: api.deleteAccount,
+    action: Str.read(api.deleteAccount) ?? "",
     hash: api.hash,
     version,
     id

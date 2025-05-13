@@ -3,7 +3,7 @@ import { Error } from "visual/component/Controls/Gallery/components/Error";
 import { Loading } from "visual/component/Controls/Gallery/components/Loading";
 import { Thumbnail } from "visual/component/Controls/Gallery/components/Thumbnail";
 import { SizeType } from "visual/global/Config/types/configs/common";
-import { useConfig } from "visual/global/hooks";
+import { useConfig } from "visual/providers/ConfigProvider";
 import { getImageUrl } from "visual/utils/image";
 import { Item as ItemType } from "../types/Item";
 

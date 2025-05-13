@@ -3,7 +3,7 @@ import React, { JSX, MouseEvent, useCallback, useMemo, useState } from "react";
 import Scrollbars from "react-custom-scrollbars";
 import { useDispatch, useSelector } from "react-redux";
 import EditorIcon from "visual/component/EditorIcon";
-import { useConfig } from "visual/global/hooks";
+import { useConfig } from "visual/providers/ConfigProvider";
 import { deleteFont, updateDefaultFont } from "visual/redux/actions2";
 import {
   defaultFontSelector,

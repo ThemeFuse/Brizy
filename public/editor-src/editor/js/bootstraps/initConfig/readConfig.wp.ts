@@ -8,7 +8,6 @@ import * as Obj from "visual/utils/reader/object";
 import * as Str from "visual/utils/reader/string";
 import { throwOnNullish } from "visual/utils/value";
 import { parseGlobalBlocks, parsePageCommon } from "./common";
-import { withDefaultConfig } from "./default";
 
 const tParser = parseStrict<unknown, Rule>({
   type: pipe(
@@ -47,7 +46,8 @@ const t = pipe(pass(Array.isArray), throwOnNullish("Err"), (v) =>
 
 export const readConfig = (_config: Record<string, unknown>): WP => {
   const wp = Obj.read(_config.wp) ?? {};
-  const config = {
+
+  return {
     ..._config,
     pageData: parsePageCommon(_config.pageData),
     globalBlocks: parseGlobalBlocks(_config.globalBlocks),
@@ -55,7 +55,5 @@ export const readConfig = (_config: Record<string, unknown>): WP => {
       ...wp,
       ruleMatches: t(wp.ruleMatches)
     }
-  };
-
-  return withDefaultConfig(config as WP);
+  } as WP;
 };

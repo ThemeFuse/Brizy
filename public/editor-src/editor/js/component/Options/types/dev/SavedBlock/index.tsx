@@ -3,7 +3,7 @@ import { shallowEqual, useSelector } from "react-redux";
 import { SavedBlock as Control } from "visual/component/Controls/SavedBlock";
 import { ToastNotification } from "visual/component/Notifications";
 import Prompts, { PromptsProps } from "visual/component/Prompts";
-import { useConfig } from "visual/global/hooks";
+import { useConfig } from "visual/providers/ConfigProvider";
 import {
   extraFontStylesSelector,
   pageDataNoRefsSelector
@@ -70,7 +70,7 @@ export const SavedBlockOption: Component = ({
       return ToastNotification.error(error);
     }
 
-    const hasWhiteLabel = getWhiteLabel();
+    const hasWhiteLabel = getWhiteLabel(globalConfig);
 
     const handleValidateBlockCreation = async () => {
       try {

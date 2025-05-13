@@ -1,5 +1,4 @@
 import { SizeType } from "visual/global/Config/types/configs/common";
-import { configSelector } from "visual/redux/selectors";
 import { read as readString } from "visual/utils/string/specs";
 import { getImageUrl } from "../image";
 import { defaultValueValue } from "../onChange";
@@ -69,11 +68,11 @@ export function styleMaskCustomShape({
   device,
   state,
   prefix = "",
-  store
+  getConfig
 }: CSSValue): string {
   const dvv = (key: string): unknown =>
     defaultValueValue({ v, key, device, state });
-  const config = configSelector(store.getState());
+  const config = getConfig();
 
   const src = readString(dvv(capByPrefix(prefix, "maskCustomUploadImageSrc")));
   const fileName = readString(

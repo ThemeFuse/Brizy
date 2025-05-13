@@ -28,11 +28,12 @@ export function parseCustomAttributes(attributes: string): Attributes {
     if (match !== null) {
       // eslint-disable-next-line prefer-const
       let [, att, , val1] = match;
+      const _att = att.toLowerCase();
 
       // events like onclick, onsubmit by default it doesn't work in react like as normal attributes
       // need to convert onclick to some custom attribute and in ssr added this events like
       // a simple attribute
-      switch (att) {
+      switch (_att) {
         case "onclick": {
           att = "data-brz-onclick-event";
           break;

@@ -11,7 +11,8 @@ import {
   SimpleValue
 } from "visual/component/Options/Type";
 import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
-import { useConfig, usePro } from "visual/global/hooks";
+import { usePro } from "visual/global/hooks";
+import { useConfig } from "visual/providers/ConfigProvider";
 import { WithClassName, WithConfig, WithId } from "visual/types/attributes";
 import { Literal } from "visual/utils/types/Literal";
 
@@ -22,16 +23,18 @@ export type Config = {
   align?: CProps<Literal>["align"];
 };
 
+type OptionTab = {
+  title?: string;
+  label?: string;
+  position?: number;
+  options?: ToolbarItemType[];
+} & WithId<Literal> &
+  WithClassName;
+
 export type Props = OptionProps<SimpleValue<Literal>> &
   WithConfig<Config> &
   WithClassName & {
-    tabs?: (WithId<Literal> &
-      WithClassName & {
-        title?: string;
-        label?: string;
-        position?: number;
-        options?: ToolbarItemType[];
-      })[];
+    tabs?: OptionTab[];
   };
 
 export const Tabs = ({

@@ -28,9 +28,10 @@ export function cssStyleElementShopifyBgColorPrice({
   device,
   state,
   store,
+  getConfig,
   prefix = "bgPrice"
 }: CSSValue): string {
-  return cssStyleBgColor({ v, device, state, store, prefix });
+  return cssStyleBgColor({ v, device, state, store, getConfig, prefix });
 }
 
 export function cssStyleElementShopifyBgColorThroughPrice({
@@ -38,9 +39,10 @@ export function cssStyleElementShopifyBgColorThroughPrice({
   device,
   state,
   store,
+  getConfig,
   prefix = "bgThroughPrice"
 }: CSSValue): string {
-  return cssStyleBgColor({ v, device, state, store, prefix });
+  return cssStyleBgColor({ v, device, state, store, getConfig, prefix });
 }
 
 export function cssStyleElementShopifyTextColorPrice({
@@ -48,9 +50,10 @@ export function cssStyleElementShopifyTextColorPrice({
   device,
   state,
   store,
+  getConfig,
   prefix = "textColorPrice"
 }: CSSValue): string {
-  return cssStyleColor({ v, device, state, store, prefix });
+  return cssStyleColor({ v, device, state, store, getConfig, prefix });
 }
 
 export function cssStyleElementShopifyTextColorThroughPrice({
@@ -58,9 +61,10 @@ export function cssStyleElementShopifyTextColorThroughPrice({
   device,
   state,
   store,
+  getConfig,
   prefix = "textColorThroughPrice"
 }: CSSValue): string {
-  return cssStyleColor({ v, device, state, store, prefix });
+  return cssStyleColor({ v, device, state, store, getConfig, prefix });
 }
 
 export function cssStyleElementShopifyBorderColorPrice({
@@ -68,9 +72,10 @@ export function cssStyleElementShopifyBorderColorPrice({
   device,
   state,
   store,
+  getConfig,
   prefix = "price"
 }: CSSValue): string {
-  return cssStyleBorder({ v, device, state, store, prefix });
+  return cssStyleBorder({ v, device, state, store, getConfig, prefix });
 }
 
 export function cssStyleElementShopifyBorderColorThroughPrice({
@@ -78,33 +83,37 @@ export function cssStyleElementShopifyBorderColorThroughPrice({
   device,
   state,
   store,
+  getConfig,
   prefix = "throughPrice"
 }: CSSValue): string {
-  return cssStyleBorder({ v, device, state, store, prefix });
+  return cssStyleBorder({ v, device, state, store, getConfig, prefix });
 }
 export function cssStyleElementShopifyBoxShadowPrice({
   v,
   device,
   state,
   store,
+  getConfig,
   prefix = "priceS"
 }: CSSValue): string {
-  return cssStyleBoxShadow({ v, device, state, store, prefix });
+  return cssStyleBoxShadow({ v, device, state, store, getConfig, prefix });
 }
 export function cssStyleElementShopifyBoxShadowThroughPrice({
   v,
   device,
   state,
   store,
+  getConfig,
   prefix = "priceThroughS"
 }: CSSValue): string {
-  return cssStyleBoxShadow({ v, device, state, store, prefix });
+  return cssStyleBoxShadow({ v, device, state, store, getConfig, prefix });
 }
 
 export function cssStyleElementShopifyFontFamilyPrice({
   v,
   device,
   store,
+  getConfig,
   prefix = "typographyPrice",
   renderContext
 }: CSSValue & WithRenderContext): string {
@@ -112,6 +121,7 @@ export function cssStyleElementShopifyFontFamilyPrice({
     v,
     device,
     store,
+    getConfig,
     prefix,
     renderContext
   });
@@ -120,43 +130,61 @@ export function cssStyleElementShopifyFontSizePrice({
   v,
   device,
   store,
+  getConfig,
   prefix = "typographyPrice"
 }: CSSValue): string {
-  return cssStyleTypography2FontSize({ v, device, store, prefix });
+  return cssStyleTypography2FontSize({ v, device, store, getConfig, prefix });
 }
 export function cssStyleElementShopifyLineHeightPrice({
   v,
   device,
   store,
+  getConfig,
   prefix = "typographyPrice"
 }: CSSValue): string {
-  return cssStyleTypography2LineHeight({ v, device, store, prefix });
+  return cssStyleTypography2LineHeight({ v, device, store, getConfig, prefix });
 }
 export function cssStyleElementShopifyFontWeightPrice({
   v,
   device,
   store,
+  getConfig,
   prefix = "typographyPrice"
 }: CSSValue): string {
-  return cssStyleTypography2FontWeight({ v, device, store, prefix });
+  return cssStyleTypography2FontWeight({ v, device, store, getConfig, prefix });
 }
 export function cssStyleElementShopifyLetterSpacingPrice({
   v,
   device,
   state,
   store,
+  getConfig,
   prefix = "typographyPrice"
 }: CSSValue): string {
-  return cssStyleTypography2LetterSpacing({ v, device, state, store, prefix });
+  return cssStyleTypography2LetterSpacing({
+    v,
+    device,
+    state,
+    store,
+    getConfig,
+    prefix
+  });
 }
 
 export function cssStyleElementShopifyFontVariationPrice({
   v,
   device,
   store,
+  getConfig,
   prefix = "typographyPrice"
 }: CSSValue): string {
-  return cssStyleTypography2FontVariation({ v, device, store, prefix });
+  return cssStyleTypography2FontVariation({
+    v,
+    device,
+    store,
+    getConfig,
+    prefix
+  });
 }
 
 export function cssStyleElementShopifyTextTransformPrice({
@@ -164,15 +192,17 @@ export function cssStyleElementShopifyTextTransformPrice({
   device,
   state,
   store,
+  getConfig,
   prefix = "typographyPrice"
 }: CSSValue): string {
-  return cssStyleTextTransforms({ v, device, prefix, state, store });
+  return cssStyleTextTransforms({ v, device, prefix, state, getConfig, store });
 }
 
 export function cssStyleElementShopifyFontFamilyThroughPrice({
   v,
   device,
   store,
+  getConfig,
   prefix = "typographyThroughPrice",
   renderContext
 }: CSSValue & WithRenderContext): string {
@@ -180,6 +210,7 @@ export function cssStyleElementShopifyFontFamilyThroughPrice({
     v,
     device,
     store,
+    getConfig,
     prefix,
     renderContext
   });
@@ -188,26 +219,35 @@ export function cssStyleElementShopifyFontSizeThroughPrice({
   v,
   device,
   store,
+  getConfig,
   prefix = "typographyThroughPrice"
 }: CSSValue): string {
-  return cssStyleTypography2FontSize({ v, device, store, prefix });
+  return cssStyleTypography2FontSize({ v, device, store, getConfig, prefix });
 }
 export function cssStyleElementShopifyLineHeightThroughPrice({
   v,
   device,
   store,
+  getConfig,
   prefix = "typographyThroughPrice"
 }: CSSValue): string {
-  return cssStyleTypography2LineHeight({ v, device, store, prefix });
+  return cssStyleTypography2LineHeight({ v, device, store, getConfig, prefix });
 }
 
 export function cssStyleElementShopifyFontVariationThroughPrice({
   v,
   device,
   store,
+  getConfig,
   prefix = "typographyThroughPrice"
 }: CSSValue): string {
-  return cssStyleTypography2FontVariation({ v, device, store, prefix });
+  return cssStyleTypography2FontVariation({
+    v,
+    device,
+    store,
+    getConfig,
+    prefix
+  });
 }
 
 export function cssStyleElementShopifyTextTransformThroughPrice({
@@ -215,9 +255,10 @@ export function cssStyleElementShopifyTextTransformThroughPrice({
   device,
   state,
   store,
+  getConfig,
   prefix = "typographyThroughPrice"
 }: CSSValue): string {
-  return cssStyleTextTransforms({ v, device, store, prefix, state });
+  return cssStyleTextTransforms({ v, device, store, getConfig, prefix, state });
 }
 
 export function cssStyleElementShopifyPaddingFourFieldsPrice({
@@ -259,24 +300,34 @@ export function cssStyleElementShopifyFontWeightThroughPrice({
   v,
   device,
   store,
+  getConfig,
   prefix = "typographyThroughPrice"
 }: CSSValue): string {
-  return cssStyleTypography2FontWeight({ v, device, store, prefix });
+  return cssStyleTypography2FontWeight({ v, device, store, getConfig, prefix });
 }
 export function cssStyleElementShopifyLetterSpacingThroughPrice({
   v,
   device,
   state,
   store,
+  getConfig,
   prefix = "typographyThroughPrice"
 }: CSSValue): string {
-  return cssStyleTypography2LetterSpacing({ v, device, state, store, prefix });
+  return cssStyleTypography2LetterSpacing({
+    v,
+    device,
+    state,
+    store,
+    getConfig,
+    prefix
+  });
 }
 
 export function cssStyleElementShopifyPriceHeight({
   v,
   device,
   state,
+  getConfig,
   store
 }: CSSValue): string {
   return cssStyleSizeMinHeightImportant({
@@ -284,6 +335,7 @@ export function cssStyleElementShopifyPriceHeight({
     device,
     state,
     store,
+    getConfig,
     prefix: "price"
   });
 }
@@ -292,15 +344,24 @@ export function cssStyleElementShopifyPriceWidth({
   v,
   device,
   state,
+  getConfig,
   store
 }: CSSValue): string {
-  return cssStyleSizeMinWidth({ v, device, state, store, prefix: "price" });
+  return cssStyleSizeMinWidth({
+    v,
+    device,
+    state,
+    store,
+    getConfig,
+    prefix: "price"
+  });
 }
 
 export function cssStyleElementShopifyPriceThroughHeight({
   v,
   device,
   state,
+  getConfig,
   store
 }: CSSValue): string {
   return cssStyleSizeMinHeightImportant({
@@ -308,6 +369,7 @@ export function cssStyleElementShopifyPriceThroughHeight({
     device,
     state,
     store,
+    getConfig,
     prefix: "thoughPrice"
   });
 }
@@ -316,6 +378,7 @@ export function cssStyleElementShopifyPriceThroughWidth({
   v,
   device,
   state,
+  getConfig,
   store
 }: CSSValue): string {
   return cssStyleSizeMinWidth({
@@ -323,6 +386,7 @@ export function cssStyleElementShopifyPriceThroughWidth({
     device,
     state,
     store,
+    getConfig,
     prefix: "thoughPrice"
   });
 }
@@ -349,9 +413,10 @@ export function cssStyleElementShopifyPriceRadius({
   device,
   state,
   store,
+  getConfig,
   prefix = "price"
 }: CSSValue): string {
-  return cssStyleBorderRadius({ v, device, state, store, prefix });
+  return cssStyleBorderRadius({ v, device, state, store, getConfig, prefix });
 }
 
 export function cssStyleElementShopifyPriceThroughRadius({
@@ -359,7 +424,8 @@ export function cssStyleElementShopifyPriceThroughRadius({
   device,
   state,
   store,
+  getConfig,
   prefix = "priceThrough"
 }: CSSValue): string {
-  return cssStyleBorderRadius({ v, device, state, store, prefix });
+  return cssStyleBorderRadius({ v, device, state, store, getConfig, prefix });
 }

@@ -1,8 +1,8 @@
-import { makeAttr } from "visual/utils/i18n/attribute";
-import { handlePlaceholderControlsClick, handleVideo } from "./utils";
-import { makeUrl } from "visual/utils/api/utils";
-import { videoData as getVideoData } from "visual/utils/video";
 import { ExportFunction } from "visual/types";
+import { makeUrl } from "visual/utils/api/utils";
+import { makeAttr } from "visual/utils/i18n/attribute";
+import { videoData as getVideoData } from "visual/utils/video";
+import { handlePlaceholderControlsClick, handleVideo } from "./utils";
 
 let initResize = false;
 
@@ -126,6 +126,12 @@ const fn: ExportFunction = ($node) => {
         const attributesNode = cover.querySelector(".brz-play-button");
 
         if (attributesNode) {
+          const src = attributesNode.getAttribute(makeAttr("link"));
+
+          if (!src) {
+            return;
+          }
+
           handleVideo(node, currentTarget, attributesNode);
           cover.classList.add("brz-d-none");
         }

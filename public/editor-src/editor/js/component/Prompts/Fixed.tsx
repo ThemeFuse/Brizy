@@ -1,7 +1,6 @@
 import classnames from "classnames";
-import { noop } from "es-toolkit";
-import React, { useMemo } from "react";
-import { CSSTransition } from "react-transition-group";
+import React, { useEffect, useMemo } from "react";
+import { useTransitionState } from "react-transition-state";
 import HotKeys from "visual/component/HotKeys";
 import Portal from "visual/component/Portal";
 
@@ -13,8 +12,24 @@ type FixedProps = {
 };
 
 const Fixed = (props: FixedProps): JSX.Element => {
-  const { className: _className, opened, children, onClose } = props;
-  const className = classnames("brz-ed-fixed", _className);
+  const { className:_className, opened = false, children, onClose } = props;
+  const [{ status, isMounted }, toggle] = useTransitionState({
+    timeout: 150,
+    mountOnEnter: true,
+    unmountOnExit: true,
+    preEnter: true
+  });
+
+  const className = classnames(
+    "brz-ed-fixed",
+    "brz-ed-fade",
+    status,
+    _className
+  );
+
+  useEffect(() => {
+    toggle(opened);
+  }, [opened, toggle]);
 
   const node = useMemo(() => {
     if (typeof window === "undefined") {
@@ -25,33 +40,21 @@ const Fixed = (props: FixedProps): JSX.Element => {
 
   return (
     <>
-      {node && (
+      {node && isMounted && (
         <Portal node={node}>
-          <CSSTransition in={opened} classNames="brz-ed-fade" timeout={150}>
-            {opened ? (
-              <div className={className}>
-                <HotKeys
-                  keyNames={["esc"]}
-                  id="key-helper-prompt-esc"
-                  onKeyUp={onClose}
-                />
-                <div className="brz-ed-fixed-overlay" onClick={onClose} />
-                <div className="brz-ed-fixed-scroll">{children}</div>
-              </div>
-            ) : (
-              <span />
-            )}
-          </CSSTransition>
+          <div className={className}>
+            <HotKeys
+              keyNames={["esc"]}
+              id="key-helper-prompt-esc"
+              onKeyUp={onClose}
+            />
+            <div className="brz-ed-fixed-overlay" onClick={onClose} />
+            <div className="brz-ed-fixed-scroll">{children}</div>
+          </div>
         </Portal>
       )}
     </>
   );
-};
-
-Fixed.defaultProps = {
-  className: "",
-  opened: false,
-  onClose: noop
 };
 
 export default Fixed;

@@ -1,6 +1,6 @@
 import { noop } from "es-toolkit";
 import { isT } from "fp-utilities";
-import React, { RefObject, createRef } from "react";
+import React, { JSX, RefObject, createRef, forwardRef } from "react";
 import ReactDOM from "react-dom";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
@@ -11,6 +11,7 @@ import { RightSidebarItems } from "visual/component/RightSidebar/RightSidebarIte
 import { currentUserRole } from "visual/component/Roles";
 import { filterOptions } from "visual/editorComponents/EditorComponent/utils";
 import { OptionDefinition } from "visual/editorComponents/ToolbarItemType";
+import { useConfig } from "visual/providers/ConfigProvider";
 import { ActionUpdateUI, setActiveElement } from "visual/redux/actions2";
 import { ReduxState } from "visual/redux/types";
 import { ActiveElement, DeviceMode } from "visual/types";
@@ -295,6 +296,7 @@ class _PortalToolbar
   getOutSideExceptions = (): (string | ((t: HTMLElement) => boolean))[] => {
     return [
       ".brz-ed-sidebar__right",
+      ".brz-ed-sidebar__addable",
       ".brz-ed-tooltip__content-portal",
       ".brz-ed-fixed",
       ".brz-ed-box__resizer--point",
@@ -305,22 +307,17 @@ class _PortalToolbar
   };
 
   getItems = (): OptionDefinition[] => {
-    const device = this.props.device;
-    const role = currentUserRole();
+    const { device, config, getItems: get } = this.props;
+    const role = currentUserRole(config);
 
-    return this.props.getItems().map(filterOptions(device, role)).filter(isT);
+    return get().map(filterOptions(device, role)).filter(isT);
   };
 
   getSidebarItems = (): OptionDefinition[] => {
-    const device = this.props.device;
-    const role = currentUserRole();
+    const { device, config, getSidebarItems: get } = this.props;
+    const role = currentUserRole(config);
 
-    return this.props.getSidebarItems
-      ? this.props
-          .getSidebarItems()
-          .map(filterOptions(device, role))
-          .filter(isT)
-      : [];
+    return get ? get().map(filterOptions(device, role)).filter(isT) : [];
   };
 
   renderToolbar(): React.ReactNode {
@@ -401,7 +398,17 @@ class _PortalToolbar
   }
 }
 
-export type PortalToolbar = InstanceType<typeof _PortalToolbar>;
+export type PortalToolbarType = InstanceType<typeof _PortalToolbar>;
+
+type FCProps = Omit<PropsWithState, "config">;
+
+const PortalToolbar = forwardRef<PortalToolbarType, FCProps>(
+  (props, ref): JSX.Element => {
+    const config = useConfig();
+
+    return <_PortalToolbar ref={ref} {...props} config={config} />;
+  }
+);
 
 const mapDispatchToProps = (
   dispatch: Dispatch
@@ -412,10 +419,9 @@ const mapDispatchToProps = (
 
 export default connect<
   { device: DeviceMode },
-  // eslint-disable-next-line @typescript-eslint/ban-types
-  {},
-  PortalToolbarProps,
+  { setActiveElement: (element: ActiveElement) => void },
+  Omit<PortalToolbarProps, "config">,
   ReduxState
 >((s) => ({ device: s.ui.deviceMode }), mapDispatchToProps, null, {
   forwardRef: true
-})(_PortalToolbar);
+})(PortalToolbar);

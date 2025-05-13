@@ -17,6 +17,7 @@ import { attachRefs } from "visual/utils/react";
 import { DESKTOP, TABLET } from "visual/utils/responsiveMode";
 import * as NoEmptyString from "visual/utils/string/NoEmptyString";
 import { parseCustomAttributes } from "visual/utils/string/parseCustomAttributes";
+import { currentUserRole } from "../../../component/Roles";
 import contextMenuConfig from "./contextMenu";
 import defaultValue from "./defaultValue.json";
 import SectionMegaMenuItems from "./items";
@@ -194,6 +195,7 @@ class SectionMegaMenu extends EditorComponent {
                     {...containerBorderAttr}
                   >
                     <Roles
+                      currentRole={currentUserRole(this.getGlobalConfig())}
                       allow={["admin"]}
                       fallbackRender={() => this.renderItems(v, vs, vd)}
                     >

@@ -9,7 +9,10 @@ import {
   normalizeMenuItems,
   symbolsToItems
 } from "visual/editorComponents/Menu/utils";
-import { MenuData } from "visual/global/Config/types/configs/ConfigCommon";
+import {
+  ConfigCommon,
+  MenuData
+} from "visual/global/Config/types/configs/ConfigCommon";
 import { ReduxAction, updateGlobalBlock } from "visual/redux/actions2";
 import { ReduxState } from "visual/redux/types";
 import { Block } from "visual/types/Block";
@@ -64,7 +67,8 @@ export function attachGlobalBlocks(
 
 export function detachGlobalBlocks(
   value: ElementModelType,
-  dispatch: Dispatch<ReduxAction>
+  dispatch: Dispatch<ReduxAction>,
+  config: ConfigCommon
 ): ElementModelType {
   const globalBlockUpdates: Array<string[]> = [];
 
@@ -90,7 +94,8 @@ export function detachGlobalBlocks(
       dispatch(
         updateGlobalBlock({
           uid: _id,
-          data: JSON.parse(dataStringified)
+          data: JSON.parse(dataStringified),
+          config
         })
       );
     }

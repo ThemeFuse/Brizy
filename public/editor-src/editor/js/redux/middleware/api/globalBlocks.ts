@@ -10,7 +10,9 @@ import { ActionTypes } from "../../actions2";
 import { Data } from "./types";
 import { apiAutoSave, apiOnChange } from "./utils";
 
-export function handleGlobalBlocks({ action, state, config }: Data): void {
+export function handleGlobalBlocks({ action, state, getConfig }: Data): void {
+  const config = getConfig();
+
   switch (action.type) {
     case "ADD_GLOBAL_BLOCK":
     case "ADD_GLOBAL_POPUP": {

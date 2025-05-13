@@ -1,22 +1,18 @@
 import { EditorComponentContextValue } from "visual/editorComponents/EditorComponent/EditorComponentContext";
+import { Sheet } from "visual/providers/StyleProvider/Sheet";
 import { DeviceMode } from "visual/types";
 import {
   ElementModelToValue,
+  PatchUnit,
+  Size,
+  Value,
   elementModelToValue,
   patchOnDCChange,
   patchOnSizeTypeChange,
-  PatchUnit,
-  pathOnUnitChange,
-  Size,
-  Value
+  pathOnUnitChange
 } from "../imageChange";
 import { ImageDCPatch, SizeTypePatch, UnitPatch } from "../types/ImagePatch";
 import { imageSizes } from "./utils";
-
-// init config before start the tests
-beforeEach(() => {
-  require("visual/bootstraps/initConfig");
-});
 
 describe("Testing 'elementModelToValue' function", () => {
   test("Match properties", () => {
@@ -36,7 +32,10 @@ describe("Testing 'elementModelToValue' function", () => {
       mobileWidth: undefined,
       mobileHeight: undefined,
       mobileWidthSuffix: undefined,
-      mobileHeightSuffix: undefined
+      mobileHeightSuffix: undefined,
+      hoverHeight: 50,
+      imageWidth: 600,
+      imageHeight: 450
     };
 
     const output: Value = {
@@ -55,7 +54,10 @@ describe("Testing 'elementModelToValue' function", () => {
       sizeType: "custom",
       width: 45,
       height: 50,
-      size: 10
+      size: 10,
+      hoverHeight: 50,
+      imageWidth: 600,
+      imageHeight: 450
     };
 
     expect(elementModelToValue(input)).toStrictEqual(output);
@@ -76,11 +78,14 @@ describe("Testing 'elementModelToValue' function", () => {
       tabletHeight: 20,
       tabletHeightSuffix: "%",
       tabletWidth: 20,
-      tabletWidthSuffix: "px"
+      tabletWidthSuffix: "px",
+      hoverHeight: 50,
+      imageWidth: 600,
+      imageHeight: 450
     };
+
     const responsiveOutput: Value = {
       imageExtension: "gif",
-
       mobileHeight: 10,
       mobileHeightSuffix: "px",
       mobileWidth: 10,
@@ -95,7 +100,10 @@ describe("Testing 'elementModelToValue' function", () => {
       width: 45,
       height: 50,
       size: 10,
-      imagePopulation: "{{feature}}"
+      imagePopulation: "{{feature}}",
+      hoverHeight: 50,
+      imageWidth: 600,
+      imageHeight: 450
     };
 
     expect(elementModelToValue(responsiveInput)).toStrictEqual(
@@ -181,6 +189,7 @@ describe("Testing 'Patches for image' functions", () => {
     const makeEditorComponentContext = (
       itemId: string
     ): EditorComponentContextValue => ({
+      sheet: new Sheet(),
       dynamicContent: {
         itemId,
         config: {
@@ -356,7 +365,10 @@ describe("Testing 'Patches for image' functions", () => {
         heightSuffix: "px",
         size: 0,
         sizeType: "custom",
-        imageExtension: "jpeg"
+        imageExtension: "jpeg",
+        hoverHeight: 0,
+        imageWidth: 600,
+        imageHeight: 450
       },
       {
         width: 100,
@@ -377,7 +389,10 @@ describe("Testing 'Patches for image' functions", () => {
         heightSuffix: "px",
         size: 100,
         sizeType: "custom",
-        imageExtension: "gif"
+        imageExtension: "gif",
+        hoverHeight: 200,
+        imageWidth: 600,
+        imageHeight: 450
       },
       {
         widthSuffix: "%"
@@ -397,7 +412,10 @@ describe("Testing 'Patches for image' functions", () => {
         heightSuffix: "px",
         size: 100,
         sizeType: "custom",
-        imageExtension: "gif"
+        imageExtension: "gif",
+        hoverHeight: 200,
+        imageWidth: 600,
+        imageHeight: 450
       },
       {
         widthSuffix: "%"
@@ -417,7 +435,10 @@ describe("Testing 'Patches for image' functions", () => {
         heightSuffix: "px",
         size: 100,
         sizeType: "custom",
-        imageExtension: "gif"
+        imageExtension: "gif",
+        hoverHeight: 200,
+        imageWidth: 600,
+        imageHeight: 450
       },
       {
         widthSuffix: "px"
@@ -439,7 +460,10 @@ describe("Testing 'Patches for image' functions", () => {
         sizeType: "custom",
         imageExtension: "gif",
         tabletWidth: 75,
-        tabletWidthSuffix: "%"
+        tabletWidthSuffix: "%",
+        hoverHeight: 200,
+        imageWidth: 600,
+        imageHeight: 450
       },
       {
         tabletWidthSuffix: "px"

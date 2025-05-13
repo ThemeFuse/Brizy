@@ -31,49 +31,63 @@ export function cssStyleElementAccordionFilterColor({
   v,
   device,
   store,
-  state
+  state,
+  getConfig
 }: CSSValue): string {
-  return cssStyleColor({ v, device, store, state, prefix: "filterColor" });
+  return cssStyleColor({
+    v,
+    device,
+    store,
+    getConfig,
+    state,
+    prefix: "filterColor"
+  });
 }
 
 export function cssStyleElementAccordionFilterActiveColor({
   v,
   device,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
   return cssStyleColor({
     v,
     device,
     store,
     state: "active",
-    prefix: "filterColor"
+    prefix: "filterColor",
+    getConfig
   });
 }
 
 export function cssStyleElementAccordionFilterActiveBgColor({
   v,
   device,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
   return cssStyleBgColor({
     v,
     device,
     store,
     state: "active",
-    prefix: "filterBg"
+    prefix: "filterBg",
+    getConfig
   });
 }
 
 export function cssStyleElementAccordionFilterActiveBorder({
   v,
   device,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
   return cssStyleBorder({
     v,
     device,
     state: "active",
     store,
+    getConfig,
     prefix: "filter"
   });
 }
@@ -81,14 +95,16 @@ export function cssStyleElementAccordionFilterActiveBorder({
 export function cssStyleElementAccordionFilterActiveShadow({
   v,
   device,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
   return cssStyleBoxShadow({
     v,
     device,
     store,
     state: "active",
-    prefix: "filter"
+    prefix: "filter",
+    getConfig
   });
 }
 
@@ -96,36 +112,68 @@ export function cssStyleElementAccordionFilterBgColor({
   v,
   device,
   store,
-  state
+  state,
+  getConfig
 }: CSSValue): string {
-  return cssStyleBgColor({ v, device, store, state, prefix: "filterBg" });
+  return cssStyleBgColor({
+    v,
+    device,
+    store,
+    state,
+    getConfig,
+    prefix: "filterBg"
+  });
 }
 
 export function cssStyleElementAccordionFilterBorder({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
-  return cssStyleBorder({ v, device, state, store, prefix: "filter" });
+  return cssStyleBorder({
+    v,
+    device,
+    state,
+    store,
+    prefix: "filter",
+    getConfig
+  });
 }
 
 export function cssStyleElementAccordionFilterBorderRadius({
   v,
   device,
   store,
-  state
+  state,
+  getConfig
 }: CSSValue): string {
-  return cssStyleBorderRadius({ v, device, store, state, prefix: "filter" });
+  return cssStyleBorderRadius({
+    v,
+    device,
+    store,
+    state,
+    getConfig,
+    prefix: "filter"
+  });
 }
 
 export function cssStyleElementAccordionFilterShadow({
   v,
   device,
   store,
-  state
+  state,
+  getConfig
 }: CSSValue): string {
-  return cssStyleBoxShadow({ v, device, store, state, prefix: "filter" });
+  return cssStyleBoxShadow({
+    v,
+    device,
+    store,
+    state,
+    getConfig,
+    prefix: "filter"
+  });
 }
 
 export function cssStyleElementAccordionMarginTop({
@@ -177,9 +225,16 @@ export function cssStyleElementAccordionNavAlign({
   v,
   device,
   store,
-  state
+  state,
+  getConfig
 }: CSSValue): string {
-  const horizontalAlign = styleAlignHorizontal({ v, device, store, state });
+  const horizontalAlign = styleAlignHorizontal({
+    v,
+    device,
+    store,
+    getConfig,
+    state
+  });
 
   return horizontalAlign === "right"
     ? "flex-direction: row-reverse;"
@@ -192,9 +247,16 @@ export function cssStyleElementAccordionNavIconSpacing({
   v,
   device,
   store,
-  state
+  state,
+  getConfig
 }: CSSValue): string {
-  const horizontalAlign = styleAlignHorizontal({ v, device, store, state });
+  const horizontalAlign = styleAlignHorizontal({
+    v,
+    device,
+    store,
+    state,
+    getConfig
+  });
 
   return horizontalAlign === "right"
     ? "margin: 0 10px 0 0;"
@@ -205,22 +267,32 @@ export function cssStyleElementAccordionNavIconSize({
   v,
   device,
   store,
-  state
+  state,
+  getConfig
 }: CSSValue): string {
-  return cssStyleSizeFontSizeIcon({ v, device, store, state, prefix: "nav" });
+  return cssStyleSizeFontSizeIcon({
+    v,
+    device,
+    store,
+    state,
+    getConfig,
+    prefix: "nav"
+  });
 }
 
 export function cssStyleElementAccordionFilterHorizontalAlign({
   v,
   device,
   store,
-  state
+  state,
+  getConfig
 }: CSSValue): string {
   return cssStyleFlexHorizontalAlign({
     v,
     device,
     store,
     state,
+    getConfig,
     prefix: "filter"
   });
 }
@@ -242,12 +314,14 @@ export function cssStyleElementAccordion3FontFamily({
   v,
   device,
   store,
+  getConfig,
   renderContext
 }: CSSValue & WithRenderContext): string {
   return cssStyleTypography2FontFamily({
     v,
     device,
     store,
+    getConfig,
     prefix: "filter",
     renderContext
   });
@@ -256,31 +330,53 @@ export function cssStyleElementAccordion3FontFamily({
 export function cssStyleElementAccordion3FontSize({
   v,
   device,
+  getConfig,
   store
 }: CSSValue): string {
-  return cssStyleTypography2FontSize({ v, device, store, prefix: "filter" });
+  return cssStyleTypography2FontSize({
+    v,
+    device,
+    store,
+    getConfig,
+    prefix: "filter"
+  });
 }
 
 export function cssStyleElementAccordion3LineHeight({
   v,
   device,
+  getConfig,
   store
 }: CSSValue): string {
-  return cssStyleTypography2LineHeight({ v, device, store, prefix: "filter" });
+  return cssStyleTypography2LineHeight({
+    v,
+    device,
+    store,
+    getConfig,
+    prefix: "filter"
+  });
 }
 
 export function cssStyleElementAccordion3FontWeight({
   v,
   device,
+  getConfig,
   store
 }: CSSValue): string {
-  return cssStyleTypography2FontWeight({ v, device, store, prefix: "filter" });
+  return cssStyleTypography2FontWeight({
+    v,
+    device,
+    store,
+    getConfig,
+    prefix: "filter"
+  });
 }
 
 export function cssStyleElementAccordion3LetterSpacing({
   v,
   device,
   state,
+  getConfig,
   store
 }: CSSValue): string {
   return cssStyleTypography2LetterSpacing({
@@ -288,6 +384,7 @@ export function cssStyleElementAccordion3LetterSpacing({
     device,
     state,
     store,
+    getConfig,
     prefix: "filter"
   });
 }
@@ -295,11 +392,13 @@ export function cssStyleElementAccordion3LetterSpacing({
 export function cssStyleElementAccordion3FontVariation({
   v,
   device,
+  getConfig,
   store
 }: CSSValue): string {
   return cssStyleTypography2FontVariation({
     v,
     device,
+    getConfig,
     store,
     prefix: "filter"
   });
@@ -309,13 +408,15 @@ export function cssStyleElementAccordionFilterTextTransform({
   v,
   device,
   store,
-  state
+  state,
+  getConfig
 }: CSSValue): string {
   return cssStyleTextTransforms({
     v,
     device,
     store,
     state,
+    getConfig,
     prefix: "filter"
   });
 }
@@ -323,33 +424,51 @@ export function cssStyleElementAccordionFilterTextTransform({
 export function cssStyleElementAccordionActiveColor({
   v,
   device,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
-  return cssStyleColor({ v, device, store, state: "active", prefix: "color" });
+  return cssStyleColor({
+    v,
+    device,
+    store,
+    getConfig,
+    state: "active",
+    prefix: "color"
+  });
 }
 
 export function cssStyleElementAccordionActiveBgColor({
   v,
   device,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
-  return cssStyleBgColor({ v, device, store, state: "active", prefix: "bg" });
+  return cssStyleBgColor({
+    v,
+    device,
+    store,
+    getConfig,
+    state: "active",
+    prefix: "bg"
+  });
 }
 
 export function cssStyleElementAccordionActiveBorder({
   v,
   device,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
-  return cssStyleBorder({ v, device, state: "active", store });
+  return cssStyleBorder({ v, device, getConfig, state: "active", store });
 }
 
 export function cssStyleElementAccordionActiveShadow({
   v,
   device,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
-  return cssStyleBoxShadow({ v, device, store, state: "active" });
+  return cssStyleBoxShadow({ v, device, getConfig, store, state: "active" });
 }
 
 export function cssStyleElementAccordionAnimDuration({ v }: CSSValue): string {

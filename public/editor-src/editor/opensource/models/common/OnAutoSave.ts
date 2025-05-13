@@ -1,10 +1,8 @@
-import { HtmlOutputType } from ".";
-import { PageData, ProjectData } from "./Output";
+import { Page } from "../Page";
+import { Project } from "../Project";
 
-export interface AutoSaveOutput<T extends HtmlOutputType> {
-  pageData?: PageData<T>;
-  projectData?: ProjectData<T>;
+export interface AutoSaveOutput {
+  pageData?: Page;
+  projectData?: Project;
 }
-export type OnAutoSave<T extends HtmlOutputType> = (
-  output: AutoSaveOutput<T>
-) => void;
+export type OnAutoSave = (output: AutoSaveOutput) => void;

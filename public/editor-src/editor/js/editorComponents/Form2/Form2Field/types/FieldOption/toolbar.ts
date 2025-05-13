@@ -4,6 +4,7 @@ import {
   ElementTypes,
   readElementType
 } from "visual/global/Config/types/configs/ElementTypes";
+import { getEnabledLinkOptions } from "visual/global/Config/types/configs/featuresValue";
 import { isPopup, isStory } from "visual/providers/EditorModeProvider";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
@@ -33,6 +34,13 @@ export const getItems: GetItems<Value, Props> = ({
   const _isStory = isStory(editorMode);
   const _isPopup = isPopup(editorMode);
 
+  const {
+    internalLink,
+    linkPopup: linkPopupEnabled,
+    linkAnchor,
+    linkExternal
+  } = getEnabledLinkOptions(component.getGlobalConfig());
+
   return [
     {
       id: "toolbarLinkCheckbox",
@@ -56,6 +64,7 @@ export const getItems: GetItems<Value, Props> = ({
             {
               id: "page",
               label: t("Page"),
+              disabled: !internalLink,
               options: [
                 {
                   id: "linkPage",
@@ -72,6 +81,7 @@ export const getItems: GetItems<Value, Props> = ({
             {
               id: "external",
               label: t("URL"),
+              disabled: !linkExternal,
               options: [
                 {
                   id: "link",
@@ -99,6 +109,7 @@ export const getItems: GetItems<Value, Props> = ({
             {
               id: "anchor",
               label: t("Block"),
+              disabled: !linkAnchor,
               options: [
                 toolbarLinkAnchor({
                   v,
@@ -111,6 +122,7 @@ export const getItems: GetItems<Value, Props> = ({
             {
               id: "popup",
               label: t("Popup"),
+              disabled: !linkPopupEnabled,
               options: [
                 {
                   id: "linkPopup",

@@ -6,13 +6,14 @@ export function cssStyleColumnHeight({
   v,
   device,
   store,
-  state
+  state,
+  getConfig
 }: CSSValue): string {
   const dvv = (key: string): unknown => defaultValueValue({ v, key, device });
   const heightStyle = dvv("heightStyle");
 
   if (heightStyle === "custom") {
-    return cssStyleSizeMinHeightPx({ v, device, store, state });
+    return cssStyleSizeMinHeightPx({ v, device, store, state, getConfig });
   } else {
     return "min-height:100%;";
   }
@@ -22,13 +23,14 @@ export function cssStyleEmptyColumnHeight({
   v,
   device,
   store,
-  state
+  state,
+  getConfig
 }: CSSValue): string {
   const dvv = (key: string): unknown => defaultValueValue({ v, key, device });
   const heightStyle = dvv("heightStyle");
 
   if (heightStyle === "custom") {
-    return cssStyleSizeMinHeightPx({ v, device, store, state });
+    return cssStyleSizeMinHeightPx({ v, device, store, state, getConfig });
   }
 
   return "";

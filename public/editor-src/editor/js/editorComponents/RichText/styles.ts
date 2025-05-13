@@ -7,7 +7,7 @@ import { OutputStyle } from "visual/utils/cssStyle/types";
 
 export function style(data: DynamicStylesProps<ElementModel>): OutputStyle {
   const styles = {
-    ".brz &&:hover": {
+    ".brz &&": {
       standart: ["cssStyleSizeWidth", "cssStyleBlendMode"]
     }
   };
@@ -17,8 +17,9 @@ export function style(data: DynamicStylesProps<ElementModel>): OutputStyle {
 
 export function styleDC(data: DynamicStylesProps<ElementModel>): OutputStyle {
   const _isStory = isStory(data.contexts.mode);
+
   const styles = {
-    ".brz &&:hover": {
+    ".brz &&": {
       standart: [
         "cssStyleElementRichTextAlign",
         "cssStyleElementRichTextFontFamily",
@@ -48,7 +49,7 @@ export function styleDC(data: DynamicStylesProps<ElementModel>): OutputStyle {
         "cssStyleElementRichTextDCGradientBackground"
       ]
     },
-    ".brz &&:hover *": {
+    ".brz && *": {
       standart: ["cssStyleElementRichTextDCUppercase"]
     },
     ".brz &&:hover > .brz-a.brz-a:not(.brz-btn)": {
@@ -130,7 +131,7 @@ export function styleDC(data: DynamicStylesProps<ElementModel>): OutputStyle {
         "cssStyleElementRichTextH6Script"
       ]
     },
-    ".brz && *:not(h1):not(h2):not(h3):not(h4):not(h5):not(h6):not(b):not(strong):not(i):not(span)":
+    ".brz && *:not(h1):not(h2):not(h3):not(h4):not(h5):not(h6):not(b):not(strong):not(i):not(span):not(p)":
       {
         standart: [
           "cssStyleElementRichTextFontFamily",
@@ -165,11 +166,10 @@ export function styleHeading(
   data: DynamicStylesProps<ElementModel>
 ): OutputStyle {
   const { renderContext, mode } = data.contexts;
+
   const styles = {
-    ".brz &&:hover": {
+    ".brz &&": {
       standart: [
-        "cssStyleColor",
-        ...(isEditor(renderContext) ? [] : ["cssStyleElementRichTextColor"]),
         "cssStyleElementRichTextMarginTop",
         "cssStyleElementRichTextMarginBottom",
         "cssStyleElementRichTextAlign",
@@ -183,6 +183,12 @@ export function styleHeading(
         "cssStyleTypography3FontVariation",
         "cssStyleTypography3TextTransform",
         "cssStyleTypography3Script"
+      ]
+    },
+    ".brz &&:hover": {
+      standart: [
+        "cssStyleColor",
+        ...(isEditor(renderContext) ? [] : ["cssStyleElementRichTextColor"])
       ]
     }
   };

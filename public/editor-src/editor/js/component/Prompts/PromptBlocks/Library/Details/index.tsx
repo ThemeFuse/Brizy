@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
+import { useConfig } from "visual/providers/ConfigProvider";
 import { placeholderBlockThumbnailUrl } from "visual/utils/blocks";
 import * as Num from "visual/utils/math/number";
 import { Footer } from "./Footer";
@@ -14,6 +15,8 @@ export const Details = (props: Props) => {
     replaceStyle: false,
     loading: false
   });
+
+  const config = useConfig();
 
   const thumbnailDetails = useRef<HTMLDivElement>(null);
   const timeoutIdRef = useRef<number | undefined>();
@@ -69,7 +72,7 @@ export const Details = (props: Props) => {
 
   const { thumbnailHeight, previewPointer, replaceStyle, loading } = state;
 
-  const activePageSrc = thumbnailSrc ?? placeholderBlockThumbnailUrl();
+  const activePageSrc = thumbnailSrc ?? placeholderBlockThumbnailUrl(config);
 
   return (
     <>

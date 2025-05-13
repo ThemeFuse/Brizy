@@ -319,7 +319,7 @@ class Library extends Component<
       produce((state: LibraryState) => {
         state.data[type] = state.data[type] ?? [];
 
-        state.data[type].forEach((block, index: number) => {
+        state.data[type]?.forEach((block, index: number) => {
           if (block.uid === uid) {
             //@ts-expect-error: Object is possibly 'undefined'.
             state.data[type][index].loading = loading;
@@ -644,15 +644,16 @@ class Library extends Component<
     const { config } = this.props;
     const { screenshot } = config.urls ?? {};
 
-    const { url, width, height } = blockThumbnailData(
-      {
+    const { url, width, height } = blockThumbnailData({
+      block: {
         type: "",
         value: {},
         meta: block.meta
       },
-      screenshot
-    );
-    const isAdminRole = currentUserRole() === "admin";
+      screenshot,
+      config
+    });
+    const isAdminRole = currentUserRole(config) === "admin";
 
     return {
       thumbnailSrc: url,
@@ -685,8 +686,9 @@ class Library extends Component<
       activeType,
       filter
     } = this.state;
-    const { type, HeaderSlotLeft, showSearch, showTitle, onClose } = this.props;
-    const hasWhiteLabel = getWhiteLabel();
+    const { config, type, HeaderSlotLeft, showSearch, showTitle, onClose } =
+      this.props;
+    const hasWhiteLabel = getWhiteLabel(config);
 
     if (detailsData && isSavedLayoutWithThumbs(detailsData)) {
       return (

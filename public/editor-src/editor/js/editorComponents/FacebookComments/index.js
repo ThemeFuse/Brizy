@@ -142,6 +142,7 @@ class FacebookComments extends EditorComponent {
                   appId={appData.appId}
                   type={type}
                   data={data[type]}
+                  config={this.getGlobalConfig()}
                   renderContext={this.props.renderContext}
                 />
               </div>
@@ -208,6 +209,7 @@ class FacebookComments extends EditorComponent {
             appId={appData.appId}
             type={type}
             data={data[type]}
+            config={this.getGlobalConfig()}
             renderContext={this.props.renderContext}
           />
         </div>

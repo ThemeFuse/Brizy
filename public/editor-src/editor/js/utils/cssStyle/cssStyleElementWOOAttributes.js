@@ -24,12 +24,14 @@ export function cssStyleElementWOOAdditionalTitleFontFamily({
   v,
   device,
   store,
+  getConfig,
   renderContext
 }) {
   return cssStyleTypography2FontFamily({
     v,
     device,
     store,
+    getConfig,
     prefix: "title",
     renderContext
   });
@@ -38,36 +40,59 @@ export function cssStyleElementWOOAdditionalTitleFontFamily({
 export function cssStyleElementWOOAdditionalTitleFontSize({
   v,
   device,
-  store
+  store,
+  getConfig
 }) {
-  return cssStyleTypography2FontSize({ v, device, store, prefix: "title" });
+  return cssStyleTypography2FontSize({
+    v,
+    device,
+    store,
+    getConfig,
+    prefix: "title"
+  });
 }
 
 export function cssStyleElementWOOAdditionalTitleLineHeight({
   v,
   device,
-  store
+  store,
+  getConfig
 }) {
-  return cssStyleTypography2LineHeight({ v, device, store, prefix: "title" });
+  return cssStyleTypography2LineHeight({
+    v,
+    device,
+    store,
+    getConfig,
+    prefix: "title"
+  });
 }
 
 export function cssStyleElementWOOAdditionalTitleFontWeight({
   v,
   device,
-  store
+  store,
+  getConfig
 }) {
-  return cssStyleTypography2FontWeight({ v, device, store, prefix: "title" });
+  return cssStyleTypography2FontWeight({
+    v,
+    device,
+    store,
+    getConfig,
+    prefix: "title"
+  });
 }
 
 export function cssStyleElementWOOAdditionalTitleLetterSpacing({
   v,
   device,
-  store
+  store,
+  getConfig
 }) {
   return cssStyleTypography2LetterSpacing({
     v,
     device,
     store,
+    getConfig,
     prefix: "title"
   });
 }
@@ -75,12 +100,14 @@ export function cssStyleElementWOOAdditionalTitleLetterSpacing({
 export function cssStyleElementWOOAdditionalTitleFontVariation({
   v,
   device,
-  store
+  store,
+  getConfig
 }) {
   return cssStyleTypography2FontVariation({
     v,
     device,
     store,
+    getConfig,
     prefix: "title"
   });
 }
@@ -89,18 +116,34 @@ export function cssStyleElementWOOAdditionalTitleTextTransform({
   v,
   state,
   device,
-  store
+  store,
+  getConfig
 }) {
-  return cssStyleTextTransforms({ v, device, state, store, prefix: "title" });
+  return cssStyleTextTransforms({
+    v,
+    device,
+    state,
+    store,
+    getConfig,
+    prefix: "title"
+  });
 }
 
 export function cssStyleElementWOOAdditionalTitleColor({
   v,
   device,
   store,
+  getConfig,
   state
 }) {
-  return cssStyleColor({ v, device, state, store, prefix: "titleColor" });
+  return cssStyleColor({
+    v,
+    device,
+    state,
+    store,
+    getConfig,
+    prefix: "titleColor"
+  });
 }
 
 export function cssStyleElementWOOAdditionalTitleSpacing({ v, device }) {
@@ -113,12 +156,14 @@ export function cssStyleElementWOOAttributesAttributesFontFamily({
   v,
   device,
   store,
+  getConfig,
   renderContext
 }) {
   return cssStyleTypography2FontFamily({
     v,
     device,
     store,
+    getConfig,
     prefix: "attributes",
     renderContext
   });
@@ -127,12 +172,14 @@ export function cssStyleElementWOOAttributesAttributesFontFamily({
 export function cssStyleElementWOOAttributesAttributesFontSize({
   v,
   device,
-  store
+  store,
+  getConfig
 }) {
   return cssStyleTypography2FontSize({
     v,
     device,
     store,
+    getConfig,
     prefix: "attributes"
   });
 }
@@ -140,12 +187,14 @@ export function cssStyleElementWOOAttributesAttributesFontSize({
 export function cssStyleElementWOOAttributesAttributesLineHeight({
   v,
   device,
-  store
+  store,
+  getConfig
 }) {
   return cssStyleTypography2LineHeight({
     v,
     device,
     store,
+    getConfig,
     prefix: "attributes"
   });
 }
@@ -153,12 +202,14 @@ export function cssStyleElementWOOAttributesAttributesLineHeight({
 export function cssStyleElementWOOAttributesAttributesFontWeight({
   v,
   device,
-  store
+  store,
+  getConfig
 }) {
   return cssStyleTypography2FontWeight({
     v,
     device,
     store,
+    getConfig,
     prefix: "attributes"
   });
 }
@@ -166,12 +217,14 @@ export function cssStyleElementWOOAttributesAttributesFontWeight({
 export function cssStyleElementWOOAttributesAttributesLetterSpacing({
   v,
   device,
-  store
+  store,
+  getConfig
 }) {
   return cssStyleTypography2LetterSpacing({
     v,
     device,
     store,
+    getConfig,
     prefix: "attributes"
   });
 }
@@ -179,12 +232,14 @@ export function cssStyleElementWOOAttributesAttributesLetterSpacing({
 export function cssStyleElementWOOAttributesAttributesFontVariation({
   v,
   device,
-  store
+  store,
+  getConfig
 }) {
   return cssStyleTypography2FontVariation({
     v,
     device,
     store,
+    getConfig,
     prefix: "attributes"
   });
 }
@@ -193,20 +248,37 @@ export function cssStyleElementWOOAttributesAttributesTextTransform({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }) {
   return cssStyleTextTransforms({
     v,
     device,
     state,
     store,
+    getConfig,
     prefix: "attributes"
   });
 }
 
-export function cssStyleElementWOOAttributesSpacing({ v, device, state }) {
-  const spacing = styleElementWOOAttributesSpacing({ v, device, state });
-  const between = styleElementWOOAttributesBetween({ v, device, state });
+export function cssStyleElementWOOAttributesSpacing({
+  v,
+  device,
+  getConfig,
+  state
+}) {
+  const spacing = styleElementWOOAttributesSpacing({
+    v,
+    device,
+    getConfig,
+    state
+  });
+  const between = styleElementWOOAttributesBetween({
+    v,
+    device,
+    getConfig,
+    state
+  });
 
   return spacing === undefined ||
     spacing === null ||
@@ -220,16 +292,25 @@ export function cssStyleElementWOOAttributesAttributeColor({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }) {
-  return cssStyleColor({ v, device, state, store, prefix: "attributeColor" });
+  return cssStyleColor({
+    v,
+    device,
+    state,
+    store,
+    getConfig,
+    prefix: "attributeColor"
+  });
 }
 
 export function cssStyleElementWOOAttributesBorder({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }) {
   const borderWidth = styleBorderWidthUngrouped({
     v,
@@ -237,8 +318,8 @@ export function cssStyleElementWOOAttributesBorder({
     state,
     current: "top"
   });
-  const borderStyle = styleBorderStyle({ v, device, state });
-  const borderColor = styleBorderColor({ v, device, state, store });
+  const borderStyle = styleBorderStyle({ v, device, getConfig, state });
+  const borderColor = styleBorderColor({ v, device, state, store, getConfig });
   const styleBorder = styleElementWOOAttributesStyleBorder({
     v,
     device,
@@ -266,9 +347,15 @@ export function cssStyleElementWOOAttributesBorder({
 export function cssStyleElementWOOAttributesLastElementBorder({
   v,
   device,
+  getConfig,
   state
 }) {
-  return styleElementWOOAttributesStyleBorder({ v, device, state }) === "table"
+  return styleElementWOOAttributesStyleBorder({
+    v,
+    device,
+    getConfig,
+    state
+  }) === "table"
     ? ""
     : "border-bottom-width: 0;";
 }

@@ -5,7 +5,7 @@ import { DynamicStylesProps } from "visual/types";
 
 export function style(data: DynamicStylesProps<ElementModel>): OutputStyle {
   const styles = {
-    ".brz &&:hover": {
+    ".brz &&": {
       standart: ["cssStyleSizeMaxWidth", "cssStyleElementForm2FlexBasisPercent"]
     }
   };

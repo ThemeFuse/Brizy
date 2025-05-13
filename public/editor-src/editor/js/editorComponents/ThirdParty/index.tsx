@@ -16,6 +16,8 @@ import { WithClassName } from "visual/types/attributes";
 import { I18n } from "visual/utils/i18n";
 import { attachRefs } from "visual/utils/react";
 import { Wrapper } from "../tools/Wrapper";
+import { DynamicContent } from "./DynamicContent";
+import { DynamicContentProps, ThirdPartyProps } from "./types";
 
 export interface Value extends ElementModel {
   thirdPartyId: string;
@@ -117,6 +119,10 @@ class ThirdParty extends EditorComponent<Value, Props> {
     );
   }
 
+  getDynamiContent(props: DynamicContentProps) {
+    return <DynamicContent {...props} />;
+  }
+
   renderToolbars(
     children: (refs?: RefObject<HTMLDivElement>[]) => ReactNode
   ): ReactNode {
@@ -172,7 +178,6 @@ class ThirdParty extends EditorComponent<Value, Props> {
 
     if (isEditor(this.props.renderContext)) {
       const { editor } = this.getComponent(thirdPartyId) ?? {};
-
       if (!editor) {
         return `Missing Third Party Component: ${thirdPartyId}`;
       }
@@ -190,7 +195,6 @@ class ThirdParty extends EditorComponent<Value, Props> {
 
     if (isView(this.props.renderContext)) {
       const { view } = this.getComponent(thirdPartyId) ?? {};
-
       if (!view) {
         return `Missing Third Party Component: ${thirdPartyId}`;
       }
@@ -202,7 +206,7 @@ class ThirdParty extends EditorComponent<Value, Props> {
   // @ts-expect-error: Props
   renderForEdit(
     v: Record<string, unknown>,
-    Component: ComponentType,
+    Component: ComponentType<ThirdPartyProps>,
     toolbarsRef: RefObject<HTMLDivElement>[] = []
   ): ReactNode {
     const { customCSS } = v;
@@ -214,6 +218,8 @@ class ThirdParty extends EditorComponent<Value, Props> {
       toolbars,
       sidebars
     });
+
+    const device = this.getDeviceMode();
 
     const className = classNames(thirdPartyClassName, wrapperClassName);
     const _customCSS = Str.read(customCSS) ?? "";
@@ -227,7 +233,11 @@ class ThirdParty extends EditorComponent<Value, Props> {
               ref: (el) => attachRefs(el, [cssRef, ...toolbarsRef])
             })}
           >
-            <Component {...v} />
+            <Component
+              {...v}
+              device={device}
+              DynamicContent={this.getDynamiContent}
+            />
           </Wrapper>
         )}
       </CustomCSS>
