@@ -15,7 +15,14 @@ export const project: RProject = (state, action, fullState) => {
       return project;
     }
     case "PUBLISH": {
+      const { type } = action.payload;
       const newProject = projectAssembled(fullState);
+
+      if (type === "externalForce") {
+        return produce(newProject, (draft) => {
+          draft.dataVersion = draft.dataVersion + 1;
+        });
+      }
 
       if (isEqual(state, newProject)) {
         return state;

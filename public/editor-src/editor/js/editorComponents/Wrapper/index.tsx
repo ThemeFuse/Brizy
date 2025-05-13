@@ -29,7 +29,7 @@ import SortableHandle from "visual/component/Sortable/SortableHandle";
 import Toolbar, {
   ToolbarExtend as _ToolbarExtend
 } from "visual/component/Toolbar";
-import { PortalToolbar } from "visual/component/Toolbar/PortalToolbar";
+import { PortalToolbarType } from "visual/component/Toolbar/PortalToolbar";
 import { TransformWrapper } from "visual/component/TransformWrapper";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import EditorComponent, {
@@ -46,6 +46,7 @@ import { Draggable } from "visual/editorComponents/tools/Draggable";
 import { Value as DraggableV } from "visual/editorComponents/tools/Draggable/entities/Value";
 import { getContainerSizes } from "visual/editorComponents/tools/Draggable/utils";
 import { WithClassName } from "visual/types/attributes";
+import { isPro } from "visual/utils/env";
 import { t } from "visual/utils/i18n";
 import { getWrapperContainerW } from "visual/utils/meta";
 import { CssId, getCSSId } from "visual/utils/models/cssId";
@@ -108,7 +109,7 @@ export default class Wrapper extends EditorComponent<Value, Props> {
   static defaultValue = defaultValue;
   static experimentalDynamicContent = true;
   childToolbarExtend?: ToolbarExtend = undefined;
-  toolbarRef = createRef<PortalToolbar>();
+  toolbarRef = createRef<PortalToolbarType>();
 
   static get componentId(): string {
     return "Wrapper";
@@ -198,7 +199,8 @@ export default class Wrapper extends EditorComponent<Value, Props> {
 
   renderContent(v: Value): ReactElement {
     const toolbarExtendFilter =
-      v.showToolbar === "on" || currentUserRole() !== "admin"
+      v.showToolbar === "on" ||
+      currentUserRole(this.getGlobalConfig()) !== "admin"
         ? (toolbarExtendItems: ToolbarItemType[]): ToolbarItemType[] =>
             toolbarExtendItems.filter(
               (item) => item.id !== "duplicate" && item.id !== "remove"
@@ -317,6 +319,7 @@ export default class Wrapper extends EditorComponent<Value, Props> {
                     }}
                   >
                     <Roles
+                      currentRole={currentUserRole(this.getGlobalConfig())}
                       allow={["admin"]}
                       fallbackRender={(): ReactNode => content}
                     >
@@ -349,7 +352,11 @@ export default class Wrapper extends EditorComponent<Value, Props> {
       <TransformWrapper<Value> v={v} needWrapper={needWrapper}>
         <ScrollMotion
           className="brz-wrapper__scrollmotion"
-          options={makeOptionValueToMotion({ v, store })}
+          options={makeOptionValueToMotion({
+            v,
+            store,
+            isPro: isPro(this.getGlobalConfig())
+          })}
           needWrapper={needWrapper}
         >
           <HoverAnimation
@@ -415,6 +422,7 @@ export default class Wrapper extends EditorComponent<Value, Props> {
                 }}
               >
                 <Roles
+                  currentRole={currentUserRole(this.getGlobalConfig())}
                   allow={["admin"]}
                   fallbackRender={(): ReactNode => content}
                 >
@@ -519,7 +527,11 @@ export default class Wrapper extends EditorComponent<Value, Props> {
     const content = (
       <TransformWrapper<Value> v={v}>
         <ScrollMotion
-          options={makeOptionValueToMotion({ v, store })}
+          options={makeOptionValueToMotion({
+            v,
+            store,
+            isPro: isPro(this.getGlobalConfig())
+          })}
           className="brz-wrapper__scrollmotion"
         >
           <HoverAnimation

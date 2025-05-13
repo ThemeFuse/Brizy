@@ -38,18 +38,48 @@ export function cssStyleElementTabsBtnSpacing({ v, device, state }) {
   }
 }
 
-export function cssStyleElementTabsBtnActiveBorderBottomColor({ v, store }) {
-  const borderColor = styleBgColor({ v, state: ACTIVE, store, prefix: "bg" });
+export function cssStyleElementTabsBtnActiveBorderBottomColor({
+  v,
+  store,
+  getConfig
+}) {
+  const borderColor = styleBgColor({
+    v,
+    state: ACTIVE,
+    store,
+    getConfig,
+    prefix: "bg"
+  });
   return `border-bottom-color: ${borderColor};`;
 }
 
-export function cssStyleElementTabsBtnActiveBorderRightColor({ v, store }) {
-  const borderColor = styleBgColor({ v, state: ACTIVE, store, prefix: "bg" });
+export function cssStyleElementTabsBtnActiveBorderRightColor({
+  v,
+  store,
+  getConfig
+}) {
+  const borderColor = styleBgColor({
+    v,
+    state: ACTIVE,
+    store,
+    getConfig,
+    prefix: "bg"
+  });
   return `border-right-color: ${borderColor};`;
 }
 
-export function cssStyleElementTabsBtnActiveBorderLeftColor({ v, store }) {
-  const borderColor = styleBgColor({ v, state: ACTIVE, store, prefix: "bg" });
+export function cssStyleElementTabsBtnActiveBorderLeftColor({
+  v,
+  store,
+  getConfig
+}) {
+  const borderColor = styleBgColor({
+    v,
+    state: ACTIVE,
+    store,
+    getConfig,
+    prefix: "bg"
+  });
   return `border-left-color: ${borderColor};`;
 }
 
@@ -57,13 +87,15 @@ export function cssStyleElementTabsActiveBeforeAfterColor({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }) {
   return `background-color: ${styleBorderColor({
     v,
     device,
     state,
-    store
+    store,
+    getConfig
   })}; z-index: 1;`;
 }
 
@@ -75,9 +107,17 @@ export function cssStyleElementTabsActiveBeforeWidth({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }) {
-  return cssStyleSizeWidth({ v, device, state, store, prefix: "border" });
+  return cssStyleSizeWidth({
+    v,
+    device,
+    state,
+    store,
+    getConfig,
+    prefix: "border"
+  });
 }
 
 export function cssStyleElementTabsBeforeAfterRightWidth({ v, device, state }) {
@@ -163,12 +203,24 @@ export function cssStyleElementTabsSpacing({ v, device, state }) {
     ? `margin: 0 ${spacing}px 0 0;`
     : `margin: 0 0 ${spacing}px 0;`;
 }
-export function cssStyleElementTabsNavAlign({ v, device, state, store }) {
-  const horizontalAlign = styleAlignHorizontal({ v, device, state, store });
+export function cssStyleElementTabsNavAlign({
+  v,
+  device,
+  state,
+  store,
+  getConfig
+}) {
+  const horizontalAlign = styleAlignHorizontal({
+    v,
+    device,
+    state,
+    store,
+    getConfig
+  });
 
   return horizontalAlign === "justify"
     ? "flex-grow: 1;"
-    : cssStyleFlexHorizontalAlign({ v, device, state, store });
+    : cssStyleFlexHorizontalAlign({ v, device, state, store, getConfig });
 }
 export function cssStyleElementTabsPadding({ v, device, state }) {
   const dvv = (key) => defaultValueValue({ v, key, device, state });
@@ -182,12 +234,13 @@ export function cssStyleElementTabsNavBorderBottom({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }) {
   const dvv = (key) => defaultValueValue({ v, key, device, state });
   const verticalMode = dvv("verticalMode");
   const verticalAlign = dvv("verticalAlign");
-  const color = styleBorderColor({ v, device, store, state });
+  const color = styleBorderColor({ v, device, store, state, getConfig });
   let width = styleBorderWidthGrouped({ v, device, state });
 
   if (verticalMode === "off") {
@@ -207,12 +260,19 @@ export function cssStyleElementTabsNavStyle3Before({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }) {
   const dvv = (key) => defaultValueValue({ v, key, device, state });
   const verticalMode = dvv("verticalMode");
   const verticalAlign = dvv("verticalAlign");
-  const color = styleBorderColor({ v, device, store, state: ACTIVE });
+  const color = styleBorderColor({
+    v,
+    device,
+    store,
+    state: ACTIVE,
+    getConfig
+  });
   const width = styleBorderWidthGrouped({ v, device, state: ACTIVE });
 
   if (verticalMode === "off") {
@@ -226,36 +286,60 @@ export function cssStyleElementTabsNavStyle3Before({
   }
 }
 
-export function cssStyleElementTabsActiveColor({ v, store }) {
-  return cssStyleColor({ v, state: ACTIVE, prefix: "color", store });
+export function cssStyleElementTabsActiveColor({ v, store, getConfig }) {
+  return cssStyleColor({ v, state: ACTIVE, getConfig, prefix: "color", store });
 }
 
-export function cssStyleElementTabsActiveBgColor({ v, store }) {
-  return cssStyleBgColor({ v, state: ACTIVE, prefix: "bg", store });
+export function cssStyleElementTabsActiveBgColor({ v, store, getConfig }) {
+  return cssStyleBgColor({ v, state: ACTIVE, prefix: "bg", store, getConfig });
 }
 
-export function cssStyleElementTabsActiveShadow({ v, store }) {
-  return cssStyleBoxShadow({ v, state: ACTIVE, store });
+export function cssStyleElementTabsActiveShadow({ v, store, getConfig }) {
+  return cssStyleBoxShadow({ v, state: ACTIVE, store, getConfig });
 }
 
-export function cssStyleElementTabsActiveBorder({ v, device, store }) {
-  return cssStyleBorder({ v, device, store, state: "active" });
+export function cssStyleElementTabsActiveBorder({
+  v,
+  device,
+  store,
+  getConfig
+}) {
+  return cssStyleBorder({ v, device, store, getConfig, state: "active" });
 }
 
-export function cssStyleElementTabsContentBgColor({ v, device, state, store }) {
+export function cssStyleElementTabsContentBgColor({
+  v,
+  device,
+  state,
+  store,
+  getConfig
+}) {
   const dvv = (key) => defaultValueValue({ v, key, device, state });
   const contentBgColorOpacity = dvv("contentBgColorOpacity");
   return contentBgColorOpacity === 0
     ? ""
-    : cssStyleBgColor({ v, device, state, store, prefix: "contentBg" });
+    : cssStyleBgColor({
+        v,
+        device,
+        state,
+        store,
+        getConfig,
+        prefix: "contentBg"
+      });
 }
 
-export function cssStyleElementTabsContentBorder({ v, device, state, store }) {
+export function cssStyleElementTabsContentBorder({
+  v,
+  device,
+  state,
+  store,
+  getConfig
+}) {
   const dvv = (key) => defaultValueValue({ v, key, device, state });
   const contentBorderColorOpacity = dvv("contentBorderColorOpacity");
   return contentBorderColorOpacity === 0
     ? ""
-    : cssStyleBorder({ v, device, state, store, prefix: "content" });
+    : cssStyleBorder({ v, device, state, store, getConfig, prefix: "content" });
 }
 
 export function cssStyleElementTabsContentShadow({
@@ -263,15 +347,27 @@ export function cssStyleElementTabsContentShadow({
   device,
   state,
   store,
+  getConfig,
   prefix = "content"
 }) {
-  return cssStyleBoxShadow({ v, device, state, store, prefix });
+  return cssStyleBoxShadow({ v, device, state, store, getConfig, prefix });
 }
 
-export function cssStyleElementTabsBgColor({ v, device, store }) {
-  return cssStyleBgColor({ v, device, store });
+export function cssStyleElementTabsBgColor({ v, device, store, getConfig }) {
+  return cssStyleBgColor({ v, device, store, getConfig });
 }
 
-export function cssStyleElementTabsActiveCustomIconColor({ v, store, device }) {
-  return cssStyleCustomIconColor({ v, device, state: ACTIVE, store });
+export function cssStyleElementTabsActiveCustomIconColor({
+  v,
+  store,
+  getConfig,
+  device
+}) {
+  return cssStyleCustomIconColor({
+    v,
+    device,
+    state: ACTIVE,
+    store,
+    getConfig
+  });
 }

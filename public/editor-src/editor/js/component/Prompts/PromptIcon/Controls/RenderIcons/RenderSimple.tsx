@@ -2,7 +2,7 @@ import React, { useCallback } from "react";
 import { PromiseComponent } from "visual/component/PromiseComponent";
 import { Icon } from "visual/config/icons/Icon";
 import { getTypeIcons } from "visual/config/icons/icons";
-import { useConfig } from "visual/global/hooks";
+import { useConfig } from "visual/providers/ConfigProvider";
 import { FCC } from "visual/utils/react/types";
 import { Filters } from "../Filters";
 import { IconGrid } from "../IconGrid";

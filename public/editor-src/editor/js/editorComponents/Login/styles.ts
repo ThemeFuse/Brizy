@@ -5,10 +5,10 @@ import { OutputStyle } from "visual/utils/cssStyle/types";
 
 export function style(data: DynamicStylesProps<ElementModel>): OutputStyle {
   const styles = {
-    ".brz &&:hover .brz-login-form": {
+    ".brz && .brz-login-form": {
       standart: ["cssStyleDisplayFlex", "cssStyleElementLoginFormMargin"]
     },
-    ".brz &&:hover .brz-login__item-button": {
+    ".brz && .brz-login__item-button": {
       standart: [
         "cssStyleDisplayFlex",
         "cssStyleMarginAlign",
@@ -33,19 +33,13 @@ export function style(data: DynamicStylesProps<ElementModel>): OutputStyle {
     ".brz && .brz-login__authorized p:hover": {
       standart: ["cssStyleElementLoginTextColor"]
     },
-    ".brz && .brz-login__authorized a:hover": {
-      standart: ["cssStyleElementLoginLinkColor"]
-    },
-    ".brz && .brz-login__authorized span:hover": {
-      standart: ["cssStyleElementLoginLinkColor"]
-    },
-    ".brz && .brz-login-form .brz-input:hover": {
+    ".brz && .brz-login__authorized a:hover, .brz && .brz-login__authorized span:hover":
+      {
+        standart: ["cssStyleElementLoginLinkColor"]
+      },
+    ".brz && .brz-login-form .brz-input": {
       standart: [
         "cssStyleElementFieldsInputSize",
-        "cssStyleColor",
-        "cssStyleBgColor",
-        "cssStyleBorder",
-        "cssStyleBoxShadow",
         "cssStyleBorderRadius",
         "cssStylePaddingFourFields",
         "cssStyleTypography2FontFamily",
@@ -56,16 +50,27 @@ export function style(data: DynamicStylesProps<ElementModel>): OutputStyle {
         "cssStyleTextTransforms"
       ]
     },
+    ".brz && .brz-login-form .brz-input:hover": {
+      standart: [
+        "cssStyleColor",
+        "cssStyleBgColor",
+        "cssStyleBorder",
+        "cssStyleBoxShadow"
+      ]
+    },
     ".brz && .brz-login-form .brz-login-form__field": {
       standart: ["cssStyleElementLoginFieldPadding"]
     },
     ".brz && .brz-login-form .brz-login__field-label": {
-      standart: ["cssStyleElementForm2FieldsLabelPadding"]
+      standart: [
+        "cssStyleElementForm2FieldsLabelPadding",
+        "cssStyleElementForm2FieldsLabelAlign"
+      ]
     },
     ".brz &&:hover .brz-login-form .brz-login__field-label": {
-      standart: ["cssStyleLabelColor", "cssStyleElementForm2FieldsLabelAlign"]
+      standart: ["cssStyleLabelColor"]
     },
-    ".brz &&:hover .brz-login-form .brz-login__field-label .brz-label": {
+    ".brz && .brz-login-form .brz-login__field-label .brz-label": {
       standart: [
         "cssStyleElementForm2FieldsLabelFontFamily",
         "cssStyleElementForm2FieldsLabelFontSize",
@@ -76,9 +81,8 @@ export function style(data: DynamicStylesProps<ElementModel>): OutputStyle {
         "cssStyleElementForm2FieldsLabelTextTransform"
       ]
     },
-    ".brz && .brz-login-form .brz-login-form__field-lost-password:hover": {
+    ".brz && .brz-login-form .brz-login-form__field-lost-password": {
       standart: [
-        "cssStyleElementLoginLostPasswordColor",
         "cssStyleElementLoginLostPasswordTypography2FontFamily",
         "cssStyleElementLoginLostPasswordTypography2FontSize",
         "cssStyleElementLoginLostPasswordTypography2FontWeight",
@@ -89,9 +93,11 @@ export function style(data: DynamicStylesProps<ElementModel>): OutputStyle {
         "cssStyleElementLoginLostPasswordAlign"
       ]
     },
-    ".brz && .brz-login-form .brz-control__check-group-option:hover": {
+    ".brz && .brz-login-form .brz-login-form__field-lost-password:hover": {
+      standart: ["cssStyleElementLoginLostPasswordColor"]
+    },
+    ".brz && .brz-login-form .brz-control__check-group-option": {
       standart: [
-        "cssStyleElementForm2FieldsCheckboxColor",
         "cssStyleElementForm2FieldsCheckboxFontFamily",
         "cssStyleElementForm2FieldsCheckboxFontSize",
         "cssStyleElementForm2FieldsCheckboxFontWeight",
@@ -102,7 +108,10 @@ export function style(data: DynamicStylesProps<ElementModel>): OutputStyle {
         "cssStyleElementLoginRememberMeAlign"
       ]
     },
-    ".brz && .brz-login-form .brz-login__register-info:hover": {
+    ".brz && .brz-login-form .brz-control__check-group-option:hover": {
+      standart: ["cssStyleElementForm2FieldsCheckboxColor"]
+    },
+    ".brz && .brz-login-form .brz-login__register-info": {
       standart: [
         "cssStyleElementLoginRegisterInfoTypography2FontFamily",
         "cssStyleElementLoginRegisterInfoTypography2FontSize",
@@ -111,11 +120,13 @@ export function style(data: DynamicStylesProps<ElementModel>): OutputStyle {
         "cssStyleElementLoginRegisterInfoTypography2LetterSpacing",
         "cssStyleElementLoginRegisterInfoTypography2FontVariation",
         "cssStyleElementLoginRegisterInfoTextTransform",
-        "cssStyleElementRegisterInfoColor",
         "cssStyleElementRegisterInfoAlign"
       ]
     },
-    ".brz && .brz-login-form .brz-login-form__field-register-link:hover": {
+    ".brz && .brz-login-form .brz-login__register-info:hover": {
+      standart: ["cssStyleElementRegisterInfoColor"]
+    },
+    ".brz && .brz-login-form .brz-login-form__field-register-link": {
       standart: [
         "cssStyleElementLoginRegisterLinkTypography2FontFamily",
         "cssStyleElementLoginRegisterLinkTypography2FontSize",
@@ -124,11 +135,13 @@ export function style(data: DynamicStylesProps<ElementModel>): OutputStyle {
         "cssStyleElementLoginRegisterLinkTypography2LetterSpacing",
         "cssStyleElementLoginRegisterLinkTypography2FontVariation",
         "cssStyleElementLoginRegisterLinkTextTransform",
-        "cssStyleElementLoginRegisterLinkColor",
         "cssStyleElementLoginRegisterLinkAlign"
       ]
     },
-    ".brz && .brz-login-form .brz-login-form__field-login-link:hover": {
+    ".brz && .brz-login-form .brz-login-form__field-register-link:hover": {
+      standart: ["cssStyleElementLoginRegisterLinkColor"]
+    },
+    ".brz && .brz-login-form .brz-login-form__field-login-link": {
       standart: [
         "cssStyleElementLoginLoginLinkTypography2FontFamily",
         "cssStyleElementLoginLoginLinkTypography2FontSize",
@@ -137,9 +150,11 @@ export function style(data: DynamicStylesProps<ElementModel>): OutputStyle {
         "cssStyleElementLoginLoginLinkTypography2LetterSpacing",
         "cssStyleElementLoginLoginLinkTypography2FontVariation",
         "cssStyleElementLoginLoginLinkTextTransform",
-        "cssStyleElementLoginLoginLinkColor",
         "cssStyleElementLoginLoginLinkAlign"
       ]
+    },
+    ".brz && .brz-login-form .brz-login-form__field-login-link:hover": {
+      standart: ["cssStyleElementLoginLoginLinkColor"]
     }
   };
 

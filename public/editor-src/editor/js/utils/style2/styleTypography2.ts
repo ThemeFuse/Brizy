@@ -1,6 +1,5 @@
 import { Str } from "@brizy/readers";
 import { WithRenderContext } from "visual/providers/RenderProvider";
-import { configSelector } from "visual/redux/selectors";
 import { FontFamilyType } from "visual/types/Fonts";
 import { DESKTOP, Device } from "visual/utils/devices";
 import { getFontCssStyle } from "visual/utils/fonts/getFontCssStyle";
@@ -20,6 +19,7 @@ export function styleTypography2FontFamily({
   state,
   store,
   prefix = "",
+  getConfig,
   renderContext
 }: CSSValue & WithRenderContext) {
   if (!store) {
@@ -65,7 +65,7 @@ export function styleTypography2FontFamily({
     return "";
   }
 
-  const config = configSelector(store.getState());
+  const config = getConfig();
 
   return getDetailsModelFontFamily({
     data: {
@@ -84,11 +84,12 @@ export function styleTypography2FontSize({
   device,
   state,
   store,
+  getConfig,
   prefix = ""
 }: CSSValue): number {
   const dvk = (key: string) => defaultValueKey({ key, device, state });
   const dvv = (key: string) => defaultValueValue({ v, key, device, state });
-  const config = configSelector(store.getState());
+  const config = getConfig();
   const fontStyleKey = capByPrefix(prefix, "fontStyle");
   const fontSizeKey = capByPrefix(prefix, "fontSize");
   const fontStyle = dvv(fontStyleKey);
@@ -143,11 +144,12 @@ export function styleTypography2LineHeight({
   device,
   state,
   store,
+  getConfig,
   prefix = ""
 }: CSSValue): string {
   const dvk = (key: string) => defaultValueKey({ key, device, state });
   const dvv = (key: string) => defaultValueValue({ v, key, device, state });
-  const config = configSelector(store.getState());
+  const config = getConfig();
   const fontStyleKey = capByPrefix(prefix, "fontStyle");
   const lineHeightKey = capByPrefix(prefix, "lineHeight");
   const fontStyle = dvv(fontStyleKey);
@@ -175,11 +177,12 @@ export function styleTypography2FontWeight({
   device,
   state,
   store,
+  getConfig,
   prefix = ""
 }: CSSValue): string {
   const dvk = (key: string) => defaultValueKey({ key, device, state });
   const dvv = (key: string) => defaultValueValue({ v, key, device, state });
-  const config = configSelector(store.getState());
+  const config = getConfig();
   const fontStyleKey = capByPrefix(prefix, "fontStyle");
   const fontWeightKey = capByPrefix(prefix, "fontWeight");
   const fontStyle = dvv(fontStyleKey);
@@ -207,11 +210,12 @@ export function styleTypography2LetterSpacing({
   device,
   state,
   store,
+  getConfig,
   prefix = ""
 }: CSSValue): string {
   const dvk = (key: string) => defaultValueKey({ key, device, state });
   const dvv = (key: string) => defaultValueValue({ v, key, device, state });
-  const config = configSelector(store.getState());
+  const config = getConfig();
   const fontStyleKey = capByPrefix(prefix, "fontStyle");
   const fontStyle = dvv(fontStyleKey);
   const letterSpacingKey = capByPrefix(prefix, "letterSpacing");
@@ -240,10 +244,11 @@ export function styleTypography2FontVariation({
   device,
   state,
   store,
+  getConfig,
   prefix = ""
 }: CSSValue): string {
   const dvv = (key: string) => defaultValueValue({ v, key, device, state });
-  const config = configSelector(store.getState());
+  const config = getConfig();
   const fontStyleKey = capByPrefix(prefix, "fontStyle");
   const variableFontWeightKey = capByPrefix(prefix, "variableFontWeight");
   const fontWidthKey = capByPrefix(prefix, "fontWidth");

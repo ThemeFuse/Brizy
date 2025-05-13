@@ -15,6 +15,7 @@ export function cssStyleElementWOOGalleryBorderThumbnail({
   v,
   device,
   state,
+  getConfig,
   store
 }) {
   return cssStyleBorder({
@@ -22,6 +23,7 @@ export function cssStyleElementWOOGalleryBorderThumbnail({
     device,
     state,
     store,
+    getConfig,
     prefix: "thumbnail"
   });
 }
@@ -30,22 +32,48 @@ export function cssStyleElementWOOGalleryBorderRadiusThumbnail({
   v,
   device,
   state,
+  getConfig,
   store
 }) {
-  return cssStyleBorderRadius({ v, device, state, store, prefix: "thumbnail" });
+  return cssStyleBorderRadius({
+    v,
+    device,
+    state,
+    store,
+    getConfig,
+    prefix: "thumbnail"
+  });
 }
 
 export function cssStyleElementWOOGalleryBoxShadowThumbnail({
   v,
   device,
   state,
+  getConfig,
   store
 }) {
-  return cssStyleBoxShadow({ v, device, prefix: "thumbnail", state, store });
+  return cssStyleBoxShadow({
+    v,
+    device,
+    prefix: "thumbnail",
+    state,
+    getConfig,
+    store
+  });
 }
 
-export function cssStyleElementWOOGallerySpacing({ v, device, state }) {
-  const spacing = styleElementWOOGallerySpacing({ v, device, state });
+export function cssStyleElementWOOGallerySpacing({
+  v,
+  device,
+  getConfig,
+  state
+}) {
+  const spacing = styleElementWOOGallerySpacing({
+    v,
+    device,
+    getConfig,
+    state
+  });
 
   return spacing !== undefined || spacing !== null
     ? v.thumbStyle === "bottom"
@@ -54,9 +82,24 @@ export function cssStyleElementWOOGallerySpacing({ v, device, state }) {
     : "";
 }
 
-export function cssStyleElementWOOGalleryParentSize({ v, device, state }) {
-  const between = styleElementWOOGalleryBetweenThumbnail({ v, device, state });
-  const spacing = styleElementWOOGallerySpacing({ v, device, state });
+export function cssStyleElementWOOGalleryParentSize({
+  v,
+  device,
+  getConfig,
+  state
+}) {
+  const between = styleElementWOOGalleryBetweenThumbnail({
+    v,
+    device,
+    getConfig,
+    state
+  });
+  const spacing = styleElementWOOGallerySpacing({
+    v,
+    device,
+    getConfig,
+    state
+  });
 
   return between !== undefined || between !== null
     ? v.thumbStyle === "bottom"
@@ -70,9 +113,15 @@ export function cssStyleElementWOOGalleryParentSize({ v, device, state }) {
 export function cssStyleElementWOOGalleryBetweenThumbnail({
   v,
   device,
+  getConfig,
   state
 }) {
-  const between = styleElementWOOGalleryBetweenThumbnail({ v, device, state });
+  const between = styleElementWOOGalleryBetweenThumbnail({
+    v,
+    device,
+    getConfig,
+    state
+  });
 
   return between !== undefined || between !== null
     ? v.thumbStyle === "left" || v.thumbStyle === "right"
@@ -81,8 +130,18 @@ export function cssStyleElementWOOGalleryBetweenThumbnail({
     : "";
 }
 
-export function cssStyleElementWOOGalleryThumbnailSize({ v, device, state }) {
-  const between = styleElementWOOGalleryBetweenThumbnail({ v, device, state });
+export function cssStyleElementWOOGalleryThumbnailSize({
+  v,
+  device,
+  getConfig,
+  state
+}) {
+  const between = styleElementWOOGalleryBetweenThumbnail({
+    v,
+    device,
+    getConfig,
+    state
+  });
 
   const thumbPerRow =
     v.thumbStyle === "left" || v.thumbStyle === "right"
@@ -101,6 +160,7 @@ export function cssStyleElementWOOGalleryChildStyle({
   v,
   device,
   store,
+  getConfig,
   state
 }) {
   const dvv = (key) => defaultValueValue({ v, key, device, state });
@@ -110,9 +170,17 @@ export function cssStyleElementWOOGalleryChildStyle({
     device,
     state,
     store,
+    getConfig,
     prefix: "thumb"
   });
-  const width = cssStyleSizeWidth({ v, device, state, store, prefix: "thumb" });
+  const width = cssStyleSizeWidth({
+    v,
+    device,
+    state,
+    store,
+    getConfig,
+    prefix: "thumb"
+  });
 
   return thumbStyle === "left" || thumbStyle === "right"
     ? `${minWidth} ${width}`
@@ -122,9 +190,15 @@ export function cssStyleElementWOOGalleryChildStyle({
 export function cssStyleElementWOOGallerySpacingStyleLeftRigth({
   v,
   device,
+  getConfig,
   state
 }) {
-  const spacing = styleElementWOOGallerySpacing({ v, device, state });
+  const spacing = styleElementWOOGallerySpacing({
+    v,
+    device,
+    getConfig,
+    state
+  });
 
   return v.thumbStyle === "left"
     ? `margin-right: ${spacing}px;`

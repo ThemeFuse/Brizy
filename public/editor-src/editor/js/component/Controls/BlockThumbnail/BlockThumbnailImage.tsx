@@ -1,6 +1,7 @@
 import React, { JSX, useCallback, useEffect, useRef, useState } from "react";
 import EditorIcon from "visual/component/EditorIcon";
-import { useConfig } from "visual/global/hooks";
+import { Block } from "visual/types/Block";
+import { useConfig } from "visual/providers/ConfigProvider";
 import { blockThumbnailData } from "visual/utils/blocks";
 import { preloadImage } from "visual/utils/image";
 import { ThumbnailImage } from "./types";
@@ -23,9 +24,9 @@ export const BlockThumbnailImage = ({
   const { blockData, imageFetched, showSpinner } = data;
 
   const preloadThumbnail = useCallback(
-    (block) => {
+    (block: Block) => {
       let canceled = false;
-      const { url } = blockThumbnailData(block, screenshot);
+      const { url } = blockThumbnailData({ block, screenshot, config });
       preloadImage(url).then(() => {
         if (isUnmounted.current && !canceled) {
           setData((prevData) => ({
@@ -39,7 +40,7 @@ export const BlockThumbnailImage = ({
 
       return () => (canceled = true);
     },
-    [isUnmounted, setData, screenshot]
+    [isUnmounted, setData, screenshot, config]
   );
 
   useEffect(() => {
@@ -52,7 +53,11 @@ export const BlockThumbnailImage = ({
     };
   }, [blockData, preloadThumbnail]);
 
-  const { url, width, height } = blockThumbnailData(blockData, screenshot);
+  const { url, width, height } = blockThumbnailData({
+    block: blockData,
+    screenshot,
+    config
+  });
   const style = {
     width: MAX_THUMBNAIL_WIDTH,
     height: (MAX_THUMBNAIL_WIDTH * height) / width

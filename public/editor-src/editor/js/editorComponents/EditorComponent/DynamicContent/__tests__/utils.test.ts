@@ -1,10 +1,27 @@
 import { Base64 } from "js-base64";
-import { ConfigCommon, Mode } from "visual/global/Config/types/configs/ConfigCommon";
+import {
+  ConfigCommon,
+  Mode
+} from "visual/global/Config/types/configs/ConfigCommon";
 import { V } from "visual/types";
-import { DCPlaceholderObj, placeholderName } from "visual/utils/dynamicContent/types";
+import {
+  DCPlaceholderObj,
+  placeholderName
+} from "visual/utils/dynamicContent/types";
 import { ECKeyDCInfo } from "../../types";
-import { dcApiProxyTestFetcher, dcKeyToKey, hasDC, isDCKey, keyDCInfo, keyToDCAttrKey, keyToDCEntityIdKey, keyToDCEntityTypeKey, keyToDCFallback2Key, keyToDCKey, placeholderObjFromECKeyDCInfo } from "../utils";
-
+import {
+  dcApiProxyTestFetcher,
+  dcKeyToKey,
+  hasDC,
+  isDCKey,
+  keyDCInfo,
+  keyToDCAttrKey,
+  keyToDCEntityIdKey,
+  keyToDCEntityTypeKey,
+  keyToDCFallback2Key,
+  keyToDCKey,
+  placeholderObjFromECKeyDCInfo
+} from "../utils";
 
 //#region keys
 
@@ -371,7 +388,8 @@ export const mockConfigCommon: ConfigCommon = {
   container: {
     id: 545
   },
-  onUpdate: () => {}
+  onUpdate: () => {},
+  onCompile: () => {}
 };
 
 describe("Testing 'dcApiProxyTestFetcher' function", () => {

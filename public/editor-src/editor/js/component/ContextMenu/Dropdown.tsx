@@ -40,11 +40,7 @@ export const Dropdown = (props: Props): ReactNode => {
   }, [getItems, isOpen]);
 
   const handleOpen = useCallback(() => {
-    setOpen(true);
-  }, []);
-
-  const handleClose = useCallback(() => {
-    setOpen(false);
+    setOpen((open) => !open);
   }, []);
 
   if (typeof window === "undefined") {
@@ -53,14 +49,14 @@ export const Dropdown = (props: Props): ReactNode => {
 
   return createPortal(
     <Menu
-      onShown={handleOpen}
-      onHidden={handleClose}
+      onVisibilityChange={handleOpen}
       animation={false}
+      disableBoundariesCheck={true}
       id={id}
-      style={{ display: isOpen && items.length > 0 ? "block" : "none" }}
+      style={{ display: items.length > 0 ? "block" : "none" }}
     >
       <Items data={items} meta={itemsMeta} />
     </Menu>,
-    document.body
+    window.parent.document.body
   );
 };

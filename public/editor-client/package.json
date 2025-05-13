@@ -18,11 +18,12 @@
   "author": "brizy",
   "license": "MIT",
   "dependencies": {
+    "@brizy/readers": "^1.0.1",
     "fp-utilities": "^1.1.4",
+    "franc": "^6.1.0",
     "js-base64": "^3.7.5",
     "lodash": "^4.17.21",
-    "franc": "^6.1.0",
-    "@brizy/readers": "^1.0.1"
+    "query-string": "^9.1.1"
   },
   "devDependencies": {
     "@babel/parser": "^7.21.8",

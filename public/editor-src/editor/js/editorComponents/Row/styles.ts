@@ -11,7 +11,9 @@ import { NORMAL } from "visual/utils/stateMode";
 
 export function styleRow(data: DynamicStylesProps<ElementModel>): OutputStyle {
   const { v, contexts } = data;
+
   const _isEditor = isEditor(contexts.renderContext);
+
   const get = (k: string) => {
     return Devices.some((device) => {
       return defaultValueValue({
@@ -22,6 +24,7 @@ export function styleRow(data: DynamicStylesProps<ElementModel>): OutputStyle {
       });
     });
   };
+
   const { maskShape = "none", hoverName = "none" } = v;
   const motion = fromElementModel(get);
 
@@ -40,7 +43,7 @@ export function styleRow(data: DynamicStylesProps<ElementModel>): OutputStyle {
     hoverName === "none" ? "" : ".brz-hover-animation__container > ";
 
   const styles = {
-    ".brz &&:hover": {
+    ".brz &&": {
       interval: ["cssStyleRowMinHeight", "cssStyleDisplayFlex"],
       standart: [
         "cssStyleMargin",
@@ -49,25 +52,25 @@ export function styleRow(data: DynamicStylesProps<ElementModel>): OutputStyle {
       ]
     },
 
+    [`.brz && > ${innerDivFromMotion}${hoverContainer}.brz-bg`]: {
+      standart: [
+        "cssStyleBorderRadius",
+        "cssStyleSizeMaxWidthSize",
+        "cssStyleBlendMode"
+      ]
+    },
     [`.brz &&:hover > ${innerDivFromMotion}${hoverContainer}.brz-bg`]: {
       standart: [
         "cssStyleBorder",
-        "cssStyleBorderRadius",
         ...(maskShape === "none"
           ? ["cssStyleBoxShadow"]
-          : ["cssStyleMaskDropShadow"]),
-        "cssStyleSizeMaxWidthSize",
-        "cssStyleBlendMode"
+          : ["cssStyleMaskDropShadow"])
       ],
       interval: ["cssStyleHoverTransition", "cssStylePropertyHoverTransition"]
     },
-    [`.brz &&:hover > ${innerDivFromMotion}${hoverContainer}.brz-bg > .brz-bg-image`]:
+    [`.brz && > ${innerDivFromMotion}${hoverContainer}.brz-bg > .brz-bg-image`]:
       {
         standart: [
-          "cssStyleBgImage",
-          "cssStyleFilter",
-          "cssStyleBgImagePosition",
-          "cssStyleBgMediaImage",
           "cssStyleBgSize",
           "cssStyleBgRepeat",
           "cssStyleMaskShape",
@@ -75,6 +78,15 @@ export function styleRow(data: DynamicStylesProps<ElementModel>): OutputStyle {
           "cssStyleMaskSize",
           "cssStyleMaskPosition",
           "cssStyleMaskRepeat"
+        ]
+      },
+    [`.brz &&:hover > ${innerDivFromMotion}${hoverContainer}.brz-bg > .brz-bg-image`]:
+      {
+        standart: [
+          "cssStyleBgImage",
+          "cssStyleFilter",
+          "cssStyleBgImagePosition",
+          "cssStyleBgMediaImage"
         ],
         interval: ["cssStyleHoverTransition", "cssStylePropertyHoverTransition"]
       },
@@ -82,26 +94,35 @@ export function styleRow(data: DynamicStylesProps<ElementModel>): OutputStyle {
       {
         standart: ["cssStyleBgImageHover"]
       },
-    [`.brz &&:hover > ${innerDivFromMotion}${hoverContainer}.brz-bg > .brz-bg-color`]:
+    [`.brz && > ${innerDivFromMotion}${hoverContainer}.brz-bg > .brz-bg-color`]:
       {
         standart: [
-          "cssStyleBgColor",
-          "cssStyleBgGradient",
           "cssStyleMaskShape",
           "cssStyleMaskCustomShape",
           "cssStyleMaskSize",
           "cssStyleMaskPosition",
           "cssStyleMaskRepeat"
-        ],
+        ]
+      },
+    [`.brz &&:hover > ${innerDivFromMotion}${hoverContainer}.brz-bg > .brz-bg-color`]:
+      {
+        standart: ["cssStyleBgColor", "cssStyleBgGradient"],
         interval: ["cssStyleHoverTransition", "cssStylePropertyHoverTransition"]
       },
+    [`.brz && > ${innerDivFromMotion}${hoverContainer}.brz-bg > .brz-bg-map`]: {
+      standart: ["cssStyleBgMediaMap"]
+    },
     [`.brz &&:hover > ${innerDivFromMotion}${hoverContainer}.brz-bg > .brz-bg-map`]:
       {
-        standart: ["cssStyleFilter", "cssStyleBgMediaMap"]
+        standart: ["cssStyleFilter"]
+      },
+    [`.brz && > ${innerDivFromMotion}${hoverContainer}.brz-bg > .brz-bg-video`]:
+      {
+        standart: ["cssStyleBgMediaVideo"]
       },
     [`.brz &&:hover > ${innerDivFromMotion}${hoverContainer}.brz-bg > .brz-bg-video`]:
       {
-        standart: ["cssStyleFilter", "cssStyleBgMediaVideo"],
+        standart: ["cssStyleFilter"],
         interval: ["cssStyleHoverTransition", "cssStylePropertyHoverTransition"]
       },
     [`.brz &&:hover > ${innerDivFromMotion}${hoverContainer}.brz-row`]: {
@@ -115,11 +136,11 @@ export function styleRow(data: DynamicStylesProps<ElementModel>): OutputStyle {
   };
 
   if (_isEditor) {
-    styles[".brz &&:hover"].interval.push(
+    styles[".brz &&"].interval.push(
       "cssStyleVisibleEditorDisplayNoneOrBlock|||editor"
     );
   } else {
-    styles[".brz &&:hover"].interval.push("cssStyleVisible|||preview");
+    styles[".brz &&"].interval.push("cssStyleVisible|||preview");
   }
 
   return renderStyles({ ...data, styles });
@@ -131,7 +152,7 @@ export function styleContainer(
   const { renderContext } = data.contexts;
   const _isEditor = isEditor(renderContext);
   const styles = {
-    ".brz &&:hover": {
+    ".brz &&": {
       standart: ["cssStylePaddingFourFields", "cssStyleSizeMaxWidthSize"],
       interval: _isEditor ? ["cssStyleVisible|||editor"] : []
     }
@@ -144,7 +165,7 @@ export function styleAnimation(
   data: DynamicStylesProps<ElementModel>
 ): OutputStyle {
   const styles = {
-    ".brz &&:hover": {
+    ".brz &&": {
       standart: ["cssStyleAnimationAll"]
     }
   };

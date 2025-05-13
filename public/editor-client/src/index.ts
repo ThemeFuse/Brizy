@@ -1,9 +1,14 @@
+import { authors } from "@/authors";
+import { shortcodeContent } from "@/shortcodeContent";
+import { sidebars } from "@/sidebars";
+import { terms } from "@/terms";
 import merge from "lodash/merge";
 import set from "lodash/set";
 import { doAiRequest } from "./aiText";
 import { autoSave } from "./autoSave";
 import { getCollectionItems } from "./collectionItems/getCollectionItems";
 import { searchCollectionItems } from "./collectionItems/searchCollectionItems";
+import { getCollectionTypesInfo } from "./collectionTypes/getCollectionTypesInfo";
 import { loadCollectionTypes } from "./collectionTypes/loadCollectionTypes";
 import { getConfig } from "./config";
 import { addFile } from "./customFile/addFile";
@@ -17,15 +22,18 @@ import {
 import { placeholderData, placeholders } from "./dynamicContent";
 import { getMenu } from "./Elements/Menu";
 import { handler as posts } from "./Elements/Posts";
+import { featuredImage } from "./featuredImage";
 import { adobeFont, uploadedFonts } from "./fonts";
 import { globalBlocks } from "./globalBlocks/blocks";
 import { globalPopups } from "./globalBlocks/popups";
 import { heartBeat } from "./heartBeat";
 import { addMedia } from "./media/addMedia";
 import { addMediaGallery } from "./media/addMediaGallery";
+import { getMenus } from "./menu";
 import { onChange } from "./onChange";
 import { onStartLoad } from "./onStartLoad";
 import { popupConditions } from "./popupConditions";
+import { posts as postsAPI } from "./posts";
 import { publish } from "./publish";
 import { getRegeneratedGlobalStyles } from "./regeneratedGlobalStyles";
 import { savedBlocks } from "./savedBlocks/savedBlocks";
@@ -69,13 +77,23 @@ const api = {
     getCollectionItems
   },
   collectionTypes: {
-    loadCollectionTypes
+    loadCollectionTypes,
+    getCollectionTypesInfo
   },
   screenshots: screenshots(),
   fonts: {
     adobeFont: adobeFont()
   },
-  heartBeat: heartBeat(config)
+  heartBeat: heartBeat(config),
+  menu: {
+    getMenus: getMenus()
+  },
+  featuredImage,
+  shortcodeContent,
+  authors,
+  posts: postsAPI,
+  terms,
+  sidebars
 };
 
 if (window.__VISUAL_CONFIG__) {

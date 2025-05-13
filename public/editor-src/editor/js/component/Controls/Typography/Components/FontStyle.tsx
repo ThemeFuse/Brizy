@@ -4,7 +4,7 @@ import { Select2 } from "visual/component/Controls/Select2";
 import { Item } from "visual/component/Controls/Select2/Item";
 import EditorIcon from "visual/component/EditorIcon";
 import { isCloud, isShopify } from "visual/global/Config/types/configs/Cloud";
-import { useConfig } from "visual/global/hooks";
+import { useConfig } from "visual/providers/ConfigProvider";
 import { FontStyleProps as Props } from "../types/Props";
 
 export const FontStyle = ({

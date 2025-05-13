@@ -7,6 +7,7 @@ import Sortable from "visual/component/Sortable";
 import { SortableElement } from "visual/component/Sortable/SortableElement";
 import { hideToolbar } from "visual/component/Toolbar";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
+import { isEditor, isView } from "visual/providers/RenderProvider";
 import { t } from "visual/utils/i18n";
 import { attachRefs } from "visual/utils/react";
 import contextMenuConfig from "./contextMenuChild";
@@ -98,7 +99,12 @@ class Items extends EditorArrayComponent {
 
   // Div
   renderItemsContainerDiv(items, sortableRef, sortableAttr) {
-    const { motion, containerClassName, containerRef } = this.props;
+    const { motion, containerClassName, containerRef, renderContext } =
+      this.props;
+
+    if (isView(renderContext)) {
+      return <ScrollMotion options={motion}>{items}</ScrollMotion>;
+    }
 
     return (
       <ScrollMotion options={motion}>
@@ -166,6 +172,7 @@ class Items extends EditorArrayComponent {
 
   renderItemWrapperDiv(item, itemKey, itemIndex) {
     const {
+      renderContext,
       itemClassName,
       meta: { inIconText }
     } = this.props;
@@ -175,9 +182,13 @@ class Items extends EditorArrayComponent {
 
     const getContent = (ref) => (
       <SortableElement key={itemKey} type="shortcode">
-        <div className={itemClassName} id={itemKey} ref={ref}>
-          {item}
-        </div>
+        {isEditor(renderContext) ? (
+          <div className={itemClassName} id={itemKey} ref={ref}>
+            {item}
+          </div>
+        ) : (
+          item
+        )}
       </SortableElement>
     );
 

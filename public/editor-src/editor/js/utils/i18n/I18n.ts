@@ -9,9 +9,9 @@ export class Dictionary {
     this.resources = resources;
   }
 
-  public t(key: string) {
+  t = (key: string) => {
     return this.resources[key] ?? key;
-  }
+  };
 
   public update(resources: Record<string, string>) {
     this.resources = resources;

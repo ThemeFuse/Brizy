@@ -71,7 +71,7 @@ function loopStyles({ v, vs, vd, contexts, styles, store, props }) {
   let mode = "";
   let legacyByDefault = {};
 
-  const { renderContext, mode: editorMode } = contexts;
+  const { renderContext, mode: editorMode, getConfig } = contexts;
 
   const _isStory = isStory(editorMode);
   const devices = getDevices(_isStory);
@@ -108,7 +108,8 @@ function loopStyles({ v, vs, vd, contexts, styles, store, props }) {
                 mode,
                 props,
                 store,
-                renderContext
+                renderContext,
+                getConfig
               });
 
               const desktopOutVS = onStyles[styleFn]({
@@ -118,7 +119,8 @@ function loopStyles({ v, vs, vd, contexts, styles, store, props }) {
                 mode,
                 props,
                 store,
-                renderContext
+                renderContext,
+                getConfig
               });
 
               const desktopOutVD = onStyles[styleFn]({
@@ -128,7 +130,8 @@ function loopStyles({ v, vs, vd, contexts, styles, store, props }) {
                 mode,
                 props,
                 store,
-                renderContext
+                renderContext,
+                getConfig
               });
 
               const currentOutV = onStyles[styleFn]({
@@ -138,7 +141,8 @@ function loopStyles({ v, vs, vd, contexts, styles, store, props }) {
                 mode,
                 props,
                 store,
-                renderContext
+                renderContext,
+                getConfig
               });
 
               outV =
@@ -154,7 +158,8 @@ function loopStyles({ v, vs, vd, contexts, styles, store, props }) {
                 styleKey,
                 state,
                 device,
-                currentStyle
+                currentStyle,
+                filterHover: false
               });
 
               const currentOutVS = onStyles[styleFn]({
@@ -164,7 +169,8 @@ function loopStyles({ v, vs, vd, contexts, styles, store, props }) {
                 renderContext,
                 mode,
                 props,
-                store
+                store,
+                getConfig
               });
 
               outVS =
@@ -190,7 +196,8 @@ function loopStyles({ v, vs, vd, contexts, styles, store, props }) {
                 renderContext,
                 mode,
                 props,
-                store
+                store,
+                getConfig
               });
 
               outVD =
@@ -341,12 +348,21 @@ function cssOutput({ v, styles, legacy, legacyByDefault, devices, states }) {
   return goout;
 }
 
-function legacyByOut({ legacy, out, styleKey, state, device, currentStyle }) {
+function legacyByOut({
+  legacy,
+  out,
+  styleKey,
+  state,
+  device,
+  currentStyle,
+  filterHover = true
+}) {
   if (!out) {
     return legacy;
   }
 
   if (
+    filterHover &&
     state === "hover" &&
     legacy.normal &&
     legacy.normal[styleKey] &&

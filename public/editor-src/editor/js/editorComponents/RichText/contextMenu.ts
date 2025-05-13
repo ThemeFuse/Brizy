@@ -1,19 +1,19 @@
 import { Str } from "@brizy/readers";
 import deepmerge from "deepmerge";
 import { setIn } from "timm";
-import { overwriteMerge } from "visual/bootstraps/initConfig/default/utils";
 import { updateCopiedElement } from "visual/redux/actions2";
 import { pageDataNoRefsSelector } from "visual/redux/selectors";
+import { overwriteMerge } from "visual/utils/array";
 import { t } from "visual/utils/i18n";
 import { createFullModelPath } from "visual/utils/models";
 import { ContextGetItems, ContextMenuItem } from "../EditorComponent/types";
+import type { Value } from "./types";
 import {
   getInnerElement,
   handleClearFormatting,
   handlePasteStyles,
   handleRenderText
 } from "./utils/ContextMenu";
-import type { Value } from "./types";
 
 const getItems: ContextGetItems<Value> = (_, component): ContextMenuItem[] => {
   const config = component.getGlobalConfig();

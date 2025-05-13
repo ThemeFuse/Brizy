@@ -6,6 +6,7 @@ export function cssStyleElementFacebookWidth({
   v,
   device,
   state,
+  getConfig,
   store
 }: CSSValue): string {
   const dvv = (key: string) => defaultValueValue({ v, key, device, state });
@@ -13,9 +14,16 @@ export function cssStyleElementFacebookWidth({
 
   switch (facebookType) {
     case "group":
-      return cssStyleSizeWidth({ v, device, state, store });
+      return cssStyleSizeWidth({ v, device, state, getConfig, store });
     case "page":
-      return cssStyleSizeWidth({ v, device, state, store, prefix: "page" });
+      return cssStyleSizeWidth({
+        v,
+        device,
+        state,
+        getConfig,
+        store,
+        prefix: "page"
+      });
   }
 
   return "";
@@ -25,12 +33,20 @@ export function cssStyleElementFacebookAlign({
   v,
   device,
   state,
+  getConfig,
   store
 }: CSSValue): string {
   const dvv = (key: string) => defaultValueValue({ v, key, device, state });
   const facebookType = dvv("facebookType");
 
   return facebookType === "page"
-    ? cssStyleMarginAlign({ v, device, state, store, prefix: "page" })
-    : cssStyleMarginAlign({ v, device, state, store });
+    ? cssStyleMarginAlign({
+        v,
+        device,
+        state,
+        getConfig,
+        store,
+        prefix: "page"
+      })
+    : cssStyleMarginAlign({ v, device, state, getConfig, store });
 }

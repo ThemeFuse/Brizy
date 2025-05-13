@@ -5,12 +5,11 @@ import type { OutputStyle } from "visual/utils/cssStyle/types";
 
 export function style(data: DynamicStylesProps<ElementModel>): OutputStyle {
   const styles = {
-    ".brz &&:hover": {
+    ".brz &&": {
       standart: ["cssStyleContentAlign", "cssStyleSizeSizePercent"]
     },
-    ".brz &&:hover h1": {
+    ".brz && h1": {
       standart: [
-        "cssStyleElementWPPostContentH1Color",
         "cssStyleElementWPPostContentTypography2H1FontFamily",
         "cssStyleElementWPPostContentTypography2H1FontSize",
         "cssStyleElementWPPostContentTypography2H1LineHeight",
@@ -20,9 +19,11 @@ export function style(data: DynamicStylesProps<ElementModel>): OutputStyle {
         "cssStyleElementWPPostContentH1TextTransform"
       ]
     },
-    ".brz &&:hover h2": {
+    ".brz &&:hover h1": {
+      standart: ["cssStyleElementWPPostContentH1Color"]
+    },
+    ".brz && h2": {
       standart: [
-        "cssStyleElementWPPostContentH2Color",
         "cssStyleElementWPPostContentTypography2H2FontFamily",
         "cssStyleElementWPPostContentTypography2H2FontSize",
         "cssStyleElementWPPostContentTypography2H2LineHeight",
@@ -32,9 +33,11 @@ export function style(data: DynamicStylesProps<ElementModel>): OutputStyle {
         "cssStyleElementWPPostContentH2TextTransform"
       ]
     },
-    ".brz &&:hover h3": {
+    ".brz &&:hover h2": {
+      standart: ["cssStyleElementWPPostContentH2Color"]
+    },
+    ".brz && h3": {
       standart: [
-        "cssStyleElementWPPostContentH3Color",
         "cssStyleElementWPPostContentTypography2H3FontFamily",
         "cssStyleElementWPPostContentTypography2H3FontSize",
         "cssStyleElementWPPostContentTypography2H3LineHeight",
@@ -44,9 +47,11 @@ export function style(data: DynamicStylesProps<ElementModel>): OutputStyle {
         "cssStyleElementWPPostContentH3TextTransform"
       ]
     },
-    ".brz &&:hover h4": {
+    ".brz &&:hover h3": {
+      standart: ["cssStyleElementWPPostContentH3Color"]
+    },
+    ".brz && h4": {
       standart: [
-        "cssStyleElementWPPostContentH4Color",
         "cssStyleElementWPPostContentTypography2H4FontFamily",
         "cssStyleElementWPPostContentTypography2H4FontSize",
         "cssStyleElementWPPostContentTypography2H4LineHeight",
@@ -56,9 +61,11 @@ export function style(data: DynamicStylesProps<ElementModel>): OutputStyle {
         "cssStyleElementWPPostContentH4TextTransform"
       ]
     },
-    ".brz &&:hover h5": {
+    ".brz &&:hover h4": {
+      standart: ["cssStyleElementWPPostContentH4Color"]
+    },
+    ".brz && h5": {
       standart: [
-        "cssStyleElementWPPostContentH5Color",
         "cssStyleElementWPPostContentTypography2H5FontFamily",
         "cssStyleElementWPPostContentTypography2H5FontSize",
         "cssStyleElementWPPostContentTypography2H5LineHeight",
@@ -68,9 +75,11 @@ export function style(data: DynamicStylesProps<ElementModel>): OutputStyle {
         "cssStyleElementWPPostContentH5TextTransform"
       ]
     },
-    ".brz &&:hover h6": {
+    ".brz &&:hover h5": {
+      standart: ["cssStyleElementWPPostContentH5Color"]
+    },
+    ".brz && h6": {
       standart: [
-        "cssStyleElementWPPostContentH6Color",
         "cssStyleElementWPPostContentTypography2H6FontFamily",
         "cssStyleElementWPPostContentTypography2H6FontSize",
         "cssStyleElementWPPostContentTypography2H6LineHeight",
@@ -80,10 +89,12 @@ export function style(data: DynamicStylesProps<ElementModel>): OutputStyle {
         "cssStyleElementWPPostContentH6TextTransform"
       ]
     },
-    ".brz && *:not(h1):not(h2):not(h3):not(h4):not(h5):not(h6):not(b):not(strong):not(i):not(span):not(em):not(s):hover":
+    ".brz &&:hover h6": {
+      standart: ["cssStyleElementWPPostContentH6Color"]
+    },
+    ".brz && *:not(h1):not(h2):not(h3):not(h4):not(h5):not(h6):not(b):not(strong):not(i):not(span):not(em):not(s)":
       {
         standart: [
-          "cssStyleElementWPPostContentParagraphColor",
           "cssStyleElementWPPostContentTypography2ParagraphFontFamily",
           "cssStyleElementWPPostContentTypography2ParagraphFontSize",
           "cssStyleElementWPPostContentTypography2ParagraphLineHeight",
@@ -93,19 +104,24 @@ export function style(data: DynamicStylesProps<ElementModel>): OutputStyle {
           "cssStyleElementWPPostContentParagraphTextTransform"
         ]
       },
-    ".brz &&:hover strong *:not(strong):not(b), .brz &&:hover b *:not(strong):not(b)":
+    ".brz && *:not(h1):not(h2):not(h3):not(h4):not(h5):not(h6):not(b):not(strong):not(i):not(span):not(em):not(s):hover":
       {
-        standart: ["cssStyleElementWPPostContentFontWeightInherit"]
+        standart: ["cssStyleElementWPPostContentParagraphColor"]
       },
-    ".brz &&:hover strong, .brz &&:hover b": {
+    ".brz && strong *:not(strong):not(b), .brz && b *:not(strong):not(b)": {
+      standart: ["cssStyleElementWPPostContentFontWeightInherit"]
+    },
+    ".brz && strong, .brz && b": {
       standart: [
-        "cssStyleElementWPPostContentParagraphColor",
         "cssStyleElementWPPostContentTypography2ParagraphFontFamily",
         "cssStyleElementWPPostContentTypography2ParagraphFontSize",
         "cssStyleElementWPPostContentTypography2ParagraphLineHeight",
         "cssStyleElementWPPostContentTypography2ParagraphLetterSpacing",
         "cssStyleElementWPPostContentTypography2ParagraphFontVariation"
       ]
+    },
+    ".brz &&:hover strong, .brz &&:hover b": {
+      standart: ["cssStyleElementWPPostContentParagraphColor"]
     }
   };
 

@@ -51,7 +51,12 @@ class PageStory extends EditorComponent {
   handleDNDSort = (data) => {
     const { dbValue } = this.props;
     const store = this.getReduxStore();
-    const newValue = changeValueAfterDND(dbValue, data, store);
+    const newValue = changeValueAfterDND(
+      dbValue,
+      data,
+      store,
+      this.getGlobalConfig()
+    );
 
     this.props.onChange(newValue);
   };

@@ -1,7 +1,7 @@
 import { isStory } from "visual/providers/EditorModeProvider";
 import { DynamicStylesProps } from "visual/types";
 import { renderStyles } from "visual/utils/cssStyle";
-import { OutputStyle } from "visual/utils/cssStyle/types";
+import { OutputStyle, Styles } from "visual/utils/cssStyle/types";
 import type { Value } from "./types";
 
 export function style(data: DynamicStylesProps<Value>): OutputStyle {
@@ -9,32 +9,32 @@ export function style(data: DynamicStylesProps<Value>): OutputStyle {
   const { maskShape = "none" } = v;
   const _isStory = isStory(contexts.mode);
 
-  const styles: {
-    [k: string]: {
-      interval?: string[];
-      standart?: string[];
-    };
-  } = {
+  const styles: Styles = {
+    ".brz && .brz-groupLayout": {
+      standart: ["cssStylePaddingBG", "cssStyleBorderRadius"]
+    },
     ".brz &&:hover .brz-groupLayout": {
       standart: [
-        "cssStylePaddingBG",
         "cssStylementOfMinistryBrandsParentBgColor",
         "cssStylementOfMinistryBrandsParentBgGradient",
         "cssStylementOfMinistryBrandsParentBorder",
-        "cssStylementOfMinistryBrandsParentBoxShadow",
-        "cssStyleBorderRadius"
+        "cssStylementOfMinistryBrandsParentBoxShadow"
       ],
       interval: [
         "cssStyleHoverTransition",
         "cssStylePropertyHoverTransitionColor"
       ]
     },
-    ".brz && .brz-ministryBrands__item--media:hover": {
+    ".brz && .brz-ministryBrands__item--media": {
       standart: [
         "cssStyleElementOfMinistryBrandsImageWidth",
         "cssStyleElementOfMinistryBrandsImagePadding",
+        "cssStyleMinistryElementMediaBorderRadius"
+      ]
+    },
+    ".brz && .brz-ministryBrands__item--media:hover": {
+      standart: [
         "cssStyleElementOfMinistryBrandsImgBorder",
-        "cssStyleMinistryElementMediaBorderRadius",
         ...(maskShape === "none"
           ? ["cssStyleElementOfMinistryBrandsImgBoxShadow"]
           : ["cssStyleElementOfMinistryBrandsImgMaskShadow"])
@@ -44,30 +44,36 @@ export function style(data: DynamicStylesProps<Value>): OutputStyle {
         "cssStylePropertyHoverTransitionColor"
       ]
     },
-    ".brz && .brz-ministryBrands__item--media:hover::after": {
+    ".brz && .brz-ministryBrands__item--media::after": {
       standart: [
-        "cssStyleElementOfMinistryBrandsImgBgColor",
-        "cssStyleElementOfMinistryBrandsImgBgGradient",
         "cssStyleMaskShape",
         "cssStyleMaskCustomShape",
         "cssStyleMaskSize",
         "cssStyleMaskPosition",
         "cssStyleMaskRepeat"
+      ]
+    },
+    ".brz && .brz-ministryBrands__item--media:hover::after": {
+      standart: [
+        "cssStyleElementOfMinistryBrandsImgBgColor",
+        "cssStyleElementOfMinistryBrandsImgBgGradient"
       ],
       interval: [
         "cssStyleHoverTransition",
         "cssStylePropertyHoverTransitionColor"
       ]
     },
-    ".brz && .brz-ministryBrands__item--media:hover :is(img, video, iframe)": {
+    ".brz && .brz-ministryBrands__item--media :is(img, video, iframe)": {
       standart: [
-        "cssStyleElementOfMinistryBrandsImgFilters",
         "cssStyleMaskShape",
         "cssStyleMaskCustomShape",
         "cssStyleMaskSize",
         "cssStyleMaskPosition",
         "cssStyleMaskRepeat"
-      ],
+      ]
+    },
+    ".brz && .brz-ministryBrands__item--media:hover :is(img, video, iframe)": {
+      standart: ["cssStyleElementOfMinistryBrandsImgFilters"],
       interval: [
         "cssStyleHoverTransition",
         "cssStylePropertyHoverTransitionColor"
@@ -124,7 +130,7 @@ export function style(data: DynamicStylesProps<Value>): OutputStyle {
     ".brz && .brz-groupLayout__content": {
       standart: ["cssStyleElementOfMinistryBrandsColumnsNumberWithSpacing"]
     },
-    ".brz &&:hover .brz-ministryBrands__meta--icons": {
+    ".brz && .brz-ministryBrands__meta--icons": {
       standart: ["cssStyleElementOfMinistryBrandsMetaIconsSpacing"]
     },
     ".brz && .brz-groupLayout--item__content-meta a:hover": {
@@ -147,12 +153,17 @@ export function style(data: DynamicStylesProps<Value>): OutputStyle {
         "cssStylePropertyHoverTransitionColor"
       ]
     },
-    ".brz && .brz-groupLayout__filters .brz-groupLayout__filters--form-selectWrapper:hover":
+    ".brz && .brz-groupLayout__filters .brz-groupLayout__filters--form-selectWrapper":
       {
         standart: [
           "cssStyleMinistryElementFiltersTypography",
+          "cssStyleMinistryElementFiltersBorderRadius"
+        ]
+      },
+    ".brz && .brz-groupLayout__filters .brz-groupLayout__filters--form-selectWrapper:hover":
+      {
+        standart: [
           "cssStyleMinistryElementFiltersBorder",
-          "cssStyleMinistryElementFiltersBorderRadius",
           "cssStyleMinistryElementFiltersInputBgColor",
           "cssStyleMinistryElementFiltersInputGradientColor",
           "cssStyleMinistryElementFiltersInputColor"
@@ -173,20 +184,22 @@ export function style(data: DynamicStylesProps<Value>): OutputStyle {
           "cssStylePropertyHoverTransitionColor"
         ]
       },
+    ".brz && .brz-groupLayout__filters input": {
+      standart: ["cssStyleMinistryElementFiltersTypography"]
+    },
     ".brz && .brz-groupLayout__filters input:hover": {
-      standart: [
-        "cssStyleMinistryElementFiltersTypography",
-        "cssStyleMinistryElementFiltersInputColor"
-      ],
+      standart: ["cssStyleMinistryElementFiltersInputColor"],
       interval: [
         "cssStyleHoverTransition",
         "cssStylePropertyHoverTransitionColor"
       ]
     },
+    ".brz && .brz-groupLayout__filters fieldset": {
+      standart: ["cssStyleMinistryElementFiltersBorderRadius"]
+    },
     ".brz && .brz-groupLayout__filters fieldset:hover": {
       standart: [
         "cssStyleMinistryElementFiltersBorder",
-        "cssStyleMinistryElementFiltersBorderRadius",
         "cssStyleMinistryElementFiltersInputBgColor",
         "cssStyleMinistryElementFiltersInputGradientColor"
       ],
@@ -209,59 +222,61 @@ export function style(data: DynamicStylesProps<Value>): OutputStyle {
         "cssStylePropertyHoverTransitionColor"
       ]
     },
+    ".brz && .brz-groupLayout--item__content-heading": {
+      standart: ["cssStyleElementOfMinistryBrandsTitleTypography"]
+    },
     ".brz && .brz-groupLayout--item__content-heading:hover": {
-      standart: [
-        "cssStyleElementOfMinistryBrandsTitleColor",
-        "cssStyleElementOfMinistryBrandsTitleTypography"
-      ],
+      standart: ["cssStyleElementOfMinistryBrandsTitleColor"],
       interval: [
         "cssStyleHoverTransition",
         "cssStylePropertyHoverTransitionColor"
       ]
+    },
+    ".brz && .brz-groupLayout--item__content-heading a": {
+      standart: ["cssStyleElementOfMinistryBrandsTitleTypography"]
     },
     ".brz && .brz-groupLayout--item__content-heading a:hover": {
-      standart: [
-        "cssStyleElementOfMinistryBrandsTitleColor",
-        "cssStyleElementOfMinistryBrandsTitleTypography"
-      ],
+      standart: ["cssStyleElementOfMinistryBrandsTitleColor"],
       interval: [
         "cssStyleHoverTransition",
         "cssStylePropertyHoverTransitionColor"
       ]
+    },
+    ".brz && .brz-groupLayout--item__content-meta": {
+      standart: ["getAllCssStyleTypography"]
     },
     ".brz && .brz-groupLayout--item__content-meta:hover": {
-      standart: ["getAllCssStyleTypography", "cssStyleColor"],
+      standart: ["cssStyleColor"],
       interval: [
         "cssStyleHoverTransition",
         "cssStylePropertyHoverTransitionColor"
       ]
     },
-
+    ".brz && .brz-groupLayout--item__content-preview": {
+      standart: ["cssStyleElementOfMinistryBrandsPreviewTypography"]
+    },
     ".brz && .brz-groupLayout--item__content-preview:hover": {
-      standart: [
-        "cssStyleElementOfMinistryBrandsPreviewTypography",
-        "cssStyleElementOfMinistryBrandsPreviewColor"
-      ],
+      standart: ["cssStyleElementOfMinistryBrandsPreviewColor"],
       interval: [
         "cssStyleHoverTransition",
         "cssStylePropertyHoverTransitionColor"
       ]
+    },
+    ".brz && .brz-groupLayout--item__content-preview--more": {
+      standart: ["cssStyleElementOfMinistryBrandsPreviewTypography"]
     },
     ".brz && .brz-groupLayout--item__content-preview--more:hover": {
-      standart: [
-        "cssStyleElementOfMinistryBrandsPreviewTypography",
-        "cssStyleElementOfMinistryBrandsPreviewColor"
-      ],
+      standart: ["cssStyleElementOfMinistryBrandsPreviewColor"],
       interval: [
         "cssStyleHoverTransition",
         "cssStylePropertyHoverTransitionColor"
       ]
     },
+    ".brz && .brz-groupLayout__pagination a:not(#current)": {
+      standart: ["cssStyleElementOfMinistryBrandsPaginationTypography"]
+    },
     ".brz && .brz-groupLayout__pagination a:hover:not(#current)": {
-      standart: [
-        "cssStyleElementOfMinistryBrandsPaginationColor",
-        "cssStyleElementOfMinistryBrandsPaginationTypography"
-      ],
+      standart: ["cssStyleElementOfMinistryBrandsPaginationColor"],
       interval: [
         "cssStyleHoverTransition",
         "cssStylePropertyHoverTransitionColor"
@@ -273,15 +288,19 @@ export function style(data: DynamicStylesProps<Value>): OutputStyle {
         "cssStyleElementOfMinistryBrandsPaginationColorActive"
       ]
     },
-    ".brz && .brz-groupLayout--item__content-detailButton:hover": {
+    ".brz && .brz-groupLayout--item__content-detailButton": {
       standart: [
         "cssStyleElementMinistryBrandsButtonsTypography",
+        "cssStyleElementMinistryBrandsButtonsBorderRadius"
+      ]
+    },
+    ".brz && .brz-groupLayout--item__content-detailButton:hover": {
+      standart: [
         "cssStyleElementMinistryBrandsButtonsBgColor",
         "cssStyleElementMinistryBrandsButtonsBgGradient",
         "cssStyleElementMinistryBrandsButtonsColor",
         "cssStyleElementMinistryBrandsButtonsBoxShadow",
-        "cssStyleElementMinistryBrandsButtonsBorder",
-        "cssStyleElementMinistryBrandsButtonsBorderRadius"
+        "cssStyleElementMinistryBrandsButtonsBorder"
       ],
       interval: ["cssStyleMinistryBrandsButtonsHoverTransition"]
     },

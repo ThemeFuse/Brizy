@@ -1,5 +1,6 @@
 import { GetItems } from "visual/editorComponents/EditorComponent/types";
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
+import { getEnabledLinkOptions } from "visual/global/Config/types/configs/featuresValue";
 import { isPopup, isStory } from "visual/providers/EditorModeProvider";
 import { getColorToolbar } from "visual/utils/color";
 import { DESKTOP } from "visual/utils/devices";
@@ -36,6 +37,13 @@ export const getItems: GetItems<Value, Props> = ({
     options: context.dynamicContent.config,
     type: DCTypes.link
   });
+
+  const {
+    internalLink,
+    linkPopup: linkPopupEnabled,
+    linkAnchor,
+    linkExternal
+  } = getEnabledLinkOptions(component.getGlobalConfig());
 
   return [
     {
@@ -264,6 +272,7 @@ export const getItems: GetItems<Value, Props> = ({
             {
               id: "page",
               label: t("Page"),
+              disabled: !internalLink,
               options: [
                 {
                   id: "linkPage",
@@ -280,6 +289,7 @@ export const getItems: GetItems<Value, Props> = ({
             {
               id: "external",
               label: t("URL"),
+              disabled: !linkExternal,
               options: [
                 {
                   id: "link",
@@ -307,6 +317,7 @@ export const getItems: GetItems<Value, Props> = ({
             {
               id: "anchor",
               label: t("Block"),
+              disabled: !linkAnchor,
               options: [
                 //@ts-expect-error Option doesn't work
                 toolbarLinkAnchor({ v, disabled: _isPopup || _isStory })
@@ -315,6 +326,7 @@ export const getItems: GetItems<Value, Props> = ({
             {
               id: "popup",
               label: t("Popup"),
+              disabled: !linkPopupEnabled,
               options: [
                 {
                   id: "linkPopup",

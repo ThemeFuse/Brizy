@@ -95,7 +95,7 @@ class Brizy_Parser_DomDocument implements Brizy_Parser_DomInterface
     {
         $nodes = array();
         $d = new DOMDocument();
-        $d->loadHTML("<html><body>{$html}</body></html>");
+        $d->loadHTML( '<?xml encoding="UTF-8"?><html><body>' . $html . '</body></html>', LIBXML_NOERROR );
         $child = $d->documentElement->firstChild->firstChild;
         while ($child) {
             $nodes[] = $doc->importNode($child, true);

@@ -1,8 +1,10 @@
 import { ReactElement, RefObject } from "react";
 import { OptionDefinition } from "visual/editorComponents/ToolbarItemType";
+import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { PortalToolbarPositionerProps } from "./PortalToolbarPositioner";
 
 export type PortalToolbarProps = {
+  config: ConfigCommon;
   getItems: () => OptionDefinition[];
   getSidebarItems?: () => OptionDefinition[];
   getSidebarTitle?: () => string;

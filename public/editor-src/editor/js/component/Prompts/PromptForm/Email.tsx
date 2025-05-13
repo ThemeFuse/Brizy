@@ -139,7 +139,7 @@ class Email extends BaseIntegration<Props, State, Context> {
     };
   }
 
-    handleConnectApp = async (appData: AppData): Promise<void> => {
+  handleConnectApp = async (appData: AppData): Promise<void> => {
     const { config } = this.props;
 
     const connectedApp = appData.id;
@@ -234,7 +234,7 @@ class Email extends BaseIntegration<Props, State, Context> {
       deletedApp,
       notifications
     } = this.state;
-    const { formId } = this.props;
+    const { formId, config } = this.props;
     const className = classnames("brz-ed-popup-integration-email__template", {
       "brz-ed-popup-integration-email__template--open": hasEmailTemplate
     });
@@ -253,6 +253,7 @@ class Email extends BaseIntegration<Props, State, Context> {
           apps={this.appsData}
           proExceptions={this.proExceptions}
           hasDelete
+          config={config}
           handleDelete={this.handleDelete}
         />
         {!this.proExceptions && (

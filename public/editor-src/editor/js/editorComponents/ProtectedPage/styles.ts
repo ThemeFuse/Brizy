@@ -1,7 +1,7 @@
 import { ElementModel } from "visual/component/Elements/Types";
+import { DynamicStylesProps } from "visual/types";
 import { renderStyles } from "visual/utils/cssStyle";
 import { OutputStyle } from "visual/utils/cssStyle/types";
-import { DynamicStylesProps } from "visual/types";
 
 export function styles(data: DynamicStylesProps<ElementModel>): OutputStyle {
   const styles = {
@@ -11,13 +11,17 @@ export function styles(data: DynamicStylesProps<ElementModel>): OutputStyle {
     ".brz && .brz-protected-form": {
       standart: ["cssStyleElementProtectedPageInputSpacing"]
     },
-    ".brz &&:hover .brz-protected-form__input": {
+    ".brz && .brz-protected-form__input": {
       standart: [
         "cssStyleBorderRadius",
+        "cssStyleElementProtectedPageInputWidth",
+        "cssStyleElementProtectedPageInputHeight"
+      ]
+    },
+    ".brz &&:hover .brz-protected-form__input": {
+      standart: [
         "cssStyleBorder",
         "cssStyleBoxShadow",
-        "cssStyleElementProtectedPageInputWidth",
-        "cssStyleElementProtectedPageInputHeight",
         "cssStyleBgColor",
         "cssStyleBgGradient"
       ],
@@ -26,9 +30,8 @@ export function styles(data: DynamicStylesProps<ElementModel>): OutputStyle {
         "cssStylePropertyHoverTransitionColor"
       ]
     },
-    ".brz &&:hover .brz-input": {
+    ".brz && .brz-input": {
       standart: [
-        "cssStyleColor",
         "cssStyleTypography3FontFamily",
         "cssStyleTypography3FontSize",
         "cssStyleTypography3LineHeight",
@@ -36,7 +39,10 @@ export function styles(data: DynamicStylesProps<ElementModel>): OutputStyle {
         "cssStyleTypography3LetterSpacing",
         "cssStyleTypography3FontVariation",
         "cssStyleTypography3TextTransform"
-      ],
+      ]
+    },
+    ".brz &&:hover .brz-input": {
+      standart: ["cssStyleColor"],
       interval: [
         "cssStyleHoverTransition",
         "cssStylePropertyHoverTransitionColor"

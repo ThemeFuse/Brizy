@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { ToastNotification } from "visual/component/Notifications";
 import { logout, sync } from "visual/component/Prompts/PromptAuthorization/api";
-import { useConfig } from "visual/global/hooks";
+import { useConfig } from "visual/providers/ConfigProvider";
 import { t } from "visual/utils/i18n";
 
 type Disconnect = {

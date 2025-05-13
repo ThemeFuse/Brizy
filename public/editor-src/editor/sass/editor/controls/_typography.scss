@@ -160,11 +160,11 @@
 
     .brz-ed__col-1-2 {
       &:nth-of-type(even) {
-        padding-right: 7px;
+        padding-inline-end: 7px;
       }
 
       &:nth-of-type(odd) {
-        padding-left: 7px;
+        padding-inline-start: 7px;
       }
 
       width: 50%;

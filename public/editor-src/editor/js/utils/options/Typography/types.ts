@@ -24,13 +24,13 @@ export type TypographyValues = Omit<
   variableFontWeight: string;
   textDecoration: string;
   textTransform: string;
-  textStyle: string;
   fontSize: Positive | string;
   lineHeight: Positive | string;
+  bold: boolean | string;
+  italic: boolean | string;
 };
 
 export interface TextTransformValues {
-  textStyle: string;
   textDecoration: string;
   textTransform: string;
 }

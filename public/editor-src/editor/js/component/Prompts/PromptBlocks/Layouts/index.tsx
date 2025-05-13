@@ -244,10 +244,8 @@ export default class List extends Component<Props, State> {
 
   renderList(data: StoriesWithThumbs | LayoutsWithThumbs): ReactElement {
     const {
-      showSidebar,
       showSearch,
-      config,
-      defaultFilter: _defaultFilter
+      config, defaultFilter: _defaultFilter
     } = this.props;
     const blocks = this.getLayoutData(data);
 
@@ -279,6 +277,8 @@ export default class List extends Component<Props, State> {
       .filter(({ hidden }) => hidden !== true);
 
     const _isStory = isStory(this.props.editorMode);
+
+    const showSidebar = categories.length > 1;
 
     return (
       <DataFilter<Data, Filter>

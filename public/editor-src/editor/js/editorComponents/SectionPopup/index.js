@@ -6,6 +6,7 @@ import ContainerBorder from "visual/component/ContainerBorder";
 import { ContextMenuDisabled } from "visual/component/ContextMenu";
 import CustomCSS from "visual/component/CustomCSS";
 import { Roles } from "visual/component/Roles";
+import { currentUserRole } from "visual/component/Roles";
 import { SortableZIndex } from "visual/component/Sortable/SortableZIndex";
 import { ThemeIcon } from "visual/component/ThemeIcon";
 import { CollapsibleToolbar } from "visual/component/Toolbar";
@@ -277,6 +278,7 @@ class SectionPopup extends EditorComponent {
                   <ThemeIcon name="close-popup" type="editor" />
                 </div>
                 <Roles
+                  currentRole={currentUserRole(this.getGlobalConfig())}
                   allow={["admin"]}
                   fallbackRender={() => this.renderItems(v, vs, vd)}
                 >

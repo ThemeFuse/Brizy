@@ -1,11 +1,11 @@
-import React, { ComponentProps, ReactElement, ReactNode } from "react";
 import classNames from "classnames";
-import { Handle } from "rc-slider";
+import { HandleProps as ControlHandleProps, Handle } from "rc-slider";
+import React, { ReactElement } from "react";
 import Range from "visual/component/Controls/Range";
 
 type Edge = "start" | "end";
 
-type HandleProps = ComponentProps<typeof Handle> & {
+type HandleProps = ControlHandleProps & {
   index: number;
   dragging: boolean;
 };
@@ -46,7 +46,7 @@ export const GradientRange = ({
       railStyle={{
         backgroundImage: `linear-gradient(to right, ${hex1}, ${hex2})`
       }}
-      handle={(props): ReactNode => {
+      handle={(props) => {
         const {
           className,
           index,

@@ -15,7 +15,7 @@ export interface Value extends ElementModel {
 }
 
 export type Animate = (data: {
-  text: HTMLSpanElement;
+  text: HTMLSpanElement | null;
   wrapper: HTMLDivElement;
   value: number;
   type: ProgressStyle;

@@ -3,7 +3,6 @@ export interface UrlsCommon {
   api: string;
   projectCloneLink: string;
   assets: string;
-  customFile: string;
   editorFonts: string;
   prefetchFonts?: string;
   pagePreview?: string;

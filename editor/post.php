@@ -262,9 +262,9 @@ class Brizy_Editor_Post extends Brizy_Editor_Entity
 
         // set needs compile true only for pages that were edited with an editor that does not support compilation in browser
         $query = $wpdb->prepare(
-            'UPDATE '.$wpdb->postmeta.' pm
-					   JOIN '.$wpdb->postmeta.' m ON m.post_id=pm.post_id and m.meta_key="brizy_enabled" and m.meta_value=1
-					   LEFT JOIN '.$wpdb->postmeta.' mm ON mm.post_id=pm.post_id and mm.meta_key="brizy-post-compiler-version"
+            'UPDATE ' . $wpdb->postmeta . ' pm
+					   JOIN ' . $wpdb->postmeta . ' m ON m.post_id=pm.post_id and m.meta_key="brizy_enabled" and m.meta_value=1
+					   LEFT JOIN ' . $wpdb->postmeta . ' mm ON mm.post_id=pm.post_id and mm.meta_key="brizy-post-compiler-version"
 					   SET pm.meta_value=1
 					   WHERE pm.meta_key="brizy-need-compile" and pm.meta_value=0 and CONVERT(REPLACE(IF(STRCMP(mm.meta_value,"dev") = 0,  0, mm.meta_value), " - wp", "") ,UNSIGNED )<%d'
             ,
@@ -279,7 +279,7 @@ class Brizy_Editor_Post extends Brizy_Editor_Entity
         $postarr = [
             'ID' => $this->getWpPostId(),
             'post_title' => $this->getTitle(),
-            'post_content' => $this->getPostContent( $createRevision ),
+            'post_content' => $this->getPostContent($createRevision),
         ];
 
         $this->deleteOldAutosaves($this->getWpPostId());
@@ -301,38 +301,39 @@ class Brizy_Editor_Post extends Brizy_Editor_Entity
         $this->createUid();
     }
 
-	private function getPostContent( $createRevision ) {
-		$post         = $this->getWpPost();
-		$emptyContent = '<div class="brz-root__container"></div>';
-		$versionTime  = '<!-- version:' . time() . ' -->';
+    private function getPostContent($createRevision)
+    {
+        $post = $this->getWpPost();
+        $emptyContent = '<div class="brz-root__container"></div>';
+        $versionTime = '<!-- version:' . time() . ' -->';
 
-		$excluded = [
-			Brizy_Admin_Blocks_Main::CP_GLOBAL,
-			Brizy_Admin_Blocks_Main::CP_SAVED,
-			Brizy_Admin_Templates::CP_TEMPLATE,
-			Brizy_Admin_Popups_Main::CP_POPUP,
-		];
+        $excluded = [
+            Brizy_Admin_Blocks_Main::CP_GLOBAL,
+            Brizy_Admin_Blocks_Main::CP_SAVED,
+            Brizy_Admin_Templates::CP_TEMPLATE,
+            Brizy_Admin_Popups_Main::CP_POPUP,
+        ];
 
-		if ( in_array( $post->post_type, $excluded ) ) {
-			return $emptyContent . $versionTime;
-		}
+        if (in_array($post->post_type, $excluded)) {
+            return $emptyContent . $versionTime;
+        }
 
-		if ( ! $createRevision && false === strpos( $post->post_content, 'brizy_dc_global_block' ) ) {
-			return $post->post_content;
-		}
+        if (!$createRevision && false === strpos($post->post_content, 'brizy_dc_global_block')) {
+            return $post->post_content;
+        }
 
-		$content = $this->get_compiled_html();
-		$content = preg_replace('/\{\{\s*brizy_dc_global_blocks.*?\}\}/', '', $content);
-		$content = preg_replace('/\{\{\s*brizy_dc_global_block.*?\}\}/', '', $content);
-		$content = apply_filters( 'brizy_content', $content, Brizy_Editor_Project::get(), $post );
-		$content = strpos( $content, 'brz-root__container' ) ? preg_replace(
-			'/<!-- version:\d+ -->/',
-			'',
-			$content
-		) : $emptyContent;
+        $content = $this->get_compiled_html();
+        $content = preg_replace('/\{\{\s*brizy_dc_global_blocks.*?\}\}/', '', $content);
+        $content = preg_replace('/\{\{\s*brizy_dc_global_block.*?\}\}/', '', $content);
+        $content = apply_filters('brizy_content', $content, Brizy_Editor_Project::get(), $post);
+        $content = strpos($content, 'brz-root__container') ? preg_replace(
+            '/<!-- version:\d+ -->/',
+            '',
+            $content
+        ) : $emptyContent;
 
-		return $content . $versionTime;
-	}
+        return $content . $versionTime;
+    }
 
     /**
      * @param int $autosave
@@ -526,7 +527,11 @@ class Brizy_Editor_Post extends Brizy_Editor_Entity
      */
     public function get_encoded_compiled_html()
     {
-        return base64_encode($this->get_compiled_html());
+        if ($this->get_compiled_html()) {
+            return base64_encode($this->get_compiled_html());
+        }
+
+        return '';
     }
 
     /**
@@ -705,16 +710,14 @@ class Brizy_Editor_Post extends Brizy_Editor_Entity
     {
         $proVersion = defined('BRIZY_PRO_VERSION') ? BRIZY_PRO_VERSION : null;
 
-        return $this->get_compiler_version() === BRIZY_EDITOR_VERSION && $this->get_pro_plugin_version(
-            ) === $proVersion && $this->plugin_version === BRIZY_VERSION;
+        return $this->get_compiler_version() === BRIZY_EDITOR_VERSION && $this->get_pro_plugin_version() === $proVersion && $this->plugin_version === BRIZY_VERSION;
     }
 
     public function isEditedWithCurrentVersion()
     {
         $proVersion = defined('BRIZY_PRO_VERSION') ? BRIZY_PRO_VERSION : null;
 
-        return $this->get_editor_version() === BRIZY_EDITOR_VERSION && $this->get_pro_plugin_version(
-            ) === $proVersion && $this->plugin_version === BRIZY_VERSION;
+        return $this->get_editor_version() === BRIZY_EDITOR_VERSION && $this->get_pro_plugin_version() === $proVersion && $this->plugin_version === BRIZY_VERSION;
     }
 
     /**
@@ -870,7 +873,7 @@ class Brizy_Editor_Post extends Brizy_Editor_Entity
                     isset($storage_post['editor_version']) ? $storage_post['editor_version'] : BRIZY_EDITOR_VERSION
                 );
                 $this->set_compiler_version(
-                    isset($storage_post['compiler_version']) ? $storage_post['compiler_version'] : BRIZY_EDITOR_VERSION
+                    get_metadata('post', $this->getWpPostId(), self::BRIZY_POST_COMPILER_VERSION, true) ?: BRIZY_EDITOR_VERSION
                 );
                 $this->set_plugin_version(
                     isset($storage_post['plugin_version']) ? $storage_post['plugin_version'] : null
@@ -947,7 +950,7 @@ SQL;
             $p->title = $postTitle;
             $p->uid = self::create_uid($p->ID, $p->uid);
             $p->ID = (int)$p->ID;
-            $p->permalink  = "{{brizy_dc_permalink post_id=\"{$p->ID}\"}}";
+            $p->permalink = "{{brizy_dc_permalink post_id=\"{$p->ID}\"}}";
         }
 
         return $posts;
@@ -957,7 +960,7 @@ SQL;
     {
 
         if (!$uid) {
-            $uid = md5($postId.time());
+            $uid = md5($postId . time());
             update_post_meta($postId, 'brizy_post_uid', $uid);
         }
 

@@ -5,10 +5,10 @@ import { IconToggle } from "visual/component/Controls/IconToggle";
 import { IconToggleItem } from "visual/component/Controls/IconToggle/IconToggleItem";
 import { getCurrentTooltip } from "visual/component/Controls/Tooltip";
 import { showHiddenElementsSelector } from "visual/redux/selectors";
+import { Toggle } from "visual/utils/options/utils/Type";
 import { Literal } from "visual/utils/types/Literal";
 import { Props } from "./types";
 import { isNonEmptyArray } from "./utils";
-import { Toggle } from "visual/utils/options/utils/Type";
 
 export const ShowOnDevice = ({
   className,
@@ -21,7 +21,7 @@ export const ShowOnDevice = ({
   const _className = classNames("brz-ed-option__toggle", className);
 
   const handleChange = useCallback(
-    (v) => {
+    (v: Literal) => {
       if (v === Toggle.OFF && closeTooltip && !showHiddenElements) {
         const tooltip = getCurrentTooltip();
 

@@ -1,3 +1,4 @@
+import { Str } from "@brizy/readers";
 import { Value as ImageUploadValue } from "visual/component/Options/types/dev/ImageUpload/Types";
 import { EditorComponentContextValue } from "visual/editorComponents/EditorComponent/EditorComponentContext";
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
@@ -6,14 +7,15 @@ import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { SizeType } from "visual/global/Config/types/configs/common";
 import { flatMap } from "visual/utils/array";
 import { getImageUrl } from "visual/utils/image";
+import { ImageType } from "visual/utils/image/types";
 import { isGIFExtension, isSVGExtension } from "visual/utils/image/utils";
 import { clamp, roundTo } from "visual/utils/math";
 import { defaultValueValue } from "visual/utils/onChange";
 import { getDynamicContentChoices } from "visual/utils/options";
 import { Choice } from "visual/utils/options/getDynamicContentChoices";
 import { ResponsiveMode } from "visual/utils/responsiveMode";
+import { capByPrefix } from "visual/utils/string";
 import { is as isNoEmptyString } from "visual/utils/string/NoEmptyString";
-import * as Str from "visual/utils/string/specs";
 import { MValue, isNullish } from "visual/utils/value";
 import { ImageSize, Unit, V } from "./types";
 
@@ -27,7 +29,7 @@ export interface ImageValue {
   heightSuffix: Unit;
 }
 
-interface Value extends ImageValue {
+export interface Value extends ImageValue {
   zoom: number;
   positionX: number;
   positionY: number;
@@ -280,15 +282,23 @@ export function getCustomImageUrl(
   v: Partial<ImageUploadValue>,
   wrapperSize: WrapperSizes,
   imageSize: ImageSize,
-  config: ConfigCommon
-): { url: string; source: string | null } {
+  config: ConfigCommon,
+  vHover?: MValue<ImageUploadValue>
+): {
+  url: string;
+  source: string | null;
+  hoverSource?: string;
+  hoverUrl?: string;
+} {
   const cW = Math.round(wrapperSize.width);
   const cH = Math.round(wrapperSize.height);
 
   const src = v.src ?? "";
+  const hoverSrc = vHover?.src ?? "";
   const sizeType = v.sizeType ?? "";
   const fileName = v.fileName ?? "";
-  const size = getImageSize(sizeType, config.imageSizes);
+  const hoverFileName = vHover?.fileName ?? "";
+  const size = getImageSize(sizeType, config.imageSizes ?? []);
 
   if (isPredefinedSize(size) || isOriginalSize(size)) {
     const url = getImageUrl(
@@ -299,10 +309,20 @@ export function getCustomImageUrl(
       },
       config
     );
+    const hoverUrl = getImageUrl(
+      {
+        uid: hoverSrc,
+        fileName: hoverFileName,
+        sizeType: sizeType as SizeType
+      },
+      config
+    );
 
     return {
       source: `${url}`,
-      url: `${url} 1x, ${url} 2x`
+      url: `${url} 1x, ${url} 2x`,
+      hoverSource: hoverUrl,
+      hoverUrl: `${hoverUrl} 1x, ${hoverUrl} 2x`
     };
   }
 
@@ -330,6 +350,15 @@ export function getCustomImageUrl(
     },
     config
   );
+  const hoverUrl = getImageUrl(
+    {
+      uid: hoverSrc,
+      crop: options,
+      fileName: hoverFileName,
+      sizeType: SizeType.custom
+    },
+    config
+  );
   const retinaUrl = getImageUrl(
     {
       uid: src,
@@ -340,10 +369,21 @@ export function getCustomImageUrl(
     },
     config
   );
+  const hoverRetinaUrl = getImageUrl(
+    {
+      uid: hoverSrc,
+      crop: multiplier(options, 2),
+      fileName: hoverFileName,
+      sizeType: SizeType.custom
+    },
+    config
+  );
 
   return {
     source: `${url ?? ""}`,
-    url: `${url ?? ""} 1x, ${retinaUrl ?? ""} 2x`
+    url: `${url ?? ""} 1x, ${retinaUrl ?? ""} 2x`,
+    hoverSource: hoverUrl ?? "",
+    hoverUrl: `${hoverUrl ?? ""} 1x, ${hoverRetinaUrl ?? ""} 2x`
   };
 }
 
@@ -395,5 +435,17 @@ export const getImageDCSize = (
 
   return Str.read(
     choices.find((item) => item.value === placeholder)?.attr?.size
+  );
+};
+
+export const isAbleToRenderOriginal = (v: V, prefix = ""): boolean => {
+  const extension = Str.read(v[capByPrefix(prefix, "imageExtension")]) ?? "";
+  const isExternalImage = v.imageType === ImageType.External;
+
+  return (
+    isSVGExtension(extension) ||
+    isGIFExtension(extension) ||
+    showOriginalImage(v) ||
+    isExternalImage
   );
 };

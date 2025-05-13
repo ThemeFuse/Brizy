@@ -2,12 +2,14 @@
   "content": {
     "images": {
       "imageSrc": "",
+      "hoverImageSrc": "",
       "maskCustomUploadImageSrc": ""
     },
     "maskCustomUploadImageFileName": "",
     "imageFileName": "",
 
     "imagePopulation": "",
+    "hoverImagePopulation": "",
     "imagePopulationEntityType": "",
     "imagePopulationEntityId": "",
 
@@ -76,6 +78,7 @@
 
     "width": 100,
     "height": 100,
+    "hoverHeight": 100,
 
     "widthSuffix": "%",
     "heightSuffix": "%",

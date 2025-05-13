@@ -12,7 +12,7 @@ import {
 } from "visual/component/Controls/ColorPicketInputs";
 import * as Option from "visual/component/Options/Type";
 import { LeftSidebarOptionsIds } from "visual/global/Config/types/configs/ConfigCommon";
-import { useConfig } from "visual/global/hooks";
+import { useConfig } from "visual/providers/ConfigProvider";
 import { updateUI } from "visual/redux/actions2";
 import { currentStyleSelector } from "visual/redux/selectors";
 import { WithClassName, WithConfig } from "visual/types/attributes";
@@ -31,7 +31,7 @@ import * as Utils from "visual/utils/options/ColorPicker/utils";
 const setOpacity = Utils.setOpacity.bind(null, _setOpacity);
 
 export interface Config {
-  opacity: boolean;
+  opacity?: boolean;
   isPaletteHidden?: boolean;
 }
 

@@ -21,7 +21,7 @@ export function style(data: DynamicStylesProps<Value>): OutputStyle {
       { standart: ["cssStyleElementEcwidProductPaddingSidebar"] },
     "#ecwid_html #ecwid_body && .ecwid .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details .product-details__gallery":
       { standart: ["cssStyleElementEcwidProductPaddingGallery"] },
-    "#ecwid_html #ecwid_body && .ecwid .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details .product-details__sidebar .product-details__product-title.ec-header-h3":
+    "#ecwid_html #ecwid_body && .ecwid .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details .product-details__sidebar .product-details__product-title.ec-header-h3, #ecwid_html #ecwid_body && .ecwid .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details--top-title-navigation .product-details__top .product-details__product-title.ec-header-h3":
       {
         standart: [
           "cssStyleElementEcwidCartTitleColor",
@@ -121,16 +121,21 @@ export function style(data: DynamicStylesProps<Value>): OutputStyle {
           "cssStyleElementEcwidProducButtonSpacing"
         ]
       },
-    "#ecwid_html #ecwid_body && .ecwid .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details .product-details__sidebar .product-details-module .product-details-module__content.product-details-module__content--indented .details-product-purchase__controls .details-product-purchase__bag-controls .details-product-purchase__add-buttons .form-control--button.details-product-purchase__add-more:hover .form-control__button":
+    "#ecwid_html #ecwid_body && .ecwid .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details .product-details__sidebar .product-details-module .product-details-module__content.product-details-module__content--indented .details-product-purchase__controls .details-product-purchase__bag-controls .details-product-purchase__add-buttons .form-control--button.details-product-purchase__add-more .form-control__button":
       {
         standart: [
           "cssStyleElementEcwidMyAccountButtonSize",
+          "cssStyleElementEcwidMyAccountButtonBorderRadius"
+        ]
+      },
+    "#ecwid_html #ecwid_body && .ecwid .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details .product-details__sidebar .product-details-module .product-details-module__content.product-details-module__content--indented .details-product-purchase__controls .details-product-purchase__bag-controls .details-product-purchase__add-buttons .form-control--button.details-product-purchase__add-more:hover .form-control__button":
+      {
+        standart: [
           "cssStyleElementEcwidMyAccountButtonColor",
           "cssStyleElementEcwidMyAccountButtonBgColor",
           "cssStyleElementEcwidMyAccountButtonBgGradient",
           "cssStyleElementEcwidMyAccountButtonBorder",
-          "cssStyleElementEcwidMyAccountButtonBoxShadow",
-          "cssStyleElementEcwidMyAccountButtonBorderRadius"
+          "cssStyleElementEcwidMyAccountButtonBoxShadow"
         ]
       },
     "#ecwid_html #ecwid_body && .ecwid .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details .product-details__sidebar .product-details-module .product-details-module__content.product-details-module__content--indented .details-product-purchase__controls .details-product-purchase__bag-controls .details-product-purchase__add-buttons .form-control--button.details-product-purchase__add-more .form-control__button .form-control__button-text":
@@ -144,16 +149,21 @@ export function style(data: DynamicStylesProps<Value>): OutputStyle {
       },
     "#ecwid_html #ecwid_body && .ecwid .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details .product-details__sidebar .product-details-module .product-details-module__content .details-product-purchase__controls .details-product-purchase__checkout-controls .form-control--button.details-product-purchase__checkout":
       { standart: ["cssStyleElementEcwidProductCheckoutWidth"] },
-    "#ecwid_html #ecwid_body && .ecwid .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details .product-details__sidebar .product-details-module .product-details-module__content .details-product-purchase__controls .details-product-purchase__checkout-controls .form-control--button.details-product-purchase__checkout:hover .form-control__button":
+    "#ecwid_html #ecwid_body && .ecwid .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details .product-details__sidebar .product-details-module .product-details-module__content .details-product-purchase__controls .details-product-purchase__checkout-controls .form-control--button.details-product-purchase__checkout .form-control__button":
       {
         standart: [
           "cssStyleElementEcwidProductCheckoutSize",
+          "cssStyleElementEcwidProductCheckoutBorderRadius"
+        ]
+      },
+    "#ecwid_html #ecwid_body && .ecwid .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details .product-details__sidebar .product-details-module .product-details-module__content .details-product-purchase__controls .details-product-purchase__checkout-controls .form-control--button.details-product-purchase__checkout:hover .form-control__button":
+      {
+        standart: [
           "cssStyleElementEcwidProductCheckoutColor",
           "cssStyleElementEcwidProductCheckoutBgColor",
           "cssStyleElementEcwidProductCheckoutBgGradient",
           "cssStyleElementEcwidProductCheckoutBorder",
-          "cssStyleElementEcwidProductCheckoutBoxShadow",
-          "cssStyleElementEcwidProductCheckoutBorderRadius"
+          "cssStyleElementEcwidProductCheckoutBoxShadow"
         ],
         interval: [
           "cssStyleHoverTransition",
@@ -171,16 +181,21 @@ export function style(data: DynamicStylesProps<Value>): OutputStyle {
           "cssStyleElementEcwidProductAddToBagSpacing"
         ]
       },
-    "#ecwid_html #ecwid_body && .ecwid .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details .product-details__sidebar .product-details-module .product-details-module__content .details-product-purchase__controls .details-product-purchase__add-buttons .form-control--button.details-product-purchase__add-to-bag:hover .form-control__button":
+    "#ecwid_html #ecwid_body && .ecwid .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details .product-details__sidebar .product-details-module .product-details-module__content .details-product-purchase__controls .details-product-purchase__add-buttons .form-control--button.details-product-purchase__add-to-bag .form-control__button":
       {
         standart: [
           "cssStyleElementEcwidProductAddToBagSize",
+          "cssStyleElementEcwidProductAddToBagBorderRadius"
+        ]
+      },
+    "#ecwid_html #ecwid_body && .ecwid .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details .product-details__sidebar .product-details-module .product-details-module__content .details-product-purchase__controls .details-product-purchase__add-buttons .form-control--button.details-product-purchase__add-to-bag:hover .form-control__button":
+      {
+        standart: [
           "cssStyleElementEcwidProductAddToBagColor",
           "cssStyleElementEcwidProductAddToBagBgColor",
           "cssStyleElementEcwidProductAddToBagBgGradient",
           "cssStyleElementEcwidProductAddToBagBorder",
-          "cssStyleElementEcwidProductAddToBagBoxShadow",
-          "cssStyleElementEcwidProductAddToBagBorderRadius"
+          "cssStyleElementEcwidProductAddToBagBoxShadow"
         ],
         interval: [
           "cssStyleHoverTransition",
@@ -195,7 +210,8 @@ export function style(data: DynamicStylesProps<Value>): OutputStyle {
           "cssStyleElementEcwidProductDetailsColor",
           "cssStyleElementEcwidProductDetailsTypography",
           "cssStyleElementEcwidProductDetailsAlign",
-          "cssStyleElementEcwidProductDetailsSpacing"
+          "cssStyleElementEcwidProductDetailsSpacing",
+          "cssStyleElementEcwidProductDetailsTopSpacing"
         ]
       },
     "#ecwid_html #ecwid_body && .ecwid .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details .product-details__description .product-details-module.product-details__general-info .product-details-module__title.ec-header-h6":
@@ -204,7 +220,8 @@ export function style(data: DynamicStylesProps<Value>): OutputStyle {
           "cssStyleElementEcwidProductDetailsColor",
           "cssStyleElementEcwidProductDetailsTypography",
           "cssStyleElementEcwidProductDetailsAlign",
-          "cssStyleElementEcwidProductDetailsSpacing"
+          "cssStyleElementEcwidProductDetailsSpacing",
+          "cssStyleElementEcwidProductDetailsTopSpacing"
         ]
       },
     "#ecwid_html #ecwid_body && .ecwid .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details .product-details__description div .product-details-module__title.ec-header-h6":
@@ -213,7 +230,8 @@ export function style(data: DynamicStylesProps<Value>): OutputStyle {
           "cssStyleElementEcwidProductDetailsColor",
           "cssStyleElementEcwidProductDetailsTypography",
           "cssStyleElementEcwidProductDetailsAlign",
-          "cssStyleElementEcwidProductDetailsSpacing"
+          "cssStyleElementEcwidProductDetailsSpacing",
+          "cssStyleElementEcwidProductDetailsTopSpacing"
         ]
       },
     "#ecwid_html #ecwid_body && .ecwid .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details .product-details__sidebar .product-details__product-options.details-product-options .product-details-module.details-product-option.details-product-option--size .product-details-module__title":
@@ -229,12 +247,13 @@ export function style(data: DynamicStylesProps<Value>): OutputStyle {
       { standart: ["cssStyleElementEcwidProductRadioSpacing"] },
     "#ecwid_html #ecwid_body && .ecwid .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details .product-details__sidebar .product-details__product-options.details-product-options .product-details-module.details-product-option.details-product-option--radio .product-details-module__content .form-control--radio":
       { standart: ["cssStyleElementEcwidProductRadioColumns"] },
+    "#ecwid_html #ecwid_body && .ecwid .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details .product-details__sidebar .product-details__product-options.details-product-options .product-details-module.details-product-option.details-product-option--radio .product-details-module__content .form-control--radio .form-control__inline-label label":
+      {
+        standart: ["cssStyleElementEcwidProductRadioTypography"]
+      },
     "#ecwid_html #ecwid_body && .ecwid .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details .product-details__sidebar .product-details__product-options.details-product-options .product-details-module.details-product-option.details-product-option--radio .product-details-module__content .form-control--radio:hover .form-control__inline-label label":
       {
-        standart: [
-          "cssStyleElementEcwidProductRadioColor",
-          "cssStyleElementEcwidProductRadioTypography"
-        ],
+        standart: ["cssStyleElementEcwidProductRadioColor"],
         interval: [
           "cssStyleHoverTransition",
           "cssStylePropertyHoverTransitionElementEcwid"
@@ -290,21 +309,26 @@ export function style(data: DynamicStylesProps<Value>): OutputStyle {
       },
     "#ecwid_html #ecwid_body && .ecwid .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details .product-details__sidebar .product-details__product-options.details-product-options .product-details-module.details-product-option.details-product-option--textfield .product-details-module__content .form-control .form-control__placeholder":
       { standart: ["cssStyleElementEcwidProductTextFieldSize"] },
-    "#ecwid_html #ecwid_body && .ecwid .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details .product-details__sidebar .product-details__product-options.details-product-options .product-details-module.details-product-option.details-product-option--textfield .product-details-module__content .form-control .form-control__placeholder .form-control__placeholder-inner:hover":
+    "#ecwid_html #ecwid_body && .ecwid .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details .product-details__sidebar .product-details__product-options.details-product-options .product-details-module.details-product-option.details-product-option--textfield .product-details-module__content .form-control .form-control__placeholder .form-control__placeholder-inner":
       {
         standart: [
           "cssStyleElementEcwidProductTextFieldPlaceholder",
           "cssStyleElementEcwidProductTextFieldTypography"
-        ],
-        interval: [
-          "cssStyleHoverTransition",
-          "cssStylePropertyHoverTransitionElementEcwid"
         ]
       },
     "#ecwid_html #ecwid_body && .ecwid .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details .product-details__sidebar .product-details__product-options.details-product-options .product-details-module.details-product-option.details-product-option--textfield":
       { standart: ["cssStyleElementEcwidProductTextFieldSpacing"] },
     "#ecwid_html #ecwid_body && .ecwid .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details .product-details__sidebar .product-details__product-options.details-product-options .product-details-module.details-product-option.details-product-option--textfield .product-details-module__content":
       { standart: ["cssStyleElementEcwidProductTextFieldAlign"] },
+    "#ecwid_html #ecwid_body && .ecwid .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details .product-details__sidebar .product-details__product-options.details-product-options .product-details-module.details-product-option.details-product-option--textfield .product-details-module__content .form-control":
+      {
+        standart: [
+          "cssStyleElementEcwidProductTextFieldBorderRadius",
+          "cssStyleElementEcwidProductTextFieldAlign",
+          "cssStyleElementEcwidProductTextFieldWidth",
+          "cssStyleElementEcwidProductTextFieldSize"
+        ]
+      },
     "#ecwid_html #ecwid_body && .ecwid .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details .product-details__sidebar .product-details__product-options.details-product-options .product-details-module.details-product-option.details-product-option--textfield .product-details-module__content .form-control:hover":
       {
         standart: [
@@ -312,11 +336,7 @@ export function style(data: DynamicStylesProps<Value>): OutputStyle {
           "cssStyleElementEcwidProductTextFieldBgColor",
           "cssStyleElementEcwidProductTextFieldBgGradient",
           "cssStyleElementEcwidProductTextFieldBorder",
-          "cssStyleElementEcwidProductTextFieldBorderRadius",
-          "cssStyleElementEcwidProductTextFieldBoxShadow",
-          "cssStyleElementEcwidProductTextFieldAlign",
-          "cssStyleElementEcwidProductTextFieldWidth",
-          "cssStyleElementEcwidProductTextFieldSize"
+          "cssStyleElementEcwidProductTextFieldBoxShadow"
         ],
         interval: [
           "cssStyleHoverTransition",
@@ -329,32 +349,40 @@ export function style(data: DynamicStylesProps<Value>): OutputStyle {
       { standart: ["cssStyleElementEcwidProductTextareaAlign"] },
     "#ecwid_html #ecwid_body && .ecwid .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details .product-details__sidebar .product-details__product-options.details-product-options .product-details-module.details-product-option.details-product-option--textarea .product-details-module__content .form-control--textarea .form-control__placeholder":
       { standart: ["cssStyleElementEcwidProductTextareaSize"] },
-    "#ecwid_html #ecwid_body && .ecwid .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details .product-details__sidebar .product-details__product-options.details-product-options .product-details-module.details-product-option.details-product-option--textarea .product-details-module__content .form-control--textarea:hover .form-control__textarea":
+    "#ecwid_html #ecwid_body && .ecwid .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details .product-details__sidebar .product-details__product-options.details-product-options .product-details-module.details-product-option.details-product-option--textarea .product-details-module__content .form-control--textarea .form-control__textarea":
       {
         standart: [
           "cssStyleElementEcwidProductTextareaSize",
           "cssStyleElementEcwidProductTextareaHeight",
           "cssStyleElementEcwidProductTextareaWidth",
+          "cssStyleElementEcwidProductTextareaBorderRadius",
+          "cssStyleElementEcwidProductTextareaTypography"
+        ]
+      },
+    "#ecwid_html #ecwid_body && .ecwid .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details .product-details__sidebar .product-details__product-options.details-product-options .product-details-module.details-product-option.details-product-option--textarea .product-details-module__content .form-control--textarea:hover .form-control__textarea":
+      {
+        standart: [
           "cssStyleElementEcwidProductTextareaBgColor",
           "cssStyleElementEcwidProductTextareaBgGradient",
           "cssStyleElementEcwidProductTextareaBorder",
-          "cssStyleElementEcwidProductTextareaBorderRadius",
           "cssStyleElementEcwidProductTextareaBoxShadow",
-          "cssStyleElementEcwidProductTextareaColor",
-          "cssStyleElementEcwidProductTextareaTypography"
+          "cssStyleElementEcwidProductTextareaColor"
         ],
         interval: [
           "cssStyleHoverTransition",
           "cssStylePropertyHoverTransitionElementEcwid"
         ]
       },
-    "#ecwid_html #ecwid_body && .ecwid .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details .product-details__sidebar .product-details__product-options.details-product-options .product-details-module.details-product-option.details-product-option--textarea .product-details-module__content .form-control--textarea:hover .form-control__placeholder .form-control__placeholder-inner":
+    "#ecwid_html #ecwid_body && .ecwid .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details .product-details__sidebar .product-details__product-options.details-product-options .product-details-module.details-product-option.details-product-option--textarea .product-details-module__content .form-control--textarea .form-control__placeholder .form-control__placeholder-inner":
       {
         standart: [
           "cssStyleElementEcwidProductTextareaPlaceholder",
-          "cssStyleElementEcwidProductTextareaColor",
           "cssStyleElementEcwidProductTextareaTypography"
-        ],
+        ]
+      },
+    "#ecwid_html #ecwid_body && .ecwid .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details .product-details__sidebar .product-details__product-options.details-product-options .product-details-module.details-product-option.details-product-option--textarea .product-details-module__content .form-control--textarea:hover .form-control__placeholder .form-control__placeholder-inner":
+      {
+        standart: ["cssStyleElementEcwidProductTextareaColor"],
         interval: [
           "cssStyleHoverTransition",
           "cssStylePropertyHoverTransitionElementEcwid"
@@ -414,7 +442,7 @@ export function style(data: DynamicStylesProps<Value>): OutputStyle {
       },
     "#ecwid_html #ecwid_body && .ecwid .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details .product-details__sidebar .product-details__product-options.details-product-options .product-details-module.details-product-option.details-product-option--date .product-details-module__content .form-control .form-control__placeholder":
       { standart: ["cssStyleElementEcwidProductDatepickerSize"] },
-    "#ecwid_html #ecwid_body && .ecwid .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details .product-details__sidebar .product-details__product-options.details-product-options .product-details-module.details-product-option.details-product-option--date .product-details-module__content .form-control .form-control__placeholder .form-control__placeholder-inner:hover":
+    "#ecwid_html #ecwid_body && .ecwid .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details .product-details__sidebar .product-details__product-options.details-product-options .product-details-module.details-product-option.details-product-option--date .product-details-module__content .form-control .form-control__placeholder .form-control__placeholder-inner":
       {
         standart: [
           "cssStyleElementEcwidProductDatepickerPlaceholder",
@@ -429,6 +457,15 @@ export function style(data: DynamicStylesProps<Value>): OutputStyle {
       { standart: ["cssStyleElementEcwidProductDatepickerAlign"] },
     "#ecwid_html #ecwid_body && .ecwid .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details .product-details__sidebar .product-details__product-options.details-product-options .product-details-module.details-product-option.details-product-option--date":
       { standart: ["cssStyleElementEcwidProductDatepickerSpacing"] },
+    "#ecwid_html #ecwid_body && .ecwid .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details .product-details__sidebar .product-details__product-options.details-product-options .product-details-module.details-product-option.details-product-option--date .product-details-module__content .form-control":
+      {
+        standart: [
+          "cssStyleElementEcwidProductDatepickerBorderRadius",
+          "cssStyleElementEcwidProductDatepickerAlign",
+          "cssStyleElementEcwidProductDatepickerWidth",
+          "cssStyleElementEcwidProductDatepickerSize"
+        ]
+      },
     "#ecwid_html #ecwid_body && .ecwid .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details .product-details__sidebar .product-details__product-options.details-product-options .product-details-module.details-product-option.details-product-option--date .product-details-module__content .form-control:hover":
       {
         standart: [
@@ -436,11 +473,7 @@ export function style(data: DynamicStylesProps<Value>): OutputStyle {
           "cssStyleElementEcwidProductDatepickerBgColor",
           "cssStyleElementEcwidProductDatepickerBgGradient",
           "cssStyleElementEcwidProductDatepickerBorder",
-          "cssStyleElementEcwidProductDatepickerBorderRadius",
-          "cssStyleElementEcwidProductDatepickerBoxShadow",
-          "cssStyleElementEcwidProductDatepickerAlign",
-          "cssStyleElementEcwidProductDatepickerWidth",
-          "cssStyleElementEcwidProductDatepickerSize"
+          "cssStyleElementEcwidProductDatepickerBoxShadow"
         ],
         interval: [
           "cssStyleHoverTransition",
@@ -451,15 +484,24 @@ export function style(data: DynamicStylesProps<Value>): OutputStyle {
       { standart: ["cssStyleElementEcwidProductFilesSpacing"] },
     "#ecwid_html #ecwid_body && .ecwid .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details .product-details__sidebar .product-details__product-options.details-product-options .product-details-module.details-product-option.details-product-option--files .product-details-module__content .form-control.form-control--file .form-control":
       { standart: ["cssStyleElementEcwidProductFilesAlign"] },
+    "#ecwid_html #ecwid_body && .ecwid .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details .product-details__sidebar .product-details__product-options.details-product-options .product-details-module.details-product-option.details-product-option--files .product-details-module__content .form-control.form-control--file .form-control .form-control__button .form-control__button-text":
+      {
+        standart: ["cssStyleElementEcwidProductFilesTypography"]
+      },
     "#ecwid_html #ecwid_body && .ecwid .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details .product-details__sidebar .product-details__product-options.details-product-options .product-details-module.details-product-option.details-product-option--files .product-details-module__content .form-control.form-control--file .form-control .form-control__button:hover .form-control__button-text":
       {
-        standart: [
-          "cssStyleElementEcwidProductFilesTypography",
-          "cssStyleElementEcwidProductFilesColor"
-        ],
+        standart: ["cssStyleElementEcwidProductFilesColor"],
         interval: [
           "cssStyleHoverTransition",
           "cssStylePropertyHoverTransitionElementEcwid"
+        ]
+      },
+    "#ecwid_html #ecwid_body && .ecwid .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details .product-details__sidebar .product-details__product-options.details-product-options .product-details-module.details-product-option.details-product-option--files .product-details-module__content .form-control.form-control--file .form-control .form-control__button":
+      {
+        standart: [
+          "cssStyleElementEcwidProductFilesBorderRadius",
+          "cssStyleElementEcwidProductFilesSize",
+          "cssStyleElementEcwidProductFilesWidth"
         ]
       },
     "#ecwid_html #ecwid_body && .ecwid .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details .product-details__sidebar .product-details__product-options.details-product-options .product-details-module.details-product-option.details-product-option--files .product-details-module__content .form-control.form-control--file .form-control .form-control__button:hover":
@@ -468,14 +510,20 @@ export function style(data: DynamicStylesProps<Value>): OutputStyle {
           "cssStyleElementEcwidProductFilesBgColor",
           "cssStyleElementEcwidProductFilesBgGradient",
           "cssStyleElementEcwidProductFilesBorder",
-          "cssStyleElementEcwidProductFilesBorderRadius",
-          "cssStyleElementEcwidProductFilesBoxShadow",
-          "cssStyleElementEcwidProductFilesSize",
-          "cssStyleElementEcwidProductFilesWidth"
+          "cssStyleElementEcwidProductFilesBoxShadow"
         ],
         interval: [
           "cssStyleHoverTransition",
           "cssStylePropertyHoverTransitionElementEcwid"
+        ]
+      },
+    "#ecwid_html #ecwid_body && .ecwid .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details .product-details__sidebar .product-details__product-options.details-product-options .product-details-module.details-product-option.details-product-option--files .product-details-module__content .form-control.form-control--file .form-control__add-more":
+      {
+        standart: [
+          "cssStyleElementEcwidProductFilesBorderRadius",
+          "cssStyleElementEcwidProductFilesSize",
+          "cssStyleElementEcwidProductFilesWidth",
+          "cssStyleElementEcwidProductFilesTypography"
         ]
       },
     "#ecwid_html #ecwid_body && .ecwid .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details .product-details__sidebar .product-details__product-options.details-product-options .product-details-module.details-product-option.details-product-option--files .product-details-module__content .form-control.form-control--file .form-control__add-more:hover":
@@ -484,11 +532,7 @@ export function style(data: DynamicStylesProps<Value>): OutputStyle {
           "cssStyleElementEcwidProductFilesBgColor",
           "cssStyleElementEcwidProductFilesBgGradient",
           "cssStyleElementEcwidProductFilesBorder",
-          "cssStyleElementEcwidProductFilesBorderRadius",
           "cssStyleElementEcwidProductFilesBoxShadow",
-          "cssStyleElementEcwidProductFilesSize",
-          "cssStyleElementEcwidProductFilesWidth",
-          "cssStyleElementEcwidProductFilesTypography",
           "cssStyleElementEcwidProductFilesColor"
         ],
         interval: [
@@ -540,18 +584,23 @@ export function style(data: DynamicStylesProps<Value>): OutputStyle {
       { standart: ["cssStyleElementEcwidProductCheckboxAlign"] },
     "#ecwid_html #ecwid_body && .ecwid .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details .product-details__sidebar .product-details__product-options.details-product-options .product-details-module.details-product-option.details-product-option--size .product-details-module__content .form-control--checkbox-button":
       { standart: ["cssStyleElementEcwidProductCheckboxSpacing"] },
-    "#ecwid_html #ecwid_body && .ecwid .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details .product-details__sidebar .product-details__product-options.details-product-options .product-details-module.details-product-option.details-product-option--size .product-details-module__content .form-control--checkbox-button .form-control__inline-label label:hover":
+    "#ecwid_html #ecwid_body && .ecwid .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details .product-details__sidebar .product-details__product-options.details-product-options .product-details-module.details-product-option.details-product-option--size .product-details-module__content .form-control--checkbox-button .form-control__inline-label label":
       {
         standart: [
           "cssStyleElementEcwidProductCheckboxTypography",
           "cssStyleElementEcwidProductCheckboxSize",
           "cssStyleElementEcwidProductCheckboxBorderRadius",
+          "cssStyleElementEcwidProductCheckboxPadding"
+        ]
+      },
+    "#ecwid_html #ecwid_body && .ecwid .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details .product-details__sidebar .product-details__product-options.details-product-options .product-details-module.details-product-option.details-product-option--size .product-details-module__content .form-control--checkbox-button .form-control__inline-label label:hover":
+      {
+        standart: [
           "cssStyleElementEcwidProductCheckboxBgColor",
           "cssStyleElementEcwidProductCheckboxBgGradient",
           "cssStyleElementEcwidProductCheckboxBorder",
           "cssStyleElementEcwidProductCheckboxBoxShadow",
-          "cssStyleElementEcwidProductCheckboxColor",
-          "cssStyleElementEcwidProductCheckboxPadding"
+          "cssStyleElementEcwidProductCheckboxColor"
         ],
         interval: [
           "cssStyleHoverTransition",
@@ -603,21 +652,23 @@ export function style(data: DynamicStylesProps<Value>): OutputStyle {
           "cssStyleElementEcwidCartFooterTypography"
         ]
       },
+    "#ecwid_html #ecwid_body && .ecwid .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .ec-footer .ec-footer__row .ec-footer__cell a.ec-footer__link.ec-link.ec-link--muted":
+      {
+        standart: ["cssStyleElementEcwidCartFooterTypography"]
+      },
     "#ecwid_html #ecwid_body && .ecwid .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .ec-footer .ec-footer__row .ec-footer__cell a.ec-footer__link.ec-link.ec-link--muted:hover":
       {
-        standart: [
-          "cssStyleElementEcwidCartFooterColor",
-          "cssStyleElementEcwidCartFooterTypography"
-        ]
+        standart: ["cssStyleElementEcwidCartFooterColor"]
       },
     "#ecwid_html #ecwid_body && .ecwid .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .ec-footer .ec-footer__row .ec-footer__cell a.ec-footer__link .svg-icon":
       { standart: ["cssStyleElementEcwidCartFooterIconSpacing"] },
+    "#ecwid_html #ecwid_body && .ecwid .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .ec-footer .ec-footer__row .ec-footer__cell a.ec-footer__link .svg-icon svg":
+      {
+        standart: ["cssStyleElementEcwidCartFooterIconSize"]
+      },
     "#ecwid_html #ecwid_body && .ecwid .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .ec-footer .ec-footer__row .ec-footer__cell a.ec-footer__link:hover .svg-icon svg":
       {
-        standart: [
-          "cssStyleElementEcwidCartFooterIconSize",
-          "cssStyleElementEcwidCartFooterIconColor"
-        ]
+        standart: ["cssStyleElementEcwidCartFooterIconColor"]
       },
     "#ecwid_html #ecwid_body && .ecwid .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details .product-details__sidebar .product-details-module.product-details__product-like.favorite-product":
       { standart: ["cssStyleElementEcwidProductFavoritesButtonsDisplay"] },
@@ -631,15 +682,20 @@ export function style(data: DynamicStylesProps<Value>): OutputStyle {
           "cssStyleElementEcwidProductFavoriteButtonSpacing"
         ]
       },
-    "#ecwid_html #ecwid_body && .ecwid .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details .product-details__sidebar .product-details-module.product-details__product-like.favorite-product .product-details-module__content.product-details-module__content--indented .form-control.form-control--button.form-control--medium.form-control--secondary.form-control--done.favorite-product__button-add .form-control__button.form-control__button--icon-prepend:hover":
+    "#ecwid_html #ecwid_body && .ecwid .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details .product-details__sidebar .product-details-module.product-details__product-like.favorite-product .product-details-module__content.product-details-module__content--indented .form-control.form-control--button.form-control--medium.form-control--secondary.form-control--done.favorite-product__button-add .form-control__button.form-control__button--icon-prepend":
       {
         standart: [
           "cssStyleElementEcwidProductFavoriteSize",
+          "cssStyleElementEcwidProductFavoriteBorderRadius"
+        ]
+      },
+    "#ecwid_html #ecwid_body && .ecwid .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details .product-details__sidebar .product-details-module.product-details__product-like.favorite-product .product-details-module__content.product-details-module__content--indented .form-control.form-control--button.form-control--medium.form-control--secondary.form-control--done.favorite-product__button-add .form-control__button.form-control__button--icon-prepend:hover":
+      {
+        standart: [
           "cssStyleElementEcwidProductFavoriteColor",
           "cssStyleElementEcwidProductFavoriteBgColor",
           "cssStyleElementEcwidProductFavoriteBgGradient",
           "cssStyleElementEcwidProductFavoriteBorder",
-          "cssStyleElementEcwidProductFavoriteBorderRadius",
           "cssStyleElementEcwidProductFavoriteBoxShadow"
         ],
         interval: [
@@ -666,15 +722,20 @@ export function style(data: DynamicStylesProps<Value>): OutputStyle {
           "cssStyleElementEcwidProductFavoritedButtonSpacing"
         ]
       },
-    "#ecwid_html #ecwid_body && .ecwid .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details .product-details__sidebar .product-details-module.product-details__product-like.favorite-product .product-details-module__content.product-details-module__content--indented .form-control.form-control--button.form-control--medium.form-control--secondary.form-control--done.favorite-product__button-saved .form-control__button.form-control__button--icon-prepend:hover":
+    "#ecwid_html #ecwid_body && .ecwid .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details .product-details__sidebar .product-details-module.product-details__product-like.favorite-product .product-details-module__content.product-details-module__content--indented .form-control.form-control--button.form-control--medium.form-control--secondary.form-control--done.favorite-product__button-saved .form-control__button.form-control__button--icon-prepend":
       {
         standart: [
           "cssStyleElementEcwidProductFavoritedSize",
+          "cssStyleElementEcwidProductFavoritedBorderRadius"
+        ]
+      },
+    "#ecwid_html #ecwid_body && .ecwid .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details .product-details__sidebar .product-details-module.product-details__product-like.favorite-product .product-details-module__content.product-details-module__content--indented .form-control.form-control--button.form-control--medium.form-control--secondary.form-control--done.favorite-product__button-saved .form-control__button.form-control__button--icon-prepend:hover":
+      {
+        standart: [
           "cssStyleElementEcwidProductFavoritedColor",
           "cssStyleElementEcwidProductFavoritedBgColor",
           "cssStyleElementEcwidProductFavoritedBgGradient",
           "cssStyleElementEcwidProductFavoritedBorder",
-          "cssStyleElementEcwidProductFavoritedBorderRadius",
           "cssStyleElementEcwidProductFavoritedBoxShadow"
         ],
         interval: [
@@ -700,15 +761,20 @@ export function style(data: DynamicStylesProps<Value>): OutputStyle {
           "cssStyleElementEcwidProductViewFavoritesWidth"
         ]
       },
-    "#ecwid_html #ecwid_body && .ecwid .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details .product-details__sidebar .product-details-module.product-details__product-like.favorite-product .product-details-module__content.product-details-module__content--indented .form-control.form-control--button.form-control--medium.form-control--secondary.form-control--done.favorite-product__button-view .form-control__button:hover":
+    "#ecwid_html #ecwid_body && .ecwid .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details .product-details__sidebar .product-details-module.product-details__product-like.favorite-product .product-details-module__content.product-details-module__content--indented .form-control.form-control--button.form-control--medium.form-control--secondary.form-control--done.favorite-product__button-view .form-control__button":
       {
         standart: [
           "cssStyleElementEcwidProductViewFavoritesSize",
+          "cssStyleElementEcwidProductViewFavoritesBorderRadius"
+        ]
+      },
+    "#ecwid_html #ecwid_body && .ecwid .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details .product-details__sidebar .product-details-module.product-details__product-like.favorite-product .product-details-module__content.product-details-module__content--indented .form-control.form-control--button.form-control--medium.form-control--secondary.form-control--done.favorite-product__button-view .form-control__button:hover":
+      {
+        standart: [
           "cssStyleElementEcwidProductViewFavoritesColor",
           "cssStyleElementEcwidProductViewFavoritesBgColor",
           "cssStyleElementEcwidProductViewFavoritesBgGradient",
           "cssStyleElementEcwidProductViewFavoritesBorder",
-          "cssStyleElementEcwidProductViewFavoritesBorderRadius",
           "cssStyleElementEcwidProductViewFavoritesBoxShadow"
         ],
         interval: [
@@ -729,20 +795,25 @@ export function style(data: DynamicStylesProps<Value>): OutputStyle {
       { standart: ["cssStyleElementEcwidProductShareButtonsIconSize"] },
     "#ecwid_html #ecwid_body && .ecwid .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details .product-details__sidebar .product-details__product-share.details-product-share .product-details-module .product-details-module__content.product-details-module__content--indented .ec-likely.details-product-share__buttons .ec-likely__wrapper":
       { standart: ["cssStyleElementEcwidProductShareButtonsAlign"] },
-    "#ecwid_html #ecwid_body && .ecwid .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details .product-details__sidebar .product-details__product-share.details-product-share .product-details-module .product-details-module__content.product-details-module__content--indented .ec-likely.details-product-share__buttons .ec-likely__wrapper .ec-likely__widget:hover":
+    "#ecwid_html #ecwid_body && .ecwid .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details .product-details__sidebar .product-details__product-share.details-product-share .product-details-module .product-details-module__content.product-details-module__content--indented .ec-likely.details-product-share__buttons .ec-likely__wrapper .ec-likely__widget":
       {
         standart: [
           "cssStyleElementEcwidProductShareButtonsSize",
           "cssStyleElementEcwidProductShareButtonsWidth",
+          "cssStyleElementEcwidProductShareButtonsBorderRadius",
+          "cssStyleElementEcwidProductShareButtonsSpacing",
+          "cssStyleElementEcwidProductShareButtonsSpacingRight",
+          "cssStyleElementEcwidProductShareButtonsTypography"
+        ]
+      },
+    "#ecwid_html #ecwid_body && .ecwid .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details .product-details__sidebar .product-details__product-share.details-product-share .product-details-module .product-details-module__content.product-details-module__content--indented .ec-likely.details-product-share__buttons .ec-likely__wrapper .ec-likely__widget:hover":
+      {
+        standart: [
           "cssStyleElementEcwidProductShareButtonsColor",
           "cssStyleElementEcwidProductShareButtonsBgColor",
           "cssStyleElementEcwidProductShareButtonsBgGradient",
           "cssStyleElementEcwidProductShareButtonsBorder",
-          "cssStyleElementEcwidProductShareButtonsBorderRadius",
-          "cssStyleElementEcwidProductShareButtonsBoxShadow",
-          "cssStyleElementEcwidProductShareButtonsSpacing",
-          "cssStyleElementEcwidProductShareButtonsSpacingRight",
-          "cssStyleElementEcwidProductShareButtonsTypography"
+          "cssStyleElementEcwidProductShareButtonsBoxShadow"
         ],
         interval: [
           "cssStyleHoverTransition",
@@ -760,12 +831,13 @@ export function style(data: DynamicStylesProps<Value>): OutputStyle {
       { standart: ["cssStyleElementEcwidProductThumbnailSpacingRightBottom"] },
     "#ecwid_html #ecwid_body && .ecwid .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details .product-details__gallery .details-gallery__wrap .details-gallery__wrap-inner .details-gallery__images .details-gallery__images-container .details-gallery__images-carousel .details-gallery__image":
       { standart: ["cssStyleElementEcwidProductThumbnailSpacingStyleCenter"] },
+    "#ecwid_html #ecwid_body && .ecwid .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details .product-details__gallery .details-gallery__wrap .details-gallery__wrap-inner .details-gallery__images .details-gallery__images-container .details-gallery__images-carousel .details-gallery__image:first-child .details-gallery__image-wrapper .details-gallery__image-wrapper-inner":
+      {
+        standart: ["cssStyleElementEcwidProductGalleryBorderRadius"]
+      },
     "#ecwid_html #ecwid_body && .ecwid .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details .product-details__gallery .details-gallery__wrap .details-gallery__wrap-inner .details-gallery__images .details-gallery__images-container .details-gallery__images-carousel .details-gallery__image:first-child .details-gallery__image-wrapper .details-gallery__image-wrapper-inner:hover":
       {
-        standart: [
-          "cssStyleElementEcwidProductGalleryBorder",
-          "cssStyleElementEcwidProductGalleryBorderRadius"
-        ]
+        standart: ["cssStyleElementEcwidProductGalleryBorder"]
       },
     "#ecwid_html #ecwid_body && .ecwid .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details .product-details__gallery .details-gallery__wrap .details-gallery__wrap-inner .details-gallery__images:hover":
       {
@@ -773,27 +845,37 @@ export function style(data: DynamicStylesProps<Value>): OutputStyle {
       },
     "#ecwid_html #ecwid_body && .ecwid .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details .product-details__gallery .details-gallery__wrap .details-gallery__wrap-inner .details-gallery__thumbs":
       { standart: ["cssStyleElementEcwidProductThumbnailWidth"] },
+    "#ecwid_html #ecwid_body && .ecwid .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details .product-details__gallery .details-gallery__wrap .details-gallery__wrap-inner .details-gallery__thumbs .details-gallery__thumb:not(.details-gallery__thumb.details-gallery__thumb--active)":
+      {
+        standart: [
+          "cssStyleElementWOOGalleryBorderRadiusThumbnail",
+          "cssStyleElementEcwidProductThumbnailBetween",
+          "cssStyleElementEcwidProductThumbnailWidthCenter"
+        ]
+      },
     "#ecwid_html #ecwid_body && .ecwid .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details .product-details__gallery .details-gallery__wrap .details-gallery__wrap-inner .details-gallery__thumbs .details-gallery__thumb:not(.details-gallery__thumb.details-gallery__thumb--active):hover":
       {
         standart: [
           "cssStyleElementWOOGalleryBorderThumbnail",
-          "cssStyleElementWOOGalleryBorderRadiusThumbnail",
-          "cssStyleElementWOOGalleryBoxShadowThumbnail",
-          "cssStyleElementEcwidProductThumbnailBetween",
-          "cssStyleElementEcwidProductThumbnailWidthCenter"
+          "cssStyleElementWOOGalleryBoxShadowThumbnail"
         ],
         interval: [
           "cssStyleHoverTransition",
           "cssStylePropertyHoverTransitionElementEcwid"
         ]
       },
+    "#ecwid_html #ecwid_body && .ecwid .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details .product-details__gallery .details-gallery__wrap .details-gallery__wrap-inner .details-gallery__images .details-gallery__images-container .details-gallery__images-carousel .details-gallery__image:not(:first-child) .details-gallery__image-wrapper .details-gallery__image-wrapper-inner":
+      {
+        standart: [
+          "cssStyleElementWOOGalleryBorderRadiusThumbnail",
+          "cssStyleElementEcwidProductThumbnailBetween"
+        ]
+      },
     "#ecwid_html #ecwid_body && .ecwid .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details .product-details__gallery .details-gallery__wrap .details-gallery__wrap-inner .details-gallery__images .details-gallery__images-container .details-gallery__images-carousel .details-gallery__image:not(:first-child) .details-gallery__image-wrapper .details-gallery__image-wrapper-inner:hover":
       {
         standart: [
           "cssStyleElementWOOGalleryBorderThumbnail",
-          "cssStyleElementWOOGalleryBorderRadiusThumbnail",
-          "cssStyleElementWOOGalleryBoxShadowThumbnail",
-          "cssStyleElementEcwidProductThumbnailBetween"
+          "cssStyleElementWOOGalleryBoxShadowThumbnail"
         ],
         interval: [
           "cssStyleHoverTransition",
@@ -834,12 +916,13 @@ export function style(data: DynamicStylesProps<Value>): OutputStyle {
           "cssStylePropertyHoverTransitionElementEcwid"
         ]
       },
+    "#ecwid_html #ecwid_body && .ecwid .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details .product-details__sidebar .product-details-module.product-details__product-price-row .product-details-module__content .product-details__attraction-block .product-details__label-container .ec-label .label__text":
+      {
+        standart: ["cssStyleElementEcwidProductFlagLabelTypography"]
+      },
     "#ecwid_html #ecwid_body && .ecwid .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details .product-details__sidebar .product-details-module.product-details__product-price-row .product-details-module__content .product-details__attraction-block .product-details__label-container:hover .ec-label .label__text":
       {
-        standart: [
-          "cssStyleElementEcwidProductFlagLabelTypography",
-          "cssStyleElementEcwidProductFlagLabelColor"
-        ],
+        standart: ["cssStyleElementEcwidProductFlagLabelColor"],
         interval: [
           "cssStyleHoverTransition",
           "cssStylePropertyHoverTransitionElementEcwid"
@@ -868,49 +951,59 @@ export function style(data: DynamicStylesProps<Value>): OutputStyle {
           "cssStyleElementEcwidProductQtySpacingBottom"
         ]
       },
-    "#ecwid_html #ecwid_body && .ecwid .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details .product-details__sidebar .product-details-module .product-details-module__content .details-product-purchase__qty label .details-product-purchase__qty-label:hover":
+    "#ecwid_html #ecwid_body && .ecwid .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details .product-details__sidebar .product-details-module .product-details-module__content .details-product-purchase__qty label .details-product-purchase__qty-label":
       {
         standart: [
           "cssStyleElementEcwidCartQtyTypography",
-          "cssStyleElementEcwidProductQtyColor",
           "cssStyleElementEcwidProductQtySpacingRight"
-        ],
+        ]
+      },
+    "#ecwid_html #ecwid_body && .ecwid .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details .product-details__sidebar .product-details-module .product-details-module__content .details-product-purchase__qty label .details-product-purchase__qty-label:hover":
+      {
+        standart: ["cssStyleElementEcwidProductQtyColor"],
         interval: [
           "cssStyleHoverTransition",
           "cssStylePropertyHoverTransitionElementEcwid"
         ]
+      },
+    "#ecwid_html #ecwid_body && .ecwid .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details .product-details__sidebar .product-details-module .product-details-module__content .details-product-purchase__qty .form-control .form-control__placeholder":
+      {
+        standart: ["cssStyleElementEcwidCartQtyTypography"]
       },
     "#ecwid_html #ecwid_body && .ecwid .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details .product-details__sidebar .product-details-module .product-details-module__content .details-product-purchase__qty .form-control:hover .form-control__placeholder":
       {
-        standart: [
-          "cssStyleElementEcwidCartQtyTypography",
-          "cssStyleElementEcwidProductQtyColor"
-        ],
+        standart: ["cssStyleElementEcwidProductQtyColor"],
         interval: [
           "cssStyleHoverTransition",
           "cssStylePropertyHoverTransitionElementEcwid"
         ]
       },
+    "#ecwid_html #ecwid_body && .ecwid .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details .product-details__sidebar .product-details-module .product-details-module__content .details-product-purchase__qty .form-control .form-control__placeholder .form-control__placeholder-inner":
+      {
+        standart: ["cssStyleElementEcwidCartQtyTypography"]
+      },
     "#ecwid_html #ecwid_body && .ecwid .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details .product-details__sidebar .product-details-module .product-details-module__content .details-product-purchase__qty .form-control:hover .form-control__placeholder .form-control__placeholder-inner":
       {
-        standart: [
-          "cssStyleElementEcwidCartQtyTypography",
-          "cssStyleElementEcwidProductQtyColor"
-        ],
+        standart: ["cssStyleElementEcwidProductQtyColor"],
         interval: [
           "cssStyleHoverTransition",
           "cssStylePropertyHoverTransitionElementEcwid"
+        ]
+      },
+    "#ecwid_html #ecwid_body && .ecwid .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details .product-details__sidebar .product-details-module .product-details-module__content .details-product-purchase__qty .form-control":
+      {
+        standart: [
+          "cssStyleElementEcwidProductQtyWidth",
+          "cssStyleElementEcwidProductQtyBorderRadius"
         ]
       },
     "#ecwid_html #ecwid_body && .ecwid .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details .product-details__sidebar .product-details-module .product-details-module__content .details-product-purchase__qty .form-control:hover":
       {
         standart: [
-          "cssStyleElementEcwidProductQtyWidth",
           "cssStyleElementEcwidProductQtyColor",
           "cssStyleElementEcwidProductQtyBgColor",
           "cssStyleElementEcwidProductQtyBgGradient",
           "cssStyleElementEcwidProductQtyBorder",
-          "cssStyleElementEcwidProductQtyBorderRadius",
           "cssStyleElementEcwidProductQtyBoxShadow"
         ],
         interval: [
@@ -987,12 +1080,13 @@ export function style(data: DynamicStylesProps<Value>): OutputStyle {
           "cssStyleElementEcwidProductShowMoreSpacing"
         ]
       },
+    "#ecwid_html #ecwid_body && .ecwid .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details .product-details__sidebar .product-details-module.product-details__general-info .product-details-module__btn-more .ec-link":
+      {
+        standart: ["cssStyleElementEcwidProductShowMoreTypography"]
+      },
     "#ecwid_html #ecwid_body && .ecwid .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details .product-details__sidebar .product-details-module.product-details__general-info .product-details-module__btn-more .ec-link:hover":
       {
-        standart: [
-          "cssStyleElementEcwidProductShowMoreColor",
-          "cssStyleElementEcwidProductShowMoreTypography"
-        ],
+        standart: ["cssStyleElementEcwidProductShowMoreColor"],
         interval: [
           "cssStyleHoverTransition",
           "cssStylePropertyHoverTransitionElementEcwid"
@@ -1177,13 +1271,16 @@ export function style(data: DynamicStylesProps<Value>): OutputStyle {
       },
     "#ecwid_html #ecwid_body && .ecwid .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .ec-related-products .ec-related-products__products.ec-grid .grid__wrap .grid__wrap-inner .grid__products .grid-product .grid-product__wrap":
       { standart: ["cssStyleElementEcwidProductGridSpacing"] },
+    "#ecwid_html #ecwid_body && .ecwid .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .ec-related-products .ec-related-products__products.ec-grid .grid__wrap .grid__wrap-inner .grid__products .grid-product .grid-product__wrap .grid-product__wrap-inner":
+      {
+        standart: ["cssStyleElementEcwidProductGridBorderRadius"]
+      },
     "#ecwid_html #ecwid_body && .ecwid .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .ec-related-products .ec-related-products__products.ec-grid .grid__wrap .grid__wrap-inner .grid__products .grid-product .grid-product__wrap:hover .grid-product__wrap-inner":
       {
         standart: [
           "cssStyleElementEcwidProductGridBgColor",
           "cssStyleElementEcwidProductGridBgGradient",
           "cssStyleElementEcwidProductGridBorder",
-          "cssStyleElementEcwidProductGridBorderRadius",
           "cssStyleElementEcwidProductGridBoxShadow"
         ]
       }

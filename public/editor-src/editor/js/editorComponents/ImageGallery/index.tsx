@@ -6,11 +6,18 @@ import { merge } from "timm";
 import { TextEditor } from "visual/component/Controls/TextEditor";
 import CustomCSS from "visual/component/CustomCSS";
 import Toolbar from "visual/component/Toolbar";
-import EditorComponent, { Props as NextProps } from "visual/editorComponents/EditorComponent";
+import EditorComponent, {
+  Props as NextProps
+} from "visual/editorComponents/EditorComponent";
 import { ComponentsMeta } from "visual/editorComponents/EditorComponent/types";
 import { SizeType } from "visual/global/Config/types/configs/common";
 import { isEditor, isView } from "visual/providers/RenderProvider";
-import { GalleryIsotope, GalleryIsotopeType, GalleryJustified, GalleryJustifiedType } from "visual/types/global";
+import {
+  GalleryIsotope,
+  GalleryIsotopeType,
+  GalleryJustified,
+  GalleryJustifiedType
+} from "visual/types/global";
 import { addFilter, applyFilter } from "visual/utils/filters";
 import { isFunction } from "visual/utils/function";
 import { getImageUrl } from "visual/utils/image";
@@ -24,7 +31,21 @@ import EditorArrayComponent from "../EditorArrayComponent";
 import { readSizeType, readUnit } from "../Image/utils";
 import { Wrapper } from "../tools/Wrapper";
 import defaultValue from "./defaultValue.json";
-import { patchOnBigImageAsCurrLayout, patchOnBigImageAsPrevLayout, patchOnBigImageChange, patchOnBigImageImagesThumbSizeChange, patchOnBigImageLayout, patchOnColumnChange, patchOnGridAspectRationAndColumnChange, patchOnGridItemsChange, patchOnGridLayout, patchOnJustifiedLayout, patchOnLightBox, patchOnMasonryLayout, patchOnThumbStyleChange } from "./imageGalleryChange";
+import {
+  patchOnBigImageAsCurrLayout,
+  patchOnBigImageAsPrevLayout,
+  patchOnBigImageChange,
+  patchOnBigImageImagesThumbSizeChange,
+  patchOnBigImageLayout,
+  patchOnColumnChange,
+  patchOnGridAspectRationAndColumnChange,
+  patchOnGridItemsChange,
+  patchOnGridLayout,
+  patchOnJustifiedLayout,
+  patchOnLightBox,
+  patchOnMasonryLayout,
+  patchOnThumbStyleChange
+} from "./imageGalleryChange";
 import Items from "./items";
 import * as sidebarExtendImage from "./sidebarExtendImage";
 import * as sidebarExtendParentConfig from "./sidebarExtendParent";
@@ -34,9 +55,16 @@ import * as toolbarExtendImage from "./toolbarExtendImage";
 import * as toolbarExtendParent from "./toolbarExtendParent";
 import * as toolbarFilterConfig from "./toolbarFilter";
 import type { Meta, Patch, Props, Value } from "./types";
-import { JustifySettings, breakpoints, getSpacing, imagesSrc, makeOptionValueToSettings, multiUpload } from "./utils";
+import {
+  JustifySettings,
+  breakpoints,
+  getRowHeight,
+  getSpacing,
+  imagesSrc,
+  makeOptionValueToSettings,
+  multiUpload
+} from "./utils";
 import { arrangeGridByTags } from "./utils.export";
-
 
 class ImageGallery extends EditorComponent<Value, Props> {
   static defaultValue = defaultValue;
@@ -121,7 +149,8 @@ class ImageGallery extends EditorComponent<Value, Props> {
     const { items: nextItems } = nextProps.dbValue;
     const { items: prevItems } = this.props.dbValue;
 
-    const { layout } = this.getValue();
+    const v = this.getValue();
+    const { layout } = v;
     const isMasonry = layout === "masonry";
     const isJustified = layout === "justified";
 
@@ -145,7 +174,14 @@ class ImageGallery extends EditorComponent<Value, Props> {
     const nextSpacing = getSpacing(nextProps.dbValue);
 
     if (isMasonry && !isEqual(currentSpacing, nextSpacing)) {
-      this.reinitIsotopes();
+      return this.reinitIsotopes();
+    }
+
+    const currentRowHeight = getRowHeight(this.props.dbValue);
+    const nextRowHeight = getRowHeight(nextProps.dbValue);
+
+    if (isJustified && !isEqual(currentRowHeight, nextRowHeight)) {
+      this.initJustifiedGallery(v);
     }
   }
 
@@ -228,7 +264,6 @@ class ImageGallery extends EditorComponent<Value, Props> {
             meta.patch.items
           );
         } else {
-          this.destroyJustifiedGallery();
           this.destroyIsotope();
           this.initGallery();
         }
@@ -249,9 +284,7 @@ class ImageGallery extends EditorComponent<Value, Props> {
           rowHeight: dvv("rowHeight")
         });
 
-        this.destroyJustifiedGallery();
         this.initJustifiedGallery(v);
-
         break;
       }
       case "grid": {
@@ -325,14 +358,6 @@ class ImageGallery extends EditorComponent<Value, Props> {
     }
     // #end region
 
-    if (meta.patch[dvk("rowHeight")]) {
-      const { layout } = this.getValue();
-      if (layout === "justified") {
-        this.destroyJustifiedGallery();
-        this.initJustifiedGallery(v);
-      }
-    }
-
     if (
       (meta.patch.gridAspectRatio || meta.patch[dvk("gridColumn")]) &&
       newValue.layout === "grid"
@@ -351,7 +376,6 @@ class ImageGallery extends EditorComponent<Value, Props> {
     if (meta.patch.gridColumn && oldValue.gridColumn < meta.patch.gridColumn) {
       newValue = patchOnColumnChange(meta.patch.gridColumn, newValue, oldValue);
     }
-
     super.handleValueChange(newValue, meta);
   }
 

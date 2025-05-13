@@ -17,6 +17,8 @@ import { hideToolbar } from "visual/component/Toolbar";
 import { DH, DW } from "visual/editorComponents/Story/utils";
 import { Draggable } from "visual/editorComponents/tools/Draggable";
 import { Value as DraggableV } from "visual/editorComponents/tools/Draggable/entities/Value";
+import { useConfig } from "visual/providers/ConfigProvider";
+import { GetConfig } from "visual/providers/ConfigProvider/types";
 import { EditorMode } from "visual/providers/EditorModeProvider";
 import { RenderType, isEditor, isView } from "visual/providers/RenderProvider";
 import { useCSS } from "visual/providers/StyleProvider/useCSS";
@@ -54,6 +56,7 @@ export interface Props<T extends Record<any, any>> extends WithClassName {
   onChange: (patch: Partial<ElementModel>) => void;
   renderContext: RenderType;
   editorMode: EditorMode;
+  getGlobalConfig: GetConfig;
   onClick?: MouseEventHandler<HTMLDivElement>;
   onDragStart?: (e: Event) => void;
   slide?: StoryAnchorAttribute;
@@ -85,6 +88,7 @@ export function WrapperComponent<T extends WithClassName & Record<any, any>>(
   }: PropsWithChildren<Props<T>>,
   ref: Ref<Element>
 ): ReactElement {
+  const config = useConfig();
   const store = useStore();
   const isAbsoluteOrFixed =
     v.elementPosition === "absolute" || v.elementPosition === "fixed";
@@ -97,7 +101,7 @@ export function WrapperComponent<T extends WithClassName & Record<any, any>>(
           vs,
           vd,
           store,
-          contexts: { renderContext, mode: editorMode }
+          contexts: { renderContext, mode: editorMode, getConfig: () => config }
         })
       : []
   });

@@ -7,6 +7,7 @@ export function cssStyleElementShopifyAddToCartSize({
   v,
   device,
   state,
+  getConfig,
   store
 }: CSSValue): string {
   const dvv = (key: string): unknown => defaultValueValue({ v, key, device });
@@ -20,9 +21,13 @@ export function cssStyleElementShopifyAddToCartSize({
   const { width: _width = 0, height: _height = 0 } = getButtonSizes(size) ?? {};
 
   const width =
-    size === "custom" ? styleSizeWidth({ v, device, state, store }) : _width;
+    size === "custom"
+      ? styleSizeWidth({ v, device, getConfig, state, store })
+      : _width;
   const height =
-    size === "custom" ? styleSizeHeight({ v, device, state, store }) : _height;
+    size === "custom"
+      ? styleSizeHeight({ v, device, getConfig, state, store })
+      : _height;
 
   return `padding: ${height}px ${width}px;`;
 }

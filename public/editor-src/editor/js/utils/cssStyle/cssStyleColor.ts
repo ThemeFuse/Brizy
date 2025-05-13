@@ -5,10 +5,10 @@ export function cssStyleColor({
   v,
   device,
   state,
-  store,
+  getConfig,
   prefix
 }: CSSValue): string {
-  const color = styleColor({ v, device, state, store, prefix });
+  const color = styleColor({ v, device, state, getConfig, prefix });
 
   return color === undefined ? "" : `color:${color};`;
 }
@@ -16,10 +16,16 @@ export function cssStyleColor({
 export function cssStyleLabelColor({
   v,
   device,
-  store,
+  getConfig,
   state
 }: CSSValue): string {
-  const color = styleColor({ v, device, state, store, prefix: "labelColor" });
+  const color = styleColor({
+    v,
+    device,
+    state,
+    getConfig,
+    prefix: "labelColor"
+  });
   return color === undefined ? "" : `color:${color};`;
 }
 
@@ -27,10 +33,10 @@ export function cssStyleCustomIconColor({
   v,
   device,
   state,
-  store,
+  getConfig,
   prefix = "color"
 }: CSSValue): string {
-  const color = styleColor({ v, device, store, state, prefix });
+  const color = styleColor({ v, device, getConfig, state, prefix });
 
   return color === undefined ? "" : `background-color:${color};`;
 }

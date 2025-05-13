@@ -1,6 +1,6 @@
 import React, {
   Children,
-  ReactNode,
+  ReactElement,
   RefObject,
   cloneElement,
   isValidElement,
@@ -34,7 +34,7 @@ interface ArgsProps extends Record<string, unknown> {
 interface Props extends Record<string, unknown> {
   selectorName?: string;
   css?: string;
-  children: ReactNode | ((props: ArgsProps) => ReactNode);
+  children: ReactElement | ((props: ArgsProps) => ReactElement);
 }
 
 const CustomCSS = ({
@@ -105,7 +105,7 @@ const CustomCSS = ({
     return cloneElement(Children.only(children), props);
   }
 
-  return null;
+  return <></>;
 };
 
 export default CustomCSS;

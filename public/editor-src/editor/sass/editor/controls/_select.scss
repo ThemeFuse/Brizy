@@ -70,7 +70,7 @@
 
   .brz-control__select-option {
     border-bottom-color: transparent !important;
-    padding-right: $control-padding + $control__arrow-size + 2; // 2 - to not override text with arrow
+    padding-inline-end: $control-padding + $control__arrow-size + 2; // 2 - to not override text with arrow
     text-overflow: ellipsis;
     overflow: hidden;
   }
@@ -79,7 +79,7 @@
 .brz-icon-svg.brz-control__select--arrow {
   position: absolute;
   top: 50%;
-  right: ($control__arrow-size + 4); // 4 - is constant
+  inset-inline-end: ($control__arrow-size + 4); // 4 - is constant
   margin-top: -0.5em;
   font-size: $control__arrow-size;
 }

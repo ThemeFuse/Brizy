@@ -17,7 +17,7 @@ const fn: ExportFunction = ($node) => {
     const initialDeviceMode = getCurrentDevice();
 
     if (initialDeviceMode === "desktop") {
-      $parallaxContainers.parallax({
+      $parallaxContainers.brzParallax({
         bgClass: "brz-bg-image-parallax"
       });
     }
@@ -26,11 +26,11 @@ const fn: ExportFunction = ($node) => {
       const device = getCurrentDevice();
 
       if (device === "desktop") {
-        $parallaxContainers.parallax({
+        $parallaxContainers.brzParallax({
           bgClass: "brz-bg-image-parallax"
         });
       } else {
-        $parallaxContainers.parallax("destroy");
+        $parallaxContainers.brzParallax("destroy");
       }
     });
 
@@ -48,9 +48,9 @@ const fn: ExportFunction = ($node) => {
             return;
           }
 
-          $parallaxContainers.parallax("paused", true);
+          $parallaxContainers.brzParallax("paused", true);
         } else {
-          $parallaxContainers.parallax("paused", true);
+          $parallaxContainers.brzParallax("paused", true);
         }
       });
     });
@@ -68,9 +68,9 @@ const fn: ExportFunction = ($node) => {
             return;
           }
 
-          $parallaxContainers.parallax("paused", false);
+          $parallaxContainers.brzParallax("paused", false);
         } else {
-          $parallaxContainers.parallax("paused", false);
+          $parallaxContainers.brzParallax("paused", false);
         }
       });
     });

@@ -192,6 +192,7 @@ class Brizy_Editor_Editor_Editor {
 			'imageSizes'      => $this->getImgSizes(),
 			'moduleGroups'    => [],
 			'l10n'            => $this->getTexts(),
+            'isRTL'           => is_rtl(),
 			'membership'      => true,
 			'elements'        => [
 				'image' => [ 'zoom' => true ],
@@ -394,11 +395,18 @@ class Brizy_Editor_Editor_Editor {
 
 
 	private function getApiConfigFields( $config, $context ) {
-		$aConfig = [
+        $homeUrl        = home_url();
+        $separatorParam = parse_url($homeUrl, PHP_URL_QUERY) !== null ? '&' : '/?';
+
+        $aConfig = [
 			'api' => [
 				'media'             => [
-					'mediaResizeUrl' => home_url(),
-					'imagePatterns'  => json_decode( '{ "full": "{{ [baseUrl] }}/?' . Brizy_Editor::prefix( '_media' ) . '={{ [fileName] }}&' . Brizy_Editor::prefix( '_crop' ) . '={{ iW%3D[iW] }}%26{{ iH%3D[iH] }}%26{{ oX%3D[oX]  }}%26{{ oY%3D[oY] }}%26{{ cW%3D[cW] }}%26{{ cH%3D[cH] }}", "original": "{{ [baseUrl] }}/?' . Brizy_Editor::prefix( '_media' ) . '={{ [fileName] }}&' . Brizy_Editor::prefix( '_crop' ) . '={{ [sizeType] }}", "split": "{{ [baseUrl] }}/?' . Brizy_Editor::prefix( '_media' ) . '={{ [fileName] }}&' . Brizy_Editor::prefix( '_crop' ) . '={{ iW%3D[iW] }}%26{{ iH%3D[iH] }}" }' ),
+					'mediaResizeUrl' => $homeUrl,
+					'imagePatterns'  => json_decode( '{
+					    "full":     "{{ [baseUrl] }}' . $separatorParam . Brizy_Editor::prefix( '_media' ) . '={{ [fileName] }}&' . Brizy_Editor::prefix( '_crop' ) . '={{ iW%3D[iW] }}%26{{ iH%3D[iH] }}%26{{ oX%3D[oX]  }}%26{{ oY%3D[oY] }}%26{{ cW%3D[cW] }}%26{{ cH%3D[cH] }}",
+					    "original": "{{ [baseUrl] }}' . $separatorParam . Brizy_Editor::prefix( '_media' ) . '={{ [fileName] }}&' . Brizy_Editor::prefix( '_crop' ) . '={{ [sizeType] }}",
+					    "split":    "{{ [baseUrl] }}' . $separatorParam . Brizy_Editor::prefix( '_media' ) . '={{ [fileName] }}&' . Brizy_Editor::prefix( '_crop' ) . '={{ iW%3D[iW] }}%26{{ iH%3D[iH] }}"
+					}' ),
 				],
 				'customFile'        => [
 					'fileUrl' => home_url( '?' . Brizy_Editor::prefix( '_attachment' ) . '=' ),
@@ -1302,6 +1310,17 @@ class Brizy_Editor_Editor_Editor {
 				'classes'       => array_values( array_filter( $item->classes ) ),
 				'xfn'           => get_post_meta( $item->ID, '_menu_item_xfn', true ),
 			);
+
+            $object_type    = get_post_meta( $item->ID, '_menu_item_object', true );
+            $brz_post_types = Brizy_Editor::get()->supported_post_types();
+            if ( in_array( $object_type, $brz_post_types ) ) {
+                $object_id = get_post_meta( $item->ID, '_menu_item_object_id', true );
+                $post      = get_post( $object_id );
+                if ( $post && Brizy_Editor_Entity::isBrizyEnabled( $post->ID ) ) {
+                    $item_value['editorUrl'] = Brizy_Editor_Entity::getEditUrl($post->ID);
+                }
+            }
+
 			$an_item               = (object) array(
 				'type' => 'MenuItem',
 			);
@@ -1737,6 +1756,8 @@ class Brizy_Editor_Editor_Editor {
 			'getDynamicContentPlaceholders' => $pref . Brizy_Editor_API::AJAX_GET_DYNAMIC_CONTENT,
 			'adobeFontsUrl'                 => $pref . Brizy_Editor_API::AJAX_GET_ADOBE_FONTS,
 		);
+
+		$actions = apply_filters('brizy_editor_api_actions', $actions);
 
 		return $actions;
 	}

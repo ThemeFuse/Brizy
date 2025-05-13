@@ -1,5 +1,5 @@
 import React, { ComponentType, ReactElement } from "react";
-import { useConfig } from "visual/global/hooks";
+import { useConfig } from "visual/providers/ConfigProvider";
 import { getComponents } from "./items";
 
 const objectIsReactClassObject = (o: unknown): o is { displayName: string } => {

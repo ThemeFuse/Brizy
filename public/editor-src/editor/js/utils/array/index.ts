@@ -250,3 +250,8 @@ export const eq = <T>(eq: IsEqual<T>, a: T[], b: T[]): boolean => {
 export const eliminateItems = <T>(arr: T[], toRemove: unknown[]): T[] => {
   return arr.filter((el) => !toRemove.includes(el));
 };
+
+export const overwriteMerge = <T>(
+  _: Array<T>,
+  sourceArray: Array<T>
+): Array<T> => sourceArray;

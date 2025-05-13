@@ -13,7 +13,7 @@ import {
   SizeType,
   defaultCrop
 } from "visual/global/Config/types/configs/common";
-import { useConfig } from "visual/global/hooks";
+import { useConfig } from "visual/providers/ConfigProvider";
 import { isEditor } from "visual/providers/RenderProvider";
 import { useCSS } from "visual/providers/StyleProvider/useCSS";
 import { getImageUrl } from "visual/utils/image";
@@ -27,7 +27,7 @@ import { styleImage } from "../styles";
 import { Device, ImageProps, ImageSizes } from "../types";
 import { calcImageSizes } from "../utils";
 
-interface RetinaData {
+export interface RetinaData {
   src: string;
   fileName: string;
   sizeType: SizeType;
@@ -312,7 +312,8 @@ const SimpleImage = (props: ImageProps): ReactElement => {
       store,
       contexts: {
         renderContext,
-        mode: editorMode
+        mode: editorMode,
+        getConfig: () => config
       }
     })
   });

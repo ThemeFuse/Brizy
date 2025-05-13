@@ -243,6 +243,7 @@ class Details extends Component<AllProps, State> {
   render(): ReactElement {
     const {
       type,
+      config,
       data: { name: title, pages, styles = [], pro }
     } = this.props;
 
@@ -251,10 +252,10 @@ class Details extends Component<AllProps, State> {
     const isStory = type === "stories";
     const currentPage = pages.find(({ id }) => id === active);
     const activePageSrc =
-      currentPage?.thumbnailSrc ?? placeholderBlockThumbnailUrl();
+      currentPage?.thumbnailSrc ?? placeholderBlockThumbnailUrl(config);
 
     const renderSectionPage = pages.map((el, index) => {
-      const pageSrc = el.thumbnailSrc ?? placeholderBlockThumbnailUrl();
+      const pageSrc = el.thumbnailSrc ?? placeholderBlockThumbnailUrl(config);
 
       const className = classnames(
         "brz-ed-popup-two-details-page-select",

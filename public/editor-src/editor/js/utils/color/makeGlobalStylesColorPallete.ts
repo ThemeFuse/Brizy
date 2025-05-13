@@ -1,4 +1,3 @@
-import Conf from "visual/global/Config";
 import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { hexToRgb } from "visual/utils/color";
 import { isExternalPopup } from "visual/utils/models/modes";
@@ -17,10 +16,9 @@ export const makeStylePaletteCSSVar = (
 };
 
 export const makeGlobalStylesColorPalette = (
-  palettes: { id: string; hex: string }[]
+  palettes: { id: string; hex: string }[],
+  config: ConfigCommon
 ): string => {
-  const config = Conf.getAll();
-
   const vars = palettes
     .map(
       ({ id, hex }) => `${makeStylePaletteCSSVar(id, config)}:${hexToRgb(hex)};`

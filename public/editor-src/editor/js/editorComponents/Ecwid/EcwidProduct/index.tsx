@@ -19,6 +19,8 @@ import { eq } from "visual/libs/Ecwid/types/EcwidConfig";
 import { pageSelector } from "visual/redux/selectors";
 import { EcwidProductPage } from "visual/types/Page";
 import { makePlaceholder } from "visual/utils/dynamicContent";
+import { getEcwidShopPathPlaceholder } from "visual/utils/ecwid";
+import { makeAttr } from "visual/utils/i18n/attribute";
 import { attachRefs } from "visual/utils/react";
 import * as Str from "visual/utils/reader/string";
 import { encodeToString } from "visual/utils/string";
@@ -1591,6 +1593,10 @@ export class EcwidProduct extends EditorComponent<Value> {
       content: "{{ecwid_store_id}}"
     });
 
+    const attr = {
+      [makeAttr("shop-path")]: getEcwidShopPathPlaceholder()
+    };
+
     return (
       <Wrapper {...this.makeWrapperProps({ className })}>
         <div
@@ -1599,6 +1605,7 @@ export class EcwidProduct extends EditorComponent<Value> {
           data-default-product-id={defaultProductId}
           data-store-id={storeId}
           data-storefront={encodeToString(cfg)}
+          {...attr}
         />
       </Wrapper>
     );

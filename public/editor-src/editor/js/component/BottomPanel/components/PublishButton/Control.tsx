@@ -8,7 +8,8 @@ import React, {
 } from "react";
 import Tooltip, { TooltipItem } from "visual/component/Controls/Tooltip";
 import { EditorIcon } from "visual/component/EditorIcon";
-import { Roles } from "visual/component/Roles";
+import { Roles, currentUserRole } from "visual/component/Roles";
+import { useConfig } from "visual/providers/ConfigProvider";
 import { ReduxState } from "visual/redux/types";
 import { Label } from "./Label";
 
@@ -32,6 +33,9 @@ export interface Props {
 }
 
 const Addons = ({ items }: { items: Item[] }): ReactElement => {
+  const config = useConfig();
+  const currentRole = currentUserRole(config);
+
   const overlay = useMemo(() => {
     return items.map((item, index) => {
       const { title, icon, roles = [], loading, onClick } = item;
@@ -52,14 +56,14 @@ const Addons = ({ items }: { items: Item[] }): ReactElement => {
       );
 
       return roles.length > 0 ? (
-        <Roles key={index} allow={roles}>
+        <Roles key={index} currentRole={currentRole} allow={roles}>
           {content}
         </Roles>
       ) : (
         <Fragment key={index}>{content}</Fragment>
       );
     });
-  }, [items]);
+  }, [items, currentRole]);
 
   return (
     <Tooltip

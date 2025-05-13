@@ -8,10 +8,81 @@
   width: 100%;
   overflow: hidden;
 
+  &--withHover {
+    &:hover {
+      @media (min-width: 992px) {
+        .brz-img,
+        .dynamic-image {
+          opacity: 0;
+        }
+
+        .brz-img__hover {
+          opacity: 1;
+        }
+      }
+    }
+  }
+
+  .brz-img__hover-population-wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .brz-img__hover-population,
+  .brz-img__hover-population-wrapper {
+    .brz-dc-hover-visible {
+      opacity: 1;
+    }
+  }
+
+  .brz-img__hover {
+    position: absolute;
+    top: 0;
+    display: none;
+
+    @media (min-width: 992px) {
+      display: block;
+    }
+
+    img {
+      width: 100%;
+      height: 100%;
+    }
+
+    &-svg {
+      position: absolute;
+      top: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    &.brz-img__hover-preview:not(.brz-img__hover-gif) {
+      width: 100%;
+      height: 100%;
+    }
+
+    &-population {
+      height: 100%;
+      width: 100%;
+
+      img {
+        object-fit: cover;
+      }
+    }
+
+    &-size--original img {
+      object-fit: cover;
+    }
+  }
+
   .brz-img {
     max-width: 100%;
 
-    &-svg, &-external {
+    &-svg,
+    &-external {
       width: 100%;
       height: 100%;
     }

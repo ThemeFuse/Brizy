@@ -22,6 +22,7 @@
     "bgImageExtension": "",
 
     "bgPopulation": "",
+    "hoverBgPopulation": null,
     "bgPopulationEntityType": "",
     "bgPopulationEntityId": "",
 

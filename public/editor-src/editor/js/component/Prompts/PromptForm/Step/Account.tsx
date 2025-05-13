@@ -38,6 +38,7 @@ interface State {
 
 class Account extends Component<Props, State> {
   static contextType = Context;
+  declare context: React.ContextType<typeof Context>;
 
   constructor(props: Props, context: Props) {
     super(props);
@@ -76,15 +77,21 @@ class Account extends Component<Props, State> {
   };
 
   handleDisconnect = async (): Promise<void> => {
-    const { config } = this.props;
+    const { config, formId } = this.props;
 
     const {
       app: { id, data: appData },
-      formId,
       onChange,
       onDisconnectApp,
       onChangeProgress
     } = this.context;
+
+    if (!appData) {
+      this.setState({
+        error: t("Missing app inside context")
+      });
+      return;
+    }
 
     this.setState({
       nextLoading: true,
@@ -152,14 +159,20 @@ class Account extends Component<Props, State> {
   };
 
   handleNext = async (): Promise<void> => {
-    const { config } = this.props;
+    const { config, formId } = this.props;
 
     const {
       app: { id, data: appData },
-      formId,
       onChange,
       onChangeNext
     } = this.context;
+
+    if (!appData) {
+      this.setState({
+        error: t("Missing app inside context")
+      });
+      return;
+    }
 
     const { active } = this.state;
 

@@ -65,7 +65,7 @@ export default class PromptIcon extends Component<Props, State> {
   };
 
   render() {
-    const { name, type, opened = false, onClose, config } = this.props;
+    const { name, type, opened = false, onClose = noop, config } = this.props;
     const { typeId, categoryId, search } = this.state;
     const categories = [
       {

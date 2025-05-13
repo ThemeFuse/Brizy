@@ -5,12 +5,11 @@ import type { OutputStyle } from "visual/utils/cssStyle/types";
 
 export function style(data: DynamicStylesProps<ElementModel>): OutputStyle {
   const styles = {
-    ".brz &&:hover": {
+    ".brz &&": {
       standart: ["cssStyleContentAlign"]
     },
-    ".brz &&:hover *": {
+    ".brz && *": {
       standart: [
-        "cssStyleColor",
         "cssStyleTypography2FontFamily",
         "cssStyleTypography2FontSize",
         "cssStyleTypography2LineHeight",
@@ -19,6 +18,9 @@ export function style(data: DynamicStylesProps<ElementModel>): OutputStyle {
         "cssStyleTypography2FontVariation",
         "cssStyleTextTransforms"
       ]
+    },
+    ".brz &&:hover *": {
+      standart: ["cssStyleColor"]
     },
     ".brz && > .brz-a.brz-a:not(.brz-btn):hover": {
       standart: ["cssStyleColor"]

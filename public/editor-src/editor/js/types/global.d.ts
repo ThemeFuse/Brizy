@@ -16,6 +16,7 @@ import { Autoplay, EffectFade } from "swiper/modules";
 import { Dropdown } from "visual/libs/dropdown";
 import { initEkklesiaPopups } from "visual/libs/group-7";
 import { Store } from "visual/redux/store";
+import Chart from "../libs/Chart";
 import Gallery from "../libs/gallery";
 
 export type GalleryIsotope = Isotope;
@@ -24,6 +25,8 @@ export type GalleryIsotopeType = typeof Isotope;
 export type GalleryJustifiedType = typeof Gallery;
 export type SwiperType = Swiper;
 export type SwiperInstanceType = typeof Swiper;
+export type ChartInstanceType = typeof Chart;
+export type ChartType = Chart;
 
 // Our own jquery plugins
 
@@ -61,16 +64,11 @@ interface BrizyProLibs {
   Lottie?: typeof Lottie;
   DotLottie?: typeof DotLottie;
   Gallery?: typeof Gallery;
+  Chart?: ChartInstanceType;
 }
 
 declare global {
   interface WPMediaFrame {
-    (config: {
-      library: {
-        type: string;
-      };
-      states: WPMediaLibrary;
-    }): WPMediaFrame;
     on: (name: "select" | "close", cb: () => void) => void;
     open: () => void;
     detach: () => void;
@@ -87,6 +85,13 @@ declare global {
     };
     query: (query: { type: "image" }) => WPMediaLibrary;
     state: () => WPMediaLibrary;
+
+    (config: {
+      library: {
+        type: string;
+      };
+      states: WPMediaLibrary;
+    }): WPMediaFrame;
   }
 
   namespace NodeJS {
@@ -135,7 +140,7 @@ declare global {
   }
 
   interface JQuery {
-    parallax(p: unknown, x?: boolean): void;
+    brzParallax(p: unknown, x?: boolean): void;
     backgroundVideo(b: unknown, c?: unknown): void;
     select2(s: {
       width?: string;

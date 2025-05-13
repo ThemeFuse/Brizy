@@ -8,6 +8,7 @@ import {
   ChoicesAsync,
   ChoicesSync
 } from "visual/component/Options/types/dev/Select/types";
+import { RuleList } from "visual/component/Prompts/PromptConditions/Rules/types";
 import { Ref } from "visual/component/Prompts/PromptConditions/Rules/utils/api";
 import { ConfigTab as PromptFormTab } from "visual/component/Prompts/PromptForm/types";
 import { FormInputTypesName } from "visual/editorComponents/Form2/Form2Field/types";
@@ -136,7 +137,6 @@ export enum LeftSidebarOptionsIds {
   collaboration = "collaboration",
   deviceMode = "deviceMode",
   pageSettings = "pageSettings",
-  settings = "settings",
   more = "more"
 }
 
@@ -166,7 +166,6 @@ interface LeftSidebarCommonOption extends LeftSidebarOptionBase {
     | LeftSidebarOptionsIds.collaboration
     | LeftSidebarOptionsIds.deviceMode
     | LeftSidebarOptionsIds.pageSettings
-    | LeftSidebarOptionsIds.settings
     | LeftSidebarOptionsIds.more;
 }
 
@@ -248,6 +247,24 @@ export interface Theme {
     "--active-color"?: string;
     "--light-gray"?: string;
   };
+}
+
+export interface MenuSimple {
+  count: number;
+  description: string;
+  filter: string;
+  name: string;
+  parent: number;
+  slug: string;
+  taxonomy: string;
+  term_group: number;
+  term_id: number;
+  term_taxonomy_id: number;
+}
+
+export interface Sidebar {
+  id: string;
+  title: string;
 }
 
 export interface Video {
@@ -517,6 +534,12 @@ export interface API {
         rej: Response<string>,
         extra: { rules: Array<Rule>; dataVersion: number }
       ) => void;
+      getRuleList?: (res: Response<Array<Rule>>, rej: Response<string>) => void;
+      getGroupList?: (
+        res: Response<Array<RuleList[]>>,
+        rej: Response<string>,
+        type: "block" | "popup"
+      ) => void;
     };
   };
 
@@ -571,6 +594,113 @@ export interface API {
       extra: ScreenshotData & { id: string }
     ) => void;
   };
+
+  menu?: {
+    getMenus?: {
+      handler: (res: Response<MenuSimple[]>, rej: Response<string>) => void;
+    };
+  };
+
+  featuredImage?: {
+    updateFeaturedImage?: (
+      res: Response<{ uid: string }>,
+      rej: Response<string>,
+      attachmentId: string
+    ) => void;
+    updateFeaturedImageFocalPoint?: (
+      res: Response<[]>,
+      rej: Response<string>,
+      data: {
+        attachmentId: string;
+        pointX: string;
+        pointY: string;
+      }
+    ) => void;
+    removeFeaturedImage?: (
+      res: Response<undefined>,
+      rej: Response<string>
+    ) => void;
+  };
+
+  shortcodeContent?: {
+    handler: (
+      res: Response<string>,
+      rej: Response<string>,
+      shortcode: string
+    ) => void;
+  };
+
+  authors?: {
+    getAuthors?: (
+      res: Response<{ ID: number; display_name: string }[]>,
+      rej: Response<string>,
+      props: { search?: string; include?: string[]; abortSignal?: AbortSignal }
+    ) => void;
+  };
+
+  posts?: {
+    getPosts?: (
+      res: Response<{ ID: number; title: string; permalink: string }[]>,
+      rej: Response<string>,
+      data: {
+        search?: string;
+        include?: string[];
+        postType?: string[];
+        excludePostType?: string[];
+        abortSignal?: AbortSignal;
+      }
+    ) => void;
+    getPostTaxonomies?: (
+      res: Response<
+        {
+          name: string;
+          label: string;
+          public: boolean;
+          hierarchical: boolean;
+          labels: { name: string; singular_name: string };
+        }[]
+      >,
+      rej: Response<string>,
+      data: {
+        taxonomy: string;
+        abortSignal?: AbortSignal;
+      }
+    ) => void;
+  };
+
+  terms?: {
+    getTerms: (
+      res: Response<
+        {
+          name: string;
+          term_id: number;
+          slug: string;
+        }[]
+      >,
+      rej: Response<string>,
+      taxonomy: string
+    ) => void;
+    getTermsBy: (
+      res: Response<
+        {
+          term_id: number;
+          name: string;
+          taxonomy: string;
+          taxonomy_name: string;
+        }[]
+      >,
+      rej: Response<string>,
+      data: {
+        include?: [string, string][];
+        search?: string;
+        abortSignal?: AbortSignal;
+      }
+    ) => void;
+  };
+
+  sidebars?: {
+    getSidebars?: (res: Response<Sidebar[]>, rej: Response<string>) => void;
+  };
 }
 
 interface _ConfigCommon<Mode> {
@@ -605,7 +735,7 @@ interface _ConfigCommon<Mode> {
 
   user?: User;
 
-  branding: {
+  branding?: {
     name: string;
   };
   editorVersion: string;
@@ -616,10 +746,10 @@ interface _ConfigCommon<Mode> {
    */
   mode: Mode;
 
-  taxonomies: Taxonomy[]; // is this property common or just wp?
-  postTypesTaxs: PostTypesTax[]; // is this property common or just wp?
+  taxonomies?: Taxonomy[]; // is this property common or just wp?
+  postTypesTaxs?: PostTypesTax[]; // is this property common or just wp?
 
-  imageSizes: ImageDataSize[];
+  imageSizes?: ImageDataSize[];
 
   multilanguage?: boolean;
   membership?: boolean;
@@ -666,6 +796,15 @@ interface _ConfigCommon<Mode> {
       imagePointer?: boolean;
       imageZoom?: boolean;
       backgroundPointer?: boolean;
+      internalLink?: boolean;
+      linkUpload?: boolean;
+      link?: {
+        internalLink?: boolean;
+        linkExternal?: boolean;
+        linkUpload?: boolean;
+        linkAnchor?: boolean;
+        linkPopup?: boolean;
+      };
     };
 
     //#endregion Features
@@ -865,6 +1004,12 @@ interface _ConfigCommon<Mode> {
   // OnUpdate are triggered outside the editor when
   // the thirty party app want to update the page
   onUpdate: (res: Response<PublishData>, config?: ConfigCommon) => void;
+
+  // `OnCompile` is triggered from outside the editor
+  // when a third-party app wants to compile the page, ignoring
+  // comparisons between the initial data and modified data.
+  // `OnCompile` forces the page, project to compile, bypassing state comparisons.
+  onCompile: (res: Response<PublishData>) => void;
 
   //#endregion
 
@@ -1099,21 +1244,12 @@ interface _ConfigCommon<Mode> {
       api?: {
         //#region shopify api handlers
 
-        metafieldsLoad?: {
+        getMetafields?: {
           handler: (
             res: Response<ChoicesSync>,
             rej: Response<string>,
             args: {
-              sourceType: string;
-            }
-          ) => void;
-        };
-        blogPostMetaLoad?: {
-          handler: (
-            res: Response<ChoicesSync>,
-            rej: Response<string>,
-            args: {
-              sourceType: string;
+              slug: string;
             }
           ) => void;
         };

@@ -4,7 +4,6 @@ import { hydrate } from "visual/redux/actions";
 import { createStore } from "visual/redux/store";
 import { isGlobalBlock, isGlobalPopup } from "visual/types/utils";
 import { systemFont } from "visual/utils/fonts/utils";
-import { uuid } from "visual/utils/uuid";
 import { MValue } from "visual/utils/value";
 import { compileProject } from "../../common/compileProject";
 import { globalBlocksToStatic } from "../../common/toStatic/globalBlocksToStatic";
@@ -34,7 +33,6 @@ export async function bootstrap(data: Props): Promise<Static> {
   const _fonts = deepMerge(fonts, {
     system: { data: systemFont }
   });
-  const configId = uuid();
 
   store.dispatch(
     //@ts-expect-error: To Ts
@@ -44,7 +42,6 @@ export async function bootstrap(data: Props): Promise<Static> {
       fonts: _fonts,
       globalBlocks,
       config,
-      configId,
       projectStatus: {},
       editorMode
     })

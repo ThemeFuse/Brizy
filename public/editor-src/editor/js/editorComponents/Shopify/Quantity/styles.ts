@@ -5,7 +5,7 @@ import { OutputStyle } from "visual/utils/cssStyle/types";
 
 export function style(data: DynamicStylesProps<ElementModel>): OutputStyle {
   const styles = {
-    ".brz &&:hover": {
+    ".brz &&": {
       standart: [
         "cssStyleTypography2FontFamily",
         "cssStyleTypography2FontSize",
@@ -13,13 +13,17 @@ export function style(data: DynamicStylesProps<ElementModel>): OutputStyle {
         "cssStyleTypography2LetterSpacing",
         "cssStyleTypography2FontVariation",
         "cssStyleTextTransforms",
+        "cssStyleElementShopifyQuantityLineHeight",
+        "cssStyleBorderRadius",
+        "cssStyleSizeWidth"
+      ]
+    },
+    ".brz &&:hover": {
+      standart: [
         "cssStyleColor",
         "cssStyleBorder",
         "cssStyleBgColor",
         "cssStyleBoxShadow",
-        "cssStyleBorderRadius",
-        "cssStyleElementShopifyQuantityLineHeight",
-        "cssStyleSizeWidth",
         "cssStyleColor"
       ]
     }

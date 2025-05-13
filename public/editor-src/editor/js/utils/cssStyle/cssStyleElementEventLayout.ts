@@ -1,6 +1,5 @@
 import { Num, Str } from "@brizy/readers";
 import { WithRenderContext } from "visual/providers/RenderProvider";
-import { configSelector } from "visual/redux/selectors";
 import { getColor } from "visual/utils/color";
 import { isNullish } from "visual/utils/value";
 import { defaultValueValue } from "../onChange";
@@ -17,6 +16,7 @@ export const cssStyleElementEventLayoutViewTypography = ({
   v,
   device,
   state,
+  getConfig,
   store,
   renderContext
 }: CSSValue & WithRenderContext): string => {
@@ -24,6 +24,7 @@ export const cssStyleElementEventLayoutViewTypography = ({
     v,
     device,
     state,
+    getConfig,
     store,
     prefix: "layoutViewTypography",
     renderContext
@@ -34,12 +35,14 @@ export const cssStyleElementEventLayoutViewBgColor = ({
   v,
   device,
   state,
+  getConfig,
   store
 }: CSSValue): string => {
   return cssStyleBgColor({
     v,
     device,
     state,
+    getConfig,
     store,
     prefix: "viewBg"
   });
@@ -49,12 +52,14 @@ export const cssStyleElementEventLayoutViewBgGradient = ({
   v,
   device,
   state,
+  getConfig,
   store
 }: CSSValue): string => {
   return cssStyleBgGradient({
     v,
     device,
     state,
+    getConfig,
     store,
     prefix: "view"
   });
@@ -63,6 +68,7 @@ export const cssStyleElementEventLayoutViewBgGradient = ({
 export const cssStyleElementEventLayoutViewBgColorActive = ({
   v,
   device,
+  getConfig,
   store
 }: CSSValue): string => {
   return cssStyleBgColor({
@@ -70,6 +76,7 @@ export const cssStyleElementEventLayoutViewBgColorActive = ({
     device,
     state: ACTIVE,
     store,
+    getConfig,
     prefix: "viewBg"
   });
 };
@@ -78,7 +85,7 @@ export const cssStyleElementEventLayoutListTitleBorderBottom = ({
   v,
   device,
   state,
-  store
+  getConfig
 }: CSSValue): string => {
   const dvv = (key: string): unknown =>
     defaultValueValue({ v, key, device, state });
@@ -100,7 +107,7 @@ export const cssStyleElementEventLayoutListTitleBorderBottom = ({
     return "";
   }
 
-  const config = configSelector(store.getState());
+  const config = getConfig();
 
   const _borderColor = getColor(
     borderPalette,
@@ -116,6 +123,7 @@ export const cssStyleElementEventLayoutListPaginationTypography = ({
   v,
   device,
   state,
+  getConfig,
   store,
   renderContext
 }: CSSValue & WithRenderContext): string => {
@@ -123,6 +131,7 @@ export const cssStyleElementEventLayoutListPaginationTypography = ({
     v,
     device,
     state,
+    getConfig,
     store,
     prefix: "listPaginationTypography",
     renderContext
@@ -133,12 +142,14 @@ export const cssStyleElementEventLayoutListPaginationColor = ({
   v,
   device,
   state,
+  getConfig,
   store
 }: CSSValue): string => {
   return cssStyleColor({
     v,
     device,
     state,
+    getConfig,
     store,
     prefix: "listPaginationColor"
   });
@@ -148,12 +159,14 @@ export const cssStyleElementEventLayoutListPaginationArrowsColor = ({
   v,
   device,
   state,
+  getConfig,
   store
 }: CSSValue): string => {
   return cssStyleColor({
     v,
     device,
     state,
+    getConfig,
     store,
     prefix: "listPaginationArrowsColor"
   });
@@ -175,6 +188,7 @@ export const cssStyleElementEventLayoutGroupingDayTypography = ({
   v,
   device,
   state,
+  getConfig,
   store,
   renderContext
 }: CSSValue & WithRenderContext): string => {
@@ -182,6 +196,7 @@ export const cssStyleElementEventLayoutGroupingDayTypography = ({
     v,
     device,
     state,
+    getConfig,
     store,
     prefix: "listTitleTypography",
     renderContext
@@ -192,6 +207,7 @@ export const cssStyleElementEventLayoutGroupingDateTypography = ({
   v,
   device,
   state,
+  getConfig,
   store,
   renderContext
 }: CSSValue & WithRenderContext): string => {
@@ -199,6 +215,7 @@ export const cssStyleElementEventLayoutGroupingDateTypography = ({
     v,
     device,
     state,
+    getConfig,
     store,
     prefix: "groupingDateTypography",
     renderContext
@@ -209,12 +226,14 @@ export const cssStyleElementEventLayoutGroupingDayColor = ({
   v,
   device,
   state,
+  getConfig,
   store
 }: CSSValue): string => {
   return cssStyleColor({
     v,
     device,
     state,
+    getConfig,
     store,
     prefix: "listTitleColor"
   });
@@ -224,12 +243,14 @@ export const cssStyleElementEventLayoutGroupingDateColor = ({
   v,
   device,
   state,
+  getConfig,
   store
 }: CSSValue): string => {
   return cssStyleColor({
     v,
     device,
     state,
+    getConfig,
     store,
     prefix: "groupingDateColor"
   });
@@ -239,6 +260,7 @@ export const cssStyleElementEventLayoutListItemDateTypography = ({
   v,
   device,
   state,
+  getConfig,
   store,
   renderContext
 }: CSSValue & WithRenderContext): string => {
@@ -246,6 +268,7 @@ export const cssStyleElementEventLayoutListItemDateTypography = ({
     v,
     device,
     state,
+    getConfig,
     store,
     prefix: "listItemDateTypography",
     renderContext
@@ -256,12 +279,14 @@ export const cssStyleElementEventLayoutListItemDateColor = ({
   v,
   device,
   state,
+  getConfig,
   store
 }: CSSValue): string => {
   return cssStyleColor({
     v,
     device,
     state,
+    getConfig,
     store,
     prefix: "listItemDateColor"
   });
@@ -271,12 +296,14 @@ export const cssStyleElementEventLayoutListItemDateBackgroundColor = ({
   v,
   device,
   state,
+  getConfig,
   store
 }: CSSValue): string => {
   return cssStyleBgColor({
     v,
     device,
     state,
+    getConfig,
     store,
     prefix: "listItemDateBg"
   });
@@ -286,12 +313,14 @@ export function cssStyleElementEventLayoutListItemDateBackgroundGradient({
   v,
   device,
   state,
+  getConfig,
   store
 }: CSSValue): string {
   return cssStyleBgGradient({
     v,
     device,
     state,
+    getConfig,
     store,
     prefix: "listItemDate"
   });
@@ -301,6 +330,7 @@ export const cssStyleElementEventLayoutListItemTitleTypography = ({
   v,
   device,
   state,
+  getConfig,
   store,
   renderContext
 }: CSSValue & WithRenderContext): string => {
@@ -308,6 +338,7 @@ export const cssStyleElementEventLayoutListItemTitleTypography = ({
     v,
     device,
     state,
+    getConfig,
     store,
     prefix: "listItemTitleTypography",
     renderContext
@@ -318,12 +349,14 @@ export const cssStyleElementEventLayoutListItemTitleColor = ({
   v,
   device,
   state,
+  getConfig,
   store
 }: CSSValue): string => {
   return cssStyleColor({
     v,
     device,
     state,
+    getConfig,
     store,
     prefix: "listItemTitleColor"
   });
@@ -333,6 +366,7 @@ export const cssStyleElementEventLayoutListItemMetaTypography = ({
   v,
   device,
   state,
+  getConfig,
   store,
   renderContext
 }: CSSValue & WithRenderContext): string => {
@@ -340,6 +374,7 @@ export const cssStyleElementEventLayoutListItemMetaTypography = ({
     v,
     device,
     state,
+    getConfig,
     store,
     prefix: "listItemMetaTypography",
     renderContext
@@ -350,12 +385,14 @@ export const cssStyleElementEventLayoutListItemMetaColor = ({
   v,
   device,
   state,
+  getConfig,
   store
 }: CSSValue): string => {
   return cssStyleColor({
     v,
     device,
     state,
+    getConfig,
     store,
     prefix: "listItemMetaColor"
   });
@@ -365,6 +402,7 @@ export const cssStyleElementEventLayoutCalendarHeadingTypography = ({
   v,
   device,
   state,
+  getConfig,
   store,
   renderContext
 }: CSSValue & WithRenderContext): string => {
@@ -372,6 +410,7 @@ export const cssStyleElementEventLayoutCalendarHeadingTypography = ({
     v,
     device,
     state,
+    getConfig,
     store,
     prefix: "calendarHeadingTypography",
     renderContext
@@ -382,12 +421,14 @@ export const cssStyleElementEventLayoutCalendarHeadingColor = ({
   v,
   device,
   state,
+  getConfig,
   store
 }: CSSValue): string => {
   return cssStyleColor({
     v,
     device,
     state,
+    getConfig,
     store,
     prefix: "calendarHeadingColor"
   });
@@ -397,6 +438,7 @@ export const cssStyleElementEventLayoutCalendarDaysTypography = ({
   v,
   device,
   state,
+  getConfig,
   store,
   renderContext
 }: CSSValue & WithRenderContext): string => {
@@ -404,6 +446,7 @@ export const cssStyleElementEventLayoutCalendarDaysTypography = ({
     v,
     device,
     state,
+    getConfig,
     store,
     prefix: "calendarDaysTypography",
     renderContext
@@ -414,12 +457,14 @@ export const cssStyleElementEventLayoutCalendarDaysColor = ({
   v,
   device,
   state,
+  getConfig,
   store
 }: CSSValue): string => {
   return cssStyleColor({
     v,
     device,
     state,
+    getConfig,
     store,
     prefix: "calendarDaysColor"
   });
@@ -429,12 +474,14 @@ export const cssStyleElementEventLayoutCalendarDaysBorder = ({
   v,
   device,
   state,
+  getConfig,
   store
 }: CSSValue): string => {
   return cssStyleBorder({
     v,
     device,
     state,
+    getConfig,
     store,
     prefix: "calendarDays"
   });
@@ -444,12 +491,14 @@ export const cssStyleElementEventLayoutCalendarDaysBgColor = ({
   v,
   device,
   state,
+  getConfig,
   store
 }: CSSValue): string => {
   return cssStyleBgColor({
     v,
     device,
     state,
+    getConfig,
     store,
     prefix: "calendarDaysBg"
   });
@@ -459,12 +508,14 @@ export const cssStyleElementEventLayoutCalendarDaysBgGradient = ({
   v,
   device,
   state,
+  getConfig,
   store
 }: CSSValue): string => {
   return cssStyleBgGradient({
     v,
     device,
     state,
+    getConfig,
     store,
     prefix: "calendarDays"
   });
@@ -474,12 +525,14 @@ export const cssStyleElementEventLayoutViewColor = ({
   v,
   device,
   state,
+  getConfig,
   store
 }: CSSValue): string => {
   return cssStyleColor({
     v,
     device,
     state,
+    getConfig,
     store,
     prefix: "viewColor"
   });
@@ -488,6 +541,7 @@ export const cssStyleElementEventLayoutViewColor = ({
 export const cssStyleElementEventLayoutViewColorActive = ({
   v,
   device,
+  getConfig,
   store
 }: CSSValue): string => {
   return cssStyleColor({
@@ -495,6 +549,7 @@ export const cssStyleElementEventLayoutViewColorActive = ({
     device,
     state: ACTIVE,
     store,
+    getConfig,
     prefix: "viewColor"
   });
 };
@@ -503,12 +558,14 @@ export const cssStyleElementEventLayoutViewBorder = ({
   v,
   device,
   state,
+  getConfig,
   store
 }: CSSValue): string => {
   return cssStyleBorder({
     v,
     device,
     state,
+    getConfig,
     store,
     prefix: "view"
   });
@@ -517,6 +574,7 @@ export const cssStyleElementEventLayoutViewBorder = ({
 export const cssStyleElementEventLayoutViewBorderActive = ({
   v,
   device,
+  getConfig,
   store
 }: CSSValue): string => {
   return cssStyleBorder({
@@ -524,6 +582,7 @@ export const cssStyleElementEventLayoutViewBorderActive = ({
     device,
     state: ACTIVE,
     store,
+    getConfig,
     prefix: "view"
   });
 };
@@ -531,6 +590,7 @@ export const cssStyleElementEventLayoutViewBorderActive = ({
 export const cssStyleElementEventLayoutViewBgGradientActive = ({
   v,
   device,
+  getConfig,
   store
 }: CSSValue): string => {
   return cssStyleBgGradient({
@@ -538,6 +598,7 @@ export const cssStyleElementEventLayoutViewBgGradientActive = ({
     device,
     state: ACTIVE,
     store,
+    getConfig,
     prefix: "view"
   });
 };
@@ -546,12 +607,14 @@ export const cssStyleElementEventLayoutCalendarEventsColor = ({
   v,
   device,
   state,
+  getConfig,
   store
 }: CSSValue): string => {
   return cssStyleColor({
     v,
     device,
     state,
+    getConfig,
     store,
     prefix: "eventsColor"
   });
@@ -561,6 +624,7 @@ export const cssStyleElementEventLayoutCalendarEventsTypography = ({
   v,
   device,
   state,
+  getConfig,
   store,
   renderContext
 }: CSSValue & WithRenderContext): string => {
@@ -568,6 +632,7 @@ export const cssStyleElementEventLayoutCalendarEventsTypography = ({
     v,
     device,
     state,
+    getConfig,
     store,
     prefix: "eventsTypography",
     renderContext
@@ -578,12 +643,14 @@ export function cssStyleElementEventLayoutTabAlign({
   v,
   device,
   state,
+  getConfig,
   store
 }: CSSValue): string {
   return cssStyleFlexHorizontalAlign({
     v,
     device,
     state,
+    getConfig,
     store,
     prefix: "tab"
   });

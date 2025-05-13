@@ -1,12 +1,16 @@
-import BackgroundGradient from "./BackgroundGradient";
+import { getBackgroundGradient } from "./BackgroundGradient";
 
-class TextBackgroundGradient extends BackgroundGradient {
-  static className = "text-gradient-bg";
-  static setValue(value, node) {
-    super.setValue(value, node);
-    node.classList.remove("brz-image-gradient");
+export const getTextBackgroundGradient = (getConfig) => {
+  const BackgroundGradient = getBackgroundGradient(getConfig);
+
+  class TextBackgroundGradient extends BackgroundGradient {
+    static className = "text-gradient-bg";
+    static setValue(value, node) {
+      super.setValue(value, node);
+      node.classList.remove("brz-image-gradient");
+    }
   }
-}
-TextBackgroundGradient.blotName = "textBackgroundGradient";
+  TextBackgroundGradient.blotName = "textBackgroundGradient";
 
-export default TextBackgroundGradient;
+  return TextBackgroundGradient;
+};

@@ -61,9 +61,16 @@ function styleElementTimelineIconHeightWidth({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }: CSSValue): number {
-  const iconSize = styleElementTimelineLineForIcon({ v, device, state, store });
+  const iconSize = styleElementTimelineLineForIcon({
+    v,
+    device,
+    state,
+    store,
+    getConfig
+  });
 
   const dvv = (key: string) => defaultValueValue({ v, key, device });
   const borderWidth = dvv("borderWidth");
@@ -77,6 +84,7 @@ function styleElementTimelineIconHalf({
   device,
   state,
   store,
+  getConfig,
   prefix
 }: CSSValue): number {
   const fullSize = styleElementTimelineIconHeightWidth({
@@ -84,6 +92,7 @@ function styleElementTimelineIconHalf({
     device,
     state,
     store,
+    getConfig,
     prefix
   });
 
@@ -101,13 +110,15 @@ function styleElementTimelineTextHeight({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }: CSSValue): number {
   const enableText = styleElementTimelineEnableText({
     v,
     device,
     state,
-    store
+    store,
+    getConfig
   });
 
   const dvv = (key: string) => defaultValueValue({ v, key, device });
@@ -121,13 +132,15 @@ function styleElementTimelineTextWidth({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }: CSSValue): number {
   const enableText = styleElementTimelineEnableText({
     v,
     device,
     state,
-    store
+    store,
+    getConfig
   });
 
   return enableText ? 116 : 0;
@@ -137,9 +150,16 @@ export function cssStyleElementTimelineIconSize({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
-  const iconSize = styleElementTimelineLineForIcon({ v, device, state, store });
+  const iconSize = styleElementTimelineLineForIcon({
+    v,
+    device,
+    state,
+    store,
+    getConfig
+  });
 
   return `font-size: ${iconSize}px;`;
 }
@@ -158,13 +178,15 @@ export function cssStyleElementTimelineIconWidth({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
   const iconWidth = styleElementTimelineIconHeightWidth({
     v,
     device,
     state,
-    store
+    store,
+    getConfig
   });
   return `width: ${iconWidth}px;`;
 }
@@ -173,13 +195,15 @@ export function cssStyleElementTimelineIconHeight({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
   const iconHeight = styleElementTimelineIconHeightWidth({
     v,
     device,
     state,
-    store
+    store,
+    getConfig
   });
   return `height: ${iconHeight}px;`;
 }
@@ -188,13 +212,15 @@ export function cssStyleElementTimelineNavTitleWidth({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
   const iconWidth = styleElementTimelineIconHeightWidth({
     v,
     device,
     state,
-    store
+    store,
+    getConfig
   });
   const titleWidth = iconWidth + 60;
 
@@ -205,13 +231,15 @@ export function cssStyleElementTimelineNavTitleVisible({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
   const enableText = styleElementTimelineEnableText({
     v,
     device,
     state,
-    store
+    store,
+    getConfig
   });
 
   return enableText ? cssStyleDisplayBlock() : cssStyleDisplayNone();
@@ -221,13 +249,13 @@ export function cssStyleElementTimelineLineBgColor({
   v,
   device,
   state,
-  store
+  getConfig
 }: CSSValue): string {
   const borderColor = styleBorderColor({
     v,
     device,
     state,
-    store,
+    getConfig,
     prefix: "line"
   });
 
@@ -245,26 +273,41 @@ export function cssStyleElementTimelineLineTop({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
   const halfIconHeight = styleElementTimelineIconHalf({
     v,
     device,
     state,
-    store
+    store,
+    getConfig
   });
   const textHeight = styleElementTimelineTextHeight({
     v,
     device,
     state,
-    store
+    store,
+    getConfig
   });
-  const iconHeight = styleElementTimelineIconHalf({ v, device, state, store });
+  const iconHeight = styleElementTimelineIconHalf({
+    v,
+    device,
+    state,
+    store,
+    getConfig
+  });
 
   const dvv = (key: string) => defaultValueValue({ v, key, device });
   const style = getStyle(dvv("timelineStyle"));
   const orientation = getOrientation(dvv("verticalMode"));
-  const iconSize = styleElementTimelineLineForIcon({ v, device, state, store });
+  const iconSize = styleElementTimelineLineForIcon({
+    v,
+    device,
+    state,
+    store,
+    getConfig
+  });
   const iconPadding = dvv("iconPadding");
   const borderWidth = dvv("borderWidth");
   const borderWidthLine = dvv("lineBorderWidth");
@@ -344,15 +387,23 @@ export function cssStyleElementTimelineVerticalPosition({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
   const halfIconWidth = styleElementTimelineIconHalf({
     v,
     device,
     state,
-    store
+    store,
+    getConfig
   });
-  const textWidth = styleElementTimelineTextWidth({ v, device, state, store });
+  const textWidth = styleElementTimelineTextWidth({
+    v,
+    device,
+    state,
+    store,
+    getConfig
+  });
 
   const dvv = (key: string) => defaultValueValue({ v, key, device });
   const orientation = getOrientation(dvv("verticalMode"));
@@ -383,19 +434,22 @@ export function cssStyleElementTimelineLineWidthHeightBefore({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
   const halfIconWidth = styleElementTimelineIconHalf({
     v,
     device,
     state,
-    store
+    store,
+    getConfig
   });
   const iconWidth = styleElementTimelineIconHeightWidth({
     v,
     device,
     state,
-    store
+    store,
+    getConfig
   });
 
   const dvv = (key: string) => defaultValueValue({ v, key, device });
@@ -418,13 +472,15 @@ export function cssStyleElementTimelineLineWidthHeightAfter({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
   const halfIconWidth = styleElementTimelineIconHalf({
     v,
     device,
     state,
-    store
+    store,
+    getConfig
   });
 
   const dvv = (key: string) => defaultValueValue({ v, key, device });
@@ -450,10 +506,23 @@ export function cssStyleElementTimelineVerticalLinePosition({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
-  const iconWidth = styleElementTimelineIconHalf({ v, device, state, store });
-  const textWidth = styleElementTimelineTextWidth({ v, device, state, store });
+  const iconWidth = styleElementTimelineIconHalf({
+    v,
+    device,
+    state,
+    store,
+    getConfig
+  });
+  const textWidth = styleElementTimelineTextWidth({
+    v,
+    device,
+    state,
+    store,
+    getConfig
+  });
 
   const dvv = (key: string) => defaultValueValue({ v, key, device });
   const orientation = getOrientation(dvv("verticalMode"));
@@ -490,9 +559,16 @@ export function cssStyleElementTimelineVerticalLineTopPosition({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
-  const iconHeight = styleElementTimelineIconHalf({ v, device, state, store });
+  const iconHeight = styleElementTimelineIconHalf({
+    v,
+    device,
+    state,
+    store,
+    getConfig
+  });
 
   const dvv = (key: string) => defaultValueValue({ v, key, device });
   const orientation = dvv("verticalMode");
@@ -504,9 +580,16 @@ export function cssStyleElementTimelineVerticalLineBottomPosition({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
-  const iconHeight = styleElementTimelineIconHalf({ v, device, state, store });
+  const iconHeight = styleElementTimelineIconHalf({
+    v,
+    device,
+    state,
+    store,
+    getConfig
+  });
 
   const dvv = (key: string) => defaultValueValue({ v, key, device });
   const orientation = dvv("verticalMode");
@@ -549,15 +632,23 @@ export function cssStyleElementTimelineVerticalInvertPosition({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
   const halfIconWidth = styleElementTimelineIconHalf({
     v,
     device,
     state,
-    store
+    store,
+    getConfig
   });
-  const textWidth = styleElementTimelineTextWidth({ v, device, state, store });
+  const textWidth = styleElementTimelineTextWidth({
+    v,
+    device,
+    state,
+    store,
+    getConfig
+  });
 
   const dvv = (key: string) => defaultValueValue({ v, key, device });
   const orientation = dvv("verticalMode");
@@ -574,15 +665,23 @@ export function cssStyleElementTimelineVerticalInvertLinePosition({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
   const halfIconWidth = styleElementTimelineIconHalf({
     v,
     device,
     state,
-    store
+    store,
+    getConfig
   });
-  const textWidth = styleElementTimelineTextWidth({ v, device, state, store });
+  const textWidth = styleElementTimelineTextWidth({
+    v,
+    device,
+    state,
+    store,
+    getConfig
+  });
 
   const dvv = (key: string) => defaultValueValue({ v, key, device });
   const orientation = dvv("verticalMode");
@@ -600,7 +699,8 @@ export function cssStyleElementTimelineCustomLineTop({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
   const dvv = (key: string) => defaultValueValue({ v, key, device });
   const orientation = getOrientation(dvv("verticalMode"));
@@ -609,28 +709,49 @@ export function cssStyleElementTimelineCustomLineTop({
     v,
     device,
     state,
-    store
+    store,
+    getConfig
   });
   const textSpacing = enableText ? dvv("textSpacing") : 0;
   const borderWidth = dvv("borderWidth");
   const borderWidthLine = dvv("lineBorderWidth");
-  const iconSize = styleElementTimelineLineForIcon({ v, device, state, store });
+  const iconSize = styleElementTimelineLineForIcon({
+    v,
+    device,
+    state,
+    store,
+    getConfig
+  });
   const iconPadding = dvv("iconPadding");
 
   const halfIconHeight = styleElementTimelineIconHalf({
     v,
     device,
     state,
-    store
+    store,
+    getConfig
   });
   const textHeight = styleElementTimelineTextHeight({
     v,
     device,
     state,
-    store
+    store,
+    getConfig
   });
-  const iconWidth = styleElementTimelineIconHalf({ v, device, state, store });
-  const textWidth = styleElementTimelineTextWidth({ v, device, state, store });
+  const iconWidth = styleElementTimelineIconHalf({
+    v,
+    device,
+    state,
+    store,
+    getConfig
+  });
+  const textWidth = styleElementTimelineTextWidth({
+    v,
+    device,
+    state,
+    store,
+    getConfig
+  });
 
   const verticalPosition = textWidth + iconWidth - borderWidthLine / 2;
   const horizontalLeftPosition =
@@ -673,7 +794,8 @@ export function cssStyleElementTimelineCustomLineOdd({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
   const dvv = (key: string) => defaultValueValue({ v, key, device });
   const orientation = getOrientation(dvv("verticalMode"));
@@ -682,28 +804,49 @@ export function cssStyleElementTimelineCustomLineOdd({
     v,
     device,
     state,
-    store
+    store,
+    getConfig
   });
   const textSpacing = enableText ? dvv("textSpacing") : 0;
   const borderWidth = dvv("borderWidth");
   const borderWidthLine = dvv("lineBorderWidth");
-  const iconSize = styleElementTimelineLineForIcon({ v, device, state, store });
+  const iconSize = styleElementTimelineLineForIcon({
+    v,
+    device,
+    state,
+    store,
+    getConfig
+  });
   const iconPadding = dvv("iconPadding");
 
   const halfIconHeight = styleElementTimelineIconHalf({
     v,
     device,
     state,
-    store
+    store,
+    getConfig
   });
   const textHeight = styleElementTimelineTextHeight({
     v,
     device,
     state,
-    store
+    store,
+    getConfig
   });
-  const iconHeight = styleElementTimelineIconHalf({ v, device, state, store });
-  const textWidth = styleElementTimelineTextWidth({ v, device, state, store });
+  const iconHeight = styleElementTimelineIconHalf({
+    v,
+    device,
+    state,
+    store,
+    getConfig
+  });
+  const textWidth = styleElementTimelineTextWidth({
+    v,
+    device,
+    state,
+    store,
+    getConfig
+  });
 
   const verticalPosition = textWidth + iconHeight - borderWidthLine / 2;
   const leftPosition = iconSize + iconPadding * 2 + borderWidth * 2 + 20;
@@ -797,15 +940,23 @@ export function cssStyleElementTimelineVerticalCustomTabPosition({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
   const halfIconWidth = styleElementTimelineIconHalf({
     v,
     device,
     state,
-    store
+    store,
+    getConfig
   });
-  const textWidth = styleElementTimelineTextWidth({ v, device, state, store });
+  const textWidth = styleElementTimelineTextWidth({
+    v,
+    device,
+    state,
+    store,
+    getConfig
+  });
 
   const dvv = (key: string) => defaultValueValue({ v, key, device });
   const orientation = getOrientation(dvv("verticalMode"));
@@ -844,15 +995,23 @@ export function cssStyleElementTimelineVerticalCustomTabPositionOdd({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
   const halfIconWidth = styleElementTimelineIconHalf({
     v,
     device,
     state,
-    store
+    store,
+    getConfig
   });
-  const textWidth = styleElementTimelineTextWidth({ v, device, state, store });
+  const textWidth = styleElementTimelineTextWidth({
+    v,
+    device,
+    state,
+    store,
+    getConfig
+  });
 
   const dvv = (key: string) => defaultValueValue({ v, key, device });
   const orientation = getOrientation(dvv("verticalMode"));
@@ -891,15 +1050,23 @@ export function cssStyleElementTimelineVerticalCustomPosition({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
   const halfIconWidth = styleElementTimelineIconHalf({
     v,
     device,
     state,
-    store
+    store,
+    getConfig
   });
-  const textWidth = styleElementTimelineTextWidth({ v, device, state, store });
+  const textWidth = styleElementTimelineTextWidth({
+    v,
+    device,
+    state,
+    store,
+    getConfig
+  });
 
   const dvv = (key: string) => defaultValueValue({ v, key, device });
   const orientation = getOrientation(dvv("verticalMode"));
@@ -941,20 +1108,29 @@ export function cssStyleElementTimelineVerticalStyle3ArrowPosition({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
   const iconWidth = styleElementTimelineIconHeightWidth({
     v,
     device,
     state,
-    store
+    store,
+    getConfig
   });
-  const textWidth = styleElementTimelineTextWidth({ v, device, state, store });
+  const textWidth = styleElementTimelineTextWidth({
+    v,
+    device,
+    state,
+    store,
+    getConfig
+  });
   const halfIconWidth = styleElementTimelineIconHalf({
     v,
     device,
     state,
-    store
+    store,
+    getConfig
   });
 
   const dvv = (key: string) => defaultValueValue({ v, key, device });
@@ -1134,25 +1310,34 @@ export function cssStyleElementTimelineTabContentBefore({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
   const dvv = (key: string) => defaultValueValue({ v, key, device });
   const orientation = getOrientation(dvv("verticalMode"));
   const style = getStyle(dvv("timelineStyle"));
   const spacing = dvv("spacing");
 
-  const textWidth = styleElementTimelineTextWidth({ v, device, state, store });
+  const textWidth = styleElementTimelineTextWidth({
+    v,
+    device,
+    state,
+    store,
+    getConfig
+  });
   const iconWidth = styleElementTimelineIconHeightWidth({
     v,
     device,
     state,
-    store
+    store,
+    getConfig
   });
   const halfIconWidth = styleElementTimelineIconHalf({
     v,
     device,
     state,
-    store
+    store,
+    getConfig
   });
 
   const arrowPosition = textWidth + iconWidth + spacing - 7;
@@ -1468,7 +1653,8 @@ export const cssStyleElementTimelineHorizontalStyle3GridTemplateRows = ({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }: CSSValue): string => {
   const dvv = (key: string) => defaultValueValue({ v, key, device });
   const orientation = dvv("verticalMode");
@@ -1479,7 +1665,8 @@ export const cssStyleElementTimelineHorizontalStyle3GridTemplateRows = ({
       v,
       device,
       state,
-      store
+      store,
+      getConfig
     });
 
     return `${cssStyleDisplayGrid()}grid-template-rows: 1fr ${iconHeight}px max-content;`;

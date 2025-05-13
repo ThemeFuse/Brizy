@@ -1,3 +1,4 @@
+import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { assetUrl } from "visual/utils/asset";
 import { t } from "visual/utils/i18n";
 import { ALL_CAT, UNCATEGORISED_CAT } from "../types";
@@ -17,16 +18,16 @@ export const getMessage = (type: GlobalType): string => {
   }
 };
 
-export const getSrc = (type: GlobalType): string => {
+export const getSrc = (type: GlobalType, config: ConfigCommon): string => {
   switch (type) {
     case "popup": {
-      return assetUrl("editor/img/global_popups_toolbar.gif");
+      return assetUrl("editor/img/global_popups_toolbar.gif", config);
     }
     case "block": {
-      return assetUrl("editor/img/global_toolbar.gif");
+      return assetUrl("editor/img/global_toolbar.gif", config);
     }
     case "conditionPopup": {
-      return assetUrl("editor/img/global_condition_popups_toolbar.gif");
+      return assetUrl("editor/img/global_condition_popups_toolbar.gif", config);
     }
   }
 };

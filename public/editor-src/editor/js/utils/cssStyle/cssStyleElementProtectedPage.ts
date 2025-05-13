@@ -10,10 +10,10 @@ export function cssStyleElementProtectedPageAutocompleteColor({
   v,
   device,
   state,
-  store,
+  getConfig,
   prefix
 }: CSSValue): string {
-  const color = styleColor({ v, device, state, store, prefix });
+  const color = styleColor({ v, device, state, getConfig, prefix });
 
   return color === undefined
     ? ""
@@ -24,9 +24,17 @@ export function cssStyleElementProtectedPageInputWidth({
   v,
   device,
   state,
-  store
+  store,
+  getConfig
 }: CSSValue): string {
-  return cssStyleSizeWidth({ v, device, state, store, prefix: "input" });
+  return cssStyleSizeWidth({
+    v,
+    device,
+    state,
+    store,
+    getConfig,
+    prefix: "input"
+  });
 }
 
 export function cssStyleElementProtectedPageInputSpacing({

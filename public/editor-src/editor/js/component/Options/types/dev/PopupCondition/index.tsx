@@ -1,7 +1,7 @@
 import classNames from "classnames";
 import React from "react";
 import { ConditionsComponent } from "visual/component/ConditionsComponent";
-import { useConfig } from "visual/global/hooks";
+import { useConfig } from "visual/providers/ConfigProvider";
 import { t } from "visual/utils/i18n";
 import { Props } from "./types";
 import { useConditions } from "./utils";

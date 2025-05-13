@@ -30,7 +30,7 @@ export const getItems: GetItems<Value> = ({ v, device, state }) => {
           disabled:
             columns === EcwidProductColumns.ThreeLeft ||
             columns === EcwidProductColumns.ThreeRight ||
-            dvv("descriptionPosition") === "besideImage",
+            dvv("descriptionPosition") === "belowImage",
           config: {
             min: 100,
             max: 1000,

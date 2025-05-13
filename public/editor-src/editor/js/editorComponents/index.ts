@@ -7,6 +7,7 @@ import Breadcrumbs from "./Breadcrumbs";
 import Button from "./Button";
 import Calendly from "./Calendly";
 import Carousel from "./Carousel";
+import Chart from "./Chart";
 import Cloneable from "./Cloneable";
 import Column from "./Column";
 import Countdown from "./Countdown";
@@ -204,6 +205,7 @@ function getShortcodes(_config: ConfigCommon) {
     Paypal,
     InstagramFeed,
     LinkedinFeed,
+    Chart,
 
     // DC
     PostTitle,

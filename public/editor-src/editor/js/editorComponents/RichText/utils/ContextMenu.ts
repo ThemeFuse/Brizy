@@ -17,6 +17,7 @@ import { DeviceMode } from "visual/types";
 import { hexToRgba } from "visual/utils/color";
 import { detectOS } from "visual/utils/dom/detectOS";
 import { hasSomeKey } from "visual/utils/reader/object";
+import { capByPrefix } from "visual/utils/string";
 import { MValue } from "visual/utils/value";
 import defaultValue from "../defaultValue.json";
 import {
@@ -40,22 +41,6 @@ type InnerElementType = {
   type: string;
   value: Value;
 };
-
-export const prefixes = [
-  "typography",
-  "color",
-  "bgColor",
-  "bgImage",
-  "bgPosition",
-  "background",
-  "shadow",
-  "gradient",
-  "textBgColor",
-  "textShadow",
-  "textBackground",
-  "textGradient",
-  "image"
-];
 
 export const handleRenderText = (key: string[]) => () => {
   const os = detectOS();
@@ -219,6 +204,31 @@ const getExtraStyles = (styles: Patch, device: DeviceMode) => {
   return hasTextTransformStyle ? patchTextTransform(styles, device) : styles;
 };
 
+const getPrefixes = (device: DeviceMode) => {
+  const prefixes = [
+    "typography",
+    "color",
+    "bgColor",
+    "bgImage",
+    "bgPosition",
+    "background",
+    "shadow",
+    "gradient",
+    "textBgColor",
+    "textShadow",
+    "textBackground",
+    "textGradient",
+    "image",
+    "contentHorizontalAlign"
+  ];
+
+  if (device === "desktop") {
+    return prefixes;
+  }
+
+  return prefixes.map((prefix) => capByPrefix(device, prefix));
+};
+
 export const handlePasteStyles = ({
   innerElement,
   onChange,
@@ -233,6 +243,8 @@ export const handlePasteStyles = ({
   config: ConfigCommon;
 }) => {
   const { textPopulation } = innerElement.value;
+  const prefixes = getPrefixes(device);
+
   const values = getStyles(innerElement.value, prefixes);
   const extraStyles = getExtraStyles(values, device);
 

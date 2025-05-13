@@ -37,7 +37,7 @@ class Account extends Component {
       onDisconnect
     } = this.props;
     const options = accounts.map(({ name, id }) => (
-      <RadioItem value={id} key={id}>
+      <RadioItem value={id} key={id} isEditor>
         {name ? name : `Account ${id}`}
         {id === usedAccount && completed && (
           <div

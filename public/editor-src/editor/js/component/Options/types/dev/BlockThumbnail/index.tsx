@@ -4,12 +4,14 @@ import { produce } from "immer";
 import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ThumbnailSelector } from "visual/component/Controls/BlockThumbnail/ThumbnailSelector";
+import { useConfig } from "visual/providers/ConfigProvider";
 import { updateBlocks, updateGlobalBlock } from "visual/redux/actions2";
 import {
   globalBlocksAssembled2Selector,
   pageBlocksDataAssembledSelector,
   pageBlocksSelector
 } from "visual/redux/selectors";
+import { ReduxState } from "visual/redux/types";
 import { GlobalBlockBase } from "visual/types/GlobalBlock";
 import { FCC } from "visual/utils/react/types";
 import { Props } from "./types";
@@ -25,9 +27,13 @@ export const BlockThumbnail: FCC<Props> = ({
   const { value } = _value;
   const { className, helper, helperContent, attr } = config ?? {};
 
+  const globalConfig = useConfig();
   const dispatch = useDispatch();
   const blocks = useSelector(pageBlocksSelector);
-  const pageBlocksAssembled = useSelector(pageBlocksDataAssembledSelector);
+  const pageBlocksAssembled = useSelector((state: ReduxState) =>
+    pageBlocksDataAssembledSelector(state, globalConfig)
+  );
+
   const globalBlocks = useSelector(globalBlocksAssembled2Selector);
 
   const [anchorInputs, setAnchorInputs] = useState(
@@ -112,7 +118,7 @@ export const BlockThumbnail: FCC<Props> = ({
           : block;
       });
 
-      dispatch(updateBlocks({ blocks: updatedBlocks }));
+      dispatch(updateBlocks({ blocks: updatedBlocks, config: globalConfig }));
     } else {
       const _id = blockToUpdate.value._id;
       const globalBlock = produce<GlobalBlockBase>(
@@ -123,7 +129,7 @@ export const BlockThumbnail: FCC<Props> = ({
         }
       );
 
-      dispatch(updateGlobalBlock(globalBlock));
+      dispatch(updateGlobalBlock({ ...globalBlock, config: globalConfig }));
     }
 
     setAnchorInputs((prevAnchorInputs) => {

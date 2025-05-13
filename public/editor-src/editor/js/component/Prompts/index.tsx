@@ -1,11 +1,12 @@
+import { isEqual } from "es-toolkit";
 import { produce } from "immer";
 import React, {
   Component,
   ComponentProps,
   ElementType,
+  JSX,
   ReactElement
 } from "react";
-import { ConnectedProps, connect } from "react-redux";
 import { SignAuthorizationProps } from "visual/component/Prompts/PromptAuthorization/types";
 import { PromptBlocksProps } from "visual/component/Prompts/PromptBlocks/types";
 import { Props as PromptPageArticleProps } from "visual/component/Prompts/PromptPageArticle/types";
@@ -20,11 +21,10 @@ import {
   PromptKeyHelperProps,
   PromptsOpenProps
 } from "visual/component/Prompts/types";
-import { getConfigById } from "visual/global/Config/InitConfig";
+import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import UIState from "visual/global/UIState";
+import { useConfig } from "visual/providers/ConfigProvider";
 import { EditorMode } from "visual/providers/EditorModeProvider";
-import { configIdSelector } from "visual/redux/selectors";
-import { ReduxState } from "visual/redux/types";
 import { BlockMetaType } from "visual/types/GlobalBlock";
 import Apps from "./PromptApps";
 import Authorization from "./PromptAuthorization";
@@ -78,12 +78,13 @@ type PromptsState = {
   prompts: (PromptsProps & { opened: boolean })[];
 };
 
-type PromptProps = ConnectedProps<typeof connector> & {
+interface PromptProps {
   editorMode: EditorMode;
-};
+  config: ConfigCommon;
+}
 
-class Prompts extends Component<PromptProps, PromptsState> {
-  globalConfig = getConfigById(this.props.configId);
+class _Prompts extends Component<PromptProps, PromptsState> {
+  globalConfig = this.props.config;
 
   state: PromptsState = {
     prompts: []
@@ -107,11 +108,11 @@ class Prompts extends Component<PromptProps, PromptsState> {
   }
 
   componentDidUpdate(prevProps: Readonly<PromptProps>) {
-    const { configId: prevConfigId } = prevProps;
-    const { configId } = this.props;
+    const { config: prevConfig } = prevProps;
+    const { config } = this.props;
 
-    if (prevConfigId !== configId) {
-      this.globalConfig = getConfigById(configId);
+    if (!isEqual(prevConfig, config)) {
+      this.globalConfig = config;
     }
   }
 
@@ -234,10 +235,13 @@ class Prompts extends Component<PromptProps, PromptsState> {
   }
 }
 
-const mapStateToProps = (state: ReduxState) => ({
-  configId: configIdSelector(state)
-});
+const Prompts = (props: Omit<PromptProps, "config">): JSX.Element => {
+  const config = useConfig();
 
-const connector = connect(mapStateToProps);
+  return <_Prompts {...props} config={config} />;
+};
 
-export default connector(Prompts);
+Prompts.open = _Prompts.open;
+Prompts.close = _Prompts.close;
+
+export default Prompts;

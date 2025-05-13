@@ -21,6 +21,7 @@ import { shouldRenderPopup } from "visual/editorComponents/tools/Popup";
 import { isPopup } from "visual/providers/EditorModeProvider";
 import { isEditor } from "visual/providers/RenderProvider";
 import { blocksDataSelector, deviceModeSelector } from "visual/redux/selectors";
+import { isPro } from "visual/utils/env";
 import { getContainerW } from "visual/utils/meta";
 import { getCSSId } from "visual/utils/models/cssId";
 import { getLinkData } from "visual/utils/models/link";
@@ -35,6 +36,7 @@ import { DESKTOP, MOBILE, TABLET } from "visual/utils/responsiveMode";
 import * as State from "visual/utils/stateMode";
 import { parseCustomAttributes } from "visual/utils/string/parseCustomAttributes";
 import * as Str from "visual/utils/string/specs";
+import { currentUserRole } from "../../component/Roles";
 import Items from "./Items";
 import contextMenuConfig from "./contextMenu";
 import defaultValue from "./defaultValue.json";
@@ -336,6 +338,8 @@ class Row extends EditorComponent {
 
     const animationClassName = this.getAnimationClassName(v, vs, vd);
 
+    const config = this.getGlobalConfig();
+
     if (showToolbar === "off") {
       return (
         <SortableElement type="row" useHandle={true}>
@@ -357,7 +361,11 @@ class Row extends EditorComponent {
     const content = (
       <ScrollMotion
         className="brz-row__scroll-motion"
-        options={makeOptionValueToMotion({ v, store })}
+        options={makeOptionValueToMotion({
+          v,
+          store,
+          isPro: isPro(config)
+        })}
       >
         <HoverAnimation
           animationId={animationId}
@@ -413,6 +421,7 @@ class Row extends EditorComponent {
                           animationClass={animationClassName}
                         >
                           <Roles
+                            currentRole={currentUserRole(config)}
                             allow={["admin"]}
                             fallbackRender={() => content}
                           >
@@ -481,7 +490,11 @@ class Row extends EditorComponent {
           >
             <ScrollMotion
               className="brz-row__scroll-motion"
-              options={makeOptionValueToMotion({ v, store })}
+              options={makeOptionValueToMotion({
+                v,
+                store,
+                isPro: isPro(this.getGlobalConfig())
+              })}
             >
               <HoverAnimation
                 animationId={animationId}

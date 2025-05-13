@@ -5,10 +5,10 @@ export function cssStyleFill({
   v,
   device,
   state,
-  store,
+  getConfig,
   prefix = "fillColor"
 }: CSSValue): string {
-  const fill = styleColor({ v, device, state, store, prefix });
+  const fill = styleColor({ v, device, state, getConfig, prefix });
 
   return fill === undefined ? "" : `fill:${fill};`;
 }

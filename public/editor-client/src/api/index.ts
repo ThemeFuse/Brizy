@@ -1,3 +1,4 @@
+import { GetAuthorsProps } from "@/authors/types";
 import { Config, getConfig } from "@/config";
 import {
   isDefaultBlock,
@@ -12,6 +13,10 @@ import {
   isStoryDataBlocks,
   isStoryDataResponse
 } from "@/defaultTemplates/utils";
+import { MenuSimple } from "@/menu/types";
+import { GetPostsProps, GetPostTaxonomiesProps } from "@/posts/types";
+import { GetTermsByProps } from "@/terms/types";
+import { Sidebar } from "@/sidebars/types";
 import {
   APIPopup,
   DefaultBlock,
@@ -44,6 +49,7 @@ import { ScreenshotData } from "@/types/Screenshots";
 import { t } from "@/utils/i18n";
 import { Arr, Json, Obj, Str } from "@brizy/readers";
 import { isT, mPipe, pass } from "fp-utilities";
+import queryString from "query-string";
 import { Dictionary } from "../types/utils";
 import { Literal } from "../utils/types";
 import {
@@ -848,6 +854,66 @@ export const updatePopupRules = async (
   } catch (e) {
     throw new Error(t("Fail to update popup rules"));
   }
+};
+
+export const getRules = async () => {
+  const config = getConfig();
+
+  if (!config) {
+    throw new Error(t("Invalid __BRZ_PLUGIN_ENV__"));
+  }
+
+  const { editorVersion, url: _url, hash, actions, pageId } = config;
+
+  const url = makeUrl(_url, {
+    hash,
+    action: actions.getRuleList,
+    post: pageId,
+    version: editorVersion
+  });
+
+  const response = await request(url, {
+    method: "POST"
+  });
+
+  if (response.ok) {
+    const res = await response.json();
+
+    if (isT(res) && isT(res.data)) {
+      return res.data;
+    }
+  }
+  throw new Error(t("Failed to get rules"));
+};
+
+export const getGroupList = async (type: "block" | "popup") => {
+  const config = getConfig();
+
+  if (!config) {
+    throw new Error(t("Invalid __BRZ_PLUGIN_ENV__"));
+  }
+
+  const { editorVersion, url: _url, hash, actions } = config;
+
+  const url = makeUrl(_url, {
+    hash,
+    action: actions.getRuleGroupList,
+    version: editorVersion,
+    context: type === "popup" ? "popup-rules" : "global-block-rules"
+  });
+
+  const response = await request(url, {
+    method: "POST"
+  });
+
+  if (response.ok) {
+    const res = await response.json();
+
+    if (isT(res) && isT(res.data)) {
+      return res.data;
+    }
+  }
+  throw new Error(t("Failed to get group list"));
 };
 
 //#endregion
@@ -1786,3 +1852,437 @@ export const getDefaultStoryPages = async (
 };
 
 //#endregion
+export const updateFeaturedImage = async (attachmentId: string) => {
+  const config = getConfig();
+
+  if (!config) {
+    throw new Error(t("Invalid __BRZ_PLUGIN_ENV__"));
+  }
+
+  const { editorVersion, hash, actions, pageId, url: _url } = config;
+
+  const url = makeUrl(_url, {
+    hash,
+    action: actions.setFeaturedImage,
+    post: pageId,
+    version: editorVersion,
+    attachmentId
+  });
+
+  const response = await request(url, {
+    method: "POST"
+  });
+
+  if (response.ok) {
+    const rj = await response.json();
+
+    return rj.data;
+  }
+
+  throw new Error(t("Failed to update featured image"));
+};
+
+export const updateFeaturedImageFocalPoint = async (
+  attachmentId: string,
+  pointX: string,
+  pointY: string
+) => {
+  const config = getConfig();
+
+  if (!config) {
+    throw new Error(t("Invalid __BRZ_PLUGIN_ENV__"));
+  }
+
+  const { editorVersion, hash, actions, pageId, url: _url } = config;
+
+  const url = makeUrl(_url, {
+    hash,
+    action: actions.setFeaturedImageFocalPoint,
+    post: pageId,
+    version: editorVersion,
+    attachmentId,
+    pointX,
+    pointY
+  });
+
+  const response = await request(url, {
+    method: "POST"
+  });
+
+  if (response.ok) {
+    const rj = await response.json();
+
+    return rj.data;
+  }
+
+  throw new Error(t("Failed to update focal point for featured image"));
+};
+
+export const removeFeaturedImage = async () => {
+  const config = getConfig();
+
+  if (!config) {
+    throw new Error(t("Invalid __BRZ_PLUGIN_ENV__"));
+  }
+
+  const { editorVersion, hash, actions, pageId, url: _url } = config;
+
+  const url = makeUrl(_url, {
+    hash,
+    action: actions.removeFeaturedImage,
+    post: pageId,
+    version: editorVersion
+  });
+
+  const response = await request(url, {
+    method: "POST"
+  });
+
+  if (response.ok) {
+    const rj = await response.json();
+
+    return rj.data;
+  }
+
+  throw new Error(t("Failed to remove featured image"));
+};
+
+export const getMenus = async (): Promise<MenuSimple[]> => {
+  const config = getConfig();
+
+  if (!config) {
+    throw new Error(t("Invalid __BRZ_PLUGIN_ENV__"));
+  }
+
+  const { editorVersion, url: _url, hash, actions } = config;
+
+  const url = makeUrl(_url, {
+    hash,
+    action: actions.getMenus,
+    version: editorVersion
+  });
+
+  const response = await request(url, {
+    method: "POST"
+  });
+
+  if (response.ok) {
+    const res = await response.json();
+
+    if (isT(res) && isT(res.data)) {
+      return res.data;
+    }
+  }
+  throw new Error(t("Failed to get menus"));
+};
+
+export const shortcodeContent = async (shortcode: string) => {
+  const config = getConfig();
+
+  if (!config) {
+    throw new Error(t("Invalid __BRZ_PLUGIN_ENV__"));
+  }
+
+  const { editorVersion, hash, actions, url: _url } = config;
+
+  const url = makeUrl(_url, {
+    hash,
+    action: actions.shortcodeContent,
+    version: editorVersion,
+    shortcode: shortcode
+  });
+
+  const response = await request(url, {
+    method: "POST"
+  });
+
+  if (response.ok) {
+    const rj = await response.json();
+
+    return rj.data;
+  }
+
+  throw new Error(t("Failed to find shortcode content"));
+};
+
+export const getAuthors = async ({
+  include = [],
+  search = "",
+  abortSignal
+}: GetAuthorsProps) => {
+  const config = getConfig();
+
+  if (!config) {
+    throw new Error(t("Invalid __BRZ_PLUGIN_ENV__"));
+  }
+
+  const { editorVersion, hash, actions, url: _url } = config;
+
+  const urlBody: Record<string, string | string[]> = {
+    hash,
+    action: actions.getUsers,
+    version: editorVersion
+  };
+
+  if (search !== "") {
+    urlBody.search = search;
+  }
+  if (include.length > 0) {
+    urlBody.include = include;
+  }
+
+  const url = queryString.stringifyUrl(
+    {
+      url: _url,
+      query: urlBody
+    },
+    { arrayFormat: "bracket" }
+  );
+
+  const response = await request(url, {
+    method: "POST",
+    signal: abortSignal
+  });
+
+  if (response.ok) {
+    const rj = await response.json();
+
+    return rj.data;
+  }
+
+  throw new Error(t("Failed to find authors"));
+};
+
+//#region Posts
+
+export const getPosts = async ({
+  include,
+  search = "",
+  postType,
+  excludePostType,
+  abortSignal
+}: GetPostsProps) => {
+  const config = getConfig();
+
+  if (!config) {
+    throw new Error(t("Invalid __BRZ_PLUGIN_ENV__"));
+  }
+
+  const { editorVersion, hash, actions, url: _url } = config;
+
+  const urlBody: Record<string, string | string[]> = {
+    hash,
+    action: actions.searchPosts,
+    version: editorVersion
+  };
+
+  if (search !== "") {
+    urlBody.search = search;
+  }
+
+  if (include && include.length > 0) {
+    const includeArr: string[] = [];
+
+    include.forEach((item) => {
+      includeArr.push(item);
+    });
+
+    urlBody.include = includeArr;
+  }
+
+  if (postType && postType.length > 0) {
+    const postTypeArr: string[] = [];
+
+    postType.forEach((item) => {
+      postTypeArr.push(item);
+    });
+
+    urlBody["post_type"] = postTypeArr;
+  }
+
+  if (excludePostType && excludePostType.length > 0) {
+    const excludePostTypeArr: string[] = [];
+
+    excludePostType.forEach((item) => {
+      excludePostTypeArr.push(item);
+    });
+
+    urlBody["exclude_post_type"] = excludePostTypeArr;
+  }
+
+  const url = queryString.stringifyUrl(
+    {
+      url: _url,
+      query: urlBody
+    },
+    { arrayFormat: "bracket" }
+  );
+
+  const response = await request(url, {
+    method: "POST",
+    signal: abortSignal
+  });
+
+  if (response.ok) {
+    const rj = await response.json();
+
+    return rj.data;
+  }
+
+  throw new Error(t("Failed to find posts"));
+};
+
+export const getPostTaxonomies = async ({
+  taxonomy,
+  abortSignal
+}: GetPostTaxonomiesProps) => {
+  const config = getConfig();
+
+  if (!config) {
+    throw new Error(t("Invalid __BRZ_PLUGIN_ENV__"));
+  }
+
+  const { editorVersion, hash, actions, url: _url } = config;
+
+  const url = makeUrl(_url, {
+    hash,
+    action: actions.getPostTaxonomies,
+    version: editorVersion,
+    post_type: taxonomy
+  });
+
+  const response = await request(url, {
+    method: "POST",
+    signal: abortSignal
+  });
+
+  if (response.ok) {
+    const rj = await response.json();
+
+    return rj.data;
+  }
+
+  throw new Error(t("Failed to find post taxonomies"));
+};
+
+//#endregion
+
+//#region Terms
+
+export const getTerms = async (taxonomy: string) => {
+  const config = getConfig();
+
+  if (!config) {
+    throw new Error(t("Invalid __BRZ_PLUGIN_ENV__"));
+  }
+
+  const { editorVersion, hash, actions, url: _url } = config;
+
+  const url = makeUrl(_url, {
+    hash,
+    action: actions.getTerms,
+    version: editorVersion,
+    taxonomy
+  });
+
+  const response = await request(url, {
+    method: "POST"
+  });
+
+  if (response.ok) {
+    const rj = await response.json();
+
+    return rj.data;
+  }
+
+  throw new Error(t("Failed to find terms"));
+};
+
+export const getTermsBy = async ({
+  include = [],
+  search = "",
+  abortSignal
+}: GetTermsByProps) => {
+  const config = getConfig();
+
+  if (!config) {
+    throw new Error(t("Invalid __BRZ_PLUGIN_ENV__"));
+  }
+
+  const { editorVersion, hash, actions, url: _url } = config;
+
+  const urlBody: Record<string, string | string[]> = {
+    hash,
+    action: actions.getTermsBy,
+    version: editorVersion
+  };
+
+  if (search !== "") {
+    urlBody.search = search;
+  }
+  if (include.length > 0) {
+    const incl: string[] = [];
+    const tax: string[] = [];
+
+    include.forEach((item) => {
+      const [taxonomy, termId] = item;
+
+      tax.push(taxonomy);
+      incl.push(termId);
+    });
+
+    urlBody.include = incl;
+    urlBody.taxonomy = tax;
+  }
+
+  const url = queryString.stringifyUrl(
+    {
+      url: _url,
+      query: urlBody
+    },
+    { arrayFormat: "bracket" }
+  );
+
+  const response = await request(url, {
+    method: "POST",
+    signal: abortSignal
+  });
+
+  if (response.ok) {
+    const rj = await response.json();
+
+    return rj.data;
+  }
+
+  throw new Error(t("Failed to find terms"));
+};
+
+//#endregion
+
+export const getSidebars = async (): Promise<Sidebar[]> => {
+  const config = getConfig();
+
+  if (!config) {
+    throw new Error(t("Invalid __BRZ_PLUGIN_ENV__"));
+  }
+
+  const { editorVersion, hash, actions, url: _url } = config;
+
+  const url = makeUrl(_url, {
+    hash,
+    action: actions.getSidebars,
+    version: editorVersion
+  });
+
+  const response = await request(url, {
+    method: "POST"
+  });
+
+  if (response.ok) {
+    const rj = await response.json();
+
+    return rj.data;
+  }
+
+  throw new Error(t("Failed to find sidebars"));
+};

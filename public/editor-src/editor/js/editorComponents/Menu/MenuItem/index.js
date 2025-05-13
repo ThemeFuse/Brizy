@@ -319,6 +319,7 @@ class MenuItem extends EditorComponent {
 
     const parentNode = getParent();
     const portalClassName = classnames(
+      "brz",
       "brz-mega-menu__portal",
       "brz-mega-menu__portal--opened",
       `brz-mega-menu__portal--${device}`,

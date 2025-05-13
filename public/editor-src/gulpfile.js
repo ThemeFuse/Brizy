@@ -651,7 +651,7 @@ function watch() {
 
 // Threshold in kilobytes (adjust as needed)
 const BROWSER_COMPILER_MAX_BUNDLE_SIZE_KB = 6404;
-const NODE_COMPILER_MAX_BUNDLE_SIZE_KB = 18841;
+const NODE_COMPILER_MAX_BUNDLE_SIZE_KB = 20000;
 const MAX_BUNDLE_SIZE_DEVIATION_KB = 200;
 
 function calculateSize(assets, size) {
