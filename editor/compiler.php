@@ -5,7 +5,7 @@ class Brizy_Editor_Compiler
 
     const BRIZY_RECOMPILE_TAG_OPTION = 'brizy-recompile-tag';
 
-    const BRIZY_RECOMPILE_TAG_OPTION = 'brizy-recompile-tag';/**
+    /**
      * @var Brizy_Editor_Project
      */
     private $project;
