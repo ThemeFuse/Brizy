@@ -85,16 +85,18 @@ export type DeviceMode = "desktop" | "tablet" | "mobile";
 
 // style
 
+export interface StylesContexts {
+  renderContext: RenderType;
+  mode: EditorMode;
+  getConfig: GetConfig;
+}
+
 export interface DynamicStylesProps<V> {
   v: V;
   vs: V;
   vd: V;
   store: Store;
-  contexts: {
-    renderContext: RenderType;
-    mode: EditorMode;
-    getConfig: GetConfig;
-  };
+  contexts: StylesContexts;
 }
 
 // Shortcodes

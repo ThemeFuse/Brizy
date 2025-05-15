@@ -17,11 +17,14 @@ export function style(data: DynamicStylesProps<Value>): OutputStyle {
       standart: sizeFns
     },
     ".brz &&:before": {
-      standart: ["cssStyleBorderRadius"]
+      standart: [
+        "cssStyleBorderRadius",
+        "cssStyleHoverTransition",
+        "cssStylePropertyHoverTransition"
+      ]
     },
     ".brz &&:hover:before": {
-      standart: ["cssStyleBoxShadow", "cssStyleBorder"],
-      interval: ["cssStyleHoverTransition", "cssStylePropertyHoverTransition"]
+      standart: ["cssStyleBoxShadow", "cssStyleBorder"]
     },
     ".brz && .brz-embed-content": {
       standart: [

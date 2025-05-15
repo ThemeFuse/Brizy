@@ -1,37 +1,26 @@
 @import "../../variables";
 
-.brz-ed-sidebar__addable {
-  //lower than bottom panel
-  z-index: z("sidebar-addable") #{!important};
-  @apply left-[48px] #{!important};
-  &__drag_overlay {
+.brz-ed-sidebar-drawer.brz-ed-sidebar__addable {
+  z-index: z("sidebar-addable");
+  .brz-ed-addable__drag_overlay {
     z-index: z("sidebar-addable__drag-overlay") #{!important};
   }
 
-  &--align-left {
-    @apply text-start #{!important};
-    .brz-ed-addable__wrapper {
-      @apply mb-0 pb-[30px];
+  .brz-ed-sidebar-drawer__body {
+    @apply gap-[30px];
+    .brz-scrollbar__view {
+      @apply px-[30px] pt-[30px];
     }
-  }
 
-  .brz-ui-scrollbar__view {
-    @apply flex flex-col;
-  }
+    .brz-ed-addable__items {
+      @apply inline-flex flex-col gap-[10px] w-full;
+    }
 
-  &__head {
-    @apply px-[30px] py-[15px];
-    background-color: $addable__sidebar__head-bg;
-
-    .brz-ed-tooltip {
-      @apply m-0;
-      background-color: $addable_sidebar__tooltip-bg;
-
-      &__overlay {
-        @apply shadow-none bg-transparent;
-        .brz-ed-arrow::after {
-          border-bottom-color: $addable_sidebar__tooltip-bg;
-        }
+    .brz-ui-noitems {
+      @apply text-center;
+      color: $sidebar-color;
+      .brz-ui-typography {
+        @apply text-center;
       }
     }
   }
@@ -39,25 +28,10 @@
 
 .brz-ed-addable {
   &__icon-wrapper {
-    @apply flex items-center gap-2 cursor-pointer text-white;
-
+    @apply flex items-center gap-2 cursor-pointer;
+    color: $control-color;
     &:hover {
-      color: $brand__primary;
-    }
-  }
-
-  &__wrapper {
-    @apply flex-grow flex flex-col justify-between pb-0 mb-[90px] gap-[30px];
-    .brz-ui-scrollbar__view {
-      @apply px-[30px] pt-[30px];
-    }
-
-    .brz-ed-addable__items {
-      @apply inline-flex flex-col gap-[10px];
-    }
-
-    .brz-ui-noitems {
-      @apply text-center text-white;
+      color: $control-color--active;
     }
   }
 
@@ -67,7 +41,8 @@
 
     &__head {
       @apply flex flex-row pl-[20px] pr-[16px] h-[45px] gap-[10px];
-      @apply text-white items-center bg-inherit select-none;
+      @apply items-center bg-inherit select-none;
+      color: $control-color;
 
       &__drag-pointer {
         @apply text-[16px] flex cursor-move;
@@ -80,7 +55,7 @@
         @apply flex-grow;
         input {
           all: unset;
-          @apply w-full overflow-hidden overflow-ellipsis
+          @apply w-full overflow-hidden overflow-ellipsis text-start;
         }
       }
 
@@ -90,6 +65,7 @@
 
       &__expand-btn {
         @apply cursor-pointer transition-transform shrink-0;
+        color:$control-color;
       }
     }
 
@@ -126,3 +102,4 @@
     }
   }
 }
+

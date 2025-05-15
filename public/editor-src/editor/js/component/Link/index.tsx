@@ -31,6 +31,7 @@ type Props = PropsWithChildren<
     attr?: JSX.IntrinsicAttributes;
     id?: string;
     draggable?: boolean;
+    ariaLabel?: string;
   }
 >;
 
@@ -46,7 +47,8 @@ const _Link = (
     slide = {},
     attr = {},
     id = "",
-    draggable
+    draggable,
+    ariaLabel
   }: Props,
   ref: Ref<HTMLAnchorElement>
 ): ReactElement => {
@@ -93,6 +95,7 @@ const _Link = (
         attachRef(v, innerRef || null);
       }}
       {...(id && { id })}
+      {...(ariaLabel && { "aria-label": ariaLabel })}
       draggable={draggable}
     >
       {children}

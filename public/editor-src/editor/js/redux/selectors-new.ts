@@ -9,7 +9,7 @@ import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { FontKeyTypes } from "visual/redux/actions2";
 import { ReduxState, StoreChanged } from "visual/redux/types";
 import { Authorized, SyncAllowed } from "visual/types";
-import { Block } from "visual/types/Block";
+import { Block, BlocksHTML } from "visual/types/Block";
 import { Font } from "visual/types/Fonts";
 import { GlobalBlock, GlobalBlockPopup } from "visual/types/GlobalBlock";
 import { NonEmptyArray } from "visual/utils/array/types";
@@ -99,6 +99,10 @@ export const currentStyleSelector = (
 
 export const errorSelector = (state: ReduxState): ReduxState["error"] =>
   state.error;
+
+export const blocksHtmlSelector = (
+  state: ReduxState
+): ReduxState["blocksHtml"] => state.blocksHtml;
 
 //#endregion
 
@@ -194,6 +198,11 @@ export const leftSidebarSelector = createSelector(
   (ui) => ui.leftSidebar
 );
 
+export const drawerContentTypeSelector = createSelector(
+  leftSidebarSelector,
+  (leftSidebar) => leftSidebar.drawerContentType
+);
+
 //#endregion
 
 //#region === 2 DEPENDENCIES ===
@@ -286,6 +295,34 @@ export const pageBlocksRawSelector = createSelector(
       }
 
       return blocksData[uid];
+    });
+  }
+);
+
+// Retrieve all blocksHTML of all normal blocks, including globalBlocks between normal blocks,
+// excluding the top & bottom globalBlocks.
+// Used when publishing and preparing block HTML for the page.
+// Middle global blocks are replaced with a placeholder.
+export const blocksHtmlRawSelector = createSelector(
+  pageBlocksRawSelector,
+  blocksHtmlSelector,
+  (blockOrders, blocksHtml) => {
+    return blockOrders.map((block) => {
+      const blockId = block.value._id;
+      const html = blocksHtml.blocks[blockId];
+
+      if (block.type === "GlobalBlock") {
+        return {
+          id: blockId,
+          ...html,
+          html: `{{ brizy_dc_global_block uid="${blockId}" }}`
+        };
+      }
+
+      return {
+        id: blockId,
+        ...html
+      };
     });
   }
 );
@@ -401,7 +438,7 @@ export const globalBlocksInPageRawSelector = createSelector(
 export const globalPopupsInPageSelector = createSelector(
   (state: ReduxState, config: ConfigCommon) =>
     pageBlocksDataSelector(state, config),
-  globalBlocksSelector,
+  globalBlocksAssembled2Selector,
   (page, globalBlocks) => {
     const popups = new Map<string, GlobalBlockPopup>();
     objectTraverse2(page, (obj: Record<string, unknown>) => {
@@ -419,6 +456,35 @@ export const globalPopupsInPageSelector = createSelector(
     });
 
     return [...popups].map(([, data]) => data);
+  }
+);
+
+// Retrieve the IDs of all globalBlocks from current page,
+// including global popups
+export const globalBlocksIdsInPageSelector = createSelector(
+  (s: ReduxState, c: ConfigCommon) => globalPopupsInPageSelector(s, c),
+  blocksOrderSelector,
+  globalBlocksSelector,
+  (popups, blocksOrder, globalBlocks) => {
+    const blocksIds = blocksOrder.filter((id) => globalBlocks[id]);
+    const popupsIds = popups.map((popup) => popup.uid);
+    return Array.from(new Set([...blocksIds, ...popupsIds]));
+  }
+);
+
+// Retrieve HTML of all globalBlocks with globalPopups from the current page,
+// used when compiling the page inside the browser.
+export const globalBlocksHTMLInPageSelector = createSelector(
+  globalBlocksIdsInPageSelector,
+  blocksHtmlSelector,
+  (blocks, blocksHtml) => {
+    return blocks.reduce(
+      (acc, uid) => {
+        acc[uid] = blocksHtml.blocks[uid];
+        return acc;
+      },
+      {} as Record<string, BlocksHTML>
+    );
   }
 );
 

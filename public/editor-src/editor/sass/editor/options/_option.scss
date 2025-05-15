@@ -102,7 +102,7 @@
 
     & > .brz-ed-option__label {
       flex-basis: auto;
-      margin-right: 0;
+      margin-inline-end: 0;
       justify-content: space-between;
       margin-bottom: 6px;
     }
@@ -160,7 +160,7 @@
     font-size: $options__item-font-size;
     color: $options__label-color;
     font-weight: 600;
-    margin-right: 10px;
+    margin-inline-end: 10px;
     display: flex;
     line-height: 1.3;
     word-break: normal;
@@ -224,8 +224,6 @@
 }
 
 .brz-ed-option__label {
-  flex: 1 1 auto;
-
   &__icon {
     font-size: 16px;
     color: $right_sidebar__icon-color;
@@ -233,6 +231,6 @@
 
   // Cannot use `&__icon + &__text` as `.brz-ed-option__label__text` !== `&__text`
   &__icon + .brz-ed-option__label__text {
-    margin-left: 10px;
+    margin-inline-start: 10px;
   }
 }

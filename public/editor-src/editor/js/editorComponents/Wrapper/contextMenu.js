@@ -9,6 +9,7 @@ const getTranslationsMap = () => ({
   VideoPlaylist: t("Playlist"),
   Spacer: t("Spacer"),
   Line: t("Line"),
+  AnimatedHeadline: t("Animated Headline"),
   Map: t("Map"),
   EmbedCode: t("Embed"),
   Form: t("Form"),

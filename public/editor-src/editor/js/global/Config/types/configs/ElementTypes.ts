@@ -7,6 +7,7 @@ export enum ElementTypes {
   Icon = "Icon",
   Spacer = "Spacer",
   Map = "Map",
+  AnimatedHeadline = "AnimatedHeadline",
   FormField = "FormField",
   FormFields = "FormFields",
   Form2 = "Form2",

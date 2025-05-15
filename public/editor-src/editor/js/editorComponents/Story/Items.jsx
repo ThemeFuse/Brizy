@@ -18,6 +18,7 @@ import Prompts from "visual/component/Prompts";
 import { ThemeIcon } from "visual/component/ThemeIcon";
 import Toolbar, { hideToolbar } from "visual/component/Toolbar";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
+import { useIsRTL } from "visual/global/hooks";
 import { isEditor, isView } from "visual/providers/RenderProvider";
 import { importStory } from "visual/redux/actions2";
 import { t } from "visual/utils/i18n";
@@ -67,6 +68,7 @@ const Dot = debounceRenderHOC(
 
 const Dots = (props) => {
   const { itemsIds, onClick, onSortEnd, onSortStart, children } = props;
+  const isRtl = useIsRTL();
 
   const sensors = useSensors(
     useSensor(PointerSensor, {
@@ -78,8 +80,9 @@ const Dots = (props) => {
     useSensor(KeyboardSensor)
   );
 
+  // The SlickSlider add dir="lrt" on the wrapper element, so we need to add dir="rtl" to the ul element
   return (
-    <ul className="brz-slick-slider__dots">
+    <ul className="brz-slick-slider__dots" dir={isRtl ? "rtl" : "ltr"}>
       <DndContext
         onDragEnd={onSortEnd}
         onDragStart={onSortStart}

@@ -34,7 +34,7 @@ export function cssStyleElementTranslationFlagSpacing({
   const flagSpacing = dvv("flagSpacing");
   const flagSpacingSuffix = dvv("flagSpacingSuffix");
 
-  return `margin-right: ${flagSpacing}${flagSpacingSuffix};`;
+  return `margin-inline-end: ${flagSpacing}${flagSpacingSuffix};`;
 }
 // #endregion
 
@@ -47,7 +47,7 @@ export function cssStyleElementTranslationTextSpacing({
   const textSpacing = dvv("textSpacing");
   const textSpacingSuffix = dvv("textSpacingSuffix");
 
-  return `margin-right: ${textSpacing}${textSpacingSuffix};`;
+  return `margin-inline-end: ${textSpacing}${textSpacingSuffix};`;
 }
 // #endregion
 

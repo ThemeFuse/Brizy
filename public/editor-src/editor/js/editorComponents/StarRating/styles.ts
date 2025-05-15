@@ -1,9 +1,10 @@
 import { ElementModel } from "visual/component/Elements/Types";
 import { DynamicStylesProps } from "visual/types";
 import { renderStyles } from "visual/utils/cssStyle";
+import { Styles } from "visual/utils/cssStyle/types";
 
 export function style(data: DynamicStylesProps<ElementModel>) {
-  const styles = {
+  const styles: Styles = {
     ".brz && .brz-starrating-text": {
       standart: [
         "cssStyleElementStarRatingTextSpacing",
@@ -17,11 +18,7 @@ export function style(data: DynamicStylesProps<ElementModel>) {
       ]
     },
     ".brz &&:hover .brz-starrating-text": {
-      standart: ["cssStyleColor"],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
-      ]
+      standart: ["cssStyleColor"]
     },
     ".brz && .brz-starrating-icon-wrap": {
       standart: ["cssStyleSizeFontSizeIcon"]
@@ -30,27 +27,15 @@ export function style(data: DynamicStylesProps<ElementModel>) {
       { standart: ["cssStyleElementStarRatingSpacing"] },
     ".brz &&:hover .brz-starrating-container .brz-starrating-icon-wrap .brz-starrating-color-empty":
       {
-        standart: ["cssStyleElementStarRatingRatingBackgroundColor"],
-        interval: [
-          "cssStyleHoverTransition",
-          "cssStylePropertyHoverTransitionColor"
-        ]
+        standart: ["cssStyleElementStarRatingRatingBackgroundColor"]
       },
     ".brz &&:hover .brz-starrating-container .brz-starrating-icon-wrap .brz-starrating-color":
       {
-        standart: ["cssStyleElementStarRatingRatingColor"],
-        interval: [
-          "cssStyleHoverTransition",
-          "cssStylePropertyHoverTransitionColor"
-        ]
+        standart: ["cssStyleElementStarRatingRatingColor"]
       },
     ".brz &&:hover .brz-starrating-container .brz-starrating-icon-wrap .brz-starrating-color .brz-icon-svg-custom":
       {
-        standart: ["cssStyleElementStarRatingCustomIconColor"],
-        interval: [
-          "cssStyleHoverTransition",
-          "cssStylePropertyHoverTransitionColor"
-        ]
+        standart: ["cssStyleElementStarRatingCustomIconColor"]
       },
     ".brz && .brz-starrating-style2-container": {
       standart: ["cssStyleBorderRadius", "cssStyleElementStarRatingDirection"]
@@ -59,12 +44,15 @@ export function style(data: DynamicStylesProps<ElementModel>) {
       standart: ["cssStyleColor", "cssStyleBgColor"]
     },
     ".brz &&:hover .brz-starrating-style2-container .brz-icon-svg-custom": {
-      standart: ["cssStyleCustomIconColor"],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
-      ]
-    }
+      standart: ["cssStyleCustomIconColor"]
+    },
+    ".brz && .brz-starrating-style2-container .brz-icon-svg-custom, .brz && .brz-starrating-container .brz-starrating-icon-wrap .brz-starrating-color .brz-icon-svg-custom, .brz && .brz-starrating-text, .brz && .brz-starrating-container .brz-starrating-icon-wrap .brz-starrating-color-empty, .brz && .brz-starrating-container .brz-starrating-icon-wrap .brz-starrating-color":
+      {
+        standart: [
+          "cssStyleHoverTransition",
+          "cssStylePropertyHoverTransitionColor"
+        ]
+      }
   };
 
   return renderStyles({ ...data, styles });

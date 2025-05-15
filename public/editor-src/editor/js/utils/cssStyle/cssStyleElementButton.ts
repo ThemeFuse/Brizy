@@ -13,7 +13,7 @@ import { getButtonSizes } from "visual/utils/cssStyle/cssStyleSize";
 import { defaultValueValue } from "visual/utils/onChange";
 import { capByPrefix } from "visual/utils/string";
 import { NORMAL } from "../stateMode";
-import { styleBgBlendGradient, styleBgColorHex } from "../style2";
+import { styleBgBlendGradient, styleColor } from "../style2";
 import { CSSValue } from "../style2/types";
 
 export function cssStyleElementButtonIconPosition({
@@ -237,12 +237,17 @@ export const cssStyleElementButtonBgBlendColor = ({
   v,
   device,
   state,
-  getConfig,
-  prefix = "bg"
+  getConfig
 }: CSSValue): string => {
-  const hex = styleBgColorHex({ v, device, getConfig, state, prefix });
+  const color = styleColor({
+    v,
+    device,
+    state,
+    getConfig,
+    prefix: "bgColor"
+  });
 
-  return `background-color: rgba(${hex}, 1);`;
+  return `background-color: ${color};`;
 };
 
 export function cssStyleElementButtonBgBlendGradient({

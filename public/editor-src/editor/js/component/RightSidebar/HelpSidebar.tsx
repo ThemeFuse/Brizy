@@ -4,6 +4,7 @@ import React, { ReactElement, useCallback, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RightSidebarTabs as Control } from "visual/component/Controls/RightSidebarTabs";
 import { Tab } from "visual/component/Controls/Tabs2/Tab";
+import { useIsRTL } from "visual/global/hooks";
 import { useConfig } from "visual/providers/ConfigProvider";
 import { updateUI } from "visual/redux/actions2";
 import { uiSelector } from "visual/redux/selectors";
@@ -14,6 +15,7 @@ import { nextAlign } from "../Options/types/dev/SidebarTabs/utils";
 
 export const HelpSidebar = (): ReactElement => {
   const dispatch = useDispatch();
+  const isRtl = useIsRTL();
 
   const selector = pipe(uiSelector, prop("rightSidebar"));
   const { alignment, lock, isOpen, activeTab, type } = useSelector(selector);
@@ -82,6 +84,7 @@ export const HelpSidebar = (): ReactElement => {
             urlTitle={t("Send a support ticket")}
             inputPlaceholder={t("How can we help?")}
             helpImage={helpImage}
+            isRtl={isRtl}
           />
         </Tab>
       ]}

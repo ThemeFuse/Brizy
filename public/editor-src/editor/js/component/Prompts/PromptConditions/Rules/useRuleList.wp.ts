@@ -2,8 +2,11 @@ import { useEffect, useState } from "react";
 import { setIn } from "timm";
 import { useConfig } from "visual/providers/ConfigProvider";
 import { Rule } from "visual/types/Rule";
-import { getGroupList, getTerms } from "visual/utils/api";
-import { getRulePostsGroupList } from "visual/utils/api/index.wp";
+import {
+  getGroupList,
+  getRulePostsGroupList,
+  getTerms
+} from "visual/utils/api";
 import {
   CATEGORIES_GROUP_ID,
   PAGES_GROUP_ID,

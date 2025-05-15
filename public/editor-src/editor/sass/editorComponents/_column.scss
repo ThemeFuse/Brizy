@@ -16,7 +16,7 @@
     height: 100%;
     width: 100%;
     top: 0;
-    left: 0;
+    inset-inline-start: 0;
   }
 
   & > div[data-scroll-motion] > .brz-hover-animation__container > .brz-bg,

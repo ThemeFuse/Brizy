@@ -88,6 +88,7 @@ import getWOOPages from "./WOOPages";
 import getWPCustomShortcode from "./WPCustomShortcode";
 import getFeaturedImage from "./WPFeaturedImage";
 import getWPSidebar from "./WPSidebar";
+import AnimatedHeadline from "./pro/AnimatedHeadline";
 import getBreadcrumbs from "./pro/Breadcrumbs";
 import getCalendly from "./pro/Calendly";
 import getCarousel from "./pro/Carousel";
@@ -186,6 +187,7 @@ export function getProShortCodes(
     Calendly: true,
     TableOfContents: true,
     Carousel: true,
+    AnimatedHeadline: true,
     Tabs: false,
     Accordion: false,
     Switcher: true,
@@ -494,6 +496,7 @@ export function getSampleShortCodes(config: ConfigCommon) {
     Audio: getAudio(),
     VideoPlaylist: getVideoPlaylist(),
     Paypal: getPaypal(),
+    AnimatedHeadline,
 
     IconText: getIconText(),
     Lottie: getLottie(config),

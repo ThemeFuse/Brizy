@@ -66,8 +66,7 @@ export function styleColumn(
         ...(maskShape === "none"
           ? ["cssStyleBoxShadow"]
           : ["cssStyleMaskDropShadow"])
-      ],
-      interval: ["cssStyleHoverTransition", "cssStylePropertyHoverTransition"]
+      ]
     },
     [`.brz && > ${innerDivFromMotion}${hoverSelector}.brz-bg > .brz-bg-image`]:
       {
@@ -88,8 +87,7 @@ export function styleColumn(
           "cssStyleFilter",
           "cssStyleBgImagePosition",
           "cssStyleBgMediaImage"
-        ],
-        interval: ["cssStyleHoverTransition", "cssStylePropertyHoverTransition"]
+        ]
       },
     [`.brz &&:hover > ${innerDivFromMotion}${hoverSelector}.brz-bg > .brz-bg-image:after`]:
       {
@@ -107,8 +105,7 @@ export function styleColumn(
       },
     [`.brz &&:hover > ${innerDivFromMotion}${hoverSelector}.brz-bg > .brz-bg-color`]:
       {
-        standart: ["cssStyleBgColor", "cssStyleBgGradient"],
-        interval: ["cssStyleHoverTransition", "cssStylePropertyHoverTransition"]
+        standart: ["cssStyleBgColor", "cssStyleBgGradient"]
       },
     [`.brz && > ${innerDivFromMotion}${hoverSelector}.brz-bg > .brz-bg-map`]: {
       standart: ["cssStyleBgMediaMap"]
@@ -124,6 +121,10 @@ export function styleColumn(
     [`.brz &&:hover > ${innerDivFromMotion}${hoverSelector}.brz-bg > .brz-bg-video`]:
       {
         standart: ["cssStyleFilter"]
+      },
+    [`.brz && > ${innerDivFromMotion}${hoverSelector}.brz-bg, .brz && > ${innerDivFromMotion}${hoverSelector}.brz-bg > .brz-bg-image, .brz && > ${innerDivFromMotion}${hoverSelector}.brz-bg > .brz-bg-color`]:
+      {
+        standart: ["cssStyleHoverTransition", "cssStylePropertyHoverTransition"]
       }
   };
 
@@ -162,15 +163,13 @@ export function styleItems(
         "cssStyleBorderTransparentColor",
         "cssStylePaddingFourFields",
         "cssStyleColumnHeight",
-        "cssStyleColumnVerticalAlignItems"
-      ]
-    },
-    ".brz &&:hover": {
-      interval: [
-        "cssStyleDisplayFlex",
+        "cssStyleColumnVerticalAlignItems",
         "cssStyleHoverTransition",
         "cssStylePropertyHoverTransition"
       ]
+    },
+    ".brz &&:hover": {
+      interval: ["cssStyleDisplayFlex"]
     }
   };
 

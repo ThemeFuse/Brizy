@@ -11,24 +11,19 @@ export function styleForm(data: DynamicStylesProps<Value>): OutputStyle {
     ".brz &&": {
       standart: [...(_isStory ? ["cssStyleSizeWidthStoryOnly"] : [])]
     },
-
     ".brz && .brz-form": {
       standart: ["cssStyleElementForm2Margin"]
     },
-
     ".brz && .brz-forms2__item,.brz && .brz-form-ms-buttons": {
       standart: ["cssStyleElementForm2Padding"]
     },
-
     ".brz && .brz-forms2__item-button": {
       standart: ["cssStyleMarginAlign", "cssStyleElementForm2SubmitWidth"]
     },
-
     ".brz && .brz-forms2-story .brz-btn:before, .brz && .brz-form-ms-buttons--story .brz-btn:before":
       {
         standart: ["cssStyleElementForm2StoryButtonHeight"]
       },
-
     ".brz && .brz-form-ms-indicators": {
       standart: ["cssStyleElementForm2MSProgressMargin"]
     }

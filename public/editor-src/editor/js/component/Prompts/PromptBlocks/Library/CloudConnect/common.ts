@@ -1,20 +1,20 @@
 import { useEffect, useState } from "react";
 import { ToastNotification } from "visual/component/Notifications";
-import { logout, sync } from "visual/component/Prompts/PromptAuthorization/api";
 import { useConfig } from "visual/providers/ConfigProvider";
+import { logout, sync } from "visual/utils/api";
 import { t } from "visual/utils/i18n";
 
 type Disconnect = {
   isDisconnect: boolean;
   loading: boolean;
   setDisconnect: () => void;
-  error?: Response;
+  error?: string;
 };
 
 export const useDisconnect = (): Disconnect => {
   const [isDisconnect, updateDisconnect] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [error, updateError] = useState<Response | undefined>(undefined);
+  const [error, updateError] = useState<string | undefined>(undefined);
   const config = useConfig();
 
   const setDisconnect = (): void => {
@@ -25,8 +25,8 @@ export const useDisconnect = (): Disconnect => {
     if (loading) {
       logout(config)
         .then((r) => {
-          if (!r.status || r.status >= 400) {
-            updateError(r);
+          if (!r.success) {
+            updateError(t("Something went wrong"));
             ToastNotification.error(t("Something went wrong"));
           } else {
             setLoading(false);
@@ -54,13 +54,13 @@ type Sync = {
   isSync: boolean;
   loading: boolean;
   setSync: () => void;
-  error?: Response;
+  error?: string;
 };
 
 export const useSync = (): Sync => {
   const [isSync, updateSync] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [error, updateError] = useState<Response | undefined>(undefined);
+  const [error, updateError] = useState<string | undefined>(undefined);
   const config = useConfig();
 
   const setSync = (): void => {
@@ -71,8 +71,8 @@ export const useSync = (): Sync => {
     if (loading) {
       sync(config)
         .then((r) => {
-          if (!r.status || r.status >= 400) {
-            updateError(r);
+          if (!r.success) {
+            updateError(t("Unsuccessful sync"));
             ToastNotification.error(t("Unsuccessful sync"));
           } else {
             setLoading(false);

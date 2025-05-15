@@ -1,9 +1,8 @@
 import React, { Component } from "react";
-import { pendingRequest } from "visual/utils/api";
+import { pendingRequest, updateIntegration } from "visual/utils/api";
 import { t } from "visual/utils/i18n";
 import { Context } from "../../common/GlobalApps/Context";
 import { RadioFields } from "../../common/GlobalApps/StepsView";
-import { updateIntegration } from "../api";
 
 /**
  * @info
@@ -52,7 +51,7 @@ class Client extends Component {
     });
 
     if (active !== appData.usedFolder) {
-      const { status, data } = await updateIntegration(
+      const data = await updateIntegration(
         {
           ...appData,
           formId,
@@ -61,7 +60,7 @@ class Client extends Component {
         config
       );
 
-      if (status !== 200) {
+      if (!data) {
         this.setState({
           nextLoading: false,
           error: t("Something went wrong")

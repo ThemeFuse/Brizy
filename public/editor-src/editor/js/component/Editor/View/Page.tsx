@@ -5,9 +5,9 @@ import EditorGlobal from "visual/global/Editor";
 import { useConfig } from "visual/providers/ConfigProvider";
 import { EditorComponentProvider } from "visual/providers/EditorComponentProvider";
 import { useEditorMode } from "visual/providers/EditorModeProvider";
+import { useTranslation } from "visual/providers/I18nProvider";
 import { pageBlocksRawSelector } from "visual/redux/selectors";
 import { ReduxState } from "visual/redux/types";
-import { t } from "visual/utils/i18n";
 import { getPageId } from "../utils";
 
 export const Page = (): JSX.Element => {
@@ -19,6 +19,7 @@ export const Page = (): JSX.Element => {
   const { mode } = useEditorMode();
   // @ts-expect-error: ConfigCommon to Config
   const pageId = getPageId(config);
+  const { t } = useTranslation();
   const dbValue = useMemo(() => ({ items: pageBlocks }), [pageBlocks]);
 
   const getGlobalConfig = useCallback(() => config, [config]);

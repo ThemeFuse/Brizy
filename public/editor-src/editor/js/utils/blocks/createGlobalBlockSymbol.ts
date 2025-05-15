@@ -4,7 +4,7 @@ interface Data {
   uid: string;
   blockId?: string;
 }
-interface GlobalBlockSymbol extends ElementModelType {
+export interface GlobalBlockSymbol extends ElementModelType {
   blockId: string;
   type: "GlobalBlock";
   value: { _id: string };

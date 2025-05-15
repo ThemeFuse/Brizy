@@ -2,6 +2,22 @@
 
 // Sidebar Right
 .brz-ed-sidebar__right {
+  // Right sidebar content box-shadow animation
+  @keyframes shadow-animation {
+    from {
+      box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+    }
+
+    to {
+      box-shadow: 0 0 10px 0 $sidebar__right_content-box-shadow;
+    }
+  }
+
+  --brz-ui-global-input-background: var(--sidebar-background, #212733);
+  --brz-ui-global-card-background: var(--sidebar-background, #212733);
+  --color-dark: var(--sidebar-background, #212733);
+  --color-gray-light: var(--sidebar-separators, #777f86);
+  --color-gray: rgb(from var(--text-labels, #777f86) r g b / 0.5);
   width: auto;
   z-index: z("sidebar") - 1;
 
@@ -14,7 +30,7 @@
       right: auto;
     }
 
-    .brz-ui-modal__sidebar {
+    .brz-ui-v2-modal__sidebar {
       left: 48px;
       text-align: start;
     }
@@ -30,27 +46,40 @@
     }
   }
 
+  .brz-ui-modal-body .brz-ui-card {
+    animation-name: shadow-animation;
+    animation-fill-mode: forwards;
+    animation-duration: 150ms;
+    animation-delay: 0.2s;
+  }
+
   .brz-ed-sidebar__content {
     &.active {
       animation-name: shadow-animation;
     }
-
-    // Right sidebar content box-shadow animation
-    @keyframes shadow-animation {
-      from {
-        box-shadow: 0 0 0 rgba(0, 0, 0, 0);
-      }
-
-      to {
-        box-shadow: 0 0 10px 0 $sidebar__right_content-box-shadow;
-      }
-    }
   }
 
-  .brz-ed-sidebar__main .brz-ed-control__tabs {
-    margin-bottom: 15px;
-    padding-left: 0;
-    padding-right: 0;
+  .brz-ed-sidebar__main {
+    .brz-ui-input__text {
+      --brz-ui-global-icon-color: var(--input-placeholder-text, #818a91);
+
+      input.brz-ui-input {
+        &.brz-ui-input.brz-ui-input.brz-ui-input.brz-ui-input {
+          font-size: 14px;
+        }
+
+        &::placeholder {
+          color: var(--input-placeholder-text, #818a91);
+          font-style: italic;
+        }
+      }
+    }
+
+    .brz-ed-control__tabs {
+      margin-bottom: 15px;
+      padding-left: 0;
+      padding-right: 0;
+    }
   }
 
   // Icons
@@ -185,7 +214,8 @@
   background-color: $scrollbar__sidebar-color;
 }
 
-.brz-ui-modal-root .brz-ed-sidebar__video-help .brz-ui-modal {
+.brz-ui-v2-modal-root .brz-ed-sidebar__video-help .brz-ui-v2-modal {
+  --brz-ui-global-card-background: transparent;
   height: auto;
 }
 
@@ -200,11 +230,13 @@
   svg {
   color: $help_video__icon-color;
   cursor: pointer;
+
   &:hover {
     color: $white;
   }
 }
-.brz-ui-menu .brz-ed-sidebar__video-help .brz-ui-modal-wrap {
+
+.brz-ui-menu .brz-ed-sidebar__video-help .brz-ui-v2-modal-wrap {
   cursor: auto;
 }
 
@@ -212,8 +244,21 @@
   display: block;
 }
 
+.brz-ui-menu__sidebar-item > span.brz-ui-icon__svg {
+  margin-right: unset;
+  margin-inline-end: 10px;
+}
+
+.brz-ed-control__right-sidebar-tabs {
+  .brz-ui-btn .brz-ui-typography {
+    color: $sidebar-color;
+    margin-left: unset;
+    margin-inline-start: 8px;
+  }
+}
+
 .brz-ed-sidebar__video-help,
-.brz-ui-modal-root > .brz-ui-modal-mask {
+.brz-ui-v2-modal-root > .brz-ui-v2-modal-mask {
   position: absolute;
   z-index: z("helpVideo");
 }

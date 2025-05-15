@@ -54,8 +54,7 @@ export function styleFormFields(data: DynamicStylesProps<Value>): OutputStyle {
           "cssStyleBgColor",
           "cssStyleBorder",
           "cssStyleBoxShadow"
-        ],
-        interval: ["cssStyleHoverTransition"]
+        ]
       },
     ".brz &&.brz-forms2__item--error .brz-forms2__field:not(.brz-forms2__radio):not(.brz-forms2__checkbox)":
       {
@@ -80,20 +79,22 @@ export function styleFormFields(data: DynamicStylesProps<Value>): OutputStyle {
       ]
     },
     ".brz &&:hover .brz-forms2__radio, .brz && .brz-forms2__checkbox": {
-      standart: ["cssStyleElementForm2FieldsCheckboxColor"],
-      interval: ["cssStyleHoverTransition"]
+      standart: ["cssStyleElementForm2FieldsCheckboxColor"]
     },
     ".brz && .brz-forms2__checkbox-option-name,.brz-forms2__radio-option-name":
       {
         standart: ["cssStyleElementForm2FieldsCheckboxTextTransform"]
       },
     ".brz &&:hover .brz-forms2__select-item__input": {
-      standart: ["cssStyleColor"],
-      interval: ["cssStyleHoverTransition"]
+      standart: ["cssStyleColor"]
     },
     ".brz && .form-alert": {
       standart: ["cssStyleTypography2FontFamily"]
-    }
+    },
+    ".brz && .brz-forms2__field:not(.brz-forms2__radio):not(.brz-forms2__checkbox), .brz && .brz-forms2__radio, .brz && .brz-forms2__checkbox, .brz && .brz-forms2__select-item__input":
+      {
+        standart: ["cssStyleHoverTransition"]
+      }
   };
 
   return renderStyles({ ...data, styles });
@@ -159,9 +160,11 @@ export function styleFormSelect(data: DynamicStylesProps<Value>): OutputStyle {
     ".brz && .select2-selection--multiple": {
       standart: ["cssStylePaddingFourFields", "cssStyleElementFieldsInputSize"]
     },
+    ".brz && .select2-selection--multiple .select2-selection__choice": {
+      standart: ["cssStyleHoverTransition"]
+    },
     ".brz &&:hover .select2-selection--multiple .select2-selection__choice": {
-      standart: ["cssStyleElementForm2FieldsSelectChoiceBgColor"],
-      interval: ["cssStyleHoverTransition"]
+      standart: ["cssStyleElementForm2FieldsSelectChoiceBgColor"]
     }
   };
 

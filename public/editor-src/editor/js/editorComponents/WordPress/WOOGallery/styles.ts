@@ -11,8 +11,7 @@ export function style(data: DynamicStylesProps<ElementModel>) {
       standart: ["cssStyleBorderRadius"]
     },
     ".brz && .woocommerce-product-gallery > .flex-viewport:hover": {
-      standart: ["cssStyleBoxShadow", "cssStyleBorder"],
-      interval: ["cssStyleHoverTransition", "cssStylePropertyHoverTransition"]
+      standart: ["cssStyleBoxShadow", "cssStyleBorder"]
     },
     ".brz && .woocommerce-product-gallery > .woocommerce-product-gallery__wrapper":
       {
@@ -20,8 +19,7 @@ export function style(data: DynamicStylesProps<ElementModel>) {
       },
     ".brz && .woocommerce-product-gallery > .woocommerce-product-gallery__wrapper:hover":
       {
-        standart: ["cssStyleBoxShadow", "cssStyleBorder"],
-        interval: ["cssStyleHoverTransition", "cssStylePropertyHoverTransition"]
+        standart: ["cssStyleBoxShadow", "cssStyleBorder"]
       },
     ".brz && .flex-control-thumbs": {
       standart: [
@@ -42,12 +40,15 @@ export function style(data: DynamicStylesProps<ElementModel>) {
       standart: [
         "cssStyleElementWOOGalleryBoxShadowThumbnail",
         "cssStyleElementWOOGalleryBorderThumbnail"
-      ],
-      interval: ["cssStyleHoverTransition", "cssStylePropertyHoverTransition"]
+      ]
     },
     ".brz && .woocommerce-product-gallery__trigger": {
       standart: ["cssStyleElementWOOGalleryZoomReposition"]
-    }
+    },
+    ".brz && .woocommerce-product-gallery > .flex-viewport, .brz && .woocommerce-product-gallery > .woocommerce-product-gallery__wrapper, .brz && .flex-control-thumbs li":
+      {
+        standart: ["cssStyleHoverTransition", "cssStylePropertyHoverTransition"]
+      }
   };
 
   return renderStyles({ ...data, styles });

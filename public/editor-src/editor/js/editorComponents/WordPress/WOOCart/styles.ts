@@ -9,11 +9,7 @@ export function style(data: DynamicStylesProps<ElementModel>): OutputStyle {
       standart: ["cssStyleBorderRadius"]
     },
     ".brz &&:hover .brz-woocart__dc": {
-      standart: ["cssStyleBgColor", "cssStyleBorder"],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
-      ]
+      standart: ["cssStyleBgColor", "cssStyleBorder"]
     },
     ".brz && .brz-woocart__parent": {
       standart: [
@@ -33,11 +29,7 @@ export function style(data: DynamicStylesProps<ElementModel>): OutputStyle {
       ]
     },
     ".brz &&:hover .brz-woocart__price": {
-      standart: ["cssStyleColor"],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
-      ]
+      standart: ["cssStyleColor"]
     },
     ".brz && .brz-woocart__icon:before": {
       standart: ["cssStyleElementWOOCartPurchasesDisabled"]
@@ -61,11 +53,7 @@ export function style(data: DynamicStylesProps<ElementModel>): OutputStyle {
       ]
     },
     ".brz &&.brz-woocart--plain:hover .brz-woocart__icon:before": {
-      standart: ["cssStyleElementWOOCartPurchasesColor"],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
-      ]
+      standart: ["cssStyleElementWOOCartPurchasesColor"]
     },
     ".brz && .brz-woocart__icon .brz-icon-svg": {
       standart: [
@@ -74,11 +62,7 @@ export function style(data: DynamicStylesProps<ElementModel>): OutputStyle {
       ]
     },
     ".brz &&:hover .brz-woocart__icon .brz-icon-svg": {
-      standart: ["cssStyleElementWOOCartIconColor"],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
-      ]
+      standart: ["cssStyleElementWOOCartIconColor"]
     },
     ".brz && .brz-woocart__sidebar": {
       standart: [
@@ -103,11 +87,7 @@ export function style(data: DynamicStylesProps<ElementModel>): OutputStyle {
       },
     ".brz && .brz-woocart__sidebar .brz-woocart__sidebar__product-name .brz-a:hover":
       {
-        standart: ["cssStyleElementWOOCartTitleColor"],
-        interval: [
-          "cssStyleHoverTransition",
-          "cssStylePropertyHoverTransitionColor"
-        ]
+        standart: ["cssStyleElementWOOCartTitleColor"]
       },
     ".brz && .brz-woocart__sidebar .brz-woocart__sidebar__product-price-parent":
       {
@@ -123,11 +103,7 @@ export function style(data: DynamicStylesProps<ElementModel>): OutputStyle {
       },
     ".brz && .brz-woocart__sidebar .brz-woocart__sidebar__product-price-parent:hover":
       {
-        standart: ["cssStyleElementWOOCartCostColor"],
-        interval: [
-          "cssStyleHoverTransition",
-          "cssStylePropertyHoverTransitionColor"
-        ]
+        standart: ["cssStyleElementWOOCartCostColor"]
       },
     ".brz && .brz-woocart__sidebar .brz-woocart__sidebar-subtotal": {
       standart: [
@@ -141,11 +117,7 @@ export function style(data: DynamicStylesProps<ElementModel>): OutputStyle {
       ]
     },
     ".brz && .brz-woocart__sidebar .brz-woocart__sidebar-subtotal:hover": {
-      standart: ["cssStyleElementWOOCartSubtotalColor"],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
-      ]
+      standart: ["cssStyleElementWOOCartSubtotalColor"]
     },
     ".brz && .brz-woocart__sidebar .brz-woocart__sidebar-button": {
       standart: [
@@ -164,22 +136,21 @@ export function style(data: DynamicStylesProps<ElementModel>): OutputStyle {
       standart: [
         "cssStyleElementWOOCartButtonBgColor",
         "cssStyleElementWOOCartButtonColor"
-      ],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
       ]
     },
     ".brz && .brz-woocart__sidebar .brz-woocart__sidebar-buttons": {
       standart: ["cssStyleElementWOOCartButtonDirection"]
     },
     ".brz && .brz-woocart__sidebar-remove .brz-icon-svg:hover": {
-      standart: ["cssStyleElementWOOCartCostColor"],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
-      ]
-    }
+      standart: ["cssStyleElementWOOCartCostColor"]
+    },
+    ".brz && .brz-woocart__sidebar-remove .brz-icon-svg, .brz && .brz-woocart__sidebar .brz-woocart__sidebar-button, .brz && .brz-woocart__sidebar .brz-woocart__sidebar-subtotal, .brz && .brz-woocart__sidebar .brz-woocart__sidebar__product-price-parent, .brz && .brz-woocart__sidebar .brz-woocart__sidebar__product-name .brz-a, .brz && .brz-woocart__dc, .brz && .brz-woocart__price, .brz &&.brz-woocart--plain .brz-woocart__icon:before, .brz && .brz-woocart__icon .brz-icon-svg":
+      {
+        standart: [
+          "cssStyleHoverTransition",
+          "cssStylePropertyHoverTransitionColor"
+        ]
+      }
   };
 
   return renderStyles({ ...data, styles });

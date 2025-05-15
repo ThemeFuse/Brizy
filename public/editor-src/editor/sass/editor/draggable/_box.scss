@@ -20,60 +20,60 @@
       position: absolute;
       padding: 12px;
       top: 50%;
-      left: 50%;
+      inset-inline-start: 50%;
       transform: translate(-50%, -50%);
     }
   }
   &--top-left {
     cursor: nwse-resize;
     bottom: auto;
-    left: $resize__point-position;
+    inset-inline-start: $resize__point-position;
     top: $resize__point-position;
   }
   &--top-center {
     cursor: ns-resize;
-    left: 50%;
-    margin-left: $resize__point-position;
+    inset-inline-start: 50%;
+    margin-inline-start: $resize__point-position;
     top: $resize__point-position - 1;
     bottom: auto;
   }
   &--top-right {
     cursor: nesw-resize;
     bottom: auto;
-    right: $resize__point-position;
+    inset-inline-end: $resize__point-position;
     top: $resize__point-position;
   }
   &--center-left {
     cursor: col-resize;
     top: 50%;
     margin-top: $resize__point-position;
-    left: $resize__point-position;
-    right: auto;
+    inset-inline-start: $resize__point-position;
+    inset-inline-end: auto;
   }
   &--center-right {
     cursor: col-resize;
     top: 50%;
     margin-top: $resize__point-position;
-    right: $resize__point-position;
-    left: auto;
+    inset-inline-end: $resize__point-position;
+    inset-inline-start: auto;
   }
   &--bottom-left {
     cursor: nesw-resize;
     bottom: $resize__point-position;
-    left: $resize__point-position;
+    inset-inline-start: $resize__point-position;
     top: auto;
   }
   &--bottom-center {
     cursor: ns-resize;
-    left: 50%;
-    margin-left: $resize__point-position;
+    inset-inline-start: 50%;
+    margin-inline-start: $resize__point-position;
     bottom: $resize__point-position - 1;
     top: auto;
   }
   &--bottom-right {
     cursor: nwse-resize;
     bottom: $resize__point-position;
-    right: $resize__point-position;
+    inset-inline-end: $resize__point-position;
     top: auto;
   }
 }

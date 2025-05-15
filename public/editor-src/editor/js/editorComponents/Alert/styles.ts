@@ -1,9 +1,12 @@
+import { ElementModel } from "visual/component/Elements/Types";
 import { isView } from "visual/providers/RenderProvider";
 import { DynamicStylesProps } from "visual/types";
 import { renderStyles } from "visual/utils/cssStyle";
 import { OutputStyle, Styles } from "visual/utils/cssStyle/types";
 
-export function style<T>(data: DynamicStylesProps<T>): OutputStyle {
+export function style<T extends ElementModel>(
+  data: DynamicStylesProps<T>
+): OutputStyle {
   const { renderContext } = data.contexts;
 
   const IS_VIEW = isView(renderContext);
@@ -19,8 +22,7 @@ export function style<T>(data: DynamicStylesProps<T>): OutputStyle {
         "cssStyleAlertContainerShadow",
         // in preview we don't have <BoxResizer/>
         ...(IS_VIEW ? ["cssStyleAlertPadding"] : [])
-      ],
-      interval: ["cssStyleHoverTransition"]
+      ]
     },
     ...(!IS_VIEW
       ? {
@@ -47,8 +49,7 @@ export function style<T>(data: DynamicStylesProps<T>): OutputStyle {
       standart: [
         "cssStyleElementAlertTitleColor",
         "cssStyleElementAlertTitleShadow"
-      ],
-      interval: ["cssStyleHoverTransition"]
+      ]
     },
     ".brz && .brz-alert-description": {
       standart: [
@@ -69,8 +70,7 @@ export function style<T>(data: DynamicStylesProps<T>): OutputStyle {
       standart: [
         "cssStyleElementAlertDescriptionColor",
         "cssStyleElementAlertDescriptionShadow"
-      ],
-      interval: ["cssStyleHoverTransition"]
+      ]
     },
     ".brz && .brz-alert-close": {
       standart: [
@@ -85,13 +85,14 @@ export function style<T>(data: DynamicStylesProps<T>): OutputStyle {
         "cssStyleElementAlertCloseButtonColor",
         "cssStyleElementAlertCloseButtonBgColor",
         "cssStyleBoxShadow"
-      ],
-      interval: ["cssStyleHoverTransition"]
+      ]
     },
     ".brz && .brz-alert-close-icon": {
       standart: ["cssStyleElementAlertCloseButtonBgSize"]
-    }
+    },
+    ".brz &&, .brz && .brz-alert-title, .brz && .brz-alert-description, .brz && .brz-alert-close":
+      { standart: ["cssStyleHoverTransition"] }
   };
 
-  return renderStyles({ ...data, styles });
+  return renderStyles<T>({ ...data, styles });
 }

@@ -11,6 +11,7 @@ import {
   GridChildComponentProps,
   ReactElementType
 } from "react-window";
+import { useIsRTL } from "visual/global/hooks";
 
 type RefType = (r: Ref<ReactElement>) => void;
 
@@ -93,6 +94,7 @@ const CustomInnerElementType = (gutter: number): ReactElementType => {
 };
 
 const SmartGrid = (props: SmartGridProps): ReactElement => {
+  const isRTL = useIsRTL();
   const {
     height,
     width,
@@ -118,6 +120,7 @@ const SmartGrid = (props: SmartGridProps): ReactElement => {
       initialScrollTop={initialScrollTop}
       outerElementType={CustomScrollbarsVirtualList}
       innerElementType={CustomInnerElementType(gutter)}
+      direction={isRTL ? "rtl" : "ltr"}
     >
       {renderItem}
     </FixedSizeGrid>
