@@ -1,9 +1,8 @@
 import React, { Component } from "react";
-import { pendingRequest } from "visual/utils/api";
+import { addAccount, deleteAccount, pendingRequest } from "visual/utils/api";
 import { t } from "visual/utils/i18n";
 import { Context } from "../../../common/GlobalApps/Context";
 import { Connect } from "../../../common/GlobalApps/StepsView";
-import { addAccount, deleteAccount } from "../../../common/GlobalApps/api";
 import validation from "./validation";
 
 const apiKeys = [{ name: "appid", title: "App ID" }];
@@ -80,9 +79,9 @@ class FacebookConnect extends Component {
       }
 
       if (data && data.id) {
-        const { status } = await deleteAccount(data.id, config);
+        const { success } = await deleteAccount(data.id, config);
 
-        if (status !== 200) {
+        if (!success) {
           this.setState({
             nextLoading: false,
             error: t("Something went wrong")
@@ -90,7 +89,7 @@ class FacebookConnect extends Component {
         }
       }
 
-      const { status } = await addAccount(
+      const { success } = await addAccount(
         {
           service,
           group,
@@ -99,7 +98,7 @@ class FacebookConnect extends Component {
         config
       );
 
-      if (status !== 200) {
+      if (!success) {
         this.setState({
           nextLoading: false,
           error: t("Something went wrong")

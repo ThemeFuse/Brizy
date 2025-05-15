@@ -23,12 +23,14 @@ import { MValue, isAllT, onNullish } from "../value";
 import {
   AllCSSKeys,
   CSS,
+  Devices,
   GeneratedCSS,
   GeneratedCSSItem,
   Option,
   OutputOptionStyle,
   OutputStyle,
-  SelectorAndCSSObject
+  SelectorAndCSSObject,
+  StoryDevices
 } from "./types";
 
 export const filterDeviceValues = (
@@ -186,10 +188,10 @@ export const addBreakpointsToCSS = (
 export const addBreakpointForStandart = (
   device: ResponsiveMode,
   state: State,
-  devices: Record<string, number | undefined>
+  devices: Devices | StoryDevices
 ): string => {
-  const tabletWidth = devices[TABLET];
-  const mobileWidth = devices[MOBILE];
+  const tabletWidth = (devices as Devices)?.[TABLET];
+  const mobileWidth = (devices as Devices)?.[MOBILE];
 
   if (device === DESKTOP && state === HOVER) {
     return `@media(min-width:${tabletWidth}px){`;
@@ -211,10 +213,10 @@ export const addBreakpointForStandart = (
 
 export const addBreakpointForInterval = (
   device: ResponsiveMode,
-  devices: Record<string, number | undefined>
+  devices: Devices | StoryDevices
 ): string => {
-  const tabletWidth = devices[TABLET];
-  const mobileWidth = devices[MOBILE];
+  const tabletWidth = (devices as Devices)?.[TABLET];
+  const mobileWidth = (devices as Devices)?.[MOBILE];
 
   switch (device) {
     case DESKTOP:
@@ -553,4 +555,16 @@ export const rtlAlign = (align: string) => {
       return "end";
   }
   return align;
+};
+
+export const getCssStyleFnAndMode = (
+  fnName: string
+): { styleFn: string; mode: string } => {
+  if (fnName.includes("|||")) {
+    const [fn, mode] = fnName.split("|||");
+
+    return { styleFn: fn, mode };
+  }
+
+  return { styleFn: fnName, mode: "" };
 };

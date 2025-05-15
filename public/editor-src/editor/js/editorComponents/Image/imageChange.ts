@@ -1,6 +1,9 @@
+import { Obj, pipe } from "@brizy/readers";
 import { mPipe, optional, pass } from "fp-utilities";
 import { ElementModel } from "visual/component/Elements/Types";
 import { EditorComponentContextValue } from "visual/editorComponents/EditorComponent/EditorComponentContext";
+import { ImageDataSize } from "visual/global/Config/types/ImageSize";
+import { SizeType } from "visual/global/Config/types/configs/common";
 import { DeviceMode } from "visual/types";
 import { isGIFExtension, isSVGExtension } from "visual/utils/image/utils";
 import * as Math from "visual/utils/math";
@@ -10,8 +13,8 @@ import { defaultValueKey, defaultValueValue } from "visual/utils/onChange";
 import { readWithParser } from "visual/utils/reader/readWithParser";
 import { is as isNoEmptyString } from "visual/utils/string/NoEmptyString";
 import * as Str from "visual/utils/string/specs";
-import { isUnit, Unit } from "./types";
-import { MValue } from "visual/utils/value";
+import { MValue, onNullish } from "visual/utils/value";
+import { Unit, isUnit } from "./types";
 import {
   HoverImagePatch,
   ImageDCPatch,
@@ -27,8 +30,6 @@ import {
   isOriginalSize,
   isPredefinedSize
 } from "./utils";
-import { SizeType } from "visual/global/Config/types/configs/common";
-import { ImageDataSize } from "visual/global/Config/types/ImageSize";
 
 export interface Size {
   width: number;
@@ -151,8 +152,14 @@ export const elementModelToValue = readWithParser<ElementModelToValue, Value>({
   height: mPipe(prop("height"), Num.read),
   hoverHeight: optional(mPipe(prop("hoverHeight"), Num.read)),
   width: mPipe(prop("width"), Num.read),
-  heightSuffix: mPipe(prop("heightSuffix"), pass(isUnit)),
-  widthSuffix: mPipe(prop("widthSuffix"), pass(isUnit)),
+  heightSuffix: pipe(
+    mPipe(Obj.readKey("heightSuffix"), pass(isUnit)),
+    onNullish("px" as Unit)
+  ),
+  widthSuffix: pipe(
+    mPipe(Obj.readKey("widthSuffix"), pass(isUnit)),
+    onNullish("px" as Unit)
+  ),
   sizeType: mPipe(prop("sizeType"), Str.read),
   size: mPipe(prop("size"), Num.read),
   imageExtension: mPipe(prop("imageExtension"), Str.read),

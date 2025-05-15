@@ -195,7 +195,6 @@ export const Typography = ({
   const handleOpenStyles = useCallback(() => {
     dispatch(
       updateUI("leftSidebar", {
-        isOpen: true,
         drawerContentType: LeftSidebarOptionsIds.globalStyle
       })
     );

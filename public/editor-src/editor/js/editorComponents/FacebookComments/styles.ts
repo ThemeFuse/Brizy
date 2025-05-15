@@ -13,11 +13,7 @@ export function style(data: DynamicStylesProps<ElementModel>): OutputStyle {
       ]
     },
     ".brz &&:hover": {
-      standart: ["cssStyleBoxShadow", "cssStyleBgColor", "cssStyleBorder"],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
-      ]
+      standart: ["cssStyleBoxShadow", "cssStyleBgColor", "cssStyleBorder"]
     },
     ".brz && .brz-comments__name": {
       standart: [
@@ -31,11 +27,7 @@ export function style(data: DynamicStylesProps<ElementModel>): OutputStyle {
       ]
     },
     ".brz && .brz-comments__name:hover": {
-      standart: ["cssStyleElementCommentsNameColor"],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
-      ]
+      standart: ["cssStyleElementCommentsNameColor"]
     },
     ".brz && .brz-comments__date": {
       standart: [
@@ -49,11 +41,7 @@ export function style(data: DynamicStylesProps<ElementModel>): OutputStyle {
       ]
     },
     ".brz &&:hover .brz-comments__date": {
-      standart: ["cssStyleElementCommentsCommentsColor"],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
-      ]
+      standart: ["cssStyleElementCommentsCommentsColor"]
     },
     ".brz && .brz-comments__reply, .brz && .comment-reply-link": {
       standart: [
@@ -78,18 +66,10 @@ export function style(data: DynamicStylesProps<ElementModel>): OutputStyle {
       ]
     },
     ".brz && .brz-comment-awaiting-moderation:hover": {
-      standart: ["cssStyleElementCommentsCommentsColor"],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
-      ]
+      standart: ["cssStyleElementCommentsCommentsColor"]
     },
     ".brz && .brz-comments__text:hover": {
-      standart: ["cssStyleElementCommentsCommentsColor"],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
-      ]
+      standart: ["cssStyleElementCommentsCommentsColor"]
     },
     ".brz && .brz-comment-respond .brz-submit": {
       standart: [
@@ -106,10 +86,6 @@ export function style(data: DynamicStylesProps<ElementModel>): OutputStyle {
       standart: [
         "cssStyleElementCommentsPostButtonColor",
         "cssStyleElementCommentsPostButtonBg"
-      ],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
       ]
     },
     ".brz && .brz-comments__logo .brz-img": {
@@ -120,11 +96,7 @@ export function style(data: DynamicStylesProps<ElementModel>): OutputStyle {
     },
     ".brz && .brz-logged-in-as a, && .nav-links a, && .comment-reply-link, && #cancel-comment-reply-link":
       {
-        standart: ["cssStyleElementCommentsColorLink"],
-        interval: [
-          "cssStyleHoverTransition",
-          "cssStylePropertyHoverTransitionColor"
-        ]
+        standart: ["cssStyleElementCommentsColorLink"]
       },
     ".brz && .brz-comments.brz-parent .brz-comments": {
       standart: ["cssStyleElementCommentsChildMargin"]
@@ -136,64 +108,39 @@ export function style(data: DynamicStylesProps<ElementModel>): OutputStyle {
       standart: ["cssStyleElementCommentsStarsSize"]
     },
     ".brz &&:hover .review .brz-comments__rating .star-rating": {
-      standart: ["cssStyleElementCommentsStarsColor"],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
-      ]
+      standart: ["cssStyleElementCommentsStarsColor"]
     },
     ".brz &&:hover .review .brz-comments__rating .star-rating:before": {
-      standart: ["cssStyleElementCommentsStarsBgColor"],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
-      ]
+      standart: ["cssStyleElementCommentsStarsBgColor"]
     },
     ".brz && .stars a": {
       standart: ["cssStyleElementCommentsStarsSize"]
     },
     ".brz &&:hover .stars a": {
-      standart: ["cssStyleElementCommentsStarsBgColor"],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
-      ]
+      standart: ["cssStyleElementCommentsStarsBgColor"]
     },
     ".brz &&:hover .stars:hover a::before": {
-      standart: ["cssStyleElementCommentsStarsColor"],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
-      ]
+      standart: ["cssStyleElementCommentsStarsColor"]
     },
     ".brz &&:hover .stars a:hover": {
-      standart: ["cssStyleElementCommentsStarsColor"],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
-      ]
+      standart: ["cssStyleElementCommentsStarsColor"]
     },
     ".brz &&:hover .stars a:hover ~ a::before": {
-      standart: ["cssStyleElementCommentsStarsBgColor"],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
-      ]
+      standart: ["cssStyleElementCommentsStarsBgColor"]
     },
     ".brz &&:hover .stars a.active ~ a::before": {
-      standart: ["cssStyleElementCommentsStarsBgColor"],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
-      ]
+      standart: ["cssStyleElementCommentsStarsBgColor"]
     },
     ".brz &&:hover .selected a::before": {
-      standart: ["cssStyleElementCommentsStarsColor"],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
-      ]
-    }
+      standart: ["cssStyleElementCommentsStarsColor"]
+    },
+    ".brz &&, .brz && .brz-comments__name, .brz && .brz-comments__date, .brz && .brz-comment-awaiting-moderation, .brz && .brz-comments__text, .brz && .brz-comment-respond .brz-submit, .brz && .brz-logged-in-as a, && .nav-links a, && .comment-reply-link, && #cancel-comment-reply-link, .brz && .review .brz-comments__rating .star-rating, .brz && .review .brz-comments__rating .star-rating:before, .brz && .stars a, .brz && .stars a::before, .brz && .stars a, .brz && .stars a ~ a::before, .brz && .stars a.active ~ a::before, .brz && .selected a::before":
+      {
+        standart: [
+          "cssStyleHoverTransition",
+          "cssStylePropertyHoverTransitionColor"
+        ]
+      }
   };
 
   return renderStyles({ ...data, styles });

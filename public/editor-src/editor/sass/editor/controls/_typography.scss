@@ -11,7 +11,8 @@
 
   &--tabs-icon {
     .brz-ed-font__typography {
-      padding: 0 0 10px 25px !important;
+      padding-block: 0 10px !important;
+      padding-inline: 25px 0 !important;
     }
 
     .brz-ed-control__typography--tab-icon
@@ -33,7 +34,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
-    border-right: 1px solid $toolbar-border;
+    border-inline-end: 1px solid $toolbar-border;
 
     .brz-ed-control__button.reverseTheme {
       padding: 0;
@@ -44,6 +45,7 @@
     }
 
     .brz-ed-control__icon-carousel {
+      color: $toolbar__item-color;
       cursor: pointer;
 
       .brz-ed-icon-svg {
@@ -73,7 +75,7 @@
         font-family: $default-font-family;
         font-weight: 700;
         padding: 5px;
-        margin-right: 10px;
+        margin-inline-end: 10px;
         word-break: normal;
         overflow: hidden;
         text-overflow: ellipsis;
@@ -83,7 +85,7 @@
         padding-top: 0;
       }
 
-      padding-left: 0;
+      padding-inline-start: 0;
       padding-bottom: 13px;
       background: none;
     }
@@ -137,13 +139,13 @@
         }
 
         &:not(:last-child) {
-          margin-right: 15px;
+          margin-inline-end: 15px;
         }
       }
     }
 
     .brz-ed-component__label {
-      margin-right: 0;
+      margin-inline-end: 0;
       text-overflow: ellipsis;
       white-space: nowrap;
       overflow: hidden;
@@ -218,7 +220,7 @@
         }
 
         .brz-input {
-          text-align: right;
+          text-align: start;
         }
 
         .brz-ed-control__typography-variation-item:not(:last-child) {

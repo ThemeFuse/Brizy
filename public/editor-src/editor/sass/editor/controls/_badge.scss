@@ -5,7 +5,7 @@
   min-width: 8px;
   border-radius: 50%;
   display: inline-block;
-  margin-left: 10px;
+  margin-inline-start: 10px;
   background-color: #c9c9c9;
 
   &__publish,
@@ -21,6 +21,6 @@
     background-color: #3dbfe8;
   }
   &.brz-badge-position {
-    margin-right: 5px;
+    margin-inline-end: 5px;
   }
 }

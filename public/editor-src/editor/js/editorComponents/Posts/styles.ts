@@ -33,11 +33,7 @@ export function style(data: DynamicStylesProps<ElementModel>): OutputStyle {
       ]
     },
     ".brz && .brz-posts__filter__item--style-1": {
-      standart: ["cssStyleElementPostsFilterPaddingFourFields"],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
-      ]
+      standart: ["cssStyleElementPostsFilterPaddingFourFields"]
     },
     ".brz && .brz-posts__filter__item--style-1.brz-posts-filter__item--active":
       {
@@ -62,11 +58,7 @@ export function style(data: DynamicStylesProps<ElementModel>): OutputStyle {
         ]
       },
     ".brz && .brz-posts__filter--style-2": {
-      standart: ["cssStyleElementPostsFilterPaddingFourFields"],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
-      ]
+      standart: ["cssStyleElementPostsFilterPaddingFourFields"]
     },
     ".brz && .brz-posts__filter__item--style-2.brz-posts-filter__item--active":
       {
@@ -122,6 +114,13 @@ export function style(data: DynamicStylesProps<ElementModel>): OutputStyle {
           "cssStyleElementPostsPaginationActiveColor",
           "cssStyleElementPostsPaginationActiveBgColor",
           "cssStyleElementPostsPaginationActiveBorder"
+        ]
+      },
+    ".brz && .brz-posts__filter__item--style-1, .brz && .brz-posts__filter--style-2":
+      {
+        standart: [
+          "cssStyleHoverTransition",
+          "cssStylePropertyHoverTransitionColor"
         ]
       }
   };

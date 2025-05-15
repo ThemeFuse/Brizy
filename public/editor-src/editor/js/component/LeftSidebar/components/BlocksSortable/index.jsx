@@ -21,6 +21,7 @@ import classnames from "classnames";
 import React from "react";
 import { connect } from "react-redux";
 import EditorIcon from "visual/component/EditorIcon";
+import { Scrollbar } from "visual/component/Scrollbar";
 import { LeftSidebarOptionsIds } from "visual/global/Config/types/configs/ConfigCommon";
 import { useConfig } from "visual/providers/ConfigProvider";
 import { removeBlock, reorderBlocks } from "visual/redux/actions2";
@@ -243,7 +244,11 @@ class _DrawerComponent extends React.Component {
 const DrawerComponent = (props) => {
   const config = useConfig();
 
-  return <_DrawerComponent {...props} config={config} />;
+  return (
+    <Scrollbar theme="dark">
+      <_DrawerComponent {...props} config={config} />
+    </Scrollbar>
+  );
 };
 
 const getMapStateToProps = (config) => (state) => ({

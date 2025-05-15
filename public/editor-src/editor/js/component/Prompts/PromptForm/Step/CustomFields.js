@@ -1,11 +1,10 @@
 import React, { Component } from "react";
 import { replaceAt } from "timm";
-import { pendingRequest } from "visual/utils/api";
+import { pendingRequest, updateIntegration } from "visual/utils/api";
 import { t } from "visual/utils/i18n";
 import { Context } from "../../common/GlobalApps/Context";
 import { Fields } from "../../common/GlobalApps/StepsView/Fields";
 import { checkRequiredFields, getFields } from "../../common/utils";
-import { updateIntegration } from "../api";
 
 class CustomFields extends Component {
   static contextType = Context;
@@ -81,7 +80,7 @@ class CustomFields extends Component {
         nextLoading: false
       });
     } else {
-      const { status, data } = await updateIntegration(
+      const data = await updateIntegration(
         {
           ...appData,
           formId,
@@ -91,7 +90,7 @@ class CustomFields extends Component {
         config
       );
 
-      if (status !== 200) {
+      if (!data) {
         this.setState({
           nextLoading: false,
           error: t("Something went wrong")

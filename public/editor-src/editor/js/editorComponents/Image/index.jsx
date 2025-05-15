@@ -105,6 +105,10 @@ class Image extends EditorComponent {
   }
 
   componentDidMount() {
+    if (isView(this.props.renderContext)) {
+      return;
+    }
+
     this.mounted = true;
 
     this.handleResize();

@@ -1,40 +1,33 @@
 import { Sidebar as _Sidebar } from "@brizy/builder-ui-components";
-import { LegacyScrollBar } from "@brizy/builder-ui-components/src/components/Brizy/UI/LegacyScrollbar";
 import classNames from "classnames";
 import React from "react";
 import { createPortal } from "react-dom";
-import { Inline } from "visual/component/Brizy-ui/Inline";
-import { TypographyText } from "visual/component/Brizy-ui/Typography";
 import ClickOutside from "visual/component/ClickOutside";
-import { Icon } from "visual/component/Controls/RightSidebarTabs/Icon";
-import {
-  alignIcon,
-  alignTitle
-} from "visual/component/Controls/RightSidebarTabs/utils";
 import EditorIcon from "visual/component/EditorIcon";
+import {
+  SidebarBody,
+  SidebarHead
+} from "visual/component/LeftSidebar/components/Drawer";
+import { Scrollbar } from "visual/component/Scrollbar";
 import { useTranslation } from "visual/providers/I18nProvider";
-import type {
-  SidebarContentProps,
-  SidebarHeadProps,
-  SidebarProps
-} from "../types";
+import type { SidebarContentProps, SidebarProps } from "../types";
 import { clickExceptions } from "../utils";
 
-export function Sidebar({
-  renderNode,
-  isOpen,
-  children,
-  onAlign,
-  align,
-  onAddGroup,
-  onClickOutside,
-  sidebarHeadTitle,
-  addNewGroupTitle,
-  className
-}: SidebarProps) {
-  const sidebarClassName = classNames("brz-ed-sidebar__addable", className, {
-    "brz-ed-sidebar__addable--align-left": align === "left"
-  });
+export function Sidebar(props: SidebarProps) {
+  const { t } = useTranslation();
+  const {
+    renderNode,
+    isOpen,
+    children,
+    onAlign,
+    align,
+    onAddGroup,
+    onClickOutside,
+    sidebarHeadTitle = t("Addable Widgets"),
+    addNewGroupTitle = t("Add New Widget"),
+    className
+  } = props;
+  const sidebarClassName = classNames("brz-ed-sidebar__addable", className);
 
   return renderNode && isOpen
     ? createPortal(
@@ -53,14 +46,16 @@ export function Sidebar({
                   <SidebarHead
                     align={align}
                     onAlign={onAlign}
-                    sidebarHeadTitle={sidebarHeadTitle}
+                    title={sidebarHeadTitle}
                   />
-                  <SidebarContent
-                    onAddGroup={onAddGroup}
-                    addNewGroupTitle={addNewGroupTitle}
-                  >
-                    {children}
-                  </SidebarContent>
+                  <SidebarBody>
+                    <SidebarContent
+                      onAddGroup={onAddGroup}
+                      addNewGroupTitle={addNewGroupTitle}
+                    >
+                      {children}
+                    </SidebarContent>
+                  </SidebarBody>
                 </_Sidebar>
               </div>
             );
@@ -71,44 +66,18 @@ export function Sidebar({
     : null;
 }
 
-function SidebarHead({ align, onAlign, sidebarHeadTitle }: SidebarHeadProps) {
-  const { t } = useTranslation();
+function SidebarContent(props: SidebarContentProps) {
+  const { children, onAddGroup, addNewGroupTitle } = props;
 
   return (
-    <div className="brz-ed-sidebar__addable__head">
-      <Inline align="between" alignY="center">
-        <TypographyText color="white" size="middle">
-          {sidebarHeadTitle ?? t("Addable Widgets")}
-        </TypographyText>
-        {onAlign && (
-          <TypographyText color="white" size="middle">
-            <Icon
-              icon={alignIcon(align)}
-              title={alignTitle(align)}
-              onClick={onAlign}
-            />
-          </TypographyText>
-        )}
-      </Inline>
-    </div>
-  );
-}
-
-function SidebarContent({
-  children,
-  onAddGroup,
-  addNewGroupTitle
-}: SidebarContentProps) {
-  const { t } = useTranslation();
-  return (
-    <div className="brz-ed-addable__wrapper">
-      <LegacyScrollBar theme="dark">
+    <>
+      <Scrollbar theme="dark">
         <div className="brz-ed-addable__items">{children}</div>
-      </LegacyScrollBar>
+      </Scrollbar>
       <button className="brz-ed-addable__add-new" onClick={onAddGroup}>
         <EditorIcon icon="nc-plus2" />
-        {addNewGroupTitle ?? t("Add New Widget")}
+        {addNewGroupTitle}
       </button>
-    </div>
+    </>
   );
 }

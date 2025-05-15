@@ -2,7 +2,6 @@ import { Sources } from "visual/editorComponents/Posts/types";
 import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { Dictionary } from "visual/types/utils";
 
-
 export enum AutoSave {
   publish = 0,
   draft = 1
@@ -106,21 +105,23 @@ export interface SelectedItem extends Rule {
 
 //#endregion
 
+export interface RulePostGroupList {
+  title: string;
+  value: string;
+  items?: RulePostGroupListItem[];
+}
+
+interface RulePostGroupListItem {
+  title: string;
+  value: string;
+  groupValue: string;
+  status?: "publish" | "draft" | "pending";
+}
+
 export type GetRulePostsGroupList = (
   p: string,
   config: ConfigCommon
-) => Promise<
-  {
-    title: string;
-    value: number;
-    items?: {
-      title: string;
-      value: number;
-      groupValue: string;
-      status?: "publish" | "draft" | "pending";
-    }[];
-  }[]
->;
+) => Promise<RulePostGroupList[]>;
 
 //#region Posts
 

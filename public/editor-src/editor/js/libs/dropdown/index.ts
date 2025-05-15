@@ -73,6 +73,22 @@ export class Dropdown {
     ) {
       this.attached.popper = true;
       const offset = this.settings.offset;
+
+      const isRtl = window.getComputedStyle(this.item).direction === "rtl";
+
+      if (isRtl && this.settings.placement) {
+        this.settings.placement = this.settings.placement.replace(
+          /right|left/,
+          (match) => (match === "right" ? "left" : "right")
+        ) as PopperOptions["placement"];
+
+        this.content.style.setProperty(
+          "inset-inline-start",
+          "0px",
+          "important"
+        );
+      }
+
       const options: Partial<PopperOptions> = {
         placement: this.settings.placement,
         modifiers: [

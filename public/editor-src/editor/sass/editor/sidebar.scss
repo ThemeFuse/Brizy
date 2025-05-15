@@ -1,5 +1,6 @@
 // --- Sidebar
 @import "@brizy/builder-ui-components/src/HelpSidebar/style/index";
+
 .brz-ed-sidebar {
   font-family: $default-font-family;
   position: fixed;
@@ -8,54 +9,9 @@
   bottom: 0;
   width: $sidebar-size;
   color: $sidebar-color;
-  z-index: z("sidebar") + 1;
+  z-index: z("sidebar");
   -webkit-font-smoothing: antialiased;
   user-select: none;
-
-  &__edit-elements {
-    align-items: flex-end;
-    display: flex;
-    justify-content: space-between;
-
-    .brz-ed-sidebar__elements--icon {
-      color: $left_sidebar__elements-color;
-      font-size: 12px;
-      font-weight: 600;
-      margin-left: 12px;
-      cursor: pointer;
-      transition: color 0.2s ease-out;
-
-      &:hover {
-        color: $left_sidebar__elements-color--active;
-      }
-
-      .brz-ed-tooltip__overlay {
-        background-color: transparent;
-        box-shadow: none;
-
-        .brz-ed-arrow::after {
-          border-bottom-color: $gray-5;
-        }
-      }
-
-      .brz-ed-sidebar__elements--icon--tooltip {
-        font-size: 12px;
-        line-height: 1;
-        font-family: $default-font-family;
-        height: 27px;
-        width: auto;
-        min-width: 60px;
-        white-space: nowrap;
-        background-color: $gray-5;
-        color: #fff;
-        text-align: center;
-        padding: 7px 10px;
-        border-radius: 14px;
-        z-index: 1;
-        transition: opacity 0.15s linear;
-      }
-    }
-  }
 
   &__ai-label {
     display: flex;
@@ -85,12 +41,12 @@
     }
 
     &-button {
-      margin-left: 3px;
+      margin-inline-start: 3px;
       width: 24px;
       height: 24px;
       border: none;
       color: white;
-      background: var(--secondary-dark, #383e48);
+      background: var(--inputs-bg, #383e48);
       border-radius: 5px;
       display: flex;
       justify-content: center;
@@ -124,12 +80,12 @@
 
       &::before {
         min-width: 11px;
-        margin-right: 5px;
+        margin-inline-end: 5px;
       }
 
       &::after {
         width: 100%;
-        margin-left: 7px;
+        margin-inline-start: 7px;
       }
     }
   }
@@ -158,6 +114,7 @@
       font-size: 8px;
       transition: all 0.2s ease;
       transform: rotate(-90deg);
+      color: $left_sidebar__main__separator__arrow-color;
     }
 
     &--opened {
@@ -173,18 +130,18 @@
       background: $left_sidebar__main__separator__line-bg;
       margin-top: -1px;
       width: 100%;
-      margin-left: 7px;
-      margin-right: 5px;
+      margin-inline-start: 7px;
+      margin-inline-end: 5px;
     }
   }
 
   // Control
   &__control {
     background: $sidebar-bg;
-    box-shadow: 0 0 8px 0 $sidebar-box-shadow;
+    box-shadow: 0 1px 8px 1px $sidebar-box-shadow;
     height: 100%;
     position: relative;
-    z-index: 1;
+    z-index: 2;
 
     &__item {
       font-size: $sidebar-font-size;
@@ -252,28 +209,6 @@
     }
 
     &-cms {
-      &__opened {
-        .brz-ed-sidebar__control {
-          &__item {
-            color: #3a404d;
-            border-bottom-width: 0;
-
-            &:hover,
-            &--active {
-              color: $brand__primary;
-            }
-          }
-
-          &--bottom .brz-ed-sidebar__control__item:last-child {
-            color: #fff;
-
-            &:hover {
-              color: $brand__primary;
-            }
-          }
-        }
-      }
-
       > .brz-ed-sidebar__control__options {
         > .brz-ed-sidebar__control__item {
           padding-top: 20px;
@@ -316,36 +251,6 @@
     }
   }
 
-  // Content
-  &__content {
-    position: absolute;
-    top: 0;
-    left: $sidebar-size;
-    width: $sidebar__content-size;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    background-color: $sidebar__content-bg;
-
-    &.active {
-      animation-name: brz-ed-shadow-animation;
-      animation-fill-mode: forwards;
-      animation-duration: 150ms;
-      animation-delay: 200ms;
-    }
-
-    // Sidebar Content Box shadow animation
-    @keyframes brz-ed-shadow-animation {
-      from {
-        box-shadow: 0 0 0 rgba(0, 0, 0, 0);
-      }
-
-      to {
-        box-shadow: 0 0 10px 0 $sidebar__content-box-shadow;
-      }
-    }
-  }
-
   &__right__content {
     position: absolute;
     top: 0;
@@ -354,43 +259,6 @@
     display: flex;
     flex-direction: column;
     color: $sidebar-color;
-  }
-
-  &__header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-grow: 0;
-    flex-shrink: 0;
-    width: 100%;
-    height: $sidebar-size;
-    background-color: $sidebar__header-bg;
-    padding-left: 30px;
-    padding-right: 30px;
-  }
-
-  &__header__title {
-    font-size: $sidebar__header-font-size !important;
-    font-family: $default-font-family !important;
-    font-weight: 600 !important;
-  }
-
-  &__header__help {
-    position: absolute;
-    top: 18px;
-    right: 30px;
-    font-size: 12px;
-    cursor: pointer;
-    transition: all 0.2s ease;
-
-    &:hover {
-      color: $left_sidebar__elements-color--active;
-    }
-  }
-
-  &__main {
-    flex-grow: 1;
-    height: 100%;
   }
 
   // Popover
@@ -430,7 +298,7 @@
       }
 
       .brz-icon-svg {
-        margin-right: 12px;
+        margin-inline-end: 12px;
         font-size: 12px;
         vertical-align: top;
       }
@@ -477,28 +345,6 @@
       &.brz-a:focus {
         color: #fff;
       }
-    }
-  }
-
-  // Button
-  &__btn {
-    height: $sidebar-size;
-    color: #fff;
-    flex-basis: 50%;
-    font-size: 12px;
-    font-family: $default-font-family;
-    letter-spacing: 0.5px;
-    font-weight: 600;
-    text-transform: uppercase;
-    text-align: center;
-    line-height: $sidebar-size;
-
-    &--active {
-      background-color: $sidebar__btn-bg;
-    }
-
-    &:hover {
-      color: #fff;
     }
   }
 
@@ -597,7 +443,7 @@
       display: none;
       position: absolute;
       top: 50%;
-      right: 14px;
+      inset-inline-end: 14px;
       transform: translateY(-50%);
       outline: none;
       cursor: pointer;
@@ -614,11 +460,8 @@
     // Layout
     &-layout {
       position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      padding-right: 1px;
+      inset: 0;
+      padding-inline-end: 1px;
       background: $sidebar__block-bg;
       text-align: center;
       font-size: 10px;
@@ -654,31 +497,16 @@
   }
 
   // Styling
-  &__styling {
-    padding: 30px;
-    height: 100%;
-
-    .brz-ed-sidebar-options > [class^="brz-ed-option"] {
-      margin-bottom: 30px;
+  &__styling .brz-ui-editable-select {
+    &-dots {
+      margin-left: unset;
+      margin-inline-start: 5px;
     }
 
-    .brz-ed-sidebar-options {
-      .brz-ed-option__select {
-        border-bottom: 1px solid #3a3f47;
-        padding-bottom: 30px;
-      }
-
-      .brz-ed-option__select > div,
-      .brz-control__select {
-        width: 100%;
-      }
+    &__options {
+      right: unset;
+      inset-inline-end: -40px;
     }
-  }
-
-  // Variants
-  &-variants {
-    height: $sidebar-size;
-    background-color: $sidebar__content__footer-bg;
   }
 
   // WP Page Template
@@ -707,13 +535,13 @@
 
       .brz-control__select--arrow {
         font-size: 8px;
-        margin-right: 0;
+        margin-inline-end: 0;
       }
     }
 
     .brz-control__select-option {
       width: 100%;
-      text-align: left;
+      text-align: start;
       font-weight: normal;
     }
   }
@@ -745,7 +573,7 @@
   &__add-elements {
     display: flex;
     flex-wrap: wrap;
-    margin-left: 38px;
+    margin-inline-start: 38px;
 
     &--base {
       padding-bottom: 0;
@@ -791,7 +619,7 @@
           position: absolute;
           height: 10px;
           width: 10px;
-          left: -3px;
+          inset-inline-start: -3px;
           top: -3px;
           border-radius: 5px;
           background-color: $brand__primary__pro;
@@ -896,7 +724,7 @@
     border-radius: 50%;
     position: absolute;
     top: 4px;
-    left: 8px;
+    inset-inline-start: 8px;
     background: $sidebar__edit__unchecked-bg;
 
     .brz-icon-svg {
@@ -909,7 +737,7 @@
     height: 100%;
     position: absolute;
     top: 0;
-    left: 0;
+    inset-inline-start: 0;
     z-index: 10;
     cursor: pointer;
 
@@ -945,7 +773,7 @@
       border: 0;
       outline: none;
       border-bottom: 1px solid $left_sidebar__main__search-border-bottom-color;
-      padding-left: 31px;
+      padding-inline-start: 31px;
       padding-top: 1px;
       padding-bottom: 12px;
       color: $left_sidebar__main__search-text-color;
@@ -962,10 +790,89 @@
   &__button-search {
     position: absolute;
     top: 2px;
-    left: 6px;
+    inset-inline-start: 6px;
 
     .brz-icon-svg {
       color: $left_sidebar__main__search-color;
+    }
+  }
+}
+
+$sidebar: "brz-ed-sidebar-drawer";
+
+.#{$sidebar} {
+  @apply z-[1];
+  @apply left-[47px] #{!important};
+  box-shadow: 0 0 10px 0 $sidebar__content-box-shadow;
+
+  .brz-ui-card {
+    @apply overflow-visible;
+    box-shadow: rgba(0, 0, 0, 0.3) 0 0 10px 0;
+  }
+
+  &--align-left {
+    @apply text-start #{!important};
+    .brz-ed-sidebar-drawer__body {
+      @apply mb-0 pb-[30px];
+    }
+  }
+
+  &__head {
+    @apply flex justify-between items-center px-[30px];
+    height: $sidebar-size;
+    background-color: $sidebar__header-bg;
+    color: $sidebar-color;
+
+    &__title {
+      @apply text-inherit m-0;
+      font-size: $sidebar__header-font-size !important;
+      font-family: $default-font-family !important;
+      font-weight: 600 !important;
+    }
+
+    &__icon__tooltip {
+      @apply text-[12px] leading-none text-center text-white whitespace-nowrap;
+      @apply h-[27px] w-auto min-w-[60px] rounded-[14px] z-[1];
+      @apply py-[7px] px-[10px];
+      @apply transition-opacity ease-linear duration-150;
+      font-family: $default-font-family;
+      background-color: $gray-5;
+    }
+
+    &__controls {
+      @apply flex items-end justify-between;
+
+      .brz-ed-icon-svg {
+        @apply text-[12px] font-semibold;
+        @apply cursor-pointer ml-[12px];
+        @apply transition-[color] ease-out duration-200;
+        color: $left_sidebar__elements-color;
+
+        &:hover {
+          color: $left_sidebar__elements-color--active;
+        }
+      }
+
+      .brz-ed-tooltip__overlay {
+        @apply bg-transparent ml-[5px] mt-[-5px];
+        box-shadow: none;
+
+        .brz-ed-arrow::after {
+          border-bottom-color: $gray-5;
+        }
+      }
+    }
+  }
+
+  &__body {
+    @apply flex-grow flex flex-col mb-[90px];
+  }
+
+  // Styling  (type of specialized drawer for styling)
+  .brz-ed-sidebar__styling {
+    @apply flex flex-col pt-[30px] gap-[30px];
+    .brz-ed-option-wrapper:not(.brz-ed--scrollable) {
+      @apply px-[30px];
     }
   }
 }

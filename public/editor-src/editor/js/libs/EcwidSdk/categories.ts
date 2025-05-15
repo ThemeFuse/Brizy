@@ -1,6 +1,5 @@
 import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
-import { EcwidCategoryId } from "visual/global/Ecwid/types";
-import { request } from "../../utils/api";
+import { searchEcwidCategories } from "visual/utils/api";
 import { Category } from "./types/Category";
 
 /**
@@ -34,25 +33,12 @@ export interface CategoriesList {
 }
 
 export class Categories {
-  constructor(private baseUrl: string) {}
-
   /**
    * Search or filter products in a store catalog. The response provides full details of found products.
    *
    * https://api-docs.ecwid.com/reference/search-products
    */
   search(config: ConfigCommon): Promise<CategoriesList> {
-    return request(`${this.baseUrl}/categories`, {}, config).then((r) =>
-      r.json()
-    );
-  }
-
-  /**
-   * Get all details of a specific category in an Ecwid store by its ID.
-   */
-  getById(id: EcwidCategoryId, config: ConfigCommon): Promise<Category> {
-    return request(`${this.baseUrl}/categories/${id}`, {}, config).then((r) =>
-      r.json()
-    );
+    return searchEcwidCategories(config);
   }
 }

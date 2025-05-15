@@ -28,12 +28,13 @@ import {
 } from "visual/utils/api";
 import { createFullModelPath } from "visual/utils/models";
 import { findDeep } from "visual/utils/object";
+import { makeTaskQueue } from "visual/utils/queue/taskQueue";
 import {
   isScreenshotSupported,
   makeNodeScreenshot
 } from "visual/utils/screenshots";
 import { ActionTypes } from "../../actions2";
-import { debounceAdvanced, makeTaskQueue } from "./utils";
+import { debounceAdvanced } from "./utils";
 
 const TASK_QUEUE_INTERVAL = 2000;
 const DEBOUNCE_INTERVAL = 2000;

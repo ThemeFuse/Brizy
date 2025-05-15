@@ -6,8 +6,9 @@ import { DynamicStylesProps } from "visual/types";
 export function style(data: DynamicStylesProps<ElementModel>): OutputStyle {
   const styles = {
     ".brz &&:hover:before": {
-      standart: ["cssStyleBoxShadow", "cssStyleBorder"],
-      interval: [
+      standart: [
+        "cssStyleBoxShadow",
+        "cssStyleBorder",
         "cssStyleHoverTransition",
         "cssStylePropertyHoverTransitionBoxShadow"
       ]

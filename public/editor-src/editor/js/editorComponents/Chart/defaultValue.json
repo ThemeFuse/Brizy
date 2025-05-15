@@ -116,6 +116,9 @@
 
     "fill": "on",
 
+    "hoverTransition": 50,
+    "hoverTransitionSuffix": "",
+
     "chartPieItemsGoogleColorHex": "#DD4B39",
     "chartPieItemsGoogleColorOpacity": 1,
     "chartPieItemsGoogleColorPalette": "",

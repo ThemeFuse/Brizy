@@ -22,7 +22,7 @@
     &:before {
       content: "";
       position: absolute;
-      left: calc(50% - 2px);
+      inset-inline-start: calc(50% - 2px);
       height: calc(100% - 4px);
       width: calc(50% - 2px);
       margin: 2px;
@@ -81,7 +81,7 @@
   &--control:before {
     content: "";
     position: relative;
-    left: calc(50% + 2px);
+    inset-inline-start: calc(50% + 2px);
     margin: 2px;
     height: calc(100% - 4px);
     width: calc(50% - 5px);

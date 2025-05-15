@@ -3,7 +3,7 @@
   position: relative;
   display: flex;
   flex-wrap: wrap;
-  text-align: left;
+  text-align: start;
   flex-basis: 100%;
   max-width: 100%;
   width: 100%;
@@ -22,7 +22,7 @@
       height: 100%;
       width: 100%;
       top: 0;
-      left: 0;
+      inset-inline-start: 0;
     }
 
     > div[data-scroll-motion],
@@ -36,7 +36,7 @@
     // align by container
     > .brz-hover-animation__container > .brz-bg,
     > .brz-bg {
-      left: auto;
+      inset-inline-start: auto;
     }
 
     .brz-wrapper__scrollmotion {

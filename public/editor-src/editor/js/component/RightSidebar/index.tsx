@@ -5,6 +5,7 @@ import { ConnectedProps, connect } from "react-redux";
 import { RenderEmpty } from "visual/component/RightSidebar/Components/RenderEmpty";
 import { RenderItems } from "visual/component/RightSidebar/Components/RenderItems";
 import { CLEAR_ITEMS_TIMEOUT } from "visual/component/RightSidebar/utils";
+import { Scrollbar } from "visual/component/Scrollbar";
 import { OptionDefinition } from "visual/editorComponents/ToolbarItemType";
 import { updateUI } from "visual/redux/actions2";
 import { deviceModeSelector, uiSelector } from "visual/redux/selectors";
@@ -163,7 +164,9 @@ export class RightSidebarInner extends React.Component<Props> {
     return (
       <div className={sidebarClassName}>
         <Sidebar isOpen={isOpen} alignment={alignment}>
-          <div className="brz-ed-sidebar__right__content">{renderData}</div>
+          <Scrollbar theme="dark">
+            <div className="brz-ed-sidebar__right__content">{renderData}</div>
+          </Scrollbar>
         </Sidebar>
       </div>
     );

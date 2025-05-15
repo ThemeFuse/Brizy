@@ -53,6 +53,8 @@ export const getBoxResizerParams = (): {
 
 export const animate: Animate = ({ text, wrapper, value, type }) => {
   let width = 0;
+  const translateValue =
+    document.dir === "rtl" ? value : Math.max(-value, -100);
 
   const interval = setInterval(() => {
     if (width >= value) {
@@ -65,9 +67,10 @@ export const animate: Animate = ({ text, wrapper, value, type }) => {
       if (text) {
         text.innerHTML = width + "%";
         if (type === "style2") {
-          text.style.marginLeft = `clamp(0%, ${
+          text.style.marginInlineStart = `clamp(0%, ${
             Math.round(width + 0.5) + "%"
           }, 100%)`;
+          text.style.transform = `translateX(${translateValue}%)`;
         }
       }
     }

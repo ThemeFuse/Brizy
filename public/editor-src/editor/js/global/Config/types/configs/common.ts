@@ -5,6 +5,10 @@ import { ImageType } from "visual/utils/image/types";
 
 export type Response<R> = (r: R) => void;
 
+export interface SuccessResponse {
+  success: true;
+}
+
 //#region Image
 
 export interface Data {

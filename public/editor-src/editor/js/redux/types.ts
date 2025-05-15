@@ -1,3 +1,4 @@
+import { LeftSidebarOptionsIds } from "visual/global/Config/types/configs/ConfigCommon";
 import {
   Authorized,
   DeviceMode,
@@ -5,7 +6,7 @@ import {
   SyncAllowed,
   UserRole
 } from "visual/types";
-import { Block } from "visual/types/Block";
+import { Block, BlocksHTML } from "visual/types/Block";
 import { Fonts } from "visual/types/Fonts";
 import { GlobalBlock } from "visual/types/GlobalBlock";
 import { Page } from "visual/types/Page";
@@ -20,6 +21,21 @@ export enum StoreChanged {
   unchanged = "unchanged"
 }
 
+export const allowedDrawerComponents = [
+  LeftSidebarOptionsIds.addElements,
+  LeftSidebarOptionsIds.globalStyle,
+  LeftSidebarOptionsIds.reorderBlock
+] as const;
+
+export type AllowedDrawerComponentTypes =
+  (typeof allowedDrawerComponents)[number];
+
+export type DrawerContentTypes =
+  | AllowedDrawerComponentTypes
+  | LeftSidebarOptionsIds.cms; // In future Need to review how to lose CMS on click Outside
+
+export type SidebarAlign = "left" | "right";
+
 // WARNING: this is a work in progress.
 // Types should be added as we go on
 export type ReduxState = {
@@ -33,19 +49,25 @@ export type ReduxState = {
   blocksData: {
     [key: string]: Block;
   };
+  blocksHtml: {
+    inProcessing: number;
+    inPending: boolean;
+    blocks: {
+      [key: string]: BlocksHTML;
+    };
+  };
   fonts: Fonts;
   ui: {
     deviceMode: DeviceMode;
     activeElement: Element | null;
     leftSidebar: {
-      isOpen: boolean;
-      drawerContentType: string | null | undefined; // TODO: converted to a union of actual drawer type later
+      drawerContentType: DrawerContentTypes | null;
     };
     rightSidebar: {
       type: "options" | "help";
       isOpen: boolean;
       lock: "manual" | "auto" | undefined;
-      alignment: "right" | "left";
+      alignment: SidebarAlign;
       activeTab: string | undefined;
     };
     showHiddenElements: boolean;

@@ -232,7 +232,7 @@ function handleHydrate(callbacks) {
       configVariables.setAttribute("rel", "stylesheet");
 
       document.head.appendChild(configVariables);
-      parentDocument?.head.appendChild(configVariables.cloneNode());
+      parentDocument?.head.appendChild(configVariables.cloneNode(true));
     }
 
     if (document.getElementById("brz-rich-text-colors") === null) {

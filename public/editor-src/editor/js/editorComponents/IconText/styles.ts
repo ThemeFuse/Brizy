@@ -6,7 +6,6 @@ import { OutputStyle } from "visual/utils/cssStyle/types";
 export function style(data: DynamicStylesProps<ElementModel>): OutputStyle {
   const styles = {
     ".brz &&": { standart: ["cssStyleElementIconBoxFlexDirection"] },
-
     ".brz && .brz-icon__container": {
       standart: ["cssStyleElementIconBoxMargin", "cssStyleFlexVerticalAlign"]
     }

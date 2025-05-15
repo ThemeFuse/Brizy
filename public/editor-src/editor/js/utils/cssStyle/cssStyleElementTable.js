@@ -21,8 +21,8 @@ export function cssStyleElementTableSpacing({ v, device, state }) {
   const iconPosition = styleElementTableIconPosition({ v, device, state });
   const iconSpacing = styleElementTableIconSpacing({ v, device, state });
   return iconPosition === "left"
-    ? `margin: auto ${iconSpacing}px auto 0;`
-    : `margin: auto 0 auto ${iconSpacing}px;`;
+    ? `margin-inline-end: ${iconSpacing}px;`
+    : `margin-inline-start: ${iconSpacing}px;`;
 }
 
 export function cssStyleElementTableBtnIconPosition({ v, device, state }) {

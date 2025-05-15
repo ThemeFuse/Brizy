@@ -36,6 +36,7 @@ export interface Value extends ElementModel, CssId {
   mobileCustomSizeSuffix: string;
 
   customCSS: string;
+  ariaLabel?: string;
 }
 
 export interface Props extends WithClassName {

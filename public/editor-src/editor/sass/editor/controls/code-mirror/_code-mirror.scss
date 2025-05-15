@@ -28,7 +28,7 @@
     border: 9px solid rgba(0, 0, 0, 0); /* Transparent border together with `background-clip: padding-box` does the trick with margin for scroll*/
     background-clip: padding-box;
     -webkit-border-radius: 1em;
-    background-color: var(--tertiary-white, #4a5058);
+    background-color: var(--toolbars-icons-separators, #4a5058);
   }
   &::-webkit-scrollbar-corner {
     background-color: transparent;
@@ -104,5 +104,5 @@
 }
 
 .cm-placeholder {
-  color: $toolbar__code_mirror-text-color;
+  color: $toolbar__code_mirror-placeholder-text-color;
 }

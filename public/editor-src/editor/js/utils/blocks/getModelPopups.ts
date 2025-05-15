@@ -5,9 +5,12 @@ import { objectTraverse2 } from "visual/utils/object";
 
 export function getModelPopups(model: ElementModel): Array<Block> {
   const popups: Array<Block> = [];
+
   objectTraverse2(model, (obj: Record<string, unknown>) => {
-    if (Array.isArray(obj.popups)) {
-      popups.push(...obj.popups);
+    const popupList = obj.linkPopupPopups ?? obj.popups;
+
+    if (Array.isArray(popupList)) {
+      popups.push(...popupList);
     }
   });
 

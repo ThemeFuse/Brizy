@@ -1,6 +1,10 @@
 import { difference, intersection } from "es-toolkit";
 import { isT } from "fp-utilities";
 import { isWp } from "visual/global/Config";
+import {
+  GetCollectionItem_collectionItem_fields_CollectionItemFieldMultiReference as CollectionItemFieldMultiReference,
+  GetCollectionItem_collectionItem_fields_CollectionItemFieldReference as CollectionItemFieldReference
+} from "visual/global/Config/types/GetCollectionItem";
 import { isCustomerPage } from "visual/global/Config/types/configs/Base";
 import {
   isCloud,
@@ -25,10 +29,6 @@ import {
   isReferenceSpecificIn,
   isWPPage
 } from "visual/types/utils";
-import {
-  GetCollectionItem_collectionItem_fields_CollectionItemFieldMultiReference as CollectionItemFieldMultiReference,
-  GetCollectionItem_collectionItem_fields_CollectionItemFieldReference as CollectionItemFieldReference
-} from "visual/utils/api/cms/graphql/types/GetCollectionItem";
 import { isTemplate } from "visual/utils/models";
 import {
   CUSTOMER_TYPE,

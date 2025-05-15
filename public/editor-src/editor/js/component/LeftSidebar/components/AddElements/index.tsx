@@ -1,9 +1,9 @@
 import React from "react";
+import { Scrollbar } from "visual/component/Scrollbar";
 import { useConfig } from "visual/providers/ConfigProvider";
 import { Shortcodes } from "visual/types";
 import { t } from "visual/utils/i18n";
 import { Control, Props } from "./Control";
-import { Header } from "./Header";
 
 interface Option {
   id: string;
@@ -14,7 +14,12 @@ interface Option {
 
 const DrawerComponent = (props: Props) => {
   const config = useConfig();
-  return <Control {...props} config={config} />;
+
+  return (
+    <Scrollbar theme="dark">
+      <Control {...props} config={config} />
+    </Scrollbar>
+  );
 };
 
 export const getBaseDrawer = ({
@@ -30,6 +35,5 @@ export const getBaseDrawer = ({
   showInDeviceModes: ["desktop"],
   drawerComponent: (props: Props) => (
     <DrawerComponent {...props} shortcodes={shortcodes} />
-  ),
-  wrapperHeaderComponent: Header
+  )
 });
