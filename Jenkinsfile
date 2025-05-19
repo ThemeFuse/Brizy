@@ -78,7 +78,7 @@ pipeline {
         stage('Update recompilation tag') {
             when { expression { return params.changeRecompilationTag } }
             steps {
-                sh "./jenkins/change-recompilation-tag.sh"
+                sh "./jenkins/update-recompilation-tag.sh"
             }
         }
 
