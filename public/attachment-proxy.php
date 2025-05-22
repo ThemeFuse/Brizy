@@ -45,7 +45,7 @@ class Brizy_Public_AttachmentProxy extends Brizy_Public_AbstractProxy {
 				exit;
 			} catch ( Exception $e ) {
 				Brizy_Logger::instance()->exception( $e );
-				status_header( $e->getMessage() );
+				status_header( 404 );
 				global $wp_query;
 				$wp_query->set_404();
 
