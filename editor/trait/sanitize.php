@@ -2,6 +2,13 @@
 
 trait Brizy_Editor_Trait_Sanitize {
 
+	public function sanitizeUid($uid) {
+		// eliminate anything that is not a letter, digit, “_”, “-”, “.” —or any run of two-or-more dots
+		$auid =  preg_replace("/(?:[^\w.\-]|\.{2,})+/u", "", $uid);
+
+		return $auid;
+	}
+
 	public function sanitizeHtml( $html ) {
 		if ( current_user_can( 'unfiltered_html' ) ) {
 			return $html;
