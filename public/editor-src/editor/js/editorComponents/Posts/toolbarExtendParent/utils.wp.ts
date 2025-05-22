@@ -8,7 +8,7 @@ import {
   getPostTaxonomies,
   getPosts,
   getTermsBy
-} from "visual/utils/api/index.wp";
+} from "visual/utils/api";
 
 function split(s: string, sep: string): string[] {
   return s.split(sep).map((s) => s.trim());

@@ -403,7 +403,7 @@ export function cssStyleElementShopifyPriceSpacingStyle1({
   const style = dvv("priceStyle");
 
   if (style === "style-1" && spacing) {
-    return `margin-right:${spacing}px;`;
+    return `margin-inline-end:${spacing}px;`;
   }
   return "";
 }

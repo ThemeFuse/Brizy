@@ -1,9 +1,9 @@
 {
-  "editor.min.js": 8.737542,
-  "editor.vendor.min.js": 6.518587,
-  "editor.min.css": 2.534232,
-  "preview.min.js": 0.54799,
-  "preview.min.css": 0.359181,
-  "polyfill.min.js": 0.007064,
-  "export.js": 20.805188
+  "editor.min.js": 8.796854,
+  "editor.vendor.min.js": 6.917364,
+  "editor.min.css": 2.57109,
+  "preview.min.js": 0.564418,
+  "preview.min.css": 0.383213,
+  "polyfill.min.js": 0.007066,
+  "export.js": 20.897801
 }

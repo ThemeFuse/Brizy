@@ -2,13 +2,14 @@ import { DragEndEvent } from "@dnd-kit/core";
 import classNames from "classnames";
 import React, { useCallback, useEffect, useReducer, useRef } from "react";
 import EditorIcon from "visual/component/EditorIcon";
+import { itemsReducer } from "visual/component/Options/types/dev/Addable/reducer";
 import { useTranslation } from "visual/providers/I18nProvider";
 import { uuid } from "visual/utils/uuid";
 import { NoAddableItems } from "./components/NoItems";
 import { Sidebar } from "./components/Sidebar";
 import { Sortable } from "./components/Sortable";
 import { ActiveGroup, AddableActions, Component } from "./types";
-import { getGroupsOrder, itemsReducer } from "./utils";
+import { getGroupsOrder, getSidebarAlignment } from "./utils";
 
 export const Addable: Component = (props) => {
   const { id: addableId, onChange, toolbar, optionGroups, config } = props;
@@ -19,7 +20,7 @@ export const Addable: Component = (props) => {
     activeGroup: null,
     sidebar: {
       isOpen: false,
-      alignment: "right"
+      alignment: getSidebarAlignment()
     }
   });
   const icon = config?.icon ?? "nc-iframe";

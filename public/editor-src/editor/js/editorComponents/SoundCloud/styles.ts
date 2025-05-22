@@ -12,13 +12,15 @@ export function style(data: DynamicStylesProps<ElementModel>): OutputStyle {
       standart: ["cssStyleBorderRadius"]
     },
     ".brz &&:hover:before": {
-      standart: ["cssStyleBorder", "cssStyleBoxShadow"],
-      interval: [
+      standart: ["cssStyleBorder", "cssStyleBoxShadow"]
+    },
+    ".brz && iframe": { standart: ["cssStyleSizeHeight"] },
+    ".brz &&:before": {
+      standart: [
         "cssStyleHoverTransition",
         "cssStylePropertyHoverTransitionColor"
       ]
-    },
-    ".brz && iframe": { standart: ["cssStyleSizeHeight"] }
+    }
   };
 
   return renderStyles({ ...data, styles });

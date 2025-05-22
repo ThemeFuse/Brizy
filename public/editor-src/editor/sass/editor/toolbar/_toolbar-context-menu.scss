@@ -4,13 +4,13 @@
   background-clip: padding-box;
   color: $options__label-color;
   border-radius: $toolbar-border-radius;
-  box-shadow: 0 0 5px 0 $toolbar-box-shadow;
+  box-shadow: 0 1px 8px 1px $toolbar-box-shadow;
   font-size: $options__item-font-size;
   font-family: $default-font-family;
   min-width: 185px;
   outline: none;
   opacity: 0;
-  text-align: left;
+  text-align: start;
   transition: opacity 0.2s linear;
   z-index: z("toolbar") + 1;
   padding: 4px 0;
@@ -43,7 +43,7 @@
       justify-content: flex-start;
 
       .brz-icon-svg {
-        margin-right: 10px;
+        margin-inline-end: 10px;
         font-size: 12px;
       }
     }
@@ -81,7 +81,7 @@
       height: 26px;
       line-height: 26px;
       padding: 6px 17px;
-      text-align: left;
+      text-align: start;
       font-weight: 600;
       color: $options__control-color;
       white-space: nowrap;
@@ -137,25 +137,35 @@
     position: absolute;
     pointer-events: none;
     border-top: 1px solid $toolbar-border;
-    margin-left: 190px;
-    margin-right: 5px;
+    margin-inline-start: 190px;
+    margin-inline-end: 5px;
 
     .contexify_rightSlot {
       position: absolute;
       top: 50%;
-      right: 17px;
+      inset-inline-end: 17px;
       width: 6px;
       height: 6px;
       background-color: transparent;
       border-top: 1px solid $options__label-color;
-      border-right: 1px solid $options__label-color;
+      border-inline-end: 1px solid $options__label-color;
       transform: rotate(45deg) translateY(-50%);
       font-size: 0;
     }
+  }
+
+  &_rightSlot {
+    display: flex;
   }
 }
 
 // Cloneable
 .brz-wrapper-clone .contexify_wrapper {
   width: auto;
+}
+
+[dir="rtl"] {
+  .contexify_rightSlot svg {
+    transform: rotate(180deg);
+  }
 }

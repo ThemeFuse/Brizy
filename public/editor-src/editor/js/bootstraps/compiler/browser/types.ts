@@ -1,25 +1,37 @@
 import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import { Store } from "visual/redux/store";
+import { BlockHtml } from "visual/types/Block";
 import { GlobalBlock } from "visual/types/GlobalBlock";
 import { Page } from "visual/types/Page";
 import { Project } from "visual/types/Project";
-import { Asset } from "../common/transforms/assets";
-import { Output as CompilerOutput } from "./bootstrap/types";
+import {
+  Asset,
+  ScriptsFree,
+  ScriptsPro,
+  StylesFree,
+  StylesPro
+} from "../common/transforms/assets";
 
 //#region GetCompileHTML
 
 export interface Data {
   config: ConfigCommon;
-  project: Project;
-  page: Page;
+  store: Store;
+  project?: Project;
+  page?: Page;
   globalBlocks?: Array<GlobalBlock>;
-  needToCompile: {
-    project?: Project;
-    page?: Page;
-    globalBlocks?: Array<GlobalBlock>;
-  };
+  blocksHtml?: Record<string, BlockHtml>;
 }
 
-export type JsonOutput = CompilerOutput;
+export type JsonOutput = {
+  html: string;
+  assets: {
+    freeStyles: StylesFree;
+    freeScripts: ScriptsFree;
+    proStyles?: StylesPro;
+    proScripts?: ScriptsPro;
+  };
+};
 
 export interface HtmlOutput {
   html: string;

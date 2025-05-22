@@ -33,7 +33,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-right: 7px;
+    margin-inline-end: 7px;
     letter-spacing: -1px;
   }
 
@@ -68,7 +68,7 @@
 
     & .brz-control__select {
       flex: 1;
-      margin-right: 10px;
+      margin-inline-end: 10px;
 
       & .brz-control__select-current {
         background-color: #fff;
@@ -98,12 +98,12 @@
     }
 
     .brz-icon-svg {
-      margin-right: 8px;
+      margin-inline-end: 8px;
     }
   }
 
   &__remove {
-    margin-left: auto;
+    margin-inline-start: auto;
     cursor: pointer;
     color: #818a91;
 
@@ -128,7 +128,7 @@
     }
 
     & > div:last-child {
-      right: -15px !important;
+      inset-inline-end: -15px !important;
     }
   }
 
@@ -149,7 +149,7 @@
     display: flex;
     align-items: center;
     cursor: pointer;
-    margin-right: 22px;
+    margin-inline-end: 22px;
 
     &-text {
       min-width: 105px;
@@ -166,16 +166,16 @@
 
       .brz-icon-svg {
         font-size: 12px;
-        margin-right: 10px;
+        margin-inline-end: 10px;
       }
     }
 
     &-include {
       .brz-ed-popup-conditions__type-text {
-        background-color: #3dbfe8;
+        background-color: $floating__button__tail-bg;
 
         &:hover {
-          background-color: #31a7cd;
+          background-color: $floating__button__second__tail-bg;
         }
       }
     }
@@ -193,18 +193,18 @@
 
   &__select {
     flex: 1;
-    margin-right: 21px;
+    margin-inline-end: 21px;
 
     & > .brz-ed-popup-conditions__select {
-      margin-right: 0;
+      margin-inline-end: 0;
     }
 
     .brz-control__select {
       flex: 1;
-      margin-right: 10px;
+      margin-inline-end: 10px;
 
       &:last-child {
-        margin-right: 0;
+        margin-inline-end: 0;
       }
 
       &-current {
@@ -256,7 +256,7 @@
       }
 
       &__save {
-        background-color: #3dbfe8;
+        background-color: $floating__button__tail-bg;
       }
     }
   }
@@ -388,7 +388,7 @@
     &--size-large {
       width: 100%;
       max-width: 100%;
-      margin-right: 10px;
+      margin-inline-end: 10px;
     }
 
     &--tag,
@@ -403,7 +403,7 @@
     }
 
     &--size-large {
-      margin-right: 0;
+      margin-inline-end: 0;
     }
   }
 

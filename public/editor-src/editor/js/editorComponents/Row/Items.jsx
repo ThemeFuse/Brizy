@@ -3,12 +3,14 @@ import React from "react";
 import { getIn, mergeDeep, setIn } from "timm";
 import { ContextMenuExtend } from "visual/component/ContextMenu";
 import HotKeys from "visual/component/HotKeys";
+import { ToastNotification } from "visual/component/Notifications";
 import Sortable from "visual/component/Sortable";
 import SortableEmpty from "visual/component/Sortable/SortableEmpty";
 import { hideToolbar } from "visual/component/Toolbar";
 import { MIN_COL_WIDTH } from "visual/config/columns";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import { isView } from "visual/providers/RenderProvider";
+import { isRTL } from "visual/utils/env";
 import { t } from "visual/utils/i18n";
 import { makeAttr } from "visual/utils/i18n/attribute";
 import { clamp, isNumeric } from "visual/utils/math";
@@ -91,12 +93,26 @@ class RowItems extends EditorArrayComponent {
   };
 
   handleColumnResize = (index, deltaX, position) => {
-    const { col1Index } = this.getColumnIndexesByPosition(index, position);
+    const _isRTL = isRTL(this.getGlobalConfig());
+    const { col1Index } = _isRTL
+      ? this.getColumnIndexesByRTLPosition(index, position)
+      : this.getColumnIndexesByPosition(index, position);
 
-    const colWidthPx = this.columnWidths[col1Index] + deltaX;
-    const colWidthPercent = toDecimalTen(
-      (colWidthPx * 100) / this.containerWidth
-    );
+    let colWidthPx = 0;
+    let colWidthPercent = 0;
+
+    if (_isRTL) {
+      const device = this.getDeviceMode();
+      const isDesktop = device === "desktop";
+
+      colWidthPx =
+        this.columnWidths[isDesktop ? col1Index : index] +
+        (isDesktop ? deltaX : deltaX * -1);
+      colWidthPercent = toDecimalTen((colWidthPx * 100) / this.containerWidth);
+    } else {
+      colWidthPx = this.columnWidths[col1Index] + deltaX;
+      colWidthPercent = toDecimalTen((colWidthPx * 100) / this.containerWidth);
+    }
 
     if (this.resizerState.isDragging) {
       this.resizerState.deltaX = deltaX;
@@ -108,12 +124,13 @@ class RowItems extends EditorArrayComponent {
     const dbValue = this.getDBValue();
     const device = this.getDeviceMode();
     const widthKey = defaultValueKey({ key: "width", device });
+    const isDesktop = device === "desktop";
+    const _isRTL = isRTL(this.getGlobalConfig());
 
     const { min, max } = this.getColumnWidthLimitsPercent(index, position);
-    const { col1Index, col2Index } = this.getColumnIndexesByPosition(
-      index,
-      position
-    );
+    const { col1Index, col2Index } = _isRTL
+      ? this.getColumnIndexesByRTLPosition(index, position)
+      : this.getColumnIndexesByPosition(index, position);
 
     valueInPercent = clamp(valueInPercent, min, max);
 
@@ -121,14 +138,24 @@ class RowItems extends EditorArrayComponent {
 
     const popoverData = [col1WidthPercent];
 
-    let newValue = setIn(
-      dbValue,
-      [col1Index, "value", widthKey],
-      col1WidthPercent
-    );
+    let newValue;
+
+    if (_isRTL) {
+      newValue = setIn(
+        dbValue,
+        [isDesktop ? col1Index : index, "value", widthKey],
+        col1WidthPercent
+      );
+    } else {
+      newValue = setIn(
+        dbValue,
+        [col1Index, "value", widthKey],
+        col1WidthPercent
+      );
+    }
 
     // for desktop we should change width and for sibling
-    if (device === "desktop") {
+    if (isDesktop) {
       const currentCol1Width = this.getColumnWidthByIndex(col1Index);
       const currentCol2Width = this.getColumnWidthByIndex(col2Index);
 
@@ -187,7 +214,7 @@ class RowItems extends EditorArrayComponent {
       col1Index = index;
     }
 
-    if (position === "left") {
+    if (position === "start") {
       col1Index = index - 1;
       col2Index = index;
     }
@@ -198,16 +225,52 @@ class RowItems extends EditorArrayComponent {
     };
   }
 
+  getColumnIndexesByRTLPosition(index, position) {
+    const arrayLength = this.props.dbValue.length;
+
+    if (index < 0 || index >= arrayLength) {
+      ToastNotification.error(t("Something went wrong column resize"));
+    }
+
+    let col1Index = index;
+    let col2Index = index + 1;
+
+    if (position === "end") {
+      col1Index = index + 1;
+      col2Index = index;
+    }
+
+    if (position === "start") {
+      col1Index = index;
+      col2Index = index - 1;
+    }
+
+    if (col2Index < 0) {
+      col2Index = col1Index + 1;
+    }
+
+    // is it a good solution?
+    if (this.props.dbValue.length - 1 === index) {
+      col2Index = index - 1;
+      col1Index = index;
+    }
+
+    return {
+      col1Index,
+      col2Index
+    };
+  }
+
   getColumnWidthLimitsPercent(index, position, columnWidths) {
     const device = this.getDeviceMode();
+    const _isRTL = isRTL(this.getGlobalConfig());
     if (device !== "desktop") {
       return { min: 5, max: 100 };
     }
 
-    const { col1Index, col2Index } = this.getColumnIndexesByPosition(
-      index,
-      position
-    );
+    const { col1Index, col2Index } = _isRTL
+      ? this.getColumnIndexesByRTLPosition(index, position)
+      : this.getColumnIndexesByPosition(index, position);
 
     const currentCol1Width = this.getColumnWidthByIndex(col1Index);
     const currentCol2Width = this.getColumnWidthByIndex(col2Index);
@@ -246,7 +309,8 @@ class RowItems extends EditorArrayComponent {
     const toolbarConfig = {
       getItems: ({ device }) => {
         const insidePopup = meta.sectionPopup2 || meta.sectionPopup;
-        const position = items.length - 1 === itemIndex ? "left" : "right";
+        const position = items.length - 1 === itemIndex ? "start" : "end";
+        const _isRTL = isRTL(this.getGlobalConfig());
         const { min, max } = this.getColumnWidthLimitsPercent(
           itemIndex,
           position,
@@ -281,7 +345,11 @@ class RowItems extends EditorArrayComponent {
                       device !== "desktop"
                         ? capByPrefix(device, "width")
                         : "width";
-                    this.changeColumnWidths(itemIndex, data[width], "right");
+                    this.changeColumnWidths(
+                      itemIndex,
+                      data[width],
+                      _isRTL ? "start" : "end"
+                    );
                   }
                 }
               ]

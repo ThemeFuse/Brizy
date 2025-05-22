@@ -4,7 +4,7 @@ import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { DynamicContentHelper } from "visual/editorComponents/WordPress/common/DynamicContentHelper";
 import { Wrapper } from "visual/editorComponents/tools/Wrapper";
-import { updateEkklesiaFields } from "visual/utils/api/common";
+import { updateEkklesiaFields } from "visual/utils/api";
 import { makePlaceholder } from "visual/utils/dynamicContent";
 import { getEkklesiaMessages } from "../utils/helpers";
 import defaultValue from "./defaultValue.json";

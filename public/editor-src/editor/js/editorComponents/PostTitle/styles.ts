@@ -21,8 +21,7 @@ export function style(data: DynamicStylesProps<ElementModel>): OutputStyle {
       ]
     },
     ".brz &&:hover *": {
-      standart: ["cssStyleColor"],
-      interval: ["cssStyleHoverTransition"]
+      standart: ["cssStyleColor", "cssStyleHoverTransition"]
     },
     // :not(.brz-btn) was added to win specificity battle
     // with standard .brz-a styles

@@ -20,6 +20,8 @@ class StoryItem extends EditorComponent {
     meta: {}
   };
   static defaultValue = defaultValue;
+  static experimentalDynamicContent = true;
+
   collapsibleToolbarRef = React.createRef();
 
   static get componentId() {

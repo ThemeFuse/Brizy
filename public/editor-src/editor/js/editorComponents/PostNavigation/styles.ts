@@ -23,8 +23,7 @@ export const style = (data: DynamicStylesProps<Value>): OutputStyle => {
       ]
     },
     ".brz && .brz-ui-ed-navigation-title span:hover": {
-      standart: ["cssStyleElementPostNavigationColorTitle"],
-      interval: ["cssStyleHoverTransition"]
+      standart: ["cssStyleElementPostNavigationColorTitle"]
     },
     ".brz && .brz-ui-ed-navigation .brz-ui-ed-typography": {
       standart: [
@@ -38,8 +37,7 @@ export const style = (data: DynamicStylesProps<Value>): OutputStyle => {
       ]
     },
     ".brz && .brz-ui-ed-navigation .brz-ui-ed-typography:hover": {
-      standart: ["cssStyleElementPostNavigationColorPost"],
-      interval: ["cssStyleHoverTransition"]
+      standart: ["cssStyleElementPostNavigationColorPost"]
     },
     ".brz &&:before": {
       standart: [
@@ -48,9 +46,12 @@ export const style = (data: DynamicStylesProps<Value>): OutputStyle => {
       ]
     },
     ".brz &&:hover:before": {
-      standart: ["cssStyleBgColor"],
-      interval: ["cssStyleHoverTransition"]
-    }
+      standart: ["cssStyleBgColor"]
+    },
+    ".brz && .brz-ui-ed-navigation-title span, .brz && .brz-ui-ed-navigation .brz-ui-ed-typography, .brz &&:before":
+      {
+        standart: ["cssStyleHoverTransition"]
+      }
   };
 
   return renderStyles({ ...data, styles });

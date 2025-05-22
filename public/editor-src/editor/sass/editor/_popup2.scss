@@ -36,7 +36,8 @@
 
   &__icon-go-to-editor {
     vertical-align: text-top;
-    margin: auto 16px auto 0;
+    margin-block: auto;
+    margin-inline: 0 16px;
   }
 
   .brz-ed-collapsible>.brz-ed-collapsible__icon {

@@ -2,6 +2,7 @@ import { useContext, useEffect, useMemo, useReducer, useRef } from "react";
 import { useConfig } from "visual/providers/ConfigProvider";
 import { isView, useRender } from "visual/providers/RenderProvider";
 import { EditorComponentContext } from "../EditorComponentContext";
+import { DCApiProxy } from "./DCApiProxy";
 import { DCApiProxyInstance } from "./DCApiProxyInstance";
 
 export type State =
@@ -71,7 +72,8 @@ const initialState: State = { status: "initial" };
 
 export function useDC(
   placeholder: string | undefined | null,
-  delayMs = 0
+  delayMs = 0,
+  Fetcher: DCApiProxy = DCApiProxyInstance
 ): State {
   const [state, dispatch] = useReducer(reducer, initialState);
   const { renderType } = useRender();
@@ -137,7 +139,7 @@ export function useDC(
     const apiProxyConfig = { postId: itemId, globalConfig: config };
 
     // 2. fetch
-    const cached = DCApiProxyInstance.getFromCache(placeholder, apiProxyConfig);
+    const cached = Fetcher.getFromCache(placeholder, apiProxyConfig);
 
     if (cached !== undefined) {
       clearTimeout(delayTimeout.current);
@@ -148,7 +150,7 @@ export function useDC(
 
       fetchController.current = controller;
 
-      DCApiProxyInstance.getDC([placeholder], apiProxyConfig)
+      Fetcher.getDC([placeholder], apiProxyConfig)
         .then((r) => {
           if (signal.aborted === false) {
             dispatch({ type: "fetch_success", data: r[0] });
@@ -163,7 +165,7 @@ export function useDC(
           window.clearTimeout(delayTimeout.current);
         });
     }
-  }, [delayMs, placeholder, itemId, isInitial, IS_VIEW, config]);
+  }, [delayMs, placeholder, itemId, isInitial, IS_VIEW, config, Fetcher]);
 
   if (placeholder === undefined || placeholder === null || placeholder === "") {
     return { status: "empty" };

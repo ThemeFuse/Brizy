@@ -1,8 +1,13 @@
 import { debounce, once } from "es-toolkit";
+import { prepareHTML } from "visual/bootstraps/compiler/common/utils/prepareHTML";
 import {
   ConfigCommon,
   PublishData
 } from "visual/global/Config/types/configs/ConfigCommon";
+import { Store } from "visual/redux/store";
+import { GlobalBlock } from "visual/types/GlobalBlock";
+import { Page } from "visual/types/Page";
+import { Project } from "visual/types/Project";
 import {
   autoSave as apiAutoSave,
   createGlobalBlock as apiCreateGlobalBlock,
@@ -13,7 +18,6 @@ import {
   sendHeartBeat as apiSendHeartBeat,
   updatePopupRules as apiUpdatePopupRules
 } from "visual/utils/api";
-import { Data, getCompile } from "visual/utils/compiler";
 import * as Obj from "visual/utils/reader/object";
 
 export {
@@ -70,14 +74,29 @@ export function pollingSendHeartBeat(heartBeat: number, config: ConfigCommon) {
 
 // OnUpdate res
 
-interface OnUpdateData extends Data {
+interface CompileData {
+  page: Page;
+  project: Project;
+  globalBlocks: Array<GlobalBlock>;
+}
+
+interface OnUpdateData {
   is_autosave: 1 | 0;
+  config: ConfigCommon;
+  needToCompile: Partial<CompileData>;
+  store: Store;
   onDone: (data: PublishData) => void;
 }
 
 export const onUpdate = async (data: OnUpdateData) => {
-  const { state, config, needToCompile, is_autosave, onDone } = data;
-  const html = await getCompile({ state, config, needToCompile });
+  const { store, config, needToCompile, is_autosave, onDone } = data;
+  const html = prepareHTML({
+    config,
+    store,
+    globalBlocks: needToCompile.globalBlocks,
+    page: needToCompile.page,
+    project: needToCompile.project
+  });
 
   onDone({ ...html, is_autosave });
 };

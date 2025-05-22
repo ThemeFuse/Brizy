@@ -1,5 +1,5 @@
 import { GetItems } from "visual/editorComponents/EditorComponent/types";
-import { getEkklesiaChoiches } from "visual/utils/api/common";
+import { getEkklesiaChoiches } from "visual/utils/api";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
 import { toolbarParentColors } from "../toolbarParent";

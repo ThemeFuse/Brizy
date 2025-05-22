@@ -10,7 +10,7 @@ import React, {
 import { ToastNotification } from "visual/component/Notifications";
 import Options from "visual/component/Options";
 import { useConfig } from "visual/providers/ConfigProvider";
-import { getDynamicContentPlaceholders } from "visual/utils/api/common";
+import { getDynamicContentPlaceholders } from "visual/utils/api";
 import { t } from "visual/utils/i18n";
 import {
   configChoicesToSelectItemChoices,

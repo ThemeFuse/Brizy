@@ -1,10 +1,15 @@
+import { isFunction } from "es-toolkit";
 import { Delta, Keyboard } from "../quill";
 
-const handleEnter = function ({ index, length }, context) {
+const handleEnter = function (getIsListOpen, { index, length }, context) {
   const { prepopulation, population } = this.quill.getFormat();
-  if (prepopulation || population) {
+
+  const isListOpen = isFunction(getIsListOpen) ? getIsListOpen() : false;
+
+  if (isListOpen || prepopulation || population) {
     return;
   }
+
   if (length === 0) {
     const [{ domNode: elem }, offset] = this.quill.getLine(index);
     const currentTextLength = elem.textContent.length;
@@ -49,25 +54,33 @@ const handleDelete = function ({ index }) {
   return true;
 };
 
-const handleArrowChange = function () {
+const handleArrowChange = function (getIsListOpen) {
   const { prepopulation, population } = this.quill.getFormat();
 
-  return !prepopulation && !population;
+  const isListOpen = isFunction(getIsListOpen) ? getIsListOpen() : false;
+
+  return !isListOpen && !prepopulation && !population;
 };
 
-const bindings = () => ({
+const bindings = (getIsListOpen) => ({
   enter: {
     key: Keyboard.keys.ENTER,
-    handler: handleEnter
+    handler: function (...data) {
+      return handleEnter.bind(this)(getIsListOpen, ...data);
+    }
   },
   "header enter": handleEnter,
   arrowUp: {
     key: 38,
-    handler: handleArrowChange
+    handler: function () {
+      return handleArrowChange.bind(this)(getIsListOpen);
+    }
   },
   arrowDown: {
     key: 40,
-    handler: handleArrowChange
+    handler: function () {
+      return handleArrowChange.bind(this)(getIsListOpen);
+    }
   },
   backspace: {
     key: 8,

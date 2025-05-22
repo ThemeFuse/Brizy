@@ -1,4 +1,4 @@
-import { addRecaptcha } from "visual/component/Prompts/PromptForm/api";
+import { addRecaptcha } from "visual/utils/api";
 
 export async function validation(data, config) {
   try {
@@ -24,7 +24,7 @@ function createRecaptcha(data, config) {
           size: "invisible",
           callback: async (response) => {
             // Validation response google hash and secretkey from the server
-            const { status } = await addRecaptcha(
+            const { success } = await addRecaptcha(
               {
                 group: "recaptcha",
                 service: "recaptcha",
@@ -37,7 +37,7 @@ function createRecaptcha(data, config) {
             recaptchaDiv.remove();
             recaptchaScript.remove();
 
-            res(status === 200);
+            res(success);
           },
           "error-callback": () => {
             recaptchaDiv.remove();

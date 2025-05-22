@@ -6,7 +6,6 @@ import CustomCSS from "visual/component/CustomCSS";
 import { HoverAnimation } from "visual/component/HoverAnimation/HoverAnimation";
 import { getHoverAnimationOptions } from "visual/component/HoverAnimation/utils";
 import Link from "visual/component/Link";
-import { ThemeIcon } from "visual/component/ThemeIcon";
 import Toolbar from "visual/component/Toolbar";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import EditorComponent from "visual/editorComponents/EditorComponent";
@@ -26,6 +25,7 @@ import * as Str from "visual/utils/reader/string";
 import * as State from "visual/utils/stateMode";
 import { Literal } from "visual/utils/types/Literal";
 import { MValue } from "visual/utils/value";
+import { Icon as _Icon } from "./Controls/Icon";
 import defaultValue from "./defaultValue.json";
 import * as sidebarConfig from "./sidebar";
 import { style, styleWrapper } from "./styles";
@@ -124,7 +124,8 @@ class Icon extends EditorComponent<Value, Props> {
       customClassName,
       filename,
       customCSS,
-      cssClass
+      cssClass,
+      ariaLabel
     } = v;
     const config = this.getGlobalConfig();
     const linkData = getLinkData(v, config);
@@ -167,25 +168,25 @@ class Icon extends EditorComponent<Value, Props> {
       )
     );
 
-    let content = (
-      <span className={classNameIcon}>
-        <ThemeIcon name={name} type={type} filename={filename} />
-      </span>
+    const icon = linkData.href ? (
+      <Link {...linkData}>
+        <_Icon
+          type={type}
+          classNameIcon={classNameIcon}
+          name={name}
+          filename={filename}
+        />
+      </Link>
+    ) : (
+      <_Icon
+        type={type}
+        classNameIcon={classNameIcon}
+        name={name}
+        filename={filename}
+        ariaLabel={ariaLabel}
+      />
     );
 
-    if (linkData.href) {
-      content = (
-        <Link
-          type={linkData.type}
-          href={linkData.href}
-          target={linkData.target}
-          rel={linkData.rel}
-          slide={linkData.slide}
-        >
-          {content}
-        </Link>
-      );
-    }
     const id = getCSSId(v);
 
     const props = {
@@ -232,7 +233,7 @@ class Icon extends EditorComponent<Value, Props> {
                       isHidden={isHidden}
                       withoutWrapper={true}
                     >
-                      {content}
+                      {icon}
                     </HoverAnimation>
                   </BoxResizer>
                 </Wrapper>

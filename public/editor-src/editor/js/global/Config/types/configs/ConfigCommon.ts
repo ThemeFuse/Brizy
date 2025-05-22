@@ -10,7 +10,10 @@ import {
 } from "visual/component/Options/types/dev/Select/types";
 import { RuleList } from "visual/component/Prompts/PromptConditions/Rules/types";
 import { Ref } from "visual/component/Prompts/PromptConditions/Rules/utils/api";
-import { ConfigTab as PromptFormTab } from "visual/component/Prompts/PromptForm/types";
+import {
+  FontFile,
+  UploadFont
+} from "visual/component/Prompts/PromptFonts/api/types";
 import { FormInputTypesName } from "visual/editorComponents/Form2/Form2Field/types";
 import {
   EkklesiaFieldMap,
@@ -18,26 +21,35 @@ import {
   EkklesiaParams
 } from "visual/editorComponents/MinistryBrands/utils/types";
 import { VideoTypes } from "visual/editorComponents/Video/types";
-import { DynamicContent } from "visual/global/Config/types/DynamicContent";
+import {
+  DynamicContent,
+  GetPlaceholderData
+} from "visual/global/Config/types/DynamicContent";
 import { ImageDataSize } from "visual/global/Config/types/ImageSize";
 import { PostTypesTax } from "visual/global/Config/types/PostTypesTax";
 import { Taxonomy } from "visual/global/Config/types/Taxonomy";
 import { UrlsCommon } from "visual/global/Config/types/Urls";
 import { EcwidProductId, EcwidStoreId } from "visual/global/Ecwid/types";
+import { CategoriesList } from "visual/libs/EcwidSdk/categories";
+import { ProductsList } from "visual/libs/EcwidSdk/products";
 import { UploadedFont } from "visual/types/Fonts";
 import { GlobalBlock } from "visual/types/GlobalBlock";
 import { Page, PageCommon } from "visual/types/Page";
 import { Project } from "visual/types/Project";
 import { Rule } from "visual/types/Rule";
 import { FontStyle, Palette } from "visual/types/Style";
-import { GetCollectionItem_collectionItem as CollectionItem } from "visual/utils/api/cms/graphql/types/GetCollectionItem";
 import {
   AdobeAddAccount,
   AdobeFonts,
   CollectionSourceItem,
-  PostsSources
+  PostsSources,
+  RulePostGroupList
 } from "visual/utils/api/types";
 import { Literal } from "visual/utils/types/Literal";
+import { GetCollectionItem_collectionItem as CollectionItem } from "../../types/GetCollectionItem";
+import { CollectionTypesInfo } from "../../types/Posts";
+import { Authorisation } from "../Authorisation";
+import { Form } from "../Form";
 import { Pro } from "../Pro";
 import { User } from "../User";
 import type { Compiler } from "./Compiler";
@@ -77,7 +89,6 @@ import {
   AddImageData,
   AddImageExtra,
   AdobeFontData,
-  FormFieldsOption,
   IconPattern,
   IconUploadData,
   ImagePatterns,
@@ -104,7 +115,9 @@ export enum Mode {
   external_story = "external_story",
   internal_story = "internal_story",
 
-  template = "template"
+  template = "template",
+
+  archive = "archive"
 }
 
 export interface MenuItem {
@@ -205,12 +218,22 @@ export interface PublishedProject extends Project {
   compiled?: ProjectOutput;
 }
 
+type BlockOutput = Partial<Output> & {
+  id: string;
+};
+
 export type PublishedPage = Page & {
-  compiled?: Output;
+  compiled?: {
+    rootClassNames?: Array<string>;
+    rootAttributes?: Record<string, string | boolean>;
+    blocks: Array<BlockOutput>;
+  };
 };
 
 export interface PublishedGlobalBlock extends APIGlobalBlock {
-  compiled?: Output;
+  compiled?: {
+    blocks: Array<BlockOutput>;
+  };
 }
 
 export interface PublishData {
@@ -235,17 +258,26 @@ export interface OnChange {
 
 export interface Theme {
   colors: {
-    "--primary-dark"?: string;
-    "--secondary-dark"?: string;
-    "--tertiary-dark"?: string;
-    "--primary-white"?: string;
-    "--secondary-white"?: string;
-    "--tertiary-white"?: string;
-    "--primary-gray"?: string;
-    "--secondary-gray"?: string;
-    "--tertiary-gray"?: string;
-    "--active-color"?: string;
-    "--light-gray"?: string;
+    "--ui-main-color"?: string; // UI main color
+    "--active-color"?: string; // Highlight color
+    "--icons-color"?: string; // Icons color
+    "--toolbars-icons-separators"?: string; // Toolbar icons separators
+
+    "--sidebar-background"?: string; // Sidebars left and right background
+    "--sidebar-header"?: string; // Sidebars left and right headers
+    "--sidebar-separators"?: string; // Sidebars separators
+    "--borders"?: string; // Borders for the elements in the left sidebar
+
+    "--inputs-bg"?: string; // All inputs background
+    "--input-placeholder-text"?: string; // Placeholder default text in inputs
+    "--text-labels"?: string; // Text labels
+
+    "--column-lvl1-border"?: string; // Border for the lvl 1 column in the editor (optional)
+    "--column-lvl2-border"?: string; // Border for the lvl 2 column in the editor (optional)
+    "--row-and-default-elements-border"?: string; // Border for the row and default elements in the editor (optional)
+    "--draggable-block-padding-bg"?: string; // Block top and bottom draggable padding in editor (optional)
+
+    "--ui-shadows"?: string; // UI shadows for toolbars and sidebars
   };
 }
 
@@ -332,16 +364,30 @@ export interface ConditionCollectionType extends ColllectionBase {
   fields: RefById[];
 }
 
+export interface Customer {
+  id: string;
+  firstName: string;
+  lastName: string;
+}
+
+export interface CustomerGroup {
+  id: string;
+  name: string;
+}
+
 export interface ConditionalTypesData {
   collectionTypes: ConditionCollectionType[];
-  customers: ColllectionBase[];
-  customerGroups: ColllectionBase[];
+  customers: Customer[];
+  customerGroups: CustomerGroup[];
 }
 
 export interface API {
   // Used only in Posts(Migration) & GlobalBlocks PopupConditions
   /** @deprecated */
   brizyApiUrl?: string;
+
+  //Authorisation
+  authorisation?: Authorisation;
 
   //AI
   textAI?: {
@@ -489,6 +535,12 @@ export interface API {
     getConditionalTypes: {
       handler: (
         res: Response<ConditionalTypesData>,
+        rej: Response<string>
+      ) => void;
+    };
+    getCollectionTypesInfo: {
+      handler: (
+        res: Response<CollectionTypesInfo>,
         rej: Response<string>
       ) => void;
     };
@@ -666,6 +718,13 @@ export interface API {
         abortSignal?: AbortSignal;
       }
     ) => void;
+    getRulePostsGroupList: (
+      res: Response<RulePostGroupList[]>,
+      rej: Response<string>,
+      data: {
+        postType: string;
+      }
+    ) => void;
   };
 
   terms?: {
@@ -776,6 +835,8 @@ interface _ConfigCommon<Mode> {
   //#region Pro
 
   pro?: Pro;
+
+  isRTL?: boolean;
 
   //#endregion
 
@@ -964,24 +1025,24 @@ interface _ConfigCommon<Mode> {
   //#region Integrations
 
   integrations?: {
-    form?: {
-      showIntegrations?: boolean;
-      action?: string;
-      recaptcha?: {
-        siteKey: string;
-      };
-      fields?: {
-        label?: string;
-        handler: (
-          res: Response<Array<FormFieldsOption>>,
-          rej: Response<string>
-        ) => void;
-      };
-      tabs?: PromptFormTab[];
-    };
+    form?: Form;
     fonts?: {
       upload?: {
         get(res: Response<Array<UploadedFont>>, rej: Response<string>): void;
+        upload(
+          res: Response<UploadFont>,
+          rej: Response<string>,
+          data: {
+            files: FontFile;
+            name: string;
+            id: string;
+          }
+        ): void;
+        delete(
+          res: Response<string>,
+          rej: Response<string>,
+          fontId: string
+        ): void;
       };
     };
   };
@@ -1207,6 +1268,9 @@ interface _ConfigCommon<Mode> {
       onOpen?: VoidFunction;
       createMenuLabel?: string;
     };
+    menuSimple?: {
+      getPlaceholderData?: GetPlaceholderData;
+    };
   };
 
   //#endregion
@@ -1263,6 +1327,20 @@ interface _ConfigCommon<Mode> {
             res: Response<ChoicesSync>,
             rej: Response<string>,
             args: { id: string }
+          ) => void;
+        };
+
+        searchEcwidProducts?: {
+          handler?: (
+            res: Response<ProductsList>,
+            rej: Response<string>
+          ) => void;
+        };
+
+        searchEcwidCategories?: {
+          handler?: (
+            res: Response<CategoriesList>,
+            rej: Response<string>
           ) => void;
         };
 

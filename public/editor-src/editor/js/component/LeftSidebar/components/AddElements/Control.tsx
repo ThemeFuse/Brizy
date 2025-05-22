@@ -32,9 +32,10 @@ import { isPro } from "visual/utils/env";
 import { t } from "visual/utils/i18n";
 import { makeAttr, makeDataAttrString } from "visual/utils/i18n/attribute";
 import { setIds } from "visual/utils/models";
+import { MValue } from "visual/utils/value";
 import { Category } from "./Category";
-import { CollapseShortcodes } from "./CollapseShortcodes";
 import { SortData } from "./types";
+import { getCollapsedCategories, setCollapsedCategories } from "./utils";
 
 export interface BaseProps {
   isEditMode: boolean;
@@ -55,6 +56,7 @@ export interface State {
   disabledElements: Record<string, boolean>;
   pinnedElements: string[];
   inputValue: string;
+  collapsedCategories: string[];
 }
 
 const mapState = (state: ReduxState): MapStateProps => ({
@@ -72,10 +74,13 @@ export type Props = WithBaseProps<BaseProps>;
 class ControlInner extends Component<Props, State> {
   private readonly isPro: boolean;
   private readonly upgradeToPro: string;
+  private inputRef: React.RefObject<HTMLInputElement>;
+  private timeoutID: MValue<ReturnType<typeof setTimeout>>;
 
   constructor(props: Props) {
     super(props);
     // convert arr to object like {text: true, icon: true}
+    this.inputRef = React.createRef<HTMLInputElement>();
     const disabledElements = props.disabledElements.reduce(
       (acc, item) => ({
         ...acc,
@@ -89,7 +94,8 @@ class ControlInner extends Component<Props, State> {
     this.state = {
       pinnedElements,
       disabledElements,
-      inputValue: ""
+      inputValue: "",
+      collapsedCategories: getCollapsedCategories()
     };
     const config = this.props.config;
 
@@ -109,6 +115,17 @@ class ControlInner extends Component<Props, State> {
     if (prevProps.isPinMode && !this.props.isPinMode) {
       this.props.updatePinnedElements(this.state.pinnedElements);
     }
+  }
+
+  //TODO: After https://github.com/bagrinsergiu/blox-editor/issues/28701 is done, we can remove this setTimeout trick
+  componentDidMount() {
+    this.timeoutID = setTimeout(() => {
+      this.inputRef.current?.focus();
+    }, 300);
+  }
+
+  componentWillUnmount() {
+    clearTimeout(this.timeoutID);
   }
 
   handleSortableSort = (data: SortData, shortcodes: Shortcode[]): void => {
@@ -243,6 +260,20 @@ class ControlInner extends Component<Props, State> {
     return searcher.search(inputValue);
   }
 
+  handleCollapsedCategoriesChange = (category: string): void => {
+    let collapsedCategories = [...this.state.collapsedCategories];
+
+    if (collapsedCategories.includes(category)) {
+      collapsedCategories = collapsedCategories.filter((c) => c !== category);
+    } else {
+      collapsedCategories.push(category);
+    }
+
+    this.setState({ collapsedCategories }, () =>
+      setCollapsedCategories(collapsedCategories)
+    );
+  };
+
   renderIcon(title: string, icon: string, proElement: boolean): ReactElement {
     const iconNode = (
       <>
@@ -370,6 +401,8 @@ class ControlInner extends Component<Props, State> {
   }): JSX.Element | null {
     const { isEditMode, isPinMode } = this.props;
 
+    const { collapsedCategories } = this.state;
+
     const isOneOfModes = isEditMode || isPinMode;
 
     if (
@@ -380,32 +413,32 @@ class ControlInner extends Component<Props, State> {
       return null;
     }
 
+    const PINNED_CATEGORY = "pinned";
+
+    const isUnCollapsed = !collapsedCategories.includes(PINNED_CATEGORY);
+
     return (
-      <CollapseShortcodes>
-        {({ open, setOpen }) => (
-          <>
-            <CategoryTitle
-              title={t("Pinned")}
-              onClick={() => setOpen(!open)}
-              open={open}
-            />
-            {open && (
-              <Category
-                category="pinned"
-                shortcodes={pinnedElementsShortcodes}
-                onChange={this.handleSortableSort}
-                showLines={showLines}
-              >
-                {this.renderIcons({
-                  shortcodes: pinnedElementsShortcodes,
-                  isStory,
-                  config
-                })}
-              </Category>
-            )}
-          </>
+      <>
+        <CategoryTitle
+          title={t("Pinned")}
+          onClick={() => this.handleCollapsedCategoriesChange(PINNED_CATEGORY)}
+          open={isUnCollapsed}
+        />
+        {isUnCollapsed && (
+          <Category
+            category={PINNED_CATEGORY}
+            shortcodes={pinnedElementsShortcodes}
+            onChange={this.handleSortableSort}
+            showLines={showLines}
+          >
+            {this.renderIcons({
+              shortcodes: pinnedElementsShortcodes,
+              isStory,
+              config
+            })}
+          </Category>
         )}
-      </CollapseShortcodes>
+      </>
     );
   }
 
@@ -433,7 +466,12 @@ class ControlInner extends Component<Props, State> {
   }
 
   render(): ReactElement {
-    const { inputValue, pinnedElements, disabledElements } = this.state;
+    const {
+      inputValue,
+      pinnedElements,
+      disabledElements,
+      collapsedCategories
+    } = this.state;
     const { shortcodes, config } = this.props;
 
     // why does Category class need for?
@@ -469,6 +507,7 @@ class ControlInner extends Component<Props, State> {
             <>
               <div className="brz-ed-sidebar__search">
                 <input
+                  ref={this.inputRef}
                   type="text"
                   className="brz-input"
                   placeholder={t("Search element")}
@@ -506,35 +545,32 @@ class ControlInner extends Component<Props, State> {
                     [(s: Shortcode) => s.component.position || 10]
                   );
 
+                  const open = !collapsedCategories.includes(category);
+
                   return (
-                    <CollapseShortcodes key={index}>
-                      {({ open, setOpen }) => (
-                        <Fragment>
-                          {this.renderShortcodeCategory(
-                            category,
-                            index,
-                            pinnedElementsShortcodes,
-                            isEveryPinnedElementDisabled,
-                            () => setOpen(!open),
-                            open
-                          )}
-                          {open && (
-                            <Category
-                              category={category}
-                              shortcodes={prepared}
-                              onChange={this.handleSortableSort}
-                              showLines={showLines}
-                            >
-                              {this.renderIcons({
-                                shortcodes: prepared,
-                                isStory: _isStory,
-                                config
-                              })}
-                            </Category>
-                          )}
-                        </Fragment>
+                    <Fragment key={index}>
+                      <CategoryTitle
+                        title={category}
+                        onClick={() =>
+                          this.handleCollapsedCategoriesChange(category)
+                        }
+                        open={open}
+                      />
+                      {open && (
+                        <Category
+                          category={category}
+                          shortcodes={prepared}
+                          onChange={this.handleSortableSort}
+                          showLines={showLines}
+                        >
+                          {this.renderIcons({
+                            shortcodes: prepared,
+                            isStory: _isStory,
+                            config
+                          })}
+                        </Category>
                       )}
-                    </CollapseShortcodes>
+                    </Fragment>
                   );
                 })}
             </>

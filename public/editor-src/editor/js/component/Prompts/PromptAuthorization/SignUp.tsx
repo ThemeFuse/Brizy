@@ -9,37 +9,38 @@ import InputPlaceholder from "visual/component/Controls/InputPlaceholder";
 import { Spacer } from "visual/component/Controls/Spacer";
 import { Button } from "visual/component/Prompts/common/Button";
 import { Loading } from "visual/component/Prompts/common/Loading";
+import { SuccessResponse } from "visual/global/Config/types/configs/common";
 import { updateAuthorization, updateSyncAllowed } from "visual/redux/actions2";
+import { checkCompatibility, signUp } from "visual/utils/api";
 import { t } from "visual/utils/i18n";
 import { setAuthorized } from "visual/utils/user/getAuthorized";
 import { validateEmail } from "../common/utils";
-import { checkCompatibility, signUp } from "./api";
 import { AuthorizationField, SignAuthorizationProps } from "./types";
 
-const fields: AuthorizationField[] = [
+const getFields = (): AuthorizationField[] => [
   {
-    title: "first name",
+    title: t("first name"),
     name: "firstName",
     required: true
   },
   {
-    title: "last name",
+    title: t("last name"),
     name: "lastName",
     required: true
   },
   {
-    title: "email",
+    title: t("email"),
     name: "email",
     required: true
   },
   {
-    title: "password",
+    title: t("password"),
     name: "password",
     type: "password",
     required: true
   },
   {
-    title: "Confirm Password",
+    title: t("Confirm Password"),
     name: "confirmPassword",
     type: "password",
     required: true
@@ -170,8 +171,8 @@ class SignUp extends Component<SingUpProps, SignUpState> {
         },
         config
       )
-        .then((r: Response) => {
-          if (!r.status || r.status >= 400) {
+        .then((r: SuccessResponse) => {
+          if (!r.success) {
             throw r;
           } else {
             updateAuthorization("connected");
@@ -179,12 +180,11 @@ class SignUp extends Component<SingUpProps, SignUpState> {
 
             if (checkCompatibilityAfter) {
               checkCompatibility(config).then((r) => {
-                const { status, data } = r || {};
-
-                if (!status || status >= 400) {
+                const { success, isSyncAllowed } = r;
+                if (!success) {
                   console.warn("Something went wrong", r);
                 } else {
-                  if (data?.isSyncAllowed) {
+                  if (isSyncAllowed) {
                     updateSyncAllowed(true);
                   }
                 }
@@ -248,20 +248,22 @@ class SignUp extends Component<SingUpProps, SignUpState> {
           <div className="brz-ed-popup-integrations__connect-body">
             {this.renderNotice()}
 
-            {fields.map(({ title, name, required, type = "text" }, index) => {
-              return (
-                <InputPlaceholder
-                  key={index}
-                  title={title}
-                  type={type}
-                  value={`${this.state.formData[name] ?? ""}`}
-                  required={required}
-                  onChange={({ target }): void => {
-                    this.handleChange(name, target.value);
-                  }}
-                />
-              );
-            })}
+            {getFields().map(
+              ({ title, name, required, type = "text" }, index) => {
+                return (
+                  <InputPlaceholder
+                    key={index}
+                    title={title}
+                    type={type}
+                    value={`${this.state.formData[name] ?? ""}`}
+                    required={required}
+                    onChange={({ target }): void => {
+                      this.handleChange(name, target.value);
+                    }}
+                  />
+                );
+              }
+            )}
             <div className="brz-ed-popup-authorization__buttons">
               <Button
                 color="teal"

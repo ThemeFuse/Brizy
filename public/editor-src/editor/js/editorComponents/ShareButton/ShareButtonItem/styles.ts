@@ -9,11 +9,7 @@ export function style(data: DynamicStylesProps<ItemValue>): OutputStyle {
       standart: ["cssStyleBorderRadius"]
     },
     ".brz &&:hover": {
-      standart: ["cssStyleElementShareButtonBorderColor"],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
-      ]
+      standart: ["cssStyleElementShareButtonBorderColor"]
     },
     ".brz && .brz-shareButton__item-icon": {
       standart: [
@@ -26,10 +22,6 @@ export function style(data: DynamicStylesProps<ItemValue>): OutputStyle {
         "cssStyleElementShareButtonBgColorIcon",
         "cssStyleElementShareButtonBgGradientIcon",
         "cssStyleElementShareButtonCustomColorIcon"
-      ],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
       ]
     },
     ".brz && .brz-shareButton__item-icon .brz-icon-svg": {
@@ -46,15 +38,18 @@ export function style(data: DynamicStylesProps<ItemValue>): OutputStyle {
         "cssStyleElementShareButtonBgColorText",
         "cssStyleElementShareButtonBgGradientText",
         "cssStyleElementShareButtonCustomColorText"
-      ],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
       ]
     },
     ".brz && .brz-shareButton__item-text .brz-span": {
       standart: ["getAllCssStyleTypography"]
-    }
+    },
+    ".brz &&, .brz && .brz-shareButton__item-icon, .brz && .brz-shareButton__item-text":
+      {
+        standart: [
+          "cssStyleHoverTransition",
+          "cssStylePropertyHoverTransitionColor"
+        ]
+      }
   };
 
   return renderStyles({ ...data, styles });
