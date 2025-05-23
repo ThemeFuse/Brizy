@@ -103,6 +103,9 @@ interface Actions {
   getAccountProperties?: string;
   authenticateIntegration?: string;
   createIntegrationGroup?: string;
+
+  downloadLayouts: string;
+  downloadBlocks: string;
 }
 
 interface ProjectStatus {
@@ -517,6 +520,14 @@ const actionsReader = parseStrict<PLUGIN_ENV["actions"], Actions>({
   ),
   createIntegrationGroup: optional(
     pipe(mPipe(Obj.readKey("createIntegrationGroup"), Str.read))
+  ),
+  downloadLayouts: pipe(
+    mPipe(Obj.readKey("downloadLayouts"), Str.read),
+    throwOnNullish("Invalid actions: downloadLayouts")
+  ),
+  downloadBlocks: pipe(
+    mPipe(Obj.readKey("downloadBlocks"), Str.read),
+    throwOnNullish("Invalid actions: downloadBlocks")
   )
 });
 
