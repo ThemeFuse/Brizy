@@ -2,14 +2,14 @@
 # This file is distributed under the GPLv3.
 msgid ""
 msgstr ""
-"Project-Id-Version: Brizy 2.6.18\n"
+"Project-Id-Version: Brizy 2.6.19\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/workspace\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-05-13T06:49:48+00:00\n"
+"POT-Creation-Date: 2025-05-26T08:43:47+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: brizy\n"
@@ -565,12 +565,12 @@ msgstr ""
 msgid "Unable to show the rule box."
 msgstr ""
 
-#: admin/templates.php:845
+#: admin/templates.php:841
 msgid "Unable to get the rule validator for this post type."
 msgstr ""
 
-#: admin/templates.php:852
-#: admin/templates.php:873
+#: admin/templates.php:848
+#: admin/templates.php:869
 msgid "Invalid data version."
 msgstr ""
 
@@ -816,12 +816,12 @@ msgstr ""
 msgid "Enter your old and new URLs for your WordPress installation, to update all %s data (Relevant for domain transfers or move to 'HTTPS')."
 msgstr ""
 
-#: brizy.php:74
+#: brizy.php:66
 #, php-format
 msgid "%1$s requires PHP version 5.6+, your currently running PHP %2$s. <b>%3$s IS NOT RUNNING.</b>"
 msgstr ""
 
-#: brizy.php:94
+#: brizy.php:78
 #, php-format
 msgid "%1$s failed to start. Please contact the support <a href=\"%s\">here</a>."
 msgstr ""
@@ -889,7 +889,7 @@ msgstr ""
 msgid "Original"
 msgstr ""
 
-#: editor/asset/static-file-trait.php:212
+#: editor/asset/static-file-trait.php:217
 msgid "Failed to write content"
 msgstr ""
 
