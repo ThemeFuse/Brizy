@@ -9,6 +9,3 @@ sed -i "s/'BRIZY_EDITOR_VERSION',.[^)]+'/'BRIZY_EDITOR_VERSION', BRIZY_DEVELOPME
 sed -i "s/'BRIZY_SYNC_VERSION',\s'.[^']*'/'BRIZY_SYNC_VERSION', '$4'/" "brizy.php"
 sed -i "s/'BRIZY_DEVELOPMENT',.[^\)]*/'BRIZY_DEVELOPMENT', false /" "brizy.php"
 sed -i "s/'BRIZY_LOG',\s.[^\)]*/'BRIZY_LOG', false /" "brizy.php"
-
-
-

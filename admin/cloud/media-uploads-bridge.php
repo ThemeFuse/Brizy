@@ -8,6 +8,7 @@ class Brizy_Admin_Cloud_MediaUploadsBridge extends Brizy_Admin_Cloud_AbstractBri
 
     use Brizy_Editor_Asset_AttachmentAware;
     use Brizy_Editor_Asset_StaticFileTrait;
+	use Brizy_Editor_Trait_Sanitize;
 
     /**
      * This is the block id for which we are importing the media
@@ -56,6 +57,8 @@ class Brizy_Admin_Cloud_MediaUploadsBridge extends Brizy_Admin_Cloud_AbstractBri
         }
 
         list($fileUid, $customFileName) = explode('|||', $mediaUpload);
+
+	    $fileUid = $this->sanitizeUid($fileUid);
 
         // enable svg upload
         // enable svg upload

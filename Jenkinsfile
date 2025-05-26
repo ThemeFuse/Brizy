@@ -72,9 +72,13 @@ pipeline {
             steps {
                 sh "./jenkins/version-update.sh ${params.buildVersion} ${params.minProVersion} ${params.editorVersion} ${params.syncVersion}"
                 sh "./jenkins/update-tested-version.sh README.md readme.txt"
-                if(params.changeRecompilationTag) {
-                    sh "./jenkins/change-recompilation-tag.sh"
-                }
+            }
+        }
+
+        stage('Update recompilation tag') {
+            when { expression { return params.changeRecompilationTag } }
+            steps {
+                sh "./jenkins/update-recompilation-tag.sh"
             }
         }
 

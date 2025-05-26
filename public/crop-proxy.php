@@ -2,6 +2,8 @@
 
 class Brizy_Public_CropProxy extends Brizy_Public_AbstractProxy {
 
+	use Brizy_Editor_Trait_Sanitize;
+
 	const ENDPOINT        = '_media';
 	const ENDPOINT_FILTER = '_crop';
 
@@ -36,7 +38,7 @@ class Brizy_Public_CropProxy extends Brizy_Public_AbstractProxy {
 
 		try {
 
-			$uid        = $vars[ $uidKey ];
+			$uid        = $this->sanitizeUid($vars[ $uidKey ]);
 			$mediaCache = new Brizy_Editor_CropCacheMedia( Brizy_Editor_Project::get() );
 
 			try {
