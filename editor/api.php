@@ -966,7 +966,7 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 		$search  = $this->param( 'search' );
 		$include = $this->param( 'include' );
 
-		$args['fields'] = $this->param( 'fields' ) ? $this->param( 'fields' ) : [ 'ID', 'display_name' ];
+		$args['fields'] = [ 'ID', 'display_name','user_nicename','user_email','user_registered' ];
 
 		if ( $this->param( 'roles' ) && is_array( $this->param( 'roles' ) ) ) {
 			$args['role__in'] = $this->param( 'roles' );

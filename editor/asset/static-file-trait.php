@@ -61,6 +61,11 @@ trait Brizy_Editor_Asset_StaticFileTrait
 
             $content = self::get_asset_content($asset_source);
 
+			if( !$content ) {
+				throw new Exception( "Unable to obtain asset content");
+			}
+
+
 	        $tempFile = Brizy_Editor_Asset_StaticFile::createSideLoadFile(
 		        $basename,
 		        $content
@@ -413,3 +418,6 @@ trait Brizy_Editor_Asset_StaticFileTrait
         );
     }
 }
+
+
+

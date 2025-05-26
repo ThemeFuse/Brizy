@@ -6,6 +6,7 @@
 class Brizy_Admin_Cloud_MediaBridge extends Brizy_Admin_Cloud_AbstractBridge {
 
 	use Brizy_Editor_Asset_AttachmentAware;
+	use Brizy_Editor_Trait_Sanitize;
 
 	/**
 	 * This is the block id for which we are importing the media
@@ -22,6 +23,8 @@ class Brizy_Admin_Cloud_MediaBridge extends Brizy_Admin_Cloud_AbstractBridge {
 	 * @throws Exception
 	 */
 	public function export( $mediaUid ) {
+
+		$mediaUid = $this->sanitizeUid( $mediaUid );
 
 		$mediaId = (int) $this->getAttachmentByMediaName( $mediaUid );
 
@@ -48,6 +51,8 @@ class Brizy_Admin_Cloud_MediaBridge extends Brizy_Admin_Cloud_AbstractBridge {
 		if ( ! $this->blockId ) {
 			throw new Exception( 'The block id is not set.' );
 		}
+
+		$mediaUid = $this->sanitizeUid( $mediaUid );
 
 		// enable svg upload
 		$svnUpload        = new Brizy_Admin_Svg_Main();

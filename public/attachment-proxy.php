@@ -2,6 +2,8 @@
 
 class Brizy_Public_AttachmentProxy extends Brizy_Public_AbstractProxy {
 
+	use Brizy_Editor_Trait_Sanitize;
+
 	const ENDPOINT = '_attachment';
 
 	/**
@@ -26,7 +28,7 @@ class Brizy_Public_AttachmentProxy extends Brizy_Public_AbstractProxy {
 			session_write_close();
 
 			try {
-				$uid        = $vars[ $ENDPOINT ];
+				$uid        = $this->sanitizeUid($vars[ $ENDPOINT ]);
 				$attachment = $this->getAttachment( $uid );
 
 				if ( ! $attachment ) {
@@ -43,7 +45,7 @@ class Brizy_Public_AttachmentProxy extends Brizy_Public_AbstractProxy {
 				exit;
 			} catch ( Exception $e ) {
 				Brizy_Logger::instance()->exception( $e );
-				status_header( $e->getMessage() );
+				status_header( 404 );
 				global $wp_query;
 				$wp_query->set_404();
 
