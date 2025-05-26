@@ -12,10 +12,10 @@
     position: relative;
     font-size: 0;
     cursor: pointer;
-    margin-left: 20px;
+    margin-inline-start: 20px;
 
     &:last-child {
-      margin-right: 20px;
+      margin-inline-end: 20px;
     }
 
     & .brz-icon-svg {

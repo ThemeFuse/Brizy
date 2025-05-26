@@ -19,11 +19,17 @@
 // Overflow need to add for HTML | body
 @import "utilities/overflow";
 
+// RTL
+@import "utilities/rtl";
+
 // Fonts
 @import "editor/fonts";
 
 // Sortable
 @import "editor/sortable";
+
+// RTL
+@import "utilities/rtl";
 
 // Components Template
 .brz {
@@ -38,4 +44,6 @@
   @import "editor";
 }
 
+// Used for mapping CSS variables to brizy/ui elements
+@import "editor/brizy-ui/theme";
 @import "@brizy/ui/dist/core";

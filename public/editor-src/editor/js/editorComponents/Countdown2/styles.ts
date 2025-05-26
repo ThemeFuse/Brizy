@@ -20,11 +20,7 @@ export function style(data: DynamicStylesProps<ElementModel>): OutputStyle {
       ]
     },
     ".brz &&:hover .brz-countdown2__item": {
-      standart: ["cssStyleBgColor", "cssStyleBorder", "cssStyleBoxShadow"],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
-      ]
+      standart: ["cssStyleBgColor", "cssStyleBorder", "cssStyleBoxShadow"]
     },
     ".brz &&:after": {
       standart: ["cssStyleSizeHeightPercentOnly"]
@@ -44,18 +40,10 @@ export function style(data: DynamicStylesProps<ElementModel>): OutputStyle {
       ]
     },
     ".brz &&:hover .brz-countdown2__number": {
-      standart: ["cssStyleElementCountDown2NumberColor"],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
-      ]
+      standart: ["cssStyleElementCountDown2NumberColor"]
     },
     ".brz &&:hover .brz-countdown2-separator": {
-      standart: ["cssStyleElementCountDown2NumberColor"],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
-      ]
+      standart: ["cssStyleElementCountDown2NumberColor"]
     },
     ".brz && .brz-countdown2__label": {
       standart: [
@@ -69,12 +57,15 @@ export function style(data: DynamicStylesProps<ElementModel>): OutputStyle {
       ]
     },
     ".brz &&:hover .brz-countdown2__label": {
-      standart: ["cssStyleElementCountDown2TitleColor"],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
-      ]
-    }
+      standart: ["cssStyleElementCountDown2TitleColor"]
+    },
+    ".brz && .brz-countdown2__item, .brz && .brz-countdown2__number, .brz && .brz-countdown2-separator, .brz && .brz-countdown2__label":
+      {
+        standart: [
+          "cssStyleHoverTransition",
+          "cssStylePropertyHoverTransitionColor"
+        ]
+      }
   };
 
   return renderStyles({ ...data, styles });
@@ -92,15 +83,13 @@ export function styleMessage(
         "cssStyleMessageTypography2FontWeight",
         "cssStyleMessageTypography2LetterSpacing",
         "cssStyleMessageTypography2FontVariation",
-        "cssStyleCountdownMessageTextTransform"
-      ]
-    },
-    ".brz &&:hover": {
-      standart: ["cssStyleElementCountDown2MessageColor"],
-      interval: [
+        "cssStyleCountdownMessageTextTransform",
         "cssStyleHoverTransition",
         "cssStylePropertyHoverTransitionColor"
       ]
+    },
+    ".brz &&:hover": {
+      standart: ["cssStyleElementCountDown2MessageColor"]
     }
   };
 

@@ -8,7 +8,11 @@
   margin: 0;
   word-break: break-all;
 
-  .brz-shopify-blogPostMeta__title > span:not(:last-child) {
-    margin-right: 10px;
+  .brz-shopify-blogPostMeta__title {
+    display: flex;
+
+    & > span:not(:last-child) {
+      margin-inline-end: 10px;
+    }
   }
 }

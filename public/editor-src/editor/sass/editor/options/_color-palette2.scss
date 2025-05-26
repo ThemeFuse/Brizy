@@ -12,13 +12,13 @@
     border-radius: 2px;
     margin-left: 2px;
     cursor: pointer;
-    border: 1px solid #3a3d43;
+    border: 1px solid $color_palette-border;
 
     &:first-child {
       margin-left: 0;
     }
     &.active {
-      border: 2px solid #fff;
+      border: 2px solid $color_palette-border--active;
     }
   }
   &__icon {
@@ -43,7 +43,7 @@
   &__item {
     width: 23px;
     height: 23px;
-    border: 1px solid #1e232a;
+    border: 1px solid #5a5a5a;
     border-radius: 2px;
     margin-left: 3px;
     cursor: pointer;

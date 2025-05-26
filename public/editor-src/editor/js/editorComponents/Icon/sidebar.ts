@@ -100,6 +100,14 @@ export const getItems: GetItems<Value, Props> = ({
                       }
                     },
                     {
+                      id: "ariaLabel",
+                      type: "inputText",
+                      label: t("Aria Label"),
+                      placeholder: t("Enter descriptive Aria Label..."),
+                      display: "block",
+                      position: 90
+                    },
+                    {
                       id: "hoverTransition",
                       label: t("Hover Transition"),
                       disabled: _isStory,

@@ -12,6 +12,7 @@ export interface Props {
   target?: null | HTMLElement;
   mods?: Record<DeviceMode, "vertical" | "horizontal">;
   placement?: Record<DeviceMode, Props["position"]>;
+  isRTL?: boolean;
 }
 
 interface State {
@@ -54,28 +55,51 @@ class MenuDropDown extends Component<Props, State> {
 
   reposition(): void {
     let { target } = this.props;
+    const { isRTL } = this.props;
 
     if (!target) {
       target = window.document.body;
     }
 
-    const { left = 0, right = 0 } = this.node?.getBoundingClientRect() ?? {};
+    const {
+      left = 0,
+      right = 0,
+      width: dropdownWidth = 0
+    } = this.node?.getBoundingClientRect() ?? {};
     const { width: targetWidth } = target.getBoundingClientRect();
 
-    if (right >= targetWidth) {
-      this.isReposition = true;
-      this.setState(
-        { position: "left-start" },
-        () => (this.isReposition = false)
-      );
-    }
+    if (isRTL) {
+      if (left >= targetWidth) {
+        this.isReposition = true;
+        this.setState(
+          { position: "right-start" },
+          () => (this.isReposition = false)
+        );
+      }
 
-    if (left <= 0) {
-      this.isReposition = true;
-      this.setState(
-        { position: "right-start" },
-        () => (this.isReposition = false)
-      );
+      if (right - dropdownWidth <= 0) {
+        this.isReposition = true;
+        this.setState(
+          { position: "left-start" },
+          () => (this.isReposition = false)
+        );
+      }
+    } else {
+      if (right >= targetWidth) {
+        this.isReposition = true;
+        this.setState(
+          { position: "left-start" },
+          () => (this.isReposition = false)
+        );
+      }
+
+      if (left <= 0) {
+        this.isReposition = true;
+        this.setState(
+          { position: "right-start" },
+          () => (this.isReposition = false)
+        );
+      }
     }
   }
 

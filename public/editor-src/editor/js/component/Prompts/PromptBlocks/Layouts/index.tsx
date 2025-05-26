@@ -25,7 +25,7 @@ import {
   defaultStoriesMeta,
   defaultStoriesPages
 } from "visual/utils/api";
-import { isBlock } from "visual/utils/api/common";
+import { isBlock } from "visual/utils/api";
 import { isPro } from "visual/utils/env";
 import { t } from "visual/utils/i18n";
 import DataFilter from "../common/DataFilter";
@@ -243,10 +243,7 @@ export default class List extends Component<Props, State> {
   };
 
   renderList(data: StoriesWithThumbs | LayoutsWithThumbs): ReactElement {
-    const {
-      showSearch,
-      config, defaultFilter: _defaultFilter
-    } = this.props;
+    const { showSearch, config, defaultFilter: _defaultFilter } = this.props;
     const blocks = this.getLayoutData(data);
 
     const countersSectionBlocks: { [k: string]: number } = {};

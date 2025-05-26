@@ -1,10 +1,9 @@
 import React, { Component } from "react";
 import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
-import { pendingRequest } from "visual/utils/api";
+import { deleteAccount, pendingRequest } from "visual/utils/api";
 import { t } from "visual/utils/i18n";
 import { Context } from "../../common/GlobalApps/Context";
 import { Disconnect as ViewDisconnect } from "../../common/GlobalApps/StepsView";
-import { deleteAccount } from "../../common/GlobalApps/api";
 
 interface Props {
   descriptions: string;
@@ -48,9 +47,9 @@ class Disconnect extends Component<Props, State> {
       error: null
     });
 
-    const { status } = await deleteAccount(app.data.id, this.props.config);
+    const { success } = await deleteAccount(app.data.id, this.props.config);
 
-    if (status === 200) {
+    if (success) {
       onDisconnectApp(app.id);
       onChange(app.id, null);
     } else {

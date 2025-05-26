@@ -3,6 +3,7 @@ import {
   cssStyleBoxShadow,
   cssStyleColor,
   cssStylePaddingFourFields,
+  cssStyleTextAlign,
   cssStyleTextShadow2,
   cssStyleTextTransforms,
   cssStyleTypography2FontFamily,
@@ -12,11 +13,7 @@ import {
   cssStyleTypography2LetterSpacing,
   cssStyleTypography2LineHeight
 } from "visual/utils/cssStyle";
-import {
-  styleAlignHorizontal,
-  styleBgColor,
-  styleColor
-} from "visual/utils/style2";
+import { styleBgColor, styleColor } from "visual/utils/style2";
 import { readIconSize } from "visual/utils/types/Type";
 import { defaultValueValue } from "../onChange";
 import { CSSValue } from "../style2/types";
@@ -157,7 +154,7 @@ export function cssStyleElementAlertCloseButtonPosition({
   const closeHorizontalPosition = dvv("closeHorizontalPosition");
   const closeVerticalPosition = dvv("closeVerticalPosition");
 
-  return `top:${closeVerticalPosition}px;right:${closeHorizontalPosition}px;`;
+  return `top:${closeVerticalPosition}px;inset-inline-end:${closeHorizontalPosition}px;`;
 }
 
 //#endregion
@@ -170,7 +167,7 @@ export function cssStyleElementAlertTitleAlign({
   store,
   getConfig
 }: CSSValue): string {
-  const contentAlign = styleAlignHorizontal({
+  return cssStyleTextAlign({
     v,
     device,
     state,
@@ -178,8 +175,6 @@ export function cssStyleElementAlertTitleAlign({
     getConfig,
     prefix: "title"
   });
-
-  return contentAlign ? `text-align:${contentAlign};` : "";
 }
 
 export function cssStyleElementAlertTitleShadow({
@@ -362,7 +357,7 @@ export function cssStyleElementAlertDescriptionAlign({
   store,
   getConfig
 }: CSSValue): string {
-  const contentAlign = styleAlignHorizontal({
+  return cssStyleTextAlign({
     v,
     device,
     state,
@@ -370,8 +365,6 @@ export function cssStyleElementAlertDescriptionAlign({
     getConfig,
     prefix: "description"
   });
-
-  return contentAlign ? `text-align:${contentAlign};` : "";
 }
 
 export function cssStyleElementAlertDescriptionShadow({

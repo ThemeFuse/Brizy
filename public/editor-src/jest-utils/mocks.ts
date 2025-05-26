@@ -8,6 +8,8 @@ const __MOCKED_VISUAL_CONFIG__ = {
   }
 } as unknown as ConfigCommon;
 
+const jestGetConfig = () => __MOCKED_VISUAL_CONFIG__;
+
 export const mockDataForReduxStore = {
   project: {
     data: {
@@ -354,4 +356,4 @@ function reducer(state = initialState, action: Action) {
 // TODO: in future meybe we need to use store instance with structure like our real production store
 const store = createStore(reducer);
 
-export { store, __MOCKED_VISUAL_CONFIG__ as config };
+export { store, __MOCKED_VISUAL_CONFIG__ as config, jestGetConfig };

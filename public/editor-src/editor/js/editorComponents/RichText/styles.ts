@@ -43,6 +43,9 @@ export function styleDC(data: DynamicStylesProps<ElementModel>): OutputStyle {
         "cssStyleTypography3Script"
       ]
     },
+    ".brz &&.brz-rich-text__population span": {
+      standart: ["cssStyleElementRichTextDCNumberOfLines"]
+    },
     ".brz &&:hover span::before": {
       standart: [
         "cssStyleElementRichTextDCBackground",
@@ -131,7 +134,7 @@ export function styleDC(data: DynamicStylesProps<ElementModel>): OutputStyle {
         "cssStyleElementRichTextH6Script"
       ]
     },
-    ".brz && *:not(h1):not(h2):not(h3):not(h4):not(h5):not(h6):not(b):not(strong):not(i):not(span):not(p)":
+    ".brz && *:not(h1):not(h2):not(h3):not(h4):not(h5):not(h6):not(b):not(strong):not(i):not(em):not(span):not(p):not(u)":
       {
         standart: [
           "cssStyleElementRichTextFontFamily",
@@ -145,7 +148,7 @@ export function styleDC(data: DynamicStylesProps<ElementModel>): OutputStyle {
           "cssStyleTypography3TextTransform"
         ]
       },
-    ".brz && strong, .brz && b": {
+    ".brz && strong, .brz && b, .brz && em, .brz && u": {
       standart: [
         "cssStyleElementRichTextFontFamily",
         ...(_isStory
@@ -153,8 +156,7 @@ export function styleDC(data: DynamicStylesProps<ElementModel>): OutputStyle {
           : ["cssStyleTypography3FontSize"]),
         "cssStyleTypography3LineHeight",
         "cssStyleTypography3LetterSpacing",
-        "cssStyleTypography3FontVariation",
-        "cssStyleTypography3TextTransform"
+        "cssStyleTypography3FontVariation"
       ]
     }
   };

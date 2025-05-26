@@ -40,14 +40,14 @@
   &--top-left,
   &--bottom-left {
     .brz-control__select-options {
-      left: 0;
+      inset-inline-start: 0;
     }
   }
 
   &--top-right,
   &--bottom-right {
     .brz-control__select-options {
-      right: 0;
+      inset-inline-end: 0;
     }
   }
 }

@@ -250,9 +250,9 @@ export function cssStyleElementTabsNavBorderBottom({
     return `content: ""; width: 105vw; height: ${width}px;  background-color: ${color}; ${cssStylePositionAbsolute()} top: auto; bottom: 0; z-index: 1;`;
   } else if (verticalMode === "on") {
     if (verticalAlign === "left") {
-      return `content: ""; width: ${width}px; height: 100vh;  background-color: ${color}; top: auto; left: auto; right: 0; `;
+      return `content: ""; width: ${width}px; height: 100vh;  background-color: ${color}; top: auto; inset-inline-start: auto; inset-inline-end: 0; `;
     } else if (verticalAlign === "right") {
-      return `content: ""; width: ${width}px; height: 100vh;  background-color: ${color}; top: auto; left: 0; right: auto; `;
+      return `content: ""; width: ${width}px; height: 100vh;  background-color: ${color}; top: auto; inset-inline-start: 0; inset-inline-end: auto; `;
     }
   }
 }
@@ -276,12 +276,12 @@ export function cssStyleElementTabsNavStyle3Before({
   const width = styleBorderWidthGrouped({ v, device, state: ACTIVE });
 
   if (verticalMode === "off") {
-    return `content: ""; width: 100%; height: ${width}px;  background-color: ${color}; ${cssStylePositionAbsolute()} bottom: 0; left: 0; z-index: 2;`;
+    return `content: ""; width: 100%; height: ${width}px;  background-color: ${color}; ${cssStylePositionAbsolute()} bottom: 0; inset-inline-start: 0; z-index: 2;`;
   } else if (verticalMode === "on") {
     if (verticalAlign === "left") {
-      return `content: ""; width: ${width}px; height: 100%; background-color: ${color}; ${cssStylePositionAbsolute()} right: 0; left: auto; z-index: 2;`;
+      return `content: ""; width: ${width}px; height: 100%; background-color: ${color}; ${cssStylePositionAbsolute()} inset-inline-end: 0; inset-inline-start: auto; z-index: 2;`;
     } else if (verticalAlign === "right") {
-      return `content: ""; width: ${width}px; height: 100%; background-color: ${color}; ${cssStylePositionAbsolute()} right: auto; left: 0; z-index: 2;`;
+      return `content: ""; width: ${width}px; height: 100%; background-color: ${color}; ${cssStylePositionAbsolute()} inset-inline-end: auto; inset-inline-start: 0; z-index: 2;`;
     }
   }
 }

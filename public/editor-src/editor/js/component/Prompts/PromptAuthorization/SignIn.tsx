@@ -11,10 +11,14 @@ import { Button } from "visual/component/Prompts/common/Button";
 import { Loading } from "visual/component/Prompts/common/Loading";
 import { validateEmail } from "visual/component/Prompts/common/utils";
 import { updateAuthorization, updateSyncAllowed } from "visual/redux/actions2";
-import { pendingRequest } from "visual/utils/api";
+import {
+  checkCompatibility,
+  pendingRequest,
+  recoveryEmail,
+  signIn
+} from "visual/utils/api";
 import { t } from "visual/utils/i18n";
 import { setAuthorized } from "visual/utils/user/getAuthorized";
-import { checkCompatibility, recoveryEmail, signIn } from "./api";
 import { AuthorizationField, SignAuthorizationProps } from "./types";
 
 interface SignInState {
@@ -123,7 +127,7 @@ class SignIn extends Component<SingInProps, SignInState> {
         config
       )
         .then((r) => {
-          if (!r.status || r.status >= 400) {
+          if (!r.success) {
             throw r;
           } else {
             updateAuthorization("connected");
@@ -131,12 +135,10 @@ class SignIn extends Component<SingInProps, SignInState> {
 
             if (checkCompatibilityAfter) {
               checkCompatibility(config).then((r) => {
-                const { status, data } = r || {};
-
-                if (!status || status >= 400) {
+                if (!r.success) {
                   console.warn("Something went wrong", r);
                 } else {
-                  if (data?.isSyncAllowed) {
+                  if (r?.isSyncAllowed) {
                     updateSyncAllowed(true);
                   }
                 }
@@ -209,7 +211,7 @@ class SignIn extends Component<SingInProps, SignInState> {
     if (recoverEmail.trim()) {
       recoveryEmail(recoverEmail, config)
         .then((r) => {
-          if (!r.status || r.status >= 400) {
+          if (!r.success) {
             throw r;
           } else {
             this.setState({

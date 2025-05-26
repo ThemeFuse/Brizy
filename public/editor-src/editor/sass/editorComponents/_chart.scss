@@ -6,9 +6,9 @@
   }
 }
 
-.addable--chart{
- .brz-ed-addable__wrapper  .brz-ui-scrollbar__view{
-    padding-left: 10px;
-    padding-right: 10px;
-  }
+.brz-ed-sidebar-drawer.brz-ed-sidebar__addable.addable--chart
+  .brz-ed-sidebar-drawer__body
+  .brz-scrollbar__wrapper
+  .brz-scrollbar__view {
+  padding-inline: 10px;
 }

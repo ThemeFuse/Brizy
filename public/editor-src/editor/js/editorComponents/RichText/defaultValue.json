@@ -23,6 +23,9 @@
 
     "customCSS": "",
 
+    "numberOfLines": 0,
+    "numberOfLinesSuffix": "",
+
     "width": 100,
     "widthSuffix": "%",
 

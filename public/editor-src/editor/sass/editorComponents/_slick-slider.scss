@@ -113,9 +113,9 @@
   }
   &-prev {
     transform: translateY(-50%) rotate(-180deg);
-    left: 30px;
+    inset-inline-start: 30px;
   }
   &-next {
-    right: 30px;
+    inset-inline-end: 30px;
   }
 }

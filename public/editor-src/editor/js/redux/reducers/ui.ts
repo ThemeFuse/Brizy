@@ -7,8 +7,7 @@ const defaultState: UIState = {
   deviceMode: "desktop",
   activeElement: null,
   leftSidebar: {
-    isOpen: false,
-    drawerContentType: undefined
+    drawerContentType: null
   },
   rightSidebar: {
     type: "options",

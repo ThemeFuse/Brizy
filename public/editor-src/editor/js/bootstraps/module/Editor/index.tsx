@@ -5,6 +5,8 @@ import { EditorModeProvider } from "visual/providers/EditorModeProvider";
 import { I18nextProvider } from "visual/providers/I18nProvider";
 import { RenderProvider } from "visual/providers/RenderProvider";
 import { StyleProvider } from "visual/providers/StyleProvider";
+import { ConfigProvider as UIConfigProvider } from "@brizy/ui/lib/ConfigProvider";
+import { AlphaConfigProvider } from "@brizy/ui/lib/AlphaConfigProvider";
 import { InitStore } from "../components/InitStore";
 import { RegisterParts } from "../components/RegisterParts";
 import { Props } from "./types";
@@ -21,7 +23,11 @@ export const Editor = (props: Props): JSX.Element => {
             <InitStore config={config} editorMode={editorMode}>
               <EditorModeProvider mode={editorMode}>
                 <StyleProvider>
-                  <Page addFile={addFile} editorMode={editorMode} />
+                  <AlphaConfigProvider>
+                    <UIConfigProvider>
+                      <Page addFile={addFile} editorMode={editorMode} />
+                    </UIConfigProvider>
+                  </AlphaConfigProvider>
                 </StyleProvider>
               </EditorModeProvider>
             </InitStore>

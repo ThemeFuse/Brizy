@@ -2,6 +2,7 @@ import deepMerge from "deepmerge";
 import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { isPopup, isStory } from "visual/providers/EditorModeProvider";
 import { hydrate } from "visual/redux/actions";
+import { pageBlocksDataSelector } from "visual/redux/selectors";
 import { createStore } from "visual/redux/store";
 import { GoogleFont } from "visual/types/Fonts";
 import { isGlobalBlock, isGlobalPopup } from "visual/types/utils";
@@ -18,6 +19,10 @@ import { globalPopupsToStatic } from "../../common/toStatic/globalPopupsToStatic
 import { pageToStatic } from "../../common/toStatic/pageToStatic";
 import { popupToStatic } from "../../common/toStatic/popupToStatic";
 import { storyToStatic } from "../../common/toStatic/storyToStatic";
+import {
+  getRootAttr,
+  getRootClassNames
+} from "../../common/utils/prepareHTML/utils";
 import { Static } from "./types";
 
 export async function bootstrap(config: ConfigCommon): Promise<Static> {
@@ -97,9 +102,20 @@ export async function bootstrap(config: ConfigCommon): Promise<Static> {
       }
     }
 
-    const data = popupToStatic(commonConfig);
+    const rootClassNames = getRootClassNames(config);
+    const rootAttributes = getRootAttr(config, store);
+    const pageBlocks = pageBlocksDataSelector(store.getState(), config);
+    const blockStatic = pageBlocks.map((block) => ({
+      id: block.value._id,
+      ...popupToStatic({ ...commonConfig, block })
+    }));
+
     return {
-      page: data,
+      page: {
+        blocks: blockStatic,
+        rootAttributes,
+        rootClassNames
+      },
       project: compiledProject,
       globalBlocks: globalPopupsStatic
     };
@@ -117,9 +133,19 @@ export async function bootstrap(config: ConfigCommon): Promise<Static> {
   }
 
   if (isStory(editorMode)) {
-    const data = storyToStatic(commonConfig);
+    const pageBlocks = pageBlocksDataSelector(store.getState(), config);
+    const blockStatic = pageBlocks.map((block) => ({
+      id: block.value._id,
+      ...storyToStatic({ ...commonConfig, block })
+    }));
+
     return {
-      page: data,
+      page: {
+        blocks: blockStatic,
+        rootClassNames: [
+          "brz brz-root__container brz-reset-all brz-root__container-story"
+        ]
+      },
       project: compiledProject,
       globalBlocks: globalPopupsStatic
     };
@@ -133,8 +159,8 @@ export async function bootstrap(config: ConfigCommon): Promise<Static> {
           compiledBlocks: globalBlocksInPage
         })
       : undefined;
-  const hasGlobalBlocks = Array.isArray(config.globalBlocks);
-  const pageStatic = pageToStatic({ ...commonConfig, hasGlobalBlocks });
+
+  const pageStatic = pageToStatic({ ...commonConfig });
   const allStaticGlobalBlocks = [
     ...(globalPopupsStatic ?? []),
     ...(globalBlocksStatic ?? [])

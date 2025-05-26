@@ -9,6 +9,15 @@ export const storeWasChanged: RStoreWasChanged = (state, action) => {
     case "HYDRATE": {
       return StoreChanged.unchanged;
     }
+
+    case "FETCH_PAGE_SUCCESS": {
+      if (state === StoreChanged.pending) {
+        return StoreChanged.unchanged;
+      }
+
+      return state;
+    }
+
     case "ADD_BLOCK":
     case ActionTypes.REMOVE_BLOCK:
     case ActionTypes.REMOVE_BLOCKS:

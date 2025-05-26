@@ -65,8 +65,7 @@ export function styleRow(data: DynamicStylesProps<ElementModel>): OutputStyle {
         ...(maskShape === "none"
           ? ["cssStyleBoxShadow"]
           : ["cssStyleMaskDropShadow"])
-      ],
-      interval: ["cssStyleHoverTransition", "cssStylePropertyHoverTransition"]
+      ]
     },
     [`.brz && > ${innerDivFromMotion}${hoverContainer}.brz-bg > .brz-bg-image`]:
       {
@@ -87,8 +86,7 @@ export function styleRow(data: DynamicStylesProps<ElementModel>): OutputStyle {
           "cssStyleFilter",
           "cssStyleBgImagePosition",
           "cssStyleBgMediaImage"
-        ],
-        interval: ["cssStyleHoverTransition", "cssStylePropertyHoverTransition"]
+        ]
       },
     [`.brz &&:hover > ${innerDivFromMotion}${hoverContainer}.brz-bg > .brz-bg-image:after`]:
       {
@@ -106,8 +104,7 @@ export function styleRow(data: DynamicStylesProps<ElementModel>): OutputStyle {
       },
     [`.brz &&:hover > ${innerDivFromMotion}${hoverContainer}.brz-bg > .brz-bg-color`]:
       {
-        standart: ["cssStyleBgColor", "cssStyleBgGradient"],
-        interval: ["cssStyleHoverTransition", "cssStylePropertyHoverTransition"]
+        standart: ["cssStyleBgColor", "cssStyleBgGradient"]
       },
     [`.brz && > ${innerDivFromMotion}${hoverContainer}.brz-bg > .brz-bg-map`]: {
       standart: ["cssStyleBgMediaMap"]
@@ -122,17 +119,15 @@ export function styleRow(data: DynamicStylesProps<ElementModel>): OutputStyle {
       },
     [`.brz &&:hover > ${innerDivFromMotion}${hoverContainer}.brz-bg > .brz-bg-video`]:
       {
-        standart: ["cssStyleFilter"],
-        interval: ["cssStyleHoverTransition", "cssStylePropertyHoverTransition"]
+        standart: ["cssStyleFilter"]
       },
     [`.brz &&:hover > ${innerDivFromMotion}${hoverContainer}.brz-row`]: {
-      standart: ["cssStyleBorderTransparentColor"],
-      interval: [
-        "cssStyleRowReverseColumn",
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransition"
-      ]
-    }
+      standart: ["cssStyleBorderTransparentColor"]
+    },
+    [`.brz && > ${innerDivFromMotion}${hoverContainer}.brz-row, .brz && > ${innerDivFromMotion}${hoverContainer}.brz-bg > .brz-bg-video, .brz && > ${innerDivFromMotion}${hoverContainer}.brz-bg, .brz && > ${innerDivFromMotion}${hoverContainer}.brz-bg > .brz-bg-image, .brz && > ${innerDivFromMotion}${hoverContainer}.brz-bg > .brz-bg-color`]:
+      {
+        standart: ["cssStyleHoverTransition", "cssStylePropertyHoverTransition"]
+      }
   };
 
   if (_isEditor) {

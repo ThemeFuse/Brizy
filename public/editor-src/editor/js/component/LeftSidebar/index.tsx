@@ -2,6 +2,7 @@ import classnames from "classnames";
 import React, { ReactElement, RefObject, useCallback, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import ClickOutside from "visual/component/ClickOutside";
+import { SidebarWrapper } from "visual/component/LeftSidebar/components/Drawer";
 import PointerEvents from "visual/component/PointerEvents";
 import { isCloud } from "visual/global/Config/types";
 import { useConfig } from "visual/providers/ConfigProvider";
@@ -9,28 +10,30 @@ import { isStory, useEditorMode } from "visual/providers/EditorModeProvider";
 import { updateUI } from "visual/redux/actions2";
 import {
   deviceModeSelector,
-  leftSidebarSelector
+  drawerContentTypeSelector
 } from "visual/redux/selectors";
+import { ReduxState } from "visual/redux/types";
 import { attachRefs } from "visual/utils/react";
 import DrawerOptions from "./components/Options";
 import { getOptions } from "./options";
 
 export const LeftSidebar = (): ReactElement => {
-  const dispatch = useDispatch();
-  const deviceMode = useSelector(deviceModeSelector);
-  const { mode: editorMode } = useEditorMode();
-
   const config = useConfig();
-
-  const { drawerContentType, isOpen } = useSelector(leftSidebarSelector);
+  const dispatch = useDispatch();
+  const { mode: editorMode } = useEditorMode();
+  const { deviceMode, drawerContentType } = useSelector(
+    (state: ReduxState) => ({
+      deviceMode: deviceModeSelector(state),
+      drawerContentType: drawerContentTypeSelector(state)
+    })
+  );
 
   const handleClickOutside = useCallback(
     () =>
       drawerContentType &&
       dispatch(
         updateUI("leftSidebar", {
-          drawerContentType: null,
-          isOpen: false
+          drawerContentType: null
         })
       ),
     [drawerContentType, dispatch]
@@ -40,7 +43,10 @@ export const LeftSidebar = (): ReactElement => {
     return getOptions(config, deviceMode, editorMode);
   }, [config, deviceMode, editorMode]);
 
-  const opened = drawerContentType === "cmsUi" && isOpen;
+  const leftSidebarDrawerOptions = useMemo(
+    () => [...top, ...bottom].filter((i) => i.type === "drawer"),
+    [top, bottom]
+  );
 
   const _isStory = isStory(editorMode);
   const leftSidebarCssV2 = useMemo(() => {
@@ -56,8 +62,8 @@ export const LeftSidebar = (): ReactElement => {
         ".brz-ed-fixed-bottom-panel",
         ".brz-ed-animated",
         ".brz-ed-eyeDropper",
-        ".brz-ui-modal-wrap",
-        ".brz-ui-modal-mask"
+        ".brz-ui-v2-modal-wrap",
+        ".brz-ui-v2-modal-mask"
       ]}
     >
       {({ ref }) => (
@@ -72,9 +78,7 @@ export const LeftSidebar = (): ReactElement => {
             >
               <div
                 className={classnames("brz-ed-sidebar__control", {
-                  "brz-ed-sidebar__control-cms": leftSidebarCssV2,
-                  "brz-ed-sidebar__control-cms__opened":
-                    leftSidebarCssV2 && opened
+                  "brz-ed-sidebar__control-cms": leftSidebarCssV2
                 })}
               >
                 <DrawerOptions
@@ -86,6 +90,7 @@ export const LeftSidebar = (): ReactElement => {
                   data={bottom}
                 />
               </div>
+              <SidebarWrapper options={leftSidebarDrawerOptions} />
             </div>
           )}
         </PointerEvents>

@@ -1,0 +1,104 @@
+@import "../variables";
+
+[dir="rtl"] {
+  .brz-ed-sidebar-drawer {
+    box-shadow: none !important;
+
+    &--align-left.brz-ui-v2-modal__sidebar {
+      right: unset !important;
+    }
+
+    &--align-right.brz-ui-v2-modal__sidebar {
+      left: unset !important;
+    }
+
+    .brz-ui-v2-modal-body .brz-scrollbar__view {
+      margin-inline-end: 0 !important;
+    }
+  }
+
+  .brz-ed-sidebar__add-elements--separator-title:not(
+      .brz-ed-sidebar__add-elements--separator-title--opened
+    ) {
+    svg {
+      transform: rotate(90deg) !important;
+    }
+  }
+
+  .brz-ed-sidebar__add-elements--separator-title--opened {
+    svg {
+      transform: rotate(180deg) !important;
+    }
+  }
+
+  .brz-ed-popup-integrations__progress
+    .brz-ed-popup-integrations__progress-stage:after {
+    transform: translateX(-3px);
+  }
+
+  .brz-ed-fixed-bottom-panel__btn {
+    flex-direction: row-reverse;
+  }
+
+  .brz-li.brz-ed-fixed-bottom-panel__item:last-child {
+    border-right: 1px solid $bottom_toolbar-border;
+  }
+
+  .brz-li.brz-ed-fixed-bottom-panel__item:first-child {
+    border-right: none;
+  }
+
+  .brz-menu__item:has(.brz-menu__sub-menu[data-popper-placement^="right"])
+    > .brz-a:after {
+    transform: rotate(-45deg) !important;
+  }
+
+  .brz-timeline__content:before {
+    transform: translateY(-50%) rotate(-45deg) !important;
+  }
+
+  .brz-switcher {
+    &__nav {
+      &--active:before {
+        transform: translateX(100%) !important;
+      }
+    }
+
+    &__nav2 {
+      &--control--active:before {
+        transform: translateX(calc(100% + 8px)) !important;
+      }
+    }
+  }
+
+  .brz-story {
+    .slick-slide {
+      direction: rtl;
+    }
+
+    .story-slider-dot {
+      transform-origin: 100% 0 !important;
+    }
+
+    .brz-slick-slider__arrow-next,
+    .brz-slick-slider__arrow-prev {
+      svg {
+        transform: rotate(180deg);
+      }
+    }
+  }
+
+  .brz-section:not(.brz-story) {
+    .slick-list .slick-track {
+      direction: rtl;
+    }
+  }
+
+  .brz-carousel {
+    .brz-slick-slider__dots {
+      left: unset;
+      inset-inline-start: 50%;
+      transform: translateX(50%);
+    }
+  }
+}

@@ -1,9 +1,10 @@
 import React from "react";
-import { isView } from "visual/providers/RenderProvider";
 import { ContextMenuExtend } from "visual/component/ContextMenu";
 import HotKeys from "visual/component/HotKeys";
 import MenuDropDown from "visual/component/MenuDropDown";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
+import { isView } from "visual/providers/RenderProvider";
+import { isRTL } from "visual/utils/env";
 import contextMenuExtendConfigFn from "./contextMenuExtend";
 
 const SubMenuForView = (props) => {
@@ -12,12 +13,16 @@ const SubMenuForView = (props) => {
 };
 
 const SubMenuForEdit = (props) => {
-  const { mMenu, items, renderContext } = props;
+  const { mMenu, items, renderContext, isRTL } = props;
 
   return mMenu ? (
     <ul className="brz-menu__sub-menu">{items}</ul>
   ) : (
-    <MenuDropDown className="brz-menu__sub-menu" renderContext={renderContext}>
+    <MenuDropDown
+      className="brz-menu__sub-menu"
+      renderContext={renderContext}
+      isRTL={isRTL}
+    >
       {items}
     </MenuDropDown>
   );
@@ -88,6 +93,8 @@ class MenuItemItems extends EditorArrayComponent {
 
   renderItemsContainer(_items) {
     const { megaMenu, mMenu } = this.props;
+    const config = this.getGlobalConfig();
+    const _isRTL = isRTL(config);
     const items = _items.filter((el) => el);
 
     if (items.length === 0) {
@@ -105,6 +112,7 @@ class MenuItemItems extends EditorArrayComponent {
         mMenu={mMenu}
         items={items}
         renderContext={this.props.renderContext}
+        isRTL={_isRTL}
       />
     );
   }

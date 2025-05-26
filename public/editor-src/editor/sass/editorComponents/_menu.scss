@@ -45,10 +45,7 @@ $dropdown-arrow-size: 7px;
         content: "";
         position: absolute;
         z-index: -1;
-        top: 0;
-        right: 0;
-        bottom: 0;
-        left: 0;
+        inset: 0;
       }
 
       // Item
@@ -71,9 +68,9 @@ $dropdown-arrow-size: 7px;
           display: block;
           position: absolute;
           top: 0;
-          right: 23px;
+          inset-inline-end: 23px;
           bottom: 0;
-          left: auto;
+          inset-inline-start: auto;
           width: $dropdown-arrow-size;
           height: $dropdown-arrow-size;
           border: 2px solid currentColor;
@@ -190,7 +187,7 @@ $dropdown-arrow-size: 7px;
       transform: none;
       padding: 0;
       position: relative;
-      left: auto;
+      inset-inline-start: auto;
       top: auto;
       visibility: visible;
       opacity: 1;
@@ -238,8 +235,8 @@ $dropdown-arrow-size: 7px;
       }
 
       .brz-mm-btn_next {
-        right: 0;
-        left: auto;
+        inset-inline-end: 0;
+        inset-inline-start: auto;
         background: none;
         padding: 0;
         min-width: 50px;
@@ -279,12 +276,12 @@ $dropdown-arrow-size: 7px;
 
       &-right {
         display: flex;
-        padding-right: 40px;
+        padding-inline-end: 40px;
         flex-direction: row-reverse;
       }
 
       &-left {
-        padding-left: 40px;
+        padding-inline-start: 40px;
       }
 
       &__title {
@@ -293,7 +290,7 @@ $dropdown-arrow-size: 7px;
     }
 
     .brz-menu__item > .brz-mm-listitem__text {
-      padding-right: 50px;
+      padding-inline-end: 50px;
     }
   }
 
@@ -327,7 +324,7 @@ $dropdown-arrow-size: 7px;
 
     .brz-a {
       font-weight: 700;
-      margin-right: 5px;
+      margin-inline-end: 5px;
       cursor: pointer;
     }
   }
@@ -366,17 +363,16 @@ $dropdown-arrow-size: 7px;
   }
 
   &[data-popper-placement^="right"] {
-    padding-right: 0;
+    padding-inline-end: 0;
   }
 
   &[data-popper-placement^="left"] {
-    padding-left: 0;
+    padding-inline-start: 0;
   }
 
   &[data-popper-placement^="top"],
   &[data-popper-placement^="bottom"] {
-    padding-left: 0;
-    padding-right: 0;
+    padding-inline: 0;
   }
 
   &[data-popper-placement^="top"] {
@@ -403,11 +399,11 @@ $dropdown-arrow-size: 7px;
   }
 
   &[data-popper-placement^="left"]:before {
-    right: calc(var(--offset) * -1);
+    inset-inline-end: calc(var(--offset) * -1);
   }
 
   &[data-popper-placement^="right"]:before {
-    left: calc(var(--offset) * -1);
+    inset-inline-start: calc(var(--offset) * -1);
   }
 }
 

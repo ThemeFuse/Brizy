@@ -2,7 +2,9 @@ import { t } from "visual/utils/i18n";
 
 export const title = () => t("Text");
 
-export function getItems() {
+export function getItems({ v }) {
+  const isDC = v.textPopulation.length > 0;
+
   return [
     {
       id: "sidebarTabs",
@@ -48,6 +50,25 @@ export function getItems() {
                         { title: t("Saturation"), value: "saturation" },
                         { title: t("Screen"), value: "screen" }
                       ]
+                    }
+                  ]
+                },
+                {
+                  id: "moreSettingsAdvanced",
+                  label: t("Advanced"),
+                  icon: "nc-cog",
+                  options: [
+                    {
+                      id: "numberOfLines",
+                      type: "slider",
+                      position: 30,
+                      display: "block",
+                      disabled: !isDC,
+                      label: t("Dynamic Text No. of Lines"),
+                      config: {
+                        min: 0,
+                        max: 100
+                      }
                     }
                   ]
                 }

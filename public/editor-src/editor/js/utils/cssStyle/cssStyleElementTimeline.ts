@@ -319,13 +319,13 @@ export function cssStyleElementTimelineLineTop({
     case Orientation.off: {
       switch (style) {
         case Style.style1: {
-          return `top:${afterHeight}px; bottom:auto; left:${leftPosition}px;`;
+          return `top:${afterHeight}px; bottom:auto; inset-inline-start:${leftPosition}px;`;
         }
         case Style.style2: {
-          return `bottom: ${afterHeight}px; top:auto; left: ${leftPosition}px;`;
+          return `bottom: ${afterHeight}px; top:auto; inset-inline-start: ${leftPosition}px;`;
         }
         case Style.style3: {
-          return `top: calc( ${afterHeight}px + 50%); bottom:auto; left: ${leftPosition}px;`;
+          return `top: calc( ${afterHeight}px + 50%); bottom:auto; inset-inline-start: ${leftPosition}px;`;
         }
       }
       break;
@@ -371,10 +371,10 @@ export function cssStyleElementTimelineContentSpacing({
       switch (style) {
         case Style.style1:
         case Style.style3: {
-          return `margin: 0 0 0 ${spacing}px;`;
+          return `margin: 0; margin-inline-start:${spacing}px;`;
         }
         case Style.style2: {
-          return `margin: 0 ${spacing}px 0 0;`;
+          return `margin: 0; margin-inline-end: ${spacing}px;`;
         }
       }
       break;
@@ -415,16 +415,16 @@ export function cssStyleElementTimelineVerticalPosition({
     case Orientation.on: {
       switch (style) {
         case Style.style1: {
-          return `left: calc(50% - ${position}px); right: auto;`;
+          return `inset-inline-start: calc(50% - ${position}px); inset-inline-end: auto;`;
         }
         case Style.style2: {
-          return `right: calc(50% - ${position}px); left: auto;`;
+          return `inset-inline-end: calc(50% - ${position}px); inset-inline-start: auto;`;
         }
       }
       break;
     }
     case Orientation.off: {
-      return "left: auto; right: auto;";
+      return "inset-inline-start: auto; inset-inline-end: auto;";
     }
   }
   return "";
@@ -495,7 +495,7 @@ export function cssStyleElementTimelineLineWidthHeightAfter({
       return `width: calc(100% + ${horizontalSpacing}px); height: ${borderWidth}px;`;
     }
     case Orientation.on: {
-      return `height: calc(${verticalSpacing}px + (50% + ${halfIconWidth}px)); width: ${borderWidth}px; left: ${borderWidth}px;`;
+      return `height: calc(${verticalSpacing}px + (50% + ${halfIconWidth}px)); width: ${borderWidth}px; inset-inline-start: ${borderWidth}px;`;
     }
     case undefined:
       return "";
@@ -535,10 +535,10 @@ export function cssStyleElementTimelineVerticalLinePosition({
     switch (style) {
       case Style.style1:
       case Style.style3: {
-        return `left: ${linePosition}px; bottom: calc( ${iconWidth}px + 50%);`;
+        return `inset-inline-start: ${linePosition}px; bottom: calc( ${iconWidth}px + 50%);`;
       }
       case Style.style2: {
-        return `right: ${linePosition}px; bottom: calc( ${iconWidth}px + 50%); left:unset;`;
+        return `inset-inline-end: ${linePosition}px; bottom: calc( ${iconWidth}px + 50%); inset-inline-start:unset;`;
       }
     }
   }
@@ -657,7 +657,7 @@ export function cssStyleElementTimelineVerticalInvertPosition({
   const rightPosition = textWidth + halfIconWidth;
 
   return orientation === "on" && style === "style-2"
-    ? `right: calc(50% - ${rightPosition}px);`
+    ? `inset-inline-end: calc(50% - ${rightPosition}px);`
     : "";
 }
 
@@ -691,7 +691,7 @@ export function cssStyleElementTimelineVerticalInvertLinePosition({
   const rightPosition = textWidth + halfIconWidth - borderWidth / 2;
 
   return orientation === "on" && style === "style-2"
-    ? `right: ${rightPosition}px;`
+    ? `inset-inline-end: ${rightPosition}px;`
     : "";
 }
 
@@ -763,13 +763,13 @@ export function cssStyleElementTimelineCustomLineTop({
     case Orientation.off: {
       switch (style) {
         case Style.style1: {
-          return `bottom:auto; right: auto; top: ${afterHeight2}px; left: ${horizontalLeftPosition}px;`;
+          return `bottom:auto; inset-inline-end: auto; top: ${afterHeight2}px; inset-inline-start: ${horizontalLeftPosition}px;`;
         }
         case Style.style2: {
-          return `bottom: ${afterHeight2}px; top:auto; right: auto; left: ${horizontalLeftPosition}px;`;
+          return `bottom: ${afterHeight2}px; top:auto; inset-inline-end: auto; inset-inline-start: ${horizontalLeftPosition}px;`;
         }
         case Style.style3: {
-          return `bottom: ${halfIconHeight}px; top: unset; right: auto; left: ${horizontalLeftPosition}px;`;
+          return `bottom: ${halfIconHeight}px; top: unset; inset-inline-end: auto; inset-inline-start: ${horizontalLeftPosition}px;`;
         }
       }
       break;
@@ -778,10 +778,10 @@ export function cssStyleElementTimelineCustomLineTop({
       switch (style) {
         case Style.style1:
         case Style.style3: {
-          return `left: ${verticalPosition}px; top: calc(50% + ${halfIconHeight}px);`;
+          return `inset-inline-start: ${verticalPosition}px; top: calc(50% + ${halfIconHeight}px);`;
         }
         case Style.style2: {
-          return `right: ${verticalPosition}px; left: auto; top: calc(50% + ${halfIconHeight}px);`;
+          return `inset-inline-end: ${verticalPosition}px; inset-inline-start: auto; top: calc(50% + ${halfIconHeight}px);`;
         }
       }
       break;
@@ -857,13 +857,13 @@ export function cssStyleElementTimelineCustomLineOdd({
     case Orientation.off: {
       switch (style) {
         case Style.style1: {
-          return `top: ${afterHeight}px; bottom:auto; right: auto; left: ${leftPosition}px;`;
+          return `top: ${afterHeight}px; bottom:auto; inset-inline-end: auto; inset-inline-start: ${leftPosition}px;`;
         }
         case Style.style2: {
-          return `bottom: ${afterHeight}px; top:auto; right: auto; left: ${leftPosition}px;`;
+          return `bottom: ${afterHeight}px; top:auto; inset-inline-end: auto; inset-inline-start: ${leftPosition}px;`;
         }
         case Style.style3: {
-          return `top: ${halfIconHeight}px; bottom: unset; right: auto; left: ${leftPosition}px;`;
+          return `top: ${halfIconHeight}px; bottom: unset; inset-inline-end: auto; inset-inline-start: ${leftPosition}px;`;
         }
       }
       break;
@@ -872,10 +872,10 @@ export function cssStyleElementTimelineCustomLineOdd({
       switch (style) {
         case Style.style1:
         case Style.style3: {
-          return `top: calc( ${iconHeight}px + 50%); left: ${verticalPosition}px;`;
+          return `top: calc( ${iconHeight}px + 50%); inset-inline-start: ${verticalPosition}px;`;
         }
         case Style.style2: {
-          return `top: calc( ${iconHeight}px + 50%); right: ${verticalPosition}px; left: auto;`;
+          return `top: calc( ${iconHeight}px + 50%); inset-inline-end: ${verticalPosition}px; inset-inline-start: auto;`;
         }
       }
       break;
@@ -909,11 +909,11 @@ export function cssStyleElementTimelineCustomContentSpacing({
     case Orientation.on: {
       switch (style) {
         case Style.style1: {
-          return `margin: 0 0 0 ${spacing}px;`;
+          return `margin: 0; margin-inline-start: ${spacing}px;`;
         }
         case Style.style2:
         case Style.style3: {
-          return `margin: 0 ${spacing}px 0 0;`;
+          return `margin: 0; margin-inline-end: ${spacing}px;`;
         }
       }
       break;
@@ -970,7 +970,7 @@ export function cssStyleElementTimelineVerticalCustomTabPosition({
         case Style.style1:
         case Style.style2:
         case Style.style3: {
-          return "right: auto; left: auto;";
+          return "inset-inline-end: auto; inset-inline-start: auto;";
         }
       }
       break;
@@ -978,11 +978,11 @@ export function cssStyleElementTimelineVerticalCustomTabPosition({
     case Orientation.on: {
       switch (style) {
         case Style.style1: {
-          return `left: calc(50% - ${position}px);`;
+          return `inset-inline-start: calc(50% - ${position}px);`;
         }
         case Style.style2:
         case Style.style3: {
-          return `right: calc(50% - ${position}px); left: auto;`;
+          return `inset-inline-end: calc(50% - ${position}px); inset-inline-start: auto;`;
         }
       }
       break;
@@ -1025,7 +1025,7 @@ export function cssStyleElementTimelineVerticalCustomTabPositionOdd({
         case Style.style1:
         case Style.style2:
         case Style.style3: {
-          return "left: auto;";
+          return "inset-inline-start: auto;";
         }
       }
       break;
@@ -1034,10 +1034,10 @@ export function cssStyleElementTimelineVerticalCustomTabPositionOdd({
       switch (style) {
         case Style.style1:
         case Style.style3: {
-          return `left: calc(50% - ${leftPosition}px);`;
+          return `inset-inline-start: calc(50% - ${leftPosition}px);`;
         }
         case Style.style2: {
-          return "left:auto;";
+          return "inset-inline-start:auto;";
         }
       }
       break;
@@ -1089,13 +1089,13 @@ export function cssStyleElementTimelineVerticalCustomPosition({
     case Orientation.on: {
       switch (style) {
         case Style.style1: {
-          return `right: auto; left: ${rightPosition}px;`;
+          return `inset-inline-end: auto; inset-inline-start: ${rightPosition}px;`;
         }
         case Style.style2: {
-          return `right: ${rightPosition}px; left: auto;`;
+          return `inset-inline-end: ${rightPosition}px; inset-inline-start: auto;`;
         }
         case Style.style3: {
-          return `right: ${rightPosition}px; left: unset;`;
+          return `inset-inline-end: ${rightPosition}px; inset-inline-start: unset;`;
         }
       }
       break;
@@ -1144,11 +1144,11 @@ export function cssStyleElementTimelineVerticalStyle3ArrowPosition({
     case Orientation.off: {
       switch (style) {
         case Style.style1: {
-          return `bottom: auto; top: 0; left: ${halfIconWidth}px;`;
+          return `bottom: auto; top: 0; inset-inline-start: ${halfIconWidth}px;`;
         }
         case Style.style2:
         case Style.style3: {
-          return `bottom: -15px; top: unset;left: ${halfIconWidth}px;`;
+          return `bottom: -15px; top: unset;inset-inline-start: ${halfIconWidth}px;`;
         }
       }
       break;
@@ -1156,11 +1156,11 @@ export function cssStyleElementTimelineVerticalStyle3ArrowPosition({
     case Orientation.on: {
       switch (style) {
         case Style.style1: {
-          return `bottom: auto; left: ${position}px; top: 50%;`;
+          return `bottom: auto; inset-inline-start: ${position}px; top: 50%;`;
         }
         case Style.style2:
         case Style.style3: {
-          return `right: ${position}px; left: unset;  top: 50%;`;
+          return `inset-inline-end: ${position}px; inset-inline-start: unset;  top: 50%;`;
         }
       }
       break;
@@ -1210,10 +1210,10 @@ export function cssStyleElementTimelineTabContentArrowColor({
     case Orientation.off: {
       switch (style) {
         case Style.style1: {
-          return "border-right: transparent; border-bottom: transparent; border-left: inherit; border-top: inherit;";
+          return "border-inline-end: transparent; border-bottom: transparent; border-inline-start: inherit; border-top: inherit;";
         }
         case Style.style2: {
-          return "border-left: transparent; border-top: transparent; border-right: inherit; border-bottom: inherit;";
+          return "border-inline-start: transparent; border-top: transparent; border-inline-end: inherit; border-bottom: inherit;";
         }
       }
       break;
@@ -1221,10 +1221,10 @@ export function cssStyleElementTimelineTabContentArrowColor({
     case Orientation.on: {
       switch (style) {
         case Style.style1: {
-          return "border-top: transparent; border-right: transparent; border-left: inherit; border-bottom: inherit;";
+          return "border-top: transparent; border-inline-end: transparent; border-inline-start: inherit; border-bottom: inherit;";
         }
         case Style.style2: {
-          return "border-left: transparent; border-bottom: transparent; border-right: inherit; border-top: inherit;";
+          return "border-inline-start: transparent; border-bottom: transparent; border-inline-end: inherit; border-top: inherit;";
         }
       }
       break;
@@ -1242,9 +1242,9 @@ export function cssStyleElementTimelineTabContentArrowCustomColor({
   const style = dvv("timelineStyle");
 
   return orientation === "off" && style === "style-3"
-    ? "border-left: transparent ; border-top: transparent ; border-right: inherit ; border-bottom: inherit;"
+    ? "border-inline-start: transparent ; border-top: transparent ; border-inline-end: inherit ; border-bottom: inherit;"
     : orientation === "on" && style === "style-3"
-      ? "border-left: transparent; border-bottom: transparent; border-right: inherit; border-top: inherit;"
+      ? "border-inline-start: transparent; border-bottom: transparent; border-inline-end: inherit; border-top: inherit;"
       : "";
 }
 
@@ -1257,7 +1257,7 @@ export function cssStyleElementTimelineTabContentArrowCustomColor1({
   const style = dvv("timelineStyle");
 
   return orientation === "on" && style === "style-3"
-    ? "border-right: transparent; border-top: transparent; border-left: inherit; border-bottom: inherit;"
+    ? "border-inline-end: transparent; border-top: transparent; border-inline-start: inherit; border-bottom: inherit;"
     : "";
 }
 
@@ -1346,11 +1346,11 @@ export function cssStyleElementTimelineTabContentBefore({
     case Orientation.off: {
       switch (style) {
         case Style.style1: {
-          return `bottom: auto; top: 0; left: ${halfIconWidth}px;`;
+          return `bottom: auto; top: 0; inset-inline-start: ${halfIconWidth}px;`;
         }
         case Style.style2:
         case Style.style3: {
-          return `bottom: -15px; top: unset;left: ${halfIconWidth}px;`;
+          return `bottom: -15px; top: unset;inset-inline-start: ${halfIconWidth}px;`;
         }
       }
       break;
@@ -1358,13 +1358,13 @@ export function cssStyleElementTimelineTabContentBefore({
     case Orientation.on: {
       switch (style) {
         case Style.style1: {
-          return `bottom: auto; left: ${arrowPosition}px; top: 50%;`;
+          return `bottom: auto; inset-inline-start: ${arrowPosition}px; top: 50%;`;
         }
         case Style.style2: {
-          return `bottom: -15px; right: ${arrowPosition}px; left: unset;  top: 50%;`;
+          return `bottom: -15px; inset-inline-end: ${arrowPosition}px; inset-inline-start: unset;  top: 50%;`;
         }
         case Style.style3: {
-          return `bottom: -15px; left: ${arrowPosition}px; top: 50%;`;
+          return `bottom: -15px; inset-inline-start: ${arrowPosition}px; top: 50%;`;
         }
       }
       break;
@@ -1401,13 +1401,13 @@ export function cssStyleElementTimelineNavTitleSpacing({
     case Orientation.off: {
       switch (style) {
         case Style.style1: {
-          return `${cssStylePositionRelative()} margin-bottom: ${textSpacing}px; left: -10px; top: auto; transform: none;`;
+          return `${cssStylePositionRelative()} margin-bottom: ${textSpacing}px; inset-inline-start: -10px; top: auto; transform: none;`;
         }
         case Style.style2: {
-          return `${cssStylePositionRelative()} margin-top: ${textSpacing}px; left: -10px; top: auto; transform: none;`;
+          return `${cssStylePositionRelative()} margin-top: ${textSpacing}px; inset-inline-start: -10px; top: auto; transform: none;`;
         }
         case Style.style3: {
-          return `${cssStylePositionAbsolute()} margin-top: auto; margin-bottom: auto; top: ${-textSpacing}px; left: -10px; transform: translateY(-100%);`;
+          return `${cssStylePositionAbsolute()} margin-top: auto; margin-bottom: auto; top: ${-textSpacing}px; inset-inline-start: -10px; transform: translateY(-100%);`;
         }
       }
       break;
@@ -1416,10 +1416,10 @@ export function cssStyleElementTimelineNavTitleSpacing({
       switch (style) {
         case Style.style1:
         case Style.style3: {
-          return `${cssStylePositionRelative()} margin: 0; left: ${-textSpacing}px; top: auto; transform: none;`;
+          return `${cssStylePositionRelative()} margin: 0; inset-inline-start: ${-textSpacing}px; top: auto; transform: none;`;
         }
         case Style.style2: {
-          return `${cssStylePositionRelative()} margin: 0; top: auto; left: ${textSpacing}px; transform: none;`;
+          return `${cssStylePositionRelative()} margin: 0; top: auto; inset-inline-start: ${textSpacing}px; transform: none;`;
         }
       }
       break;
@@ -1442,10 +1442,10 @@ export function cssStyleElementTimelineNavTitleStyle3({
       switch (style) {
         case Style.style1:
         case Style.style2: {
-          return `${cssStylePositionRelative()} left: -10px; bottom: auto; transform: none;`;
+          return `${cssStylePositionRelative()} inset-inline-start: -10px; bottom: auto; transform: none;`;
         }
         case Style.style3: {
-          return `${cssStylePositionAbsolute()} bottom: ${-textSpacing}px; top: auto; left: -10px; transform: translateY(100%);`;
+          return `${cssStylePositionAbsolute()} bottom: ${-textSpacing}px; top: auto; inset-inline-start: -10px; transform: translateY(100%);`;
         }
       }
       break;
@@ -1453,13 +1453,13 @@ export function cssStyleElementTimelineNavTitleStyle3({
     case Orientation.on: {
       switch (style) {
         case Style.style1: {
-          return `${cssStylePositionRelative()} left: ${-textSpacing}px; bottom: auto; transform: none;`;
+          return `${cssStylePositionRelative()} inset-inline-start: ${-textSpacing}px; bottom: auto; transform: none;`;
         }
         case Style.style2: {
-          return `${cssStylePositionRelative()} bottom: auto; left: ${textSpacing}px; transform: none;`;
+          return `${cssStylePositionRelative()} bottom: auto; inset-inline-start: ${textSpacing}px; transform: none;`;
         }
         case Style.style3: {
-          return `${cssStylePositionRelative()} left: ${textSpacing}px; bottom: auto; transform: none;`;
+          return `${cssStylePositionRelative()} inset-inline-start: ${textSpacing}px; bottom: auto; transform: none;`;
         }
       }
       break;
@@ -1563,9 +1563,9 @@ export function cssStyleElementTimelineTabsVerticalNavIcon({
   const orientation = dvv("verticalMode");
 
   return orientation === "on"
-    ? "margin-left: 0; line-height: 0; z-index: 1;"
+    ? "margin-inline-start: 0; line-height: 0; z-index: 1;"
     : orientation === "off"
-      ? "margin-left: 20px"
+      ? "margin-inline-start: 20px"
       : "";
 }
 

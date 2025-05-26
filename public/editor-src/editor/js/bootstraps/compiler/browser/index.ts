@@ -13,11 +13,9 @@ global.__VISUAL_CONFIG__ = {};
 class Core {
   async compile(data: string): Promise<Static> {
     const {
-      page,
       project,
-      globalBlocks,
-      needToCompile,
-      config: _config
+      config: _config,
+      page
     } = JSON.parse(data);
 
     // Load the pro components
@@ -46,15 +44,14 @@ class Core {
 
     return await bootstrap({
       config,
-      page,
       project,
-      needToCompile,
-      globalBlocks,
-      editorMode: config.mode
+      editorMode: config.mode,
+      page
     });
   }
 }
 
 export type Compiler = typeof Core;
+export type { Core };
 
 expose(Core);

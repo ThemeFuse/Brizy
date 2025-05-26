@@ -6,20 +6,23 @@ import { EditorMode } from "visual/providers/EditorModeProvider";
 import { ServerStyleSheet } from "visual/providers/StyleProvider/ServerStyleSheet";
 import { pageBlocksRawSelector } from "visual/redux/selectors";
 import { Store } from "visual/redux/store";
+import { Block } from "visual/types/Block";
 import { Providers } from "../controls/Providers";
-import { Root } from "../controls/Root";
 import { baseToStatic } from "./baseToStatic";
 import { Output } from "./types";
 
 interface Props {
   store: Store;
   config: ConfigCommon;
-  hasGlobalBlocks: boolean;
   editorMode: EditorMode;
 }
 
-const RenderPage = (props: { store: Store; editorMode: EditorMode }) => {
-  const { store, editorMode } = props;
+const RenderPage = (props: {
+  store: Store;
+  editorMode: EditorMode;
+  block: Block;
+}) => {
+  const { store, editorMode, block } = props;
   const { Page: BasePage } = EditorGlobal.getComponents();
 
   const config = useConfig();
@@ -29,10 +32,8 @@ const RenderPage = (props: { store: Store; editorMode: EditorMode }) => {
     throw Error("Missing Page Components", EditorGlobal.getComponents());
   }
   const reduxState = store.getState();
-
-  const pageBlocks = pageBlocksRawSelector(reduxState);
   const dbValue = {
-    items: pageBlocks
+    items: [block]
   };
 
   return (
@@ -50,22 +51,37 @@ const RenderPage = (props: { store: Store; editorMode: EditorMode }) => {
   );
 };
 
-export const pageToStatic = (props: Props): Output => {
-  const { store, hasGlobalBlocks, config, editorMode } = props;
-  const sheet = new ServerStyleSheet();
+export const pageToStatic = (
+  props: Props
+): {
+  rootClassNames: Array<string>;
+  blocks: Array<Output & { id: string }>;
+} => {
+  const { store, config, editorMode } = props;
+  const reduxState = store.getState();
+  const pageBlocks = pageBlocksRawSelector(reduxState);
+  const rootClassNames = [
+    "brz brz-root__container brz-reset-all brz-root__container-page"
+  ];
+  const blocks = pageBlocks.map((block) => {
+    const sheet = new ServerStyleSheet();
 
-  const Page = (
-    <Providers
-      store={store}
-      sheet={sheet.instance}
-      config={config}
-      editorMode={editorMode}
-    >
-      <Root className="brz" type="page" hasGlobalBlocks={hasGlobalBlocks}>
-        <RenderPage store={store} editorMode={editorMode} />
-      </Root>
-    </Providers>
-  );
+    const Page = (
+      <Providers
+        store={store}
+        sheet={sheet.instance}
+        config={config}
+        editorMode={editorMode}
+      >
+        <RenderPage block={block} store={store} editorMode={editorMode} />
+      </Providers>
+    );
 
-  return baseToStatic({ Page, sheet: sheet.instance, store, config });
+    return {
+      id: block.value._id,
+      ...baseToStatic({ Page, sheet: sheet.instance, store, config })
+    };
+  });
+
+  return { rootClassNames, blocks };
 };

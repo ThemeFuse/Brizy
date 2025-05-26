@@ -41,12 +41,10 @@ export function style(data: DynamicStylesProps<Value>): OutputStyle {
           : [])
       ]
     },
-
     ".brz &&.brz-image__gallery-with-thumb .brz-image__gallery-item .brz-picture:after":
       {
         standart: ["cssStyleElementImageGalleryBorderRadiusThumbnail"]
       },
-
     ".brz && .brz-image__gallery-item .brz-ed-image__wrapper": {
       standart: [
         "cssStyleElementImageGalleryBigImageImagesMaskShape",
@@ -63,6 +61,13 @@ export function style(data: DynamicStylesProps<Value>): OutputStyle {
 
 export function styleForFilter(data: DynamicStylesProps<Value>): OutputStyle {
   const styles: Styles = {
+    ".brz && .brz-image__gallery-filter__item, .brz && .brz-image__gallery-filter__item--style-1:not(.brz-image__gallery-filter__item--active), .brz &&.brz-image__gallery-filter--style-2":
+      {
+        standart: [
+          "cssStyleHoverTransition",
+          "cssStylePropertyHoverTransitionColor"
+        ]
+      },
     ".brz &&": {
       standart: [
         "cssStyleElementImageGalleryFilterAfterSpacing",
@@ -79,10 +84,6 @@ export function styleForFilter(data: DynamicStylesProps<Value>): OutputStyle {
         "cssStyleElementImageGallery3LetterSpacing",
         "cssStyleElementImageGallery3FontVariation",
         "cssStyleElementImageGalleryFilterTextTransform"
-      ],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
       ]
     },
     ".brz && .brz-image__gallery-filter__item:not(.brz-image__gallery-filter__item--active):hover":
@@ -105,10 +106,6 @@ export function styleForFilter(data: DynamicStylesProps<Value>): OutputStyle {
           "cssStyleElementImageGalleryFilterBgColor",
           "cssStyleElementImageGalleryFilterBorder",
           "cssStyleElementImageGalleryFilterBoxShadow"
-        ],
-        interval: [
-          "cssStyleHoverTransition",
-          "cssStylePropertyHoverTransitionColor"
         ]
       },
     ".brz && .brz-image__gallery-filter__item--style-1.brz-image__gallery-filter__item--active":
@@ -118,10 +115,6 @@ export function styleForFilter(data: DynamicStylesProps<Value>): OutputStyle {
           "cssStyleElementImageGalleryFilterActiveBgColor",
           "cssStyleElementImageGalleryFilterActiveBorder",
           "cssStyleElementImageGalleryFilterActiveShadow"
-        ],
-        interval: [
-          "cssStyleHoverTransition",
-          "cssStylePropertyHoverTransitionColor"
         ]
       },
     ".brz &&.brz-image__gallery-filter--style-2": {
@@ -136,19 +129,11 @@ export function styleForFilter(data: DynamicStylesProps<Value>): OutputStyle {
         "cssStyleElementImageGalleryFilterBgColor",
         "cssStyleElementImageGalleryFilterBorder",
         "cssStyleElementImageGalleryFilterBoxShadow"
-      ],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
       ]
     },
     ".brz && .brz-image__gallery-filter__item--style-2.brz-image__gallery-filter__item--active":
       {
-        standart: ["cssStyleElementImageGalleryFilterActiveColor"],
-        interval: [
-          "cssStyleHoverTransition",
-          "cssStylePropertyHoverTransitionColor"
-        ]
+        standart: ["cssStyleElementImageGalleryFilterActiveColor"]
       }
   };
 

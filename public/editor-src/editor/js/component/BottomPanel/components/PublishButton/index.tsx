@@ -33,6 +33,7 @@ import {
   updatePageStatus
 } from "visual/redux/actions2";
 import {
+  blocksHtmlSelector,
   extraFontStylesSelector,
   pageDataNoRefsSelector2,
   pageSelector,
@@ -72,6 +73,8 @@ import {
 
 type Page = ReduxState["page"];
 
+type LoadingType = "updateLoading" | "draftLoading" | "saveAndPublishLoading";
+
 const _getMode = match(
   [isCloud, match([isShopify, getMode], [isCMS, (): undefined => undefined])],
   [isWp, (): undefined => undefined]
@@ -85,6 +88,7 @@ const mapState = (
   extraFontStyles: ReduxState["extraFontStyles"];
   storeWasChanged: StoreChanged;
   currentStyle: Style;
+  compilationProcess: boolean;
 } => {
   return {
     page: pageSelector(state),
@@ -92,7 +96,8 @@ const mapState = (
       pageDataNoRefsSelector2(state, config),
     extraFontStyles: extraFontStylesSelector(state),
     storeWasChanged: storeWasChangedSelector(state),
-    currentStyle: state.currentStyle
+    currentStyle: state.currentStyle,
+    compilationProcess: blocksHtmlSelector(state).inPending
   };
 };
 const mapDispatch = {
@@ -134,6 +139,12 @@ class _PublishButton extends Component<Props, State> {
     mode: MValue<Mode>;
   };
 
+  pendingToPublish?: {
+    status: "draft" | "publish";
+    type: LoadingType;
+    mode: EditorMode;
+  };
+
   constructor(props: Props) {
     super(props);
     this.configComputedValues = this.getValuesByConfig();
@@ -141,6 +152,24 @@ class _PublishButton extends Component<Props, State> {
 
   componentDidUpdate() {
     this.configComputedValues = this.getValuesByConfig();
+    const pendingStatus = this.pendingToPublish;
+
+    if (!this.props.compilationProcess && pendingStatus) {
+      switch (pendingStatus.status) {
+        case "publish": {
+          const { mode, type } = pendingStatus;
+          this.pendingToPublish = undefined;
+          this.handlePublish(type, mode);
+          break;
+        }
+        case "draft": {
+          const { mode } = pendingStatus;
+          this.pendingToPublish = undefined;
+          this.handleDraft("draftLoading", mode);
+          break;
+        }
+      }
+    }
   }
 
   publish = (
@@ -300,10 +329,7 @@ class _PublishButton extends Component<Props, State> {
     Prompts.open(data);
   }
 
-  handlePublishWithArticle(
-    loading: "updateLoading" | "draftLoading" | "saveAndPublishLoading",
-    editorMode: EditorMode
-  ): void {
+  handlePublishWithArticle(loading: LoadingType, editorMode: EditorMode): void {
     const { page } = this.props;
     const config = this.getConfig();
     const templateType = getShopifyTemplate(config);
@@ -333,10 +359,23 @@ class _PublishButton extends Component<Props, State> {
     Prompts.open(data);
   }
 
-  handlePublish(
-    loading: "updateLoading" | "draftLoading" | "saveAndPublishLoading",
-    editorMode: EditorMode
-  ): Promise<void> {
+  handlePublish(loading: LoadingType, editorMode: EditorMode): Promise<void> {
+    const { compilationProcess } = this.props;
+
+    if (compilationProcess) {
+      if (this.state[loading]) {
+        return Promise.resolve();
+      }
+
+      this.pendingToPublish = {
+        status: "publish",
+        type: loading,
+        mode: editorMode
+      };
+      this.setState({ [loading]: true });
+      return Promise.resolve();
+    }
+
     if (this[loading]) {
       return this[loading] as Promise<void>;
     }
@@ -368,11 +407,29 @@ class _PublishButton extends Component<Props, State> {
     loading: "updateLoading" | "draftLoading",
     editorMode: EditorMode
   ): Promise<void> {
+    const { compilationProcess } = this.props;
+
+    if (compilationProcess) {
+      if (this.state[loading]) {
+        return Promise.resolve();
+      }
+
+      this.pendingToPublish = {
+        status: "draft",
+        type: loading,
+        mode: editorMode
+      };
+      this.setState({ [loading]: true });
+      return Promise.resolve();
+    }
+
     if (this[loading]) {
       return this[loading] as Promise<void>;
     }
 
-    this.setState({ [loading]: true });
+    if (!this.state[loading]) {
+      this.setState({ [loading]: true });
+    }
 
     const { status } = this.props.page;
     const pageStatus = status === "future" ? "future" : "draft";

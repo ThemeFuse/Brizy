@@ -5,9 +5,9 @@ import EditorGlobal from "visual/global/Editor";
 import { useConfig } from "visual/providers/ConfigProvider";
 import { EditorComponentProvider } from "visual/providers/EditorComponentProvider";
 import { useEditorMode } from "visual/providers/EditorModeProvider";
+import { useTranslation } from "visual/providers/I18nProvider";
 import { pageDataDraftBlocksSelector } from "visual/redux/selectors";
 import { ReduxState } from "visual/redux/types";
-import { t } from "visual/utils/i18n";
 import { getPageId } from "../utils";
 
 export const Story = (): JSX.Element => {
@@ -17,6 +17,7 @@ export const Story = (): JSX.Element => {
   const store = useStore();
   const config = useConfig();
   const { mode } = useEditorMode();
+  const { t } = useTranslation();
   // @ts-expect-error: ConfigCommon to Config
   const pageId = getPageId(config);
 

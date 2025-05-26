@@ -20,7 +20,7 @@
     position: absolute;
     padding: 12px;
     top: $center;
-    left: $center;
+    inset-inline-start: $center;
     transform: translate(-50%, -50%);
   }
 
@@ -28,12 +28,12 @@
     transform: translate(-5px, -5px);
     cursor: nwse-resize;
     top: $vOffset;
-    left: $hOffset;
+    inset-inline-start: $hOffset;
   }
 
   &--topCenter {
     top: $vOffset;
-    left: $center;
+    inset-inline-start: $center;
     transform: translate(-50%, -5px);
     cursor: ns-resize;
   }
@@ -41,34 +41,34 @@
   &--topRight {
     transform: translate(5px, -5px);
     top: $vOffset;
-    right: $hOffset;
+    inset-inline-end: $hOffset;
     cursor: nesw-resize;
   }
 
   &--centerLeft {
     transform: translate(-50%, -5px);
     top: $center;
-    left: $hOffset;
+    inset-inline-start: $hOffset;
     cursor: ew-resize;
   }
 
   &--centerRight {
     transform: translate(50%, -5px);
     top: $center;
-    right: $hOffset;
+    inset-inline-end: $hOffset;
     cursor: ew-resize;
   }
 
   &--bottomLeft {
     transform: translate(-5px, 5px);
     bottom: $vOffset;
-    left: $hOffset;
+    inset-inline-start: $hOffset;
     cursor: nesw-resize;
   }
 
   &--bottomCenter {
     bottom: $vOffset;
-    left: $center;
+    inset-inline-start: $center;
     transform: translate(-50%, 5px);
     cursor: ns-resize;
   }
@@ -76,7 +76,7 @@
   &--bottomRight {
     transform: translate(5px, 5px);
     bottom: $vOffset;
-    right: $hOffset;
+    inset-inline-end: $hOffset;
     cursor: nwse-resize;
   }
 }

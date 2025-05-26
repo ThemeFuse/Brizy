@@ -121,7 +121,6 @@ const Sortable = (props: Props) => {
   const handleEmptyClick = useCallback(() => {
     dispatch(
       updateUI("leftSidebar", {
-        isOpen: true,
         drawerContentType: LeftSidebarOptionsIds.addElements
       })
     );

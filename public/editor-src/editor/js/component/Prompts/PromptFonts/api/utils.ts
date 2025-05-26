@@ -1,11 +1,11 @@
 import { create } from "fontkit";
-import { orElse } from "fp-utilities";
+import { isT, orElse } from "fp-utilities";
 import { produce } from "immer";
 import { VariationFont } from "visual/types/Fonts";
 import { checkValue2 } from "visual/utils/checkValue";
 import { pipe } from "visual/utils/fp";
 import * as Obj from "visual/utils/reader/object";
-import { Response, VariationAxes, VariationAxesTags } from "./types";
+import { FontFile, Response, VariationAxes, VariationAxesTags } from "./types";
 
 const readVariationAxes = (font: unknown) =>
   pipe(Obj.read, orElse({}), Obj.readKey("variationAxes"))(font);
@@ -41,6 +41,13 @@ export const getFontVariation = async (
   }
 };
 
+export const getFontVariations = (files: FontFile) => {
+  const filesToProcess = Object.values(files).flatMap((f) =>
+    Object.values(f).filter(isT)
+  );
+
+  return Promise.all(filesToProcess.map(getFontVariation));
+};
 // uid for cloud is id in editor
 export const normalizeFonts = (
   res: Response,
