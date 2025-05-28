@@ -1,72 +1,75 @@
 <?php
 
-class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
+class Brizy_Editor_API extends Brizy_Admin_AbstractApi
+{
 
-	const nonce = 'brizy-api';
-	const AJAX_GET_POST_INFO = '_get_post_info';
-	const AJAX_GET = '_editor_get_items';
-	const AJAX_UPDATE = '_update_item';
-	const AJAX_GET_PROJECT = '_get_project';
-	const AJAX_SET_PROJECT = '_set_project';
-	const AJAX_LOCK_PROJECT = '_lock_project';
-	const AJAX_MEDIA = '_media';
-	const AJAX_SIDEBARS = '_sidebars';
-	const AJAX_SIDEBAR_CONTENT = '_sidebar_content';
-	const AJAX_SHORTCODE_CONTENT = '_shortcode_content';
-	const AJAX_PLACEHOLDER_CONTENT = '_placeholder_content';
-	const AJAX_PLACEHOLDERS_CONTENT = '_placeholders_content';
-	const AJAX_GET_POST_OBJECTS = '_get_posts';
-	const AJAX_SEARCH_POST = '_search_posts';
-	const AJAX_GET_MENU_LIST = '_get_menu_list';
-	const AJAX_REMOVE_LOCK = '_remove_lock';
-	const AJAX_HEARTBEAT = '_heartbeat';
-	const AJAX_TAKE_OVER = '_take_over';
-	const AJAX_JWT_TOKEN = '_multipass_create';
-	const AJAX_UPDATE_MENU_DATA = '_update_menu_data';
-	const AJAX_UPDATE_EDITOR_META_DATA = '_update_editor_meta_data';
-	const AJAX_UPDATE_MENU_ITEM_DATA = '_update_menu_item_data';
-	const AJAX_MEDIA_METAKEY = '_get_media_key';
-	const AJAX_CREATE_ATTACHMENT_UID = '_create_attachment_uid';
-	const AJAX_SET_FEATURED_IMAGE = '_set_featured_image';
-	const AJAX_SET_IMAGE_FOCAL_PT = '_set_featured_image_focal_point';
-	const AJAX_REMOVE_FEATURED_IMAGE = '_remove_featured_image';
-	const AJAX_TIMESTAMP = '_timestamp';
-	const AJAX_SET_TEMPLATE_TYPE = '_set_template_type';
-	const AJAX_GET_USERS = '_get_users';
-	const AJAX_GET_TERMS = '_get_terms';
-	const AJAX_GET_TERMS_BY = '_get_terms_by';
-	const AJAX_GET_POST_TAXONOMIES = '_get_post_taxonomies';
+    const nonce = 'brizy-api';
+    const AJAX_GET_POST_INFO = '_get_post_info';
+    const AJAX_GET = '_editor_get_items';
+    const AJAX_UPDATE = '_update_item';
+    const AJAX_GET_PROJECT = '_get_project';
+    const AJAX_SET_PROJECT = '_set_project';
+    const AJAX_LOCK_PROJECT = '_lock_project';
+    const AJAX_MEDIA = '_media';
+    const AJAX_SIDEBARS = '_sidebars';
+    const AJAX_SIDEBAR_CONTENT = '_sidebar_content';
+    const AJAX_SHORTCODE_CONTENT = '_shortcode_content';
+    const AJAX_PLACEHOLDER_CONTENT = '_placeholder_content';
+    const AJAX_PLACEHOLDERS_CONTENT = '_placeholders_content';
+    const AJAX_GET_POST_OBJECTS = '_get_posts';
+    const AJAX_SEARCH_POST = '_search_posts';
+    const AJAX_GET_MENU_LIST = '_get_menu_list';
+    const AJAX_REMOVE_LOCK = '_remove_lock';
+    const AJAX_HEARTBEAT = '_heartbeat';
+    const AJAX_TAKE_OVER = '_take_over';
+    const AJAX_JWT_TOKEN = '_multipass_create';
+    const AJAX_UPDATE_MENU_DATA = '_update_menu_data';
+    const AJAX_UPDATE_EDITOR_META_DATA = '_update_editor_meta_data';
+    const AJAX_UPDATE_MENU_ITEM_DATA = '_update_menu_item_data';
+    const AJAX_MEDIA_METAKEY = '_get_media_key';
+    const AJAX_CREATE_ATTACHMENT_UID = '_create_attachment_uid';
+    const AJAX_SET_FEATURED_IMAGE = '_set_featured_image';
+    const AJAX_SET_IMAGE_FOCAL_PT = '_set_featured_image_focal_point';
+    const AJAX_REMOVE_FEATURED_IMAGE = '_remove_featured_image';
+    const AJAX_TIMESTAMP = '_timestamp';
+    const AJAX_SET_TEMPLATE_TYPE = '_set_template_type';
+    const AJAX_GET_USERS = '_get_users';
+    const AJAX_GET_TERMS = '_get_terms';
+    const AJAX_GET_TERMS_BY = '_get_terms_by';
+    const AJAX_GET_POST_TAXONOMIES = '_get_post_taxonomies';
     const AJAX_GET_ADOBE_FONTS = '_get_adobe_fonts';
 
-	const AJAX_GET_DYNAMIC_CONTENT = '_get_dynamic_content';
+    const AJAX_GET_DYNAMIC_CONTENT = '_get_dynamic_content';
 
-	/**
-	 * @var Brizy_Editor_Post
-	 */
-	private $post;
+    /**
+     * @var Brizy_Editor_Post
+     */
+    private $post;
 
-	/**
-	 * @return Brizy_Editor_Post
-	 */
-	public function get_post() {
-		return $this->post;
-	}
+    /**
+     * @return Brizy_Editor_Post
+     */
+    public function get_post()
+    {
+        return $this->post;
+    }
 
-	/**
-	 * Brizy_Editor_API constructor.
-	 *
-	 * @param Brizy_Editor_Project $project
-	 * @param Brizy_Editor_Post $post
-	 */
-	public function __construct( $post ) {
+    /**
+     * Brizy_Editor_API constructor.
+     *
+     * @param Brizy_Editor_Project $project
+     * @param Brizy_Editor_Post $post
+     */
+    public function __construct($post)
+    {
 
 		$this->post = $post;
 
 		parent::__construct();
 	}
 
-	protected function initializeApiActions() {
-		if ( ! Brizy_Editor_User::is_user_allowed() ) {
+    protected function initializeApiActions()
+    {if ( ! Brizy_Editor_User::is_user_allowed() ) {
 			return;
 		}
 
@@ -102,13 +105,15 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 	    add_action($p . self::AJAX_GET_ADOBE_FONTS, array($this, 'getAdobeFonts'));
         add_action($p . 'nopriv_' . Brizy_Editor::prefix(self::AJAX_TIMESTAMP), array($this, 'timestamp'));
 
-	}
+    }
 
-	protected function getRequestNonce() {
-		return $this->param( 'hash' );
-	}
+    protected function getRequestNonce()
+    {
+        return $this->param('hash');
+    }
 
-	public function addPostTaxonomies() {
+    public function addPostTaxonomies()
+    {
 
 		$this->verifyNonce( self::nonce );
 
@@ -130,40 +135,40 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 		$this->success( $post_taxonomies );
 	}
 
-	public function addDynamicContent() {
-		$this->verifyNonce( self::nonce );
+    public function addDynamicContent()
+    {$this->verifyNonce( self::nonce );
 
 		$context      = Brizy_Content_ContextFactory::createContext( Brizy_Editor_Project::get(), $this->get_post() );
 		$provider     = new Brizy_Content_PlaceholderProvider( $context );
 		$placeholders = $provider->getGroupedPlaceholdersForApiResponse();
 
-		return $this->success( $placeholders );
-	}
+        return $this->success($placeholders);
+    }
 
-	public function lock_project() {
-		$this->verifyNonce( self::nonce );
+    public function lock_project()
+    {$this->verifyNonce( self::nonce );
 
 		if ( Brizy_Editor::get()->checkIfProjectIsLocked() === false ) {
 			Brizy_Editor::get()->lockProject();
 		}
 
-		$editor = new Brizy_Editor_Editor_Editor( Brizy_Editor_Project::get(), null );
-		$this->success( $editor->getProjectStatus() );
-	}
+        $editor = new Brizy_Editor_Editor_Editor(Brizy_Editor_Project::get(), null);
+        $this->success($editor->getProjectStatus());
+    }
 
-	public function removeProjectLock() {
-		$this->verifyNonce( self::nonce );
+    public function removeProjectLock()
+    {$this->verifyNonce( self::nonce );
 
 		if ( Brizy_Editor::get()->checkIfProjectIsLocked() === false ) {
 			Brizy_Editor::get()->removeProjectLock();
 		}
 
-		$editor = new Brizy_Editor_Editor_Editor( Brizy_Editor_Project::get(), null );
-		$this->success( $editor->getProjectStatus() );
-	}
+        $editor = new Brizy_Editor_Editor_Editor(Brizy_Editor_Project::get(), null);
+        $this->success($editor->getProjectStatus());
+    }
 
-	public function heartbeat() {
-		$this->verifyNonce( self::nonce );
+    public function heartbeat()
+    {$this->verifyNonce( self::nonce );
 
 		if ( Brizy_Editor::get()->checkIfProjectIsLocked() === false ) {
 			Brizy_Editor::get()->lockProject();
@@ -172,8 +177,8 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 		$this->success( $editor->getProjectStatus() );
 	}
 
-	public function takeOver() {
-		$this->verifyNonce( self::nonce );
+    public function takeOver()
+    {$this->verifyNonce( self::nonce );
 
 		Brizy_Editor::get()->lockProject();
 
@@ -181,13 +186,14 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 		$this->success( $editor->getProjectStatus() );
 	}
 
-	public function timestamp() {
-		$this->success( array( 'timestamp' => time() ) );
-	}
+    public function timestamp()
+    {
+        $this->success(array('timestamp' => time()));
+    }
 
 
-	public function set_featured_image() {
-		$this->verifyNonce( self::nonce );
+    public function set_featured_image()
+    {$this->verifyNonce( self::nonce );
 
 		if ( ! isset( $_REQUEST['attachmentId'] ) ) {
 			$this->error( 400, 'Bad request' );
@@ -201,17 +207,17 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 			$this->success( array( 'uid' => $uid ) );
 		}
 
-		$this->error( 400, 'Invalid post' );
-	}
+        $this->error(400, 'Invalid post');
+    }
 
-	public function set_featured_image_focal_point() {
-		$this->verifyNonce( self::nonce );
+    public function set_featured_image_focal_point()
+    {$this->verifyNonce( self::nonce );
 
 		if ( ! isset( $_REQUEST['attachmentId'] ) || ! isset( $_REQUEST['pointX'] ) || ! isset( $_REQUEST['pointY'] ) ) {
 			$this->error( 400, 'Bad request' );
 		}
 
-		if ( $this->post && $this->post->uses_editor() ) {
+        if ($this->post && $this->post->uses_editor()) {
 
 			update_post_meta(
 				$this->post->getWpPostId(),
@@ -220,16 +226,16 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 					'x' => $_REQUEST['pointX'],
 					'y' => $_REQUEST['pointY'],
 				)
-			);
+            );
 
 			$this->success( array() );
 		}
 
-		$this->error( 400, 'Invalid post' );
-	}
+        $this->error(400, 'Invalid post');
+    }
 
-	public function remove_featured_image() {
-		$this->verifyNonce( self::nonce );
+    public function remove_featured_image()
+    {$this->verifyNonce( self::nonce );
 
 		if ( $this->post && $this->post->uses_editor() ) {
 			delete_post_thumbnail( $this->post->getWpPostId() );
@@ -237,8 +243,8 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 			$this->success( null );
 		}
 
-		$this->error( 400, 'Invalid post' );
-	}
+        $this->error(400, 'Invalid post');
+    }
 
 
 //	public function multipass_create() {
@@ -296,22 +302,23 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 	/**
 	 * @internal
 	 **/
-	public function get_project() {
-		try {
-			$this->verifyNonce( self::nonce );
-			$data = Brizy_Editor_Project::get()->createResponse();
-			$this->success( $data );
-		} catch ( Exception $exception ) {
-			Brizy_Logger::instance()->exception( $exception );
-			$this->error( $exception->getCode(), $exception->getMessage() );
-		}
-	}
+	public function get_project()
+    {
+        try {
+            $this->verifyNonce(self::nonce);
+            $data = Brizy_Editor_Project::get()->createResponse();
+            $this->success($data);
+        } catch (Exception $exception) {
+            Brizy_Logger::instance()->exception($exception);
+            $this->error($exception->getCode(), $exception->getMessage());
+        }
+    }
 
-	/**
-	 * @internal
-	 */
-	public function set_project() {
-		try {
+    /**
+     * @internal
+     */
+    public function set_project()
+    {try {
 			$this->verifyNonce( self::nonce );
 
 			// update project globas
@@ -349,19 +356,19 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 				do_action( 'brizy_global_data_updated' );
 			}
 
-			$this->success( $project->createResponse() );
-		} catch ( Exception $exception ) {
-			Brizy_Logger::instance()->exception( $exception );
-			$this->error( 400, $exception->getMessage() );
-			exit;
-		}
-	}
+            $this->success($project->createResponse());
+        } catch (Exception $exception) {
+            Brizy_Logger::instance()->exception($exception);
+            $this->error(400, $exception->getMessage());
+            exit;
+        }
+    }
 
-	/**
-	 * @internal
-	 **/
-	public function get_item() {
-		try {
+    /**
+     * @internal
+     **/
+    public function get_item()
+    {try {
 			$this->verifyNonce( self::nonce );
 
 			if ( ! $this->post ) {
@@ -379,11 +386,11 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 		}
 	}
 
-	/**
-	 * @internal
-	 **/
-	public function get_post_info() {
-		try {
+    /**
+     * @internal
+     **/
+    public function get_post_info()
+    {try {
 			$this->verifyNonce( self::nonce );
 
 			$postId        = (int) $this->param( 'post_id' );
@@ -414,11 +421,11 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 		}
 	}
 
-	/**
-	 * @internal
-	 **/
-	public function update_item() {
-		try {
+    /**
+     * @internal
+     **/
+    public function update_item()
+    {try {
 			$this->verifyNonce( self::nonce );
 
 			$data        = $this->sanitizeJson(stripslashes( $this->param( 'data' ) ));
@@ -441,13 +448,13 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 				$this->error( 400, "The compiled data is invalid" );
 			}
 
-			if ( $compiled ) {
-				$this->post->set_encoded_compiled_html( $compiled['html'] );
+            if ($compiled) {
+                $this->post->set_encoded_compiled_html( $compiled['html'] );
 				$this->post->set_compiled_scripts( [
 					'free' => $compiled['assets']['freeScripts'],
-					'pro'  => ( isset( $compiled['assets']['proScripts'] ) ? $compiled['assets']['proScripts'] : [] ),
-				] );
-				$this->post->set_compiled_styles( [
+					'pro'  => ( isset($compiled['assets']['proScripts'] ) ? $compiled['assets']['proScripts'] : [] ),
+				]);
+                $this->post->set_compiled_styles( [
 					'free' => $compiled['assets']['freeStyles'],
 					'pro'  => ( isset( $compiled['assets']['proStyles'] ) ? $compiled['assets']['proStyles'] : [] ),
 				] );
@@ -466,8 +473,8 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 			    $this->post->setDependencies($dependencies);
 			}
 
-			if ( $data ) {
-				$this->post->set_editor_data( $data );
+            if ($data) {
+                $this->post->set_editor_data( $data );
 				$this->post->set_editor_version( BRIZY_EDITOR_VERSION );
 			}
 
@@ -485,18 +492,19 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 				$this->post->savePost( true );
 			}
 
-			$this->success( $this->post->createResponse() );
-		} catch ( Exception $exception ) {
-			Brizy_Logger::instance()->exception( $exception );
-			$this->error( 500, $exception->getMessage() );
-		}
-	}
+            $this->success($this->post->createResponse());
+        } catch (Exception $exception) {
+            Brizy_Logger::instance()->exception($exception);
+            $this->error(500, $exception->getMessage());
+        }
+    }
 
-	/*
-	 * Used for elements like Woocommerce pages.
-	 */
-	public function shortcode_content() {
-		try {
+    /*
+     * Used for elements like Woocommerce pages.
+     */
+    public function shortcode_content()
+    {
+        try {
 
 			$this->verifyNonce( self::nonce );
 
@@ -514,14 +522,14 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 				)
 			);
 
-		} catch ( Exception $exception ) {
-			Brizy_Logger::instance()->exception( $exception );
-			$this->error( $exception->getCode(), $exception->getMessage() );
-		}
-	}
+        } catch (Exception $exception) {
+            Brizy_Logger::instance()->exception($exception);
+            $this->error($exception->getCode(), $exception->getMessage());
+        }
+    }
 
-	public function placeholder_content() {
-		try {
+    public function placeholder_content()
+    {try {
 			$this->verifyNonce( self::nonce );
 			$postId       = $this->param( 'post_id' );
 			$placeholders = $this->param( 'placeholders' );
@@ -556,14 +564,14 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 					'placeholders' => $contents,
 				)
 			);
-		} catch ( Exception $exception ) {
-			Brizy_Logger::instance()->exception( $exception );
-			$this->error( $exception->getCode(), $exception->getMessage() );
-		}
-	}
+        } catch (Exception $exception) {
+            Brizy_Logger::instance()->exception($exception);
+            $this->error($exception->getCode(), $exception->getMessage());
+        }
+    }
 
-	public function placeholders_content() {
-		global $post, $wp_query;
+    public function placeholders_content()
+    {global $post, $wp_query;
 		try {
 			$this->verifyNonce( self::nonce );
 			$posts    = $this->param( 'p' );
@@ -593,8 +601,8 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 		}
 	}
 
-	private function getPostSample( $templateId ) {
-		global $wp_query;
+    private function getPostSample($templateId)
+    {global $wp_query;
 		$wp_post = get_post( $templateId );
 		if ( $wp_post->post_type !== Brizy_Admin_Templates::CP_TEMPLATE ) {
 			return $wp_post;
@@ -691,8 +699,8 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 							]
 						);
 
-						$wp_query->is_tax = true;
-					}
+                        $wp_query->is_tax = true;
+                    }
 
 					return array_pop( $terms );
 
@@ -707,9 +715,9 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 						$wp_query = new WP_Query( [ 'post_type' => 'product', 'fields' => 'ids' ] );
 						$posts    = $wp_query->get_posts();
 
-						return get_post( array_pop( $posts ) );
-					}
-					$posts = $wp_query->get_posts();
+                        return get_post(array_pop($posts));
+                    }
+                    $posts = $wp_query->get_posts();
 
 					return get_post( array_pop( $posts ) );;
 				case  Brizy_Admin_Rule::TEMPLATE :
@@ -728,9 +736,9 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 						case '404':
 							$wp_query->is_404 = true;
 
-							return null;
-						case 'search':
-							$wp_query->is_search = true;
+                            return null;
+                        case 'search':
+                            $wp_query->is_search = true;
 
 							return null;
 
@@ -768,12 +776,13 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 					$wp_query         = new WP_Query( 'year=' . date( 'Y' ) . '&monthnum=' . date( 'm' ) . '&day=' . date( 'd' ) );
 					$wp_query->is_day = true;
 
-					return null;
-			}
-		}
-	}
+                    return null;
+            }
+        }
+    }
 
-	public function get_post_objects() {
+    public function get_post_objects()
+    {
 
 		global $wp_post_types;
 		$this->verifyNonce( self::nonce );
@@ -800,8 +809,8 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 		$this->success( array( 'filter_term' => $searchTerm, 'posts' => $posts ) );
 	}
 
-	public function get_sidebars() {
-		global $wp_registered_sidebars;
+    public function get_sidebars()
+    {global $wp_registered_sidebars;
 
 		$this->verifyNonce( self::nonce );
 
@@ -815,10 +824,11 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 			$items[] = $item;
 		}
 
-		$this->success( $items );
-	}
+        $this->success($items);
+    }
 
-	public function brizy_post_title_filter( $where, $wp_query = null ) {
+    public function brizy_post_title_filter($where, $wp_query = null)
+    {
 
 		global $wpdb;
 
@@ -830,17 +840,19 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 			$where .= ' AND ' . $wpdb->posts . '.post_title LIKE ' . $search_term;
 		}
 
-		return $where;
-	}
+        return $where;
+    }
 
-	public function get_menu_list() {
-		$this->success( wp_get_nav_menus( array( 'hide_empty' => true ) ), 200 );
-	}
+    public function get_menu_list()
+    {
+        $this->success(wp_get_nav_menus(array('hide_empty' => true)), 200);
+    }
 
-	/**
-	 * Used in woocomerce producs, block conditions
-	 */
-	public function get_terms() {
+    /**
+     * Used in woocomerce producs, block conditions
+     */
+    public function get_terms()
+    {
 
 		try {
 			$this->verifyNonce( self::nonce );
@@ -851,16 +863,17 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 
 			$this->success( array_values( $terms ) );
 
-		} catch ( Exception $e ) {
-			Brizy_Logger::instance()->error( $e->getMessage(), [ $e ] );
-			$this->error( 500, $e->getMessage() );
-		}
-	}
+        } catch (Exception $e) {
+            Brizy_Logger::instance()->error($e->getMessage(), [$e]);
+            $this->error(500, $e->getMessage());
+        }
+    }
 
-	/**
-	 * Used in posts filter element
-	 */
-	public function get_terms_by() {
+    /**
+     * Used in posts filter element
+     */
+    public function get_terms_by()
+    {
 
 		$this->verifyNonce( self::nonce );
 
@@ -890,14 +903,14 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 			];
 		}
 
-		$this->success( $out );
-	}
+        $this->success($out);
+    }
 
-	/**
-	 * Used in posts filter element
-	 */
-	public function search_post() {
-		$this->verifyNonce( self::nonce );
+    /**
+     * Used in posts filter element
+     */
+    public function search_post()
+    {$this->verifyNonce( self::nonce );
 		$args              = [ 'numberposts' => - 1 ];
 		$args['post_type'] = array_values( get_post_types( [ 'public' => true ] ) );
 
@@ -956,15 +969,17 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 			];
 		}
 
-		$this->success( $out );
-	}
+        $this->success($out);
+    }
 
-	public function get_users() {
-		$this->verifyNonce( self::nonce );
+    public function get_users()
+    {$this->verifyNonce( self::nonce );
 
 		$args    = [];
 		$search  = $this->param( 'search' );
-		$include = $this->param( 'include' );
+		$include = $this->param( 'include' );if (!user_can(get_current_user_id(), 'list_users')) {
+            $this->success([]);
+        }
 
 		$args['fields'] = [ 'ID', 'display_name' ];
 
@@ -977,9 +992,9 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 			$args['search_columns'] = [ 'display_name' ];
 		}
 
-		if ( is_array( $include ) && ! empty( $include ) ) {
-			$args['include'] = $include;
-		}
+        if (is_array($include) && !empty($include)) {
+            $args['include'] = $include;
+        }
 
         $users = array_map(
             function ( $user ) {
@@ -994,8 +1009,8 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 		$this->success( $users );
 	}
 
-	public function get_media_key() {
-		try {
+    public function get_media_key()
+    {try {
 			session_write_close();
 			$this->verifyNonce( self::nonce );
 			$apost         = (int) $_REQUEST['post_id'];
@@ -1008,18 +1023,18 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 
 			$this->success( array( 'uid' => $uid ) );
 
-		} catch ( Exception $e ) {
-			Brizy_Logger::instance()->error( $e->getMessage(), [ $e ] );
+        } catch (Exception $e) {
+            Brizy_Logger::instance()->error($e->getMessage(), [$e]);
 
-			return;
-		}
-	}
+            return;
+        }
+    }
 
-	/**
-	 * @see Brizy_Admin_Migrations_AttachmentUidMigration
-	 */
-	public function get_attachment_key() {
-		try {
+    /**
+     * @see Brizy_Admin_Migrations_AttachmentUidMigration
+     */
+    public function get_attachment_key()
+    {try {
 			session_write_close();
 
 			$this->verifyNonce( self::nonce );
@@ -1046,17 +1061,18 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 				update_post_meta( $attachmentId, 'brizy_attachment_uid', $uid );
 			}
 
-			$this->success( array( 'uid' => $uid ) );
+            $this->success(array('uid' => $uid));
 
-		} catch ( Exception $e ) {
-			Brizy_Logger::instance()->error( $e->getMessage(), [ $e ] );
+        } catch (Exception $e) {
+            Brizy_Logger::instance()->error($e->getMessage(), [$e]);
 
-			return;
-		}
-	}
+            return;
+        }
+    }
 
-	public function setTemplateType() {
-		try {
+    public function setTemplateType()
+    {
+        try {
 
 			$this->verifyNonce( self::nonce );
 			$templateId   = $this->param( 'template_id' );
@@ -1081,17 +1097,17 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 
 			$this->success( [] );
 
-		} catch ( Exception $e ) {
-			Brizy_Logger::instance()->error( $e->getMessage(), [ $e ] );
-			$this->error( 500, $e->getMessage() );
+        } catch (Exception $e) {
+            Brizy_Logger::instance()->error($e->getMessage(), [$e]);
+            $this->error(500, $e->getMessage());
 
-			return;
-		}
-	}
+            return;
+        }
+    }
 
 
-	private function createMediaKey( $postId, $attachmentId ) {
-		$uid = get_post_meta( $attachmentId, 'brizy_attachment_uid', true );
+    private function createMediaKey($postId, $attachmentId)
+    {$uid = get_post_meta( $attachmentId, 'brizy_attachment_uid', true );
 
 		if ( ! $uid ) {
 			$file       = get_attached_file( $attachmentId );
@@ -1111,11 +1127,11 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 			}
 		}
 
-		return $uid;
-	}
+        return $uid;
+    }
 
-	public function getAdobeFonts() {
-		$this->checkNonce( self::nonce );
+    public function getAdobeFonts()
+    {$this->checkNonce( self::nonce );
 
 		$manager  = new Brizy_Editor_Accounts_ServiceAccountManager( Brizy_Editor_Project::get() );
 		$accounts = $manager->getAccountsByGroup( Brizy_Editor_Accounts_AbstractAccount::ADOBE_GROUP );
@@ -1138,6 +1154,6 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi {
 			$this->error( 400, 'An error occurred creating the request to adobe.' );
 		}
 
-		$this->success( json_decode( wp_remote_retrieve_body( $response ), true ) );
-	}
+        $this->success(json_decode(wp_remote_retrieve_body($response), true));
+    }
 }
