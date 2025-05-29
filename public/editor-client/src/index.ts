@@ -1,5 +1,6 @@
 import { authorisation } from "@/authorisation";
 import { authors } from "@/authors";
+import { getExportBlockUrl } from "@/block";
 import { form } from "@/form";
 import { shortcodeContent } from "@/shortcodeContent";
 import { sidebars } from "@/sidebars";
@@ -97,7 +98,10 @@ const api = {
   authors,
   posts: postsAPI,
   terms,
-  sidebars
+  sidebars,
+  block: {
+    getExportBlockUrl
+  }
 };
 
 if (window.__VISUAL_CONFIG__) {
