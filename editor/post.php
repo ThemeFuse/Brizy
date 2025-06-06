@@ -906,9 +906,14 @@ class Brizy_Editor_Post extends Brizy_Editor_Entity
         if (is_array($excludePostType) && in_array($postType, $excludePostType)) {
             return [];
         }
+
+        $queryParams = [$postType, $postLabel, $postType];
+
         if ($searchTerm) {
-            $searchQuery = " AND post_title LIKE %s";
+            $searchQuery = " AND p.post_title LIKE %s";
+            $queryParams[] = '%' . $wpdb->esc_like($searchTerm) . '%';
         }
+
         $postStatus = $postType == 'attachment' ? "'inherit'" : "'publish','pending','draft','future','private'";
         $query = <<<SQL
 			SELECT
@@ -922,13 +927,18 @@ class Brizy_Editor_Post extends Brizy_Editor_Entity
 			FROM
 			     $wpdb->posts p
 				LEFT JOIN $wpdb->postmeta pm ON pm.post_id=p.ID and pm.meta_key='brizy_post_uid'
-			WHERE 
+			WHERE
 				p.post_type='%s' and p.post_status IN ($postStatus) $searchQuery
 			GROUP BY p.ID
-			ORDER BY p.post_title ASC			
+			ORDER BY p.post_title ASC
 			LIMIT %d,%d
 SQL;
-        $posts = $wpdb->get_results($wpdb->prepare($query, $postType, $postLabel, $postType, $offset, $limit));
+
+        $queryParams[] = $offset;
+        $queryParams[] = $limit;
+
+        $posts = $wpdb->get_results($wpdb->prepare($query, ...$queryParams));
+
         foreach ($posts as $i => $p) {
             $postTitle = get_the_title($p->ID);
             $p->post_title = $postTitle;
