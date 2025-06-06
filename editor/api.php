@@ -695,9 +695,9 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi
                 return !in_array($type->name, array('brizy_template')) && $type->show_ui;
             }));
         }
-        add_filter('posts_where', array($this, 'brizy_post_title_filter'), 10, 2);
+
         $posts = Brizy_Editor_Post::getPostList($searchTerm, $postType, $excludePostType, 0, 100000);
-        remove_filter('posts_where', array($this, 'brizy_post_title_filter'), 10);
+
         $this->success(array('filter_term' => $searchTerm, 'posts' => $posts));
     }
 
@@ -716,18 +716,7 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi
         $this->success($items);
     }
 
-    public function brizy_post_title_filter($where, $wp_query = null)
-    {
 
-        global $wpdb;
-        if ($wp_query instanceof WP_Query && $term = $wp_query->get('post_title_term')) {
-            $search_term = $wpdb->esc_like($term);
-            $search_term = ' \'%' . $search_term . '%\'';
-            $where .= ' AND ' . $wpdb->posts . '.post_title LIKE ' . $search_term;
-        }
-
-        return $where;
-    }
 
     public function get_menu_list()
     {
