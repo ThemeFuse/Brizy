@@ -10,9 +10,11 @@ const observerCallback = (mutations: MutationRecord[]): void => {
   for (const mutation of mutations) {
     const node = mutation.target as HTMLElement;
 
-    const products = node.querySelectorAll<HTMLDivElement>(
-      ".ec-filters__products .grid-product"
-    );
+    const products = Array.from(
+      node.querySelectorAll<HTMLDivElement>(
+        ".ec-filters__products .grid-product"
+      )
+    ).filter((product) => product.getAttribute("data-event") !== "true");
 
     products.forEach((product) => {
       product.addEventListener(
@@ -29,7 +31,7 @@ const observerCallback = (mutations: MutationRecord[]): void => {
             const href = link.getAttribute("href");
 
             if (href) {
-              window.open(href, "_blank");
+              window.location.href = href;
             }
           }
         },
@@ -37,6 +39,7 @@ const observerCallback = (mutations: MutationRecord[]): void => {
       );
 
       product.classList.add("brz-enabled");
+      product.setAttribute("data-event", "true");
     });
   }
 };

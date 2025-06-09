@@ -32,7 +32,7 @@ export const getItems: GetItems<Value> = ({ v, device, state }) => {
           config: {
             fontFamily: device === "desktop"
           },
-          selector: `${productCardSelector} .grid-product__label .ec-label.label--notice`
+          selector: `${productCardSelector} .grid-product__label .ec-label.label--notice, ${productCardSelector} .grid-product__label .ec-label.label--custom`
         }
       ]
     },
@@ -63,7 +63,7 @@ export const getItems: GetItems<Value> = ({ v, device, state }) => {
                   id: "productBadgeColor",
                   type: "colorPicker",
                   states: [NORMAL, HOVER],
-                  selector: `${productCardSelector} .grid-product__label .ec-label.label--notice`
+                  selector: `${productCardSelector} .grid-product__label .ec-label.label--notice, ${productCardSelector} .grid-product__label .ec-label.label--custom`
                 }
               ]
             },
@@ -75,7 +75,7 @@ export const getItems: GetItems<Value> = ({ v, device, state }) => {
                   id: "productBadge",
                   type: "backgroundColor",
                   states: [NORMAL, HOVER],
-                  selector: `${productCardSelector} .grid-product__label .ec-label.label--notice`
+                  selector: `${productCardSelector} .grid-product__label .ec-label.label--notice, ${productCardSelector} .grid-product__label .ec-label.label--custom`
                 }
               ]
             },
@@ -87,7 +87,7 @@ export const getItems: GetItems<Value> = ({ v, device, state }) => {
                   id: "productBadgeBorder",
                   type: "border",
                   states: [NORMAL, HOVER],
-                  selector: `${productCardSelector} .grid-product__label .ec-label.label--notice`
+                  selector: `${productCardSelector} .grid-product__label .ec-label.label--notice, ${productCardSelector} .grid-product__label .ec-label.label--custom`
                 }
               ]
             },
@@ -99,7 +99,7 @@ export const getItems: GetItems<Value> = ({ v, device, state }) => {
                   id: "productBadgeBoxShadow",
                   type: "boxShadow",
                   states: [NORMAL, HOVER],
-                  selector: `${productCardSelector} .grid-product__label .ec-label.label--notice`
+                  selector: `${productCardSelector} .grid-product__label .ec-label.label--notice, ${productCardSelector} .grid-product__label .ec-label.label--custom`
                 }
               ]
             }

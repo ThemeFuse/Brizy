@@ -5,3 +5,5 @@ export { EcwidProduct } from "./EcwidProduct";
 export { EcwidProducts } from "./EcwidProducts";
 export { EcwidShoppingBag } from "./EcwidShoppingBag";
 export { EcwidSearch } from "./EcwidSearch";
+export { EcwidPrice } from "./EcwidPrice";
+export { EcwidAddToCart } from "./EcwidAddToCart";

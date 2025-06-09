@@ -19,6 +19,7 @@ import {
   readHorizontalAlign
 } from "visual/utils/cssStyle";
 import { defaultValueValue } from "visual/utils/onChange";
+import { ACTIVE } from "visual/utils/stateMode";
 import { styleAlignHorizontal } from "visual/utils/style2";
 import { CSSValue } from "visual/utils/style2/types";
 import { styleColor } from "../style2/styleColor";
@@ -1809,3 +1810,10 @@ export function cssStyleElementEcwidCartSummaryNoteTypography({
     renderContext
   });
 }
+
+export const cssStyleElementEcwidCartRadioBorder = (data: CSSValue): string =>
+  cssStyleBorder({ ...data, prefix: "radio" });
+
+export const cssStyleElementEcwidCartRadioActiveBorder = (
+  data: CSSValue
+): string => cssStyleBorder({ ...data, state: ACTIVE, prefix: "radio" });

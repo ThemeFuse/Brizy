@@ -57,6 +57,16 @@
                   background-color: transparent !important;
                 }
               }
+
+              .ec-cart__cert {
+                height: auto !important;
+              }
+            }
+
+            .form-control.form-control--datepicker {
+              input {
+                border: none !important;
+              }
             }
           }
         }
@@ -304,14 +314,6 @@
           .ec-cart-item__image {
             pointer-events: none !important;
           }
-        }
-      }
-
-      .ec-store.ec-store__confirmation-page {
-        .ec-page-title,
-        .ec-confirmation__steps,
-        .ec-confirmation__continue {
-          display: none !important;
         }
       }
     }

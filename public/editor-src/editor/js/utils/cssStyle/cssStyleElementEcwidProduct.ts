@@ -6,6 +6,7 @@ import {
 import { WithRenderContext } from "visual/providers/RenderProvider";
 import { checkValue } from "visual/utils/checkValue";
 import {
+  FlexHorizontalAligns,
   cssStyleBgColor,
   cssStyleBgColorHex,
   cssStyleBgGradient,
@@ -29,7 +30,8 @@ import {
   cssStyleSpacing,
   cssStyleSpacingWithPadding,
   cssStyleTextAlign,
-  getAllCssStyleTypography
+  getAllCssStyleTypography,
+  readHorizontalAlign
 } from "visual/utils/cssStyle";
 import { defaultValueValue } from "visual/utils/onChange";
 import * as Num from "visual/utils/reader/number";
@@ -618,18 +620,13 @@ export function cssStyleElementEcwidProductCheckboxActiveBoxShadow({
 export function cssStyleElementEcwidProductCheckboxAlign({
   v,
   device,
-  state,
-  getConfig,
-  store
+  state
 }: CSSValue): string {
-  return cssStyleTextAlign({
-    v,
-    device,
-    state,
-    getConfig,
-    store,
-    prefix: "checkbox"
-  });
+  const dvv = (key: string) => defaultValueValue({ v, key, device, state });
+
+  const align = readHorizontalAlign(dvv("checkboxHorizontalAlign"));
+
+  return align ? `justify-content: ${FlexHorizontalAligns[align]}` : "";
 }
 
 export function cssStyleElementEcwidProductCheckboxSpacing({

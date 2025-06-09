@@ -1,4 +1,5 @@
 import { getFlatShortcodes } from "visual/shortcodeComponents/utils";
+import { ECWID_CATEGORY_TYPE, ECWID_PRODUCT_TYPE } from "visual/utils/ecwid";
 import { t } from "visual/utils/i18n";
 import { getThirdPartyShortcodeTitle } from "./utils";
 
@@ -28,16 +29,26 @@ const getTranslationsMap = () => ({
   Carousel: t("Carousel"),
   Row: t("Row"),
   Column: t("Column"),
-  Posts: (v) =>
-    v.type === "posts"
+  Posts: (v) => {
+    const { type, component } = v;
+
+    switch (component) {
+      case ECWID_PRODUCT_TYPE:
+        return t("Products");
+      case ECWID_CATEGORY_TYPE:
+        return t("Categories");
+    }
+
+    return type === "posts"
       ? t("Posts")
-      : v.type === "upsell"
+      : type === "upsell"
         ? t("Upsell")
-        : v.type === "relatedProducts"
+        : type === "relatedProducts"
           ? t("Related Products")
-          : v.type === "categories"
+          : type === "categories"
             ? t("Categories")
-            : t("Products"),
+            : t("Products");
+  },
   Archives: t("Archives"),
   Menu: t("Menu"),
   FacebookButton: t("Facebook Button"),
@@ -104,6 +115,8 @@ const getTranslationsMap = () => ({
   EcwidShoppingBag: t("Shopping Bag"),
   EcwidFavorites: t("Favorites"),
   EcwidSearch: t("Filters"),
+  EcwidPrice: t("Price"),
+  EcwidAddToCart: t("Add To Cart"),
 
   // Shopify
   AddToCart: t("Add To Cart"),

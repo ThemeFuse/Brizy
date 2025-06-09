@@ -32,7 +32,7 @@ export const getItems: GetItems<Value> = ({ v, device, state }) => {
           config: {
             fontFamily: device === "desktop"
           },
-          selector: `${productCardSelector} .grid-product__price-compare`
+          selector: `${productCardSelector} .grid-product__price-compare .grid-product__textblock s`
         }
       ]
     },
@@ -63,7 +63,7 @@ export const getItems: GetItems<Value> = ({ v, device, state }) => {
                   id: "productSalePriceColor",
                   type: "colorPicker",
                   states: [NORMAL, HOVER],
-                  selector: `${productCardSelector} .grid-product__price-compare`
+                  selector: `${productCardSelector} .grid-product__price-compare .grid-product__textblock s`
                 }
               ]
             },
@@ -75,7 +75,7 @@ export const getItems: GetItems<Value> = ({ v, device, state }) => {
                   id: "productSalePriceTextShadow",
                   type: "textShadow",
                   states: [NORMAL, HOVER],
-                  selector: `${productCardSelector} .grid-product__price-compare`
+                  selector: `${productCardSelector} .grid-product__price-compare .grid-product__textblock s`
                 }
               ]
             }

@@ -1,7 +1,7 @@
 import { add as addToCart } from "visual/libs/shopify/AjaxApi/Cart";
 import { ProductHandle } from "visual/libs/shopify/types/Product";
 import { makeAttr } from "visual/utils/i18n/attribute";
-import { getAddToCartData, useSpinner } from "./utils";
+import { getAddToCartData, handleSpinner } from "./utils";
 
 export default function ($node: JQuery): void {
   const node = $node.get(0);
@@ -21,11 +21,19 @@ export default function ($node: JQuery): void {
       }
 
       item.addEventListener("click", async () => {
-        useSpinner({ cartNode: item, loading: true });
+        handleSpinner({
+          cartNode: item,
+          loading: true,
+          className: "brz-shopify-add-to-cart--spinner"
+        });
 
         await addToCart(getAddToCartData({ productId, defaultVarintId }));
 
-        useSpinner({ cartNode: item, loading: false });
+        handleSpinner({
+          cartNode: item,
+          loading: false,
+          className: "brz-shopify-add-to-cart--spinner"
+        });
       });
     });
 }

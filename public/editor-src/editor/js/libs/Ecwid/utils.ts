@@ -88,15 +88,3 @@ export const replaceContentLink = (
     }
   }
 };
-
-export const addListenerToPlaceOrder = () => {
-  const placeOrderButton = document.querySelector(
-    ".ec-cart__step.ec-cart-step.ec-cart-step--payment .ec-cart-step__body .ec-form .ec-form__row--continue"
-  );
-
-  if (placeOrderButton) {
-    placeOrderButton.addEventListener("click", () => {
-      window.location.href = "/thank-you";
-    });
-  }
-};

@@ -12,9 +12,11 @@ import getChart from "./Chart";
 import getColumns from "./Columns";
 import getCountdown2 from "./Countdown2";
 import getCounter from "./Counter";
+import getEcwidAddToCart from "./Ecwid/AddToCart";
 import getCart from "./Ecwid/Cart";
 import getFavorites from "./Ecwid/Favorites";
 import getMyAccount from "./Ecwid/MyAccount";
+import getEcwidPrice from "./Ecwid/Price";
 import getProduct from "./Ecwid/Product";
 import getEcwidSearch from "./Ecwid/Search";
 import getShoppingBag from "./Ecwid/ShoppingBag";
@@ -558,6 +560,7 @@ export function getSampleShortCodes(config: ConfigCommon) {
     ShoppingBag: getShoppingBag(),
     MyAccount: getMyAccount(),
     Favorites: getFavorites(),
+    EcwidAddToCart: getEcwidAddToCart(),
     ShopPosts: getShopPosts(config),
     ShopCategories: getShopCategories(config),
 
@@ -586,6 +589,7 @@ export function getSampleShortCodes(config: ConfigCommon) {
 
     Product: getProduct(),
     EcwidSearch: getEcwidSearch(),
+    EcwidPrice: getEcwidPrice(),
     PostInfo: getPostInfo(),
     PostNavigation: getPostNavigation(),
     Breadcrumbs: getBreadcrumbs(),

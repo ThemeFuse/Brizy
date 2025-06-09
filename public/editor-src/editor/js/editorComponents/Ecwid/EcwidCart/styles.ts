@@ -1,6 +1,7 @@
 import { DynamicStylesProps } from "visual/types";
 import { renderStyles } from "visual/utils/cssStyle";
 import { OutputStyle, Styles } from "visual/utils/cssStyle/types";
+import { radioSelectorFormControl } from "./css/selectors";
 import { Value } from "./types/Value";
 
 export function style(data: DynamicStylesProps<Value>): OutputStyle {
@@ -70,6 +71,14 @@ export function style(data: DynamicStylesProps<Value>): OutputStyle {
     "#ecwid_html #ecwid_body && .ecwid .ecwid-productBrowser .ec-wrapper .ec-store .ec-store__content-wrapper .ec-cart .ec-cart__sidebar .ec-cart__sidebar-inner .ec-page-title .page-title__name.ec-header-h1:hover":
       {
         standart: ["cssStyleElementEcwidCartTitleColor"]
+      },
+    "#ecwid_html #ecwid_body && .ecwid .ecwid-productBrowser.ecwid-productBrowser-OrderConfirmationPage .ec-wrapper .ec-store__confirmation-page .ec-store__content-wrapper .ec-page-title .page-title__name.ec-header-h1:hover":
+      {
+        standart: [
+          "cssStyleElementEcwidCartTitleColor",
+          "cssStyleElementEcwidCartTitleTypography",
+          "cssStyleElementEcwidCartTitleSpacing"
+        ]
       },
     "#ecwid_html #ecwid_body && .ecwid .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .ec-page-title .page-title__name.ec-header-h1":
       {
@@ -447,6 +456,10 @@ export function style(data: DynamicStylesProps<Value>): OutputStyle {
         ]
       },
     "#ecwid_html #ecwid_body && .ecwid .ecwid-productBrowser div .ec-wrapper .ec-store .ec-store__content-wrapper .ec-cart .ec-cart__body .ec-cart__body-inner .ec-cart__steps .ec-cart-step .ec-cart-step__wrap .ec-cart-step__title:hover":
+      {
+        standart: ["cssStyleElementEcwidCartPaymentColor"]
+      },
+    "#ecwid_html #ecwid_body && .ecwid .ecwid-productBrowser div .ec-wrapper .ec-store .ec-store__content-wrapper .ec-cart .ec-cart__body .ec-cart__body-inner .ec-cart__steps .ec-cart-step .ec-cart-step__section .ec-cart-step__subtitle.ec-header-h5:hover":
       {
         standart: ["cssStyleElementEcwidCartPaymentColor"]
       },
@@ -947,6 +960,18 @@ export function style(data: DynamicStylesProps<Value>): OutputStyle {
         interval: [
           "cssStyleHoverTransition",
           "cssStylePropertyHoverTransitionElementEcwid"
+        ]
+      },
+    [`${radioSelectorFormControl} .form-control--radio:hover .form-control__radio-view::after`]:
+      {
+        standart: ["cssStyleElementEcwidCartRadioBorder"]
+      },
+    [`${radioSelectorFormControl} .form-control--radio:hover .form-control__radio:checked ~ .form-control__radio-view::after`]:
+      {
+        standart: [
+          "cssStyleElementEcwidSearchRadioActiveBg",
+          "cssStyleElementEcwidSearchRadioActiveGradient",
+          "cssStyleElementEcwidCartRadioActiveBorder"
         ]
       }
   };
