@@ -53,7 +53,8 @@
       "checkoutPaymentsTypographyFontFamily": "lato",
       "checkoutShippingTypographyFontFamily": "lato",
       "checkoutShippingPriceTypographyFontFamily": "lato",
-      "checkoutInputsTypographyFontFamily": "lato"
+      "checkoutInputsTypographyFontFamily": "lato",
+      "inputsTypographyFontFamily": "lato"
     },
 
     "parentBgColorType": "solid",
@@ -1358,6 +1359,107 @@
     "checkoutInputsTypographyLowercase": false,
 
     "hoverTransition": 50,
-    "hoverTransitionSuffix": ""
+    "hoverTransitionSuffix": "",
+
+    "radioBgColorType": "solid",
+
+    "radioBgColorHex": "#ffffff",
+    "radioBgColorOpacity": 1,
+    "radioBgColorPalette": "color5",
+
+    "radioGradientActivePointer": "startPointer",
+    "radioGradientStartPointer": 0,
+    "radioGradientFinishPointer": 100,
+
+    "radioGradientColorHex": "#009900",
+    "radioGradientColorOpacity": 0.8,
+    "radioGradientColorPalette": "",
+
+    "radioGradientType": "linear",
+    "radioGradientLinearDegree": 90,
+    "radioGradientRadialDegree": 90,
+
+    "radioBorderStyle": "solid",
+    "radioBorderColorHex": "#000000",
+    "radioBorderColorOpacity": 1,
+    "radioBorderColorPalette": "",
+    "radioBorderWidthType": "grouped",
+    "radioBorderWidth": 1,
+    "radioBorderTopWidth": 1,
+    "radioBorderRightWidth": 1,
+    "radioBorderBottomWidth": 1,
+    "radioBorderLeftWidth": 1,
+
+    "inputsBorderRadiusType": "grouped",
+    "inputsBorderRadius": 0,
+    "inputsBorderRadiusSuffix": "px",
+    "inputsBorderTopLeftRadius": 0,
+    "inputsBorderTopRightRadius": 0,
+    "inputsBorderBottomRightRadius": 0,
+    "inputsBorderBottomLeftRadius": 0,
+    "inputsBorderTopLeftRadiusSuffix": 0,
+    "inputsBorderTopRightRadiusSuffix": 0,
+    "inputsBorderBottomRightRadiusSuffix": 0,
+    "inputsBorderBottomLeftRadiusSuffix": 0,
+
+    "inputsColorHex": "#000000",
+    "inputsColorOpacity": 1,
+    "inputsColorPalette": 0,
+
+    "inputsBgColorBgColorType": "solid",
+    "inputsBgColorBgColorHex": "#FFFFFF",
+    "inputsBgColorBgColorOpacity": 1,
+    "inputsBgColorBgColorPalette": "",
+    "inputsBgColorGradientColorHex": "#000000",
+    "inputsBgColorGradientColorOpacity": 1,
+    "inputsBgColorGradientColorPalette": "",
+    "inputsBgColorGradientType": "linear",
+    "inputsBgColorGradientStartPointer": 0,
+    "inputsBgColorGradientFinishPointer": 100,
+    "inputsBgColorGradientActivePointer": "startPointer",
+    "inputsBgColorGradientLinearDegree": 90,
+    "inputsBgColorGradientRadialDegree": 90,
+
+    "inputsTypographyFontStyle": "paragraph",
+    "inputsTypographyFontFamilyType": "google",
+    "inputsTypographyFontSize": 16,
+    "inputsTypographyFontSizeSuffix": "px",
+    "inputsTypographyFontWeight": 400,
+    "inputsTypographyLetterSpacing": 1,
+    "inputsTypographyLineHeight": 1,
+    "inputsTypographyVariableFontWeight": 400,
+    "inputsTypographyFontWidth": 100,
+    "inputsTypographyFontSoftness": 0,
+    "inputsTypographyBold": false,
+    "inputsTypographyItalic": false,
+    "inputsTypographyUnderline": false,
+    "inputsTypographyStrike": false,
+    "inputsTypographyUppercase": false,
+    "inputsTypographyLowercase": false,
+
+    "inputsHeight": 30,
+    "inputsHeightSuffix": "px",
+
+    "inputsBorderStyle": "solid",
+    "inputsBorderColorHex": "#000000",
+    "inputsBorderColorOpacity": 1,
+    "inputsBorderColorPalette": "",
+    "inputsBorderWidthType": "grouped",
+    "inputsBorderWidth": 1,
+    "inputsBorderTopWidth": 1,
+    "inputsBorderRightWidth": 1,
+    "inputsBorderBottomWidth": 1,
+    "inputsBorderLeftWidth": 1,
+
+    "inputsBoxShadow": "",
+
+    "inputsBoxShadowColorHex": "#000000",
+    "inputsBoxShadowColorOpacity": 1,
+    "inputsBoxShadowColorPalette": "",
+
+    "inputsBoxShadowBlur": 0,
+    "inputsBoxShadowSpread": 0,
+    "inputsBoxShadowVertical": 0,
+    "inputsBoxShadowHorizontal": 0
   }
 }

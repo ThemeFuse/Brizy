@@ -1,0 +1,36 @@
+.brz-ecwid-add-to-cart {
+  position: relative;
+  display: flex;
+  align-items: center;
+
+  &--spinner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: inherit;
+    display: flex;
+
+    &-svg {
+      animation-name: spin;
+      animation-duration: 1s;
+      animation-iteration-count: infinite;
+      animation-timing-function: linear;
+    }
+  }
+}
+
+&.brz:not(.brz-ed) {
+  .brz-ecwid-add-to-cart {
+    cursor: pointer;
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

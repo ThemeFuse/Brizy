@@ -3,13 +3,14 @@ import {
   getSpacingFn
 } from "visual/editorComponents/Ecwid/EcwidFavorites/css";
 import type { EcwidToolbarCSSData } from "visual/editorComponents/Ecwid/utils/Value";
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import type { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { getColor } from "visual/utils/color";
 import type { OptionStyle, OptionStyleData } from "visual/utils/cssStyle/types";
 import type { MValue } from "visual/utils/value";
 import {
   dropdownTitleHeadTextSelector,
   dropdownTitleSelector,
+  filtersProductsSelector,
   filtersResultsSelector,
   footerIcon,
   footerIconWrapper,
@@ -18,6 +19,7 @@ import {
   popupInputSelectorMobile,
   productCardSelector,
   rangeSelector,
+  sortBySelectSelector,
   titlePopupFilterItemSelectorMobile,
   titleSelector,
   titleSelectorMobile
@@ -136,6 +138,43 @@ export const skuSpacingCSS: OptionStyle<"slider"> = ({
   value: { value, unit }
 }) => ({
   [`${productCardSelector} .grid-product__sku-inner`]: {
+    "margin-top": `${value}${unit}`
+  }
+});
+
+export const getSpacingCSS =
+  (align: "LEFT" | "RIGHT"): OptionStyle<"slider"> =>
+  ({ value: { value, unit } }) => ({
+    [filtersProductsSelector]:
+      align === "LEFT"
+        ? {
+            "margin-left": `${value}${unit}`,
+            "margin-right": 0
+          }
+        : {
+            "margin-right": `${value}${unit}`,
+            "margin-left": 0
+          }
+  });
+
+export const getSelectBgColorCSS =
+  (config: ConfigCommon): OptionStyle<"colorPicker"> =>
+  ({ value: { palette, hex, opacity } }) => {
+    const color = getColor(palette, hex, opacity, config);
+
+    if (color) {
+      return {
+        [`${sortBySelectSelector} select option`]: {
+          "background-color": color
+        }
+      };
+    }
+  };
+
+export const subtitleSpacingCSS: OptionStyle<"slider"> = ({
+  value: { value, unit }
+}) => ({
+  [`${productCardSelector} .grid-product__subtitle-inner`]: {
     "margin-top": `${value}${unit}`
   }
 });

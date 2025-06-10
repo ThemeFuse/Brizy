@@ -4,7 +4,7 @@ Tags: page builder, website builder, brizy, editor, visual editor, unyson, wysiw
 Requires at least: 4.5
 Tested up to: 6.8.1
 Requires PHP: 7.2.24
-Stable tag: 2.6.21
+Stable tag: 2.6.22
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -132,6 +132,9 @@ Don't worry if you make a mistake or delete something that you shouldn't have. W
 11. **Resize columns by dragging the handle that appears in between**
 
 == Changelog ==
+
+= 2.6.22 - 2025-06-10 =
+* Improved: Enhanced performance for image resizing.
 
 = 2.6.21 - 2025-05-28 =
 * Fixed: Check if the current user can "list_users" on Posts component

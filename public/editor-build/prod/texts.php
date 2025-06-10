@@ -164,6 +164,7 @@ class Brizy_Public_EditorBuild_Prod_Texts {
 			"Add new font variation" => __("Add new font variation", "brizy"),
 			"Add new option" => __("Add new option", "brizy"),
 			"Add new trigger condition" => __("Add new trigger condition", "brizy"),
+			"Add to Cart" => __("Add to Cart", "brizy"),
 			"Add to cart" => __("Add to cart", "brizy"),
 			"Add to cart Input" => __("Add to cart Input", "brizy"),
 			"Add your custom ID without the #pound, example: my-id" => __("Add your custom ID without the #pound, example: my-id", "brizy"),

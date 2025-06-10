@@ -19,7 +19,7 @@ import { MValue, mApply } from "visual/utils/value";
 import { checkValue } from "../checkValue";
 
 type Get = (k: string) => MValue<unknown>;
-type Size = "small" | "medium" | "large" | "custom";
+export type Size = "small" | "medium" | "large" | "custom";
 export const getSize = checkValue<Size>(["small", "medium", "large", "custom"]);
 
 const getIconSizeValue = (
