@@ -178,7 +178,9 @@ export enum ElementTypes {
   GlobalBlock = "GlobalBlock",
   LinkedinFeed = "LinkedinFeed",
   Chart = "Chart",
-  EcwidSearch = "EcwidSearch"
+  EcwidSearch = "EcwidSearch",
+  EcwidPrice = "EcwidPrice",
+  EcwidAddToCart = "EcwidAddToCart"
 }
 
 export const readElementType = checkValue2(ElementTypes);

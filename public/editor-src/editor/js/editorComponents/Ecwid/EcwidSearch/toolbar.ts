@@ -2,6 +2,7 @@ import type { GetItems } from "visual/editorComponents/EditorComponent/types";
 import { getColorToolbar } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
+import { getSpacingCSS } from "./css";
 import {
   containerSelector,
   popupBlockButtonsWrapSelectorMobile,
@@ -13,6 +14,8 @@ import { Value } from "./types";
 
 export const getItems: GetItems<Value> = ({ v, device, state }) => {
   const dvv = (key: string) => defaultValueValue({ v, key, device, state });
+
+  const align = dvv("sidebarAlign");
 
   const parentBgColor = getColorToolbar(
     dvv("parentBgColorPalette"),
@@ -67,11 +70,68 @@ export const getItems: GetItems<Value> = ({ v, device, state }) => {
       ]
     },
     {
+      id: "toolbarSettings",
+      type: "popover",
+      config: {
+        icon: "nc-cog",
+        title: t("Settings")
+      },
+      position: 110,
+      options: [
+        {
+          id: "spacing",
+          label: t("Spacing"),
+          type: "slider",
+          config: {
+            min: 0,
+            max: 100,
+            units: [{ value: "px", title: "px" }]
+          },
+          style: getSpacingCSS(align)
+        },
+        {
+          id: "grid",
+          type: "grid",
+          config: { separator: true },
+          columns: [
+            {
+              id: "col-1",
+              size: 1,
+              options: [
+                {
+                  id: "styles",
+                  type: "sidebarTabsButton",
+                  config: {
+                    tabId: "styles",
+                    text: t("Styling"),
+                    icon: "nc-cog"
+                  }
+                }
+              ]
+            },
+            {
+              id: "col-2",
+              size: 1,
+              options: [
+                {
+                  id: "effects",
+                  type: "sidebarTabsButton",
+                  config: {
+                    tabId: "effects",
+                    text: t("Effects"),
+                    icon: "nc-flash"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
       id: "advancedSettings",
       type: "advancedSettings",
-      devices: "desktop",
-      position: 30,
-      title: t("Settings")
+      disabled: true
     },
     {
       id: "horizontalAlign",

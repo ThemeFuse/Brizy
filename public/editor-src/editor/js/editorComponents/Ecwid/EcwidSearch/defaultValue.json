@@ -21,7 +21,11 @@
       "productSalePriceTypographyFontFamily": "lato",
       "productBadgeTypographyFontFamily": "lato",
       "productSoldOutBadgeTypographyFontFamily": "lato",
-      "noResultsTypographyFontFamily": "lato"
+      "noResultsTypographyFontFamily": "lato",
+      "selectTitleTypographyFontFamily": "lato",
+      "selectTypographyFontFamily": "lato",
+      "subtitleTypographyFontFamily": "lato",
+      "priceLabelTypographyFontFamily": "lato"
     },
 
     "titleTypographyFontStyle": "heading2",
@@ -74,6 +78,40 @@
     "dropdownTitleTypographyStrike": false,
     "dropdownTitleTypographyUppercase": false,
     "dropdownTitleTypographyLowercase": false,
+
+    "selectTitleTypographyFontStyle": "heading6",
+    "selectTitleTypographyFontFamilyType": "google",
+    "selectTitleTypographyFontSize": 15,
+    "selectTitleTypographyFontSizeSuffix": "px",
+    "selectTitleTypographyFontWeight": 400,
+    "selectTitleTypographyLetterSpacing": 1,
+    "selectTitleTypographyLineHeight": 1,
+    "selectTitleTypographyVariableFontWeight": 400,
+    "selectTitleTypographyFontWidth": 100,
+    "selectTitleTypographyFontSoftness": 0,
+    "selectTitleTypographyBold": false,
+    "selectTitleTypographyItalic": false,
+    "selectTitleTypographyUnderline": false,
+    "selectTitleTypographyStrike": false,
+    "selectTitleTypographyUppercase": false,
+    "selectTitleTypographyLowercase": false,
+
+    "selectTypographyFontStyle": "heading6",
+    "selectTypographyFontFamilyType": "google",
+    "selectTypographyFontSize": 15,
+    "selectTypographyFontSizeSuffix": "px",
+    "selectTypographyFontWeight": 400,
+    "selectTypographyLetterSpacing": 1,
+    "selectTypographyLineHeight": 1,
+    "selectTypographyVariableFontWeight": 400,
+    "selectTypographyFontWidth": 100,
+    "selectTypographyFontSoftness": 0,
+    "selectTypographyBold": false,
+    "selectTypographyItalic": false,
+    "selectTypographyUnderline": false,
+    "selectTypographyStrike": false,
+    "selectTypographyUppercase": false,
+    "selectTypographyLowercase": false,
 
     "titleColorHex": "#000000",
     "titleColorOpacity": 1,
@@ -491,6 +529,10 @@
     "productSkuColorOpacity": 1,
     "productSkuColorPalette": "",
 
+    "subtitleColorHex": "#757575",
+    "subtitleColorOpacity": 1,
+    "subtitleColorPalette": "",
+
     "productSkuTypographyFontStyle": "",
     "productSkuTypographyFontFamilyType": "google",
     "productSkuTypographyFontSize": 14,
@@ -515,6 +557,14 @@
     "productSkuTextShadowColorPalette": "",
     "productSkuTextShadowHorizontal": 2,
     "productSkuTextShadowVertical": 2,
+
+    "subtitleTextShadow": "",
+    "subtitleTextShadowBlur": 4,
+    "subtitleTextShadowColorHex": "#000000",
+    "subtitleTextShadowColorOpacity": 0,
+    "subtitleTextShadowColorPalette": "",
+    "subtitleTextShadowHorizontal": 2,
+    "subtitleTextShadowVertical": 2,
 
     "productPriceColorHex": "#333333",
     "productPriceColorOpacity": 1,
@@ -549,6 +599,10 @@
     "productSalePriceColorOpacity": 1,
     "productSalePriceColorPalette": "",
 
+    "priceLabelColorHex": "#757575",
+    "priceLabelColorOpacity": 1,
+    "priceLabelColorPalette": "",
+
     "productSalePriceTypographyFontStyle": "",
     "productSalePriceTypographyFontFamilyType": "google",
     "productSalePriceTypographyFontSize": 16,
@@ -566,6 +620,23 @@
     "productSalePriceTypographyUppercase": false,
     "productSalePriceTypographyLowercase": false,
 
+    "priceLabelTypographyFontStyle": "",
+    "priceLabelTypographyFontFamilyType": "google",
+    "priceLabelTypographyFontSize": 16,
+    "priceLabelTypographyFontSizeSuffix": "px",
+    "priceLabelTypographyFontWeight": 400,
+    "priceLabelTypographyLetterSpacing": 1,
+    "priceLabelTypographyLineHeight": 1,
+    "priceLabelTypographyVariableFontWeight": 400,
+    "priceLabelTypographyFontWidth": 100,
+    "priceLabelTypographyFontSoftness": 0,
+    "priceLabelTypographyBold": false,
+    "priceLabelTypographyItalic": false,
+    "priceLabelTypographyUnderline": false,
+    "priceLabelTypographyStrike": false,
+    "priceLabelTypographyUppercase": false,
+    "priceLabelTypographyLowercase": false,
+
     "productSalePriceTextShadow": "",
     "productSalePriceTextShadowBlur": 4,
     "productSalePriceTextShadowColorHex": "#000000",
@@ -573,6 +644,14 @@
     "productSalePriceTextShadowColorPalette": "",
     "productSalePriceTextShadowHorizontal": 2,
     "productSalePriceTextShadowVertical": 2,
+
+    "priceLabelTextShadow": "",
+    "priceLabelTextShadowBlur": 4,
+    "priceLabelTextShadowColorHex": "#000000",
+    "priceLabelTextShadowColorOpacity": 0,
+    "priceLabelTextShadowColorPalette": "",
+    "priceLabelTextShadowHorizontal": 2,
+    "priceLabelTextShadowVertical": 2,
 
     "productBadgeTypographyFontStyle": "",
     "productBadgeTypographyFontFamilyType": "google",
@@ -590,6 +669,23 @@
     "productBadgeTypographyStrike": false,
     "productBadgeTypographyUppercase": false,
     "productBadgeTypographyLowercase": false,
+
+    "subtitleTypographyFontStyle": "",
+    "subtitleTypographyFontFamilyType": "google",
+    "subtitleTypographyFontSize": 14,
+    "subtitleTypographyFontSizeSuffix": "px",
+    "subtitleTypographyFontWeight": 400,
+    "subtitleTypographyLetterSpacing": 1,
+    "subtitleTypographyLineHeight": 1,
+    "subtitleTypographyVariableFontWeight": 400,
+    "subtitleTypographyFontWidth": 100,
+    "subtitleTypographyFontSoftness": 0,
+    "subtitleTypographyBold": false,
+    "subtitleTypographyItalic": false,
+    "subtitleTypographyUnderline": false,
+    "subtitleTypographyStrike": false,
+    "subtitleTypographyUppercase": false,
+    "subtitleTypographyLowercase": false,
 
     "productBadgeBgColorType": "solid",
 
@@ -637,6 +733,9 @@
 
     "productSkuSpacing": 0,
     "productSkuSpacingSuffix": "px",
+
+    "subtitleSpacing": 0,
+    "subtitleSpacingSuffix": "px",
 
     "inputsBorderRadiusType": "grouped",
     "inputsBorderRadius": 0,
@@ -771,6 +870,23 @@
     "parentPaddingBottomSuffix": "px",
 
     "parentPaddingLeft": 0,
-    "parentPaddingLeftSuffix": "px"
+    "parentPaddingLeftSuffix": "px",
+
+    "spacing": 32,
+    "spacingSuffix": "px",
+
+    "selectTitleColorHex": "#000000",
+    "selectTitleColorOpacity": 1,
+    "selectTitleColorPalette": "color7",
+
+    "selectColorHex": "#000000",
+    "selectColorOpacity": 1,
+    "selectColorPalette": "color7",
+
+    "selectBgColorHex": "#ffffff",
+    "selectBgColorOpacity": 1,
+    "selectBgColorPalette": "",
+
+    "hoverAnimation": "none"
   }
 }

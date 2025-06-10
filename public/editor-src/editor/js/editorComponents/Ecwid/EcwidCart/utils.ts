@@ -14,14 +14,21 @@ export function valueToEciwdConfig(v: Value): EcwidConfig {
   };
 }
 
-export const disableClick = (node: HTMLElement): void => {
-  const pictures = node.querySelectorAll(
-    ".ecwid-productBrowser .ec-cart__products-inner .ec-cart__item .ec-cart-item__picture .ec-cart-item__picture-inner"
+export const addListenerToContinueShopping = (node: HTMLElement) => () => {
+  const button = node.querySelector(
+    ".ec-store.ec-store__confirmation-page .ec-confirmation__continue .form-control.form-control--done"
   );
 
-  pictures.forEach((pic) => {
-    pic.addEventListener("click", (e) => {
-      e.stopPropagation();
-    });
-  });
+  if (button) {
+    button.addEventListener(
+      "click",
+      (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+
+        window.location.href = "/";
+      },
+      true
+    );
+  }
 };

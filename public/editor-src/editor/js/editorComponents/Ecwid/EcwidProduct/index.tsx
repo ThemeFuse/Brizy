@@ -12,14 +12,17 @@ import { Wrapper } from "visual/editorComponents/tools/Wrapper";
 import { isEcwidShop } from "visual/global/Config/types/configs/Base";
 import { Cloud, isCloud } from "visual/global/Config/types/configs/Cloud";
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
-import { getEcwidProductId, isEcwidProductId } from "visual/global/Ecwid";
 import { EcwidProductId } from "visual/global/Ecwid/types";
 import { EcwidService } from "visual/libs/Ecwid";
 import { eq } from "visual/libs/Ecwid/types/EcwidConfig";
 import { pageSelector } from "visual/redux/selectors";
 import { EcwidProductPage } from "visual/types/Page";
 import { makePlaceholder } from "visual/utils/dynamicContent";
-import { getEcwidShopPathPlaceholder } from "visual/utils/ecwid";
+import {
+  getEcwidProductId,
+  getEcwidShopPathPlaceholder,
+  isEcwidProductId
+} from "visual/utils/ecwid";
 import { makeAttr } from "visual/utils/i18n/attribute";
 import { attachRefs } from "visual/utils/react";
 import * as Str from "visual/utils/reader/string";
