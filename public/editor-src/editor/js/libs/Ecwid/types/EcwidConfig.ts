@@ -7,7 +7,8 @@ export type FooterRoutes =
   | `${string}/account`
   | `${string}/account/favorites`
   | `${string}/cart`
-  | `${string}/search`;
+  | `${string}/search`
+  | "/";
 
 export type ContentRoutes =
   | `${string}/cart`

@@ -21,23 +21,12 @@ import { isEditor, isView } from "visual/providers/RenderProvider";
 import { blocksDataSelector } from "visual/redux/selectors";
 import { makePlaceholder } from "visual/utils/dynamicContent";
 import { imagePopulationUrl } from "visual/utils/image";
-import {
-  isGIFExtension,
-  isSVGExtension,
-  isUnsplashImage
-} from "visual/utils/image/utils";
+import { isGIFExtension, isSVGExtension, isUnsplashImage } from "visual/utils/image/utils";
 import { getLinkData } from "visual/utils/models/link";
-import {
-  defaultValueValue,
-  mobileSyncOnChange,
-  tabletSyncOnChange
-} from "visual/utils/onChange";
+import { defaultValueValue, mobileSyncOnChange, tabletSyncOnChange } from "visual/utils/onChange";
 import { fromElementModel } from "visual/utils/options/ImageUpload/converters";
 import { makeOptionValueToAnimation } from "visual/utils/options/utils/makeValueToOptions";
-import {
-  fromLinkElementModel,
-  patchOnDCChange as patchOnLinkDCChange
-} from "visual/utils/patch/Link/";
+import { fromLinkElementModel, patchOnDCChange as patchOnLinkDCChange } from "visual/utils/patch/Link/";
 import { DESKTOP, MOBILE, TABLET } from "visual/utils/responsiveMode";
 import { HOVER } from "visual/utils/stateMode";
 import { SizeType } from "../../global/Config/types/configs/common";
@@ -47,32 +36,14 @@ import { Wrapper } from "../tools/Wrapper";
 import ImageContent from "./Image";
 import ImageWrapper from "./Wrapper";
 import defaultValue from "./defaultValue.json";
-import {
-  elementModelToValue,
-  patchOnDCChange,
-  patchOnHoverImageChange,
-  patchOnImageChange,
-  patchOnSizeTypeChange,
-  pathOnUnitChange
-} from "./imageChange";
+import { elementModelToValue, patchOnDCChange, patchOnHoverImageChange, patchOnImageChange, patchOnSizeTypeChange, pathOnUnitChange } from "./imageChange";
 import { migrations } from "./migrations";
 import * as sidebarConfig from "./sidebar";
 import { style, styleContent, styleHover } from "./styles";
 import toolbarConfigFn from "./toolbar";
 import * as ImagePatch from "./types/ImagePatch";
-import {
-  calcImageSizes,
-  calcWrapperOriginalSizes,
-  calcWrapperPredefinedSizes,
-  calcWrapperSizes,
-  getCustomImageUrl,
-  getImageSize,
-  getSizeType,
-  isOriginalSize,
-  isPredefinedSize,
-  multiplier,
-  showOriginalImage
-} from "./utils";
+import { calcImageSizes, calcWrapperOriginalSizes, calcWrapperPredefinedSizes, calcWrapperSizes, getCustomImageUrl, getImageSize, getSizeType, isOriginalSize, isPredefinedSize, multiplier, showOriginalImage } from "./utils";
+
 
 class Image extends EditorComponent {
   static defaultProps = {
@@ -260,7 +231,11 @@ class Image extends EditorComponent {
   handleResize = () => {
     if (!isStory(this.props.editorMode)) {
       this.updateContainerWidth();
-      this.updateHoverImageHeight();
+
+      const { v } = this.getValue2();
+      if (v.hoverImageSrc) {
+        this.updateHoverImageHeight();
+      }
     }
 
     this.props.onResize();
@@ -920,6 +895,7 @@ class Image extends EditorComponent {
       this.getHoverAnimationData(v);
     const { wrapperAnimationActive } = this.props.meta;
     const isDisabledHover = Bool.read(wrapperAnimationActive);
+
     return (
       <Fragment>
         <Toolbar

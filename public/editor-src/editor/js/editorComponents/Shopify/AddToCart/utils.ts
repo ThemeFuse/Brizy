@@ -33,20 +33,20 @@ export const getAddToCartData = ({
   return formData;
 };
 
-export const useSpinner = ({
+export const handleSpinner = ({
   cartNode,
-  loading
+  loading,
+  className
 }: {
   cartNode: HTMLButtonElement;
   loading: boolean;
+  className: string;
 }): void => {
   if (!cartNode.children.length) return;
 
   const _children = Array.from(cartNode.children);
 
-  const spinner = _children.find((node) =>
-    node.classList.contains("brz-shopify-add-to-cart--spinner")
-  );
+  const spinner = _children.find((node) => node.classList.contains(className));
 
   if (loading) {
     cartNode.classList.add("brz-blocked");

@@ -1,6 +1,11 @@
 import { getColorToolbar } from "visual/utils/color";
 import { OptionStyle } from "visual/utils/cssStyle/types";
-import { checkoutEmailIconSelector } from "./selectors";
+import {
+  cartBodySelector,
+  checkoutEmailIconSelector,
+  inputsSelector,
+  nextTitleSelector
+} from "./selectors";
 
 export const textAlignCSS =
   (selectors: string[]): OptionStyle<"toggle"> =>
@@ -23,3 +28,27 @@ export const checkoutEmailBorderCSS: OptionStyle<"colorPicker"> = ({
     };
   }
 };
+
+export const sidebarSpacingCSS: OptionStyle<"slider"> = ({
+  value: { value, unit }
+}) => ({
+  [cartBodySelector]: {
+    "margin-left": `${value}${unit}`
+  }
+});
+
+export const nextSpacingCSS: OptionStyle<"slider"> = ({
+  value: { value, unit }
+}) => ({
+  [nextTitleSelector]: {
+    "padding-top": `${value}${unit}`
+  }
+});
+
+export const inputsHeightCSS: OptionStyle<"slider"> = ({
+  value: { value, unit }
+}) => ({
+  [inputsSelector]: {
+    height: `${value}${unit}`
+  }
+});

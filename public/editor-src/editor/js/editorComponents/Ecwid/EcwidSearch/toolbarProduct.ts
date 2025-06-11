@@ -17,6 +17,27 @@ export const getItems: GetItems<Value> = ({ v, device, state }) => {
 
   return [
     {
+      id: "toolbarImage",
+      type: "popover",
+      config: {
+        icon: "nc-img",
+        title: t("Image")
+      },
+      position: 80,
+      options: [
+        {
+          id: "hoverAnimation",
+          label: t("Animation"),
+          type: "select",
+          choices: [
+            { title: t("None"), value: "none" },
+            { title: t("Zoom In"), value: "zoomIn" },
+            { title: t("Zoom Out"), value: "zoomOut" }
+          ]
+        }
+      ]
+    },
+    {
       id: "toolbarColor",
       type: "popover",
       config: {

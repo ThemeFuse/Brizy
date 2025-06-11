@@ -283,8 +283,8 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi
      * @internal
      **/
     public function get_project()
-    {
-        try {
+
+        {try {
             $this->verifyNonce(self::nonce);
             $data = Brizy_Editor_Project::get()->createResponse();
             $this->success($data);
@@ -716,11 +716,9 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi
         $this->success($items);
     }
 
-
-
     public function get_menu_list()
-    {
-        $this->success(wp_get_nav_menus(array('hide_empty' => true)), 200);
+
+        {$this->success(wp_get_nav_menus(array('hide_empty' => true)), 200);
     }
 
     /**
@@ -835,7 +833,9 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi
         $this->verifyNonce(self::nonce);
         $args = [];
         $search = $this->param('search');
-        $include = $this->param('include');
+        $include = $this->param('include');if (!user_can(get_current_user_id(), 'list_users')) {
+            $this->success([]);
+        }
         if (!user_can(get_current_user_id(), 'list_users')) {
             $this->success([]);
         }

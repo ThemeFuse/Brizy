@@ -1,6 +1,9 @@
 import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
-import { ECWID_PRODUCT_TYPE } from "visual/utils/ecwid";
+import {
+  ECWID_PRODUCT_TYPE,
+  ECWID_RELATED_PRODUCTS_SLUG
+} from "visual/utils/ecwid";
 import { t } from "visual/utils/i18n";
 
 export default function (config: ConfigCommon) {
@@ -37,7 +40,9 @@ export default function (config: ConfigCommon) {
         source === "manual" ? manualId : undefined,
       collectionFilters: ECWID_PRODUCT_TYPE,
       getIncludeDisabledValue: (source: string) =>
-        contentDefaults?.component === ECWID_PRODUCT_TYPE && manualId === source
+        (contentDefaults?.component === ECWID_PRODUCT_TYPE &&
+          manualId === source) ||
+        source === ECWID_RELATED_PRODUCTS_SLUG
     }
   };
 }
