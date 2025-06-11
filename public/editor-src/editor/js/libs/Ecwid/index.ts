@@ -15,10 +15,10 @@ import {
   EcwidProductId,
   EcwidStoreId
 } from "../../global/Ecwid/types";
+import { Address, AddressData } from "./types/Address";
 import { SearchArgs } from "./types/EcwidWidget";
 import { PageType } from "./types/PageType";
 import {
-  addListenerToPlaceOrder,
   convertEcwidWidget,
   replaceContentLink,
   replaceFooterLink
@@ -157,6 +157,11 @@ declare const Ecwid: {
   Cart: {
     addProduct: (id: Literal) => void;
     clear: VoidFunction;
+    setAddress: (
+      address: Address,
+      successCb?: VoidFunction,
+      errorCb?: VoidFunction
+    ) => void;
   };
   refreshConfig?: VoidFunction;
 };
@@ -183,6 +188,11 @@ const getDefaultConfig = (baseUrl: string): Partial<EcwidConfig> => ({
       {
         route: `${baseUrl}/search`,
         selector: ".footer__link--all-products"
+      },
+      {
+        route: `${baseUrl}/search`,
+        selector:
+          ".ec-cart__body-inner .ec-confirmation .ec-confirmation__body .ec-link"
       }
     ],
     fromContent: [
@@ -272,13 +282,21 @@ export class EcwidService {
   }
 
   prefetchScriptsForCart() {
-    Ecwid.openPage(EcwidCartCheckoutStep.Payment, {});
-    Ecwid.openPage(EcwidCartCheckoutStep.Address, {});
-    Ecwid.openPage(EcwidCartCheckoutStep.Shipping, {});
-    Ecwid.openPage(EcwidCartCheckoutStep.Cart, {});
+    const steps = [
+      EcwidCartCheckoutStep.Payment,
+      EcwidCartCheckoutStep.Address,
+      EcwidCartCheckoutStep.Shipping,
+      EcwidCartCheckoutStep.Cart
+    ];
+
+    steps.forEach((step) => {
+      requestAnimationFrame(() => {
+        Ecwid.openPage(step, {});
+      });
+    });
   }
 
-  private loadScripts(node?: HTMLElement) {
+  public loadScripts(node?: HTMLElement) {
     if (!document.getElementById("ecwid-script")) {
       window.ecwid_script_defer = true;
       window.ecwid_dynamic_widgets = true;
@@ -308,7 +326,6 @@ export class EcwidService {
           }
 
           window.dispatchEvent(new Event("resize"));
-          addListenerToPlaceOrder();
 
           if (Array.isArray(this.config.onPageLoadCallbacks)) {
             this.config.onPageLoadCallbacks.forEach((cb) => {
@@ -464,6 +481,23 @@ export class EcwidService {
 
   public clearCart() {
     Ecwid.Cart.clear();
+  }
+
+  public populateCartAddress(data?: AddressData): void {
+    const { address: _address, successCb, errorCb } = data ?? {};
+
+    const address = _address ?? {
+      name: "John Doe",
+      companyName: "Glass",
+      street: "5th Ave",
+      city: "New York",
+      countryName: "United States",
+      postalCode: "10002",
+      stateOrProvinceCode: "NY",
+      phone: "+1 234 567 89 00"
+    };
+
+    Ecwid.Cart.setAddress(address, successCb, errorCb);
   }
 
   private changeRedirectLinks(node: HTMLElement) {

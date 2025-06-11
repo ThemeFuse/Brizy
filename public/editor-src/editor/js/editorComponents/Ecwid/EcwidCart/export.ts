@@ -5,6 +5,8 @@ import type { EcwidConfig } from "visual/libs/Ecwid/types/EcwidConfig";
 import { ExportFunction } from "visual/types";
 import { getEcwidShopPathFromAttribute } from "visual/utils/ecwid";
 import { parseFromString } from "visual/utils/string";
+import { EcwidCartCheckoutStep } from "./types/Value";
+import { addListenerToContinueShopping } from "./utils";
 
 export const fn: ExportFunction = ($node) => {
   $node.find(".brz-ecwid-cart").each((_, node) => {
@@ -14,7 +16,15 @@ export const fn: ExportFunction = ($node) => {
     const baseUrl = getEcwidShopPathFromAttribute(node) ?? "";
 
     if (storeId) {
-      EcwidService.init(storeId, { ...cfg, baseUrl }).cart(node);
+      const ecwid = EcwidService.init(storeId, {
+        ...cfg,
+        baseUrl,
+        onPageLoaded: addListenerToContinueShopping(node)
+      });
+
+      ecwid.cart(node, EcwidCartCheckoutStep.Cart, {
+        onPageLoad: () => ecwid.populateCartAddress({ address: {} })
+      });
     }
   });
 };

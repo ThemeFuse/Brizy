@@ -1,8 +1,5 @@
-import {
-  getEcwidProductId,
-  isEcwidProductIdWithSlug
-} from "visual/global/Ecwid";
 import { EcwidProductIdWithSlug } from "visual/global/Ecwid/types";
+import { getEcwidProductId, isEcwidProductIdWithSlug } from "../index";
 
 describe("testing isEcwidProductIdWithSlug function which contains regex", () => {
   test.each([

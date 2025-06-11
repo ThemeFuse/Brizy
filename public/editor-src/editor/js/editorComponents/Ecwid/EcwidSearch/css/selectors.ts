@@ -1,5 +1,6 @@
 export const containerSelector =
   "#ecwid_html #ecwid_body &&.brz-ecwid-search-wrapper .ecwid";
+export const filtersProductsSelector = `${containerSelector} .ec-store .grid__filters .ec-filters__products`;
 export const popupSelectorMobile =
   "#ecwid_html #ecwid_body &&.brz-ecwid-search-wrapper .ecwid .ecwid-productBrowser .ec-wrapper .ec-store .ec-filters.ec-filters--popup";
 export const popupBlockWrapSelectorMobile = `${popupSelectorMobile} .ec-filters__body .ec-openable-block__wrap`;
@@ -62,3 +63,5 @@ export const productCardSelector =
   "#ecwid_html #ecwid_body &&.brz-ecwid-search-wrapper .ecwid .ecwid-productBrowser .ec-wrapper .ec-store  .ec-filters__products .grid-product";
 export const noResultsSelector =
   "#ecwid_html #ecwid_body &&.brz-ecwid-search-wrapper .ecwid .ecwid-productBrowser .ec-wrapper .ec-store  .ec-filters__products .ec-search .search__notice";
+export const sortBySelectSelector =
+  "#ecwid_html #ecwid_body &&.brz-ecwid-search-wrapper .ecwid .ecwid-productBrowser .ec-wrapper .ec-store .ec-grid .grid__sort .grid-sort__item--sortby";

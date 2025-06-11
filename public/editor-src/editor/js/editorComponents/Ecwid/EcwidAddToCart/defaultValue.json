@@ -1,0 +1,100 @@
+{
+  "content": {
+    "text": "Add to Cart",
+    "entityId": "auto",
+
+    "iconName": "cart-simple-in",
+    "iconType": "glyph",
+    "iconFilename": ""
+  },
+
+  "families": {
+    "fontFamily": "lato"
+  },
+
+  "style": {
+    "size": "medium",
+    "fillType": "filled",
+
+    "iconPosition": "left",
+
+    "iconCustomSize": 16,
+    "iconCustomSizeSuffix": "px",
+
+    "width": 20,
+    "widthSuffix": "px",
+
+    "height": 10,
+    "heightSuffix": "px",
+
+    "iconSpacing": 10,
+    "iconSpacingSuffix": "px",
+
+    "fontFamilyType": "",
+    "fontStyle": "button",
+    "fontSize": 15,
+    "fontSizeSuffix": "px",
+    "fontWeight": 700,
+    "letterSpacing": 1,
+    "lineHeight": 1.5,
+    "variableFontWeight": 700,
+    "fontWidth": 100,
+    "fontSoftness": 0,
+    "bold": false,
+    "italic": false,
+    "underline": false,
+    "strike": false,
+    "uppercase": false,
+    "lowercase": false,
+
+    "bgColorType": "solid",
+
+    "bgColorHex": "#239ddb",
+    "bgColorOpacity": 1,
+    "bgColorPalette": "color3",
+
+    "gradientColorHex": "#009900",
+    "gradientColorOpacity": 1,
+    "gradientColorPalette": "",
+    "gradientType": "linear",
+    "gradientActivePointer": "startPointer",
+    "gradientStartPointer": 0,
+    "gradientFinishPointer": 100,
+    "gradientLinearDegree": 90,
+    "gradientRadialDegree": 90,
+
+    "borderRadiusType": "square",
+    "borderRadius": 0,
+    "borderRadiusSuffix": "px",
+
+    "colorHex": "#ffffff",
+    "colorOpacity": 1,
+    "colorPalette": "color8",
+
+    "borderStyle": "solid",
+    "borderColorHex": "#239ddb",
+    "borderColorOpacity": 1,
+    "borderColorPalette": "color3",
+
+    "borderWidthType": "grouped",
+
+    "borderWidth": 2,
+    "borderTopWidth": 2,
+    "borderRightWidth": 2,
+    "borderBottomWidth": 2,
+    "borderLeftWidth": 2,
+
+    "boxShadow": "none",
+
+    "boxShadowColorHex": "#000000",
+    "boxShadowColorOpacity": 1,
+    "boxShadowColorPalette": "",
+    "boxShadowBlur": 0,
+    "boxShadowSpread": 0,
+    "boxShadowVertical": 0,
+    "boxShadowHorizontal": 0,
+
+    "hoverTransition": 50,
+    "hoverTransitionSuffix": ""
+  }
+}

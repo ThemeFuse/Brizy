@@ -1,3 +1,5 @@
+export const cartBodySelector =
+  "#ecwid_html #ecwid_body && .ecwid .ecwid-productBrowser .ec-wrapper .ec-store .ec-store__content-wrapper .ec-cart .ec-cart__body";
 export const checkboxLinkSelector =
   "#ecwid_html #ecwid_body && .ecwid .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .ec-cart .ec-cart__body .ec-cart__body-inner .ec-cart__checkout .ec-cart__agreement .form-control--checkbox .form-control__inline-label .ec-link";
 export const checkoutEmailIconSelector =
@@ -24,3 +26,9 @@ export const checkoutShippingSelector =
   "#ecwid_html #ecwid_body && .ecwid .ecwid-productBrowser .ec-cart__sidebar .ec-cart__sidebar-inner .ec-cart__summary .ec-cart-summary__row.ec-cart-summary__row--shipping .ec-cart-summary__cell.ec-cart-summary__title";
 export const checkoutShippingPriceSelector =
   "#ecwid_html #ecwid_body && .ecwid .ecwid-productBrowser .ec-cart__sidebar .ec-cart__sidebar-inner .ec-cart__summary .ec-cart-summary__row.ec-cart-summary__row--shipping .ec-cart-summary__price";
+export const nextTitleSelector =
+  "#ecwid_html #ecwid_body && .ecwid .ecwid-productBrowser .ec-wrapper .ec-store .ec-store__content-wrapper .ec-cart .ec-cart__body .ec-cart__body-inner .ec-cart__next.ec-cart-next .ec-cart-next__header";
+export const radioSelectorFormControl =
+  "#ecwid_html #ecwid_body && .ecwid .ecwid-productBrowser .ec-wrapper .ec-store .ec-store__content-wrapper .ec-cart .ec-cart__body-inner .ec-cart-step__wrap .ec-cart-step__section .ec-radiogroup .ec-radiogroup__item";
+export const inputsSelector =
+  "#ecwid_html #ecwid_body && .ecwid .ecwid-productBrowser .ec-wrapper .ec-store .ec-store__content-wrapper .ec-cart .ec-cart__body-inner .ec-cart-step__section .ec-form .form-control.form-control--datepicker";

@@ -1,0 +1,34 @@
+.brz-ecwid-price {
+  &-container {
+    display: flex;
+    justify-content: inherit;
+    flex: 1;
+  }
+
+  &-style1 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: fit-content;
+
+    .brz-shortcode__placeholder:nth-child(2) {
+      display: none;
+    }
+  }
+
+  &-style2 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: line-through;
+    height: fit-content;
+
+    &:empty {
+      display: none;
+    }
+  }
+
+  .brz-shortcode__placeholder.placeholder-is-empty {
+    flex: 1;
+  }
+}
