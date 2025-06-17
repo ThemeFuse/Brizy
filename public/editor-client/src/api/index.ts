@@ -753,7 +753,7 @@ export const getCollections: GetCollections = async (
   }
 };
 
-export const getCollectionSourceItems = async (id: string) => {
+export const getCollectionSourceItems = async (id: string, search: string) => {
   const config = getConfig();
 
   if (!config) {
@@ -768,7 +768,8 @@ export const getCollectionSourceItems = async (id: string) => {
       hash,
       version: editorVersion,
       postType: id,
-      action: actions.getPostObjects
+      action: actions.getPostObjects,
+      filterTerm: search
     })
   })
     .then((r) => r.json())
