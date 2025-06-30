@@ -155,8 +155,8 @@ class Brizy_Public_AssetEnqueueManager
             }
             $styles = array_merge($styles, $postGroups['freeStyles']);
 
-            if (isset($postGroups['prosStyles'])) {
-                foreach ($postGroups['prosStyles'] as $i => &$aGroup) {
+            if (isset($postGroups['proStyles'])) {
+                foreach ($postGroups['proStyles'] as $i => &$aGroup) {
                     $this->replacePlaceholders($aGroup, $editorPost->getWpPost(), 'head');
                 }
                 $styles = array_merge($styles, $postGroups['proStyles']);
