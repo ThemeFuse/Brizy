@@ -229,12 +229,12 @@ class Brizy_Admin_Blocks_Main
             }
         }
 
-        return array_reduce( array_merge($matching_blocks, $this->findReferencedInGlobalBlocks($matching_blocks), $referenced), function ( $result, $object ) {
-			if($object) {
-				$result[ $object->getUid() ] = $object;
-			}
-			return $result;
-		}, [] );
+        return array_reduce(array_merge($matching_blocks, $this->findReferencedInGlobalBlocks($matching_blocks), $referenced), function ($result, $object) {
+            if ($object) {
+                $result[$object->getUid()] = $object;
+            }
+            return $result;
+        }, []);
     }
 
     private function getTemplateRuleMatches(WP_Post $template)
@@ -379,7 +379,9 @@ class Brizy_Admin_Blocks_Main
 
             return $blocks;
         }
-        $html = $wpPost->getCompiledSectionManager()->buildHtml();if (!empty($html)) {
+
+        $html = $wpPost->getCompiledSectionManager()->buildHtml();
+        if (!empty($html)) {
             $context = Brizy_Content_ContextFactory::createContext(Brizy_Editor_Project::get(), $wpPost);
             $placeholderProvider = new Brizy_Content_Providers_GlobalBlockProvider($context);
             $extractor = new \BrizyPlaceholders\Extractor($placeholderProvider);
@@ -399,15 +401,9 @@ class Brizy_Admin_Blocks_Main
 
             return $blocks;
         }
-        // return all blocks
-        $blockManager = new Brizy_Admin_Blocks_Manager(Brizy_Admin_Blocks_Main::CP_GLOBAL);
-        $blocks = $blockManager->getEntities(['post_status' => 'any']);
+
         // include all blocks
         $resultBlocks = [];
-        foreach ($blocks as $block) {
-            $resultBlocks[] = Brizy_Editor_Block::get($block->getWpPostId());
-        }
-
         return $resultBlocks;
     }
 }
