@@ -813,10 +813,11 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi
     {$this->verifyNonce( self::nonce );
 		$args           = [];
 		$search         = $this->param( 'search' );
+		$page         = $this->param( 'search' )?:1;
 		$include        = $this->param( 'include' );if (!user_can(get_current_user_id(), 'list_users')) {
             $this->success([]);
         }
-		$args['fields'] = [ 'ID', 'display_name' ];
+		$args['fields'] = [ 'ID', 'display_name','paged'=>true, 'number'=>30 ];
 		if ( $this->param( 'roles' ) && is_array( $this->param( 'roles' ) ) ) {
 			$args['role__in'] = $this->param( 'roles' );
 		}
@@ -829,8 +830,6 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi
 		}
 
 		$users = array_map( function ( $user ) {
-
-
 			return [
 				'ID'              => $user->ID,
 				'display_name'    => $user->display_name,
