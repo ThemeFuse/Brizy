@@ -162,10 +162,10 @@ export function cssStyleElementImageMarginLeft({ v, device, props = {} }) {
   const sizeType = getSizeType(v, device);
 
   if (sizeType === "custom" || isSvgOrGif(v, device)) {
-    return `margin-left: ${marginLeft}px;`;
+    return `margin-inline-start: ${marginLeft}px;`;
   }
 
-  return "margin-left: auto;";
+  return "margin-inline-start: auto;";
 }
 
 export function cssStyleElementImageHoverMarginLeft({ v, props = {} }) {
@@ -178,10 +178,10 @@ export function cssStyleElementImageHoverMarginLeft({ v, props = {} }) {
   const sizeType = getSizeType(v, "desktop");
 
   if (sizeType === "custom" || isSvgOrGif(v, "desktop")) {
-    return `margin-left: ${marginLeft}px;`;
+    return `margin-inline-start: ${marginLeft}px;`;
   }
 
-  return "margin-left: auto;";
+  return "margin-inline-start: auto;";
 }
 
 export function cssStyleElementImageMarginTop({ v, device, props = {} }) {

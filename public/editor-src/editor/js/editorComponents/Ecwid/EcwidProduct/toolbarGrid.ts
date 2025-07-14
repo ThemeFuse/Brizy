@@ -72,6 +72,16 @@ export const getItems: GetItems<Value> = ({ v, device, state }) => {
       ]
     },
     {
+      id: "relatedProductsImagesHorizontalAlign",
+      type: "toggle",
+      position: 40,
+      choices: [
+        { icon: "nc-text-align-left", title: t("Align"), value: "left" },
+        { icon: "nc-text-align-center", title: t("Align"), value: "center" },
+        { icon: "nc-text-align-right", title: t("Align"), value: "right" }
+      ]
+    },
+    {
       id: "toolbarSettings",
       type: "popover",
       config: { icon: "nc-cog", title: t("Settings") },

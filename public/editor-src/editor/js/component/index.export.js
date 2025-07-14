@@ -1,5 +1,6 @@
 export { default as Animation } from "./Animation/export.js";
 export { default as HoverAnimation } from "./HoverAnimation/export";
+export { default as AnimatedHeadline } from "./AnimatedHeadline/export.ts";
 export { default as Background } from "./Background/export.ts";
 export { default as Comments } from "./Comments/export.js";
 // Controls

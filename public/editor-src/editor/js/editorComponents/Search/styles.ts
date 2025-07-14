@@ -14,10 +14,6 @@ export function styles(data: DynamicStylesProps<ElementModel>): OutputStyle {
         "cssStyleBgGradient",
         "cssStyleBorder",
         "cssStyleBoxShadow"
-      ],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
       ]
     },
     ".brz &&.brz-search-container--minimal .brz-search-form": {
@@ -44,29 +40,24 @@ export function styles(data: DynamicStylesProps<ElementModel>): OutputStyle {
       ]
     },
     ".brz &&:hover .brz-search, &&:hover .brz-search::placeholder": {
-      standart: ["cssStyleColor"],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
-      ]
+      standart: ["cssStyleColor"]
     },
     ".brz && .brz-search-form .brz-search-icon__style1": {
       standart: ["cssStyleTypography3FontSize"]
     },
     ".brz &&:hover .brz-search-form .brz-search-icon__style1": {
-      standart: ["cssStyleColor"],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
-      ]
+      standart: ["cssStyleColor"]
     },
     ".brz &&:hover .brz-search:-webkit-autofill": {
-      standart: ["cssStyleElementSearchAutocompleteColor"],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
-      ]
-    }
+      standart: ["cssStyleElementSearchAutocompleteColor"]
+    },
+    ".brz &&, .brz && .brz-search, && .brz-search::placeholder, .brz && .brz-search-form .brz-search-icon__style1, .brz && .brz-search:-webkit-autofill":
+      {
+        standart: [
+          "cssStyleHoverTransition",
+          "cssStylePropertyHoverTransitionColor"
+        ]
+      }
   };
   return renderStyles({ ...data, styles });
 }

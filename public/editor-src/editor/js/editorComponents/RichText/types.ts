@@ -101,3 +101,8 @@ export interface QuillFormat {
   header?: unknown;
   pre?: unknown;
 }
+
+export interface PrepopulationData {
+  show: boolean;
+  index: number | null;
+}

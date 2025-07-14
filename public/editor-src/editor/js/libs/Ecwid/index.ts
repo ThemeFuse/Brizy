@@ -15,7 +15,7 @@ import {
   EcwidProductId,
   EcwidStoreId
 } from "../../global/Ecwid/types";
-import { Address, AddressData } from "./types/Address";
+import { Address, AddressData, EmailData } from "./types/Customer";
 import { SearchArgs } from "./types/EcwidWidget";
 import { PageType } from "./types/PageType";
 import {
@@ -162,6 +162,11 @@ declare const Ecwid: {
       successCb?: VoidFunction,
       errorCb?: VoidFunction
     ) => void;
+    setCustomerEmail: (
+      email: string,
+      successCb?: VoidFunction,
+      errorCb?: VoidFunction
+    ) => void;
   };
   refreshConfig?: VoidFunction;
 };
@@ -296,7 +301,9 @@ export class EcwidService {
     });
   }
 
-  public loadScripts(node?: HTMLElement) {
+  public loadScripts(config?: { node?: HTMLElement; callback?: VoidFunction }) {
+    const { node, callback } = config ?? {};
+
     if (!document.getElementById("ecwid-script")) {
       window.ecwid_script_defer = true;
       window.ecwid_dynamic_widgets = true;
@@ -314,6 +321,8 @@ export class EcwidService {
             this.prefetchScriptsForCart();
             this.wasPrefetched = true;
           }
+
+          callback?.();
         });
 
         Ecwid.OnPageLoaded.add(() => {
@@ -346,6 +355,7 @@ export class EcwidService {
     } else {
       if (typeof Ecwid !== "undefined" && typeof Ecwid.init === "function") {
         Ecwid.init();
+        callback?.();
       }
     }
   }
@@ -366,7 +376,7 @@ export class EcwidService {
 
   private openPage(widget: EcwidWidget.EcwidWidget, node: HTMLElement) {
     this.addWidget(widget);
-    this.loadScripts(node);
+    this.loadScripts({ node });
     this.$widgets.next(widget);
   }
 
@@ -442,7 +452,7 @@ export class EcwidService {
   }
 
   public shoppingCart(node?: HTMLElement) {
-    this.loadScripts(node);
+    this.loadScripts({ node });
     this.$load.subscribe(() => {
       Ecwid.init();
 
@@ -475,7 +485,7 @@ export class EcwidService {
     Ecwid.refreshConfig?.();
   }
 
-  public populateCart(id: Literal) {
+  public addToCart(id: Literal) {
     Ecwid.Cart.addProduct(id);
   }
 
@@ -483,7 +493,13 @@ export class EcwidService {
     Ecwid.Cart.clear();
   }
 
-  public populateCartAddress(data?: AddressData): void {
+  public setEmail(data: EmailData): void {
+    const { email, successCb, errorCb } = data ?? {};
+
+    Ecwid.Cart.setCustomerEmail(email, successCb, errorCb);
+  }
+
+  public setAddress(data?: AddressData): void {
     const { address: _address, successCb, errorCb } = data ?? {};
 
     const address = _address ?? {

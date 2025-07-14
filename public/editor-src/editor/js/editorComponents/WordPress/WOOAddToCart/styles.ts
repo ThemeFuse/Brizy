@@ -36,18 +36,10 @@ export function style(data: DynamicStylesProps<ElementModel>) {
         "cssStyleElementWOOAddToCartInputBg",
         "cssStyleElementWOOAddToCartInputBorder",
         "cssStyleElementWOOAddToCartInputBoxShadow"
-      ],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
       ]
     },
     ".brz &&:hover input[type=number].input-text::placeholder": {
-      standart: ["cssStyleElementWOOAddToCartInputColor"],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
-      ]
+      standart: ["cssStyleElementWOOAddToCartInputColor"]
     },
     ".brz && .single_variation": {
       standart: [
@@ -61,11 +53,7 @@ export function style(data: DynamicStylesProps<ElementModel>) {
       ]
     },
     ".brz &&:hover .single_variation": {
-      standart: ["cssStyleElementWOOAddToCartValueColor"],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
-      ]
+      standart: ["cssStyleElementWOOAddToCartValueColor"]
     },
     ".brz && button[type=submit].single_add_to_cart_button.single_add_to_cart_button":
       {
@@ -89,10 +77,6 @@ export function style(data: DynamicStylesProps<ElementModel>) {
           "cssStyleBgGradient",
           "cssStyleElementWOOAddToCartBorder",
           "cssStyleBoxShadow"
-        ],
-        interval: [
-          "cssStyleHoverTransition",
-          "cssStylePropertyHoverTransitionColor"
         ]
       },
     ".brz && td label": {
@@ -107,11 +91,7 @@ export function style(data: DynamicStylesProps<ElementModel>) {
       ]
     },
     ".brz &&:hover td label": {
-      standart: ["cssStyleElementWOOAddToCartLabelColor"],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
-      ]
+      standart: ["cssStyleElementWOOAddToCartLabelColor"]
     },
     ".brz && th label": {
       standart: [
@@ -125,11 +105,7 @@ export function style(data: DynamicStylesProps<ElementModel>) {
       ]
     },
     ".brz &&:hover th label": {
-      standart: ["cssStyleElementWOOAddToCartLabelColor"],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
-      ]
+      standart: ["cssStyleElementWOOAddToCartLabelColor"]
     },
     ".brz && td.value .reset_variations": {
       standart: [
@@ -143,31 +119,19 @@ export function style(data: DynamicStylesProps<ElementModel>) {
       ]
     },
     ".brz &&:hover td.value .reset_variations": {
-      standart: ["cssStyleElementWOOAddToCartClearColor"],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
-      ]
+      standart: ["cssStyleElementWOOAddToCartClearColor"]
     },
     ".brz &&:hover table": {
       standart: [
         "cssStyleElementWOOAddToCartTableMargin",
         "cssStyleElementWOOAddToCartTableBoxShadow"
-      ],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
       ]
     },
     ".brz &&:hover .label, .woocommerce-grouped-product-list-item": {
       standart: ["cssStyleElementWOOAddToCartLabelBg"]
     },
     ".brz &&:hover table td": {
-      standart: ["cssStyleElementWOOAddToCartTableBorder"],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
-      ]
+      standart: ["cssStyleElementWOOAddToCartTableBorder"]
     },
     ".brz && td.value select": {
       standart: [
@@ -184,10 +148,6 @@ export function style(data: DynamicStylesProps<ElementModel>) {
       standart: [
         "cssStyleElementWOOAddToCartTableBorder",
         "cssStyleElementWOOAddToCartValueColor"
-      ],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
       ]
     },
     ".brz &&:hover .value": {
@@ -205,12 +165,15 @@ export function style(data: DynamicStylesProps<ElementModel>) {
       ]
     },
     ".brz &&:hover td.woocommerce-grouped-product-list-item__price": {
-      standart: ["cssStyleElementWOOAddToCartValueColor"],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
-      ]
-    }
+      standart: ["cssStyleElementWOOAddToCartValueColor"]
+    },
+    ".brz && td.woocommerce-grouped-product-list-item__price, .brz && td.value select, .brz && table td, .brz && table, .brz && td.value .reset_variations, .brz && th label, .brz && td label, .brz && input[type=number].input-text, .brz && input[type=number].input-text::placeholder, .brz && .single_variation, .brz && button[type=submit].single_add_to_cart_button.single_add_to_cart_button":
+      {
+        standart: [
+          "cssStyleHoverTransition",
+          "cssStylePropertyHoverTransitionColor"
+        ]
+      }
   };
 
   return renderStyles({ ...data, styles });

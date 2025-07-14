@@ -111,9 +111,8 @@ class Global<T extends BlockMetaType> extends Component<_Props<T>> {
   };
 
   handleUpdate = (thumbnailData: Thumbnail): void => {
-    const { config, getGlobalBlocksInPage } = this.props;
+    const { config, globalBlocks } = this.props;
 
-    const globalBlocks = getGlobalBlocksInPage(config);
     const globalBlock = globalBlocks[thumbnailData.uid];
 
     if (globalBlock) {

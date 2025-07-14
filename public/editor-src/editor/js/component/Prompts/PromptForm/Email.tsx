@@ -7,8 +7,9 @@ import { Switch } from "visual/component/Controls/Switch";
 import Tooltip from "visual/component/Controls/Tooltip";
 import EditorIcon from "visual/component/EditorIcon";
 import { EmailDisconnect } from "visual/component/Prompts/PromptForm/Step";
-import { IntegrationType } from "visual/component/Prompts/PromptForm/api/types";
 import { isWp } from "visual/global/Config";
+import { IntegrationType } from "visual/global/Config/types/Form";
+import { getForm, getSmtpIntegration, updateForm } from "visual/utils/api";
 import { isPro } from "visual/utils/env";
 import { t } from "visual/utils/i18n";
 import BaseIntegration from "../common/GlobalApps/BaseIntegration";
@@ -22,13 +23,6 @@ import {
 } from "../common/GlobalApps/type";
 import * as AppsComponent from "./Apps";
 import { HelperCopy } from "./Step/common/HelperToolip";
-import {
-  createForm,
-  createSmtpIntegration,
-  getForm,
-  getSmtpIntegration,
-  updateForm
-} from "./api";
 
 type Props = BaseIntegrationProps & {
   formId: string;
@@ -94,34 +88,19 @@ class Email extends BaseIntegration<Props, State, Context> {
 
   async getData(): Promise<void> {
     const { formId, config, onLoading } = this.props;
-    const { status, data } = await getForm({ formId }, config);
+    const data = await getForm({ formId }, config);
 
-    if (status !== 200) {
-      if (status === 404) {
-        const { status, data } = await createForm({ formId }, config);
-
-        if (status >= 400 || !data) {
-          this.setState({
-            error: t("Something went wrong")
-          });
-        } else {
-          this.setState({
-            connectedApps: this.getConnectedApps(data.integrations),
-            loading: false
-          });
-        }
-      } else {
-        this.setState({
-          error: t("Something went wrong")
-        });
-      }
-    } else if (data) {
+    if (data) {
       this.setState({
         connectedApps: this.getConnectedApps(data.integrations),
         emailTemplate: data.emailTemplate || "",
         hasEmailTemplate: data.hasEmailTemplate,
         notifications: data.notifications || [],
         loading: false
+      });
+    } else {
+      this.setState({
+        error: t("Something went wrong")
       });
     }
 
@@ -147,8 +126,7 @@ class Email extends BaseIntegration<Props, State, Context> {
     const { stages = [] } =
       this.appsData.find((app) => app.id === connectedApp) || {};
 
-    // eslint-disable-next-line prefer-const
-    let { status, data: integrationData } = await getSmtpIntegration(
+    const data = await getSmtpIntegration(
       {
         formId,
         id: connectedApp
@@ -156,32 +134,10 @@ class Email extends BaseIntegration<Props, State, Context> {
       config
     );
 
-    if (status !== 200) {
-      if (status === 404) {
-        const { status, data } = await createSmtpIntegration(
-          {
-            formId,
-            id: connectedApp
-          },
-          config
-        );
-
-        if (status !== 200) {
-          this.setState({
-            error: t("Something went wrong")
-          });
-
-          return;
-        } else {
-          integrationData = data;
-        }
-      } else {
-        this.setState({
-          error: t("Something went wrong")
-        });
-
-        return;
-      }
+    if (!data) {
+      return this.setState({
+        error: t("Something went wrong")
+      });
     }
 
     this.setState(
@@ -189,7 +145,7 @@ class Email extends BaseIntegration<Props, State, Context> {
         draft.stages = stages;
         draft.connectedApp = connectedApp;
         draft.data[connectedApp] = Object.assign(appData, {
-          data: integrationData
+          data
         });
       }),
       () => {

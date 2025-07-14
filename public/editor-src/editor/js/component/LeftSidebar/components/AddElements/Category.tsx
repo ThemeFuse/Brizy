@@ -3,6 +3,7 @@ import { noop } from "es-toolkit";
 import React, { ReactElement, ReactNode } from "react";
 import Sortable from "visual/component/Sortable";
 import { Shortcode } from "visual/types";
+import { makeBzelmAttr } from "visual/utils/i18n/attribute";
 import { SortData } from "./types";
 
 const sortableBlindZone = {
@@ -52,7 +53,9 @@ export class Category extends React.Component<Props> {
         dragOffset={sortableDragOffset}
         onSort={this.handleChange}
       >
-        <div className={className}>{children}</div>
+        <div className={className} {...makeBzelmAttr(category)}>
+          {children}
+        </div>
       </Sortable>
     );
   }

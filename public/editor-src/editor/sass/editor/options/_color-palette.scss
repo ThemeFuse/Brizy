@@ -13,14 +13,14 @@
     border-radius: 2px;
     margin-left: 2px;
     cursor: pointer;
-    border: 1px solid #3a3d43;
+    border: 1px solid $color_palette-border;
 
     &:first-child {
       margin-left: 0;
     }
 
     &.active {
-      border: 2px solid #fff;
+      border: 2px solid $color_palette-border--active;
     }
   }
 

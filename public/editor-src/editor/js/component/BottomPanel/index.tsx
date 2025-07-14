@@ -1,5 +1,6 @@
 import React, { ComponentType, ReactElement } from "react";
 import { useConfig } from "visual/providers/ConfigProvider";
+import { makeBzelmAttr } from "visual/utils/i18n/attribute";
 import { getComponents } from "./items";
 
 const objectIsReactClassObject = (o: unknown): o is { displayName: string } => {
@@ -22,7 +23,9 @@ export default function BottomPanel(): JSX.Element {
 
   return (
     <div className="brz-ed-fixed-bottom-panel">
-      <ul className="brz-ul">{panelItems}</ul>
+      <ul className="brz-ul" {...makeBzelmAttr("publish-options")}>
+        {panelItems}
+      </ul>
     </div>
   );
 }

@@ -16,8 +16,7 @@ export function style(data: Data): OutputStyle {
       standart: ["cssStyleBorderRadius", "cssStyleBlendMode"]
     },
     ".brz &&:hover > .brz-bg": {
-      standart: ["cssStyleBorder", "cssStyleMaskDropShadow"],
-      interval: ["cssStyleHoverTransition", "cssStylePropertyHoverTransition"]
+      standart: ["cssStyleBorder", "cssStyleMaskDropShadow"]
     },
     ".brz && > .brz-bg > .brz-bg-image": {
       standart: [
@@ -37,11 +36,7 @@ export function style(data: Data): OutputStyle {
         "cssStyleBgImagePosition",
         "cssStyleBgMediaImage"
       ],
-      interval: [
-        "cssStyleBgImageAttachment",
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransition"
-      ]
+      interval: ["cssStyleBgImageAttachment"]
     },
     ".brz &&:hover > .brz-bg > .brz-bg-image:after": {
       standart: ["cssStyleBgImageHover"]
@@ -56,25 +51,19 @@ export function style(data: Data): OutputStyle {
       ]
     },
     ".brz &&:hover > .brz-bg > .brz-bg-color": {
-      standart: ["cssStyleBgColor", "cssStyleBgGradient"],
-      interval: [
-        "cssStyleHoverTransitionFlash",
-        "cssStylePropertyHoverTransition"
-      ]
+      standart: ["cssStyleBgColor", "cssStyleBgGradient"]
     },
     ".brz && > .brz-bg > .brz-bg-map": {
       standart: ["cssStyleBgMediaMap"]
     },
     ".brz &&:hover > .brz-bg > .brz-bg-map": {
-      standart: ["cssStyleFilter"],
-      interval: ["cssStyleHoverTransition", "cssStylePropertyHoverTransition"]
+      standart: ["cssStyleFilter"]
     },
     ".brz && > .brz-bg > .brz-bg-video": {
       standart: ["cssStyleBgMediaVideo"]
     },
     ".brz &&:hover > .brz-bg > .brz-bg-video": {
-      standart: ["cssStyleFilter"],
-      interval: ["cssStyleHoverTransition", "cssStylePropertyHoverTransition"]
+      standart: ["cssStyleFilter"]
     },
     ".brz && > .brz-bg > .brz-bg-shape__top": {
       standart: [
@@ -121,6 +110,10 @@ export function style(data: Data): OutputStyle {
     ".brz && > .brz-bg > .brz-bg-slideshow .swiper-slide.swiper-slide-active .brz-bg-slideshow-item, .brz && > .brz-bg > .brz-bg-slideshow .swiper-slide-duplicate-active .brz-bg-slideshow-item":
       {
         standart: ["cssStyleBgSlideshowKenBurnsEffectEnd"]
+      },
+    ".brz && > .brz-bg, .brz && > .brz-bg > .brz-bg-image, .brz && > .brz-bg > .brz-bg-map, .brz && > .brz-bg > .brz-bg-color, .brz && > .brz-bg > .brz-bg-video":
+      {
+        standart: ["cssStyleHoverTransition", "cssStylePropertyHoverTransition"]
       }
   };
 

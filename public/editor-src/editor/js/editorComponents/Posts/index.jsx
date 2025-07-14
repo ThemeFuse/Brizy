@@ -15,11 +15,10 @@ import Placeholder from "visual/component/Placeholder";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { DCApiProxyInstance } from "visual/editorComponents/EditorComponent/DynamicContent/DCApiProxyInstance";
 import { withMigrations } from "visual/editorComponents/tools/withMigrations";
-import { isCloud } from "visual/global/Config/types/configs/Cloud";
 import { isWp } from "visual/global/Config/types/configs/WP";
-import { isEditor } from "visual/providers/RenderProvider";
+import { isEditor, isView } from "visual/providers/RenderProvider";
 import { pageSelector } from "visual/redux/selectors";
-import { defaultPostsSources } from "visual/utils/api";
+import { defaultPostsSources, getCollectionTypesInfo } from "visual/utils/api";
 import { makePlaceholder } from "visual/utils/dynamicContent";
 import { getCurrentPageId } from "visual/utils/env";
 import { tabletSyncOnChange } from "visual/utils/onChange";
@@ -28,7 +27,7 @@ import * as json from "visual/utils/reader/json";
 import Items from "./Items";
 import contextMenuConfig from "./contextMenu";
 import defaultValue from "./defaultValue.json";
-import { getCollectionTypesInfo, migrations } from "./migrations";
+import { migrations } from "./migrations";
 import * as sidebarExtendFilter from "./sidebarExtendFilter";
 import * as sidebarExtendPagination from "./sidebarExtendPagination";
 import * as sidebarExtendParent from "./sidebarExtendParent";
@@ -146,6 +145,10 @@ export class Posts extends EditorComponent {
   };
 
   async componentDidMount() {
+    if (isView(this.props.renderContext)) {
+      return;
+    }
+
     this.reloadData();
 
     const config = this.getGlobalConfig();
@@ -389,14 +392,8 @@ export class Posts extends EditorComponent {
 }
 
 export default withMigrations(Posts, migrations, {
-  getValue: async (renderContext, config) => {
-    return isEditor(renderContext) && isCloud(config)
-      ? await getCollectionTypesInfo({
-          uri: config?.api?.brizyApiUrl,
-          authorization: config.tokenV2
-            ? `${config.tokenV2.token_type} ${config.tokenV2.access_token}`
-            : undefined
-        })
-      : Promise.resolve(undefined);
-  }
+  getValue: async (renderContext, config) =>
+    isEditor(renderContext)
+      ? await getCollectionTypesInfo(config)
+      : Promise.resolve(undefined)
 });

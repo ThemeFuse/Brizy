@@ -34,8 +34,7 @@ import {
 import { ReduxState } from "visual/redux/types";
 import { ExtraFontStyle, FontStyles, Palette, Style } from "visual/types/Style";
 import { isExtraFontStyle } from "visual/types/utils";
-import { getGlobalColors } from "visual/utils/api";
-import { getGlobalTypography } from "visual/utils/api/common";
+import { getGlobalColors, getGlobalTypography } from "visual/utils/api";
 import { brizyToBranding } from "visual/utils/branding";
 import { t } from "visual/utils/i18n";
 import { uuid } from "visual/utils/uuid";
@@ -268,6 +267,7 @@ class _DrawerComponent extends React.Component<Props, State> {
       {
         id: "fontStyles",
         type: "fontStyleEditor",
+        parentClassName: "brz-ed--scrollable",
         className: "brz-ed-sidebar-option__font-style-editor",
         value: { extraFontStyles, fontStyles },
         label: showTypographyRegenerate
@@ -277,14 +277,16 @@ class _DrawerComponent extends React.Component<Props, State> {
               loadingTypography
             )
           : undefined,
+        wrapOptions: false,
         onChange: this.handleFontStylesChange
       }
     ];
 
     return (
-      <div className="brz-ed-sidebar__styling">
-        <Options className="brz-ed-sidebar-options" data={options} />
-      </div>
+      <Options
+        className="brz-ed-sidebar__styling brz-ed-sidebar-options"
+        data={options}
+      />
     );
   }
 }
@@ -301,6 +303,7 @@ const mapStateToProps = (state: ReduxState): Omit<StateProps, "config"> => ({
   currentStyle: currentStyleSelector(state),
   extraFontStyles: extraFontStylesSelector(state)
 });
+
 const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
   dispatch
 });

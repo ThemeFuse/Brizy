@@ -32,8 +32,8 @@ class DrawerPopover extends React.Component {
     const { leftSidebar, dispatch } = this.props;
 
     if (!this.state.isOpen) {
-      if (leftSidebar.isOpen) {
-        dispatch(updateUI("leftSidebar", { isOpen: false }));
+      if (leftSidebar.drawerContentType !== null) {
+        dispatch(updateUI("leftSidebar", { drawerContentType: null }));
       }
 
       this.open();

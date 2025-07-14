@@ -20,6 +20,7 @@ interface Item {
   icon?: string;
   roles?: string[];
   loading?: boolean;
+  attr?: Record<string, string>;
   onClick?: VoidFunction;
 }
 
@@ -30,6 +31,7 @@ export interface Props {
   disabled?: boolean;
   status: status;
   onClick?: MouseEventHandler<HTMLDivElement>;
+  attr?: Record<string, string>;
 }
 
 const Addons = ({ items }: { items: Item[] }): ReactElement => {
@@ -38,11 +40,12 @@ const Addons = ({ items }: { items: Item[] }): ReactElement => {
 
   const overlay = useMemo(() => {
     return items.map((item, index) => {
-      const { title, icon, roles = [], loading, onClick } = item;
+      const { title, icon, roles = [], loading, onClick, attr } = item;
       const content = (
         <TooltipItem
           className="brz-ed-fixed-bottom-panel-popover__item"
           onClick={onClick}
+          attr={attr}
         >
           {loading ? (
             <EditorIcon icon="nc-circle-02" className="brz-ed-animated--spin" />
@@ -81,7 +84,8 @@ const Addons = ({ items }: { items: Item[] }): ReactElement => {
 };
 
 export const Controls = (props: Props): JSX.Element => {
-  const { loading, children, addonAfter, disabled, status, onClick } = props;
+  const { loading, children, addonAfter, disabled, status, onClick, attr } =
+    props;
   const className = classnames("brz-ed-fixed-bottom-panel__btn", {
     "brz-ed-fixed-bottom-panel__btn-popover": addonAfter?.length,
     "brz-ed-fixed-bottom-panel__btn-disabled": disabled
@@ -94,7 +98,7 @@ export const Controls = (props: Props): JSX.Element => {
   });
 
   return (
-    <div className={className}>
+    <div className={className} {...attr}>
       <div
         className="brz-ed-fixed-bottom-panel__btn-loading brz-d-xs-flex brz-align-items-xs-center brz-text-lg-center"
         onClick={onClick}

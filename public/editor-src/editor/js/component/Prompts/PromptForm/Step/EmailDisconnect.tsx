@@ -1,12 +1,11 @@
 import React, { ReactElement, useCallback, useContext, useState } from "react";
-import { IntegrationType } from "visual/component/Prompts/PromptForm/api/types";
+import { IntegrationType } from "visual/global/Config/types/Form";
 import { useConfig } from "visual/providers/ConfigProvider";
-import { pendingRequest } from "visual/utils/api";
+import { deleteSmtpIntegration, pendingRequest } from "visual/utils/api";
 import { t } from "visual/utils/i18n";
 import { Context } from "../../common/GlobalApps/Context";
 import { Disconnect } from "../../common/GlobalApps/StepsView";
 import { AppData } from "../../common/GlobalApps/type";
-import { deleteSmtpIntegration } from "../api";
 
 interface Props {
   app?: AppData;
@@ -36,7 +35,7 @@ export const EmailDisconnect = ({
       return;
     }
 
-    const { status } = await deleteSmtpIntegration(
+    const { success } = await deleteSmtpIntegration(
       {
         formId,
         integration: id,
@@ -45,7 +44,7 @@ export const EmailDisconnect = ({
       config
     );
 
-    if (status === 200 || status === 204) {
+    if (success) {
       onDisconnectApp(id);
       handleRemoveDeletedApp();
     } else {

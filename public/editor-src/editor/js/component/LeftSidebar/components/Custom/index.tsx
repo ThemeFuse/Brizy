@@ -17,17 +17,14 @@ const Component = (props: Props): ReactElement => {
   const { icon, onOpen, onClose } = props;
   const leftSidebar = useSelector(leftSidebarSelector);
   const mountedRef = useRef(false);
-  const opened =
-    leftSidebar.drawerContentType === LeftSidebarOptionsIds.cms &&
-    leftSidebar.isOpen;
+  const opened = leftSidebar.drawerContentType === LeftSidebarOptionsIds.cms;
   const dispatch = useDispatch();
 
   const update = useCallback(
     (isOpen: boolean) => {
       dispatch(
         updateUI("leftSidebar", {
-          drawerContentType: isOpen ? LeftSidebarOptionsIds.cms : null,
-          isOpen
+          drawerContentType: isOpen ? LeftSidebarOptionsIds.cms : null
         })
       );
     },

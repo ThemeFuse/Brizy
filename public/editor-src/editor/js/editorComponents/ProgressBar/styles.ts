@@ -12,61 +12,37 @@ export function styleBg(data: DynamicStylesProps<Value>): OutputStyle {
       standart: ["cssStyleBorderRadius", "cssStyleSizeProgressBarStyle1Height"]
     },
     ".brz &&:hover.brz-progress-bar-style1": {
-      standart: ["cssStyleBg2Color"],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
-      ]
+      standart: ["cssStyleBg2Color"]
     },
     ".brz &&.brz-progress-bar-style1::after": {
       standart: ["cssStyleBorderRadius"]
     },
     ".brz &&:hover.brz-progress-bar-style1::after": {
-      standart: ["cssStyleBoxShadow"],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
-      ]
+      standart: ["cssStyleBoxShadow"]
     },
     ".brz &&.brz-progress-bar-style2 .brz-progress-bar-overlay": {
       standart: ["cssStyleBorderRadius", "cssStyleSizeProgressBarStyle2Height"]
     },
     ".brz &&:hover.brz-progress-bar-style2 .brz-progress-bar-overlay": {
-      standart: ["cssStyleBg2Color"],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
-      ]
+      standart: ["cssStyleBg2Color"]
     },
     ".brz &&.brz-progress-bar-style2 .brz-progress-bar-overlay::after": {
       standart: ["cssStyleBorderRadius"]
     },
     ".brz &&:hover.brz-progress-bar-style2 .brz-progress-bar-overlay::after": {
-      standart: ["cssStyleBoxShadow"],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
-      ]
+      standart: ["cssStyleBoxShadow"]
     },
     ".brz && .brz-progress-bar__wrapper": {
       standart: ["cssStyleBorderRadius"]
     },
     ".brz &&:hover .brz-progress-bar__wrapper": {
-      standart: ["cssStyleBgColor"],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
-      ]
+      standart: ["cssStyleBgColor"]
     },
     ".brz &&.brz-progress-bar-style2 .brz-progress-bar__percent": {
       standart: ["cssStyleBorderRadius"]
     },
     ".brz &&:hover.brz-progress-bar-style2 .brz-progress-bar__percent": {
-      standart: ["cssStyleBgColor"],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
-      ]
+      standart: ["cssStyleBgColor"]
     },
     ".brz && .brz-progress-bar__text": {
       standart: [
@@ -80,11 +56,7 @@ export function styleBg(data: DynamicStylesProps<Value>): OutputStyle {
       ]
     },
     ".brz &&:hover .brz-progress-bar__text": {
-      standart: ["cssStyleLabelColor"],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
-      ]
+      standart: ["cssStyleLabelColor"]
     },
     ".brz && .brz-progress-bar__percent": {
       standart: [
@@ -98,12 +70,15 @@ export function styleBg(data: DynamicStylesProps<Value>): OutputStyle {
       ]
     },
     ".brz &&:hover .brz-progress-bar__percent": {
-      standart: ["cssStyleColor"],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
-      ]
-    }
+      standart: ["cssStyleColor"]
+    },
+    ".brz && .brz-progress-bar__percent, .brz && .brz-progress-bar__text, .brz &&.brz-progress-bar-style2 .brz-progress-bar__percent, .brz && .brz-progress-bar__wrapper, .brz &&.brz-progress-bar-style1, .brz &&.brz-progress-bar-style1::after, .brz &&.brz-progress-bar-style2 .brz-progress-bar-overlay, .brz &&.brz-progress-bar-style2 .brz-progress-bar-overlay::after":
+      {
+        standart: [
+          "cssStyleHoverTransition",
+          "cssStylePropertyHoverTransitionColor"
+        ]
+      }
   };
   return renderStyles({ ...data, styles });
 }

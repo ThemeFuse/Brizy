@@ -749,6 +749,13 @@ export function style(data: DynamicStylesProps<Value>): OutputStyle {
           "cssStylePropertyHoverTransitionElementEcwid"
         ]
       },
+    "#ecwid_html #ecwid_body && .ecwid .ecwid-productBrowser div .ec-wrapper .ec-store .ec-store__content-wrapper .ec-confirmation .ec-confirmation__steps .ec-confirmation__step--orderinfo .ec-confirmation__title .ec-confirmation__float .ec-link":
+      {
+        standart: [
+          "cssStyleElementEcwidMyAccountConnectLinkTypography",
+          "cssStyleElementEcwidMyAccountConnectLinkColor"
+        ]
+      },
     "#ecwid_html #ecwid_body && .ecwid .ecwid-productBrowser div .ec-wrapper .ec-store .ec-store__content-wrapper .ec-cart .ec-cart__body .ec-cart__body-inner .ec-cart__steps .ec-cart-step .ec-cart-step__block .ec-cart-step__wrap .ec-cart-step__body .ec-cart-step__section":
       { standart: ["cssStyleElementEcwidMyAccountConnectLinkAlign"] },
     "#ecwid_html #ecwid_body && .ecwid .ecwid-productBrowser div .ec-wrapper .ec-store .ec-store__content-wrapper .ec-cart .ec-cart__body .ec-cart__body-inner .ec-cart__steps .ec-cart-step .ec-cart-step__block .ec-cart-step__wrap .ec-cart-step__body .ec-cart-step__section .ec-cart-step__text":

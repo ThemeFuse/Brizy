@@ -28,7 +28,7 @@
     width: 35%;
     flex-basis: 35%;
     height: $control-height;
-    margin-left: 5px;
+    margin-inline-start: 5px;
   }
 
   &--up,
@@ -41,7 +41,7 @@
     line-height: math.div($control-height , 2);
     font-size: 8px;
     position: absolute;
-    right: 0;
+    inset-inline-end: 0;
     cursor: pointer;
     color: $control-color;
     -webkit-transition: color 0.2s linear;
@@ -49,7 +49,7 @@
 
     .brz-icon-svg {
       position: absolute;
-      right: 10px;
+      inset-inline-end: 10px;
       top: auto;
     }
 

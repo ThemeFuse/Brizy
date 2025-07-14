@@ -1,6 +1,7 @@
 import classnames from "classnames";
 import React, { ReactElement } from "react";
 import RoundPlus from "visual/component/RoundPlus";
+import { makeBzelmAttr } from "visual/utils/i18n/attribute";
 
 export interface Props {
   title: string;
@@ -27,7 +28,11 @@ export const First = (props: Props): ReactElement => {
 
   return (
     <div className={className}>
-      <div className="brz-ed-wrap-block-empty-page" onClick={onClick}>
+      <div
+        className="brz-ed-wrap-block-empty-page"
+        onClick={onClick}
+        {...makeBzelmAttr("start-building-page")}
+      >
         <div className="brz-ed-wrap-block-empty-page-heading">{title}</div>
         <RoundPlus className={iconClassName} icon={icon} />
         <div className="brz-ed-wrap-block-empty-page-heading2">

@@ -120,6 +120,16 @@ export const getItems: GetItems<Value> = ({ v, device, state }) => {
               ]
             },
             {
+              id: "radioOptionColor",
+              label: t("Radio"),
+              options: [
+                {
+                  id: "radioBgOptionColor",
+                  type: "colorPicker"
+                }
+              ]
+            },
+            {
               id: "surchargeColor",
               label: t("Surcharge"),
               options: [

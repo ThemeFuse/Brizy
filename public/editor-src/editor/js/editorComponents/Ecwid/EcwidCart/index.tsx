@@ -124,7 +124,8 @@ export class EcwidCart extends EditorComponent<Value> {
 
       this.ecwid.cart(this.containerRef.current, step, {
         onPageLoad: () => {
-          this.ecwid?.populateCartAddress();
+          this.ecwid?.setAddress();
+          this.ecwid?.setEmail({ email: "john.doe@example.com" });
           this.handleCartContent(prefilledCart);
         }
       });
@@ -166,7 +167,7 @@ export class EcwidCart extends EditorComponent<Value> {
     if (defaultProductId) {
       switch (prefilledCart) {
         case "on":
-          this.ecwid?.populateCart(defaultProductId);
+          this.ecwid?.addToCart(defaultProductId);
           break;
         case "off":
           this.ecwid?.clearCart();

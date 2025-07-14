@@ -7,6 +7,7 @@ import { DynamicContent } from "visual/editorComponents/EditorComponent/DynamicC
 import { isEditor } from "visual/providers/RenderProvider";
 import { makePlaceholder } from "visual/utils/dynamicContent";
 import { t } from "visual/utils/i18n";
+import { DCMenuProxyInstance } from "./DC/DCMenuProxyInstance";
 import defaultValue from "./defaultValue.json";
 import * as sidebarConfig from "./sidebar";
 import { style } from "./styles";
@@ -99,16 +100,12 @@ export default class MenuSimple extends EditorComponent {
             <DynamicContent
               placeholder={placeholder}
               renderContext={this.props.renderContext}
+              fetcher={DCMenuProxyInstance}
             >
               {({ status, data }) => {
                 if (status === "success") {
                   let ret = (
                     <div
-                      className={
-                        isEditor(this.props.renderContext)
-                        ? "brz-blocked"
-                        : undefined
-                      }
                       dangerouslySetInnerHTML={{
                         __html: data
                       }}

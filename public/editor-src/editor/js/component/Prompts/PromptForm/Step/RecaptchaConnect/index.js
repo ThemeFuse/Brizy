@@ -1,8 +1,7 @@
 import React, { Component } from "react";
-import { pendingRequest } from "visual/utils/api";
+import { deleteAccount, pendingRequest } from "visual/utils/api";
 import { t } from "visual/utils/i18n";
 import { Context } from "../../../common/GlobalApps/Context";
-import { deleteAccount } from "../../../common/GlobalApps/api";
 import ViewFields from "./ViewFields";
 import { validation } from "./validation";
 
@@ -79,9 +78,9 @@ class RecaptchaConnect extends Component {
       const { data } = app;
 
       if (data) {
-        const { status } = await deleteAccount(data.id, config);
+        const { success } = await deleteAccount(data.id, config);
 
-        if (status !== 200) {
+        if (!success) {
           this.setState({
             nextLoading: false,
             error: t("Something went wrong")

@@ -1,6 +1,7 @@
 import { noop } from "es-toolkit";
 import React, { KeyboardEvent, ReactElement } from "react";
 import { ToastContainer } from "react-toastify";
+import { RuntimeCompiler } from "visual/bootstraps/compiler/Runtime";
 import BottomPanel from "visual/component/BottomPanel";
 import HotKeys from "visual/component/HotKeys";
 import { LeftSidebar } from "visual/component/LeftSidebar";
@@ -49,13 +50,28 @@ class Editor extends React.Component<Props> {
     const type = getCommonEditorMode(editorMode);
     switch (type) {
       case "page": {
-        return <Page />;
+        return (
+          <>
+            <Page />
+            <RuntimeCompiler mode="page" />
+          </>
+        );
       }
       case "popup": {
-        return <Popup />;
+        return (
+          <>
+            <Popup />
+            <RuntimeCompiler mode="popup" />
+          </>
+        );
       }
       case "story": {
-        return <Story />;
+        return (
+          <>
+            <Story />
+            <RuntimeCompiler mode="story" />
+          </>
+        );
       }
     }
   }

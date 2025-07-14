@@ -6,7 +6,7 @@ import EditorComponent from "visual/editorComponents/EditorComponent";
 import { DynamicContentHelper } from "visual/editorComponents/WordPress/common/DynamicContentHelper";
 import { Wrapper } from "visual/editorComponents/tools/Wrapper";
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
-import { updateEkklesiaFields } from "visual/utils/api/common";
+import { updateEkklesiaFields } from "visual/utils/api";
 import { attachRefs } from "visual/utils/react";
 import * as sidebarConfig from "../sidebar";
 import * as toolbarExtendButtons from "../toolbarExtendButtons";

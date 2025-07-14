@@ -2,19 +2,19 @@ import classNames from "classnames";
 import { css } from "visual/utils/cssStyle/css/tujur";
 import { OutputStyle } from "visual/utils/cssStyle/types";
 import { MValue } from "visual/utils/value";
-
-interface CSSSheet {
-  node?: Element;
-  className: string;
-  cssText: string;
-}
+import { CSSOrdered, CSSSheet } from "./types";
 
 export class Sheet {
   private css = new Map<string, CSSSheet>();
   private doc: Document | undefined;
+  private cssOrdered: CSSOrdered = {
+    default: [],
+    rules: [],
+    custom: []
+  };
 
-  constructor() {
-    this.doc = typeof window === "undefined" ? undefined : document;
+  constructor(doc?: Document) {
+    this.doc = doc ?? (typeof window === "undefined" ? undefined : document);
   }
 
   setDoc(doc: Document): void {
@@ -23,6 +23,10 @@ export class Sheet {
 
   getDoc(): Document | undefined {
     return this.doc;
+  }
+
+  getCSSOrdered(): CSSOrdered {
+    return this.cssOrdered;
   }
 
   set(key: string, value: CSSSheet) {

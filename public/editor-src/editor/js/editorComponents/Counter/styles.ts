@@ -22,27 +22,22 @@ export function style(data: DynamicStylesProps<Value>): OutputStyle {
       standart: ["cssStylePaddingBG"]
     },
     ".brz &&:hover .brz-counter-figures": {
-      standart: ["cssStyleColor", "cssStyleElementCounterTextShadow"],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionFill"
-      ]
+      standart: ["cssStyleColor", "cssStyleElementCounterTextShadow"]
     },
     ".brz && .brz-counter-chart-radial > svg > .brz-counter-pie-chart, .brz && .brz-counter-chart-empty > svg > .brz-counter-pie-chart":
       {
         standart: ["cssStyleElementCounterChartWidth"]
       },
     ".brz &&:hover .brz-counter-pie-chart": {
-      standart: ["cssStyleStroke"],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionFill"
-      ]
+      standart: ["cssStyleStroke"]
     },
     ".brz &&:hover .brz-counter-radial-chart, .brz &&:hover .brz-counter-chart-pie":
       {
-        standart: ["cssStyleFill"],
-        interval: [
+        standart: ["cssStyleFill"]
+      },
+    ".brz && .brz-counter-figures, .brz && .brz-counter-pie-chart, .brz && .brz-counter-radial-chart, .brz && .brz-counter-chart-pie":
+      {
+        standart: [
           "cssStyleHoverTransition",
           "cssStylePropertyHoverTransitionFill"
         ]

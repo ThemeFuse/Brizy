@@ -6,8 +6,8 @@ import { DynamicStylesProps } from "visual/types";
 export function style(data: DynamicStylesProps<ElementModel>): OutputStyle {
   const styles = {
     ".brz &&:hover": {
-      standart: ["cssStyleBoxShadow"],
-      interval: [
+      standart: [
+        "cssStyleBoxShadow",
         "cssStyleHoverTransition",
         "cssStylePropertyHoverTransitionBoxShadow"
       ]

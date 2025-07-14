@@ -1,28 +1,18 @@
+import { ElementModel } from "visual/component/Elements/Types";
 import { DynamicStylesProps } from "visual/types";
 import { renderStyles } from "visual/utils/cssStyle";
-import { OutputStyle } from "visual/utils/cssStyle/types";
+import { OutputStyle, Styles } from "visual/utils/cssStyle/types";
 
-export function style<T>(data: DynamicStylesProps<T>): OutputStyle {
-  const styles: {
-    [k: string]: {
-      interval?: string[];
-      standart?: string[];
-    };
-  } = {
+export function style<T extends ElementModel>(
+  data: DynamicStylesProps<T>
+): OutputStyle {
+  const styles: Styles = {
     ".brz && > .brz-accordion__item:not(.brz-accordion__item--active):hover": {
-      standart: ["cssStyleBoxShadow", "cssStyleBorder", "cssStyleBgColor"],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
-      ]
+      standart: ["cssStyleBoxShadow", "cssStyleBorder", "cssStyleBgColor"]
     },
     ".brz && > .brz-accordion__item:not(.brz-accordion__item--active):hover .brz-accordion__nav":
       {
-        standart: ["cssStyleColor"],
-        interval: [
-          "cssStyleHoverTransition",
-          "cssStylePropertyHoverTransitionColor"
-        ]
+        standart: ["cssStyleColor"]
       },
     ".brz && > .brz-accordion__item": {
       standart: ["cssStyleBorderRadius"]
@@ -32,19 +22,15 @@ export function style<T>(data: DynamicStylesProps<T>): OutputStyle {
         "cssStyleElementAccordionActiveBgColor",
         "cssStyleElementAccordionActiveBorder",
         "cssStyleElementAccordionActiveShadow"
-      ],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
       ]
     },
     ".brz && > .brz-accordion__item.brz-accordion__item--active > .brz-accordion__nav":
       {
-        standart: ["cssStyleElementAccordionActiveColor"],
-        interval: [
-          "cssStyleHoverTransition",
-          "cssStylePropertyHoverTransitionColor"
-        ]
+        standart: ["cssStyleElementAccordionActiveColor"]
+      },
+    ".brz && > .brz-accordion__filter-wrapper > .brz-accordion__filter > .brz-accordion__filter__item:not(.brz-accordion__filter__item--active):hover":
+      {
+        standart: ["cssStyleElementAccordionFilterColor"]
       },
     ".brz && > .brz-accordion__item > .brz-accordion__nav": {
       standart: [
@@ -100,14 +86,6 @@ export function style<T>(data: DynamicStylesProps<T>): OutputStyle {
     },
     ".brz && > .brz-accordion__filter-wrapper > .brz-accordion__filter > .brz-accordion__filter__item":
       { standart: ["cssStyleElementAccordionFilterSpacing"] },
-    ".brz && > .brz-accordion__filter-wrapper > .brz-accordion__filter > .brz-accordion__filter__item:not(.brz-accordion__filter__item--active):hover":
-      {
-        standart: ["cssStyleElementAccordionFilterColor"],
-        interval: [
-          "cssStyleHoverTransition",
-          "cssStylePropertyHoverTransitionColor"
-        ]
-      },
     ".brz && > .brz-accordion__filter-wrapper > .brz-accordion__filter > .brz-accordion__filter__item--style-1:not(.brz-accordion__filter__item--active):hover":
       {
         standart: [
@@ -141,29 +119,29 @@ export function style<T>(data: DynamicStylesProps<T>): OutputStyle {
           "cssStyleElementAccordionFilterShadow",
           "cssStyleElementAccordionFilterBorderRadius",
           "cssStyleDisplayInlineFlex"
-        ],
-        interval: [
-          "cssStyleHoverTransition",
-          "cssStylePropertyHoverTransitionColor"
         ]
       },
     ".brz && > .brz-accordion__filter-wrapper > .brz-accordion__filter > .brz-accordion__filter__item--style-2.brz-accordion__filter__item--active":
-      { standart: ["cssStyleElementAccordionFilterActiveColor"] }
+      { standart: ["cssStyleElementAccordionFilterActiveColor"] },
+    ".brz && > .brz-accordion__item:not(.brz-accordion__item--active), .brz && > .brz-accordion__item:not(.brz-accordion__item--active) .brz-accordion__nav, .brz && > .brz-accordion__filter-wrapper > .brz-accordion__filter > .brz-accordion__filter__item:not(.brz-accordion__filter__item--active), .brz && > .brz-accordion__filter-wrapper > .brz-accordion__filter > .brz-accordion__filter--style-2":
+      {
+        standart: [
+          "cssStyleHoverTransition",
+          "cssStylePropertyHoverTransitionColor"
+        ]
+      }
   };
-  return renderStyles({ ...data, styles });
+  return renderStyles<T>({ ...data, styles });
 }
 
-export function styleAnimation<T>(data: DynamicStylesProps<T>): OutputStyle {
-  const styles: {
-    [k: string]: {
-      interval?: string[];
-      standart?: string[];
-    };
-  } = {
+export function styleAnimation<T extends ElementModel>(
+  data: DynamicStylesProps<T>
+): OutputStyle {
+  const styles: Styles = {
     ".brz &&": {
       standart: ["cssStyleAnimationAll"]
     }
   };
 
-  return renderStyles({ ...data, styles });
+  return renderStyles<T>({ ...data, styles });
 }

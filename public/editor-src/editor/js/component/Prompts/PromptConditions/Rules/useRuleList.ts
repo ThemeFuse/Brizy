@@ -6,18 +6,15 @@ import { setIn } from "timm";
 import { isEcwidShop } from "visual/global/Config/types/configs/Base";
 import { isCMS, isCloud } from "visual/global/Config/types/configs/Cloud";
 import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
-import { useConfig } from "visual/providers/ConfigProvider";
 import { Categories } from "visual/libs/EcwidSdk/categories";
 import { Products } from "visual/libs/EcwidSdk/products";
+import { useConfig } from "visual/providers/ConfigProvider";
 import {
   CollectionItemRule,
   CollectionTypeRule,
   Rule
 } from "visual/types/Rule";
-import {
-  getConditionalItems,
-  getConditionalTypes
-} from "visual/utils/api/common";
+import { getConditionalItems, getConditionalTypes } from "visual/utils/api";
 import {
   CUSTOMER_TYPE,
   createEntityValue,
@@ -35,6 +32,8 @@ import { isOneOf } from "visual/utils/fp/isOneOf";
 import { t } from "visual/utils/i18n";
 import { CmsListItem, RuleList, RuleListItem } from "./types";
 import {
+  convertCustomerGroupIdToValue,
+  convertCustomerIdToValue,
   convertIdToValue,
   disableAlreadyUsedRules,
   getRefsById,
@@ -84,14 +83,14 @@ export default function useRuleList(
 
   const ecwidProductsClient = useMemo((): Products | undefined => {
     if (shopModulesApiUrl) {
-      return new Products(shopModulesApiUrl);
+      return new Products();
     }
 
     return undefined;
   }, [shopModulesApiUrl]);
   const ecwidCategoriesClient = useMemo((): Categories | undefined => {
     if (shopModulesApiUrl) {
-      return new Categories(shopModulesApiUrl);
+      return new Categories();
     }
 
     return undefined;
@@ -183,7 +182,7 @@ export default function useRuleList(
             title: t("Specific User"),
             value: CUSTOMER_TYPE,
             mode: "specific",
-            items: convertIdToValue(customerTypes)
+            items: convertCustomerIdToValue(customerTypes)
           });
         }
 
@@ -192,7 +191,7 @@ export default function useRuleList(
             title: t("Roles"),
             value: CUSTOMER_TYPE,
             mode: "reference",
-            items: convertIdToValue(groups)
+            items: convertCustomerGroupIdToValue(groups)
           });
         }
 

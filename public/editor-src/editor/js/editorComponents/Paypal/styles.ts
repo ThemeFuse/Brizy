@@ -16,7 +16,8 @@ export function style(data: DynamicStylesProps<Value>): OutputStyle {
         "cssStyleElementPaypalIconPosition",
         "cssStyleBorderRadius",
         "cssStyleSizeWidth",
-        "cssStyleSizeHeight"
+        "cssStyleSizeHeight",
+        "cssStyleHoverTransition"
       ]
     },
     ".brz &&:hover .brz-paypal-button": {
@@ -27,10 +28,8 @@ export function style(data: DynamicStylesProps<Value>): OutputStyle {
         "cssStyleBgGradient",
 
         "cssStyleColor"
-      ],
-      interval: ["cssStyleHoverTransition"]
+      ]
     },
-
     ".brz && .brz-paypal-icon": {
       standart: ["cssStyleSizeFontSizeIcon", "cssStyleElementPaypalBtnSpacing"]
     }

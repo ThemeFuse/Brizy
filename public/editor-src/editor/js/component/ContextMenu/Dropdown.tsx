@@ -1,10 +1,4 @@
-import React, {
-  ReactNode,
-  useCallback,
-  useMemo,
-  useRef,
-  useState
-} from "react";
+import React, { ReactNode, useState } from "react";
 import { Menu } from "react-contexify";
 import { createPortal } from "react-dom";
 import Items from "./Items";
@@ -23,40 +17,24 @@ export interface Props {
   id: string;
   getItems: () => Item[];
   itemsMeta: Meta;
+  root: HTMLElement;
 }
 
 export const Dropdown = (props: Props): ReactNode => {
-  const { id, getItems, itemsMeta } = props;
+  const { id, getItems, itemsMeta, root } = props;
   const [isOpen, setOpen] = useState(false);
-  const oldItems = useRef<Item[]>([]);
 
-  const items = useMemo(() => {
-    if (isOpen) {
-      oldItems.current = getItems();
-      return oldItems.current;
-    }
-
-    return oldItems.current;
-  }, [getItems, isOpen]);
-
-  const handleOpen = useCallback(() => {
-    setOpen((open) => !open);
-  }, []);
-
-  if (typeof window === "undefined") {
-    return;
-  }
+  const items = isOpen ? <Items data={getItems()} meta={itemsMeta} /> : null;
 
   return createPortal(
     <Menu
-      onVisibilityChange={handleOpen}
+      onVisibilityChange={setOpen}
       animation={false}
       disableBoundariesCheck={true}
       id={id}
-      style={{ display: items.length > 0 ? "block" : "none" }}
     >
-      <Items data={items} meta={itemsMeta} />
+      {items}
     </Menu>,
-    window.parent.document.body
+    root
   );
 };

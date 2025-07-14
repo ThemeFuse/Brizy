@@ -29,10 +29,6 @@ export const getTranslationsLanguages = (config: ConfigCommon): Language[] => {
     [
       isWp,
       (): Language[] => {
-        if (process.env.NODE_ENV === "development") {
-          console.error("not implemented");
-        }
-
         return [];
       }
     ],

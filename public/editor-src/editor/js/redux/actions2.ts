@@ -14,7 +14,7 @@ import {
   DeviceMode,
   ProjectLockStatus
 } from "visual/types";
-import { Block } from "visual/types/Block";
+import { Block, BlockHtml } from "visual/types/Block";
 import {
   AdobeFont,
   Font,
@@ -306,6 +306,28 @@ export type ActionStoreWasChanged = {
   payload: StoreChanged;
 };
 
+export type ActionUpdateBlockHTML = {
+  type: ActionTypes.UPDATE_BLOCK_HTML;
+  payload: {
+    blockId: string;
+    data: BlockHtml;
+  };
+};
+
+export type ActionUpdateBlocksHTML = {
+  type: ActionTypes.UPDATE_BLOCKS_HTML;
+  payload: {
+    blocks: Array<{ id: string; block: BlockHtml }>;
+  };
+};
+
+export type ActionUpdateBlockHTMLStats = {
+  type: ActionTypes.UPDATE_BLOCK_HTML_STATS;
+  payload: {
+    stats: number;
+  };
+};
+
 export type ReduxAction =
   | ActionHydrate
   | ActionUpdateGlobalBlock
@@ -340,6 +362,9 @@ export type ReduxAction =
   | ActionUpdateGBRules
   | ActionRemoveBlocks
   | ActionReorderBlocks
+  | ActionUpdateBlockHTML
+  | ActionUpdateBlockHTMLStats
+  | ActionUpdateBlocksHTML
   | ActionUpdateBlocks
   | ActionMakeBlockToGlobalBlock
   | ActionMakeGlobalBlockToBlock
@@ -874,6 +899,36 @@ export function reorderBlocks(payload: {
   };
 }
 
+export function updateBlockHtml(payload: {
+  blockId: string;
+  data: BlockHtml;
+}): ActionUpdateBlockHTML {
+  return {
+    type: ActionTypes.UPDATE_BLOCK_HTML,
+    payload
+  };
+}
+
+export function updateBlocksHtml(payload: {
+  blocks: Array<{ id: string; block: BlockHtml }>;
+}): ActionUpdateBlocksHTML {
+  return {
+    type: ActionTypes.UPDATE_BLOCKS_HTML,
+    payload
+  };
+}
+
+export function updateBlockHtmlStats(
+  payload: number
+): ActionUpdateBlockHTMLStats {
+  return {
+    type: ActionTypes.UPDATE_BLOCK_HTML_STATS,
+    payload: {
+      stats: payload
+    }
+  };
+}
+
 // UI
 
 export function setDeviceMode(mode: DeviceMode): ActionUpdateUI {
@@ -953,7 +1008,10 @@ export enum ActionTypes {
   "REMOVE_BLOCKS" = "REMOVE_BLOCKS",
   "UPDATE_PINNED_ELEMENTS" = "UPDATE_PINNED_ELEMENTS",
   "REGENERATE_COLORS" = "REGENERATE_COLORS",
-  "REGENERATE_TYPOGRAPHY" = "REGENERATE_TYPOGRAPHY"
+  "REGENERATE_TYPOGRAPHY" = "REGENERATE_TYPOGRAPHY",
+  "UPDATE_BLOCK_HTML" = "UPDATE_BLOCK_HTML",
+  "UPDATE_BLOCKS_HTML" = "UPDATE_BLOCKS_HTML",
+  "UPDATE_BLOCK_HTML_STATS" = "UPDATE_BLOCK_HTML_STATS"
 }
 
 // templates

@@ -5,6 +5,7 @@ import EditorComponent from "visual/editorComponents/EditorComponent";
 import { DynamicContentHelper } from "visual/editorComponents/WordPress/common/DynamicContentHelper";
 import { getMenus } from "visual/utils/api";
 import { makePlaceholder } from "visual/utils/dynamicContent";
+import { DCMenuProxyInstance } from "./DC/DCMenuProxyInstance";
 import defaultValue from "./defaultValue.json";
 import * as sidebarConfig from "./sidebar";
 import { style } from "./styles";
@@ -58,7 +59,12 @@ export default class MenuSimpleWP extends EditorComponent {
     });
 
     let content = (
-      <DynamicContentHelper placeholder={placeholder} tagName="div" />
+      <DynamicContentHelper
+        placeholder={placeholder}
+        tagName="div"
+        blocked={false}
+        fetcher={DCMenuProxyInstance}
+      />
     );
 
     if (tabletToggleMenu === "on" || mobileToggleMenu === "on") {

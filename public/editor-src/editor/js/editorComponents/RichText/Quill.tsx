@@ -1,4 +1,4 @@
-import { debounce, isEqual } from "es-toolkit";
+import { debounce, isEqual, isFunction } from "es-toolkit";
 import jQuery from "jquery";
 import type QuillType from "quill";
 import { BoundsStatic, RangeStatic } from "quill";
@@ -27,7 +27,7 @@ import { diff } from "visual/utils/reader/object";
 import { uuid } from "visual/utils/uuid";
 import { MValue } from "visual/utils/value";
 import { styleHeading } from "./styles";
-import { QuillFormat } from "./types";
+import { PrepopulationData, QuillFormat } from "./types";
 import QuillUtils, { createLabel, getFormats } from "./utils";
 import bindings from "./utils/bindings";
 import { changeRichText } from "./utils/changeRichText";
@@ -87,9 +87,16 @@ type Props = {
   selectedValue?: (v: string) => void;
   onTextChange?: (text: string) => void;
   isToolbarOpen?: () => boolean;
-  onSelectionChange?: (format: Formats, coords: Coords) => void;
+  onSelectionChange?: (
+    format: Formats,
+    coords: Coords,
+    cursorIndex?: number
+  ) => void;
   textId?: string;
   isStoryMode?: boolean;
+  isDCHandler?: boolean;
+  isListOpen?: boolean;
+  setPrepopulationData?: (data: PrepopulationData) => void;
 };
 
 export class QuillComponent extends React.Component<Props> {
@@ -220,14 +227,16 @@ export class QuillComponent extends React.Component<Props> {
     }
   }
 
-  initPlugin = (): void => {
-    const hasSelectionHandler =
-      typeof this.props.onSelectionChange === "function";
+  getIsListOpen = () => {
+    return this.props.isListOpen;
+  };
 
-    if (
-      !isEditor(this.props.renderContext) ||
-      typeof this.quillClass === "undefined"
-    ) {
+  initPlugin = (): void => {
+    const { renderContext, onSelectionChange } = this.props;
+
+    const hasSelectionHandler = typeof onSelectionChange === "function";
+
+    if (!isEditor(renderContext) || typeof this.quillClass === "undefined") {
       return;
     }
     const quill = new this.quillClass(
@@ -240,7 +249,9 @@ export class QuillComponent extends React.Component<Props> {
             maxStack: 0
           },
           keyboard: {
-            bindings: isEditor(this.props.renderContext) ? bindings() : {}
+            bindings: isEditor(renderContext)
+              ? bindings(this.getIsListOpen)
+              : {}
           },
           clipboard: {
             matchVisual: false
@@ -255,7 +266,11 @@ export class QuillComponent extends React.Component<Props> {
         // TODO: make much less hacky
         if (hasSelectionHandler && range && !isEqual(range, oldRange)) {
           const format = this.getSelectionFormat();
-          this.props.onSelectionChange?.(format, this.getCoords(range));
+          this.props.onSelectionChange?.(
+            format,
+            this.getCoords(range),
+            quill.selection.savedRange.index
+          );
         }
       }
     });
@@ -377,9 +392,30 @@ export class QuillComponent extends React.Component<Props> {
 
   handleKeyPress = (event: React.KeyboardEvent<HTMLDivElement>): void => {
     if (triggerCodes.includes(event.key)) {
-      (this.quill as _Quill).format("prepopulation", "visible");
+      const { isDCHandler, setPrepopulationData } = this.props;
+      const selection = (this.quill as _Quill).selection.savedRange;
+
+      if (isDCHandler) {
+        this.formatPrepopulation();
+      } else {
+        if (isFunction(setPrepopulationData)) {
+          setPrepopulationData({ show: true, index: selection.index });
+        }
+      }
     }
   };
+
+  getSelectionRange() {
+    return (this.quill as _Quill).selection.savedRange;
+  }
+
+  formatPrepopulation(): void {
+    (this.quill as _Quill).format("prepopulation", "visible");
+  }
+
+  deleteText(index: number, length: number): void {
+    (this.quill as _Quill).deleteText(index, length);
+  }
 
   handlePaste = (e: React.ClipboardEvent): void => {
     const pastedData = e.clipboardData.getData("Text");

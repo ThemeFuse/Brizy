@@ -33,7 +33,7 @@ import {
   updateSavedBlock,
   updateSavedLayout
 } from "visual/utils/api";
-import { updateSavedPopup } from "visual/utils/api/common";
+import { updateSavedPopup } from "visual/utils/api";
 import { blockThumbnailData } from "visual/utils/blocks";
 import { normalizeFonts } from "visual/utils/fonts/normalizeFonts";
 import { normalizeFontStyles } from "visual/utils/fonts/transform";

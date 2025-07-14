@@ -23,6 +23,9 @@ import {
 import {
   CUSTOM_CODE,
   DEPENDENCY_SCORE,
+  DYNAMIC_CUSTOM_CSS,
+  DYNAMIC_DEFAULT_CSS,
+  DYNAMIC_RULES_CSS,
   LIBS_SCORE,
   MAIN_SCORE,
   OTHERS_SCORE,
@@ -186,27 +189,55 @@ const makeDCColor = ($doc: cheerio.Root, config: ConfigCommon): Asset[] => {
 };
 
 const makeDynamicStyle = (css: DynamicCSS): Asset[] => {
-  let cssText = "";
+  const cssText: Array<Asset> = [];
+  const { default: defaultCSS, rules, custom } = css;
 
-  for (const cssModel of css) {
-    cssText += cssModel.cssText;
-    cssText += "\n";
-  }
-
-  return [
-    {
-      name: toHashCode(cssText),
-      score: OTHERS_SCORE,
+  for (const cssModel of defaultCSS) {
+    cssText.push({
+      name: toHashCode(cssModel.cssText),
+      score: DYNAMIC_DEFAULT_CSS,
       content: {
         type: "inline",
-        content: cssText,
+        content: cssModel.cssText,
         attr: {
           class: "brz-style"
         }
       },
       pro: false
-    }
-  ];
+    });
+  }
+
+  for (const cssModel of rules) {
+    cssText.push({
+      name: toHashCode(cssModel.cssText),
+      score: DYNAMIC_RULES_CSS,
+      content: {
+        type: "inline",
+        content: cssModel.cssText,
+        attr: {
+          class: "brz-style"
+        }
+      },
+      pro: false
+    });
+  }
+
+  for (const cssModel of custom) {
+    cssText.push({
+      name: toHashCode(cssModel.cssText),
+      score: DYNAMIC_CUSTOM_CSS,
+      content: {
+        type: "inline",
+        content: cssModel.cssText,
+        attr: {
+          class: "brz-style"
+        }
+      },
+      pro: false
+    });
+  }
+
+  return cssText;
 };
 
 // main => preview.min.css | preview.pro.min.css only one added in the page

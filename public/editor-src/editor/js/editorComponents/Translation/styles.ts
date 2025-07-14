@@ -20,7 +20,9 @@ export function style(data: DynamicStylesProps<Value>): OutputStyle {
         "cssStyleBorderRadius",
         "cssStyleElementTranslationAlign",
         "cssStyleSizeWidth",
-        "cssStyleSizeHeight"
+        "cssStyleSizeHeight",
+        "cssStyleHoverTransition",
+        "cssStylePropertyHoverTransitionColor"
       ]
     },
     ".brz &&:hover": {
@@ -29,10 +31,6 @@ export function style(data: DynamicStylesProps<Value>): OutputStyle {
         "cssStyleBgColor",
         "cssStyleBorder",
         "cssStyleBoxShadow"
-      ],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
       ]
     },
     ".brz && .brz-span": {
@@ -73,10 +71,6 @@ export function style(data: DynamicStylesProps<Value>): OutputStyle {
         "cssStyleBgColor",
         "cssStyleBorder",
         "cssStyleBoxShadow"
-      ],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
       ]
     },
     ".brz && .select2-selection .select2-selection__rendered .brz-translation__select-item .brz-span":
@@ -114,11 +108,7 @@ export function style(data: DynamicStylesProps<Value>): OutputStyle {
       standart: ["cssStyleElementTranslationWidth"]
     },
     ".brz && .select2-dropdown:hover": {
-      standart: ["cssStyleElementTranslationBoxShadow"],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
-      ]
+      standart: ["cssStyleElementTranslationBoxShadow"]
     },
     ".brz && .select2-results__options .select2-results__option": {
       standart: ["cssStyleSizeHeight"]
@@ -128,16 +118,19 @@ export function style(data: DynamicStylesProps<Value>): OutputStyle {
         "cssStyleElementTranslationColor",
         "cssStyleElementTranslationBgColor",
         "cssStyleElementTranslationBorder"
-      ],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
       ]
     },
     ".brz && .select2-dropdown .select2-results__option ": {
       standart: ["cssStyleElementTranslationAlign"]
-    }
+    },
     // #endregion
+    ".brz &&, .brz && .select2-dropdown, .brz && .select2-results__options .select2-results__option":
+      {
+        standart: [
+          "cssStyleHoverTransition",
+          "cssStylePropertyHoverTransitionColor"
+        ]
+      }
   };
 
   return renderStyles({
@@ -149,11 +142,7 @@ export function style(data: DynamicStylesProps<Value>): OutputStyle {
 export function styleDropdown(data: DynamicStylesProps<Value>): OutputStyle {
   const styles = {
     ".brz && .brz-translation__select-list:hover": {
-      standart: ["cssStyleElementTranslationBoxShadow"],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
-      ]
+      standart: ["cssStyleElementTranslationBoxShadow"]
     },
     ".brz && .brz-translation__select-list .brz-translation__select-item": {
       standart: [
@@ -174,10 +163,6 @@ export function styleDropdown(data: DynamicStylesProps<Value>): OutputStyle {
           "cssStyleElementTranslationColor",
           "cssStyleElementTranslationBgColor",
           "cssStyleElementTranslationBorder"
-        ],
-        interval: [
-          "cssStyleHoverTransition",
-          "cssStylePropertyHoverTransitionColor"
         ]
       },
     ".brz && .brz-translation__select-list .brz-translation__select-item .brz-span":
@@ -187,6 +172,13 @@ export function styleDropdown(data: DynamicStylesProps<Value>): OutputStyle {
         standart: [
           "cssStyleElementTranslationFlagSize",
           "cssStyleElementTranslationFlagSpacing"
+        ]
+      },
+    ".brz && .brz-translation__select-list, .brz && .brz-translation__select-list .brz-translation__select-item":
+      {
+        standart: [
+          "cssStyleHoverTransition",
+          "cssStylePropertyHoverTransitionColor"
         ]
       }
   };

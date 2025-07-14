@@ -8,18 +8,10 @@ export function style(data: DynamicStylesProps<ElementModel>) {
       standart: ["cssStyleElementWOORatingSize"]
     },
     ".brz && .star-rating:hover": {
-      standart: ["cssStyleColor"],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
-      ]
+      standart: ["cssStyleColor"]
     },
     ".brz && .star-rating:hover:before": {
-      standart: ["cssStyleElementWOORatingBgStarColor"],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
-      ]
+      standart: ["cssStyleElementWOORatingBgStarColor"]
     },
     ".brz && .woocommerce-review-link": {
       standart: [
@@ -34,12 +26,15 @@ export function style(data: DynamicStylesProps<ElementModel>) {
       ]
     },
     ".brz && .woocommerce-review-link:hover": {
-      standart: ["cssStyleElementWOORatingTextColor"],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
-      ]
-    }
+      standart: ["cssStyleElementWOORatingTextColor"]
+    },
+    ".brz && .star-rating, .brz && .star-rating:before, .brz && .woocommerce-review-link":
+      {
+        standart: [
+          "cssStyleHoverTransition",
+          "cssStylePropertyHoverTransitionColor"
+        ]
+      }
   };
 
   return renderStyles({ ...data, styles });

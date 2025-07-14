@@ -22,7 +22,7 @@ export function style(data: BaseData): OutputStyle {
   const type = dvv("type");
   const submitType = type === "submit";
 
-  const styles = {
+  const styles: Styles = {
     ".brz &&.brz-btn": {
       standart: [
         "cssStyleTypography2FontFamily",
@@ -33,12 +33,11 @@ export function style(data: BaseData): OutputStyle {
         "cssStyleTypography2FontVariation",
         "cssStyleTextTransforms",
         "cssStyleBorderRadiusType",
-        "cssStylePaddingFourFields",
         "cssStyleElementButtonIconPosition",
         "cssStyleSizeHeightPxOnly",
         ...(_isStory
           ? ["cssStyleElementButtonSizeForStory"]
-          : ["cssStyleElementButtonSize"]),
+          : ["cssStylePaddingFourFields", "cssStyleElementButtonSize"]),
         "cssStyleSizeWidth"
       ]
     },
@@ -50,8 +49,6 @@ export function style(data: BaseData): OutputStyle {
         "cssStyleBoxShadow"
       ],
       interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor",
         "cssStyleVisibleMode|||editor",
         "cssStyleVisibleMode|||preview",
         "cssStyleVisibleEditorDisplayNoneOrFlex|||editor"
@@ -64,21 +61,13 @@ export function style(data: BaseData): OutputStyle {
       ]
     },
     ".brz &&.brz-btn:hover .brz-icon-svg-custom": {
-      standart: ["cssStyleCustomIconColor"],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
-      ]
+      standart: ["cssStyleCustomIconColor"]
     },
     ".brz &&.brz-btn.brz-btn-submit:hover": {
       standart: [
         "cssStyleColor",
         "cssStyleElementButtonBgColor",
         "cssStyleElementButtonBgGradient"
-      ],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
       ]
     },
     ".brz &&:after": {
@@ -97,15 +86,18 @@ export function style(data: BaseData): OutputStyle {
         "cssStyleElementButtonBorderStory",
         "cssStyleElementButtonIconPosition",
         "cssStyleBorderRadiusType"
-      ],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
       ]
     },
     ".brz && .brz-btn--story-container:after": {
       standart: ["cssStyleSizeHeightPercentOnly"]
-    }
+    },
+    ".brz &&.brz-btn, .brz &&.brz-btn .brz-icon-svg-custom, .brz &&.brz-btn.brz-btn-submit":
+      {
+        standart: [
+          "cssStyleHoverTransition",
+          "cssStylePropertyHoverTransitionColor"
+        ]
+      }
   };
 
   return renderStyles({ ...baseData, styles });
@@ -134,20 +126,22 @@ export function styleButtonFillAnimation(
         standart: [
           "cssStyleElementButtonBgColorStateNORMAL",
           "cssStyleElementButtonBgGradientStateNORMAL"
-        ],
-        interval: ["cssStyleButtonHoverTransitionDuration"]
+        ]
       },
     ".brz &&.brz-btn--hover:not(.brz-btn--hover-in):before, .brz &&.brz-btn--hover-in":
       {
         standart: [
           "cssStyleElementButtonBgBlendColor",
           "cssStyleElementButtonBgBlendGradient"
-        ],
-        interval: ["cssStyleButtonHoverTransitionDuration"]
+        ]
       },
     ".brz &&.brz-back-pulse:before:hover": {
       interval: ["cssStyleButtonHoverAnimationDuration"]
-    }
+    },
+    ".brz &&.brz-btn--hover:not(.brz-btn--hover-in), .brz &&.brz-btn--hover-in:before, .brz &&.brz-btn--hover:not(.brz-btn--hover-in):before, .brz &&.brz-btn--hover-in":
+      {
+        standart: ["cssStyleButtonHoverTransitionDuration"]
+      }
   };
 
   return renderStyles({ ...data, styles });

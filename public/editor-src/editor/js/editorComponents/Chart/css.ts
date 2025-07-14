@@ -6,6 +6,14 @@ export const titleAlignCSS: OptionStyle<"toggle"> = ({ value: { value } }) => ({
   }
 });
 
+export const titleHoverTransitionCSS: OptionStyle<"slider"> = ({
+  value: { value }
+}) => ({
+  "{{WRAPPER}} .brz-chart_title": {
+    "transition-duration": `0.${value}s;`
+  }
+});
+
 export const widthCSS: OptionStyle<"slider"> = ({
   value: { value, unit }
 }) => ({

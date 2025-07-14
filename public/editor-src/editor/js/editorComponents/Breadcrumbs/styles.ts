@@ -15,12 +15,10 @@ export const style = (data: DynamicStylesProps<Value>): OutputStyle => {
         "cssStyleTypography2LetterSpacing",
         "cssStyleTypography2FontVariation",
         "cssStyleTextTransforms"
-      ],
-      interval: ["cssStyleHoverTransition"]
+      ]
     },
     ".brz && .brz-ui-ed-breadcrumbs li:not(li:last-child):hover": {
-      standart: ["cssStyleColor"],
-      interval: ["cssStyleHoverTransition"]
+      standart: ["cssStyleColor"]
     },
     ".brz && .brz-ui-ed-breadcrumbs .brz-ui-ed-breadcrumb-separator svg": {
       standart: ["cssStyleElementBreadcrumbsColorArrows"]
@@ -28,6 +26,10 @@ export const style = (data: DynamicStylesProps<Value>): OutputStyle => {
     ".brz && .brz-ui-ed-breadcrumbs li:has(.brz-ui-ed-breadcrumb-link):nth-last-child(-n+2) ":
       {
         standart: ["cssStyleElementBreadcrumbsColorActive"]
+      },
+    ".brz && .brz-ui-ed-breadcrumbs li, .brz && .brz-ui-ed-breadcrumbs li:not(li:last-child)":
+      {
+        standart: ["cssStyleHoverTransition"]
       }
   };
 

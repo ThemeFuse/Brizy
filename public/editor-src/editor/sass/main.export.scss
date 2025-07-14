@@ -6,6 +6,9 @@
 // Overflow need to add for HTML | body
 @import "utilities/overflow";
 
+// RTL
+@import "utilities/rtl";
+
 // Main Styles
 .brz {
   @import "editorComponents";

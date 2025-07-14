@@ -112,7 +112,11 @@ interface CSS {
   cssText: string;
 }
 
-export type DynamicCSS = Array<CSS>;
+export type DynamicCSS = {
+  default: Array<CSS>;
+  rules: Array<CSS>;
+  custom: Array<CSS>;
+};
 
 interface Data {
   $root: cheerio.Root;

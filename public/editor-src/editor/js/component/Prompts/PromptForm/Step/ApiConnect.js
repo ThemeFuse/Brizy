@@ -1,13 +1,13 @@
 import React, { Component } from "react";
-import { pendingRequest } from "visual/utils/api";
-import { t } from "visual/utils/i18n";
-import { Context } from "../../common/GlobalApps/Context";
-import { Connect } from "../../common/GlobalApps/StepsView";
 import {
   createIntegrationAccount,
   getIntegration,
-  getIntegrationAccountApiKey
-} from "../api";
+  getIntegrationAccountApiKey,
+  pendingRequest
+} from "visual/utils/api";
+import { t } from "visual/utils/i18n";
+import { Context } from "../../common/GlobalApps/Context";
+import { Connect } from "../../common/GlobalApps/StepsView";
 import { authWindow } from "./common/utils";
 
 const getMessage = (data, keys) => {
@@ -59,7 +59,7 @@ class ApiConnect extends Component {
       onError
     } = context;
 
-    let { status, data } = await getIntegrationAccountApiKey(
+    let data = await getIntegrationAccountApiKey(
       {
         id,
         formId
@@ -67,7 +67,7 @@ class ApiConnect extends Component {
       props.config
     );
 
-    if (!status || status >= 400) {
+    if (!data) {
       data = [];
       onError(t("Something went wrong"));
     }
@@ -109,7 +109,7 @@ class ApiConnect extends Component {
     });
 
     if (!keysValue.some((key) => !key)) {
-      let { status, data } = await createIntegrationAccount(
+      const data = await createIntegrationAccount(
         {
           ...appData,
           formId,
@@ -118,12 +118,14 @@ class ApiConnect extends Component {
         config
       );
 
+      const { status } = data;
+
       if (status === 302) {
         const { redirect: redirectUrl } = data;
 
         try {
           await authWindow(redirectUrl);
-          const { data } = await getIntegration({ formId, id }, config);
+          const data = await getIntegration({ formId, id }, config);
 
           onChange(id, { ...appData, accounts: data.accounts });
           onChangeProgress({ showProgress: true });
