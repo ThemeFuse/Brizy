@@ -1,6 +1,7 @@
 .brz-ed-control__internalLink-wrapper {
   display: flex;
   align-items: center;
+  justify-content: space-between;
 
   .brz-ed-control__internalLink {
     font-family: $default-font-family;
@@ -37,7 +38,7 @@
       .brz-ed-icon-svg {
         cursor: pointer;
         min-width: 13px;
-        margin-left: auto;
+        margin-inline-start: auto;
       }
     }
 
@@ -101,7 +102,7 @@
       }
 
       .brz-ed-control__internalLink__spinner {
-        margin-left: 5px;
+        margin-inline-start: 5px;
       }
     }
 

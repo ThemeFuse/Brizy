@@ -74,3 +74,35 @@ export const getErrorMessage = (e: unknown): MValue<ErrorResponse> => {
   }
   return undefined;
 };
+
+export const getResponseData = async (res: Response) => {
+  const jsonData = await res.json();
+
+  if (jsonData.success) {
+    return jsonData;
+  }
+
+  const { data } = jsonData;
+
+  return {
+    ...data,
+    status: data.code ?? res.status
+  };
+};
+
+export function objectToQueryString(
+  obj: Record<string, string | number | boolean>
+): string {
+  if (!obj) {
+    return "";
+  }
+
+  return Object.entries<string | number | boolean>(obj)
+    .map((item) => {
+      return item[0] + "=" + encodeURIComponent(item[1]);
+    })
+    .join("&");
+}
+
+export const urlContainsQueryString = (url: string): boolean =>
+  url.includes("?");

@@ -16,13 +16,15 @@ type Props = {
   subtype?: string;
   useHandle?: boolean;
   children: React.ReactElement | FunctionAsAChild;
+  extraAttributes?: Record<string, string>;
 };
 
 export const SortableElement: (props: Props) => React.ReactElement = ({
   children,
   type,
   subtype,
-  useHandle
+  useHandle,
+  extraAttributes
 }) => {
   const { renderType } = useRender();
   const sortableUseHandleDataFromAttr = useHandle
@@ -41,7 +43,8 @@ export const SortableElement: (props: Props) => React.ReactElement = ({
         }),
         ...makeDataAttr({ name: "sortable-type", value: type }),
         ...makeDataAttr({ name: "sortable-subtype", value: subtype }),
-        ...sortableUseHandleDataFromAttr
+        ...sortableUseHandleDataFromAttr,
+        ...extraAttributes
       };
 
   return typeof children === "function"

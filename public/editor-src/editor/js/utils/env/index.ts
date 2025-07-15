@@ -5,6 +5,8 @@ import * as Str from "visual/utils/reader/string";
 
 export const isPro = (config: ConfigCommon): boolean => !!config.pro;
 
+export const isRTL = (config: ConfigCommon): boolean => !!config.isRTL;
+
 //#region Page
 
 export const getCurrentPageId = (config: ConfigCommon): string => {

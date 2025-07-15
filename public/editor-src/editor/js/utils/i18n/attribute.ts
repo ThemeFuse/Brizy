@@ -40,3 +40,7 @@ export const makeDataAttr = (data: DatasetUnknown): Record<string, string> => {
   const attrName = makeAttr(name, translatable);
   return { [attrName]: attrValue };
 };
+
+export const makeBzelmAttr = (value: string): Record<string, string> => ({
+  "data-bzelm": value
+});

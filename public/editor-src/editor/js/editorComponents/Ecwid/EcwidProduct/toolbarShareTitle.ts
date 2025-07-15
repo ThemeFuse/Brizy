@@ -95,8 +95,18 @@ export const getItems: GetItems<Value> = ({ v, device, state }) => {
       position: 40,
       options: [
         {
+          id: "shareTitleTopSpacing",
+          label: t("S. Top"),
+          type: "slider",
+          config: {
+            min: 0,
+            max: 100,
+            units: [{ value: "px", title: "px" }]
+          }
+        },
+        {
           id: "shareTitleSpacing",
-          label: t("Spacing"),
+          label: t("S. Bottom"),
           type: "slider",
           config: {
             min: 0,

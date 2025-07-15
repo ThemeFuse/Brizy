@@ -43,7 +43,7 @@
   > .story-slider-curtain {
     position: absolute;
     top: -6px;
-    left: -6px;
+    inset-inline-start: -6px;
     z-index: 2;
     width: 98px;
     height: 155px;
@@ -67,7 +67,7 @@
     flex: auto;
   }
   .brz-section__content > .brz-bg {
-    right: 0;
+    inset-inline-end: 0;
   }
 
   // For Slider
@@ -114,7 +114,7 @@
         > .story-slider-curtain {
           position: absolute;
           top: -6px;
-          left: -6px;
+          inset-inline-start: -6px;
           z-index: 2;
           width: 91px;
           height: 170px;
@@ -142,7 +142,7 @@
         }
       }
       > li:first-child > .story-slider-curtain {
-        margin-left: 0;
+        margin-inline-start: 0;
       }
     }
   }

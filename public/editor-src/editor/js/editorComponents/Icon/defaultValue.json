@@ -259,6 +259,8 @@
 
     "customCSS": "",
 
+    "ariaLabel": "",
+
     "tempMobilePadding": 20,
     "tempMobileBorderRadius": 4
   }

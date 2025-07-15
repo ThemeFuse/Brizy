@@ -29,9 +29,8 @@ class Brizy_Admin_Popups_Main {
 		add_action( 'brizy_preview_enqueue_post', [ $this, 'enqueuePopupScripts' ] );
 		add_action( 'wp_footer', [ $this, 'wpFooterAppendPopupHtml' ] );
 		add_filter( 'body_class', [ $this, 'bodyClassFrontend' ], 11 );
-
-		$this->enqueuePopupScripts($post->getWpPostId());
-		$this->enqueuePopupScripts(null);
+		$this->enqueuePopupScripts( $post->getWpPostId() );
+		$this->enqueuePopupScripts( null );
 	}
 
 	public function enqueuePopupScripts( $postId ) {
@@ -165,12 +164,11 @@ class Brizy_Admin_Popups_Main {
 			/**
 			 * @var Brizy_Editor_Post $brizyPopup ;
 			 */
-			if ( ! $brizyPopup->get_compiled_html() ) {
+			if ( empty($brizyPopup->getCompiledSections()) ) {
 				continue;
 			}
 
-			$popupContent = apply_filters( 'brizy_content', $brizyPopup->get_compiled_html(), Brizy_Editor_Project::get(), null, $context );
-
+			$popupContent = apply_filters( 'brizy_content', $brizyPopup->getCompiledHtml(), Brizy_Editor_Project::get(), null, $context );
 			$content .= "\n\n<!-- POPUP BODY -->\n{$popupContent}\n<!-- POPUP BODY END-->\n\n";
 		}
 
@@ -229,7 +227,7 @@ class Brizy_Admin_Popups_Main {
 			foreach ( $allPopups as $aPopup ) {
 				try {
 					if ( $ruleSets[ $aPopup->ID ]->isMatching( $applyFor, $entityType, $entityValues ) ) {
-						$resultPopups[ $aPopup->ID ] = Brizy_Editor_Post::get( $aPopup );
+						$resultPopups[ $aPopup->ID ] = Brizy_Editor_Popup::get( $aPopup );
 					}
 				} catch ( \Exception $e ) {
 					continue; // we catch here  the  exclusions

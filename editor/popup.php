@@ -228,7 +228,7 @@ class Brizy_Editor_Popup extends Brizy_Editor_Post {
 		$global = array();
 
 		if ( in_array( 'data', $fields ) ) {
-			$global['data'] = $this->get_editor_data( $context == Brizy_Editor_Editor_Editor::COMPILE_CONTEXT );
+			$global['data'] = $this->getEditorData( $context == Brizy_Editor_Editor_Editor::COMPILE_CONTEXT );
 		}
 
 		if ( in_array( 'uid', $fields ) ) {
@@ -262,5 +262,9 @@ class Brizy_Editor_Popup extends Brizy_Editor_Post {
 		$global['compiler'] = $this->get_compiler();
 
 		return $global;
+	}
+	public function getCompiledHtml() {
+		$sectionSet = $this->getCompiledSectionManager();
+		return $sectionSet->wrapHtml($sectionSet->buildHtml());
 	}
 }

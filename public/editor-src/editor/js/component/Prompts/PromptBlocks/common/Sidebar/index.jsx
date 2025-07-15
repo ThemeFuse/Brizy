@@ -1,5 +1,5 @@
-import React from "react";
 import classnames from "classnames";
+import React from "react";
 import Scrollbars from "react-custom-scrollbars";
 
 export { Option as SidebarOption } from "./Option";
@@ -14,7 +14,7 @@ export default function Sidebar(props) {
       style={{
         ...style,
         borderRadius: "inherit",
-        backgroundColor: "rgba(129, 138, 145, 0.5)"
+        backgroundColor: "var(--toolbars-icons-separators, #3f4652)"
       }}
     />
   );

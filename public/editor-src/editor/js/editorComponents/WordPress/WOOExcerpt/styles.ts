@@ -19,8 +19,7 @@ export function style(data: DynamicStylesProps<ElementModel>) {
       ]
     },
     ".brz && h1:hover": {
-      standart: ["cssStyleElementWPPostContentH1Color"],
-      interval: ["cssStyleHoverTransition"]
+      standart: ["cssStyleElementWPPostContentH1Color"]
     },
     ".brz && h2": {
       standart: [
@@ -34,8 +33,7 @@ export function style(data: DynamicStylesProps<ElementModel>) {
       ]
     },
     ".brz && h2:hover": {
-      standart: ["cssStyleElementWPPostContentH2Color"],
-      interval: ["cssStyleHoverTransition"]
+      standart: ["cssStyleElementWPPostContentH2Color"]
     },
     ".brz && h3": {
       standart: [
@@ -49,8 +47,7 @@ export function style(data: DynamicStylesProps<ElementModel>) {
       ]
     },
     ".brz && h3:hover": {
-      standart: ["cssStyleElementWPPostContentH3Color"],
-      interval: ["cssStyleHoverTransition"]
+      standart: ["cssStyleElementWPPostContentH3Color"]
     },
     ".brz && h4": {
       standart: [
@@ -64,8 +61,7 @@ export function style(data: DynamicStylesProps<ElementModel>) {
       ]
     },
     ".brz && h4:hover": {
-      standart: ["cssStyleElementWPPostContentH4Color"],
-      interval: ["cssStyleHoverTransition"]
+      standart: ["cssStyleElementWPPostContentH4Color"]
     },
     ".brz && h5": {
       standart: [
@@ -79,8 +75,7 @@ export function style(data: DynamicStylesProps<ElementModel>) {
       ]
     },
     ".brz && h5:hover": {
-      standart: ["cssStyleElementWPPostContentH5Color"],
-      interval: ["cssStyleHoverTransition"]
+      standart: ["cssStyleElementWPPostContentH5Color"]
     },
     ".brz && h6": {
       standart: [
@@ -94,8 +89,7 @@ export function style(data: DynamicStylesProps<ElementModel>) {
       ]
     },
     ".brz && h6:hover": {
-      standart: ["cssStyleElementWPPostContentH6Color"],
-      interval: ["cssStyleHoverTransition"]
+      standart: ["cssStyleElementWPPostContentH6Color"]
     },
     ".brz && strong, .brz && b": {
       standart: [
@@ -109,8 +103,7 @@ export function style(data: DynamicStylesProps<ElementModel>) {
       ]
     },
     ".brz &&:hover strong, .brz &&:hover b": {
-      standart: ["cssStyleElementWPPostContentParagraphColor"],
-      interval: ["cssStyleHoverTransition"]
+      standart: ["cssStyleElementWPPostContentParagraphColor"]
     },
     ".brz && *:not(h1):not(h2):not(h3):not(h4):not(h5):not(h6):not(b):not(strong):not(i):not(span)":
       {
@@ -126,8 +119,11 @@ export function style(data: DynamicStylesProps<ElementModel>) {
       },
     ".brz && *:not(h1):not(h2):not(h3):not(h4):not(h5):not(h6):not(b):not(strong):not(i):not(span):hover":
       {
-        standart: ["cssStyleElementWPPostContentParagraphColor"],
-        interval: ["cssStyleHoverTransition"]
+        standart: ["cssStyleElementWPPostContentParagraphColor"]
+      },
+    ".brz && h1, .brz && h2, .brz && h3, .brz && h4, .brz && h5, .brz && h6, .brz && strong, .brz && b, .brz && p":
+      {
+        standart: ["cssStyleHoverTransition"]
       }
   };
 

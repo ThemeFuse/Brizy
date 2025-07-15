@@ -1,3 +1,4 @@
+import { CheckCompatibilityResponse } from "@/authorisation/types";
 import { GetAuthorsProps } from "@/authors/types";
 import { Config, getConfig } from "@/config";
 import {
@@ -13,10 +14,22 @@ import {
   isStoryDataBlocks,
   isStoryDataResponse
 } from "@/defaultTemplates/utils";
+import {
+  AddRecaptchaData,
+  CreateIntegrationAccountData,
+  CreateIntegrationListData,
+  FormData as FormDataType,
+  IntegrationAccountApiKeyResponse,
+  IntegrationAccountResponse,
+  IntegrationResponse,
+  NormalizeAccountsResolve,
+  UpdateIntegrationData
+} from "@/form/types";
 import { MenuSimple } from "@/menu/types";
 import { GetPostsProps, GetPostTaxonomiesProps } from "@/posts/types";
-import { GetTermsByProps } from "@/terms/types";
 import { Sidebar } from "@/sidebars/types";
+import { GetTermsByProps } from "@/terms/types";
+import { SignIn, SignUp } from "@/types/Authorization";
 import {
   APIPopup,
   DefaultBlock,
@@ -31,12 +44,13 @@ import {
   Style
 } from "@/types/DefaultTemplate";
 import { ConfigDCItem } from "@/types/DynamicContent";
+import { UploadFont } from "@/types/Fonts";
 import { GlobalBlock } from "@/types/GlobalBlocks";
 import { IconUploadData } from "@/types/Icon";
 import { Page } from "@/types/Page";
 import { Rule } from "@/types/PopupConditions";
 import { Project } from "@/types/Project";
-import { ResponseWithBody } from "@/types/Response";
+import { ResponseWithBody, SuccessResponse } from "@/types/Response";
 import {
   CreateSavedBlock,
   CreateSavedLayout,
@@ -62,7 +76,7 @@ import {
   stringifyProject,
   stringifySavedBlock
 } from "./adapter";
-import { makeFormEncode, makeUrl } from "./utils";
+import { getResponseData, makeFormEncode, makeUrl } from "./utils";
 
 //#region Common Utils Request & PersistentRequest
 
@@ -1236,6 +1250,69 @@ export async function getUploadedFonts() {
   return response.data;
 }
 
+export async function uploadFont(formData: FormData): Promise<UploadFont> {
+  const config = getConfig();
+
+  if (!config) {
+    throw new Error(t("Invalid __BRZ_PLUGIN_ENV__"));
+  }
+
+  const {
+    hash,
+    url: _url,
+    editorVersion: version,
+    actions: { createFont }
+  } = config;
+
+  const url = makeUrl(_url, {
+    action: createFont,
+    version,
+    hash
+  });
+
+  const r = await request(url, { method: "POST", body: formData });
+
+  if (!r.ok) {
+    throw new Error("Failed to upload font");
+  }
+
+  const responseData: UploadFont = (await r.json()).data;
+
+  return responseData;
+}
+
+export async function deleteFont(fontId: string): Promise<boolean> {
+  const config = getConfig();
+
+  if (!config) {
+    throw new Error(t("Invalid __BRZ_PLUGIN_ENV__"));
+  }
+
+  const {
+    hash,
+    url: _url,
+    editorVersion: version,
+    actions: { deleteFont }
+  } = config;
+
+  const url = makeUrl(_url, {
+    action: deleteFont,
+    version,
+    hash,
+    id: fontId
+  });
+
+  const r = await request(url, { method: "POST" });
+
+  if (!r.ok) {
+    throw new Error("Failed to delete font");
+  }
+
+  const { success } = await r.json();
+
+  return success;
+}
+
 //#endregion
 
 //#region Global Blocks
@@ -2165,6 +2242,35 @@ export const getPostTaxonomies = async ({
   throw new Error(t("Failed to find post taxonomies"));
 };
 
+export const getRulePosts = async (postType: string) => {
+  const config = getConfig();
+
+  if (!config) {
+    throw new Error(t("Invalid __BRZ_PLUGIN_ENV__"));
+  }
+
+  const { editorVersion, hash, actions, url: _url } = config;
+
+  const url = makeUrl(_url, {
+    hash,
+    action: actions.rulePostsGroupList,
+    version: editorVersion,
+    postType
+  });
+
+  const response = await request(url, {
+    method: "POST"
+  });
+
+  if (response.ok) {
+    const rj = await response.json();
+
+    return rj.data;
+  }
+
+  throw new Error(t("Failed to find rule posts"));
+};
+
 //#endregion
 
 //#region Terms
@@ -2286,3 +2392,702 @@ export const getSidebars = async (): Promise<Sidebar[]> => {
 
   throw new Error(t("Failed to find sidebars"));
 };
+
+//#region Authorisation
+export const signIn = async (data: SignIn): Promise<SuccessResponse> => {
+  const config = getConfig();
+
+  if (!config) {
+    throw new Error(t("Invalid __BRZ_PLUGIN_ENV__"));
+  }
+
+  const { editorVersion, hash, actions, url: _url } = config;
+
+  const url = makeUrl(_url, {
+    hash,
+    action: actions.cloudSignIn,
+    version: editorVersion
+  });
+
+  const r = await request(url, {
+    method: "POST",
+    body: JSON.stringify(data)
+  });
+
+  if (r.ok) {
+    return {
+      success: true
+    };
+  }
+
+  throw new Error(t("Failed to sign in"));
+};
+
+export const signUp = async (data: SignUp): Promise<SuccessResponse> => {
+  const config = getConfig();
+
+  if (!config) {
+    throw new Error(t("Invalid __BRZ_PLUGIN_ENV__"));
+  }
+
+  const { editorVersion, hash, actions, url: _url } = config;
+
+  const url = makeUrl(_url, {
+    hash,
+    action: actions.cloudSignUp,
+    version: editorVersion
+  });
+
+  const r = await request(url, {
+    method: "POST",
+    body: JSON.stringify(data)
+  });
+
+  if (r.ok) {
+    return {
+      success: true
+    };
+  }
+
+  throw new Error(t("Failed to sign up"));
+};
+
+export const recoveryEmail = async (
+  email: string
+): Promise<SuccessResponse> => {
+  const config = getConfig();
+
+  if (!config) {
+    throw new Error(t("Invalid __BRZ_PLUGIN_ENV__"));
+  }
+
+  const { editorVersion, hash, actions, url: _url } = config;
+
+  const url = makeUrl(_url, {
+    hash,
+    action: actions.cloudResetPassword,
+    version: editorVersion
+  });
+
+  const r = await request(url, {
+    method: "POST",
+    body: JSON.stringify({ email })
+  });
+
+  if (r.ok) {
+    return {
+      success: true
+    };
+  }
+
+  throw new Error(t("Failed to send recovery email"));
+};
+
+export const logout = async (): Promise<SuccessResponse> => {
+  const config = getConfig();
+
+  if (!config) {
+    throw new Error(t("Invalid __BRZ_PLUGIN_ENV__"));
+  }
+
+  const { editorVersion, hash, actions, url: _url } = config;
+
+  const url = makeUrl(_url, {
+    hash,
+    action: actions.cloudSignOut,
+    version: editorVersion
+  });
+
+  const r = await request(url, {
+    method: "GET"
+  });
+
+  if (r.ok) {
+    return {
+      success: true
+    };
+  }
+
+  throw new Error(t("Failed to sign out"));
+};
+
+export const sync = async (maxTries = 5): Promise<SuccessResponse> => {
+  const config = getConfig();
+
+  if (!config) {
+    throw new Error(t("Invalid __BRZ_PLUGIN_ENV__"));
+  }
+
+  const { editorVersion, hash, actions, url: _url } = config;
+
+  const url = makeUrl(_url, {
+    hash,
+    action: actions.cloudSync,
+    version: editorVersion
+  });
+
+  const r = await request(url, {
+    method: "GET"
+  });
+
+  const { status, data } = await getResponseData(r);
+
+  if (!status || status >= 400) {
+    throw new Error(t("Failed to sync"));
+  }
+
+  const { synchronized } = data;
+
+  if (synchronized === 0) {
+    return {
+      success: true
+    };
+  } else {
+    if (maxTries > 0) {
+      return sync(maxTries - 1);
+    }
+  }
+
+  throw new Error(t("Failed to sync"));
+};
+
+export const checkCompatibility =
+  async (): Promise<CheckCompatibilityResponse> => {
+    const config = getConfig();
+
+    if (!config) {
+      throw new Error(t("Invalid __BRZ_PLUGIN_ENV__"));
+    }
+
+    const { editorVersion, hash, actions, url: _url } = config;
+
+    const url = makeUrl(_url, {
+      hash,
+      action: actions.cloudSyncAllowed,
+      version: editorVersion
+    });
+
+    const r = await request(url, {
+      method: "GET"
+    });
+
+    if (r.ok) {
+      const { data } = await r.json();
+
+      return {
+        success: true,
+        isSyncAllowed: data.isSyncAllowed || true
+      };
+    }
+
+    throw new Error(t("Failed to check compatibility"));
+  };
+//#endregion
+
+//#region Form
+export const getForm = async (formId: string): Promise<FormDataType> => {
+  const config = getConfig();
+
+  if (!config) {
+    throw new Error(t("Invalid __BRZ_PLUGIN_ENV__"));
+  }
+
+  const { editorVersion, hash, actions, url: _url } = config;
+
+  const url = makeUrl(_url, {
+    hash,
+    action: actions.getForm,
+    version: editorVersion,
+    formId
+  });
+
+  const r = await request(url, {
+    method: "GET"
+  });
+
+  const { status, success, data } = await getResponseData(r);
+
+  if (success) {
+    return data;
+  }
+
+  if (status === 404) {
+    return createForm(formId);
+  }
+  throw new Error(t("Failed to get form"));
+};
+
+const createForm = async (formId: string): Promise<FormDataType> => {
+  const config = getConfig();
+
+  if (!config) {
+    throw new Error(t("Invalid __BRZ_PLUGIN_ENV__"));
+  }
+
+  const { editorVersion, hash, actions, url: _url } = config;
+
+  const url = makeUrl(_url, {
+    hash,
+    action: actions.createForm,
+    version: editorVersion
+  });
+
+  const r = await request(url, {
+    method: "POST",
+    body: JSON.stringify({
+      id: formId
+    })
+  });
+
+  const { success, data } = await getResponseData(r);
+
+  if (success) {
+    return data;
+  }
+
+  throw new Error(t("Failed to create form"));
+};
+
+export const updateForm = async ({
+  formId,
+  hasEmailTemplate,
+  emailTemplate
+}: {
+  formId: string;
+  hasEmailTemplate: boolean;
+  emailTemplate: string;
+}): Promise<SuccessResponse> => {
+  const config = getConfig();
+
+  if (!config) {
+    throw new Error(t("Invalid __BRZ_PLUGIN_ENV__"));
+  }
+
+  const { editorVersion, hash, actions, url: _url } = config;
+
+  const url = makeUrl(_url, {
+    formId,
+    hash,
+    action: actions.updateForm,
+    version: editorVersion
+  });
+
+  const r = await request(url, {
+    method: "POST",
+    body: JSON.stringify({
+      hasEmailTemplate,
+      emailTemplate
+    })
+  });
+
+  const { success } = await getResponseData(r);
+
+  if (success) {
+    return {
+      success: true
+    };
+  }
+
+  throw new Error(t("Failed to update form"));
+};
+
+export const getIntegration = async ({
+  formId,
+  id
+}: {
+  formId: string;
+  id: string;
+}): Promise<IntegrationResponse> => {
+  const config = getConfig();
+
+  if (!config) {
+    throw new Error(t("Invalid __BRZ_PLUGIN_ENV__"));
+  }
+
+  const { editorVersion, hash, actions, url: _url } = config;
+
+  const url = makeUrl(_url, {
+    hash,
+    action: actions.getIntegration,
+    version: editorVersion,
+    formId,
+    integration: id
+  });
+
+  const r = await request(url, {
+    method: "GET"
+  });
+
+  const { status, success, data } = await getResponseData(r);
+
+  if (success) {
+    return data;
+  }
+
+  if (status === 404) {
+    return createIntegration({ formId, id });
+  }
+
+  throw new Error(t("Failed to get integration"));
+};
+
+export const createIntegration = async ({
+  formId,
+  id
+}: {
+  formId: string;
+  id: string;
+}): Promise<IntegrationResponse> => {
+  const config = getConfig();
+
+  if (!config) {
+    throw new Error(t("Invalid __BRZ_PLUGIN_ENV__"));
+  }
+
+  const { editorVersion, hash, actions, url: _url } = config;
+
+  const url = makeUrl(_url, {
+    hash,
+    action: actions.createIntegration,
+    version: editorVersion,
+    formId
+  });
+
+  const r = await request(url, {
+    method: "POST",
+    body: JSON.stringify({
+      id
+    })
+  });
+
+  const { success, data } = await getResponseData(r);
+
+  if (success) {
+    return data;
+  }
+
+  throw new Error(t("Failed to create integration"));
+};
+
+export const updateIntegration = async ({
+  formId,
+  ...appData
+}: UpdateIntegrationData): Promise<IntegrationResponse> => {
+  const config = getConfig();
+
+  if (!config) {
+    throw new Error(t("Invalid __BRZ_PLUGIN_ENV__"));
+  }
+
+  const { editorVersion, hash, actions, url: _url } = config;
+
+  const url = makeUrl(_url, {
+    hash,
+    action: actions.updateIntegration,
+    version: editorVersion,
+    formId
+  });
+
+  const r = await request(url, {
+    method: "POST",
+    body: JSON.stringify(appData)
+  });
+
+  const { success, data } = await getResponseData(r);
+
+  if (success) {
+    return data;
+  }
+
+  throw new Error(t("Failed to update integration"));
+};
+
+export const getIntegrationAccountApiKey = async ({
+  formId,
+  id
+}: {
+  formId: string;
+  id: string;
+}): Promise<IntegrationAccountApiKeyResponse> => {
+  const config = getConfig();
+
+  if (!config) {
+    throw new Error(t("Invalid __BRZ_PLUGIN_ENV__"));
+  }
+
+  const { editorVersion, hash, actions, url: _url } = config;
+
+  const url = makeUrl(_url, {
+    hash,
+    action: actions.getAccountProperties ?? "",
+    version: editorVersion,
+    formId,
+    integration: id
+  });
+
+  const r = await request(url, {
+    method: "GET"
+  });
+
+  const { success, data } = await getResponseData(r);
+
+  if (success) {
+    return data;
+  }
+
+  throw new Error(t("Failed to get integration account api key"));
+};
+
+export const createIntegrationAccount = async ({
+  formId,
+  id,
+  data
+}: CreateIntegrationAccountData): Promise<IntegrationAccountResponse> => {
+  const config = getConfig();
+
+  if (!config) {
+    throw new Error(t("Invalid __BRZ_PLUGIN_ENV__"));
+  }
+
+  const { editorVersion, hash, actions, url: _url } = config;
+
+  const url = makeUrl(_url, {
+    hash,
+    action: actions.authenticateIntegration ?? "",
+    version: editorVersion,
+    formId,
+    integration: id
+  });
+
+  const r = await request(url, {
+    method: "POST",
+    body: JSON.stringify(data)
+  });
+
+  const { success, status = r.status, data: rData } = await getResponseData(r);
+
+  if (success || status === 302) {
+    return {
+      ...rData,
+      status
+    };
+  }
+
+  throw new Error(t("Failed to create integration account"));
+};
+
+export const createIntegrationList = async ({
+  formId,
+  id,
+  data
+}: CreateIntegrationListData): Promise<CreateIntegrationListData> => {
+  const config = getConfig();
+
+  if (!config) {
+    throw new Error(t("Invalid __BRZ_PLUGIN_ENV__"));
+  }
+
+  const { editorVersion, hash, actions, url: _url } = config;
+
+  const url = makeUrl(_url, {
+    hash,
+    action: actions.createIntegrationGroup ?? "",
+    version: editorVersion,
+    formId,
+    integration: id
+  });
+
+  const r = await request(url, {
+    method: "POST",
+    body: JSON.stringify(data)
+  });
+
+  const { success, data: rData } = await getResponseData(r);
+
+  if (success) {
+    return rData;
+  }
+
+  throw new Error(t("Failed to create integration list"));
+};
+
+export const deleteSmtpIntegration = async ({
+  formId,
+  integration
+}: {
+  formId: string;
+  integration: string;
+}): Promise<SuccessResponse> => {
+  const config = getConfig();
+
+  if (!config) {
+    throw new Error(t("Invalid __BRZ_PLUGIN_ENV__"));
+  }
+
+  const { editorVersion, hash, actions, url: _url } = config;
+
+  const url = makeUrl(_url, {
+    hash,
+    action: actions.deleteIntegration,
+    version: editorVersion,
+    formId,
+    integration
+  });
+
+  const r = await request(url, {
+    method: "DELETE"
+  });
+
+  const { success } = await getResponseData(r);
+
+  if (success) {
+    return {
+      success
+    };
+  }
+
+  throw new Error(t("Failed to delete integration"));
+};
+
+export const addRecaptcha = async ({
+  group,
+  service,
+  secretkey,
+  sitekey,
+  response
+}: AddRecaptchaData): Promise<SuccessResponse> => {
+  const config = getConfig();
+
+  if (!config) {
+    throw new Error(t("Invalid __BRZ_PLUGIN_ENV__"));
+  }
+
+  const { editorVersion, hash, actions, url: _url } = config;
+
+  const url = makeUrl(_url, {
+    hash,
+    action: actions.addAccount,
+    version: editorVersion,
+    secretkey,
+    response
+  });
+
+  const r = await request(url, {
+    method: "POST",
+    body: JSON.stringify({
+      group,
+      service,
+      sitekey,
+      secretkey
+    })
+  });
+
+  const { success } = await getResponseData(r);
+
+  if (success) {
+    return {
+      success
+    };
+  }
+
+  throw new Error(t("Failed to add recaptcha"));
+};
+
+export const getAccounts = async (data: {
+  group: string;
+  services: string;
+}): Promise<NormalizeAccountsResolve> => {
+  const config = getConfig();
+
+  if (!config) {
+    throw new Error(t("Invalid __BRZ_PLUGIN_ENV__"));
+  }
+
+  const { editorVersion, hash, actions, url: _url } = config;
+
+  const url = makeUrl(_url, {
+    hash,
+    action: actions.getAccounts,
+    version: editorVersion,
+    ...(data ? data : {})
+  });
+
+  const r = await request(url, {
+    method: "GET"
+  });
+
+  const { success, data: rData } = await getResponseData(r);
+
+  if (success) {
+    return rData;
+  }
+
+  throw new Error(t("Failed to get accounts"));
+};
+
+export const addAccount = async (data: {
+  group: string;
+  service: string;
+  [apiKey: string]: string;
+}): Promise<SuccessResponse> => {
+  const config = getConfig();
+
+  if (!config) {
+    throw new Error(t("Invalid __BRZ_PLUGIN_ENV__"));
+  }
+
+  const { editorVersion, hash, actions, url: _url } = config;
+
+  const url = makeUrl(_url, {
+    hash,
+    action: actions.addAccount,
+    version: editorVersion
+  });
+
+  const r = await request(url, {
+    method: "POST",
+    body: JSON.stringify(data)
+  });
+
+  const { success } = await getResponseData(r);
+
+  if (success) {
+    return {
+      success
+    };
+  }
+
+  throw new Error(t("Failed to add account"));
+};
+
+export const deleteAccount = async (id: string): Promise<SuccessResponse> => {
+  const config = getConfig();
+
+  if (!config) {
+    throw new Error(t("Invalid __BRZ_PLUGIN_ENV__"));
+  }
+
+  const { editorVersion, hash, actions, url: _url } = config;
+
+  const url = makeUrl(_url, {
+    hash,
+    action: actions.deleteAccount,
+    version: editorVersion,
+    id
+  });
+
+  const r = await request(url, {
+    method: "DELETE"
+  });
+
+  const { success } = await getResponseData(r);
+
+  if (success) {
+    return {
+      success
+    };
+  }
+
+  throw new Error(t("Failed to delete account"));
+};
+//#endregion

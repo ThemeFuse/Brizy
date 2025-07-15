@@ -1,5 +1,5 @@
-import React, { Component } from "react";
 import classnames from "classnames";
+import React, { Component } from "react";
 import { DraggableDiv } from "visual/component/DraggableDiv";
 
 class ColumnResizer extends Component {
@@ -29,7 +29,12 @@ class ColumnResizer extends Component {
   };
 
   renderPopover = () => {
-    const widths = this.props.popoverData() ?? [];
+    const { isRTL, popoverData } = this.props;
+
+    const widths = popoverData() ?? [];
+
+    if (isRTL) widths.reverse();
+
     const content = widths.reduce((acc, width, index) => {
       if (index > 0) {
         acc.push(
@@ -59,6 +64,7 @@ class ColumnResizer extends Component {
 
   render() {
     const { position, color } = this.props;
+
     const className = classnames(
       "brz-ed-draggable__column",
       `brz-ed-draggable__column--${position}`,

@@ -5,6 +5,10 @@ import { Value } from "./types/Value";
 
 export function style(data: DynamicStylesProps<Value>): OutputStyle {
   const styles = {
+    "#ecwid_html #ecwid_body .ecwid-pswp section.pswp__scroll-wrap .pswp__caption .pswp__caption__center, #ecwid_html #ecwid_body .ecwid-pswp section.pswp__scroll-wrap .pswp__caption .pswp__caption__left, #ecwid_html #ecwid_body .ecwid-pswp section.pswp__scroll-wrap .pswp__caption .pswp__caption__right":
+      {
+        standart: ["cssStyleElementEcwidProductImageLightboxTitle"]
+      },
     "#ecwid_html #ecwid_body && .ecwid .ecwid-productBrowser:hover": {
       standart: [
         "cssStyleElementEcwidProductBgColor",
@@ -243,6 +247,15 @@ export function style(data: DynamicStylesProps<Value>): OutputStyle {
           "cssStyleElementEcwidProductSizeSpacing"
         ]
       },
+    "#ecwid_html #ecwid_body && .ecwid .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details .product-details__sidebar .product-details__product-options.details-product-options .product-details-module.details-product-option.details-product-option--radio .product-details-module__title, #ecwid_html #ecwid_body && .ecwid .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details .product-details__sidebar .product-details__product-options.details-product-options .product-details-module.details-product-option.details-product-option--swatches .product-details-module__title, #ecwid_html #ecwid_body && .ecwid .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details .product-details__sidebar .product-details__product-options.details-product-options .product-details-module.details-product-option.details-product-option--checkbox .product-details-module__title, #ecwid_html #ecwid_body && .ecwid .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details .product-details__sidebar .product-details__product-options.details-product-options .product-details-module.details-product-option.details-product-option--select .product-details-module__title":
+      {
+        standart: [
+          "cssStyleElementEcwidProductSizeColor",
+          "cssStyleElementEcwidProductSizeTypography",
+          "cssStyleElementEcwidProductSizeAlign",
+          "cssStyleElementEcwidProductSizeSpacing"
+        ]
+      },
     "#ecwid_html #ecwid_body && .ecwid .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details .product-details__sidebar .product-details__product-options.details-product-options .product-details-module.details-product-option.details-product-option--radio":
       { standart: ["cssStyleElementEcwidProductRadioSpacing"] },
     "#ecwid_html #ecwid_body && .ecwid .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details .product-details__sidebar .product-details__product-options.details-product-options .product-details-module.details-product-option.details-product-option--radio .product-details-module__content .form-control--radio":
@@ -263,10 +276,7 @@ export function style(data: DynamicStylesProps<Value>): OutputStyle {
       { standart: ["cssStyleElementEcwidProductRadioIconSize"] },
     "#ecwid_html #ecwid_body && .ecwid .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details .product-details__sidebar .product-details__product-options.details-product-options .product-details-module.details-product-option.details-product-option--radio .product-details-module__content .form-control--radio:hover .form-control__radio-wrap .form-control__radio-view:after":
       {
-        standart: [
-          "cssStyleElementEcwidProductRadioColorIcon",
-          "cssStyleElementEcwidProductRadioBorderColorIcon"
-        ],
+        standart: ["cssStyleElementEcwidProductRadioOptionColor"],
         interval: [
           "cssStyleHoverTransition",
           "cssStylePropertyHoverTransitionElementEcwid"
@@ -756,10 +766,7 @@ export function style(data: DynamicStylesProps<Value>): OutputStyle {
       { standart: ["cssStyleElementEcwidProductFavoritedIconSize"] },
     "#ecwid_html #ecwid_body && .ecwid .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details .product-details__sidebar .product-details-module.product-details__product-like.favorite-product .product-details-module__content.product-details-module__content--indented .form-control.form-control--button.form-control--medium.form-control--secondary.form-control--done.favorite-product__button-view":
       {
-        standart: [
-          "cssStyleElementEcwidProductViewFavoritesSpacing",
-          "cssStyleElementEcwidProductViewFavoritesWidth"
-        ]
+        standart: ["cssStyleElementEcwidProductViewFavoritesWidth"]
       },
     "#ecwid_html #ecwid_body && .ecwid .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details .product-details__sidebar .product-details-module.product-details__product-like.favorite-product .product-details-module__content.product-details-module__content--indented .form-control.form-control--button.form-control--medium.form-control--secondary.form-control--done.favorite-product__button-view .form-control__button":
       {
@@ -866,10 +873,7 @@ export function style(data: DynamicStylesProps<Value>): OutputStyle {
       },
     "#ecwid_html #ecwid_body && .ecwid .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details .product-details__gallery .details-gallery__wrap .details-gallery__wrap-inner .details-gallery__images .details-gallery__images-container .details-gallery__images-carousel .details-gallery__image:not(:first-child) .details-gallery__image-wrapper .details-gallery__image-wrapper-inner":
       {
-        standart: [
-          "cssStyleElementWOOGalleryBorderRadiusThumbnail",
-          "cssStyleElementEcwidProductThumbnailBetween"
-        ]
+        standart: ["cssStyleElementWOOGalleryBorderRadiusThumbnail"]
       },
     "#ecwid_html #ecwid_body && .ecwid .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details .product-details__gallery .details-gallery__wrap .details-gallery__wrap-inner .details-gallery__images .details-gallery__images-container .details-gallery__images-carousel .details-gallery__image:not(:first-child) .details-gallery__image-wrapper .details-gallery__image-wrapper-inner:hover":
       {
@@ -1106,17 +1110,15 @@ export function style(data: DynamicStylesProps<Value>): OutputStyle {
       {
         standart: [
           "cssStyleElementEcwidProductWholesalePriceAlign",
-          "cssStyleElementEcwidProductWholesalePriceSpacing"
-        ]
-      },
-    "#ecwid_html #ecwid_body && .ecwid .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details .product-details__sidebar .product-details-module.product-details__product-price-row .product-details-module__content .product-details__attraction-block.product-details__product-on-sale .details-product-price-compare__container .details-product-price-compare__value":
-      {
-        standart: [
+          "cssStyleElementEcwidProductWholesalePriceSpacing",
           "cssStyleElementEcwidProductWholesaleColor",
           "cssStyleElementEcwidProductWholesaleTypography",
-          "cssStyleElementEcwidProductWholesalePriceRightSpacing",
           "cssStyleElementEcwidProductWholesalePriceColumn"
         ]
+      },
+    "#ecwid_html #ecwid_body && .ecwid .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details .product-details__sidebar .product-details-module.product-details__product-price-row .product-details-module__content .product-details__attraction-block.product-details__product-on-sale .details-product-price-compare__container s":
+      {
+        standart: ["cssStyleElementEcwidProductWholesalePriceRightSpacing"]
       },
     "#ecwid_html #ecwid_body && .ecwid .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details .product-details__sidebar .product-details-module.product-details__product-price-row .product-details-module__content .product-details__attraction-block.product-details__product-on-sale .details-product-price-compare__container .product-details__product-price-discount":
       {
@@ -1208,6 +1210,10 @@ export function style(data: DynamicStylesProps<Value>): OutputStyle {
           "cssStyleElementEcwidProductRelatedAlign",
           "cssStyleElementEcwidProductRelatedSpacing"
         ]
+      },
+    "#ecwid_html #ecwid_body && .ecwid .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .ec-related-products .ec-related-products__products.ec-grid .grid__wrap .grid__wrap-inner .grid__products":
+      {
+        standart: ["cssStyleElementEcwidProductRelatedImagesAlign"]
       },
     "#ecwid_html #ecwid_body && .ecwid .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .ec-related-products .ec-related-products__products.ec-grid .grid__wrap .grid__wrap-inner .grid__products .grid-product .grid-product__wrap .grid-product__wrap-inner .grid-product__title .grid-product__title-inner":
       {

@@ -97,21 +97,48 @@ const fn: ExportFunction = ($node) => {
       }
     });
 
-    window.Brz.on("elements.slick.ready", (slick: HTMLElement) => {
-      const video = $this.get(0);
+    window.Brz.on(
+      "elements.slick.ready",
+      ({ slick, wrapper }: { slick: HTMLElement; wrapper?: HTMLElement }) => {
+        const video = $this.get(0);
 
-      if (video) {
-        $this.backgroundVideo("resize");
+        if (video) {
+          $this.backgroundVideo("resize");
+          const isSectionSlick = !!slick.querySelector(".brz-section__content");
 
-        if (slick.contains(video)) {
-          $this.backgroundVideo("reinit", {
-            type,
-            loop,
-            start
-          });
+          if (slick.contains(video) && !isSectionSlick) {
+            $this.backgroundVideo("reinit", {
+              type,
+              loop,
+              start
+            });
+          }
+
+          // Pause background videos inside the current slick slider, excluding the active slide
+          if (
+            isSectionSlick &&
+            !slick.contains(video) &&
+            wrapper?.contains(video)
+          ) {
+            $this.backgroundVideo("pause");
+          }
         }
       }
-    });
+    );
+
+    window.Brz.on(
+      "elements.section.slide.change",
+      ({ node, slick }: { node: HTMLElement; slick: HTMLElement }) => {
+        const video = $this.get(0);
+
+        if (!video || !node.contains(video)) {
+          return;
+        }
+
+        const method = video && slick.contains(video) ? "play" : "pause";
+        $this.backgroundVideo(method);
+      }
+    );
   });
 
   // slideshow

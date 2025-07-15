@@ -10,12 +10,12 @@
     margin-bottom: 15px;
 
     .brz-ed-control__tab {
-      margin-right: 20px;
+      margin-inline-end: 20px;
       position: relative;
       min-height: 30px;
 
       &:not(:last-child) {
-        margin-right: 19px;
+        margin-inline-end: 19px;
       }
 
       &:after {

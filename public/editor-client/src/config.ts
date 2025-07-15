@@ -46,11 +46,14 @@ interface Actions {
 
   searchPosts: string;
   getPostTaxonomies: string;
+  rulePostsGroupList: string;
 
   createBlockScreenshot: string;
   updateBlockScreenshot: string;
   adobeFontsUrl: string;
   addAccount: string;
+  getAccounts: string;
+  deleteAccount: string;
 
   getDynamicContentPlaceholders: string;
 
@@ -63,6 +66,8 @@ interface Actions {
   heartBeat: string;
   takeOver: string;
   getFonts: string;
+  createFont: string;
+  deleteFont: string;
   getMenus: string;
 
   setFeaturedImage: string;
@@ -80,6 +85,27 @@ interface Actions {
   getRuleGroupList: string;
 
   getSidebars: string;
+
+  cloudSignIn: string;
+  cloudSignUp: string;
+  cloudResetPassword: string;
+  cloudSignOut: string;
+  cloudSync: string;
+  cloudSyncAllowed: string;
+
+  getForm: string;
+  createForm: string;
+  updateForm: string;
+  getIntegration: string;
+  createIntegration: string;
+  updateIntegration: string;
+  deleteIntegration: string;
+  getAccountProperties?: string;
+  authenticateIntegration?: string;
+  createIntegrationGroup?: string;
+
+  downloadLayouts: string;
+  downloadBlocks: string;
 }
 
 interface ProjectStatus {
@@ -314,6 +340,10 @@ const actionsReader = parseStrict<PLUGIN_ENV["actions"], Actions>({
     mPipe(Obj.readKey("getPostTaxonomies"), Str.read),
     throwOnNullish("Invalid actions: getPostTaxonomies")
   ),
+  rulePostsGroupList: pipe(
+    mPipe(Obj.readKey("rulePostsGroupList"), Str.read),
+    throwOnNullish("Invalid actions: rulePostsGroupList")
+  ),
   createBlockScreenshot: pipe(
     mPipe(Obj.readKey("createBlockScreenshot"), Str.read),
     throwOnNullish("Invalid actions: createBlockScreenshot")
@@ -329,6 +359,14 @@ const actionsReader = parseStrict<PLUGIN_ENV["actions"], Actions>({
   addAccount: pipe(
     mPipe(Obj.readKey("addAccount"), Str.read),
     throwOnNullish("Invalid actions: addAccount")
+  ),
+  getAccounts: pipe(
+    mPipe(Obj.readKey("getAccounts"), Str.read),
+    throwOnNullish("Invalid actions: getAccounts")
+  ),
+  deleteAccount: pipe(
+    mPipe(Obj.readKey("deleteAccount"), Str.read),
+    throwOnNullish("Invalid actions: deleteAccount")
   ),
   getDynamicContentPlaceholders: pipe(
     mPipe(Obj.readKey("getDynamicContentPlaceholders"), Str.read),
@@ -369,6 +407,14 @@ const actionsReader = parseStrict<PLUGIN_ENV["actions"], Actions>({
   getFonts: pipe(
     mPipe(Obj.readKey("getFonts"), Str.read),
     throwOnNullish("Invalid actions: getFonts")
+  ),
+  createFont: pipe(
+    mPipe(Obj.readKey("createFont"), Str.read),
+    throwOnNullish("Invalid actions: createFont")
+  ),
+  deleteFont: pipe(
+    mPipe(Obj.readKey("deleteFont"), Str.read),
+    throwOnNullish("Invalid actions: deleteFont")
   ),
   getMenus: pipe(
     mPipe(Obj.readKey("getMenus"), Str.read),
@@ -413,6 +459,75 @@ const actionsReader = parseStrict<PLUGIN_ENV["actions"], Actions>({
   getSidebars: pipe(
     mPipe(Obj.readKey("getSidebars"), Str.read),
     throwOnNullish("Invalid actions: getSidebars")
+  ),
+  cloudSignIn: pipe(
+    mPipe(Obj.readKey("cloudSignIn"), Str.read),
+    throwOnNullish("Invalid actions: cloudSignIn")
+  ),
+  cloudSignUp: pipe(
+    mPipe(Obj.readKey("cloudSignUp"), Str.read),
+    throwOnNullish("Invalid actions: cloudSignUp")
+  ),
+  cloudResetPassword: pipe(
+    mPipe(Obj.readKey("cloudResetPassword"), Str.read),
+    throwOnNullish("Invalid actions: cloudResetPassword")
+  ),
+  cloudSignOut: pipe(
+    mPipe(Obj.readKey("cloudSignOut"), Str.read),
+    throwOnNullish("Invalid actions: cloudSignOut")
+  ),
+  cloudSync: pipe(
+    mPipe(Obj.readKey("cloudSync"), Str.read),
+    throwOnNullish("Invalid actions: cloudSync")
+  ),
+  cloudSyncAllowed: pipe(
+    mPipe(Obj.readKey("cloudSyncAllowed"), Str.read),
+    throwOnNullish("Invalid actions: cloudSyncAllowed")
+  ),
+  getForm: pipe(
+    mPipe(Obj.readKey("getForm"), Str.read),
+    throwOnNullish("Invalid actions: getForm")
+  ),
+  createForm: pipe(
+    mPipe(Obj.readKey("createForm"), Str.read),
+    throwOnNullish("Invalid actions: createForm")
+  ),
+  updateForm: pipe(
+    mPipe(Obj.readKey("updateForm"), Str.read),
+    throwOnNullish("Invalid actions: updateForm")
+  ),
+  getIntegration: pipe(
+    mPipe(Obj.readKey("getIntegration"), Str.read),
+    throwOnNullish("Invalid actions: getIntegration")
+  ),
+  createIntegration: pipe(
+    mPipe(Obj.readKey("createIntegration"), Str.read),
+    throwOnNullish("Invalid actions: createIntegration")
+  ),
+  updateIntegration: pipe(
+    mPipe(Obj.readKey("updateIntegration"), Str.read),
+    throwOnNullish("Invalid actions: updateIntegration")
+  ),
+  deleteIntegration: pipe(
+    mPipe(Obj.readKey("deleteIntegration"), Str.read),
+    throwOnNullish("Invalid actions: deleteIntegration")
+  ),
+  getAccountProperties: optional(
+    pipe(mPipe(Obj.readKey("getAccountProperties"), Str.read))
+  ),
+  authenticateIntegration: optional(
+    pipe(mPipe(Obj.readKey("authenticateIntegration"), Str.read))
+  ),
+  createIntegrationGroup: optional(
+    pipe(mPipe(Obj.readKey("createIntegrationGroup"), Str.read))
+  ),
+  downloadLayouts: pipe(
+    mPipe(Obj.readKey("downloadLayouts"), Str.read),
+    throwOnNullish("Invalid actions: downloadLayouts")
+  ),
+  downloadBlocks: pipe(
+    mPipe(Obj.readKey("downloadBlocks"), Str.read),
+    throwOnNullish("Invalid actions: downloadBlocks")
   )
 });
 

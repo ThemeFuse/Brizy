@@ -259,7 +259,9 @@ class Brizy_Editor_CropCacheMedia extends Brizy_Editor_Asset_StaticFile {
 	 */
 	private function getImgPathByWpSize( $uid, $size ) {
 
-		$imgPath = str_replace( $this->url_builder->upload_url(), $this->url_builder->upload_path(), $this->getImgUrlByWpSize( $uid, $size ) );
+		$size = $size == 'original' ? 'full' : $size;
+        $src = wp_get_attachment_image_src( $this->getAttachmentId( $uid ), $size );
+		$imgPath = str_replace( $this->url_builder->upload_url(), $this->url_builder->upload_path(), $src[0] );
 
 		if ( ! file_exists( $imgPath ) ) {
 			throw new Exception( sprintf( 'The image with uid %s has no this wp size %s', $uid, $size ) );

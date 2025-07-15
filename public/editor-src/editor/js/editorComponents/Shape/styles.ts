@@ -8,7 +8,7 @@ export function style(data: DynamicStylesProps<ElementModel>) {
       standart: ["cssStyleSizeWidth"]
     },
     ".brz &&:before": {
-      standart: ["cssStyleBorderRadius"]
+      standart: ["cssStyleBorderRadius", "cssStyleHoverTransition"]
     },
     ".brz &&:hover:before": {
       standart: [
@@ -16,8 +16,7 @@ export function style(data: DynamicStylesProps<ElementModel>) {
         "cssStyleBoxShadow",
         "cssStyleBgColor",
         "cssStyleBgGradient"
-      ],
-      interval: ["cssStyleHoverTransition"]
+      ]
     },
 
     ".brz &&:after": {

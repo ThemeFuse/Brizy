@@ -212,10 +212,10 @@ export function cssStyleSizeHeightPxOnly({
   const unit = Str.read(dvv("heightSuffix")) || "px";
 
   return unit === "px"
-    ? mApply(
+    ? (mApply(
         (v) => `height:${v}${unit};`,
         styleSizeHeight({ v, device, state, getConfig, store })
-      ) ?? ""
+      ) ?? "")
     : unit === "%"
       ? "height: unset;"
       : "";
@@ -235,10 +235,10 @@ export function cssStyleSizeHeightPercentOnly({
   const unit = Str.read(dvv("heightSuffix")) || "px";
 
   return unit === "%"
-    ? mApply(
+    ? (mApply(
         (v) => `content: ""; display:block; width: 0; padding-top:${v}${unit};`,
         styleSizeHeight({ v, device, state, getConfig, store })
-      ) ?? ""
+      ) ?? "")
     : unit === "px"
       ? "height: unset;"
       : "";
@@ -550,7 +550,7 @@ export function cssStyleSizeTextSpacing({
 }: CSSValue): string {
   return (
     mApply(
-      (v) => `margin-right: ${v}px;`,
+      (v) => `margin-inline-end: ${v}px;`,
       styleSizeTextSpacing({ v, device, state, getConfig, store })
     ) ?? ""
   );

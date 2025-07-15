@@ -6,13 +6,16 @@ export function cssStyleElementIconBoxFlexDirection({ v }) {
 }
 
 export function cssStyleElementIconBoxMargin({ v, device }) {
-  const dvv = key => defaultValueValue({ v, key, device });
+  const dvv = (key) => defaultValueValue({ v, key, device });
   const spacing = dvv("iconSpacing");
   const position = dvv("iconPosition");
 
-  return position === "right"
-    ? `margin-left:${spacing}px; margin-right: auto;`
-    : position === "top"
-    ? `margin-bottom:${spacing}px; margin-right: auto; margin-left: auto;`
-    : `margin-left:auto; margin-right: ${spacing}px;`;
+  switch (position) {
+    case "right":
+      return `margin-inline-start:${spacing}px; margin-inline-end: auto;`;
+    case "top":
+      return `margin-bottom:${spacing}px; margin-inline-end: auto; margin-inline-start: auto;`;
+    default:
+      return `margin-inline-start:auto; margin-inline-end: ${spacing}px;`;
+  }
 }

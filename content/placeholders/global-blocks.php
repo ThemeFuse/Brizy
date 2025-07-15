@@ -24,14 +24,12 @@ class Brizy_Content_Placeholders_GlobalBlocks extends Brizy_Content_Placeholders
 	 */
 	public function getValue( ContextInterface $context, ContentPlaceholder $placeholder ) {
 		$position = $placeholder->getAttribute( 'position' ) ?: 'top';
-
 		$template = Brizy_Admin_Templates::getTemplate();
 		if ( $template ) {
 			$blocks = Brizy_Admin_Blocks_Main::_init()->getMatchingBrizyBlocks( $template->getWpPost() );
 		} else {
 			$blocks = Brizy_Admin_Blocks_Main::_init()->getMatchingBrizyBlocks( $context->getEntity() );
 		}
-
 		$blocks = array_filter( $blocks, function ( Brizy_Editor_Post $block ) use ( $position ) {
 			$is_referenced_in_page = Brizy_Admin_Blocks_Main::_init()->isReferencedInPage( $block );
 
@@ -49,7 +47,7 @@ class Brizy_Content_Placeholders_GlobalBlocks extends Brizy_Content_Placeholders
 	}
 
 	/**
-	 * @param array $blocks
+	 * @param array<Brizy_Editor_Block> $blocks
 	 *
 	 * @return string
 	 */
@@ -57,10 +55,16 @@ class Brizy_Content_Placeholders_GlobalBlocks extends Brizy_Content_Placeholders
 
 		$content = "";
 		foreach ( $blocks as $block ) {
+
 			/**
 			 * @var
 			 */
-			$html    = base64_decode( $block->get_encoded_compiled_html() );
+			$sectionSet = $block->getCompiledSectionManager();
+
+			$html       = $sectionSet->buildHtml();
+			if ( empty( $html ) ) {
+				continue;
+			}
 			$content .= <<<HTML
 \n<!-- GLOBAL BLOCK [{$block->getWpPostId()}]-->
 {$html}

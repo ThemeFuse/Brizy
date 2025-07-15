@@ -6,105 +6,96 @@
  * Time: 12:20 PM
  */
 
+class Brizy_Editor_Story extends Brizy_Editor_Post {
+	use Brizy_Editor_AutoSaveAware;
 
-class Brizy_Editor_Story extends Brizy_Editor_Post
-{
-    use Brizy_Editor_AutoSaveAware;
+	/**
+	 * @var string
+	 */
+	protected $meta;
 
-    /**
-     * @var string
-     */
-    protected $meta;
-
-    /**
-     * @var string
-     */
-    protected $media;
+	/**
+	 * @var string
+	 */
+	protected $media;
 
 
-    /**
-     * @var self;
-     */
-    static protected $block_instance = null;
+	/**
+	 * @var self;
+	 */
+	static protected $block_instance = null;
 
-    public static function cleanClassCache()
-    {
-        self::$block_instance = array();
-    }
+	public static function cleanClassCache() {
+		self::$block_instance = array();
+	}
 
-    /**
-     * @param $apost
-     * @param null $uid
-     *
-     * @return Brizy_Editor_Story|Brizy_Editor_Post|mixed
-     * @throws Exception
-     */
-    public static function get($apost, $uid = null)
-    {
+	/**
+	 * @param $apost
+	 * @param null $uid
+	 *
+	 * @return Brizy_Editor_Story|Brizy_Editor_Post|mixed
+	 * @throws Exception
+	 */
+	public static function get( $apost, $uid = null ) {
 
-        $wp_post_id = $apost;
+		$wp_post_id = $apost;
+		if ( $apost instanceof WP_Post ) {
+			$wp_post_id = $apost->ID;
+		}
+		if ( isset( self::$block_instance[ $wp_post_id ] ) ) {
+			return self::$block_instance[ $wp_post_id ];
+		}
 
-        if ($apost instanceof WP_Post) {
-            $wp_post_id = $apost->ID;
-        }
+		return self::$block_instance[ $wp_post_id ] = new self( $wp_post_id, $uid );
+	}
 
-        if (isset(self::$block_instance[$wp_post_id])) {
-            return self::$block_instance[$wp_post_id];
-        }
+	/**
+	 * Brizy_Editor_Story constructor.
+	 *
+	 * @param $wp_post_id
+	 * @param null $uid
+	 *
+	 * @throws Brizy_Editor_Exceptions_NotFound
+	 * @throws Brizy_Editor_Exceptions_UnsupportedPostType
+	 */
+	public function __construct( $wp_post_id, $uid = null ) {
 
-        return self::$block_instance[$wp_post_id] = new self($wp_post_id, $uid);
-    }
+		if ( $uid ) {
+			$this->uid = $uid;
+		}
+		parent::__construct( $wp_post_id );
+	}
 
-    /**
-     * Brizy_Editor_Story constructor.
-     *
-     * @param $wp_post_id
-     * @param null $uid
-     *
-     * @throws Brizy_Editor_Exceptions_NotFound
-     * @throws Brizy_Editor_Exceptions_UnsupportedPostType
-     */
-    public function __construct($wp_post_id, $uid = null)
-    {
+	/**
+	 * @return bool
+	 */
+	public function uses_editor() {
+		return true;
+	}
 
-        if ($uid) {
-            $this->uid = $uid;
-        }
+	/**
+	 * This should always return true
+	 *
+	 * @param $val
+	 *
+	 * @return $this
+	 */
+	public function set_uses_editor( $val ) {
+		parent::set_uses_editor( true );
 
-        parent::__construct($wp_post_id);
-    }
+		return $this;
+	}
 
-    /**
-     * @return bool
-     */
-    public function uses_editor()
-    {
-        return true;
-    }
+	public function save( $autosave = 0 ) {
 
-    /**
-     * This should always return true
-     *
-     * @param $val
-     *
-     * @return $this
-     */
-    public function set_uses_editor($val)
-    {
-	    parent::set_uses_editor(true);
+		parent::save( $autosave );
+		if ( $autosave !== 1 ) {
+			$this->savePost();
+		}
+	}
 
-        return $this;
-    }
-
-    public function save($autosave = 0)
-    {
-
-        parent::save($autosave);
-
-        if ($autosave !== 1) {
-            $this->savePost();
-        }
-    }
-
-
+	public function getCompiledHtml() {
+		$section_manager = $this->getCompiledSectionManager();
+		return $section_manager->wrapHtml( $section_manager->buildHtml() );
+	}
 }

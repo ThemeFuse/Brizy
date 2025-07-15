@@ -22,7 +22,7 @@ import EditorComponent from "visual/editorComponents/EditorComponent";
 import { shouldRenderPopup } from "visual/editorComponents/tools/Popup";
 import { isEditor } from "visual/providers/RenderProvider";
 import { blocksDataSelector, deviceModeSelector } from "visual/redux/selectors";
-import { isPro } from "visual/utils/env";
+import { isPro, isRTL } from "visual/utils/env";
 import { getContainerW } from "visual/utils/meta";
 import { getCSSId } from "visual/utils/models/cssId";
 import { getLinkData } from "visual/utils/models/link";
@@ -250,7 +250,7 @@ class Column extends EditorComponent {
     const { isFirst } = row.item;
     const isInnerRow = this.isInnerRow();
 
-    if (isFirst && position === "left") {
+    if (isFirst && position === "start") {
       return null;
     }
 
@@ -262,6 +262,7 @@ class Column extends EditorComponent {
         onResizeStart={this.handleResizeStart}
         onResize={this.handleResize}
         onResizeEnd={this.handleResizeEnd}
+        isRTL={isRTL(this.getGlobalConfig())}
       />
     );
   }
@@ -435,8 +436,8 @@ class Column extends EditorComponent {
                             allow={["admin"]}
                             fallbackRender={() => content}
                           >
-                            {this.renderResizer("left")}
-                            {this.renderResizer("right")}
+                            {this.renderResizer("start")}
+                            {this.renderResizer("end")}
                             <ToolbarExtend onEscape={this.handleToolbarEscape}>
                               {content}
                             </ToolbarExtend>

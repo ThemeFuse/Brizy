@@ -511,7 +511,7 @@ class Brizy_Admin_Rules_Api extends Brizy_Admin_AbstractApi
         $groups[] = array(
             'title' => 'Specific '.$postTypeName,
             'value' => Brizy_Admin_Rule::POSTS,
-            'items' => array_map($closurePost, Brizy_Editor_Post::get_post_list(null, $post_type, null, 0, 100000)),
+            'items' => array_map($closurePost, Brizy_Editor_Post::getPostList(null, $post_type, null, 0, 100000)),
         );
 
         $groups[] = array(
@@ -598,8 +598,8 @@ class Brizy_Admin_Rules_Api extends Brizy_Admin_AbstractApi
 
     public function getTemplateGroupsList()
     {
-        $context = $this->param('context');
-        $templateType = $this->param('templateType');
+        $searchQuery = $this->param('searchQuery');
+        $page = (int)$this->param('page')?:1;
 
         $groups = [];
 
@@ -610,11 +610,16 @@ class Brizy_Admin_Rules_Api extends Brizy_Admin_AbstractApi
                 'groupValue' => 'author',
             );
         };
-
-        $groups[] = array(
+	    $get_users = get_users( [ 'fields'         => [ 'ID', 'user_nicename' ],
+	                              'search'         => $searchQuery?"*$searchQuery*":"",
+	                              'search_columns' => array( 'user_nicename', 'user_email','display_name' ),
+	                              'offset'         => ( $page - 1 ) * 30,
+	                              'number'         => 30
+	    ] );
+	    $groups[]  = array(
             'title' => 'Specific Author',
             'value' => Brizy_Admin_Rule::TEMPLATE,
-            'items' => array_map($closureAuthor, get_users(['fields' => ['ID', 'user_nicename']])),
+            'items' => array_map($closureAuthor, $get_users ),
         );
 
         $groups = array_values(array_filter($groups, function ($o) {

@@ -5,6 +5,7 @@ import type { EcwidConfig } from "visual/libs/Ecwid/types/EcwidConfig";
 import type { ExportFunction } from "visual/types";
 import { getEcwidShopPathFromAttribute } from "visual/utils/ecwid";
 import { parseFromString } from "visual/utils/string";
+import { parseUrlParameters } from "visual/utils/url/parseUrlParameters";
 
 const observerCallback = (mutations: MutationRecord[]): void => {
   for (const mutation of mutations) {
@@ -62,10 +63,12 @@ export const fn: ExportFunction = ($node) => {
     if (storeId) {
       observer.observe(node, { childList: true, subtree: true });
 
+      const params = parseUrlParameters(window.location.href);
+
       EcwidService.init(storeId, {
         ...cfg,
         baseUrl
-      }).search(node);
+      }).search(node, params);
     }
   });
 };

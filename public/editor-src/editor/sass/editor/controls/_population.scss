@@ -59,7 +59,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: var(--secondary-dark, #383e48);
+    background-color: var(--inputs-bg, #383e48);
     height: 30px;
     min-width: $control__md-width;
     border-radius: 4px;
@@ -97,7 +97,7 @@
     font-size: 0;
     line-height: 1;
     cursor: pointer;
-    color: var(--primary-gray, #fff);
+    color: var(--icons-color, #fff);
 
     .brz-icon-svg {
       font-size: 14px;
@@ -112,7 +112,7 @@
   .brz-ed-control__population-content-wrapper {
     width: 142px;
     z-index: 1110;
-    background-color: var(--secondary-dark, #383e48);
+    background-color: var(--inputs-bg, #383e48);
     border-radius: 4px;
     margin-top: 5px;
     padding: 5px;
@@ -123,14 +123,14 @@
       &-options {
         border-radius: 4px;
         margin-left: 0;
-        box-shadow: 0 1px 3px 0
+        box-shadow: 0 1px 6px 0
           var(--picker__select__option-box-shadow, rgba(0, 0, 0, 0.5));
-        background-color: var(--secondary-dark, #383e48);
+        background-color: var(--inputs-bg, #383e48);
         width: 100%;
 
         .brz-control__select-option {
           border-bottom: 1px solid
-            var(--tertiary-white, rgba(255, 255, 255, 0.07)) !important;
+            var(--toolbars-icons-separators, rgba(255, 255, 255, 0.07)) !important;
           max-width: $control__lg-width;
         }
       }

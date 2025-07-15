@@ -54,12 +54,12 @@ export function styleInner(data: DynamicStylesProps<Value>): OutputStyle {
     ".brz && > .brz-container__wrap .brz-popup2__close": {
       standart: [
         "cssStyleContainerPopup2CloseState",
-        "cssStyleContainerPopup2ClosePosition"
+        "cssStyleContainerPopup2ClosePosition",
+        "cssStyleHoverTransition"
       ]
     },
     ".brz && > .brz-container__wrap .brz-popup2__close:hover": {
-      standart: ["cssStyleContainerPopup2CloseColor"],
-      interval: ["cssStyleHoverTransition"]
+      standart: ["cssStyleContainerPopup2CloseColor"]
     },
     ".brz && > .brz-container__wrap .brz-popup2__close .brz-icon-svg, .brz&& > .brz-container__wrap .brz-popup2__close .brz-icon-svg":
       {

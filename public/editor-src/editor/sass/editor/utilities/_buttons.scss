@@ -31,7 +31,7 @@
   // Button with icon
   &-icon {
     .brz-icon-svg {
-      margin-left: 10px;
+      margin-inline-start: 10px;
       vertical-align: middle;
     }
 
@@ -43,8 +43,8 @@
 
   &-icon--left {
     .brz-icon-svg {
-      margin-left: 0;
-      margin-right: 10px;
+      margin-inline-start: 0;
+      margin-inline-end: 10px;
     }
   }
 

@@ -24,7 +24,7 @@
 .brz-ed-tooltip__overlay {
   cursor: auto;
   background-color: $toolbar-bg;
-  box-shadow: 0 0 5px 0 $popover_tooltips__helper__overlay-box-shadow;
+  box-shadow: 0 1px 8px 1px $popover_tooltips__helper__overlay-box-shadow;
   border-radius: $toolbar-border-radius;
 
   .brz-ed-tooltip--top-start,

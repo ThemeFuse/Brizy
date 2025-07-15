@@ -128,7 +128,7 @@ class Select extends TextField {
     const dropdownStyle = {
       width,
       top: top + height + window.scrollY,
-      "inset-inline-start": left + scrollLeft
+      insetInlineStart: left + scrollLeft
     };
     const className = classnames(
       "brz-portal-forms__select brz-ed-dd-cancel",

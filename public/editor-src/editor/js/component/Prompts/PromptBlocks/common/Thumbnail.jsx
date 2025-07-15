@@ -9,6 +9,7 @@ import LazyLoadImage from "visual/component/LazyLoadImage";
 import { ProInfo } from "visual/component/ProInfo";
 import { authorizedSelector } from "visual/redux/selectors";
 import { t } from "visual/utils/i18n";
+import { makeBzelmAttr } from "visual/utils/i18n/attribute";
 import { imageWrapperSize } from "visual/utils/image";
 import { DownloadBlock } from "./DownloadBlock";
 import { TagEditable } from "./TagEditable";
@@ -460,8 +461,10 @@ class Thumbnail extends Component {
       }
     }
 
+    const attr = makeBzelmAttr(isLayout ? "add-layout" : "add-block");
+
     return (
-      <div className={className}>
+      <div className={className} {...attr}>
         {content}
         {showRemoveIcon && this.renderRemoveIcon()}
         {loading && this.renderLoading()}

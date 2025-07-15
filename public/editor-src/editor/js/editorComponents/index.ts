@@ -2,6 +2,7 @@ import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import Accordion from "./Accordion";
 import AccordionItem from "./Accordion/AccordionItem";
 import Alert from "./Alert";
+import AnimatedHeadline from "./AnimatedHeadline";
 import Audio from "./Audio";
 import Breadcrumbs from "./Breadcrumbs";
 import Button from "./Button";
@@ -123,6 +124,7 @@ function getShortcodes(_config: ConfigCommon) {
     SectionFooter,
     Row,
     Column,
+    AnimatedHeadline,
     Form,
     FormFields,
     FormField,
@@ -229,6 +231,7 @@ function getShortcodes(_config: ConfigCommon) {
     Leadific
   };
 }
+
 export default getShortcodes;
 
 export { NotFound as NotFoundComponent } from "./NotFound";

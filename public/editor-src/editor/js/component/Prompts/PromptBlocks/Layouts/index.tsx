@@ -25,9 +25,10 @@ import {
   defaultStoriesMeta,
   defaultStoriesPages
 } from "visual/utils/api";
-import { isBlock } from "visual/utils/api/common";
+import { isBlock } from "visual/utils/api";
 import { isPro } from "visual/utils/env";
 import { t } from "visual/utils/i18n";
+import { makeBzelmAttr } from "visual/utils/i18n/attribute";
 import DataFilter from "../common/DataFilter";
 import SearchInput from "../common/SearchInput";
 import Sidebar, { SidebarList, SidebarOption } from "../common/Sidebar";
@@ -243,10 +244,7 @@ export default class List extends Component<Props, State> {
   };
 
   renderList(data: StoriesWithThumbs | LayoutsWithThumbs): ReactElement {
-    const {
-      showSearch,
-      config, defaultFilter: _defaultFilter
-    } = this.props;
+    const { showSearch, config, defaultFilter: _defaultFilter } = this.props;
     const blocks = this.getLayoutData(data);
 
     const countersSectionBlocks: { [k: string]: number } = {};
@@ -279,6 +277,8 @@ export default class List extends Component<Props, State> {
     const _isStory = isStory(this.props.editorMode);
 
     const showSidebar = categories.length > 1;
+
+    const attr = makeBzelmAttr("layouts-library");
 
     return (
       <DataFilter<Data, Filter>
@@ -314,7 +314,10 @@ export default class List extends Component<Props, State> {
               </Sidebar>
             )}
 
-            <div className="brz-ed-popup-two-body__content brz-ed-popup-two-blocks-body-layouts">
+            <div
+              className="brz-ed-popup-two-body__content brz-ed-popup-two-blocks-body-layouts"
+              {...attr}
+            >
               <Scrollbars>
                 {filteredThumbnails.length > 0 ? (
                   <ThumbnailGrid<Data>

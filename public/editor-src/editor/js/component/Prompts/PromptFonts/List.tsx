@@ -10,13 +10,12 @@ import {
   unDeletedFontsSelector
 } from "visual/redux/selectors";
 import { Font, UploadedFont } from "visual/types/Fonts";
-import { pendingRequest } from "visual/utils/api";
+import { deleteFont as apiDeleteFont, pendingRequest } from "visual/utils/api";
 import { fontTransform } from "visual/utils/fonts/transform";
 import { FONT_INITIAL } from "visual/utils/fonts/utils";
 import { t } from "visual/utils/i18n";
 import { Circle } from "./Circle";
 import { Tooltip } from "./Tooltip";
-import { deleteFont as apiDeleteFont } from "./api";
 import { FontTypes } from "./types";
 import { sortFonts } from "./utils";
 

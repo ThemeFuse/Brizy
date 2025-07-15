@@ -1,7 +1,6 @@
 import { produce } from "immer";
-import { pendingRequest } from "visual/utils/api";
+import { getAccounts, pendingRequest } from "visual/utils/api";
 import BaseIntegration from "../common/GlobalApps/BaseIntegration";
-import { getAccounts } from "../common/GlobalApps/api";
 import { AppData, BaseIntegrationProps } from "../common/GlobalApps/type";
 import * as AppsComponent from "./Apps";
 
@@ -23,12 +22,8 @@ class Apps extends BaseIntegration<Props> {
 
   async getData(): Promise<void> {
     const { group, service, config } = this.props;
-    const { status, data } = await getAccounts(
-      { group, services: service },
-      config
-    );
-
-    if (data && data.length > 0 && status === 200) {
+    const data = await getAccounts({ group, services: service }, config);
+    if (data && data.length > 0) {
       const integrationData = data[0];
       const { services } = integrationData;
 

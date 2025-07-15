@@ -58,8 +58,7 @@ import type { Meta, Patch, Props, Value } from "./types";
 import {
   JustifySettings,
   breakpoints,
-  getRowHeight,
-  getSpacing,
+ getRowHeight, getSpacing,
   imagesSrc,
   makeOptionValueToSettings,
   multiUpload
@@ -117,6 +116,10 @@ class ImageGallery extends EditorComponent<Value, Props> {
   }
 
   componentDidMount(): void {
+    if (isView(this.props.renderContext)) {
+      return;
+    }
+
     const toolbarExtend = this.makeToolbarPropsFromConfig2(
       toolbarExtendParent,
       sidebarExtendParentConfig,

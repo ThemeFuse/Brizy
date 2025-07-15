@@ -527,7 +527,7 @@ class Brizy_Admin_Main {
 	 * Mark all post to be compiled next time
 	 */
 	public function global_data_updated() {
-		Brizy_Editor_Post::mark_all_for_compilation();
+		Brizy_Editor_Post::markAllForCompilation();
 	}
 
 	public function version_update_warning( $data ) {

@@ -1,435 +1,466 @@
 <?php
 
-abstract class Brizy_Editor_Entity extends Brizy_Admin_Serializable {
-	const COMPILER_BROWSER = 'browser';
-	const COMPILER_EXTERNAL = 'server';
+abstract class Brizy_Editor_Entity extends Brizy_Admin_Serializable
+{
+    const COMPILER_BROWSER = 'browser';
+    const COMPILER_EXTERNAL = 'server';
 
-	const BRIZY_DATA_VERSION_KEY = 'brizy_data_version';
-	const BRIZY_DEPENDENCIES_KEY = 'brizy_dependencies';
+    const BRIZY_DATA_VERSION_KEY = 'brizy_data_version';
+    const BRIZY_DEPENDENCIES_KEY = 'brizy_dependencies';
 
-	/**
-	 * @var string
-	 */
-	protected $uid;
-
-
-	/**
-	 * @var string
-	 */
-	protected $title;
-
-	/**
-	 * @var int
-	 */
-	protected $wp_post_id;
-
-	/**
-	 * @var WP_Post
-	 */
-	protected $wp_post = null;
-
-	/**
-	 * @var int
-	 */
-	protected $dataVersion = null;
-
-	/**
-	 * @var array
-	 */
-	protected $dependencies = [];
-
-	/**
-	 * @var null
-	 */
-	protected $compiler = self::COMPILER_EXTERNAL;
-
-	/**
-	 * Brizy_Editor_Entity constructor.
-	 */
-	public function __construct( $postId ) {
-		if ( ! is_numeric( $postId ) ) {
-			throw new Exception( 'Invalid post id provided' );
-		}
-
-		Brizy_Editor::checkIfPostTypeIsSupported( $postId );
-
-		$this->setWpPostId( $postId );
-
-		$this->loadInstanceData();
-
-		$this->dependencies = get_post_meta( $this->getWpPostId(), self::BRIZY_DEPENDENCIES_KEY, true );
-	}
-
-	/**
-	 * @return bool
-	 */
-	public function can_edit_posts() {
-		return current_user_can( 'edit_posts' );
-	}
-
-	/**
-	 * @return bool
-	 */
-	static public function canEditPosts() {
-		return current_user_can( 'edit_posts' );
-	}
-
-	static public function get( $postId, $uid = null ) {
-		$type = get_post_type( $postId );
-
-		switch ( $type ) {
-
-			case Brizy_Admin_Blocks_Main::CP_GLOBAL:
-			case Brizy_Admin_Blocks_Main::CP_SAVED:
-				return Brizy_Editor_Block::get( $postId, $uid );
-
-			default:
-			case 'page':
-			case 'post':
-			case Brizy_Admin_Popups_Main::CP_POPUP:
-				return Brizy_Editor_Post::get( $postId, $uid );
-		}
-	}
+    /**
+     * @var string
+     */
+    protected $uid;
 
 
-	/**
-	 * @return bool
-	 */
-	public function uses_editor() {
-		return self::isBrizyEnabled( $this->getWpPostId() );
-	}
+    /**
+     * @var string
+     */
+    protected $title;
 
-	/**
-	 * @return bool
-	 */
-	static public function isBrizyEnabled( $post ) {
+    /**
+     * @var int
+     */
+    protected $wp_post_id;
 
-		if ( $post instanceof WP_Post ) {
-			$post = $post->ID;
-		}
+    /**
+     * @var WP_Post
+     */
+    protected $wp_post = null;
 
-		return (bool) get_post_meta( $post, Brizy_Editor_Constants::BRIZY_ENABLED, true );
-	}
+    /**
+     * @var int
+     */
+    protected $dataVersion = null;
 
-	/**
-	 * @param $value
-	 *
-	 * @return $this
-	 * @throws Brizy_Editor_Exceptions_AccessDenied
-	 */
-	public function set_uses_editor( $value ) {
-		self::setBrizyEnabled( $this->getWpPostId(), $value );
+    /**
+     * @var array
+     */
+    protected $dependencies = [];
 
-		return $this;
-	}
+    /**
+     * @var null
+     */
+    protected $compiler = self::COMPILER_EXTERNAL;
 
-	/**
-	 * @return bool
-	 */
-	static public function setBrizyEnabled( $post, $value ) {
+    /**
+     * Brizy_Editor_Entity constructor.
+     */
+    public function __construct($postId)
+    {
+        if (!is_numeric($postId)) {
+            throw new Exception('Invalid post id provided');
+        }
 
-		if ( ! self::canEditPosts() ) {
-			throw new Brizy_Editor_Exceptions_AccessDenied( 'Current user cannot edit page' );
-		}
+        Brizy_Editor::checkIfPostTypeIsSupported($postId);
 
-		if ( $post instanceof WP_Post ) {
-			$post = $post->ID;
-		}
+        $this->setWpPostId($postId);
 
-		update_post_meta( $post, Brizy_Editor_Constants::BRIZY_ENABLED, (int) $value );
-	}
+        $this->loadInstanceData();
 
-	/**
-	 * @return string
-	 */
-	static public function getEditUrl( $post ) {
+        $this->dependencies = get_post_meta($this->getWpPostId(), self::BRIZY_DEPENDENCIES_KEY, true);
+    }
 
-		if ( $post instanceof WP_Post ) {
-			$post = $post->ID;
-		}
+    /**
+     * @return bool
+     */
+    public function can_edit_posts()
+    {
+        return current_user_can('edit_posts');
+    }
 
-		if ( $parent_post_id = wp_is_post_revision( $post ) ) {
-			$post = $parent_post_id;
-		}
+    /**
+     * @return bool
+     */
+    static public function canEditPosts()
+    {
+        return current_user_can('edit_posts');
+    }
 
-		return add_query_arg(
-			[
-				'action' => 'in-front-editor',
-				'post'   => $post
-			],
-			admin_url( 'post.php' )
-		);
-	}
+    static public function get($postId, $uid = null)
+    {
+        $type = get_post_type($postId);
 
-	/**
-	 * @param $postId
-	 *
-	 * @return Brizy_Editor_Block|Brizy_Editor_Post|mixed
-	 * @throws Exception
-	 */
-	public function duplicateTo( $postId ) {
-		// check post types
-		if ( get_post_type( $postId ) !== $this->getWpPost()->post_type ) {
-			throw new Exception( 'Cannot duplicate post. Invalid target post type' );
-		}
+        switch ($type) {
 
-		if ( ! $this->uses_editor() ) {
-			throw new Exception( 'The source post is not using Brizy.' );
-		}
-
-		// copy current date the the new post
-		$newPost = self::get( $postId );
-
-		if ( $newPost->uses_editor() ) {
-			throw new Exception( 'Target post is using Brizy.' );
-		}
-
-		$newPost->set_needs_compile( true );
-		$newPost->set_uses_editor( true );
-		$newPost->setDataVersion( 1 );
-		$newPost->createUid();
-
-		return $newPost;
-	}
+            case Brizy_Admin_Stories_Main::CP_STORY:
+                return Brizy_Editor_Story::get($postId, $uid);
+            case Brizy_Admin_Blocks_Main::CP_GLOBAL:
+            case Brizy_Admin_Blocks_Main::CP_SAVED:
+                return Brizy_Editor_Block::get($postId, $uid);
+            case Brizy_Admin_Popups_Main::CP_POPUP:
+                return Brizy_Editor_Popup::get($postId, $uid);
+            default:
+                return Brizy_Editor_Post::get($postId, $uid);
+        }
+    }
 
 
-	/**
-	 * Will return the key on witch the object data will be saved in storage
-	 *
-	 * @return mixed
-	 */
-	abstract protected function getObjectKey();
+    /**
+     * @return bool
+     * @deprecated us isBrizyEnabled
+     */
+    public function uses_editor()
+    {
+        return self::isBrizyEnabled($this->getWpPostId());
+    }
 
-	/**
-	 * Load all object data
-	 */
-	abstract protected function loadInstanceData();
+    /**
+     * @return bool
+     */
+    static public function isBrizyEnabled($post)
+    {
 
-	/**
-	 * @return mixed
-	 */
-	abstract public function createResponse( $fields = array(), $context=Brizy_Editor_Editor_Editor::EDITOR_CONTEXT );
+        if ($post instanceof WP_Post) {
+            $post = $post->ID;
+        }
 
-	/**
-	 * Save post data and and trigger post update
-	 *
-	 * @return mixed
-	 */
-	abstract public function savePost();
+        return (bool)get_post_meta($post, Brizy_Editor_Constants::BRIZY_ENABLED, true);
+    }
 
-	/**
-	 * This will save ro create an autosave object the the data from entity
-	 * Also before saving the data version will be checked
-	 *
-	 * @return $this
-	 * @throws Exception
-	 */
-	public function save( $autosave = 0 ) {
+    /**
+     * @param $value
+     *
+     * @return $this
+     * @throws Brizy_Editor_Exceptions_AccessDenied
+     */
+    public function set_uses_editor($value)
+    {
+        self::setBrizyEnabled($this->getWpPostId(), $value);
 
-		// check entity versions before saving.
-		if ( (int) $autosave === 0 ) {
-			$this->saveDataVersion();
+        return $this;
+    }
 
-			update_post_meta( $this->getWpPostId(), self::BRIZY_DEPENDENCIES_KEY, $this->dependencies );
-		}
+    /**
+     * @return bool
+     */
+    static public function setBrizyEnabled($post, $value)
+    {
 
-		$this->createUid();
+        if (!self::canEditPosts()) {
+            throw new Brizy_Editor_Exceptions_AccessDenied('Current user cannot edit page');
+        }
 
-		return $this;
-	}
+        if ($post instanceof WP_Post) {
+            $post = $post->ID;
+        }
 
-	/**
-	 * This will take all values from entity and save them to database
-	 */
-	public function saveStorage() {
-		$value = $this->convertToOptionValue();
-		$this->getStorage()->set( $this->getObjectKey(), $value );
-	}
+        update_post_meta($post, Brizy_Editor_Constants::BRIZY_ENABLED, (int)$value);
+    }
+
+    /**
+     * @return string
+     */
+    static public function getEditUrl($post)
+    {
+
+        if ($post instanceof WP_Post) {
+            $post = $post->ID;
+        }
+
+        if ($parent_post_id = wp_is_post_revision($post)) {
+            $post = $parent_post_id;
+        }
+
+        return add_query_arg(
+            [
+                'action' => 'in-front-editor',
+                'post' => $post
+            ],
+            admin_url('post.php')
+        );
+    }
+
+    /**
+     * @param $postId
+     *
+     * @return Brizy_Editor_Block|Brizy_Editor_Post|mixed
+     * @throws Exception
+     */
+    public function duplicateTo($postId)
+    {
+        // check post types
+        if (get_post_type($postId) !== $this->getWpPost()->post_type) {
+            throw new Exception('Cannot duplicate post. Invalid target post type');
+        }
+
+        if (!$this->uses_editor()) {
+            throw new Exception('The source post is not using Brizy.');
+        }
+
+        // copy current date the the new post
+        $newPost = self::get($postId);
+
+        if ($newPost->uses_editor()) {
+            throw new Exception('Target post is using Brizy.');
+        }
+
+        $newPost->set_needs_compile(true);
+        $newPost->set_uses_editor(true);
+        $newPost->setDataVersion(1);
+        $newPost->createUid();
+
+        return $newPost;
+    }
 
 
-	/**
-	 * @return Brizy_Editor_Post[]
-	 * @throws Brizy_Editor_Exceptions_NotFound
-	 * @throws Brizy_Editor_Exceptions_UnsupportedPostType
-	 */
-	public static function get_all_brizy_post_ids() {
-		global $wpdb;
-		$posts = $wpdb->get_results(
-			$wpdb->prepare(
-				"SELECT p.ID FROM {$wpdb->postmeta} pm 
+    /**
+     * Will return the key on witch the object data will be saved in storage
+     *
+     * @return mixed
+     */
+    abstract protected function getObjectKey();
+
+    /**
+     * Load all object data
+     */
+    abstract protected function loadInstanceData();
+
+    /**
+     * @return mixed
+     */
+    abstract public function createResponse($fields = array(), $context = Brizy_Editor_Editor_Editor::EDITOR_CONTEXT);
+
+    /**
+     * Save post data and and trigger post update
+     *
+     * @return mixed
+     */
+    abstract public function savePost();
+
+    /**
+     * This will save ro create an autosave object the the data from entity
+     * Also before saving the data version will be checked
+     *
+     * @return $this
+     * @throws Exception
+     */
+    public function save($autosave = 0)
+    {
+
+        // check entity versions before saving.
+        if ((int)$autosave === 0) {
+            $this->saveDataVersion();
+
+            update_post_meta($this->getWpPostId(), self::BRIZY_DEPENDENCIES_KEY, $this->dependencies);
+        }
+
+        $this->createUid();
+
+        return $this;
+    }
+
+    /**
+     * This will take all values from entity and save them to database
+     */
+    public function saveStorage()
+    {
+        $value = $this->convertToOptionValue();
+        $this->getStorage()->set($this->getObjectKey(), $value);
+    }
+
+
+    /**
+     * @return Brizy_Editor_Post[]
+     * @throws Brizy_Editor_Exceptions_NotFound
+     * @throws Brizy_Editor_Exceptions_UnsupportedPostType
+     */
+    public static function get_all_brizy_post_ids()
+    {
+        global $wpdb;
+        $posts = $wpdb->get_results(
+            $wpdb->prepare(
+                "SELECT p.ID FROM {$wpdb->postmeta} pm 
 					   JOIN {$wpdb->posts} p ON p.ID=pm.post_id and p.post_type <> 'revision'  and p.post_type<>'attachment' and p.post_status='publish'
 					   WHERE pm.meta_key = %s ",
-				Brizy_Editor_Storage_Post::META_KEY
-			), ARRAY_A
-		);
+                Brizy_Editor_Storage_Post::META_KEY
+            ), ARRAY_A
+        );
 
-		return array_column( $posts, 'ID' );
-	}
+        return array_column($posts, 'ID');
+    }
 
-	/**
-	 * @return int
-	 */
-	public function getWpPostId() {
-		return $this->wp_post_id;
-	}
+    /**
+     * @return int
+     */
+    public function getWpPostId()
+    {
+        return $this->wp_post_id;
+    }
 
-	/**
-	 * @param int $wp_post_id
-	 *
-	 * @return Brizy_Editor_Entity
-	 */
-	public function setWpPostId( $wp_post_id ) {
-		$this->wp_post_id = $wp_post_id;
+    /**
+     * @param int $wp_post_id
+     *
+     * @return Brizy_Editor_Entity
+     */
+    public function setWpPostId($wp_post_id)
+    {
+        $this->wp_post_id = $wp_post_id;
 
-		return $this;
-	}
+        return $this;
+    }
 
-	/**
-	 * Return the post parent id
-	 *
-	 * @return int
-	 */
-	public function getWpPostParentId() {
-		return $this->getWpPost()->post_parent ?: $this->getWpPostId();
-	}
+    /**
+     * Return the post parent id
+     *
+     * @return int
+     */
+    public function getWpPostParentId()
+    {
+        return $this->getWpPost()->post_parent ?: $this->getWpPostId();
+    }
 
-	/**
-	 * @return WP_Post
-	 */
-	public function getWpPost() {
-		return $this->wp_post ?: ( $this->wp_post = get_post( $this->getWpPostId() ) );
-	}
+    /**
+     * @return WP_Post
+     */
+    public function getWpPost()
+    {
+        return $this->wp_post ?: ($this->wp_post = get_post($this->getWpPostId()));
+    }
 
-	/**
-	 * @return null
-	 */
-	public function get_compiler() {
-		return $this->compiler;
-	}
+    /**
+     * @return null
+     */
+    public function get_compiler()
+    {
+        return $this->compiler;
+    }
 
-	/**
-	 * @param null $compiler
-	 */
-	public function set_compiler( $compiler ) {
-		if ( in_array( $compiler, [ self::COMPILER_BROWSER, self::COMPILER_EXTERNAL ] ) ) {
-			$this->compiler = $compiler;
+    /**
+     * @param null $compiler
+     */
+    public function set_compiler($compiler)
+    {
+        if (in_array($compiler, [self::COMPILER_BROWSER, self::COMPILER_EXTERNAL])) {
+            $this->compiler = $compiler;
 
-			return $this;
-		}
+            return $this;
+        }
 
-		throw new \Exception( 'Invalid compiler type provided.' );
-	}
+        throw new \Exception('Invalid compiler type provided.');
+    }
 
-	/**
-	 * @return $this
-	 */
-	protected function saveDataVersion() {
-		$version = $this->getCurrentDataVersion();
+    /**
+     * @return $this
+     */
+    protected function saveDataVersion()
+    {
+        $version = $this->getCurrentDataVersion();
 
-		if ( $this->dataVersion !== $version + 1 ) {
-			Brizy_Logger::instance()->critical(
-				'Unable to save entity. The data version is wrong.',
-				[
-					'post_id'        => $this->getWpPostId(),
-					'currentVersion' => $version,
-					'newVersion'     => $this->dataVersion,
-				]
-			);
-			throw new Brizy_Editor_Exceptions_DataVersionMismatch( 'Unable to save entity. The data version is wrong.' );
-		}
+        if ($this->dataVersion !== $version + 1) {
+            Brizy_Logger::instance()->critical(
+                'Unable to save entity. The data version is wrong.',
+                [
+                    'post_id' => $this->getWpPostId(),
+                    'currentVersion' => $version,
+                    'newVersion' => $this->dataVersion,
+                ]
+            );
+            throw new Brizy_Editor_Exceptions_DataVersionMismatch('Unable to save entity. The data version is wrong.');
+        }
 
-		update_post_meta( $this->getWpPostId(), self::BRIZY_DATA_VERSION_KEY, $this->dataVersion );
+        update_post_meta($this->getWpPostId(), self::BRIZY_DATA_VERSION_KEY, $this->dataVersion);
 
-		return $this;
-	}
+        return $this;
+    }
 
-	/**
-	 * @return int
-	 */
-	public function getCurrentDataVersion() {
-		return (int) ( get_post_meta( $this->getWpPostId(), self::BRIZY_DATA_VERSION_KEY, true ) ?: 0 );
-	}
+    /**
+     * @return int
+     */
+    public function getCurrentDataVersion()
+    {
+        return (int)(get_post_meta($this->getWpPostId(), self::BRIZY_DATA_VERSION_KEY, true) ?: 0);
+    }
 
 
-	/**
-	 * @param $dataVersion
-	 *
-	 * @return $this
-	 */
-	public function setDataVersion( $dataVersion ) {
-		$this->dataVersion = (int) $dataVersion;
+    /**
+     * @param $dataVersion
+     *
+     * @return $this
+     */
+    public function setDataVersion($dataVersion)
+    {
+        $this->dataVersion = (int)$dataVersion;
 
-		return $this;
-	}
+        return $this;
+    }
 
-	/**
-	 * @return string
-	 */
-	public function getUid() {
-		return $this->uid;
-	}
+    /**
+     * @return string
+     */
+    public function getUid()
+    {
+        return $this->uid;
+    }
 
-	public function getTitle() {
-		return $this->getWpPost()->post_title;
-	}
+    public function getTitle()
+    {
+        return $this->getWpPost()->post_title;
+    }
 
-	public function setTitle( $title ) {
-		$this->getWpPost()->post_title = $title;
+    public function setTitle($title)
+    {
+        $this->getWpPost()->post_title = $title;
 
-		return $this;
-	}
+        return $this;
+    }
 
-	/**
-	 * Return an instance of Brizy_Editor_Storage_Abstract that will store the object data
-	 *
-	 * @return Brizy_Editor_Storage_Post
-	 */
-	protected function getStorage() {
-		return Brizy_Editor_Storage_Post::instance( $this->wp_post_id );
-	}
+    /**
+     * Return an instance of Brizy_Editor_Storage_Abstract that will store the object data
+     *
+     * @return Brizy_Editor_Storage_Post
+     */
+    protected function getStorage()
+    {
+        return Brizy_Editor_Storage_Post::instance($this->wp_post_id);
+    }
 
-	/**
-	 * @return mixed|string
-	 */
-	protected function createUid() {
-		$WPPost  = $this->getWpPost();
-		$post_id = $WPPost->post_type != 'revision' ? $this->getWpPostId() : $WPPost->post_parent;
+    /**
+     * @return mixed|string
+     */
+    protected function createUid()
+    {
+        $WPPost = $this->getWpPost();
+        $post_id = $WPPost->post_type != 'revision' ? $this->getWpPostId() : $WPPost->post_parent;
 
-		if ( $uid = $this->getUid() ) {
-			$uid = get_post_meta( $post_id, 'brizy_post_uid', true );
-			if ( ! $uid ) {
-				update_post_meta( $post_id, 'brizy_post_uid', $this->getUid() );
-			}
+        if ($uid = $this->getUid()) {
+            $uid = get_post_meta($post_id, 'brizy_post_uid', true);
+            if (!$uid) {
+                update_post_meta($post_id, 'brizy_post_uid', $this->getUid());
+            }
 
-			return $uid;
-		}
+            return $uid;
+        }
 
-		$uid = get_post_meta( $post_id, 'brizy_post_uid', true );
+        $uid = get_post_meta($post_id, 'brizy_post_uid', true);
 
-		if ( ! $uid ) {
-			$uid = md5( $post_id . time() );
-			update_post_meta( $post_id, 'brizy_post_uid', $uid );
-		}
+        if (!$uid) {
+            $uid = md5($post_id . time());
+            update_post_meta($post_id, 'brizy_post_uid', $uid);
+        }
 
-		return $this->uid = $uid;
-	}
+        return $this->uid = $uid;
+    }
 
-	/**
-	 * @return array
-	 */
-	public function getDependencies() {
-		return $this->dependencies;
-	}
+    /**
+     * @return array
+     */
+    public function getDependencies()
+    {
+        return $this->dependencies;
+    }
 
-	/**
-	 * @param array $dependencies
-	 *
-	 * @return Brizy_Editor_Entity
-	 */
-	public function setDependencies( $dependencies ) {
-		$this->dependencies = $dependencies;
+    /**
+     * @param array $dependencies
+     *
+     * @return Brizy_Editor_Entity
+     */
+    public function setDependencies($dependencies)
+    {
+        $this->dependencies = $dependencies;
 
-		return $this;
-	}
+        return $this;
+    }
 
 }

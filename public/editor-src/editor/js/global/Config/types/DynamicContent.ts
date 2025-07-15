@@ -65,6 +65,12 @@ type Cnf = {
 
 export type DCGroup<T extends "wp" | "cloud"> = Cnf[T];
 
+export type GetPlaceholderData = (
+  res: Response<Dictionary<string[]>>,
+  rej: Response<string>,
+  extraData: { placeholders: unknown; signal: AbortSignal | undefined }
+) => void;
+
 export interface DynamicContent<T extends "wp" | "cloud"> {
   groups?: DCGroup<T>;
   handler?: (
@@ -72,9 +78,5 @@ export interface DynamicContent<T extends "wp" | "cloud"> {
     rej: Response<string>,
     extraData: { entityType: string; groupType: DCTypes }
   ) => void;
-  getPlaceholderData?: (
-    res: Response<Dictionary<string[]>>,
-    rej: Response<string>,
-    extraData: { placeholders: unknown; signal: AbortSignal | undefined }
-  ) => void;
+  getPlaceholderData?: GetPlaceholderData;
 }

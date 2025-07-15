@@ -54,7 +54,7 @@ class Brizy_Import_Import {
 			throw new Exception( $e->getMessage() );
 		}
 
-		Brizy_Editor_Post::mark_all_for_compilation();
+		Brizy_Editor_Post::markAllForCompilation();
 
 		$this->cleanup();
 	}

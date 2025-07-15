@@ -6,6 +6,7 @@ import { Store } from "visual/redux/store";
 
 export interface Props {
   store: Store;
+  doc?: Document;
   sheet: Readonly<Sheet>;
   config: ConfigCommon;
   children: ReactNode;

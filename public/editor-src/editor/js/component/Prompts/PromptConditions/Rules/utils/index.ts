@@ -2,7 +2,11 @@ import { Str } from "@brizy/readers";
 import classNames from "classnames";
 import { setIn } from "timm";
 import { Refs } from "visual/component/Prompts/PromptConditions/Rules/utils/api";
-import { ConditionCollectionType } from "visual/global/Config/types/configs/ConfigCommon";
+import {
+  ConditionCollectionType,
+  Customer,
+  CustomerGroup
+} from "visual/global/Config/types/configs/ConfigCommon";
 import {
   CollectionItemRule,
   CollectionTypeRule,
@@ -117,17 +121,25 @@ export const getValue = (
     return undefined;
   }
 
-  const foundItem = items.find((item) =>
-    item.items?.some((nestedItem) => Str.read(nestedItem.value) === ruleValue)
+  const foundItem = items.find(
+    (item) =>
+      item.items?.some(
+        (nestedItem) => Str.read(nestedItem.value) === ruleValue
+      ) || item.value === ruleValue
   );
 
-  if (!foundItem || !foundItem.items) {
+  if (!foundItem) {
     return undefined;
   }
 
-  return foundItem.items.find(
-    (nestedItem) => Str.read(nestedItem.value) === ruleValue
-  );
+  if (foundItem.items) {
+    return foundItem.items.find(
+      (nestedItem) => Str.read(nestedItem.value) === ruleValue
+    );
+  }
+
+  // Category collection has no items
+  return foundItem as ValueItems;
 };
 
 export const getOptionItemClassNames = (active: boolean): string =>
@@ -147,6 +159,24 @@ export const convertIdToValue = <T extends { id: string }>(
     value: id,
     ...rest
   })) as WithoutId<T>;
+
+export const convertCustomerIdToValue = <T extends Customer>(
+  items: T[]
+): WithoutId<{ id: string; title: string }> =>
+  items.map(({ id, firstName, lastName, ...rest }) => ({
+    value: id,
+    title: `${firstName} ${lastName}`,
+    ...rest
+  })) as WithoutId<{ id: string; title: string }>;
+
+export const convertCustomerGroupIdToValue = (
+  items: CustomerGroup[]
+): WithoutId<{ id: string; title: string }> =>
+  items.map(({ id, name, ...rest }) => ({
+    value: id,
+    title: name,
+    ...rest
+  })) as WithoutId<{ id: string; title: string }>;
 
 export const getRefsById = (collectionType: ConditionCollectionType[]) =>
   collectionType.reduce((acc, { id, fields }) => {

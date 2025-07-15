@@ -195,7 +195,7 @@ class Brizy_Editor {
 			$user = Brizy_Editor_User::get();
 
             if ($pid) {
-                $post = Brizy_Editor_Post::get($pid);
+                $post = Brizy_Editor_Entity::get($pid);
             }
         } catch (Exception $e) {
 
@@ -224,7 +224,7 @@ class Brizy_Editor {
 
 		}
         try {
-            $post = Brizy_Editor_Post::get($pid);
+            $post = Brizy_Editor_Entity::get($pid);
         } catch (Exception $e) {
             return;
 
@@ -246,7 +246,7 @@ class Brizy_Editor {
 
 		}
         try {
-            $post = Brizy_Editor_Post::get($pid);
+            $post = Brizy_Editor_Entity::get($pid);
         } catch (Exception $e) {
             return;
 

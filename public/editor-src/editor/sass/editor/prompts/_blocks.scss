@@ -7,7 +7,7 @@
     width: 50px;
     height: 60px;
     top: 0;
-    right: 0;
+    inset-inline-end: 0;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -21,8 +21,8 @@
       width: 17px;
       border-top: 2px solid $block_layout__btn-color;
       top: 45%;
-      left: 50%;
-      margin-left: -8px;
+      inset-inline-start: 50%;
+      margin-inline-start: -8px;
       transition: all 0.2s ease;
     }
 
@@ -44,7 +44,7 @@
     position: absolute;
     color: $block_layout__btn-color;
     top: 19px;
-    right: 41px;
+    inset-inline-end: 41px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -70,14 +70,14 @@
     .brz-ed-popup-two__input {
       width: 100%;
       height: 100%;
-      padding-left: 70px;
-      background-color: $gray-1;
-      color: $white;
+      padding-inline-start: 70px;
+      background-color: $right_sidebar__header__tabs-bg;
+      color: $left_sidebar__main__search-text-color;
       font-family: $default-font-family;
       font-size: 15px;
       position: absolute;
       top: 0;
-      left: 0;
+      inset-inline-start: 0;
       outline: none;
       border: 0;
       text-overflow: ellipsis;
@@ -85,7 +85,7 @@
       white-space: nowrap;
 
       &::placeholder {
-        color: rgba(255, 255, 255, 0.5);
+        color: $left_sidebar__main__search-text-color;
         font-style: italic;
       }
     }
@@ -94,9 +94,9 @@
       position: absolute;
       top: 0;
       bottom: 0;
-      left: 40px;
+      inset-inline-start: 40px;
       margin: auto;
-      color: #ebeced;
+      color: $left_sidebar__main__search-text-color;
     }
 
     &--hidden {
@@ -113,7 +113,7 @@
     background-color: $white;
     display: flex;
     align-items: center;
-    padding-right: 60px;
+    padding-inline-end: 60px;
     height: 100%;
     cursor: pointer;
   }
@@ -153,7 +153,7 @@
 
       &-icon {
         position: relative;
-        margin-right: 10px;
+        margin-inline-end: 10px;
         top: 1px;
       }
     }
@@ -168,7 +168,7 @@
   &-body__sidebar {
     flex-basis: 256px;
     max-width: 256px;
-    background-color: #2a2e37;
+    background-color: $sidebar__content-bg;
     height: 100%;
     padding-bottom: 10px;
   }
@@ -190,7 +190,7 @@
   }
 
   &-body__content--import {
-    margin-left: 30px;
+    margin-inline-start: 30px;
   }
 
   // Footer
@@ -240,7 +240,7 @@
 
     &-list {
       cursor: pointer;
-      color: #767f86;
+      color: $left_sidebar__elements__content-color;
       padding-bottom: 15px;
       display: flex;
       align-items: center;
@@ -250,7 +250,7 @@
       transition: color 0.3s ease;
 
       &:hover {
-        color: rgba(255, 255, 255, 0.9);
+        color: $blocks_sidebar__elements-color--active;
       }
 
       &:last-child {
@@ -278,7 +278,7 @@
 
       &__span {
         &-icon {
-          margin-right: 10px;
+          margin-inline-end: 10px;
           font-size: 16px;
         }
 
@@ -289,7 +289,7 @@
         &-new {
           width: 32px;
           height: 16px;
-          margin-left: 15px;
+          margin-inline-start: 15px;
           background-color: #d62c2c;
           justify-content: center;
           align-items: center;
@@ -304,7 +304,7 @@
         }
 
         &-quantity {
-          margin-left: auto;
+          margin-inline-start: auto;
           font-size: 13px;
           padding-top: 1px;
         }
@@ -312,7 +312,7 @@
     }
 
     &-title {
-      color: rgba(255, 255, 255, 0.9);
+      color: $blocks_sidebar__main__separator__title-color;
       font-size: 12px;
       font-weight: 600;
       letter-spacing: 1px;
@@ -327,8 +327,8 @@
         content: "";
         width: 100%;
         height: 1px;
-        background-color: #424951;
-        margin-left: 20px;
+        background-color: $blocks_sidebar__main__separator__line-bg;
+        margin-inline-start: 20px;
         display: block;
       }
     }
@@ -356,10 +356,7 @@
     height: 89.537037%;
     max-width: 1650px;
     max-height: 967px;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
+    inset: 0;
     margin: auto;
     border-radius: 5px;
     overflow: hidden;
@@ -440,7 +437,7 @@
       }
 
       &:after {
-        border-color: $blue-21;
+        border-color: $brand__primary;
       }
     }
 
@@ -487,7 +484,7 @@
     &__span-lock {
       position: absolute;
       top: 50%;
-      left: 50%;
+      inset-inline-start: 50%;
       transform: translate(-50%, -50%);
       color: $brand__primary__pro;
       opacity: 0;
@@ -534,7 +531,7 @@
         height: 100%;
         position: absolute;
         top: 0;
-        left: 0;
+        inset-inline-start: 0;
         pointer-events: none;
         border: 3px solid transparent;
         transition: border-color 0.3s ease-in-out,
@@ -583,16 +580,13 @@
         font-size: 15px;
         font-weight: 600;
         line-height: 18px;
-        padding-left: 10px;
+        padding-inline-start: 10px;
       }
 
       .brz-ed-container-trigger--small {
         position: relative;
         display: block;
-        top: auto;
-        right: auto;
-        bottom: auto;
-        left: auto;
+        inset: auto;
         margin: 0;
 
         &:after,
@@ -646,7 +640,7 @@
       }
 
       .brz-p:not(.brz-ed-badge) .brz-icon-svg {
-        margin-right: 7px;
+        margin-inline-end: 7px;
       }
     }
 
@@ -681,7 +675,7 @@
         height: 100%;
         position: absolute;
         top: 0;
-        left: 0;
+        inset-inline-start: 0;
         margin: 0;
 
         &-item:before,
@@ -711,7 +705,7 @@
         padding: 0 17px;
         position: absolute;
         bottom: 0;
-        left: 0;
+        inset-inline-start: 0;
         display: flex;
         z-index: 3;
         opacity: 0;
@@ -802,7 +796,7 @@
       }
 
       &-title-pen {
-        padding-left: 7px;
+        padding-inline-start: 7px;
       }
 
       .brz-ed-tooltip__overlay {
@@ -909,7 +903,7 @@
         width: 100%;
         height: 100%;
         top: 0;
-        left: 0;
+        inset-inline-start: 0;
       }
     }
   }
@@ -936,7 +930,9 @@
 
     &-left {
       width: 600px;
-      margin: 0 37px 0 17px;
+      margin-block: 0;
+      margin-inline-start: 17px;
+      margin-inline-end: 37px;
     }
 
     &-back {
@@ -958,7 +954,7 @@
 
       &-icon {
         height: 20px;
-        margin-right: 15px;
+        margin-inline-end: 15px;
       }
     }
 
@@ -972,10 +968,7 @@
 
       .brz-ed-animated--spin {
         position: absolute;
-        top: 0;
-        right: 0;
-        bottom: 0;
-        left: 0;
+        inset: 0;
         color: rgba(94, 100, 111, 0.6);
         font-size: 24px;
         margin: auto;
@@ -1058,10 +1051,7 @@
 
         .brz-ed-animated--spin {
           position: absolute;
-          top: 0;
-          right: 0;
-          bottom: 0;
-          left: 0;
+          inset: 0;
           color: rgba(94, 100, 111, 0.6);
           font-size: 24px;
           margin: auto;
@@ -1074,7 +1064,7 @@
           height: 100%;
           position: absolute;
           top: 0;
-          left: 0;
+          inset-inline-start: 0;
           border-radius: 3px;
           pointer-events: none;
           opacity: 0;
@@ -1102,13 +1092,13 @@
           background: $brand__primary;
           position: absolute;
           bottom: 0;
-          left: 0;
+          inset-inline-start: 0;
           color: rgba(3, 8, 15, 0.92);
           font-family: $default-font-family;
           font-size: 13px;
           font-weight: 600;
           line-height: 30px;
-          padding-left: 10px;
+          padding-inline-start: 10px;
           opacity: 0;
           transition: opacity 0.3s ease-in-out;
 
@@ -1142,7 +1132,7 @@
       background: $white;
       position: absolute;
       bottom: 0;
-      left: 0;
+      inset-inline-start: 0;
       z-index: 2;
       display: flex;
       justify-content: flex-end;
@@ -1166,7 +1156,7 @@
         align-items: center;
 
         &-button {
-          margin-right: 36px;
+          margin-inline-end: 36px;
           color: $gray-19;
           font-family: $default-font-family;
           font-size: 13px;
@@ -1182,7 +1172,7 @@
         }
 
         &-icon {
-          margin-right: 8px;
+          margin-inline-end: 8px;
           font-size: 14px;
         }
       }
@@ -1247,7 +1237,7 @@
 
     .brz-a {
       color: #767f86;
-      margin-left: 5px;
+      margin-inline-start: 5px;
     }
   }
 
@@ -1303,11 +1293,11 @@
   }
 
   &__select-pen {
-    margin-right: 5px;
+    margin-inline-end: 5px;
   }
 
   &__select-add {
-    margin-right: 5px;
+    margin-inline-end: 5px;
     color: $control-color;
 
     .brz-icon-svg {

@@ -1,9 +1,12 @@
 import React, { Component } from "react";
 import { Provider } from "react-redux";
 import { readPageData } from "visual/bootstraps/common/adapter";
+import { PublishData } from "visual/global/Config/types/configs/ConfigCommon";
 import { GetConfig } from "visual/providers/ConfigProvider/types";
 import { editorRendered, hydrate } from "visual/redux/actions";
+import { fetchPageSuccess } from "visual/redux/actions2";
 import { Store, createStore } from "visual/redux/store";
+import { addFilter } from "visual/utils/filters";
 import { parseGlobalBlocksToRecord } from "visual/utils/reader/globalBlocks";
 import { getAuthorized } from "visual/utils/user/getAuthorized";
 import { getMiddleware } from "./getMiddleware";
@@ -64,6 +67,11 @@ class InitStore extends Component<Props> {
 
     // For External API
     config.onUpdate = (res) => {
+      const onDone = (r: PublishData) => {
+        store.dispatch(fetchPageSuccess());
+        res(r);
+      };
+
       store.dispatch({
         type: "PUBLISH",
         payload: {
@@ -71,13 +79,18 @@ class InitStore extends Component<Props> {
           type: "external",
           editorMode: this.props.editorMode,
           config,
-          res
+          res: onDone
         }
       });
     };
 
     // For External API
     config.onCompile = (res) => {
+      const onDone = (r: PublishData) => {
+        store.dispatch(fetchPageSuccess());
+        res(r);
+      };
+
       store.dispatch({
         type: "PUBLISH",
         payload: {
@@ -85,10 +98,13 @@ class InitStore extends Component<Props> {
           type: "externalForce",
           editorMode: this.props.editorMode,
           config,
-          res
+          res: onDone
         }
       });
     };
+
+    // Add the getConfig filter to retrieve the configuration
+    addFilter("getConfig", () => config);
     this.store = store;
   }
 

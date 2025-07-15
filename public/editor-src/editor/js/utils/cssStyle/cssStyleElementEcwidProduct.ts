@@ -701,6 +701,21 @@ export function cssStyleElementEcwidProductShareTitleAlign({
 export function cssStyleElementEcwidProductShareTitleSpacing({
   v,
   device,
+  state
+}: CSSValue): string {
+  const dvv = (key: string): unknown =>
+    defaultValueValue({ v, key, device, state });
+  const spacingBottom = dvv("shareTitleSpacing");
+  const spacingBottomSuffix = dvv("shareTitleSpacingSuffix");
+  const spacingTop = dvv("shareTitleTopSpacing");
+  const spacingTopSuffix = dvv("shareTitleTopSpacingSuffix");
+
+  return `margin:${spacingTop}${spacingTopSuffix} 0 ${spacingBottom}${spacingBottomSuffix} 0;`;
+}
+
+export function cssStyleElementEcwidProductShareTitleSpacingTop({
+  v,
+  device,
   state,
   getConfig,
   store
@@ -711,8 +726,8 @@ export function cssStyleElementEcwidProductShareTitleSpacing({
     state,
     getConfig,
     store,
-    prefix: "shareTitle",
-    direction: "bottom"
+    prefix: "shareTitleTop",
+    direction: "top"
   });
 }
 
@@ -1340,24 +1355,6 @@ export function cssStyleElementEcwidProductViewFavoritesBoxShadow({
     getConfig,
     store,
     prefix: "viewFavorites"
-  });
-}
-
-export function cssStyleElementEcwidProductViewFavoritesSpacing({
-  v,
-  device,
-  state,
-  getConfig,
-  store
-}: CSSValue): string {
-  return cssStyleSpacing({
-    v,
-    device,
-    state,
-    getConfig,
-    store,
-    prefix: "viewFavorites",
-    direction: "bottom"
   });
 }
 
@@ -4350,15 +4347,21 @@ export function cssStyleElementEcwidProductWholesalePriceRightSpacing({
   getConfig,
   store
 }: CSSValue): string {
-  return cssStyleSpacing({
-    v,
-    device,
-    state,
-    getConfig,
-    store,
-    prefix: "wholesalePriceRight",
-    direction: "right"
-  });
+  const dvv = (key: string) => defaultValueValue({ v, key, device, state });
+
+  const isColumn = dvv("wholesalePriceColumn") === "on";
+
+  return isColumn
+    ? ""
+    : cssStyleSpacing({
+        v,
+        device,
+        state,
+        getConfig,
+        store,
+        prefix: "wholesalePriceRight",
+        direction: "right"
+      });
 }
 
 export function cssStyleElementEcwidProductWholesalePriceColumn({
@@ -4750,19 +4753,16 @@ export function cssStyleElementEcwidProductRelatedAlign({
 export function cssStyleElementEcwidProductRelatedSpacing({
   v,
   device,
-  state,
-  getConfig,
-  store
+  state
 }: CSSValue): string {
-  return cssStyleSpacing({
-    v,
-    device,
-    state,
-    getConfig,
-    store,
-    prefix: "relatedTitle",
-    direction: "bottom"
-  });
+  const dvv = (key: string): unknown =>
+    defaultValueValue({ v, key, device, state });
+  const spacingBottom = dvv("relatedTitleSpacing");
+  const spacingBottomSuffix = dvv("relatedTitleSpacingSuffix");
+  const spacingTop = dvv("relatedTitleTopSpacing");
+  const spacingTopSuffix = dvv("relatedTitleTopSpacingSuffix");
+
+  return `margin:${spacingTop}${spacingTopSuffix} 0 ${spacingBottom}${spacingBottomSuffix} 0;`;
 }
 
 export function cssStyleElementEcwidProductGridTitleTypography({
@@ -5524,3 +5524,60 @@ export function cssStyleElementEcwidProductTaxesSpacing({
     direction: "bottom"
   });
 }
+
+export const cssStyleElementEcwidProductRadioSurchargeColor = ({
+  v,
+  device,
+  state,
+  getConfig
+}: CSSValue) => {
+  const color = styleColor({
+    v,
+    device,
+    state,
+    getConfig,
+    prefix: "surchargeColor"
+  });
+
+  return color ? `background-color:${color}; border-color:${color};` : "";
+};
+
+export const cssStyleElementEcwidProductRelatedImagesAlign = ({
+  v,
+  device,
+  state
+}: CSSValue) => {
+  const dvv = (key: string): unknown =>
+    defaultValueValue({ v, key, device, state });
+
+  const align = readHorizontalAlign(
+    dvv("relatedProductsImagesHorizontalAlign")
+  );
+
+  return align ? `justify-content:${FlexHorizontalAligns[align]};` : "";
+};
+
+export const cssStyleElementEcwidProductImageLightboxTitle = (
+  data: CSSValue & WithRenderContext
+) =>
+  getAllCssStyleTypography({
+    ...data,
+    prefix: "productImageLightboxTitleTypography"
+  });
+
+export const cssStyleElementEcwidProductRadioOptionColor = ({
+  v,
+  device,
+  state,
+  getConfig
+}: CSSValue) => {
+  const color = styleColor({
+    v,
+    device,
+    state,
+    getConfig,
+    prefix: "radioBgOptionColor"
+  });
+
+  return color ? `background-color:${color}; border-color:${color};` : "";
+};

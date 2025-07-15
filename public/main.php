@@ -82,7 +82,7 @@ class Brizy_Public_Main
         remove_filter('the_content', 'shortcode_unautop');
         // insert the compiled head and content
         add_filter('body_class', array($this, 'body_class_frontend'));
-        add_action('wp_head', array($this, 'insert_page_head'));
+        //add_action('wp_head', array($this, 'insert_page_head'));
         add_action('admin_bar_menu', array($this, 'toolbar_link'), 999);
         add_action('wp_enqueue_scripts', array($this, '_action_enqueue_preview_assets'), 9999);
         add_filter('the_content', array($this, 'insert_page_content'), -12000);
@@ -340,34 +340,7 @@ class Brizy_Public_Main
         echo $this->_filter_the_content('');
     }
 
-    /**
-     *  Show the compiled page head content
-     */
-    public function insert_page_head()
-    {
-        if (!$this->post->get_compiled_html()) {
-            $compiled_html_head = $this->post->get_compiled_html_head();
-            $compiled_html_head = Brizy_SiteUrlReplacer::restoreSiteUrl($compiled_html_head);
-            $this->post->set_needs_compile(true)->saveStorage();
-            $html = $compiled_html_head;
-        } else {
-            $compiled_page = $this->post->get_compiled_page();
-            $head = $compiled_page->get_head();
-            $html = $head;
-        }
 
-        if (empty($html)) {
-            return;
-        }
-
-        echo apply_filters(
-            'brizy_content',
-            $html,
-            Brizy_Editor_Project::get(),
-            $this->post->getWpPost(),
-            'head'
-        );
-    }
 
     public function brizy_post_excerpt($content, $post = null)
     {
@@ -404,19 +377,12 @@ class Brizy_Public_Main
             return $content;
         }
 
-        $project = Brizy_Editor_Project::get();
-        if ($this->post->get_compiled_scripts()) {
-            $content = $this->post->get_compiled_html();
-        } else {
-            if (!$this->post->get_compiled_html()) {
-                $compiled_html_body = (string)$this->post->get_compiled_html_body();
-                $content = Brizy_SiteUrlReplacer::restoreSiteUrl($compiled_html_body);
-                $this->post->set_needs_compile(true)->saveStorage();
-            } else {
-                $compiled_page = $this->post->get_compiled_page();
-                $content = $compiled_page->get_body();
-            }
-        }
+		$project = Brizy_Editor_Project::get();
+		$content = $this->post->getCompiledHtml();
+
+		if ( empty( $content ) ) {
+			return '';
+		}
 
         return apply_filters(
             'brizy_content',

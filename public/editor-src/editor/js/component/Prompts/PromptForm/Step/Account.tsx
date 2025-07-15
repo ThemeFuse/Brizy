@@ -1,13 +1,12 @@
 import React, { Component } from "react";
 import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
-import { pendingRequest } from "visual/utils/api";
+import { pendingRequest, updateIntegration } from "visual/utils/api";
 import { t } from "visual/utils/i18n";
 import { Context } from "../../common/GlobalApps/Context";
 import {
   Account as ViewAccount,
   Disconnect as ViewDisconnect
 } from "../../common/GlobalApps/StepsView";
-import { updateIntegration } from "../api";
 
 interface AppData {
   accounts: Array<{ id: string }>;
@@ -98,7 +97,7 @@ class Account extends Component<Props, State> {
       error: null
     });
 
-    const { status, data } = await updateIntegration(
+    const data = await updateIntegration(
       {
         ...appData,
         formId,
@@ -107,7 +106,7 @@ class Account extends Component<Props, State> {
       config
     );
 
-    if (status !== 200) {
+    if (!data) {
       this.setState({
         nextLoading: false,
         error: t("Something went wrong")
@@ -182,7 +181,7 @@ class Account extends Component<Props, State> {
     });
 
     if (active !== appData.usedAccount) {
-      const { status, data } = await updateIntegration(
+      const data = await updateIntegration(
         {
           ...appData,
           formId,
@@ -191,7 +190,7 @@ class Account extends Component<Props, State> {
         config
       );
 
-      if (status !== 200) {
+      if (!data) {
         this.setState({
           nextLoading: false,
           error: t("Something went wrong")

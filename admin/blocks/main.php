@@ -229,21 +229,16 @@ class Brizy_Admin_Blocks_Main
             }
         }
 
-        return array_merge($matching_blocks, $this->findReferencedInGlobalBlocks($matching_blocks), $referenced);
+        return array_reduce(array_merge($matching_blocks, $this->findReferencedInGlobalBlocks($matching_blocks), $referenced), function ($result, $object) {
+            if ($object) {
+                $result[$object->getUid()] = $object;
+            }
+            return $result;
+        }, []);
     }
 
     private function getTemplateRuleMatches(WP_Post $template)
     {
-        $rule_manager = new Brizy_Admin_Rules_Manager();
-        $template_rules = $rule_manager->getRules($template->ID);
-//        $ruleMatches = array_map(function (Brizy_Admin_Rule $r) {
-//            return [
-//                //'type'         => $r->getType(),
-//                'applyFor' => $r->getAppliedFor(),
-//                'entityType' => $r->getEntityType(),
-//                'entityValues' => $r->getEntityValues(),
-//            ];
-//        }, $template_rules);
         $ruleMatches[] = [
             'applyFor' => Brizy_Admin_Rule::BRIZY_TEMPLATE,
             'entityType' => $template->post_type,
@@ -326,7 +321,7 @@ class Brizy_Admin_Blocks_Main
         $extractor = new \BrizyPlaceholders\Extractor($placeholderProvider);
         $globalPopups = [];
         foreach ($matching_blocks as $block) {
-            $content1 = $block->get_compiled_html();
+            $content1 = $block->getCompiledHtml();
             if (!$content1) continue;
             list($placeholders, $placeholderInstances, $content) = $extractor->extract($content1);
             foreach ($placeholders as $i => $placeholder) {
@@ -384,12 +379,14 @@ class Brizy_Admin_Blocks_Main
 
             return $blocks;
         }
-        if (!empty($wpPost->get_compiled_html())) {
+
+        $html = $wpPost->getCompiledSectionManager()->buildHtml();
+        if (!empty($html)) {
             $context = Brizy_Content_ContextFactory::createContext(Brizy_Editor_Project::get(), $wpPost);
             $placeholderProvider = new Brizy_Content_Providers_GlobalBlockProvider($context);
             $extractor = new \BrizyPlaceholders\Extractor($placeholderProvider);
             $blocks = [];
-            list($placeholders, $placeholderInstances, $content) = $extractor->extract($wpPost->get_compiled_html());
+            list($placeholders, $placeholderInstances, $content) = $extractor->extract($html);
             foreach ($placeholders as $i => $placeholder) {
                 $attrs = $placeholder->getAttributes();
                 $blockManager = new Brizy_Admin_Blocks_Manager(Brizy_Admin_Blocks_Main::CP_GLOBAL);
@@ -404,15 +401,9 @@ class Brizy_Admin_Blocks_Main
 
             return $blocks;
         }
-        // return all blocks
-        $blockManager = new Brizy_Admin_Blocks_Manager(Brizy_Admin_Blocks_Main::CP_GLOBAL);
-        $blocks = $blockManager->getEntities(['post_status' => 'any']);
+
         // include all blocks
         $resultBlocks = [];
-        foreach ($blocks as $block) {
-            $resultBlocks[] = Brizy_Editor_Block::get($block->getWpPostId());
-        }
-
         return $resultBlocks;
     }
 }

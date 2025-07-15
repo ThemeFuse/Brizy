@@ -1,4 +1,5 @@
 import cn from "classnames";
+import { uniqueId } from "es-toolkit/compat";
 import React, { useMemo } from "react";
 import { IconTypes } from "visual/config/icons/Type";
 import { useConfig } from "visual/providers/ConfigProvider";
@@ -26,18 +27,33 @@ function getSuffix(type: string): Suffix {
 
 const Svg = ({
   className,
-  href
+  href,
+  ariaLabel
 }: {
-  className?: string;
   href: string;
-}): JSX.Element => (
-  <svg className={className}>
-    <use href={href} />
-  </svg>
-);
+  ariaLabel?: string;
+  className?: string;
+}): JSX.Element => {
+  if (!ariaLabel) {
+    return (
+      <svg className={className}>
+        <use href={href} />
+      </svg>
+    );
+  }
+
+  const ariaId = uniqueId("brz-aria-");
+
+  return (
+    <svg className={className} aria-labelledby={ariaId}>
+      <title id={ariaId}>{ariaLabel}</title>
+      <use href={href} />
+    </svg>
+  );
+};
 
 const ThemeIconPreview = (props: Props): JSX.Element => {
-  const { type, name, className: _className, filename } = props;
+  const { type, name, className: _className, filename, ariaLabel } = props;
 
   const config = useConfig();
   const className = cn("brz-icon-svg align-[initial]", _className);
@@ -53,6 +69,7 @@ const ThemeIconPreview = (props: Props): JSX.Element => {
           config
         })}
         className={className}
+        ariaLabel={ariaLabel}
       />
     );
   }
@@ -73,6 +90,7 @@ const ThemeIconPreview = (props: Props): JSX.Element => {
         suffix: getSuffix(type),
         config
       })}
+      ariaLabel={ariaLabel}
     />
   );
 };

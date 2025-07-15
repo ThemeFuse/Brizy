@@ -59,6 +59,8 @@ function youtubeLoadScript(cb) {
 function Youtube($iframe, settings) {
   this._loop = settings.loop;
   this._start = settings.start || 0;
+  this._shouldPause = false;
+  this._isFinished = false;
 
   youtubeLoadScript(this._init.bind(this, $iframe));
 }
@@ -73,11 +75,18 @@ $.extend(Youtube.prototype, {
           event.target.mute();
           event.target.seekTo(this._start);
           event.target.playVideo();
+          if (this._shouldPause) {
+            event.target.pauseVideo();
+          } else {
+            event.target.playVideo();
+          }
         }.bind(this),
         onStateChange: function (event) {
           if (this._loop && event.data == YT.PlayerState.ENDED) {
             event.target.seekTo(this._start);
             event.target.playVideo();
+          } else if (!this._loop && event.data == YT.PlayerState.ENDED) {
+            this._isFinished = true;
           }
         }.bind(this)
       }
@@ -90,6 +99,9 @@ $.extend(Youtube.prototype, {
     this.player.unMute();
   },
   play: function () {
+    if (this._isFinished) {
+      return;
+    }
     if (this.player && typeof this.player.playVideo === "function") {
       this.player.playVideo();
     }
@@ -98,7 +110,11 @@ $.extend(Youtube.prototype, {
     this.player.stopVideo();
   },
   pause: function () {
-    this.player.pauseVideo();
+    if (this.player && typeof this.player.pauseVideo === "function") {
+      this.player.pauseVideo();
+    } else {
+      this._shouldPause = true;
+    }
   },
   setLoop: function (value) {
     this.play();
@@ -117,16 +133,22 @@ $.extend(Youtube.prototype, {
 function Vimeo($iframe, settings) {
   var loop = settings.loop;
   var start = settings.start || 0;
+  var isFinished = false;
+  var shouldPause = false;
 
   var sendMessage = function (method, value) {
-    $iframe.get(0).contentWindow &&
-      $iframe.get(0).contentWindow.postMessage(
-        JSON.stringify({
-          method: method,
-          value: value
-        }),
-        "*"
-      );
+    const iframe = $iframe.get(0);
+    if (!iframe || !iframe.contentWindow) {
+      return;
+    }
+
+    iframe.contentWindow.postMessage(
+      JSON.stringify({
+        method: method,
+        value: value
+      }),
+      "*"
+    );
   }.bind(this);
 
   window.addEventListener(
@@ -148,6 +170,10 @@ function Vimeo($iframe, settings) {
             $iframe.attr(readyAttr, "true");
             sendMessage("addEventListener", "loaded");
             sendMessage("addEventListener", "finish");
+
+            if (shouldPause) {
+              sendMessage("pause");
+            }
           }
           break;
         }
@@ -161,13 +187,19 @@ function Vimeo($iframe, settings) {
               }.bind(this),
               260
             );
+          } else {
+            isFinished = true;
           }
           break;
         }
         case "loaded": {
           sendMessage("setCurrentTime", start);
           sendMessage("setVolume", 0);
-          sendMessage("play");
+
+          if (!shouldPause) {
+            sendMessage("play");
+          }
+
           break;
         }
       }
@@ -185,10 +217,13 @@ function Vimeo($iframe, settings) {
       sendMessage("setVolume", 100);
     },
     play: function () {
-      sendMessage("play");
+      if (!isFinished) {
+        sendMessage("play");
+      }
     },
     pause: function () {
       sendMessage("pause");
+      shouldPause = true;
     },
     setLoop: function (value) {
       this.play();
@@ -210,17 +245,23 @@ function CustomVideo(video, settings) {
   const loop = settings.loop;
   const start = settings.start || 0;
   const _video = video.find("video")[0];
+  let isFinished = false;
 
   const handleCustomVideoEnded = () => {
+    if (isFinished) {
+      return;
+    }
+
+    if (!loop) {
+      return (isFinished = true);
+    }
+
     _video.currentTime = start;
     _video.play();
   };
 
   if (_video) {
-    if (loop) {
-      _video.addEventListener("ended", handleCustomVideoEnded);
-    }
-
+    _video.addEventListener("ended", handleCustomVideoEnded);
     _video.setAttribute("muted", "true");
     _video.currentTime = start;
     _video.play();
@@ -238,7 +279,21 @@ function CustomVideo(video, settings) {
         _video.currentTime = 0;
       }
     },
-    seekTo: () => {}
+    seekTo: () => {},
+    pause: () => {
+      if (_video) {
+        _video.pause();
+      }
+    },
+    play: () => {
+      if (isFinished) {
+        return;
+      }
+
+      if (_video) {
+        _video.play();
+      }
+    }
   };
 }
 

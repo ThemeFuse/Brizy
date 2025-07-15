@@ -258,6 +258,10 @@ export const makeGlobalStylesTypography = ({
       ${textTransformStyle}
       `;
     })
+    .join("")
+    .split("\n")
+    .map((s) => s.trim())
+    .filter(Boolean)
     .join("");
 
   return `:root{${vars}}`;

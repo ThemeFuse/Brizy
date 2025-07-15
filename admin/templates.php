@@ -523,7 +523,7 @@ class Brizy_Admin_Templates
             $post = get_post($pid);
         }
 
-        $compiled_html = self::getTemplate()->get_compiled_html();
+        $compiled_html = self::getTemplate()->getCompiledHtml();
         $content = apply_filters(
             'brizy_content',
             $compiled_html,

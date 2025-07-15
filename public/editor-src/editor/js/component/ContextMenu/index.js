@@ -66,6 +66,7 @@ export const ContextMenuProvider = ({
   componentId
 }) => {
   const ref = useRef(null);
+  const rootRef = useRef(null);
   const { getParentContextMenuExtendItems } =
     useContext(ContextMenuExtendContext) ?? {};
   const { getParentContextMenuItems } = useContext(ContextMenuContext) ?? {};
@@ -123,12 +124,41 @@ export const ContextMenuProvider = ({
     [getItems]
   );
 
+  const root = useMemo(() => {
+    if (rootRef.current) {
+      return rootRef.current;
+    }
+
+    if (typeof window !== "undefined") {
+      const rootClassName = "brz-context-menu__root";
+      const node = window.parent.document.querySelector(`.${rootClassName}`);
+
+      if (node) {
+        rootRef.current = node;
+        return node;
+      }
+
+      const root = document.createElement("div");
+      root.className = rootClassName;
+      rootRef.current = root;
+      window.parent.document.body.appendChild(root);
+      return root;
+    }
+  }, []);
+
   return (
     <ContextMenuContext.Provider value={value}>
       <ContextMenuWrapper id={id} ref={ref}>
         {typeof children === "function" ? children({ ref }) : children}
       </ContextMenuWrapper>
-      <Dropdown id={id} getItems={getSquashedItems} itemsMeta={meta} />
+      {root && (
+        <Dropdown
+          id={id}
+          getItems={getSquashedItems}
+          itemsMeta={meta}
+          root={root}
+        />
+      )}
     </ContextMenuContext.Provider>
   );
 };

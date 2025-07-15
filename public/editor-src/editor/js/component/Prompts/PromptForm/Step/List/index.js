@@ -1,9 +1,12 @@
 import React, { Component } from "react";
-import { pendingRequest } from "visual/utils/api";
+import {
+  createIntegrationList,
+  pendingRequest,
+  updateIntegration
+} from "visual/utils/api";
 import { t } from "visual/utils/i18n";
 import { Context } from "../../../common/GlobalApps/Context";
 import { RadioFields } from "../../../common/GlobalApps/StepsView";
-import { createIntegrationList, updateIntegration } from "../../api";
 import CreateList from "./CreateList";
 
 const getError = (type, app) => {
@@ -91,7 +94,7 @@ class List extends Component {
       onChange
     } = this.context;
 
-    const { status, data } = await updateIntegration(
+    const data = await updateIntegration(
       {
         ...appData,
         formId,
@@ -100,7 +103,7 @@ class List extends Component {
       config
     );
 
-    if (status !== 200) {
+    if (!data) {
       this.setState({
         error: t("Something went wrong")
       });
@@ -156,7 +159,7 @@ class List extends Component {
     });
 
     if (!keysValue.some((key) => !key)) {
-      const { status, data } = await createIntegrationList(
+      const data = await createIntegrationList(
         {
           formId,
           id: appData.id,
@@ -166,7 +169,7 @@ class List extends Component {
         config
       );
 
-      if (status !== 200) {
+      if (!data) {
         if (data.message) {
           this.setState({
             nextLoading: false,
@@ -217,7 +220,7 @@ class List extends Component {
     });
 
     if (active !== appData.usedList) {
-      const { status, data } = await updateIntegration(
+      const data = await updateIntegration(
         {
           ...appData,
           formId,
@@ -226,7 +229,7 @@ class List extends Component {
         config
       );
 
-      if (status !== 200) {
+      if (!data) {
         this.setState({
           nextLoading: false,
           error: t("Something went wrong")

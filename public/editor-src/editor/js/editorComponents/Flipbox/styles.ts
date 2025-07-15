@@ -15,7 +15,7 @@ export function style(data: DynamicStylesProps<Value>): OutputStyle {
     },
     ".brz && > .brz-flipbox-content, .brz && > .brz-flipbox-content > .brz-flipbox-item ":
       {
-        interval: ["cssStyleElementFlipboxTransitionSpeed"]
+        standart: ["cssStyleElementFlipboxTransitionSpeed"]
       },
 
     //#region Front side styles

@@ -120,7 +120,6 @@ export const Border = ({
     () =>
       dispatch(
         updateUI("leftSidebar", {
-          isOpen: true,
           drawerContentType: LeftSidebarOptionsIds.globalStyle
         })
       ),

@@ -68,8 +68,11 @@ class SectionPopup extends EditorComponent {
 
   componentDidMount() {
     this.mounted = true;
-    this.popupsContainer.appendChild(this.el);
     Instances.set(this.instanceKey, this);
+
+    if (this.popupsContainer) {
+      this.popupsContainer.appendChild(this.el);
+    }
   }
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -79,12 +82,14 @@ class SectionPopup extends EditorComponent {
 
   componentWillUnmount() {
     this.mounted = false;
-    this.popupsContainer.removeChild(this.el);
-    this.popupsContainer = null;
-    this.el = null;
-
     document.documentElement.classList.remove("brz-ow-hidden");
     Instances.delete(this.instanceKey);
+
+    if (this.popupsContainer) {
+      this.popupsContainer.removeChild(this.el);
+      this.popupsContainer = null;
+      this.el = null;
+    }
   }
 
   handleValueChange(newValue, meta) {

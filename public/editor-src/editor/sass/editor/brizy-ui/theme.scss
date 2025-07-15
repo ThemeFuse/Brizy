@@ -1,0 +1,18 @@
+// Redefine the root variables for the Brizy UI theme
+:root {
+  --brz-ui-global-input-border-color: var(--inputs-bg, #212733);
+  --brz-ui-global-icon-color: var(--icons-color, #ffffff);
+  --brz-ui-global-card-background: var(--ui-main-color, #212733);
+  --brz-ui-global-input-color: var(--text-labels, #ffffff);
+  --brz-ui-global-input-background: var(--inputs-bg, #212733);
+  --color-white: var(--icons-color, #ffffff);
+  --color-gray: var(--sidebar-separators, #777f86);
+  --color-blue: var(--active-color, #3dbfe8);
+  --select-editable-item-border-color: var(
+    --toolbars-icons-separators,
+    rgba(255, 255, 255, 0.07)
+  );
+  --select-editable-background-active: var(--inputs-bg, #383e48);
+  --select-editable-background: var(--inputs-bg, #383e48);
+  --select-editable-dots-background: var(--inputs-bg, #383e48);
+}

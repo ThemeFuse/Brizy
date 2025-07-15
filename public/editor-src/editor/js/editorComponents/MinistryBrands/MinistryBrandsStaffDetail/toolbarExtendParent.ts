@@ -1,12 +1,11 @@
 import { GetItems } from "visual/editorComponents/EditorComponent/types";
-import { getEkklesiaChoiches } from "visual/utils/api/common";
+import { getEkklesiaChoiches } from "visual/utils/api";
 import { t } from "visual/utils/i18n";
 import { toolbarParentColors } from "../toolbarParent";
 import { Props, Value } from "./types";
 
 export const getItems: GetItems<Value, Props> = (props) => {
   const config = props.component.getGlobalConfig();
-
 
   return [
     {

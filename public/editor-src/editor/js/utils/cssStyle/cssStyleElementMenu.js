@@ -98,9 +98,9 @@ export function cssStyleElementMenuIconSpacing({
 
   switch (iconPosition) {
     case "left":
-      return `margin:0 ${iconSpacing}px 0 0;`;
+      return `margin:0; margin-inline-end:${iconSpacing}px;`;
     case "right":
-      return `margin:0 0 0 ${iconSpacing}px;`;
+      return `margin:0; margin-inline-start:${iconSpacing}px;`;
   }
 }
 
@@ -948,9 +948,9 @@ export function cssStyleElementMenuSubMenuIconSpacing({ v, device, state }) {
 
   switch (iconPosition) {
     case "left":
-      return `margin:0 ${iconSpacing}px 0 0;`;
+      return `margin:0; margin-inline-end: ${iconSpacing}px;`;
     case "right":
-      return `margin:0 0 0 ${iconSpacing}px;`;
+      return `margin:0; margin-inline-start: ${iconSpacing}px;`;
   }
 }
 
@@ -1109,7 +1109,7 @@ export function cssStyleElementMenuDropdown({ v, device, state }) {
   const mode = styleElementMenuMode({ v, device, state });
 
   if (mode === "vertical" && (device === TABLET || device === MOBILE)) {
-    return `${cssStylePositionRelative()} top: auto; left: auto; transform: translate(0, 0); height: 0; overflow: hidden;`;
+    return `${cssStylePositionRelative()} top: auto; inset-inline-start: auto; transform: translate(0, 0); height: 0; overflow: hidden;`;
   }
 }
 
@@ -1117,7 +1117,7 @@ export function cssStyleElementMenuInnerDropdown({ v, device, state }) {
   const mode = styleElementMenuMode({ v, device, state });
 
   if (mode === "horizontal" && (device === TABLET || device === MOBILE)) {
-    return `${cssStylePositionRelative()} top: auto; left: auto; transform: translate(0, 0); height: 0; overflow: hidden;`;
+    return `${cssStylePositionRelative()} top: auto; inset-inline-start: auto; transform: translate(0, 0); height: 0; overflow: hidden;`;
   }
 }
 
@@ -1153,7 +1153,7 @@ export function cssStyleMenuDropdownPositionLeft({ device }) {
     return "";
   }
 
-  return "right: calc(100% + 5px);";
+  return "inset-inline-end: calc(100% + 5px);";
 }
 
 export function cssStyleMenuDropdownPositionRight({ device }) {
@@ -1161,7 +1161,7 @@ export function cssStyleMenuDropdownPositionRight({ device }) {
     return "";
   }
 
-  return "left: calc(100% + 5px);";
+  return "inset-inline-start: calc(100% + 5px);";
 }
 
 // First Dropdown Position
@@ -1189,9 +1189,9 @@ export function cssStyleMenuFirstDropdownPositionRight({ v, device, state }) {
   const mode = styleElementMenuMode({ v, device, state });
 
   if (mode === "horizontal") {
-    return "left: 0;";
+    return "inset-inline-start: 0;";
   } else {
-    return "left: calc(100% + 5px);";
+    return "inset-inline-start: calc(100% + 5px);";
   }
 }
 

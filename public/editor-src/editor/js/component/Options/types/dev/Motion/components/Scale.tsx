@@ -75,13 +75,14 @@ export const Scale: JSXElementConstructor<EffectProps<V>> = ({
     []
   );
   const xs = useMemo<Props<V["x"]>["directions"]>(
-    () => Object.entries(getXPositionTitle) as [XPosition, string][],
+    () => Object.entries(getXPositionTitle()) as [XPosition, string][],
     []
   );
   const ys = useMemo<Props<V["y"]>["directions"]>(
-    () => Object.entries(getYPositionTitle) as [YPosition, string][],
+    () => Object.entries(getYPositionTitle()) as [YPosition, string][],
     []
   );
+
   return (
     <>
       <Direction<V["direction"]>

@@ -24,10 +24,6 @@ export function styles(data: DynamicStylesProps<ElementModel>): OutputStyle {
         "cssStyleBoxShadow",
         "cssStyleBgColor",
         "cssStyleBgGradient"
-      ],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
       ]
     },
     ".brz && .brz-input": {
@@ -42,26 +38,21 @@ export function styles(data: DynamicStylesProps<ElementModel>): OutputStyle {
       ]
     },
     ".brz &&:hover .brz-input": {
-      standart: ["cssStyleColor"],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
-      ]
+      standart: ["cssStyleColor"]
     },
     ".brz &&:hover .brz-input::placeholder": {
-      standart: ["cssStyleColor"],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
-      ]
+      standart: ["cssStyleColor"]
     },
     ".brz &&:hover .brz-input:-webkit-autofill": {
-      standart: ["cssStyleElementProtectedPageAutocompleteColor"],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
-      ]
-    }
+      standart: ["cssStyleElementProtectedPageAutocompleteColor"]
+    },
+    ".brz && .brz-protected-form__input, .brz && .brz-input, .brz && .brz-input::placeholder, .brz && .brz-input:-webkit-autofill":
+      {
+        standart: [
+          "cssStyleHoverTransition",
+          "cssStylePropertyHoverTransitionColor"
+        ]
+      }
   };
 
   return renderStyles({ ...data, styles });

@@ -1,7 +1,11 @@
+import { authorisation } from "@/authorisation";
 import { authors } from "@/authors";
+import { getExportBlockUrl } from "@/block";
+import { form } from "@/form";
 import { shortcodeContent } from "@/shortcodeContent";
 import { sidebars } from "@/sidebars";
 import { terms } from "@/terms";
+import get from "lodash/get";
 import merge from "lodash/merge";
 import set from "lodash/set";
 import { doAiRequest } from "./aiText";
@@ -48,6 +52,7 @@ if (!config) {
 }
 
 const api = {
+  authorisation,
   ...(config.api.openAIUrl ? { textAI: { handler: doAiRequest } } : {}),
   media: {
     addMedia,
@@ -93,7 +98,10 @@ const api = {
   authors,
   posts: postsAPI,
   terms,
-  sidebars
+  sidebars,
+  block: {
+    getExportBlockUrl
+  }
 };
 
 if (window.__VISUAL_CONFIG__) {
@@ -127,6 +135,11 @@ if (window.__VISUAL_CONFIG__) {
     set(window.__VISUAL_CONFIG__, ["elements", "posts", "handler"], posts);
   }
   set(window.__VISUAL_CONFIG__, ["elements", "menu"], getMenu(config));
+  set(
+    window.__VISUAL_CONFIG__,
+    ["elements", "menuSimple", "getPlaceholderData"],
+    placeholderData
+  );
 
   // Dynamic Content
   if (window.__VISUAL_CONFIG__.dynamicContent) {
@@ -143,4 +156,8 @@ if (window.__VISUAL_CONFIG__) {
     ["integrations", "fonts", "upload"],
     uploadedFonts
   );
+
+  const existingForm = get(window.__VISUAL_CONFIG__, ["integrations", "form"]);
+  const updatedForm = merge({}, existingForm, form);
+  set(window.__VISUAL_CONFIG__, ["integrations", "form"], updatedForm);
 }

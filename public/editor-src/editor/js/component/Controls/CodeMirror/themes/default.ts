@@ -4,7 +4,7 @@ import createTheme from "@uiw/codemirror-themes";
 export const defaultTheme = createTheme({
   theme: "dark",
   settings: {
-    background: "var(--secondary-dark, #292b2e);",
+    background: "var(--inputs-bg, #292b2e);",
     foreground: "var(--toolbar__code_mirror-color, #808080)",
     caret: "var(--toolbar__code_mirror__cursor-color, #808080)",
     selection: "var(--toolbar__code_mirror__selected-bg, #0b69da)",

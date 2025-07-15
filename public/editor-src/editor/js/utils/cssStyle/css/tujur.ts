@@ -4,22 +4,6 @@ import { makeAttr } from "visual/utils/i18n/attribute";
 import { uuid } from "visual/utils/uuid";
 import { addUuid, getNodeWithNewReference } from "./utils";
 
-interface Data {
-  node?: Element;
-  className: string;
-  cssText: string;
-}
-
-const cssOrdered: {
-  default: Array<Data>;
-  rules: Array<Data>;
-  custom: Array<Data>;
-} = {
-  default: [],
-  rules: [],
-  custom: []
-};
-
 // ====== tujur ======
 export function css(
   defaultID: string,
@@ -29,6 +13,7 @@ export function css(
 ) {
   let defaultData;
   const isBrowser = typeof window !== "undefined";
+  const cssOrdered = sheet.getCSSOrdered();
 
   if (defaultStyle) {
     defaultData = sheet.get(defaultID);
@@ -52,7 +37,7 @@ export function css(
         node.appendChild(doc.createTextNode(""));
         node.childNodes[0].nodeValue = cssText;
 
-        insertStyleNodeIntoDOM("default", node, doc);
+        insertStyleNodeIntoDOM("default", { node, doc, sheet });
       }
 
       defaultData = {
@@ -99,7 +84,7 @@ export function css(
         node.appendChild(doc.createTextNode(""));
         node.childNodes[0].nodeValue = cssText;
 
-        insertStyleNodeIntoDOM("rules", node, doc);
+        insertStyleNodeIntoDOM("rules", { node, doc, sheet });
       }
 
       rulesData = {
@@ -133,7 +118,7 @@ export function css(
         node.appendChild(doc.createTextNode(""));
         node.childNodes[0].nodeValue = cssText;
 
-        insertStyleNodeIntoDOM("custom", node, doc);
+        insertStyleNodeIntoDOM("custom", { node, doc, sheet });
       }
 
       elementData = {
@@ -185,6 +170,7 @@ export function css1(
   replacePlaceholdersCb = replacePlaceholders
 ) {
   let elementData = sheet.get(elementID);
+  const cssOrdered = sheet.getCSSOrdered();
   const isBrowser = typeof window !== "undefined";
 
   if (!elementData) {
@@ -201,7 +187,8 @@ export function css1(
       }
       node.appendChild(doc.createTextNode(""));
       node.childNodes[0].nodeValue = cssText;
-      insertStyleNodeIntoDOM("custom", node, doc);
+
+      insertStyleNodeIntoDOM("custom", { node, doc, sheet });
     }
 
     elementData = {
@@ -251,9 +238,14 @@ export function replacePlaceholders(styles: string, className: string) {
 
 function insertStyleNodeIntoDOM(
   styleType: "default" | "rules" | "custom",
-  styleNode: HTMLElement,
-  doc: Document
+  data: {
+    node: HTMLElement;
+    doc: Document;
+    sheet: Readonly<Sheet>;
+  }
 ) {
+  const { node: styleNode, doc, sheet } = data;
+  const cssOrdered = sheet.getCSSOrdered();
   const default_ = cssOrdered.default; // can't use default as a identifier
   const rules = cssOrdered.rules;
   const custom = cssOrdered.custom;

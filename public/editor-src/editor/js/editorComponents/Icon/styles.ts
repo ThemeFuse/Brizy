@@ -25,15 +25,13 @@ export function style(data: DynamicStylesProps<Value>): OutputStyle {
         "cssStyleBoxShadow",
         "cssStyleElementIconBgColor",
         "cssStyleElementIconBgGradient"
-      ],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStyleElementIconPropertyHoverTransition"
       ]
     },
     ".brz &&:hover .brz-icon-svg-custom": {
-      standart: ["cssStyleCustomIconColor"],
-      interval: [
+      standart: ["cssStyleCustomIconColor"]
+    },
+    ".brz &&, .brz && .brz-icon-svg-custom": {
+      standart: [
         "cssStyleHoverTransition",
         "cssStyleElementIconPropertyHoverTransition"
       ]

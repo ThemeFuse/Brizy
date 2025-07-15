@@ -26,7 +26,6 @@ export default function ($node: JQuery): void {
 
     authorizedNode?.querySelector("span")?.addEventListener("click", () => {
       const fetchUrl = getFetchUrl(ElementType.authorized);
-      const fetchHeaders = new Headers();
 
       handleSubmit(
         ElementType.authorized,

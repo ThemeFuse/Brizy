@@ -122,7 +122,6 @@ export const TextShadow = ({
     () =>
       dispatch(
         updateUI("leftSidebar", {
-          isOpen: true,
           drawerContentType: LeftSidebarOptionsIds.globalStyle
         })
       ),
