@@ -4,7 +4,7 @@ Contributors: themefuse<br>
 Requires at least: 4.5<br>
 Tested up to: 6.8.1<br>
 Requires PHP: 7.2.24<br>
-Stable tag: 2.6.22<br>
+Stable tag: 2.7.0<br>
 License: GPLv3<br>
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -135,6 +135,58 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 [Privacy policy](https://brizy.io/privacy/)
 
 ## Changelog
+
+### 2.7.0 - 2025-07-15
+* New: Animated Headline element for attention‑grabbing text
+* New: AlphaModal component replaces deprecated defaults
+* New: Column element gains full RTL support
+* New: Icon element now has an ARIA‑LABEL field for better accessibility
+* New: Fonts upload is handled by the faster API client
+* New: Context menu closes reliably after use
+* New: First‑Block Adder height refined for cleaner layouts
+* Improved: Compiled Sections – pages are rendered server‑side for faster load times
+* Improved: Rich‑Text toolbar – bold, italic and underline work consistently
+* Improved: Visual settings can now be adjusted via add/apply filters
+* Improved: Sidebar alignment and other UI optimisations
+* Improved: Colour palette and UI contrast tweaks
+* Improved: User‑role handling inside the builder
+* Improved: Global‑typography CSS output is leaner
+* Improved: Transition CSS de‑duplicated to avoid repeats
+* Improved: CSS generator works faster on large pages
+* Improved: Smaller compiler bundle and section‑level runtime compilation
+* Improved: Deep context‑menu trees load more quickly
+* Fixed: Conditional Display – no more slow‑downs on sites with a large user base when the rule checks the logged‑in user
+* Fixed: Button – hover fill effect not working
+* Fixed: Button – fill effect not working for hover (duplicate issue resolved)
+* Fixed: Button – box resizer wrong position in Story mode
+* Fixed: Builder – chartType selector is stable
+* Fixed: Builder – global theme CSS variables load correctly
+* Fixed: Left Sidebar – collapsed‑category state is saved
+* Fixed: Left Sidebar (RTL) – layout displays correctly
+* Fixed: Rich‑Text – @ address sign renders correctly
+* Fixed: Rich‑Text – opacity values below 1 apply
+* Fixed: Section – duplicate display‑style values removed
+* Fixed: Section – background video plays only on active slide
+* Fixed: RTL – dropdowns and selects display properly
+* Fixed: RTL – prompt dialogs align correctly
+* Fixed: RTL – menu dropdowns support RTL
+* Fixed: RTL – overall UI layout no longer breaks
+* Fixed: Colours – UI palette improvements
+* Fixed: Right Sidebar – separator now inherits theme colour
+* Fixed: Editor – no more crashes on archive pages
+* Fixed: Form – select field uses correct font size with Blocksy theme
+* Fixed: Menu – free menu works in editor mode
+* Fixed: Build Environment – added develop branch for WP Free
+* Fixed: Toolbar – section‑header toolbar no longer hidden behind menus
+* Fixed: Animated Headline – loop‑off option previews correctly
+* Fixed: Internal Link – alignment options now respected
+* Fixed: Visual – config via filter applies correctly
+* Fixed: Roles – user permission fixes applied
+* Fixed: Colours – additional UI colour tweaks
+* Fixed: Visual – sidebar alignment & minor optimisations
+* Fixed: Fonts – upload process via API client stable
+* Fixed: First‑Block Adder – height calculation fixed
+* Fixed: Context Menu – closes properly on exit
 
 ### 2.6.22 - 2025-06-10
 * Improved: Enhanced performance for image resizing.
