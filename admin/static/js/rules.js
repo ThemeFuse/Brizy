@@ -121,16 +121,18 @@ var api = {
         })
     },
 
-    getTemplateGroupList: function (templateType) {
-        if (apiCache.templateGroupListPromise[templateType + '-author'])
-            return apiCache.templateGroupListPromise[templateType + '-author'];
+    getTemplateGroupList: function (templateType, searchQuery = '', page = 1) {
+        //if (apiCache.templateGroupListPromise[templateType + '-author'])
+        //    return apiCache.templateGroupListPromise[templateType + '-author'];
 
         return apiCache.templateGroupListPromise[templateType + '-author'] = jQuery.getJSON(Brizy_Admin_Rules.url, {
             action: Brizy_Admin_Rules.prefix + "_rule_template_group_list",
             hash: Brizy_Admin_Rules.hash,
             version: Brizy_Admin_Data.editorVersion,
             context: 'template-rules',
-            templateType: templateType
+            templateType: templateType,
+            searchQuery: searchQuery,
+            page: page
         })
     },
 
@@ -384,7 +386,6 @@ var RuleTypeField = function (params) {
 };
 
 var BrzSelect2 = function (params) {
-
     var oncreate = function (element) {
 
         var el = jQuery(element);
@@ -399,14 +400,14 @@ var BrzSelect2 = function (params) {
                     options.forEach(function (option) {
                         el.append(option);
                     });
-                    el.select2();
+                    el.select2(params.select2Args);
                 });
             } else {
                 var options = params.convertResponseToOptions(optionRequest);
                 options.forEach(function (option) {
                     el.append(option);
                 });
-                el.select2();
+                el.select2(params.select2Args);
             }
         }
     };
@@ -511,8 +512,8 @@ var RuleArchiveGroupSelectField = function (params) {
                     if (group.items.length > 0) {
                         group.items.forEach(function (option) {
 
-                            var targetValue = parseInt( option.value ),
-                                optionValue =  isNaN( targetValue ) ? String(option.value) : targetValue;
+                            var targetValue = parseInt(option.value),
+                                optionValue = isNaN(targetValue) ? String(option.value) : targetValue;
 
                             groupElement.appendChild(new Option(option.title, optionValue, false, params.rule.entityValues.includes(optionValue)))
                         });
@@ -551,10 +552,40 @@ var RuleAuthorGroupSelectField = function (params) {
         var taxonomy = params.rule.entityType;
         var value = String(params.rule.entityValues[0] ? params.rule.entityValues[0] : '');
 
-        var convertResponseToOptions = function (response) {
+        var convertDataToOptions2 = function (data, includeAll = true) {
+            if (data.length === 0) {
+                return [];
+            }
+
+            var groups = [];
+            if (includeAll) {
+                groups.push({"id": "", "text": "All", "selected": value === ''});
+            }
+
+            groups.push(...data.map(function (item) {
+                if (!item.items) {
+                    return {
+                        "id": String(item.value),
+                        "text": item.title,
+                        "disabled": false,
+                        "selected": params.rule.entityValues.includes(item.value)
+                    };
+
+                } else {
+                    return {
+                        "text": item.title,
+                        "disabled": false,
+                        "children": item.items ? convertDataToOptions2(item.items, false) : [],
+                    };
+                }
+            }));
+
+            return groups;
+        }
+        var convertDataToOptions = function (data) {
             var groups = [];
             groups.push(new Option("All", '', false, value === ''));
-            response.data.forEach(function (group) {
+            data.forEach(function (group) {
 
                 if (group.title === "") {
                     group.items.forEach(function (option) {
@@ -567,8 +598,8 @@ var RuleAuthorGroupSelectField = function (params) {
 
                     if (group.items.length > 0) {
                         group.items.forEach(function (option) {
-                            var targetValue = parseInt( option.value ),
-                                optionValue =  isNaN( targetValue ) ? String(option.value) : targetValue;
+                            var targetValue = parseInt(option.value),
+                                optionValue = isNaN(targetValue) ? String(option.value) : targetValue;
 
                             groupElement.appendChild(new Option(option.title, optionValue, false, params.rule.entityValues.includes(optionValue)))
                         });
@@ -578,6 +609,9 @@ var RuleAuthorGroupSelectField = function (params) {
             });
 
             return groups;
+        }
+        var convertResponseToOptions = function (response) {
+            return convertDataToOptions(response.data);
         };
 
         return h(
@@ -595,6 +629,23 @@ var RuleAuthorGroupSelectField = function (params) {
                 },
                 convertResponseToOptions: convertResponseToOptions,
                 onChange: params.onChange,
+                select2Args: {
+                    ajax: {
+                        transport: function (r_params, success, failure) {
+                            api.getTemplateGroupList(params.type,r_params.data.term,r_params.data.page??1).done(success).fail(failure);
+                        },
+                        dataType: 'json',
+                        delay: 350,
+                        processResults: function (data, params) {
+                            return {
+                                results: convertDataToOptions2(data.data[0].items, true),
+                                pagination: {
+                                    more: data.data[0].items > 0
+                                }
+                            };
+                        },
+                    }
+                }
             },
             []
         );
@@ -660,10 +711,10 @@ var RuleApplyGroupField = function (params) {
                             type: params.type,
                             name: inList ? 'brizy-' + params.type + '-rule-entity-values[]' : '',
                             onChange: function (e) {
-                                var targetValue = parseInt( e.target.value );
+                                var targetValue = parseInt(e.target.value);
 
                                 actions.rule.update({
-                                    entityValues: e.target.value ? [ isNaN( targetValue ) ? e.target.value : targetValue ] : [],
+                                    entityValues: e.target.value ? [isNaN(targetValue) ? e.target.value : targetValue] : [],
                                 });
                             }
                         })
@@ -680,10 +731,10 @@ var RuleApplyGroupField = function (params) {
                             taxonomy: entityType,
                             name: inList ? 'brizy-' + params.type + '-rule-entity-values[]' : '',
                             onChange: function (e) {
-                                var targetValue = parseInt( e.target.value );
+                                var targetValue = parseInt(e.target.value);
 
                                 actions.rule.update({
-                                    entityValues: e.target.value ? [ isNaN( targetValue ) ? e.target.value : targetValue ] : [],
+                                    entityValues: e.target.value ? [isNaN(targetValue) ? e.target.value : targetValue] : [],
                                 });
                             }
                         })
@@ -707,17 +758,16 @@ var RuleApplyGroupField = function (params) {
                                 name: inList ? 'brizy-' + params.type + '-rule-entity-values[]' : '',
                                 onChange: function (e) {
 
-                                    var targetValue = parseInt( e.target.value );
+                                    var targetValue = parseInt(e.target.value);
 
                                     actions.rule.update({
-                                        entityValues: e.target.value ? [ isNaN( targetValue ) ? e.target.value : targetValue ] : [],
+                                        entityValues: e.target.value ? [isNaN(targetValue) ? e.target.value : targetValue] : [],
                                     });
                                 }
                             })
                         ]));
-                } else
-                {
-                    elements.push( h("input", {
+                } else {
+                    elements.push(h("input", {
                         type: "hidden",
                         value: "",
                         name: inList ? 'brizy-' + params.type + '-rule-entity-values[]' : ''
