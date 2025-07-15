@@ -1,11 +1,12 @@
 // Columns
-.brz-columns {
+.brz-columns,
+.brz-columns2 {
   > .brz-ed-border__inner {
-    left: 0;
+    inset-inline-start: 0;
   }
 
   &:first-child > .brz-ed-border__inner {
-    left: -2px;
+    inset-inline-start: -2px;
   }
 
   // Empty
@@ -15,11 +16,13 @@
 }
 
 // Tablet
-&.brz-ed--tablet .brz-columns &:first-child > .brz-ed-border__inner {
-  left: 0;
+&.brz-ed--tablet .brz-columns &:first-child > .brz-ed-border__inner,
+&.brz-ed--tablet .brz-columns2 &:first-child > .brz-ed-border__inner {
+  inset-inline-start: 0;
 }
 
 // When is device mode mobile
-&.brz-ed--mobile .brz-columns > .brz-ed-border__inner {
-  left: -2px;
+&.brz-ed--mobile .brz-columns > .brz-ed-border__inner,
+&.brz-ed--mobile .brz-columns2 > .brz-ed-border__inner {
+  inset-inline-start: -2px;
 }

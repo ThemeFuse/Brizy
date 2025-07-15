@@ -1,6 +1,7 @@
 import classnames from "classnames";
 import React, { ReactElement } from "react";
 import EditorIcon from "visual/component/EditorIcon";
+import { makeBzelmAttr } from "visual/utils/i18n/attribute";
 
 interface Props {
   className?: string;
@@ -13,7 +14,7 @@ const RoundPlus = (props: Props): ReactElement => {
   const className = classnames(_className, "floating-action-button");
 
   return (
-    <div className={className} onClick={onClick}>
+    <div className={className} onClick={onClick} {...makeBzelmAttr("start")}>
       {icon ? <EditorIcon icon={icon} /> : null}
     </div>
   );

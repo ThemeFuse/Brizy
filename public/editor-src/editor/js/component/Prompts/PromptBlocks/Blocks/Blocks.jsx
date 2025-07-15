@@ -6,6 +6,7 @@ import SelectItem from "visual/component/Controls/Select/SelectItem";
 import EditorIcon from "visual/component/EditorIcon";
 import { EditorModeContext } from "visual/providers/EditorModeProvider";
 import { t } from "visual/utils/i18n";
+import { makeBzelmAttr } from "visual/utils/i18n/attribute";
 import DataFilter from "../common/DataFilter";
 import SearchInput from "../common/SearchInput";
 import Sidebar, { SidebarList, SidebarOption } from "../common/Sidebar";
@@ -181,6 +182,8 @@ class Blocks extends Component {
     const showType = types.length > 1;
     const showCategories = categories.length > 1;
 
+    const attr = makeBzelmAttr("blocks-library");
+
     return (
       <DataFilter
         data={blocks}
@@ -244,7 +247,7 @@ class Blocks extends Component {
                 </Sidebar>
               )}
 
-              <div className="brz-ed-popup-two-body__content">
+              <div className="brz-ed-popup-two-body__content" {...attr}>
                 <Scrollbars>
                   {filteredThumbnails.length > 0 ? (
                     <EditorModeContext.Consumer>

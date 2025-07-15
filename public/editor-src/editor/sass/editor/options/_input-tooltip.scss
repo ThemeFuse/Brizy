@@ -2,7 +2,7 @@
 .brz-ed-popover__inner {
   //width: 275px;
   background-color: $toolbar-bg;
-  box-shadow: 0 0 5px 0 $toolbar-box-shadow;
+  box-shadow: 0 1px 8px 1px $toolbar-box-shadow;
   border-radius: 8px;
   position: relative;
 
@@ -18,7 +18,7 @@
     margin-top: 25px;
     margin-bottom: 25px;
     background-color: $toolbar-bg;
-    box-shadow: 0 0 5px 0 $toolbar-box-shadow;
+    box-shadow: 0 1px 8px 1px $toolbar-box-shadow;
     border-radius: 8px;
   }
 

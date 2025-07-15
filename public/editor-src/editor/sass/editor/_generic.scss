@@ -25,12 +25,14 @@
 }
 
 // Wrapper blocks and addBlock
-.brz-ed-wrap-block-wrap {
-  width: 100%;
+.brz-root__container {
+  .brz-ed-wrap-block-wrap {
+    width: 100%;
 
-  &--first {
-    min-height: 400px;
-    height: 100vh;
+    &--first {
+      min-height: 400px;
+      height: 100vh;
+    }
   }
 }
 

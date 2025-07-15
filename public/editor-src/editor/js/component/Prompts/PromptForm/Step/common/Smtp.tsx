@@ -1,13 +1,12 @@
 import { isT } from "fp-utilities";
 import React, { Component, ReactElement } from "react";
 import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
-import { pendingRequest } from "visual/utils/api";
+import { pendingRequest, updateSmtpIntegration } from "visual/utils/api";
 import { pipe } from "visual/utils/fp";
 import { t } from "visual/utils/i18n";
 import * as Str from "visual/utils/string/specs";
 import { Fields } from "../../../common/GlobalApps/StepsView/Fields";
 import { AppData, FormField } from "../../../common/GlobalApps/type";
-import { updateSmtpIntegration } from "../../api";
 import { readApiKey } from "./utils";
 
 export type ApiKeys = Record<string, unknown>;
@@ -106,7 +105,7 @@ class Smtp extends Component<Props, State> {
         nextLoading: false
       });
     } else {
-      const { status, data } = await updateSmtpIntegration(
+      const data = await updateSmtpIntegration(
         {
           ...appData,
           ...apiKeyValue,
@@ -116,7 +115,7 @@ class Smtp extends Component<Props, State> {
         config
       );
 
-      if (status !== 200) {
+      if (!data) {
         this.setState({
           nextLoading: false,
           error: t("Something went wrong")

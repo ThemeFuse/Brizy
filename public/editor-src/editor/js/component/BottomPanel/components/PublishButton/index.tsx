@@ -33,6 +33,7 @@ import {
   updatePageStatus
 } from "visual/redux/actions2";
 import {
+  blocksHtmlSelector,
   extraFontStylesSelector,
   pageDataNoRefsSelector2,
   pageSelector,
@@ -55,6 +56,7 @@ import {
 import { SelectedItem } from "visual/utils/api/types";
 import { ErrorCodes } from "visual/utils/errors";
 import { t } from "visual/utils/i18n";
+import { makeBzelmAttr } from "visual/utils/i18n/attribute";
 import { isNumber } from "visual/utils/math";
 import { browserSupports, makeNodeScreenshot } from "visual/utils/screenshots";
 import { uuid } from "visual/utils/uuid";
@@ -72,6 +74,8 @@ import {
 
 type Page = ReduxState["page"];
 
+type LoadingType = "updateLoading" | "draftLoading" | "saveAndPublishLoading";
+
 const _getMode = match(
   [isCloud, match([isShopify, getMode], [isCMS, (): undefined => undefined])],
   [isWp, (): undefined => undefined]
@@ -85,6 +89,7 @@ const mapState = (
   extraFontStyles: ReduxState["extraFontStyles"];
   storeWasChanged: StoreChanged;
   currentStyle: Style;
+  compilationProcess: boolean;
 } => {
   return {
     page: pageSelector(state),
@@ -92,7 +97,8 @@ const mapState = (
       pageDataNoRefsSelector2(state, config),
     extraFontStyles: extraFontStylesSelector(state),
     storeWasChanged: storeWasChangedSelector(state),
-    currentStyle: state.currentStyle
+    currentStyle: state.currentStyle,
+    compilationProcess: blocksHtmlSelector(state).inPending
   };
 };
 const mapDispatch = {
@@ -111,6 +117,7 @@ interface State {
   updateLoading: boolean;
   layoutLoading: boolean;
   draftLoading: boolean;
+
   [key: string]: boolean;
 }
 
@@ -134,6 +141,12 @@ class _PublishButton extends Component<Props, State> {
     mode: MValue<Mode>;
   };
 
+  pendingToPublish?: {
+    status: "draft" | "publish";
+    type: LoadingType;
+    mode: EditorMode;
+  };
+
   constructor(props: Props) {
     super(props);
     this.configComputedValues = this.getValuesByConfig();
@@ -141,6 +154,24 @@ class _PublishButton extends Component<Props, State> {
 
   componentDidUpdate() {
     this.configComputedValues = this.getValuesByConfig();
+    const pendingStatus = this.pendingToPublish;
+
+    if (!this.props.compilationProcess && pendingStatus) {
+      switch (pendingStatus.status) {
+        case "publish": {
+          const { mode, type } = pendingStatus;
+          this.pendingToPublish = undefined;
+          this.handlePublish(type, mode);
+          break;
+        }
+        case "draft": {
+          const { mode } = pendingStatus;
+          this.pendingToPublish = undefined;
+          this.handleDraft("draftLoading", mode);
+          break;
+        }
+      }
+    }
   }
 
   publish = (
@@ -300,10 +331,7 @@ class _PublishButton extends Component<Props, State> {
     Prompts.open(data);
   }
 
-  handlePublishWithArticle(
-    loading: "updateLoading" | "draftLoading" | "saveAndPublishLoading",
-    editorMode: EditorMode
-  ): void {
+  handlePublishWithArticle(loading: LoadingType, editorMode: EditorMode): void {
     const { page } = this.props;
     const config = this.getConfig();
     const templateType = getShopifyTemplate(config);
@@ -333,10 +361,23 @@ class _PublishButton extends Component<Props, State> {
     Prompts.open(data);
   }
 
-  handlePublish(
-    loading: "updateLoading" | "draftLoading" | "saveAndPublishLoading",
-    editorMode: EditorMode
-  ): Promise<void> {
+  handlePublish(loading: LoadingType, editorMode: EditorMode): Promise<void> {
+    const { compilationProcess } = this.props;
+
+    if (compilationProcess) {
+      if (this.state[loading]) {
+        return Promise.resolve();
+      }
+
+      this.pendingToPublish = {
+        status: "publish",
+        type: loading,
+        mode: editorMode
+      };
+      this.setState({ [loading]: true });
+      return Promise.resolve();
+    }
+
     if (this[loading]) {
       return this[loading] as Promise<void>;
     }
@@ -368,11 +409,29 @@ class _PublishButton extends Component<Props, State> {
     loading: "updateLoading" | "draftLoading",
     editorMode: EditorMode
   ): Promise<void> {
+    const { compilationProcess } = this.props;
+
+    if (compilationProcess) {
+      if (this.state[loading]) {
+        return Promise.resolve();
+      }
+
+      this.pendingToPublish = {
+        status: "draft",
+        type: loading,
+        mode: editorMode
+      };
+      this.setState({ [loading]: true });
+      return Promise.resolve();
+    }
+
     if (this[loading]) {
       return this[loading] as Promise<void>;
     }
 
-    this.setState({ [loading]: true });
+    if (!this.state[loading]) {
+      this.setState({ [loading]: true });
+    }
 
     const { status } = this.props.page;
     const pageStatus = status === "future" ? "future" : "draft";
@@ -644,6 +703,7 @@ class _PublishButton extends Component<Props, State> {
         title: getTooltipPageTitle(page.status),
         icon: getTooltipPageIcon(page.status),
         loading: this.state.draftLoading,
+        attr: this.getBzelmAttr(true),
         onClick: (): void => {
           switch (page.status) {
             case "publish": {
@@ -702,6 +762,7 @@ class _PublishButton extends Component<Props, State> {
     const { storeWasChanged } = this.props;
     const { readyForPublish } = this.state;
     const { isShopify } = this.configComputedValues;
+    const attr = this.getBzelmAttr(false);
 
     const isReadyForPublish = isShopify ? !readyForPublish : true;
 
@@ -727,6 +788,7 @@ class _PublishButton extends Component<Props, State> {
                 }}
                 status={this.props.page.status}
                 loading={this.state.updateLoading}
+                attr={attr}
               >
                 {this.getLabel()}
               </Controls>
@@ -756,6 +818,18 @@ class _PublishButton extends Component<Props, State> {
         typeof config.api?.savedLayouts?.create === "function",
       mode: _getMode(config)
     };
+  }
+
+  getBzelmAttr(forTooltipItem: boolean) {
+    const { page } = this.props;
+
+    if (forTooltipItem) {
+      return makeBzelmAttr(
+        page.status === "publish" ? "switch-to-draft" : "publish-page"
+      );
+    }
+
+    return makeBzelmAttr(page.status === "publish" ? "update" : "save-draft");
   }
 }
 

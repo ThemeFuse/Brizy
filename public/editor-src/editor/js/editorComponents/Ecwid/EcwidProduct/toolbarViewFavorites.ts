@@ -165,33 +165,9 @@ export const getItems: GetItems<Value> = ({ v, device, state }) => {
       ]
     },
     {
-      id: "toolbarSettings",
-      type: "popover",
-      config: { icon: "nc-cog", title: t("Settings") },
-      position: 50,
-      options: [
-        {
-          id: "viewFavoritesSpacing",
-          label: t("Spacing"),
-          type: "slider",
-          config: {
-            min: 0,
-            max: 100,
-            units: [{ value: "px", title: "px" }]
-          }
-        },
-        {
-          id: "styles",
-          type: "sidebarTabsButton",
-          devices: "desktop",
-          config: {
-            tabId: "styles",
-            text: t("Styling"),
-            icon: "nc-cog",
-            align: "left"
-          }
-        }
-      ]
+      id: "advancedSettings",
+      type: "advancedSettings",
+      position: 110
     }
   ];
 };

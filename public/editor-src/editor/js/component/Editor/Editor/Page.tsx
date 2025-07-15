@@ -1,3 +1,4 @@
+import { isEqual } from "es-toolkit";
 import React, { useCallback, useMemo } from "react";
 import { useDispatch, useSelector, useStore } from "react-redux";
 import { DraggableOverlay } from "visual/component/DraggableOverlay";
@@ -6,12 +7,12 @@ import EditorGlobal from "visual/global/Editor";
 import { useConfig } from "visual/providers/ConfigProvider";
 import { EditorComponentProvider } from "visual/providers/EditorComponentProvider";
 import { useEditorMode } from "visual/providers/EditorModeProvider";
+import { useTranslation } from "visual/providers/I18nProvider";
 import { updateBlocks } from "visual/redux/actions2";
 import {
   pageDataDraftBlocksSelector,
   stateSelector
 } from "visual/redux/selectors";
-import { t } from "visual/utils/i18n";
 import { areStatesEqual, getPageId } from "../utils";
 import { OnChange } from "./types";
 
@@ -21,10 +22,13 @@ const Page = (): JSX.Element => {
   const store = useStore();
   const config = useConfig();
   const { mode } = useEditorMode();
+  const { t } = useTranslation();
   // @ts-expect-error: ConfigCommon to Config
   const pageId = getPageId(config);
   const modulesGroup = config.dynamicContent?.groups;
   const groups = useMemo(() => modulesGroup, [modulesGroup]);
+  const pageData = pageDataDraftBlocksSelector(state);
+  const items = pageData.items;
 
   const getGlobalConfig = useCallback(() => config, [config]);
 
@@ -33,16 +37,26 @@ const Page = (): JSX.Element => {
       if (!model) {
         return;
       }
-
       const { items: blocks = [] } = model;
-      // @ts-expect-error: TMP
-      dispatch(updateBlocks({ blocks, meta, config }));
+
+      if (isEqual(blocks, items)) {
+        return;
+      }
+
+      dispatch(
+        updateBlocks({
+          // @ts-expect-error: Blocks to onChange
+          blocks,
+          // @ts-expect-error: Meta to onChange
+          meta,
+          config
+        })
+      );
     },
-    [config, dispatch]
+    [config, dispatch, items]
   );
 
   const { Page } = EditorGlobal.getComponents();
-  const pageData = pageDataDraftBlocksSelector(state);
 
   if (!Page) {
     return <div>{t("Missing Page Component")}</div>;

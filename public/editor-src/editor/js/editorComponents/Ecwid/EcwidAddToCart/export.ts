@@ -2,6 +2,7 @@ import { isFunction } from "es-toolkit";
 import type { EcwidStoreId } from "visual/global/Ecwid/types";
 import { EcwidService } from "visual/libs/Ecwid";
 import type { ExportFunction } from "visual/types";
+import { getEcwidShopPathFromAttribute } from "visual/utils/ecwid";
 import { makeAttr } from "visual/utils/i18n/attribute";
 import type { Literal } from "visual/utils/types/Literal";
 import { handleSpinner } from "../../Shopify/AddToCart/utils";
@@ -15,6 +16,27 @@ declare const Ecwid: {
   };
 };
 
+const handleClick = (
+  data: { item: HTMLElement; baseUrl: string },
+  callback: VoidFunction
+): void => {
+  const { item, baseUrl } = data;
+
+  const isInitialized = typeof Ecwid !== "undefined";
+
+  if (!isInitialized || !Ecwid.Cart || !isFunction(Ecwid.Cart.addProduct)) {
+    const storeId = item.getAttribute(
+      makeAttr("store-id")
+    ) as EcwidStoreId | null;
+
+    if (storeId) {
+      EcwidService.init(storeId, { baseUrl }).loadScripts({ callback });
+    }
+  } else {
+    callback();
+  }
+};
+
 export const fn: ExportFunction = ($node) => {
   const node = $node.get(0);
 
@@ -23,22 +45,12 @@ export const fn: ExportFunction = ($node) => {
   node
     .querySelectorAll<HTMLButtonElement>(".brz-ecwid-add-to-cart")
     .forEach((item) => {
-      const isInitialized = typeof Ecwid !== "undefined";
-
-      if (!isInitialized || !Ecwid.Cart || !isFunction(Ecwid.Cart.addProduct)) {
-        const storeId = item.getAttribute(
-          makeAttr("store-id")
-        ) as EcwidStoreId | null;
-
-        if (storeId) {
-          EcwidService.init(storeId, {}).loadScripts();
-        }
-      }
-
       const productId = item.getAttribute(makeAttr("product-id"));
 
       if (productId) {
-        item.addEventListener("click", () => {
+        const baseUrl = getEcwidShopPathFromAttribute(item) ?? "";
+
+        const handleAddToCart = () => {
           handleSpinner({
             cartNode: item,
             loading: true,
@@ -54,6 +66,10 @@ export const fn: ExportFunction = ($node) => {
                 className: "brz-ecwid-add-to-cart--spinner"
               })
           });
+        };
+
+        item.addEventListener("click", () => {
+          handleClick({ item, baseUrl }, handleAddToCart);
         });
       }
     });

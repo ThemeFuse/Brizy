@@ -21,14 +21,14 @@ module.exports = {
         "shuttle-grey-3": "rgba(94, 100, 111, 1)",
 
         //
-        "option-content-bg": "var(--secondary-dark, #383e48)",
-        "option-content-color": "var(--secondary-gray, #fff)",
+        "option-content-bg": "var(--inputs-bg, #383e48)",
+        "option-content-color": "var(--icons-color, #fff)",
 
         //Right Sidebar Effects colors
-        "right-sidebar-item": "var(--primary-white, #fff)",
-        "right-sidebar-item-label": "var(--primary-gray, #fff)",
+        "right-sidebar-item": "var(--icons-color, #fff)",
+        "right-sidebar-item-label": "var(--text-labels, #fff)",
         "right-sidebar-item--active": "var(--active-color, #3dbfe8)",
-        "right-sidebar-item-border": "var(--tertiary-gray,#383e48)",
+        "right-sidebar-item-border": "var(--borders,#383e48)",
         "right-sidebar-item-border--hover": "var(--active-color,#818a91)"
       }
     }

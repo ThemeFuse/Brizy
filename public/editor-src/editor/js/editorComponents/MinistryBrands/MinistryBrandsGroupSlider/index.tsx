@@ -6,7 +6,7 @@ import EditorComponent from "visual/editorComponents/EditorComponent";
 import { Model } from "visual/editorComponents/EditorComponent/types";
 import { DynamicContentHelper } from "visual/editorComponents/WordPress/common/DynamicContentHelper";
 import { Wrapper } from "visual/editorComponents/tools/Wrapper";
-import { updateEkklesiaFields } from "visual/utils/api/common";
+import { updateEkklesiaFields } from "visual/utils/api";
 import { attachRefs } from "visual/utils/react";
 import { read as readNum } from "visual/utils/reader/number";
 import { read as readString } from "visual/utils/reader/string";

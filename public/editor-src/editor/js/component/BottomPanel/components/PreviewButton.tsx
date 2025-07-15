@@ -4,6 +4,7 @@ import HotKeys from "visual/component/HotKeys";
 import type { Config } from "visual/global/Config/types";
 import { useConfig } from "visual/providers/ConfigProvider";
 import { t } from "visual/utils/i18n";
+import { makeBzelmAttr } from "visual/utils/i18n/attribute";
 import { BottomPanelItem } from "./Item";
 
 const hotKeysForPreview = [
@@ -65,6 +66,7 @@ export function PreviewButton(): JSX.Element {
           rel="noopener noreferrer"
           ref={refAnchor}
           onClick={onClick}
+          {...makeBzelmAttr("preview")}
         >
           <EditorIcon icon="nc-preview" />
         </a>

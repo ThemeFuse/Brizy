@@ -1,6 +1,7 @@
 import classnames from "classnames";
 import React, { ReactElement, useEffect } from "react";
 import Placeholder from "visual/component/Placeholder";
+import { DCApiProxy } from "visual/editorComponents/EditorComponent/DynamicContent/DCApiProxy";
 import { useDC } from "visual/editorComponents/EditorComponent/DynamicContent/useDC";
 import { isEditor, isView, useRender } from "visual/providers/RenderProvider";
 
@@ -13,11 +14,14 @@ type Props<T extends keyof JSX.IntrinsicElements> = {
   onSuccess?: (data: string) => void;
   blocked?: boolean;
   fallbackComponent?: ReactElement;
+  fetcher?: DCApiProxy;
 };
 
 function dataIsEmpty(data: string | null): boolean {
   return data === null || data === "";
 }
+
+const DELAY_MS = 0;
 
 export function DynamicContentHelper<T extends keyof JSX.IntrinsicElements>({
   placeholder,
@@ -27,9 +31,10 @@ export function DynamicContentHelper<T extends keyof JSX.IntrinsicElements>({
   placeholderHeight,
   onSuccess,
   blocked: _blocked,
-  fallbackComponent
+  fallbackComponent,
+  fetcher
 }: Props<T>): ReactElement {
-  const state = useDC(placeholder);
+  const state = useDC(placeholder, DELAY_MS, fetcher);
   const innerHtml = state.status === "success" ? state.data : placeholder;
   const status = state.status;
   const { renderType } = useRender();

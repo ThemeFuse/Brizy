@@ -110,7 +110,9 @@
       "gridSKUInnerTypographyFontFamily": "lato",
       "gridPriceTypographyFontFamily": "lato",
       "gridBuyNowTypographyFontFamily": "lato",
-      "taxesTypographyFontFamily": "lato"
+      "taxesTypographyFontFamily": "lato",
+      "productImageLightboxTitleTypographyFontFamily": "lato",
+      "optionColorTypographyFontFamily": "lato"
     },
 
     "positionName": 100,
@@ -782,6 +784,9 @@
     "shareTitleSpacing": 10,
     "shareTitleSpacingSuffix": "px",
 
+    "shareTitleTopSpacing": 10,
+    "shareTitleTopSpacingSuffix": "px",
+
     "favoriteSize": "medium",
 
     "favoriteHeight": 19,
@@ -879,6 +884,8 @@
     "favoriteBoxShadowHorizontal": 0,
 
     "favoriteHorizontalAlign": "left",
+
+    "relatedProductsImagesHorizontalAlign": "left",
 
     "favoriteSpacing": 10,
     "favoriteSpacingSuffix": "px",
@@ -1079,9 +1086,6 @@
     "viewFavoritesBoxShadowSpread": 0,
     "viewFavoritesBoxShadowVertical": 0,
     "viewFavoritesBoxShadowHorizontal": 0,
-
-    "viewFavoritesSpacing": 35,
-    "viewFavoritesSpacingSuffix": "px",
 
     "viewFavoritesRightIconSpacing": 10,
     "viewFavoritesRightIconSpacingSuffix": "px",
@@ -2042,12 +2046,12 @@
     "wholesalePriceTypographyVariableFontWeight": 400,
     "wholesalePriceTypographyFontWidth": 100,
     "wholesalePriceTypographyFontSoftness": 0,
-    "wholesalesPriceTypographyBold": false,
-    "wholesalesPriceTypographyItalic": false,
-    "wholesalesPriceTypographyUnderline": false,
-    "wholesalesPriceTypographyStrike": false,
-    "wholesalesPriceTypographyUppercase": false,
-    "wholesalesPriceTypographyLowercase": false,
+    "wholesalePriceTypographyBold": false,
+    "wholesalePriceTypographyItalic": false,
+    "wholesalePriceTypographyUnderline": false,
+    "wholesalePriceTypographyStrike": false,
+    "wholesalePriceTypographyUppercase": false,
+    "wholesalePriceTypographyLowercase": false,
 
     "wholesaleTypographyFontStyle": "",
     "wholesaleTypographyFontFamilyType": "google",
@@ -2221,6 +2225,9 @@
 
     "relatedTitleSpacing": 15,
     "relatedTitleSpacingSuffix": "px",
+
+    "relatedTitleTopSpacing": 15,
+    "relatedTitleTopSpacingSuffix": "px",
 
     "gridTitleTypographyFontStyle": "",
     "gridTitleTypographyFontFamilyType": "google",
@@ -2581,6 +2588,112 @@
     "taxesSpacingSuffix": "px",
 
     "hoverTransition": 50,
-    "hoverTransitionSuffix": ""
+    "hoverTransitionSuffix": "",
+
+    "productImageLightboxTitleTypographyFontStyle": "paragraph",
+    "productImageLightboxTitleTypographyFontFamilyType": "google",
+
+    "radioBgOptionColorHex": "#000000",
+    "radioBgOptionColorOpacity": 1,
+    "radioBgOptionColorPalette": "",
+
+    "optionColorTypographyFontStyle": "",
+    "optionColorTypographyFontFamilyType": "google",
+    "optionColorTypographyFontSize": 12,
+    "optionColorTypographyFontSizeSuffix": "px",
+    "optionColorTypographyFontWeight": 400,
+    "optionColorTypographyLetterSpacing": 1.3,
+    "optionColorTypographyLineHeight": 1,
+    "optionColorTypographyVariableFontWeight": 400,
+    "optionColorTypographyFontWidth": 100,
+    "optionColorTypographyFontSoftness": 0,
+    "optionColorTypographyBold": false,
+    "optionColorTypographyItalic": false,
+    "optionColorTypographyUnderline": false,
+    "optionColorTypographyStrike": false,
+    "optionColorTypographyUppercase": false,
+    "optionColorTypographyLowercase": false,
+
+    "optionColorColorHex": "#FFFFFF",
+    "optionColorColorOpacity": 1,
+    "optionColorColorPalette": "",
+
+    "optionColorBorderStyle": "solid",
+
+    "optionColorBorderColorHex": "#000000",
+    "optionColorBorderColorOpacity": 1,
+    "optionColorBorderColorPalette": "",
+
+    "optionColorBorderWidthType": "grouped",
+
+    "optionColorBorderWidth": 1,
+    "optionColorBorderTopWidth": 1,
+    "optionColorBorderRightWidth": 1,
+    "optionColorBorderBottomWidth": 1,
+    "optionColorBorderLeftWidth": 1,
+
+    "optionColorBoxShadow": "none",
+
+    "optionColorBoxShadowColorHex": "#000000",
+    "optionColorBoxShadowColorOpacity": 0,
+    "optionColorBoxShadowColorPalette": "",
+
+    "optionColorBoxShadowBlur": 0,
+    "optionColorBoxShadowSpread": 0,
+    "optionColorBoxShadowVertical": 0,
+    "optionColorBoxShadowHorizontal": 0,
+
+    "optionColorHorizontalAlign": "left",
+
+    "optionColorSpacing": 10,
+    "optionColorSpacingSuffix": "px",
+
+    "optionColorBorderRadiusType": "grouped",
+
+    "optionColorBorderRadius": 0,
+    "optionColorBorderRadiusSuffix": "px",
+
+    "optionColorBorderTopLeftRadius": 0,
+    "optionColorBorderTopRightRadius": 0,
+    "optionColorBorderBottomRightRadius": 0,
+    "optionColorBorderBottomLeftRadius": 0,
+
+    "optionColorBorderTopLeftRadiusSuffix": "px",
+    "optionColorBorderTopRightRadiusSuffix": "px",
+    "optionColorBorderBottomRightRadiusSuffix": "px",
+    "optionColorBorderBottomLeftRadiusSuffix": "px",
+
+    "optionColorBgColorType": "solid",
+
+    "optionColorGradientActivePointer": "startPointer",
+    "optionColorGradientStartPointer": 0,
+    "optionColorGradientFinishPointer": 100,
+
+    "optionColorBgColorHex": "#333333",
+    "optionColorBgColorOpacity": 1,
+    "optionColorBgColorPalette": "",
+
+    "optionColorGradientColorHex": "#009900",
+    "optionColorGradientColorOpacity": 0.8,
+    "optionColorGradientColorPalette": "",
+
+    "optionColorGradientType": "linear",
+    "optionColorGradientLinearDegree": 90,
+    "optionColorGradientRadialDegree": 90,
+
+    "optionColorTooltipBorderRadiusType": "grouped",
+
+    "optionColorTooltipBorderRadius": 0,
+    "optionColorTooltipBorderRadiusSuffix": "px",
+
+    "optionColorTooltipBorderTopLeftRadius": 0,
+    "optionColorTooltipBorderTopRightRadius": 0,
+    "optionColorTooltipBorderBottomRightRadius": 0,
+    "optionColorTooltipBorderBottomLeftRadius": 0,
+
+    "optionColorTooltipBorderTopLeftRadiusSuffix": "px",
+    "optionColorTooltipBorderTopRightRadiusSuffix": "px",
+    "optionColorTooltipBorderBottomRightRadiusSuffix": "px",
+    "optionColorTooltipBorderBottomLeftRadiusSuffix": "px"
   }
 }

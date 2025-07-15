@@ -20,6 +20,7 @@ import {
   CollectionTypeRule,
   Rule
 } from "visual/types/Rule";
+import { pendingRequest } from "visual/utils/api";
 import {
   CUSTOMER_TYPE,
   PAGES_GROUP_ID
@@ -137,7 +138,10 @@ const Rules = (props: Props): ReactElement => {
           rules: getUniqRules(rules)
         },
         meta: {
-          syncSuccess: (): void => setLoading(false),
+          syncSuccess: async (): Promise<void> => {
+            await pendingRequest(100);
+            setLoading(false);
+          },
           syncFail: (data): void => {
             setLoading(false);
             ToastNotification.error(data.message ?? t("Something went wrong"));

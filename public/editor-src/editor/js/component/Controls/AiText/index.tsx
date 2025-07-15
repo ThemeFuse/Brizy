@@ -10,6 +10,7 @@ import { Inline } from "visual/component/Brizy-ui/Inline";
 import { Input } from "visual/component/Brizy-ui/Input";
 import { Layout, LayoutSection } from "visual/component/Brizy-ui/Layout";
 import { Space } from "visual/component/Brizy-ui/Space";
+import { useIsRTL } from "visual/global/hooks";
 import { t } from "visual/utils/i18n";
 import { cardSize } from "./constants";
 import { AiActionButton } from "./controls/AiActionButton";
@@ -26,7 +27,8 @@ const theme: FieldsTheme = {
 };
 
 const controlsSpacing: Spacing = [0, 0, 15, 10];
-const textareaSpacing: Spacing = [0, 8, 5, 0];
+const getTextareaSpacing = (isRtl: boolean): Spacing =>
+  isRtl ? [0, 0, 5, 8] : [0, 8, 5, 0];
 const textareaButtonSpacing: Spacing = [0, 0, 0, 5];
 const promptAreaGutter: Gutter = [0, 0];
 
@@ -49,6 +51,9 @@ export const AiText = ({
 }: Props): ReactElement => {
   const [disabled, setDisabled] = useState<boolean>(false);
   const [buttonDisabled, setButtonDisabled] = useState<boolean>(true);
+  const isRtl = useIsRTL();
+
+  const textareaSpacing = getTextareaSpacing(isRtl);
 
   const iconColor = value.length > 0 ? "white" : "gray";
 
@@ -75,7 +80,7 @@ export const AiText = ({
     setButtonDisabled(value.length === 0 || loading);
   }, [value, loading]);
 
-  const actions = getActions();
+  const actions = getActions(isRtl);
 
   return (
     <Card width="407px" size={cardSize} borderStyle="none" color="transparent">

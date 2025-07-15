@@ -18,18 +18,16 @@ export function style(data: DynamicStylesProps<Value>): OutputStyle {
         "cssStyleBgGradient",
         "cssStyleBoxShadow",
         "cssStyleBorder"
-      ],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
       ]
     },
     ".brz &&.brz-fb-styles-button": {
       standart: ["cssStylePaddingBG", "cssStyleElementFacebookAlign"]
     },
     ".brz &&:hover.brz-fb-styles-button": {
-      standart: ["cssStyleBgColor", "cssStyleBgGradient", "cssStyleBoxShadow"],
-      interval: [
+      standart: ["cssStyleBgColor", "cssStyleBgGradient", "cssStyleBoxShadow"]
+    },
+    ".brz &&.brz-fb-styles, .brz &&.brz-fb-styles-button": {
+      standart: [
         "cssStyleHoverTransition",
         "cssStylePropertyHoverTransitionColor"
       ]

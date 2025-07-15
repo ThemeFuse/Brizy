@@ -26,13 +26,17 @@
     .brz-p {
       position: absolute;
       top: 50%;
-      left: 20px;
+      inset-inline-start: 20px;
       cursor: text;
       transform: translateY(-50%);
       text-transform: uppercase;
       margin: 0;
       opacity: 0;
       transition: 0.2s linear opacity;
+    }
+
+    .brz-strong{
+      display: flex;
     }
 
     .brz-input {
@@ -60,7 +64,7 @@
 
     .brz-span {
       color: $brand__primary;
-      padding-left: 3px;
+      padding-inline-start: 3px;
     }
   }
 

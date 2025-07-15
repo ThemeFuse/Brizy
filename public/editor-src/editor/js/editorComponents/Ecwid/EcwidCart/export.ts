@@ -23,7 +23,7 @@ export const fn: ExportFunction = ($node) => {
       });
 
       ecwid.cart(node, EcwidCartCheckoutStep.Cart, {
-        onPageLoad: () => ecwid.populateCartAddress({ address: {} })
+        onPageLoad: () => ecwid.setAddress({ address: {} })
       });
     }
   });

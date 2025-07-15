@@ -1,6 +1,6 @@
+import { GetCollectionItem_collectionItem as CollectionItem } from "visual/global/Config/types/GetCollectionItem";
 import { EcwidCategoryId, EcwidProductId } from "visual/global/Ecwid/types";
-import { GetCollectionItem_collectionItem as CollectionItem } from "visual/utils/api/cms/graphql/types/GetCollectionItem";
-import { Block } from "./Block";
+import { Block, BlockHtml } from "./Block";
 import { Layout } from "./Layout";
 import { Rule } from "./Rule";
 
@@ -16,6 +16,7 @@ export interface DataCommon {
   dataVersion: number;
   status: "draft" | "publish" | "future" | "private"; // The future status is used for scheduled pages .
   dependencies: Array<string>;
+  blocks?: Array<BlockHtml & { id: string }>;
 }
 
 interface DataWithTitle extends DataCommon {

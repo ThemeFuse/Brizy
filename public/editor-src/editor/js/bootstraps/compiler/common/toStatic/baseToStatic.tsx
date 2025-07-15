@@ -38,7 +38,7 @@ export const baseToStatic = (props: Props): Output => {
   const html = ReactDOMServer.renderToStaticMarkup(Page);
 
   // === Extract all css from CSS generator ===
-  const dynamicCss = sheet.getStyles();
+  const dynamicCss = sheet.getCSSOrdered();
   // ===========
 
   const $pageHTML = cheerio.load(

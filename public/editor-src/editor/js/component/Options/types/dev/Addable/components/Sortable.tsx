@@ -75,7 +75,7 @@ export function Sortable({
       </SortableContext>
 
       {createPortal(
-        <DragOverlay className="brz-ed-sidebar__addable__drag_overlay">
+        <DragOverlay className="brz-ed-addable__drag_overlay">
           {overlayGroup && (
             <Group
               options={overlayGroup.options}

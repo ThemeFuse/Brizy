@@ -124,7 +124,6 @@ export const BoxShadow = ({
     () =>
       dispatch(
         updateUI("leftSidebar", {
-          isOpen: true,
           drawerContentType: LeftSidebarOptionsIds.globalStyle
         })
       ),

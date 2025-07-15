@@ -1,6 +1,5 @@
 import { noop, once } from "es-toolkit";
 import { produce } from "immer";
-import { StoreChanged } from "visual/redux/types";
 import { onChange } from "visual/utils/api";
 import { ErrorCodes } from "visual/utils/errors";
 import { t } from "visual/utils/i18n";
@@ -20,13 +19,11 @@ import {
   ADD_GLOBAL_POPUP,
   ActionTypes,
   DELETE_FONTS,
-  PUBLISH,
   UPDATE_CURRENT_KIT_ID,
   UPDATE_DEFAULT_FONT,
   UPDATE_DISABLED_ELEMENTS,
   UPDATE_EXTRA_FONT_STYLES,
-  updateError,
-  updateStoreWasChanged
+  updateError
 } from "../../actions2";
 import { historySelector } from "../../history/selectors";
 import { REDO, UNDO } from "../../history/types";
@@ -61,22 +58,32 @@ export default ({ getConfig, editorMode }) =>
       next(action);
 
       const state = store.getState();
-      handlePublish({
+
+      const data = {
         action,
+        store,
         state,
         oldState,
         getConfig,
         apiHandler,
         editorMode
-      });
-      handleProject({ action, state, oldState, getConfig, apiHandler });
-      handlePage({ action, state, getConfig, apiHandler });
-      handleGlobalBlocks({ action, state, oldState, getConfig, apiHandler });
+      };
+      handlePublish(data);
+      handleProject(data);
+      handlePage(data);
+      handleGlobalBlocks(data);
       handleHeartBeat({ action, state, getConfig, apiHandler });
     };
   };
 
-function handleProject({ action, state, oldState, getConfig, apiHandler }) {
+function handleProject({
+  action,
+  state,
+  store,
+  oldState,
+  getConfig,
+  apiHandler
+}) {
   const config = getConfig();
   const apiAutoSave = debouncedApiAutoSave(config.autoSaveInterval);
 
@@ -102,6 +109,7 @@ function handleProject({ action, state, oldState, getConfig, apiHandler }) {
       const page = pageSelector(state);
       const data = {
         config,
+        store,
         needToCompile: {
           project
         },
@@ -134,6 +142,7 @@ function handleProject({ action, state, oldState, getConfig, apiHandler }) {
           draft.data.styles = styles;
         });
         const data = {
+          store,
           config,
           needToCompile: {
             project
@@ -163,6 +172,7 @@ function handleProject({ action, state, oldState, getConfig, apiHandler }) {
       const page = pageSelector(state);
       const data = {
         config,
+        store,
         needToCompile: {
           project
         },
@@ -188,6 +198,7 @@ function handleProject({ action, state, oldState, getConfig, apiHandler }) {
       const page = pageSelector(state);
       const data = {
         config,
+        store,
         needToCompile: {
           project
         },
@@ -228,7 +239,7 @@ function handleProject({ action, state, oldState, getConfig, apiHandler }) {
   }
 }
 
-function handlePage({ action, state, getConfig }) {
+function handlePage({ action, store, state, getConfig }) {
   const config = getConfig();
 
   const apiAutoSave = debouncedApiAutoSave(config.autoSaveInterval);
@@ -263,6 +274,7 @@ function handlePage({ action, state, getConfig }) {
       const { syncSuccess = noop, syncFail = noop } = action.meta || {};
       const project = projectSelector(state);
       const data = {
+        store,
         config,
         needToCompile: {
           page
@@ -330,10 +342,6 @@ function handleHeartBeat({ action, state, getConfig, apiHandler }) {
 function apiCatch(next, p, action, onSuccess = noop, onError = noop) {
   return p
     .then((r) => {
-      if (action?.type === PUBLISH) {
-        next(updateStoreWasChanged(StoreChanged.unchanged));
-      }
-
       onSuccess(r);
     })
     .catch((r) => {

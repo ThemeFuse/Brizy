@@ -101,7 +101,6 @@ export const BackgroundColor = ({
   const openSidebar = () => {
     dispatch(
       updateUI("leftSidebar", {
-        isOpen: true,
         drawerContentType: LeftSidebarOptionsIds.globalStyle
       })
     );

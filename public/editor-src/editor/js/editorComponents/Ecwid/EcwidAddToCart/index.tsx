@@ -7,7 +7,10 @@ import EditorComponent from "visual/editorComponents/EditorComponent";
 import { Wrapper } from "visual/editorComponents/tools/Wrapper";
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import { makePlaceholder } from "visual/utils/dynamicContent";
-import { getEcwidProductId } from "visual/utils/ecwid";
+import {
+  getEcwidProductId,
+  getEcwidShopPathPlaceholder
+} from "visual/utils/ecwid";
 import { makeAttr } from "visual/utils/i18n/attribute";
 import { attachRefs } from "visual/utils/react";
 import type { MValue } from "visual/utils/value";
@@ -92,7 +95,8 @@ export class EcwidAddToCart extends EditorComponent<Value> {
       [makeAttr("store-id")]: makePlaceholder({
         content: "{{ecwid_store_id}}"
       }),
-      [makeAttr("product-id")]: productId
+      [makeAttr("product-id")]: productId,
+      [makeAttr("shop-path")]: getEcwidShopPathPlaceholder()
     };
 
     return (

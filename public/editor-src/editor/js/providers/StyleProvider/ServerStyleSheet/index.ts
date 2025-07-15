@@ -4,8 +4,8 @@ import { ServerStyle } from "./types";
 export class ServerStyleSheet implements ServerStyle {
   readonly instance: Readonly<Sheet>;
 
-  constructor() {
-    this.instance = Object.freeze(new Sheet());
+  constructor(doc?: Document) {
+    this.instance = Object.freeze(new Sheet(doc));
   }
 
   getStyles() {

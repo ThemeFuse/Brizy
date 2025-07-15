@@ -68,7 +68,6 @@ export const ColorPicker = ({
     () =>
       dispatch(
         updateUI("leftSidebar", {
-          isOpen: true,
           drawerContentType: LeftSidebarOptionsIds.globalStyle
         })
       ),

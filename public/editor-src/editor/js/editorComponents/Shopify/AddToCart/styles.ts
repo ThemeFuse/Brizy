@@ -26,24 +26,22 @@ export function style(data: DynamicStylesProps<Value>): OutputStyle {
         "cssStyleBgGradient",
         "cssStyleBoxShadow",
         "cssStyleBorder"
-      ],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
       ]
     },
     ".brz && .brz-icon-svg-custom:hover": {
-      standart: ["cssStyleCustomIconColor"],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
-      ]
+      standart: ["cssStyleCustomIconColor"]
     },
     ".brz && .brz-shopify-icon-cart": {
       standart: [
         "cssStyleSizeFontSizeIcon",
         "cssStyleElementButtonIconMargin",
         "cssStyleElementButtonIconStrokeWidth"
+      ]
+    },
+    ".brz &&, .brz && .brz-icon-svg-custom": {
+      standart: [
+        "cssStyleHoverTransition",
+        "cssStylePropertyHoverTransitionColor"
       ]
     }
   };

@@ -8,14 +8,14 @@ export function styleMenuContainer(
 ): OutputStyle {
   const styles = {
     ".brz && .brz-mm-menu__icon": {
+      standart: [
+        "cssStyleHoverTransition",
+        "cssStylePropertyHoverTransitionColor"
+      ],
       interval: ["cssStyleElementMenuShowIcon", "cssStyleElementMMenuSize"]
     },
     ".brz &&:hover .brz-mm-menu__icon": {
-      interval: [
-        "cssStyleElementMMenuIconColor",
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
-      ]
+      interval: ["cssStyleElementMMenuIconColor"]
     },
     ".brz && .brz-menu": {
       interval: ["cssStyleElementMenuShow"]
@@ -44,10 +44,6 @@ export function styleMenu(data: DynamicStylesProps<Value>): OutputStyle {
       ]
     },
     ".brz &&:hover .brz-menu__ul": {
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
-      ],
       standart: ["cssStyleColor"]
     },
     ".brz && .brz-menu__ul > .brz-menu__item > .brz-a": {
@@ -57,32 +53,17 @@ export function styleMenu(data: DynamicStylesProps<Value>): OutputStyle {
       ]
     },
     ".brz && .brz-menu__ul > .brz-menu__item > .brz-a:hover": {
-      standart: ["cssStyleColor", "cssStyleElementMenuLinkBgColor"],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
-      ]
+      standart: ["cssStyleColor", "cssStyleElementMenuLinkBgColor"]
     },
     ".brz && .brz-menu__ul > .brz-menu__item.brz-menu__item--opened > .brz-a:hover":
       {
-        standart: [
-          "cssStyleElementMenuColor",
-          "cssStyleElementMenuLinkBgColor"
-        ],
-        interval: [
-          "cssStyleHoverTransition",
-          "cssStylePropertyHoverTransitionColor"
-        ]
+        standart: ["cssStyleElementMenuColor", "cssStyleElementMenuLinkBgColor"]
       },
     ".brz && .brz-menu__ul > .brz-menu__item.brz-menu__item--opened:hover": {
       standart: [
         "cssStyleElementMenuColor",
         "cssStyleElementMenuBgColor",
         "cssStyleElementMenuBorder"
-      ],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
       ]
     },
 
@@ -93,10 +74,6 @@ export function styleMenu(data: DynamicStylesProps<Value>): OutputStyle {
           "cssStyleElementMenuCurrentColor",
           "cssStyleElementMenuCurrentBgColor",
           "cssStyleElementMenuCurrentBorder"
-        ],
-        interval: [
-          "cssStyleHoverTransition",
-          "cssStylePropertyHoverTransitionColor"
         ]
       },
     ".brz && .brz-menu__ul > .brz-menu__item.brz-menu__item--current > .brz-a:not(.brz-a:active):hover":
@@ -104,10 +81,6 @@ export function styleMenu(data: DynamicStylesProps<Value>): OutputStyle {
         standart: [
           "cssStyleElementMenuCurrentColor",
           "cssStyleElementMenuCurrentLinkBgColor"
-        ],
-        interval: [
-          "cssStyleHoverTransition",
-          "cssStylePropertyHoverTransitionColor"
         ]
       },
     ".brz && > .brz-ed-border": {
@@ -119,27 +92,15 @@ export function styleMenu(data: DynamicStylesProps<Value>): OutputStyle {
     },
     ".brz && .brz-menu__ul > .brz-menu__item > .brz-a:hover > .brz-icon-svg.brz-icon-svg-custom":
       {
-        standart: ["cssStyleCustomIconColor"],
-        interval: [
-          "cssStyleHoverTransition",
-          "cssStylePropertyHoverTransitionColor"
-        ]
+        standart: ["cssStyleCustomIconColor"]
       },
     ".brz && .brz-menu__ul > .brz-menu__item.brz-menu__item--current > .brz-a:not(.brz-a:active):hover > .brz-icon-svg.brz-icon-svg-custom":
       {
-        standart: ["cssStyleMenuCustomIconActiveColor"],
-        interval: [
-          "cssStyleHoverTransition",
-          "cssStylePropertyHoverTransitionColor"
-        ]
+        standart: ["cssStyleMenuCustomIconActiveColor"]
       },
     ".brz && .brz-menu__ul > .brz-menu__item.brz-menu__item--current:not(.brz-menu__item.brz-menu__item--current:active):hover > .brz-icon-svg.brz-icon-svg-custom":
       {
-        standart: ["cssStyleMenuCustomIconActiveColor"],
-        interval: [
-          "cssStyleHoverTransition",
-          "cssStylePropertyHoverTransitionColor"
-        ]
+        standart: ["cssStyleMenuCustomIconActiveColor"]
       },
     ".brz && .brz-menu__ul > .brz-menu__item": {
       standart: ["cssStyleElementMenuBorderRadius"],
@@ -150,10 +111,6 @@ export function styleMenu(data: DynamicStylesProps<Value>): OutputStyle {
         "cssStyleElementMenuColor",
         "cssStyleElementMenuBgColor",
         "cssStyleElementMenuBorder"
-      ],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
       ]
     },
     ".brz && .brz-menu__ul > .brz-menu__item > a": {
@@ -181,10 +138,6 @@ export function styleMenu(data: DynamicStylesProps<Value>): OutputStyle {
       standart: ["cssStyleElementMenuSubMenuFontFamily", "cssStyleBorderRadius"]
     },
     ".brz && .brz-menu__sub-menu:hover": {
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
-      ],
       standart: [
         "cssStyleElementMenuSubMenuColor",
         "cssStyleElementMenuSubMenuBgColor",
@@ -195,11 +148,7 @@ export function styleMenu(data: DynamicStylesProps<Value>): OutputStyle {
       standart: ["cssStyleElementMenuSubMenuIconPosition"]
     },
     ".brz &&:hover .brz-menu__sub-menu .brz-a:hover": {
-      standart: ["cssStyleElementMenuSubMenuColor"],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
-      ]
+      standart: ["cssStyleElementMenuSubMenuColor"]
     },
     ".brz && .brz-menu__sub-menu .brz-a > .brz-icon-svg": {
       standart: [
@@ -211,79 +160,42 @@ export function styleMenu(data: DynamicStylesProps<Value>): OutputStyle {
     // Current SubMenu
     ".brz &&:hover .brz-menu__sub-menu > .brz-menu__item.brz-menu__item--current > .brz-a":
       {
-        standart: ["cssStyleElementMenuSubMenuCurrentColor"],
-        interval: [
-          "cssStyleHoverTransition",
-          "cssStylePropertyHoverTransitionColor"
-        ]
+        standart: ["cssStyleElementMenuSubMenuCurrentColor"]
       },
     ".brz &&:hover .brz-menu__sub-menu > .brz-menu__item.brz-menu__item--current":
       {
-        standart: ["cssStyleElementMenuSubMenuCurrentBgColor"],
-        interval: [
-          "cssStyleHoverTransition",
-          "cssStylePropertyHoverTransitionColor"
-        ]
+        standart: ["cssStyleElementMenuSubMenuCurrentBgColor"]
       },
     ".brz &&:hover .brz-menu__sub-menu > .brz-menu__item.brz-menu__item--current:hover":
       {
-        standart: ["cssStyleElementMenuSubMenuCurrentBgColor"],
-        interval: [
-          "cssStyleHoverTransition",
-          "cssStylePropertyHoverTransitionColor"
-        ]
+        standart: ["cssStyleElementMenuSubMenuCurrentBgColor"]
       },
     ".brz &&:hover .brz-menu__item--current .brz-menu__sub-menu": {
-      standart: ["cssStyleElementMenuSubMenuCurrentBoxShadow"],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
-      ]
+      standart: ["cssStyleElementMenuSubMenuCurrentBoxShadow"]
     },
     ".brz && .brz-menu__sub-menu > .brz-menu__item > .brz-a:hover > .brz-icon-svg.brz-icon-svg-custom":
       {
-        standart: ["cssStyleElementMenuSubMenuCustomIconColor"],
-        interval: [
-          "cssStyleHoverTransition",
-          "cssStylePropertyHoverTransitionColor"
-        ]
+        standart: ["cssStyleElementMenuSubMenuCustomIconColor"]
       },
     ".brz && .brz-menu__sub-menu > .brz-menu__item:not(.brz-menu__item.brz-menu__item--current):hover > .brz-a > .brz-icon-svg.brz-icon-svg-custom":
       {
-        standart: ["cssStyleElementMenuSubMenuCustomIconColor"],
-        interval: [
-          "cssStyleHoverTransition",
-          "cssStylePropertyHoverTransitionColor"
-        ]
+        standart: ["cssStyleElementMenuSubMenuCustomIconColor"]
       },
     ".brz &&:hover .brz-menu__sub-menu > .brz-menu__item.brz-menu__item--current > .brz-a > .brz-icon-svg.brz-icon-svg-custom":
       {
-        standart: ["cssStyleMenuSubMenuCustomIconActiveColor"],
-        interval: [
-          "cssStyleHoverTransition",
-          "cssStylePropertyHoverTransitionColor"
-        ]
+        standart: ["cssStyleMenuSubMenuCustomIconActiveColor"]
       },
     // Background Color for Dropdown
     ".brz && .brz-menu__item-dropdown .brz-menu__item:hover": {
       standart: [
         "cssStyleElementMenuSubMenuBgColor",
         "cssStyleElementMenuSubMenuColor"
-      ],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
       ]
     },
-
     // Color for dropdown arrow
     ".brz && .brz-menu__sub-menu .brz-menu__item-dropdown:hover .brz-a:hover:after":
       {
-        standart: ["cssStyleElementMenuSubMenuBorderColor"],
-        interval: [
-          "cssStyleHoverTransition",
-          "cssStylePropertyHoverTransitionColor"
-        ]
+        standart: ["cssStyleElementMenuSubMenuBorderColor"]
       },
 
     // Dropdown Menu Items
@@ -338,7 +250,14 @@ export function styleMenu(data: DynamicStylesProps<Value>): OutputStyle {
     },
     ".brz && .brz-menu__item-mega-menu .brz-mega-menu__portal": {
       interval: ["cssStyleElementMenuDropdown"]
-    }
+    },
+    ".brz && .brz-menu__item-dropdown .brz-menu__item, .brz && .brz-menu__sub-menu .brz-menu__item-dropdown .brz-a:after, .brz && .brz-menu__sub-menu > .brz-menu__item.brz-menu__item--current > .brz-a > .brz-icon-svg.brz-icon-svg-custom, .brz && .brz-menu__sub-menu > .brz-menu__item:not(.brz-menu__item.brz-menu__item--current) > .brz-a > .brz-icon-svg.brz-icon-svg-custom, .brz && .brz-menu__sub-menu > .brz-menu__item > .brz-a > .brz-icon-svg.brz-icon-svg-custom, .brz && .brz-menu__item--current .brz-menu__sub-menu, .brz && .brz-menu__sub-menu > .brz-menu__item.brz-menu__item--current, .brz &&:hover .brz-menu__ul, .brz && .brz-menu__ul > .brz-menu__item > .brz-a, .brz && .brz-menu__ul > .brz-menu__item.brz-menu__item--opened > .brz-a, .brz && .brz-menu__ul > .brz-menu__item.brz-menu__item--opened, .brz && .brz-menu__ul > .brz-menu__item.brz-menu__item--current:not(.brz-menu__item.brz-menu__item--current:active), .brz && .brz-menu__ul > .brz-menu__item.brz-menu__item--current > .brz-a:not(.brz-a:active), .brz && .brz-menu__ul > .brz-menu__item > .brz-a > .brz-icon-svg.brz-icon-svg-custom, .brz && .brz-menu__ul > .brz-menu__item.brz-menu__item--current > .brz-a:not(.brz-a:active) > .brz-icon-svg.brz-icon-svg-custom, .brz && .brz-menu__ul > .brz-menu__item.brz-menu__item--current:not(.brz-menu__item.brz-menu__item--current:active) > .brz-icon-svg.brz-icon-svg-custom, .brz && .brz-menu__ul > .brz-menu__item, .brz && .brz-menu__sub-menu, .brz &&:hover .brz-menu__sub-menu .brz-a, .brz && .brz-menu__sub-menu > .brz-menu__item.brz-menu__item--current > .brz-a, .brz && .brz-menu__sub-menu > .brz-menu__item.brz-menu__item--current":
+      {
+        standart: [
+          "cssStyleHoverTransition",
+          "cssStylePropertyHoverTransitionColor"
+        ]
+      }
   };
 
   return renderStyles({ ...data, styles });
@@ -373,18 +292,10 @@ export function styleMMenu(data: DynamicStylesProps<Value>): OutputStyle {
       standart: ["cssStyleElementMMenuFontFamily"]
     },
     ".brz && .brz-menu__item:hover": {
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
-      ],
       standart: ["cssStyleElementMMenuColor", "cssStyleElementMMenuBorderColor"]
     },
     ".brz nav.brz-mm-menu&&": {
-      standart: ["cssStyleElementMMenuBackgroundColor"],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
-      ]
+      standart: ["cssStyleElementMMenuBackgroundColor"]
     },
     ".brz &&.brz-mm-menu .brz-menu__item .brz-mm-listitem__text": {
       standart: [
@@ -393,11 +304,7 @@ export function styleMMenu(data: DynamicStylesProps<Value>): OutputStyle {
       ]
     },
     ".brz &&:hover .brz-menu__item:hover > .brz-mm-listitem__text": {
-      standart: ["cssStyleElementMMenuColor"],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
-      ]
+      standart: ["cssStyleElementMMenuColor"]
     },
     ".brz && .brz-menu__item .brz-a": {
       interval: [
@@ -413,11 +320,7 @@ export function styleMMenu(data: DynamicStylesProps<Value>): OutputStyle {
     },
     ".brz && .brz-menu__item:hover .brz-mm-menu__item__icon.brz-icon-svg-custom":
       {
-        standart: ["cssStyleMenuCustomIconColor"],
-        interval: [
-          "cssStyleHoverTransition",
-          "cssStylePropertyHoverTransitionColor"
-        ]
+        standart: ["cssStyleMenuCustomIconColor"]
       },
     ".brz && .brz-mm-navbar": {
       interval: [
@@ -428,18 +331,12 @@ export function styleMMenu(data: DynamicStylesProps<Value>): OutputStyle {
         "cssStyleElementMMenuLetterSpacing",
         "cssStyleElementMMenuFontVariation",
         "cssStyleElementMMenuTextTransform",
-        "cssStyleElementMMenuBorderColor",
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
+        "cssStyleElementMMenuBorderColor"
       ],
       standart: ["cssStyleElementMMenuTitleColor"]
     },
     ".brz &&:hover .brz-menu__item.brz-mm-listitem_opened": {
-      standart: ["cssStyleElementMMenuColor"],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
-      ]
+      standart: ["cssStyleElementMMenuColor"]
     },
     ".brz &&.brz-mm-menu .brz-mm-listitem_vertical .brz-mm-btn_next": {
       interval: ["cssStyleElementMMenuBtnNext"]
@@ -447,16 +344,19 @@ export function styleMMenu(data: DynamicStylesProps<Value>): OutputStyle {
     ".brz &&.brz-mm-menu.brz-mm-menu_theme-dark .brz-mm-panels": {
       standart: ["cssStyleElementMenuHamburgerBgImage"]
     },
+    ".brz &&.brz-mm-menu.brz-mm-menu_theme-dark .brz-mm-panels, .brz && .brz-mm-panels > .brz-mm-panel:before":
+      {
+        standart: [
+          "cssStyleElementMMenuGradientBgColor",
+          "cssStyleElementMMenuBackgroundColor"
+        ]
+      },
     ".brz &&.brz-mm-menu.brz-mm-menu_theme-dark .brz-mm-panels, .brz &&:hover .brz-mm-panels > .brz-mm-panel":
       {
         standart: [
           "cssStyleElementMMenuBackgroundColor",
           "cssStyleElementMMenuImageFilter",
           "cssStyleBgImagePosition"
-        ],
-        interval: [
-          "cssStyleHoverTransition",
-          "cssStylePropertyHoverTransitionColor"
         ]
       },
     ".brz && .brz-mm-panels > .brz-mm-panel": {
@@ -467,18 +367,10 @@ export function styleMMenu(data: DynamicStylesProps<Value>): OutputStyle {
     },
     ".brz &&.brz-mm-menu.brz-mm-menu_theme-dark .brz-mm-navbar.brz-mm-listitem .brz-mm-listitem_opened > .brz-mm-listitem__text:after":
       {
-        standart: ["cssStyleElementMMenuBorderColor"],
-        interval: [
-          "cssStyleHoverTransition",
-          "cssStylePropertyHoverTransitionColor"
-        ]
+        standart: ["cssStyleElementMMenuBorderColor"]
       },
     ".brz &&:hover .brz-mm-listitem": {
-      standart: ["cssStyleElementMMenuBorderColor"],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
-      ]
+      standart: ["cssStyleElementMMenuBorderColor"]
     },
 
     // Current
@@ -489,6 +381,13 @@ export function styleMMenu(data: DynamicStylesProps<Value>): OutputStyle {
     ".brz &&  .brz-menu__item.brz-menu__item--current:not(brz-menu__item.brz-menu__item--current:active):hover > .brz-mm-listitem__text > .brz-icon-svg.brz-icon-svg-custom":
       {
         standart: ["cssStyleElementMMenuIconActiveColor"]
+      },
+    ".brz && .brz-mm-listitem, .brz &&.brz-mm-menu.brz-mm-menu_theme-dark .brz-mm-navbar.brz-mm-listitem .brz-mm-listitem_opened > .brz-mm-listitem__text:after, .brz && .brz-menu__item:hover, .brz &&.brz-mm-menu.brz-mm-menu_theme-dark .brz-mm-panels, .brz && .brz-mm-panels > .brz-mm-panel, .brz &&.brz-mm-menu.brz-mm-menu_theme-dark .brz-mm-panels, .brz && .brz-mm-panels > .brz-mm-panel:before, .brz && .brz-menu__item.brz-mm-listitem_opened, .brz && .brz-mm-navbar, .brz nav.brz-mm-menu&&, .brz && .brz-menu__item > .brz-mm-listitem__text, .brz && .brz-menu__item .brz-mm-menu__item__icon.brz-icon-svg-custom":
+      {
+        standart: [
+          "cssStyleHoverTransition",
+          "cssStylePropertyHoverTransitionColor"
+        ]
       }
   };
 

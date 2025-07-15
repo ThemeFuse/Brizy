@@ -1,6 +1,7 @@
 import { GetItems } from "visual/editorComponents/EditorComponent/types";
 import { isStory } from "visual/providers/EditorModeProvider";
 import { t } from "visual/utils/i18n";
+import { titleHoverTransitionCSS } from "./css";
 import { Props, Value } from "./types";
 
 export const getItems: GetItems<Value, Props> = ({ editorMode }) => [
@@ -54,7 +55,8 @@ export const getItems: GetItems<Value, Props> = ({ editorMode }) => [
                       min: 0,
                       max: 99,
                       units: [{ title: "ms", value: "ms" }]
-                    }
+                    },
+                    style: titleHoverTransitionCSS
                   }
                 ]
               }

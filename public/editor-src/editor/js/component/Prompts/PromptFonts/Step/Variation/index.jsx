@@ -191,14 +191,14 @@ class Variation extends Component {
       nextLoading: true
     });
 
-    const { status, data } = await createFont({
+    const { data } = await createFont({
       id: uuid(),
       name: fontName,
       files,
       config: this.props.config
     });
 
-    if (status !== 200) {
+    if (!data) {
       this.setState({
         nextLoading: false,
         error: t("Something went wrong")

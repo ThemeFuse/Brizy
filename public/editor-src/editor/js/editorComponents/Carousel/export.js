@@ -96,7 +96,9 @@ export default function ($node) {
       observer.observe(_this);
     }
 
-    window.Brz.emit("elements.slick.ready", $this.get(0));
+    window.Brz.emit("elements.slick.ready", {
+      slick: $this.get(0)
+    });
 
     // Need rearrange when changed some of elements [tabs, accordion, ... ]
     const elements = [

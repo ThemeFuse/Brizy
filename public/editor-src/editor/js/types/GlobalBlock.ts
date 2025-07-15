@@ -1,4 +1,4 @@
-import { Block } from "./Block";
+import { Block, BlockHtmlWithId } from "./Block";
 import { Rule } from "./Rule";
 import { ExtraFontStyle } from "./Style";
 
@@ -21,6 +21,7 @@ export interface GlobalBlockBase {
   dataVersion: number;
   title?: string;
   tags?: string;
+  blocks?: Array<BlockHtmlWithId>;
 
   // Used for Internal Global Popup(GlobalBlock -> Button -> GlobalPopup)
   dependencies: Array<Dependency>;

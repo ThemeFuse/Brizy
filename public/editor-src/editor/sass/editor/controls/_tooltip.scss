@@ -129,7 +129,7 @@
   padding: 18px 18px 18px 22px;
   font-size: 13px;
   line-height: 18px;
-  text-align: left;
+  text-align: start;
 
   &-title {
     margin-bottom: 17px;
@@ -137,7 +137,7 @@
 
   &-body .brz-icon-svg {
     font-size: 10px;
-    margin-right: 8px;
+    margin-inline-end: 8px;
   }
 
   .brz-p {

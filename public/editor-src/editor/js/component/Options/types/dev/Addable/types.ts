@@ -108,7 +108,10 @@ export interface GroupBodyProps {
 //#endregion
 
 //#region Sidebar Types
-type SidebarAlignment = "left" | "right";
+export enum SidebarAlignment {
+  left = "left",
+  right = "right"
+}
 
 export interface SidebarProps extends SidebarHeadProps, SidebarContentProps {
   isOpen: boolean;

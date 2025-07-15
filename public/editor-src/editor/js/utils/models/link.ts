@@ -1,3 +1,4 @@
+import { isString } from "es-toolkit";
 import { ElementModel } from "visual/component/Elements/Types";
 import { StoryAnchorAttribute } from "visual/component/Link/types/Slide";
 import * as LinkTarget from "visual/component/Link/types/Target";
@@ -44,6 +45,7 @@ export interface Link {
   target: MValue<LinkTarget.Target>;
   rel: MValue<string>;
   slide: MValue<StoryAnchorAttribute>;
+  ariaLabel?: string;
 }
 
 const isNan = pipe(Num.read, isNullish);
@@ -128,6 +130,7 @@ export const getLinkData = <T extends Value>(
   config: ConfigCommon
 ): Link => {
   const {
+    ariaLabel,
     linkLightBox,
     linkAnchor,
     linkToSlide,
@@ -172,6 +175,7 @@ export const getLinkData = <T extends Value>(
     href: data[type],
     target,
     rel: Str.read(linkExternalRel),
-    slide: slideAnchor
+    slide: slideAnchor,
+    ...(isString(ariaLabel) && { ariaLabel })
   };
 };

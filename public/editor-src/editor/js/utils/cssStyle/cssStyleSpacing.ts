@@ -37,11 +37,11 @@ export function cssStyleSpacing({
     case "top":
       return `margin:${spacing}${spacingSuffix} 0 0 0;`;
     case "right":
-      return `margin: 0 ${spacing}${spacingSuffix} 0 0;`;
+      return `margin: 0; margin-inline-end: ${spacing}${spacingSuffix};`;
     case "bottom":
       return `margin: 0 0 ${spacing}${spacingSuffix} 0;`;
     case "left":
-      return `margin: 0 0 0 ${spacing}${spacingSuffix};`;
+      return `margin: 0; margin-inline-start: ${spacing}${spacingSuffix};`;
     case "horizontal":
       return `margin: 0 ${spacing}${spacingSuffix};`;
     case "vertical":

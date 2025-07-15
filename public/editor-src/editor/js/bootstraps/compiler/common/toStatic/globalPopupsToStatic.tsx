@@ -8,7 +8,6 @@ import { ServerStyleSheet } from "visual/providers/StyleProvider/ServerStyleShee
 import { Store } from "visual/redux/store";
 import { GlobalBlockPopup } from "visual/types/GlobalBlock";
 import { Providers } from "../controls/Providers";
-import { Root } from "../controls/Root";
 import { baseToStatic } from "./baseToStatic";
 import { GlobalBlockStatic } from "./types";
 
@@ -73,9 +72,7 @@ export const globalPopupsToStatic = (props: Props): GlobalBlocksOutput => {
         config={config}
         editorMode={editorMode}
       >
-        <Root className="brz" type="block">
-          <RenderPage store={store} dbValue={dbValue} editorMode={editorMode} />
-        </Root>
+        <RenderPage store={store} dbValue={dbValue} editorMode={editorMode} />
       </Providers>
     );
 
@@ -86,7 +83,10 @@ export const globalPopupsToStatic = (props: Props): GlobalBlocksOutput => {
         sheet: sheet.instance,
         config
       });
-      outputs.push({ uid: block.uid, ...output });
+      outputs.push({
+        uid: block.uid,
+        blocks: [{ id: block.uid, ...output }]
+      });
     } catch (e) {
       console.error("Fail to compile globalBLock", e);
     }

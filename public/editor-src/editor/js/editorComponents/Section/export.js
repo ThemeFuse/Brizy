@@ -28,9 +28,40 @@ export default function ($node) {
     const autoPlay = data.autoPlay;
     const autoPlaySpeed = data.autoPlaySpeed;
     const swipe = data.swipe;
+    const section = $this.closest(".brz-section").get(0);
     const responsive = JSON.parse(decodeURIComponent(data.responsive));
 
     const getArrow = makeArrow(_this);
+
+    $this.on("init", function (event, slick) {
+      if (window.Brz) {
+        const node = slick.$slides[0];
+
+        if (!node || !section) {
+          return;
+        }
+
+        window.Brz.emit("elements.slick.ready", {
+          slick: node,
+          wrapper: section
+        });
+      }
+    });
+
+    $this.on("afterChange", function (event, slick, currentSlide) {
+      if (window.Brz) {
+        const _slick = slick.$slides[currentSlide];
+
+        if (!_slick || !section) {
+          return;
+        }
+
+        window.Brz.emit("elements.section.slide.change", {
+          slick: _slick,
+          node: section
+        });
+      }
+    });
 
     $this.slick({
       slidesToShow,
@@ -52,7 +83,5 @@ export default function ($node) {
       rtl: isRtl,
       rows: 0
     });
-
-    window.Brz.emit("elements.slick.ready", $this.get(0));
   });
 }
