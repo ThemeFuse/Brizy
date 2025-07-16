@@ -3,76 +3,92 @@
 use BrizyPlaceholders\ContentPlaceholder;
 use BrizyPlaceholders\ContextInterface;
 
-class Brizy_Content_Placeholders_GlobalBlocks extends Brizy_Content_Placeholders_Abstract {
+class Brizy_Content_Placeholders_GlobalBlocks extends Brizy_Content_Placeholders_Abstract
+{
 
-	public function __construct(
-		$label, $placeholder, $group = null, $display = Brizy_Content_Placeholders_Abstract::DISPLAY_INLINE, $attrs = []
-	) {
-		$this->setLabel( $label );
-		$this->setPlaceholder( $placeholder );
-		$this->setDisplay( $display );
-		$this->setGroup( $group );
-		$this->setAttributes( $attrs );
-	}
+    public function __construct(
+        $label, $placeholder, $group = null, $display = Brizy_Content_Placeholders_Abstract::DISPLAY_INLINE, $attrs = []
+    )
+    {
+        $this->setLabel($label);
+        $this->setPlaceholder($placeholder);
+        $this->setDisplay($display);
+        $this->setGroup($group);
+        $this->setAttributes($attrs);
+    }
 
-	/**
-	 * @param ContextInterface $context
-	 * @param ContentPlaceholder $placeholder
-	 *
-	 * @return string
-	 * @throws Exception
-	 */
-	public function getValue( ContextInterface $context, ContentPlaceholder $placeholder ) {
-		$position = $placeholder->getAttribute( 'position' ) ?: 'top';
-		$template = Brizy_Admin_Templates::getTemplate();
-		if ( $template ) {
-			$blocks = Brizy_Admin_Blocks_Main::_init()->getMatchingBrizyBlocks( $template->getWpPost() );
-		} else {
-			$blocks = Brizy_Admin_Blocks_Main::_init()->getMatchingBrizyBlocks( $context->getEntity() );
-		}
-		$blocks = array_filter( $blocks, function ( Brizy_Editor_Post $block ) use ( $position ) {
-			$is_referenced_in_page = Brizy_Admin_Blocks_Main::_init()->isReferencedInPage( $block );
+    /**
+     * @param ContextInterface $context
+     * @param ContentPlaceholder $placeholder
+     *
+     * @return string
+     * @throws Exception
+     */
+    public function getValue(ContextInterface $context, ContentPlaceholder $placeholder)
+    {
+        $position = $placeholder->getAttribute('position') ?: 'top';
+        $template = Brizy_Admin_Templates::getTemplate();
+        if ($template) {
+            $blocks = Brizy_Admin_Blocks_Main::_init()->getMatchingBrizyBlocks($template->getWpPost());
+        } else {
+            $blocks = Brizy_Admin_Blocks_Main::_init()->getMatchingBrizyBlocks($context->getEntity());
+        }
+        $blocks = array_filter($blocks, function (Brizy_Editor_Post $block) use ($position) {
+            $is_referenced_in_page = Brizy_Admin_Blocks_Main::_init()->isReferencedInPage($block);
 
-			return $block->getPosition()->getAlign() == $position and ! $is_referenced_in_page;
-		} );
-		usort( $blocks, function ( $first, $second ) use ( $position ) {
-			if ( $position == 'top' ) {
-				return $first->getPosition()->getTop() > $second->getPosition()->getTop() ? 1 : - 1;
-			} else {
-				return $first->getPosition()->getBottom() > $second->getPosition()->getBottom() ? 1 : - 1;
-			}
-		} );
+            return $block->getPosition()->getAlign() == $position and !$is_referenced_in_page;
+        });
+        usort($blocks, function ($first, $second) use ($position) {
+            if ($position == 'top') {
+                return $first->getPosition()->getTop() > $second->getPosition()->getTop() ? 1 : -1;
+            } else {
+                return $first->getPosition()->getBottom() > $second->getPosition()->getBottom() ? 1 : -1;
+            }
+        });
 
-		return $this->returnBlocksContent( $blocks );
-	}
+        return $this->returnBlocksContent($blocks);
+    }
 
-	/**
-	 * @param array<Brizy_Editor_Block> $blocks
-	 *
-	 * @return string
-	 */
-	private function returnBlocksContent( array $blocks ) {
+    /**
+     * @param array<Brizy_Editor_Block> $blocks
+     *
+     * @return string
+     */
+    private function returnBlocksContent(array $blocks)
+    {
+        $project = Brizy_Editor_Project::get();
+        $blocks_manager = new Brizy_Admin_Blocks_Manager(Brizy_Admin_Blocks_Main::CP_GLOBAL);
+        $compiler_url = Brizy_Config::getCompilerUrls();
+        $compiler_download_url = Brizy_Config::getCompilerDownloadUrl();
 
-		$content = "";
-		foreach ( $blocks as $block ) {
+        $content = "";
+        foreach ($blocks as $block) {
+            $compiler = new Brizy_Editor_Compiler($project, $blocks_manager, new Brizy_Editor_UrlBuilder($project, $block), $compiler_url, $compiler_download_url);
+            // Compile the block if needed
+            try {
+                if ($compiler->needsCompile($block)) {
+                    $editorConfig = Brizy_Editor_Editor_Editor::get($project, $block)->config(Brizy_Editor_Editor_Editor::COMPILE_CONTEXT);
+                    $compiler->compilePost($block, $editorConfig);
+                }
 
-			/**
-			 * @var
-			 */
-			$sectionSet = $block->getCompiledSectionManager();
+            } catch (Exception $e) {
+                Brizy_Logger::instance()->exception($e);
+            }
 
-			$html       = $sectionSet->buildHtml();
-			if ( empty( $html ) ) {
-				continue;
-			}
-			$content .= <<<HTML
+            $sectionSet = $block->getCompiledSectionManager();
+
+            $html = $sectionSet->buildHtml();
+            if (empty($html)) {
+                continue;
+            }
+            $content .= <<<HTML
 \n<!-- GLOBAL BLOCK [{$block->getWpPostId()}]-->
 {$html}
 <!-- END GLOBAL BLOCK [{$block->getWpPostId()}]-->
 \n
 HTML;
-		}
+        }
 
-		return $content;
-	}
+        return $content;
+    }
 }
