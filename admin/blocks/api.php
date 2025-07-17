@@ -248,7 +248,6 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 			}
 			$block->save();
 			do_action( 'brizy_global_block_created', $block );
-			do_action( 'brizy_global_data_updated' );
 			$this->success( $block->createResponse() );
 
 		} catch ( Exception $exception ) {
@@ -335,7 +334,6 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 				}
 				$block->save( 0 );
 				do_action( 'brizy_global_block_updated', $block );
-				do_action( 'brizy_global_data_updated' );
 			}
 			Brizy_Editor_Block::cleanClassCache();
 			$this->success( Brizy_Editor_Block::get( $block->getWpPostId() )->createResponse() );
@@ -430,7 +428,6 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 					do_action( 'brizy_global_block_updated', $block );
 				}
 			}
-			do_action( 'brizy_global_data_updated' );
 			$this->success( [] );
 
 		} catch ( Exception $exception ) {
@@ -527,7 +524,6 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 			//$block->setCloudUpdateRequired( true );
 			$block->save();
 			do_action( 'brizy_saved_block_created', $block );
-			do_action( 'brizy_global_data_updated' );
 			$this->success( $block->createResponse() );
 
 		} catch ( Exception $exception ) {
@@ -573,7 +569,6 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 			} else {
 				$block->save();
 				do_action( 'brizy_saved_block_updated', $block );
-				do_action( 'brizy_global_data_updated' );
 			}
 			Brizy_Editor_Block::cleanClassCache();
 			$this->success( Brizy_Editor_Block::get( $block->getWpPostId() )->createResponse() );
@@ -640,7 +635,6 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 				}
 				do_action( 'brizy_global_block_updated', $block );
 			}
-			do_action( 'brizy_global_data_updated' );
 			$wpdb->query( 'COMMIT' );
 
 		} catch ( Exception $e ) {
