@@ -57,19 +57,6 @@ class Brizy_Content_Placeholders_GlobalBlock extends Brizy_Content_Placeholders_
 	 * @return string
 	 */
 	private function returnBlockContent( $block ) {
-		try {
-			$compiler = new Brizy_Editor_Compiler( Brizy_Editor_Project::get(), new Brizy_Admin_Blocks_Manager( Brizy_Admin_Blocks_Main::CP_GLOBAL ), new Brizy_Editor_UrlBuilder( Brizy_Editor_Project::get(), $block ), Brizy_Config::getCompilerUrls(), Brizy_Config::getCompilerDownloadUrl() );
-			if ( $compiler->needsCompile( $block ) ) {
-				$editorConfig = Brizy_Editor_Editor_Editor::get( Brizy_Editor_Project::get(), $block )->config( Brizy_Editor_Editor_Editor::COMPILE_CONTEXT );
-				$compiler->compilePost( $block, $editorConfig );
-			}
-
-		} catch ( Exception $e ) {
-			Brizy_Logger::instance()->exception( $e );
-		}
-		/**
-		 * @var
-		 */
 		$sectionSet = $block->getCompiledSectionManager();
 		$html    = $sectionSet->buildHtml();
 		$content = <<<HTML

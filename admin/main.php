@@ -55,7 +55,6 @@ class Brizy_Admin_Main {
 
 		add_action( 'admin_head', array( $this, 'hide_editor' ) );
 		add_action( 'admin_head', array( $this, 'custom_css_btns' ) );
-		add_action( 'brizy_global_data_updated', array( $this, 'global_data_updated' ) );
 		add_filter( 'plugin_action_links_' . BRIZY_PLUGIN_BASE, array( $this, 'plugin_action_links' ) );
 		add_action( 'in_plugin_update_message-' . BRIZY_PLUGIN_BASE, [ $this, 'version_update_warning' ] );
 
@@ -521,13 +520,6 @@ class Brizy_Admin_Main {
 		}
 
 		exit;
-	}
-
-	/**
-	 * Mark all post to be compiled next time
-	 */
-	public function global_data_updated() {
-		Brizy_Editor_Post::markAllForCompilation();
 	}
 
 	public function version_update_warning( $data ) {

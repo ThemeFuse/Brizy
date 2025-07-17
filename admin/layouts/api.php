@@ -215,7 +215,6 @@ class Brizy_Admin_Layouts_Api extends Brizy_Admin_AbstractApi
             $layout->save();
 
             do_action('brizy_layout_created', $layout);
-            do_action('brizy_global_data_updated');
 
             $this->success($layout->createResponse());
 
@@ -276,7 +275,6 @@ class Brizy_Admin_Layouts_Api extends Brizy_Admin_AbstractApi
             } else {
                 $layout->save();
                 do_action('brizy_layout_updated', $layout);
-                do_action('brizy_global_data_updated');
             }
 
             $this->success($layout->createResponse());
