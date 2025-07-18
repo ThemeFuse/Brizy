@@ -9,8 +9,8 @@ trait Brizy_Editor_Trait_Sanitize {
 		return $auid;
 	}
 
-	public function sanitizeHtml( $html ) {
-		if ( current_user_can( 'unfiltered_html' ) ) {
+	public function sanitizeHtml( $html, $capabilityIgnore=false ) {
+		if ( current_user_can( 'unfiltered_html' ) || $capabilityIgnore == true ) {
 			return $html;
 		}
 		add_filter( 'safe_style_css', function ( $styles ) {
@@ -30,7 +30,8 @@ trait Brizy_Editor_Trait_Sanitize {
 			return $preg_match;
 		}, 10, 2 );
 
-		$html = wp_kses_post( $html );
+		$allowed_tags = wp_kses_allowed_html();
+		$html = wp_kses( $html, $allowed_tags );
 		return $html;
 	}
 
