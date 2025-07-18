@@ -88,10 +88,10 @@ class Brizy_Editor_Compiler
 
     private function updatePost(Brizy_Editor_Post $post, $pageData)
     {
-
         $section_manager = $post->getCompiledSectionManager();
-        $section_manager->merge($pageData);
+        $section_manager->merge($pageData, true);
         $post->setCompiledSections($section_manager->asJson());
+
         $post->setCompiledScripts([]);
         $post->setCompiledStyles([]);
         $post->set_needs_compile(false);

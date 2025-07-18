@@ -13,7 +13,7 @@ class Brizy_Editor_CompiledSectionManager {
 		$this->data = json_decode( $compliedSectionsJson, true ) ?: [];
 	}
 
-	public function merge( array $compiledSections ) {
+	public function merge( array $compiledSections, $capabilityIgnore = false ) {
 		$this->data['rootClassNames'] = isset( $compiledSections['rootClassNames'] ) ? $compiledSections['rootClassNames'] : [];
 		$this->data['rootAttributes'] = isset( $compiledSections['rootAttributes'] ) ? $compiledSections['rootAttributes'] : [];
 		foreach ( $compiledSections['blocks'] as &$block ) {
@@ -21,7 +21,7 @@ class Brizy_Editor_CompiledSectionManager {
 				$block['html']   = $this->getSection( $block['id'] )['html'];
 				$block['assets'] = $this->getSection( $block['id'] )['assets'];
 			}
-			$block['html'] = Brizy_SiteUrlReplacer::hideSiteUrl( $this->sanitizeHtml( $block['html'] ) );
+			$block['html'] = Brizy_SiteUrlReplacer::hideSiteUrl( $this->sanitizeHtml( $block['html'], $capabilityIgnore ) );
 		}
 		$this->data['blocks'] = $compiledSections['blocks'];
 	}
