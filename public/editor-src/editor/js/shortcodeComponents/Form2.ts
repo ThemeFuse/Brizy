@@ -55,7 +55,12 @@ export default function () {
                 {
                   type: "Button",
                   value: {
-                    _styles: ["button", "submit"]
+                    _styles: ["button", "submit"],
+                    size: "custom",
+                    paddingRL: 100,
+                    paddingRLSuffix: "%",
+                    tabletPaddingRLSuffix: "px",
+                    mobilePaddingRLSuffix: "px"
                   }
                 },
                 {
@@ -121,14 +126,24 @@ export default function () {
                   value: {
                     _styles: ["button"],
                     text: "Prev",
-                    iconPosition: "left"
+                    iconPosition: "left",
+                    size: "custom",
+                    paddingRL: 100,
+                    paddingRLSuffix: "%",
+                    tabletPaddingRLSuffix: "px",
+                    mobilePaddingRLSuffix: "px"
                   }
                 },
                 {
                   type: "Button",
                   value: {
                     _styles: ["button"],
-                    text: "Next"
+                    text: "Next",
+                    size: "custom",
+                    paddingRL: 100,
+                    paddingRLSuffix: "%",
+                    tabletPaddingRLSuffix: "px",
+                    mobilePaddingRLSuffix: "px"
                   }
                 }
               ]

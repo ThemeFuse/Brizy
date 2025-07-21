@@ -1,13 +1,14 @@
-import { Gap } from "@brizy/component";
+import { Gap } from "@brizy/component/src/Flex/Gap";
 import classnames from "classnames";
 import React from "react";
 import BoxResizer from "visual/component/BoxResizer";
+import { Patch } from "visual/component/BoxResizer/types";
 import Toolbar from "visual/component/Toolbar";
-import EditorComponent from "visual/editorComponents/EditorComponent";
-import defaultValue from "./defaultValue.json";
+import { BaseSpacer } from "visual/editorComponents/Spacer/Base";
 import * as sidebarConfig from "./sidebar";
 import { style } from "./styles";
 import * as toolbarConfig from "./toolbar";
+import type { Value } from "./types";
 
 const resizerPoints = ["bottomCenter"];
 const resizerRestrictions = {
@@ -28,16 +29,10 @@ const resizerRestrictions = {
   }
 };
 
-class Spacer extends EditorComponent {
-  static defaultValue = defaultValue;
+class Spacer extends BaseSpacer {
+  handleResizerChange = (patch: Patch): void => this.patchValue(patch);
 
-  static get componentId() {
-    return "Spacer";
-  }
-
-  handleResizerChange = (patch) => this.patchValue(patch);
-
-  renderForEdit(v, vs, vd) {
+  renderForEdit(v: Value, vs: Value, vd: Value) {
     const className = classnames(
       "brz-spacer",
       this.css(
@@ -72,25 +67,6 @@ class Spacer extends EditorComponent {
         )}
       </Toolbar>
     );
-  }
-
-  renderForView(v, vs, vd) {
-    const className = classnames(
-      "brz-spacer",
-      this.css(
-        this.getComponentId(),
-        this.getId(),
-        style({
-          v,
-          vs,
-          vd,
-          store: this.getReduxStore(),
-          contexts: this.getContexts()
-        })
-      )
-    );
-
-    return <Gap className={className} />;
   }
 }
 

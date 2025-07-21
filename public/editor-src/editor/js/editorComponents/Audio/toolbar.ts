@@ -1,4 +1,3 @@
-import { ElementModel } from "visual/component/Elements/Types";
 import { GetItems } from "visual/editorComponents/EditorComponent/types";
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
 import { getColorToolbar } from "visual/utils/color";
@@ -6,13 +5,7 @@ import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
 import { getDynamicContentOption } from "visual/utils/options";
 import { HOVER, NORMAL } from "visual/utils/stateMode";
-
-export interface Value extends ElementModel {
-  bgColorHex: string;
-  bgColorPalette: string;
-  borderColorHex: string;
-  borderColorPalette: string;
-}
+import { Value } from "./types";
 
 export const getItems: GetItems<Value> = ({ v, device, context }) => {
   const dvv = (key: string) => defaultValueValue({ v, key, device });

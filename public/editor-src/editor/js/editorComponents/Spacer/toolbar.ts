@@ -1,8 +1,12 @@
+import { Params } from "visual/editorComponents/EditorComponent/types";
+import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
+import { Value } from "./types";
 
-export function getItems({ v, device }) {
-  const dvv = (key) => defaultValueValue({ v, key, device, state: "normal" });
+export function getItems({ v, device }: Params<Value>): ToolbarItemType[] {
+  const dvv = (key: string) =>
+    defaultValueValue({ v, key, device, state: "normal" });
 
   return [
     {
@@ -32,7 +36,8 @@ export function getItems({ v, device }) {
     {
       id: "horizontalAlign",
       type: "toggle",
-      disabled: true
+      disabled: true,
+      choices: []
     }
   ];
 }

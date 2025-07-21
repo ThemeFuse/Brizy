@@ -143,6 +143,8 @@ export * from "./cssStyleElementWPPostContent";
 //WP Title
 export * from "./cssStyleElementWPTitle";
 export * from "./cssStyleElementWrapper";
+// Element Audio
+export * from "./cssStyleElementAudio";
 // Fill
 export * from "./cssStyleFill";
 // Filter
@@ -219,3 +221,6 @@ export * from "./cssStyleElementMinistryEventCalendar";
 export * from "./cssStyleElementMinistryEventDetail";
 // Group Slider
 export * from "./cssStyleElementMinistryGroupSlider";
+
+// Tooltip
+export * from "./cssStyleOptionTooltip";

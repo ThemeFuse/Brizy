@@ -80,6 +80,8 @@ export function cssStyleElementButtonSize({
 
   const paddingTB = dvv(capByPrefix(prefix, "paddingTB"));
   const paddingRL = dvv(capByPrefix(prefix, "paddingRL"));
+  const widthSuffix = dvv("paddingRLSuffix");
+  const isPercentWidth = widthSuffix === "%";
 
   const size = getSize(dvv(capByPrefix(prefix, "size")));
   const fillType = getFillType(dvv(capByPrefix(prefix, "fillType")));
@@ -87,16 +89,22 @@ export function cssStyleElementButtonSize({
   if (!size) {
     return "";
   }
+  const isCustomSize = size === "custom";
 
   const { width: _width = 0, height: _height = 0 } = getButtonSizes(size) ?? {};
 
-  const width = size === "custom" ? paddingRL : _width;
-  const height = size === "custom" ? paddingTB : _height;
+  const widthPx = isCustomSize ? paddingRL : _width;
+  const height = isCustomSize ? paddingTB : _height;
+
+  const paddingWidth = isPercentWidth ? "0" : widthPx;
+  const percentWidth = isPercentWidth
+    ? `width:${paddingRL}${widthSuffix};`
+    : "width: auto;";
 
   switch (fillType) {
     case "filled":
     case "outline":
-      return `padding: ${height}px ${width}px;`;
+      return `padding: ${height}px ${paddingWidth}px; ${percentWidth}`;
     case "default":
       return `padding: ${height}px 0px;`;
     case undefined:

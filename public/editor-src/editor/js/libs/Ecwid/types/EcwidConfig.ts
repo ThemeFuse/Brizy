@@ -14,7 +14,7 @@ export type ContentRoutes =
   | `${string}/cart`
   | `${string}/thank-you`
   | `${string}/account/favorites`
-  | "/";
+  | `${string}/search`;
 
 export interface EcwidConfig {
   baseUrl?: string;

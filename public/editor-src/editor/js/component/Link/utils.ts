@@ -126,7 +126,7 @@ export const getHref = (
     case "page":
     case "lightBox":
     case "external": {
-      href = _href;
+      href = _href || "#";
       break;
     }
     case "story":

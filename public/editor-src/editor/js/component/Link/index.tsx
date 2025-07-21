@@ -32,6 +32,7 @@ type Props = PropsWithChildren<
     id?: string;
     draggable?: boolean;
     ariaLabel?: string;
+    onClick?: VoidFunction;
   }
 >;
 
@@ -48,7 +49,8 @@ const _Link = (
     attr = {},
     id = "",
     draggable,
-    ariaLabel
+    ariaLabel,
+    onClick
   }: Props,
   ref: Ref<HTMLAnchorElement>
 ): ReactElement => {
@@ -97,6 +99,7 @@ const _Link = (
       {...(id && { id })}
       {...(ariaLabel && { "aria-label": ariaLabel })}
       draggable={draggable}
+      onClick={onClick}
     >
       {children}
     </a>

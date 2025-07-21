@@ -1,34 +1,38 @@
 import classnames from "classnames";
-import React from "react";
+import React, { JSX } from "react";
 import CustomCSS from "visual/component/CustomCSS";
 import FacebookPlugin from "visual/component/Facebook";
 import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
+import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import { makePlaceholder } from "visual/utils/dynamicContent";
 import { defaultValueValue } from "visual/utils/onChange";
 import { attachRefs } from "visual/utils/react";
 import { Wrapper } from "../tools/Wrapper";
+import { Deprecated } from "./Deprecated";
 import defaultValue from "./defaultValue.json";
 import * as sidebarConfig from "./sidebar";
 import { style } from "./styles";
 import * as toolbarConfig from "./toolbar";
+import type { AppData, PageTabs, Value } from "./types";
+import { toolbarConfigEmpty, toolbarExtendFilter } from "./utils";
 
-class Facebook extends EditorComponent {
+class Facebook extends EditorComponent<Value> {
   static defaultValue = defaultValue;
   static experimentalDynamicContent = true;
 
-  static get componentId() {
-    return "Facebook";
+  static get componentId(): ElementTypes.Facebook {
+    return ElementTypes.Facebook;
   }
 
-  dvv = (key) => {
+  dvv = (key: string): unknown => {
     const v = this.getValue();
     const device = this.getDeviceMode();
 
     return defaultValueValue({ v, key, device });
   };
 
-  getAppData() {
+  getAppData(): AppData {
     return {
       appId: 113869198637480,
       href: makePlaceholder({
@@ -40,7 +44,7 @@ class Facebook extends EditorComponent {
     };
   }
 
-  tabs = (v) => {
+  tabs = (v: Value): PageTabs[] | string => {
     const { pageTabs } = v;
 
     try {
@@ -50,7 +54,19 @@ class Facebook extends EditorComponent {
     }
   };
 
-  renderForEdit(v, vs, vd) {
+  renderGroup(): JSX.Element {
+    return (
+      <Toolbar
+        {...this.makeToolbarPropsFromConfig2(toolbarConfigEmpty, undefined, {
+          parentItemsFilter: toolbarExtendFilter
+        })}
+      >
+        {({ ref }) => <Deprecated ref={ref} />}
+      </Toolbar>
+    );
+  }
+
+  renderForEdit(v: Value, vs: Value, vd: Value): JSX.Element {
     const {
       className: _className,
       facebookType,
@@ -74,14 +90,13 @@ class Facebook extends EditorComponent {
       smallHeader,
       hideCover,
       showFacepile,
-      facebookGroupHref,
-      skin,
-      showSocialContext,
-      showMetaData,
       customCSS
     } = v;
 
-    const width = this.dvv("width");
+    if (facebookType === "group") {
+      return this.renderGroup();
+    }
+
     const pageWidth = this.dvv("pageWidth");
 
     const className = classnames(
@@ -163,17 +178,6 @@ class Facebook extends EditorComponent {
         showFacepile: showFacepile === "on",
         adaptContainerWidth: true,
         lang: appData.lang
-      },
-      group: {
-        width,
-        href:
-          facebookGroupHref === ""
-            ? "https://www.facebook.com/groups/669915249871846"
-            : facebookGroupHref,
-        skin,
-        showSocialContext: showSocialContext === "on",
-        showMetaData: showMetaData === "on",
-        lang: appData.lang
       }
     };
 
@@ -195,8 +199,8 @@ class Facebook extends EditorComponent {
                 <FacebookPlugin
                   renderContext={this.props.renderContext}
                   appId={appData.appId}
-                  type={typeData[facebookType]}
-                  data={data[facebookType]}
+                  type={typeData[facebookType as keyof typeof typeData]}
+                  data={data[facebookType as keyof typeof data]}
                 />
               </Wrapper>
             )}
@@ -206,7 +210,7 @@ class Facebook extends EditorComponent {
     );
   }
 
-  renderForView(v, vs, vd) {
+  renderForView(v: Value, vs: Value, vd: Value): JSX.Element | null {
     const {
       className: _className,
       facebookType,
@@ -230,14 +234,13 @@ class Facebook extends EditorComponent {
       smallHeader,
       hideCover,
       showFacepile,
-      facebookGroupHref,
-      showSocialContext,
-      showMetaData,
-      skin,
       customCSS
     } = v;
 
-    const width = this.dvv("width");
+    if (facebookType === "group") {
+      return null;
+    }
+
     const pageWidth = this.dvv("pageWidth");
 
     const className = classnames(
@@ -315,17 +318,6 @@ class Facebook extends EditorComponent {
             ? "https://www.facebook.com/techcrunch/"
             : facebookPageHref,
         "data-lang": appData.lang
-      },
-      group: {
-        "data-width": width,
-        "data-href":
-          facebookGroupHref === ""
-            ? "https://www.facebook.com/groups/669915249871846"
-            : facebookGroupHref,
-        "data-show-social-context": showSocialContext === "on",
-        "data-show-metadata": showMetaData === "on",
-        "data-skin": skin,
-        "data-lang": appData.lang
       }
     };
 
@@ -342,8 +334,8 @@ class Facebook extends EditorComponent {
           <FacebookPlugin
             renderContext={this.props.renderContext}
             appId={appData.appId}
-            type={typeData[facebookType]}
-            data={data[facebookType]}
+            type={typeData[facebookType as keyof typeof typeData]}
+            data={data[facebookType as keyof typeof data]}
           />
         </div>
       </CustomCSS>

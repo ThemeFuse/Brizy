@@ -33,9 +33,11 @@ $btn-default-color: #fff;
   &.focus {
     text-decoration: none;
   }
+
   &:focus {
     text-decoration: none;
   }
+
   .brz-span {
     display: block;
   }
@@ -56,4 +58,12 @@ $btn-default-color: #fff;
   .brz-wrapper-clone__item {
     padding: 10px;
   }
+}
+
+.brz-btn:focus-visible {
+  outline: 2px solid blue !important;
+}
+
+.brz-a:focus-visible, .brz-a:focus-visible > .brz-lottie-anim {
+  outline: 2px solid blue !important;
 }

@@ -61,10 +61,10 @@ export function styleWrapperAudio(
         "cssStyleBorderRadius"
       ]
     },
-    ".brz &&:hover > .brz-audio-controls > .brz-audio-current-time": {
+    ".brz &&:hover .brz-audio-controls > .brz-audio-current-time": {
       standart: ["cssStyleColor"]
     },
-    ".brz &&:hover > .brz-audio-controls > .brz-audio-total-time": {
+    ".brz &&:hover .brz-audio-controls > .brz-audio-total-time": {
       standart: ["cssStyleColor"]
     },
     ".brz && .brz-audio-slider:before": {
@@ -73,13 +73,45 @@ export function styleWrapperAudio(
     ".brz &&:hover .brz-audio-slider:before": {
       standart: ["cssStyleBg2Color"]
     },
-    ".brz &&, .brz && > .brz-audio-controls > .brz-audio-total-time, .brz && .brz-audio-slider:before":
+    ".brz &&, .brz && .brz-audio-controls > .brz-audio-total-time, .brz && .brz-audio-slider:before":
       {
         standart: [
           "cssStyleHoverTransition",
           "cssStylePropertyHoverTransitionColor"
         ]
-      }
+      },
+    ".brz && .brz-audio-title": {
+      standart: [
+        "cssStyleElementAudioTitleTypography",
+        "cssStyleElementAudioTitleTextAlign",
+        "cssStyleElementAudioTitleMargin"
+      ]
+    },
+    ".brz && .brz-audio-title:hover": {
+      standart: [
+        "cssStyleElementAudioTitleColor",
+        "cssStyleElementAudioTitleStroke",
+        "cssStyleElementAudioTitleShadow",
+        "cssStyleHoverTransition"
+      ]
+    },
+    ".brz && .brz-audio-caption": {
+      standart: [
+        "cssStyleElementAudioCaptionTypography",
+        "cssStyleElementAudioCaptionTextAlign",
+        "cssStyleElementAudioTitlePadding",
+        "cssStyleElementAudioTitleBorderRadius"
+      ]
+    },
+    ".brz && .brz-audio-caption:hover": {
+      standart: [
+        "cssStyleElementAudioCaptionColor",
+        "cssStyleElementAudioCaptionBg",
+        "cssStyleElementAudioCaptionShadow",
+        "cssStyleElementAudioCaptionBorder",
+        "cssStyleHoverTransition"
+      ]
+    }
   };
   return renderStyles({ ...data, styles });
 }

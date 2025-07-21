@@ -31,7 +31,17 @@
     "showOriginalImage": "off",
 
     "offsetX": 0,
-    "offsetY": 0
+    "offsetY": 0,
+
+    "enableTooltip": "off",
+    "tooltipTriggerClick": "off",
+    "tooltipText": "Tooltip text goes here",
+    "tooltipHorizontalAlign": "center",
+
+    "tooltipPlacement": "top",
+
+    "tooltipOffset": 10,
+    "tooltipOffsetSuffix": "px"
   },
 
   "link": {
@@ -93,6 +103,10 @@
     "tempBorderColorPalette": "",
 
     "tempBorderStyle": "solid",
+
+    "families": {
+      "tooltipTypographyFontFamily": "lato"
+    },
 
     "borderWidthType": "grouped",
     "borderWidth": 0,
@@ -212,6 +226,89 @@
     "hoverName": "none",
     "hoverDuration": 600,
     "hoverDelay": 0,
-    "hoverInfiniteAnimation": true
+    "hoverInfiniteAnimation": true,
+
+    "tooltipWidth": 200,
+    "tooltipWidthSuffix": "px",
+
+    "tooltipBorderRadius": 4,
+    "tooltipBorderRadiusSuffix": "px",
+    "tooltipBorderRadiusType": "grouped",
+    "tooltipBorderTopLeftRadius": 4,
+    "tooltipBorderTopLeftRadiusSuffix": "px",
+    "tooltipBorderTopRightRadius": 4,
+    "tooltipBorderTopRightRadiusSuffix": "px",
+    "tooltipBorderBottomRightRadius": 4,
+    "tooltipBorderBottomRightRadiusSuffix": "px",
+    "tooltipBorderBottomLeftRadius": 4,
+    "tooltipBorderBottomLeftRadiusSuffix": "px",
+
+    "tooltipBgColorHex": "#03080f",
+    "tooltipBgColorOpacity": 1,
+    "tooltipBgColorPalette": "",
+    "tooltipBgColorType": "solid",
+
+    "tooltipGradientColorHex": "#0527CA",
+    "tooltipGradientColorOpacity": 1,
+    "tooltipGradientColorPalette": "",
+    "tooltipGradientType": "linear",
+    "tooltipGradientStartPointer": 0,
+    "tooltipGradientFinishPointer": 100,
+    "tooltipGradientActivePointer": "startPointer",
+    "tooltipGradientLinearDegree": 90,
+    "tooltipGradientRadialDegree": 90,
+
+    "tooltipTextColorHex": "#ffffff",
+    "tooltipTextColorOpacity": 1,
+    "tooltipTextColorPalette": "",
+
+    "tooltipBorderStyle": "none",
+    "tooltipBorderWidth": 0,
+    "tooltipBorderWidthType": "grouped",
+    "tooltipBorderTopWidth": 0,
+    "tooltipBorderRightWidth": 0,
+    "tooltipBorderBottomWidth": 0,
+    "tooltipBorderLeftWidth": 0,
+    "tooltipBorderColorHex": "#000000",
+    "tooltipBorderColorOpacity": 1,
+    "tooltipBorderColorPalette": "",
+
+    "tooltipBoxShadow": 0,
+    "tooltipBoxShadowColorHex": "#000000",
+    "tooltipBoxShadowColorPalette": "",
+    "tooltipBoxShadowColorOpacity": 0,
+    "tooltipBoxShadowBlur": 0,
+    "tooltipBoxShadowSpread": 0,
+    "tooltipBoxShadowVertical": 0,
+    "tooltipBoxShadowHorizontal": 0,
+
+    "tooltipTypographyFontStyle": "custom",
+    "tooltipTypographyFontFamilyType": "google",
+    "tooltipTypographyFontSize": 16,
+    "tooltipTypographyFontSizeSuffix": "px",
+    "tooltipTypographyFontWeight": 400,
+    "tooltipTypographyLetterSpacing": 0,
+    "tooltipTypographyLineHeight": 1.3,
+    "tooltipTypographyVariableFontWeight": 400,
+    "tooltipTypographyFontWidth": 100,
+    "tooltipTypographyFontSoftness": 0,
+    "tooltipTypographyBold": false,
+    "tooltipTypographyItalic": false,
+    "tooltipTypographyUnderline": false,
+    "tooltipTypographyStrike": false,
+    "tooltipTypographyUppercase": false,
+    "tooltipTypographyLowercase" : false,
+
+    "tooltipPaddingType": "grouped",
+    "tooltipPadding": 10,
+    "tooltipPaddingSuffix": "px",
+    "tooltipPaddingTop": 10,
+    "tooltipPaddingTopSuffix": "px",
+    "tooltipPaddingRight": 10,
+    "tooltipPaddingRightSuffix": "px",
+    "tooltipPaddingBottom": 10,
+    "tooltipPaddingBottomSuffix": "px",
+    "tooltipPaddingLeft": 10,
+    "tooltipPaddingLeftSuffix": "px"
   }
 }

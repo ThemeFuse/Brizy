@@ -5,7 +5,7 @@ import { PortalToolbarProps } from "./PortalToolbar/types";
 
 export type ToolbarExtendProps = Pick<
   PortalToolbarProps,
-  "position" | "onEscape"
+  "position" | "onEscape" | "placement"
 >;
 export type ToolbarExtendContextType = ToolbarExtendProps | undefined;
 
@@ -15,12 +15,15 @@ export const ToolbarExtendContext =
 export const ToolbarExtend: FCC<ToolbarExtendProps> = ({
   children,
   position,
-  onEscape
+  onEscape,
+  placement
 }) => {
   const parentToolbarExtendProps = useContext(ToolbarExtendContext);
   const props = useMemo((): ToolbarExtendProps => {
-    return defaults({ position, onEscape }, [parentToolbarExtendProps]);
-  }, [position, onEscape, parentToolbarExtendProps]);
+    return defaults({ position, onEscape, placement }, [
+      parentToolbarExtendProps
+    ]);
+  }, [position, onEscape, placement, parentToolbarExtendProps]);
 
   return (
     <ToolbarExtendContext.Provider value={props}>

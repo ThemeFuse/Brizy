@@ -122,7 +122,7 @@ export function styleRow(data: DynamicStylesProps<ElementModel>): OutputStyle {
         standart: ["cssStyleFilter"]
       },
     [`.brz &&:hover > ${innerDivFromMotion}${hoverContainer}.brz-row`]: {
-      standart: ["cssStyleBorderTransparentColor"]
+      standart: ["cssStyleBorderTransparentColor", "cssStyleRowReverseColumn"]
     },
     [`.brz && > ${innerDivFromMotion}${hoverContainer}.brz-row, .brz && > ${innerDivFromMotion}${hoverContainer}.brz-bg > .brz-bg-video, .brz && > ${innerDivFromMotion}${hoverContainer}.brz-bg, .brz && > ${innerDivFromMotion}${hoverContainer}.brz-bg > .brz-bg-image, .brz && > ${innerDivFromMotion}${hoverContainer}.brz-bg > .brz-bg-color`]:
       {

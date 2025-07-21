@@ -1,11 +1,16 @@
 import $ from "jquery";
 import { initHoverAnimation } from "visual/libs/hoveranimation/utils";
+import {
+  attachSliderControls,
+  makePausePlayItem
+} from "../../utils/export/slider";
 
 const observer = new IntersectionObserver(
   (entries) => {
     entries.forEach((entry) => {
       const $slick = $(entry.target);
-      if (entry.isIntersecting) {
+      const isPaused = $slick.attr("data-slider-paused") === "true";
+      if (entry.isIntersecting && !isPaused) {
         $slick.slick("slickPlay");
       } else {
         $slick.slick("slickPause");
@@ -28,6 +33,16 @@ export default function ($node) {
     };
   };
 
+  const handleClickPlay = ($this) => {
+    $this.slick("slickPlay");
+    $this.attr("data-slider-paused", "false");
+  };
+
+  const handleClickPause = ($this) => {
+    $this.slick("slickPause");
+    $this.attr("data-slider-paused", "true");
+  };
+
   $node.find(".brz-carousel__slider").each(function () {
     const _this = this;
     const $this = $(this);
@@ -44,6 +59,7 @@ export default function ($node) {
     const transitionSpeed = data.transitionSpeed;
     const swipe = data.swipe;
     const responsive = JSON.parse(decodeURIComponent(data.responsive));
+    const playPauseItem = makePausePlayItem(_this);
 
     $this.on("init", function () {
       initHoverAnimation(_this);
@@ -68,6 +84,17 @@ export default function ($node) {
           }
         });
       });
+
+      const $dots = $this.find(".brz-slick-slider__dots");
+      if ($dots.length && playPauseItem) {
+        $dots.append(playPauseItem);
+        attachSliderControls(
+          $this,
+          playPauseItem,
+          handleClickPause,
+          handleClickPlay
+        );
+      }
     });
 
     const getArrow = makeArrow(_this);

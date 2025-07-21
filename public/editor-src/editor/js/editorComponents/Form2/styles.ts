@@ -14,7 +14,13 @@ export function styleForm(data: DynamicStylesProps<Value>): OutputStyle {
     ".brz && .brz-form": {
       standart: ["cssStyleElementForm2Margin"]
     },
-    ".brz && .brz-forms2__item,.brz && .brz-form-ms-buttons": {
+    ".brz && .brz-form-ms-buttons": {
+      standart: [
+        "cssStyleElementForm2Padding",
+        "cssStyleElementForm2MSButtonsSpacing"
+      ]
+    },
+    ".brz && .brz-forms2__item": {
       standart: ["cssStyleElementForm2Padding"]
     },
     ".brz && .brz-forms2__item-button": {
@@ -26,7 +32,11 @@ export function styleForm(data: DynamicStylesProps<Value>): OutputStyle {
       },
     ".brz && .brz-form-ms-indicators": {
       standart: ["cssStyleElementForm2MSProgressMargin"]
-    }
+    },
+    ".brz && .brz-form-ms-next-button, .brz && .brz-form-ms-prev-button, .brz && .brz-form-ms-buttons .brz-forms2__item-button":
+      {
+        standart: ["cssStyleElementForm2MSButtonsAlign"]
+      }
   };
 
   return renderStyles({ ...data, styles });

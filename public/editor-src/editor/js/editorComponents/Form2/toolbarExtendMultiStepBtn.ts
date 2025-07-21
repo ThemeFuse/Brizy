@@ -8,6 +8,39 @@ export const getItems: GetItems<Value> = ({ editorMode }) => {
 
   return [
     {
+      id: "toolbarCurrentShortcode",
+      type: "popover",
+      config: {
+        icon: "nc-button",
+        title: t("Button")
+      },
+      position: 20,
+      options: [
+        {
+          id: "currentShortcodeTabs",
+          type: "tabs",
+          tabs: [
+            {
+              id: "currentShortcodeTab",
+              label: t("Button"),
+              options: [
+                {
+                  id: "msButtonsSpacing",
+                  type: "slider",
+                  label: t("Spacing"),
+                  config: {
+                    min: 0,
+                    max: 100,
+                    units: [{ title: "px", value: "px" }]
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
       id: "toolbarSettings",
       type: "popover",
       config: {
@@ -46,8 +79,18 @@ export const getItems: GetItems<Value> = ({ editorMode }) => {
       disabled: true
     },
     {
-      id: "advancedSettings",
+      choices: [
+        { icon: "nc-text-align-left", title: t("Align"), value: "left" },
+        { icon: "nc-text-align-center", title: t("Align"), value: "center" },
+        { icon: "nc-text-align-right", title: t("Align"), value: "right" }
+      ],
+      id: "multiStepBtnHorizontalAlign",
+      position: 100,
+      type: "toggle"
+    },
+    {
       type: "advancedSettings",
+      id: "advancedSettings",
       disabled: _isStory
     }
   ];

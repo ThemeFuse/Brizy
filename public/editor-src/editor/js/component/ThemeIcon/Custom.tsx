@@ -13,12 +13,9 @@ export const CustomIcon: FCC<Props> = ({ src, className, ariaLabel }) => {
     [src]
   );
 
-  return (
-    <div
-      className={_className}
-      style={style}
-      role="img"
-      {...(ariaLabel && { "aria-label": ariaLabel })}
-    />
-  );
+  const accessibilityProps = ariaLabel
+    ? { role: "img", "aria-label": ariaLabel }
+    : { "aria-hidden": true }; // hide if it's decorative
+
+  return <div className={_className} style={style} {...accessibilityProps} />;
 };

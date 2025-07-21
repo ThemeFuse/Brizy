@@ -1,3 +1,4 @@
+import { Obj } from "@brizy/readers";
 import classnames from "classnames";
 import React, {
   ReactElement,
@@ -32,7 +33,8 @@ import { t } from "visual/utils/i18n";
 import {
   allowedExtensions,
   toInitialStructure,
-  toUploadData
+  toUploadData,
+  valueToItems
 } from "visual/utils/options/Gallery/utils";
 import { reducer } from "./reducer";
 import * as Actions from "./types/Actions";
@@ -40,7 +42,7 @@ import * as Image from "./types/Image";
 import * as Item from "./types/Item";
 
 export type Value<I extends Image.Image> = Array<Image.Image | I>;
-type Items = Item.Item<number>[];
+export type Items = Item.Item<number>[];
 
 export type Props<I extends Image.Image> = Option.Props<Value<I>> & {
   config?: {
@@ -57,12 +59,24 @@ export function Gallery<I extends Image.Image>({
   const [isLoading, setIsLoading] = useState(false);
   const [items, dispatch] = useReducer<Reducer<Items, Actions.Actions>>(
     reducer,
-    value.map((payload, i) => {
-      // generating indexes from 1 because dnd-kit doesn't work with zero index element
-      const idx = +i + 1;
-      return Item.thumbnail(idx, payload);
-    })
+    valueToItems(value)
   );
+
+  useEffect(() => {
+    if (
+      items.length === value.length &&
+      items.some((item) => Obj.isObject(item.payload) && !item.payload.id)
+    ) {
+      const newItems = valueToItems(value);
+
+      if (
+        newItems.every((item) => Obj.isObject(item.payload) && item.payload.id)
+      ) {
+        dispatch(Actions.set(newItems));
+      }
+    }
+  }, [value, items]);
+
   const globalConfig = useConfig();
   const items$ = useRef(new BehaviorSubject<Items>(items));
   const value$ = useRef(new BehaviorSubject<Value<I>>(value));
@@ -110,6 +124,7 @@ export function Gallery<I extends Image.Image>({
 
   useEffect(() => value$.current.next(value), [value]);
   useEffect(() => items$.current.next(items), [items]);
+
   useEffect(() => {
     const onUpload$ = items$.current
       .pipe(

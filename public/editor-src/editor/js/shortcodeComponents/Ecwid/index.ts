@@ -7,8 +7,8 @@ import getFavorites from "./Favorites";
 import getMyAccount from "./MyAccount";
 import getPrice from "./Price";
 import getProduct from "./Product";
+import getSearch from "./Search";
 import getShoppingBag from "./ShoppingBag";
-import getSearch from "./Search"
 
 const pro = (c: ConfigCommon): boolean => getDaysLeft(c) <= 0;
 

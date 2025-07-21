@@ -1,4 +1,5 @@
 import $ from "jquery";
+import { handleLightBoxZoom } from "visual/utils/export/lightbox";
 
 export default function ($node: JQuery) {
   const node = $node.get(0);
@@ -20,7 +21,10 @@ export default function ($node: JQuery) {
           .magnificPopup({
             delegate: "a",
             type: "image",
-            closeOnContentClick: true
+            closeOnContentClick: true,
+            callbacks: {
+              open: handleLightBoxZoom
+            }
           })
           .magnificPopup("open");
       }

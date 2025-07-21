@@ -6,7 +6,7 @@ import { getDynamicContentOption } from "visual/utils/options";
 import { ResponsiveMode } from "visual/utils/responsiveMode";
 import { State } from "visual/utils/stateMode";
 import { EditorComponentContextValue } from "../EditorComponent/EditorComponentContext";
-import { Value } from "./index";
+import { Value } from "./types";
 
 export function getItems({
   v,
