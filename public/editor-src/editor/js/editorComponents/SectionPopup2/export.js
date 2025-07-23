@@ -232,7 +232,7 @@ function _parsePopupData($popup) {
     otherPopups: otherPopups,
     specificPopup: specificPopup,
 
-    triggerOnce: triggerOnce === "true",
+    triggerOnce: triggerOnce === "true" || triggerOnce === "1",
     popupId: popupId
   };
 
