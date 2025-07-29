@@ -349,7 +349,8 @@ const init = (item: HTMLElement, root: HTMLElement): void => {
   if (reference) {
     const popperSettings = {
       placement: getPopperPlacement(settings, device),
-      modifiers: getPopperModifiers(settings, device)
+      modifiers: getPopperModifiers(settings, device),
+      strategy: "fixed" as const
     };
     const popper: PopperInstance = CreatePopper(
       reference,

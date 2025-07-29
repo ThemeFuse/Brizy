@@ -1,10 +1,1 @@
-[
-  ".brz-image__gallery",
-  ".brz-posts--masonry",
-  ".brz-menu__mmenu",
-  ".brz-mega-menu__portal",
-  ".brz-menu__sub-menu",
-  ".brz-menu__preview",
-  ".brz-lottie",
-  ".brz-chart"
-]
+[".brz-image__gallery",".brz-posts--masonry",".brz-menu__mmenu",".brz-mega-menu__portal",".brz-menu__sub-menu",".brz-menu__preview",".brz-tooltip",".brz-lottie",".brz-chart"]

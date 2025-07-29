@@ -2,13 +2,15 @@ import { WP } from "visual/global/Config";
 import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { getFileFormat } from "./utils";
 
+export const splitFile = (file: string): string[] => file.split("|||");
+
 export const customFileUrl = (file: string, config: ConfigCommon) => {
   if (!file) return null;
 
   const { fileUrl } = config.api?.customFile ?? {};
 
   if (fileUrl) {
-    const [uid, filename] = file.split("|||");
+    const [uid, filename] = splitFile(file);
     const isWP = !!(config as WP).wp;
 
     if (isWP) {

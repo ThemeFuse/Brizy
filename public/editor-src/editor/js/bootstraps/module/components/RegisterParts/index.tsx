@@ -2,15 +2,23 @@ import { Component } from "react";
 import getEditorComponents, {
   NotFoundComponent
 } from "visual/editorComponents";
+import { Container } from "visual/editorComponents/ThirdParty/Container";
 import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import Editor from "visual/global/Editor";
+import { addFilter } from "visual/utils/filters";
 import { Props } from "./types";
 
 class RegisterParts extends Component<Props> {
   constructor(props: Props) {
     super(props);
     this.register(props.config);
+
+    addFilter("getEditorElements", this.getEditorElements);
   }
+
+  getEditorElements = () => {
+    return { Container };
+  };
 
   register(config: ConfigCommon) {
     // components

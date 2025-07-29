@@ -51,6 +51,12 @@
     .brz-section__content {
       height: 100%;
     }
+
+    .brz-slick-slider__pause{
+      display: inline-flex;
+      font-size: 24px;
+      cursor: pointer;
+    }
   }
 
   // Slider
@@ -269,6 +275,8 @@
     .brz-story-linked,
     .brz-forms2,
     .brz-embed-code,
+    .brz-icon__container,
+    .brz-image,
     .brz-rich-text a {
       pointer-events: initial;
     }

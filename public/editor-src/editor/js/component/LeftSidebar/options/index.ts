@@ -77,7 +77,11 @@ const getItems = ({
   const helpIcon = config?.ui?.help?.showIcon;
 
   return {
-    [LeftSidebarOptionsIds.cms]: custom(leftSidebar[LeftSidebarOptionsIds.cms]),
+    [LeftSidebarOptionsIds.cms]: custom({
+      // TODO: Temporarily fix, will be fixed here https://github.com/bagrinsergiu/blox-editor/issues/29257
+      id: LeftSidebarOptionsIds.cms,
+      ...leftSidebar[LeftSidebarOptionsIds.cms]
+    }),
     [LeftSidebarOptionsIds.addElements]: getBaseDrawer,
     [LeftSidebarOptionsIds.reorderBlock]: getBlocksSortable({
       helpIcon,
@@ -101,6 +105,7 @@ const getItems = ({
       disabled: pageSettingsOptions.length === 0,
       options: pageSettingsOptions
     },
+    [LeftSidebarOptionsIds.custom]: custom,
     [LeftSidebarOptionsIds.more]: {
       id: LeftSidebarOptionsIds.more,
       icon: "nc-back",
@@ -120,7 +125,7 @@ const getTabsOrder = (
   const tabs: Option[] = [];
   const shortcodes = getShortcodeComponents(config);
 
-  tabOrder.forEach(({ type, id, title, icon }) => {
+  tabOrder.forEach(({ type, id, title, icon, ...rest }) => {
     const filteredShortcodes =
       shortcodes.find((shortcode) => shortcode.tabId === id)?.shortcodes ?? {};
 
@@ -133,6 +138,7 @@ const getTabsOrder = (
         id,
         title,
         icon,
+        ...rest,
         shortcodes: filteredShortcodes
       });
     } else {

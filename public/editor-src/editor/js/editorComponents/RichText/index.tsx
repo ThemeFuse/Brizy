@@ -960,7 +960,9 @@ class RichText extends EditorComponent<Value, Record<string, unknown>, State> {
                           </BoxResizer>
                         ) : (
                           // div is needed as an attachment for context menu in dynamic content case
-                          <div ref={contextMenuRef}>{content}</div>
+                          <div ref={contextMenuRef} className={"brz-rich-text-context-wrapper"}>
+                            {content}
+                          </div>
                         )
                       }
                     </ContextMenu>

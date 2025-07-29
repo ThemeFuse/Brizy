@@ -1,6 +1,7 @@
 import { DynamicStylesProps } from "visual/types";
 import { renderStyles } from "visual/utils/cssStyle";
 import { OutputStyle, Styles } from "visual/utils/cssStyle/types";
+import { getTooltipStyles } from "../tools/Tooltip/styles";
 import { Value } from "./types";
 
 export function style(data: DynamicStylesProps<Value>): OutputStyle {
@@ -46,5 +47,10 @@ export function styleWrapper(data: DynamicStylesProps<Value>): OutputStyle {
       standart: ["cssStyleElementIconSizeStory"]
     }
   };
+  return renderStyles({ ...data, styles });
+}
+
+export function styleTooltip(data: DynamicStylesProps<Value>): OutputStyle {
+  const styles = getTooltipStyles();
   return renderStyles({ ...data, styles });
 }

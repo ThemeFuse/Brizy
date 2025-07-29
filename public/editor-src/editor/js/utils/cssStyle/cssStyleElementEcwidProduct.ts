@@ -411,6 +411,23 @@ export function cssStyleElementEcwidProductCheckboxSize({
   }
 }
 
+export function cssStyleElementEcwidProductCheckBoxCheckmark({
+  v,
+  device,
+  state,
+  getConfig,
+  store
+}: CSSValue): string {
+  return cssStyleColor({
+    v,
+    device,
+    state,
+    getConfig,
+    store,
+    prefix: "checkbox2CheckmarkColor"
+  });
+}
+
 export function cssStyleElementEcwidProductCheckboxPadding({
   v,
   device,

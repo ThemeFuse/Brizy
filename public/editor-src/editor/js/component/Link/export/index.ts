@@ -1,3 +1,4 @@
+import { makeDataAttrString } from "visual/utils/i18n/attribute";
 import { easeInOutQuad, toSamePage } from "./utils";
 
 const scrollTo = (config: {
@@ -126,6 +127,39 @@ export default function ($node: JQuery): void {
       }
     }
   };
+
+  const anchorBlockSelector = ".brz-anchor, .link--anchor, .link--external";
+
+  root.querySelectorAll(anchorBlockSelector).forEach((anchor) => {
+    const href = anchor.getAttribute("href");
+    const hrefValue = href?.split("#")[1];
+
+    if (!hrefValue) {
+      return;
+    }
+
+    // For each anchor:
+    // 1. If there's a section on the page with an id matching the href value, do nothing.
+    // 2. If no matching id is found, check if a section has a matching data-brz-id.
+    //    If so, get the anchorName from that section and update the href to use it
+    //    so that scrolling to the section works correctly.
+
+    const existingSection = !!document.getElementById(hrefValue);
+
+    if (existingSection) {
+      return;
+    }
+
+    const anchorSection = root.querySelector(
+      makeDataAttrString({ name: "id", value: `'${hrefValue}'` })
+    );
+
+    if (anchorSection) {
+      const id = anchorSection.getAttribute("id");
+
+      anchor.setAttribute("href", `#${id}`);
+    }
+  });
 
   window.addEventListener("load", getLastPosition);
   window.addEventListener("hashchange", handleHashChange);
