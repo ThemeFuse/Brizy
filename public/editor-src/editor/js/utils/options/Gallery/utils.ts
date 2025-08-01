@@ -1,8 +1,10 @@
 import { mPipe, optional } from "fp-utilities";
+import { Items, Value } from "visual/component/Options/types/dev/Gallery";
 import {
   AddImageData,
   Image
 } from "visual/component/Options/types/dev/Gallery/types/Image";
+import { thumbnail } from "visual/component/Options/types/dev/Gallery/types/Item";
 import { UploadData } from "visual/component/Options/types/dev/Gallery/types/UploadData";
 import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { SizeType } from "visual/global/Config/types/configs/common";
@@ -59,3 +61,10 @@ export const fromRecord = readWithParser<Record<any, any>, Image>({
   width: mPipe(prop("width"), Num.read),
   height: mPipe(prop("height"), Num.read)
 });
+
+export const valueToItems = (value: Value<Image>): Items =>
+  value.map((payload, i) => {
+    // generating indexes from 1 because dnd-kit doesn't work with zero index element
+    const idx = +i + 1;
+    return thumbnail(idx, payload);
+  });

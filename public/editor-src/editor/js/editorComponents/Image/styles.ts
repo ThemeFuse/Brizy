@@ -1,4 +1,6 @@
 import { ElementModel, ElementProps } from "visual/component/Elements/Types";
+import { Value } from "visual/editorComponents/Icon/types";
+import { getTooltipStyles } from "visual/editorComponents/tools/Tooltip/styles";
 import { DynamicStylesProps } from "visual/types";
 import { renderStyles } from "visual/utils/cssStyle";
 import { OutputStyle, Styles } from "visual/utils/cssStyle/types";
@@ -212,6 +214,12 @@ export function styleSvgHoverWrapper(data: Omit<Props, "props">): OutputStyle {
       standart: [hoverTransitionCSSFn]
     }
   };
+
+  return renderStyles({ ...data, styles });
+}
+
+export function styleTooltip(data: DynamicStylesProps<Value>): OutputStyle {
+  const styles = getTooltipStyles();
 
   return renderStyles({ ...data, styles });
 }

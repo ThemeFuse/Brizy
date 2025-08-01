@@ -120,6 +120,16 @@ export const getItems: GetItems<Value> = ({ v, device, state }) => {
               ]
             },
             {
+              id: "checkbox2Checkmark",
+              label: t("Checkmark"),
+              options: [
+                {
+                  id: "checkbox2CheckmarkColor",
+                  type: "colorPicker"
+                }
+              ]
+            },
+            {
               id: "surchargeColor",
               label: t("Surcharge"),
               options: [

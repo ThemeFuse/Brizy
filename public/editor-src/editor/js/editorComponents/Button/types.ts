@@ -1,5 +1,6 @@
 import { Patch } from "visual/component/BoxResizer/types";
 import { ElementModel } from "visual/component/Elements/Types";
+import { TooltipPlacement } from "visual/component/Tooltip/types";
 import { ComponentsMeta } from "visual/editorComponents/EditorComponent/types";
 import { Block } from "visual/types/Block";
 import { WithClassName } from "visual/types/attributes";
@@ -64,11 +65,28 @@ export interface Value extends ElementModel, CssId {
   iconSize: "small" | "medium" | "large" | "custom";
 
   borderRadiusType: "square" | "rounded" | "custom";
+
+  enableTooltip: "on" | "off";
+  tooltipTriggerClick: "on" | "off";
+  tooltipPlacement: TooltipPlacement;
+  tooltipWidth: number;
+  tooltipText: string;
+
+  tooltipOffset: number;
 }
 
 export interface Props extends WithClassName {
   meta: ComponentsMeta;
   attributes: Record<string, string | number>;
+  renderer?: {
+    form?: {
+      percentWidth?: boolean;
+    };
+    disableTooltip?: boolean;
+  };
+  updateWidthPrefixBySizeChange?: "%" | "px";
 }
 
-export type PatchValue = Value | Patch | Record<string, string>;
+export type PatchValue = (Value | Patch | Record<string, string>) & {
+  [k: string]: any; // eslint-disable-line @typescript-eslint/no-explicit-any
+};

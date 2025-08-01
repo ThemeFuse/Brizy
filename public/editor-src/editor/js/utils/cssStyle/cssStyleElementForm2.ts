@@ -3,6 +3,7 @@ import type { StylesProps as Props } from "visual/editorComponents/Form2/Form2St
 import { WithRenderContext } from "visual/providers/RenderProvider";
 import { getColor } from "visual/utils/color";
 import {
+  FlexHorizontalAligns,
   cssStyleBgColor,
   cssStyleBorder,
   cssStyleBorderRadius,
@@ -18,7 +19,8 @@ import {
   cssStyleTypography2FontVariation,
   cssStyleTypography2FontWeight,
   cssStyleTypography2LetterSpacing,
-  cssStyleTypography2LineHeight
+  cssStyleTypography2LineHeight,
+  readHorizontalAlign
 } from "visual/utils/cssStyle";
 import { isStory } from "visual/utils/models";
 import { defaultValueValue } from "visual/utils/onChange";
@@ -26,6 +28,7 @@ import * as Num from "visual/utils/reader/number";
 import * as Str from "visual/utils/reader/string";
 import { ACTIVE, NORMAL } from "visual/utils/stateMode";
 import {
+  styleAlignHorizontal,
   styleBorderWidthGrouped,
   styleBorderWidthType,
   styleBorderWidthUngrouped,
@@ -929,3 +932,38 @@ export function cssStyleElementForm2MSActiveCustomIconColor({
     prefix: "numberColor"
   });
 }
+
+export function cssStyleElementForm2MSButtonsAlign({
+  v,
+  device,
+  store,
+  getConfig,
+  state
+}: CSSValue): string {
+  const alignItems = readHorizontalAlign(
+    styleAlignHorizontal({
+      v,
+      device,
+      state,
+      store,
+      getConfig,
+      prefix: "multiStepBtn"
+    })
+  );
+
+  return alignItems
+    ? `justify-content:${FlexHorizontalAligns[alignItems]};`
+    : "";
+}
+
+export const cssStyleElementForm2MSButtonsSpacing = ({
+  v,
+  device,
+  state
+}: CSSValue) => {
+  const dvv = (key: string) => defaultValueValue({ v, key, device, state });
+  const spacing = dvv("msButtonsSpacing");
+  const suffix = dvv("msButtonsSpacingSuffix");
+
+  return `gap:${spacing}${suffix};`;
+};

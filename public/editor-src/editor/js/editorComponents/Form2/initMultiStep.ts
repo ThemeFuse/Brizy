@@ -1,5 +1,5 @@
 import { makeAttr } from "visual/utils/i18n/attribute";
-import { clearFormMessages, validateForm } from "./export";
+import { clearFormMessages, showErrorMessage, validateForm } from "./export";
 
 export const initMultiStep = (item: HTMLElement): void => {
   const form = item.querySelector<HTMLFormElement>("form");
@@ -62,6 +62,8 @@ export const initMultiStep = (item: HTMLElement): void => {
             changeStepContent(multistepItems, multistepActive);
             changeStepButtons(buttons, multistepActive, multistepItems.length);
             changeProgressState(progressBars, progressBarText, multistepActive);
+          } else {
+            showErrorMessage(form);
           }
         });
       }
@@ -116,13 +118,13 @@ const changeStepButtons = (
   if (buttons.length && totalItems) {
     setHidden(buttons);
     if (active === 1) {
-      buttons[1].style.display = "block";
+      buttons[1].style.display = "flex";
     } else if (active === totalItems) {
-      buttons[0].style.display = "block";
-      buttons[2].style.display = "block";
+      buttons[0].style.display = "flex";
+      buttons[2].style.display = "flex";
     } else {
-      buttons[0].style.display = "block";
-      buttons[1].style.display = "block";
+      buttons[0].style.display = "flex";
+      buttons[1].style.display = "flex";
     }
   }
 };

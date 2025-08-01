@@ -318,6 +318,19 @@ export const getItems: GetItems<Value> = ({
                   ]
                 },
                 {
+                  id: "caption",
+                  label: t("Captions (CC)"),
+                  type: "fileUpload",
+                  devices: "desktop",
+                  disabled: !isCustomOrUrl,
+                  acceptedExtensions: ["vtt"],
+                  helper: {
+                    content: t(
+                      "Upload a .vtt file with captions for your video"
+                    )
+                  }
+                },
+                {
                   id: "branding",
                   label: t("Branding"),
                   type: "switch",
@@ -401,7 +414,7 @@ export const getItems: GetItems<Value> = ({
                   states: [NORMAL, HOVER],
                   disabled: !isCustomOrUrl || offControls,
                   selector:
-                    "{{WRAPPER}} .brz-video-custom-play:hover, {{WRAPPER}} .brz-video-custom-pause:hover, {{WRAPPER}} .brz-video-custom-mute:hover, {{WRAPPER}} .brz-video-custom-unmute:hover, {{WRAPPER}} .brz-video-custom-fullscreen-icon:hover, {{WRAPPER}} .brz-video-elem > .brz-video-custom-video-controls > .brz-video-custom-controls > .brz-video-custom-current-time:hover, {{WRAPPER}} .brz-video-elem > .brz-video-custom-video-controls > .brz-video-custom-controls > .brz-video-custom-total-time:hover"
+                    "{{WRAPPER}} .brz-video-custom-play:hover, {{WRAPPER}} .brz-video-custom-pause:hover, {{WRAPPER}} .brz-video-custom-mute:hover, {{WRAPPER}} .brz-video-custom-unmute:hover, {{WRAPPER}} .brz-video-custom-fullscreen-icon:hover, {{WRAPPER}} .brz-video-elem > .brz-video-custom-video-controls > .brz-video-custom-controls > .brz-video-custom-current-time:hover, {{WRAPPER}} .brz-video-elem > .brz-video-custom-video-controls > .brz-video-custom-controls > .brz-video-custom-total-time:hover, {{WRAPPER}} .brz-media-caption"
                 }
               ]
             },

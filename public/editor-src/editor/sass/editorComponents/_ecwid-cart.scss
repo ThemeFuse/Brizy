@@ -7,7 +7,7 @@
     }
   }
 
-  .ecwid div .ecwid-productBrowser div div div .ec-wrapper .ec-store {
+  .ecwid div .ecwid-productBrowser .ec-wrapper .ec-store {
     &__content-wrapper {
       .ec-page-title {
         padding-bottom: 0 !important;
@@ -24,6 +24,8 @@
 
       .ec-cart {
         &__body {
+          padding-left: 0 !important;
+
           &-inner {
             .ec-cart__email .ec-cart-email__input .form-control {
               display: flex !important;
@@ -72,6 +74,8 @@
         }
 
         .ec-cart__sidebar {
+          padding-right: 0 !important;
+
           &-inner {
             .ec-page-title {
               padding-bottom: 0 !important;

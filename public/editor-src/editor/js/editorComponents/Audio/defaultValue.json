@@ -23,6 +23,9 @@
     "playCounts": "on",
     "username": "on",
     "artWork": "on",
+    "showTitle": "off",
+
+    "caption": "",
 
     "images": {
       "coverImageSrc": ""
@@ -42,7 +45,10 @@
 
     "coverZoom": 100,
     "coverZoomSuffix": "%",
-    "coverAlt": ""
+    "coverAlt": "",
+
+    "titleHorizontalAlign": "start",
+    "captionHorizontalAlign": "center"
   },
 
   "toolbar": {
@@ -71,7 +77,9 @@
     "largeIconSize": 32,
 
     "families": {
-      "fontFamily": "lato"
+      "fontFamily": "lato",
+      "titleTypographyFontFamily": "lato",
+      "captionTypographyFontFamily": "lato"
     },
 
     "fontStyle": "",
@@ -216,6 +224,126 @@
     "bgPaddingLeftSuffix": "px",
 
     "hoverTransition": 50,
-    "hoverTransitionSuffix": ""
+    "hoverTransitionSuffix": "",
+
+    "titleTypographyFontStyle": "heading6",
+    "titleTypographyFontFamilyType": "google",
+    "titleTypographyFontSize": 16,
+    "titleTypographyFontSizeSuffix": "px",
+    "titleTypographyFontWeight": 400,
+    "titleTypographyLetterSpacing": 0,
+    "titleTypographyLineHeight": 1.1,
+    "titleTypographyVariableFontWeight": 400,
+    "titleTypographyFontWidth": 100,
+    "titleTypographyFontSoftness": 0,
+    "titleTypographyBold": false,
+    "titleTypographyItalic": false,
+    "titleTypographyUnderline": false,
+    "titleTypographyStrike": false,
+    "titleTypographyUppercase": false,
+    "titleTypographyLowercase": false,
+
+    "titleColorHex": "#000000",
+    "titleColorOpacity": 1,
+    "titleColorPalette": "color2",
+
+    "titleShadowColorHex": "#000000",
+    "titleShadowColorOpacity": 0,
+    "titleShadowBlur": 0,
+    "titleShadowHorizontal": 0,
+    "titleShadowVertical": 0,
+    "titleShadowColorPalette": "color2",
+
+    "titleStrokeBorderStyle": "none",
+    "titleStrokeBorderColorHex": "#000000",
+    "titleStrokeBorderColorOpacity": 0,
+    "titleStrokeBorderColorPalette": "",
+    "titleStrokeBorderWidthType": "grouped",
+    "titleStrokeBorderWidth": 0,
+    "titleStrokeBorderTopWidth": 0,
+    "titleStrokeBorderRightWidth": 0,
+    "titleStrokeBorderBottomWidth": 0,
+    "titleStrokeBorderLeftWidth": 0,
+
+    "titleMarginType": "ungrouped",
+    "titleMargin": 0,
+    "titleMarginSuffix": "px",
+    "titleMarginTop": 10,
+    "titleMarginTopSuffix": "px",
+    "titleMarginRight": 0,
+    "titleMarginRightSuffix": "px",
+    "titleMarginBottom": 0,
+    "titleMarginBottomSuffix": "px",
+    "titleMarginLeft": 0,
+    "titleMarginLeftSuffix": "px",
+
+    "captionTypographyFontStyle": "heading5",
+    "captionTypographyFontFamilyType": "google",
+    "captionTypographyFontSize": 16,
+    "captionTypographyFontSizeSuffix": "px",
+    "captionTypographyFontWeight": 400,
+    "captionTypographyLetterSpacing": 0,
+    "captionTypographyLineHeight": 1.1,
+    "captionTypographyVariableFontWeight": 400,
+    "captionTypographyFontWidth": 100,
+    "captionTypographyFontSoftness": 0,
+    "captionTypographyBold": false,
+    "captionTypographyItalic": false,
+    "captionTypographyUnderline": false,
+    "captionTypographyStrike": false,
+    "captionTypographyUppercase": false,
+    "captionTypographyLowercase": false,
+
+    "captionColorHex": "#ffffff",
+    "captionColorOpacity": 1,
+    "captionColorPalette": "",
+
+    "captionBgColorHex": "#000000",
+    "captionBgColorOpacity": 1,
+    "captionBgColorPalette": "",
+
+    "captionBorderStyle": "none",
+    "captionBorderColorHex": "#000000",
+    "captionBorderColorOpacity": 0,
+    "captionBorderColorPalette": "",
+    "captionBorderWidthType": "grouped",
+    "captionBorderWidth": 0,
+    "captionBorderTopWidth": 0,
+    "captionBorderRightWidth": 0,
+    "captionBorderBottomWidth": 0,
+    "captionBorderLeftWidth": 0,
+
+    "captionBoxShadow": "none",
+    "captionBoxShadowColorHex": "#000000",
+    "captionBoxShadowColorPalette": "",
+    "captionBoxShadowColorOpacity": 0,
+    "captionBoxShadowBlur": 0,
+    "captionBoxShadowSpread": 0,
+    "captionBoxShadowVertical": 0,
+    "captionBoxShadowHorizontal": 0,
+
+    "captionCornerBorderRadiusType": "grouped",
+    "captionCornerBorderRadius": 4,
+    "captionCornerBorderRadiusSuffix": "px",
+    "captionCornerBorderTopLeftRadius": 4,
+    "captionCornerBorderTopLeftRadiusSuffix": "px",
+    "captionCornerBorderTopRightRadius": 4,
+    "captionCornerBorderTopRightRadiusSuffix": "px",
+    "captionCornerBorderBottomRightRadius": 4,
+    "captionCornerBorderBottomRightRadiusSuffix": "px",
+    "captionCornerBorderBottomLeftRadius": 4,
+    "captionCornerBorderBottomLeftRadiusSuffix": "px",
+
+    "captionPaddingType": "grouped",
+    "captionPadding": 5,
+    "captionPaddingSuffix": "px",
+    "captionPaddingTop": 5,
+    "captionPaddingTopSuffix": "px",
+    "captionPaddingRight": 5,
+    "captionPaddingRightSuffix": "px",
+    "captionPaddingBottom": 5,
+    "captionPaddingBottomSuffix": "px",
+    "captionPaddingLeft": 5,
+    "captionPaddingLeftSuffix": "px"
   }
 }

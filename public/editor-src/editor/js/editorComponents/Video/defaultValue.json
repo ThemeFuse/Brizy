@@ -15,6 +15,7 @@
     "suggestedVideos": "current",
     "lazyLoad": "on",
     "lightbox": "off",
+    "caption": "",
 
     "images": {
       "coverImageSrc": "",

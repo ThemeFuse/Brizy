@@ -11,24 +11,28 @@ interface Props {
   icon?: string;
   onOpen?: (r: VoidFunction) => void;
   onClose?: VoidFunction;
+  id: string;
+  href?: string;
+  title?: string;
 }
 
 const Component = (props: Props): ReactElement => {
-  const { icon, onOpen, onClose } = props;
+  const { icon, onOpen, onClose, id, href, title } = props;
   const leftSidebar = useSelector(leftSidebarSelector);
   const mountedRef = useRef(false);
-  const opened = leftSidebar.drawerContentType === LeftSidebarOptionsIds.cms;
+  const opened = leftSidebar.drawerContentType === id;
   const dispatch = useDispatch();
 
   const update = useCallback(
     (isOpen: boolean) => {
       dispatch(
         updateUI("leftSidebar", {
-          drawerContentType: isOpen ? LeftSidebarOptionsIds.cms : null
+          drawerContentType:
+            isOpen && id === LeftSidebarOptionsIds.cms ? id : null
         })
       );
     },
-    [dispatch]
+    [dispatch, id]
   );
 
   const onLinkClick = useCallback((): void => {
@@ -55,8 +59,9 @@ const Component = (props: Props): ReactElement => {
         "brz-ed-sidebar__control__item--active": opened
       })}
       icon={icon ?? "nc-menu"}
-      title={t("CMS")}
+      title={title ?? t("CMS")}
       onClick={onLinkClick}
+      link={href}
     />
   );
 };
@@ -69,6 +74,9 @@ export const custom = (option?: Props) => ({
       icon={option?.icon}
       onOpen={option?.onOpen}
       onClose={option?.onClose}
+      id={option?.id ?? ""}
+      href={option?.href}
+      title={option?.title}
     />
   )
 });
