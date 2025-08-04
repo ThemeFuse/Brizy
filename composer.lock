@@ -12,7 +12,7 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/bagrinsergiu/brizy-merge-page-assets.git",
-                "reference": "277f7b7bc7eb443f870ae7194adf309b66a5bac6"
+                "reference": "02950716142303539b3b50527aca3d90d5762f4c"
             },
             "require": {
                 "ext-json": "*",
