@@ -12,7 +12,7 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/bagrinsergiu/brizy-merge-page-assets.git",
-                "reference": "61eea2244cb34ff8666b802aafa74f74dec869da"
+                "reference": "277f7b7bc7eb443f870ae7194adf309b66a5bac6"
             },
             "require": {
                 "ext-json": "*",
@@ -34,7 +34,7 @@
                 "brizy",
                 "brizy merge assets"
             ],
-            "time": "2022-09-27T14:56:05+00:00"
+            "time": "2025-08-04T11:01:01+00:00"
         },
         {
             "name": "bagrinsergiu/brizy-migration-utils",
