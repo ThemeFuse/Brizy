@@ -464,8 +464,8 @@ class Brizy_Editor_Zip_Archiver implements Brizy_Editor_Zip_ArchiverInterface {
 	}
 	private function getImportClass( $class ) {
 
-		if ( isset( $map[ $class ] ) ) {
-			return $map[ $class ];
+		if ( isset( $this->classMap[ $class ] ) ) {
+			return $this->classMap[ $class ];
 		}
 
 		return $class;
