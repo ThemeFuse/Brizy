@@ -202,6 +202,14 @@ export const moveAddableToColumn = (
   return addIn(oldValue, to.itemPath, from.itemData);
 };
 
+export const moveAddableToThirdPartyContainer = (
+  oldValue: ElementModelType,
+  from: { itemData: ElementModelType },
+  to: { itemPath: string[] }
+): MValue<ElementModelType> => {
+  return addIn(oldValue, to.itemPath, from.itemData);
+};
+
 //#endregion
 
 //#region Move Column to [section, row]

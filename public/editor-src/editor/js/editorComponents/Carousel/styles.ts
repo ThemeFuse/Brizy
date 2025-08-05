@@ -17,6 +17,9 @@ export function style(data: DynamicStylesProps<Value>): OutputStyle {
     ".brz && .brz-carousel__slider .brz-slick-slider__dots": {
       standart: ["cssStyleElementCarouselColorDots"]
     },
+    ".brz && .brz-carousel__slider .brz-slick-slider__pause": {
+      standart: ["cssStyleElementCarouselColorPause"]
+    },
     ".brz && .brz-carousel__slider .brz-slick-slider__arrow": {
       standart: ["cssStyleElementCarouselColorArrow"]
     },

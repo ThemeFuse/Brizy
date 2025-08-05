@@ -34,6 +34,8 @@ export const getItems: GetItems<Value, Props> = ({
     store: component.getReduxStore()
   });
 
+  const usePercentWidth = component.props?.renderer?.form?.percentWidth;
+
   // Colors
   const bgColor = getColorToolbar(
     dvv("bgColorPalette"),
@@ -121,11 +123,16 @@ export const getItems: GetItems<Value, Props> = ({
                       id: "paddingRL",
                       label: t("Width"),
                       type: "slider",
-                      disabled: submitType || customSize,
+                      disabled: (submitType && !usePercentWidth) || customSize,
                       config: {
                         min: 0,
                         max: 100,
-                        units: [{ title: "px", value: "px" }]
+                        units: [
+                          { title: "px", value: "px" },
+                          ...(usePercentWidth
+                            ? [{ title: "%", value: "%" }]
+                            : [])
+                        ]
                       }
                     },
                     {

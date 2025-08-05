@@ -215,7 +215,11 @@ export const patchOnImageChange = (
 
   if (v.widthSuffix === "%") {
     const w = v.width || 100;
-    newCW = (wrapperSizes.width * w) / newWrapperSizes.width;
+    newCW = Math.clamp(
+      (wrapperSizes.width * w) / newWrapperSizes.width,
+      0,
+      100
+    );
   } else {
     if (isSvgOrGif) {
       const resize = Math.roundTo((v.width / cW) * 100, 2);
@@ -240,7 +244,11 @@ export const patchOnImageChange = (
   } else {
     if (v.heightSuffix === "%") {
       const h = v.height || 100;
-      newCH = (wrapperSizes.height * h) / newWrapperSizes.height;
+      newCH = Math.clamp(
+        (wrapperSizes.height * h) / newWrapperSizes.height,
+        0,
+        100
+      );
     }
   }
 
@@ -382,31 +390,39 @@ export const patchOnDCChange = (
   };
 };
 
-const normalizeWidth = (cW: number, width: number, suffix: Unit): number => {
+const normalizeDimension = (
+  containerSize: number,
+  size: number,
+  suffix: Unit
+): number => {
   switch (suffix) {
     case "%": {
-      return Math.roundTo((width / cW) * 100, 2);
+      return Math.clamp(Math.roundTo((size / containerSize) * 100, 2), 0, 100);
     }
     case "px": {
-      return Math.roundTo((width / 100) * cW, 2);
+      return Math.clamp(
+        Math.roundTo((size / 100) * containerSize, 2),
+        0,
+        containerSize
+      );
     }
   }
 };
 
 export const pathOnUnitChange = (
   cW: number,
+  cH: number,
   v: Value,
   patch: UnitPatch,
   device: DeviceMode
 ): PatchUnit => {
-  const extension = v.imageExtension;
   const population = v.imagePopulation;
-  const isSvgOrGif = extension === "svg" || extension === "gif";
   const dvk = (key: string): string =>
     defaultValueKey({ key, device, state: "normal" });
   const [suffixKey] = Object.keys(patch).filter(
     (key) => key === dvk("widthSuffix") || key === dvk("heightSuffix")
   );
+
   const dvv = (key: string): unknown => defaultValueValue({ key, v, device });
 
   if (suffixKey === undefined) {
@@ -414,20 +430,49 @@ export const pathOnUnitChange = (
   }
 
   const widthKey = dvk("width");
+  const heightKey = dvk("height");
   const width = Num.read(dvv("width"));
+  const height = Num.read(dvv("height"));
+
   const vPatched = dvv(suffixKey);
   const patchValue = patch[suffixKey];
 
-  if (!isUnit(patchValue) || width === undefined) {
+  if (!isUnit(patchValue) || width === undefined || height === undefined) {
     return {};
   }
 
-  if (!isSvgOrGif || population || vPatched === patchValue) {
+  if (population && vPatched === patchValue) {
     return patch;
   }
 
+  if (vPatched === patchValue) {
+    return patch;
+  }
+
+  const isWidthChanged = !!patch[dvk("widthSuffix")];
+  const isHeightChanged = !!patch[dvk("heightSuffix")];
+
+  const heightPatch =
+    dvv("heightSuffix") === patchValue
+      ? patch.height
+      : normalizeDimension(cH, height, patchValue);
+
+  const widthPatch =
+    dvv("widthSuffix") === patchValue
+      ? patch.width
+      : normalizeDimension(cW, width, patchValue);
+
   return {
     [suffixKey]: patchValue,
-    [widthKey]: normalizeWidth(cW, width, patchValue)
+    ...(isWidthChanged
+      ? {
+          [widthKey]: widthPatch
+        }
+      : {}),
+    ...(isHeightChanged
+      ? {
+          [heightKey]: heightPatch
+        }
+      : {})
   };
 };

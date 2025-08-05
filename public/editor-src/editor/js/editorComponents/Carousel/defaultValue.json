@@ -23,6 +23,7 @@
     "sliderAutoPlaySpeedSuffix": "s",
     "transitionSpeed": 3.5,
     "transitionSpeedSuffix": "s",
+    "stopSlider": "off",
 
     "items": []
   },
@@ -49,6 +50,10 @@
     "sliderDotsColorHex": "#000000",
     "sliderDotsColorOpacity": 1,
     "sliderDotsColorPalette": "",
+
+    "sliderPauseColorHex": "#000000",
+    "sliderPauseColorOpacity": 1,
+    "sliderPauseColorPalette": "",
 
     "tempSliderDotsColorOpacity": 1,
     "tempSliderDotsColorPalette": "",

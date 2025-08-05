@@ -1,6 +1,6 @@
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
-import { Form2FieldOption } from "../migrations/type";
+import { Form2FieldOption } from "../migrations/Form2Field/type";
 import { Value } from "./type";
 
 class Form2FieldItems extends EditorArrayComponent {

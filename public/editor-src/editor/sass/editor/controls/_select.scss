@@ -107,7 +107,6 @@
   opacity: 0;
 
   .brz-control__select-option {
-
     &:hover,
     &.active {
       transition: color 0.15s linear;
@@ -165,7 +164,6 @@
 
 // Dark Version
 .brz-control__select--dark {
-
   .brz-control__select-current,
   .brz-control__select-options {
     background-color: $control-bg;
@@ -204,7 +202,6 @@
 
 // Light Version
 .brz-control__select--light {
-
   .brz-control__select-current,
   .brz-control__select-options {
     background-color: $control_light-bg;
@@ -234,7 +231,6 @@
 
 // White Version
 .brz-control__select--white {
-
   .brz-control__select-current,
   .brz-control__select-options {
     background-color: $control_white-bg;
@@ -307,7 +303,6 @@
 
 // Popup Control Select Light
 .brz-ed-popup-control__select--light {
-
   .brz-control__select-current,
   .brz-control__select-options {
     background-color: $control__popup_light-bg;
@@ -347,7 +342,8 @@
 
     .brz-control__select-options {
       box-shadow: 0 5px 10px -2px $popup__select__options-box-shadow;
-      border-radius: 0 0 $popup__select-border-radius $popup__select-border-radius;
+      border-radius: 0 0 $popup__select-border-radius
+        $popup__select-border-radius;
     }
   }
 
@@ -436,7 +432,7 @@
   }
 
   .brz-control__select-options {
-    width: 120px;
+    width: auto;
   }
 }
 

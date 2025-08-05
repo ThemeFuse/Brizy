@@ -27,7 +27,10 @@ export function style(data: DynamicStylesProps<ElementModel>) {
           "cssStyleElementWOOAttributesSpacing"
         ]
       },
-    ".brz &&:hover table th, .brz &&:hover table td": {
+    ".brz &&:hover table th": {
+      standart: ["cssStyleElementWOOAttributesBorder"]
+    },
+    ".brz &&:hover table td": {
       standart: ["cssStyleElementWOOAttributesBorder"]
     },
     ".brz && table tr:last-child th, .brz && table tr:last-child td": {

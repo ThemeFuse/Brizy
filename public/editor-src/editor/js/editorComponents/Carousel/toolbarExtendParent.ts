@@ -44,6 +44,8 @@ export const getItems: GetItems<Value> = ({ v, device, component }) => {
     return taxonomies.flatMap((category) => category.optgroup) as ChoicesSync;
   };
 
+  const isAutoPlayEnabled = dvv("sliderAutoPlay") === "on";
+
   //@ts-expect-error review here when ConfigCommon is ready
   const wordpress = !!component.getGlobalConfig().wp;
 
@@ -79,11 +81,22 @@ export const getItems: GetItems<Value> = ({ v, device, component }) => {
                       id: "sliderAutoPlaySpeed",
                       label: t("Stop Time"),
                       type: "slider",
-                      disabled: dvv("sliderAutoPlay") !== "on",
+                      disabled: !isAutoPlayEnabled,
                       config: {
                         min: 0,
                         max: 6,
                         units: [{ value: "s", title: "s" }]
+                      }
+                    },
+                    {
+                      id: "stopSlider",
+                      type: "switch",
+                      label: t("Stop animation"),
+                      disabled: !isAutoPlayEnabled,
+                      helper: {
+                        content: t(
+                          "When enabled, clicking pause stops the animation and slider until play is clicked"
+                        )
                       }
                     }
                   ]
@@ -308,6 +321,17 @@ export const getItems: GetItems<Value> = ({ v, device, component }) => {
               options: [
                 {
                   id: "sliderDotsColor",
+                  type: "colorPicker",
+                  disabled: dvv("slider") === "off"
+                }
+              ]
+            },
+            {
+              id: "pauseColorTab",
+              label: t("Pause"),
+              options: [
+                {
+                  id: "sliderPauseColor",
                   type: "colorPicker",
                   disabled: dvv("slider") === "off"
                 }

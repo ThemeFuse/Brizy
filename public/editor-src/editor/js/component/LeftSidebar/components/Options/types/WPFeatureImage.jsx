@@ -13,6 +13,22 @@ const debouncedUpdateFeaturedImageFocalPoint = debounce((...args) => {
   updateFeaturedImageFocalPoint(...args);
 }, 1000);
 
+let currentFeaturedImage;
+
+const defaultFeaturedImageData = {
+  id: "",
+  url: "",
+  pointX: 50,
+  pointY: 50
+};
+
+const updateCurrentFeaturedImage = (newData) => {
+  currentFeaturedImage = {
+    ...(currentFeaturedImage ?? {}),
+    ...newData
+  };
+};
+
 export default class WPFeatureImage extends React.Component {
   static defaultProps = {
     label: "",
@@ -20,17 +36,21 @@ export default class WPFeatureImage extends React.Component {
     title: ""
   };
 
-  currentFeaturedImage = (() => {
-    const wpConfig = this.props.globalConfig.wp;
-    const { id, url, pointX, pointY } = wpConfig?.featuredImage || {};
+  constructor(props) {
+    super(props);
 
-    return {
-      id: id || "",
-      url: url || "",
-      pointX: pointX || 50,
-      pointY: pointY || 50
-    };
-  })();
+    if (!currentFeaturedImage) {
+      const wpConfig = props.globalConfig.wp;
+      const { id, url, pointX, pointY } = wpConfig?.featuredImage || {};
+
+      updateCurrentFeaturedImage({
+        id: id || "",
+        url: url || "",
+        pointX: pointX || 50,
+        pointY: pointY || 50
+      });
+    }
+  }
 
   mounted = false;
 
@@ -47,20 +67,14 @@ export default class WPFeatureImage extends React.Component {
     const { src: url, x: pointX, y: pointY } = value;
 
     if (url === "") {
-      this.currentFeaturedImage = {
-        id: "",
-        url: "",
-        pointX: 50,
-        pointY: 50
-      };
+      updateCurrentFeaturedImage(defaultFeaturedImageData);
 
       removeFeaturedImage(globalConfig);
     } else {
-      this.currentFeaturedImage.pointX = pointX;
-      this.currentFeaturedImage.pointY = pointY;
+      updateCurrentFeaturedImage({ pointX, pointY });
 
       debouncedUpdateFeaturedImageFocalPoint(
-        this.currentFeaturedImage.id,
+        currentFeaturedImage.id,
         pointX,
         pointY,
         globalConfig
@@ -98,8 +112,7 @@ export default class WPFeatureImage extends React.Component {
       const { url, id } = attachment.attributes;
 
       updateFeaturedImage(id, globalConfig).then(() => {
-        this.currentFeaturedImage.id = id;
-        this.currentFeaturedImage.url = url;
+        updateCurrentFeaturedImage({ id, url });
 
         if (this.mounted) {
           this.forceUpdate();
@@ -124,7 +137,8 @@ export default class WPFeatureImage extends React.Component {
       "brz-ed-sidebar__wp-feature__image",
       _className
     );
-    const { pointX, pointY, url } = this.currentFeaturedImage;
+    const { pointX, pointY, url } =
+      currentFeaturedImage ?? defaultFeaturedImageData;
 
     const addMedia = this.props.addMedia ?? {};
 

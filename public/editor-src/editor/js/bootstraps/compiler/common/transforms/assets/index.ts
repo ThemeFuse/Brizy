@@ -95,6 +95,7 @@ export interface StylesPro {
 
 export interface ScriptsFree {
   main: Asset;
+  version: string;
   generic: Asset[];
   libsMap: AssetLibsMap[];
   libsSelectors: string[];
@@ -102,6 +103,7 @@ export interface ScriptsFree {
 
 export interface ScriptsPro {
   main: Asset;
+  version: string;
   generic: Asset[];
   libsMap: AssetLibsMap[];
   libsSelectors: string[];

@@ -2,6 +2,7 @@ import { GetItems } from "visual/editorComponents/EditorComponent/types";
 import { getColorToolbar } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
+import { sidebarSpacingCSS } from "./css";
 import { EcwidCartCheckoutStep, Value } from "./types/Value";
 
 export const getItems: GetItems<Value> = ({ v, device }) => {
@@ -134,6 +135,17 @@ export const getItems: GetItems<Value> = ({ v, device }) => {
             max: 100,
             units: [{ value: "%", title: "%" }]
           }
+        },
+        {
+          id: "sidebarSpacing",
+          label: t("Spacing"),
+          type: "slider",
+          config: {
+            min: 0,
+            max: 200,
+            units: [{ value: "px", title: "px" }]
+          },
+          style: sidebarSpacingCSS
         },
         {
           id: "grid",
