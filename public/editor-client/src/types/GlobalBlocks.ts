@@ -1,5 +1,5 @@
 import { Output } from "@/types/utils";
-import { Response } from "./Response";
+import { Response, ResponseWithSuccessStatus } from "./Response";
 
 export interface GlobalBlock {
   uid: string;
@@ -19,6 +19,11 @@ export interface GlobalBlockConfig {
     res: Response<GlobalBlock>,
     rej: Response<string>,
     extra: GlobalBlock
+  ) => void;
+  delete?: (
+    res: Response<ResponseWithSuccessStatus>,
+    rej: Response<string>,
+    uid: string
   ) => void;
 }
 

@@ -6,6 +6,8 @@ export interface ResponseWithBody<T> {
   data: T;
 }
 
-export interface SuccessResponse {
-  success: true;
+export interface ResponseWithSuccessStatus<T extends boolean = boolean> {
+  success: T;
 }
+
+export type SuccessResponse = ResponseWithSuccessStatus<true>;
