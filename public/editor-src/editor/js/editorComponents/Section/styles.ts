@@ -38,7 +38,11 @@ export function styleSection(
     },
     ".brz && > .slick-slider > .brz-slick-slider__arrow:hover": {
       standart: ["cssStyleSectionColorArrows"]
-    }
+    },
+    ".brz && > .slick-slider > .brz-slick-slider__dots > .brz-slick-slider__pause:hover":
+      {
+        standart: ["cssStyleSectionColorPause"]
+      }
   };
 
   if (isEditorMode) {

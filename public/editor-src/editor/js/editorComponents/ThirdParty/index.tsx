@@ -10,11 +10,13 @@ import {
   NewToolbarConfig,
   ToolbarConfig
 } from "visual/editorComponents/EditorComponent/types";
+import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import Editor from "visual/global/Editor";
 import { isEditor, isView } from "visual/providers/RenderProvider";
 import { WithClassName } from "visual/types/attributes";
 import { I18n } from "visual/utils/i18n";
 import { attachRefs } from "visual/utils/react";
+import { ThirdPartyContextProvider } from "../tools/ThirdPartyContext";
 import { Wrapper } from "../tools/Wrapper";
 import { DynamicContent } from "./DynamicContent";
 import { DynamicContentProps, ThirdPartyProps } from "./types";
@@ -45,17 +47,22 @@ interface Options<
 
 class ThirdParty extends EditorComponent<Value, Props> {
   static get componentId(): string {
-    return "ThirdParty";
+    return ElementTypes.ThirdParty;
   }
+
+  static experimentalDynamicContent = true;
+
+  static defaultValue = {
+    items: []
+  };
+
+  component?: ThirdpartyComponent;
 
   getComponentId(): string {
     const parentId = super.getComponentId();
     const { thirdPartyId } = this.getValue();
     return `${parentId}-${thirdPartyId}`;
   }
-
-  static experimentalDynamicContent = true;
-  component?: ThirdpartyComponent;
 
   getComponent(ID: string): ThirdpartyComponent | undefined {
     if (this.component) {
@@ -211,7 +218,6 @@ class ThirdParty extends EditorComponent<Value, Props> {
   ): ReactNode {
     const { customCSS } = v;
     const thirdPartyClassName = "brz-third-party";
-
     const { toolbars, sidebars } = this.getOptions();
 
     const wrapperClassName = this.getCSSClassnames({
@@ -223,6 +229,9 @@ class ThirdParty extends EditorComponent<Value, Props> {
 
     const className = classNames(thirdPartyClassName, wrapperClassName);
     const _customCSS = Str.read(customCSS) ?? "";
+    const itemsProps = this.makeSubcomponentProps({
+      bindWithKey: "items"
+    });
 
     return (
       <CustomCSS selectorName={this.getId()} css={_customCSS}>
@@ -233,11 +242,14 @@ class ThirdParty extends EditorComponent<Value, Props> {
               ref: (el) => attachRefs(el, [cssRef, ...toolbarsRef])
             })}
           >
-            <Component
-              {...v}
-              device={device}
-              DynamicContent={this.getDynamiContent}
-            />
+            {/* @ts-expect-error: Type 'unknown' is not assignable to type 'Props<ElementModel, Record<string, any>>'. */}
+            <ThirdPartyContextProvider editorProps={itemsProps}>
+              <Component
+                {...v}
+                device={device}
+                DynamicContent={this.getDynamiContent}
+              />
+            </ThirdPartyContextProvider>
           </Wrapper>
         )}
       </CustomCSS>

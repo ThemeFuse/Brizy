@@ -2,7 +2,9 @@ import { match } from "fp-utilities";
 import React, { ReactElement, useCallback, useRef, useState } from "react";
 import EditorIcon from "visual/component/EditorIcon";
 import { ToastNotification } from "visual/component/Notifications";
+import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import {
+  getExportBlockUrl,
   getSavedBlockById,
   getSavedLayoutById,
   getSavedPopupById
@@ -10,14 +12,8 @@ import {
 import { t } from "visual/utils/i18n";
 import { blockIsPro } from "visual/utils/traverse/blockIsPro";
 import { getContentType } from "visual/utils/url";
-import {
-  getExportBlocksUrls,
-  isBlock,
-  isLayout,
-  isPopup
-} from "../common/utils";
+import { isBlock, isLayout, isPopup } from "../common/utils";
 import { BlockTypes } from "../types";
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 
 export interface Props {
   id: string;
@@ -56,7 +52,12 @@ export const DownloadBlock = (props: Props): ReactElement => {
 
       if (node) {
         const isPro = blockIsPro({ models: data, config });
-        const url = getExportBlocksUrls(type, id, isPro, config);
+        const url = getExportBlockUrl({
+          id,
+          isPro,
+          type,
+          config
+        });
         const contentType = await getContentType(url);
 
         if (

@@ -8,6 +8,7 @@ import {
   isJustified,
   removeUselessInfo
 } from "./utils.export";
+import { handleLightBoxZoom } from "visual/utils/export/lightbox";
 
 export default function ($node: JQuery): void {
   const { Isotope, ImagesLoaded, Gallery } = getProLibs();
@@ -145,6 +146,9 @@ export default function ($node: JQuery): void {
             type: "image",
             gallery: {
               enabled: true
+            },
+            callbacks: {
+              open: handleLightBoxZoom
             }
           });
         } else {
@@ -256,7 +260,10 @@ export default function ($node: JQuery): void {
             gallery: {
               enabled: true
             },
-            mainClass: "brz brz-lightbox"
+            mainClass: "brz brz-lightbox",
+            callbacks: {
+              open: handleLightBoxZoom
+            }
           })
           .magnificPopup("open")
           .magnificPopup("goTo", index);

@@ -13,7 +13,8 @@ export default function () {
           {
             type: "Audio",
             value: {
-              _styles: ["audio"]
+              _styles: ["audio"],
+              showTitle: "on"
             }
           }
         ]

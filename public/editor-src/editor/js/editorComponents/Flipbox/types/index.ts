@@ -109,6 +109,12 @@ export interface BackgroundValue {
   gradientType: string;
   tabletGradientType: string;
   mobileGradientType: string;
+  borderWidthType: string;
+  borderWidth: number;
+  borderTopWidth: number;
+  borderRightWidth: number;
+  borderBottomWidth: number;
+  borderLeftWidth: number;
 }
 
 export type GetBackgroundValue = (data: {

@@ -116,7 +116,7 @@ export default function ($node) {
   // Excluded embedded popups(.brz-conditions-popup--static)
   const $conditionalPopups = $node
     .find(".brz-conditions-popup:not(.brz-conditions-popup--static)")
-    .filter((_, node) => node.innerHTML);
+    .filter((_, node) => node.innerHTML && node.innerHTML.trim() !== "");
 
   // Popups with Triggers
   $conditionalPopups.each(function () {

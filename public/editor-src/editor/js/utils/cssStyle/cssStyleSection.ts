@@ -108,6 +108,23 @@ export function cssStyleSectionColorArrows({
   });
 }
 
+export function cssStyleSectionColorPause({
+  v,
+  device,
+  store,
+  getConfig,
+  state
+}: CSSValue): string {
+  return cssStyleColor({
+    v,
+    device,
+    store,
+    state,
+    getConfig,
+    prefix: "sliderPauseColor"
+  });
+}
+
 export function cssStyleSectionToolbarOffset({
   v,
   device,

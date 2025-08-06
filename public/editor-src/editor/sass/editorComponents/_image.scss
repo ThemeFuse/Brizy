@@ -93,6 +93,10 @@
     outline: none;
   }
 
+  .brz-a:focus-visible > .brz-picture {
+    border: 2px solid blue !important;
+  }
+
   .brz-shortcode__placeholder {
     top: 0;
     position: absolute;
@@ -159,6 +163,10 @@
   margin: 0;
 }
 
+.mfp-img {
+  user-select: none;
+}
+
 .mfp-figure:after,
 .mfp-iframe-scaler iframe {
   box-shadow: 0 0 40px rgba(0, 0, 0, 0.35);
@@ -166,4 +174,30 @@
 
 &.brz-lightbox {
   z-index: 1102;
+}
+
+.brz-lightbox-controls {
+  position: absolute;
+  right: 30px;
+  top: 0;
+  display: flex;
+  gap: 10px;
+  height: 44px;
+  align-items: center;
+  z-index: 1047;
+  color: #fff;
+  opacity: 0.65;
+  font-size: 18px;
+
+  .zoom-in {
+    cursor: zoom-in;
+  }
+
+  .zoom-out {
+    cursor: zoom-out;
+  }
+
+  &:hover {
+    opacity: 1;
+  }
 }
