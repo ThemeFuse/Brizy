@@ -1,11 +1,11 @@
 import classnames from "classnames";
 import React from "react";
 import SlickSlider from "react-slick";
-import { isEditor, isView } from "visual/providers/RenderProvider";
 import EditorIcon from "visual/component/EditorIcon";
 import { ThemeIcon } from "visual/component/ThemeIcon";
 import { hideToolbar } from "visual/component/Toolbar";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
+import { isEditor, isView } from "visual/providers/RenderProvider";
 import { t } from "visual/utils/i18n";
 
 // className is added by react-slick
@@ -13,6 +13,17 @@ const SliderArrow = ({ className, extraClassName, onClick, icon }) => (
   <div className={classnames(className, extraClassName)} onClick={onClick}>
     <ThemeIcon name={icon} type="editor" />
   </div>
+);
+
+const renderSliderDots = (dots, stopSlider) => (
+  <ul>
+    {dots}
+    {stopSlider && (
+      <li className="brz-slick-slider__pause">
+        <ThemeIcon name="button-circle-pause" type="glyph" />
+      </li>
+    )}
+  </ul>
 );
 
 class SectionItems extends EditorArrayComponent {
@@ -148,7 +159,8 @@ class SectionItems extends EditorArrayComponent {
     let ret;
 
     if (showSlider) {
-      const { sliderDots, sliderArrows, sliderAnimation } = this.props;
+      const { sliderDots, sliderArrows, sliderAnimation, stopSlider } =
+        this.props;
 
       if (isEditor(this.props.renderContext)) {
         ret = (
@@ -178,6 +190,7 @@ class SectionItems extends EditorArrayComponent {
               />
             }
             dots={sliderDots !== "none"}
+            appendDots={(dots) => renderSliderDots(dots, stopSlider)}
             dotsClass={`brz-slick-slider__dots brz-slick-slider__dots--${sliderDots}`}
             fade={sliderAnimation === "fade"}
             vertical={sliderAnimation === "vertical"}
@@ -233,6 +246,20 @@ class SectionItems extends EditorArrayComponent {
                 type="editor"
                 name={`right-arrow-${sliderArrows}`}
               />
+            )}
+            {stopSlider && (
+              <>
+                <ThemeIcon
+                  name="button-circle-pause"
+                  type="glyph"
+                  className="brz-hidden button-pause"
+                />
+                <ThemeIcon
+                  name="button-circle-play"
+                  type="glyph"
+                  className="brz-hidden button-play"
+                />
+              </>
             )}
           </div>
         );

@@ -65,7 +65,7 @@ const FirstPopupBlockAdder = (props: Props): ReactElement => {
           type: "popup",
           showTemplate: false,
           blocksType: false,
-          globalSearch: false,
+          globalSearch: true,
           showGlobal,
           onChangeBlocks: onAddBlock,
           onChangeGlobal: onAddGlobalPopup,

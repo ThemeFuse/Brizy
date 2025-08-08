@@ -20,6 +20,7 @@ export type PortalToolbarPositionerProps = {
   offsetLeft?: number;
   repositionOnUpdates?: boolean;
   device?: DeviceMode;
+  placement?: "top" | "bottom";
 } & Omit<
   ToolbarItemsProps,
   "containerRef" | "arrowRef" | "arrow" | "onContentChange"
@@ -47,8 +48,15 @@ export class PortalToolbarPositioner extends React.Component<PortalToolbarPositi
   }
 
   reposition = (): void => {
-    const { node, offsetTop, offsetBottom, offsetLeft, position, device } =
-      this.props;
+    const {
+      node,
+      offsetTop,
+      offsetBottom,
+      offsetLeft,
+      position,
+      device,
+      placement
+    } = this.props;
     const toolbar = this.toolbarItemsContainerRef.current;
     const arrow = this.toolbarItemsArrowRef.current;
     const window = node.ownerDocument.defaultView;
@@ -70,18 +78,41 @@ export class PortalToolbarPositioner extends React.Component<PortalToolbarPositi
       windowTop + nodeRect.top - (toolbarRect.height + TOOLBAR_HEIGHT_MAGIC) >=
       window.scrollY;
 
-    if (fitsAbove) {
+    const fitsAboveWithoutMagic =
+      windowTop + nodeRect.top - toolbarRect.height >= window.scrollY;
+
+    const fitsBelow =
+      windowTop + nodeRect.top + nodeRect.height + toolbarRect.height <=
+      windowTop + window.innerHeight;
+
+    // This is the case when we have a toolbar and a tooltip for the same element.
+    // We want to show the tooltip at the top of the element and the toolbar below it.
+    if (placement === "bottom" && fitsBelow) {
+      toolbarBelow = true;
+      toolbarTop =
+        windowTop + nodeRect.top + nodeRect.height + Number(offsetBottom);
+
+      setPosition("below");
+    } else if (placement === "top" && fitsAboveWithoutMagic) {
       toolbarBelow = false;
       toolbarTop =
         windowTop + nodeRect.top - toolbarRect.height - Number(offsetTop);
 
       setPosition("above");
     } else {
-      toolbarBelow = true;
-      toolbarTop =
-        windowTop + nodeRect.top + nodeRect.height + Number(offsetBottom);
+      if (fitsAbove) {
+        toolbarBelow = false;
+        toolbarTop =
+          windowTop + nodeRect.top - toolbarRect.height - Number(offsetTop);
 
-      setPosition("below");
+        setPosition("above");
+      } else {
+        toolbarBelow = true;
+        toolbarTop =
+          windowTop + nodeRect.top + nodeRect.height + Number(offsetBottom);
+
+        setPosition("below");
+      }
     }
 
     // toolbar left

@@ -176,9 +176,11 @@ export default class Section extends EditorComponent<Value, Props> {
       mobileAnimationDelay,
       mobileAnimationInfiniteAnimation,
       translations,
-      translationsLangs
+      translationsLangs,
+      stopSlider
     } = v;
 
+    const isSliderAutoPlay = sliderAutoPlay === "on";
     const itemsProps = this.makeSubcomponentProps({
       sliderDots,
       sliderArrows,
@@ -187,7 +189,8 @@ export default class Section extends EditorComponent<Value, Props> {
       sliderAutoPlaySpeed,
       bindWithKey: "items",
       meta: this.getMeta(v),
-      sliderAutoPlay: sliderAutoPlay === "on",
+      sliderAutoPlay: isSliderAutoPlay,
+      stopSlider: stopSlider === "on" && isSliderAutoPlay,
       toolbarExtend: this.makeToolbarPropsFromConfig2(
         toolbarExtendConfig,
         sidebarExtendConfig
@@ -382,14 +385,22 @@ export default class Section extends EditorComponent<Value, Props> {
       content: "{{ random_id }}",
       attr: { key: this.getId() }
     });
-    const blockName = cssID
-      ? cssID
-      : anchorName || `${uidPlaceholder}_${this.getId()}`;
+
+    const uuid = `${uidPlaceholder}_${this.getId()}`;
+    const blockName = cssID ? cssID : anchorName || uuid;
+
+    const shouldAddUidAttr = cssID || anchorName;
 
     const props = {
       ...parseCustomAttributes(customAttributes),
       id: blockName,
-      className: classNameSection
+      className: classNameSection,
+      ...(shouldAddUidAttr
+        ? makeDataAttr({
+            name: "id",
+            value: uuid
+          })
+        : {})
     };
 
     const content = (

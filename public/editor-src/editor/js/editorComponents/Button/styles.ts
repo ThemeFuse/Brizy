@@ -4,6 +4,7 @@ import { DeviceMode, DynamicStylesProps } from "visual/types";
 import { renderStyles } from "visual/utils/cssStyle";
 import { OutputStyle, Styles } from "visual/utils/cssStyle/types";
 import { defaultValueValue } from "visual/utils/onChange";
+import { getTooltipStyles } from "../tools/Tooltip/styles";
 import { Value } from "./types";
 
 interface BaseData extends DynamicStylesProps<Value> {
@@ -144,5 +145,10 @@ export function styleButtonFillAnimation(
       }
   };
 
+  return renderStyles({ ...data, styles });
+}
+
+export function styleTooltip(data: DynamicStylesProps<Value>): OutputStyle {
+  const styles = getTooltipStyles();
   return renderStyles({ ...data, styles });
 }

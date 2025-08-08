@@ -347,10 +347,14 @@ const init = (item: HTMLElement, root: HTMLElement): void => {
   const reference = getPopperReference(item, settings, device);
 
   if (reference) {
+    const isStaticMenu = item.closest(".brz-section__header-type--static");
+
     const popperSettings = {
       placement: getPopperPlacement(settings, device),
-      modifiers: getPopperModifiers(settings, device)
+      modifiers: getPopperModifiers(settings, device),
+      ...(!isStaticMenu ? { strategy: "fixed" as const } : {})
     };
+
     const popper: PopperInstance = CreatePopper(
       reference,
       megaMenu,

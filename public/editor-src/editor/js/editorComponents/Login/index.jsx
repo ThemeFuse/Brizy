@@ -275,9 +275,13 @@ class Login extends EditorComponent {
           : {
               type: "submit",
               name: "wp-submit"
-            }
+            },
+        renderer: {
+          disableTooltip: true
+        }
       }
     });
+
     return (
       <div className="brz-login-form__field brz-login__item-button">
         <div className="brz-login__item brz-align-self-xs-end">

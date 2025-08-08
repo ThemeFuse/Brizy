@@ -522,6 +522,7 @@ class ControlInner extends Component<Props, State> {
                   onChange={({ target: { value } }): void =>
                     this.setState({ inputValue: value })
                   }
+                  {...makeBzelmAttr("add-elements")}
                 />
                 <div className="brz-ed-sidebar__button-search">
                   <EditorIcon icon="nc-search" />

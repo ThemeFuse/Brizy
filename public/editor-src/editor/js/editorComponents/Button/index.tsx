@@ -1,5 +1,5 @@
 import classnames from "classnames";
-import React, { ReactElement, ReactNode, RefObject } from "react";
+import React, { ReactElement, ReactNode, RefObject, createRef } from "react";
 import { omit } from "timm";
 import BoxResizer from "visual/component/BoxResizer";
 import { Patch } from "visual/component/BoxResizer/types";
@@ -10,34 +10,50 @@ import { getHoverAnimationOptions } from "visual/component/HoverAnimation/utils"
 import Link from "visual/component/Link";
 import { ThemeIcon } from "visual/component/ThemeIcon";
 import Toolbar from "visual/component/Toolbar";
+import { Tooltip } from "visual/component/Tooltip";
+import { TooltipImperativeProps } from "visual/component/Tooltip/types";
 import {
-  getHoverClassName,
-  hasSizing,
-  isButtonFillHover
-} from "visual/editorComponents/Button/utils";
+  getToolbarPlacement,
+  getTooltipPlacement,
+  shouldUpdateTooltipByPatch
+} from "visual/component/Tooltip/utils";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
-import EditorComponent from "visual/editorComponents/EditorComponent";
+import EditorComponent, {
+  Props as PrevProps
+} from "visual/editorComponents/EditorComponent";
 import { shouldRenderPopup } from "visual/editorComponents/tools/Popup";
+import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import { isStory } from "visual/providers/EditorModeProvider";
 import { isEditor } from "visual/providers/RenderProvider";
 import { blocksDataSelector } from "visual/redux/selectors";
 import { Block } from "visual/types/Block";
+import { makeDataAttr } from "visual/utils/i18n/attribute";
 import { getCSSId } from "visual/utils/models/cssId";
 import { getLinkData } from "visual/utils/models/link";
-import { defaultValueValue } from "visual/utils/onChange";
+import { defaultValueKey, defaultValueValue } from "visual/utils/onChange";
 import { makeOptionValueToAnimation } from "visual/utils/options/utils/makeValueToOptions";
 import { handleLinkChange } from "visual/utils/patch/Link";
 import { attachRefs } from "visual/utils/react";
+import { DESKTOP } from "visual/utils/responsiveMode";
 import * as State from "visual/utils/stateMode";
+import { camelCase } from "visual/utils/string";
 import * as Str from "visual/utils/string/specs";
 import { Literal } from "visual/utils/types/Literal";
 import { MValue } from "visual/utils/value";
+import * as tooltipSidebarConfig from "../tools/Tooltip/tooltipSidebar";
+import * as tooltipToolbarConfig from "../tools/Tooltip/tooltipToolbar";
 import { Wrapper } from "../tools/Wrapper";
 import defaultValue from "./defaultValue.json";
 import * as sidebarConfig from "./sidebar";
-import { style, styleButtonFillAnimation, styleIcon } from "./styles";
+import {
+  style,
+  styleButtonFillAnimation,
+  styleIcon,
+  styleTooltip
+} from "./styles";
 import * as toolbarConfig from "./toolbar";
 import { PatchValue, Props, Value } from "./types";
+import { getHoverClassName, hasSizing, isButtonFillHover } from "./utils";
 
 const resizerPoints = [
   "topLeft",
@@ -63,13 +79,67 @@ export default class Button extends EditorComponent<Value, Props> {
   static defaultValue = defaultValue;
   static experimentalDynamicContent = true;
 
-  static get componentId(): "Button" {
-    return "Button";
+  tooltipRef = createRef<TooltipImperativeProps>();
+  tooltipReferenceElement: Element | null = null;
+  isInitialisedTooltip = false;
+
+  static get componentId(): ElementTypes.Button {
+    return ElementTypes.Button;
   }
 
-  patchValue(patch: PatchValue, meta = {}) {
-    const link = handleLinkChange(patch);
-    super.patchValue({ ...patch, ...link }, meta);
+  componentDidUpdate(prevProps: PrevProps<Value, Props>) {
+    const { enableTooltip } = this.props.dbValue;
+    const { enableTooltip: prevEnableTooltip } = prevProps.dbValue;
+
+    if (enableTooltip === "on" && prevEnableTooltip !== enableTooltip) {
+      this.tooltipRef.current?.openTooltip();
+    }
+  }
+
+  handleButtonChange(patch: PatchValue): PatchValue {
+    const { updateWidthPrefixBySizeChange } = this.props;
+
+    const linkPatch = handleLinkChange(patch);
+
+    const extra = {};
+
+    if (
+      updateWidthPrefixBySizeChange === "%" ||
+      updateWidthPrefixBySizeChange === "px"
+    ) {
+      const device = this.getDeviceMode();
+      const dvk = (key: string) =>
+        defaultValueKey({ key, device, state: "normal" });
+
+      const sizeKey = dvk("size");
+      const size = patch[sizeKey];
+
+      if (size && size !== "custom") {
+        const prefix = device === DESKTOP ? "" : device;
+
+        Object.assign(extra, {
+          [camelCase([prefix, "paddingRLSuffix"])]:
+            updateWidthPrefixBySizeChange
+        });
+      }
+    }
+
+    return {
+      ...linkPatch,
+      ...extra
+    };
+  }
+
+  patchValue(patch: PatchValue, meta = {}): void {
+    const button = this.handleButtonChange(patch);
+
+    const needToUpdateTooltip = shouldUpdateTooltipByPatch(patch);
+
+    if (needToUpdateTooltip) {
+      this.tooltipRef.current?.updatePopper();
+    }
+
+    super.patchValue({ ...patch, ...button }, meta);
   }
 
   handleResizerChange = (patch: Patch): void => this.patchValue(patch);
@@ -104,6 +174,29 @@ export default class Button extends EditorComponent<Value, Props> {
     );
   }
 
+  handleToggleTooltip = () => {
+    this.tooltipRef.current?.toggleTooltip();
+  };
+
+  handleUpdateTooltipReference(el: Element | null) {
+    const { enableTooltip } = this.getValue();
+
+    if (enableTooltip !== "on") {
+      return;
+    }
+
+    if (!this.isInitialisedTooltip) {
+      this.isInitialisedTooltip = true;
+      // We call forceUpdate because updating the ref alone doesn't trigger a re-render,
+      // so Popper doesn't get the updated reference element.
+      this.forceUpdate();
+    }
+
+    if (el) {
+      this.tooltipReferenceElement = el;
+    }
+  }
+
   renderSubmit(
     v: Value,
     vs: Value,
@@ -111,11 +204,13 @@ export default class Button extends EditorComponent<Value, Props> {
     content: ReactElement,
     refs: (RefObject<HTMLDivElement> | null)[]
   ): ReactElement {
-    const { cssClass, customClassName, tabsState, type } = v;
+    const { cssClass, customClassName, tabsState, type, enableTooltip } = v;
     const device = this.getDeviceMode();
     const state = State.mRead(tabsState);
     const id = getCSSId<Value>(v);
     const populationClassName = Str.mRead(cssClass || customClassName);
+
+    const isTooltipEnabled = enableTooltip === "on";
 
     const className = classnames(
       "brz-btn",
@@ -145,12 +240,19 @@ export default class Button extends EditorComponent<Value, Props> {
           className,
           ref: (el) => {
             attachRefs(el, refs);
+            this.handleUpdateTooltipReference(el);
           }
         })}
         component={componentType}
         attributes={{
           ...this.props.attributes,
-          ...(id && { id })
+          ...(id && { id }),
+          ...(isTooltipEnabled
+            ? makeDataAttr({
+                name: "tooltip-wrapper-id",
+                value: this.getId()
+              })
+            : {})
         }}
       >
         {hasSizing(v, device, state) && type !== "submit" ? (
@@ -176,7 +278,13 @@ export default class Button extends EditorComponent<Value, Props> {
     content: ReactNode,
     refs: (RefObject<HTMLDivElement> | null)[]
   ): ReactElement {
-    const { actionClosePopup, customClassName, cssClass, tabsState } = v;
+    const {
+      actionClosePopup,
+      customClassName,
+      cssClass,
+      tabsState,
+      enableTooltip
+    } = v;
     const config = this.getGlobalConfig();
 
     const state = State.mRead(tabsState);
@@ -185,6 +293,7 @@ export default class Button extends EditorComponent<Value, Props> {
     const id = getCSSId<Value>(v);
     const _className = Str.mRead(cssClass || customClassName);
     const hoverName = Str.read(this.dvv("hoverName")) ?? "none";
+    const isTooltipEnabled = enableTooltip === "on";
 
     const className = classnames(
       "brz-btn",
@@ -227,7 +336,17 @@ export default class Button extends EditorComponent<Value, Props> {
       target: linkData.target,
       rel: linkData.rel,
       className: className,
-      ...(id && { id })
+      ...(id && { id }),
+      ...(isTooltipEnabled
+        ? {
+            attr: {
+              ...makeDataAttr({
+                name: "tooltip-wrapper-id",
+                value: this.getId()
+              })
+            }
+          }
+        : {})
     };
 
     if (isEditor(this.props.renderContext)) {
@@ -245,9 +364,11 @@ export default class Button extends EditorComponent<Value, Props> {
           slide: linkData.slide,
           ref: (el) => {
             attachRefs(el, refs);
+            this.handleUpdateTooltipReference(el);
           }
         })}
         component={Link}
+        onClick={this.handleToggleTooltip}
       >
         {hasSizing(v, device, state) ? (
           <BoxResizer
@@ -335,13 +456,71 @@ export default class Button extends EditorComponent<Value, Props> {
     };
   }
 
+  renderTooltip(v: Value, vs: Value, vd: Value) {
+    const {
+      tooltipOffset,
+      tooltipText,
+      tooltipTriggerClick,
+      tooltipPlacement
+    } = v;
+
+    const classTooltip = this.css(
+      `${this.getComponentId()}-tooltip`,
+      `${this.getId()}-tooltip`,
+      styleTooltip({
+        v,
+        vs,
+        vd,
+        store: this.getReduxStore(),
+        contexts: this.getContexts()
+      })
+    );
+
+    return (
+      <Toolbar
+        {...this.makeToolbarPropsFromConfig2(
+          tooltipToolbarConfig,
+          tooltipSidebarConfig,
+          {
+            allowExtend: false
+          }
+        )}
+      >
+        {({ ref: tooltipToolbarRef }) => (
+          <Tooltip
+            overlay={tooltipText}
+            offset={tooltipOffset}
+            ref={this.tooltipRef}
+            openOnClick={tooltipTriggerClick === "on"}
+            placement={tooltipPlacement}
+            id={this.getId()}
+            contentRef={tooltipToolbarRef}
+            referenceElement={this.tooltipReferenceElement}
+            className={classTooltip}
+          />
+        )}
+      </Toolbar>
+    );
+  }
+
   renderForEdit(v: Value, vs: Value, vd: Value): ReactNode {
-    const { type, iconName, iconType, customCSS, tabsState } = v;
+    const {
+      type,
+      iconName,
+      iconType,
+      customCSS,
+      tabsState,
+      enableTooltip,
+      tooltipPlacement
+    } = v;
+
     const state = State.mRead(tabsState);
     const device = this.getDeviceMode();
 
+    const isTooltipEnabled = enableTooltip === "on";
     const _isEditor = isEditor(this.props.renderContext);
     const renderIcon = iconName && iconType;
+
     const content =
       hasSizing(v, device, state) && _isEditor && type !== "submit" ? (
         <div className="brz-btn--story-container">
@@ -366,6 +545,13 @@ export default class Button extends EditorComponent<Value, Props> {
       );
 
     const { hoverName, isHidden, animationId, options } = this.getHoverData(v);
+
+    const _tooltipPlacement = isTooltipEnabled
+      ? getTooltipPlacement(tooltipPlacement)
+      : undefined;
+
+    const mainToolbarPlacement = getToolbarPlacement(_tooltipPlacement);
+
     return (
       <>
         <HoverAnimation
@@ -377,11 +563,13 @@ export default class Button extends EditorComponent<Value, Props> {
         >
           <Toolbar
             {...this.makeToolbarPropsFromConfig2(toolbarConfig, sidebarConfig)}
+            placement={mainToolbarPlacement}
           >
             {({ ref: toolbarRef }) => (
               <CustomCSS selectorName={this.getId()} css={customCSS}>
                 {({ ref: cssRef }) => {
                   const refs = [toolbarRef, cssRef];
+
                   return type === "link"
                     ? this.renderLink(v, vs, vd, content, refs)
                     : this.renderSubmit(v, vs, vd, content, refs);
@@ -392,6 +580,7 @@ export default class Button extends EditorComponent<Value, Props> {
         </HoverAnimation>
         {shouldRenderPopup(v, blocksDataSelector(this.getReduxState())) &&
           this.renderPopups()}
+        {isTooltipEnabled && this.renderTooltip(v, vs, vd)}
       </>
     );
   }

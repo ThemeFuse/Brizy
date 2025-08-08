@@ -23,7 +23,7 @@ export const makeScripts = (
   const libsSelectors = new Set<string>();
   const libsMap: AssetLibsMap[] = [];
 
-  const { pro: proConfig } = config;
+  const { editorVersion, pro: proConfig } = config;
 
   // added previewJS
   const main: Asset = {
@@ -78,6 +78,7 @@ export const makeScripts = (
   const scripts: MakeScripts = {
     free: {
       main,
+      version: editorVersion,
       generic,
       libsMap,
       libsSelectors: [...libsSelectors]
@@ -133,6 +134,7 @@ export const makeScripts = (
 
     scripts.pro = {
       main: mainPro,
+      version: proConfig.version ?? "",
       generic: genericPro,
       libsMap: libsProMap,
       libsSelectors: [...libsProSelectors]

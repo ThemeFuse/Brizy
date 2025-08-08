@@ -8,7 +8,7 @@ import { withMigrations } from "visual/editorComponents/tools/withMigrations";
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import { makePlaceholder } from "visual/utils/dynamicContent";
 import { uuid } from "visual/utils/uuid";
-import { migrations } from "../migrations";
+import { migrations } from "../migrations/Form2Field";
 import Form2FieldItems from "./Items";
 import defaultValue from "./defaultValue.json";
 import * as sidebar from "./sidebar";

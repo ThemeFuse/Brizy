@@ -100,10 +100,11 @@ export function getColorToolbar(
 export function getColorPalette(
   palette: string,
   hex: string,
+  opacity: number,
   config: ConfigCommon
 ): string {
   if (palette) {
-    return `var(${makeStylePaletteCSSVar(palette, config)})`;
+    return `rgba(var(${makeStylePaletteCSSVar(palette, config)}), ${opacity})`;
   }
 
   return hex;

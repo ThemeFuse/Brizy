@@ -1,3 +1,4 @@
+import { Caption } from "@brizy/builder-icons/src";
 import classnames from "classnames";
 import React from "react";
 import { mergeDeep } from "timm";
@@ -259,12 +260,15 @@ class Video extends EditorComponent {
       ratio,
       type,
       video,
-      lightbox
+      lightbox,
+      caption
     } = v;
     const config = this.getGlobalConfig();
 
     const customVideoFile =
       type === "custom" ? customFileUrl(custom, config) : video;
+
+    const captionUrl = caption ? customFileUrl(caption, config) : null;
 
     const classNameWrapper = classnames(
       "video-wrapper",
@@ -321,6 +325,11 @@ class Video extends EditorComponent {
 
                 <span className="brz-video-custom-total-time">0:00</span>
               </div>
+              {captionUrl && (
+                <span className="brz-media-caption">
+                  <Caption className="brz-icon-svg" />
+                </span>
+              )}
               <div className="brz-video-custom-volume">
                 <div className="brz-video-custom-fullscreen-btn">
                   <ThemeIcon
@@ -360,8 +369,13 @@ class Video extends EditorComponent {
               data-autoplay={this.getAutoplay(v)}
               src={customVideoFile}
               playsInline
+              crossOrigin="anonymous"
               {...customVideoAttr}
-            />
+            >
+              {captionUrl && (
+                <track kind="captions" src={captionUrl} label="Captions" />
+              )}
+            </video>
           )}
         </div>
       </>

@@ -1,22 +1,12 @@
-import { ElementModel } from "visual/component/Elements/Types";
-import { GetItems } from "visual/editorComponents/EditorComponent/types";
+import type { GetItems } from "visual/editorComponents/EditorComponent/types";
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
 import { getColorToolbar } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
 import { getDynamicContentOption } from "visual/utils/options";
 import { HOVER, NORMAL } from "visual/utils/stateMode";
-import { ToolbarItemType } from "../ToolbarItemType";
-
-export interface Value extends ElementModel {
-  facebookType: string;
-  facebookEmbedType: string;
-
-  borderColorHex: string;
-  borderColorPalette: string;
-  boxShadowColorHex: string;
-  boxShadowColorPalette: string;
-}
+import type { ToolbarItemType } from "../ToolbarItemType";
+import type { Value } from "./types";
 
 export const getItems: GetItems<Value> = ({ v, device, state, context }) => {
   const dvv = (key: string) => defaultValueValue({ v, key, device, state });
@@ -27,7 +17,6 @@ export const getItems: GetItems<Value> = ({ v, device, state, context }) => {
   const embedType = facebookType === "embed";
   const buttonType = facebookType === "button";
   const pageType = facebookType === "page";
-  const groupType = facebookType === "group";
 
   const postEmbedType = facebookEmbedType !== "post";
   const videoEmbedType = facebookEmbedType !== "video";
@@ -59,8 +48,6 @@ export const getItems: GetItems<Value> = ({ v, device, state, context }) => {
         return t("Embed");
       case "page":
         return t("Page");
-      case "group":
-        return t("Group");
     }
   };
 
@@ -85,7 +72,7 @@ export const getItems: GetItems<Value> = ({ v, device, state, context }) => {
           }
         },
         {
-          id: pageType ? "pageWidth" : "width",
+          id: "pageWidth",
           label: t("Width"),
           type: "slider",
           disabled: embedType || buttonType,
@@ -217,8 +204,7 @@ export const getItems: GetItems<Value> = ({ v, device, state, context }) => {
                   choices: [
                     { title: t("Button"), value: "button" },
                     { title: t("Embed"), value: "embed" },
-                    { title: t("Page"), value: "page" },
-                    { title: t("Group"), value: "group" }
+                    { title: t("Page"), value: "page" }
                   ]
                 },
                 {
@@ -289,25 +275,6 @@ export const getItems: GetItems<Value> = ({ v, device, state, context }) => {
                     { title: t("Timeline"), value: "timeline" },
                     { title: t("Events"), value: "events" },
                     { title: t("Messages"), value: "messages" }
-                  ]
-                },
-                {
-                  id: "facebookGroupHref",
-                  label: t("Link"),
-                  type: "inputText",
-                  disabled: !groupType,
-                  devices: "desktop",
-                  population: linkDC
-                },
-                {
-                  id: "skin",
-                  label: t("Skin"),
-                  type: "select",
-                  devices: "desktop",
-                  disabled: !groupType,
-                  choices: [
-                    { title: t("Light"), value: "light" },
-                    { title: t("Dark"), value: "dark" }
                   ]
                 }
               ]
@@ -395,20 +362,6 @@ export const getItems: GetItems<Value> = ({ v, device, state, context }) => {
                   label: t("Show Friend's Faces"),
                   type: "switch",
                   disabled: !pageType,
-                  devices: "desktop"
-                },
-                {
-                  id: "showSocialContext",
-                  label: t("Show Social Context"),
-                  type: "switch",
-                  disabled: !groupType,
-                  devices: "desktop"
-                },
-                {
-                  id: "showMetaData",
-                  label: t("Show Meta Data"),
-                  type: "switch",
-                  disabled: !groupType,
                   devices: "desktop"
                 }
               ]
@@ -506,8 +459,8 @@ export const getItems: GetItems<Value> = ({ v, device, state, context }) => {
         }
       ]
     },
-    ...(groupType || pageType ? settings() : disabledToolbarSettings()),
-    ...(groupType || pageType ? disableAdvancedSettings() : advancedSettings()),
+    ...(pageType ? settings() : disabledToolbarSettings()),
+    ...(pageType ? disableAdvancedSettings() : advancedSettings()),
     ...(embedType ? disableAlign() : pageType ? pageAlign() : align())
   ];
 };
