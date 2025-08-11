@@ -1,0 +1,19 @@
+@mixin media-caption {
+  .brz-media-caption {
+    display: flex;
+    position: relative;
+    font-size: 20px;
+    margin-inline-start: 15px;
+    cursor: pointer;
+
+    &-active::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: -5px;
+      height: 2px;
+      background-color: currentColor;
+    }
+  }
+}

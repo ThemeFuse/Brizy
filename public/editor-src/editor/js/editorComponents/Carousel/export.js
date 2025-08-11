@@ -1,11 +1,16 @@
 import $ from "jquery";
 import { initHoverAnimation } from "visual/libs/hoveranimation/utils";
+import {
+  attachSliderControls,
+  makePausePlayItem
+} from "../../utils/export/slider";
 
 const observer = new IntersectionObserver(
   (entries) => {
     entries.forEach((entry) => {
       const $slick = $(entry.target);
-      if (entry.isIntersecting) {
+      const isPaused = $slick.attr("data-slider-paused") === "true";
+      if (entry.isIntersecting && !isPaused) {
         $slick.slick("slickPlay");
       } else {
         $slick.slick("slickPause");
@@ -20,12 +25,23 @@ export default function ($node) {
   const makeArrow = (node) => {
     const $svg = $(node).children(".brz-icon-svg").removeClass("brz-hidden");
 
+    if (!$svg.length) return () => "";
     // Delete Svg
     $(node).children(".brz-icon-svg").remove();
 
     return (className) => {
       return `<div class="brz-slick-slider__arrow ${className}">${$svg[0].outerHTML}</div>`;
     };
+  };
+
+  const handleClickPlay = ($this) => {
+    $this.slick("slickPlay");
+    $this.attr("data-slider-paused", "false");
+  };
+
+  const handleClickPause = ($this) => {
+    $this.slick("slickPause");
+    $this.attr("data-slider-paused", "true");
   };
 
   $node.find(".brz-carousel__slider").each(function () {
@@ -44,6 +60,7 @@ export default function ($node) {
     const transitionSpeed = data.transitionSpeed;
     const swipe = data.swipe;
     const responsive = JSON.parse(decodeURIComponent(data.responsive));
+    const playPauseItem = makePausePlayItem(_this);
 
     $this.on("init", function () {
       initHoverAnimation(_this);
@@ -68,6 +85,17 @@ export default function ($node) {
           }
         });
       });
+
+      const $dots = $this.find(".brz-slick-slider__dots");
+      if ($dots.length && playPauseItem) {
+        $dots.append(playPauseItem);
+        attachSliderControls(
+          $this,
+          playPauseItem,
+          handleClickPause,
+          handleClickPlay
+        );
+      }
     });
 
     const getArrow = makeArrow(_this);

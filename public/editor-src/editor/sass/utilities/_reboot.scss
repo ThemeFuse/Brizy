@@ -615,3 +615,8 @@ svg:not(:root) {
   -ms-appearance: none;
   appearance: none;
 }
+
+// Fix Accessibility widget position
+.asw-menu-btn {
+  bottom: 60px !important;
+}

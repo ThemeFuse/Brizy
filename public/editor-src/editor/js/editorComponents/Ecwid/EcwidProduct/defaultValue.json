@@ -1367,6 +1367,10 @@
     "checkbox2BgColorOpacity": 1,
     "checkbox2BgColorPalette": "color7",
 
+    "checkbox2CheckmarkColorHex": "#FFFFFF",
+    "checkbox2CheckmarkColorOpacity": 1,
+    "checkbox2CheckmarkColorPalette": "",
+
     "checkbox2Spacing": 10,
     "checkbox2SpacingSuffix": "px",
 

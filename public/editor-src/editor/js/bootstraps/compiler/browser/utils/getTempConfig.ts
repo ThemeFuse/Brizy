@@ -1,12 +1,16 @@
-import { ThirdPartyComponentsHosts } from "visual/global/Config/types/configs/ThirdParty";
+import { Arr, Err, Obj, Str, pipe } from "@brizy/readers";
 import { mPipe, parseStrict } from "fp-utilities";
-import { Err, Str, Arr, Obj, pipe } from "@brizy/readers";
+import { Media } from "visual/global/Config/types/configs/ConfigCommon";
+import { ThirdPartyComponentsHosts } from "visual/global/Config/types/configs/ThirdParty";
 
 interface TempConfig {
   thirdPartyComponentHosts?: ThirdPartyComponentsHosts;
   urls?: {
     templateIcons?: string;
     compileTemplateIcons?: string;
+  };
+  api?: {
+    media?: Pick<Media, "mediaResizeUrl">;
   };
 }
 
@@ -46,10 +50,21 @@ const parseCompileIcons = mPipe(
   Str.read
 );
 
+const parseMediaResizeUrl = mPipe(
+  Obj.read,
+  Obj.readKey("api"),
+  Obj.read,
+  Obj.readKey("media"),
+  Obj.read,
+  Obj.readKey("mediaResizeUrl"),
+  Str.read
+);
+
 export function getTempConfig(config: unknown): TempConfig {
   const thirdPartyComponentHosts = parse(config);
   const templateIcons = parseIcons(config);
   const compileTemplateIcons = parseCompileIcons(config);
+  const mediaResizeUrl = parseMediaResizeUrl(config);
 
   return thirdPartyComponentHosts
     ? {
@@ -57,6 +72,11 @@ export function getTempConfig(config: unknown): TempConfig {
         urls: {
           templateIcons: templateIcons,
           compileTemplateIcons: compileTemplateIcons
+        },
+        api: {
+          media: {
+            mediaResizeUrl
+          }
         }
       }
     : {};

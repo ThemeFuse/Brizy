@@ -20,8 +20,27 @@ class Brizy_Editor_CompiledSectionManager {
 			if ( $block['html'] == '' ) {
 				$block['html']   = $this->getSection( $block['id'] )['html'];
 				$block['assets'] = $this->getSection( $block['id'] )['assets'];
+				continue;
 			}
 			$block['html'] = Brizy_SiteUrlReplacer::hideSiteUrl( $this->sanitizeHtml( $block['html'], $capabilityIgnore ) );
+
+			// hide the site url in the assets
+			if ( isset( $block['assets']['freeStyles']['generic'] )  ) {
+				foreach ( $block['assets']['freeStyles']['generic'] as &$asset ) {
+					if( $asset['content']['type'] === 'inline' || $asset['content']['type'] === 'code')
+					{
+						$asset['content']['content'] = Brizy_SiteUrlReplacer::hideSiteUrl( $asset['content']['content'] );
+					}
+				}
+			}
+			if ( isset( $block['assets']['proStyles']['generic'] )  ) {
+				foreach ( $block['assets']['proStyles']['generic'] as &$asset ) {
+					if( $asset['content']['type'] === 'inline' || $asset['content']['type'] === 'code')
+					{
+						$asset['content']['content'] = Brizy_SiteUrlReplacer::hideSiteUrl( $asset['content']['content'] );
+					}
+				}
+			}
 		}
 		$this->data['blocks'] = $compiledSections['blocks'];
 	}

@@ -21,6 +21,8 @@
   "style": {
     "horizontalAlign": "left",
 
+    "multiStepBtnHorizontalAlign": "center",
+
     "label": "off",
     "placeholder": "on",
 
@@ -85,6 +87,9 @@
     "tempMobilePaddingTopSuffix": "px",
     "tempMobilePaddingRightSuffix": "px",
     "tempMobilePaddingBottomSuffix": "px",
-    "tempMobilePaddingLeftSuffix": "px"
+    "tempMobilePaddingLeftSuffix": "px",
+
+    "msButtonsSpacing": 10,
+    "msButtonsSpacingSuffix": "px"
   }
 }

@@ -58,7 +58,8 @@ import type { Meta, Patch, Props, Value } from "./types";
 import {
   JustifySettings,
   breakpoints,
- getRowHeight, getSpacing,
+  getRowHeight,
+  getSpacing,
   imagesSrc,
   makeOptionValueToSettings,
   multiUpload

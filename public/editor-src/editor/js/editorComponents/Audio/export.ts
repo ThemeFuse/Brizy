@@ -75,6 +75,33 @@ export default function ($node: JQuery): void {
     });
   };
 
+  const updateCaptions = (captionDiv: HTMLElement, track: HTMLTrackElement) => {
+    const activeCues = track.track.activeCues;
+    if (activeCues && activeCues.length > 0) {
+      const cue = activeCues[0] as VTTCue;
+      captionDiv.textContent = cue.text;
+    } else {
+      captionDiv.textContent = "";
+    }
+  };
+
+  const toggleCaptions = (
+    captionBtn: HTMLElement,
+    track: HTMLTrackElement,
+    captionDiv: HTMLElement
+  ) => {
+    const trackMode = track.track.mode;
+
+    if (trackMode === "hidden") {
+      track.track.mode = "disabled";
+    } else {
+      track.track.mode = "hidden";
+    }
+
+    captionBtn.classList.toggle("brz-media-caption-active");
+    updateCaptions(captionDiv, track);
+  };
+
   window.Brz.on("elements.popup.open", (popup: HTMLElement) => {
     showSoundCloud(popup);
   });
@@ -103,6 +130,10 @@ export default function ($node: JQuery): void {
       const currentTimeNode = item.querySelector(".brz-audio-current-time");
       const totalTimeNode = item.querySelector(".brz-audio-total-time");
       const playPauseBtnNode = item.querySelector(".brz-audio-play-pause-btn");
+      const captionBtnNode =
+        item.querySelector<HTMLElement>(".brz-media-caption");
+      const trackNode = item.querySelector("track");
+      const captionDiv = item.querySelector<HTMLElement>(".brz-audio-caption");
 
       const stopPreviousTrack = (item: Element): void => {
         const elementsToStop: Element[] = Array.from(
@@ -141,6 +172,10 @@ export default function ($node: JQuery): void {
         const currentTime = audioTarget.currentTime;
         const duration = audioTarget.duration;
         const progressPercent = (currentTime / duration) * 100;
+
+        if (captionDiv && trackNode) {
+          updateCaptions(captionDiv, trackNode);
+        }
 
         if (sliderNode && currentTimeNode) {
           sliderNode.style.width = `${progressPercent.toFixed(2)}%`;
@@ -208,6 +243,14 @@ export default function ($node: JQuery): void {
           }
         }
       });
+
+      if (captionBtnNode && trackNode && captionDiv) {
+        trackNode.track.mode = "disabled";
+
+        captionBtnNode.addEventListener("click", () => {
+          toggleCaptions(captionBtnNode, trackNode, captionDiv);
+        });
+      }
     }
   });
 }

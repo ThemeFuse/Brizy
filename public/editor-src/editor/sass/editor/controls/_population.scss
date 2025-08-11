@@ -126,12 +126,12 @@
         box-shadow: 0 1px 6px 0
           var(--picker__select__option-box-shadow, rgba(0, 0, 0, 0.5));
         background-color: var(--inputs-bg, #383e48);
-        width: 100%;
+        min-width: $control__lg-width;
 
         .brz-control__select-option {
           border-bottom: 1px solid
             var(--toolbars-icons-separators, rgba(255, 255, 255, 0.07)) !important;
-          max-width: $control__lg-width;
+          min-width: $control__lg-width;
         }
       }
 
@@ -146,13 +146,13 @@
   }
 
   .brz-ed-control__multiSelect__menu {
-    max-width: $control__lg-width;
+    min-width: $control__lg-width;
 
     .brz-ed-control__multiSelect__option {
       text-overflow: ellipsis;
       overflow: hidden;
       white-space: nowrap;
-      max-width: $control__lg-width;
+      min-width: $control__lg-width;
       width: 100%;
       display: inline-block;
     }
@@ -168,7 +168,7 @@
     padding-top: 10px;
     padding-inline-end: 15px;
     padding-bottom: 15px;
-    padding-inline-start: 8px ;
+    padding-inline-start: 8px;
   }
 }
 

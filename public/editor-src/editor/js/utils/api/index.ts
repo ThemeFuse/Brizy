@@ -52,6 +52,7 @@ import {
   AutoSave,
   ConditionalTypesData,
   ConfigCommon,
+  ExportBlockURLData,
   MenuSimple,
   Sidebar
 } from "visual/global/Config/types/configs/ConfigCommon";
@@ -2203,3 +2204,25 @@ export const deleteAccount: DeleteAccount = async (id, config) => {
   });
 };
 //#endregion
+
+export const getExportBlockUrl = ({
+  isPro,
+  config,
+  id,
+  type
+}: ExportBlockURLData & {
+  config: ConfigCommon;
+}): string => {
+  const { api } = config;
+  const { getExportBlockUrl } = api?.block ?? {};
+
+  if (typeof getExportBlockUrl !== "function") {
+    throw new Error("No getExportBlockUrl handler found.");
+  }
+
+  return getExportBlockUrl({
+    isPro,
+    id,
+    type
+  });
+};

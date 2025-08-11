@@ -4,7 +4,7 @@ Tags: page builder, website builder, brizy, editor, visual editor, unyson, wysiw
 Requires at least: 4.5
 Tested up to: 6.8.2
 Requires PHP: 7.2.24
-Stable tag: 2.7.4
+Stable tag: 2.7.5
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -24,7 +24,7 @@ A page builder that is fast & easy, [Brizy](https://brizy.io/) is a next-gen web
 ![Clutter free](https://brizy.io/wp-content/uploads/2018/04/Clutter-free.gif)
 
 = Smart & clutter free =
-Most page builder crowd all the options for a specific element in remote sidebars, making it hard to focus on the task at hand. Our website builder shows only what's needed, front & centre, close to the element you are editing. 
+Most page builder crowd all the options for a specific element in remote sidebars, making it hard to focus on the task at hand. Our website builder shows only what's needed, front & centre, close to the element you are editing.
 
 ![Drag & Drop](https://brizy.io/wp-content/uploads/2018/04/Drag-Drop.gif)
 
@@ -116,6 +116,10 @@ Don't worry if you make a mistake or delete something that you shouldn't have. W
 - [Request a feature](https://github.com/ThemeFuse/Brizy/issues)
 - [Submit an issue](https://github.com/ThemeFuse/Brizy/issues)
 
+= How can I report security bugs? =
+
+You can report security bugs through the Patchstack Vulnerability Disclosure Program. The Patchstack team helps validate, triage and handle any security vulnerabilities. [Report a security vulnerability.](https://patchstack.com/database/vdp/e5a90be1-c3fc-4382-b6f7-a309bd2081ee)
+
 
 == Screenshots ==
 
@@ -132,6 +136,34 @@ Don't worry if you make a mistake or delete something that you shouldn't have. W
 11. **Resize columns by dragging the handle that appears in between**
 
 == Changelog ==
+
+= 2.7.5 - 2025-08-11 =
+* New: Tooltip option for Icon, Button and Image elements
+* New: Role and ARIA-hidden attributes for Icon element (accessibility improvement)
+* New: Focus indicators for buttons, links and form items (accessibility improvement)
+* New: Captions support for video and audio elements
+* New: Title display for uploaded audio tracks
+* New: Stop-animation option for Carousel and Section Slider
+* New: Multi-step form – set custom width for navigation buttons
+* New: Form validation errors for empty fields and invalid emails
+* New: Added a third-party container for integrations
+* New: Context menu now closes reliably after use
+* New: White Label – “Brizy” name is hidden in exported block/layout JSON files
+* Improved: Video element height handling
+* Improved: Image element – better width/height calculation
+* Improved: Image element – smoother re-render process
+* Improved: Pass media configuration to browser compiler
+* Improved: Added utility function to get image source for third-party components
+* Improved: Select dropdown positioning
+* Improved: Widget positioning in accessibility mode
+* Improved: Rich-text – consistent “em” font size in dynamic content
+* Improved: Split some visual editor components into editor/preview files for faster loading, plus cleaned up imports
+* Fixed: CSS – styleBgColorHex now works correctly with palette colours
+* Fixed: Form – fields now receive focus correctly
+* Fixed: Internal Link – search now finds items correctly
+* Fixed: Sections – smoother scrolling between sections in Blocksy theme
+* Fixed: Row – reverse columns option works as expected
+* Fixed: Image links now update correctly when moving a staging site to production
 
 = 2.7.4 - 2025-07-23 =
 * Fixed: reverse column
@@ -253,17 +285,17 @@ Don't worry if you make a mistake or delete something that you shouldn't have. W
 * Fixed: Deleting images on Media Gallery
 
 = 2.6.11 - 2025-02-18 =
-* Fixed: Gallery with layout justify 
+* Fixed: Gallery with layout justify
 
 = 2.6.10 - 2025-02-11
 * Fixed: SVG attachment creation
 * Fixed: added a security fix on API endpoint
 
 = 2.6.9 - 2025-01-30 =
-* Fixed: Image upload 
-* Fixed: Importing starter template erases code snippet 
+* Fixed: Image upload
+* Fixed: Importing starter template erases code snippet
 * Fixed: Global block code gets added to SEO description
-* Fixed: Images are not responsive 
+* Fixed: Images are not responsive
 * Fixed: Blurry Image
 
 = 2.6.8 - 2025-01-16 =
@@ -289,22 +321,22 @@ Don't worry if you make a mistake or delete something that you shouldn't have. W
 * Fixed: Invalidate cached image URLs after site migration.
 
 = 2.6.0 - 2024-11-12 =
-* New: Added video "URL" option for the Playlist element 
-* New: Added "Blending Mode" styling option for the Image element 
-* New: Ability to add multi-line text in one Buttons 
-* New: Add mask on Video 
-* New:: Added decimal sizes for VW, EM, and REM font size option 
-* Fixed: Publish button not available on private pages 
+* New: Added video "URL" option for the Playlist element
+* New: Added "Blending Mode" styling option for the Image element
+* New: Ability to add multi-line text in one Buttons
+* New: Add mask on Video
+* New:: Added decimal sizes for VW, EM, and REM font size option
+* Fixed: Publish button not available on private pages
 * Fixed: When scrolling to a block, consider the height of the menu
 * Fixed: Global block renaming
-* Fixed: Paralax effect 
-* Fixed: Download saved blocks and layouts on Firefox 
-* Fixed: Some WP templates broke the view in Editor 
-* Fixed: Translate Press switcher is not displayed correctly 
-* Fixed: Images loading in editor 
-* Fixed: Warnings displayed on Brizy pages 
-* Improved: Color Hex code input 
-* Updated: Brizy-ui library 
+* Fixed: Paralax effect
+* Fixed: Download saved blocks and layouts on Firefox
+* Fixed: Some WP templates broke the view in Editor
+* Fixed: Translate Press switcher is not displayed correctly
+* Fixed: Images loading in editor
+* Fixed: Warnings displayed on Brizy pages
+* Improved: Color Hex code input
+* Updated: Brizy-ui library
 
 = 2.5.9 - 2024-10-21 =
 * Fixed: CSS styles in Hamburger Menu
@@ -313,7 +345,7 @@ Don't worry if you make a mistake or delete something that you shouldn't have. W
 * Improved: Page, Popup and Global Blocks dependencies
 
 = 2.5.8 - 2024-09-19 =
-* Fixed: Anchor link with dynamic ID placeholder 
+* Fixed: Anchor link with dynamic ID placeholder
 * Fixed: Missing Icon for help video
 * Fixed: Global typography - Missing generate method in config
 
@@ -423,44 +455,44 @@ Don't worry if you make a mistake or delete something that you shouldn't have. W
 
 = 2.4.40 - 2024-02-07 =
 * New: Help video functionality inside the builder
-* New: Added variable fonts 
-* New: Text highlight color  
+* New: Added variable fonts
+* New: Text highlight color
 * Improved: Custom Attributes position in the right sidebar
-* Improved: Include Global Style when saving layouts 
+* Improved: Include Global Style when saving layouts
 * Improved: Toolbar options arrow position on Rows
-* Improved: Extract React from editor build, and add this as standalone script in HTML 
+* Improved: Extract React from editor build, and add this as standalone script in HTML
 * Improved: Disable shorten/extend actions for AI text in some cases
-* Improved: Drag and drop for Icons and Buttons 
+* Improved: Drag and drop for Icons and Buttons
 * Improved: Tabs UI colors in right sidebar
-* Fixed: Progress bar comes out of the wrapper 
-* Fixed: Text Link option pasted value doesn't save if instantly closing toolbar 
+* Fixed: Progress bar comes out of the wrapper
+* Fixed: Text Link option pasted value doesn't save if instantly closing toolbar
 * Fixed: Video player won't extend on mobile on IOS
-* Fixed: Form Select arrow 
-* Fixed: Column align when Effects are enabled 
-* Fixed: Writing long texts in Form fields 
+* Fixed: Form Select arrow
+* Fixed: Column align when Effects are enabled
+* Fixed: Writing long texts in Form fields
 * Fixed: Video element crashed when imported with a block
-* Fixed: Column alignment doesn't work on Auto distribute option  
+* Fixed: Column alignment doesn't work on Auto distribute option
 * Fixed: Toolbar css issue when searching a Collection Type name
-* Fixed: Copy Styles don't apply for Dynamic Content Rich Text 
+* Fixed: Copy Styles don't apply for Dynamic Content Rich Text
 * Fixed: Background button and icon hover color didn't match preview
 * Fixed: Video background for blocks and columns unable to pause
 
 = 2.4.39 - 2024-01-17 =
- * New: Add Right Click Context Menu to Tabs Element 
- * New: Added tooltip message when saving draft pages 
+ * New: Add Right Click Context Menu to Tabs Element
+ * New: Added tooltip message when saving draft pages
  * Improved: Speed when searching pages URL for Links
  * Improved: Reduced file size of the Client API
  * Improved: UI Translation
- * Fixed: Link To option loses focus 
- * Fixed: Icon Background corner is not active 
+ * Fixed: Link To option loses focus
+ * Fixed: Icon Background corner is not active
  * Fixed: Save selected Page in Link option on any Text element
- * Fixed: Scroll in toolbara and typography is not working when parallax effect is set 
- * Fixed: Some Saved Blocks thumbnails are not displayed 
- * Fixed: Styling Dividers Show thin line on some mobile devices 
- * Fixed: Background color on hover "Get a pro Plan" button 
- * Fixed: Drag & Drop for Posts, Accordion Tab elements 
+ * Fixed: Scroll in toolbara and typography is not working when parallax effect is set
+ * Fixed: Some Saved Blocks thumbnails are not displayed
+ * Fixed: Styling Dividers Show thin line on some mobile devices
+ * Fixed: Background color on hover "Get a pro Plan" button
+ * Fixed: Drag & Drop for Posts, Accordion Tab elements
  * Fixed: Drag & Drop Lines remain active randomly
- * Fixed: Padding bottom for Video with Cover Image 
+ * Fixed: Padding bottom for Video with Cover Image
 
 = 2.4.38 - 2023-12-28 =
 * Fixed: Small layout fixes in templates
@@ -503,8 +535,8 @@ Don't worry if you make a mistake or delete something that you shouldn't have. W
 * Fixed: Accordion icon size issue on front end
 
 = 2.4.33 - 2023-12-01 =
-* Fixed: Buttons width in preview 
-* Fixed: Overlay was visible under gradient color 
+* Fixed: Buttons width in preview
+* Fixed: Overlay was visible under gradient color
 
 = 2.4.32 - 2023-11-29 =
 * New: Use system default fonts instead of Google or custom fonts
@@ -533,67 +565,67 @@ Don't worry if you make a mistake or delete something that you shouldn't have. W
 
 = 2.4.30 - 2023-11-06 =
 * New: Added title and tags for global blocks
-* New: Added delete option for form integrations 
-* Improved: Brizy UI Library in Editor 
+* New: Added delete option for form integrations
+* Improved: Brizy UI Library in Editor
 * Improved: Added notification for outdated Safari browser (version 16.3 and below)
-* Improved: Styling option for the Button element in responsive 
-* Improved: Removed Effects from the Text element in responsive 
+* Improved: Styling option for the Button element in responsive
+* Improved: Removed Effects from the Text element in responsive
 * Improved: Various option toolbars where the title of the label is too long
-* Improved: Added scroll navigation to active element when device mode changes 
-* Improved: Added GET, POST for Form webhooks 
-* Improved: Prefixed all data-attributes 
+* Improved: Added scroll navigation to active element when device mode changes
+* Improved: Added GET, POST for Form webhooks
+* Improved: Prefixed all data-attributes
 * Improved: Added width in PX for the Row element
 * Improved: Removed the terms & conditions checkbox from authorization form
-* Improved: Sidebar device mode titles 
+* Improved: Sidebar device mode titles
 * Improved: Google Fonts updated to the latest version
 * Fixed: HTML tags being removed from the Embed element
 * Fixed: Autoplay for video background in block slider
-* Fixed: Line element does not align if hover is set 
+* Fixed: Line element does not align if hover is set
 * Fixed: Random Google Fonts were not displayed in the preview
 * Fixed: Word break does not work correctly in the Alert element
 * Fixed: Background video on block slider does not resize correctly
 * Fixed: Updated Twitter icon to X
-* Fixed: Hide background preview for popups 
-* Fixed: XSS vulnerability to Text Editor 
+* Fixed: Hide background preview for popups
+* Fixed: XSS vulnerability to Text Editor
 * Fixed: Accordion tags not working correctly in preview
 * Fixed: Version checking for zip files when moving blocks or layouts from WP to Cloud
-* Fixed: Setup config data for help videos inside the builder 
-* Fixed: Added permission to download svg files 
-* Fixed: Default template display in preview 
-* Fixed: Jump to the second block by link 
+* Fixed: Setup config data for help videos inside the builder
+* Fixed: Added permission to download svg files
+* Fixed: Default template display in preview
+* Fixed: Jump to the second block by link
 * Fixed: Sites give a 500 Error when Brizy Free is updated to latest version on WordPress.com
-* Fixed: Gutenberg opens in iframe and the edit with brizy button is not displayed 
+* Fixed: Gutenberg opens in iframe and the edit with brizy button is not displayed
 
 = 2.4.29 - 2023-10-20 =
 * Fixed: Login element error when try to register
 
 = 2.4.28 - 2023-10-11 =
 * New: Added Internal Link on the link option for all elements
-* Improved: Removed getPage request added pageData inside config 
-* Improved: Sections container width was changed in 1170px 
+* Improved: Removed getPage request added pageData inside config
+* Improved: Sections container width was changed in 1170px
 * Improved: Changed icon for the Webhooks integration on forms
 * Improved: Removed the ability to change icons in responsive views for the icon element
-* Improved: Button width for default fill type 
-* Improved: Rename Tags titles in Saved blocks 
-* Improved: Rearrange Global typography styles 
+* Improved: Button width for default fill type
+* Improved: Rename Tags titles in Saved blocks
+* Improved: Rearrange Global typography styles
 * Improved: Responsive views change automatically when you select the devices in global typography styling
 * Fixed: Text color picker on dynamic elements
 * Fixed: Hover on certain elements that have motion effects set
 * Fixed: Drag and Drop was not working on images with link
-* Fixed: Lightbox preview 
-* Fixed: Toolbars label text length 
+* Fixed: Lightbox preview
+* Fixed: Toolbars label text length
 * Fixed: Dynamic text with gradient color was not visible
 * Fixed: Hover animation not working for the same item after sliding
 * Fixed: Column content align when scroll animation is applied
-* Fixed: Text space for ordered and unordered lists 
-* Fixed: The accordion element disappears after deleting tags 
+* Fixed: Text space for ordered and unordered lists
+* Fixed: The accordion element disappears after deleting tags
 * Fixed: Opacity for Gradient color does not work correctly
 * Fixed: Button Spacing incorrectly affects position and alignment
-* Fixed: Global styling not changing 
+* Fixed: Global styling not changing
 * Fixed: Audio element is still playing after the pop-up is closed
 * Fixes: Global colors for Image shadow
 * Fixes: Global colors for Image border
-* Fixed: Tab and Accordion elements heading get hidden under Sticky/Fixed menu on mobiles 
+* Fixed: Tab and Accordion elements heading get hidden under Sticky/Fixed menu on mobiles
 
 = 2.4.27 - 2023-08-08 =
 * New: Added 26 new premade design templates
@@ -728,14 +760,14 @@ Don't worry if you make a mistake or delete something that you shouldn't have. W
 = 2.4.13 - 2022-11-17 =
 * New: Added styles and more options for the Line element
 * New: Added paddings for Counter, Embed, Video, Map, Audio & Countdown elements
-* New: Added Mask option for the Image element 
-* New: Video element new options: Lazy Load, Privacy Mode, Suggested Videos, Muted 
-* Improved: Borders moved from toolbar to sidebar 
-* Improved: Color works under CSS variables in Text CSS classes 
-* Fixed: Column width changed when you click the column resize handle 
-* Fixed: Hover styles for Update toolbar icons 
+* New: Added Mask option for the Image element
+* New: Video element new options: Lazy Load, Privacy Mode, Suggested Videos, Muted
+* Improved: Borders moved from toolbar to sidebar
+* Improved: Color works under CSS variables in Text CSS classes
+* Fixed: Column width changed when you click the column resize handle
+* Fixed: Hover styles for Update toolbar icons
 * Fixed: Border global color on Tabs
-* Fixed: Hover styles on icons from Effects 
+* Fixed: Hover styles on icons from Effects
 * Fixed: Right Click on Row element
 * Fixed: Added new rule matches for current page
 
@@ -743,54 +775,54 @@ Don't worry if you make a mistake or delete something that you shouldn't have. W
 * Fixed: Images URL
 
 = 2.4.10 - 2022-10-11 =
-* Fixed: Using SVGs in Image element 
+* Fixed: Using SVGs in Image element
 * Fixed: Image URLs when using Sync
-* Fixed: Fonts when missing fontFamilyType 
-* Improved: Prefetch for Bunny Fonts 
+* Fixed: Fonts when missing fontFamilyType
+* Improved: Prefetch for Bunny Fonts
 * Improved: Rename Base category to Essentials in element panel
 * Improved: Grid elements moved to the top in the element panel
 
 = 2.4.9 - 2022-10-03 =
-* Fixed: Global Blocks rules for the Archive template 
+* Fixed: Global Blocks rules for the Archive template
 
 = 2.4.8 - 2022-09-28 =
 * Fixed: The crash when the WooComerce plugin is disabled.
 
 = 2.4.7 - 2022-09-28 =
-* Improved: Get fonts from https://fonts.bunny.net instead of https://fonts.googleapis.com to address GDPR font issues  
-* Improved: Saved blocks pagination 50 blocks 
-* Improved: Deleting request when you delete saved block or saved layout 
-* Improved: Removed Math.random for security 
+* Improved: Get fonts from https://fonts.bunny.net instead of https://fonts.googleapis.com to address GDPR font issues
+* Improved: Saved blocks pagination 50 blocks
+* Improved: Deleting request when you delete saved block or saved layout
+* Improved: Removed Math.random for security
 * Fixed: Map - popup is not closed when the cover on map is clicked
-* Fixed: Parallax in responsive mode 
+* Fixed: Parallax in responsive mode
 * Fixed: Menu element - Icon size option
 * Fixed: Product Archive template shows posts instead of products
 * Fixed: Wp Optimize plugin compatibility
 
 = 2.4.6 - 2022-09-17 =
-* New: Infinite animation option 
-* New: Added select All option for custom post types in Global blocks conditions 
+* New: Infinite animation option
+* New: Added select All option for custom post types in Global blocks conditions
 * Fixed: Lag when you select colors in Global styles
-* Fixed: Added from category display condition for global blocks 
-* Fixed: Made mouse pointer when you hover the color option on block dividers 
-* Fixed: Undo and Redo in Text element 
-* Fixed: Empty column crash on Editor role  
+* Fixed: Added from category display condition for global blocks
+* Fixed: Made mouse pointer when you hover the color option on block dividers
+* Fixed: Undo and Redo in Text element
+* Fixed: Empty column crash on Editor role
 * Fixed: Mute video when you set the cover option in Video element
-* Fixed: Divider on Section 
-* Fixed: Parallax in responsive views 
+* Fixed: Divider on Section
+* Fixed: Parallax in responsive views
 * Fixed: Enable update button on undo or redo
-* Fixed: Diacritics are converted to unicode characters 
+* Fixed: Diacritics are converted to unicode characters
 * Fixed: Image crashing when clicking the resize pointers
-* Fixed: Counter style 2-3-4 in Story 
-* Fixed: Countdown height in Story 
+* Fixed: Counter style 2-3-4 in Story
+* Fixed: Countdown height in Story
 * Fixed: Form submit button in Story
-* Fixed: Button border in Story 
+* Fixed: Button border in Story
 * Fixed: Accordion - border-radius on tags
-* Fixed: Tabs - Title in responsive views 
-* Fixed: Carousel - Working with text breaks the carousel 
-* Fixed: Fast scroll on Blocks that have Parallax option on 
-* Improved: UI improvement to accommodate long text translation 
-* Improved: Minify global typography CSS variables 
+* Fixed: Tabs - Title in responsive views
+* Fixed: Carousel - Working with text breaks the carousel
+* Fixed: Fast scroll on Blocks that have Parallax option on
+* Improved: UI improvement to accommodate long text translation
+* Improved: Minify global typography CSS variables
 * Improved: Root window referrer request
 * Improved: Color picker gradient issues
 * Improved: LeftSidebar icon position in dropdown menu
@@ -810,7 +842,7 @@ Don't worry if you make a mistake or delete something that you shouldn't have. W
 = 2.4.2 - 2022-06-15 =
 * Fixed: Template Conditions
 * Fixed: Polylang fix home url in breadcrumbs
-* Fixed: Remove logs for cropping images 
+* Fixed: Remove logs for cropping images
 * Fixed: Escape the script contents for non adminstrators users. This vulnerability was discovered by Vishnupriya Ilango of Fortinets FortiGuard Labs
 * Fixed: Fix autoupdate of the pro version, added an admin notice in the plugins list page when a major update is available
 
@@ -819,15 +851,15 @@ Don't worry if you make a mistake or delete something that you shouldn't have. W
 * Improved: Performance on columns drag and drop
 * Improved: Performance on videos and images resize
 * Improved: Performance on column resize
-* Improved: Section padding resize 
-* Fixed: Column issue when is inside a Tab element 
-* Fixed: Featured image on columns hover did not inherit image from normal state 
-* Fixed: The right sidebar on Tab element was messed up 
-* Fixed: Endless spinning on the Video element 
-* Fixed: Block margin in px and % 
+* Improved: Section padding resize
+* Fixed: Column issue when is inside a Tab element
+* Fixed: Featured image on columns hover did not inherit image from normal state
+* Fixed: The right sidebar on Tab element was messed up
+* Fixed: Endless spinning on the Video element
+* Fixed: Block margin in px and %
 * Fixed: Block border radius on color hover
-* Fixed: YouTube header script 
-* Fixed: Do not render PRO elements in preview 
+* Fixed: YouTube header script
+* Fixed: Do not render PRO elements in preview
 * Fixed: Added controls option for Vimeo videos
 
 = 2.4.0 - 2022-05-18 =
@@ -852,9 +884,9 @@ Don't worry if you make a mistake or delete something that you shouldn't have. W
 * New: Added reorder option to accordion
 * New: Moved entrance animation effects functionality in right sidebar
 * New: Added vh and em suffixes to Spacer
-* New: Add new style blending mode for certain elements 
+* New: Add new style blending mode for certain elements
 * New: Added Column width option
-* New: Added status badge in the block display conditions popup 
+* New: Added status badge in the block display conditions popup
 * New: Added support for placeholders in email templates
 * Improved: Added new shortcut Ctrl+M opens Styling right panel
 * Improved: Added new shortcut Ctrl + K opens Effects right panel
@@ -903,49 +935,49 @@ Don't worry if you make a mistake or delete something that you shouldn't have. W
 * Fixed: Unexpected token h in JSON at position 0 error when saving a layout
 
 = 2.3.36 - 2022-05-03 =
-* Improved: Improved performance when you have a lot of columns on the page 
+* Improved: Improved performance when you have a lot of columns on the page
 * Improved: Improved performance when you change global styling
 * Improved: Improved performance when you copy paste styles
-* Fixed: Mouse cursor when hovering the UI on the left sidebar 
-* Fixed: Moved layout Ekstra to PRO 
-* Fixed: Import Blocks button in Safari  
-* Fixed: Buttons conflicts with GTM 
+* Fixed: Mouse cursor when hovering the UI on the left sidebar
+* Fixed: Moved layout Ekstra to PRO
+* Fixed: Import Blocks button in Safari
+* Fixed: Buttons conflicts with GTM
 
 = 2.3.35 - 2022-04-21 =
 * Fixed: Text blink
 * Fixed: Section Dividers
 
 = 2.3.34 - 2022-04-20 =
-* New: Added hover Transition for elements: Accordion, ProgressBar and Tabs 
-* New: Added cover image option for the Map element 
+* New: Added hover Transition for elements: Accordion, ProgressBar and Tabs
+* New: Added cover image option for the Map element
 * Fixed: Cover images not displaying in Playlist element
 * Fixed: YouTube loop when you set start-end options
 * Fixed: Changed size for Image option upload field
 * Fixed: Text element blinks when changing align options
-* Fixed: Layout Carwash was changed to PRO 
-* Fixed: Layout Scooter Rental was changed to PRO 
-* Fixed: Active border size for element Tabs 
-* Fixed: Style 3 for Tabs element 
+* Fixed: Layout Carwash was changed to PRO
+* Fixed: Layout Scooter Rental was changed to PRO
+* Fixed: Active border size for element Tabs
+* Fixed: Style 3 for Tabs element
 * Fixed: Center align option for arrows in the Accordion element
 * Fixed: Cover image repeat issue
-* New: Auto install for Brizy Starter Templates 
+* New: Auto install for Brizy Starter Templates
 * Fixed: Fixed attachment post type exclusion
 * Fixed: Remove attachment post type from post type list from editor config
-* Fixed: Lost global colour styling 
+* Fixed: Lost global colour styling
 * Fixed: Include inline JS scripts depending on their priority
-* Fixed: Preventing directory traversal on get icon 
+* Fixed: Preventing directory traversal on get icon
 
 = 2.3.33 - 2022-03-10 =
-* New: Import and Export Saved Blocks, Popups, Layouts 
+* New: Import and Export Saved Blocks, Popups, Layouts
 * New: Show progress on story when autoplay is on
-* Improved: Increased the number of history snapshots from 10 to 20. Happy Ctrl-Z-ing 
-* Improved: SEO for Video element 
+* Improved: Increased the number of history snapshots from 10 to 20. Happy Ctrl-Z-ing
+* Improved: SEO for Video element
 * Improved: Plugin Cross-Site Scripting
 * Fixed: Link to slide in Web Stories
 * Fixed: Undo and redo in Text element
 * Fixed: Text styles after pasting text from outside the builder
 * Fixed: Random global blocks are not saved in Global block list
-* Fixed: Posts include and exclude select 
+* Fixed: Posts include and exclude select
 * Fixed: Style for Counter element in Firefox
 * Fixed: Vimeo video background loop
 * Fixed: Countdown restart after finished
@@ -954,24 +986,24 @@ Don't worry if you make a mistake or delete something that you shouldn't have. W
 * Fixed: Security fix
 
 = 2.3.31 - 2022-03-02 =
-* New: Collaboration tool option in left sidebar 
-* Improved: Changed max value for counter element 
-* Improved: Selecting dropdown options in Post filter option 
+* New: Collaboration tool option in left sidebar
+* Improved: Changed max value for counter element
+* Improved: Selecting dropdown options in Post filter option
 * Improved: Cache for dynamic content images
 * Improved: Performance on extracting images, avoid creating duplicate of images when the sizes are bigger than image, removed functions and all data sent to editor regards to download_images from s3
 * Improved: SQL query for attachment id
 * Improved: Optimize save global blocks
 * Fixed: Avoid load duplicates images in the editor
 * Fixed: Original image width and height
-* Fixed: Width for sidebar custom attributes 
-* Fixed: Links on buttons when global blocks are missing 
+* Fixed: Width for sidebar custom attributes
+* Fixed: Links on buttons when global blocks are missing
 * Fixed: Gradient color for buttons
-* Fixed: External Popups font assets 
-* Fixed: Form hidden field send only label 
-* Fixed: Premade popup designs available only in PRO 
-* Fixed: View as for membership roles in builder 
-* Fixed: Separators in responsive and hamburger dropdowns in the left sidebar 
-* Fixed: Accordion active tags 
+* Fixed: External Popups font assets
+* Fixed: Form hidden field send only label
+* Fixed: Premade popup designs available only in PRO
+* Fixed: View as for membership roles in builder
+* Fixed: Separators in responsive and hamburger dropdowns in the left sidebar
+* Fixed: Accordion active tags
 * Fixed: Hide go to dashboard for reseller partners
 * Fixed: Removed dependency asset storage of asset proxy processor
 * Fixed: Custom fonts endpoint
@@ -985,8 +1017,8 @@ Don't worry if you make a mistake or delete something that you shouldn't have. W
 * Fixed: Tabs element - duplicate options in right sidebar on responsive views
 * Fixed: Blocks get reordered when only global blocks exist in page
 * Fixed: Menu element - jumping on hover when border opacity is 0 in normal mode
-* Fixed: Columns and Rows - image background hover not working 
-* Fixed: Global blocks conditions in custom post types 
+* Fixed: Columns and Rows - image background hover not working
+* Fixed: Global blocks conditions in custom post types
 * Fixed: Section Background Video error when loop is enabled
 * Fixed: Slider and Carousel element - dots not positioned correctly
 
@@ -1018,7 +1050,7 @@ Don't worry if you make a mistake or delete something that you shouldn't have. W
 * Fixed: Form error messages
 * Fixed: Added compatibility with the plugin Perfmatters
 * Fixed: On export templates check if the license key is valid
-* Fixed: Tell the editor if the current user is admin 
+* Fixed: Tell the editor if the current user is admin
 * Fixed: Do not load scripts in header and footer when they are build it with Astra Pro and template is brizy blank template
 * Fixed: WPML Menu switcher is missing from Brizy pages
 * Fixed: Escape the script contents for non adminstrators users (This vulnerability was discovered by Vishnupriya Ilango of Fortinets FortiGuard Labs)
@@ -1035,7 +1067,7 @@ Don't worry if you make a mistake or delete something that you shouldn't have. W
 
 = 2.3.23 - 2021-12-13 =
 * Fixed: Switching weights on custom uploaded fonts
-* Fixed: Select dropdown width on Countdown 
+* Fixed: Select dropdown width on Countdown
 * Fixed: Responsive corrections in Seo Agency layout
 * Fixed: Added brizy_attachment_uid to attachments
 * Fixed: Show WooCommerce notices on templates for products
@@ -1049,10 +1081,10 @@ Don't worry if you make a mistake or delete something that you shouldn't have. W
 = 2.3.21 - 2021-11-30 =
 * New: Size options when you upload .svg and .gifs files in Image element
 * Fixed: Remove rel attributes for style to solve some plugin conflicts
-* Fixed: Button align and width on Login element 
-* Fixed: Labels correspond with input id in the Form element 
+* Fixed: Button align and width on Login element
+* Fixed: Labels correspond with input id in the Form element
 * Fixed: 505 error when you use extra large retina images
-* Fixed: Text alignment when it is in a list for certain fonts 
+* Fixed: Text alignment when it is in a list for certain fonts
 * Fixed: Color for bullet points
 * Fixed: Removed the form placeholder name from dropdowns on the front end
 * Fixed: Form pattern attribute
@@ -1071,42 +1103,42 @@ Don't worry if you make a mistake or delete something that you shouldn't have. W
 
 = 2.3.19 - 2021-11-09 =
 * New: Select original image in the Image Element
-* New: Select original image for the dynamic image element 
+* New: Select original image for the dynamic image element
 * Improved: Updated the Google fonts library
 * Fixed: Google fonts search option was not working correctly
 * Fixed: Image is cut in full height option
-* Fixed: The fonts no longer intersect for element tabs 
+* Fixed: The fonts no longer intersect for element tabs
 * Fixed: End option on Vimeo videos
 * Fixed: Border Shadow options display
 * Fixed: Border top on tabs in responsive
-* Fixed: Media file upload position 
+* Fixed: Media file upload position
 * Fixed: Counter goes only to 100 in preview
 * Fixed: Text sometime data-href is empty (Internal 500 error on the front-end)
 * Fixed: Select drop-down options in the contact form are not showing the selected font
-* Fixed: Allowing redirects on loading our iframe, so you can use theme default templates 
+* Fixed: Allowing redirects on loading our iframe, so you can use theme default templates
 
 = 2.3.18 - 2021-10-18 =
 * New: 3 design layout packs
 * Improved: Added autoplay and loop options for the Video element
-* Improved: Drag and Drop between columns 
+* Improved: Drag and Drop between columns
 * Improved: Compatibility WP Ultimo plugin. Edit brizy pages with remapping domain
 * Improved: Compatibility with Page Optimize plugin
 * Improved: Moved HTML Tag option back on the main toolbar on Text element
-* Fixed: PostTitle added title hover transition 
-* Fixed: Contact form text arrangement in dropdown 
+* Fixed: PostTitle added title hover transition
+* Fixed: Contact form text arrangement in dropdown
 * Fixed: Contact form dropdown border
-* Fixed: Nested accordions collapse issue 
+* Fixed: Nested accordions collapse issue
 * Fixed: Alignment in Login element
-* Fixed: Fonts for Tabs 
+* Fixed: Fonts for Tabs
 * Fixed: Styles issues for nested tabs
 * Fixed: Styles issues for nested accordions
-* Fixed: Vimeo bg video starting with a delay 
-* Fixed: Nested accordions animation 
-* Fixed: Displays negative values for the Counter element 
+* Fixed: Vimeo bg video starting with a delay
+* Fixed: Nested accordions animation
+* Fixed: Displays negative values for the Counter element
 * Fixed: Hexa color code in gradient background for Blocks
-* Fixed: Countdown styles size and color 
+* Fixed: Countdown styles size and color
 * Fixed: Empty links in Text element in preview
-* Fixed: Negative spread values for shadows 
+* Fixed: Negative spread values for shadows
 * Fixed: Double options in right sidebar for certain elements in responsive views
 * Fixed: Images are not rendered on a non default language URL
 * Fixed: Use Brizy_Public_AssetProxy::get_mime instead of native function
@@ -1117,28 +1149,28 @@ Don't worry if you make a mistake or delete something that you shouldn't have. W
 * Fixed: Recompile popups on update
 
 = 2.3.16 - 2021-09-16 =
-* New: Added vertical align for icon in IconBox 
-* New: Import and Export for Saved blocks 
+* New: Added vertical align for icon in IconBox
+* New: Import and Export for Saved blocks
 * Improved: Page loading speed on preview when you have custom fonts on your page
-* Fixed: CSS with theme Zita for wooPrice 
+* Fixed: CSS with theme Zita for wooPrice
 * Fixed: Popups on Text links
 * Fixed: Block screenshots not looking properly in Chrome
-* Fixed: Text element with Google translate extensions 
-* Fixed: Image light-box 
+* Fixed: Text element with Google translate extensions
+* Fixed: Image light-box
 * Fixed: False positives malware File Found notifications
 * Fixed: Some bugs with meta brizy_post_uid on attachments
 * Fixed: Cache related issue when the page appeared broken in preview
 
 = 2.3.15 - 2021-09-09 =
-* Fixed: Broken home page url 
+* Fixed: Broken home page url
 * Fixed: Asset manager for pages that contains popups
 
 = 2.3.14 - 2021-09-06 =
 * Fixed: Icons in the Tabs element
 * Fixed: Cover images for the Video element
-* Fixed: CSS in Countdown element 
-* Improved: Brizy works better with caching plugins 
-* Fixed: Some default options values in the builder 
+* Fixed: CSS in Countdown element
+* Improved: Brizy works better with caching plugins
+* Fixed: Some default options values in the builder
 
 = 2.3.13 - 2021-08-26 =
 * Fixed:  Editor for Internal Popup
@@ -1147,7 +1179,7 @@ Don't worry if you make a mistake or delete something that you shouldn't have. W
 * New: Hide Section icon when not in focus on tablet and mobile
 * Fixed: Anchor scroll when block not found
 * Fixed: Form multi-select close
-* Fixed: Richtext styles 
+* Fixed: Richtext styles
 * Fixed: Global blocks in page compiler error
 * Fixed: Deprecate function is_user_allowed from Brizy_Editor class
 * Fixed: Load popup on non Brizy pages
@@ -1213,7 +1245,7 @@ Don't worry if you make a mistake or delete something that you shouldn't have. W
 * Fixed: Check the assets content before sending to asset grouping library
 
 = 2.3.1 - 2021-07-20 =
-* Fixed: Global styles reset for text 
+* Fixed: Global styles reset for text
 * Fixed: Fatal Error cased by loading incompatible PRO plugin versions
 
 = 2.3.0 - 2021-07-19 =
@@ -1261,7 +1293,7 @@ Don't worry if you make a mistake or delete something that you shouldn't have. W
 
 = 2.2.20 - 2021-07-13 =
 * New: error messages in Form element for Number and File input
-* Fixed: change Row background for Section slider 
+* Fixed: change Row background for Section slider
 * Fixed: styles for Table element
 * Fixed: button Drag and Drop when position is set to fixed or absolute
 * Fixed: display rules popup for global blocks
@@ -1331,7 +1363,7 @@ Don't worry if you make a mistake or delete something that you shouldn't have. W
 * New: Added ability to change tags for post content and post excerpt
 * New: Added Brizy_Editor_CompiledHtml::getPageContent
 * Improved: Added swipe to Carousel element and for block sliders
-* Improved: Icon for Post element 
+* Improved: Icon for Post element
 * Fixed: Do not translate Company Name when there is white label
 * Fixed: Suppress language when wpml media translation is active on extracting our fonts
 * Fixed: Brizy template is not applying for Password-Protected pages
@@ -1345,7 +1377,7 @@ Don't worry if you make a mistake or delete something that you shouldn't have. W
 * Fixed: Anchor scroll
 * Fixed: Global Blocks Screenshots
 * Fixed: Minimum size for Spacer element
-* Fixed: Membership placement 
+* Fixed: Membership placement
 * Fixed: Post Content Rich-text element
 
 = 2.2.10 - 2021-03-23 =
@@ -1405,10 +1437,10 @@ Don't worry if you make a mistake or delete something that you shouldn't have. W
 
 = 2.2.7 - 2021-02-02 =
 * New: Added animation option for Accordion content
-* Improved: Code refactoring and optimization 
+* Improved: Code refactoring and optimization
 * Fixed: Custom Video CSS option
 * Fixed: Images with absolute position no longer blurry
-* Fixed: Get taxonomies bug 
+* Fixed: Get taxonomies bug
 * Fixed: Removed duplicate dynamic content call
 * Fixed: Restore template from trash
 * Fixed: Avoid cloud call crash

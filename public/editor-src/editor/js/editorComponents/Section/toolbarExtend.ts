@@ -65,6 +65,8 @@ export const getItems: GetItems<Value, Props> = ({ v, device, component }) => {
     }
   ];
 
+  const isAutoPlayEnabled = dvv("sliderAutoPlay") === "on";
+
   return [
     {
       id: `showOn${deviceCapitalize}`,
@@ -195,10 +197,21 @@ export const getItems: GetItems<Value, Props> = ({ v, device, component }) => {
                             type: "switch"
                           },
                           {
+                            id: "stopSlider",
+                            type: "switch",
+                            label: t("Stop animation"),
+                            disabled: !isAutoPlayEnabled,
+                            helper: {
+                              content: t(
+                                "When enabled, clicking pause stops the animation and slider until play is clicked"
+                              )
+                            }
+                          },
+                          {
                             id: "sliderAutoPlaySpeed",
                             label: t("Speed"),
                             type: "slider",
-                            disabled: dvv("sliderAutoPlay") !== "on",
+                            disabled: !isAutoPlayEnabled,
                             config: {
                               min: 1,
                               max: 6,
@@ -293,6 +306,18 @@ export const getItems: GetItems<Value, Props> = ({ v, device, component }) => {
                         type: "colorPicker",
                         states: [NORMAL, HOVER],
                         disabled: slider === "off"
+                      }
+                    ]
+                  },
+                  {
+                    id: "pauseColorTab",
+                    label: t("Pause"),
+                    options: [
+                      {
+                        id: "sliderPauseColor",
+                        type: "colorPicker",
+                        disabled: dvv("slider") === "off",
+                        states: [NORMAL, HOVER]
                       }
                     ]
                   }

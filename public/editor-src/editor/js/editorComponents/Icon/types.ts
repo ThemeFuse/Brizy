@@ -1,6 +1,7 @@
 import { ElementModel } from "visual/component/Elements/Types";
 import { Target } from "visual/component/Link/types/Target";
 import { Type } from "visual/component/Link/types/Type";
+import { TooltipPlacement } from "visual/component/Tooltip/types";
 import { ComponentsMeta } from "visual/editorComponents/EditorComponent/types";
 import { Block } from "visual/types/Block";
 import { WithClassName } from "visual/types/attributes";
@@ -37,6 +38,13 @@ export interface Value extends ElementModel, CssId {
 
   customCSS: string;
   ariaLabel?: string;
+
+  enableTooltip: "on" | "off";
+  tooltipTriggerClick: "on" | "off";
+  tooltipPlacement: TooltipPlacement;
+  tooltipText: string;
+
+  tooltipOffset: number;
 }
 
 export interface Props extends WithClassName {

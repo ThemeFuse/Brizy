@@ -535,7 +535,8 @@ export default class SectionHeader extends EditorComponent<
       customClassName,
       customAttributes,
       cssID,
-      cssClass
+      cssClass,
+      type
     } = v;
 
     const uidPlaceholder = makePlaceholder({
@@ -547,6 +548,7 @@ export default class SectionHeader extends EditorComponent<
       : anchorName || `${uidPlaceholder}_${this.getId()}`;
     const classNameSection = classnames(
       "brz-section brz-section__header",
+      `brz-section__header-type--${type}`,
       className,
       cssClass || customClassName,
       this.css(

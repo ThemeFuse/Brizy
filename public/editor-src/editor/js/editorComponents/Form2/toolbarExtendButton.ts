@@ -15,7 +15,44 @@ export const getItems: GetItems<Value> = ({
 
   const { showIntegrations = false } = config.integrations?.form ?? {};
 
+  const { multistep } = v;
+
+  const isMultistepEnabled = multistep === "on";
+
   return [
+    {
+      id: "toolbarCurrentShortcode",
+      type: "popover",
+      config: {
+        icon: "nc-button",
+        title: t("Button")
+      },
+      position: 20,
+      options: [
+        {
+          id: "currentShortcodeTabs",
+          type: "tabs",
+          tabs: [
+            {
+              id: "currentShortcodeTab",
+              label: t("Button"),
+              options: [
+                {
+                  id: "msButtonsSpacing",
+                  type: "slider",
+                  label: t("Spacing"),
+                  config: {
+                    min: 0,
+                    max: 100,
+                    units: [{ title: "px", value: "px" }]
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
     {
       id: "popoverLink",
       type: "popover",
@@ -75,11 +112,12 @@ export const getItems: GetItems<Value> = ({
         title: t("Settings")
       },
       position: 110,
+      disabled: isMultistepEnabled,
       options: [
         {
           id: "submitWidth",
-          label: t("Width"),
           type: "slider",
+          label: t("Width"),
           config: {
             min: 1,
             max: 100,
@@ -111,9 +149,27 @@ export const getItems: GetItems<Value> = ({
       ]
     },
     {
+      id: "advancedSettings2",
+      type: "advancedSettings",
+      position: 110,
+      disabled: !isMultistepEnabled
+    },
+    {
       id: "horizontalAlign",
       type: "toggle",
       position: 100,
+      disabled: isMultistepEnabled,
+      choices: [
+        { icon: "nc-text-align-left", title: t("Align"), value: "left" },
+        { icon: "nc-text-align-center", title: t("Align"), value: "center" },
+        { icon: "nc-text-align-right", title: t("Align"), value: "right" }
+      ]
+    },
+    {
+      id: "multiStepBtnHorizontalAlign",
+      type: "toggle",
+      position: 100,
+      disabled: !isMultistepEnabled,
       choices: [
         { icon: "nc-text-align-left", title: t("Align"), value: "left" },
         { icon: "nc-text-align-center", title: t("Align"), value: "center" },

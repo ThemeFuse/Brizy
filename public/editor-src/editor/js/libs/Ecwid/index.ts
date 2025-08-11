@@ -210,7 +210,7 @@ const getDefaultConfig = (baseUrl: string): Partial<EcwidConfig> => ({
         selector: ".favorite-product__button-view"
       },
       {
-        route: "/",
+        route: `${baseUrl}/search`,
         selector: ".ec-cart--empty .form-control.form-control--done"
       }
     ]
@@ -228,7 +228,7 @@ const getContentRoutes = (baseUrl: string) => ({
   [`${baseUrl}/cart`]: `${baseUrl}/cart`,
   [`${baseUrl}/thank-you`]: `${baseUrl}/thank-you`,
   [`${baseUrl}/account/favorites`]: `${baseUrl}/account/favorites`,
-  "/": "/"
+  [`${baseUrl}/search`]: `${baseUrl}/search`
 });
 
 export class EcwidService {

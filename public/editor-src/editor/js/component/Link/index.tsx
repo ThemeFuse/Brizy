@@ -8,7 +8,6 @@ import React, {
   useEffect,
   useRef
 } from "react";
-import { useStore } from "react-redux";
 import { useConfig } from "visual/providers/ConfigProvider";
 import { useRender } from "visual/providers/RenderProvider";
 import { WithClassName } from "visual/types/attributes";
@@ -32,6 +31,7 @@ type Props = PropsWithChildren<
     id?: string;
     draggable?: boolean;
     ariaLabel?: string;
+    onClick?: VoidFunction;
   }
 >;
 
@@ -48,11 +48,11 @@ const _Link = (
     attr = {},
     id = "",
     draggable,
-    ariaLabel
+    ariaLabel,
+    onClick
   }: Props,
   ref: Ref<HTMLAnchorElement>
 ): ReactElement => {
-  const store = useStore();
   const config = useConfig();
 
   const innerRef = useRef<HTMLAnchorElement>();
@@ -62,7 +62,7 @@ const _Link = (
     { "brz-anchor": type === "anchor" },
     className
   );
-  const _href = getHref(type, mRead(href), store, renderType, config);
+  const _href = getHref(type, mRead(href), renderType, config);
   const _target = getTarget(type, target);
   const attrs = getAttr(attr);
   const _rel = getRel(mRead(rel));
@@ -97,6 +97,7 @@ const _Link = (
       {...(id && { id })}
       {...(ariaLabel && { "aria-label": ariaLabel })}
       draggable={draggable}
+      onClick={onClick}
     >
       {children}
     </a>

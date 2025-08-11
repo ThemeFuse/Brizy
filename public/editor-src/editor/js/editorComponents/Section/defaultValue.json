@@ -36,6 +36,7 @@
     "sliderAutoPlay": "off",
     "sliderAutoPlaySpeed": 3,
     "sliderAutoPlaySpeedSuffix": null,
+    "stopSlider": "off",
 
     "animationName": "none",
     "animationDuration": 1000,
@@ -69,6 +70,10 @@
     "sliderDotsColorHex": "#000000",
     "sliderDotsColorOpacity": 1,
     "sliderDotsColorPalette": "",
+
+    "sliderPauseColorHex": "#000000",
+    "sliderPauseColorOpacity": 1,
+    "sliderPauseColorPalette": "",
 
     "tempSliderDotsColorOpacity": 1,
     "tempSliderDotsColorPalette": "",

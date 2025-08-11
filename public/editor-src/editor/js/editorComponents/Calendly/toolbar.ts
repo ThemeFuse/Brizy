@@ -6,7 +6,7 @@ import { ResponsiveMode } from "visual/utils/responsiveMode";
 import { HOVER, NORMAL } from "visual/utils/stateMode";
 import { ToolbarItemType } from "../ToolbarItemType";
 import { calendlySelector, getSizeCSSFn } from "./css";
-import { Value } from "./index";
+import { Value } from "./types";
 
 export function getItems({
   v,

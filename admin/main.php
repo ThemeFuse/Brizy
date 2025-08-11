@@ -77,7 +77,7 @@ class Brizy_Admin_Main {
 		$post_type_object = get_post_type_object( $post->post_type );
 		$focalPoint       = get_post_meta( $postId, 'brizy_attachment_focal_point', true );
 
-		if ( ! $focalPoint ) {
+        if ( ! ( is_array( $focalPoint ) && isset( $focalPoint['x'] ) && isset( $focalPoint['y'] ) ) ) {
 			$focalPoint = array( 'x' => 50, 'y' => 50 );
 		}
 

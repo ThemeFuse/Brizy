@@ -22,7 +22,8 @@ const getThirdPartyShortcodeConfig = (element: {
         {
           type: "ThirdParty",
           value: {
-            thirdPartyId: element.id
+            thirdPartyId: element.id,
+            items: []
           }
         }
       ]

@@ -1,7 +1,8 @@
 &:not(.brz-ed) {
   .brz-login {
     .brz-login-form,
-    .brz-login__authorized {
+    .brz-login__authorized,
+    .brz-control__check-group .brz-input {
       display: none;
     }
   }
@@ -68,8 +69,7 @@
 
     .brz-btn {
       outline: none;
-      width: 100%;
-
+      width: 100% !important;
       padding-left: 0;
       padding-right: 0;
     }

@@ -318,6 +318,10 @@
 
 // RichText with Dynamic content
 .brz-rich-text__population {
+  .brz-rich-text-context-wrapper {
+    font-size: inherit;
+  }
+
   span {
     display: inline-block;
     position: relative;
@@ -432,13 +436,15 @@
 
 // Story rich text
 .brz-story .brz-rich-text {
-  ol, ul {
+  ol,
+  ul {
     margin-left: 0;
   }
 }
 
 .story-slider-dot .brz-rich-text {
-  ol, ul {
+  ol,
+  ul {
     display: flex;
     flex-direction: column;
   }

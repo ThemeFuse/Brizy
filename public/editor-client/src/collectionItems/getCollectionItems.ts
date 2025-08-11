@@ -7,13 +7,14 @@ export const getCollectionItems = {
   async handler(
     res: Response<ChoicesSync>,
     rej: Response<string>,
-    extra: { id: string; extraChoices?: ChoicesSync }
+    extra: { id: string; extraChoices?: ChoicesSync; search?: string }
   ) {
     try {
-      const data = await getCollectionSourceItems(extra.id);
+      const { id, extraChoices, search = "" } = extra;
+      const data = await getCollectionSourceItems(id, search);
 
       const items = [
-        ...(extra?.extraChoices ?? []),
+        ...(extraChoices ?? []),
         ...data.posts.map(
           ({
             ID,

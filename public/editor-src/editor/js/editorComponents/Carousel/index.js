@@ -167,7 +167,8 @@ class Carousel extends EditorComponent {
       order,
       tabletSlidesToShow,
       mobileSlidesToShow,
-      customCSS
+      customCSS,
+      stopSlider
     } = v;
     const carouselClassName = classNames(
       "brz-carousel",
@@ -209,7 +210,8 @@ class Carousel extends EditorComponent {
       orderBy,
       order,
       tabletSlidesToShow,
-      mobileSlidesToShow
+      mobileSlidesToShow,
+      stopSlider: stopSlider === "on" && sliderAutoPlay === "on"
     });
 
     return (

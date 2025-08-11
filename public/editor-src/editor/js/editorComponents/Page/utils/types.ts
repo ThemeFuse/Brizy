@@ -41,10 +41,20 @@ interface FromShortcodeSection extends FromShortcodeBase {
   };
 }
 
+interface FromShortcodeThirdParty extends FromShortcodeBase {
+  to: {
+    containerType: "thirdPartyContainer";
+    itemPath: string[];
+    containerPath: string[];
+    itemIndex?: number;
+  };
+}
+
 type FromShortcode =
   | FromShortcodeColumn
   | FromShortcodeRow
-  | FromShortcodeSection;
+  | FromShortcodeSection
+  | FromShortcodeThirdParty;
 
 //#endregion
 
@@ -81,7 +91,19 @@ interface FromColumnSection extends FromColumnColumnBase {
   };
 }
 
-type FromColumn = FromColumnColumn | FromColumnRow | FromColumnSection;
+interface FromColumnThirdParty extends FromColumnColumnBase {
+  to: {
+    containerType: "thirdPartyContainer";
+    itemPath: string[];
+    containerPath: string[];
+  };
+}
+
+type FromColumn =
+  | FromColumnColumn
+  | FromColumnRow
+  | FromColumnSection
+  | FromColumnThirdParty;
 
 //#endregion
 
@@ -93,7 +115,7 @@ interface FromRow {
     itemPath: string[];
   };
   to: {
-    containerType: "column" | "section";
+    containerType: "column" | "section" | "thirdPartyContainer";
     itemPath: string[];
   };
 }
@@ -131,7 +153,19 @@ interface FromAddableSection extends FromAddableBase {
   };
 }
 
-type FromAddable = FromAddableColumn | FromAddableRow | FromAddableSection;
+interface FromAddableThirdParty extends FromAddableBase {
+  to: {
+    containerType: "thirdPartyContainer";
+    containerPath: string[];
+    itemPath: string[];
+  };
+}
+
+type FromAddable =
+  | FromAddableColumn
+  | FromAddableRow
+  | FromAddableSection
+  | FromAddableThirdParty;
 
 //#endregion
 

@@ -31,6 +31,7 @@ export function styleBgColorHex({
   const config = getConfig();
   const colorPalette = dvv(capByPrefix(prefix, "colorPalette"));
   const colorHex = dvv(capByPrefix(prefix, "colorHex"));
+  const colorOpacity = dvv(capByPrefix(prefix, "colorOpacity"));
 
-  return getColorPalette(colorPalette, colorHex, config);
+  return getColorPalette(colorPalette, colorHex, colorOpacity, config);
 }
