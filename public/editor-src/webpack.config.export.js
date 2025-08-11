@@ -1,5 +1,6 @@
 const path = require("path");
 const webpack = require("webpack");
+const StatoscopeWebpackPlugin = require("@statoscope/webpack-plugin").default;
 const BundleAnalyzerPlugin =
   require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
 const editorConfigFn = require("./webpack.config.editor");
@@ -253,6 +254,7 @@ exports.browser = (options) => {
   const configAnalyze = {
     plugins: [
       ...config.plugins,
+      // new StatoscopeWebpackPlugin(), // Uncomment for advanced inspect bundle size
       new BundleAnalyzerPlugin({
         analyzerMode: "json", // use "server" if needed to start a dev server to inspect the bundle
         generateStatsFile: true,

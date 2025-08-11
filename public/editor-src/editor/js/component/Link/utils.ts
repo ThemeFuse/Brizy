@@ -2,32 +2,12 @@ import { ElementModel } from "visual/component/Elements/Types";
 import * as LinkType from "visual/component/Link/types/Type";
 import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { RenderType, isEditor } from "visual/providers/RenderProvider";
-import { pageDataNoRefsSelector } from "visual/redux/selectors";
-import { Store } from "visual/redux/store";
 import { customFileUrl } from "visual/utils/customFile";
-import {
-  getPopulatedEntityValues,
-  makePlaceholder
-} from "visual/utils/dynamicContent";
+import { makePlaceholder } from "visual/utils/dynamicContent";
 import { read as readNum } from "visual/utils/reader/number";
 import { read } from "visual/utils/reader/string";
-import { MValue } from "visual/utils/value";
 import { Target, TargetTypes } from "./types/Target";
 import { LinkData, Type } from "./types/Type";
-
-interface SectionModel {
-  value: {
-    _id: string;
-    anchorName: string;
-    cssIDPopulation: string;
-    cssIDPopulationEntityId: string;
-    cssIDPopulationEntityType: string;
-  };
-}
-
-type Data = {
-  items: Array<SectionModel>;
-};
 
 export const getAttr = (
   attr: JSX.IntrinsicAttributes
@@ -49,35 +29,7 @@ export const getTarget = (type: Type, target: Target): TargetTypes => {
     : "_self";
 };
 
-const createAnchor = (data: {
-  href: string;
-  section?: SectionModel;
-}): string => {
-  const { href, section } = data;
-  const sectionValue = section?.value;
-
-  if (sectionValue?.cssIDPopulation || sectionValue?.anchorName) {
-    if (sectionValue.cssIDPopulation) {
-      const {
-        cssIDPopulation,
-        cssIDPopulationEntityId,
-        cssIDPopulationEntityType
-      } = sectionValue;
-
-      return makePlaceholder({
-        content: cssIDPopulation,
-        attr: getPopulatedEntityValues(
-          cssIDPopulationEntityId,
-          cssIDPopulationEntityType
-        )
-      });
-    }
-
-    return sectionValue.anchorName;
-  }
-
-  // Use the key:href(UID of the block) to ensure the `random_id`
-  // remains consistent across sections.
+const createAnchor = (href: string): string => {
   const uidPlaceholder = makePlaceholder({
     content: "{{ random_id }}",
     attr: { key: href }
@@ -89,7 +41,6 @@ const createAnchor = (data: {
 export const getHref = (
   type: Type,
   _href: string,
-  store: Store,
   renderContext: RenderType,
   config: ConfigCommon
 ): string => {
@@ -100,18 +51,7 @@ export const getHref = (
       if (isEditor(renderContext)) {
         href = `#${_href}`;
       } else {
-        // while the orthodox way of getting data from the store is be using connect from react-redux
-        // it could be problematic in this case because of potential problems caused be rerenders triggered by connect
-        // because Link can hold in children heavy react trees (like columns)
-        const pageDataNoRefs = pageDataNoRefsSelector(
-          store.getState()
-        ) as MValue<Data>;
-        const pageBlocks = pageDataNoRefs?.items || [];
-        const blockByHref = pageBlocks.find(
-          (block) => block.value._id === _href
-        );
-        const anchorName = createAnchor({ href: _href, section: blockByHref });
-
+        const anchorName = createAnchor(_href);
         href = `#${anchorName}`;
       }
       break;
@@ -126,7 +66,7 @@ export const getHref = (
     case "page":
     case "lightBox":
     case "external": {
-      href = _href;
+      href = _href || "#";
       break;
     }
     case "story":

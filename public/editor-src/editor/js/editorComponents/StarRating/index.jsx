@@ -1,4 +1,5 @@
-import { StarRating1, StarRating2 } from "@brizy/component";
+import { StarRating1 } from "@brizy/component/src/Flex/StarRating1";
+import { StarRating2 } from "@brizy/component/src/Flex/StarRating2";
 import classnames from "classnames";
 import React from "react";
 import { Text } from "visual/component/ContentOptions/types";

@@ -1,12 +1,14 @@
+import { isFunction } from "es-toolkit";
+import { makeDataAttrString } from "visual/utils/i18n/attribute";
 import { easeInOutQuad, toSamePage } from "./utils";
 
 const scrollTo = (config: {
-  endLocation: number;
+  endLocation: number | (() => number);
   duration: number;
   targetNode?: HTMLElement;
 }): Promise<void> =>
   new Promise((resolve) => {
-    const { endLocation, duration, targetNode } = config;
+    const { endLocation: _endLocation, duration, targetNode } = config;
 
     window.Brz.emit("elements.anchor.startScrolled", targetNode);
 
@@ -14,12 +16,16 @@ const scrollTo = (config: {
 
     if (element) {
       const startLocation = element.scrollTop;
-      const distance = endLocation - startLocation;
       const increment = 20;
 
       let currentTime = 0;
 
       const animateScroll = (): void => {
+        const endLocation = isFunction(_endLocation)
+          ? _endLocation()
+          : _endLocation;
+        const distance = endLocation - startLocation;
+
         currentTime += increment;
 
         const val = easeInOutQuad(
@@ -76,11 +82,15 @@ export default function ($node: JQuery): void {
     const targetExists =
       anchorHash && !!root.querySelector(`[id="${anchorHash.slice(1)}"]`);
 
-    (targetExists || anchorHash === "#") &&
+    if (targetExists || anchorHash === "#") {
+      const _getEndLocation = () =>
+        getEndLocation(root, anchorHash, scrollingElement);
+
       scrollTo({
-        endLocation: getEndLocation(root, anchorHash, scrollingElement),
+        endLocation: _getEndLocation,
         duration: 600
       });
+    }
   };
 
   const handleRootClick = (e: Event): void => {
@@ -106,8 +116,11 @@ export default function ($node: JQuery): void {
             history.pushState(null, "", anchorHash);
           };
 
+          const _getEndLocation = () =>
+            getEndLocation(root, anchorHash, scrollingElement);
+
           scrollTo({
-            endLocation: getEndLocation(root, anchorHash, scrollingElement),
+            endLocation: _getEndLocation,
             duration: 600,
             targetNode
           }).then(handleComplete);
@@ -126,6 +139,39 @@ export default function ($node: JQuery): void {
       }
     }
   };
+
+  const anchorBlockSelector = ".brz-anchor, .link--anchor, .link--external";
+
+  root.querySelectorAll(anchorBlockSelector).forEach((anchor) => {
+    const href = anchor.getAttribute("href");
+    const hrefValue = href?.split("#")[1];
+
+    if (!hrefValue) {
+      return;
+    }
+
+    // For each anchor:
+    // 1. If there's a section on the page with an id matching the href value, do nothing.
+    // 2. If no matching id is found, check if a section has a matching data-brz-id.
+    //    If so, get the anchorName from that section and update the href to use it
+    //    so that scrolling to the section works correctly.
+
+    const existingSection = !!document.getElementById(hrefValue);
+
+    if (existingSection) {
+      return;
+    }
+
+    const anchorSection = root.querySelector(
+      makeDataAttrString({ name: "id", value: `'${hrefValue}'` })
+    );
+
+    if (anchorSection) {
+      const id = anchorSection.getAttribute("id");
+
+      anchor.setAttribute("href", `#${id}`);
+    }
+  });
 
   window.addEventListener("load", getLastPosition);
   window.addEventListener("hashchange", handleHashChange);

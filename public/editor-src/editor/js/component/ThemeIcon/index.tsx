@@ -45,7 +45,7 @@ const Svg = ({
   const ariaId = uniqueId("brz-aria-");
 
   return (
-    <svg className={className} aria-labelledby={ariaId}>
+    <svg className={className} aria-labelledby={ariaId} role="img">
       <title id={ariaId}>{ariaLabel}</title>
       <use href={href} />
     </svg>

@@ -158,6 +158,45 @@ const backgroundValueReader = (
     [capByPrefix(device, "gradientType")]: pipe(
       mPipe(Obj.readKey(camelCase([device, prefix, "gradientType"])), Str.read),
       onNullish("")
+    ),
+    [capByPrefix(device, "borderWidthType")]: pipe(
+      mPipe(
+        Obj.readKey(camelCase([device, prefix, "borderWidthType"])),
+        Str.read
+      ),
+      onNullish("")
+    ),
+    [capByPrefix(device, "borderWidth")]: pipe(
+      mPipe(Obj.readKey(camelCase([device, prefix, "borderWidth"])), Num.read),
+      onNullish(0)
+    ),
+    [capByPrefix(device, "borderTopWidth")]: pipe(
+      mPipe(
+        Obj.readKey(camelCase([device, prefix, "borderTopWidth"])),
+        Num.read
+      ),
+      onNullish(0)
+    ),
+    [capByPrefix(device, "borderRightWidth")]: pipe(
+      mPipe(
+        Obj.readKey(camelCase([device, prefix, "borderRightWidth"])),
+        Num.read
+      ),
+      onNullish(0)
+    ),
+    [capByPrefix(device, "borderBottomWidth")]: pipe(
+      mPipe(
+        Obj.readKey(camelCase([device, prefix, "borderBottomWidth"])),
+        Num.read
+      ),
+      onNullish(0)
+    ),
+    [capByPrefix(device, "borderLeftWidth")]: pipe(
+      mPipe(
+        Obj.readKey(camelCase([device, prefix, "borderLeftWidth"])),
+        Num.read
+      ),
+      onNullish(0)
     )
   });
 
@@ -215,7 +254,13 @@ const bgKeys: Array<keyof BackgroundValue> = [
   "mobileGradientColorPalette",
   "gradientType",
   "tabletGradientType",
-  "mobileGradientType"
+  "mobileGradientType",
+  "borderWidthType",
+  "borderWidth",
+  "borderTopWidth",
+  "borderRightWidth",
+  "borderBottomWidth",
+  "borderLeftWidth"
 ];
 
 const getBackgroundValue: GetBackgroundValue = ({ type, v, device }) => {

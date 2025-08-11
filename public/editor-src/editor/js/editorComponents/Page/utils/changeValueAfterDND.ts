@@ -14,6 +14,7 @@ import {
   moveAddableToColumn,
   moveAddableToRow,
   moveAddableToSection,
+  moveAddableToThirdPartyContainer,
   moveColumnToAnotherRow,
   moveColumnToSection,
   moveShortcodeToRow,
@@ -87,7 +88,8 @@ function getValue(
     }
 
     switch (to.containerType) {
-      case "column": {
+      case "column":
+      case "thirdPartyContainer": {
         return simpleMove(oldValue, from, to, movedElement);
       }
       case "row": {
@@ -130,16 +132,15 @@ function getValue(
     }
 
     switch (to.containerType) {
-      case "column": {
+      case "column":
+      case "section":
+      case "thirdPartyContainer": {
         return moveColumnToSection(oldValue, from, to);
       }
       case "row": {
         return isEqual(from.containerPath, to.containerPath)
           ? simpleMove(oldValue, from, to)
           : moveColumnToAnotherRow(oldValue, from, to);
-      }
-      case "section": {
-        return moveColumnToSection(oldValue, from, to);
       }
     }
   }
@@ -150,6 +151,7 @@ function getValue(
     switch (to.containerType) {
       case "column":
       case "section":
+      case "thirdPartyContainer":
         return simpleMove(
           oldValue,
           { itemPath: from.itemPath },
@@ -168,6 +170,8 @@ function getValue(
         return moveAddableToRow(oldValue, from, to);
       case "section":
         return moveAddableToSection(oldValue, from, to);
+      case "thirdPartyContainer":
+        return moveAddableToThirdPartyContainer(oldValue, from, to);
     }
   }
 

@@ -1,0 +1,43 @@
+.brz-tooltip {
+  z-index: z("tooltip-overlay");
+
+  &--arrow {
+    width: 0;
+    height: 0;
+    border: 6px solid transparent;
+  }
+
+  &[data-popper-placement*="bottom"] .brz-tooltip--arrow {
+    top: -6px;
+    border-top: none;
+  }
+
+  &[data-popper-placement*="top"] .brz-tooltip--arrow {
+    bottom: -6px;
+    border-bottom: none;
+  }
+
+  &[data-popper-placement*="right"] .brz-tooltip--arrow {
+    left: -12px;
+    border-top: 6px solid transparent;
+    border-bottom: 6px solid transparent;
+    border-right: 6px solid #6c7583;
+  }
+
+  &[data-popper-placement*="left"] .brz-tooltip--arrow {
+    right: -12px;
+    border-block: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-left: 6px solid;
+  }
+}
+
+.brz:not(.brz-ed) {
+  .brz-tooltip {
+    display: none;
+
+    &[data-show] {
+      display: block;
+    }
+  }
+}

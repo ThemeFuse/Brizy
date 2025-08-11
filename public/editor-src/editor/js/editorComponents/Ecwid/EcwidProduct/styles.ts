@@ -287,7 +287,12 @@ export function style(data: DynamicStylesProps<Value>): OutputStyle {
     "#ecwid_html #ecwid_body && .ecwid .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details .product-details__sidebar .product-details__product-options.details-product-options .product-details-module.details-product-option.details-product-option--checkbox .product-details-module__content .form-control--checkbox":
       { standart: ["cssStyleElementEcwidProductCheckbox2Columns"] },
     "#ecwid_html #ecwid_body && .ecwid .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details .product-details__sidebar .product-details__product-options.details-product-options .product-details-module.details-product-option.details-product-option--checkbox .product-details-module__content .form-control--checkbox .form-control__checkbox-wrap .form-control__checkbox-view":
-      { standart: ["cssStyleElementEcwidProductCheckbox2IconSize"] },
+      {
+        standart: [
+          "cssStyleElementEcwidProductCheckbox2IconSize",
+          "cssStyleElementEcwidProductCheckBoxCheckmark"
+        ]
+      },
     "#ecwid_html #ecwid_body && .ecwid .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details .product-details__sidebar .product-details__product-options.details-product-options .product-details-module.details-product-option.details-product-option--checkbox .product-details-module__content .form-control--checkbox:hover .form-control__checkbox-wrap .form-control__checkbox-view:after":
       {
         standart: [

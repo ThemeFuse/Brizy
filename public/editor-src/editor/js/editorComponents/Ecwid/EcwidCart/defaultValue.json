@@ -1358,6 +1358,12 @@
     "checkoutInputsTypographyUppercase": false,
     "checkoutInputsTypographyLowercase": false,
 
+    "sidebarSpacing": 48,
+    "sidebarSpacingSuffix": "px",
+
+    "nextSpacing": 20,
+    "nextSpacingSuffix": "px",
+
     "hoverTransition": 50,
     "hoverTransitionSuffix": "",
 

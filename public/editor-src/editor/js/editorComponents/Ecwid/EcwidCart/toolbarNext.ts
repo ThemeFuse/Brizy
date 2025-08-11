@@ -3,6 +3,7 @@ import { getColorToolbar } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
 import { HOVER, NORMAL } from "visual/utils/stateMode";
+import { nextSpacingCSS } from "./css";
 import { Value } from "./types/Value";
 
 export const getItems: GetItems<Value> = ({ v, device, state }) => {
@@ -64,6 +65,26 @@ export const getItems: GetItems<Value> = ({ v, device, state }) => {
         { icon: "nc-text-align-left", title: t("Align"), value: "left" },
         { icon: "nc-text-align-center", title: t("Align"), value: "center" },
         { icon: "nc-text-align-right", title: t("Align"), value: "right" }
+      ]
+    },
+    {
+      id: "toolbarSettings",
+      type: "popover",
+      config: { title: t("Settings") },
+      position: 110,
+      devices: "desktop",
+      options: [
+        {
+          id: "nextSpacing",
+          label: t("Spacing"),
+          type: "slider",
+          config: {
+            min: 0,
+            max: 200,
+            units: [{ value: "px", title: "px" }]
+          },
+          style: nextSpacingCSS
+        }
       ]
     }
   ];

@@ -1,5 +1,5 @@
-import { isIOS } from "visual/utils/devices";
 import { Num } from "@brizy/readers";
+import { isIOS } from "visual/utils/devices";
 
 interface DocumentWithFullscreen extends Document {
   mozFullscreenElement?: Element;
@@ -35,12 +35,18 @@ export const initCustomVideoActions = (
     const video = videoNode.querySelector("video");
     const autoplay = video?.getAttribute("data-autoplay");
     const muted = video?.hasAttribute("muted");
+    const captionBtn =
+      videoNode.querySelector<HTMLElement>(".brz-media-caption");
 
     if (autoplay === "on") {
       changePlayerState(videoNode);
     }
     if (muted) {
       changePlayerMute(videoNode, true);
+    }
+
+    if (captionBtn && video) {
+      toggleCaption(video, captionBtn);
     }
   });
 
@@ -359,3 +365,16 @@ const closeFullscreen = (): void => {
     doc.msExitFullscreen();
   }
 };
+
+const toggleCaption = (video: HTMLVideoElement, captionBtn: HTMLElement) =>
+  captionBtn.addEventListener("click", () => {
+    const isActive = captionBtn.classList.contains("brz-media-caption-active");
+
+    if (isActive) {
+      video.textTracks[0].mode = "hidden";
+      captionBtn.classList.remove("brz-media-caption-active");
+    } else {
+      video.textTracks[0].mode = "showing";
+      captionBtn.classList.add("brz-media-caption-active");
+    }
+  });

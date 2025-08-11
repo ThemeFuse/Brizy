@@ -15,9 +15,11 @@ import { isView } from "visual/providers/RenderProvider";
 import { makeAttr, makeDataAttr } from "visual/utils/i18n/attribute";
 import * as Attr from "visual/utils/string/parseCustomAttributes";
 import { MValue } from "visual/utils/value";
+import { withMigrations } from "../tools/withMigrations";
 import { Button, MSButtons, SubmitButton } from "./Components/Buttons";
 import { Form } from "./Components/Form";
 import defaultValue from "./defaultValue.json";
+import { migrations } from "./migrations/Form2";
 import * as sidebarExtendButton from "./sidebarExtendButton";
 import * as sidebarExtendParent from "./sidebarExtendParent";
 import { styleForm } from "./styles";
@@ -27,7 +29,7 @@ import * as toolbarExtendMultiStepBtn from "./toolbarExtendMultiStepBtn";
 import * as toolbarExtendParent from "./toolbarExtendParent";
 import type { State, Value } from "./types";
 
-export default class Form2 extends EditorComponent<Value, ElementProps, State> {
+class Form2 extends EditorComponent<Value, ElementProps, State> {
   static defaultValue = defaultValue;
   static defaultProps = {
     meta: {},
@@ -82,8 +84,8 @@ export default class Form2 extends EditorComponent<Value, ElementProps, State> {
         activeStep: active,
         viewType,
         multistep,
-        labelType: label === "off" ? "inside" : "outside",
         placeholder: placeholder === "on",
+        labelType: label === "off" ? "inside" : "outside",
         meta: this.props.meta,
         toolbarExtendFields: this.makeToolbarPropsFromConfig2(
           toolbarExtendFields,
@@ -107,11 +109,18 @@ export default class Form2 extends EditorComponent<Value, ElementProps, State> {
       sliceEndIndex,
       itemProps: {
         meta: this.props.meta,
+        renderer: {
+          disableTooltip: true,
+          form: {
+            percentWidth: true
+          }
+        },
         toolbarExtend: this.makeToolbarPropsFromConfig2(
           toolbarExtendMultiStepBtn,
           undefined,
           { allowExtend: false }
-        )
+        ),
+        updateWidthPrefixBySizeChange: "px"
       }
     });
   }
@@ -146,6 +155,15 @@ export default class Form2 extends EditorComponent<Value, ElementProps, State> {
     const { active } = this.state;
     const totalSteps = this.getTotalSteps(v);
 
+    const submitButtonItemProps = {
+      renderer: {
+        disableTooltip: true,
+        form: {
+          percentWidth: true
+        }
+      }
+    };
+
     const className = classnames({
       "brz-form-ms-buttons--story": isStory(this.props.editorMode)
     });
@@ -166,7 +184,7 @@ export default class Form2 extends EditorComponent<Value, ElementProps, State> {
         {active === totalSteps && (
           <>
             {this.renderPrevButton()}
-            {this.renderButton(v)}
+            {this.renderButton(v, submitButtonItemProps)}
           </>
         )}
         {active !== 1 && active !== totalSteps && (
@@ -201,7 +219,10 @@ export default class Form2 extends EditorComponent<Value, ElementProps, State> {
     return <EditorArrayComponent {...itemsProps} />;
   }
 
-  renderButton(v: Value): React.JSX.Element {
+  renderButton(
+    v: Value,
+    itemProps?: Record<string, unknown>
+  ): React.JSX.Element {
     const { multistep } = v;
     const IS_VIEW = isView(this.props.renderContext);
 
@@ -215,7 +236,12 @@ export default class Form2 extends EditorComponent<Value, ElementProps, State> {
           toolbarExtendButton,
           sidebarExtendButton,
           { allowExtend: false }
-        )
+        ),
+        updateWidthPrefixBySizeChange: "px",
+        renderer: {
+          disableTooltip: true
+        },
+        ...itemProps
       }
     });
     const className = classnames(
@@ -258,8 +284,11 @@ export default class Form2 extends EditorComponent<Value, ElementProps, State> {
     const { multistep, customCSS } = v;
     const { points, restrictions } = getBoxResizerParams();
 
+    const isMultistepEnabled = multistep === "on";
+
     const className = classnames(
       "brz-forms2",
+      { "brz-forms2--multistep": isMultistepEnabled },
       this.css(
         `${this.getComponentId()}-form`,
         `${this.getId()}-form`,
@@ -275,7 +304,7 @@ export default class Form2 extends EditorComponent<Value, ElementProps, State> {
 
     const formContent = (
       <Form className="brz-form" onSubmit={this.handleSubmit}>
-        {multistep === "off" ? (
+        {!isMultistepEnabled ? (
           <>
             {this.renderFields(v)}
             {this.renderButton(v)}
@@ -324,12 +353,15 @@ export default class Form2 extends EditorComponent<Value, ElementProps, State> {
       multistep
     } = v;
 
+    const isMultistepEnabled = multistep === "on";
+
     const { action, recaptcha } = config?.integrations?.form ?? {};
     const projectId = config?.project?.id ?? "";
     const recaptchaSiteKey = recaptcha && recaptcha.siteKey;
 
     const className = classnames(
       "brz-forms2",
+      { "brz-forms2--multistep": isMultistepEnabled },
       this.css(
         `${this.getComponentId()}-form`,
         `${this.getId()}-form`,
@@ -343,7 +375,7 @@ export default class Form2 extends EditorComponent<Value, ElementProps, State> {
       )
     );
 
-    const formType = multistep === "on" ? "multistep" : "default";
+    const formType = isMultistepEnabled ? "multistep" : "default";
 
     const attr = {
       action,
@@ -355,7 +387,11 @@ export default class Form2 extends EditorComponent<Value, ElementProps, State> {
       [makeAttr("form-type")]: formType,
       [makeAttr("default-success", true)]: "Your email was sent successfully",
       [makeAttr("default-error", true)]: "Your email was not sent",
-      [makeAttr("default-empty", true)]: "Please check your entry and try again"
+      [makeAttr("default-empty", true)]: "Please fill in the required fields",
+      [makeAttr("default-invalid", true)]:
+        "Please check your entry and try again",
+      [makeAttr("default-invalid-email", true)]:
+        "Please enter a valid email address (e.g., name@example.com)"
     };
 
     return (
@@ -371,7 +407,7 @@ export default class Form2 extends EditorComponent<Value, ElementProps, State> {
             attributes={attr}
             recaptcha={recaptchaSiteKey}
           >
-            {multistep === "off" ? (
+            {!isMultistepEnabled ? (
               <>
                 {this.renderFields(v)}
                 {this.renderButton(v)}
@@ -388,3 +424,5 @@ export default class Form2 extends EditorComponent<Value, ElementProps, State> {
     );
   }
 }
+
+export default withMigrations(Form2, migrations);

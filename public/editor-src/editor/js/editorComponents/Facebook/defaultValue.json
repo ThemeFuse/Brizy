@@ -18,10 +18,7 @@
 
     "smallHeader": "off",
     "hideCover": "off",
-    "showFacepile": "off",
-
-    "showSocialContext": "on",
-    "showMetaData": "on"
+    "showFacepile": "off"
   },
   "link": {
     "targetUrl": "current",
@@ -44,24 +41,14 @@
     "facebookPageHref": "https://www.facebook.com/facebook",
     "facebookPageHrefPopulation": "",
     "facebookPageHrefPopulationEntityType": "",
-    "facebookPageHrefPopulationEntityId": "",
-
-    "facebookGroupHref": "https://www.facebook.com/groups/669915249871846",
-    "facebookGroupHrefPopulation": "",
-    "facebookGroupHrefPopulationEntityType": "",
-    "facebookGroupHrefPopulationEntityId": ""
+    "facebookPageHrefPopulationEntityId": ""
   },
   "style": {
-    "width": 300,
-    "widthSuffix": "px",
-
     "height": 450,
     "heightSuffix": "px",
 
     "pageWidth": 500,
     "pageWidthSuffix": "px",
-
-    "skin": "light",
 
     "className": "",
 

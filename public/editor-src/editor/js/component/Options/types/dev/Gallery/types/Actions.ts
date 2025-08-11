@@ -1,3 +1,4 @@
+import { Item } from "./Item";
 import { UploadData } from "./UploadData";
 
 // region Add
@@ -8,6 +9,18 @@ export interface Add {
 
 export const add = (payload: Add["payload"]): Add => ({
   type: "Add",
+  payload
+});
+// endregion
+
+// region Set
+interface Set {
+  type: "Set";
+  payload: Item<number>[];
+}
+
+export const set = (payload: Set["payload"]): Set => ({
+  type: "Set",
   payload
 });
 // endregion
@@ -71,4 +84,4 @@ export const fetchError = (payload: FetchError["payload"]): FetchError => ({
 });
 // endregion
 
-export type Actions = Add | Remove | Sort | FetchSuccess | FetchError;
+export type Actions = Add | Set | Remove | Sort | FetchSuccess | FetchError;
