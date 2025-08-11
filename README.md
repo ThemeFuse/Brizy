@@ -4,7 +4,7 @@ Contributors: themefuse<br>
 Requires at least: 4.5<br>
 Tested up to: 6.8.2<br>
 Requires PHP: 7.2.24<br>
-Stable tag: 2.7.4<br>
+Stable tag: 2.7.5<br>
 License: GPLv3<br>
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -135,6 +135,34 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 [Privacy policy](https://brizy.io/privacy/)
 
 ## Changelog
+
+### 2.7.5 - 2025-08-11
+* New: Tooltip option for Icon, Button and Image elements
+* New: Role and ARIA-hidden attributes for Icon element (accessibility improvement)
+* New: Focus indicators for buttons, links and form items (accessibility improvement)
+* New: Captions support for video and audio elements
+* New: Title display for uploaded audio tracks
+* New: Stop-animation option for Carousel and Section Slider
+* New: Multi-step form – set custom width for navigation buttons
+* New: Form validation errors for empty fields and invalid emails
+* New: Added a third-party container for integrations
+* New: Context menu now closes reliably after use
+* New: White Label – “Brizy” name is hidden in exported block/layout JSON files
+* Improved: Video element height handling
+* Improved: Image element – better width/height calculation
+* Improved: Image element – smoother re-render process
+* Improved: Pass media configuration to browser compiler
+* Improved: Added utility function to get image source for third-party components
+* Improved: Select dropdown positioning
+* Improved: Widget positioning in accessibility mode
+* Improved: Rich-text – consistent “em” font size in dynamic content
+* Improved: Split some visual editor components into editor/preview files for faster loading, plus cleaned up imports
+* Fixed: CSS – styleBgColorHex now works correctly with palette colours
+* Fixed: Form – fields now receive focus correctly
+* Fixed: Internal Link – search now finds items correctly
+* Fixed: Sections – smoother scrolling between sections in Blocksy theme
+* Fixed: Row – reverse columns option works as expected
+* Fixed: Image links now update correctly when moving a staging site to production
 
 ### 2.7.4 - 2025-07-23
 * Fixed: reverse column
