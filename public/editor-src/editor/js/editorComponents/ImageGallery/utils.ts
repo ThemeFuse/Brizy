@@ -247,7 +247,8 @@ export const multiUpload = (
           value.imageSrc &&
           item.uid &&
           !value.clonedFromGallery &&
-          value.imageSrc === item.uid
+          value.imageSrc === item.uid &&
+          value._id === item.id
         );
       });
 
@@ -260,7 +261,7 @@ export const multiUpload = (
           ? {
               ...currentItem,
               value: {
-                ...(currentItem.value as Value),
+                ...currentValue,
                 imageSrc: uid,
                 imageWidth: width,
                 imageHeight: height,

@@ -1,4 +1,5 @@
 import type { ElementModelType } from "visual/component/Elements/Types";
+import { SizeType } from "visual/global/Config/types/configs/common";
 import {
   getPatchExtraData,
   imagesSrc,
@@ -14,7 +15,6 @@ import {
   masonryLayout,
   mockValue
 } from "./imageGalleryChange";
-import { SizeType } from "visual/global/Config/types/configs/common";
 
 const fakeImageUrl = "https://image.com";
 const fakeImageUrl2 = "https://image2.com";
@@ -358,7 +358,10 @@ describe("Testing multiupload function should return an array with images", () =
       items: [
         {
           type: "Image",
-          value: multiUploadCommonData3
+          value: {
+            ...multiUploadCommonData3,
+            _id: "test"
+          }
         }
       ],
       _id: "5"
@@ -366,7 +369,7 @@ describe("Testing multiupload function should return an array with images", () =
 
     const patchItems = [
       {
-        id: 1,
+        id: "test",
         uid: "image.jpg",
         fileName: "image.jpg",
         ...commonSizes
@@ -377,7 +380,10 @@ describe("Testing multiupload function should return an array with images", () =
     expect(multiUpload(v, patchItems)).toStrictEqual([
       {
         type: "Image",
-        value: multiUploadCommonData3
+        value: {
+          ...multiUploadCommonData3,
+          _id: "test"
+        }
       },
       {
         type: "Image",

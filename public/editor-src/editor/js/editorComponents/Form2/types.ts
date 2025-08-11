@@ -39,13 +39,17 @@ export interface DataValue {
 export enum MessageStatus {
   Success = "success",
   Error = "error",
-  Empty = "empty"
+  Empty = "empty",
+  Invalid = "invalid",
+  InvalidEmail = "invalid-email"
 }
 
 export interface ResponseMessages {
   [MessageStatus.Success]: string;
   [MessageStatus.Error]: string;
   [MessageStatus.Empty]: string;
+  [MessageStatus.Invalid]: string;
+  [MessageStatus.InvalidEmail]: string;
 }
 
 export interface GetFormMessageData {

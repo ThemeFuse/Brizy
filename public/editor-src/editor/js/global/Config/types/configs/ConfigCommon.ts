@@ -8,6 +8,7 @@ import {
   ChoicesAsync,
   ChoicesSync
 } from "visual/component/Options/types/dev/Select/types";
+import { BlockTypes } from "visual/component/Prompts/PromptBlocks/types";
 import { RuleList } from "visual/component/Prompts/PromptConditions/Rules/types";
 import { Ref } from "visual/component/Prompts/PromptConditions/Rules/utils/api";
 import {
@@ -150,7 +151,8 @@ export enum LeftSidebarOptionsIds {
   collaboration = "collaboration",
   deviceMode = "deviceMode",
   pageSettings = "pageSettings",
-  more = "more"
+  more = "more",
+  custom = "custom"
 }
 
 export enum LeftSidebarPageSettingsOptionsIds {
@@ -190,9 +192,18 @@ export interface LeftSidebarAddElementsType extends LeftSidebarOptionBase {
   }[];
 }
 
+export interface LeftSidebarCustomType extends LeftSidebarOptionBase {
+  type: LeftSidebarOptionsIds.custom;
+  href?: string;
+  onOpen?: (close: VoidFunction) => void;
+  onClose?: VoidFunction;
+  icon?: string;
+}
+
 export type LeftSidebarOption =
   | LeftSidebarCommonOption
-  | LeftSidebarAddElementsType;
+  | LeftSidebarAddElementsType
+  | LeftSidebarCustomType;
 
 export interface LeftSidebarMoreOptions {
   type: LeftSidebarMoreOptionsIds;
@@ -254,6 +265,12 @@ export interface OnChange {
   projectData?: PublishedProject;
   pageData?: PublishedPage;
   globalBlocks?: Array<PublishedGlobalBlock>;
+}
+
+export interface ExportBlockURLData {
+  isPro: boolean;
+  type: BlockTypes;
+  id: string;
 }
 
 export interface Theme {
@@ -381,6 +398,33 @@ export interface ConditionalTypesData {
   customerGroups: CustomerGroup[];
 }
 
+export interface Media {
+  isOldImage?: boolean;
+
+  mediaResizeUrl?: string;
+
+  addMedia?: {
+    label?: string;
+    handler: (
+      res: Response<AddImageData>,
+      rej: Response<string>,
+      extra: AddImageExtra
+    ) => void;
+  };
+
+  // Image Gallery
+  addMediaGallery?: {
+    label?: string;
+    handler: (
+      res: Response<Array<AddImageData>>,
+      rej: Response<string>,
+      extra: AddImageExtra
+    ) => void;
+  };
+
+  imagePatterns?: ImagePatterns;
+}
+
 export interface API {
   // Used only in Posts(Migration) & GlobalBlocks PopupConditions
   /** @deprecated */
@@ -399,32 +443,7 @@ export interface API {
   };
 
   // Media
-  media?: {
-    isOldImage?: boolean;
-
-    mediaResizeUrl?: string;
-
-    addMedia?: {
-      label?: string;
-      handler: (
-        res: Response<AddImageData>,
-        rej: Response<string>,
-        extra: AddImageExtra
-      ) => void;
-    };
-
-    // Image Gallery
-    addMediaGallery?: {
-      label?: string;
-      handler: (
-        res: Response<Array<AddImageData>>,
-        rej: Response<string>,
-        extra: AddImageExtra
-      ) => void;
-    };
-
-    imagePatterns?: ImagePatterns;
-  };
+  media?: Media;
 
   fonts?: {
     adobeFont?: {
@@ -759,6 +778,10 @@ export interface API {
 
   sidebars?: {
     getSidebars?: (res: Response<Sidebar[]>, rej: Response<string>) => void;
+  };
+
+  block?: {
+    getExportBlockUrl?: (data: ExportBlockURLData) => string;
   };
 }
 

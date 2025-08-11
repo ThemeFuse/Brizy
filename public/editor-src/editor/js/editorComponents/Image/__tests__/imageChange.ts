@@ -354,10 +354,11 @@ describe("Testing 'Patches for image' functions", () => {
     ).toStrictEqual({ height: 200, heightSuffix: "px", sizeType: "custom" });
   });
 
-  test.each<[number, Value, UnitPatch, DeviceMode, PatchUnit]>([
+  test.each<[number, number, Value, UnitPatch, DeviceMode, PatchUnit]>([
     // base
     [
       400,
+      800,
       {
         width: 0,
         height: 0,
@@ -382,6 +383,7 @@ describe("Testing 'Patches for image' functions", () => {
     ],
     [
       500,
+      800,
       {
         width: 500,
         height: 200,
@@ -405,6 +407,7 @@ describe("Testing 'Patches for image' functions", () => {
     ],
     [
       500,
+      800,
       {
         width: 250,
         height: 200,
@@ -428,6 +431,7 @@ describe("Testing 'Patches for image' functions", () => {
     ],
     [
       500,
+      800,
       {
         width: 50,
         height: 200,
@@ -451,6 +455,7 @@ describe("Testing 'Patches for image' functions", () => {
     ],
     [
       500,
+      800,
       {
         width: 100,
         height: 200,
@@ -474,7 +479,7 @@ describe("Testing 'Patches for image' functions", () => {
         tabletWidthSuffix: "px"
       }
     ]
-  ])("pathOnUnitChange cW = %i", (cW, v, patch, device, resolve) => {
-    expect(pathOnUnitChange(cW, v, patch, device)).toStrictEqual(resolve);
+  ])("pathOnUnitChange cW = %i", (cW, cH, v, patch, device, resolve) => {
+    expect(pathOnUnitChange(cW, cH, v, patch, device)).toStrictEqual(resolve);
   });
 });

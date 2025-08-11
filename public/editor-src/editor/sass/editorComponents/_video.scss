@@ -111,6 +111,7 @@
 
   // Video Player
   @include custom-video;
+  @include media-caption;
 }
 
 // Custom Video Style
@@ -133,7 +134,6 @@
 .brz-custom-video.brz-video-on-controls-hidden {
   .brz-video__cover {
     position: relative;
-    height: calc(100% + 50px);
   }
 
   .brz-video-content .brz-video-elem video {

@@ -36,6 +36,8 @@ export interface Value extends ElementModel {
 
   items: Array<ElementModelType>;
   tagName: keyof JSX.IntrinsicElements;
+
+  stopSlider: Switch;
 }
 
 export interface Props {

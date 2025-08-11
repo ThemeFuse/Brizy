@@ -24,10 +24,37 @@ const recaptchaSelector =
 const defaultResponseMessages: ResponseMessages = {
   success: "Your email was sent successfully",
   error: "Your email was not sent",
-  empty: "Please check your entry and try again"
+  empty: "Please fill in the required fields",
+  invalid: "Please check your entry and try again",
+  "invalid-email": "Please enter a valid email address (e.g., name@example.com)"
 };
 
 const responseMessages = new Map<HTMLFormElement, ResponseMessages>();
+
+export const showErrorMessage = (form: HTMLFormElement) => {
+  const isFormFieldEmpty = !!form.querySelector(
+    ".brz-forms2__item--error-required"
+  );
+
+  const isEmailPatternInvalid = !!form.querySelector(
+    ".brz-forms2__item--error-pattern .brz-forms2__field-email"
+  );
+
+  const status = isFormFieldEmpty
+    ? MessageStatus.Empty
+    : isEmailPatternInvalid
+      ? MessageStatus.InvalidEmail
+      : MessageStatus.Invalid;
+
+  const message = getFormMessage({
+    status,
+    form
+  });
+
+  if (message) {
+    showFormMessage(form, message);
+  }
+};
 
 export default function ($node: JQuery): void {
   const root = $node.get(0);
@@ -176,7 +203,9 @@ export default function ($node: JQuery): void {
         dropdownParent: $this,
         placeholder,
         templateSelection: (data) => {
-          return !placeholder && !initialized ? "" : Str.read(data.text) ?? "";
+          return !placeholder && !initialized
+            ? ""
+            : (Str.read(data.text) ?? "");
         }
       });
 
@@ -272,7 +301,7 @@ function validateFormItem(node: HTMLFormElement): boolean {
     "brz-forms2__item--error-required"
   );
 
-  if (isRequired && (!value || !patternTest)) {
+  if (isRequired && !value) {
     parentElem?.classList.add(
       "brz-forms2__item--error",
       "brz-forms2__item--error-required"
@@ -500,8 +529,8 @@ function initForm(form: HTMLElement): void {
       // validate form
       const isValid = validateForm(form);
 
-      if (!isValid) {
-        return;
+      if (!isValid && formNode) {
+        return showErrorMessage(formNode);
       }
 
       // call recaptcha
@@ -521,8 +550,8 @@ function initForm(form: HTMLElement): void {
         // validate form
         const isValid = validateForm(form);
 
-        if (!isValid) {
-          return;
+        if (!isValid && formNode) {
+          return showErrorMessage(formNode);
         }
 
         // create formData;

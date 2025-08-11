@@ -1,4 +1,8 @@
 import $ from "jquery";
+import {
+  attachSliderControls,
+  makePausePlayItem
+} from "../../utils/export/slider";
 
 export default function ($node) {
   const isRtl = $node.closest("[dir='rtl']").length > 0;
@@ -11,6 +15,14 @@ export default function ($node) {
     return (className) => {
       return `<div class="brz-slick-slider__arrow ${className}">${$svg[0].outerHTML}</div>`;
     };
+  };
+
+  const handleClickPlay = ($this) => {
+    $this.slick("slickPlay");
+  };
+
+  const handleClickPause = ($this) => {
+    $this.slick("slickPause");
   };
 
   $node.find(".brz-slick-slider__section").each(function () {
@@ -31,6 +43,8 @@ export default function ($node) {
     const section = $this.closest(".brz-section").get(0);
     const responsive = JSON.parse(decodeURIComponent(data.responsive));
 
+    const playPauseItem = makePausePlayItem(_this);
+
     const getArrow = makeArrow(_this);
 
     $this.on("init", function (event, slick) {
@@ -45,6 +59,19 @@ export default function ($node) {
           slick: node,
           wrapper: section
         });
+      }
+      const $dots = $this.find(
+        ".brz-slick-slider__dots:not(.brz-carousel__slider .brz-slick-slider__dots)"
+      );
+
+      if ($dots.length && playPauseItem) {
+        $dots.append(playPauseItem);
+        attachSliderControls(
+          $this,
+          playPauseItem,
+          handleClickPause,
+          handleClickPlay
+        );
       }
     });
 

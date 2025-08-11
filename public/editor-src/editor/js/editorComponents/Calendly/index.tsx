@@ -1,26 +1,14 @@
-import { Calendly as CalendlyComponent } from "@brizy/component";
+import { Calendly as CalendlyComponent } from "@brizy/component/src/Flex/Calendly";
 import React, { ReactNode } from "react";
 import BoxResizer from "visual/component/BoxResizer";
 import { Patch } from "visual/component/BoxResizer/types";
-import { ElementModel } from "visual/component/Elements/Types";
 import Placeholder from "visual/component/Placeholder";
 import Toolbar from "visual/component/Toolbar";
-import { ComponentsMeta } from "visual/editorComponents/EditorComponent/types";
-import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
-import { WithClassName } from "visual/types/attributes";
-import EditorComponent from "../EditorComponent";
 import { Wrapper } from "../tools/Wrapper";
-import defaultValue from "./defaultValue.json";
+import { BaseCalendly } from "./Base";
 import * as sidebarConfig from "./sidebar";
 import * as toolbarConfig from "./toolbar";
-
-export interface Value extends ElementModel {
-  link: string;
-}
-
-interface Props extends WithClassName {
-  meta: ComponentsMeta;
-}
+import { Value } from "./types";
 
 const resizerPoints = [
   "centerLeft",
@@ -43,13 +31,7 @@ const resizerRestrictions = {
   }
 };
 
-class Calendly extends EditorComponent<Value, Props> {
-  static defaultValue = defaultValue;
-
-  static get componentId(): ElementTypes.Calendly {
-    return ElementTypes.Calendly;
-  }
-
+class Calendly extends BaseCalendly {
   handleResizerChange = (patch: Patch): void => this.patchValue(patch);
 
   renderForEdit(v: Value): ReactNode {
@@ -83,25 +65,6 @@ class Calendly extends EditorComponent<Value, Props> {
           </Wrapper>
         )}
       </Toolbar>
-    );
-  }
-
-  renderForView(v: Value): ReactNode {
-    const { link } = v;
-
-    const className = this.getCSSClassnames({
-      toolbars: [toolbarConfig],
-      sidebars: [sidebarConfig],
-      extraClassNames: ["brz-calendly"]
-    });
-
-    return (
-      <Wrapper
-        {...this.makeWrapperProps({ className })}
-        attributes={{ "data-url": link }}
-      >
-        {!link && <Placeholder icon="calendly" />}
-      </Wrapper>
     );
   }
 }

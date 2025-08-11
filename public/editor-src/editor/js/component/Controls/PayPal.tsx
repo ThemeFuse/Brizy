@@ -45,11 +45,11 @@ export const PayPal = ({
       onSave={onSave}
       onCancel={onCancel}
       validator={validator}
-      description={t("Allow us to access your PayPal account via API access")}
+      description={t("Please add your PayPal email address")}
     >
       <InputPlaceholder
         value={value ?? ""}
-        title={t("API KEY")}
+        title={t("EMAIL")}
         onChange={handleChange}
         required={true}
       />

@@ -37,6 +37,23 @@ export function cssStyleElementCarouselColorArrow({
   });
 }
 
+export function cssStyleElementCarouselColorPause({
+  v,
+  device,
+  store,
+  getConfig,
+  state
+}: CSSValue): string {
+  return cssStyleColor({
+    v,
+    device,
+    store,
+    state,
+    getConfig,
+    prefix: "sliderPauseColor"
+  });
+}
+
 export function cssStyleElementCarouselPaddingLeftRight({
   v,
   device

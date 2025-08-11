@@ -39,9 +39,7 @@ export class EcwidPrice extends EditorComponent<Value> {
 
   renderForEdit(v: Value): JSX.Element {
     const { priceStyle, entityId: _entityId, customCSS } = v;
-
     const config = this.getGlobalConfig();
-
     const isContextAuto = _entityId === "auto";
     const entityType = isContextAuto
       ? undefined

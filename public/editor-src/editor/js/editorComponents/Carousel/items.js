@@ -21,6 +21,17 @@ const SliderArrow = ({ className, extraClassName, onClick, icon }) => (
   </div>
 );
 
+const renderSliderDots = (dots, stopSlider) => (
+  <ul>
+    {dots}
+    {stopSlider && (
+      <li className="brz-slick-slider__pause">
+        <ThemeIcon name="button-circle-pause" type="glyph" />
+      </li>
+    )}
+  </ul>
+);
+
 class Items extends EditorArrayComponent {
   static defaultProps = {
     containerClassName: "",
@@ -299,7 +310,8 @@ class Items extends EditorArrayComponent {
       transitionSpeed,
       swipe,
       tabletSlidesToShow,
-      mobileSlidesToShow
+      mobileSlidesToShow,
+      stopSlider
     } = this.props;
 
     if (isView(this.props.renderContext)) {
@@ -343,6 +355,20 @@ class Items extends EditorArrayComponent {
               className="brz-hidden"
             />
           )}
+          {stopSlider && (
+            <>
+              <ThemeIcon
+                name="button-circle-pause"
+                type="glyph"
+                className="brz-hidden button-pause"
+              />
+              <ThemeIcon
+                name="button-circle-play"
+                type="glyph"
+                className="brz-hidden button-play"
+              />
+            </>
+          )}
         </div>
       );
     }
@@ -360,6 +386,7 @@ class Items extends EditorArrayComponent {
         useTransform={false}
         speed={500}
         fade={sliderAnimation === "fade"}
+        appendDots={(dots) => renderSliderDots(dots, stopSlider)}
         nextArrow={
           <SliderArrow
             icon={`right-arrow-${sliderArrows}`}

@@ -1,8 +1,8 @@
-import { Bool, Num, Str } from "@brizy/readers";
+import { Bool, Num, Obj, Str } from "@brizy/readers";
 import classnames from "classnames";
 import { noop } from "es-toolkit";
 import { Base64 } from "js-base64";
-import React, { Fragment } from "react";
+import React, { Fragment, createRef } from "react";
 import ResizeAware from "react-resize-aware";
 import { omit } from "timm";
 import CustomCSS from "visual/component/CustomCSS";
@@ -10,6 +10,12 @@ import { HoverAnimation } from "visual/component/HoverAnimation/HoverAnimation";
 import { getHoverAnimationOptions } from "visual/component/HoverAnimation/utils";
 import { getLinkValue } from "visual/component/Link/utils";
 import Toolbar from "visual/component/Toolbar";
+import { Tooltip } from "visual/component/Tooltip";
+import {
+  getToolbarPlacement,
+  getTooltipPlacement,
+  shouldUpdateTooltipByPatch
+} from "visual/component/Tooltip/utils";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { keyToDCFallback2Key } from "visual/editorComponents/EditorComponent/DynamicContent/utils";
@@ -20,30 +26,62 @@ import { isStory } from "visual/providers/EditorModeProvider";
 import { isEditor, isView } from "visual/providers/RenderProvider";
 import { blocksDataSelector } from "visual/redux/selectors";
 import { makePlaceholder } from "visual/utils/dynamicContent";
+import { makeDataAttr } from "visual/utils/i18n/attribute";
 import { imagePopulationUrl } from "visual/utils/image";
-import { isGIFExtension, isSVGExtension, isUnsplashImage } from "visual/utils/image/utils";
+import {
+  isGIFExtension,
+  isSVGExtension,
+  isUnsplashImage
+} from "visual/utils/image/utils";
 import { getLinkData } from "visual/utils/models/link";
-import { defaultValueValue, mobileSyncOnChange, tabletSyncOnChange } from "visual/utils/onChange";
+import {
+  defaultValueValue,
+  mobileSyncOnChange,
+  tabletSyncOnChange
+} from "visual/utils/onChange";
 import { fromElementModel } from "visual/utils/options/ImageUpload/converters";
 import { makeOptionValueToAnimation } from "visual/utils/options/utils/makeValueToOptions";
-import { fromLinkElementModel, patchOnDCChange as patchOnLinkDCChange } from "visual/utils/patch/Link/";
+import {
+  fromLinkElementModel,
+  patchOnDCChange as patchOnLinkDCChange
+} from "visual/utils/patch/Link/";
 import { DESKTOP, MOBILE, TABLET } from "visual/utils/responsiveMode";
 import { HOVER } from "visual/utils/stateMode";
 import { SizeType } from "../../global/Config/types/configs/common";
 import { attachRefs } from "../../utils/react";
 import { capByPrefix } from "../../utils/string";
+import * as tooltipSidebarConfig from "../tools/Tooltip/tooltipSidebar";
+import * as tooltipToolbarConfig from "../tools/Tooltip/tooltipToolbar";
 import { Wrapper } from "../tools/Wrapper";
 import ImageContent from "./Image";
 import ImageWrapper from "./Wrapper";
 import defaultValue from "./defaultValue.json";
-import { elementModelToValue, patchOnDCChange, patchOnHoverImageChange, patchOnImageChange, patchOnSizeTypeChange, pathOnUnitChange } from "./imageChange";
+import {
+  elementModelToValue,
+  patchOnDCChange,
+  patchOnHoverImageChange,
+  patchOnImageChange,
+  patchOnSizeTypeChange,
+  pathOnUnitChange
+} from "./imageChange";
 import { migrations } from "./migrations";
 import * as sidebarConfig from "./sidebar";
-import { style, styleContent, styleHover } from "./styles";
+import { style, styleContent, styleHover, styleTooltip } from "./styles";
 import toolbarConfigFn from "./toolbar";
 import * as ImagePatch from "./types/ImagePatch";
-import { calcImageSizes, calcWrapperOriginalSizes, calcWrapperPredefinedSizes, calcWrapperSizes, getCustomImageUrl, getImageSize, getSizeType, isOriginalSize, isPredefinedSize, multiplier, showOriginalImage } from "./utils";
-
+import {
+  calcImageSizes,
+  calcWrapperOriginalSizes,
+  calcWrapperPredefinedSizes,
+  calcWrapperSizes,
+  getCustomImageUrl,
+  getImageSize,
+  getSizeType,
+  isOriginalSize,
+  isPredefinedSize,
+  multiplier,
+  showOriginalImage
+} from "./utils";
 
 class Image extends EditorComponent {
   static defaultProps = {
@@ -57,6 +95,10 @@ class Image extends EditorComponent {
     cH: 0
   };
   container = React.createRef();
+
+  tooltipRef = createRef();
+  tooltipReferenceElement = null;
+  isInitialisedTooltip = false;
 
   constructor(props) {
     super(props);
@@ -87,15 +129,27 @@ class Image extends EditorComponent {
 
   componentDidUpdate(prevProps) {
     const device = this.getDeviceMode();
-    const { sizeType: prevSizeType } = prevProps.dbValue;
-    const { sizeType: currentSizeType } = this.getValue();
+    const {
+      sizeType: prevSizeType,
+      heightSuffix: prevSuffix,
+      enableTooltip: prevEnableTooltip
+    } = prevProps.dbValue;
 
-    if (
-      prevSizeType &&
-      prevSizeType !== currentSizeType &&
-      device === DESKTOP
-    ) {
+    const {
+      sizeType: currentSizeType,
+      heightSuffix: currentSuffix,
+      enableTooltip
+    } = this.getValue();
+
+    const isChangedSizeType = prevSizeType && prevSizeType !== currentSizeType;
+    const isChangedSuffix = prevSuffix && prevSuffix !== currentSuffix;
+
+    if ((isChangedSizeType || isChangedSuffix) && device === DESKTOP) {
       this.updateHoverImageHeight();
+    }
+
+    if (enableTooltip === "on" && prevEnableTooltip !== enableTooltip) {
+      this.tooltipRef.current?.openTooltip();
     }
   }
 
@@ -105,6 +159,13 @@ class Image extends EditorComponent {
 
   patchValue(patch, meta) {
     const image = this.handleImageChange(patch);
+
+    const needToUpdateTooltip = shouldUpdateTooltipByPatch(patch);
+
+    if (needToUpdateTooltip) {
+      this.tooltipRef.current?.updatePopper();
+    }
+
     super.patchValue({ ...patch, ...image }, meta);
   }
 
@@ -137,6 +198,8 @@ class Image extends EditorComponent {
   }
 
   handleImageChange(patch) {
+    this.updateContainerWidth();
+
     const { imageSizes: cfgImageSizes } = this.getGlobalConfig();
     const device = this.getDeviceMode();
     const { v } = this.getValue2();
@@ -197,9 +260,16 @@ class Image extends EditorComponent {
     }
 
     if (imageUnit !== undefined) {
-      const containerWidth = this.getContainerSize()[device];
+      const containerWidth = this.getDimension("width");
+      const containerHeight = this.getDimension("height");
 
-      return pathOnUnitChange(containerWidth, value, imageUnit, device);
+      return pathOnUnitChange(
+        containerWidth,
+        containerHeight,
+        value,
+        imageUnit,
+        device
+      );
     }
 
     const sizeType = dvv("sizeType");
@@ -243,6 +313,10 @@ class Image extends EditorComponent {
     }
 
     this.props.onResize();
+
+    if (this.tooltipRef.current) {
+      this.tooltipRef.current.updatePopper();
+    }
   };
 
   handleChange = (patch) => {
@@ -266,36 +340,69 @@ class Image extends EditorComponent {
 
   onDragEnd = () => {
     const sizePatch = this.state.sizePatch;
-    this.setState({ isDragging: false, sizePatch: null }, () =>
-      this.handleBoxResizerChange(sizePatch)
-    );
+    this.setState({ isDragging: false, sizePatch: null }, () => {
+      if (Obj.isObject(sizePatch)) {
+        this.handleBoxResizerChange(sizePatch);
+      }
+    });
   };
 
-  getWidth = () => {
-    // INFO: the parent element chosen for width can affect the ImageGallery element
-    let parentNode = this.container?.current?.parentElement;
+  getDimension = (size) => {
+    switch (size) {
+      case "width": {
+        // INFO: the parent element chosen for width can affect the ImageGallery element
+        let parentNode = this.container?.current?.parentElement;
 
-    if (parentNode) {
-      if (parentNode.classList.contains("brz-wrapper__scrollmotion")) {
-        parentNode = parentNode.parentElement;
+        if (parentNode) {
+          if (parentNode.classList.contains("brz-wrapper__scrollmotion")) {
+            parentNode = parentNode.parentElement;
+          }
+
+          const parentWidth = parentNode.getBoundingClientRect().width;
+
+          if (Num.read(parentWidth)) {
+            const cs = getComputedStyle(parentNode);
+
+            const paddingX =
+              parseFloat(cs.paddingLeft) + parseFloat(cs.paddingRight);
+            const borderX =
+              parseFloat(cs.borderTopWidth) + parseFloat(cs.borderBottomWidth);
+
+            return parentWidth - paddingX - borderX;
+          }
+        }
+
+        return undefined;
       }
+      case "height": {
+        const parentNode =
+          this.container?.current?.querySelector(".brz-picture");
 
-      const parentWidth = parentNode.getBoundingClientRect().width;
+        if (parentNode) {
+          const parentHeight = parentNode.getBoundingClientRect()?.height;
 
-      if (Num.read(parentWidth)) {
-        const cs = getComputedStyle(parentNode);
+          if (Num.read(parentHeight)) {
+            const cs = getComputedStyle(parentNode);
 
-        const paddingX =
-          parseFloat(cs.paddingLeft) + parseFloat(cs.paddingRight);
-        const borderX =
-          parseFloat(cs.borderTopWidth) + parseFloat(cs.borderBottomWidth);
+            const paddingY =
+              parseFloat(cs.paddingTop) + parseFloat(cs.paddingBottom);
+            const borderY =
+              parseFloat(cs.borderTopWidth) + parseFloat(cs.borderBottomWidth);
 
-        return parentWidth - paddingX - borderX;
+            return parentHeight - paddingY - borderY;
+          }
+        }
+
+        return undefined;
       }
     }
-
-    return undefined;
   };
+
+  updateContainerDimensions(deviceMode, width, widthStateKey) {
+    if (this.state[widthStateKey] !== width) {
+      this.setState((state) => ({ ...state, [widthStateKey]: width }));
+    }
+  }
 
   updateContainerWidth = () => {
     if (!this.mounted) {
@@ -303,26 +410,28 @@ class Image extends EditorComponent {
     }
 
     const deviceMode = this.getDeviceMode();
-    const width = this.getWidth();
+    const width = this.getDimension("width");
 
     if (width !== undefined) {
       switch (deviceMode) {
         case "desktop": {
-          if (this.state.containerWidth !== width) {
-            this.setState({ containerWidth: width });
-          }
+          this.updateContainerDimensions("desktop", width, "containerWidth");
           break;
         }
         case "tablet": {
-          if (this.state.tabletContainerWidth !== width) {
-            this.setState({ tabletContainerWidth: width });
-          }
+          this.updateContainerDimensions(
+            "tablet",
+            width,
+            "tabletContainerWidth"
+          );
           break;
         }
         case "mobile": {
-          if (this.state.mobileContainerWidth !== width) {
-            this.setState({ mobileContainerWidth: width });
-          }
+          this.updateContainerDimensions(
+            "mobile",
+            width,
+            "mobileContainerWidth"
+          );
           break;
         }
       }
@@ -591,28 +700,38 @@ class Image extends EditorComponent {
     if (resize) {
       value = {
         ...value,
-        width: resize,
-
-        widthSuffix: "%",
-        heightSuffix: "%"
+        width: resize
       };
     }
     if (tabletResize) {
       value = {
         ...value,
-        tabletWidth: tabletResize,
-
-        tabletWidthSuffix: "%",
-        tabletHeightSuffix: "%"
+        tabletWidth: tabletResize
       };
     }
     if (mobileResize) {
       value = {
         ...value,
-        mobileWidth: mobileResize,
+        mobileWidth: mobileResize
+      };
+    }
 
-        mobileWidthSuffix: "%",
-        mobileHeightSuffix: "%"
+    if (dbValue.width) {
+      value = {
+        ...value,
+        width: dbValue.width
+      };
+    }
+    if (dbValue.tabletWidth) {
+      value = {
+        ...value,
+        tabletWidth: dbValue.tabletWidth
+      };
+    }
+    if (dbValue.mobileWidth) {
+      value = {
+        ...value,
+        mobileWidth: dbValue.mobileWidth
       };
     }
 
@@ -721,6 +840,76 @@ class Image extends EditorComponent {
     });
   }
 
+  handleToggleTooltip = () => {
+    this.tooltipRef.current?.toggleTooltip();
+  };
+
+  handleUpdateTooltipReference(el) {
+    const { enableTooltip } = this.getValue();
+
+    if (enableTooltip !== "on") {
+      return;
+    }
+
+    if (!this.isInitialisedTooltip) {
+      this.isInitialisedTooltip = true;
+      // We call forceUpdate because updating the ref alone doesn't trigger a re-render,
+      // so Popper doesn't get the updated reference element.
+      this.forceUpdate();
+    }
+
+    if (el) {
+      this.tooltipReferenceElement = el;
+    }
+  }
+
+  renderTooltip(v, vs, vd) {
+    const {
+      tooltipOffset,
+      tooltipText,
+      tooltipTriggerClick,
+      tooltipPlacement
+    } = v;
+
+    const classTooltip = this.css(
+      `${this.getComponentId()}-tooltip`,
+      `${this.getId()}-tooltip`,
+      styleTooltip({
+        v,
+        vs,
+        vd,
+        store: this.getReduxStore(),
+        contexts: this.getContexts()
+      })
+    );
+
+    return (
+      <Toolbar
+        {...this.makeToolbarPropsFromConfig2(
+          tooltipToolbarConfig,
+          tooltipSidebarConfig,
+          {
+            allowExtend: false
+          }
+        )}
+      >
+        {({ ref: tooltipToolbarRef }) => (
+          <Tooltip
+            overlay={tooltipText}
+            offset={tooltipOffset}
+            ref={this.tooltipRef}
+            openOnClick={tooltipTriggerClick === "on"}
+            placement={tooltipPlacement}
+            id={this.getId()}
+            contentRef={tooltipToolbarRef}
+            referenceElement={this.tooltipReferenceElement}
+            className={classTooltip}
+          />
+        )}
+      </Toolbar>
+    );
+  }
+
   renderPopups() {
     const meta = this.props.meta;
     const popupsProps = this.makeSubcomponentProps({
@@ -811,7 +1000,9 @@ class Image extends EditorComponent {
       imageType,
       hoverImageSrc,
       hoverImage,
-      tabsState
+      tabsState,
+      enableTooltip,
+      tooltipPlacement
     } = v;
     const config = this.getGlobalConfig();
 
@@ -899,11 +1090,26 @@ class Image extends EditorComponent {
       this.getHoverAnimationData(v);
     const { wrapperAnimationActive } = this.props.meta;
     const isDisabledHover = Bool.read(wrapperAnimationActive);
+    const isTooltipEnabled = enableTooltip === "on";
+
+    const _tooltipPlacement = isTooltipEnabled
+      ? getTooltipPlacement(tooltipPlacement)
+      : undefined;
+
+    const mainToolbarPlacement = getToolbarPlacement(_tooltipPlacement);
+
+    const attrs = isTooltipEnabled
+      ? makeDataAttr({
+          name: "tooltip-wrapper-id",
+          value: this.getId()
+        })
+      : {};
 
     return (
       <Fragment>
         <Toolbar
           {...this.makeToolbarPropsFromConfig2(toolbarConfig, sidebarConfig)}
+          placement={mainToolbarPlacement}
         >
           {({ ref: toolbarRef }) => (
             <CustomCSS selectorName={this.getId()} css={v.customCSS}>
@@ -917,8 +1123,11 @@ class Image extends EditorComponent {
                         toolbarRef,
                         customCssRef
                       ]);
-                    }
+                      this.handleUpdateTooltipReference(el);
+                    },
+                    attributes: attrs
                   })}
+                  onClick={this.handleToggleTooltip}
                 >
                   <HoverAnimation
                     animationId={animationId}
@@ -970,12 +1179,19 @@ class Image extends EditorComponent {
         )}
         {shouldRenderPopup(v, blocksDataSelector(this.getReduxState())) &&
           this.renderPopups()}
+        {isTooltipEnabled && this.renderTooltip(v, vs, vd)}
       </Fragment>
     );
   }
 
   renderForView(v, vs, vd) {
-    const { className, actionClosePopup, hoverImageSrc, hoverImage } = v;
+    const {
+      className,
+      actionClosePopup,
+      hoverImageSrc,
+      hoverImage,
+      enableTooltip
+    } = v;
     const config = this.getGlobalConfig();
     const isAbsoluteOrFixed =
       v.elementPosition === "absolute" || v.elementPosition === "fixed";
@@ -1046,6 +1262,15 @@ class Image extends EditorComponent {
       )
     );
 
+    const isTooltipEnabled = enableTooltip === "on";
+
+    const attrs = isTooltipEnabled
+      ? makeDataAttr({
+          name: "tooltip-wrapper-id",
+          value: this.getId()
+        })
+      : {};
+
     return (
       <Fragment>
         <CustomCSS selectorName={this.getId()} css={v.customCSS}>
@@ -1060,7 +1285,8 @@ class Image extends EditorComponent {
             <Wrapper
               {...this.makeWrapperProps({
                 className: parentClassName,
-                ref: this.container
+                ref: this.container,
+                attributes: attrs
               })}
             >
               <ImageContent
@@ -1087,6 +1313,7 @@ class Image extends EditorComponent {
         </CustomCSS>
         {shouldRenderPopup(v, blocksDataSelector(this.getReduxState())) &&
           this.renderPopups()}
+        {isTooltipEnabled && this.renderTooltip(v, vs, vd)}
       </Fragment>
     );
   }

@@ -6,7 +6,6 @@ import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import defaultValue from "./defaultValue.json";
 import * as sidebarExtendButton from "./sidebarExtendButton";
-import * as sidebarExtendIcon from "./sidebarExtendIcon";
 import * as sidebarExtendParent from "./sidebarExtendParent";
 import * as sidebarExtendText from "./sidebarExtendText";
 import { style } from "./styles";
@@ -53,7 +52,7 @@ class IconText extends EditorComponent {
         meta,
         toolbarExtend: this.makeToolbarPropsFromConfig2(
           toolbarExtendIcon,
-          sidebarExtendIcon,
+          undefined,
           {
             allowExtend: false
           }

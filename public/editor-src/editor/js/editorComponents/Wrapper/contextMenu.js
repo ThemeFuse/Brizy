@@ -3,7 +3,7 @@ import { ECWID_CATEGORY_TYPE, ECWID_PRODUCT_TYPE } from "visual/utils/ecwid";
 import { t } from "visual/utils/i18n";
 import { getThirdPartyShortcodeTitle } from "./utils";
 
-const getTranslationsMap = () => ({
+export const getTranslationsMap = () => ({
   RichText: t("Text"),
   Image: t("Image"),
   Video: t("Video"),

@@ -13,6 +13,9 @@ export function reducer(
       const max = maxId(s);
       return [...s, ...a.payload.map((p, i) => Item.loading(i + max + 1, p))];
     }
+    case "Set": {
+      return a.payload;
+    }
     case "Remove":
       return s.filter((i) => i.id !== a.payload);
     case "Sort":
