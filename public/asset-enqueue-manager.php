@@ -144,6 +144,15 @@ class Brizy_Public_AssetEnqueueManager
     public function enqueueStyles()
     {
         $styles = [];
+
+        if (is_array($this->project->getCompiledStyles())) {
+            foreach ($this->project->getCompiledAssetGroup()->getPageStyles() as $asset) {
+                if ($asset = apply_filters('brizy_add_style', $asset)) {
+                    $this->styles[$this->getHandle($asset)] = $asset;
+                }
+            }
+        }
+
         foreach ($this->posts as $editorPost) {
             $sectionSet = $editorPost->getCompiledSectionManager();
             $postGroups = $sectionSet->getAssetsGroups();
@@ -163,6 +172,7 @@ class Brizy_Public_AssetEnqueueManager
             }
 
         }
+
         $assetAggregator = new AssetAggregator($styles);
         foreach ($assetAggregator->getAssetList() as $asset) {
             /*
@@ -174,14 +184,7 @@ class Brizy_Public_AssetEnqueueManager
                 $this->styles[$this->getHandle($asset)] = $asset;
             }
         }
-        // enqueue
-        if (is_array($this->project->getCompiledStyles())) {
-            foreach ($this->project->getCompiledAssetGroup()->getPageStyles() as $asset) {
-                if ($asset = apply_filters('brizy_add_style', $asset)) {
-                    $this->styles[$this->getHandle($asset)] = $asset;
-                }
-            }
-        }
+
         foreach ($this->styles as $handle => $asset) {
             if ($asset->getType() == Asset::TYPE_FILE) {
                 wp_register_style($handle, $this->getAssetUrl($asset), [], apply_filters('brizy_asset_version', BRIZY_EDITOR_VERSION, $asset));
