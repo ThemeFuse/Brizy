@@ -250,6 +250,8 @@ class Brizy_Content_Providers_FreeProvider extends Brizy_Content_Providers_Abstr
         $this->registerPlaceholder(
             new Brizy_Content_Placeholders_GlobalBlock(__('Brizy Global Block', 'brizy'), 'brizy_dc_global_block')
         );
+
+        $this->registerPlaceholder(new Brizy_Content_Placeholders_GlobalBlockAnchor('Brizy Global Block Anchor', 'globalblock_anchor'));
 	}
 
 	private function filterData( $property, $post ) {
