@@ -16,9 +16,7 @@ def discordFooter = "Version ${params.buildVersion}\n Editor Version: ${params.e
 
 env.BUILD_FOLDER_PATH = "/tmp/brizy"
 
-def pluginVersionRegex = ~/^[0-9]{1}\.[0-9]{1,2}\.[0-9]{1,3}(-[a-z0-9-]+)?$/
-def editorVersionRegex = ~/^[0-9]{1,3}-wp$/
-def syncVersionRegex = ~/^[0-9]{1,3}$/
+
 
 pipeline {
     options {
@@ -35,20 +33,26 @@ pipeline {
 
         stage('Check version syntax.. because we are idiots sometimes') {
             steps {
-                if (!(params.buildVersion ==~ pluginVersionRegex)) {
-                    error "❌ Invalid plugin version format!"
-                }
+                script {
+                    def pluginVersionRegex = ~/^[0-9]{1}\.[0-9]{1,2}\.[0-9]{1,3}(-[a-z0-9-]+)?$/
+                    def editorVersionRegex = ~/^[0-9]{1,3}-wp$/
+                    def syncVersionRegex = ~/^[0-9]{1,3}$/
 
-                if (!(params.editorVersion ==~ editorVersionRegex)) {
-                    error "❌ Invalid editor version format!"
-                }
+                    if (!(params.buildVersion ==~ pluginVersionRegex)) {
+                        error "❌ Invalid plugin version format!"
+                    }
 
-                if (!(params.syncVersion ==~ syncVersionRegex)) {
-                    error "❌ Invalid sync version format!"
-                }
+                    if (!(params.editorVersion ==~ editorVersionRegex)) {
+                        error "❌ Invalid editor version format!"
+                    }
 
-                if (!(params.minProVersion ==~ pluginVersionRegex)) {
-                    error "❌ Invalid minimum pro version format!"
+                    if (!(params.syncVersion ==~ syncVersionRegex)) {
+                        error "❌ Invalid sync version format!"
+                    }
+
+                    if (!(params.minProVersion ==~ pluginVersionRegex)) {
+                        error "❌ Invalid minimum pro version format!"
+                    }
                 }
             }
         }
