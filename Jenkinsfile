@@ -35,8 +35,8 @@ pipeline {
             steps {
                 script {
                     def pluginVersionRegex = ~/^[0-9]{1}\.[0-9]{1,2}\.[0-9]{1,3}(-[a-z0-9-]+)?$/
-                    def editorVersionRegex = ~/^[0-9]{1,3}-wp$/
-                    def syncVersionRegex = ~/^[0-9]{1,3}$/
+                    def editorVersionRegex = ~/^[0-9]{1,3}(-[a-z0-9-]+)?-wp$/
+                    def syncVersionRegex = ~/^[0-9]{1,3}(-[a-z0-9-]+)?$/
 
                     if (!(params.buildVersion ==~ pluginVersionRegex)) {
                         error "❌ Invalid plugin version format!"
