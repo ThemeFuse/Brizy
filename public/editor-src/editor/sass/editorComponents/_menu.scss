@@ -454,6 +454,10 @@ $dropdown-arrow-size: 7px;
     }
   }
 
+  .brz-root__container:has(.brz-menu) {
+    overflow: visible;
+  }
+
   // Mega Menu
   .brz-mega-menu__portal {
     z-index: z("mega-menu");

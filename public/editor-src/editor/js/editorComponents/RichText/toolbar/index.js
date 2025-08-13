@@ -4,7 +4,11 @@ import { isPopup, isStory } from "visual/providers/EditorModeProvider";
 import { t } from "visual/utils/i18n";
 import { getDynamicContentOption } from "visual/utils/options";
 import { toolbarLinkAnchor } from "visual/utils/toolbar";
-import { handleChangeLink, patchTextTransform } from "../utils/dependencies";
+import {
+  handleChangeLink,
+  handleChangeTooltip,
+  patchTextTransform
+} from "../utils/dependencies";
 import getColorToolbar from "./color";
 import { checkTextIncludeTag } from "./utils/checkTextIncludeTag";
 import { mergeTypographyFontFamily } from "./utils/index";
@@ -82,6 +86,9 @@ const getItems =
 
     const dependencies = dependenciesOption(v, onChange);
 
+    const tooltipDependencies = (data) =>
+      v.textPopulation ? data : onChange(handleChangeTooltip(data, v));
+
     const disableHeadingTags = (v, tag) => {
       const { text, textPopulation } = v;
 
@@ -113,6 +120,9 @@ const getItems =
     } = getEnabledLinkOptions(config);
 
     const isDisabledLinkUpload = !config.pro || !linkUpload;
+
+    const isEnabledTooltip = v.enableTooltip === "on" && config.pro;
+    const shouldDisableTooltip = !isEnabledTooltip || _isStory;
 
     return [
       {
@@ -157,7 +167,7 @@ const getItems =
             tabs: [
               {
                 id: "tabTypographyParagraph",
-                label: t("P"),
+                label: t("Text"),
                 options: [
                   {
                     id: "gridTypographyParagraph",
@@ -459,6 +469,43 @@ const getItems =
                         ]
                       }
                     ]
+                  }
+                ]
+              },
+              {
+                id: "textTooltip",
+                label: t("Tooltip"),
+                options: [
+                  {
+                    id: "enableTooltip",
+                    label: t("Enable Tooltip"),
+                    type: "switch",
+                    devices: "desktop",
+                    disabled: _isStory || !config.pro,
+                    dependencies: tooltipDependencies
+                  },
+                  {
+                    id: "tooltipText",
+                    label: t("Text"),
+                    disabled: shouldDisableTooltip,
+                    type: "textarea",
+                    placeholder: t("Paste your text here"),
+                    devices: "desktop",
+                    config: {
+                      lines: 3
+                    },
+                    dependencies: tooltipDependencies
+                  },
+                  {
+                    id: "tooltipTriggerClick",
+                    label: t("Enable on Click"),
+                    helper: {
+                      content: t("Enable tooltip on click instead of hover")
+                    },
+                    type: "switch",
+                    disabled: shouldDisableTooltip,
+                    devices: "desktop",
+                    dependencies: tooltipDependencies
                   }
                 ]
               }

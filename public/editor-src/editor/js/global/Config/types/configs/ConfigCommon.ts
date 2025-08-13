@@ -134,6 +134,7 @@ export interface MenuItem {
     classes: string[];
     liClasses: string[];
     current: boolean;
+    editorUrl: string;
   };
 }
 
@@ -521,6 +522,16 @@ export interface API {
       ) => void;
     };
 
+    getCollectionItemById: {
+      handler: (
+        res: Response<CollectionItem[]>,
+        rej: Response<string>,
+        extra: {
+          id: string | number;
+        }
+      ) => void;
+    };
+
     getCollectionSourceItems: {
       handler: (
         res: Response<CollectionSourceItem[]>,
@@ -536,7 +547,7 @@ export interface API {
       handler: (
         res: Response<CollectionItem[]>,
         rej: Response<string>,
-        args: { entityType: string }
+        args: { entityType: string; search?: string }
       ) => void;
     };
   };

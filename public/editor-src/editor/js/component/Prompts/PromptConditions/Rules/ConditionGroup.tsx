@@ -3,7 +3,7 @@ import React from "react";
 import { SelectItem } from "visual/component/Controls/InternalLink/Components/SelectItem";
 import { Select2 } from "visual/component/Controls/Select2";
 import { Item } from "visual/component/Controls/Select2/Item";
-import { Rule } from "visual/types/Rule";
+import { CollectionItemRule, Rule } from "visual/types/Rule";
 import {
   isCollectionItemRule,
   isCollectionTypeRule
@@ -27,6 +27,8 @@ interface ConditionGroupProps {
   rulesList: RuleList[];
   onGroupChange: (v: string | null) => void;
   onTypeChange: (v: string | null) => void;
+  getItems: (collectionType: string, search: string) => Promise<ValueItems[]>;
+  addRuleToTheList: (item: CollectionItemRule) => void;
 }
 
 const ALL = "all";
@@ -125,10 +127,10 @@ class ConditionGroup extends React.Component<ConditionGroupProps> {
     );
   }
 
-  handleSearchChange = (
+  handleSearchChange = async (
     searchTerm: string,
     currentRuleList: RuleList | null
-  ): void => {
+  ): Promise<void> => {
     this.setState({
       loading: true
     });
@@ -138,20 +140,63 @@ class ConditionGroup extends React.Component<ConditionGroupProps> {
         filteredItems: currentRuleList.items,
         loading: false
       });
-    } else {
-      if (currentRuleList && currentRuleList.items) {
-        const _filteredItems = currentRuleList.items.map((item) => ({
-          ...item,
-          items: item.items?.filter((nestedItem) =>
-            nestedItem.title.toLowerCase().includes(searchTerm.toLowerCase())
-          )
-        }));
+      return;
+    }
 
+    if (currentRuleList && currentRuleList.items) {
+      const _filteredItems = currentRuleList.items.map((item) => ({
+        ...item,
+        items: item.items?.filter((nestedItem) =>
+          nestedItem.title.toLowerCase().includes(searchTerm.toLowerCase())
+        )
+      }));
+
+      const hasResults = _filteredItems.some(
+        (item) => item.items && item.items.length > 0
+      );
+
+      if (hasResults) {
         this.setState({
           filteredItems: _filteredItems,
           loading: false
         });
+      } else {
+        try {
+          const items = await this.props.getItems(
+            currentRuleList.value,
+            searchTerm
+          );
+
+          if (items.length === 0) {
+            throw new Error(`No results found`);
+          }
+
+          const updatedRuleList2 = {
+            ...currentRuleList,
+            items: [
+              {
+                ...currentRuleList.items[0],
+                items
+              }
+            ]
+          };
+
+          this.setState({
+            filteredItems: [...updatedRuleList2.items],
+            loading: false
+          });
+        } catch (error) {
+          console.error("Search API request failed:", error);
+          this.setState({
+            filteredItems: _filteredItems,
+            loading: false
+          });
+        }
       }
+    } else {
+      this.setState({
+        loading: false
+      });
     }
   };
 

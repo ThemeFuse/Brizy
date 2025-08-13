@@ -120,15 +120,22 @@ export const changeRichText = (
         );
         link.attr("data-brz-link-type", data.type);
 
+        const rel = [];
         if (
           (newData.type === "external" && newData.externalBlank === "on") ||
           (newData.type === "page" && newData.internalBlank === "on")
         ) {
           link.attr("target", "_blank");
+          rel.push("noreferrer", "noopener");
         }
         if (newData.type === "external" && newData.externalRel === "on") {
-          link.attr("rel", "nofollow");
+          rel.push("nofollow");
         }
+
+        if (rel.length > 0) {
+          link.attr("rel", rel.join(" "));
+        }
+
         $this.replaceWith(link);
       } else {
         const newClassNames = className

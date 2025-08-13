@@ -7,9 +7,14 @@ import { defaultValueValue } from "visual/utils/onChange";
 import { hoverEffects } from "visual/utils/options/Animation/utils";
 import { read as readString } from "visual/utils/string/specs";
 import { GetItems } from "../EditorComponent/types";
-import type { V } from "./types";
+import type { Props, V } from "./types";
 
-export const getItems: GetItems<V> = ({ v, device, component, editorMode }) => {
+export const getItems: GetItems<V, Props> = ({
+  v,
+  device,
+  component,
+  editorMode
+}) => {
   const dvv = (key: string) => defaultValueValue({ v, key, device });
 
   const config = component.getGlobalConfig();

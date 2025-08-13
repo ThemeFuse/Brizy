@@ -79,11 +79,15 @@ export const getHref = (
   return href;
 };
 
-export const getRel = (_rel: string): string => {
+export const getRel = (_rel: string, target: TargetTypes): string => {
   const rel = ["noopener"];
 
   if (_rel === "on") {
     rel.push("nofollow");
+  }
+
+  if (target === "_blank") {
+    rel.push("noreferrer");
   }
 
   return rel.join(" ");
