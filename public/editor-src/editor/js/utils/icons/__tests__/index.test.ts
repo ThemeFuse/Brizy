@@ -1,5 +1,5 @@
-import { getCustomIconUrl } from "../utils";
 import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import { getCustomIconUrl } from "../utils";
 
 describe("Test getCustomIconUrl function", () => {
   const config = {
@@ -42,6 +42,23 @@ describe("Test getCustomIconUrl function", () => {
 
     expect(getCustomIconUrl(_config, iconName)).toEqual(
       "https://beta1.brizydemo.com/customicon/9560822af44b2a9c0b97d72fa3a5823abe9a"
+    );
+  });
+
+  test("Should also work with {{placeholder}} format for baseUrl", () => {
+    const _config = {
+      api: {
+        customIcon: {
+          iconUrl: "{{brizy_dc_url_site}}",
+          iconPattern: {
+            original: "{{ [baseUrl] }}/{{ [uid] }}"
+          }
+        }
+      }
+    } as ConfigCommon;
+
+    expect(getCustomIconUrl(_config, iconName)).toEqual(
+      "{{brizy_dc_url_site}}/9560822af44b2a9c0b97d72fa3a5823abe9a"
     );
   });
 });
