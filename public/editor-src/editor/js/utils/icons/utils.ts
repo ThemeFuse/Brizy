@@ -6,34 +6,40 @@ import { getPlaceholders } from "../placeholders";
 
 export const makeCustomIconUrl = (options: CustomIconOptions): string => {
   const { pattern } = options;
+  const url = pattern.replace(/[{}\s]/g, "");
 
   const placeholders = getPlaceholders(pattern);
 
-  const url = placeholders.reduce((acc, placeholder) => {
+  return placeholders.reduce((acc, placeholder) => {
     const key = placeholder.replace(/[[\]]/g, "");
     const getKeyValue = mPipe(Obj.readKey(key), Str.read);
     const value = getKeyValue(options);
 
     return value ? acc.replace(placeholder, value) : acc;
-  }, pattern);
-
-  return url.replace(/[{}\s]/g, "");
+  }, url);
 };
 
 export const getCustomIconUrl = (
   config: ConfigCommon,
   iconName: string,
-  fileName?: string
+  fileName?: string,
+  isPreview?: boolean
 ): string => {
-  const { iconUrl, iconPattern } = config.api?.customIcon ?? {};
+  const { iconUrl, iconPattern, compileIconUrl } = config.api?.customIcon ?? {};
 
   if (!iconPattern || !iconUrl) {
     return "";
   }
 
+  let baseUrl = iconUrl;
+
+  if (isPreview && compileIconUrl) {
+    baseUrl = compileIconUrl;
+  }
+
   const options = {
+    baseUrl,
     pattern: iconPattern.original,
-    baseUrl: iconUrl,
     uid: iconName,
     fileName
   };
