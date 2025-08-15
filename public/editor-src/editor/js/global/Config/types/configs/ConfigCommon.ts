@@ -463,6 +463,7 @@ export interface API {
   customIcon?: {
     iconUrl?: string;
     iconPattern?: IconPattern;
+    compileIconUrl?: string;
     add?: (
       res: Response<IconUploadData[]>,
       rej: Response<string>,

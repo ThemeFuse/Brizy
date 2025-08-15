@@ -422,12 +422,13 @@ class SectionFooter extends EditorComponent {
     } = v;
 
     const uidPlaceholder = makePlaceholder({
-      content: "{{ random_id }}",
-      attr: { key: this.getId() }
+      content: "{{ globalblock_anchor }}",
+      attr: { uid: this.getId() }
     });
-    const blockName = cssID
-      ? cssID
-      : anchorName || `${uidPlaceholder}_${this.getId()}`;
+    const uuid = `${uidPlaceholder}_${this.getId()}`;
+    const blockName = cssID ? cssID : anchorName || uuid;
+
+    const shouldAddUidAttr = cssID || anchorName;
 
     const content = (
       <CustomCSS selectorName={this.getId()} css={customCSS}>
@@ -452,7 +453,13 @@ class SectionFooter extends EditorComponent {
                   contexts: this.getContexts()
                 })
               )
-            )
+            ),
+            ...(shouldAddUidAttr
+              ? makeDataAttr({
+                  name: "id",
+                  value: uuid
+                })
+              : {})
           }}
           animationClass={this.getAnimationClassName(v, vs, vd)}
         >

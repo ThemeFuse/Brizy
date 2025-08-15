@@ -14,8 +14,7 @@ import {
 import { ReduxState } from "visual/redux/types";
 import { GlobalBlockBase } from "visual/types/GlobalBlock";
 import { FCC } from "visual/utils/react/types";
-import { Props } from "./types";
-import { PreloadThumbnailProps } from "./types";
+import { PreloadThumbnailProps, Props } from "./types";
 
 export const BlockThumbnail: FCC<Props> = ({
   label,
@@ -37,7 +36,7 @@ export const BlockThumbnail: FCC<Props> = ({
   const globalBlocks = useSelector(globalBlocksAssembled2Selector);
 
   const [anchorInputs, setAnchorInputs] = useState(
-    blocks.map(({ value: blockValue }) => ({
+    pageBlocksAssembled.map(({ value: blockValue }) => ({
       id: blockValue._id,
       value: blockValue.anchorName
     }))

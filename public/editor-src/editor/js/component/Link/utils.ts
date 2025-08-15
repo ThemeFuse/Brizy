@@ -31,8 +31,8 @@ export const getTarget = (type: Type, target: Target): TargetTypes => {
 
 const createAnchor = (href: string): string => {
   const uidPlaceholder = makePlaceholder({
-    content: "{{ random_id }}",
-    attr: { key: href }
+    content: "{{ globalblock_anchor }}",
+    attr: { uid: href }
   });
 
   return `${uidPlaceholder}_${href}`;

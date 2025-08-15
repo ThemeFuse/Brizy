@@ -28,7 +28,7 @@ export function compileTemplateIconUrl({
   config
 }: TemplateIconData): string {
   if (type === IconTypes.Custom) {
-    return getCustomIconUrl(config, iconName, filename);
+    return getCustomIconUrl(config, iconName, filename, true);
   }
 
   const { templateIcons, compileTemplateIcons } = config.urls ?? {};
