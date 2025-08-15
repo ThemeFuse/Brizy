@@ -50,7 +50,11 @@ import { IconUploadData } from "@/types/Icon";
 import { Page } from "@/types/Page";
 import { Rule } from "@/types/PopupConditions";
 import { Project } from "@/types/Project";
-import { ResponseWithBody, SuccessResponse } from "@/types/Response";
+import {
+  ResponseWithBody,
+  ResponseWithSuccessStatus,
+  SuccessResponse
+} from "@/types/Response";
 import {
   CreateSavedBlock,
   CreateSavedLayout,
@@ -1529,6 +1533,40 @@ export const updateGlobalBlocks = async (
     return d.data;
   } catch {
     throw new Error(t("Failed to update Global blocks"));
+  }
+};
+
+export const deleteGlobalBlock = async (
+  uid: string
+): Promise<ResponseWithSuccessStatus> => {
+  const config = getConfig();
+
+  if (!config) {
+    throw new Error(t("Invalid __BRZ_PLUGIN_ENV__"));
+  }
+
+  const { url, hash, actions, editorVersion } = config;
+  const _url = makeUrl(url, {
+    hash,
+    action: actions.deleteGlobalBlock,
+    version: editorVersion,
+    uid
+  });
+
+  try {
+    const d = await request(_url, {
+      method: "POST"
+    });
+
+    if (!d.ok) {
+      throw new Error(t("Failed to delete global block"));
+    }
+
+    const data = await d.json();
+
+    return data;
+  } catch (e) {
+    throw new Error(t("Failed to delete global block"));
   }
 };
 
