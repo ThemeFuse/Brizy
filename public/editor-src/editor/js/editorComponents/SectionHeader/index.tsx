@@ -23,6 +23,7 @@ import {
 } from "visual/utils/dynamicContent";
 import { isPro } from "visual/utils/env";
 import { t } from "visual/utils/i18n";
+import { makeDataAttr } from "visual/utils/i18n/attribute";
 import {
   defaultValueValue,
   validateKeyByProperty
@@ -540,12 +541,13 @@ export default class SectionHeader extends EditorComponent<
     } = v;
 
     const uidPlaceholder = makePlaceholder({
-      content: "{{ random_id }}",
-      attr: { key: this.getId() }
+      content: "{{ globalblock_anchor }}",
+      attr: { uid: this.getId() }
     });
-    const blockName = cssID
-      ? cssID
-      : anchorName || `${uidPlaceholder}_${this.getId()}`;
+
+    const uuid = `${uidPlaceholder}_${this.getId()}`;
+
+    const blockName = cssID ? cssID : anchorName || uuid;
     const classNameSection = classnames(
       "brz-section brz-section__header",
       `brz-section__header-type--${type}`,
@@ -564,11 +566,19 @@ export default class SectionHeader extends EditorComponent<
       )
     );
 
+    const shouldAddUidAttr = cssID || anchorName;
+
     const props = {
       ...parseCustomAttributes(customAttributes),
       id: blockName,
       style: this.getStyle(v),
-      className: classNameSection
+      className: classNameSection,
+      ...(shouldAddUidAttr
+        ? makeDataAttr({
+            name: "id",
+            value: uuid
+          })
+        : {})
     };
 
     const content = (

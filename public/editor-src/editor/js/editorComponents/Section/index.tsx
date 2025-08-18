@@ -382,8 +382,8 @@ export default class Section extends EditorComponent<Value, Props> {
     const animationClassName = this.getAnimationClassName(v, vs, vd);
 
     const uidPlaceholder = makePlaceholder({
-      content: "{{ random_id }}",
-      attr: { key: this.getId() }
+      content: "{{ globalblock_anchor }}",
+      attr: { uid: this.getId() }
     });
 
     const uuid = `${uidPlaceholder}_${this.getId()}`;

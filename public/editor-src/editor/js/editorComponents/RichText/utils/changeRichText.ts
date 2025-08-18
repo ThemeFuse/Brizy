@@ -238,11 +238,11 @@ function getLinkContentByType(data: Data, config: ConfigCommon): string {
       href = href.replace("#", "");
       const blockByHref = pageBlocks.find((block) => block.value._id === href);
 
-      // Use the key:href(UID of the block) to ensure the `random_id`
+      // Use the uid:href(UID of the block) to ensure the `globalblock_anchor`
       // remains consistent across sections.
       const uidPlaceholder = makePlaceholder({
-        content: "{{ random_id }}",
-        attr: { key: href }
+        content: "{{ globalblock_anchor }}",
+        attr: { uid: href }
       });
       const anchorName =
         (blockByHref && blockByHref.value.anchorName) ||
