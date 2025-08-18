@@ -16,6 +16,8 @@ def discordFooter = "Version ${params.buildVersion}\n Editor Version: ${params.e
 
 env.BUILD_FOLDER_PATH = "/tmp/brizy"
 
+
+
 pipeline {
     options {
         skipDefaultCheckout()
@@ -28,6 +30,33 @@ pipeline {
             S3_BUCKET_NAME     = credentials('s3-bucket-name')
     }
     stages {
+
+        stage('Check version syntax.. because we are idiots sometimes') {
+            steps {
+                script {
+                    def pluginVersionRegex = ~/^[0-9]{1}\.[0-9]{1,2}\.[0-9]{1,3}(-[a-z0-9-]+)?$/
+                    def editorVersionRegex = ~/^[0-9]{1,3}(-[a-z0-9-]+)?-wp$/
+                    def syncVersionRegex = ~/^[0-9]{1,3}(-[a-z0-9-]+)?$/
+
+                    if (!(params.buildVersion ==~ pluginVersionRegex)) {
+                        error "❌ Invalid plugin version format!"
+                    }
+
+                    if (!(params.editorVersion ==~ editorVersionRegex)) {
+                        error "❌ Invalid editor version format!"
+                    }
+
+                    if (!(params.syncVersion ==~ syncVersionRegex)) {
+                        error "❌ Invalid sync version format!"
+                    }
+
+                    if (!(params.minProVersion ==~ pluginVersionRegex)) {
+                        error "❌ Invalid minimum pro version format!"
+                    }
+                }
+            }
+        }
+
         stage('Verifying requested version') {
             steps {
                  script {
