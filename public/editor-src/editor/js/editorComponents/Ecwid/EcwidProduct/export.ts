@@ -6,6 +6,12 @@ import { ExportFunction } from "visual/types";
 import { getEcwidShopPathFromAttribute } from "visual/utils/ecwid";
 import * as Num from "visual/utils/reader/number";
 import { parseFromString } from "visual/utils/string";
+import {
+  datePickerSelector,
+  getReplacePlaceholderFn,
+  textAreaSelector,
+  textFieldSelector
+} from "./utils";
 
 export const fn: ExportFunction = ($node) => {
   $node.find(".brz-ecwid-product").each((_, node) => {
@@ -13,6 +19,15 @@ export const fn: ExportFunction = ($node) => {
     const config = Str.read(node.getAttribute("data-storefront"));
     const cfg = config ? parseFromString<EcwidConfig>(config) : {};
     const baseUrl = getEcwidShopPathFromAttribute(node) ?? "";
+    const textFieldPlaceholderText = node.getAttribute(
+      "data-textFieldplaceholderText"
+    );
+    const textareaPlaceholderText = node.getAttribute(
+      "data-textareaplaceholderText"
+    );
+    const datepickerPlaceholderText = node.getAttribute(
+      "data-datepickerplaceholderText"
+    );
 
     const productId = Num.read(node.getAttribute("data-product-id")) as
       | EcwidProductId
@@ -24,7 +39,30 @@ export const fn: ExportFunction = ($node) => {
     const _productId = productId ?? defaultProductId;
 
     if (_productId && storeId) {
-      const _cfg = cfg ? { ...cfg, baseUrl } : {};
+      const replacePlaceholder = getReplacePlaceholderFn(node);
+      const onPageLoadCallbacks: Array<VoidFunction> = [];
+
+      if (textFieldPlaceholderText) {
+        onPageLoadCallbacks.push(() =>
+          replacePlaceholder(textFieldPlaceholderText, textFieldSelector)
+        );
+      }
+
+      if (textareaPlaceholderText) {
+        onPageLoadCallbacks.push(() =>
+          replacePlaceholder(textareaPlaceholderText, textAreaSelector)
+        );
+      }
+
+      if (datepickerPlaceholderText) {
+        onPageLoadCallbacks.push(() =>
+          replacePlaceholder(datepickerPlaceholderText, datePickerSelector)
+        );
+      }
+
+      const _cfg = cfg
+        ? { ...cfg, baseUrl, onPageLoadCallbacks }
+        : { onPageLoadCallbacks };
 
       EcwidService.init(storeId, _cfg).product(_productId, node);
     }

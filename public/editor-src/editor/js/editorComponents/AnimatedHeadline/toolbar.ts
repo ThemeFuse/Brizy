@@ -103,7 +103,7 @@ export const getItems: GetItems<Value, ElementProps> = ({
                   devices: "desktop",
                   choices: [
                     { title: t("Text"), value: AnimationStyle.text },
-                    { title: t("Svg"), value: AnimationStyle.svg }
+                    { title: t("Shape"), value: AnimationStyle.svg }
                   ]
                 },
                 {

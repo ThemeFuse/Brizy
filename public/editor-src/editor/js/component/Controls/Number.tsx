@@ -1,6 +1,6 @@
 import classNames from "classnames";
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import Number from "visual/component/Controls/AutoCorrectingInput";
+import NumberControl from "visual/component/Controls/AutoCorrectingInput";
 import EditorIcon from "visual/component/EditorIcon";
 import { WithClassName, WithSize } from "visual/types/attributes";
 
@@ -12,6 +12,8 @@ export interface Props extends WithClassName, WithSize {
   onIncrease: () => void;
   onDecrease: () => void;
   spinner: boolean;
+  min: number;
+  max: number;
 }
 
 export const NumberComponent = ({
@@ -21,7 +23,9 @@ export const NumberComponent = ({
   size = "auto",
   spinner = true,
   onIncrease,
-  onDecrease
+  onDecrease,
+  min,
+  max
 }: Props): JSX.Element => {
   const ref = useRef<NodeJS.Timeout>();
   const [action, setAction] = useState<Action>("none");
@@ -64,12 +68,12 @@ export const NumberComponent = ({
 
   return (
     <div className={_className}>
-      <Number
+      <NumberControl
         className="brz-input"
         value={value}
         onChange={handleOnChange}
-        min={-999999}
-        max={999999}
+        min={min}
+        max={max}
         step={1}
       />
       {spinner ? (

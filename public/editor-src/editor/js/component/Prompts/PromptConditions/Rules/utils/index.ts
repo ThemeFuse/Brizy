@@ -22,7 +22,7 @@ import {
   isCollectionTypeRule
 } from "visual/utils/blocks/guards";
 import { MValue, isT } from "visual/utils/value";
-import { RuleList, RuleListItem, ValueItems } from "../types";
+import { CmsListItem, RuleList, RuleListItem, ValueItems } from "../types";
 
 export function getRulesListIndexByRule(
   rulesList: RuleList[],
@@ -210,3 +210,51 @@ export const getRefsById = (collectionType: ConditionCollectionType[]) =>
 
     return acc;
   }, {} as Refs);
+
+export const hasEntityValues = (
+  collections: RuleListItem[],
+  entityRule: CollectionItemRule
+): boolean => {
+  if (!entityRule.entityValues?.length) {
+    return false;
+  }
+
+  const allValues = collections.flatMap(
+    (group) => group.items?.map((item) => item.value) ?? []
+  );
+
+  return entityRule.entityValues.some((entityValue) =>
+    allValues.includes(entityValue)
+  );
+};
+
+export const mergeCollectionGroups = (
+  collection1: CmsListItem,
+  collection2: CmsListItem
+): CmsListItem => {
+  if (
+    collection1.title !== collection2.title ||
+    collection1.value !== collection2.value
+  ) {
+    throw new Error(
+      "Collections must have the same title, value, and mode to be merged"
+    );
+  }
+  const mergedItems = [...collection1.items, ...collection2.items].reduce<
+    Map<string | number, ValueItems>
+  >((map, item) => {
+    if (!map.has(item.value)) {
+      map.set(item.value, item);
+    }
+    return map;
+  }, new Map());
+
+  const sortedItems = Array.from(mergedItems.values()).sort((a, b) =>
+    a.title.localeCompare(b.title)
+  );
+
+  return {
+    ...collection1,
+    items: sortedItems
+  };
+};

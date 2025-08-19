@@ -1,5 +1,6 @@
-import { Chart } from "@brizy/builder-icons/src/Icons/Chart";
 import { AnimatedHeadline } from "@brizy/builder-icons/src/Icons/AnimatedHeadline";
+import { Chart } from "@brizy/builder-icons/src/Icons/Chart";
+import { EditMenuItem } from "@brizy/builder-icons/src/Icons/EditMenuItem";
 import { InstagramFeed } from "@brizy/builder-icons/src/Icons/InstagramFeed";
 import { LinkedinFeed } from "@brizy/builder-icons/src/Icons/LinkedinFeed";
 import { PayPal } from "@brizy/builder-icons/src/Icons/PayPal";
@@ -76,7 +77,8 @@ const Icons = {
   "t2-linkedin-feed": LinkedinFeed,
   "t2-reorder": Reorder,
   "t2-chart": Chart,
-  "t2-animated-headline": AnimatedHeadline
+  "t2-animated-headline": AnimatedHeadline,
+  "t2-edit-menu-item": EditMenuItem
 };
 
 export type IconNames = keyof typeof Icons;

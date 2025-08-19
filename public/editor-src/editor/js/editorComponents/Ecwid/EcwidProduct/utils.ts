@@ -67,3 +67,26 @@ export function valueToEciwdConfig(v: Value): EcwidConfig {
     )
   };
 }
+
+export const textFieldSelector =
+  ".product-details-module.details-product-option.details-product-option--textfield .product-details-module__content .form-control__placeholder .form-control__placeholder-inner";
+export const textAreaSelector =
+  ".product-details-module.details-product-option.details-product-option--textarea .product-details-module__content .form-control__placeholder .form-control__placeholder-inner";
+export const datePickerSelector =
+  ".product-details-module.details-product-option.details-product-option--date .product-details-module__content .form-control__placeholder .form-control__placeholder-inner";
+
+const replacePlaceholder = (
+  placeholder: string,
+  selector: string,
+  node: HTMLElement
+): void => {
+  const textField = node.querySelector<HTMLDivElement>(selector);
+
+  if (textField) {
+    textField.innerHTML = placeholder;
+  }
+};
+
+export const getReplacePlaceholderFn =
+  (node: HTMLElement) => (placeholder: string, selector: string) =>
+    replacePlaceholder(placeholder, selector, node);
