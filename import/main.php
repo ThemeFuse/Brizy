@@ -67,6 +67,9 @@ class Brizy_Import_Main {
 				't13'           => __( 'Choose this option if you want to start fresh and delete your current content. A backup is advisable, there is no turning back from this.', 'brizy' ),
 				't14'           => __( 'Deletes your current content', 'brizy' ),
                 't15'            => __( 'Edit Website', 'brizy' ),
+				// ai-core
+                'generateWithAI' => __( 'Generate with AI', 'brizy' ),
+                'requiresProLicense' => __( 'Generate with AI (requires Pro license)', 'brizy' ),
             ],
 			'supportUrl' => Brizy_Config::getSupportUrl(),
 			'goProUrl'   => Brizy_Config::getUpgradeUrl(),
