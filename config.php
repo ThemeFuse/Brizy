@@ -50,6 +50,8 @@ class Brizy_Config
     const CLOUD_SCREENSHOTS = '/api/screenshots';
     const CLOUD_CUSTOM_FILES = '/api/custom_files';
     const GENERATE_GLOBAL_STYLES_ENDPOINT = 'https://ai.brizy.io';
+    const AI_CREATE_SESSION_URL = 'http://172.17.0.1:8000/api/create-session';
+    const AI_GENERATED_TEMPLATE_URL = 'http://172.17.0.1:8000/api/generated-template/';
     const WP_HTTP_TIMEOUT = 30;
 
     const LAYOUTS_CHUNK_URL = 'https://template-mk.b-cdn.net/api/get-layouts-chunk';
@@ -128,5 +130,14 @@ class Brizy_Config
     static public function getTermsOfServiceUrl()
     {
         return apply_filters('brizy_config_terms_of_service_url', self::TERMS_OF_SERVICE_URL);
+    }
+    static public function getAiCreateSessionUrl()
+    {
+        return apply_filters('brizy_ai_create_session_url', self::AI_CREATE_SESSION_URL);
+    }
+
+    static public function getAiGeneratedTemplateUrl()
+    {
+        return apply_filters('brizy_ai_generated_template_url', self::AI_GENERATED_TEMPLATE_URL);
     }
 }

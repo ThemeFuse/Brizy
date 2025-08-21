@@ -23,6 +23,25 @@
             <input placeholder="<?php echo $l10n['search']; ?>..." type="search" aria-describedby="live-search-desc" id="wp-filter-search-input" class="wp-filter-search js-demo-input-search">
         </form>
     </div>
+
+    <!-- ai-core -->
+    <?php if ( $isPro ): ?>
+        <a class="button button-primary js-open-ai-selection-modal" href="#" title="<?php echo $l10n['generateWithAI']; ?>">
+            <?php echo $l10n['generateWithAI']; ?>
+        </a>
+    <?php else: ?>
+        <button class="button button-primary" disabled title="<?php echo $l10n['requiresProLicense']; ?>" style="opacity: 0.6; cursor: not-allowed;">
+            <?php echo $l10n['generateWithAI']; ?>
+        </button>
+        <p style="margin-top: 8px; font-size: 13px; color: #666;">
+            <?php echo __( 'This feature requires a Pro license.', 'brizy' ); ?> 
+            <a href="<?php echo $goProUrl; ?>" target="_blank" style="color: #0073aa; text-decoration: none;">
+                <?php echo __( 'Get Pro License', 'brizy' ); ?>
+            </a>
+        </p>
+    <?php endif; ?>
+    <br><br>
+
     <div class="theme-browser content-filterable rendered">
         <div class="themes wp-clearfix">
 	        <?php foreach( $demos as $demo ): ?>

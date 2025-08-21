@@ -280,6 +280,14 @@ class Brizy_Admin_Main {
 		);
 
 		wp_enqueue_script(
+            Brizy_Editor::get_slug() . '-admin-ai-js',
+			$urlBuilder->plugin_url( 'admin/static/js/ai-core.js' ),
+            array( Brizy_Editor::get_slug() . '-admin-js', 'jquery' ),
+			BRIZY_VERSION,
+			true
+		);
+
+		wp_enqueue_script(
 			Brizy_Editor::get_slug() . '-admin-featured-image-js',
 			$urlBuilder->plugin_url( 'admin/static/js/featured-image.js' ),
 			array( 'jquery', 'underscore' ),
@@ -308,10 +316,27 @@ class Brizy_Admin_Main {
 				'editorVersion' => BRIZY_EDITOR_VERSION,
 				'pluginVersion' => BRIZY_VERSION,
 				'nonce'         => wp_create_nonce( 'brizy-admin-nonce' ),
-				'l10n'          => [
-					'deactivateFeedbackSubmitBtn' => __( 'Submit & Deactivate', 'brizy' ),
-					'deactivateFeedbackSkipBtn'   => __( 'Skip & Deactivate', 'brizy' ),
-				]
+				// AI data
+				'aiNonce'       => wp_create_nonce( 'brizy-api' ),
+				'aiPrefix'      => Brizy_Editor::prefix(),
+                'aiActions'     => array(
+                    'createSession'  => Brizy_Admin_Ai_Api::AJAX_CREATE_SESSION,
+                    'generateTemplate'  => Brizy_Admin_Ai_Api::AJAX_GENERATE_TEMPLATE,
+                    'importDelete'  => Brizy_Admin_Ai_Api::AJAX_IMPORT_DELETE,
+                    'importKeep'  => Brizy_Admin_Ai_Api::AJAX_IMPORT_KEEP,
+                ),
+                'l10n'          => [
+                    'deactivateFeedbackSubmitBtn' => __( 'Submit & Deactivate', 'brizy' ),
+                    'deactivateFeedbackSkipBtn'   => __( 'Skip & Deactivate', 'brizy' ),
+                    // AI flow
+                    'aiCreatingSessionTitle'     => __( 'Creating AI session', 'brizy' ),
+                    'aiCreatingSessionDesc'      => __( 'Waiting for server response. Please wait…', 'brizy' ),
+                    'aiCreatingSessionSuccessTitle'     => __( 'Connection successful!', 'brizy' ),
+                    'aiCreatingSessionSuccessDesc'     => __( 'The session was created successfully.', 'brizy' ),
+                    'aiCreatingSessionSuccessBtn'     => __( 'Start generating the website', 'brizy' ),
+                    'aiGenerateTemplateTitle'     => __( 'Generating template', 'brizy' ),
+                    'aiGenerateTemplateDesc'     => __( 'Please wait. This may take a few minutes.', 'brizy' ),
+                ]
 			)
 		);
 	}
