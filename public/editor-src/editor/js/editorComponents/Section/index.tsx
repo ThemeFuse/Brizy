@@ -2,6 +2,7 @@ import { MValue } from "@brizy/builder-ui-components/src/utils/value";
 import classnames from "classnames";
 import React from "react";
 import Animation from "visual/component/Animation";
+import HotKeys from "visual/component/HotKeys";
 import {
   wInBoxedPage,
   wInFullPage,
@@ -270,7 +271,9 @@ export default class Section extends EditorComponent<Value, Props> {
       className: classNameSection
     };
 
-    return (
+    const isGlobalBlock = this.props.meta.globalBlockId;
+
+    const content = (
       <Animation
         component="section"
         componentProps={props}
@@ -279,7 +282,38 @@ export default class Section extends EditorComponent<Value, Props> {
         {this.renderItems(v)}
       </Animation>
     );
+
+    if (isGlobalBlock) {
+      return content;
+    }
+
+    const shortcuts = ["duplicate"];
+
+    return (
+      <HotKeys
+        shortcutsTypes={shortcuts}
+        id={this.getId()}
+        onKeyDown={this.handleKeyDown}
+      >
+        {content}
+      </HotKeys>
+    );
   }
+
+  handleKeyDown = (
+    e: Event,
+    { keyName, id }: { keyName: string; id: string }
+  ) => {
+    e.preventDefault();
+    const { onClone } = this.props;
+    switch (keyName) {
+      case "alt+D":
+      case "ctrl+D":
+      case "cmd+D":
+      case "right_cmd+D":
+        return onClone(id);
+    }
+  };
 
   renderLangOrMemberOrAll(content: JSX.Element, v: Value): JSX.Element {
     const { membershipRoles, translationsLangs, membership, translations } = v;

@@ -53,6 +53,7 @@ export interface Props {
   meta?: Meta;
   blockId: string;
   instanceKey: string;
+  onClone: (id: string) => void;
 }
 
 export type Patch = Partial<Value>;

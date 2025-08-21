@@ -1,9 +1,11 @@
+import { Obj } from "@brizy/readers";
 import { mPipe, optional } from "fp-utilities";
 import { ElementModel } from "visual/component/Elements/Types";
 import { DeviceMode } from "visual/types";
 import * as Num from "visual/utils/math/number";
 import { prop } from "visual/utils/object/get";
 import { defaultValueKey } from "visual/utils/onChange";
+import { LinkDCPatch } from "visual/utils/patch/Link/linkPatch";
 import { readWithParser } from "visual/utils/reader/readWithParser";
 import * as Str from "visual/utils/string/specs";
 import { MValue } from "visual/utils/value";
@@ -52,7 +54,7 @@ interface FromImageElementModel extends ElementModel {
   imageExtension: unknown | undefined;
   imageHeight: unknown | undefined;
   imageWidth: unknown | undefined;
-  alt: unknown | undefined;
+  alt?: unknown | undefined;
 }
 
 interface FromHoverImageElementModel extends ElementModel {
@@ -62,6 +64,40 @@ interface FromHoverImageElementModel extends ElementModel {
   hoverImageWidth: MValue<unknown>;
 }
 
+export type Patch =
+  | ImagePatch
+  | HoverImagePatch
+  | HoverImageDCPatch
+  | ImageDCPatch
+  | SizeTypePatch
+  | UnitPatch
+  | LinkDCPatch;
+
+export const isImagePatch = (v: Patch): v is ImagePatch =>
+  Obj.isObject(v) &&
+  Obj.hasKeys(["imageExtension", "imageHeight", "imageSrc", "imageWidth"], v);
+
+export const isHoverImagePatch = (v: Patch): v is HoverImagePatch =>
+  Obj.isObject(v) &&
+  Obj.hasKeys(
+    [
+      "hoverImageSrc",
+      "hoverImageExtension",
+      "hoverImageHeight",
+      "hoverImageWidth"
+    ],
+    v
+  );
+
+export const isDCImagePatch = (v: Patch): v is ImageDCPatch =>
+  "imagePopulation" in v && typeof v.imagePopulation === "string";
+
+export const isSizeTypePatch = (v: Patch): v is SizeTypePatch =>
+  "sizeType" in v && typeof v.sizeType === "string";
+
+export const isLinkDcPatch = (v: Patch): v is LinkDCPatch =>
+  "linkPopulation" in v && typeof v.linkPopulation === "string";
+
 export const fromImageElementModel = readWithParser<
   FromImageElementModel,
   ImagePatch
@@ -70,7 +106,7 @@ export const fromImageElementModel = readWithParser<
   imageExtension: mPipe(prop("imageExtension"), Str.read),
   imageHeight: mPipe(prop("imageHeight"), Num.read),
   imageWidth: mPipe(prop("imageWidth"), Num.read),
-  alt: optional(mPipe(prop("alt"), Str.read))
+  alt: optional(mPipe(Obj.readKey("alt"), Str.read))
 });
 
 export const fromHoverImageElementModel = readWithParser<

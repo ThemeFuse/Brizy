@@ -299,6 +299,12 @@
   .brz-tp__dc-block img {
     max-width: 100%;
   }
+
+  &__population-tooltip *, [data-tooltip] {
+    text-decoration: underline !important;
+    text-decoration-style: dashed !important;
+    text-underline-offset: 5px;
+  }
 }
 
 // RichText with QuillJs

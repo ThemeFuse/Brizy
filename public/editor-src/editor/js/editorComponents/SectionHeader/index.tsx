@@ -3,6 +3,7 @@ import React from "react";
 import ResizeAware from "react-resize-aware";
 import Animation from "visual/component/Animation";
 import { getCurrentTooltip } from "visual/component/Controls/Tooltip";
+import HotKeys from "visual/component/HotKeys";
 import Portal from "visual/component/Portal";
 import { ProBlocked } from "visual/component/ProBlocked";
 import { SortableZIndex } from "visual/component/Sortable/SortableZIndex";
@@ -407,6 +408,26 @@ export default class SectionHeader extends EditorComponent<
     }
   }
 
+  handleKeyDown = (
+    e: Event,
+    { keyName, id }: { keyName: string; id: string }
+  ) => {
+    e.preventDefault();
+    const { onClone } = this.props;
+    switch (keyName) {
+      case "alt+D":
+      case "ctrl+D":
+      case "cmd+D":
+      case "right_cmd+D":
+        return onClone(id);
+      case "alt+del":
+      case "ctrl+del":
+      case "cmd+del":
+      case "right_cmd+del":
+        return this.selfDestruct();
+    }
+  };
+
   renderForEdit(v: Value, vs: Value, vd: Value): React.JSX.Element {
     const { className, customClassName, cssClass, customAttributes, tagName } =
       v;
@@ -436,25 +457,40 @@ export default class SectionHeader extends EditorComponent<
       className: classNameSection
     };
 
-    return this.isPro ? (
-      <Animation
-        component={tagName}
-        componentProps={props}
-        animationClass={this.getAnimationClassName(v, vs, vd)}
+    const shortcuts = ["delete"];
+    const isGlobalBlock = this.props.meta.globalBlockId;
+
+    if (!isGlobalBlock) {
+      shortcuts.push("duplicate");
+    }
+
+    return (
+      <HotKeys
+        shortcutsTypes={shortcuts}
+        id={this.getId()}
+        onKeyDown={this.handleKeyDown}
       >
-        {this.renderTypes(v, vs, vd)}
-      </Animation>
-    ) : (
-      <header className="brz-section brz-section__header">
-        <ProBlocked
-          text="Header"
-          message={t("Upgrade to PRO to use this")}
-          upgradeLink={this.getGlobalConfig()?.urls?.upgradeToPro}
-          upgradeText={t("Get a PRO plan")}
-          absolute={false}
-          onRemove={this.handleRemove}
-        />
-      </header>
+        {this.isPro ? (
+          <Animation
+            component={tagName}
+            componentProps={props}
+            animationClass={this.getAnimationClassName(v, vs, vd)}
+          >
+            {this.renderTypes(v, vs, vd)}
+          </Animation>
+        ) : (
+          <header className="brz-section brz-section__header">
+            <ProBlocked
+              text="Header"
+              message={t("Upgrade to PRO to use this")}
+              upgradeLink={this.getGlobalConfig()?.urls?.upgradeToPro}
+              upgradeText={t("Get a PRO plan")}
+              absolute={false}
+              onRemove={this.handleRemove}
+            />
+          </header>
+        )}
+      </HotKeys>
     );
   }
 

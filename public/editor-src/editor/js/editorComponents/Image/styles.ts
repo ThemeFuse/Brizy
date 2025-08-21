@@ -1,9 +1,9 @@
 import { ElementModel, ElementProps } from "visual/component/Elements/Types";
-import { Value } from "visual/editorComponents/Icon/types";
 import { getTooltipStyles } from "visual/editorComponents/tools/Tooltip/styles";
 import { DynamicStylesProps } from "visual/types";
 import { renderStyles } from "visual/utils/cssStyle";
 import { OutputStyle, Styles } from "visual/utils/cssStyle/types";
+import { V as Value } from "./types";
 
 interface Props extends DynamicStylesProps<ElementModel> {
   props: ElementProps;
