@@ -37,6 +37,9 @@ export interface Value {
   typographyUppercase: boolean;
   typographyLowercase: string;
   typographyScript: TextScripts;
+
+  tooltip: string;
+  tooltipId: string;
 }
 
 export type Patch = Partial<Value>;
@@ -158,3 +161,14 @@ export const fromFormatsToTextTransform = ({
   typographyUppercase: capitalize === "on",
   typographyScript: script
 });
+
+export const handleChangeTooltip = (patch: Patch, value: Value): Patch => {
+  const data = encodeToString({
+    ...patch,
+    tooltipId: value.tooltipId
+  });
+
+  return {
+    tooltip: data
+  };
+};

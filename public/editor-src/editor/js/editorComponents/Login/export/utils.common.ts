@@ -157,6 +157,20 @@ export const handleRedirect = (node: Element): void => {
   }
 };
 
+export const handleRedirectLogout = (node: Element): void => {
+  const dataRedirect =
+    node.getAttribute(makeAttr("logout-redirect")) ?? "samePage";
+  const dataRedirectValue = node.getAttribute(
+    makeAttr("logout-redirect-value")
+  );
+
+  if (dataRedirect === "samePage") {
+    window.location.reload();
+  } else {
+    window.location.href = dataRedirectValue || "/";
+  }
+};
+
 export const formTypeUpdate = (element: Element, formClass: string): void => {
   switch (formClass) {
     case ".brz-login-form__login":
@@ -185,8 +199,10 @@ export const handleSubmitSuccess = (
   switch (elementType) {
     case ElementType.login:
     case ElementType.register:
-    case ElementType.authorized:
       handleRedirect(node);
+      break;
+    case ElementType.authorized:
+      handleRedirectLogout(node);
       break;
     case ElementType.forgot:
       clearForm(form);

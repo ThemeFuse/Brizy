@@ -78,8 +78,8 @@ export const getItems: GetItems<Value> = ({
                   disabled: !isSimple,
                   config: {
                     size: "short",
-                    min: -1000000000,
-                    max: 1000000000,
+                    min: Number.MIN_SAFE_INTEGER,
+                    max: Number.MAX_SAFE_INTEGER,
                     spinner: false
                   },
                   population: richTextDC
@@ -91,8 +91,8 @@ export const getItems: GetItems<Value> = ({
                   devices: "desktop",
                   config: {
                     size: "short",
-                    min: isSimple ? -1000000000 : 0,
-                    max: isSimple ? 1000000000 : 100,
+                    min: isSimple ? Number.MIN_SAFE_INTEGER : 0,
+                    max: isSimple ? Number.MAX_SAFE_INTEGER : 100,
                     spinner: false
                   },
                   population: richTextDC

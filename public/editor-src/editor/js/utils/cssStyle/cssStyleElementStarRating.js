@@ -92,3 +92,20 @@ export function cssStyleElementStarRatingCustomIconColor({
     prefix: "ratingColor"
   });
 }
+
+export function cssStyleElementStarRatingCustomIconBackgroundColor({
+  v,
+  device,
+  state,
+  store,
+  getConfig
+}) {
+  return cssStyleCustomIconColor({
+    v,
+    device,
+    state,
+    store,
+    getConfig,
+    prefix: "ratingBackgroundColor"
+  });
+}

@@ -14,6 +14,8 @@ export const getItems: GetItems<Value> = ({ v, device, state }) => {
     dvv("textFieldBgColorOpacity")
   );
 
+  const isPlaceholderDisabled = dvv("textFieldPlaceholder") === "off";
+
   return [
     {
       id: "toolbarCurrent",
@@ -25,9 +27,23 @@ export const getItems: GetItems<Value> = ({ v, device, state }) => {
       },
       options: [
         {
-          id: "textFieldPlaceholder",
-          label: t("Placeholder"),
-          type: "switch"
+          id: "groupPlaceholder",
+          type: "group",
+          options: [
+            {
+              id: "textFieldPlaceholder",
+              type: "switch",
+              label: t("Placeholder")
+            },
+            {
+              id: "textFieldPlaceholderText",
+              type: "inputText",
+              label: t("Text"),
+              devices: "desktop",
+              placeholder: t("Enter custom text"),
+              disabled: isPlaceholderDisabled
+            }
+          ]
         },
         {
           id: "textFieldSize",

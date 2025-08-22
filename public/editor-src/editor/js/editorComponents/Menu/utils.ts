@@ -17,7 +17,8 @@ const configKeys = [
   "attrTitle",
   "classes",
   "liClasses",
-  "current"
+  "current",
+  "editorUrl"
 ] as const;
 
 type ConfigKeys = typeof configKeys;

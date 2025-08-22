@@ -1,17 +1,3 @@
-// Mobile
-&.brz-ed--mobile,
-&.brz-ed--tablet {
-  padding-inline-start: $mobile-paddings;
-  padding-inline-end: $mobile-paddings;
-
-  .brz-section__header--animated,
-  .brz-section__header--fixed-opened {
-    inset-inline-start: $mobile-paddings;
-    inset-inline-end: $mobile-paddings;
-    width: calc(100% - #{$mobile-paddings * 2});
-  }
-}
-
 // Section
 .brz-section {
   position: relative;
