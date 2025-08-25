@@ -49,6 +49,9 @@ export interface Value extends ElementModel {
   subtitleDisplay: Switch;
   wholesalePricesDisplay: Switch;
   weightDisplay: Switch;
+  textFieldPlaceholderText: string;
+  textareaPlaceholderText: string;
+  datepickerPlaceholderText: string;
 
   descriptionPosition: "belowImage" | "besideImage";
   thumbnailAspectRatio:

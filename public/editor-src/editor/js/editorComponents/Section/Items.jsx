@@ -2,6 +2,7 @@ import classnames from "classnames";
 import React from "react";
 import SlickSlider from "react-slick";
 import EditorIcon from "visual/component/EditorIcon";
+import HotKeys from "visual/component/HotKeys";
 import { ThemeIcon } from "visual/component/ThemeIcon";
 import { hideToolbar } from "visual/component/Toolbar";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
@@ -152,6 +153,62 @@ class SectionItems extends EditorArrayComponent {
       },
       toolbarExtend
     };
+  }
+
+  handleKeyDown = (e, { keyName, id }) => {
+    e.preventDefault();
+    const v = this.getValue();
+    const itemIndex = v.findIndex(({ value: { _id } }) => _id === id);
+    switch (keyName) {
+      case "ctrl+M":
+      case "cmd+M":
+      case "right_cmd+M":
+        return this.handleOpenRightSidebar("styles");
+      case "alt+D":
+      case "ctrl+D":
+      case "cmd+D":
+      case "right_cmd+D":
+        return this.cloneItem(itemIndex);
+      case "alt+C":
+      case "ctrl+C":
+      case "cmd+C":
+      case "right_cmd+C":
+        return this.copy(itemIndex);
+      case "alt+shift+V":
+      case "ctrl+shift+V":
+      case "cmd+shift+V":
+      case "right_cmd+shift+V":
+      case "shift+alt+V":
+      case "shift+ctrl+V":
+      case "shift+cmd+V":
+      case "shift+right_cmd+V":
+        return this.pasteStyles(itemIndex);
+      case "alt+del":
+      case "ctrl+del":
+      case "cmd+del":
+      case "right_cmd+del":
+        return this.removeItem(itemIndex);
+    }
+  };
+
+  renderItemWrapper(item, itemKey) {
+    const shortcuts = ["copy", "pasteStyles", "delete", "showSidebarStyling"];
+    const { isSlider } = this.props.meta.section;
+
+    if (isSlider) {
+      shortcuts.push("duplicate");
+    }
+
+    return (
+      <HotKeys
+        key={itemKey}
+        shortcutsTypes={shortcuts}
+        id={itemKey}
+        onKeyDown={this.handleKeyDown}
+      >
+        {item}
+      </HotKeys>
+    );
   }
 
   renderItemsContainer(items) {

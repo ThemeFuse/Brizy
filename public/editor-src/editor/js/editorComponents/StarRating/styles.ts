@@ -37,6 +37,10 @@ export function style(data: DynamicStylesProps<ElementModel>) {
       {
         standart: ["cssStyleElementStarRatingCustomIconColor"]
       },
+    ".brz &&:hover .brz-starrating-container .brz-starrating-icon-wrap .brz-starrating-color-empty.brz-icon-svg-custom":
+      {
+        standart: ["cssStyleElementStarRatingCustomIconBackgroundColor"]
+      },
     ".brz && .brz-starrating-style2-container": {
       standart: ["cssStyleBorderRadius", "cssStyleElementStarRatingDirection"]
     },

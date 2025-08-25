@@ -17,6 +17,7 @@
   .brz-animatedHeadline {
     display: flex;
     @include word-wrap;
+    flex-flow: wrap;
 
     &.brz-headline-animated {
       svg {
@@ -76,6 +77,7 @@
 
   .brz-animatedHeadline-text-wrapper {
     vertical-align: bottom;
+    white-space: nowrap;
   }
 
   .brz-animatedHeadline-dynamic-wrapper {

@@ -13,7 +13,7 @@ import { Cloud, isCloud } from "visual/global/Config/types/configs/Cloud";
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import { EcwidProductId } from "visual/global/Ecwid/types";
 import { EcwidService } from "visual/libs/Ecwid";
-import { eq } from "visual/libs/Ecwid/types/EcwidConfig";
+import { EcwidConfig, eq } from "visual/libs/Ecwid/types/EcwidConfig";
 import { pageSelector } from "visual/redux/selectors";
 import { EcwidProductPage } from "visual/types/Page";
 import { makePlaceholder } from "visual/utils/dynamicContent";
@@ -134,7 +134,14 @@ export class EcwidProduct extends EditorComponent<Value> {
       isCloud(config) &&
       config.modules?.shop?.type === "ecwid"
     ) {
-      const cnf = valueToEciwdConfig(this.getValue());
+      const cnf: EcwidConfig = {
+        ...valueToEciwdConfig(this.getValue()),
+        onPageLoadCallbacks: [
+          this.handleTextFieldPlaceholder,
+          this.handleTextareaPlaceholder,
+          this.handleDatePickerPlaceholder
+        ]
+      };
 
       const { productId } = pageSelector(
         this.getReduxState()
@@ -162,8 +169,18 @@ export class EcwidProduct extends EditorComponent<Value> {
   }
 
   componentDidUpdate(prevProps: Props<Value, Record<string, unknown>>): void {
-    const { productId: _prevProductId } = prevProps.dbValue;
-    const { productId } = this.getValue();
+    const {
+      productId: _prevProductId,
+      textFieldPlaceholderText: prevTextFieldPlaceholderText,
+      textareaPlaceholderText: prevTextareaPlaceholderText,
+      datepickerPlaceholderText: prevDatepickerPlaceholderText
+    } = prevProps.dbValue;
+    const {
+      productId,
+      textFieldPlaceholderText,
+      textareaPlaceholderText,
+      datepickerPlaceholderText
+    } = this.getValue();
 
     const initialProductId = getEcwidProductId(this.initialProductId ?? "");
     const lastUsedProductId = getEcwidProductId(this.lastUsedProductId ?? "");
@@ -176,7 +193,7 @@ export class EcwidProduct extends EditorComponent<Value> {
     const oldConfig = this.ecwid?.getConfig();
 
     if (!oldConfig || !eq(oldConfig, newConfig)) {
-      this.ecwid?.updateConfig(newConfig);
+      this.ecwid?.updateConfig({ ...oldConfig, ...newConfig });
     }
 
     if (node && this.ecwid) {
@@ -221,7 +238,59 @@ export class EcwidProduct extends EditorComponent<Value> {
         }
       }
     }
+
+    if (prevTextFieldPlaceholderText !== textFieldPlaceholderText) {
+      this.handleTextFieldPlaceholder();
+    }
+
+    if (prevTextareaPlaceholderText !== textareaPlaceholderText) {
+      this.handleTextareaPlaceholder();
+    }
+
+    if (prevDatepickerPlaceholderText !== datepickerPlaceholderText) {
+      this.handleDatePickerPlaceholder();
+    }
   }
+
+  handleTextFieldPlaceholder = () =>
+    this.handlePlaceholder(
+      "textFieldPlaceholderText",
+      ".product-details-module.details-product-option.details-product-option--textfield .product-details-module__content .form-control__placeholder .form-control__placeholder-inner"
+    );
+
+  handleTextareaPlaceholder = () =>
+    this.handlePlaceholder(
+      "textareaPlaceholderText",
+      ".product-details-module.details-product-option.details-product-option--textarea .product-details-module__content .form-control__placeholder .form-control__placeholder-inner"
+    );
+
+  handleDatePickerPlaceholder = () =>
+    this.handlePlaceholder(
+      "datepickerPlaceholderText",
+      ".product-details-module.details-product-option.details-product-option--date .product-details-module__content .form-control__placeholder .form-control__placeholder-inner"
+    );
+
+  handlePlaceholder = (
+    key:
+      | "textFieldPlaceholderText"
+      | "textareaPlaceholderText"
+      | "datepickerPlaceholderText",
+    selector: string
+  ): void => {
+    const container = this.containerRef.current;
+
+    if (container) {
+      const placeholder = this.getValue()[key] ?? "";
+
+      setTimeout(() => {
+        const textField = container.querySelector<HTMLDivElement>(selector);
+
+        if (textField) {
+          textField.innerHTML = placeholder;
+        }
+      }, 500);
+    }
+  };
 
   getWrapperClassName() {
     return this.getCSSClassnames({
@@ -1584,7 +1653,12 @@ export class EcwidProduct extends EditorComponent<Value> {
   renderForView(v: Value): ReactNode {
     const cfg = valueToEciwdConfig(v);
 
-    const { productId: _modelProductId } = v;
+    const {
+      productId: _modelProductId,
+      textFieldPlaceholderText,
+      textareaPlaceholderText,
+      datepickerPlaceholderText
+    } = v;
     const modelProductId = getEcwidProductId(_modelProductId);
 
     const config = this.getGlobalConfig() as Cloud;
@@ -1610,19 +1684,19 @@ export class EcwidProduct extends EditorComponent<Value> {
     });
 
     const attr = {
+      "data-product-id": productId,
+      "data-default-product-id": defaultProductId,
+      "data-store-id": storeId,
+      "data-storefront": encodeToString(cfg),
+      "data-textFieldplaceholderText": textFieldPlaceholderText,
+      "data-textareaplaceholderText": textareaPlaceholderText,
+      "data-datepickerplaceholderText": datepickerPlaceholderText,
       [makeAttr("shop-path")]: getEcwidShopPathPlaceholder()
     };
 
     return (
       <Wrapper {...this.makeWrapperProps({ className })}>
-        <div
-          className="brz-ecwid-product"
-          data-product-id={productId}
-          data-default-product-id={defaultProductId}
-          data-store-id={storeId}
-          data-storefront={encodeToString(cfg)}
-          {...attr}
-        />
+        <div className="brz-ecwid-product" {...attr} />
       </Wrapper>
     );
   }
