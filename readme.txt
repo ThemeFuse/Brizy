@@ -137,6 +137,9 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 
 == Changelog ==
 
+= 2.7.11 - 2025-08-18 =
+* Fixed: Readme file typos
+
 = 2.7.10 - 2025-08-18 =
 * Fixed: The links to the global block do not always work.
 
@@ -183,7 +186,7 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 
 = 2.7.4 - 2025-07-23 =
 * Fixed: reverse column
-* Fixed: popup trigger once condtion
+* Fixed: popup trigger once condition
 
 = 2.7.3 - 2025-07-18 =
 * Fixed: html sanitize on compile page
