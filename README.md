@@ -4,7 +4,7 @@ Contributors: themefuse<br>
 Requires at least: 4.5<br>
 Tested up to: 6.8.2<br>
 Requires PHP: 7.2.24<br>
-Stable tag: 2.7.10<br>
+Stable tag: 2.7.12<br>
 License: GPLv3<br>
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -135,6 +135,32 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 [Privacy policy](https://brizy.io/privacy/)
 
 ## Changelog
+
+### 2.7.12 - 2025-08-26
+* New: Rich-Text – tooltip option added
+* New: Update Button – hover color now white for better visibility
+* New: Section – hotkeys for faster block actions
+* Fixed: Jenkins – workspace now cleaned after each build, tags publish correctly
+* Fixed: Links – smooth scroll behavior
+* Fixed: Links – “rel” attribute now includes 'noreferrer' for blank pages
+* Fixed: Links – block linking now works correctly
+* Fixed: reCAPTCHA – z-index styles corrected
+* Fixed: Controls (Select2) – popper now renders correctly
+* Fixed: Form – submit button no longer “jumps” on hover
+* Fixed: Form – select field in Mega Menu works correctly in editor
+* Fixed: Button – alignment Fixed when using hover animations
+* Fixed: Editor – padding removed between content and scrollbar in tablet/mobile view
+* Fixed: Visual – file upload from 'ElementModel' always returns a model
+* Fixed: Context Menu – now closes properly in Firefox
+* Fixed: Screenshots – block screenshot ID updates when backend provides New ID
+* Fixed: Publish Button – no more infinite loading when saving a draft
+* Fixed: Global Blocks – link redirects to global blocks work correctly
+* Fixed: Background – overlay now works on responsive devices even if opacity is 0 on desktop
+* Fixed: Animated Headline – text no longer wraps into multiple rows incorrectly
+* Fixed: Section – global blocks are no longer duplicated
+* Fixed: Rich-Text – tooltip retrieves dynamic CSS correctly in preview
+* Fixed: Compiler – missing sections in preview now render properly
+* Improved: Image element converted to TypeScript for better stability and maintainability
 
 
 ### 2.7.11 - 2025-08-18
