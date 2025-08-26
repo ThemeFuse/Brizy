@@ -57,10 +57,10 @@ export interface Patch {
   mobileHeightSuffix: Unit | null;
 }
 
-interface HoverPatch {
+type HoverPatch = {
   hoverImageSrc: string;
   hoverHeight: number;
-}
+};
 
 export interface Value extends Size {
   imageExtension: string;

@@ -64,7 +64,7 @@
     "rc-slider": "8.6.1",
     "react": "^18.2.0",
     "react-calendly": "^4.1.0",
-    "react-contexify": "github:bagrinsergiu/react-contexify-v6#v.6.0.2-rc",
+    "react-contexify": "github:bagrinsergiu/react-contexify-v6#v6.0.3-rc",
     "react-custom-scrollbars": "github:bagrinsergiu/react-custom-scrollbars#4.2.1.4-rc",
     "react-dom": "^18.2.0",
     "react-draggable": "^4.2.0",

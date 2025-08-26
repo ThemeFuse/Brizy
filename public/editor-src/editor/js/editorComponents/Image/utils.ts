@@ -283,7 +283,7 @@ export function getCustomImageUrl(
   wrapperSize: WrapperSizes,
   imageSize: ImageSize,
   config: ConfigCommon,
-  vHover?: MValue<ImageUploadValue>
+  vHover?: Partial<ImageUploadValue>
 ): {
   url: string;
   source: string | null;

@@ -1,13 +1,14 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { ReactNode } from "react";
-import { LinkData } from "visual/component/Link/types/Type";
-import { LinkProps } from "visual/component/hooks/withLink";
+import { TooltipPlacement } from "visual/component/Tooltip/types";
 import { EditorComponentContextValue } from "visual/editorComponents/EditorComponent/EditorComponentContext";
 import { ECDC } from "visual/editorComponents/EditorComponent/types";
 import { EditorMode } from "visual/providers/EditorModeProvider";
 import { RenderType } from "visual/providers/RenderProvider";
 import { Store } from "visual/redux/store";
+import { WithClassName } from "visual/types/attributes";
 import { ImageType } from "visual/utils/image/types";
+import { Positive } from "visual/utils/math/Positive";
 
 type sizes = {
   width: number;
@@ -97,29 +98,61 @@ export type V = {
   hoverImageExtension: string;
   hoverImage: string;
   hoverImageFileName: string;
+  tabletWidthSuffix: string;
+  tabletHeightSuffix: string;
+  mobileWidthSuffix: string;
+  mobileHeightSuffix: string;
+
+  tooltipOffset: number;
+  tooltipText: string;
+  tooltipTriggerClick: string;
+  tooltipPlacement: TooltipPlacement;
+
+  imagePopulationEntityType?: string;
+  imagePopulationEntityId?: string;
+
+  customCSS: string;
 
   [others: string]: unknown;
 };
 
+export interface Props extends WithClassName {
+  meta: Meta;
+  onResize: VoidFunction;
+  renderer?: {
+    gallery?: GalleryRenderer;
+  };
+}
+
+export interface GalleryRenderer {
+  inGallery: boolean;
+  hoverName: string;
+  hoverDuration: Positive;
+  hoverInfiniteAnimation: boolean;
+  layout?: string;
+  withBigImage: boolean;
+  enableTags: boolean;
+}
+
 export type Patch = { [key: string]: number };
 
-export type GetResponsiveUrls = (imageSizes: ImageSizes) => {
+export interface ImagesSources {
   desktopSrc: string;
   hoverDesktopSrc: string;
   tabletSrc: string;
-  hoverTabletSrc: string;
+  hoverTabletSrc?: string;
   mobileSrc: string;
-  hoverMobileSrc: string;
+  hoverMobileSrc?: string;
   sourceSrc: string;
   hoverSourceSrc: string;
-};
+}
 
-export type ImageProps = {
+export type GetResponsiveUrls = (imageSizes: ImageSizes) => ImagesSources;
+
+export type ImageContent = {
   v: V;
   vs: V;
   vd: V;
-  link: LinkData;
-  context: EditorComponentContextValue;
   _id: string;
   componentId: string;
   meta: Meta;
@@ -129,18 +162,17 @@ export type ImageProps = {
   // INFO: this function is passed only in preview
   getResponsiveUrls?: GetResponsiveUrls;
   extraAttributes?: React.HTMLAttributes<HTMLImageElement>;
-  children: ReactNode;
-  onChange: (arg0: Patch) => void;
   onStart?: VoidFunction;
   onEnd?: VoidFunction;
-  gallery?: {
-    inGallery: boolean;
-    layout: string;
-  };
+  gallery?: GalleryRenderer;
   store: Store;
-
-  linkProps?: LinkProps;
 };
+
+export interface ImageProps extends ImageContent {
+  context: EditorComponentContextValue;
+  children: ReactNode;
+  onChange: (arg0: Patch) => void;
+}
 
 export type HoverImageCommonProps = Pick<
   ImageProps,
@@ -167,3 +199,16 @@ export type Unit = "px" | "%";
 
 export const isUnit = (v: unknown): v is Unit =>
   ["px", "%"].includes(v as Unit);
+
+export interface State {
+  containerWidth: number;
+  tabletContainerWidth: number;
+  mobileContainerWidth: number;
+  isDragging: boolean;
+  sizePatch: Patch | null;
+}
+
+export type Dimensions =
+  | "containerWidth"
+  | "tabletContainerWidth"
+  | "mobileContainerWidth";

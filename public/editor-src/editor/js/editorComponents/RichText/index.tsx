@@ -1,6 +1,6 @@
 import classNames from "classnames";
 import { isNumber } from "es-toolkit/compat";
-import React, { Fragment, RefObject, createRef } from "react";
+import React, { Fragment, MouseEvent, RefObject, createRef } from "react";
 import ReactDOM from "react-dom";
 import { omit } from "timm";
 import BoxResizer from "visual/component/BoxResizer";
@@ -20,6 +20,13 @@ import { ToastNotification } from "visual/component/Notifications";
 import Placeholder from "visual/component/Placeholder";
 import Toolbar from "visual/component/Toolbar";
 import { PortalToolbarType } from "visual/component/Toolbar/PortalToolbar";
+import { Tooltip } from "visual/component/Tooltip";
+import { TooltipImperativeProps } from "visual/component/Tooltip/types";
+import {
+  getToolbarPlacement,
+  getTooltipPlacement,
+  shouldUpdateTooltipByPatch
+} from "visual/component/Tooltip/utils";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import {
@@ -38,6 +45,7 @@ import { isEditor, isView } from "visual/providers/RenderProvider";
 import { blocksDataSelector, deviceModeSelector } from "visual/redux/selectors";
 import { Block } from "visual/types/Block";
 import { t } from "visual/utils/i18n";
+import { makeDataAttr } from "visual/utils/i18n/attribute";
 import { getLinkData } from "visual/utils/models/link";
 import { defaultValueKey2 } from "visual/utils/onChange/device";
 import {
@@ -45,7 +53,7 @@ import {
   getDynamicContentChoices
 } from "visual/utils/options";
 import { Choice } from "visual/utils/options/getDynamicContentChoices";
-import { attachRefs } from "visual/utils/react";
+import { attachRef, attachRefs } from "visual/utils/react";
 import * as ResponsiveMode from "visual/utils/responsiveMode";
 import { Wrapper } from "../tools/Wrapper";
 import { withMigrations } from "../tools/withMigrations";
@@ -55,9 +63,11 @@ import defaultValue from "./defaultValue.json";
 import { migrations } from "./migrations";
 import * as RichTextPatch from "./patch";
 import * as sidebarConfig from "./sidebar";
-import { style, styleDC } from "./styles";
+import { style, styleDC, styleTooltip } from "./styles";
 import toolbarConfigFn from "./toolbar";
+import tooltipToolbarConfigFn from "./toolbar/tooltipToolbar";
 import { TypographyTags, isTypographyTags, tagId } from "./toolbar/utils";
+import tooltipSidebarConfigFn from "./tooltipSidebar";
 import type { Patch, PrepopulationData, Value } from "./types";
 import {
   dcItemOptionParser,
@@ -100,6 +110,8 @@ class RichText extends EditorComponent<Value, Record<string, unknown>, State> {
   static experimentalDynamicContent = true;
 
   prepopulation: string | null = null;
+  tooltipRef = createRef<TooltipImperativeProps>();
+  tooltipReferenceElement: Element | null = null;
 
   state: State = {
     formats: {},
@@ -228,7 +240,8 @@ class RichText extends EditorComponent<Value, Record<string, unknown>, State> {
   handleSelectionChange = (
     formats: Formats,
     selectionCoords: Coords,
-    cursorIndex?: number
+    cursorIndex?: number,
+    node?: Element | null
   ) => {
     const newState = {
       formats
@@ -282,7 +295,20 @@ class RichText extends EditorComponent<Value, Record<string, unknown>, State> {
       });
     }
 
-    this.setState(newState, () => this.toolbarRef.current?.show());
+    if (node) {
+      this.handleUpdateTooltipReferenceFromQuill(node);
+    }
+
+    this.setState(newState, () => {
+      const { enableTooltip } = formats;
+
+      if (enableTooltip === "on") {
+        // The tooltip toolbar is closed because the main toolbar take the control
+        return;
+      }
+
+      this.toolbarRef.current?.show();
+    });
   };
 
   handleActiveClick = (
@@ -513,7 +539,9 @@ class RichText extends EditorComponent<Value, Record<string, unknown>, State> {
         "brz-rich-text__custom": !v.textPopulation,
         "brz-rich-text__population": v.textPopulation,
         "brz-rich-text__population-cloud":
-          v.textPopulation && isCloud(this.getGlobalConfig())
+          v.textPopulation && isCloud(this.getGlobalConfig()),
+        "brz-rich-text__population-tooltip":
+          v.textPopulation && v.enableTooltip === "on"
       },
       v.className,
       this.css(
@@ -642,6 +670,12 @@ class RichText extends EditorComponent<Value, Record<string, unknown>, State> {
       this.quillRef.current.formatMultiple(link);
     }
 
+    const needUpdateTooltip = shouldUpdateTooltipByPatch(patch);
+
+    if (needUpdateTooltip) {
+      this.tooltipRef.current?.updatePopper();
+    }
+
     super.patchValue(newPatch, meta);
   }
 
@@ -710,6 +744,56 @@ class RichText extends EditorComponent<Value, Record<string, unknown>, State> {
     );
 
     return ReactDOM.createPortal(content, document.body);
+  }
+
+  renderTooltip(v: Value, vs: Value, vd: Value) {
+    const {
+      tooltipOffset,
+      tooltipText,
+      tooltipTriggerClick,
+      tooltipPlacement
+    } = v;
+
+    const classTooltip = this.css(
+      `${this.getComponentId()}-tooltip`,
+      `${this.getId()}-tooltip`,
+      styleTooltip({
+        v,
+        vs,
+        vd,
+        store: this.getReduxStore(),
+        contexts: this.getContexts()
+      })
+    );
+
+    const tooltipToolbarConfig = tooltipToolbarConfigFn(this.handleChange);
+    const tooltipSidebarConfig = tooltipSidebarConfigFn(this.handleChange);
+
+    return (
+      <Toolbar
+        {...this.makeToolbarPropsFromConfig2(
+          tooltipToolbarConfig,
+          tooltipSidebarConfig,
+          {
+            allowExtend: false
+          }
+        )}
+      >
+        {({ ref: tooltipToolbarRef }) => (
+          <Tooltip
+            overlay={tooltipText}
+            offset={tooltipOffset}
+            ref={this.tooltipRef}
+            openOnClick={tooltipTriggerClick === "on"}
+            placement={tooltipPlacement}
+            id={this.getId()}
+            contentRef={tooltipToolbarRef}
+            referenceElement={this.tooltipReferenceElement}
+            className={classTooltip}
+          />
+        )}
+      </Toolbar>
+    );
   }
 
   renderPopups(v: Value) {
@@ -786,7 +870,7 @@ class RichText extends EditorComponent<Value, Record<string, unknown>, State> {
   }
 
   renderLink(v: Value) {
-    const { text } = v;
+    const { text, enableTooltip } = v;
     const linkData = getLinkData(v, this.getGlobalConfig());
 
     let content = (
@@ -795,9 +879,17 @@ class RichText extends EditorComponent<Value, Record<string, unknown>, State> {
       </div>
     );
 
+    const attr =
+      enableTooltip === "on"
+        ? makeDataAttr({
+            name: "tooltip-wrapper-id",
+            value: this.getId()
+          })
+        : undefined;
+
     if (this._dc?.lastCache?.text || this.renderDC) {
       if (isView(this.props.renderContext)) {
-        content = <span>{text}</span>;
+        content = <span {...attr}>{text}</span>;
       } else {
         content = (
           <span
@@ -824,6 +916,24 @@ class RichText extends EditorComponent<Value, Record<string, unknown>, State> {
     }
 
     return content;
+  }
+
+  handleToggleTooltip = () => {
+    this.tooltipRef.current?.toggleTooltip();
+  };
+
+  handleUpdateTooltipReferenceFromQuill(el: Element | null) {
+    const nodeWithTooltip = el?.closest("[data-tooltip]");
+
+    if (nodeWithTooltip) {
+      this.tooltipReferenceElement = nodeWithTooltip;
+    }
+  }
+
+  handleUpdateTooltipReferenceFromDC(el: Element | null) {
+    if (el) {
+      this.tooltipReferenceElement = el;
+    }
   }
 
   renderForEdit(v: Value, vs: Value, vd: Value) {
@@ -870,6 +980,15 @@ class RichText extends EditorComponent<Value, Record<string, unknown>, State> {
     const dynamicContentGroups = this.getGlobalConfig().dynamicContent?.groups;
     const isDCHandler = isDCItemHandler(dynamicContentGroups?.richText);
 
+    const { enableTooltip, tooltipPlacement } = v;
+    const isTooltipEnabled = enableTooltip === "on";
+
+    const _tooltipPlacement = isTooltipEnabled
+      ? getTooltipPlacement(tooltipPlacement)
+      : undefined;
+
+    const mainToolbarPlacement = getToolbarPlacement(_tooltipPlacement);
+
     let content = (
       <Quill
         ref={this.quillRef}
@@ -909,6 +1028,13 @@ class RichText extends EditorComponent<Value, Record<string, unknown>, State> {
       content = this.renderLink(v);
     }
 
+    const attrs = isTooltipEnabled
+      ? makeDataAttr({
+          name: "tooltip-wrapper-id",
+          value: this.getId()
+        })
+      : undefined;
+
     return (
       <React.Fragment>
         <HotKeys
@@ -925,6 +1051,7 @@ class RichText extends EditorComponent<Value, Record<string, unknown>, State> {
                   sidebarConfig as SidebarConfig<Value>
                 )}
                 ref={this.toolbarRef}
+                placement={mainToolbarPlacement}
                 {...toolbarOptions}
               >
                 {({ ref: toolbarRef }) => (
@@ -935,6 +1062,8 @@ class RichText extends EditorComponent<Value, Record<string, unknown>, State> {
                     ref={(el) => {
                       attachRefs(el, [toolbarRef, cssRef, this.nodeRef]);
                     }}
+                    onClick={this.handleToggleTooltip}
+                    attributes={attrs}
                   >
                     <ContextMenu
                       {...this.makeContextMenuProps(contextMenuConfig)}
@@ -960,7 +1089,15 @@ class RichText extends EditorComponent<Value, Record<string, unknown>, State> {
                           </BoxResizer>
                         ) : (
                           // div is needed as an attachment for context menu in dynamic content case
-                          <div ref={contextMenuRef} className={"brz-rich-text-context-wrapper"}>
+                          <div
+                            ref={(el) => {
+                              attachRef(el, contextMenuRef);
+                              if (v.textPopulation) {
+                                this.handleUpdateTooltipReferenceFromDC(el);
+                              }
+                            }}
+                            className={"brz-rich-text-context-wrapper"}
+                          >
                             {content}
                           </div>
                         )
@@ -974,12 +1111,14 @@ class RichText extends EditorComponent<Value, Record<string, unknown>, State> {
         </HotKeys>
         {showPopulationHelper && this.renderPopulationHelper()}
         {this.renderPopups(v)}
+        {isTooltipEnabled && this.renderTooltip(v, vs, vd)}
       </React.Fragment>
     );
   }
 
   renderForView(v: Value, vs: Value, vd: Value) {
     const config = this.getGlobalConfig();
+    const { textPopulation, enableTooltip } = v;
 
     let content = (
       <Quill
@@ -990,12 +1129,15 @@ class RichText extends EditorComponent<Value, Record<string, unknown>, State> {
         editorMode={this.props.editorMode}
         getConfig={this.getGlobalConfig}
         dcGroups={config?.dynamicContent?.groups}
+        v={v}
       />
     );
 
-    if (v.textPopulation) {
+    if (textPopulation) {
       content = this.renderLink(v);
     }
+
+    const shouldRenderTooltip = enableTooltip === "on" && textPopulation;
 
     return (
       <Fragment>
@@ -1009,6 +1151,7 @@ class RichText extends EditorComponent<Value, Record<string, unknown>, State> {
           </Wrapper>
         </CustomCSS>
         {this.renderPopups(v)}
+        {shouldRenderTooltip && this.renderTooltip(v, vs, vd)}
       </Fragment>
     );
   }

@@ -8,23 +8,31 @@ import { omit } from "timm";
 import CustomCSS from "visual/component/CustomCSS";
 import { HoverAnimation } from "visual/component/HoverAnimation/HoverAnimation";
 import { getHoverAnimationOptions } from "visual/component/HoverAnimation/utils";
-import { getLinkValue } from "visual/component/Link/utils";
 import Toolbar from "visual/component/Toolbar";
 import { Tooltip } from "visual/component/Tooltip";
+import { TooltipImperativeProps } from "visual/component/Tooltip/types";
 import {
   getToolbarPlacement,
   getTooltipPlacement,
   shouldUpdateTooltipByPatch
 } from "visual/component/Tooltip/utils";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
-import EditorComponent from "visual/editorComponents/EditorComponent";
+import EditorComponent, {
+  Props as EditorComponentProps
+} from "visual/editorComponents/EditorComponent";
 import { keyToDCFallback2Key } from "visual/editorComponents/EditorComponent/DynamicContent/utils";
+import { ECKeyDCInfo } from "visual/editorComponents/EditorComponent/types";
 import { createOptionId } from "visual/editorComponents/EditorComponent/utils";
 import { shouldRenderPopup } from "visual/editorComponents/tools/Popup";
-import { withMigrations } from "visual/editorComponents/tools/withMigrations";
+import {
+  DBMigration,
+  withMigrations
+} from "visual/editorComponents/tools/withMigrations";
 import { isStory } from "visual/providers/EditorModeProvider";
 import { isEditor, isView } from "visual/providers/RenderProvider";
 import { blocksDataSelector } from "visual/redux/selectors";
+import { DeviceMode } from "visual/types";
+import { Block } from "visual/types/Block";
 import { makePlaceholder } from "visual/utils/dynamicContent";
 import { makeDataAttr } from "visual/utils/i18n/attribute";
 import { imagePopulationUrl } from "visual/utils/image";
@@ -33,6 +41,7 @@ import {
   isSVGExtension,
   isUnsplashImage
 } from "visual/utils/image/utils";
+import { Positive, is as isPositive } from "visual/utils/math/Positive";
 import { getLinkData } from "visual/utils/models/link";
 import {
   defaultValueValue,
@@ -47,6 +56,7 @@ import {
 } from "visual/utils/patch/Link/";
 import { DESKTOP, MOBILE, TABLET } from "visual/utils/responsiveMode";
 import { HOVER } from "visual/utils/stateMode";
+import { Literal } from "visual/utils/types/Literal";
 import { SizeType } from "../../global/Config/types/configs/common";
 import { attachRefs } from "../../utils/react";
 import { capByPrefix } from "../../utils/string";
@@ -68,7 +78,27 @@ import { migrations } from "./migrations";
 import * as sidebarConfig from "./sidebar";
 import { style, styleContent, styleHover, styleTooltip } from "./styles";
 import toolbarConfigFn from "./toolbar";
+import {
+  Dimensions,
+  GalleryRenderer,
+  GetResponsiveUrls,
+  ImageSizes,
+  ImagesSources,
+  Meta,
+  Patch,
+  Props,
+  State,
+  V as Value,
+  WrapperSizes
+} from "./types";
 import * as ImagePatch from "./types/ImagePatch";
+import {
+  isDCImagePatch,
+  isHoverImagePatch,
+  isImagePatch,
+  isLinkDcPatch,
+  isSizeTypePatch
+} from "./types/ImagePatch";
 import {
   calcImageSizes,
   calcWrapperOriginalSizes,
@@ -83,10 +113,14 @@ import {
   showOriginalImage
 } from "./utils";
 
-class Image extends EditorComponent {
+class Image extends EditorComponent<Value, Props, State> {
   static defaultProps = {
     meta: {},
-    onResize: noop
+    onResize: noop,
+    onToolbarOpen: noop,
+    onToolbarClose: noop,
+    onToolbarEnter: noop,
+    onToolbarLeave: noop
   };
   static defaultValue = defaultValue;
   static experimentalDynamicContent = true;
@@ -94,13 +128,18 @@ class Image extends EditorComponent {
     cW: 0,
     cH: 0
   };
-  container = React.createRef();
+  container = React.createRef<Element>();
 
-  tooltipRef = createRef();
-  tooltipReferenceElement = null;
+  tooltipRef = createRef<TooltipImperativeProps>();
+  tooltipReferenceElement: Element | null = null;
   isInitialisedTooltip = false;
 
-  constructor(props) {
+  mounted = false;
+  dbValueMigrated:
+    | DBMigration<EditorComponentProps<Value, Props>>["dbValue"]
+    | undefined;
+
+  constructor(props: EditorComponentProps<Value, Props>) {
     super(props);
     const { desktopW, mobileW, tabletW } = this.props.meta;
 
@@ -127,7 +166,7 @@ class Image extends EditorComponent {
     this.handleResize();
   }
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate(prevProps: EditorComponentProps<Value, Props>) {
     const device = this.getDeviceMode();
     const {
       sizeType: prevSizeType,
@@ -157,7 +196,7 @@ class Image extends EditorComponent {
     this.mounted = false;
   }
 
-  patchValue(patch, meta) {
+  patchValue(patch: Patch, meta = {}) {
     const image = this.handleImageChange(patch);
 
     const needToUpdateTooltip = shouldUpdateTooltipByPatch(patch);
@@ -166,14 +205,13 @@ class Image extends EditorComponent {
       this.tooltipRef.current?.updatePopper();
     }
 
-    super.patchValue({ ...patch, ...image }, meta);
+    const newPatch = { ...patch, ...image } as Patch;
+
+    super.patchValue(newPatch, meta);
   }
 
   updateHoverImageHeight() {
     const v = this.getValue();
-    const device = this.getDeviceMode();
-    const containerWidth = this.getContainerSize()[device];
-    const wrapperSize = this.getWrapperSizes(v)["desktop"];
 
     const {
       hoverHeight,
@@ -184,6 +222,14 @@ class Image extends EditorComponent {
     } = v;
 
     const value = elementModelToValue(v);
+
+    if (!value) {
+      return;
+    }
+
+    const device = this.getDeviceMode();
+    const containerWidth = this.getContainerSize()[device];
+    const wrapperSize = this.getWrapperSizes(v)["desktop"];
 
     const patch = patchOnHoverImageChange(containerWidth, value, wrapperSize, {
       hoverImageSrc,
@@ -197,24 +243,36 @@ class Image extends EditorComponent {
     }
   }
 
-  handleImageChange(patch) {
+  handleImageChange(patch: Patch) {
     this.updateContainerWidth();
 
-    const { imageSizes: cfgImageSizes } = this.getGlobalConfig();
+    const { imageSizes: cfgImageSizes = [] } = this.getGlobalConfig();
     const device = this.getDeviceMode();
     const { v } = this.getValue2();
-    const dvv = (key) => defaultValueValue({ v, device, key });
+    const dvv = (key: string) => defaultValueValue({ v, device, key });
     const value = elementModelToValue(v);
-    const image = ImagePatch.fromImageElementModel(patch);
-    const hoverImage = ImagePatch.fromHoverImageElementModel(patch);
+    const image = isImagePatch(patch)
+      ? ImagePatch.fromImageElementModel(patch)
+      : undefined;
+    const hoverImage = isHoverImagePatch(patch)
+      ? ImagePatch.fromHoverImageElementModel(patch)
+      : undefined;
 
-    const imageDC = ImagePatch.fromImageDCElementModel(patch);
+    const isDCPatch = isDCImagePatch(patch);
 
-    const imageSizeType = ImagePatch.patchImageSizeType(patch);
+    const imageDC = isDCPatch
+      ? ImagePatch.fromImageDCElementModel(patch)
+      : undefined;
+
+    const imageSizeType = isSizeTypePatch(patch)
+      ? ImagePatch.patchImageSizeType(patch)
+      : undefined;
 
     const imageUnit = ImagePatch.patchImageUnit(patch, device);
 
-    const imageLinkDC = fromLinkElementModel(patch);
+    const imageLinkDC = isLinkDcPatch(patch)
+      ? fromLinkElementModel(patch)
+      : undefined;
 
     if (value === undefined) {
       return {};
@@ -245,7 +303,7 @@ class Image extends EditorComponent {
       );
     }
 
-    if (imageDC !== undefined) {
+    if (imageDC !== undefined && isDCPatch) {
       const context = this.context;
       const wrapperSize = this.getWrapperSizes(v)[device];
       const containerWidth = this.getContainerSize()[device];
@@ -260,8 +318,8 @@ class Image extends EditorComponent {
     }
 
     if (imageUnit !== undefined) {
-      const containerWidth = this.getDimension("width");
-      const containerHeight = this.getDimension("height");
+      const containerWidth = this.getDimension("width") ?? 0;
+      const containerHeight = this.getDimension("height") ?? 0;
 
       return pathOnUnitChange(
         containerWidth,
@@ -285,7 +343,11 @@ class Image extends EditorComponent {
       const wrapperSize = this.getWrapperSizes(v)["desktop"];
 
       return {
-        ...patchOnSizeTypeChange(containerWidth, imageSizeType, cfgImageSizes),
+        ...patchOnSizeTypeChange(
+          containerWidth,
+          imageSizeType,
+          cfgImageSizes ?? []
+        ),
         ...patchOnHoverImageChange(containerWidth, value, wrapperSize, {
           hoverImageSrc,
           hoverImageExtension,
@@ -319,11 +381,11 @@ class Image extends EditorComponent {
     }
   };
 
-  handleChange = (patch) => {
+  handleChange = (patch: Patch) => {
     this.patchValue(patch);
   };
 
-  handleBoxResizerChange = (patch) => {
+  handleBoxResizerChange = (patch: Patch) => {
     if (this.state.isDragging) {
       // INFO: we need to reset this flag after migration of image because our resizer works with internal state
       // and because of this handleValueChange is not called initially to reset the "dbValueMigrated"
@@ -347,7 +409,7 @@ class Image extends EditorComponent {
     });
   };
 
-  getDimension = (size) => {
+  getDimension = (size: string) => {
     switch (size) {
       case "width": {
         // INFO: the parent element chosen for width can affect the ImageGallery element
@@ -358,9 +420,10 @@ class Image extends EditorComponent {
             parentNode = parentNode.parentElement;
           }
 
-          const parentWidth = parentNode.getBoundingClientRect().width;
+          const parentWidth = parentNode?.getBoundingClientRect().width;
+          const parentWidthValue = Num.read(parentWidth);
 
-          if (Num.read(parentWidth)) {
+          if (parentWidthValue && parentNode) {
             const cs = getComputedStyle(parentNode);
 
             const paddingX =
@@ -368,7 +431,7 @@ class Image extends EditorComponent {
             const borderX =
               parseFloat(cs.borderTopWidth) + parseFloat(cs.borderBottomWidth);
 
-            return parentWidth - paddingX - borderX;
+            return parentWidthValue - paddingX - borderX;
           }
         }
 
@@ -398,7 +461,7 @@ class Image extends EditorComponent {
     }
   };
 
-  updateContainerDimensions(deviceMode, width, widthStateKey) {
+  updateContainerDimensions(width: number, widthStateKey: Dimensions) {
     if (this.state[widthStateKey] !== width) {
       this.setState((state) => ({ ...state, [widthStateKey]: width }));
     }
@@ -415,30 +478,22 @@ class Image extends EditorComponent {
     if (width !== undefined) {
       switch (deviceMode) {
         case "desktop": {
-          this.updateContainerDimensions("desktop", width, "containerWidth");
+          this.updateContainerDimensions(width, "containerWidth");
           break;
         }
         case "tablet": {
-          this.updateContainerDimensions(
-            "tablet",
-            width,
-            "tabletContainerWidth"
-          );
+          this.updateContainerDimensions(width, "tabletContainerWidth");
           break;
         }
         case "mobile": {
-          this.updateContainerDimensions(
-            "mobile",
-            width,
-            "mobileContainerWidth"
-          );
+          this.updateContainerDimensions(width, "mobileContainerWidth");
           break;
         }
       }
     }
   };
 
-  getExtraImageProps(v) {
+  getExtraImageProps(v: Value) {
     const {
       alt: alt_,
       imageSrc,
@@ -478,7 +533,11 @@ class Image extends EditorComponent {
     };
   }
 
-  getImageUrlsFor(wrapperSizes, imageSizes, device) {
+  getImageUrlsFor(
+    wrapperSizes: WrapperSizes,
+    imageSizes: ImageSizes,
+    device: DeviceMode
+  ) {
     const v = this.getValue();
 
     let { width: cW, height: cH } = wrapperSizes[device];
@@ -499,7 +558,7 @@ class Image extends EditorComponent {
       };
     }
 
-    const dvv = (key) => defaultValueValue({ v, key, device });
+    const dvv = (key: string) => defaultValueValue({ v, key, device });
     const config = this.getGlobalConfig();
 
     return getCustomImageUrl(
@@ -510,7 +569,7 @@ class Image extends EditorComponent {
     );
   }
 
-  getHoverImageUrlsFor(wrapperSizes, imageSizes) {
+  getHoverImageUrlsFor(wrapperSizes: WrapperSizes, imageSizes: ImageSizes) {
     const v = this.getValue();
     const { hoverImagePopulation, hoverImage, sizeType } = v;
     const desktopSizes = wrapperSizes["desktop"];
@@ -519,8 +578,9 @@ class Image extends EditorComponent {
     cW = Math.round(cW);
     cH = Math.round(cH);
 
-    const dvv = (key) => defaultValueValue({ v, key, device: "desktop" });
-    const hoverGetter = (key) => dvv(capByPrefix("hover", key));
+    const dvv = (key: string) =>
+      defaultValueValue({ v, key, device: "desktop" });
+    const hoverGetter = (key: string) => dvv(capByPrefix("hover", key));
 
     if (hoverImagePopulation && hoverImage) {
       const options = { cW, cH };
@@ -550,26 +610,26 @@ class Image extends EditorComponent {
     }
   }
 
-  getResponsiveUrls(wrapperSizes, imageSizes) {
+  getResponsiveUrls(
+    wrapperSizes: WrapperSizes,
+    imageSizes: ImageSizes
+  ): ImagesSources {
     return {
       desktopSrc: this.getImageUrlsFor(wrapperSizes, imageSizes, "desktop").url,
-      hoverDesktopSrc: this.getHoverImageUrlsFor(wrapperSizes, imageSizes)
-        .hoverUrl,
+      hoverDesktopSrc:
+        this.getHoverImageUrlsFor(wrapperSizes, imageSizes).hoverUrl ?? "",
       tabletSrc: this.getImageUrlsFor(wrapperSizes, imageSizes, "tablet").url,
       mobileSrc: this.getImageUrlsFor(wrapperSizes, imageSizes, "mobile").url,
-      sourceSrc: this.getImageUrlsFor(wrapperSizes, imageSizes, "desktop")
-        .source,
-      hoverSourceSrc: this.getHoverImageUrlsFor(
-        wrapperSizes,
-        imageSizes,
-        "desktop"
-      ).hoverSource
+      sourceSrc:
+        this.getImageUrlsFor(wrapperSizes, imageSizes, "desktop").source ?? "",
+      hoverSourceSrc:
+        this.getHoverImageUrlsFor(wrapperSizes, imageSizes).hoverSource ?? ""
     };
   }
 
-  getWrapperSizes(v) {
+  getWrapperSizes(v: Value) {
     const config = this.getGlobalConfig();
-    const { imageSizes: cfgImageSizes } = config;
+    const { imageSizes: cfgImageSizes = [] } = config;
 
     const { containerWidth, tabletContainerWidth, mobileContainerWidth } =
       this.state;
@@ -595,7 +655,12 @@ class Image extends EditorComponent {
     const mobileSizeType = getImageSize(_mobileSizeType, cfgImageSizes);
     const { desktop, tablet, mobile } = this.getContainerSize();
 
-    if (isPredefinedSize(sizeType) && !isSvgOfGif) {
+    const isPredefined =
+      isPredefinedSize(sizeType) &&
+      isPredefinedSize(tabletSizeType) &&
+      isPredefinedSize(mobileSizeType);
+
+    if (isPredefined && !isSvgOfGif) {
       return {
         desktop: calcWrapperPredefinedSizes(sizeType, desktop),
         tablet: calcWrapperPredefinedSizes(tabletSizeType, tablet),
@@ -603,8 +668,9 @@ class Image extends EditorComponent {
       };
     }
 
-    const dvv = (key, device) => defaultValueValue({ v, device, key });
-    const dvvH = (key) =>
+    const dvv = (key: string, device: DeviceMode) =>
+      defaultValueValue({ v, device, key });
+    const dvvH = (key: string) =>
       defaultValueValue({ v, device: "desktop", key, state: "hover" });
     const size = dvv("size", DESKTOP);
     const tabletSize = dvv("size", TABLET);
@@ -777,14 +843,15 @@ class Image extends EditorComponent {
     };
   }
 
-  getDCValueHook(dcKeys, v) {
+  getDCValueHook(dcKeys: ECKeyDCInfo[], v: Value) {
     const wrapperSizes = this.getWrapperSizes(v);
     const deviceMode = this.getDeviceMode();
-    const dvv = (key) => defaultValueValue({ v, key, device: deviceMode });
+    const dvv = (key: string) =>
+      defaultValueValue({ v, key, device: deviceMode });
 
     return dcKeys.map((dcKey) => {
       if (dcKey.key === "image") {
-        let { width, height } = wrapperSizes[deviceMode];
+        const { width, height } = wrapperSizes[deviceMode];
         let { cW, cH } = this.prevWrapperSizes;
 
         if (width > cW || height > cH) {
@@ -798,7 +865,7 @@ class Image extends EditorComponent {
         }
 
         const fallbackImage = fromElementModel(
-          (k) => v[createOptionId(keyToDCFallback2Key(dcKey.key), k)]
+          (k) => v[createOptionId(keyToDCFallback2Key(dcKey.key), k)] as Literal
         );
         const config = this.getGlobalConfig();
         const fallbackUrl = getCustomImageUrl(
@@ -811,10 +878,10 @@ class Image extends EditorComponent {
               height: dvv("height"),
               widthSuffix: dvv("widthSuffix"),
               heightSuffix: dvv("heightSuffix"),
-              imageHeight: fallbackImage.height,
-              imageWidth: fallbackImage.width,
-              positionX: fallbackImage.x,
-              positionY: fallbackImage.y,
+              imageHeight: fallbackImage.height ?? 0,
+              imageWidth: fallbackImage.width ?? 0,
+              positionX: fallbackImage.x ?? 0,
+              positionY: fallbackImage.y ?? 0,
               zoom: dvv("zoom")
             },
             this.props.meta[`${deviceMode}W`],
@@ -844,7 +911,7 @@ class Image extends EditorComponent {
     this.tooltipRef.current?.toggleTooltip();
   };
 
-  handleUpdateTooltipReference(el) {
+  handleUpdateTooltipReference(el: Element | null) {
     const { enableTooltip } = this.getValue();
 
     if (enableTooltip !== "on") {
@@ -863,7 +930,7 @@ class Image extends EditorComponent {
     }
   }
 
-  renderTooltip(v, vs, vd) {
+  renderTooltip(v: Value, vs: Value, vd: Value) {
     const {
       tooltipOffset,
       tooltipText,
@@ -914,11 +981,9 @@ class Image extends EditorComponent {
     const meta = this.props.meta;
     const popupsProps = this.makeSubcomponentProps({
       bindWithKey: "popups",
-      itemProps: (itemData) => {
-        let {
-          blockId,
-          value: { popupId }
-        } = itemData;
+      itemProps: (itemData: Block) => {
+        const { blockId, value } = itemData;
+        let { popupId } = value;
 
         let newMeta = omit(meta, ["globalBlockId"]);
 
@@ -948,13 +1013,14 @@ class Image extends EditorComponent {
       }
     });
 
+    // @ts-expect-error: Need transform EditorArrayComponents to ts
     return <EditorArrayComponent {...popupsProps} />;
   }
 
-  getHoverAnimationData(v) {
-    const { gallery = {} } = this.props.renderer
+  getHoverAnimationData(v: Value) {
+    const { gallery = {} as GalleryRenderer } = this.props.renderer
       ? this.props.renderer
-      : { gallery: {} };
+      : { gallery: {} as GalleryRenderer };
     const { wrapperAnimationId } = this.props.meta;
     const {
       hoverName: galleryHoverName,
@@ -968,7 +1034,9 @@ class Image extends EditorComponent {
       const hoverName = Str.read(galleryHoverName) ?? "none";
       const isHidden = isStory(this.props.editorMode) || hoverName === "none";
       const optionsFromGallery = {
-        duration: Num.read(galleryHoverDuration) ?? 1000,
+        duration: isPositive(galleryHoverDuration)
+          ? galleryHoverDuration
+          : (1000 as Positive),
         infiniteAnimation: galleryHoverInfiniteAnimation ?? false
       };
 
@@ -993,7 +1061,7 @@ class Image extends EditorComponent {
     };
   }
 
-  renderForEdit(v, vs, vd) {
+  renderForEdit(v: Value, vs: Value, vd: Value) {
     const {
       className,
       actionClosePopup,
@@ -1002,26 +1070,26 @@ class Image extends EditorComponent {
       hoverImage,
       tabsState,
       enableTooltip,
-      tooltipPlacement
+      tooltipPlacement,
+      customCSS
     } = v;
     const config = this.getGlobalConfig();
 
+    const { renderer, renderContext, editorMode } = this.props;
+
     const hasHoverImage = !!hoverImageSrc || !!hoverImage;
 
-    const { gallery = {} } = this.props.renderer
-      ? this.props.renderer
-      : { gallery: {} };
+    const { gallery = {} as GalleryRenderer } = renderer
+      ? renderer
+      : { gallery: {} as GalleryRenderer };
     const { containerWidth, tabletContainerWidth, mobileContainerWidth } =
       this.state;
 
     const wrapperSizes = this.getWrapperSizes(v);
 
     const toolbarConfig = toolbarConfigFn({
-      desktopWrapperSizes: wrapperSizes.desktop,
       desktopContainerWidth: containerWidth,
-      tabletWrapperSizes: wrapperSizes.tablet,
       tabletContainerWidth,
-      mobileWrapperSizes: wrapperSizes.mobile,
       mobileContainerWidth,
       gallery
     });
@@ -1037,9 +1105,9 @@ class Image extends EditorComponent {
 
     const parentClassName = classnames(
       "brz-image",
-      isStory(this.props.editorMode) && "brz-image--story",
+      isStory(editorMode) && "brz-image--story",
       {
-        "brz-story-linked": isStory(this.props.editorMode) && linked,
+        "brz-story-linked": isStory(editorMode) && linked,
         "brz-image--withHover": hasHoverImage,
         "brz-image-hide-normal": tabsState === HOVER && hasHoverImage
       },
@@ -1074,7 +1142,7 @@ class Image extends EditorComponent {
       )
     );
 
-    const meta = {
+    const meta: Meta = {
       ...this.props.meta,
       desktopW: containerWidth,
       tabletW: tabletContainerWidth,
@@ -1082,8 +1150,11 @@ class Image extends EditorComponent {
       _dc: this._dc
     };
 
-    const getResponsiveUrls = isUnsplashImage(imageType)
-      ? (imageSizes) => this.getResponsiveUrls(wrapperSizes, imageSizes)
+    const getResponsiveUrls: GetResponsiveUrls | undefined = isUnsplashImage(
+      imageType
+    )
+      ? (imageSizes: ImageSizes) =>
+          this.getResponsiveUrls(wrapperSizes, imageSizes)
       : undefined;
 
     const { animationId, hoverName, options, isHidden } =
@@ -1112,7 +1183,7 @@ class Image extends EditorComponent {
           placement={mainToolbarPlacement}
         >
           {({ ref: toolbarRef }) => (
-            <CustomCSS selectorName={this.getId()} css={v.customCSS}>
+            <CustomCSS selectorName={this.getId()} css={customCSS}>
               {({ ref: customCssRef }) => (
                 <Wrapper
                   {...this.makeWrapperProps({
@@ -1151,6 +1222,8 @@ class Image extends EditorComponent {
                       onEnd={this.onDragEnd}
                       gallery={gallery}
                       context={this.context}
+                      renderContext={renderContext}
+                      editorMode={editorMode}
                     >
                       <ImageContent
                         store={this.getReduxStore()}
@@ -1164,8 +1237,8 @@ class Image extends EditorComponent {
                         meta={meta}
                         gallery={gallery}
                         linkProps={linkProps}
-                        renderContext={this.props.renderContext}
-                        editorMode={this.props.editorMode}
+                        renderContext={renderContext}
+                        editorMode={editorMode}
                       />
                     </ImageWrapper>
                   </HoverAnimation>
@@ -1184,13 +1257,14 @@ class Image extends EditorComponent {
     );
   }
 
-  renderForView(v, vs, vd) {
+  renderForView(v: Value, vs: Value, vd: Value) {
     const {
       className,
       actionClosePopup,
       hoverImageSrc,
       hoverImage,
-      enableTooltip
+      enableTooltip,
+      customCSS
     } = v;
     const config = this.getGlobalConfig();
     const isAbsoluteOrFixed =
@@ -1214,8 +1288,6 @@ class Image extends EditorComponent {
     const linkProps = {
       slide: link.slide
     };
-
-    const linkValue = getLinkValue(v);
 
     const linked = v.linkExternal !== "" || v.linkPopulation !== "";
 
@@ -1273,7 +1345,7 @@ class Image extends EditorComponent {
 
     return (
       <Fragment>
-        <CustomCSS selectorName={this.getId()} css={v.customCSS}>
+        <CustomCSS selectorName={this.getId()} css={customCSS}>
           <HoverAnimation
             animationId={animationId}
             className={hoverAnimationClassName}
@@ -1293,17 +1365,15 @@ class Image extends EditorComponent {
                 v={v}
                 vs={vs}
                 vd={vd}
-                link={linkValue}
                 _id={this.getId()}
                 componentId={this.getComponentId()}
                 wrapperSizes={wrapperSizes}
                 meta={this.props.meta}
                 extraAttributes={extraAttributes}
-                getResponsiveUrls={(imageSizes) =>
+                getResponsiveUrls={(imageSizes: ImageSizes) =>
                   this.getResponsiveUrls(wrapperSizes, imageSizes)
                 }
                 linkProps={linkProps}
-                onChange={this.handleChange}
                 store={this.getReduxStore()}
                 renderContext={this.props.renderContext}
                 editorMode={this.props.editorMode}

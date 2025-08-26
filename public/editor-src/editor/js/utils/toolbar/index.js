@@ -13,7 +13,4 @@ export {
 // Element Section
 export { getInstanceParentId } from "./toolbarElementSection";
 
-// Element Image
-export { toolbarImageTags } from "./toolbarElementImage";
-
 export { toolbarElementForm2Apps } from "./toolbarElementForm2";

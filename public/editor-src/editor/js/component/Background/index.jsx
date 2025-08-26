@@ -34,13 +34,6 @@ const getMediaProps = (v) => {
 
   const media = opacityKeyValue.some((k) => k < 1);
 
-  if (v.bgColorType === "none") {
-    return {
-      media,
-      opacity: false
-    };
-  }
-
   // Verify if media is less than 1
   // Verify if opacity is greater than 0
   return {

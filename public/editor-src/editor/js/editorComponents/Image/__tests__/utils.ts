@@ -1,12 +1,12 @@
 import { ImageType } from "visual/utils/image/types";
 import { V } from "../types";
 import {
+  ImageValue,
+  PredefinedCustomSize,
   calcWrapperOriginalSizes,
   calcWrapperPredefinedSizes,
   getImageSize,
-  getSizeType,
-  ImageValue,
-  PredefinedCustomSize
+  getSizeType
 } from "../utils";
 
 export const imageSizes = [
@@ -172,7 +172,16 @@ describe("Testing 'Getters Image' functions", () => {
       hoverHeight: 100,
       hoverImageExtension: "",
       hoverImage: "",
-      hoverImageFileName: ""
+      hoverImageFileName: "",
+      tabletWidthSuffix: "",
+      tabletHeightSuffix: "",
+      mobileWidthSuffix: "",
+      mobileHeightSuffix: "",
+      tooltipOffset: 0,
+      tooltipText: "",
+      tooltipTriggerClick: "",
+      tooltipPlacement: "top",
+      customCSS: ""
     };
 
     // without population

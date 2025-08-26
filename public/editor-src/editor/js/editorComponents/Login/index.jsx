@@ -517,7 +517,9 @@ class Login extends EditorComponent {
       messageRedirect,
       emptyFieldsError,
       passLengthError,
-      passMatchError
+      passMatchError,
+      logoutRedirectType,
+      logoutRedirect
     } = v;
     const className = classnames(
       "brz-login",
@@ -550,6 +552,14 @@ class Login extends EditorComponent {
               ...makeDataAttr({
                 name: "redirect-value",
                 value: messageRedirect
+              }),
+              ...makeDataAttr({
+                name: "logout-redirect",
+                value: logoutRedirectType
+              }),
+              ...makeDataAttr({
+                name: "logout-redirect-value",
+                value: logoutRedirect
               }),
               ...makeDataAttr({
                 name: "error-empty",

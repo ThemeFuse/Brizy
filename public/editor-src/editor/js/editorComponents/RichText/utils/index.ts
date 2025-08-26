@@ -2,7 +2,6 @@ import { Num } from "@brizy/readers";
 import { once } from "es-toolkit";
 import { mPipe, optional, parseStrict, pass } from "fp-utilities";
 import { ElementModelType2 } from "visual/component/Elements/Types";
-import type { QuillFormat } from "visual/editorComponents/RichText/types";
 import {
   DCGroupCloud,
   DCGroups,
@@ -19,13 +18,18 @@ import { getDynamicContentChoices } from "visual/utils/options";
 import { findDCChoiceByPlaceholder } from "visual/utils/options/Population/utils";
 import * as Obj from "visual/utils/reader/object";
 import * as Str from "visual/utils/reader/string";
-import { capByPrefix, decodeFromString } from "visual/utils/string";
+import {
+  capByPrefix,
+  decodeFromString,
+  parseFromString
+} from "visual/utils/string";
 import {
   MValue,
   isNullish,
   onNullish,
   throwOnNullish
 } from "visual/utils/value";
+import type { QuillFormat, TooltipFormat } from "../types";
 import { fromFormatsToTextTransform } from "./dependencies";
 import { classNamesToV } from "./transforms";
 
@@ -53,10 +57,7 @@ function quillUtils(renderContext: RenderType) {
     : // eslint-disable-next-line @typescript-eslint/no-var-requires
       (require("cheerio") as cheerio.CheerioAPI);
 
-  function mapBlockElements(
-    html: string,
-    fn: JQueryCallback | cheerio.Selector
-  ) {
+  function mapElements(html: string, fn: JQueryCallback | cheerio.Selector) {
     const $ = getWrapper(html);
     const nodes = getParagraphsArray($);
 
@@ -77,13 +78,14 @@ function quillUtils(renderContext: RenderType) {
     }
 
     function getParagraphsArray($: cheerio.Root | JQuery<HTMLElement>) {
-      const selector = ":header, p, pre, li, div:not(.brz-temp-div)";
+      const selector =
+        ":header, p, pre, li, div:not(.brz-temp-div), span[data-tooltip]";
 
       return isJQueryHTMLElement($) ? $.find(selector) : $(selector);
     }
   }
 
-  return { mapBlockElements };
+  return { mapElements };
 }
 
 const GetQuillUtils = once((renderContext: RenderType) =>
@@ -382,6 +384,15 @@ const getPopulation = (
   return null;
 };
 
+const getTooltipFormat = (value = "{}"): TooltipFormat => {
+  const formats = parseFromString<MValue<TooltipFormat>>(value) ?? {};
+
+  return {
+    ...formats,
+    enableTooltip: formats.enableTooltip ?? "off"
+  };
+};
+
 export const getFormats = (
   $elem: JQuery<HTMLElement>,
   format: QuillFormat = {},
@@ -514,6 +525,7 @@ export const getFormats = (
     ...populationColor,
 
     ...getPopulationColorFormat({ ...populationColor }),
+    ...getTooltipFormat(format.tooltip),
 
     list: format.list ?? "",
     population: getPopulation(format.population, $elem, dcGroups),

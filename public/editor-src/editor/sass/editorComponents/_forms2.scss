@@ -127,6 +127,10 @@
         height: 100%;
       }
     }
+
+    .brz-g-recaptcha {
+      z-index: 1;
+    }
   }
 
   &__wrap,
@@ -350,7 +354,10 @@
       background-color: #15d053;
     }
 
-    &--error, &--empty, &--invalid, &--invalid-email {
+    &--error,
+    &--empty,
+    &--invalid,
+    &--invalid-email {
       background-color: #f00;
     }
   }

@@ -4,6 +4,7 @@ import type QuillType from "quill";
 import { BoundsStatic, RangeStatic } from "quill";
 import React, { ReactNode } from "react";
 import { connect } from "react-redux";
+import { ElementModel } from "visual/component/Elements/Types";
 import { Translate } from "visual/component/Translate";
 import {
   ConfigDCItem,
@@ -24,10 +25,11 @@ import { css1 } from "visual/utils/cssStyle";
 import { makePlaceholder } from "visual/utils/dynamicContent";
 import * as Arr from "visual/utils/reader/array";
 import { diff } from "visual/utils/reader/object";
+import { encodeToString, parseFromString } from "visual/utils/string";
 import { uuid } from "visual/utils/uuid";
 import { MValue } from "visual/utils/value";
-import { styleHeading } from "./styles";
-import { PrepopulationData, QuillFormat } from "./types";
+import { styleHeading, styleTooltip } from "./styles";
+import { PrepopulationData, QuillFormat, Value } from "./types";
 import QuillUtils, { createLabel, getFormats } from "./utils";
 import bindings from "./utils/bindings";
 import { changeRichText } from "./utils/changeRichText";
@@ -51,10 +53,7 @@ type JQueryCallback = (arg: JQuery) => void;
 type CheerioCallback = (arg: cheerio.Cheerio) => void;
 
 interface QuillUtils {
-  mapBlockElements: (
-    html: string,
-    fn: JQueryCallback | CheerioCallback
-  ) => string;
+  mapElements: (html: string, fn: JQueryCallback | CheerioCallback) => string;
 }
 
 const instances: QuillComponent[] = [];
@@ -90,13 +89,15 @@ type Props = {
   onSelectionChange?: (
     format: Formats,
     coords: Coords,
-    cursorIndex?: number
+    cursorIndex?: number,
+    node?: Element | null
   ) => void;
   textId?: string;
   isStoryMode?: boolean;
   isDCHandler?: boolean;
   isListOpen?: boolean;
   setPrepopulationData?: (data: PrepopulationData) => void;
+  v?: Value;
 };
 
 export class QuillComponent extends React.Component<Props> {
@@ -261,6 +262,18 @@ export class QuillComponent extends React.Component<Props> {
     ) as _Quill;
 
     quill.on("selection-change", (range: RangeStatic | null, oldRange) => {
+      const selection = quill.selection?.savedRange;
+      let domNode: Element | null = null;
+
+      if (selection) {
+        const [leaf] = quill.getLeaf(selection.index) || [];
+        const parent = leaf?.parent;
+
+        if (parent && parent.domNode instanceof Element) {
+          domNode = parent.domNode;
+        }
+      }
+
       this.currentSelection = range;
       if (quill.hasFocus()) {
         // TODO: make much less hacky
@@ -269,7 +282,8 @@ export class QuillComponent extends React.Component<Props> {
           this.props.onSelectionChange?.(
             format,
             this.getCoords(range),
-            quill.selection.savedRange.index
+            quill.selection.savedRange.index,
+            domNode
           );
         }
       }
@@ -444,7 +458,13 @@ export class QuillComponent extends React.Component<Props> {
     const { store, sheet, renderContext, editorMode, getConfig } = this.props;
 
     if (isEditor(renderContext) && typeof this.quillUtils !== "undefined") {
-      return this.quillUtils.mapBlockElements(html, ($elem: JQuery) => {
+      return this.quillUtils.mapElements(html, ($elem: JQuery) => {
+        const isTooltip = !!$elem.attr("data-tooltip");
+
+        if (isTooltip) {
+          return;
+        }
+
         const uniqId = uuid(5);
 
         const className = this.getClassName(
@@ -456,38 +476,81 @@ export class QuillComponent extends React.Component<Props> {
         $elem.attr("data-uniq-id", uniqId);
       });
     } else {
-      return this.quillUtils.mapBlockElements(
-        html,
-        ($elem: cheerio.Cheerio) => {
-          const uniqId = uuid(5);
+      return this.quillUtils.mapElements(html, ($elem: cheerio.Cheerio) => {
+        const uniqId = uuid(5);
+        const tooltipAttr = $elem.attr("data-tooltip");
 
-          const { v, vs, vd } = classNamesToV2(
-            $elem.attr("class")?.split(" ") ?? []
-          );
+        if (tooltipAttr) {
+          const { v } = this.props;
+
+          const value = parseFromString<ElementModel>(tooltipAttr) ?? {};
+
           const contexts = {
             renderContext,
             mode: editorMode,
             getConfig
           };
-          const styles = styleHeading({
-            v,
-            vs,
-            vd,
+
+          const styles = styleTooltip({
+            v: {
+              ...v,
+              ...value
+            },
+            vs: {},
+            vd: {},
             store,
             contexts
           });
 
-          const { className } = css1(
-            uniqId,
-            // data under the index 2 - contain element's style
-            styles[2],
-            sheet
-          );
+          const { className } = css1(uniqId, styles[2], sheet);
 
-          const extraClassNames = this.getExtraClassNames($elem);
-          $elem.addClass([className, ...extraClassNames].join(" "));
+          const {
+            tooltipText,
+            tooltipPlacement,
+            tooltipOffset,
+            tooltipTriggerClick
+          } = value;
+
+          const encoded = encodeToString({
+            tooltipText: tooltipText ?? v?.tooltipText,
+            tooltipPlacement: tooltipPlacement ?? v?.tooltipPlacement,
+            tooltipOffset: tooltipOffset ?? v?.tooltipOffset,
+            tooltipTriggerClick:
+              tooltipTriggerClick === "on" ? "click" : "hover"
+          });
+
+          $elem.attr("data-tooltip", encoded);
+          $elem.addClass(className);
+
+          return;
         }
-      );
+
+        const { v, vs, vd } = classNamesToV2(
+          $elem.attr("class")?.split(" ") ?? []
+        );
+        const contexts = {
+          renderContext,
+          mode: editorMode,
+          getConfig
+        };
+        const styles = styleHeading({
+          v,
+          vs,
+          vd,
+          store,
+          contexts
+        });
+
+        const { className } = css1(
+          uniqId,
+          // data under the index 2 - contain element's style
+          styles[2],
+          sheet
+        );
+
+        const extraClassNames = this.getExtraClassNames($elem);
+        $elem.addClass([className, ...extraClassNames].join(" "));
+      });
     }
   }
 

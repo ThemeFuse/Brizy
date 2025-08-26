@@ -1,7 +1,7 @@
 import { ElementModel } from "visual/component/Elements/Types";
-import { ComponentsMeta } from "../EditorComponent/types";
 import { WithClassName } from "visual/types/attributes";
 import { Literal } from "visual/utils/types/Literal";
+import { ComponentsMeta } from "../EditorComponent/types";
 
 export enum RenderType {
   Static = "static",
@@ -36,6 +36,7 @@ export interface Meta extends ComponentsMeta {
 export interface Props extends WithClassName {
   meta: Meta;
   instanceKey: string;
+  onClone: (id: string) => void;
 }
 
 export interface States {
