@@ -5,6 +5,7 @@ import Animation from "visual/component/Animation";
 import Background from "visual/component/Background";
 import ContainerBorder from "visual/component/ContainerBorder";
 import CustomCSS from "visual/component/CustomCSS";
+import HotKeys from "visual/component/HotKeys";
 import PaddingResizer from "visual/component/PaddingResizer";
 import { ProBlocked } from "visual/component/ProBlocked";
 import { Roles } from "visual/component/Roles";
@@ -276,67 +277,99 @@ class SectionFooter extends EditorComponent {
     );
   }
 
+  handleKeyDown = (e, { keyName, id }) => {
+    e.preventDefault();
+    const { onClone } = this.props;
+    switch (keyName) {
+      case "alt+D":
+      case "ctrl+D":
+      case "cmd+D":
+      case "right_cmd+D":
+        return onClone(id);
+      case "alt+del":
+      case "ctrl+del":
+      case "cmd+del":
+      case "right_cmd+del":
+        return this.selfDestruct();
+    }
+  };
+
   renderForEdit(v, vs, vd) {
     const { className, customClassName, cssClass, customAttributes } = v;
 
-    return this.isPro ? (
-      <ContainerBorder
-        type="footer"
-        hiddenInResponsive={true}
-        activateOnContentClick={false}
+    const shortcuts = ["delete"];
+    const isGlobalBlock = this.props.meta.globalBlockId;
+
+    if (!isGlobalBlock) {
+      shortcuts.push("duplicate");
+    }
+
+    return (
+      <HotKeys
+        shortcutsTypes={shortcuts}
+        id={this.getId()}
+        onKeyDown={this.handleKeyDown}
       >
-        {({ ref: containerBorderRef, attr: containerBorderAttr }) => (
-          <CustomCSS selectorName={this.getId()} css={v.customCSS}>
-            {({ ref: cssRef }) => (
-              <Animation
-                ref={(el) => attachRefs(el, [containerBorderRef, cssRef])}
-                component="footer"
-                componentProps={{
-                  ...parseCustomAttributes(customAttributes),
-                  ...containerBorderAttr,
-                  ...makeDataAttr({
-                    name: "block-id",
-                    value: this.props.blockId
-                  }),
-                  id: this.getId(),
-                  className: classnames(
-                    "brz-footer",
-                    className,
-                    cssClass || customClassName,
-                    this.css(
-                      `${this.getComponentId()}-section`,
-                      `${this.getId()}-section`,
-                      styleSection({
-                        v,
-                        vs,
-                        vd,
-                        store: this.getReduxStore(),
-                        contexts: this.getContexts()
-                      })
-                    )
-                  )
-                }}
-                animationClass={this.getAnimationClassName(v, vs, vd)}
-              >
-                <Roles
-                  currentRole={currentUserRole(this.getGlobalConfig())}
-                  allow={["admin"]}
-                  fallbackRender={() => this.renderItems(v, vs, vd)}
-                >
-                  {this.renderToolbar(v)}
-                  <ToolbarExtend onEscape={this.handleToolbarEscape}>
-                    {this.renderItems(v, vs, vd)}
-                  </ToolbarExtend>
-                </Roles>
-              </Animation>
+        {this.isPro ? (
+          <ContainerBorder
+            type="footer"
+            hiddenInResponsive={true}
+            activateOnContentClick={false}
+          >
+            {({ ref: containerBorderRef, attr: containerBorderAttr }) => (
+              <CustomCSS selectorName={this.getId()} css={v.customCSS}>
+                {({ ref: cssRef }) => (
+                  <Animation
+                    ref={(el) => attachRefs(el, [containerBorderRef, cssRef])}
+                    component="footer"
+                    componentProps={{
+                      ...parseCustomAttributes(customAttributes),
+                      ...containerBorderAttr,
+                      ...makeDataAttr({
+                        name: "block-id",
+                        value: this.props.blockId
+                      }),
+                      id: this.getId(),
+                      className: classnames(
+                        "brz-footer",
+                        className,
+                        cssClass || customClassName,
+                        this.css(
+                          `${this.getComponentId()}-section`,
+                          `${this.getId()}-section`,
+                          styleSection({
+                            v,
+                            vs,
+                            vd,
+                            store: this.getReduxStore(),
+                            contexts: this.getContexts()
+                          })
+                        )
+                      )
+                    }}
+                    animationClass={this.getAnimationClassName(v, vs, vd)}
+                  >
+                    <Roles
+                      currentRole={currentUserRole(this.getGlobalConfig())}
+                      allow={["admin"]}
+                      fallbackRender={() => this.renderItems(v, vs, vd)}
+                    >
+                      {this.renderToolbar(v)}
+                      <ToolbarExtend onEscape={this.handleToolbarEscape}>
+                        {this.renderItems(v, vs, vd)}
+                      </ToolbarExtend>
+                    </Roles>
+                  </Animation>
+                )}
+              </CustomCSS>
             )}
-          </CustomCSS>
+          </ContainerBorder>
+        ) : (
+          <footer className="brz-footer">
+            <ProBlocked text={"Footer"} onRemove={this.handleRemove} />
+          </footer>
         )}
-      </ContainerBorder>
-    ) : (
-      <footer className="brz-footer">
-        <ProBlocked text={"Footer"} onRemove={this.handleRemove} />
-      </footer>
+      </HotKeys>
     );
   }
 

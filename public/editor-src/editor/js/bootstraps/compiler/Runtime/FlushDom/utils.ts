@@ -54,18 +54,6 @@ function addQueue(
   store: Store,
   config: ConfigCommon
 ): void {
-  if (blocks.length === 0) {
-    return;
-  }
-
-  if (blocks.length === 1) {
-    const block = blocks[0];
-    const blockId = block.value._id ?? "";
-    queue.add(blockId, compile([block], store, config));
-    return;
-  }
-
-  // When multiple blocks are selected, generate a unique ID for the batch
   const blockId = blocks.map((b) => b.value._id).join("");
   queue.add(blockId, compile(blocks, store, config));
 }

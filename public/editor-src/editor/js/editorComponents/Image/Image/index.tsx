@@ -8,7 +8,7 @@ import { isEditor } from "visual/providers/RenderProvider";
 import { useCSS } from "visual/providers/StyleProvider/useCSS";
 import { MValue } from "visual/utils/value";
 import { stylePicture } from "../styles";
-import { ImageProps } from "../types";
+import { ImageContent } from "../types";
 import { isAbleToRenderOriginal, showOriginalImage } from "../utils";
 import HoverSimpleImage from "./HoverSimpleImage";
 import HoverSvgImage from "./HoverSvgImage";
@@ -16,7 +16,7 @@ import OriginalImage from "./OriginalImage";
 import Population from "./Population";
 import SimpleImage from "./SimpleImage";
 
-const Content = (props: ImageProps): JSX.Element => {
+const Content = (props: ImageContent): JSX.Element => {
   const {
     v,
     vs,

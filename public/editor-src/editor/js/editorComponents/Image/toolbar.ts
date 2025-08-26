@@ -1,4 +1,5 @@
 import { keyToDCFallback2Key } from "visual/editorComponents/EditorComponent/DynamicContent/utils";
+import { GetItems } from "visual/editorComponents/EditorComponent/types";
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
 import {
   getEnabledLinkOptions,
@@ -21,16 +22,26 @@ import { getDynamicContentOption } from "visual/utils/options";
 import { popupToOldModel } from "visual/utils/options/PromptAddPopup/utils";
 import { read as readString } from "visual/utils/reader/string";
 import { HOVER, NORMAL } from "visual/utils/stateMode";
-import { toolbarImageTags, toolbarLinkAnchor } from "visual/utils/toolbar";
+import { toolbarLinkAnchor } from "visual/utils/toolbar";
 import { SizeType } from "../../global/Config/types/configs/common";
+import { Device, GalleryRenderer, Props, V as Value } from "./types";
 import { getImageDCSize } from "./utils";
+
+interface Data {
+  desktopContainerWidth: number;
+  tabletContainerWidth: number;
+  mobileContainerWidth: number;
+  gallery: GalleryRenderer;
+}
+
+type Property = Record<Device, { cW: number; gallery: GalleryRenderer }>;
 
 export default ({
   desktopContainerWidth,
   tabletContainerWidth,
   mobileContainerWidth,
   gallery
-}) => ({
+}: Data) => ({
   getItems: getItems({
     property: {
       desktop: {
@@ -50,7 +61,7 @@ export default ({
 });
 
 export const getItems =
-  ({ property }) =>
+  ({ property }: { property: Property }): GetItems<Value, Props> =>
   ({ v, device, component, context, editorMode, state }) => {
     const config = component.getGlobalConfig();
     const _isStory = isStory(editorMode);
@@ -72,7 +83,7 @@ export const getItems =
       layout,
       enableTags
     } = gallery || {};
-    const dvv = (key) => defaultValueValue({ v, key, device });
+    const dvv = (key: string) => defaultValueValue({ v, key, device });
 
     const linkDC = getDynamicContentOption({
       options: context.dynamicContent.config,
@@ -224,8 +235,8 @@ export const getItems =
                 id: "tabMask",
                 label: t("Mask"),
                 position: 110,
-                options: [
-                  ...(inGallery && !isBigImageFromGallery
+                options:
+                  inGallery && !isBigImageFromGallery
                     ? []
                     : [
                         {
@@ -319,18 +330,27 @@ export const getItems =
                           disabled: maskShapeIsDisabled || maskSize === "cover",
                           choices: getMaskRepeat()
                         }
-                      ])
-                ]
+                      ]
               },
               {
                 id: "tabTags",
                 label: t("Tags"),
                 options: [
-                  toolbarImageTags({
+                  {
+                    label: t("Tags"),
+                    id: "tags",
+                    type: "inputText",
+                    helper: {
+                      enabled: true,
+                      content: t(
+                        "Enter the tags, separated by a comma (art, sport, nature, etc)."
+                      ),
+                      position: "top-end"
+                    },
+                    placeholder: t("art, nature, etc."),
                     devices: "desktop",
-                    gallery,
-                    enableTags: _enableTags
-                  })
+                    disabled: !inGallery || !_enableTags
+                  }
                 ]
               }
             ]
@@ -480,7 +500,9 @@ export const getItems =
                 options: [
                   toolbarLinkAnchor({
                     v,
-                    disabled: _isStory
+                    disabled: _isStory,
+                    device,
+                    state
                   })
                 ]
               },

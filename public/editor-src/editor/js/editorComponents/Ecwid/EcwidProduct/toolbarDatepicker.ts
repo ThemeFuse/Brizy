@@ -14,6 +14,8 @@ export const getItems: GetItems<Value> = ({ v, device, state }) => {
     dvv("datepickerBgColorOpacity")
   );
 
+  const isPlaceholderDisabled = dvv("datepickerPlaceholder") === "off";
+
   return [
     {
       id: "toolbarCurrent",
@@ -25,9 +27,23 @@ export const getItems: GetItems<Value> = ({ v, device, state }) => {
       },
       options: [
         {
-          id: "datepickerPlaceholder",
-          label: t("Placeholder"),
-          type: "switch"
+          id: "groupPlaceholder",
+          type: "group",
+          options: [
+            {
+              id: "datepickerPlaceholder",
+              label: t("Placeholder"),
+              type: "switch"
+            },
+            {
+              id: "datepickerPlaceholderText",
+              type: "inputText",
+              label: t("Text"),
+              devices: "desktop",
+              placeholder: t("Enter custom text"),
+              disabled: isPlaceholderDisabled
+            }
+          ]
         },
         {
           id: "datepickerSize",

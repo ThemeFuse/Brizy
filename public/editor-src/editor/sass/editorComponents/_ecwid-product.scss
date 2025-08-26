@@ -513,3 +513,20 @@
     }
   }
 }
+
+&#ecwid_body {
+  .dp__instance_calendar
+    .dp__calendar
+    .dp__calendar
+    .dp__calendar_row
+    .dp__calendar_item {
+    &:has(.dp__cell_inner.dp--past) {
+      pointer-events: none;
+
+      .dp__cell_inner.dp--past {
+        // ecwid CSS variable
+        color: var(--dp-secondary-color, #d3d3d3);
+      }
+    }
+  }
+}

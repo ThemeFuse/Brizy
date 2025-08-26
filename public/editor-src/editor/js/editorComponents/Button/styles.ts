@@ -44,7 +44,6 @@ export function style(data: BaseData): OutputStyle {
     },
     ".brz &&.brz-btn:hover": {
       standart: [
-        "cssStyleDisplayFlex",
         "cssStyleColor",
         ...(hasSizing && _isEditor && !submitType ? [] : ["cssStyleBorder"]),
         "cssStyleBoxShadow"

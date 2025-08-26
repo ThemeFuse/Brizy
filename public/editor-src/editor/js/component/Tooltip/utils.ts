@@ -54,7 +54,8 @@ const UPDATE_TOOLTIP_KEYS = [
   "padding",
   "size",
   "spacing",
-  "font"
+  "font",
+  "align"
 ];
 
 export const shouldUpdateTooltipByPatch = (patch: ElementModel) =>

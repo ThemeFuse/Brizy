@@ -266,7 +266,7 @@ $z-indexes: (
   "section-popup": 1060,
   "section-popup-opened": 1070,
   "eye-dropper": 1070,
-  "forms-select": 1065,
+  "forms-select": 1068,
   "toolbar-column": 1040,
   "tooltip-overlay": 1100,
   "cloneable-bar": 1030,
@@ -661,7 +661,7 @@ $bottom_toolbar__disable-color: unquote(
   "rgb(from var(--icons-color, #ffffff) r g b / 0.5)"
 );
 $bottom_toolbar__btn-color: var(--icons-color, $white);
-$bottom_toolbar__btn-color--hover: var(--ui-main-color, $gray-3);
+$bottom_toolbar__btn-color--hover: var(--ui-main-color, $white);
 $bottom_toolbar__btn-bg: var(--active-color, $blue-1);
 $bottom_toolbar__btn-bg--hover: var(--active-color, $blue-4);
 $bottom_toolbar__btn__disable-bg: unquote(

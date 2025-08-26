@@ -1,11 +1,11 @@
 import { Num } from "@brizy/readers";
 import React, { ReactNode } from "react";
-import { RenderType } from "visual/providers/RenderProvider";
 import EditorIcon from "visual/component/EditorIcon";
 import { ElementModel } from "visual/component/Elements/Types";
 import { EditorInstance, Props } from "visual/editorComponents/EditorComponent";
 import { OnChangeMeta } from "visual/editorComponents/EditorComponent/types";
 import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import { RenderType } from "visual/providers/RenderProvider";
 import {
   Deps,
   Migration,
@@ -14,7 +14,7 @@ import {
 } from "visual/utils/migration";
 import { MValue } from "visual/utils/value";
 
-type DBMigration<M> = M & {
+export type DBMigration<M> = M & {
   _version: number;
 };
 

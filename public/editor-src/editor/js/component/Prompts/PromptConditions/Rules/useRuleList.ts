@@ -14,7 +14,11 @@ import {
   CollectionTypeRule,
   Rule
 } from "visual/types/Rule";
-import { getConditionalItems, getConditionalTypes } from "visual/utils/api";
+import {
+  getCollectionItemById,
+  getConditionalItems,
+  getConditionalTypes
+} from "visual/utils/api";
 import {
   CUSTOMER_TYPE,
   createEntityValue,
@@ -38,7 +42,9 @@ import {
   disableAlreadyUsedRules,
   getRefsById,
   getRulesListIndexByRule,
-  getUniqRules
+  getUniqRules,
+  hasEntityValues,
+  mergeCollectionGroups
 } from "./utils";
 import { Refs as RefsById } from "./utils/api";
 
@@ -211,39 +217,74 @@ export default function useRuleList(
 
   useEffect(() => {
     async function fetchData(): Promise<void> {
-      const uniqRules = getUniqRules(rules);
-      let newRulesList = collectionRuleList;
+      try {
+        const uniqRules = getUniqRules(rules);
+        let newRulesList = collectionRuleList;
 
-      await Promise.all(
-        uniqRules.map(async (rule) => {
-          if (isCollectionItemRule(rule) || isCollectionTypeRule(rule)) {
-            const ruleIndex = getRulesListIndexByRule(collectionRuleList, rule);
-            const hasItems = collectionRuleList[ruleIndex]?.items;
+        await Promise.all(
+          uniqRules.map(async (rule) => {
+            if (isCollectionItemRule(rule) || isCollectionTypeRule(rule)) {
+              const ruleIndex = getRulesListIndexByRule(
+                collectionRuleList,
+                rule
+              );
+              const currentRule = collectionRuleList[ruleIndex];
 
-            if (ruleIndex === -1 || hasItems) {
-              return Promise.resolve();
+              if (ruleIndex === -1 || currentRule?.items) {
+                return Promise.resolve();
+              }
+
+              const items = await fetchRuleListItems(
+                rule,
+                newRulesList[ruleIndex],
+                refsById,
+                config
+              );
+
+              const [firstItem] = items;
+
+              if (isCollectionItemRule(rule) && !hasEntityValues(items, rule)) {
+                const selectedItems = await Promise.all(
+                  rule.entityValues.map((item) =>
+                    fetchSelectedItem(item, config)
+                  )
+                );
+
+                const flattenedItems = selectedItems.flat(2);
+                const updatedFirstItem = {
+                  ...firstItem,
+                  items: [...(firstItem.items ?? []), ...flattenedItems]
+                } as RuleListItem;
+
+                items[0] = updatedFirstItem;
+              }
+
+              const existingItems = newRulesList[ruleIndex].items;
+              const updatedItems = existingItems
+                ? [
+                    mergeCollectionGroups(
+                      existingItems[0] as CmsListItem,
+                      items[0] as CmsListItem
+                    )
+                  ]
+                : items;
+
+              newRulesList = setIn(
+                newRulesList,
+                [ruleIndex, "items"],
+                updatedItems
+              ) as RuleList[];
             }
 
-            const items = await fetchRuleListItems(
-              rule,
-              newRulesList[ruleIndex],
-              refsById,
-              config
-            );
+            return Promise.resolve();
+          })
+        );
 
-            newRulesList = setIn(
-              newRulesList,
-              [ruleIndex, "items"],
-              items
-            ) as RuleList[];
-          }
-
-          return Promise.resolve();
-        })
-      );
-
-      setCollectionRuleList(disableAlreadyUsedRules(rules, newRulesList));
-      setListLoading(false);
+        setCollectionRuleList(disableAlreadyUsedRules(rules, newRulesList));
+        setListLoading(false);
+      } catch (e) {
+        console.error("Something went wrong while searching Rules", e);
+      }
     }
 
     if (rules === null) {
@@ -346,6 +387,19 @@ async function getItems(
   config: ConfigCommon
 ): Promise<RuleList[]> {
   const items = await getConditionalItems(entityType, config);
+
+  return items.map(({ id, title, status }) => ({
+    title: title,
+    value: id,
+    status
+  }));
+}
+
+async function fetchSelectedItem(
+  collectionItemId: string | number,
+  config: ConfigCommon
+) {
+  const items = await getCollectionItemById(collectionItemId, config);
 
   return items.map(({ id, title, status }) => ({
     title: title,

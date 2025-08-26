@@ -64,7 +64,7 @@ class Blocks extends EditorArrayComponent {
     }
   }
 
-  handleClone(id) {
+  handleClone = (id) => {
     const index = this.getValue().findIndex((block) => block.value._id === id);
 
     if (index !== -1) {
@@ -72,7 +72,7 @@ class Blocks extends EditorArrayComponent {
     } else {
       console.error("Invalid block id", id);
     }
-  }
+  };
 
   handleKeyDown = () => {
     const insertIndex = this.getValue().length;
@@ -143,7 +143,7 @@ class Blocks extends EditorArrayComponent {
     };
     const toolbarExtend = this.makeToolbarPropsFromConfig2(cloneRemoveConfig);
 
-    return { blockId, toolbarExtend };
+    return { blockId, toolbarExtend, onClone: this.handleClone };
   }
 
   renderItemWrapper(item, itemKey, itemIndex, itemData, itemsArray) {
