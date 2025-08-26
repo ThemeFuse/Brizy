@@ -165,9 +165,9 @@ class _PublishButton extends Component<Props, State> {
           break;
         }
         case "draft": {
-          const { mode } = pendingStatus;
+          const { mode, type } = pendingStatus;
           this.pendingToPublish = undefined;
-          this.handleDraft("draftLoading", mode);
+          this.handleDraft(type, mode);
           break;
         }
       }
@@ -405,10 +405,7 @@ class _PublishButton extends Component<Props, State> {
       }));
   }
 
-  handleDraft(
-    loading: "updateLoading" | "draftLoading",
-    editorMode: EditorMode
-  ): Promise<void> {
+  handleDraft(loading: LoadingType, editorMode: EditorMode): Promise<void> {
     const { compilationProcess } = this.props;
 
     if (compilationProcess) {

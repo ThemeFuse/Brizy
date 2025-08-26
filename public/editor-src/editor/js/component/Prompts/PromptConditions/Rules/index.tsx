@@ -1,8 +1,13 @@
 import { noop } from "es-toolkit";
-import React, { ReactElement, useEffect, useState } from "react";
+import React, { ReactElement, useEffect, useMemo, useState } from "react";
 import { useSelector } from "react-redux";
 import EditorIcon from "visual/component/EditorIcon";
 import { ToastNotification } from "visual/component/Notifications";
+import {
+  CmsListItem,
+  RuleList,
+  ValueItems
+} from "visual/component/Prompts/PromptConditions/Rules/types";
 import { Scrollbar } from "visual/component/Scrollbar";
 import { isCustomerPage } from "visual/global/Config/types/configs/Base";
 import {
@@ -17,9 +22,11 @@ import { pageSelector } from "visual/redux/selectors";
 import {
   AllRule,
   BlockTypeRule,
+  CollectionItemRule,
   CollectionTypeRule,
   Rule
 } from "visual/types/Rule";
+import { getConditionalItems } from "visual/utils/api";
 import { pendingRequest } from "visual/utils/api";
 import {
   CUSTOMER_TYPE,
@@ -35,7 +42,7 @@ import * as NoEmptyString from "visual/utils/string/NoEmptyString";
 import Buttons from "../Buttons";
 import ConditionChoices from "./ConditionChoices";
 import useRuleList from "./useRuleList";
-import { getUniqRules } from "./utils";
+import { getRulesListIndexByRule, getUniqRules } from "./utils";
 
 type AsyncGetValue = () => Rule[];
 
@@ -66,10 +73,22 @@ const Rules = (props: Props): ReactElement => {
   const [rules, setRules] = useState(value);
   const [loading, setLoading] = useState(false);
   const [listLoading, rulesList] = useRuleList(rules, context);
+  const [currentRuleList, setCurrentRuleList] = useState<RuleList[]>([]);
+  const [searchItems, setSearchItems] = useState<ValueItems[]>([]);
   const page = useSelector(pageSelector);
   const config = useConfig();
   const _isPro = isPro(config);
   const { mode } = useEditorMode();
+
+  const stringifiedJson = JSON.stringify(rulesList);
+
+  const memoizedRulesList = useMemo(() => {
+    try {
+      return JSON.parse(stringifiedJson);
+    } catch (e) {
+      console.error("Something went wrong while searching Rules", e);
+    }
+  }, [stringifiedJson]);
 
   useEffect(() => {
     async function fetchData(getValueFn: AsyncGetValue): Promise<void> {
@@ -157,6 +176,64 @@ const Rules = (props: Props): ReactElement => {
     }
   }
 
+  const getItems = async (
+    collectionType: string,
+    search: string
+  ): Promise<ValueItems[]> => {
+    const items = await getConditionalItems(collectionType, config, search);
+
+    const convertedItems = items.map((item) => ({
+      value: item.id,
+      status: item.status,
+      title: item.title
+    }));
+
+    setSearchItems(convertedItems);
+
+    return convertedItems;
+  };
+
+  const addRuleToTheList = (item: CollectionItemRule) => {
+    const ruleIndex = getRulesListIndexByRule(currentRuleList, item);
+
+    const matchingItems = searchItems.filter((searchItem) =>
+      item.entityValues.includes(searchItem.value)
+    );
+
+    setCurrentRuleList((prev) => {
+      const currentRule = prev[ruleIndex];
+
+      if (!currentRule) return prev;
+
+      const items = currentRule.items || [];
+      const firstItem = items[0] as CmsListItem;
+
+      if (!firstItem) return prev;
+
+      const existingItems = firstItem.items || [];
+
+      const updatedRule = {
+        ...currentRule,
+        items: [
+          {
+            ...firstItem,
+            items: [...existingItems, ...matchingItems]
+          }
+        ]
+      };
+
+      return prev.map((rule, index) =>
+        index === ruleIndex ? updatedRule : rule
+      );
+    });
+  };
+
+  useEffect(() => {
+    if (!listLoading) {
+      setCurrentRuleList(memoizedRulesList);
+    }
+  }, [listLoading, memoizedRulesList]);
+
   return (
     <>
       {listLoading ? (
@@ -168,8 +245,10 @@ const Rules = (props: Props): ReactElement => {
           {rules !== null && (
             <ConditionChoices
               rules={rules}
-              rulesList={rulesList}
+              rulesList={currentRuleList}
               onChange={handleConditionChange}
+              getItems={getItems}
+              addRuleToTheList={addRuleToTheList}
             />
           )}
           <div

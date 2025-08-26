@@ -11,7 +11,7 @@ import React, {
   useState
 } from "react";
 import { Scrollbars, positionValues } from "react-custom-scrollbars";
-import { Manager, Popper, Reference } from "react-popper";
+import { usePopper } from "react-popper";
 import { SelectItem } from "visual/component/Controls/Select2/SelectItem";
 import { Tag } from "visual/component/Controls/Select2/Tag";
 import EditorIcon from "visual/component/EditorIcon";
@@ -78,6 +78,11 @@ export function Component<T extends Literal>({
     (v: T) => mCompose(onSelect, property("value"), property("props"))(v),
     [onSelect]
   );
+  const [referenceElement, setReferenceElement] = useState<HTMLElement | null>(
+    null
+  );
+  const [popperElement, setPopperElement] = useState<HTMLElement | null>(null);
+  const { styles, attributes } = usePopper(referenceElement, popperElement);
 
   useEffect(() => {
     setMount(true);
@@ -91,135 +96,120 @@ export function Component<T extends Literal>({
 
   return (
     <div ref={containerRef} className={_className}>
-      <Manager>
-        <Downshift
-          // Use key in order to force re-render for the Downshift when component mounts
-          // This is necessary in order to refresh the `environment` prop
-          key={Number(mount)}
-          environment={getEnvironment(containerRef.current)}
-          onChange={_onSelect}
-          itemToString={(i?: ItemInstance<T>): string => mRead(i?.key)}
-        >
-          {({
-            openMenu,
-            isOpen,
-            getMenuProps,
-            getItemProps,
-            closeMenu
-          }): ReactElement => {
-            const triggerOpen = (): void => {
-              if (!isOpen) {
-                onOpen && onOpen();
-                openMenu();
-              } else if (autoClose) {
-                closeMenu();
-              }
-              inputRef.current?.focus();
-            };
+      <Downshift
+        // Use key in order to force re-render for the Downshift when component mounts
+        // This is necessary in order to refresh the `environment` prop
+        key={Number(mount)}
+        environment={getEnvironment(containerRef.current)}
+        onChange={_onSelect}
+        itemToString={(i?: ItemInstance<T>): string => mRead(i?.key)}
+      >
+        {({
+          openMenu,
+          isOpen,
+          getMenuProps,
+          getItemProps,
+          closeMenu
+        }): ReactElement => {
+          const triggerOpen = (): void => {
+            if (!isOpen) {
+              onOpen && onOpen();
+              openMenu();
+            } else if (autoClose) {
+              closeMenu();
+            }
+            inputRef.current?.focus();
+          };
 
-            return (
-              <div>
-                <Reference>
-                  {({ ref }): ReactElement => (
-                    <div
-                      ref={ref}
-                      className="brz-ed-control__multiSelect--value-container"
-                      onClick={(): void => triggerOpen()}
-                    >
-                      {tags}
-                      {editable && (
-                        <input
-                          placeholder={placeholder}
-                          ref={inputRef}
-                          value={inputValue}
-                          size={inputValue?.length || 1}
-                          onChange={({ target }): void => {
-                            onType?.(target.value);
-                            triggerOpen();
-                          }}
-                          onKeyDown={onKeyDown}
-                          onFocus={(): void => {
-                            triggerOpen();
-                          }}
-                          className="brz-input brz-ed-control__multiSelect--value"
-                        />
-                      )}
-                      {!editable && (
-                        <>
-                          {tags.length === 0 && (
-                            <span className="brz-ed-control__multiSelect--placeholder">
-                              {placeholder}
-                            </span>
-                          )}
-                          <EditorIcon
-                            icon="nc-stre-down"
-                            className="brz-control__select--arrow"
-                          />
-                        </>
-                      )}
-                    </div>
-                  )}
-                </Reference>
-                <div className="brz-ed-control__multiSelect__menu-container">
-                  <Popper>
-                    {({ ref, style, placement }): ReactElement | null => {
-                      if (!isOpen) {
-                        return null;
-                      }
+          const items = children.map((item, i) => {
+            const props = getItemProps({
+              item,
+              key: i,
+              disabled: item.props.disabled
+            });
+            return <SelectItem key={i} {...props} {...item.props} />;
+          });
 
-                      const items = children.map((item, i) => {
-                        const props = getItemProps({
-                          item,
-                          key: i,
-                          disabled: item.props.disabled
-                        });
-                        return (
-                          <SelectItem key={i} {...props} {...item.props} />
-                        );
-                      });
-
-                      return items.length ? (
-                        <div
-                          ref={ref}
-                          style={{
-                            ...style,
-                            position: positionDropdown || style.position
-                          }}
-                          className="brz-ed-control__multiSelect__menu"
-                          {...makeDataAttr({
-                            name: "placement",
-                            value: placement
-                          })}
-                        >
-                          <Scrollbars
-                            onUpdate={onScrollUpdate}
-                            autoHeight={true}
-                            autoHeightMax={maxHeight ?? height}
-                            renderThumbVertical={(props): ReactElement => {
-                              return (
-                                <div
-                                  className={
-                                    "brz-ed-control__multiSelect__scroll-thumb"
-                                  }
-                                  {...props}
-                                />
-                              );
-                            }}
-                          >
-                            <ul {...getMenuProps()} className="brz-ul">
-                              {items}
-                            </ul>
-                          </Scrollbars>
-                        </div>
-                      ) : null;
+          return (
+            <div>
+              <div
+                ref={setReferenceElement}
+                className="brz-ed-control__multiSelect--value-container"
+                onClick={(): void => triggerOpen()}
+              >
+                {tags}
+                {editable && (
+                  <input
+                    placeholder={placeholder}
+                    ref={inputRef}
+                    value={inputValue}
+                    size={inputValue?.length || 1}
+                    onChange={({ target }): void => {
+                      onType?.(target.value);
+                      triggerOpen();
                     }}
-                  </Popper>
-                </div>
+                    onKeyDown={onKeyDown}
+                    onFocus={(): void => {
+                      triggerOpen();
+                    }}
+                    className="brz-input brz-ed-control__multiSelect--value"
+                  />
+                )}
+                {!editable && (
+                  <>
+                    {tags.length === 0 && (
+                      <span className="brz-ed-control__multiSelect--placeholder">
+                        {placeholder}
+                      </span>
+                    )}
+                    <EditorIcon
+                      icon="nc-stre-down"
+                      className="brz-control__select--arrow"
+                    />
+                  </>
+                )}
               </div>
-            );
-          }}
-        </Downshift>
-      </Manager>
+
+              {isOpen && referenceElement && items.length && (
+                <div className="brz-ed-control__multiSelect__menu-container">
+                  <div
+                    ref={setPopperElement}
+                    style={{
+                      ...styles.popper,
+                      position: positionDropdown || styles.popper.position
+                    }}
+                    className="brz-ed-control__multiSelect__menu"
+                    {...makeDataAttr({
+                      name: "placement",
+                      value: attributes.popper?.["data-popper-placement"]
+                    })}
+                  >
+                    <Scrollbars
+                      onUpdate={onScrollUpdate}
+                      autoHeight={true}
+                      autoHeightMax={maxHeight ?? height}
+                      renderThumbVertical={(props): ReactElement => {
+                        return (
+                          <div
+                            className={
+                              "brz-ed-control__multiSelect__scroll-thumb"
+                            }
+                            {...props}
+                          />
+                        );
+                      }}
+                    >
+                      <ul {...getMenuProps()} className="brz-ul">
+                        {items}
+                      </ul>
+                    </Scrollbars>
+                  </div>
+                </div>
+              )}
+            </div>
+          );
+        }}
+      </Downshift>
     </div>
   );
 }

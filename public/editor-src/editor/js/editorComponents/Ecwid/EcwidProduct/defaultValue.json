@@ -65,7 +65,11 @@
     "radioColumns": 1,
 
     "checkbox2ColumnSwitch": "off",
-    "checkbox2Columns": 1
+    "checkbox2Columns": 1,
+
+    "textFieldPlaceholderText": "Enter your text",
+    "textareaPlaceholderText": "Enter your text",
+    "datepickerPlaceholderText": "Please choose a date"
   },
 
   "style": {

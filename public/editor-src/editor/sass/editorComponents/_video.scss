@@ -173,13 +173,21 @@
 }
 
 // this is magnific popup container class, need for video lightbox mode
-.mfp-content {
-  &:has(.mfp-iframe) {
-    max-width: 900px;
+.mfp-container {
+  &.mfp-inline-holder {
+    .mfp-content {
+      width: auto;
+    }
   }
 
-  video {
-    display: block !important;
-    width: 100%;
+  .mfp-content {
+    &:has(.mfp-iframe) {
+      max-width: 900px;
+    }
+
+    video {
+      display: block !important;
+      width: 100%;
+    }
   }
 }

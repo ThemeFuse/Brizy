@@ -294,12 +294,16 @@ async function pageBlockTaskCb(
 
       screenshotId = r.id;
     } else {
-      screenshotId = screenshots[blockId]._thumbnailSrc;
-
-      await apiUpdateBlockScreenshot(
-        { id: screenshotId, base64: screenshot.src, blockType: "normal" },
+      const { id } = await apiUpdateBlockScreenshot(
+        {
+          id: screenshots[blockId]._thumbnailSrc,
+          base64: screenshot.src,
+          blockType: "normal"
+        },
         config
       );
+
+      screenshotId = id;
     }
   }
 
@@ -404,11 +408,9 @@ async function globalBlockTaskCb(
 
       screenshotId = r.id;
     } else {
-      screenshotId = latestScreenshot;
-
-      await apiUpdateBlockScreenshot(
+      const { id } = await apiUpdateBlockScreenshot(
         {
-          id: screenshotId,
+          id: latestScreenshot,
           base64: screenshot.src,
 
           // ATTENTION: this is used only for WP and is
@@ -418,6 +420,8 @@ async function globalBlockTaskCb(
         },
         config
       );
+
+      screenshotId = id;
     }
   }
 
@@ -517,11 +521,9 @@ async function popupBlockTaskCb(
 
       screenshotId = r.id;
     } else {
-      screenshotId = latestScreenshot;
-
-      await apiUpdateBlockScreenshot(
+      const { id } = await apiUpdateBlockScreenshot(
         {
-          id: screenshotId,
+          id: latestScreenshot,
           base64: screenshot.src,
 
           // ATTENTION: this is used only for WP and is
@@ -531,6 +533,8 @@ async function popupBlockTaskCb(
         },
         config
       );
+
+      screenshotId = id;
     }
   }
 
@@ -667,16 +671,16 @@ async function popupBlockInsideGlobalBlockTaskCb(
 
         screenshotId = r.id;
       } else {
-        screenshotId = popup.value._thumbnailSrc;
-
-        await apiUpdateBlockScreenshot(
+        const { id } = await apiUpdateBlockScreenshot(
           {
-            id: screenshotId,
+            id: popup.value._thumbnailSrc,
             base64: screenshot.src,
             blockType: popupIsGlobal ? "global" : "normal"
           },
           config
         );
+
+        screenshotId = id;
       }
     }
   }

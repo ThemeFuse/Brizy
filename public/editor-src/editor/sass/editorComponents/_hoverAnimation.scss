@@ -11,6 +11,10 @@
   svg {
     backface-visibility: hidden;
   }
+
+  &:has(.brz-btn){
+    height: auto;
+  }
 }
 
 .brz-btn--hover {

@@ -17,6 +17,7 @@ import PlainClipboard from "./formats/PlainClipboard";
 import Population from "./formats/Population";
 import Pre from "./formats/Pre";
 import { getTextBackgroundGradient } from "./formats/TextBackgroundGradient";
+import Tooltip from "./formats/Tooltip";
 import { blockValues, inlineValues, legacyValues } from "./transforms";
 import { Values } from "./transforms/defaultValues";
 
@@ -83,6 +84,7 @@ function getQuill(renderContext: RenderType, getConfig: GetConfig) {
     Quill.register(DCBlock, true);
     Quill.register(getBackgroundGradient(getConfig), true);
     Quill.register(getTextBackgroundGradient(getConfig), true);
+    Quill.register(Tooltip, true);
 
     Quill.register("modules/clipboard", PlainClipboard, true);
   }

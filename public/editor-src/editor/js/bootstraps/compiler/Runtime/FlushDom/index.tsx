@@ -33,21 +33,9 @@ const _FlushDom = (props: Props): JSX.Element => {
 
     const queueTask = queue.current;
 
-    blocks.forEach((block) => {
-      const blockId = block.value._id ?? "";
-      addQueueDebounced.set(blockId, queueTask, [block], store, config);
-    });
-
-    // if (blocks.length === 1) {
-    //   const block = blocks[0];
-    //   const blockId = block.value._id ?? "";
-    //   addQueueDebounced.set(blockId, queueTask, blocks, store, config);
-    //   return;
-    // }
-
-    // // When multiple blocks are selected, generate a unique ID for the batch
-    // const id = blocks.map((b) => b.value._id).join("");
-    // addQueueDebounced.set(id, queueTask, blocks, store, config);
+    // When multiple blocks are selected, generate a unique ID for the batch
+    const id = blocks.map((b) => b.value._id).join("");
+    addQueueDebounced.set(id, queueTask, blocks, store, config);
   }, [blocks, store, config]);
 
   return <></>;

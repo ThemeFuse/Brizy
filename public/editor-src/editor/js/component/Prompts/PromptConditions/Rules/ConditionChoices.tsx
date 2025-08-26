@@ -8,12 +8,14 @@ import {
 } from "visual/types/Rule";
 import ItemWrapper from "../common/ItemWrapper";
 import ConditionGroup from "./ConditionGroup";
-import { RuleList } from "./types";
+import { RuleList, ValueItems } from "./types";
 
 export interface Props {
   rules: Rule[];
   rulesList: RuleList[];
   onChange: (rules: Rule[]) => void;
+  getItems: (collectionType: string, search: string) => Promise<ValueItems[]>;
+  addRuleToTheList: (item: CollectionItemRule) => void;
 }
 
 class ConditionChoices extends React.Component<Props> {
@@ -49,7 +51,7 @@ class ConditionChoices extends React.Component<Props> {
   };
 
   handleTypeChange = (value: string | null, index: number): void => {
-    const { rules, onChange } = this.props;
+    const { rules, onChange, addRuleToTheList } = this.props;
     let newRule: Rule;
 
     if (value === null) {
@@ -75,13 +77,15 @@ class ConditionChoices extends React.Component<Props> {
         mode: mode === "reference" ? "reference" : "specific",
         entityValues: v ? [v] : []
       };
+
+      addRuleToTheList(newRule);
     }
 
     onChange(setIn(rules, [index], newRule) as Rule[]);
   };
 
   render(): JSX.Element[] {
-    const { rules, rulesList } = this.props;
+    const { rules, rulesList, getItems, addRuleToTheList } = this.props;
 
     return rules.map((rule, index) => {
       const isInclude = rule.type === BlockTypeRule.include;
@@ -104,6 +108,8 @@ class ConditionChoices extends React.Component<Props> {
             onTypeChange={(value: string | null): void =>
               this.handleTypeChange(value, index)
             }
+            getItems={getItems}
+            addRuleToTheList={addRuleToTheList}
           />
         </ItemWrapper>
       );

@@ -24,7 +24,7 @@ import {
 } from "visual/utils/onChange";
 import { DESKTOP, MOBILE, TABLET } from "visual/utils/responsiveMode";
 import { styleImage } from "../styles";
-import { Device, ImageProps, ImageSizes } from "../types";
+import { Device, ImageContent, ImageSizes } from "../types";
 import { calcImageSizes } from "../utils";
 
 export interface RetinaData {
@@ -89,7 +89,7 @@ const formatSrc = (data: RetinaData, config: ConfigCommon): string => {
   }
 };
 
-const SimpleImage = (props: ImageProps): ReactElement => {
+const SimpleImage = (props: ImageContent): ReactElement => {
   const {
     v,
     vs,

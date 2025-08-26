@@ -4,8 +4,8 @@ import { NumberComponent as Control } from "visual/component/Controls/Number";
 import { OnChange } from "visual/component/Options/Type";
 import { useDebouncedOnChange } from "visual/component/hooks";
 import { add, clamp, subtractR } from "visual/utils/math";
-import { Component } from "./Type";
 import { MValue } from "visual/utils/value";
+import { Component } from "./Type";
 
 export const Number: Component = ({
   className,
@@ -59,6 +59,8 @@ export const Number: Component = ({
         value={_value}
         size={size}
         spinner={spinner}
+        max={max}
+        min={min}
       />
     </>
   );

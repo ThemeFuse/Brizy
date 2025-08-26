@@ -2,7 +2,9 @@ import {
   ElementModel,
   ElementModelType2
 } from "visual/component/Elements/Types";
+import { TooltipPlacement } from "visual/component/Tooltip/types";
 import { TypographyTags } from "visual/editorComponents/RichText/toolbar/utils";
+import { Switch } from "visual/types/Options";
 import { TextScripts } from "visual/types/Style";
 import type { Value as LinkValue } from "./utils/dependencies";
 
@@ -12,6 +14,10 @@ export interface Value extends ElementModel, LinkValue {
   className: string;
   popups: Array<ElementModelType2>;
   customCSS: string;
+
+  tooltipOffset: number;
+  tooltipPlacement: TooltipPlacement;
+  tooltipText: string;
 }
 
 export interface Patch extends Partial<Value> {
@@ -86,6 +92,11 @@ export interface QuillFormat {
   typographyScript?: string;
   script?: TextScripts;
 
+  tooltip?: string;
+  enableTooltip?: Switch;
+  tooltipTriggerClick?: Switch;
+  tooltipText?: string;
+
   opacity?: string;
   colorPalette?: string;
   populationColor?: PopulationColor;
@@ -105,4 +116,16 @@ export interface QuillFormat {
 export interface PrepopulationData {
   show: boolean;
   index: number | null;
+}
+
+export interface TooltipFormat {
+  enableTooltip?: Switch;
+  tooltipId?: string;
+}
+
+export interface TooltipAttributes {
+  tooltipText: string;
+  tooltipPlacement: string;
+  tooltipOffset: string;
+  tooltipTriggerClick: Switch;
 }

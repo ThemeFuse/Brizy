@@ -13,6 +13,7 @@ const getItemsSimple =
     const dvv = (key) => defaultValueValue({ v, key, device });
 
     const iconName = dvv("iconName");
+    const { editorUrl } = v;
 
     return [
       {
@@ -147,7 +148,20 @@ const getItemsSimple =
               options: []
             }
           ]
-        : [])
+        : []),
+      {
+        id: "editorUrlToolbar",
+        type: "button",
+        disabled: !editorUrl,
+        config: {
+          icon: "t2-edit-menu-item",
+          reverseTheme: true,
+          title: t("Edit page")
+        },
+        onClick: () => {
+          window.parent.location.assign(editorUrl);
+        }
+      }
     ];
   };
 
@@ -158,6 +172,8 @@ const getItemsMMenu =
     const dvv = (key) => defaultValueValue({ v, key, device });
 
     const iconName = dvv("iconName");
+
+    const { editorUrl } = v;
 
     return [
       {
@@ -196,6 +212,19 @@ const getItemsMMenu =
               ]
             : [])
         ]
+      },
+      {
+        id: "mMenuEditorUrlToolbar",
+        type: "button",
+        disabled: !editorUrl,
+        config: {
+          icon: "t2-edit-menu-item",
+          reverseTheme: true,
+          title: t("Edit page")
+        },
+        onClick: () => {
+          window.parent.location.assign(editorUrl);
+        }
       }
     ];
   };

@@ -914,15 +914,31 @@ export const getCollectionItems = (
   });
 };
 
+export const getCollectionItemById = (
+  id: string | number,
+  config: ConfigCommon
+): Promise<CollectionItem[]> => {
+  const get = config.api?.collectionItems?.getCollectionItemById?.handler;
+
+  return new Promise((res, rej) => {
+    if (typeof get === "function") {
+      get(res, rej, { id });
+    } else {
+      rej(t("Missing api getCollectionItemById handler in config"));
+    }
+  });
+};
+
 export const getConditionalItems = (
   entityType: string,
-  config: ConfigCommon
+  config: ConfigCommon,
+  search?: string
 ): Promise<CollectionItem[]> => {
   const get = config?.api?.collectionItems?.getConditionalItems?.handler;
 
   return new Promise((res, rej) => {
     if (typeof get === "function") {
-      get(res, rej, { entityType });
+      get(res, rej, { entityType, search });
     } else {
       rej(t("Missing api conditional items handler in config"));
     }
