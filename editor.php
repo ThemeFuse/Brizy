@@ -106,7 +106,9 @@ class Brizy_Editor {
 		add_action( 'init', array( $this, 'initializeThirdParty' ), -2000);
         add_action('init', [ $this, 'handleEditorEditMode' ], 0 );
 		add_action( 'wp', [ $this, 'handleEditorPreviewMode' ] );
-	}
+
+        new Brizy_Editor_AuthModal();
+    }
 
 	public function initialize() {
 
