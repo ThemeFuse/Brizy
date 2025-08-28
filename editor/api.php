@@ -62,14 +62,13 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi
      */
     public function __construct($post)
     {
-
         $this->post = $post;
         parent::__construct();
     }
 
     protected function initializeApiActions()
     {
-        if (!Brizy_Editor_User::is_user_allowed()) {
+        if (!Brizy_Editor_User::is_user_allowed($this->post->getWpPostId())) {
             return;
         }
         $p = 'wp_ajax_' . Brizy_Editor::prefix();
