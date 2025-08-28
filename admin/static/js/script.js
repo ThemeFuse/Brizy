@@ -363,6 +363,15 @@ jQuery(document).ready(function ($) {
             $( document ).on( 'click', '.js-demo-install', function( e ) {
                 e.preventDefault();
 
+                // AI module intercept
+                if (window.Brizy_Admin_Ai && typeof window.Brizy_Admin_Ai.handleInstallClick === 'function') {
+                    if ($(this).attr('data-is-ai')) {
+                        if (window.Brizy_Admin_Ai.handleInstallClick($(this), e)) {
+                            return;
+                        }
+                    }
+                }
+
                 $( '.brz-demo-modal-content' ).html( $( '#brz-demo-modal-content-installing' ).html() );
 
                 $.ajax( {
