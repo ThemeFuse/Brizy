@@ -317,12 +317,12 @@ class Brizy_Admin_Main {
 
         if ( ( ! isset( $_REQUEST['post'], $_REQUEST['template'] ) || ! ( $p = get_post( $_REQUEST['post'] ) ) ) || ( ( ! isset( $_REQUEST['hash'] ) || ! wp_verify_nonce( $_REQUEST['hash'], 'brizy-admin-nonce' ) ) ) ) {
             Brizy_Admin_Flash::instance()->add_error( 'Invalid Request.' );
-            wp_safe_redirect( $_SERVER['HTTP_REFERER'] );
+            wp_send_json_error( [ 'message' => 'You do not have sufficient permissions.' ] );
             exit();
         }
         if ( ! current_user_can( 'edit_post', $p->ID ) ) {
             Brizy_Admin_Flash::instance()->add_error( 'You do not have sufficient permissions.' );
-            wp_safe_redirect( $_SERVER['HTTP_REFERER'] );
+            wp_send_json_error( [ 'message' => 'You do not have sufficient permissions.' ] );
             exit();
         }
         try {
@@ -331,7 +331,10 @@ class Brizy_Admin_Main {
             exit;
         } catch ( Brizy_Editor_Exceptions_Exception $exception ) {
             Brizy_Admin_Flash::instance()->add_error( 'Unable to disabled the editor. Please try again later.' );
+            wp_safe_redirect( $_SERVER['HTTP_REFERER'] );
+            exit();
         }
+
         wp_safe_redirect( $_SERVER['HTTP_REFERER'] );
         exit;
     }

@@ -119,6 +119,10 @@ class Brizy_Editor_User {
 			return true;
 		}
 
+		if ( $post_id ) {
+			return current_user_can( 'edit_post', $post_id );
+		}
+
 		if ( is_null( self::$is_allowed_for_current_user ) ) {
 			self::$is_allowed_for_current_user =
 				(
@@ -126,11 +130,8 @@ class Brizy_Editor_User {
 					(current_user_can( Brizy_Admin_Capabilities::CAP_EDIT_WHOLE_PAGE ) || current_user_can( Brizy_Admin_Capabilities::CAP_EDIT_CONTENT_ONLY ))
 				);
 
-			if( $post_id ) {
-				self::$is_allowed_for_current_user = current_user_can( 'edit_post', $post_id );
-			}
-		}
 
+		}
 		return self::$is_allowed_for_current_user;
 	}
 

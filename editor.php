@@ -178,9 +178,9 @@ class Brizy_Editor {
 		} catch ( Exception $e ) {
 
 		}
-		if ( $post && Brizy_Editor_User::is_user_allowed( $post->getWpPostId() ) ) {
-			$this->loadEditorApi( $post, $user );
-		}
+
+		$this->loadEditorApi( $post, $user );
+
 		$this->loadEditorAdminSettings();
 		if ( ! class_exists( 'BrizyPro_Admin_WhiteLabel' ) || ! BrizyPro_Admin_WhiteLabel::_init()->getEnabled() ) {
 			if ( current_user_can( 'manage_options' ) ) {
