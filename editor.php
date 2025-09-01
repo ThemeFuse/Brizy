@@ -196,14 +196,13 @@ class Brizy_Editor {
 
 	public function handleEditorEditMode() {
 		$pid = Brizy_Editor::get()->currentPostId();
-		if ( ! $pid || ! Brizy_Editor_Entity::isBrizyEnabled( $pid ) || ! Brizy_Editor_User::is_user_allowed() ) {
+		if ( ! $pid || ! Brizy_Editor_Entity::isBrizyEnabled( $pid ) || ! Brizy_Editor_User::is_user_allowed($pid) ) {
 			return;
 		}
 		try {
 			$post = Brizy_Editor_Entity::get( $pid );
 		} catch ( Exception $e ) {
 			return;
-
 		}
 		try {
 			$main = Brizy_Public_Main::get( $post );
