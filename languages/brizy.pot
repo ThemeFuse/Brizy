@@ -2,14 +2,14 @@
 # This file is distributed under the GPLv3.
 msgid ""
 msgstr ""
-"Project-Id-Version: Brizy 2.7.12\n"
+"Project-Id-Version: Brizy 2.7.13\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/workspace\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-08-26T07:26:05+00:00\n"
+"POT-Creation-Date: 2025-09-01T12:13:12+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: brizy\n"
@@ -223,27 +223,27 @@ msgstr ""
 msgid "Layout."
 msgstr ""
 
-#: admin/main.php:245
+#: admin/main.php:217
 #: admin/settings.php:96
 #: public/editor-build/prod/texts.php:1472
 msgid "Settings"
 msgstr ""
 
-#: admin/main.php:253
+#: admin/main.php:221
 #: admin/settings.php:138
 #: import/main.php:54
 msgid "Go Pro"
 msgstr ""
 
-#: admin/main.php:312
+#: admin/main.php:260
 msgid "Submit & Deactivate"
 msgstr ""
 
-#: admin/main.php:313
+#: admin/main.php:261
 msgid "Skip & Deactivate"
 msgstr ""
 
-#: admin/main.php:436
+#: admin/main.php:391
 #: admin/views/button.php:25
 #: admin/views/button.php:44
 #: compatibilities/gutenberg.php:95
@@ -252,12 +252,12 @@ msgstr ""
 msgid "Edit with %s"
 msgstr ""
 
-#: admin/main.php:541
+#: admin/main.php:485
 msgid "Heads up, Please backup before upgrade!"
 msgstr ""
 
 #. translators: %1$s Link open tag, %2$s: Link close tag.
-#: admin/main.php:547
+#: admin/main.php:489
 #, php-format
 msgid "The latest update includes some substantial changes across different areas of the plugin. We highly recommend you %1$sbackup your site before upgrading%2$s, and make sure you first update in a staging environment"
 msgstr ""
@@ -881,11 +881,11 @@ msgstr ""
 msgid "Brizy Global Blocks"
 msgstr ""
 
-#: editor.php:314
+#: editor.php:282
 msgid " Template"
 msgstr ""
 
-#: editor.php:617
+#: editor.php:561
 msgid "Original"
 msgstr ""
 
