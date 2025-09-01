@@ -109,7 +109,7 @@ class Brizy_Editor_User {
 		return current_user_can( 'manage_options' ) || is_super_admin();
 	}
 
-	public static function is_user_allowed() {
+	public static function is_user_allowed($post_id = null) {
 
 		if ( ! is_user_logged_in() ) {
 			return false;
@@ -119,14 +119,19 @@ class Brizy_Editor_User {
 			return true;
 		}
 
+		if ( $post_id ) {
+			return current_user_can( 'edit_post', $post_id );
+		}
+
 		if ( is_null( self::$is_allowed_for_current_user ) ) {
 			self::$is_allowed_for_current_user =
 				(
 					current_user_can( 'edit_posts' ) &&
 					(current_user_can( Brizy_Admin_Capabilities::CAP_EDIT_WHOLE_PAGE ) || current_user_can( Brizy_Admin_Capabilities::CAP_EDIT_CONTENT_ONLY ))
 				);
-		}
 
+
+		}
 		return self::$is_allowed_for_current_user;
 	}
 

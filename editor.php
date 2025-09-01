@@ -27,7 +27,6 @@ class Brizy_Editor {
 		if ( self::$instance ) {
 			return self::$instance;
 		}
-
 		self::$instance = new self();
 
 		return self::$instance;
@@ -43,17 +42,12 @@ class Brizy_Editor {
 	public static function prefix( $string = null ) {
 
 		$string = $string ? trim( $string ) : '';
-
 		if ( ! self::$prefix ) {
 
 			$prefix = 'brizy';
-
 			if ( class_exists( 'BrizyPro_Admin_WhiteLabel' ) && BrizyPro_Admin_WhiteLabel::_init()->getEnabled() ) {
-				$prefix = method_exists( 'BrizyPro_Admin_WhiteLabel',
-					'getPrefix' ) ? BrizyPro_Admin_WhiteLabel::_init()->getPrefix() : get_option( 'brizy_prefix',
-					'brizy' );
+				$prefix = method_exists( 'BrizyPro_Admin_WhiteLabel', 'getPrefix' ) ? BrizyPro_Admin_WhiteLabel::_init()->getPrefix() : get_option( 'brizy_prefix', 'brizy' );
 			}
-
 			self::$prefix = $prefix;
 		}
 
@@ -73,7 +67,6 @@ class Brizy_Editor {
 		if ( $string == '' ) {
 			throw new Exception( 'The prefix cannot be empty' );
 		}
-
 		update_option( 'brizy_prefix', $string );
 
 		return self::$prefix = $string;
@@ -88,23 +81,18 @@ class Brizy_Editor {
 		if ( is_admin() ) {
 			Brizy_SystemChecks::run();
 		}
-
 		// make sure the project is created
 		// do not remove this! we force the project creation here.
 		$project = Brizy_Editor_Project::get();
-
 		Brizy_Editor_Compiler::checkRecompileTag();
-
 		Brizy_Admin_Flash::instance()->initialize(); // initialize flash
-
 		add_action( 'init', array( $this, 'registerCustomPostTemplates' ), - 4000 );
 		add_action( 'init', array( $this, 'runMigrations' ), - 3000 );
-
 		add_action( 'init', array( 'Brizy_MaintenanceMode', 'init' ), - 4000 );
 		add_action( 'init', array( $this, 'resetPermalinks' ), - 2000 );
 		add_action( 'init', array( $this, 'initialize' ), - 2000 );
-		add_action( 'init', array( $this, 'initializeThirdParty' ), -2000);
-        add_action('init', [ $this, 'handleEditorEditMode' ], 0 );
+		add_action( 'init', array( $this, 'initializeThirdParty' ), - 2000 );
+		add_action( 'init', [ $this, 'handleEditorEditMode' ], 0 );
 		add_action( 'wp', [ $this, 'handleEditorPreviewMode' ] );
 	}
 
@@ -113,14 +101,13 @@ class Brizy_Editor {
 		add_action( 'init', array( $this, 'wordpressInit' ), 1000 );
 		add_action( 'wp_loaded', array( $this, 'wordpressLoaded' ) );
 		add_action( 'wp_print_scripts', array( $this, 'forceJqueryQueue' ), 99999 );
-
 		if ( current_user_can( Brizy_Admin_Capabilities::CAP_EDIT_WHOLE_PAGE ) || Brizy_Editor_User::is_administrator() ) {
 			Brizy_Admin_Rules_Api::_init();
 		}
-
 		if ( ! defined( 'WP_POST_REVISIONS' ) || ( defined( 'WP_POST_REVISIONS' ) && WP_POST_REVISIONS !== false ) ) {
 			add_filter( "wp_revisions_to_keep", array( $this, 'revisionsToKeep' ), 10, 2 );
-		}}
+		}
+	}
 
 	public function initializeThirdParty() {
 		Brizy_Editor_ThirdParty_Main::_init();
@@ -135,7 +122,6 @@ class Brizy_Editor {
 		} catch ( Exception $e ) {
 			Brizy_Admin_Flash::instance()->add_error( 'On run migrations, get project throw the message: ' . $e->getMessage() );
 		}
-
 		try {
 			$migrationManager = new Brizy_Admin_Migrations();
 			$migrationManager->runMigrations( BRIZY_VERSION );
@@ -152,7 +138,6 @@ class Brizy_Editor {
 		$metaManager = new Brizy_Admin_Post_RevisionManager();
 		$metaManager->addMonitor( new Brizy_Admin_Post_BrizyPostsMonitor() );
 		$metaManager->addMonitor( new Brizy_Admin_Post_ProjectPostMonitor() );
-
 		//Brizy_Editor_Asset_Cleaner::_init();
 		Brizy_Admin_PanelPostContent::_init();
 		Brizy_Admin_Templates::instance();
@@ -162,24 +147,19 @@ class Brizy_Editor {
 		Brizy_Admin_Blocks_Main::_init();
 		Brizy_Admin_Stories_Main::_init();
 		Brizy_Admin_Symbols_Main::_init();
-
 		if ( Brizy_Editor_User::is_user_allowed() ) {
 			Brizy_Admin_Svg_Main::_init();
 			Brizy_Admin_Json_Main::_init();
 			Brizy_Admin_Layouts_Main::_init();
 			Brizy_Admin_Membership_Membership::_init();
-
 			// the cloud will be always initialized with the exception when the white label is enabled
 			if ( ! ( class_exists( 'BrizyPro_Admin_WhiteLabel' ) && BrizyPro_Admin_WhiteLabel::_init()->getEnabled() ) ) {
 				Brizy_Admin_Cloud::_init();
 			}
 		}
-
 		$this->initializeAssetLoaders();
-
 		$supported_post_types   = $this->supported_post_types();
 		$supported_post_types[] = Brizy_Admin_Templates::CP_TEMPLATE;
-
 		foreach ( $supported_post_types as $type ) {
 			add_filter( "theme_{$type}_templates", array( $this, 'registerPageTemplates' ) );
 		}
@@ -189,49 +169,43 @@ class Brizy_Editor {
 
 		$pid  = Brizy_Editor::get()->currentPostId();
 		$post = null;
-
 		try {
 			// do not delete this line
 			$user = Brizy_Editor_User::get();
-
-            if ($pid) {
-                $post = Brizy_Editor_Entity::get($pid);
-            }
-        } catch (Exception $e) {
+			if ( $pid ) {
+				$post = Brizy_Editor_Entity::get( $pid );
+			}
+		} catch ( Exception $e ) {
 
 		}
-        $this->loadEditorApi($post, $user);
-        $this->loadEditorAdminSettings();
 
+		$this->loadEditorApi( $post, $user );
+
+		$this->loadEditorAdminSettings();
 		if ( ! class_exists( 'BrizyPro_Admin_WhiteLabel' ) || ! BrizyPro_Admin_WhiteLabel::_init()->getEnabled() ) {
 			if ( current_user_can( 'manage_options' ) ) {
 				add_action( 'wp_dashboard_setup', 'Brizy_Admin_DashboardWidget::_init' );
 			}
 		}
-
-        if ((current_user_can('manage_options') && is_admin()) || (defined('WP_CLI') && WP_CLI)) {
-            new Brizy_Import_Main();
+		if ( ( current_user_can( 'manage_options' ) && is_admin() ) || ( defined( 'WP_CLI' ) && WP_CLI ) ) {
+			new Brizy_Import_Main();
 
 		}
-        add_filter('brizy_content', array($this, 'brizy_content'), 10, 3);
-    }
+		add_filter( 'brizy_content', array( $this, 'brizy_content' ), 10, 3 );
+	}
 
 	public function handleEditorEditMode() {
 		$pid = Brizy_Editor::get()->currentPostId();
-
-        if (!$pid || !Brizy_Editor_Entity::isBrizyEnabled($pid) || !Brizy_Editor_User::is_user_allowed()) {
-            return;
-
+		if ( ! $pid || ! Brizy_Editor_Entity::isBrizyEnabled( $pid ) || ! Brizy_Editor_User::is_user_allowed($pid) ) {
+			return;
 		}
-        try {
-            $post = Brizy_Editor_Entity::get($pid);
-        } catch (Exception $e) {
-            return;
-
+		try {
+			$post = Brizy_Editor_Entity::get( $pid );
+		} catch ( Exception $e ) {
+			return;
 		}
-        try {
-            $main = Brizy_Public_Main::get($post);
-
+		try {
+			$main = Brizy_Public_Main::get( $post );
 			$main->editMode();
 		} catch ( Exception $e ) {
 			Brizy_Logger::instance()->exception( $e );
@@ -240,21 +214,19 @@ class Brizy_Editor {
 
 	public function handleEditorPreviewMode() {
 		$pid = Brizy_Editor::get()->currentPostId();
-
-        if (!$pid || !Brizy_Editor_Entity::isBrizyEnabled($pid)) {
-            return;
-
-		}
-        try {
-            $post = Brizy_Editor_Entity::get($pid);
-        } catch (Exception $e) {
-            return;
+		if ( ! $pid || ! Brizy_Editor_Entity::isBrizyEnabled( $pid ) ) {
+			return;
 
 		}
-        try {
-            $context             = Brizy_Content_ContextFactory::createContext( Brizy_Editor_Project::get(), $post->getWpPost() );
+		try {
+			$post = Brizy_Editor_Entity::get( $pid );
+		} catch ( Exception $e ) {
+			return;
+
+		}
+		try {
+			$context             = Brizy_Content_ContextFactory::createContext( Brizy_Editor_Project::get(), $post->getWpPost() );
 			$this->mainProcessor = new Brizy_Content_MainProcessor( $context );
-
 			$main = Brizy_Public_Main::get( $post );
 			$main->previewMode();
 		} catch ( Exception $e ) {
@@ -265,22 +237,20 @@ class Brizy_Editor {
 	public function revisionsToKeep( $num, $post ) {
 		try {
 			$revisionCount = apply_filters( 'brizy_revisions_max_count', BRIZY_MAX_REVISIONS_TO_KEEP );
-
 			// $num can be -1
 			if ( $revisionCount > $num && $num >= 0 ) {
 				return $num;
 			}
-
-            if (in_array($post->post_type, array(Brizy_Editor_Project::BRIZY_PROJECT))) {
-                return $revisionCount;
+			if ( in_array( $post->post_type, array( Brizy_Editor_Project::BRIZY_PROJECT ) ) ) {
+				return $revisionCount;
 
 			}
-            if (Brizy_Editor_Entity::isBrizyEnabled($post->ID)) {
-                $num = $revisionCount;
-            }
-        } catch (Exception $e) {
-            Brizy_Logger::instance()->debug($e->getMessage(), array($e));
-        }
+			if ( Brizy_Editor_Entity::isBrizyEnabled( $post->ID ) ) {
+				$num = $revisionCount;
+			}
+		} catch ( Exception $e ) {
+			Brizy_Logger::instance()->debug( $e->getMessage(), array( $e ) );
+		}
 
 		return $num;
 	}
@@ -291,17 +261,16 @@ class Brizy_Editor {
 	public function resetPermalinks() {
 
 		$this->registerCustomPostTemplates();
-
-        if (defined('BRIZY_PRO_VERSION') && class_exists('BrizyPro_Main')) {
-            $mainInstance = new BrizyPro_Main();
-            $mainInstance->registerCustomPosts();
+		if ( defined( 'BRIZY_PRO_VERSION' ) && class_exists( 'BrizyPro_Main' ) ) {
+			$mainInstance = new BrizyPro_Main();
+			$mainInstance->registerCustomPosts();
 
 		}
-        if (get_option('brizy-regenerate-permalinks', false)) {
-            flush_rewrite_rules();
-            delete_option('brizy-regenerate-permalinks');
-        }
-    }
+		if ( get_option( 'brizy-regenerate-permalinks', false ) ) {
+			flush_rewrite_rules();
+			delete_option( 'brizy-regenerate-permalinks' );
+		}
+	}
 
 	/**
 	 * @param $templates
@@ -309,8 +278,7 @@ class Brizy_Editor {
 	 * @return array
 	 */
 	function registerPageTemplates( $templates ) {
-		return array_merge( $templates,
-			array(
+		return array_merge( $templates, array(
 				Brizy_Config::BRIZY_BLANK_TEMPLATE_FILE_NAME => __bt( 'brizy', 'Brizy' ) . __( ' Template', 'brizy' ),
 			) );
 	}
@@ -333,15 +301,11 @@ class Brizy_Editor {
 	 */
 	private function loadEditorApi( $post, $user ) {
 		try {
-			if ( Brizy_Editor_User::is_user_allowed() ) {
-				new Brizy_Editor_RestExtend();
-				new Brizy_Editor_API( $post );
-				new Brizy_Editor_BlockScreenshotApi( $post );
-				Brizy_Editor_Accounts_Api::_init();
-			}
-
+			new Brizy_Editor_RestExtend();
+			new Brizy_Editor_API( $post );
+			new Brizy_Editor_BlockScreenshotApi( $post );
+			Brizy_Editor_Accounts_Api::_init();
 			new Brizy_Editor_Forms_Api( $post );
-
 			// for other apis
 			do_action( 'brizy_register_api_methods', $user, $post );
 		} catch ( Exception $e ) {
@@ -352,33 +316,31 @@ class Brizy_Editor {
 	private function loadEditorAdminSettings() {
 		try {
 			new Brizy_Admin_Capabilities( Brizy_Editor_Storage_Common::instance() );
-
-            if (is_admin()) {
-                Brizy_Admin_Main::instance();
-                new Brizy_Admin_GettingStarted();
-                $this->initFeedback();
+			if ( is_admin() ) {
+				Brizy_Admin_Main::instance();
+				new Brizy_Admin_GettingStarted();
+				$this->initFeedback();
 
 			}
-            if (is_network_admin()) {
-                Brizy_Admin_NetworkSettings::_init();
-            } elseif (is_admin()) {
-                Brizy_Admin_Settings::_init();
-            }
-        } catch (Exception $exception) {
-            Brizy_Admin_Flash::instance()->add_error('Unable to empty the trash. Please try again later.');
-            wp_safe_redirect($_SERVER['HTTP_REFERER']);
-            exit;
-        }
-    }
+			if ( is_network_admin() ) {
+				Brizy_Admin_NetworkSettings::_init();
+			} elseif ( is_admin() ) {
+				Brizy_Admin_Settings::_init();
+			}
+		} catch ( Exception $exception ) {
+			Brizy_Admin_Flash::instance()->add_error( 'Unable to empty the trash. Please try again later.' );
+			wp_safe_redirect( $_SERVER['HTTP_REFERER'] );
+			exit;
+		}
+	}
 
 	public function brizy_content( $content, $project, $wpPost, $contentType = 'document' ) {
 
-		$context             = Brizy_Content_ContextFactory::createContext( $project, $wpPost );
-
-		if(!$this->mainProcessor) {
+		$context = Brizy_Content_ContextFactory::createContext( $project, $wpPost );
+		if ( ! $this->mainProcessor ) {
 			$this->mainProcessor = new Brizy_Content_MainProcessor( $context );
 		} else {
-			$this->mainProcessor->setContext($context);
+			$this->mainProcessor->setContext( $context );
 		}
 
 		return $this->mainProcessor->process( $content );
@@ -393,7 +355,6 @@ class Brizy_Editor {
 	private function initializeAssetLoaders() {
 		try {
 			$url_builder = new Brizy_Editor_UrlBuilder( null );
-
 			$config           = null;
 			$proxy            = new Brizy_Public_AssetProxy( $url_builder, $config );
 			$crop_proxy       = new Brizy_Public_CropProxy( $url_builder, $config );
@@ -411,31 +372,29 @@ class Brizy_Editor {
 	 * =====================================================================================================
 	 * =====================================================================================================
 	 */
-    function currentPostId()
-    {
-        $pid = null;
-        global $wp_query;
+	function currentPostId() {
+		$pid = null;
+		global $wp_query;
+		if ( $wp_query && $wp_query->is_posts_page ) {
+			$pid = absint( get_queried_object_id() );
+		} elseif ( $wp_query && ( $apid = get_queried_object_id() ) && ( is_single() || is_page() ) && $wp_query->queried_object instanceof WP_Post ) {
+			$pid = absint( $apid );
+		} elseif ( function_exists( 'is_shop' ) && is_shop() ) {
+			$pid = wc_get_page_id( 'shop' );
+		} elseif ( isset( $_REQUEST[ Brizy_Editor::prefix( '_post' ) ] ) ) {
+			$pid = absint( $_REQUEST[ Brizy_Editor::prefix( '_post' ) ] );
+		} elseif ( isset( $_REQUEST['post'] ) ) {
+			$pid = absint( $_REQUEST['post'] );
+		} elseif ( isset( $_REQUEST['page_id'] ) ) {
+			$pid = absint( $_REQUEST['page_id'] );
+		} elseif ( isset( $_REQUEST['post_ID'] ) ) {
+			$pid = absint( $_REQUEST['post_ID'] );
+		} elseif ( isset( $_REQUEST['id'] ) ) {
+			$pid = absint( $_REQUEST['id'] );
+		}
 
-        if ($wp_query && $wp_query->is_posts_page) {
-            $pid = absint(get_queried_object_id());
-        } elseif ($wp_query && ($apid = get_queried_object_id()) && (is_single() || is_page()) && $wp_query->queried_object instanceof WP_Post) {
-            $pid = absint($apid);
-        } elseif (function_exists('is_shop') && is_shop()) {
-            $pid = wc_get_page_id('shop');
-        } elseif (isset($_REQUEST[Brizy_Editor::prefix('_post')])) {
-            $pid = absint($_REQUEST[Brizy_Editor::prefix('_post')]);
-        } elseif (isset($_REQUEST['post'])) {
-            $pid = absint($_REQUEST['post']);
-        } elseif (isset($_REQUEST['page_id'])) {
-            $pid = absint($_REQUEST['page_id']);
-        } elseif (isset($_REQUEST['post_ID'])) {
-            $pid = absint($_REQUEST['post_ID']);
-        } elseif (isset($_REQUEST['id'])) {
-            $pid = absint($_REQUEST['id']);
-        }
-
-        return $pid;
-    }
+		return $pid;
+	}
 
 	static public function get_slug() {
 		return apply_filters( 'brizy-slug', 'brizy' );
@@ -462,16 +421,12 @@ class Brizy_Editor {
 	 */
 	public static function checkIfPostTypeIsSupported( $wp_post_id, $throw = true ) {
 		$type = get_post_type( $wp_post_id );
-
 		$supported_post_types   = self::get()->supported_post_types();
 		$supported_post_types[] = 'revision';
-
 		if ( ! in_array( $type, $supported_post_types ) ) {
 
 			if ( $throw ) {
-				throw new Brizy_Editor_Exceptions_UnsupportedPostType(
-					"Brizy editor doesn't support '{$type}' post type"
-				);
+				throw new Brizy_Editor_Exceptions_UnsupportedPostType( "Brizy editor doesn't support '{$type}' post type" );
 			} else {
 				return false;
 			}
@@ -527,17 +482,15 @@ class Brizy_Editor {
 	private function initFeedback() {
 
 		$feedback = true;
-
 		if ( class_exists( 'BrizyPro_Admin_WhiteLabel' ) ) {
 
 			$whiteLabel = BrizyPro_Admin_WhiteLabel::_init();
 			$callable   = is_callable( [ $whiteLabel, 'getEnabled' ] );
+			if ( ( $callable && $whiteLabel->getEnabled() ) || ! $callable ) {
+				$feedback = false;
 
-            if (($callable && $whiteLabel->getEnabled()) || !$callable) {
-                $feedback = false;
-
+			}
 		}
-}
 		if ( $feedback && current_user_can( 'manage_options' ) ) {
 			new Brizy_Admin_Feedback();
 		}
@@ -551,16 +504,11 @@ class Brizy_Editor {
 		if ( ! is_user_logged_in() ) {
 			return false;
 		}
-
 		if ( current_user_can( 'manage_options' ) ) {
 			return true;
 		}
-
 		if ( is_null( self::$is_allowed_for_current_user ) ) {
-			self::$is_allowed_for_current_user = (
-				current_user_can( Brizy_Admin_Capabilities::CAP_EDIT_WHOLE_PAGE )
-				||
-				current_user_can( Brizy_Admin_Capabilities::CAP_EDIT_CONTENT_ONLY ));
+			self::$is_allowed_for_current_user = ( current_user_can( Brizy_Admin_Capabilities::CAP_EDIT_WHOLE_PAGE ) || current_user_can( Brizy_Admin_Capabilities::CAP_EDIT_CONTENT_ONLY ) );
 
 		}
 
@@ -576,27 +524,23 @@ class Brizy_Editor {
 	 */
 	static public function get_all_image_sizes() {
 		global $_wp_additional_image_sizes;
-
 		static $image_sizes = [];
-
-        if ($image_sizes) {
-            return $image_sizes;
+		if ( $image_sizes ) {
+			return $image_sizes;
 
 		}
-        foreach (['thumbnail', 'medium', 'medium_large', 'large'] as $size) {
-            $image_sizes[$size] = [
-                'width' => (int)get_option($size . '_size_w'),
-                'height' => (int)get_option($size . '_size_h'),
-                'crop' => (bool)get_option($size . '_crop'),
-
-		];
+		foreach ( [ 'thumbnail', 'medium', 'medium_large', 'large' ] as $size ) {
+			$image_sizes[ $size ] = [
+				'width'  => (int) get_option( $size . '_size_w' ),
+				'height' => (int) get_option( $size . '_size_h' ),
+				'crop'   => (bool) get_option( $size . '_crop' ),
+			];
 		}
 		if ( $_wp_additional_image_sizes ) {
 			$image_sizes = array_merge( $image_sizes, $_wp_additional_image_sizes );
 		}
-
 		/** The filter image_size_names_choose is documented in wp-admin/includes/media.php */
-		$image_sizes = array_filter( apply_filters( 'image_size_names_choose', $image_sizes ), function ( $size ) {
+		$image_sizes  = array_filter( apply_filters( 'image_size_names_choose', $image_sizes ), function ( $size ) {
 			return ! empty( $size['width'] ) && ! empty( $size['height'] );
 		} );
 		$translations = [
@@ -604,18 +548,18 @@ class Brizy_Editor {
 			'medium'    => __( 'Medium' ),
 			'large'     => __( 'Large' ),
 			'full'      => __( 'Full Size' ),
-		];foreach ( $image_sizes as $sizeName => $sizeAttrs ) {
-			$label = isset( $translations[ $sizeName ] ) ? $translations[ $sizeName ] :ucwords( str_replace( '_', ' ', $sizeName ) );
+		];
+		foreach ( $image_sizes as $sizeName => $sizeAttrs ) {
+			$label = isset( $translations[ $sizeName ] ) ? $translations[ $sizeName ] : ucwords( str_replace( '_', ' ', $sizeName ) );
 			if ( is_array( $sizeAttrs ) ) {
 				$label .= sprintf( ' - %d x %d', $sizeAttrs['width'], $sizeAttrs['height'] );
 			}
-
-            $image_sizes[$sizeName]['label'] = $label;
+			$image_sizes[ $sizeName ]['label'] = $label;
 
 		}
-        if (!array_key_exists('original', $image_sizes)) {
-            $image_sizes = ['original' => ['label' => __('Original', 'brizy')]] + $image_sizes;
-        }
+		if ( ! array_key_exists( 'original', $image_sizes ) ) {
+			$image_sizes = [ 'original' => [ 'label' => __( 'Original', 'brizy' ) ] ] + $image_sizes;
+		}
 
 		return $image_sizes;
 	}

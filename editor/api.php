@@ -62,7 +62,6 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi
      */
     public function __construct($post)
     {
-
         $this->post = $post;
         parent::__construct();
     }
