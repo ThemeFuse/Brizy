@@ -28,9 +28,6 @@ class Brizy_Editor_Forms_Api
 
     const AJAX_AUTHENTICATION_CALLBACK = '_authentication_callback';
 
-    const AJAX_AUTH_STATUS = '_auth_status';
-    const AJAX_LOGIN_HANDLER = '_login_handler';
-
     /**
      * @var Brizy_Editor_Post
      */
@@ -71,60 +68,12 @@ class Brizy_Editor_Forms_Api
             add_action($pref . self::AJAX_GET_INTEGRATION, array($this, 'getIntegration'));
             add_action($pref . self::AJAX_UPDATE_INTEGRATION, array($this, 'updateIntegration'));
             add_action($pref . self::AJAX_DELETE_INTEGRATION, array($this, 'deleteIntegration'));
-            add_action($pref . self::AJAX_AUTH_STATUS, array($this, 'updateAuthStatus'));
         }
 
         add_filter('brizy_form_submit_data', array($this, 'handleFileTypeFields'), -100, 2);
 
         add_action($pref . self::AJAX_SUBMIT_FORM, array($this, 'submit_form'));
         add_action($pref_nopriv . self::AJAX_SUBMIT_FORM, array($this, 'submit_form'));
-
-        add_action($pref_nopriv . self::AJAX_AUTH_STATUS, array($this, 'updateAuthStatus'));
-        add_action($pref_nopriv . self::AJAX_LOGIN_HANDLER, array($this, 'submitLoginHandler'));
-    }
-
-    function updateAuthStatus()
-    {
-        if (is_user_logged_in()) {
-            $nonce = 'brizy-api';
-
-            wp_send_json_success(array(
-                'logged' => true,
-                'nonce'  => wp_create_nonce($nonce)
-            ));
-        } else {
-            wp_send_json_success(array(
-                'logged' => false
-            ));
-        }
-
-        exit;
-    }
-
-    function submitLoginHandler()
-    {
-        $creds = array();
-
-        $creds['user_login']    = $_POST['log'];
-        $creds['user_password'] = $_POST['pwd'];
-        $creds['remember']      = isset($_POST['rememberme']);
-
-        $user = wp_signon($creds, false);
-
-        if (is_wp_error($user)) {
-            wp_send_json_error(array(
-                'message' => $user->get_error_message()
-            ));
-        } else {
-            $nonce = 'brizy-api';
-
-            wp_send_json_success(array(
-                'logged' => true,
-                'nonce'  => wp_create_nonce($nonce)
-            ));
-        }
-
-        exit;
     }
 
     protected function error($code, $message)

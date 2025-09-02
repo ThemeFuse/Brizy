@@ -9,7 +9,6 @@ class Brizy_Editor_AuthModal
         add_action('wp_footer', [$this, 'authModal']);
     }
 
-
     public function authModal()
     {
         if (!Brizy_Public_Main::is_editing()) {
@@ -70,18 +69,25 @@ class Brizy_Editor_AuthModal
                         type: 'POST',
                         url: ajaxurl,
                         data: {
-                            'action': 'brizy_auth_status'
+                            'action': 'brizy_heartbeat'
                         },
                         dataType: 'json',
                         complete: function (xhr, status) {
-                            if (xhr.responseJSON && xhr.responseJSON.data && xhr.responseJSON.data.logged === true) {
-                                if (typeof __BRZ_PLUGIN_ENV__ !== 'undefined') {
-                                    __BRZ_PLUGIN_ENV__.hash = xhr.responseJSON.data.nonce;
-                                }
+                            if (xhr.responseJSON.data.logged === true) {
                                 closeAuthModal();
                             } else {
                                 openAuthModal();
                             }
+
+                            // if (xhr.responseJSON && xhr.responseJSON.data && xhr.responseJSON.data.logged === true) {
+                            //     if (typeof __BRZ_PLUGIN_ENV__ !== 'undefined') {
+                            //         __BRZ_PLUGIN_ENV__.hash = xhr.responseJSON.data.nonce;
+                            //         // __BRZ_PLUGIN_ENV__.actions.hash = xhr.responseJSON.data.nonce;
+                            //     }
+                            //     closeAuthModal();
+                            // } else {
+                            //     openAuthModal();
+                            // }
                         }
                     });
                 }, 5000);
@@ -116,9 +122,9 @@ class Brizy_Editor_AuthModal
                                         data: Object.fromEntries(formData.entries()),
                                         success: function (response) {
                                             if (response.success) {
-                                                if (typeof __BRZ_PLUGIN_ENV__ !== 'undefined') {
-                                                    __BRZ_PLUGIN_ENV__.hash = response.data.nonce;
-                                                }
+                                                // if (typeof __BRZ_PLUGIN_ENV__ !== 'undefined') {
+                                                //     __BRZ_PLUGIN_ENV__.hash = response.data.nonce;
+                                                // }
                                                 closeAuthModal();
                                             } else {
                                                 var errorMessage = iframeContent.getElementById('login-error-message');

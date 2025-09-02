@@ -74,7 +74,6 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi
         }
         $p = 'wp_ajax_' . Brizy_Editor::prefix();
         add_action($p . self::AJAX_REMOVE_LOCK, array($this, 'removeProjectLock'));
-        add_action($p . self::AJAX_HEARTBEAT, array($this, 'heartbeat'));
         add_action($p . self::AJAX_TAKE_OVER, array($this, 'takeOver'));
         add_action($p . self::AJAX_GET, array($this, 'get_item'));
         add_action($p . self::AJAX_GET_POST_INFO, array($this, 'get_post_info'));
@@ -97,13 +96,10 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi
         add_action($p . self::AJAX_SET_FEATURED_IMAGE, array($this, 'set_featured_image'));
         add_action($p . self::AJAX_REMOVE_FEATURED_IMAGE, array($this, 'remove_featured_image'));
         add_action($p . self::AJAX_SET_IMAGE_FOCAL_PT, array($this, 'set_featured_image_focal_point'));
-        add_action($p . self::AJAX_TIMESTAMP, array($this, 'timestamp'));
         add_action($p . self::AJAX_SET_TEMPLATE_TYPE, array($this, 'setTemplateType'));
         add_action($p . self::AJAX_GET_POST_TAXONOMIES, array($this, 'addPostTaxonomies'));
         add_action($p . self::AJAX_GET_DYNAMIC_CONTENT, array($this, 'addDynamicContent'));
         add_action($p . self::AJAX_GET_ADOBE_FONTS, array($this, 'getAdobeFonts'));
-        add_action($p . 'nopriv_' . Brizy_Editor::prefix(self::AJAX_TIMESTAMP), array($this, 'timestamp'));
-
     }
 
     protected function getRequestNonce()
@@ -161,16 +157,6 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi
 		$this->success( $editor->getProjectStatus() );
 	}
 
-    public function heartbeat()
-    {
-        $this->verifyNonce(self::nonce);
-        if (Brizy_Editor::get()->checkIfProjectIsLocked() === false) {
-            Brizy_Editor::get()->lockProject();
-        }
-        $editor = new Brizy_Editor_Editor_Editor(Brizy_Editor_Project::get(), null);
-        $this->success($editor->getProjectStatus());
-    }
-
     public function takeOver()
     {
         $this->verifyNonce(self::nonce);
@@ -178,12 +164,6 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi
         $editor = new Brizy_Editor_Editor_Editor(Brizy_Editor_Project::get(), null);
         $this->success($editor->getProjectStatus());
     }
-
-    public function timestamp()
-    {
-        $this->success(array('timestamp' => time()));
-    }
-
 
     public function set_featured_image()
     {
