@@ -10,9 +10,11 @@ type RProject = (s: Project, a: ReduxAction, f: ReduxState) => Project;
 export const project: RProject = (state, action, fullState) => {
   switch (action.type) {
     case "HYDRATE": {
-      const { project } = action.payload;
+      const { project, config } = action.payload;
 
-      return project;
+      return produce(project, (draft) => {
+        draft.data.editorVersion = config.editorVersion;
+      });
     }
     case "PUBLISH": {
       const { type } = action.payload;

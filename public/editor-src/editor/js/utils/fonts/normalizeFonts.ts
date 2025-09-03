@@ -31,10 +31,13 @@ export const normalizeFonts = async ({
 
   const fonts = new Map<Types, Array<FontModel & { brizyId: string }>>();
   const makeFontWithId = (font: FontModel) => ({ brizyId: uuid(), ...font });
+  const uploadedFontsIds = newFonts
+    .filter((f) => f.type === "upload")
+    .map((f) => f.family);
 
   let uploadedFonts: Array<UploadedFont> = [];
   try {
-    uploadedFonts = await getUploadedFonts(config);
+    uploadedFonts = await getUploadedFonts(config, uploadedFontsIds);
   } catch (e) {
     console.log(e);
   }

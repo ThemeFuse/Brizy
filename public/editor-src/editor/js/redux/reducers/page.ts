@@ -18,9 +18,11 @@ type RPage = (s: Page, a: ReduxAction, f: ReduxState) => Page;
 export const page: RPage = (state, action, fullState) => {
   switch (action.type) {
     case "HYDRATE": {
-      const { page } = action.payload;
+      const { page, config } = action.payload;
 
-      return page;
+      return produce(page, (draft) => {
+        draft.data.editorVersion = config.editorVersion;
+      });
     }
     case "PUBLISH": {
       const { status, editorMode } = action.payload;

@@ -145,7 +145,8 @@ function editorJS(done) {
     BUILD_DIR_PRO: paths.buildPro,
     NO_WATCH,
     AUTHORIZATION_URL,
-    ANALYZE: ANALYZE_EDITOR
+    ANALYZE: ANALYZE_EDITOR,
+    BUILD_VERSION: VERSION ?? "dev"
   };
   const config = [
     webpackConfigEditor(options),

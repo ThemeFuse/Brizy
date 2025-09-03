@@ -8,11 +8,14 @@ import $ from "jquery";
 import { getProLibs } from "visual/libs";
 import { DeviceMode } from "visual/types";
 import { BrizyProLibs } from "visual/types/global";
+import { checkValue2 } from "visual/utils/checkValue";
 import { getCurrentDevice } from "visual/utils/export";
+import { makeAttr } from "visual/utils/i18n/attribute";
 import * as Str from "visual/utils/reader/string";
 import { parseFromString } from "visual/utils/string";
 import { uuid } from "visual/utils/uuid";
-import { Settings } from "./types";
+import { AnimatedHamburgerIcon } from "./HamburgerIcon";
+import { MMenuAnimationTypes, Settings } from "./types";
 import {
   getParentMegaMenuUid,
   getPlacement,
@@ -532,6 +535,7 @@ export default function ($node: JQuery): void {
     const icon = [...node.children].find((node) =>
       node.classList.contains("brz-mm-menu__icon")
     );
+
     const isSticky =
       Str.read(node.getAttribute("data-mmenu-stickyTitle")) === "on";
 
@@ -552,8 +556,17 @@ export default function ($node: JQuery): void {
         break;
     }
 
-    if (!mmenuId || !icon) {
+    if (!mmenuId || !(icon instanceof HTMLElement)) {
       return;
+    }
+
+    const iconAnimation = icon.getAttribute(makeAttr("brz-mmenu-icon"));
+    let animatedHamburgerIcon: AnimatedHamburgerIcon | undefined;
+
+    if (iconAnimation) {
+      animatedHamburgerIcon = new AnimatedHamburgerIcon(icon, {
+        animation: checkValue2(MMenuAnimationTypes)(iconAnimation)
+      });
     }
 
     const options = {
@@ -589,6 +602,7 @@ export default function ($node: JQuery): void {
           // Emit Menu panel opened
           // @ts-expect-error: mmenu function context
           window.Brz.emit("elements.mmenu.close", this.node.pnls);
+          animatedHamburgerIcon?.close();
           currentMenuOpened = undefined;
         },
         "close:finish": function (): void {

@@ -12,6 +12,8 @@
 
     "bgImageFileName": null,
 
+    "mMenuAnimation": "off",
+
     "images": {
       "bgImageSrc": ""
     }

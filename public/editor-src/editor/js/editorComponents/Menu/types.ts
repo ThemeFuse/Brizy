@@ -1,6 +1,6 @@
+import type { Placement as PopperPlacement } from "@popperjs/core";
 import { ElementModel } from "visual/component/Elements/Types";
 import { DeviceMode } from "visual/types";
-import type { Placement as PopperPlacement } from "@popperjs/core";
 
 export interface Value extends ElementModel {
   closeColorHex: string;
@@ -18,4 +18,16 @@ export interface Settings {
   placement?: {
     [k in DeviceMode]: PopperPlacement;
   };
+}
+
+export enum MMenuAnimationTypes {
+  OFF = "off",
+  TILT = "tilt",
+  SQUASH = "squash",
+  TWIRL = "twirl",
+  FADE = "fade",
+  DIVIDE = "divide",
+  TURN = "turn",
+  SLING = "sling",
+  SPIN = "spin"
 }

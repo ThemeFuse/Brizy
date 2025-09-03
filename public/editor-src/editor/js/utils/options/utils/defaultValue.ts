@@ -59,6 +59,7 @@ import { defaultValue as toggle } from "visual/utils/options/Toggle/converters";
 import { defaultValue as toggleButton } from "visual/utils/options/ToggleButton/converters";
 import { defaultValue as transform } from "visual/utils/options/Transform/converters";
 import { defaultValue as typography } from "visual/utils/options/Typography/converters";
+import { defaultValue as linkExternal } from "../LinkExternal/converters";
 
 type DefaultValues = {
   [K in OptionName]: OptionValue<K>;
@@ -126,7 +127,8 @@ export const defaultValues: DefaultValues = {
   showOnDevice: showOnDevice,
   advancedSettings: advancedSettings,
   symbols,
-  addable
+  addable,
+  linkExternal
 };
 
 export function applyDefaultValueToOption<T>(values: T, type: OptionName): T {

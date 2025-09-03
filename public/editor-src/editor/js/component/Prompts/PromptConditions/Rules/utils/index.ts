@@ -33,6 +33,15 @@ export function getRulesListIndexByRule(
   );
 }
 
+export function getItemsIndex(
+  items: RuleListItem[],
+  id: string | number
+): number {
+  return items.findIndex((item) => {
+    return item.value === id;
+  });
+}
+
 export function disableAlreadyUsedRules(
   rules: Rule[],
   rulesList: RuleList[]
@@ -121,19 +130,18 @@ export const getValue = (
     return undefined;
   }
 
-  const foundItem = items.find(
-    (item) =>
-      item.items?.some(
-        (nestedItem) => Str.read(nestedItem.value) === ruleValue
-      ) || item.value === ruleValue
+  const foundItemSubitems = items.find((item) =>
+    item.items?.some((nestedItem) => Str.read(nestedItem.value) === ruleValue)
   );
 
-  if (!foundItem) {
+  const foundItem = items.find((item) => item.value === ruleValue);
+
+  if (!foundItem && !foundItemSubitems) {
     return undefined;
   }
 
-  if (foundItem.items) {
-    return foundItem.items.find(
+  if (foundItemSubitems?.items) {
+    return foundItemSubitems.items.find(
       (nestedItem) => Str.read(nestedItem.value) === ruleValue
     );
   }

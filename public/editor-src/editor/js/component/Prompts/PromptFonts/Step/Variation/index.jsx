@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { createFont } from "visual/component/Prompts/PromptFonts/api";
 import { Context } from "visual/component/Prompts/common/GlobalApps/Context";
 import { addFonts } from "visual/redux/actions2";
+import { fontsSelector } from "visual/redux/selectors-new";
 import { pendingRequest } from "visual/utils/api";
 import { getWeightTypes } from "visual/utils/fonts/getFontWeight";
 import { t } from "visual/utils/i18n";
@@ -181,11 +182,12 @@ class Variation extends Component {
 
   handleNext = async () => {
     const {
-      app: {
-        data: { files, fontName }
-      },
-      onChangeNext
+      app: { id, data: appData },
+      onChangeNext,
+      onChange
     } = this.context;
+
+    const { fontName, files } = appData;
 
     this.setState({
       nextLoading: true
@@ -204,7 +206,33 @@ class Variation extends Component {
         error: t("Something went wrong")
       });
     } else {
-      this.props.dispatch(addFonts([{ type: "upload", fonts: [data] }]));
+      const { exists, ...font } = data;
+      const { id: fontId } = font;
+      const { dispatch, fonts } = this.props;
+
+      if (exists) {
+        // If the font already exists, update the font name and mark it as existing
+        onChange(id, {
+          ...appData,
+          fontName: font.family ?? fontName,
+          exists: true
+        });
+
+        const uploadedFont = fonts.find((f) => f.id === fontId);
+
+        // If the existing uploaded font was previously marked as deleted, restore it
+        if (uploadedFont?.deleted) {
+          dispatch(
+            addFonts([
+              { type: "upload", fonts: [{ ...uploadedFont, deleted: false }] }
+            ])
+          );
+        }
+      } else {
+        // If the font does not exist, add it as a new uploaded font
+        dispatch(addFonts([{ type: "upload", fonts: [font] }]));
+      }
+      // Proceed to the next font update step
       onChangeNext();
     }
   };
@@ -247,4 +275,8 @@ class Variation extends Component {
   }
 }
 
-export default connect()(Variation);
+const mapStateToProps = (state) => ({
+  fonts: fontsSelector(state).upload?.data ?? []
+});
+
+export default connect(mapStateToProps)(Variation);

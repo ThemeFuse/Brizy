@@ -181,7 +181,8 @@ describe("Testing 'Getters Image' functions", () => {
       tooltipText: "",
       tooltipTriggerClick: "",
       tooltipPlacement: "top",
-      customCSS: ""
+      customCSS: "",
+      enableLazyLoad: "off"
     };
 
     // without population

@@ -1,5 +1,5 @@
 import type { GetItems } from "visual/editorComponents/EditorComponent/types";
-import { isStory } from "visual/providers/EditorModeProvider";
+import { isPopup, isStory } from "visual/providers/EditorModeProvider";
 import { t } from "visual/utils/i18n";
 import { toolbarElementForm2Apps } from "visual/utils/toolbar";
 import type { Value } from "./types";
@@ -18,6 +18,12 @@ export const getItems: GetItems<Value> = ({
   const { multistep } = v;
 
   const isMultistepEnabled = multistep === "on";
+
+  const inPopup2 = Boolean(
+    component.props.meta && component.props.meta.sectionPopup2
+  );
+
+  const _isPopup = isPopup(editorMode);
 
   return [
     {
@@ -84,6 +90,13 @@ export const getItems: GetItems<Value> = ({
                   type: "inputText",
                   devices: "desktop",
                   placeholder: t("Message not sent")
+                },
+                {
+                  id: "messageEmptyRequired",
+                  label: t("Fields Required"),
+                  type: "inputText",
+                  devices: "desktop",
+                  placeholder: t("Fields are required")
                 }
               ]
             },
@@ -97,6 +110,19 @@ export const getItems: GetItems<Value> = ({
                   type: "inputText",
                   devices: "desktop",
                   placeholder: "http://"
+                }
+              ]
+            },
+            {
+              id: "action",
+              label: t("Action"),
+              options: [
+                {
+                  id: "actionClosePopup",
+                  label: t("Close Popup"),
+                  type: "switch",
+                  devices: "desktop",
+                  disabled: !(inPopup2 || _isPopup)
                 }
               ]
             }

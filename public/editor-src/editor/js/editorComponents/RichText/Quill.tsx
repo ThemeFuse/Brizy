@@ -86,12 +86,12 @@ type Props = {
   selectedValue?: (v: string) => void;
   onTextChange?: (text: string) => void;
   isToolbarOpen?: () => boolean;
-  onSelectionChange?: (
-    format: Formats,
-    coords: Coords,
-    cursorIndex?: number,
-    node?: Element | null
-  ) => void;
+  onSelectionChange?: (data: {
+    formats: Formats;
+    selectionCoords: Coords;
+    cursorIndex?: number;
+    node?: Element | null;
+  }) => void;
   textId?: string;
   isStoryMode?: boolean;
   isDCHandler?: boolean;
@@ -167,10 +167,18 @@ export class QuillComponent extends React.Component<Props> {
         isToolbarOpen() &&
         typeof onSelectionChange === "function"
       ) {
-        onSelectionChange(
-          this.getSelectionFormat(),
-          this.getCoords(quill.selection.savedRange)
-        );
+        const selectionNode = this.getDomNodeBySelection(quill);
+        const parentNode = this.content.current?.closest(".brz-rich-text");
+
+        const node = document.contains(selectionNode)
+          ? selectionNode
+          : parentNode;
+
+        onSelectionChange({
+          formats: this.getSelectionFormat(),
+          selectionCoords: this.getCoords(quill.selection.savedRange),
+          node
+        });
       }
     }
   }
@@ -262,38 +270,35 @@ export class QuillComponent extends React.Component<Props> {
     ) as _Quill;
 
     quill.on("selection-change", (range: RangeStatic | null, oldRange) => {
-      const selection = quill.selection?.savedRange;
-      let domNode: Element | null = null;
-
-      if (selection) {
-        const [leaf] = quill.getLeaf(selection.index) || [];
-        const parent = leaf?.parent;
-
-        if (parent && parent.domNode instanceof Element) {
-          domNode = parent.domNode;
-        }
-      }
+      const domNode = this.getDomNodeBySelection(quill);
 
       this.currentSelection = range;
       if (quill.hasFocus()) {
         // TODO: make much less hacky
         if (hasSelectionHandler && range && !isEqual(range, oldRange)) {
           const format = this.getSelectionFormat();
-          this.props.onSelectionChange?.(
-            format,
-            this.getCoords(range),
-            quill.selection.savedRange.index,
-            domNode
-          );
+          this.props.onSelectionChange?.({
+            formats: format,
+            selectionCoords: this.getCoords(range),
+            cursorIndex: quill.selection.savedRange.index,
+            node: domNode
+          });
         }
       }
     });
     quill.on("text-change", () => {
+      const domNode = this.getDomNodeBySelection(quill);
+
       const { textId, isStoryMode } = this.props;
       const range = quill.selection.savedRange;
       const format = this.getSelectionFormat();
+
       if (hasSelectionHandler) {
-        this.props.onSelectionChange?.(format, this.getCoords(range));
+        this.props.onSelectionChange?.({
+          formats: format,
+          selectionCoords: this.getCoords(range),
+          node: domNode
+        });
       }
 
       const container = this.contentEditable.current;
@@ -338,6 +343,22 @@ export class QuillComponent extends React.Component<Props> {
     }
     instances.push(this);
   };
+
+  getDomNodeBySelection(quill: _Quill): Element | null {
+    const selection = quill.selection?.savedRange;
+    let domNode: Element | null = null;
+
+    if (selection) {
+      const [leaf] = quill.getLeaf(selection.index) || [];
+      const parent = leaf?.parent;
+
+      if (parent && parent.domNode instanceof Element) {
+        domNode = parent.domNode;
+      }
+    }
+
+    return domNode;
+  }
 
   destroyPlugin(): void {
     this.quill = null;

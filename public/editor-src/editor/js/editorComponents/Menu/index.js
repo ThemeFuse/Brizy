@@ -12,6 +12,7 @@ import Toolbar from "visual/component/Toolbar";
 import { wInMMenu } from "visual/config/columns";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import EditorComponent from "visual/editorComponents/EditorComponent";
+import { HamburgerIcon } from "visual/editorComponents/Menu/controls/HamburgerIcon";
 import UIEvents from "visual/global/UIEvents";
 import { isView } from "visual/providers/RenderProvider";
 import { makePlaceholder } from "visual/utils/dynamicContent";
@@ -401,7 +402,14 @@ export default class Menu extends EditorComponent {
   }
 
   renderMMenu({ v, vs, vd, ref }) {
-    const { menuSelected, mMenuPosition } = v;
+    const {
+      menuSelected,
+      mMenuPosition,
+      mMenuAnimation,
+      mMenuSize,
+      tabletMMenuSize,
+      mobileMMenuSize
+    } = v;
 
     return (
       <>
@@ -414,10 +422,13 @@ export default class Menu extends EditorComponent {
             {this.renderMenuForEdit({ v, vs, vd, id: this.getId() })}
           </div>
         </Portal>
-
-        <div className="brz-mm-menu__icon" onClick={this.openMMenu}>
-          <ThemeIcon name="menu-3" type="editor" />
-        </div>
+        <HamburgerIcon
+          onOpen={this.openMMenu}
+          animation={mMenuAnimation}
+          size={mMenuSize}
+          mobileSize={mobileMMenuSize}
+          tabletSize={tabletMMenuSize}
+        />
       </>
     );
   }
@@ -537,7 +548,11 @@ export default class Menu extends EditorComponent {
       closeDrawerIcon,
       mobileCloseDrawerIcon,
       tabletCloseDrawerIcon,
-      customCSS
+      customCSS,
+      mMenuAnimation,
+      mMenuSize,
+      tabletMMenuSize,
+      mobileMMenuSize
     } = v;
 
     const isSlider = this.props.meta?.section?.isSlider;
@@ -581,9 +596,12 @@ export default class Menu extends EditorComponent {
           {this.renderMenuForView(v, vs, vd)}
           {hasMMenu && (
             <>
-              <div className="brz-mm-menu__icon">
-                <ThemeIcon name="menu-3" type="editor" />
-              </div>
+              <HamburgerIcon
+                animation={mMenuAnimation}
+                size={mMenuSize}
+                mobileSize={mobileMMenuSize}
+                tabletSize={tabletMMenuSize}
+              />
               {this.isPro && this.renderMenuForView(v, vs, vd, htmlId)}
             </>
           )}
@@ -663,6 +681,7 @@ export default class Menu extends EditorComponent {
 
     if (menuAPI) {
       menuAPI.close();
+      UIEvents.emit("mMenu:close");
     }
   };
 

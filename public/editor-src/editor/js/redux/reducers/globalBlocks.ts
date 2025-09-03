@@ -46,8 +46,12 @@ export const globalBlocks: RGlobalBlocks = (state = {}, action, allState) => {
         .map((block) => block?.value?.globalBlockId);
 
       return Object.entries(globalBlocks).reduce((acc, [id, block]) => {
+        const globalBlock = produce(block, (draft) => {
+          draft.data.editorVersion = payloadConfig.editorVersion;
+        });
+
         if (legacyGlobalBlockIds.includes(id) && !isPopup(block.data)) {
-          acc[id] = produce(block, (draft) => {
+          acc[id] = produce(globalBlock, (draft) => {
             draft.rules = changeRule(
               block,
               true,
@@ -57,7 +61,7 @@ export const globalBlocks: RGlobalBlocks = (state = {}, action, allState) => {
             draft.data.value._id = id;
           });
         } else {
-          acc[id] = block;
+          acc[id] = globalBlock;
         }
         return acc;
       }, {} as GlobalBlocks);
@@ -112,7 +116,7 @@ export const globalBlocks: RGlobalBlocks = (state = {}, action, allState) => {
     // last slide - then instead of REMOVE_BLOCK action we get
     // UPDATE_GLOBAL_BLOCK - with payload.data.value = null
     case "UPDATE_GLOBAL_BLOCK": {
-      const { uid, data, title = "", tags = "", config } = action.payload;
+      const { uid, data, config } = action.payload;
 
       if (data.value === null && !isPopup(state[uid].data)) {
         const globalBlock = changeRule(
@@ -126,6 +130,12 @@ export const globalBlocks: RGlobalBlocks = (state = {}, action, allState) => {
           [uid]: globalBlock
         };
       }
+
+      return state;
+    }
+
+    case ActionTypes.UPDATE_GLOBAL_BLOCK_METADATA: {
+      const { uid, title = "", tags = "" } = action.payload;
 
       return produce(state, (draft) => {
         if (title.length > 0) {

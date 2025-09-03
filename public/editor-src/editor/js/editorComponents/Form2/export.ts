@@ -46,9 +46,11 @@ export const showErrorMessage = (form: HTMLFormElement) => {
       ? MessageStatus.InvalidEmail
       : MessageStatus.Invalid;
 
+  const { brzEmpty: formErrorMessage } = form.dataset;
   const message = getFormMessage({
     status,
-    form
+    form,
+    text: status === MessageStatus.Empty ? formErrorMessage : undefined
   });
 
   if (message) {
@@ -497,6 +499,15 @@ function initForm(form: HTMLElement): void {
   const $form = $(form);
   const formNode = form.querySelector<HTMLFormElement>("form");
 
+  // Correction Form Fields with Checkbox & Radio
+  form
+    .querySelectorAll<HTMLElement>(
+      ".brz-forms2__checkbox-options, .brz-forms2__radio-options, .brz-forms2__field-select"
+    )
+    .forEach((item) => {
+      initFieldOptions(item);
+    });
+
   if (formNode) {
     const messages = getTranslatedResponseMessages(formNode);
     responseMessages.set(formNode, messages);
@@ -637,6 +648,9 @@ function handleSubmit(form: HTMLElement, allData: AllFormData) {
     if (success === false) {
       handleError();
     } else {
+      const { brzClosePopup, brzPopupId } = nodeForm.dataset;
+      const shouldClosePopup = brzClosePopup === "on";
+
       showFormMessage(
         nodeForm,
         getFormMessage({
@@ -648,6 +662,10 @@ function handleSubmit(form: HTMLElement, allData: AllFormData) {
 
       if (brzRedirect && brzRedirect !== "") {
         window.location.replace(brzRedirect);
+      }
+
+      if (shouldClosePopup && brzPopupId) {
+        closePopupForm(brzPopupId);
       }
 
       // Reset Form Values
@@ -758,7 +776,7 @@ function getFormData(form: HTMLElement): AllFormData {
         }
 
         if (brzType === "Hidden") {
-          dataValue.value = brzPlaceholder || brzLabel;
+          dataValue.value = value || brzPlaceholder || brzLabel;
         }
       }
 
@@ -803,6 +821,21 @@ export function clearFormMessages(form: HTMLElement): void {
 function showFormMessage(form: HTMLElement, message: HTMLElement): void {
   clearFormMessages(form);
   form.appendChild(message);
+}
+
+function closePopupForm(popupId: string): void {
+  const $elem = $(`#${popupId}`);
+
+  if (!$elem.length) {
+    return;
+  }
+
+  if ($elem.hasClass("brz-popup2")) {
+    const popup = $elem.popup();
+    if (popup && typeof popup.close === "function") {
+      popup.close();
+    }
+  }
 }
 
 function resetFormValues(form: HTMLElement): void {
@@ -872,4 +905,26 @@ function loadReCAPTCHA(): MValue<HTMLScriptElement> {
   document.body.append(scriptElement);
 
   return scriptElement;
+}
+
+// Radio & Checkbox
+function initFieldOptions(element: HTMLElement): void {
+  const values = element.dataset.value?.split(",").map((f) => f.trim()) ?? [];
+  const inputs = element.querySelectorAll<HTMLInputElement>("input");
+  const selects = element.querySelectorAll<HTMLSelectElement>("select");
+
+  inputs.forEach((input) => {
+    input.checked = values.includes(input.value) ?? false;
+  });
+
+  selects.forEach((select) => {
+    const values = select.dataset.value?.split(",").map((f) => f.trim()) ?? [];
+    const options = select.querySelectorAll("option");
+
+    options.forEach((option) => {
+      if (option.value) {
+        option.selected = values.includes(option.value) ?? false;
+      }
+    });
+  });
 }

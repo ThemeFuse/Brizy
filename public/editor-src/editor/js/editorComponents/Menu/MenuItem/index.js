@@ -475,6 +475,7 @@ class MenuItem extends EditorComponent {
       ".brz-ed-eyeDropper",
       this.insideMegaMenu,
       ".react-contexify",
+      ".brz-context-menu__root",
       ...(TARGET === "WP"
         ? [
             ".media-modal", // class of the WP media modal

@@ -4,7 +4,10 @@ import Tooltip from "visual/component/Controls/Tooltip";
 import { ToastNotification } from "visual/component/Notifications";
 import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { isPopup, isStory } from "visual/providers/EditorModeProvider";
-import { deleteGlobalBlock, updateGlobalBlock } from "visual/redux/actions2";
+import {
+  deleteGlobalBlock,
+  updateGlobalBlockMetaData
+} from "visual/redux/actions2";
 import {
   fontsSelector,
   globalBlocksAssembledSelector,
@@ -34,7 +37,10 @@ const mapState = (state: ReduxState): StateToProps => ({
   projectFonts: fontsSelector(state)
 });
 
-const mapDispatch = { updateGlobalBlock, deleteGlobalBlock };
+const mapDispatch = {
+  deleteGlobalBlock,
+  updateGlobalBlockMetaData
+};
 
 const connector = connect(mapState, mapDispatch);
 
@@ -111,17 +117,15 @@ class Global<T extends BlockMetaType> extends Component<_Props<T>> {
   };
 
   handleUpdate = (thumbnailData: Thumbnail): void => {
-    const { config, globalBlocks } = this.props;
+    const { globalBlocks } = this.props;
 
     const globalBlock = globalBlocks[thumbnailData.uid];
 
     if (globalBlock) {
-      this.props.updateGlobalBlock({
+      this.props.updateGlobalBlockMetaData({
         uid: globalBlock.uid,
-        data: globalBlock.data,
         title: thumbnailData.title,
-        tags: thumbnailData.tags,
-        config
+        tags: thumbnailData.tags
       });
     } else {
       ToastNotification.error(t("Error updating global block"));

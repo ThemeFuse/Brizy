@@ -62,6 +62,15 @@ class GlobalBlock extends EditorComponent<Value, Props> {
         value
       };
 
+      const isGlobalBlockEqual = isEqual(
+        updatedGlobalBlock.value,
+        globalBlock.value
+      );
+
+      if (isGlobalBlockEqual) {
+        return;
+      }
+
       this.props.dispatch(
         updateGlobalBlock({
           uid: _id,

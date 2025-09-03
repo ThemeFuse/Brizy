@@ -238,10 +238,17 @@ class Select extends TextField {
 
   renderForView({ attr, label }: SelectProps): React.JSX.Element {
     const { children } = this.props;
+    const { multiple = false, defaultValue } = attr;
+    const value = multiple ? undefined : defaultValue;
 
     return (
       <div className={this.getClassName()}>
-        <select {...attr} className="brz-select">
+        <select
+          {...attr}
+          defaultValue={value}
+          data-value={defaultValue}
+          className="brz-select"
+        >
           <option value="">{label}</option>
           {children}
         </select>

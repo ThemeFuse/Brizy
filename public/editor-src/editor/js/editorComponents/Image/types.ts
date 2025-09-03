@@ -113,6 +113,8 @@ export type V = {
 
   customCSS: string;
 
+  enableLazyLoad: "on" | "off";
+
   [others: string]: unknown;
 };
 

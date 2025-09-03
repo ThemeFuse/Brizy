@@ -332,7 +332,6 @@ const SimpleImage = (props: ImageContent): ReactElement => {
         src={sourceSrc}
         {...extraAttributes}
         draggable={false}
-        loading="lazy"
       />
     </>
   );

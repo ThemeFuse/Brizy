@@ -1,6 +1,5 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
-import { Input as Control } from "visual/component/Controls/Input";
-import { useDebouncedEffect } from "visual/component/hooks";
+import React, { useCallback } from "react";
+import { InputWithDebounce as Control } from "visual/component/Controls/Input";
 import { Component } from "./Type";
 
 export const InputText: Component = ({
@@ -10,44 +9,18 @@ export const InputText: Component = ({
   placeholder,
   label
 }) => {
-  const [_value, setValue] = useState(value);
-
-  const lastUpdate = useRef(_value);
-
-  useEffect(() => {
-    if (lastUpdate.current !== value) {
-      lastUpdate.current = value;
-      setValue(value);
-    }
-  }, [value]);
-
-  useDebouncedEffect(
-    () => {
-      if (lastUpdate.current !== _value) {
-        lastUpdate.current = _value;
-        onChange({ value: _value });
-      }
-    },
-    1000,
-    [onChange, _value]
+  const handleChange = useCallback(
+    (v: string) => onChange({ value: v }),
+    [onChange]
   );
-
-  const handleBlur = useCallback(() => {
-    if (lastUpdate.current !== _value) {
-      lastUpdate.current = _value;
-
-      onChange({ value: _value });
-    }
-  }, [onChange, _value]);
 
   return (
     <>
       {label}
       <Control
         className={className}
-        onChange={setValue}
-        onBlur={handleBlur}
-        value={_value}
+        onChange={handleChange}
+        value={value}
         placeholder={placeholder}
       />
     </>

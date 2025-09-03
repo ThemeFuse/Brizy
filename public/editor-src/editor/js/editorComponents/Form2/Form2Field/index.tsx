@@ -1,5 +1,7 @@
+import { Obj } from "@brizy/readers";
 import classnames from "classnames";
 import React from "react";
+import { getIn } from "timm";
 import Toolbar from "visual/component/Toolbar";
 import { Translate } from "visual/component/Translate";
 import EditorComponent from "visual/editorComponents/EditorComponent";
@@ -21,6 +23,7 @@ import { Active } from "./types/type";
 
 class Form2Field extends EditorComponent<Value, Props> {
   static defaultValue = defaultValue;
+  static experimentalDynamicContent = true;
 
   static get componentId(): ElementTypes.Form2Field {
     return ElementTypes.Form2Field;
@@ -196,8 +199,16 @@ class Form2Field extends EditorComponent<Value, Props> {
       selectClassName
     } = this.props;
 
-    const { type, customFieldName, _id, active, label, required, activeRadio } =
-      v;
+    const {
+      type,
+      customFieldName,
+      _id,
+      active,
+      label,
+      required,
+      activeRadio,
+      defaultValue
+    } = v;
     const name = customFieldName ?? _id;
     const Component = types[type];
 
@@ -227,13 +238,25 @@ class Form2Field extends EditorComponent<Value, Props> {
     const isRadio = type === ElementTypes.Radio;
     const isCheckbox = type === ElementTypes.Checkbox;
     const isRadioOrCheckbox = isRadio || isCheckbox;
+    const activeValueForCheckbox = isCheckbox
+      ? {
+          active: {
+            ...(Obj.isObject(active) ? active : {}),
+            ...defaultValue
+              ?.split(",")
+              .reduce((acc, k) => ({ ...acc, [k.trim()]: true }), {})
+          }
+        }
+      : {};
+    const activeValueForRadio = isRadio ? { activeRadio } : {};
 
     const itemProps = this.makeSubcomponentProps({
       bindWithKey: "items",
       itemProps: {
         type,
-        ...(isRadioOrCheckbox ? { active, name } : {}),
-        ...(isRadio ? { activeRadio } : {}),
+        ...activeValueForCheckbox,
+        ...activeValueForRadio,
+        ...(isRadioOrCheckbox ? { name } : {}),
         ...(required === "on" ? { required } : {}),
         label
       }
@@ -242,6 +265,10 @@ class Form2Field extends EditorComponent<Value, Props> {
     const isSelect = type === ElementTypes.Select;
     const isTypeWithItems =
       type === ElementTypes.Radio || type === ElementTypes.Checkbox || isSelect;
+    // Re-order values only for Radio
+    const value = isRadio
+      ? defaultValue || getIn(v.items[activeRadio ?? 0], ["value", "value"])
+      : defaultValue;
 
     return (
       <Translate className={classNameField}>
@@ -268,6 +295,7 @@ class Form2Field extends EditorComponent<Value, Props> {
         ) : (
           <Component
             {...v}
+            defaultValue={value}
             name={name}
             label={label}
             labelId={labelId}

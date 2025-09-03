@@ -224,3 +224,6 @@ export * from "./cssStyleElementMinistryGroupSlider";
 
 // Tooltip
 export * from "./cssStyleOptionTooltip";
+
+// Post Excerpt
+export * from "./cssStyleElementPostExcerpt";

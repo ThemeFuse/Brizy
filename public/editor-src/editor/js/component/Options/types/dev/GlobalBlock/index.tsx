@@ -141,7 +141,10 @@ export const GlobalBlockOption: Component = ({
           uid: blockData.value._id,
           meta,
           status: "draft",
-          data: blockData,
+          data: {
+            ...blockData,
+            editorVersion: globalConfig.editorVersion
+          },
           rules: [],
           dependencies: [],
           dataVersion: 0,

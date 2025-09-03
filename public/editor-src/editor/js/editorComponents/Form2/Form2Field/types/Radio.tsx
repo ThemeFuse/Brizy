@@ -23,14 +23,14 @@ export default class Radio extends TextField {
   };
 
   renderForEdit({ label }: RadioProps): React.JSX.Element {
-    const { activeRadioItem, children } = this.props;
+    const { defaultValue, children } = this.props;
 
     return (
       <div className={this.getClassName()}>
         <RadioControls
           className="brz-forms2__radio-options"
           name={label}
-          defaultValue={activeRadioItem}
+          defaultValue={defaultValue}
         >
           {children}
         </RadioControls>
@@ -44,14 +44,14 @@ export default class Radio extends TextField {
   }
 
   renderForView({ label }: RadioProps): React.JSX.Element {
-    const { activeRadioItem, children } = this.props;
+    const { defaultValue, children } = this.props;
 
     return (
       <div className={this.getClassName()}>
         <RadioControls
           name={label}
           className="brz-forms2__radio-options"
-          defaultValue={activeRadioItem}
+          defaultValue={defaultValue}
         >
           {children}
         </RadioControls>

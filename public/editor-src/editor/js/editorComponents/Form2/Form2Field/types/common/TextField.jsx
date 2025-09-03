@@ -37,6 +37,7 @@ export default class TextField extends Component {
     labelType: "inside",
     required: "off",
     type: "Text",
+    defaultValue: undefined,
     selectToolbarItems: null
   };
 
@@ -130,6 +131,7 @@ export default class TextField extends Component {
       name,
       label,
       labelType,
+      defaultValue,
       showPlaceholder,
       required,
       type,
@@ -172,6 +174,7 @@ export default class TextField extends Component {
           ...(isExistingType(type) ? { type: type.toLocaleLowerCase() } : ""),
           id: labelId,
           name: name,
+          defaultValue,
           placeholder: this.getPlaceholder(),
           required: required === "on",
           pattern:

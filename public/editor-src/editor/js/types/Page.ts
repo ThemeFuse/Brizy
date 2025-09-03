@@ -11,6 +11,7 @@ export interface DataCommon {
   matchingItemId?: string;
   data: {
     items: Block[];
+    editorVersion?: string;
     [k: string]: any; // eslint-disable-line @typescript-eslint/no-explicit-any
   };
   dataVersion: number;

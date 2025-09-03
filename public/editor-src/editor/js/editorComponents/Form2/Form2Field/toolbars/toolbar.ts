@@ -1,13 +1,16 @@
 import { GetItems } from "visual/editorComponents/EditorComponent/types";
 import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
+import { DCTypes } from "visual/global/Config/types/DynamicContent";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
+import { getDynamicContentOption } from "visual/utils/options";
 import { Props, Value } from "../type";
 import { getThirtyOptions, inputTypesChoice } from "../utils";
 
 export const getItems: GetItems<Value, Props> = ({ v, device, component }) => {
   const dvv = (key: string) => defaultValueValue({ v, key, device });
   const config = component.getGlobalConfig();
+  const context = component.context;
 
   const type = dvv("type");
 
@@ -214,6 +217,11 @@ export const getItems: GetItems<Value, Props> = ({ v, device, component }) => {
     }
   ];
 
+  const richTextDC = getDynamicContentOption({
+    options: context.dynamicContent.config,
+    type: DCTypes.richText
+  });
+
   return [
     {
       id: "toolbarCurrentElement",
@@ -240,6 +248,26 @@ export const getItems: GetItems<Value, Props> = ({ v, device, component }) => {
                   position: 10,
                   disabled: inputTypes.length === 0,
                   choices: inputTypes
+                },
+                {
+                  id: "defaultValue",
+                  label: t("Default Value"),
+                  type: "inputText",
+                  devices: "desktop",
+                  config: {
+                    size: "medium"
+                  },
+                  disabled: isFileUpload,
+                  position: 11,
+                  helper: {
+                    content:
+                      isCheckbox || isSelect
+                        ? t(
+                            "Enter the default value for the field. If needed, use a comma-separated list. For example, 'Option 1,Option 2'"
+                          )
+                        : t("Enter the default value for the field.")
+                  },
+                  population: richTextDC
                 },
                 {
                   id: "fileSizeErrorMessage",

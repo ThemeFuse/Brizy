@@ -54,6 +54,7 @@ import {
   styleItemMarginTop,
   styleItemPaddingBottom,
   styleItemPaddingTop,
+  styleSizeSize,
   styleTypography2FontSize,
   styleTypography2LineHeight
 } from "visual/utils/style2";
@@ -310,7 +311,7 @@ export function cssStyleElementMMenuSize({
   store,
   getConfig
 }) {
-  return cssStyleSizeFontSize({
+  const size = styleSizeSize({
     v,
     device,
     state,
@@ -318,6 +319,8 @@ export function cssStyleElementMMenuSize({
     getConfig,
     prefix: "mMenu"
   });
+
+  return size ? `width:${size}px;` : "";
 }
 
 export function cssStyleElementMMenuFontFamily({

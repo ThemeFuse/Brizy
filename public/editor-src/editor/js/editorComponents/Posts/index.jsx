@@ -40,6 +40,8 @@ import {
   decodeSymbols,
   encodeSymbols,
   getLoopName,
+  getPlaceholderClassName,
+  getPlaceholderIcon,
   stringifyAttributes
 } from "./utils.common";
 
@@ -280,8 +282,16 @@ export class Posts extends EditorComponent {
   renderForEdit(v, vs, vd) {
     const { data, dataLoading } = this.state;
 
-    if (data === undefined) {
-      return <Placeholder icon="posts" style={{ height: "300px" }} />;
+    const context = data?.context;
+
+    if (data === undefined || (context && context.length === 0)) {
+      return (
+        <Placeholder
+          className={getPlaceholderClassName(v.component)}
+          icon={getPlaceholderIcon(v.component)}
+          style={{ height: "300px" }}
+        />
+      );
     }
 
     const { type, pagination, filter, filterStyle, allTag, masonryFilter } = v;

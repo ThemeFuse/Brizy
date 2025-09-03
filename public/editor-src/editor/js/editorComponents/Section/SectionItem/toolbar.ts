@@ -569,7 +569,7 @@ export const getItems: GetItems = ({
                   config: linkDC,
                   option: {
                     id: "linkExternal",
-                    type: "inputText",
+                    type: "linkExternal",
                     placeholder: "http://"
                   }
                 },
