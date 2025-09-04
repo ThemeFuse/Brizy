@@ -161,6 +161,7 @@ export interface ComponentsMeta {
   mobileWNoSpacing?: number;
   sectionPopup?: boolean;
   sectionPopup2?: boolean;
+  popupId?: string;
   [k: string]: unknown;
 }
 

@@ -68,7 +68,11 @@ export default class Radio extends React.Component {
   renderForView() {
     const className = classnames("brz-control__radio", this.props.className);
 
-    return <div className={className}>{this.renderOptions("view")}</div>;
+    return (
+      <div className={className} data-value={this.state.currentValue}>
+        {this.renderOptions("view")}
+      </div>
+    );
   }
 
   render() {

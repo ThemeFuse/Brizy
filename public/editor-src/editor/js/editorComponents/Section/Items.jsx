@@ -8,6 +8,7 @@ import { hideToolbar } from "visual/component/Toolbar";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import { isEditor, isView } from "visual/providers/RenderProvider";
 import { t } from "visual/utils/i18n";
+import { makeAttr } from "visual/utils/i18n/attribute";
 
 // className is added by react-slick
 const SliderArrow = ({ className, extraClassName, onClick, icon }) => (
@@ -211,6 +212,25 @@ class SectionItems extends EditorArrayComponent {
     );
   }
 
+  updateCurrentSlide = () => {
+    // In section sliders using fade mode, multiple slides are stacked.
+    // We set a zIndex attribute on the current slide to enable proper drag & drop.
+    const sliderList = this.slider?.innerSlider?.list;
+    if (!sliderList) return;
+
+    const disabledAttr = makeAttr("sortable-disabled");
+
+    sliderList.querySelectorAll(".slick-slide").forEach((slide) => {
+      const isCurrent = slide.classList.contains("slick-current");
+
+      if (isCurrent) {
+        slide.removeAttribute(disabledAttr);
+      } else {
+        slide.setAttribute(disabledAttr, "true");
+      }
+    });
+  };
+
   renderItemsContainer(items) {
     const { showSlider } = this.state;
     let ret;
@@ -226,6 +246,7 @@ class SectionItems extends EditorArrayComponent {
             ref={(el) => {
               this.slider = el;
             }}
+            afterChange={this.updateCurrentSlide}
             slidesToShow={1}
             slidesToScroll={1}
             swipe={false}

@@ -499,13 +499,17 @@ class Image extends EditorComponent<Value, Props, State> {
       imageSrc,
       imagePopulation,
       imagePopulationEntityType: entityType,
-      imagePopulationEntityId: entityId
+      imagePopulationEntityId: entityId,
+      enableLazyLoad
     } = v;
+
+    const attr = enableLazyLoad === "on" ? { loading: "lazy" } : {};
 
     if (imagePopulation) {
       // prettier-ignore
       const imagePlaceholder = Base64.encode(imagePopulation.replace(/"/g, "\\\""));
       return {
+        ...attr,
         alt:
           alt_ ||
           makePlaceholder({
@@ -520,6 +524,7 @@ class Image extends EditorComponent<Value, Props, State> {
     }
 
     return {
+      ...attr,
       alt:
         alt_ ||
         makePlaceholder({

@@ -153,6 +153,10 @@ declare global {
       ) => HTMLDivElement | string;
       dropdownAutoWidth?: boolean;
     }): void;
+    popup(): {
+      close?: () => void;
+      open?: () => void;
+    };
   }
 
   type Primitive = undefined | null | string | number | boolean;

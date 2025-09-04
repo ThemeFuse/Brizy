@@ -13,8 +13,7 @@ export { browserSupports, isScreenshotSupported } from "./browserSupports";
 // See webpack.config.worker.js
 const getWorkerUrl = (config: ConfigCommon) => {
   const base = config.urls?.worker ?? assetUrl("editor/js", config);
-  const version = config.editorVersion;
-  return `${base}/screenshots.worker.min.js?ver=${version}`;
+  return `${base}/screenshots.worker.min.js?ver=${BUILD_VERSION}`;
 };
 
 const SCREENSHOT_MAX_WIDTH = 600;

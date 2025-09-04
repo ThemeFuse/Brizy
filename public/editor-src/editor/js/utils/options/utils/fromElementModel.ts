@@ -72,6 +72,7 @@ import { DESKTOP } from "visual/utils/responsiveMode";
 import { NORMAL, State } from "visual/utils/stateMode";
 import { Literal } from "visual/utils/types/Literal";
 import { MValue } from "visual/utils/value";
+import { fromElementModel as linkExternal } from "../LinkExternal/converters";
 import { applyDefaultValueToOption } from "./defaultValue";
 
 type FromElementModelFns = {
@@ -140,7 +141,8 @@ const fns: FromElementModelFns = {
   advancedSettings: advancedSettings,
   blockThumbnail: blockThumbnail,
   symbols,
-  addable
+  addable,
+  linkExternal
 };
 
 /**

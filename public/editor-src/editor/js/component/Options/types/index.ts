@@ -51,6 +51,7 @@ import { CodeMirror as CodeMirrorDev } from "./dev/CodeMirror";
 import { EditableSelect } from "./dev/EditableSelect";
 import { FormApps as FormAppsDev } from "./dev/FormApps";
 import { GlobalBlockOption as GlobalBlockDev } from "./dev/GlobalBlock";
+import { LinkExternal } from "./dev/LinkExternal";
 import { Margin } from "./dev/Margin";
 import { Number } from "./dev/Number";
 import { Padding } from "./dev/Padding";
@@ -125,7 +126,8 @@ export const types = {
   symbols: Symbols,
   advancedSettings: AdvancedSettings,
   blockThumbnail: BlockThumbnail,
-  addable: Addable
+  addable: Addable,
+  linkExternal: LinkExternal
 };
 
 export type OptionTypes = typeof types;

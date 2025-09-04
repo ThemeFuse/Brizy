@@ -37,7 +37,8 @@ export function handleGlobalBlocks({
       break;
     }
 
-    case "UPDATE_GLOBAL_BLOCK": {
+    case "UPDATE_GLOBAL_BLOCK":
+    case ActionTypes.UPDATE_GLOBAL_BLOCK_METADATA: {
       const { uid } = action.payload;
       const globalBlock = globalBlocksAssembledSelector(state)[uid];
 

@@ -14,5 +14,6 @@ export interface Project {
     fonts: Fonts;
     disabledElements: string[];
     pinnedElements: string[];
+    editorVersion?: string;
   };
 }

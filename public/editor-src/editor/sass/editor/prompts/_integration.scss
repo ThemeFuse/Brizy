@@ -554,7 +554,7 @@ $option-color: #626b70;
     }
   }
 
-  &--delete {
+  &--delete, &--tooltip {
     cursor: pointer;
     color: $option-color;
     transition: 0.2s linear color;
@@ -573,6 +573,15 @@ $option-color: #626b70;
     .brz-icon-svg {
       font-size: 16px;
     }
+  }
+
+  &--tooltip {
+    inset-inline-end: 30px;
+  }
+
+
+  &--delete {
+    inset-inline-end: 10px;
   }
 
   // Fields
@@ -743,6 +752,10 @@ $option-color: #626b70;
     .brz-icon-svg {
       font-size: 47px;
     }
+  }
+
+  &-step__warning-icon {
+    color: #F27C38;
   }
 
   &-step__done-content {

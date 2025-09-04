@@ -29,15 +29,7 @@ const PopulationComponent = ({
     [hoverImage, imageSrc, isHover]
   );
 
-  return (
-    <img
-      {...attr}
-      className={className}
-      src={src}
-      draggable={false}
-      loading="lazy"
-    />
-  );
+  return <img {...attr} className={className} src={src} draggable={false} />;
 };
 
 export default PopulationComponent;

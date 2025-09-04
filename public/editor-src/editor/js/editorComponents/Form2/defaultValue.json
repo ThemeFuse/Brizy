@@ -3,6 +3,7 @@
     "messageSuccess": "",
     "messageError": "",
     "messageRedirect": "",
+    "messageEmptyRequired": "",
 
     "customAttributes": null,
     "customAttributesPopulation": "",
@@ -16,7 +17,9 @@
     "offsetY": 0,
 
     "multistep": "off",
-    "viewType": "icon"
+    "viewType": "icon",
+
+    "actionClosePopup": "off"
   },
   "style": {
     "horizontalAlign": "left",

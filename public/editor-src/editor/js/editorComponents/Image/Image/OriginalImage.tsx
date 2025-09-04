@@ -42,7 +42,6 @@ const OriginalImage = ({
       src={url}
       {...extraAttributes}
       draggable={false}
-      loading="lazy"
     />
   );
 };

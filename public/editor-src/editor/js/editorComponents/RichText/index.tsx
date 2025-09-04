@@ -102,6 +102,7 @@ type ToolbarOption =
       repositionOnUpdates: boolean;
       onOpen: VoidFunction;
       onClose: VoidFunction;
+      customCoordinates?: Coords;
     }
   | Record<string, never>;
 
@@ -237,12 +238,14 @@ class RichText extends EditorComponent<Value, Record<string, unknown>, State> {
     return { res, rej, extra };
   };
 
-  handleSelectionChange = (
-    formats: Formats,
-    selectionCoords: Coords,
-    cursorIndex?: number,
-    node?: Element | null
-  ) => {
+  handleSelectionChange = (data: {
+    formats: Formats;
+    selectionCoords: Coords;
+    cursorIndex?: number;
+    node?: Element | null;
+  }) => {
+    const { formats, selectionCoords, cursorIndex, node } = data;
+
     const newState = {
       formats
     };
@@ -939,7 +942,8 @@ class RichText extends EditorComponent<Value, Record<string, unknown>, State> {
   renderForEdit(v: Value, vs: Value, vd: Value) {
     const {
       selectedValue,
-      prepopulationData: { show }
+      prepopulationData: { show },
+      selectionCoords
     } = this.state;
     const { meta = {} } = this.props;
     const inPopup = Boolean(meta.sectionPopup);
@@ -1021,6 +1025,10 @@ class RichText extends EditorComponent<Value, Record<string, unknown>, State> {
       onOpen: this.handleToolbarOpen,
       onClose: this.handleToolbarClose
     };
+
+    if (selectionCoords) {
+      toolbarOptions["customCoordinates"] = selectionCoords;
+    }
 
     if (v.textPopulation) {
       toolbarOptions = {};

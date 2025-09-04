@@ -63,6 +63,7 @@ import { toElementModel as toggle } from "visual/utils/options/Toggle/converters
 import { toElementModel as toggleButton } from "visual/utils/options/ToggleButton/converters";
 import { toElementModel as transform } from "visual/utils/options/Transform/converters";
 import { toElementModel as typography } from "visual/utils/options/Typography/converters";
+import { toElementModel as linkExternal } from "../LinkExternal/converters";
 
 type ToElementModelFns = {
   [K in OptionName]: ToElementModel<K>;
@@ -130,7 +131,8 @@ const fns: ToElementModelFns = {
   blockThumbnail: blockThumbnail,
   fontStyleEditor: fontStyleEditor,
   symbols,
-  addable
+  addable,
+  linkExternal
 };
 
 /**

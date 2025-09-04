@@ -830,13 +830,14 @@ export const defaultStoriesData = (
 
 //#region Fonts
 export function getUploadedFonts(
-  config: ConfigCommon
+  config: ConfigCommon,
+  fontIds: string[]
 ): Promise<Array<UploadedFont>> {
   const { get } = config.integrations?.fonts?.upload ?? {};
 
   return new Promise((res, rej) => {
     if (typeof get === "function") {
-      get(res, rej);
+      get(res, rej, { ids: fontIds });
     } else {
       rej(t("Missing getUploadedFonts inside api config"));
     }

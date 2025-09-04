@@ -73,7 +73,6 @@ const HoverSvgImage: FCC<HoverSvgImageProps> = ({
           className={styleHoverImage}
           src={hoverUrl ?? ""}
           draggable={false}
-          loading="lazy"
           {...extraAttributes}
         />
       </div>

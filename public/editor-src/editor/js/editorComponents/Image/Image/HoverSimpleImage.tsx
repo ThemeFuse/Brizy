@@ -244,7 +244,6 @@ const HoverSimpleImage: FCC<HoverImageProps> = (props) => {
         srcSet={hoverDesktopSrc}
         src={hoverSourceSrc}
         draggable={false}
-        loading="lazy"
         {...extraAttributes}
       />
     </div>

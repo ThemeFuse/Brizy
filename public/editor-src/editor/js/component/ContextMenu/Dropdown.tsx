@@ -23,8 +23,13 @@ export interface Props {
 export const Dropdown = (props: Props): ReactNode => {
   const { id, getItems, itemsMeta, root } = props;
   const [isOpen, setOpen] = useState(false);
+  const items = getItems();
 
-  const items = isOpen ? <Items data={getItems()} meta={itemsMeta} /> : null;
+  if (!items || !items.length) {
+    return null;
+  }
+
+  const itemsNode = isOpen ? <Items data={items} meta={itemsMeta} /> : null;
 
   return createPortal(
     <Menu
@@ -33,7 +38,7 @@ export const Dropdown = (props: Props): ReactNode => {
       disableBoundariesCheck={true}
       id={id}
     >
-      {items}
+      {itemsNode}
     </Menu>,
     root
   );

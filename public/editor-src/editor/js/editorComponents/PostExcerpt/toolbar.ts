@@ -210,7 +210,7 @@ export const getItems: GetItems<ElementModel> = ({
                   config: linkDC,
                   option: {
                     id: "linkExternal",
-                    type: "inputText",
+                    type: "linkExternal",
                     placeholder: "http://",
                     config: {
                       size: "medium"

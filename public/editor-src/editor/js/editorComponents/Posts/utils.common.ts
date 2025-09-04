@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-use-before-define */
 import { produce } from "immer";
+import { ECWID_CATEGORY_TYPE, ECWID_PRODUCT_TYPE } from "visual/utils/ecwid";
 import { mPipe } from "visual/utils/fp/mPipe";
 import { objectFromEntries } from "visual/utils/object";
 import * as Arr from "visual/utils/reader/array";
@@ -151,3 +152,23 @@ export function getLoopName(type: PostsTypes): string {
     }
   }
 }
+
+export const getPlaceholderIcon = (component: string): string => {
+  switch (component) {
+    case ECWID_PRODUCT_TYPE:
+    case ECWID_CATEGORY_TYPE:
+      return "ecwid-product-placeholder";
+    default:
+      return "posts";
+  }
+};
+
+export const getPlaceholderClassName = (component: string): string => {
+  switch (component) {
+    case ECWID_PRODUCT_TYPE:
+    case ECWID_CATEGORY_TYPE:
+      return "brz-ecwid-product-placeholder";
+    default:
+      return "";
+  }
+};

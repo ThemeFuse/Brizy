@@ -44,6 +44,22 @@ export function getItems(): ToolbarItemType[] {
                   label: t("Advanced"),
                   options: [
                     {
+                      id: "numberOfLines",
+                      type: "slider",
+                      position: 30,
+                      display: "block",
+                      label: t("Number of Lines"),
+                      config: {
+                        min: 0,
+                        max: 100
+                      },
+                      helper: {
+                        content: t(
+                          "Set the number of lines to show in the excerpt. If set to 0, it will show the full content."
+                        )
+                      }
+                    },
+                    {
                       id: "customCSS",
                       label: t("Custom CSS"),
                       type: "codeMirror",

@@ -10,7 +10,7 @@ class Upload extends Component {
     id: "",
     className: "",
     name: "",
-    value: null,
+    value: undefined,
     placeholder: null,
     required: false,
     accept: "",
@@ -62,7 +62,8 @@ class Upload extends Component {
   }
 
   renderForView() {
-    const { fileText, ...props } = this.props;
+    // eslint-disable-next-line no-unused-vars
+    const { fileText, renderContext: _, ...props } = this.props;
     const { id, className: _className, placeholder } = props;
 
     const className = classnames("brz-input__upload", _className);

@@ -6,7 +6,10 @@ import type { OutputStyle, Styles } from "visual/utils/cssStyle/types";
 export function style(data: DynamicStylesProps<ElementModel>): OutputStyle {
   const styles: Styles = {
     ".brz &&": {
-      standart: ["cssStyleContentAlign"]
+      standart: [
+        "cssStyleContentAlign",
+        "cssStyleElementPostExcerptNumberOfLines"
+      ]
     },
     ".brz && *": {
       standart: [

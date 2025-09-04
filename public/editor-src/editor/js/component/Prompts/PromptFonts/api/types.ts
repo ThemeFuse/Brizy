@@ -15,6 +15,7 @@ export interface UploadFont {
   id: string;
   weights: string[];
   variations?: VariationFont[];
+  exists?: boolean;
 }
 
 export interface CreateFont {

@@ -139,7 +139,7 @@ export type GetSmtpIntegration = (
 
 export type UpdateSmtpIntegration = (
   data: {
-    [k: string]: string | boolean | null;
+    [k: string]: unknown;
     formId: string;
     completed: boolean;
   },
@@ -237,7 +237,7 @@ export interface Form {
     data: {
       formId: string;
       completed: boolean;
-      [k: string]: string | boolean | null;
+      [k: string]: unknown;
     }
   ) => void;
   deleteSmtpIntegration: (

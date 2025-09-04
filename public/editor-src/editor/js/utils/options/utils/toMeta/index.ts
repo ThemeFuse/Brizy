@@ -76,7 +76,8 @@ const fns: ToMetaFns = {
   blockThumbnail: undefined,
   advancedSettings: undefined,
   symbols: undefined,
-  addable: undefined
+  addable: undefined,
+  linkExternal: undefined
 };
 
 export const toMeta = <T extends OptionName>(type: T) => {

@@ -349,8 +349,10 @@ class Form2 extends EditorComponent<Value, ElementProps, State> {
       messageSuccess,
       messageError,
       messageRedirect,
+      messageEmptyRequired,
       customCSS,
-      multistep
+      multistep,
+      actionClosePopup
     } = v;
 
     const isMultistepEnabled = multistep === "on";
@@ -377,6 +379,8 @@ class Form2 extends EditorComponent<Value, ElementProps, State> {
 
     const formType = isMultistepEnabled ? "multistep" : "default";
 
+    const { popupId } = this.props.meta;
+
     const attr = {
       action,
       [makeAttr("form-id")]: _id,
@@ -384,6 +388,7 @@ class Form2 extends EditorComponent<Value, ElementProps, State> {
       [makeAttr("success")]: messageSuccess,
       [makeAttr("error")]: messageError,
       [makeAttr("redirect")]: messageRedirect,
+      [makeAttr("empty")]: messageEmptyRequired,
       [makeAttr("form-type")]: formType,
       [makeAttr("default-success", true)]: "Your email was sent successfully",
       [makeAttr("default-error", true)]: "Your email was not sent",
@@ -391,7 +396,13 @@ class Form2 extends EditorComponent<Value, ElementProps, State> {
       [makeAttr("default-invalid", true)]:
         "Please check your entry and try again",
       [makeAttr("default-invalid-email", true)]:
-        "Please enter a valid email address (e.g., name@example.com)"
+        "Please enter a valid email address (e.g., name@example.com)",
+      ...(popupId
+        ? {
+            [makeAttr("close-popup")]: actionClosePopup,
+            [makeAttr("popup-id")]: popupId
+          }
+        : {})
     };
 
     return (

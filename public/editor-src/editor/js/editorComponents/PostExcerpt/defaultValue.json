@@ -7,7 +7,10 @@
 
     "textPopulation": "{{brizy_dc_post_excerpt}}",
     "textPopulationEntityType": "",
-    "textPopulationEntityId": ""
+    "textPopulationEntityId": "",
+
+    "numberOfLines": 0,
+    "numberOfLinesSuffix": ""
   },
 
   "toolbar": {

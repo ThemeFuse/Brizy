@@ -43,13 +43,17 @@ export default class Checkbox extends TextField {
   }
 
   renderForView(): React.JSX.Element {
-    const { active, children } = this.props as CheckboxProps;
+    const { active, defaultValue, children } = this.props as CheckboxProps;
+    const valueRecord = defaultValue
+      ?.split(",")
+      .reduce((acc, f) => ({ ...acc, [f.trim()]: true }), {});
+    const value = { ...active, ...valueRecord };
 
     return (
       <div className={this.getClassName()}>
         <CheckboxControls
           className="brz-forms2__checkbox-options"
-          defaultValue={active}
+          defaultValue={value}
         >
           {children}
         </CheckboxControls>

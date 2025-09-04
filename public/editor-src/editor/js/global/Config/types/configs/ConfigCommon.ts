@@ -1063,7 +1063,13 @@ interface _ConfigCommon<Mode> {
     form?: Form;
     fonts?: {
       upload?: {
-        get(res: Response<Array<UploadedFont>>, rej: Response<string>): void;
+        get(
+          res: Response<Array<UploadedFont>>,
+          rej: Response<string>,
+          data: {
+            ids: string[];
+          }
+        ): void;
         upload(
           res: Response<UploadFont>,
           rej: Response<string>,
