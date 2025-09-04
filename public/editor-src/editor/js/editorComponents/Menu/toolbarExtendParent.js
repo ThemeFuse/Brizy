@@ -1,3 +1,4 @@
+import { MMenuAnimationTypes } from "visual/editorComponents/Menu/types";
 import { getColorToolbar } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
@@ -23,6 +24,8 @@ export function getItems({ v, device, component }) {
     dvv("mMenuIconColorHex"),
     dvv("mMenuIconColorOpacity")
   );
+
+  const isMmenu = dvv("mMenu") === "on";
 
   return [
     {
@@ -60,7 +63,7 @@ export function getItems({ v, device, component }) {
               id: "mMenuSize",
               type: "slider",
               label: t("Size"),
-              disabled: dvv("mMenu") !== "on",
+              disabled: !isMmenu,
               config: {
                 min: 8,
                 max: 64,
@@ -74,7 +77,7 @@ export function getItems({ v, device, component }) {
           label: t("Orientation"),
           type: "radioGroup",
           position: 30,
-          disabled: dvv("mMenu") === "on",
+          disabled: isMmenu,
           choices: [
             { value: "vertical", icon: "nc-vertical-items" },
             { value: "horizontal", icon: "nc-horizontal-items" }
@@ -84,7 +87,7 @@ export function getItems({ v, device, component }) {
           id: "mMenuPosition",
           label: t("Drawer Position"),
           type: "radioGroup",
-          disabled: dvv("mMenu") === "off",
+          disabled: !isMmenu,
           position: 40,
           choices: [
             { value: "left", icon: "nc-align-left" },
@@ -92,9 +95,27 @@ export function getItems({ v, device, component }) {
           ]
         },
         {
+          id: "mMenuAnimation",
+          type: "select",
+          disabled: !isMmenu,
+          label: t("Icon Animation"),
+          devices: "desktop",
+          choices: [
+            { value: MMenuAnimationTypes.OFF, title: t("Off") },
+            { value: MMenuAnimationTypes.TILT, title: t("Tilt") },
+            { value: MMenuAnimationTypes.SQUASH, title: t("Squash") },
+            { value: MMenuAnimationTypes.TWIRL, title: t("Twirl") },
+            { value: MMenuAnimationTypes.FADE, title: t("Fade") },
+            { value: MMenuAnimationTypes.DIVIDE, title: t("Divide") },
+            { value: MMenuAnimationTypes.TURN, title: t("Turn") },
+            { value: MMenuAnimationTypes.SLING, title: t("Sling") },
+            { value: MMenuAnimationTypes.SPIN, title: t("Spin") }
+          ]
+        },
+        {
           id: "closeDrawerIcon",
           type: "switch",
-          disabled: dvv("mMenu") === "off",
+          disabled: !isMmenu,
           label: t("Close Drawer Icon")
         },
         {
@@ -103,7 +124,7 @@ export function getItems({ v, device, component }) {
           label: t("Spacing"),
           roles: ["admin"],
           position: 50,
-          disabled: v.items.length === 1 || dvv("mMenu") === "on",
+          disabled: v.items.length === 1 || isMmenu,
           config: {
             min: 0,
             max: 100,
@@ -125,7 +146,7 @@ export function getItems({ v, device, component }) {
         }
       },
       position: 20,
-      disabled: dvv("mMenu") === "off",
+      disabled: !isMmenu,
       options: [
         {
           id: "mMenuIconColor",

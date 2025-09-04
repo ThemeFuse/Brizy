@@ -11,6 +11,7 @@ export interface RadioProps {
     placeholder: string;
     type: string;
     value: string;
+    defaultValue?: string;
   };
 }
 
@@ -31,6 +32,8 @@ export interface SelectProps {
     placeholder: string;
     type: string;
     value: string;
+    defaultValue?: string;
+    multiple?: boolean;
   };
   items: ElementModelType2[];
 }
@@ -38,4 +41,5 @@ export interface SelectProps {
 export interface CheckboxProps {
   children: React.JSX.Element | React.JSX.Element[];
   active: Record<string, boolean>;
+  defaultValue?: string;
 }

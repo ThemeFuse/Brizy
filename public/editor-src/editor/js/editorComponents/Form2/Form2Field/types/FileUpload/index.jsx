@@ -67,10 +67,12 @@ export default class FileUpload extends TextField {
 
   renderForView(v) {
     const { fileText, renderContext } = this.props;
+    // eslint-disable-next-line no-unused-vars
+    const { defaultValue: _, ...attrs } = v.attr;
 
     return (
       <Upload
-        {...v.attr}
+        {...attrs}
         fileText={fileText}
         multiple={false}
         className={this.getClassName(v)}

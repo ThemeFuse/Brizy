@@ -39,8 +39,13 @@ export const CheckGroup = forwardRef<HTMLDivElement, Props>(
       }
     );
 
+    const keys = Object.keys(defaultValue ?? {}).filter(
+      (k) => defaultValue?.[k]
+    );
+    const toValueStr = keys.length > 0 ? keys.join(",") : "";
+
     return (
-      <div className={_className} ref={ref}>
+      <div className={_className} ref={ref} data-value={toValueStr}>
         {options}
       </div>
     );

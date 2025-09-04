@@ -181,7 +181,7 @@ export const getItems: GetItems<Value, Props> = ({
               options: [
                 {
                   id: "linkExternal",
-                  type: "inputText",
+                  type: "linkExternal",
                   label: t("Link to"),
                   placeholder: "https://",
                   devices: "desktop",

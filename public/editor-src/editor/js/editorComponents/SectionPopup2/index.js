@@ -171,8 +171,23 @@ class SectionPopup2 extends EditorComponent {
       tabletWNoSpacing,
       mobileW,
       mobileWNoSpacing,
-      sectionPopup2: true
+      sectionPopup2: true,
+      popupId: this.getPopupId()
     };
+  }
+
+  getPopupId() {
+    const { popupId } = this.getValue();
+    const id = this.getId();
+
+    const uidPlaceholder = makePlaceholder({
+      content: "{{ random_id }}",
+      attr: {
+        key: id
+      }
+    });
+
+    return popupId || `${id}_${uidPlaceholder}`;
   }
 
   renderToolbar() {
@@ -440,8 +455,7 @@ class SectionPopup2 extends EditorComponent {
       )
     );
 
-    const uidPlaceholder = makePlaceholder({ content: "{{ random_id }}" });
-    const popupId = _popupId || `${this.getId()}_${uidPlaceholder}`;
+    const popupId = this.getPopupId();
 
     return (
       <CustomCSS selectorName={this.getId()} css={customCSS}>

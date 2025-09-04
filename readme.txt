@@ -4,7 +4,7 @@ Tags: page builder, website builder, brizy, editor, visual editor, unyson, wysiw
 Requires at least: 4.5
 Tested up to: 6.8.2
 Requires PHP: 7.2.24
-Stable tag: 2.7.13
+Stable tag: 2.7.14
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -136,6 +136,17 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 11. **Resize columns by dragging the handle that appears in between**
 
 == Changelog ==
+
+= 2.7.14 - 2025-09-04 =
+* New: Links – phone numbers and email addresses now automatically prepend tel: and mailto:
+* New: Image – option to enable/disable lazy loading
+* New: Rich-Text – toolbar now opens directly next to the selected text
+* New: Webhooks – display name shown instead of full URL
+* New: Posts – placeholder added when no content is available
+* New: Conditions – improved selection for global block conditions
+* Fixed: Global Blocks – updating a global block no longer causes infinite loading
+* Fixed: Context Menu – no empty context menu appears for the first container inside a popup
+* Fixed: Section – elements are correctly added inside Section Slider (fade mode)
 
 = 2.7.13 - 2025-09-01 =
 * Fixed: Security enhancements

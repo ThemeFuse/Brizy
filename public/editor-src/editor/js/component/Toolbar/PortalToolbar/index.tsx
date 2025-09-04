@@ -284,6 +284,12 @@ class _PortalToolbar
     }
   }
 
+  setNode(node: Element | null): void {
+    if (node !== null) {
+      this.node = node;
+    }
+  }
+
   clickOutsideException = (clickTarget: HTMLElement): boolean => {
     try {
       const node = this.ref.current;

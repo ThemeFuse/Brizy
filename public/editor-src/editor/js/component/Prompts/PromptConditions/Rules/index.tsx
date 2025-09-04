@@ -42,7 +42,7 @@ import * as NoEmptyString from "visual/utils/string/NoEmptyString";
 import Buttons from "../Buttons";
 import ConditionChoices from "./ConditionChoices";
 import useRuleList from "./useRuleList";
-import { getRulesListIndexByRule, getUniqRules } from "./utils";
+import { getItemsIndex, getRulesListIndexByRule, getUniqRules } from "./utils";
 
 type AsyncGetValue = () => Rule[];
 
@@ -200,32 +200,47 @@ const Rules = (props: Props): ReactElement => {
       item.entityValues.includes(searchItem.value)
     );
 
-    setCurrentRuleList((prev) => {
-      const currentRule = prev[ruleIndex];
+    const itemExists =
+      currentRuleList
+        .find((currentItem) => currentItem.value === item.entityType)
+        ?.items?.some((subItemCurrent) =>
+          subItemCurrent.items?.some(
+            (subSubItemCurrent) =>
+              subSubItemCurrent.value === item.entityValues[0]
+          )
+        ) || false;
 
-      if (!currentRule) return prev;
+    if (!itemExists) {
+      setCurrentRuleList((prev) => {
+        const currentRule = prev[ruleIndex];
 
-      const items = currentRule.items || [];
-      const firstItem = items[0] as CmsListItem;
+        if (!currentRule) return prev;
 
-      if (!firstItem) return prev;
+        const items = currentRule.items || [];
 
-      const existingItems = firstItem.items || [];
+        const itemIndex = getItemsIndex(items, item.entityType);
 
-      const updatedRule = {
-        ...currentRule,
-        items: [
-          {
-            ...firstItem,
-            items: [...existingItems, ...matchingItems]
-          }
-        ]
-      };
+        const firstItem = items[itemIndex] as CmsListItem;
 
-      return prev.map((rule, index) =>
-        index === ruleIndex ? updatedRule : rule
-      );
-    });
+        if (!firstItem) return prev;
+
+        const existingItems = firstItem.items || [];
+
+        const updatedRule = {
+          ...currentRule,
+          items: [
+            {
+              ...firstItem,
+              items: [...existingItems, ...matchingItems]
+            }
+          ]
+        };
+
+        return prev.map((rule, index) =>
+          index === ruleIndex ? updatedRule : rule
+        );
+      });
+    }
   };
 
   useEffect(() => {

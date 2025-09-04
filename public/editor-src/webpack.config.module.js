@@ -253,7 +253,8 @@ const webpackEditorConfig = (options) => {
     plugins: [
       ...baseConfig.plugins,
       new webpack.DefinePlugin({
-        "process.env.NODE_ENV": JSON.stringify(baseConfig.mode)
+        "process.env.NODE_ENV": JSON.stringify(baseConfig.mode),
+        BUILD_VERSION: JSON.stringify(options.BUILD_VERSION)
       }),
       new GenerateJsonPlugin("../../package.json", packageJSON, (_, v) => v, 2),
       new CopyPlugin({
@@ -297,6 +298,7 @@ module.exports = (env, argv) => {
   });
   const editorConfig = webpackEditorConfig({
     ...options,
+    BUILD_VERSION: env["version"] ?? "dev",
     ANALYZE: env["analyze_editor"] ?? false
   });
 

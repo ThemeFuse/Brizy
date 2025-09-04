@@ -24,6 +24,7 @@ export const storeWasChanged: RStoreWasChanged = (state, action) => {
     case "REORDER_BLOCKS":
     case "UPDATE_BLOCKS":
     case "UPDATE_GLOBAL_BLOCK":
+    case ActionTypes.UPDATE_GLOBAL_BLOCK_METADATA:
     case "MAKE_BLOCK_TO_GLOBAL_BLOCK":
     case "MAKE_POPUP_TO_GLOBAL_POPUP":
     case "MAKE_GLOBAL_POPUP_TO_POPUP":

@@ -114,6 +114,18 @@ export type ActionUpdateGlobalBlock = {
   };
 };
 
+export type ActionUpdateGlobalBlockMetaData = {
+  type: ActionTypes.UPDATE_GLOBAL_BLOCK_METADATA;
+  payload: {
+    uid: string;
+    title?: string;
+    tags?: string;
+  };
+  meta: {
+    is_autosave: 0 | 1;
+  };
+};
+
 export const ADD_GLOBAL_BLOCK = "ADD_GLOBAL_BLOCK";
 
 export type ActionAddGlobalBlock = {
@@ -331,6 +343,7 @@ export type ActionUpdateBlockHTMLStats = {
 export type ReduxAction =
   | ActionHydrate
   | ActionUpdateGlobalBlock
+  | ActionUpdateGlobalBlockMetaData
   | ActionAddFonts
   | ActionDeleteFont
   | ActionUpdateDefaultFont
@@ -550,16 +563,12 @@ export function makeGlobalBlockToPopup(
 export function updateGlobalBlock({
   uid,
   data,
-  title,
-  tags,
   meta,
   config
 }: {
   uid: string;
   data: GlobalBlock["data"];
   config: ConfigCommon;
-  title?: string;
-  tags?: string;
   meta?: {
     is_autosave?: 1 | 0;
     sourceBlockId?: string;
@@ -567,10 +576,28 @@ export function updateGlobalBlock({
 }): ActionUpdateGlobalBlock {
   return {
     type: "UPDATE_GLOBAL_BLOCK",
-    payload: { uid, data, title, tags, config },
+    payload: { uid, data, config },
     meta: {
       is_autosave: 1,
       ...meta
+    }
+  };
+}
+
+export function updateGlobalBlockMetaData({
+  uid,
+  title,
+  tags
+}: {
+  uid: string;
+  title?: string;
+  tags?: string;
+}): ActionUpdateGlobalBlockMetaData {
+  return {
+    type: ActionTypes.UPDATE_GLOBAL_BLOCK_METADATA,
+    payload: { uid, title, tags },
+    meta: {
+      is_autosave: 1
     }
   };
 }
@@ -1011,7 +1038,8 @@ export enum ActionTypes {
   "REGENERATE_TYPOGRAPHY" = "REGENERATE_TYPOGRAPHY",
   "UPDATE_BLOCK_HTML" = "UPDATE_BLOCK_HTML",
   "UPDATE_BLOCKS_HTML" = "UPDATE_BLOCKS_HTML",
-  "UPDATE_BLOCK_HTML_STATS" = "UPDATE_BLOCK_HTML_STATS"
+  "UPDATE_BLOCK_HTML_STATS" = "UPDATE_BLOCK_HTML_STATS",
+  "UPDATE_GLOBAL_BLOCK_METADATA" = "UPDATE_GLOBAL_BLOCK_METADATA"
 }
 
 // templates

@@ -102,7 +102,8 @@ module.exports = (options = {}) => {
       new webpack.DefinePlugin({
         "process.env.NODE_ENV": JSON.stringify(BUILD_MODE),
         TARGET: JSON.stringify(options.TARGET),
-        AUTHORIZATION_URL: JSON.stringify(options.AUTHORIZATION_URL)
+        AUTHORIZATION_URL: JSON.stringify(options.AUTHORIZATION_URL),
+        BUILD_VERSION: JSON.stringify(options.BUILD_VERSION)
       }),
       new webpack.ProvidePlugin({
         process: "process/browser",

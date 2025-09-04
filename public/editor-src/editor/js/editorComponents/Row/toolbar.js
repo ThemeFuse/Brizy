@@ -489,7 +489,7 @@ export const getItems = ({ v, device, component, context, editorMode }) => {
                   config: linkDC,
                   option: {
                     id: "linkExternal",
-                    type: "inputText",
+                    type: "linkExternal",
                     placeholder: "http://"
                   }
                 },

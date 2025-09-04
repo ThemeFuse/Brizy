@@ -9,6 +9,8 @@ export interface Value extends ElementModel {
   multistep: MultiStep;
   items: ElementModelType2[];
   customCSS: string;
+
+  actionClosePopup: "on" | "off";
 }
 
 export interface State {

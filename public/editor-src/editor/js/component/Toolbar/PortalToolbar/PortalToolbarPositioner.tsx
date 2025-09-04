@@ -21,6 +21,7 @@ export type PortalToolbarPositionerProps = {
   repositionOnUpdates?: boolean;
   device?: DeviceMode;
   placement?: "top" | "bottom";
+  customCoordinates?: Omit<DOMRect, "x" | "y" | "toJSON">;
 } & Omit<
   ToolbarItemsProps,
   "containerRef" | "arrowRef" | "arrow" | "onContentChange"
@@ -55,7 +56,8 @@ export class PortalToolbarPositioner extends React.Component<PortalToolbarPositi
       offsetLeft,
       position,
       device,
-      placement
+      placement,
+      customCoordinates
     } = this.props;
     const toolbar = this.toolbarItemsContainerRef.current;
     const arrow = this.toolbarItemsArrowRef.current;
@@ -68,12 +70,15 @@ export class PortalToolbarPositioner extends React.Component<PortalToolbarPositi
     }
 
     const toolbarRect = toolbar.getBoundingClientRect();
-    const nodeRect = node.getBoundingClientRect();
+    const nodeRect = customCoordinates
+      ? customCoordinates
+      : node.getBoundingClientRect();
 
     // toolbar top + below
     let toolbarBelow;
     let toolbarTop;
-    const windowTop = position === "fixed" ? 0 : window.scrollY;
+    const windowTop =
+      position === "fixed" || customCoordinates ? 0 : window.scrollY;
     const fitsAbove =
       windowTop + nodeRect.top - (toolbarRect.height + TOOLBAR_HEIGHT_MAGIC) >=
       window.scrollY;

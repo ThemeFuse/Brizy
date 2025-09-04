@@ -14,3 +14,16 @@
 .brz-posts__pagination a.page-numbers {
   pointer-events: none;
 }
+
+.brz-ecwid-product-placeholder {
+  svg.brz-icon-svg {
+    width: auto;
+    height: auto;
+
+    use {
+      color: #0e0736 !important;
+      transform: scale(0.55);
+      transform-origin: center;
+    }
+  }
+}

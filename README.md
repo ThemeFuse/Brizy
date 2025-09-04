@@ -4,7 +4,7 @@ Contributors: themefuse<br>
 Requires at least: 4.5<br>
 Tested up to: 6.8.2<br>
 Requires PHP: 7.2.24<br>
-Stable tag: 2.7.13<br>
+Stable tag: 2.7.14<br>
 License: GPLv3<br>
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -135,6 +135,17 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 [Privacy policy](https://brizy.io/privacy/)
 
 ## Changelog
+
+### 2.7.14 - 2025-09-04
+* New: Links – phone numbers and email addresses now automatically prepend tel: and mailto:
+* New: Image – option to enable/disable lazy loading
+* New: Rich-Text – toolbar now opens directly next to the selected text
+* New: Webhooks – display name shown instead of full URL
+* New: Posts – placeholder added when no content is available
+* New: Conditions – improved selection for global block conditions
+* Fixed: Global Blocks – updating a global block no longer causes infinite loading
+* Fixed: Context Menu – no empty context menu appears for the first container inside a popup
+* Fixed: Section – elements are correctly added inside Section Slider (fade mode)
 
 ### 2.7.13 - 2025-09-01
 * Fixed: Security enhancements

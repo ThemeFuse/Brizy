@@ -56,6 +56,12 @@ export interface BaseIntegrationContext {
   config: ConfigCommon;
 }
 
+export interface Account {
+  id: string;
+  name: string;
+  title?: string;
+}
+
 export type AppData = {
   id: string;
   img: string;
@@ -76,5 +82,6 @@ export type AppData = {
     fieldsMap: string;
     usedAccount?: string | null;
     completed?: boolean;
+    accounts?: Account[];
   };
 };

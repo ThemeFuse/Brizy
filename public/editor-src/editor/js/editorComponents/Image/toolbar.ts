@@ -217,6 +217,17 @@ export const getItems =
                     }
                   },
                   {
+                    id: "enableLazyLoad",
+                    label: t("Lazy Load"),
+                    type: "switch",
+                    devices: "desktop",
+                    helper: {
+                      content: t(
+                        "Load this image only when it's about to enter the viewport"
+                      )
+                    }
+                  },
+                  {
                     id: "linkLightBox",
                     label: t("Open in Lightbox"),
                     type: "switch",
@@ -476,7 +487,7 @@ export const getItems =
                     config: linkDC,
                     option: {
                       id: "linkExternal",
-                      type: "inputText",
+                      type: "linkExternal",
                       placeholder: "http://",
                       disabled: inGallery
                     }

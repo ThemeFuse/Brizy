@@ -14,7 +14,10 @@ type Dependency = string;
 
 export interface GlobalBlockBase {
   uid: string;
-  data: Block & { deleted?: boolean };
+  data: Block & {
+    deleted?: boolean;
+    editorVersion?: string;
+  };
   status: "draft" | "publish";
   rules: Rule[];
   position: GlobalBlockPosition | null;

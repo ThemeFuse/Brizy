@@ -41,7 +41,9 @@
     "tooltipPlacement": "top",
 
     "tooltipOffset": 10,
-    "tooltipOffsetSuffix": "px"
+    "tooltipOffsetSuffix": "px",
+
+    "enableLazyLoad": "on"
   },
 
   "link": {
