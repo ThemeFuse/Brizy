@@ -11,10 +11,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
         const sessionId = getUrlParameter('sessionId');
         const page = getUrlParameter('page');
-        const content = getUrlParameter('content');
 
         if (page === 'starter-templates' && sessionId.trim() !== '') {
-            generateTemplate(sessionId, content);
+            generateTemplate(sessionId);
         } else if (openAiModalButton) {
             openAiModalButton.addEventListener('click', function (event) {
                 event.preventDefault();
@@ -25,7 +24,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     initializeHandler();
 
-    function generateTemplate(sessionId, content) {
+    function generateTemplate(sessionId) {
         loadingModal(
             Brizy_Admin_Data.l10n.aiGenerateTemplateTitle,
             Brizy_Admin_Data.l10n.aiGenerateTemplateDesc,
@@ -52,6 +51,8 @@ document.addEventListener('DOMContentLoaded', function () {
             })
             .then(response => {
                 if (response && response.success) {
+                    const content = getContentType();
+
                     switch (content) {
                         case 'delete':
                             importContentDelete(response.data);
@@ -239,7 +240,9 @@ document.addEventListener('DOMContentLoaded', function () {
         const responseString = buttonElement.dataset.response;
         const responseData = JSON.parse(responseString);
 
-        let aiUrl = responseData.data.aiUrl + '/wp-admin/admin.php?page=starter-templates&content=delete';
+        saveContentType('delete');
+
+        let aiUrl = responseData.data.aiUrl + '/wp-admin/admin.php?page=starter-templates';
 
         window.location.href = aiUrl;
     }
@@ -252,9 +255,19 @@ document.addEventListener('DOMContentLoaded', function () {
         const responseString = buttonElement.dataset.response;
         const responseData = JSON.parse(responseString);
 
-        let aiUrl = responseData.data.aiUrl + '/wp-admin/admin.php?page=starter-templates&content=keep';
+        saveContentType('keep');
+
+        let aiUrl = responseData.data.aiUrl + '/wp-admin/admin.php?page=starter-templates';
 
         window.location.href = aiUrl;
+    }
+
+    function saveContentType(type) {
+        localStorage.setItem('content', type);
+    }
+
+    function getContentType() {
+        return localStorage.getItem('content');
     }
 
     function successModal(titleText, descriptionText, buttonText, editUrl) {
