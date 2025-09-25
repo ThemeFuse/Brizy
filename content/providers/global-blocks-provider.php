@@ -4,12 +4,15 @@ class Brizy_Content_Providers_GlobalBlocksProvider extends Brizy_Content_Provide
 {
     public function __construct()
     {
-        $this->registerPlaceholder(new Brizy_Content_Placeholders_GroupPlaceholder());
-        $this->registerPlaceholder(
-            new Brizy_Content_Placeholders_GlobalBlocks(
-                __('Brizy Global Blocks', 'brizy'),
-                'brizy_dc_global_blocks'
-            )
-        );
+        $this->registerPlaceholderName( 'group', function ( $name ) {
+			return new Brizy_Content_Placeholders_GroupPlaceholder();
+		} );
+		$this->registerPlaceholderName('brizy_dc_global_block', function ($name) {
+			return new Brizy_Content_Placeholders_GlobalBlock(
+				__('Brizy Global Block', 'brizy'),
+				$name
+			);
+		});
+
     }
 }

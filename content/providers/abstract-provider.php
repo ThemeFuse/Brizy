@@ -14,7 +14,6 @@ abstract class Brizy_Content_Providers_AbstractProvider extends Registry impleme
 			self::CONFIG_KEY_OEMBED   =>array(),
 			self::CONFIG_KEY_VIDEO    =>array(),
 			self::CONFIG_KEY_SNDCLOUD =>array(),
-
 		);
 	}
 

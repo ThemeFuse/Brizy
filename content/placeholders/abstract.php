@@ -62,9 +62,9 @@ abstract class Brizy_Content_Placeholders_Abstract extends \BrizyPlaceholders\Ab
         ];
     }
 
-    public function support($placeholderName)
+    static public function support($placeholderName)
     {
-        return $this->getPlaceholder() == $placeholderName;
+        return false;
     }
 
     public function shouldFallbackValue($value, ContextInterface $context, ContentPlaceholder $placeholder)
