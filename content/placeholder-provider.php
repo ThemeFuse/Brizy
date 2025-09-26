@@ -3,82 +3,100 @@
 use BrizyPlaceholders\PlaceholderInterface;
 use BrizyPlaceholders\RegistryInterface;
 
-class Brizy_Content_PlaceholderProvider implements RegistryInterface {
+class Brizy_Content_PlaceholderProvider extends \BrizyPlaceholders\Registry implements RegistryInterface
+{
 
-	/**
-	 * @var array of implements Brizy_Editor_Content_PlaceholdersProviderInterface
-	 */
-	protected $providers = array();
+    static private $instance = null;
 
-	/**
-	 * @var array
-	 */
-	static private $cache_grouped_placeholders = null;
-	static private $cache_all_placeholders = null;
+    /**
+     * @var array of implements Brizy_Editor_Content_PlaceholdersProviderInterface
+     */
+    protected $providers = array();
 
-	/**
-	 * BrizyPro_Content_ProviderPlaceholders constructor.
-	 *
-	 * $context: for back compatibility
-	 *
-	 * @param Brizy_Content_Context $context
-	 */
-	public function __construct( $context = null ) {
-		$this->providers[] = new Brizy_Content_Providers_FreeProvider();
-		$this->providers   = apply_filters( 'brizy_providers', $this->providers, null );
-	}
+    /**
+     * @var array
+     */
+    static private $cache_grouped_placeholders = null;
+    static private $cache_all_placeholders = null;
 
-	/**
-	 * @return array
-	 */
-	public function getGroupedPlaceholders() {
-		if ( self::$cache_grouped_placeholders ) {
-			return self::$cache_grouped_placeholders;
-		}
+    /**
+     * BrizyPro_Content_ProviderPlaceholders constructor.
+     *
+     * $context: for back compatibility
+     *
+     * @param Brizy_Content_Context $context
+     */
+    private function __construct($context = null)
+    {
+        $this->providers[] = new Brizy_Content_Providers_FreeProvider();
+        $this->providers = apply_filters('brizy_providers', $this->providers, null);
+    }
 
-		$result = array();
+    static public function getInstance($context = null)
+    {
+        if (self::$instance === null) {
+            self::$instance = new self($context);
+        }
 
-		foreach ( $this->providers as $provider ) {
+        return self::$instance;
+    }
 
-			foreach ( $provider->getPlaceholders() as $placeholder ) {
+    /**
+     * @return array
+     */
+    public function getGroupedPlaceholders()
+    {
+        if (self::$cache_grouped_placeholders) {
+            return self::$cache_grouped_placeholders;
+        }
 
-				if ( $placeholder->getGroup() ) {
-					$result[ $placeholder->getGroup() ][] = $placeholder;
-				}
-			}
-		}
+        $result = array();
 
-		return apply_filters( 'brizy_placeholders', self::$cache_grouped_placeholders = $result );
-	}
+        foreach ($this->providers as $provider) {
 
-	public function getGroupedPlaceholdersForApiResponse() {
-		$groups = $this->getGroupedPlaceholders();
-		$result = [];
-		foreach ( $groups as $group => $entries ) {
-			$result[ $group ] = array_map( function ( PlaceholderInterface $entry ) {
-				return apply_filters( 'editor_placeholder_data', $entry->getConfigStructure(), $entry );
-			}, $entries );
-		}
+            foreach ($provider->getPlaceholders() as $placeholder) {
 
-		return $result;
-	}
+                if ($placeholder->getGroup()) {
+                    $result[$placeholder->getGroup()][] = $placeholder;
+                }
+            }
+        }
 
-	/**
-	 * @inheritDoc
-	 */
-	public function getPlaceholderSupportingName( $name ) {
-		foreach ( $this->providers as $provider ) {
-			if ( $instance = $provider->getPlaceholderSupportingName( $name ) ) {
-				return $instance;
-			}
-		}
-	}
+        return apply_filters('brizy_placeholders', self::$cache_grouped_placeholders = $result);
+    }
 
-	public function registerPlaceholder( PlaceholderInterface $instance ) {
-		throw new Exception( 'Try to use a specific registry to register the placeholder' );
-	}
+    public function getGroupedPlaceholdersForApiResponse()
+    {
+        $groups = $this->getGroupedPlaceholders();
+        $result = [];
+        foreach ($groups as $group => $entries) {
+            $result[$group] = array_map(function (PlaceholderInterface $entry) {
+                return apply_filters('editor_placeholder_data', $entry->getConfigStructure(), $entry);
+            }, $entries);
+        }
 
-	public function registerPlaceholderName( string $placeholderName, callable $factory ) {
-		throw new Exception( 'Try to use a specific registry to register the placeholder' );
-	}
+        return $result;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getPlaceholderSupportingName($name)
+    {
+        foreach ($this->providers as $provider) {
+            if ($instance = $provider->getPlaceholderSupportingName($name)) {
+                return $instance;
+            }
+        }
+    }
+
+    public function registerPlaceholder(PlaceholderInterface $instance)
+    {
+        throw new Exception('Try to use a specific registry to register the placeholder');
+    }
+
+    public function registerPlaceholderName(string $placeholderName, callable $factory)
+    {
+        throw new Exception('Try to use a specific registry to register the placeholder');
+    }
 }

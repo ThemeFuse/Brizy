@@ -1,15 +1,30 @@
 <?php
 
-class Brizy_Content_Providers_GlobalBlockProvider extends Brizy_Content_Providers_AbstractProvider {
-	public function __construct() {
+class Brizy_Content_Providers_GlobalBlockProvider extends Brizy_Content_Providers_AbstractProvider
+{
+    /**
+     * @var Brizy_Content_Providers_GlobalBlockProvider
+     */
+    private static $instance;
 
-		$this->registerPlaceholderName( 'brizy_dc_global_block', function ( $name ) {
-			return new Brizy_Content_Placeholders_GlobalBlock( __( 'Brizy Global Block', 'brizy' ), $name );
-		} );
+    static public function getInstance($context = null)
+    {
+        if (self::$instance === null) {
+            self::$instance = new self($context);
+        }
 
-		$this->registerPlaceholderName( 'group', function ( $name ) {
-			return new Brizy_Content_Placeholders_GroupPlaceholder();
-		} );
+        return self::$instance;
+    }
 
-	}
+    public function __construct()
+    {
+        $this->registerPlaceholderName('brizy_dc_global_block', function ($name) {
+            return new Brizy_Content_Placeholders_GlobalBlock(__('Brizy Global Block', 'brizy'), $name);
+        });
+
+        $this->registerPlaceholderName('group', function ($name) {
+            return new Brizy_Content_Placeholders_GroupPlaceholder();
+        });
+
+    }
 }

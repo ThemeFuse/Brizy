@@ -73,7 +73,7 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/bagrinsergiu/brizy-content-placeholder.git",
-                "reference": "521b42b6d5b5c59f06fa051e0ce17350a519c0c2"
+                "reference": "36732b34d07d56172ff7edd24c30abe6df858ca6"
             },
             "require": {
                 "php": ">=7.1.0",
@@ -99,7 +99,7 @@
                 "content",
                 "placeholders"
             ],
-            "time": "2025-09-25T19:20:11+00:00"
+            "time": "2025-09-26T09:57:37+00:00"
         },
         {
             "name": "enshrined/svg-sanitize",
@@ -1453,6 +1453,6 @@
     "platform": {
         "php": ">=5.6"
     },
-    "platform-dev": {},
-    "plugin-api-version": "2.6.0"
+    "platform-dev": [],
+    "plugin-api-version": "2.2.0"
 }
