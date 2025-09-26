@@ -19,6 +19,7 @@ import {
   CreateIntegrationAccountData,
   CreateIntegrationListData,
   FormData as FormDataType,
+  IntegrationType,
   IntegrationAccountApiKeyResponse,
   IntegrationAccountResponse,
   IntegrationResponse,
@@ -2645,9 +2646,14 @@ export const getForm = async (formId: string): Promise<FormDataType> => {
   });
 
   const { status, success, data } = await getResponseData(r);
-
   if (success) {
-    return data;
+    return { 
+      ...data, 
+      integrationList: data.integrations.map((integration: IntegrationType) => ({
+        ...integration,
+        type: integration.id
+      }))
+    };
   }
 
   if (status === 404) {
