@@ -2647,7 +2647,7 @@ export const getForm = async (formId: string): Promise<FormDataType> => {
   const { status, success, data } = await getResponseData(r);
 
   if (success) {
-    return data;
+    return { ...data, integrationList: data.integrations };
   }
 
   if (status === 404) {
