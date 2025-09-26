@@ -12,6 +12,7 @@ class Brizy_Admin_Ai_Api
     const AJAX_GENERATE_TEMPLATE = '_ai_generate_template';
     const AJAX_IMPORT_DELETE     = '_ai_import_delete';
     const AJAX_IMPORT_KEEP       = '_ai_import_keep';
+    const AJAX_SEND_PROJECT      = '_ai_send_project';
 
     public static function _init()
     {
@@ -37,11 +38,13 @@ class Brizy_Admin_Ai_Api
         $generateTemplate = $pref.self::AJAX_GENERATE_TEMPLATE;
         $importDelete     = $pref.self::AJAX_IMPORT_DELETE;
         $importKeep       = $pref.self::AJAX_IMPORT_KEEP;
+        $sendProject      = $pref.self::AJAX_SEND_PROJECT;
 
         add_action($createSession, array($this, 'aiCreateSession'));
         add_action($generateTemplate, array($this, 'aiGenerateTemplate'));
         add_action($importDelete, array($this, 'aiImportDelete'));
         add_action($importKeep, array($this, 'aiImportKeep'));
+        add_action($sendProject, array($this, 'aiSendProject'));
     }
 
     private function getLicenseKey()
@@ -274,7 +277,8 @@ class Brizy_Admin_Ai_Api
         }
         $projectData['styles'] = $keepProjectDataStyles;
 
-        $mergeProjectDataFontsBlocks = array_merge($projectData['fonts']['blocks']['data'], $bodyProjectData['fonts']['blocks']['data']);
+        $mergeProjectDataFontsBlocks = array_merge($projectData['fonts']['blocks']['data'],
+            $bodyProjectData['fonts']['blocks']['data']);
         $keepProjectDataFontsBlocks  = [];
         $idsProjectDataFontsBlocks   = [];
         foreach ($mergeProjectDataFontsBlocks as $fontsBlocks) {
@@ -285,7 +289,8 @@ class Brizy_Admin_Ai_Api
         }
         $projectData['fonts']['blocks']['data'] = $keepProjectDataFontsBlocks;
 
-        $mergeProjectDataFontsConfig = array_merge($projectData['fonts']['config']['data'], $bodyProjectData['fonts']['config']['data']);
+        $mergeProjectDataFontsConfig = array_merge($projectData['fonts']['config']['data'],
+            $bodyProjectData['fonts']['config']['data']);
         $keepProjectDataFontsConfig  = [];
         $idsProjectDataFontsConfig   = [];
         foreach ($mergeProjectDataFontsConfig as $fontsConfig) {
@@ -297,7 +302,8 @@ class Brizy_Admin_Ai_Api
         $projectData['fonts']['config']['data'] = $keepProjectDataFontsConfig;
 
         if ($projectData['fonts']['google']['data'] && $bodyProjectData['fonts']['google']['data']) {
-            $mergeProjectDataFontsGoogle = array_merge($projectData['fonts']['google']['data'], $bodyProjectData['fonts']['google']['data']);
+            $mergeProjectDataFontsGoogle = array_merge($projectData['fonts']['google']['data'],
+                $bodyProjectData['fonts']['google']['data']);
             $keepProjectDataFontsGoogle  = [];
             $idsProjectDataFontsGoogle   = [];
             foreach ($mergeProjectDataFontsGoogle as $fontsGoogle) {
@@ -391,6 +397,37 @@ class Brizy_Admin_Ai_Api
             foreach ($existing_pages as $existing_page_id) {
                 wp_delete_post($existing_page_id, true);
             }
+        }
+    }
+
+    private function aiSendProject()
+    {
+        try {
+            $data = Brizy_Editor_Project::get()->createResponse();
+
+            $url = 'http://172.0.1.8000/api/set-project/1234-test';
+
+            $httpClient = new Brizy_Editor_Http_Client();
+
+            $options = [
+                'body' => json_encode(['data' => $data]),
+                'headers' => [
+                    'Content-Type' => 'application/json',
+                ],
+            ];
+
+            $response = $httpClient->request($url, $options, 'POST');
+
+            $responseBody = $response->get_response_body();
+
+            if ($responseBody) {
+                wp_send_json_success($responseBody);
+            } else {
+                wp_send_json_error('No response received from the external API.', 500);
+            }
+
+        } catch (Exception $e) {
+            wp_send_json_error('Error sending project data to the API: ' . $e->getMessage(), 500);
         }
     }
 

@@ -255,11 +255,41 @@ document.addEventListener('DOMContentLoaded', function () {
         const responseString = buttonElement.dataset.response;
         const responseData = JSON.parse(responseString);
 
-        saveContentType('keep');
+        loadingModal(
+            Brizy_Admin_Data.l10n.aiSendingProjectTitle,
+            Brizy_Admin_Data.l10n.aiSendingProjectDesc
+        );
 
-        let aiUrl = responseData.data.aiUrl + '/wp-admin/admin.php?page=starter-templates';
+        const ajaxData = {
+            action: Brizy_Admin_Data.aiPrefix + Brizy_Admin_Data.aiActions.sendProject,
+            hash: Brizy_Admin_Data.aiNonce,
+        };
 
-        window.location.href = aiUrl;
+        fetch(Brizy_Admin_Data.url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: new URLSearchParams(ajaxData)
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`${response.status}`);
+                }
+                return response.json();
+            })
+            .then(response => {
+                if (response && response.success) {
+                    saveContentType('keep');
+                    let aiUrl = responseData.data.aiUrl + '/wp-admin/admin.php?page=starter-templates';
+                    window.location.href = aiUrl;
+                } else {
+                    errorModal();
+                }
+            })
+            .catch(error => {
+                errorModal();
+            });
     }
 
     function saveContentType(type) {
