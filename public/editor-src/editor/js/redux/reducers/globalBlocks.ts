@@ -16,6 +16,7 @@ import {
   isPopup
 } from "visual/utils/blocks";
 import { getModelPopups } from "visual/utils/blocks/getModelPopups";
+import { DELETE_GLOBAL_BLOCK } from "../actions";
 import { ActionTypes, ReduxAction } from "../actions2";
 import { ReduxState } from "../types";
 
@@ -275,11 +276,11 @@ export const globalBlocks: RGlobalBlocks = (state = {}, action, allState) => {
         draft[id].rules = rules;
       });
     }
-    case "DELETE_GLOBAL_BLOCK": {
+    case DELETE_GLOBAL_BLOCK: {
       const { id } = action.payload;
 
       return produce(state, (draft) => {
-        draft[id].data.deleted = true;
+        delete draft[id];
       });
     }
 
@@ -311,7 +312,7 @@ export const globalBlocks: RGlobalBlocks = (state = {}, action, allState) => {
             block.data.type === "SectionPopup" ||
             block.data.type === "SectionPopup2";
 
-          draft.dependencies = getModelPopups(draft.data)
+          draft.dependencies = getModelPopups(draft.data, allGlobalBlocks)
             .filter((block) => block.type === "GlobalBlock")
             .map((b) => b.value._id);
 

@@ -36,12 +36,17 @@ export const getDevices = (isStory: boolean): Devices | StoryDevices =>
         mobile: 767
       };
 
-const getLoopCases = (withHover?: boolean): LoopCases => [
-  { device: DESKTOP, state: NORMAL },
-  ...(withHover ? ([{ device: DESKTOP, state: HOVER }] as LoopCases) : []),
-  { device: TABLET, state: NORMAL },
-  { device: MOBILE, state: NORMAL }
-];
+const getLoopCases = (isStory: boolean, withHover?: boolean): LoopCases =>
+  isStory
+    ? [{ device: DESKTOP, state: NORMAL }]
+    : [
+        { device: DESKTOP, state: NORMAL },
+        ...(withHover
+          ? ([{ device: DESKTOP, state: HOVER }] as LoopCases)
+          : []),
+        { device: TABLET, state: NORMAL },
+        { device: MOBILE, state: NORMAL }
+      ];
 
 export const renderStyles = <T extends ElementModel = ElementModel>(
   data: RenderStylesData<T>
@@ -76,7 +81,9 @@ function loopStyles<T extends ElementModel = ElementModel>({
 
   const { renderContext, mode: editorMode, getConfig } = contexts;
 
-  getLoopCases().forEach(({ device, state }) => {
+  const isStoryMode = isStory(editorMode);
+
+  getLoopCases(isStoryMode).forEach(({ device, state }) => {
     const isDesktop = device === DESKTOP;
 
     Object.entries(styles).forEach(function ([selector, styleValue]) {
@@ -320,8 +327,9 @@ function cssOutput<T extends ElementModel = ElementModel>({
 
   const result: CSSOutputResult = {} as CSSOutputResult;
 
-  const devices = getDevices(isStory(editorMode));
-  const loopCases = getLoopCases(true);
+  const isStoryMode = isStory(editorMode);
+  const devices = getDevices(isStoryMode);
+  const loopCases = getLoopCases(isStoryMode, true);
 
   Object.entries(cssData).forEach(([modelType, currentCSSData]) => {
     goout = "";

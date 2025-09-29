@@ -1,4 +1,5 @@
 import { AnimatedHeadline } from "@brizy/builder-icons/src/Icons/AnimatedHeadline";
+import { Cancel } from "@brizy/builder-icons/src/Icons/Cancel";
 import { Chart } from "@brizy/builder-icons/src/Icons/Chart";
 import { EditMenuItem } from "@brizy/builder-icons/src/Icons/EditMenuItem";
 import { InstagramFeed } from "@brizy/builder-icons/src/Icons/InstagramFeed";
@@ -78,7 +79,8 @@ const Icons = {
   "t2-reorder": Reorder,
   "t2-chart": Chart,
   "t2-animated-headline": AnimatedHeadline,
-  "t2-edit-menu-item": EditMenuItem
+  "t2-edit-menu-item": EditMenuItem,
+  "t2-cancel": Cancel
 };
 
 export type IconNames = keyof typeof Icons;

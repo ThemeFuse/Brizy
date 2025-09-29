@@ -46,6 +46,7 @@ export const BoxShadow = ({
   onChange,
   value,
   className,
+  label,
   config
 }: Props): ReactElement => {
   const dispatch = useDispatch();
@@ -151,14 +152,17 @@ export const BoxShadow = ({
   );
 
   return (
-    <ShadowControl
-      opacity={opacity ?? true}
-      className={_className}
-      value={_value}
-      onChange={onValueChange}
-      types={types}
-      palette={palette}
-      paletteOpenSettings={enableGlobalStyle ? openPaletteSidebar : undefined}
-    />
+    <>
+      {label}
+      <ShadowControl
+        opacity={opacity ?? true}
+        className={_className}
+        value={_value}
+        onChange={onValueChange}
+        types={types}
+        palette={palette}
+        paletteOpenSettings={enableGlobalStyle ? openPaletteSidebar : undefined}
+      />
+    </>
   );
 };

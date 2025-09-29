@@ -193,7 +193,7 @@ export const addBreakpointForStandart = (
   const tabletWidth = (devices as Devices)?.[TABLET];
   const mobileWidth = (devices as Devices)?.[MOBILE];
 
-  if (device === DESKTOP && state === HOVER) {
+  if (device === DESKTOP && state === HOVER && tabletWidth) {
     return `@media(min-width:${tabletWidth}px){`;
   }
 

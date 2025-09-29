@@ -581,6 +581,7 @@ export const pageDataNoRefsSelector = createSelector(
 
 export const popupBlocksInPageSelector = createSelector(
   pageDataDraftBlocksSelector,
+  globalBlocksAssembledSelector,
   getModelPopups
 );
 

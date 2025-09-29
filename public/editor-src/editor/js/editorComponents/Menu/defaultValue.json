@@ -39,6 +39,14 @@
     "bgPopulationEntityType": "",
     "bgPopulationEntityId": "",
 
+    "tabletBgPopulation": null,
+    "tabletBgPopulationEntityType": null,
+    "tabletBgPopulationEntityId": null,
+
+    "mobileBgPopulation": null,
+    "mobileBgPopulationEntityType": null,
+    "mobileBgPopulationEntityId": null,
+
     "media": "image",
 
     "bgPositionX": 50,

@@ -12,6 +12,12 @@
   }
 }
 
+.brz-ed-option-type__colorPicker {
+  .brz-ed-option__label {
+    display: none;
+  }
+}
+
 //Global Styles
 .brz-ed-option__colorPicker__global__styles {
   padding: 0 15px;

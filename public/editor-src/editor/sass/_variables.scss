@@ -21,6 +21,7 @@ $black-6: #121419;
 $black-7: #141923;
 $black-8: #000001;
 $black-9: #212733;
+$black-10: rgba(3, 8, 15, 0.92);
 $blue: #0000ff;
 $blue-1: #0085ba;
 $blue-2: #3ebfe8;
@@ -78,6 +79,7 @@ $gray-27: #999;
 $gray-28: #616569;
 $gray-29: #5c6065;
 $gray-30: #2a2e37;
+$gray-31: rgba(129, 138, 145, .6);
 $pink: #ed2164;
 $pink-1: #fd7e7e;
 $pink-2: #f88b8b;
@@ -135,7 +137,7 @@ $picker2__pointer_tooltip-color: var(
 );
 $picker2__pointer_tooltip-bg: var(
   --picker2__pointer_tooltip-bg,
-  rgba($black-1, 0.92)
+  $black-10
 );
 $picker2__pointer_tooltip-box-shadow: var(
   --picker2__pointer_tooltip-box-shadow,
@@ -193,7 +195,7 @@ $popover__tabs-border--active: var(--active-color, $blue-21);
 $popover__tabs_left-color: var(--popover__tabs_left-color, $white);
 $popover__tabs_left-color--active: var(--active-color, $blue-21);
 $popover__tabs_left-bg: var(--popover__tabs_left-bg, rgba($blue-24, 0.92));
-$popover__tabs_left-bg--active: var(--inputs-bg, rgba($black-1, 0.92));
+$popover__tabs_left-bg--active: var(--ui-main-color, $black-10);
 $popover__tabs_left-box-shadow: var(
   --popover__tabs_left-box-shadow,
   rgba($black, 0.5)
@@ -256,9 +258,9 @@ $z-indexes: (
   "brz-ed-fixed": 1100,
   "popup-overlay": 1080,
   "toolbar": 1070,
+  "sidebar": 1064,
   "bottom-panel": 1065,
   "sidebar-addable": 1063,
-  "sidebar": 1060,
   "toolbar-collapsible": 1057,
   "section-menu": 1055,
   "section-menu-opened": 1056,
@@ -295,6 +297,7 @@ $section__padding-bg--hover: var(
 
 // Sidebar colors
 $sidebar-bg: var(--ui-main-color, $black-7);
+$sidebar-separator-bg: var(--sidebar-separators, #424951);
 $sidebar__item__separator-border: var(
   --toolbars-icons-separators,
   rgba($white, 0.1)
@@ -315,7 +318,7 @@ $sidebar__btn-bg: var(--sidebar__btn-bg, $green-1);
 $right_sidebar__icon-color: var(--icons-color, $white);
 $right_sidebar__icon-color--hover: var(--active-color, $blue-21);
 $right_sidebar__tooltip-color: var(--right_sidebar__tooltip-color, $white);
-$right_sidebar__tooltip-bg: var(--right_sidebar__tooltip-bg, $gray-5);
+$right_sidebar__tooltip-bg: var(--right_sidebar__tooltip-bg, $black-10);
 $right_sidebar__tooltip-box-shadow: var(
   --right_sidebar__tooltip-box-shadow,
   rgba($black-8, 0.15)
@@ -350,7 +353,7 @@ $left_sidebar__elements-border: var(--borders, $gray-13);
 $left_sidebar__elements__content-color: var(--text-labels, rgba($white, 0.6));
 $left_sidebar__elements__tooltips-bg: var(
   --left_sidebar__elements__tooltips-bg,
-  $gray-5
+  $black-10
 );
 $left_sidebar__elements__tooltips-color: var(
   --left_sidebar__elements__tooltips-color,
@@ -366,7 +369,7 @@ $left_sidebar__elements__tooltips__arrow-border: var(
 );
 $left_sidebar__elements__tooltips__arrow-border-top-color: var(
   --left_sidebar__elements__tooltips__arrow-border-top-color,
-  $gray-5
+  $black-10
 );
 $left_sidebar__main__search-border-bottom-color: var(
   --sidebar-separators,
@@ -402,7 +405,7 @@ $sidebar__edit__checked__icon-bg: var(
   --sidebar__edit__checked__icon-bg,
   $blue-1
 );
-$sidebar__edit__unchecked-bg: var(--sidebar__edit__unchecked-bg, $black);
+$sidebar__edit__unchecked-bg: var(--sidebar-separators, $black);
 $sidebar__edit__unchecked-border: var(
   --sidebar__edit__unchecked-border,
   rgba($gray-19, 0.6)
@@ -453,13 +456,14 @@ $notification_error: var(--notification_error, $red);
 // Toolbar
 //
 // Colors
-$toolbar-bg: var(--ui-main-color, rgba($black-1, 0.92));
+$toolbar-bg: var(--ui-main-color, $black-10);
 $toolbar-border: var(--toolbars-icons-separators, rgba($white, 0.15));
 $toolbar-box-shadow: $shadows;
 $toolbar__item-color: var(--icons-color, $white);
 $toolbar__item-color--hover: var(--active-color, $blue-21);
-$toolbar__badge-color: var(--toolbar__badge-color, $white);
-$toolbar__badge-bg: var(--toolbar__badge-bg, $blue-21);
+$toolbar__badge-color: var(--ui-main-color, $white);
+$selection-color: var(--ui-main-color, $white);
+$toolbar__badge-bg: var(--active-color, $blue-21);
 $toolbar__popover_tooltip-color: var(
   --toolbar__popover_tooltip-color,
   $blue-21
@@ -603,19 +607,13 @@ $bottom_panel__popover-border: var(
 
 // Right Toolbar
 $right_toolbar__display__condition__icon-color: var(
-  --right_toolbar__display__condition__icon-color,
+  --ui-main-color,
   $black-1
 );
-$right_toolbar__display__condition__icon-bg: var(
-  --right_toolbar__display__condition__icon-bg,
-  $blue-21
-);
-$right_toolbar__display__condition__icon-bg--hover: var(--active-color, $white);
-$right_toolbar__display__condition-color: var(
-  --right_toolbar__display__condition-color,
-  $blue-21
-);
-$right_toolbar__display__condition-color--hover: var(--active-color, $white);
+$right_toolbar__display__condition__icon-bg: var(--active-color, $blue-21);
+$right_toolbar__display__condition__icon-bg--hover: var(--text-labels, $white);
+$right_toolbar__display__condition-color: var(--active-color, $blue-21);
+$right_toolbar__display__condition-color--hover: var(--text-labels, $white);
 
 // Right toolbar loader
 $right_toolbar__make_global__loader-color: var(
@@ -648,7 +646,7 @@ $toolbar_tooltip__typo-width-no-population: 425px;
 // Bottom Toolbar Color
 $bottom_toolbar-color: var(--icons-color, $white);
 $bottom_toolbar-color--active: var(--active-color, $blue-21);
-$bottom_toolbar-bg: var(--ui-main-color, rgba($black-1, 0.92));
+$bottom_toolbar-bg: var(--ui-main-color, $black-10);
 $bottom_toolbar-border: var(--toolbars-icons-separators, rgba($white, 0.15));
 $bottom_toolbar-box-shadow: $shadows;
 $bottom_toolbar__btn-border: unquote(
@@ -703,8 +701,8 @@ $focal_point__before-bg: var(--focal_point__before-bg, rgba($black, 0.3));
 $focal_point__upload-bg: var(--inputs-bg, $gray-6);
 $focal_point__upload-color: var(--input-placeholder-text, rgba($gray-7, 0.6));
 $focal_point__upload-color--hover: var(--active-color, $gray-7);
-$focal_point__delete-color: var(--focal_point__delete-color, $white);
-$focal_point__delete-bg: var(--focal_point__delete-bg, $gray-6);
+$focal_point__delete-color: var(--sidebar-separators, $white);
+$focal_point__delete-bg: var(--icons-color, $gray-6);
 $focal_point-size: 18px;
 $focal_point-width: 140px;
 $focal_point-height: 93px;
@@ -804,16 +802,28 @@ $file__upload__icon-color--hover: var(--active-color, $gray-7);
 $file__upload__file__name-color: var(--text-labels, $white);
 $file__upload__file__name__icon-color: var(--icons-color, $black-4);
 
+// Checkbox
+$multiSelect2__option-checkbox: var(--sidebar-separators, #5b6068);
+
+// Icon Setter
+$icon_setter__box-bg: var(--inputs-bg);
+$icon_setter__box-border: var(--borders);
+
+// Sidebar
+$sidebar__cloud-icon--connect-background: var(--sidebar-background, $gray-30);
+
 // Switch
 $switch-bg: var(--inputs-bg, $gray-1);
 $switch-box-shadow: var(--switch-box-shadow, rgba($black, 0.38));
-$switch__icon-color: var(--switch__icon-color, rgba($black-6, 0.7));
+$switch__icon-color: var(--text-labels, rgba($black-6, 0.7));
+$switch__check__icon-color--sidebar: var(--sidebar-background, rgba($black-6, 0.7));
+$switch__check__icon-color--tooltip: var(--ui-main-color, rgba($black-6, 0.7));
 $switch__handle-bg: var(--switch__handle-bg, $white);
 $switch__handle-box-shadow: var(
   --switch__handle-box-shadow,
   rgba($white, 0.35)
 );
-$switch__handle__line-color: var(--switch__handle__line-color, $blue-9);
+$switch__handle__line-color: var(--active-color, $blue-9);
 $switch__checked-bg: var(--active-color, $blue-21);
 
 // Thumbnail from Block on the image
@@ -842,9 +852,11 @@ $thumbnail__block__loader-bg: var(
 // Input
 $input-bg: var(--inputs-bg, $gray-1);
 $input-color: var(--text-labels, $white);
+$input__bottom-control-categories-element-placeholder: var(--input-placeholder-text, #788189);
 $input__placeholder-color: var(--input-placeholder-text, rgba($blue-23, 0.2));
 
 // Extract Popover tooltip colors
+$tooltip__pro-content__text-color: var(--text-labels, rgba($white, 0.8));
 $popover_tooltips__icon-color: var(
   --popover_tooltips__icon-color,
   rgba($gray-2, 0.35)
@@ -860,11 +872,11 @@ $popover_tooltips__helper__overlay-bg: var(
 $popover_tooltips__helper__overlay-box-shadow: $shadows;
 $popover_tooltips__helper__content-color: var(
   --popover_tooltips__helper__content-color,
-  rgba($white, 0.8)
+  $white
 );
 $popover_tooltips__helper__content-bg: var(
   --popover_tooltips__helper__content-bg,
-  rgba($gray-1, 0.92)
+  $black-10
 );
 
 //Slider control
@@ -909,6 +921,10 @@ $popup__select-border-radius: 4px;
 
 // Popup Integrations Header
 $popup__header__tabs-bg: var(--sidebar-background, $gray-4);
+$popup__block__title-color: var(--ui-main-color, $black-10);
+$popup__block__action-color: var(--ui-main-color, #2c3039);
+$popup__block__dropdown-item-color: var(--ui-main-color, $black);
+$popup__block__dropdown-placeholder-color: unquote("rgb(from var(--ui-main-color, #000) r g b / 0.83)");
 $popup__header__tabs__item-bg: unquote(
   "rgb(from var(--sidebar-header, #292e37) r g b / 0.5)"
 );
@@ -918,7 +934,7 @@ $popup__header__tabs__btn-color: var(
   $gray-22
 );
 $popup__header__tabs__btn-color--hover: var(
-  --popup__header__tabs__btn__close-color--hover,
+  --icons-color,
   $white
 );
 $popup__header__tabs__item-color: unquote(
@@ -1138,4 +1154,8 @@ $addable__sidebar__add_button--active: var(
   --addable__sidebar__add_button--active,
   $blue-21
 );
+//#endregion
+
+//#region Textarea
+$textarea-placeholder-color: var(--input-placeholder-text, $white);
 //#endregion

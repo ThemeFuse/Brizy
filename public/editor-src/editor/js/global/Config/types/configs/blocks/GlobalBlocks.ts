@@ -20,6 +20,7 @@ export interface Extra {
 
 export interface APIGlobalBlocks {
   create?: (res: Response<Block>, rej: Response<string>, extra: Block) => void;
+  delete?: (res: Response<Block>, rej: Response<string>, uid: string) => void;
 }
 
 //#endregion

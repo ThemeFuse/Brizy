@@ -2,6 +2,7 @@ import { produce } from "immer";
 import { BlockHtmlWithId, PublishedBlockHtml } from "visual/types/Block";
 import { generateBlocksList } from "visual/utils/blocks";
 import { getModelPopups } from "visual/utils/blocks/getModelPopups";
+import { DELETE_GLOBAL_BLOCK } from "../actions";
 import { ActionTypes, ReduxAction } from "../actions2";
 import {
   blocksOrderSelector,
@@ -83,7 +84,7 @@ export const blocksHtml: RBlocksHtml = (
 
         return items.find((b) => b.value._id === blockId);
       });
-      const popups = getModelPopups({ value: blockData });
+      const popups = getModelPopups({ value: blockData }, globalBlocks);
 
       popups.forEach((popup) => {
         const blockId = popup.value._id;
@@ -177,6 +178,14 @@ export const blocksHtml: RBlocksHtml = (
           },
           {} as BlocksHtml["blocks"]
         );
+      });
+    }
+
+    case DELETE_GLOBAL_BLOCK: {
+      const { id } = action.payload;
+
+      return produce(state, (draft) => {
+        delete draft.blocks[id];
       });
     }
 

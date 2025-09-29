@@ -4,6 +4,9 @@ import { Media } from "visual/global/Config/types/configs/ConfigCommon";
 import { ThirdPartyComponentsHosts } from "visual/global/Config/types/configs/ThirdParty";
 
 interface TempConfig {
+  project?: {
+    publicData?: string;
+  };
   thirdPartyComponentHosts?: ThirdPartyComponentsHosts;
   urls?: {
     templateIcons?: string;
@@ -60,14 +63,26 @@ const parseMediaResizeUrl = mPipe(
   Str.read
 );
 
+const parseProjectData = mPipe(
+  Obj.read,
+  Obj.readKey("project"),
+  Obj.read,
+  Obj.readKey("publicData"),
+  Str.read
+);
+
 export function getTempConfig(config: unknown): TempConfig {
   const thirdPartyComponentHosts = parse(config);
   const templateIcons = parseIcons(config);
   const compileTemplateIcons = parseCompileIcons(config);
   const mediaResizeUrl = parseMediaResizeUrl(config);
+  const projectPublicData = parseProjectData(config);
 
   return thirdPartyComponentHosts
     ? {
+        project: {
+          publicData: projectPublicData
+        },
         thirdPartyComponentHosts,
         urls: {
           templateIcons: templateIcons,

@@ -68,3 +68,18 @@ export const getTags = (data: Thumbnail[]): Array<Tag> => {
     editable: t !== ALL_CAT && t !== UNCATEGORISED_CAT
   }));
 };
+
+export const getRemoveConfirmationMessage = (
+  type: "used" | "unused"
+): string => {
+  switch (type) {
+    case "used":
+      return t(
+        "You are about to delete a global block that is still in use. Removing it could distort affected pages, so be sure you want to continue."
+      );
+    case "unused":
+      return t(
+        "Deleting this global block is permanent and cannot be undone. Proceed only if you are sure you no longer need it."
+      );
+  }
+};

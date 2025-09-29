@@ -34,6 +34,7 @@ import { Screenshot } from "visual/types/Screenshot";
 import { ExtraFontStyle } from "visual/types/Style";
 import { ArrayType } from "visual/utils/array/types";
 import { uuid } from "visual/utils/uuid";
+import { DELETE_GLOBAL_BLOCK } from "./actions";
 import { ReduxState, StoreChanged } from "./types";
 
 type UIState = ReduxState["ui"];
@@ -142,7 +143,7 @@ export type ActionAddGlobalBlock = {
 };
 
 export type ActionDeleteGlobalBlock = {
-  type: "DELETE_GLOBAL_BLOCK";
+  type: typeof DELETE_GLOBAL_BLOCK;
   payload: {
     id: string;
   };
@@ -860,7 +861,7 @@ export function deleteGlobalBlock({
   id: string;
 }): ActionDeleteGlobalBlock {
   return {
-    type: "DELETE_GLOBAL_BLOCK",
+    type: DELETE_GLOBAL_BLOCK,
     payload: {
       id
     }

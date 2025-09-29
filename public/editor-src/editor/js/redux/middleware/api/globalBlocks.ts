@@ -78,28 +78,5 @@ export function handleGlobalBlocks({
       apiAutoSave({ globalBlock }, config);
       break;
     }
-    case "DELETE_GLOBAL_BLOCK": {
-      const { id } = action.payload;
-      const globalBlocks = globalBlocksSelector(state);
-      const globalBlock = globalBlocks[id];
-      // @ts-expect-error Type Page is not assignable to type PageCommon
-      const page: PageCommon = pageSelector(state);
-      const project = projectSelector(state);
-      const data = {
-        store,
-        config,
-        needToCompile: {
-          globalBlocks: [globalBlock]
-        },
-        state: {
-          project,
-          page,
-          globalBlocks: Object.values(globalBlocks)
-        }
-      };
-
-      apiOnChange(data);
-      break;
-    }
   }
 }

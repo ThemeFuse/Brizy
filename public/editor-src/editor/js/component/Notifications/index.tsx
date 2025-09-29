@@ -1,5 +1,6 @@
 import classNames from "classnames";
-import React, { useCallback, useEffect } from "react";
+import { isFunction } from "es-toolkit";
+import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useTransitionState } from "react-transition-state";
 import EditorIcon from "visual/component/EditorIcon";
@@ -63,6 +64,8 @@ const NotificationCloseIcon: FCC<{ onClick: VoidFunction }> = ({ onClick }) => (
 );
 
 const Notification = () => {
+  const [loading, setLoading] = useState(false);
+
   const config = useConfig();
   const error = useSelector(errorSelector);
   const dispatch = useDispatch();
@@ -78,6 +81,18 @@ const Notification = () => {
       ToastNotification.error(t("Take over failed please refresh the page"));
     }
   }, [clearError, config.api, t]);
+
+  const handleDeleteGlobalBlock = useCallback(() => {
+    const handleRemove =
+      error?.code === ErrorCodes.REMOVE_GLOBAL_BLOCK
+        ? error.data.handleDelete
+        : undefined;
+
+    if (isFunction(handleRemove)) {
+      setLoading(true);
+      handleRemove({ onAfterResponse: () => setLoading(false) });
+    }
+  }, [error]);
 
   if (!error || !(error.code in ErrorCodes)) {
     return null;
@@ -200,6 +215,45 @@ const Notification = () => {
             </a>
           </NotificationFooter>
           <NotificationCloseIcon onClick={clearError} />
+        </NotificationContainer>
+      );
+    }
+    case ErrorCodes.REMOVE_GLOBAL_BLOCK: {
+      const {
+        data: { text }
+      } = error ?? {};
+
+      return (
+        <NotificationContainer>
+          <NotificationHeader>
+            <EditorIcon
+              icon="nc-warning"
+              className="brz-ed-notification__warning"
+            />
+          </NotificationHeader>
+          <NotificationContent>{text}</NotificationContent>
+          <NotificationFooter>
+            <button
+              className="brz-ed-notification__remove-gb--cancel"
+              onClick={clearError}
+            >
+              <EditorIcon icon="t2-cancel" />
+              {t("Cancel")}
+            </button>
+            <button
+              className="brz-button brz-ed-btn brz-ed-btn-blue brz-ed-btn-round brz-ed-btn-xs-2 brz-ed-notification__remove-gb--confirmation"
+              onClick={handleDeleteGlobalBlock}
+            >
+              {loading ? (
+                <EditorIcon
+                  icon="nc-circle-02"
+                  className="brz-ed-animated--spin"
+                />
+              ) : (
+                t("Delete Anyway")
+              )}
+            </button>
+          </NotificationFooter>
         </NotificationContainer>
       );
     }

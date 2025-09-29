@@ -10,6 +10,14 @@ $background: $brand__options; // #5aaeca
 $switchTransition: 0.15s ease-out;
 $background-light-checked: #c7c9cd;
 
+.brz-ed-sidebar .brz-ed-control__switch--check {
+  color: $switch__check__icon-color--sidebar;
+}
+
+.brz-ed-tooltip__overlay .brz-ed-control__switch--check {
+  color: $switch__check__icon-color--tooltip;
+}
+
 // ---
 .brz-ed-control__switch {
   &-label {
@@ -42,7 +50,6 @@ $background-light-checked: #c7c9cd;
     transform: translateY(-50%);
     margin: 0;
     transition: inherit;
-    color: $switch__icon-color;
   }
 
   &--check {
@@ -54,6 +61,7 @@ $background-light-checked: #c7c9cd;
   &--un-check {
     // Close x
     right: 5px;
+    color: $switch__icon-color;
   }
 
   &--handle {
