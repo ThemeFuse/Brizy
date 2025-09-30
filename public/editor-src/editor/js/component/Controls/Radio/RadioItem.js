@@ -4,6 +4,7 @@ import React from "react";
 import EditorIcon from "visual/component/EditorIcon";
 import { ThemeIcon } from "visual/component/ThemeIcon";
 import Toolbar from "visual/component/Toolbar";
+import { makePlaceholder } from "visual/utils/dynamicContent";
 import { makeDataAttr } from "visual/utils/i18n/attribute";
 import { uuid } from "visual/utils/uuid";
 
@@ -76,12 +77,16 @@ export default class RadioItem extends React.Component {
       { "brz-control__radio-option--active": active },
       _className
     );
-    const id = uuid();
+    const uidPlaceholder = makePlaceholder({
+      content: "{{ random_id }}",
+      attr: { key: name }
+    });
+    const labelId = `${uuid()}_${uidPlaceholder}`;
 
     return (
       <div className={className} onClick={onClick}>
         <input
-          id={id}
+          id={labelId}
           className="brz-input"
           type="radio"
           name={name}
@@ -98,7 +103,7 @@ export default class RadioItem extends React.Component {
           })}
           onChange={() => {}}
         />
-        <label className="brz-label" htmlFor={id}>
+        <label className="brz-label" htmlFor={labelId}>
           <ThemeIcon
             className="brz-control__radio-icon brz-control__radio--check"
             type="editor"

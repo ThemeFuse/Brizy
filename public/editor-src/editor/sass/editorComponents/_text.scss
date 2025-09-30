@@ -328,13 +328,13 @@
     font-size: inherit;
   }
 
-  span {
+  span, .brz-rich-text-context-wrapper {
     display: inline-block;
     position: relative;
     z-index: 0;
   }
 
-  span::before {
+  span::before, .brz-rich-text-context-wrapper::before {
     content: "";
     position: absolute;
     top: 0;

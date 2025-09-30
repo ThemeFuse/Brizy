@@ -7,7 +7,8 @@ import {
   styleBgImage,
   styleBgPositionX,
   styleBgPositionY,
-  styleExportBgImage
+  styleExportBgImage,
+  styleExportBgImageWithoutCssVars
 } from "visual/utils/style2";
 import { defaultValueValue } from "../onChange";
 
@@ -51,6 +52,29 @@ export function cssStyleBgImageHover({
     : styleExportBgImage({ v, device, store, getConfig, state: "hover" });
 
   return bgImage ? `content: "";background-image:${bgImage};` : "";
+}
+
+export function cssStyleBgImageWithoutCssVars({
+  v,
+  device,
+  state,
+  renderContext,
+  getConfig,
+  store,
+  prefix = ""
+}) {
+  const bgImage = isEditor(renderContext)
+    ? styleBgImage({ v, device, state, store, getConfig, prefix })
+    : styleExportBgImageWithoutCssVars({
+        v,
+        device,
+        state,
+        store,
+        getConfig,
+        prefix
+      });
+
+  return `background-image:${bgImage};`;
 }
 
 export function cssStyleBgMediaImage({ v, device }) {

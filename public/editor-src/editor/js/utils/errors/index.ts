@@ -54,7 +54,8 @@ export enum ErrorCodes {
   HEART_BEAT_ERROR = 1, // polling
   PROJECT_LOCKED_ERROR = 2, // project uses from another user
   PROJECT_DATA_VERSION_ERROR = 3, // project data version
-  SYNC_ERROR = 4 // Shopify sync error
+  SYNC_ERROR = 4, // Shopify sync error,
+  REMOVE_GLOBAL_BLOCK = 5 // confirmation when user trying to remove global block
 }
 
 export const IRREPARABLE_ERRORS = [

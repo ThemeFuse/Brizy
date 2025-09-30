@@ -6,6 +6,7 @@ import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { isPopup, isStory } from "visual/providers/EditorModeProvider";
 import {
   deleteGlobalBlock,
+  updateError,
   updateGlobalBlockMetaData
 } from "visual/redux/actions2";
 import {
@@ -15,11 +16,13 @@ import {
 } from "visual/redux/selectors";
 import { ReduxState } from "visual/redux/types";
 import { BlockMetaType } from "visual/types/GlobalBlock";
+import { deleteGlobalBlock as apiDeleteGlobalBlock } from "visual/utils/api";
 import {
   blockThumbnailData,
   createGlobalBlockSymbol
 } from "visual/utils/blocks";
 import { isPro } from "visual/utils/env";
+import { ErrorCodes } from "visual/utils/errors";
 import { normalizeFonts } from "visual/utils/fonts/normalizeFonts";
 import { t } from "visual/utils/i18n";
 import {
@@ -29,6 +32,7 @@ import {
 import { Blocks } from "./Blocks";
 import { Info } from "./controls/Info";
 import { Props, State, StateToProps, Thumbnail } from "./types";
+import { getRemoveConfirmationMessage } from "./utils";
 
 const mapState = (state: ReduxState): StateToProps => ({
   globalBlocks: globalBlocksAssembledSelector(state),
@@ -39,7 +43,8 @@ const mapState = (state: ReduxState): StateToProps => ({
 
 const mapDispatch = {
   deleteGlobalBlock,
-  updateGlobalBlockMetaData
+  updateGlobalBlockMetaData,
+  updateError
 };
 
 const connector = connect(mapState, mapDispatch);
@@ -113,7 +118,29 @@ class Global<T extends BlockMetaType> extends Component<_Props<T>> {
   };
 
   handleRemove = ({ uid }: Thumbnail): void => {
-    this.props.deleteGlobalBlock({ id: uid });
+    const { globalBlocks, config, updateError } = this.props;
+
+    const candidate = globalBlocks[uid];
+    const messageType = candidate?.rules.length > 0 ? "used" : "unused";
+
+    updateError({
+      code: ErrorCodes.REMOVE_GLOBAL_BLOCK,
+      data: {
+        text: getRemoveConfirmationMessage(messageType),
+        handleDelete: ({ onAfterResponse }) => {
+          apiDeleteGlobalBlock(uid, config)
+            .then(() => {
+              onAfterResponse();
+              updateError(null);
+              this.props.deleteGlobalBlock({ id: uid });
+            })
+            .catch((err) => {
+              onAfterResponse();
+              ToastNotification.error(err);
+            });
+        }
+      }
+    });
   };
 
   handleUpdate = (thumbnailData: Thumbnail): void => {

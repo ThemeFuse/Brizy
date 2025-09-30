@@ -35,19 +35,20 @@ export function styleDC(data: DynamicStylesProps<ElementModel>): OutputStyle {
         "cssStyleElementRichTextDCUppercase"
       ]
     },
-    ".brz &&:hover span": {
-      standart: [
-        "cssStyleElementRichTextDCColor",
-        "cssStyleElementRichTextDCGradient",
-        "cssStyleElementTitleTextShadow",
-        "cssStyleElementRichTextBgImage",
-        "cssStyleTypography3Script"
-      ]
-    },
-    ".brz &&.brz-rich-text__population span": {
+    ".brz && .brz-rich-text-context-wrapper, .brz && .brz-rich-text-context-wrapper :is(h1, h2, h3, h4, h5, h6)":
+      {
+        standart: [
+          "cssStyleElementRichTextDCColor",
+          "cssStyleElementRichTextDCGradient",
+          "cssStyleElementTitleTextShadow",
+          "cssStyleElementRichTextBgImage",
+          "cssStyleTypography3Script"
+        ]
+      },
+    ".brz &&.brz-rich-text__population .brz-rich-text-context-wrapper": {
       standart: ["cssStyleElementRichTextDCNumberOfLines"]
     },
-    ".brz &&:hover span::before": {
+    ".brz &&:hover .brz-rich-text-context-wrapper::before": {
       standart: [
         "cssStyleElementRichTextDCBackground",
         "cssStyleElementRichTextDCGradientBackground"

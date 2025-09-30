@@ -153,7 +153,7 @@ class ThirdParty extends EditorComponent<Value, Props> {
         return child;
       } else {
         const [toolbarData, ...rest] = toolbars;
-        const { selector, toolbar, sidebar } = toolbarData;
+        const { selector, toolbar, sidebar, toolbarPlacement } = toolbarData;
 
         const toolbarProps = this.makeToolbarPropsFromConfig2(
           { getItems: () => toolbar ?? [] },
@@ -161,7 +161,11 @@ class ThirdParty extends EditorComponent<Value, Props> {
         );
 
         const html = (
-          <Toolbar selector={selector} {...toolbarProps}>
+          <Toolbar
+            selector={selector}
+            placement={toolbarPlacement}
+            {...toolbarProps}
+          >
             {({ ref }) => {
               ref && toolbarsRefs.push(ref);
               return <>{child}</>;

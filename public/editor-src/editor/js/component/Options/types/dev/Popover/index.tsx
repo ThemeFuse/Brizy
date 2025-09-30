@@ -16,6 +16,7 @@ export const Popover: FCP<Props, ReactElement | null> = ({
   config,
   options,
   toolbar,
+  label,
   id
 }) => {
   const onOpenDirect = config?.onOpenDirect ?? false;
@@ -54,22 +55,25 @@ export const Popover: FCP<Props, ReactElement | null> = ({
   const pro = usePro();
 
   return options?.length ? (
-    <Control
-      title={config?.title}
-      trigger={getTrigger(config?.icon ?? "nc-cog")}
-      className={className}
-      placement={config?.placement ?? "top"}
-      size={config?.size ?? "medium"}
-      toolbar={toolbar}
-      clickOutsideExceptions={clickOutsideExceptions}
-    >
-      <Options
-        wrapOptions={false}
-        data={options}
+    <>
+      {label}
+      <Control
+        title={config?.title}
+        trigger={getTrigger(config?.icon ?? "nc-cog")}
+        className={className}
+        placement={config?.placement ?? "top"}
+        size={config?.size ?? "medium"}
         toolbar={toolbar}
-        isPro={pro}
-        upgradeToPro={cnfg?.urls?.upgradeToPro}
-      />
-    </Control>
+        clickOutsideExceptions={clickOutsideExceptions}
+      >
+        <Options
+          wrapOptions={false}
+          data={options}
+          toolbar={toolbar}
+          isPro={pro}
+          upgradeToPro={cnfg?.urls?.upgradeToPro}
+        />
+      </Control>
+    </>
   ) : null;
 };

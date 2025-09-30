@@ -1,5 +1,27 @@
 .brz-ed-control__icon-setter{
   .brz-icon-svg-custom {
-    background-color: $white;
+    background-color: $textarea-placeholder-color;
+  }
+
+  &:has(.brz-ed-control__focal-point__delete) .brz-icon-svg,
+  &--active {
+    color: $textarea-placeholder-color;
+  }
+
+  .brz-ed-control__focal-point__delete .brz-icon-svg {
+    color: $focal_point__delete-color;
+  }
+
+  &__box {
+    background-color: $icon_setter__box-bg;
+    border-color: $icon_setter__box-border;
+  }
+
+  &__box.brz-ed-control__icon-setter__box:not(:has(.brz-ed-control__focal-point__delete)):hover {
+    color: $brand__primary;
+  }
+
+  &__box.brz-ed-control__icon-setter__box:hover {
+    border-color: $brand__primary;
   }
 }

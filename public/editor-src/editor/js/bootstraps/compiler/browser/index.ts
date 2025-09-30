@@ -12,11 +12,7 @@ global.__VISUAL_CONFIG__ = {};
 
 class Core {
   async compile(data: string): Promise<Static> {
-    const {
-      project,
-      config: _config,
-      page
-    } = JSON.parse(data);
+    const { project, config: _config, page } = JSON.parse(data);
 
     // Load the pro components
     const proScriptUrl = getProScriptUrl(_config);

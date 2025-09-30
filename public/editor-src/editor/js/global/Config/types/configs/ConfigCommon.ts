@@ -821,6 +821,7 @@ interface _ConfigCommon<Mode> {
       locked: boolean;
       lockedBy: boolean | { user_email: string };
     };
+    publicData?: string;
   };
 
   container: {

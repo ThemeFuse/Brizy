@@ -181,11 +181,20 @@ type SyncError = {
   };
 };
 
+type RemoveGlobalBlockError = {
+  code: typeof ErrorCodes.REMOVE_GLOBAL_BLOCK;
+  data: {
+    text: string;
+    handleDelete: (data: { onAfterResponse: VoidFunction }) => void;
+  };
+};
+
 export type Error =
   | ProjectLockError
   | HeartBeatError
   | ProjectDataError
-  | SyncError;
+  | SyncError
+  | RemoveGlobalBlockError;
 
 //#endregion
 

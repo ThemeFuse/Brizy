@@ -371,7 +371,6 @@ export function getItemsMMenu({ v, device, state, context, component }) {
                   type: "imageUpload",
                   population: imageDynamicContentChoices,
                   config: {
-                    edit: device === "desktop",
                     disableSizes: isExternalImage,
                     pointer: !isExternalImage && isPointerEnabled
                   }

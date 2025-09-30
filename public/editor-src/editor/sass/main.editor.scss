@@ -47,3 +47,7 @@
 // Used for mapping CSS variables to brizy/ui elements
 @import "editor/brizy-ui/theme";
 @import "@brizy/ui/dist/core";
+
+.brz-ed ::selection {
+  color: $selection-color;
+}

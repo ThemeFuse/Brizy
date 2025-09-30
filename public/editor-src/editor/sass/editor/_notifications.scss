@@ -20,7 +20,7 @@
   &__body {
     max-width: 450px;
     min-height: 220px;
-    background-color: rgba(3, 8, 15, 0.92);
+    background-color: $black-10;
     border-radius: 7px;
     box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.5);
     font-family: $default-font-family;
@@ -66,6 +66,32 @@
     line-height: inherit;
     background: none;
     border: none;
+  }
+
+  &__remove-gb {
+    &--cancel {
+      display: flex;
+      align-items: center;
+      color: rgba(129, 138, 145, 1);
+      cursor: pointer;
+      outline: none;
+      font-family: inherit;
+      font-size: 14px;
+      font-weight: inherit;
+      line-height: inherit;
+      background: none;
+      border: none;
+      margin-right: 20px;
+
+      svg {
+        margin-right: 5px;
+      }
+    }
+
+    &--confirmation {
+      min-width: 128px;
+      min-height: 28px;
+    }
   }
 }
 

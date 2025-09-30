@@ -1,6 +1,7 @@
 import { Num } from "@brizy/readers";
 import { once } from "es-toolkit";
 import { mPipe, optional, parseStrict, pass } from "fp-utilities";
+import { JSX } from "react";
 import { ElementModelType2 } from "visual/component/Elements/Types";
 import {
   DCGroupCloud,
@@ -597,11 +598,30 @@ export const getFilteredPopups = (
     domPopups.some((popupId) => {
       const { _id } = value;
       if (type === "GlobalBlock" && typeof _id !== "undefined") {
-        const { value: blockValue } = blocksData[_id];
-        return `#${blockValue.popupId}` === popupId;
+        const { value: blockValue } = blocksData[_id] ?? {};
+
+        if (blockValue) {
+          return `#${blockValue.popupId}` === popupId;
+        }
       }
 
       return `#${value.popupId}` === popupId;
     })
   );
+};
+
+export const getTag = (value: string): keyof JSX.IntrinsicElements => {
+  switch (value) {
+    case "h1":
+    case "h2":
+    case "h3":
+    case "h4":
+    case "h5":
+    case "h6":
+    case "p":
+    case "pre":
+      return value;
+    default:
+      return "span";
+  }
 };

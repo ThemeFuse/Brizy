@@ -344,9 +344,10 @@ export function styleMMenu(data: DynamicStylesProps<Value>): OutputStyle {
     ".brz &&.brz-mm-menu .brz-mm-listitem_vertical .brz-mm-btn_next": {
       interval: ["cssStyleElementMMenuBtnNext"]
     },
-    ".brz &&.brz-mm-menu.brz-mm-menu_theme-dark .brz-mm-panels": {
-      standart: ["cssStyleElementMenuHamburgerBgImage"]
-    },
+    ".brz &&.brz-mm-menu.brz-mm-menu_theme-dark.brz-mm-menu_opened .brz-mm-panels":
+      {
+        standart: ["cssStyleElementMenuHamburgerBgImage"]
+      },
     ".brz &&.brz-mm-menu.brz-mm-menu_theme-dark .brz-mm-panels, .brz && .brz-mm-panels > .brz-mm-panel:before":
       {
         standart: [

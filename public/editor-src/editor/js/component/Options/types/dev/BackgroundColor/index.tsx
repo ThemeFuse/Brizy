@@ -28,6 +28,7 @@ export type Props = O.Props<Value> &
 export const BackgroundColor = ({
   value,
   onChange,
+  label,
   config
 }: Props): ReactElement => {
   const dispatch = useDispatch();
@@ -122,14 +123,17 @@ export const BackgroundColor = ({
   }, [globalConfig?.ui?.leftSidebar]);
 
   return (
-    <Bg
-      value={toBgControlValue(_value)}
-      onChange={_onChange}
-      paletteOpenSettings={enableGlobalStyle ? openSidebar : undefined}
-      palette={colorPalette}
-      opacity={config?.opacity ?? true}
-      withNone={config?.withNone ?? true}
-      gradientColors={[_value.hex, _value.gradientHex]}
-    />
+    <>
+      {label}
+      <Bg
+        value={toBgControlValue(_value)}
+        onChange={_onChange}
+        paletteOpenSettings={enableGlobalStyle ? openSidebar : undefined}
+        palette={colorPalette}
+        opacity={config?.opacity ?? true}
+        withNone={config?.withNone ?? true}
+        gradientColors={[_value.hex, _value.gradientHex]}
+      />
+    </>
   );
 };

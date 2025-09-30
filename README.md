@@ -4,7 +4,7 @@ Contributors: themefuse<br>
 Requires at least: 4.5<br>
 Tested up to: 6.8.2<br>
 Requires PHP: 7.2.24<br>
-Stable tag: 2.7.14<br>
+Stable tag: 2.7.15<br>
 License: GPLv3<br>
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -135,6 +135,13 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 [Privacy policy](https://brizy.io/privacy/)
 
 ## Changelog
+
+### 2.7.15 - 2025-09-30
+* New: Rich-Text – added tags support for dynamic content
+* New: Rich-Text – toolbar now toggles automatically while typing
+* New: Forms – dynamic IDs for checkboxes and radio fields
+* New: Third-Party – new toolbar placement option
+* Fixed: Colors – updated Brizy UI version to resolve styling issues
 
 ### 2.7.14 - 2025-09-04
 * New: Links – phone numbers and email addresses now automatically prepend tel: and mailto:

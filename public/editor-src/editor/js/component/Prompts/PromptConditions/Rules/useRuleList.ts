@@ -259,15 +259,26 @@ export default function useRuleList(
                 items[0] = updatedFirstItem;
               }
 
-              const existingItems = newRulesList[ruleIndex].items;
-              const updatedItems = existingItems
-                ? [
-                    mergeCollectionGroups(
-                      existingItems[0] as CmsListItem,
-                      items[0] as CmsListItem
-                    )
-                  ]
-                : items;
+              const existingItems = newRulesList[ruleIndex].items ?? [];
+
+              const existingItemsMap = new Map(
+                existingItems.map((item) => [item.value, item])
+              );
+
+              items.forEach((newItem) => {
+                const existingItem = existingItemsMap.get(newItem.value);
+                if (existingItem) {
+                  const mergedItem = mergeCollectionGroups(
+                    existingItem as CmsListItem,
+                    newItem as CmsListItem
+                  );
+                  existingItemsMap.set(newItem.value, mergedItem);
+                } else {
+                  existingItemsMap.set(newItem.value, newItem);
+                } 
+              });
+
+              const updatedItems = Array.from(existingItemsMap.values());
 
               newRulesList = setIn(
                 newRulesList,
@@ -399,13 +410,17 @@ async function fetchSelectedItem(
   collectionItemId: string | number,
   config: ConfigCommon
 ) {
-  const items = await getCollectionItemById(collectionItemId, config);
+  try {
+    const items = await getCollectionItemById(collectionItemId, config);
 
-  return items.map(({ id, title, status }) => ({
-    title: title,
-    value: id,
-    status
-  }));
+    return items.map(({ id, title, status }) => ({
+      title: title,
+      value: id,
+      status
+    }));
+  } catch (error) {
+    return [];
+  }
 }
 
 async function fetchRuleListItems(

@@ -105,7 +105,7 @@ const _systemFont = {
     const newConfig = {
       ...config,
       projectData: normalizedProject,
-      pageData: normalizePage(page, editorMode),
+      pageData: normalizePage(page, globalBlocks, editorMode),
       onLoad() {
         config.onLoad?.();
         pageCurtain?.parentElement?.removeChild(pageCurtain);

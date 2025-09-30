@@ -94,6 +94,12 @@ export default function ($node) {
         node.setAttribute("href", `#${newId}`);
         popup.setAttribute(makeAttr("popup"), newId);
         rootBody.append(popup);
+      } else {
+        node.classList.remove("link--popup");
+
+        if (!node.classList.contains("brz-btn")) {
+          node.classList.add("brz-cursor-auto");
+        }
       }
     });
 

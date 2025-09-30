@@ -125,7 +125,7 @@
 .brz-ed-tooltip-content__pro {
   font-family: $default-font-family;
   font-weight: 600;
-  color: rgba(255, 255, 255, 0.8);
+  color: $tooltip__pro-content__text-color;
   padding: 18px 18px 18px 22px;
   font-size: 13px;
   line-height: 18px;

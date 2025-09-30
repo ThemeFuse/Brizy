@@ -165,7 +165,10 @@
   &__option {
     padding: 15px 0;
 
-    .brz-ed-option-type__colorPicker {
+    &-type__popover .brz-ed-option-type__colorPicker,
+    &-type__popover .brz-ed-option-type__backgroundColor,
+    &-type__popover .brz-ed-option-type__textShadow,
+    &-type__popover .brz-ed-option-type__boxShadow {
       &,
       &-dev {
         padding: 15px;
@@ -197,6 +200,25 @@
             }
           }
         }
+      }
+    }
+
+    &-type__colorPicker,
+    &-type__backgroundColor,
+    &-type__textShadow,
+    &-type__boxShadow {
+      flex-direction: column;
+
+      .brz-ed-option__label {
+        display: block;
+        width: 100%;
+        margin-bottom: 10px;
+      }
+    }
+
+    &-type__popover {
+      .brz-ed-option__label {
+        display: block;
       }
     }
   }

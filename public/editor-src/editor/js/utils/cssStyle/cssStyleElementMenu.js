@@ -3,7 +3,7 @@ import {
   cssStyleBgColor,
   cssStyleBgColorHex,
   cssStyleBgGradient,
-  cssStyleBgImage,
+  cssStyleBgImageWithoutCssVars,
   cssStyleBorder,
   cssStyleBorderRadius,
   cssStyleBoxShadow,
@@ -1213,7 +1213,14 @@ export function cssStyleElementMenuHamburgerBgImage({
     return cssStyleElementMMenuDynamicImage({ v, device, state });
   }
 
-  return cssStyleBgImage({ v, device, state, store, getConfig, renderContext });
+  return cssStyleBgImageWithoutCssVars({
+    v,
+    device,
+    state,
+    store,
+    getConfig,
+    renderContext
+  });
 }
 
 export function cssStyleMenuCustomIconColor({

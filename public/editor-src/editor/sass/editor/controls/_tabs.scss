@@ -86,7 +86,10 @@
     width: 30px;
     height: 35px;
     background-color: $popover__tabs_left-bg;
-    box-shadow: 0 0 5px 0 $popover__tabs_left-box-shadow;
+    box-shadow:
+      -3px 0 5px -4px $popover__tabs_left-box-shadow,
+      -2px -4px 5px -4px $popover__tabs_left-box-shadow,
+      -2px 4px 5px -4px $popover__tabs_left-box-shadow;
     border-top-left-radius: 7px;
     border-bottom-left-radius: 7px;
     display: flex;

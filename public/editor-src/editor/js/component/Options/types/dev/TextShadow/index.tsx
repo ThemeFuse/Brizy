@@ -47,6 +47,7 @@ export const TextShadow = ({
   onChange,
   value,
   className,
+  label,
   config
 }: Props): ReactElement => {
   const dispatch = useDispatch();
@@ -149,14 +150,17 @@ export const TextShadow = ({
   const options = getOptions();
 
   return (
-    <ShadowControl<Palette, SelectType>
-      opacity={true}
-      className={_className}
-      value={shadowValue}
-      onChange={onValueChange}
-      palette={colorPalette}
-      paletteOpenSettings={enableGlobalStyle ? openPaletteSidebar : undefined}
-      options={options}
-    />
+    <>
+      {label}
+      <ShadowControl<Palette, SelectType>
+        opacity={true}
+        className={_className}
+        value={shadowValue}
+        onChange={onValueChange}
+        palette={colorPalette}
+        paletteOpenSettings={enableGlobalStyle ? openPaletteSidebar : undefined}
+        options={options}
+      />
+    </>
   );
 };

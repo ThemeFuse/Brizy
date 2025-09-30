@@ -123,7 +123,7 @@ class Brizy_Admin_Blocks_Main
      * This will not include the block that are include by uid with {{ brizy_dc_global_block }} placeholder
      * @return void
      */
-    public function enqueueMatchedGlobalBlockAssets(Brizy_Editor_Post $post = null)
+    public function enqueueMatchedGlobalBlockAssets($post = null)
     {
 //		if ( ! in_array( get_post_type( $id ), [ self::CP_GLOBAL, Brizy_Admin_Popups_Main::CP_POPUP ] ) ) {
 //			$matching_brizy_blocks = $this->getMatchingBrizyBlocks( get_post( $id ) );

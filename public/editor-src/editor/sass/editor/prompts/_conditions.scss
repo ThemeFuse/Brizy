@@ -60,6 +60,21 @@
     text-align: center;
     line-height: 350px;
   }
+  &__deleted-rule-notification {
+    background-color: #fefce8;
+    border: 1px solid #fde047;
+    border-radius: 6px;
+    padding: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 10px;
+  }
+  &__deleted-rule-notification-text {
+    color: #92400e;
+    font-size: 14px;
+    font-weight: 500;
+  }
 
   &__condition {
     padding: 15px 0;
@@ -273,7 +288,8 @@
   }
 }
 
-.brz-ed-popup-conditions__select > .brz-ed-popup-conditions__select-condition-group {
+.brz-ed-popup-conditions__select
+  > .brz-ed-popup-conditions__select-condition-group {
   .brz-ed-popup-conditions__select {
     justify-content: space-evenly;
   }

@@ -212,7 +212,7 @@ export const parseGlobalBlock = (
 
 //#region Parse GlobalBlocks
 
-interface BlockRecord {
+export interface BlockRecord {
   [key: string]: GlobalBlock;
 }
 
