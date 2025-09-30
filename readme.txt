@@ -4,7 +4,7 @@ Tags: page builder, website builder, brizy, editor, visual editor, unyson, wysiw
 Requires at least: 4.5
 Tested up to: 6.8.2
 Requires PHP: 7.2.24
-Stable tag: 2.7.14
+Stable tag: 2.7.15
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -136,6 +136,13 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 11. **Resize columns by dragging the handle that appears in between**
 
 == Changelog ==
+
+= 2.7.15 - 2025-09-30 =
+* New: Rich-Text – added tags support for dynamic content
+* New: Rich-Text – toolbar now toggles automatically while typing
+* New: Forms – dynamic IDs for checkboxes and radio fields
+* New: Third-Party – new toolbar placement option
+* Fixed: Colors – updated Brizy UI version to resolve styling issues
 
 = 2.7.14 - 2025-09-04 =
 * New: Links – phone numbers and email addresses now automatically prepend tel: and mailto:
