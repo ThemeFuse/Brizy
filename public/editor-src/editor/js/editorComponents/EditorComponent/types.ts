@@ -169,6 +169,7 @@ export interface ToolbarConfig {
   selector: string;
   toolbar?: ToolbarItemType[];
   sidebar?: ToolbarItemType[];
+  toolbarPlacement?: "top" | "bottom";
 }
 
 export interface ToolbarProps {

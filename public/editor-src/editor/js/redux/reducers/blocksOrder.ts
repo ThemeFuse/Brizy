@@ -1,6 +1,7 @@
 import { insert, removeAt, replaceAt } from "timm";
 import { generateBlocksList } from "visual/utils/blocks";
 import { isStory } from "visual/utils/models";
+import { DELETE_GLOBAL_BLOCK } from "../actions";
 import { ActionTypes, ReduxAction } from "../actions2";
 import { ReduxState } from "../types";
 
@@ -143,6 +144,12 @@ export const blocksOrder: RBlocksOrder = (state = [], action) => {
       }
 
       return state;
+    }
+
+    case DELETE_GLOBAL_BLOCK: {
+      const { id } = action.payload;
+
+      return state.filter((uid) => uid !== id);
     }
 
     default:

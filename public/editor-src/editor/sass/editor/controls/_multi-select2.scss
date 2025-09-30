@@ -117,11 +117,13 @@
       flex-shrink: 0;
       margin-right: 8px;
       font-size: 12px;
-      color: #5b6068;
+      color: $multiSelect2__option-checkbox;
+      border: 1px solid $gray-31;
     }
 
     &--active .brz-ed-control__multiSelect2__option-checkbox {
       color: $brand__primary;
+      border: 1px solid $brand__primary;
     }
 
     &-text {

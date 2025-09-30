@@ -47,6 +47,7 @@ export const ColorPicker = ({
   attr,
   onChange,
   value,
+  label,
   config
 }: Props): ReactElement => {
   const dispatch = useDispatch();
@@ -128,15 +129,18 @@ export const ColorPicker = ({
   );
 
   return (
-    <div {...attr} className={className}>
-      <ColorPicker3
-        value={value}
-        opacity={config?.opacity ?? true}
-        onChange={_onChange}
-        palette={palette}
-        paletteOpenSettings={enableGlobalStyle ? openLeftSidebar : undefined}
-      />
-      <ColorPickerInputs value={value.hex} onChange={onHexChange} />
-    </div>
+    <>
+      {label}
+      <div {...attr} className={className}>
+        <ColorPicker3
+          value={value}
+          opacity={config?.opacity ?? true}
+          onChange={_onChange}
+          palette={palette}
+          paletteOpenSettings={enableGlobalStyle ? openLeftSidebar : undefined}
+        />
+        <ColorPickerInputs value={value.hex} onChange={onHexChange} />
+      </div>
+    </>
   );
 };

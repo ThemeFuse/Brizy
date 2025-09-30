@@ -8,6 +8,7 @@ export enum BlockTypeRule {
 
 export interface AllRule {
   type: BlockTypeRule;
+  deleted?: boolean;
 }
 
 export interface CollectionTypeRule extends AllRule {

@@ -125,6 +125,47 @@ export function styleExportBgImage({
     : "none";
 }
 
+export function styleExportBgImageWithoutCssVars({
+  v,
+  device,
+  state,
+  getConfig,
+  prefix = ""
+}: CSSValue): string {
+  const dvv = (key: string) => defaultValueValue({ v, key, device, state });
+  const config = getConfig();
+
+  const media = dvv("media");
+  const bgImageSrc = dvv(capByPrefix(prefix, "bgImageSrc"));
+  const bgSizeType = dvv(capByPrefix(prefix, "bgSizeType"));
+  const bgPopulation = dvv(capByPrefix(prefix, "bgPopulation"));
+  const bgImageFileName = dvv(capByPrefix(prefix, "bgImageFileName"));
+  const bgImageType = dvv("bgImageType");
+  const crop = isUnsplashImage(bgImageType)
+    ? { ...defaultCrop, cW: UNSPLASH_BG_IMAGE_WIDTH }
+    : undefined;
+  const bg = dvv(capByPrefix(prefix, "bg"));
+
+  if (media === "image" && (bgImageSrc !== "" || bgPopulation)) {
+    return `url("${
+      bgPopulation
+        ? bg
+        : getImageUrl(
+            {
+              sizeType: bgSizeType,
+              uid: bgImageSrc,
+              fileName: bgImageFileName,
+              imageType: bgImageType,
+              crop
+            },
+            config
+          )
+    }")`;
+  }
+
+  return "none";
+}
+
 export function styleBgPositionX({
   v,
   device,

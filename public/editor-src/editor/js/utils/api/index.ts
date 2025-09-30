@@ -1470,6 +1470,22 @@ export const createGlobalBlock = (
   });
 };
 
+export const deleteGlobalBlock = (
+  uid: string,
+  config: ConfigCommon
+): Promise<APIGlobalBlock> => {
+  return new Promise((res, rej) => {
+    const { globalBlocks } = config.api ?? {};
+    const deleteFn = globalBlocks?.delete;
+
+    if (!deleteFn) {
+      rej(t("API: No globalBlocks delete found."));
+    } else {
+      deleteFn(res, rej, uid);
+    }
+  });
+};
+
 //#endregion
 
 //#region Global Popups

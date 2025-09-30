@@ -18,6 +18,8 @@ export interface Value extends ElementModel, LinkValue {
   tooltipOffset: number;
   tooltipPlacement: TooltipPlacement;
   tooltipText: string;
+
+  tag: string;
 }
 
 export interface Patch extends Partial<Value> {

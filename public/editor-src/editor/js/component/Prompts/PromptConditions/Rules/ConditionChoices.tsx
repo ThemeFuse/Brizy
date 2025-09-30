@@ -8,7 +8,54 @@ import {
 } from "visual/types/Rule";
 import ItemWrapper from "../common/ItemWrapper";
 import ConditionGroup from "./ConditionGroup";
+import { DeletedRuleNotification } from "./DeletedRuleNotification";
 import { RuleList, ValueItems } from "./types";
+
+export const getValidRules = (rules: Rule[], rulesList: RuleList[]): Rule[] => {
+  const rulesListValues = new Set(rulesList.map((item) => String(item.value)));
+
+  const availableEntityValues = new Set<string>();
+
+  rulesList.forEach((ruleListItem) => {
+    if (ruleListItem.items) {
+      ruleListItem.items.forEach((item) => {
+        // Add direct item values
+        if (item.value) {
+          availableEntityValues.add(String(item.value));
+        }
+        
+        // Add nested item values  
+        if ("items" in item && Array.isArray(item.items)) {
+          item.items.forEach((valueItem) => {
+            availableEntityValues.add(String(valueItem.value));
+          });
+        }
+      });
+    }
+  });
+
+  return rules.map((rule) => {
+    const hasInvalidEntityType =
+      "entityType" in rule && !rulesListValues.has(String(rule.entityType));
+
+    const hasInvalidEntityValues =
+      "entityValues" in rule &&
+      rule.entityValues &&
+      rule.entityValues.length > 0 &&
+      !rule.entityValues.some((entityValue) =>
+        availableEntityValues.has(String(entityValue))
+      );
+
+    if (hasInvalidEntityType || hasInvalidEntityValues) {
+      return {
+        ...rule,
+        deleted: true
+      };
+    }
+
+    return rule;
+  });
+};
 
 export interface Props {
   rules: Rule[];
@@ -87,10 +134,15 @@ class ConditionChoices extends React.Component<Props> {
   render(): JSX.Element[] {
     const { rules, rulesList, getItems, addRuleToTheList } = this.props;
 
-    return rules.map((rule, index) => {
+    return getValidRules(rules, rulesList).map((rule, index) => {
       const isInclude = rule.type === BlockTypeRule.include;
 
-      return (
+      return rule.deleted ? (
+        <DeletedRuleNotification
+          key={index}
+          onRemove={(): void => this.handleRemove(index)}
+        />
+      ) : (
         <ItemWrapper
           key={index}
           active={isInclude}

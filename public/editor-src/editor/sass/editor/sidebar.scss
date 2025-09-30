@@ -45,7 +45,7 @@
       width: 24px;
       height: 24px;
       border: none;
-      color: white;
+      color: $icon-color;
       background: var(--inputs-bg, #383e48);
       border-radius: 5px;
       display: flex;
@@ -836,7 +836,7 @@ $sidebar: "brz-ed-sidebar-drawer";
       @apply py-[7px] px-[10px];
       @apply transition-opacity ease-linear duration-150;
       font-family: $default-font-family;
-      background-color: $gray-5;
+      background-color: $black-10;
     }
 
     &__controls {
@@ -858,7 +858,7 @@ $sidebar: "brz-ed-sidebar-drawer";
         box-shadow: none;
 
         .brz-ed-arrow::after {
-          border-bottom-color: $gray-5;
+          border-bottom-color: $black-10;
         }
       }
     }

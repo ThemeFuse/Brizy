@@ -257,7 +257,7 @@ const Rules = (props: Props): ReactElement => {
         </div>
       ) : (
         <Scrollbar autoHeightMax="350px" theme="light">
-          {rules !== null && (
+          {rules !== null && rulesList.length > 0 && (
             <ConditionChoices
               rules={rules}
               rulesList={currentRuleList}

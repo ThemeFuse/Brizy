@@ -1,6 +1,7 @@
 import { noop } from "es-toolkit";
 import React, { Attributes, useMemo } from "react";
 import { Translate } from "visual/component/Translate";
+import { makePlaceholder } from "visual/utils/dynamicContent";
 import { makeDataAttr } from "visual/utils/i18n/attribute";
 import { uuid } from "visual/utils/uuid";
 import { CheckGroupView } from "./types";
@@ -17,7 +18,11 @@ export const CheckGroupItemView = ({
   label
 }: CheckGroupView): JSX.Element => {
   // Generate a unique id for every checkbox, because otherwise the checkboxes will not work properly
-  const id = uuid();
+  const uidPlaceholder = makePlaceholder({
+    content: "{{ random_id }}",
+    attr: { key: name }
+  });
+  const labelId = `${uuid()}_${uidPlaceholder}`;
 
   const attr = useMemo<Attributes>(
     () => ({
@@ -36,7 +41,7 @@ export const CheckGroupItemView = ({
   return (
     <Translate className={className}>
       <input
-        id={id}
+        id={labelId}
         className="brz-input"
         type="checkbox"
         value={value}
@@ -46,7 +51,7 @@ export const CheckGroupItemView = ({
         required={required}
         {...attr}
       />
-      <label className="brz-label" htmlFor={id}>
+      <label className="brz-label" htmlFor={labelId}>
         {typeof renderIcons === "function" && renderIcons({ active })}
         {children}
       </label>

@@ -1,3 +1,4 @@
+import { Str } from "@brizy/readers";
 import { debounce, isEqual, isFunction } from "es-toolkit";
 import jQuery from "jquery";
 import type QuillType from "quill";
@@ -17,6 +18,7 @@ import { RenderType, isEditor, isView } from "visual/providers/RenderProvider";
 import { Sheet } from "visual/providers/StyleProvider/Sheet";
 import {
   defaultFontSelector,
+  globalBlocksSelector,
   unDeletedFontsSelector
 } from "visual/redux/selectors";
 import { Store } from "visual/redux/store";
@@ -97,7 +99,9 @@ type Props = {
   isDCHandler?: boolean;
   isListOpen?: boolean;
   setPrepopulationData?: (data: PrepopulationData) => void;
+  onTextChangeStart?: VoidFunction;
   v?: Value;
+  globalBlocks: ReduxState["globalBlocks"];
 };
 
 export class QuillComponent extends React.Component<Props> {
@@ -146,8 +150,14 @@ export class QuillComponent extends React.Component<Props> {
   }
 
   componentDidUpdate(props: Props): void {
-    const { fonts } = props;
-    const { value, forceUpdate, onSelectionChange, isToolbarOpen } = this.props;
+    const { fonts, globalBlocks: prevGlobalBlocks } = props;
+    const {
+      value,
+      forceUpdate,
+      onSelectionChange,
+      isToolbarOpen,
+      globalBlocks: nextGlobalBlocks
+    } = this.props;
     const reinitForFonts = !isEqual(fonts, this.props.fonts);
     const reinitForValue = value !== this.lastUpdatedValue || forceUpdate;
     const quill = this.quill as _Quill;
@@ -181,12 +191,72 @@ export class QuillComponent extends React.Component<Props> {
         });
       }
     }
+
+    const prevGlobalBlocksLength = Object.keys(prevGlobalBlocks).length;
+    const nextGlobalBlocksLength = Object.keys(nextGlobalBlocks).length;
+
+    if (
+      prevGlobalBlocksLength !== nextGlobalBlocksLength &&
+      prevGlobalBlocksLength > nextGlobalBlocksLength
+    ) {
+      this.reinitPluginWithValue(this.props.value);
+
+      const containerNode = this.content.current;
+
+      if (containerNode) {
+        const allPopupLinksNodes =
+          containerNode.querySelectorAll<HTMLAnchorElement>("a.link--popup");
+        const prevGlobalBlocksValues = Object.values(prevGlobalBlocks);
+        const nextGlobalBlocksValues = Object.values(nextGlobalBlocks);
+
+        allPopupLinksNodes.forEach((linkNode) => {
+          const { href } = linkNode.dataset;
+
+          if (href) {
+            const linkData = parseFromString<Record<string, unknown>>(href);
+
+            if (linkData) {
+              const _popupId = Str.read(linkData.popup);
+
+              if (_popupId) {
+                const popupId = _popupId.replace("#", "");
+
+                const existsInPrev = prevGlobalBlocksValues.find(
+                  (gb) => gb.data.value.popupId === popupId
+                );
+                const existsInNext = nextGlobalBlocksValues.find(
+                  (gb) => gb.data.value.popupId === popupId
+                );
+
+                if (!existsInPrev && !existsInNext) {
+                  return;
+                }
+
+                if (existsInPrev) {
+                  linkNode.classList.remove("link--popup");
+                }
+              }
+            }
+          }
+        });
+      }
+    }
   }
 
   shouldComponentUpdate(nextProps: Props): boolean {
     const { fonts, value } = nextProps;
 
+    const prevGlobalBlocksLength = Object.keys(this.props.globalBlocks).length;
+    const nextGlobalBlocksLength = Object.keys(nextProps.globalBlocks).length;
+
     if (!isEqual(fonts, this.props.fonts) || value !== this.lastUpdatedValue) {
+      return true;
+    }
+
+    if (
+      prevGlobalBlocksLength !== nextGlobalBlocksLength &&
+      prevGlobalBlocksLength > nextGlobalBlocksLength
+    ) {
       return true;
     }
 
@@ -286,15 +356,23 @@ export class QuillComponent extends React.Component<Props> {
         }
       }
     });
-    quill.on("text-change", () => {
-      const domNode = this.getDomNodeBySelection(quill);
+    quill.on("text-change", (delta) => {
+      const { onTextChangeStart, onSelectionChange } = this.props;
+      const wasTextChanged = delta.ops.some(
+        (op) => typeof op.insert === "string" || typeof op.delete === "number"
+      );
 
+      if (wasTextChanged) {
+        onTextChangeStart?.();
+      }
+
+      const domNode = this.getDomNodeBySelection(quill);
       const { textId, isStoryMode } = this.props;
       const range = quill.selection.savedRange;
       const format = this.getSelectionFormat();
 
       if (hasSelectionHandler) {
-        this.props.onSelectionChange?.({
+        onSelectionChange?.({
           formats: format,
           selectionCoords: this.getCoords(range),
           node: domNode
@@ -877,9 +955,11 @@ const mapStateToProps = (
 ): {
   defaultFont: DefaultFont;
   fonts: ReduxState["fonts"];
+  globalBlocks: ReduxState["globalBlocks"];
 } => ({
   defaultFont: defaultFontSelector(state),
-  fonts: unDeletedFontsSelector(state)
+  fonts: unDeletedFontsSelector(state),
+  globalBlocks: globalBlocksSelector(state)
 });
 
 export default connect(mapStateToProps, null, null, { forwardRef: true })(

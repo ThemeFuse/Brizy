@@ -4,6 +4,7 @@ import { isPopup, isStory } from "visual/providers/EditorModeProvider";
 import { t } from "visual/utils/i18n";
 import { getDynamicContentOption } from "visual/utils/options";
 import { toolbarLinkAnchor } from "visual/utils/toolbar";
+import { getTag } from "../utils";
 import {
   handleChangeLink,
   handleChangeTooltip,
@@ -96,6 +97,12 @@ const getItems =
         return true;
       }
 
+      const isSameTag = getTag(v.tag) === tag;
+
+      if (isSameTag) {
+        return false;
+      }
+
       return !checkTextIncludeTag(text, tag);
     };
 
@@ -123,6 +130,7 @@ const getItems =
 
     const isEnabledTooltip = v.enableTooltip === "on" && config.pro;
     const shouldDisableTooltip = !isEnabledTooltip || _isStory;
+    const isDC = !!v.textPopulation;
 
     return [
       {
@@ -167,7 +175,7 @@ const getItems =
             tabs: [
               {
                 id: "tabTypographyParagraph",
-                label: t("Text"),
+                label: isDC ? t("P") : t("Text"),
                 options: [
                   {
                     id: "gridTypographyParagraph",
@@ -767,14 +775,6 @@ const getItems =
         ]
       },
       {
-        id: "advancedSettings",
-        type: "advancedSettings",
-        disabled: !v.textPopulation,
-        title: t("Settings"),
-        devices: "desktop",
-        position: 110
-      },
-      {
         id: "toolbarSettings",
         type: "popover",
         config: {
@@ -782,13 +782,12 @@ const getItems =
         },
         roles: ["admin"],
         position: 110,
-        disabled: Boolean(v.textPopulation),
         options: [
           {
             id: "marginTop",
             label: t("Gap Above"),
             type: "slider",
-            disabled: _isStory,
+            disabled: _isStory || isDC,
             config: {
               min: 0,
               max: 100,
@@ -801,7 +800,7 @@ const getItems =
             id: "marginBottom",
             label: t("Gap Below"),
             type: "slider",
-            disabled: _isStory,
+            disabled: _isStory || isDC,
             config: {
               min: 0,
               max: 100,

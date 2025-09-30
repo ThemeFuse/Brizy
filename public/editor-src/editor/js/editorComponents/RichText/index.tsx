@@ -1,3 +1,4 @@
+import { Str } from "@brizy/readers";
 import classNames from "classnames";
 import { isNumber } from "es-toolkit/compat";
 import React, { Fragment, MouseEvent, RefObject, createRef } from "react";
@@ -42,7 +43,11 @@ import {
 } from "visual/global/Config/types/DynamicContent";
 import { isPopup, isStory } from "visual/providers/EditorModeProvider";
 import { isEditor, isView } from "visual/providers/RenderProvider";
-import { blocksDataSelector, deviceModeSelector } from "visual/redux/selectors";
+import {
+  blocksDataSelector,
+  deviceModeSelector,
+  globalBlocksSelector
+} from "visual/redux/selectors";
 import { Block } from "visual/types/Block";
 import { t } from "visual/utils/i18n";
 import { makeDataAttr } from "visual/utils/i18n/attribute";
@@ -55,6 +60,7 @@ import {
 import { Choice } from "visual/utils/options/getDynamicContentChoices";
 import { attachRef, attachRefs } from "visual/utils/react";
 import * as ResponsiveMode from "visual/utils/responsiveMode";
+import { parseFromString } from "visual/utils/string";
 import { Wrapper } from "../tools/Wrapper";
 import { withMigrations } from "../tools/withMigrations";
 import Quill, { Coords, Formats, QuillComponent, triggerCodes } from "./Quill";
@@ -72,6 +78,7 @@ import type { Patch, PrepopulationData, Value } from "./types";
 import {
   dcItemOptionParser,
   getFilteredPopups,
+  getTag,
   getTextBackground,
   parseColor,
   parseShadow
@@ -130,6 +137,7 @@ class RichText extends EditorComponent<Value, Record<string, unknown>, State> {
   toolbarRef = createRef<PortalToolbarType>();
   nodeRef = createRef<HTMLDivElement>();
   toolbarOpen = false;
+  shouldOpenToolbar = true;
   tmpPopups: Value["popups"] | null = null;
 
   setPrepopulationData = (newPrepopulationData: Partial<PrepopulationData>) =>
@@ -185,7 +193,46 @@ class RichText extends EditorComponent<Value, Record<string, unknown>, State> {
         }
       });
     }
+
+    this.removeUnderlineFromDeletedPopups();
   }
+
+  componentDidUpdate() {
+    this.removeUnderlineFromDeletedPopups();
+  }
+
+  removeUnderlineFromDeletedPopups = () => {
+    const containerNode = this.nodeRef.current;
+
+    if (containerNode) {
+      const allPopupLinksNodes =
+        containerNode.querySelectorAll<HTMLAnchorElement>("a.link--popup");
+
+      const popups = this.getPopups();
+
+      allPopupLinksNodes.forEach((linkNode) => {
+        const { href } = linkNode.dataset;
+
+        if (href) {
+          const linkData = parseFromString<Record<string, unknown>>(href);
+
+          if (linkData) {
+            const popupId = Str.read(linkData.popup);
+
+            if (popupId) {
+              const existsInPopups = popups.find(
+                (popup) => popup.value.popupId === popupId.replace("#", "")
+              );
+
+              if (!existsInPopups) {
+                linkNode.classList.remove("link--popup");
+              }
+            }
+          }
+        }
+      });
+    }
+  };
 
   handleToolbarOpen = () => {
     this.toolbarOpen = true;
@@ -310,7 +357,9 @@ class RichText extends EditorComponent<Value, Record<string, unknown>, State> {
         return;
       }
 
-      this.toolbarRef.current?.show();
+      if (this.shouldOpenToolbar) {
+        this.toolbarRef.current?.show();
+      }
     });
   };
 
@@ -336,6 +385,7 @@ class RichText extends EditorComponent<Value, Record<string, unknown>, State> {
 
   handleTextChange = (text: string) => {
     let popups: Value["popups"] | undefined;
+    this.handleTextChangeEnd();
 
     // making use of the popups hack
     if (this.tmpPopups) {
@@ -353,6 +403,29 @@ class RichText extends EditorComponent<Value, Record<string, unknown>, State> {
         ? { popups: filteredPopups }
         : {})
     });
+  };
+
+  getPopups = (): ElementModelType2[] => {
+    const popups = this.tmpPopups || this.getValue().popups;
+    const reduxGb = globalBlocksSelector(this.getReduxStore().getState());
+
+    return popups
+      .map((popup) => {
+        if (popup.type === "GlobalBlock") {
+          const popupId = popup.value._id;
+
+          if (popupId) {
+            if (reduxGb[popupId] && reduxGb[popupId].data) {
+              return reduxGb[popupId].data;
+            }
+          }
+
+          return undefined;
+        }
+
+        return popup;
+      })
+      .filter(Boolean) as ElementModelType2[];
   };
 
   handlePopulationSet = (value: string) => {
@@ -873,8 +946,10 @@ class RichText extends EditorComponent<Value, Record<string, unknown>, State> {
   }
 
   renderLink(v: Value) {
-    const { text, enableTooltip } = v;
+    const { text, enableTooltip, tag } = v;
     const linkData = getLinkData(v, this.getGlobalConfig());
+
+    const Tag = getTag(tag);
 
     let content = (
       <div className="placeholder-is-empty">
@@ -892,10 +967,14 @@ class RichText extends EditorComponent<Value, Record<string, unknown>, State> {
 
     if (this._dc?.lastCache?.text || this.renderDC) {
       if (isView(this.props.renderContext)) {
-        content = <span {...attr}>{text}</span>;
+        content = (
+          <div className="brz-rich-text-context-wrapper">
+            <Tag {...attr}>{text}</Tag>
+          </div>
+        );
       } else {
         content = (
-          <span
+          <Tag
             className="brz-blocked"
             dangerouslySetInnerHTML={{ __html: text }}
           />
@@ -938,6 +1017,24 @@ class RichText extends EditorComponent<Value, Record<string, unknown>, State> {
       this.tooltipReferenceElement = el;
     }
   }
+
+  handleTextChangeStart = () => {
+    this.handleToolbarClose();
+    this.shouldOpenToolbar = false;
+
+    if (this.toolbarRef.current) {
+      this.toolbarRef.current.hide();
+    }
+  };
+
+  handleTextChangeEnd = () => {
+    this.handleToolbarOpen();
+    this.shouldOpenToolbar = true;
+
+    if (this.toolbarRef.current) {
+      this.toolbarRef.current.show();
+    }
+  };
 
   renderForEdit(v: Value, vs: Value, vd: Value) {
     const {
@@ -1017,6 +1114,7 @@ class RichText extends EditorComponent<Value, Record<string, unknown>, State> {
         isDCHandler={isDCHandler}
         isListOpen={show}
         setPrepopulationData={this.setPrepopulationData}
+        onTextChangeStart={this.handleTextChangeStart}
       />
     );
     let toolbarOptions: ToolbarOption = {
