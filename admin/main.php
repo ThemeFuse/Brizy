@@ -324,6 +324,7 @@ class Brizy_Admin_Main {
                     'generateTemplate'  => Brizy_Admin_Ai_Api::AJAX_GENERATE_TEMPLATE,
                     'importDelete'  => Brizy_Admin_Ai_Api::AJAX_IMPORT_DELETE,
                     'importKeep'  => Brizy_Admin_Ai_Api::AJAX_IMPORT_KEEP,
+					'sendProject'  => Brizy_Admin_Ai_Api::AJAX_SEND_PROJECT,
                 ),
                 'l10n'          => [
                     'deactivateFeedbackSubmitBtn' => __( 'Submit & Deactivate', 'brizy' ),

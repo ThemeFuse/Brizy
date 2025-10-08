@@ -400,12 +400,12 @@ class Brizy_Admin_Ai_Api
         }
     }
 
-    private function aiSendProject()
+    public function aiSendProject()
     {
         try {
             $data = Brizy_Editor_Project::get()->createResponse();
 
-            $url = 'http://172.0.1.8000/api/set-project/1234-test';
+            $url = Brizy_Config::getAiSetProjectDataUrl();
 
             $httpClient = new Brizy_Editor_Http_Client();
 
