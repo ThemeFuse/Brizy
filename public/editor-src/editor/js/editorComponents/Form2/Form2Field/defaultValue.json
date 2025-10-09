@@ -27,6 +27,9 @@
     "numberMinMessage": "Selected quantity is less than stock status, min:",
     "numberMaxMessage": "Selected quantity  is more than stock status, max: ",
 
+    "calculatedExpression": "",
+    "calculatedText": "Total :",
+
     "columns": 1
   },
 

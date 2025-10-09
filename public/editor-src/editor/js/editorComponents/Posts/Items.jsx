@@ -14,6 +14,7 @@ import {
   makePlaceholder,
   makeStartPlaceholder
 } from "visual/utils/dynamicContent";
+import { getLoopName, stringifyAttributes } from "visual/utils/elements/posts";
 import { applyFilter } from "visual/utils/filters";
 import {
   makeAttr,
@@ -24,7 +25,6 @@ import { attachRefs } from "visual/utils/react";
 import { DynamicContentHelper } from "../WordPress/common/DynamicContentHelper";
 import contextMenuExtendConfigFn from "./contextMenuExtend";
 import { disconnect, observe } from "./resizeObserver";
-import { getLoopName, stringifyAttributes } from "./utils.common";
 
 export default class Items extends EditorArrayComponent {
   node = createRef();

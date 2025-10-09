@@ -36,6 +36,12 @@ export const Tooltip = forwardRef<TooltipImperativeProps, Props>(
             options: { offset: [0, offset] }
           },
           {
+            name: "flip",
+            options: {
+              fallbackPlacements: ["auto", "auto-start", "auto-end"]
+            }
+          },
+          {
             name: "arrow",
             options: { element: arrowElement, padding: 5 }
           }

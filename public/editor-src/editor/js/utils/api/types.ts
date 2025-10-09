@@ -1,6 +1,6 @@
-import { Sources } from "visual/editorComponents/Posts/types";
 import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { Dictionary } from "visual/types/utils";
+import { RefsById, Sources } from "../elements/posts/types";
 
 export enum AutoSave {
   publish = 0,
@@ -127,6 +127,7 @@ export type GetRulePostsGroupList = (
 
 export interface PostsSources {
   sources: Sources[];
+  refsById: RefsById;
 }
 
 //#endregion

@@ -15,7 +15,7 @@ export interface FontStyle {
 export const fontStyle = (fontStyle: string): FontStyle => ({ fontStyle });
 
 export const isFontStyle = (p: Patch): p is FontStyle =>
-  typeof (p as Partial<FontStyle>).fontStyle === "string";
+  "fontStyle" in p && p.fontStyle.length > 0;
 // endregion
 
 // region FontFamily
