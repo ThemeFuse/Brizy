@@ -38,6 +38,7 @@ export default class Gallery {
   nodeItems: HTMLElement[];
   node: HTMLElement;
   justifiedParams: JustifiedRowParams;
+  filterOpts?: Filter;
 
   constructor(node: HTMLElement, params: Settings) {
     this.node = node;
@@ -63,16 +64,20 @@ export default class Gallery {
   }
 
   public arrange(filterOpts?: Filter): void {
+    if (filterOpts) {
+      this.filterOpts = filterOpts;
+    }
+
     this.justifiedParams.nodeItems = this.getItems(
       this.node,
       this.currentSettings.itemSelector
     );
 
-    if (filterOpts && filterOpts.filter !== "*") {
+    if (this.filterOpts && this.filterOpts.filter !== "*") {
       this.justifiedParams.nodeItems.forEach((item) => {
         item.style.display = "block";
       });
-      const { filter: tag } = filterOpts;
+      const { filter: tag } = this.filterOpts;
 
       this.justifiedParams.nodeItems.forEach((item) => {
         if (!item.classList.contains(tag)) {

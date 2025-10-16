@@ -84,12 +84,12 @@ export default class GridItem extends Component {
       isDeletable,
       handleDelete,
       id,
-      idx
+      notification
     } = this.props;
 
     const handleDeleteEmail = (evt) => {
       evt.stopPropagation();
-      handleDelete({ type: id, id: idx });
+      handleDelete({ type: id, id: notification.id });
     };
 
     const className = classnames(

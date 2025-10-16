@@ -24,15 +24,11 @@ export enum StoreChanged {
 export const allowedDrawerComponents = [
   LeftSidebarOptionsIds.addElements,
   LeftSidebarOptionsIds.globalStyle,
-  LeftSidebarOptionsIds.reorderBlock
+  LeftSidebarOptionsIds.reorderBlock,
+  LeftSidebarOptionsIds.custom
 ] as const;
 
-export type AllowedDrawerComponentTypes =
-  (typeof allowedDrawerComponents)[number];
-
-export type DrawerContentTypes =
-  | AllowedDrawerComponentTypes
-  | LeftSidebarOptionsIds.cms; // In future Need to review how to lose CMS on click Outside
+export type DrawerContentTypes = (typeof allowedDrawerComponents)[number];
 
 export type SidebarAlign = "left" | "right";
 
