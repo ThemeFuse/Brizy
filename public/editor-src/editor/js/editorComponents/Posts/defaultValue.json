@@ -13,7 +13,8 @@
     "order": "ASC",
     "allTag": "All",
 
-    "excludeCurrentProduct": "off"
+    "excludeCurrentProduct": "off",
+    "field": ""
   },
 
   "style": {

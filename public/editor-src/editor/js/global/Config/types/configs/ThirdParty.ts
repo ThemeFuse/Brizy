@@ -36,6 +36,8 @@ export type ThirdPartyComponentsHosts = Array<{
 // These keys are populated by Backend (Cloud, WP),
 // and are used by Worker(compiler/browser/index.ts)
 // when try to compile the Components to HTML
+// these keys are used to obtain the urls of each widget,
+// for preview.js where widget put all business logic on the preview.
 export type ThirdPartyUrls = Array<{
   scriptUrl: string;
   styleUrl?: string;

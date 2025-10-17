@@ -1,13 +1,13 @@
 import { produce } from "immer";
 import { ElementModel } from "visual/component/Elements/Types";
 import { Dictionary } from "visual/types/utils";
+import { createFieldCollectionId } from "visual/utils/elements/posts";
+import { Context } from "visual/utils/elements/posts/types";
 import { Migration } from "visual/utils/migration";
 import { objectFromEntries } from "visual/utils/object";
 import * as Obj from "visual/utils/reader/object";
 import * as Str from "visual/utils/reader/string";
 import * as NoEmptyString from "visual/utils/string/NoEmptyString";
-import { createFieldCollectionId } from "../toolbarExtendParent/utils";
-import { Context } from "../types";
 
 interface V3 {
   symbols: Dictionary<string> | undefined;

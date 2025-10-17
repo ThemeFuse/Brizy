@@ -357,16 +357,29 @@ export default class Button extends EditorComponent<Value, Props> {
       props.draggable = "false";
     }
 
+    const wrapperProps = this.makeWrapperProps({
+      attributes: props,
+      slide: linkData.slide,
+      ref: (el) => {
+        attachRefs(el, refs);
+        this.handleUpdateTooltipReference(el);
+      }
+    });
+
+    if (wrapperProps.attr && wrapperProps.attributes) {
+      wrapperProps.attributes = {
+        ...wrapperProps.attributes,
+        // The attr prop is needed for the Link component to attach the custom attributes
+        attr: {
+          ...(wrapperProps.attributes.attr || {}),
+          ...wrapperProps.attr
+        }
+      };
+    }
+
     return (
       <Wrapper
-        {...this.makeWrapperProps({
-          attributes: props,
-          slide: linkData.slide,
-          ref: (el) => {
-            attachRefs(el, refs);
-            this.handleUpdateTooltipReference(el);
-          }
-        })}
+        {...wrapperProps}
         component={Link}
         onClick={this.handleToggleTooltip}
       >

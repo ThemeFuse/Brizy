@@ -4,12 +4,9 @@
   min-width: 0;
   min-height: 1px;
 
-  &:has(.brz-wrapper-transform),
-  &:has(.brz-wrapper__scrollmotion),
-  &:has(.brz-hover-animation__container) {
-    &:has(.brz-menu) {
-      z-index: z("menu-transform");
-    }
+  &:has(.brz-wrapper-transform, .brz-wrapper__scrollmotion, .brz-hover-animation__container)
+  :has(.brz-menu__item-dropdown--active, .brz-menu__item--opened) {
+    z-index: z("menu-transform");
   }
 
   > .brz-wrapper-transform {

@@ -1,0 +1,235 @@
+ already exists in the project.
+API: No Remove Featured Image found.
+API: No Update Featured Image Focal Point found.
+API: No Update Featured Image found.
+API: No authors found.
+API: No checkCompatibility handler found.
+API: No getMenus found.
+API: No globalBlocks delete found.
+API: No group list found.
+API: No logout handler found.
+API: No posts found.
+API: No posts group list found.
+API: No posts taxonomies found.
+API: No recoveryEmail handler found.
+API: No rules list found.
+API: No shortcodeContent found.
+API: No sidebars found.
+API: No signIn handler found.
+API: No signUp handler found.
+API: No sync handler found.
+API: No terms found.
+Add New Widget
+Add New item
+Add to Cart
+Addable Widgets
+Animate
+Animated Headline
+Aria Label
+Blinds
+Both sides
+Bottom End
+Bottom Middle
+Bottom Start
+Bring to Front
+Calculated
+Canvas
+Captioned
+Captions (CC)
+Chart
+Chart Items
+Checkmark
+Click on the button to edit the items.
+Clip
+Color of item
+Confirm Password
+Corner Tooltip
+Couldn't complete the upload as the font named 
+Curly
+Customizes the spinner displayed while the content is loading
+Default Value
+Delete Anyway
+Deleting this global block is permanent and cannot be undone. Proceed only if you are sure you no longer need it.
+Diagonal
+Disables the default loading spinner that appears while the content is loading.
+Disables the placeholder completely.
+Displays captions from the Instagram Post. If set to false, it provides a cleaner view of the embedded content without additional text.
+Divide
+Double
+Double Underline
+Drop In
+Dynamic Text No. of Lines
+EMAIL
+Edit page
+Empty
+Enable Tooltip
+Enable on Click
+Enable tooltip on click instead of hover
+Enter API key
+Enter a link ending in .mp4
+Enter custom text
+Enter descriptive Aria Label...
+Enter the default value for the field.
+Enter the default value for the field. If needed, use a comma-separated list. For example, 'Option 1,Option 2'
+Enter the labels, separated by a comma ( Label1, Label2, ... ).
+Enter the values, separated by a comma ( Value1, Value2, ... ).
+Expression
+Extract headings from specific containers. Containers can be selected by CSS class name without the .dot, example: .container1, .container2
+Favorites
+Fields Required
+Fields are required
+FileUpload
+Filled
+Find the post,click the 3 dots and select "Embed this post", then copy the src link
+Get Shop Add-On
+I have deselected "Verify the origins of reCAPTCHA solutions and clicked "Save Changes" under "Key Settings > Advanced Settings" in my Google reCAPTCHA page
+Icon Animation
+If this is selected and you would like the image to be a fallback when no video is available make sure to select "Display Image".
+If this is selected and you would like the image to be a fallback when no video is available make sure to select "Display Images".
+If this is selected and you would like the image to be a fallback when no video is available make sure to select "Images".
+Ignore headings selection from specific containers. Containers can be selected by CSS class name without the .dot, example: .container1, .container2
+In your Adobe account, find "My Adobe Fonts" on the right hand side. Click the Web Projects tab, copy the Project ID and paste it here in the field below.
+Instagram Feed
+Integrations: No addAccount handler found.
+Integrations: No addRecaptcha handler found.
+Integrations: No createIntegrationAccount handler found.
+Integrations: No createIntegrationList handler found.
+Integrations: No deleteAccount handler found.
+Integrations: No deleteIntegration handler found.
+Integrations: No getAccounts handler found.
+Integrations: No getForm handler found.
+Integrations: No getIntegration handler found.
+Integrations: No getIntegrationAccountApiKey handler found.
+Integrations: No getSmtpIntegration handler found.
+Integrations: No updateForm handler found.
+Integrations: No updateIntegration handler found.
+Integrations: No updateSmtpIntegration handler found.
+Invalid editor config
+Item Background
+Item Padding
+Labels of chart
+Left End
+Left Start
+Link text
+Linkedin Feed
+Load this image only when it's about to enter the viewport
+Middle Left
+Middle Right
+Missing Page Component
+Missing Page Components
+Missing PagePopup Component
+Missing PagePopup Components
+Missing PageStory Component
+Missing PageStory Components
+Missing api collection types info handler in config
+Missing api collectionItems handler in config
+Missing api conditional items handler in config
+Missing api conditional types handler in config
+Missing api getCollectionItemById handler in config
+Missing app data
+Missing app id
+Missing app inside context
+Missing deleteFonts handler inside api config
+Missing getCollectionSourceItems in config
+Missing getPageRelations api handler in config
+Missing menuSimple dynamicContent inside api Config
+Missing placeholder props
+Missing searchEcwidCategories api handler in config
+Missing searchEcwidProducts api handler in config
+Missing shopifyBlogItems handler
+Missing shopifySyncArticle handler
+Missing shopifySyncPage handler
+Missing shopifySyncRules handler
+Missing shopifyUnpublishPage handler
+Missing uploadFonts handler inside api config
+Navigation Padding
+Number of Lines
+One side
+Only select if "Display Video" is not selected.
+Open Media Library
+Parameters
+Paste your text here
+Pause
+Payment
+Pie
+Placeholder spinner
+Placement
+Please add your PayPal email address
+Pre-filled cart
+Prevents the automatic loading of the script that is required for embedding content.
+Right End
+Right Start
+S. Bottom
+S. Top
+SVG
+Script load
+Select a recent article. Use only if you are not using "Article Slug" below and "Latest" is set to "Off".
+Select a recent event. Use only if you are not using "Event Slug" below and "Show Latest" is set to "Off".
+Selected
+Selection
+Set the number of lines to show in the excerpt. If set to 0, it will show the full content.
+Shipping
+Sidebar align
+Slide Down
+Slide Left
+Slide Right
+Slide Up
+Sling
+Slug of article (my-article-name). Use only if you are not selecting from the "Recent Articles" above and "Latest" is set to "Off".
+Slug of event (my-event-name). Use only if you are not selecting from the "Recent Events" above and "Show Latest" is set to "Off".
+Something went wrong column resize
+Something went wrong missing app id
+Spacing Bottom
+Spacing Top
+Spin
+Squash
+Stop animation
+Strike Through
+Swirl
+Text After
+Text Before
+Text Highlighted
+The text displayed as a link to view the content.
+Theme Header & Footer
+This is a sample caption of the audio content
+This option does not affect your cart in preview. This option is only required to allow you to customize the cart element in different states.
+This should be a comma separate list of category slugs without spaces eg. if you wanted to use the categories "Category Example 1" and "Category Example 2" the list would be "category-example-1,category-example-2". This option removes the parent filter options.
+This type was removed, please remove this item!
+Tilt
+To be able to display and customize these steps, you need to configure shipping, address and payment in CMS or Ecwid store
+Tooltip
+Tooltip Bg.
+Top End
+Top Start
+Turn
+Twirl
+Types
+Typing
+URL of article detail page. If used a link to the heading and an image will be added to take the user to the article detail page. Requires the "Article Detail" widget to be placed on a page and that page url/slug placed in this field .
+URL of article detail page. If used will add a link to the heading to take the user to the article detail page.  Requires the "Article Detail" widget to be placed on a page and that page url/slug placed in this field .
+URL of event detail page. If used a link to the heading and an image will be added to take the user to the event detail page. Requires the "Event Detail" widget to be placed on a page and that page url/slug placed in this field .
+URL of event detail page. If used a link to the heading and an image will be added to take the user to the event detail page. Requires the "Event Detail" widget to be placed on a page and that page url/slug placed in this field.
+URL of group detail page. If used will add a link to the heading to take the user to the group detail page. Requires the "Group Detail" widget to be placed on a page and that page url/slug placed in this field.
+URL of sermon detail page. If used will add a link to the heading to take the user to the sermon detail page. Requires the "Sermon Detail" widget to be placed on a page and that page url/slug placed in this field.
+Underline Zigzag
+Upload a .vtt file with captions for your video
+Url
+Use label names for fields to calculate values, e.g., {{Label1}} + {{Label2}}. Supports types: number, radio, select, checkbox.
+View on Instagram
+View on LinkedIn
+Wave
+Web Project ID
+When enabled, clicking pause stops the animation and slider until play is clicked
+You are about to delete a global block that is still in use. Removing it could distort affected pages, so be sure you want to continue.
+You do not have any option
+You have no items yet
+You need the Shop Add-on to use this
+email
+first name
+items
+last name
+ms
+password
+px
+useEditorProvider must be used within useEditorProvider
+{{Label1}}+{{Label2}}

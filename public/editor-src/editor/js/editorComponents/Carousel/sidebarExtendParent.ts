@@ -1,6 +1,6 @@
 import { t } from "visual/utils/i18n";
 import { GetItems } from "../EditorComponent/types";
-import { Value } from "./types";
+import { Props, Value } from "./types";
 
 export const title = () => t("Carousel");
 
@@ -16,7 +16,7 @@ const getHtml = () => {
 </p>`;
 };
 
-export const getItems: GetItems<Value> = () => {
+export const getItems: GetItems<Value, Props> = () => {
   return [
     {
       id: "sidebarTabs",
@@ -51,6 +51,13 @@ export const getItems: GetItems<Value> = () => {
                       label: t("Padding"),
                       devices: "desktop",
                       position: 50
+                    },
+                    {
+                      id: "navigationBgPadding",
+                      type: "padding",
+                      label: t("Navigation Padding"),
+                      devices: "desktop",
+                      position: 60
                     }
                   ]
                 },
@@ -95,6 +102,12 @@ export const getItems: GetItems<Value> = () => {
                       type: "padding",
                       label: t("Padding"),
                       position: 50
+                    },
+                    {
+                      id: "navigationBgPadding",
+                      type: "padding",
+                      label: t("Navigation Padding"),
+                      position: 60
                     }
                   ]
                 }
