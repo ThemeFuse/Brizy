@@ -245,7 +245,7 @@ class Brizy_Admin_Ai_Api
         $current_data_version = $project->getCurrentDataVersion();
         $project->setDataVersion($current_data_version + 1);
 
-        $project->set_compiler(Brizy_Editor_Entity::COMPILER_BROWSER);
+        $project->set_compiler(Brizy_Editor_Entity::COMPILER_EXTERNAL);
 
         $project->set_uses_editor(true);
 
@@ -320,7 +320,7 @@ class Brizy_Admin_Ai_Api
         $current_data_version = $project->getCurrentDataVersion();
         $project->setDataVersion($current_data_version + 1);
 
-        $project->set_compiler(Brizy_Editor_Entity::COMPILER_BROWSER);
+        $project->set_compiler(Brizy_Editor_Entity::COMPILER_EXTERNAL);
 
         $project->set_uses_editor(true);
 
@@ -354,19 +354,25 @@ class Brizy_Admin_Ai_Api
                 'comment_status' => 'closed',
                 'page_template'  => Brizy_Config::BRIZY_BLANK_TEMPLATE_FILE_NAME,
             );
+            $postId = wp_insert_post($pageStructure);
 
-            $postId = wp_insert_post(postarr: $pageStructure);
             $post   = Brizy_Editor_Post::get($postId);
 
-            $post->enable_editor();
-            $post->saveStorage();
+            $current_data_version = $post->getCurrentDataVersion();
+            $post->setDataVersion($current_data_version + 1);
+
             $post->set_editor_data($pageData);
-            $post->setDataVersion(1);
-            $post->set_compiler_version(0);
+
+            $post->enable_editor();
             $post->set_editor_version(BRIZY_EDITOR_VERSION);
             $post->set_needs_compile(true);
-            $post->save(0);
-            $post->compile_page();
+            $post->set_plugin_version(BRIZY_VERSION);
+            $post->set_pro_plugin_version(BRIZY_PRO_VERSION);
+            $post->set_compiler(Brizy_Editor_Entity::COMPILER_EXTERNAL);
+            $post->set_compiler_version(0);
+
+            $post->saveStorage();
+            $post->save();
             $post->savePost(true);
 
             $imported[] = array(
@@ -403,11 +409,19 @@ class Brizy_Admin_Ai_Api
     public function aiSendProject()
     {
         try {
-            $data = Brizy_Editor_Project::get()->createResponse();
-
+            $projectData = Brizy_Editor_Project::get()->createResponse();
             $url = Brizy_Config::getAiSetProjectDataUrl();
-
             $httpClient = new Brizy_Editor_Http_Client();
+
+            $project = Brizy_Editor_Project::get();
+            $typography = $project->getCompiledStyles()['styles'][0]['content']['content'];
+            $projectFonts = $this->getProjectFonts();
+
+            $data = [
+                'projectData' => $projectData,
+                'projectTypography' => $typography,
+                'projectFonts' => $projectFonts,
+            ];
 
             $options = [
                 'body' => json_encode(['data' => $data]),
@@ -416,19 +430,70 @@ class Brizy_Admin_Ai_Api
                 ],
             ];
 
-            $response = $httpClient->request($url, $options, 'POST');
+            $request = $httpClient->request($url, $options, 'POST');
 
-            $responseBody = $response->get_response_body();
+            $response = $request->get_response_body();
 
-            if ($responseBody) {
-                wp_send_json_success($responseBody);
+            if ($response) {
+                wp_send_json_success($response);
             } else {
                 wp_send_json_error('No response received from the external API.', 500);
             }
 
         } catch (Exception $e) {
-            wp_send_json_error('Error sending project data to the API: ' . $e->getMessage(), 500);
+            wp_send_json_error('Error sending project data to the API: '.$e->getMessage(), 500);
         }
+    }
+
+    private function getProjectFonts()
+    {
+        $fonts   = [];
+        $project = Brizy_Editor_Project::get();
+
+        try {
+            $projectData = $project->getDecodedData();
+            $googleFonts = [];
+
+            if (isset($projectData->fonts->google->data) && is_array($projectData->fonts->google->data)) {
+                $googleFonts = $projectData->fonts->google->data;
+            }
+            elseif (isset($projectData->fonts->blocks->data) && is_array($projectData->fonts->blocks->data)) {
+                $googleFonts = $projectData->fonts->blocks->data;
+            }
+            elseif (isset($projectData->fonts->config->data) && is_array($projectData->fonts->config->data)) {
+                $googleFonts = $projectData->fonts->config->data;
+            }
+
+            if (!empty($googleFonts)) {
+                $families = [];
+
+                foreach ($googleFonts as $font) {
+                    if (isset($font->family) && isset($font->variants)) {
+                        $fontFamily = str_replace(' ', '+', $font->family);
+                        $weights    = is_array($font->variants) ? implode(',', $font->variants) : $font->variants;
+
+                        $families[] = $fontFamily.':'.$weights;
+                    }
+                }
+
+                if (!empty($families)) {
+                    $family  = implode('|', $families);
+                    $fontUrl = 'https://fonts.bunny.net/css?family='.$family.'&subset=arabic,bengali,cyrillic,cyrillic-ext,devanagari,greek,greek-ext,gujarati,hebrew,khmer,korean,latin-ext,tamil,telugu,thai,vietnamese&display=swap';
+
+                    $fonts[] = [
+                        'name'    => 'google',
+                        'type'    => 'google-font',
+                        'url'     => $fontUrl,
+                        'content' => '',
+                        'fonts'   => $googleFonts
+                    ];
+                }
+            }
+        } catch (Exception $e) {
+            error_log('Error getting project fonts: '.$e->getMessage());
+        }
+
+        return $fonts;
     }
 
 }

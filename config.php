@@ -52,7 +52,7 @@ class Brizy_Config
     const GENERATE_GLOBAL_STYLES_ENDPOINT = 'https://ai.brizy.io';
     const AI_CREATE_SESSION_URL = 'http://172.17.0.1:8000/api/create-session';
     const AI_GENERATED_TEMPLATE_URL = 'http://172.17.0.1:8000/api/generated-template/';
-    const AI_SET_PROJECT_DATA_URL = 'http://172.17.0.1:8000/api/set-project/1234-test';
+    const AI_SEND_PROJECT_DATA_URL = 'http://172.17.0.1:8000/api/send-project/1234-test';
     const WP_HTTP_TIMEOUT = 30;
 
     const LAYOUTS_CHUNK_URL = 'https://template-mk.b-cdn.net/api/get-layouts-chunk';
@@ -144,6 +144,6 @@ class Brizy_Config
 
     static public function getAiSetProjectDataUrl()
     {
-        return apply_filters('brizy_ai_set_project_data_url', self::AI_SET_PROJECT_DATA_URL);
+        return apply_filters('brizy_ai_send_project_data_url', self::AI_SEND_PROJECT_DATA_URL);
     }
 }
