@@ -1,6 +1,6 @@
 import { ElementModel } from "visual/component/Elements/Types";
-import { createFieldCollectionId } from "../../toolbarExtendParent/utils";
-import { Context } from "../../types";
+import { createFieldCollectionId } from "visual/utils/elements/posts";
+import { Context } from "visual/utils/elements/posts/types";
 import { m3 } from "../3";
 
 type GetCollectionTypesInfoResult = Context["collectionTypesInfo"];

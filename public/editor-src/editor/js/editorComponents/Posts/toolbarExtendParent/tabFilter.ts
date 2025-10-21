@@ -4,16 +4,20 @@ import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
 import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { loadCollectionItems, searchCollectionItems } from "visual/utils/api";
 import { ArrayType } from "visual/utils/array/types";
+import {
+  CURRENT_CONTEXT_TYPE,
+  ORDER_BY_FIELD,
+  createFieldCollectionId,
+  fieldConverter,
+  getManualTitle,
+  orderByConverter,
+  useAsSimpleSelectConditions
+} from "visual/utils/elements/posts";
+import { Context } from "visual/utils/elements/posts/types";
 import { t } from "visual/utils/i18n";
 import { MValue } from "visual/utils/value";
-import { CloudComponentConfig, Context, V, VDecoded } from "../types";
-import { CURRENT_CONTEXT_TYPE, decodeV } from "../utils.common";
-import {
-  createFieldCollectionId,
-  getManualTitle,
-  useAsSimpleSelectConditions
-} from "./utils";
-import { orderByConverter } from "./utils.common";
+import { CloudComponentConfig, V, VDecoded } from "../types";
+import { decodeV } from "../utils.common";
 
 type TabOptionType = ArrayType<Required<TabsOptionProps>["tabs"]>;
 
@@ -55,6 +59,11 @@ export function tabFilter(
     context.collectionTypesInfo.sources
   );
 
+  const fieldChoices = fieldConverter(
+    v.source,
+    context.collectionTypesInfo.sources
+  );
+
   const collectionChoices = sourceChoices.filter(
     (c) => c.value !== CURRENT_CONTEXT_TYPE
   );
@@ -74,6 +83,10 @@ export function tabFilter(
     disabled: !isPosts || isCurrentQuery || disableExclude,
     config
   });
+
+  const isOrderByField = vd.orderBy === ORDER_BY_FIELD;
+  const showField =
+    isOrderByField && fieldChoices.length > 0 && !disableOrderBy;
 
   return {
     id: "filter",
@@ -121,6 +134,14 @@ export function tabFilter(
         devices: "desktop",
         choices: orderByChoices,
         disabled: disableOrderBy
+      },
+      {
+        id: "field",
+        type: "select",
+        label: t("Field"),
+        devices: "desktop",
+        choices: fieldChoices,
+        disabled: !showField
       },
       {
         id: "order",

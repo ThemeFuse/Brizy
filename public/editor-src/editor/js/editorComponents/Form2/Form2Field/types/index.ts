@@ -1,3 +1,4 @@
+import Calculated from "./Calculated";
 import Checkbox from "./Checkbox";
 import Date from "./Date";
 import Email from "./Email";
@@ -27,7 +28,8 @@ const types = {
   FileUpload,
   Hidden,
   Tel,
-  Password
+  Password,
+  Calculated
 };
 
 export default types;

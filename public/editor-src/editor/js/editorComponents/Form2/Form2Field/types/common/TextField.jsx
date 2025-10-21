@@ -1,5 +1,6 @@
 import classnames from "classnames";
 import React, { Component } from "react";
+import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import { isEditor } from "visual/providers/RenderProvider";
 import { makeDataAttr } from "visual/utils/i18n/attribute";
 
@@ -140,7 +141,8 @@ export default class TextField extends Component {
       tabletColumns,
       mobileColumns,
       labelId,
-      renderContext
+      renderContext,
+      calculatedText
     } = this.props;
 
     if (isEditor(renderContext)) {
@@ -158,7 +160,8 @@ export default class TextField extends Component {
           placeholder: this.getPlaceholder(),
           onClick: this.handleClick,
           onBlur: this.handleBlur
-        }
+        },
+        ...(type === ElementTypes.Calculated ? { calculatedText } : {})
       };
       return this.renderForEdit(props);
     } else {
@@ -186,7 +189,8 @@ export default class TextField extends Component {
             value: this.getPlaceholder()
           }),
           ...this.getAttributes()
-        }
+        },
+        ...(type === ElementTypes.Calculated ? { calculatedText } : {})
       };
 
       return this.renderForView(props);

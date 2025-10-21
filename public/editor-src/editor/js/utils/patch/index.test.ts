@@ -1,4 +1,4 @@
-import { apply, Patcher, patcher } from "./index";
+import { apply, Patcher, patcher, filterPatchValues } from "./index";
 import { Getter } from "visual/utils/model";
 
 /**
@@ -10,7 +10,7 @@ export const testPatchFunction = <V, M extends P, P>(
   valid: V[],
   m: M
 ) => {
-  describe("Testing patch function behaviour", function() {
+  describe("Testing patch function behaviour", function () {
     test("If value is equal to current value, return undefined", () => {
       valid.forEach(v => {
         const p = patch(v, m);
@@ -31,7 +31,7 @@ export const testPatchFunction = <V, M extends P, P>(
   });
 };
 
-describe("Testing 'patcher' function", function() {
+describe("Testing 'patcher' function", function () {
   type M = { test: string };
 
   const m: M = { test: "" };
@@ -47,7 +47,7 @@ describe("Testing 'patcher' function", function() {
   });
 });
 
-describe("Testing 'apply' function", function() {
+describe("Testing 'apply' function", function () {
   type P1 = { test1: number };
   type P2 = { test2: number };
   type M = { test1: number; test2: number };
@@ -83,5 +83,174 @@ describe("Testing 'apply' function", function() {
         { ...m, test3: 3 }
       )
     ).toEqual(result);
+  });
+});
+
+describe("Testing 'filterPatchValues' function", function () {
+  test("should return null for non-object inputs", () => {
+    expect(filterPatchValues(null)).toBe(null);
+    expect(filterPatchValues(undefined)).toBe(null);
+    expect(filterPatchValues("string")).toBe(null);
+    expect(filterPatchValues(123)).toBe(null);
+    expect(filterPatchValues(true)).toBe(null);
+    expect(filterPatchValues(false)).toBe(null);
+    expect(filterPatchValues([])).toBe(null);
+    expect(filterPatchValues([1, 2, 3])).toBe(null);
+    expect(filterPatchValues(() => { })).toBe(null);
+    expect(filterPatchValues(Symbol("test"))).toBe(null);
+  });
+
+  test("should return empty object for empty object input", () => {
+    expect(filterPatchValues({})).toEqual({});
+  });
+
+  test("should filter and return only string, number, and boolean values", () => {
+    const input = {
+      stringValue: "hello",
+      numberValue: 42,
+      booleanValue: true,
+      nullValue: null,
+      undefinedValue: undefined,
+      arrayValue: [1, 2, 3],
+      objectValue: { nested: "value" },
+      functionValue: () => { },
+      symbolValue: Symbol("test")
+    };
+
+    const expected = {
+      stringValue: "hello",
+      numberValue: 42,
+      booleanValue: true
+    };
+
+    expect(filterPatchValues(input)).toEqual(expected);
+  });
+
+  test("should handle mixed valid and invalid values", () => {
+    const input = {
+      validString: "test",
+      validNumber: 0,
+      validBoolean: false,
+      invalidNull: null,
+      invalidArray: [],
+      invalidObject: {},
+      validNegativeNumber: -5,
+      validFloat: 3.14,
+      validEmptyString: ""
+    };
+
+    const expected = {
+      validString: "test",
+      validNumber: 0,
+      validBoolean: false,
+      validNegativeNumber: -5,
+      validFloat: 3.14,
+      validEmptyString: ""
+    };
+
+    expect(filterPatchValues(input)).toEqual(expected);
+  });
+
+  test("should handle edge cases for valid types", () => {
+    const input = {
+      zero: 0,
+      negativeZero: -0,
+      infinity: Infinity,
+      negativeInfinity: -Infinity,
+      nan: NaN,
+      emptyString: "",
+      whitespaceString: "   ",
+      trueValue: true,
+      falseValue: false
+    };
+
+    const expected = {
+      zero: 0,
+      negativeZero: -0,
+      infinity: Infinity,
+      negativeInfinity: -Infinity,
+      nan: NaN,
+      emptyString: "",
+      whitespaceString: "   ",
+      trueValue: true,
+      falseValue: false
+    };
+
+    expect(filterPatchValues(input)).toEqual(expected);
+  });
+
+  test("should preserve object structure and key names", () => {
+    const input = {
+      "camelCase": "value1",
+      "snake_case": "value2",
+      "kebab-case": "value3",
+      "with spaces": "value4",
+      "with123numbers": "value5",
+      "special!@#$%chars": "value6"
+    };
+
+    const expected = {
+      "camelCase": "value1",
+      "snake_case": "value2",
+      "kebab-case": "value3",
+      "with spaces": "value4",
+      "with123numbers": "value5",
+      "special!@#$%chars": "value6"
+    };
+
+    expect(filterPatchValues(input)).toEqual(expected);
+  });
+
+  test("should handle objects with only invalid values", () => {
+    const input = {
+      nullValue: null,
+      undefinedValue: undefined,
+      arrayValue: [1, 2, 3],
+      objectValue: { nested: "value" },
+      functionValue: () => { }
+    };
+
+    expect(filterPatchValues(input)).toEqual({});
+  });
+
+  test("should handle objects with only valid values", () => {
+    const input = {
+      string1: "hello",
+      string2: "world",
+      number1: 1,
+      number2: 2.5,
+      boolean1: true,
+      boolean2: false
+    };
+
+    expect(filterPatchValues(input)).toEqual(input);
+  });
+
+  test("should not mutate the original object", () => {
+    const input = {
+      valid: "test",
+      invalid: null,
+      array: [1, 2, 3]
+    };
+    const originalInput = { ...input };
+
+    filterPatchValues(input);
+
+    expect(input).toEqual(originalInput);
+  });
+
+  test("should handle objects with prototype properties", () => {
+    const input = Object.create({ inherited: "value" });
+    input.ownString = "own";
+    input.ownNumber = 42;
+    input.ownBoolean = true;
+
+    const expected = {
+      ownString: "own",
+      ownNumber: 42,
+      ownBoolean: true
+    };
+
+    expect(filterPatchValues(input)).toEqual(expected);
   });
 });

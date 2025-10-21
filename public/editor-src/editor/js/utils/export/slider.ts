@@ -20,10 +20,10 @@ export const makePausePlayItem = (node: Element): HTMLElement | null => {
   return listItem;
 };
 
-type CB = (node: Element) => void;
+type CB = (node: JQuery<Element>) => void;
 
 export const attachSliderControls = (
-  $this: Element,
+  $this: JQuery<Element>,
   node: Element,
   onClickPause: CB,
   onClickPlay: CB

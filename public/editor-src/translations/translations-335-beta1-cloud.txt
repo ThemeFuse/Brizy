@@ -1,0 +1,10 @@
+Both sides
+Bottom Middle
+Calculated
+Expression
+Middle Left
+Middle Right
+Navigation Padding
+One side
+Use label names for fields to calculate values, e.g., {{Label1}} + {{Label2}}. Supports types: number, radio, select, checkbox.
+{{Label1}}+{{Label2}}

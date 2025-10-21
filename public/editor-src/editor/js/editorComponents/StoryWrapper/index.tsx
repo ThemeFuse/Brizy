@@ -32,6 +32,7 @@ import {
 import * as Position from "visual/utils/position/element";
 import { attachRefs } from "visual/utils/react";
 import * as State from "visual/utils/stateMode";
+import { parseCustomAttributes } from "visual/utils/string/parseCustomAttributes";
 import * as Str from "visual/utils/string/specs";
 import { Literal } from "visual/utils/types/Literal";
 import { MValue } from "visual/utils/value";
@@ -51,6 +52,7 @@ type Item = {
 
 interface Value extends ElementModel, CssId {
   items: Item[];
+  customAttributes: string;
 }
 
 type Props = {
@@ -176,11 +178,16 @@ export class StoryWrapper extends EditorComponent<Value, Props> {
   }
 
   renderForView(v: Value, vs: Value, vd: Value): React.ReactNode {
+    const attributes = parseCustomAttributes(v.customAttributes);
+
     const itemsProps = this.makeSubcomponentProps({
       bindWithKey: "items",
       itemProps: {
         meta: this.props.meta,
         wrapperExtend: {
+          // For the Elements wrapped in the Link component we need to pass attributes as attr
+          attr: attributes,
+          attributes,
           className: this.getWrapperClassName(v, vs, vd),
           animationClass: this.getAnimationClassName(v, vs, vd)
         }

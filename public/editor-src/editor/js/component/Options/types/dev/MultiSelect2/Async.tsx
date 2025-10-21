@@ -37,6 +37,7 @@ type RState = {
   state:
     | "INACTIVE"
     | "LOADING"
+    | "LOADING_ALL"
     | "IDLE"
     | "HAS_INPUT"
     | "FETCHING"
@@ -45,6 +46,7 @@ type RState = {
     | "SELECTED";
   vChoices: ChoicesSync;
   sChoices: ChoicesSync;
+  allChoices: ChoicesSync;
   search: string;
 };
 type RAction =
@@ -55,7 +57,14 @@ type RAction =
       type: "loading";
     }
   | {
+      type: "loading_all";
+    }
+  | {
       type: "load_success";
+      choices: ChoicesSync;
+    }
+  | {
+      type: "load_all_success";
       choices: ChoicesSync;
     }
   | {
@@ -89,9 +98,15 @@ function reducer(state: RState, action: RAction): RState {
       switch (action.type) {
         case "idle":
         case "loading":
+        case "loading_all":
           return {
             ...state,
-            state: action.type === "idle" ? "IDLE" : "LOADING"
+            state:
+              action.type === "idle"
+                ? "IDLE"
+                : action.type === "loading"
+                  ? "LOADING"
+                  : "LOADING_ALL"
           };
       }
       break;
@@ -103,6 +118,19 @@ function reducer(state: RState, action: RAction): RState {
             ...state,
             state: "IDLE",
             vChoices: action.type === "load_success" ? action.choices : []
+          };
+      }
+      break;
+    case "LOADING_ALL":
+      switch (action.type) {
+        case "load_all_success":
+        case "load_fail":
+          return {
+            ...state,
+            state: "IDLE",
+            allChoices:
+              action.type === "load_all_success" ? action.choices : [],
+            vChoices: action.type === "load_all_success" ? action.choices : []
           };
       }
       break;
@@ -247,6 +275,7 @@ const initialState: RState = {
   state: "INACTIVE",
   vChoices: [],
   sChoices: [],
+  allChoices: [],
   search: ""
 };
 
@@ -270,15 +299,20 @@ export const Async = ({
   const debouncedSearch = useDebounce(state.search, 1000);
   const currentSearchController = useRef<AbortController>();
   const initialChoices = useRef<ChoicesSync>([]);
-  const { vChoices, sChoices, state: currentState } = state;
-  const { useAsSimpleSelect = false, showArrow = false } = config ?? {};
+  const { vChoices, sChoices, allChoices, state: currentState } = state;
+  const {
+    useAsSimpleSelect = false,
+    showArrow = false,
+    search = true,
+    fetchOnMount = false
+  } = config ?? {};
 
   const _onChange = useCallback<OnChange<Value>>(
     (v): void => {
       const cachedChoices = initialChoices.current;
-      const allChoices = [...vChoices, ...sChoices];
+      const availableChoices = [...vChoices, ...sChoices];
       const choices = v
-        .map((vv) => allChoices.find((item) => item.value === vv))
+        .map((vv) => availableChoices.find((item) => item.value === vv))
         .filter((item) => item !== undefined) as ChoicesSync;
 
       const diffBySearch = difference(
@@ -294,12 +328,45 @@ export const Async = ({
         initialChoices.current = choices;
       }
 
-      dispatch({ type: "value_changed", choices });
+      // When search is false, we want to show all available choices, not just selected ones
+      const choicesToUpdate = search
+        ? choices
+        : allChoices.length > 0
+          ? allChoices
+          : availableChoices;
+
+      dispatch({ type: "value_changed", choices: choicesToUpdate });
       onChange({ value: v });
     },
-    [onChange, vChoices, sChoices]
+    [onChange, vChoices, sChoices, allChoices, search]
   );
 
+  // Load all choices at first render when fetchOnMount is true
+  useEffect(() => {
+    if (fetchOnMount && allChoices.length === 0) {
+      dispatch({ type: "loading_all" });
+
+      const controller = new AbortController();
+      choices
+        .load([], controller.signal) // Empty array to get all items
+        .then((r) => {
+          if (!controller.signal.aborted) {
+            dispatch({ type: "load_all_success", choices: r });
+          }
+        })
+        .catch(() => {
+          if (!controller.signal.aborted) {
+            dispatch({ type: "load_fail" });
+          }
+        });
+
+      return (): void => {
+        controller.abort();
+      };
+    }
+  }, [fetchOnMount, choices, allChoices.length]);
+
+  // Handle loading selected values
   useEffect(() => {
     let controller: AbortController;
 
@@ -357,7 +424,10 @@ export const Async = ({
 
   const isIdle = useMemo(() => currentState === "IDLE", [currentState]);
   const isSelected = useMemo(() => currentState === "SELECTED", [currentState]);
-  const isLoading = useMemo(() => currentState === "LOADING", [currentState]);
+  const isLoading = useMemo(
+    () => currentState === "LOADING" || currentState === "LOADING_ALL",
+    [currentState]
+  );
   const isFetching = useMemo(() => currentState === "FETCHING", [currentState]);
   const isFetchNotFound = useMemo(
     () => currentState === "FETCH_NOT_FOUND",
@@ -371,6 +441,24 @@ export const Async = ({
   }, [isIdle, vChoices]);
 
   const _choices = useMemo(() => {
+    // When search is false, show all available choices
+    if (!search) {
+      const availableChoices = allChoices.length > 0 ? allChoices : vChoices;
+      return mergeChoices(
+        missingChoices(value, availableChoices),
+        availableChoices,
+        []
+      );
+    }
+
+    if (fetchOnMount && allChoices.length > 0) {
+      // When fetchOnMount is true and we have search results, show search results or all choices if no search results
+      return sChoices.length > 0
+        ? mergeChoices(missingChoices(value, allChoices), sChoices, [])
+        : mergeChoices(missingChoices(value, allChoices), allChoices, []);
+    }
+
+    // Default behavior for search=true cases
     return isSelected
       ? mergeChoices(
           missingChoices(value, vChoices),
@@ -378,27 +466,37 @@ export const Async = ({
           sChoices
         )
       : mergeChoices(missingChoices(value, vChoices), vChoices, sChoices);
-  }, [isSelected, sChoices, vChoices, value]);
+  }, [isSelected, sChoices, vChoices, value, search, allChoices, fetchOnMount]);
+
+  const _onSearchChange = useCallback(
+    (s: string): void => {
+      // If search is disabled, don't handle search changes
+      if (!search) {
+        return;
+      }
+
+      currentSearchController.current?.abort();
+      dispatch(
+        s === ""
+          ? { type: "search_erased" }
+          : { type: "search_changed", search: s }
+      );
+    },
+    [search]
+  );
 
   return (
     <Control<ValueItem>
       value={value}
       valueIsLoading={isLoading}
       placeholder={placeholder}
-      search={true}
+      search={search}
       searchIsLoading={isFetching}
       searchIsEmpty={isFetchNotFound}
       onChange={_onChange}
       useAsSimpleSelect={useAsSimpleSelect}
       showArrow={showArrow}
-      onSearchChange={(s): void => {
-        currentSearchController.current?.abort();
-        dispatch(
-          s === ""
-            ? { type: "search_erased" }
-            : { type: "search_changed", search: s }
-        );
-      }}
+      onSearchChange={_onSearchChange}
     >
       {_choices.map(choiceToItem)}
     </Control>

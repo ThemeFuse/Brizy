@@ -21,10 +21,14 @@ export interface FormData {
   hasEmailTemplate: boolean;
 }
 
+export interface FormDataWithIntegrationList extends FormData {
+  integrationList?: IntegrationType[];
+}
+
 export type GetForm = (
   data: { formId: string },
   config: ConfigCommon
-) => Promise<FormData>;
+) => Promise<FormDataWithIntegrationList>;
 
 type UpdateFormData = {
   formId: string;
@@ -134,7 +138,8 @@ export type GetSmtpIntegration = (
     formId: string;
     id: string;
   },
-  config: ConfigCommon
+  config: ConfigCommon,
+  id: string
 ) => Promise<SmptIntegrationResponse>;
 
 export type UpdateSmtpIntegration = (
@@ -143,7 +148,8 @@ export type UpdateSmtpIntegration = (
     formId: string;
     completed: boolean;
   },
-  config: ConfigCommon
+  config: ConfigCommon,
+  id: string
 ) => Promise<SmptIntegrationResponse>;
 
 export type DeleteSmtpIntegration = (
@@ -152,7 +158,8 @@ export type DeleteSmtpIntegration = (
     integration: string;
     notificationId: string;
   },
-  config: ConfigCommon
+  config: ConfigCommon,
+  id: string
 ) => Promise<SuccessResponse>;
 
 // Recaptcha
@@ -229,7 +236,8 @@ export interface Form {
   getSmtpIntegration: (
     res: APIResponse<SmptIntegrationResponse>,
     rej: APIResponse<string>,
-    data: { formId: string; id: string }
+    data: { formId: string; id: string },
+    id: string
   ) => void;
   updateSmtpIntegration: (
     res: APIResponse<SmptIntegrationResponse>,
@@ -238,12 +246,14 @@ export interface Form {
       formId: string;
       completed: boolean;
       [k: string]: unknown;
-    }
+    },
+    id: string
   ) => void;
   deleteSmtpIntegration: (
     res: APIResponse<SuccessResponse>,
     rej: APIResponse<string>,
-    data: { formId: string; integration: string }
+    data: { formId: string; integration: string },
+    id: string
   ) => void;
   createIntegrationAccount: (
     res: APIResponse<{
