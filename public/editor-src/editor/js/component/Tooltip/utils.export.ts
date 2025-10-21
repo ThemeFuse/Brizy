@@ -92,6 +92,12 @@ export function setupTooltip(
         options: { boundary: "viewport" }
       },
       {
+        name: "flip",
+        options: {
+          fallbackPlacements: ["auto", "auto-start", "auto-end"]
+        }
+      },
+      {
         name: "offset",
         options: { offset: [0, offsetValue] }
       }

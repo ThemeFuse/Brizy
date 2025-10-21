@@ -888,11 +888,14 @@ export default class EditorArrayComponent extends EditorComponent {
       ({ type }) => type === v.type
     );
 
+    const rules = rulesSelector(this.getReduxStore().getState());
+
     if (value) {
       const newValue = setStyles({
         depth,
         componentValue: value,
-        deviceMode: this.getDeviceMode()
+        deviceMode: this.getDeviceMode(),
+        rules
       });
 
       const mergedValue = deepMerge(v, newValue, {

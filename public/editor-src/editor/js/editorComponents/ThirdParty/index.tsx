@@ -7,6 +7,7 @@ import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import {
   ComponentsMeta,
+  Model,
   NewToolbarConfig,
   ToolbarConfig
 } from "visual/editorComponents/EditorComponent/types";
@@ -15,6 +16,7 @@ import Editor from "visual/global/Editor";
 import { isEditor, isView } from "visual/providers/RenderProvider";
 import { WithClassName } from "visual/types/attributes";
 import { I18n } from "visual/utils/i18n";
+import { filterPatchValues } from "visual/utils/patch";
 import { attachRefs } from "visual/utils/react";
 import { ThirdPartyContextProvider } from "../tools/ThirdPartyContext";
 import { Wrapper } from "../tools/Wrapper";
@@ -214,6 +216,19 @@ class ThirdParty extends EditorComponent<Value, Props> {
     }
   }
 
+  onChange = (patch: Partial<Model<Value>>) => {
+    const values = filterPatchValues(patch);
+
+    if (values) {
+      this.patchValue(values);
+    } else {
+      console.warn(
+        "Invalid patch values provided to ThirdParty component:",
+        patch
+      );
+    }
+  };
+
   // @ts-expect-error: Props
   renderForEdit(
     v: Record<string, unknown>,
@@ -252,6 +267,7 @@ class ThirdParty extends EditorComponent<Value, Props> {
                 {...v}
                 device={device}
                 DynamicContent={this.getDynamiContent}
+                onChange={this.onChange}
               />
             </ThirdPartyContextProvider>
           </Wrapper>

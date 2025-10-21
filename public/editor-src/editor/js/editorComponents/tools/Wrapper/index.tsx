@@ -60,6 +60,7 @@ export interface Props<T extends Record<any, any>> extends WithClassName {
   onClick?: MouseEventHandler<HTMLDivElement>;
   onDragStart?: (e: Event) => void;
   slide?: StoryAnchorAttribute;
+  attr?: Record<string, unknown | number>;
 }
 
 const wrapperId = uuid(7);

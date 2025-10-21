@@ -112,7 +112,8 @@ class Smtp extends Component<Props, State> {
           formId,
           completed: true
         },
-        config
+        config,
+        id
       );
 
       if (!data) {

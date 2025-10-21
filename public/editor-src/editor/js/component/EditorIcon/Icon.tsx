@@ -1,5 +1,15 @@
 import { AnimatedHeadline } from "@brizy/builder-icons/src/Icons/AnimatedHeadline";
 import { Cancel } from "@brizy/builder-icons/src/Icons/Cancel";
+import { CarouselArrowBottomLeft } from "@brizy/builder-icons/src/Icons/CarouselArrowBottomLeft";
+import { CarouselArrowBottomMiddle } from "@brizy/builder-icons/src/Icons/CarouselArrowBottomMiddle";
+import { CarouselArrowBottomRight } from "@brizy/builder-icons/src/Icons/CarouselArrowBottomRight";
+import { CarouselArrowMiddleLeft } from "@brizy/builder-icons/src/Icons/CarouselArrowMiddleLeft";
+import { CarouselArrowMiddleRight } from "@brizy/builder-icons/src/Icons/CarouselArrowMiddleRight";
+import { CarouselArrowStyle1 } from "@brizy/builder-icons/src/Icons/CarouselArrowStyle1";
+import { CarouselArrowStyle2 } from "@brizy/builder-icons/src/Icons/CarouselArrowStyle2";
+import { CarouselArrowStyle3 } from "@brizy/builder-icons/src/Icons/CarouselArrowStyle3";
+import { CarouselArrowTopLeft } from "@brizy/builder-icons/src/Icons/CarouselArrowTopLeft";
+import { CarouselArrowTopRight } from "@brizy/builder-icons/src/Icons/CarouselArrowTopRight";
 import { Chart } from "@brizy/builder-icons/src/Icons/Chart";
 import { EditMenuItem } from "@brizy/builder-icons/src/Icons/EditMenuItem";
 import { InstagramFeed } from "@brizy/builder-icons/src/Icons/InstagramFeed";
@@ -80,7 +90,17 @@ const Icons = {
   "t2-chart": Chart,
   "t2-animated-headline": AnimatedHeadline,
   "t2-edit-menu-item": EditMenuItem,
-  "t2-cancel": Cancel
+  "t2-cancel": Cancel,
+  "t2-carousel-arrow-style1": CarouselArrowStyle1,
+  "t2-carousel-arrow-style2": CarouselArrowStyle2,
+  "t2-carousel-arrow-style3": CarouselArrowStyle3,
+  "t2-carousel-arrow-top-left": CarouselArrowTopLeft,
+  "t2-carousel-arrow-top-right": CarouselArrowTopRight,
+  "t2-carousel-arrow-bottom-right": CarouselArrowBottomRight,
+  "t2-carousel-arrow-bottom-left": CarouselArrowBottomLeft,
+  "t2-carousel-arrow-bottom-middle": CarouselArrowBottomMiddle,
+  "t2-carousel-arrow-middle-left": CarouselArrowMiddleLeft,
+  "t2-carousel-arrow-middle-right": CarouselArrowMiddleRight
 };
 
 export type IconNames = keyof typeof Icons;

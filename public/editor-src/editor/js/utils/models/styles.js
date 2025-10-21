@@ -105,14 +105,29 @@ export function getStateModeKeys(v) {
   }, {});
 }
 
-function getStyles({ value, type }, deviceMode) {
+function getStyles({ value, type }, deviceMode, rules = {}) {
   const { defaultValue } = Editor.getComponent(type);
+
+  const ruleStyles = (value._styles || []).reduce((acc, style) => {
+    // Get the rule for the current style
+    const rule = Obj.readKey(style)(rules);
+
+    // If the rule is not an object, skip it
+    if (!Obj.isObject(rule)) return acc;
+
+    // Filter only allowed style properties based on defaultValue.style
+    const allowedKeys = Object.keys(defaultValue.style);
+    const filteredValues = Object.fromEntries(
+      Object.entries(rule).filter(([key]) => allowedKeys.includes(key))
+    );
+
+    return { ...acc, ...filteredValues };
+  }, {});
 
   if (deviceMode === DESKTOP) {
     const stateModeKeys = getStateModeKeys(value);
     const defaultStyleDevice = filterDesktopKeys(defaultValue.style);
-
-    return Object.assign({}, defaultStyleDevice, stateModeKeys);
+    return Object.assign({}, defaultStyleDevice, ruleStyles, stateModeKeys);
   } else {
     const componentStyleDevice = filterResponsiveKeys(value, deviceMode);
     const defaultStyleDevice = filterResponsiveKeys(
@@ -120,14 +135,19 @@ function getStyles({ value, type }, deviceMode) {
       deviceMode
     );
 
-    return Object.assign({}, defaultStyleDevice, componentStyleDevice);
+    return Object.assign(
+      {},
+      defaultStyleDevice,
+      ruleStyles,
+      componentStyleDevice
+    );
   }
 }
 
 export function setStyles(data) {
-  const { componentValue, deviceMode, depth = 0 } = data;
+  const { componentValue, deviceMode, depth = 0, rules } = data;
   let i = data.i ?? 0;
-  const styles = getStyles(componentValue, deviceMode);
+  const styles = getStyles(componentValue, deviceMode, rules);
 
   let newValue = setIn(
     componentValue,
@@ -156,7 +176,8 @@ export function setStyles(data) {
         },
         depth,
         i,
-        deviceMode
+        deviceMode,
+        rules
       });
     });
     newValue = setIn(newValue, ["value", "items"], newItems);

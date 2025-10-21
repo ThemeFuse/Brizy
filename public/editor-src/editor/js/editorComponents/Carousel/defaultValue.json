@@ -6,6 +6,12 @@
 
     "orderBy": "title",
     "order": "ASC",
+    "source": "",
+    "querySource": "",
+    "tagsSource": "",
+    "offset": 0,
+    "count": 4,
+    "field": "",
 
     "columns": 4,
 
@@ -24,6 +30,22 @@
     "transitionSpeed": 3.5,
     "transitionSpeedSuffix": "s",
     "stopSlider": "off",
+
+    "arrowStyle": "style-1",
+
+    "sliderArrowsCustomName": "",
+    "sliderArrowsCustomType": "",
+    "sliderArrowsCustomFilename": "",
+
+    "arrowSize": "small",
+    "customArrowSize": 48,
+    "customArrowSizeSuffix": "px",
+
+    "sliderDotsCustomName": "",
+    "sliderDotsCustomType": "",
+    "sliderDotsCustomFilename": "",
+
+    "arrowPosition": "top-left",
 
     "items": []
   },
@@ -100,6 +122,33 @@
     "mobileSliderPaddingBottom": 30,
     "mobileSliderPaddingBottomSuffix": "px",
     "mobileSliderPaddingLeft": 0,
-    "mobileSliderPaddingLeftSuffix": "px"
+    "mobileSliderPaddingLeftSuffix": "px",
+
+    "navigationBgColorType": "none",
+    "navigationBgColorHex": "#000000",
+    "navigationBgColorOpacity": 0,
+    "navigationBgColorPalette": "",
+
+    "navigationGradientColorHex": "#000000",
+    "navigationGradientColorOpacity": 1,
+    "navigationGradientColorPalette": "",
+    "navigationGradientType": "linear",
+    "navigationGradientStartPointer": 0,
+    "navigationGradientFinishPointer": 100,
+    "navigationGradientActivePointer": "finishPointer",
+    "navigationGradientLinearDegree": 0,
+    "navigationGradientRadialDegree": 0,
+
+    "navigationBgPaddingType": "grouped",
+    "navigationBgPadding": 0,
+    "navigationBgPaddingSuffix": "px",
+    "navigationBgPaddingTop": 0,
+    "navigationBgPaddingTopSuffix": "px",
+    "navigationBgPaddingRight": 0,
+    "navigationBgPaddingRightSuffix": "px",
+    "navigationBgPaddingBottom": 0,
+    "navigationBgPaddingBottomSuffix": "px",
+    "navigationBgPaddingLeft": 0,
+    "navigationBgPaddingLeftSuffix": "px"
   }
 }

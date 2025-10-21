@@ -2,9 +2,9 @@
 
 Contributors: themefuse<br>
 Requires at least: 4.5<br>
-Tested up to: 6.8.2<br>
+Tested up to: 6.8.3<br>
 Requires PHP: 7.2.24<br>
-Stable tag: 2.7.15<br>
+Stable tag: 2.7.16<br>
 License: GPLv3<br>
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -135,6 +135,18 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 [Privacy policy](https://brizy.io/privacy/)
 
 ## Changelog
+
+### 2.7.16 - 2025-10-21
+
+* New: Counter – added “fix value” option for better number control
+* New: Context Menu – improved copy/paste styling on Firefox
+* New: Section – introduced CSS variable for full-height sections
+* New: Typography – improved custom-style handling
+* Fixed: Story – widget sizes preserved when pasting styles
+* Fixed: Story – custom attributes now work correctly
+* Fixed: Typography – toolbar now applies default font style properly
+* Fixed: Row – “show on device” visibility works correctly
+* Fixed: Link – absolute URLs keep their original link format
 
 ### 2.7.15 - 2025-09-30
 * New: Rich-Text – added tags support for dynamic content

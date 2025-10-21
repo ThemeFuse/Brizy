@@ -2,11 +2,10 @@ import { Props as TabsOptionProps } from "visual/component/Options/types/dev/Tab
 import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
 import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { ArrayType } from "visual/utils/array/types";
-import { t } from "visual/utils/i18n";
-import { MValue } from "visual/utils/value";
-import { CloudComponentConfig, Context, V, VDecoded } from "../types";
-import { CURRENT_CONTEXT_TYPE, decodeV } from "../utils.common";
-import { orderByConverter } from "./utils.common";
+import {
+  CURRENT_CONTEXT_TYPE,
+  orderByConverter
+} from "visual/utils/elements/posts";
 import {
   authorsLoad,
   authorsSearch,
@@ -14,8 +13,12 @@ import {
   manualSearch,
   termsLoad,
   termsSearch
-} from "./utils.wp";
-
+} from "visual/utils/elements/posts/index.wp";
+import { Context } from "visual/utils/elements/posts/types";
+import { t } from "visual/utils/i18n";
+import { MValue } from "visual/utils/value";
+import { CloudComponentConfig, V, VDecoded } from "../types";
+import { decodeV } from "../utils.common";
 
 type TabOptionType = ArrayType<Required<TabsOptionProps>["tabs"]>;
 

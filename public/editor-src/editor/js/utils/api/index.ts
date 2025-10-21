@@ -2147,7 +2147,11 @@ export const addRecaptcha: AddRecaptcha = async (data, config) => {
   });
 };
 
-export const getSmtpIntegration: GetSmtpIntegration = async (data, config) => {
+export const getSmtpIntegration: GetSmtpIntegration = async (
+  data,
+  config,
+  id
+) => {
   return new Promise((res, rej) => {
     const { integrations } = config;
 
@@ -2156,14 +2160,15 @@ export const getSmtpIntegration: GetSmtpIntegration = async (data, config) => {
     if (typeof getSmtpIntegration !== "function") {
       rej(t("Integrations: No getSmtpIntegration handler found."));
     } else {
-      getSmtpIntegration(res, rej, data);
+      getSmtpIntegration(res, rej, data, id);
     }
   });
 };
 
 export const updateSmtpIntegration: UpdateSmtpIntegration = async (
   data,
-  config
+  config,
+  id
 ) => {
   return new Promise((res, rej) => {
     const { integrations } = config;
@@ -2173,14 +2178,15 @@ export const updateSmtpIntegration: UpdateSmtpIntegration = async (
     if (typeof updateSmtpIntegration !== "function") {
       rej(t("Integrations: No updateSmtpIntegration handler found."));
     } else {
-      updateSmtpIntegration(res, rej, data);
+      updateSmtpIntegration(res, rej, data, id);
     }
   });
 };
 
 export const deleteSmtpIntegration: DeleteSmtpIntegration = async (
   data,
-  config
+  config,
+  id
 ) => {
   return new Promise((res, rej) => {
     const { integrations } = config;
@@ -2190,7 +2196,7 @@ export const deleteSmtpIntegration: DeleteSmtpIntegration = async (
     if (typeof deleteIntegration !== "function") {
       rej(t("Integrations: No deleteIntegration handler found."));
     } else {
-      deleteIntegration(res, rej, data);
+      deleteIntegration(res, rej, data, id);
     }
   });
 };

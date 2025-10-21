@@ -38,6 +38,9 @@ const argvVars = require("./build-utils/argvVars");
 const {
   wpTranslations: wpTranslationsUtil
 } = require("./build-utils/wpTranslations");
+const {
+  cloudTranslations: cloudTranslationsUtil
+} = require("./build-utils/cloudTranslations");
 const LibsConfig = require("./editor/js/bootstraps/libs.json");
 
 // flags
@@ -59,6 +62,7 @@ const {
   paths
 } = argvVars(process.argv);
 const WP = TARGET === "WP";
+const CLOUD = TARGET === "Cloud";
 
 const brizyUIDistPath = path.resolve(
   require.resolve("@brizy/ui"),
@@ -531,6 +535,17 @@ async function wpTranslations() {
 
   fs.writeFileSync(dest, phpSourceCode, "utf8");
 }
+
+async function cloudTranslations() {
+  let dest = path.resolve(paths.build, "translations.json");
+  let jsonSourceCode = await cloudTranslationsUtil({
+    paths,
+    VERSION
+  });
+
+  fs.writeFileSync(dest, jsonSourceCode, "utf8");
+}
+
 function wpOpenSource() {
   const src = [
     "./**/*",
@@ -743,6 +758,11 @@ exports.build = gulp.series.apply(undefined, [
           ...(IS_PRODUCTION && IS_EXPORT ? [wpOpenSource] : [])
         ])
       ]
+    : []),
+
+  // cloud
+  ...(CLOUD && IS_PRODUCTION
+    ? [gulp.parallel.apply(undefined, [cloudTranslations])]
     : []),
 
   // build
@@ -1090,6 +1110,12 @@ exports.libs = gulp.series.apply(undefined, [
 //#region WP Translations
 
 exports.translation = gulp.series(wpTranslations);
+
+//#endregion
+
+//#region Cloud Translations
+
+exports.cloudTranslation = gulp.series(cloudTranslations);
 
 //#endregion
 

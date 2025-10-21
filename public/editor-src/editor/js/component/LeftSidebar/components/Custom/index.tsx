@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { LeftSidebarOptionsIds } from "visual/global/Config/types/configs/ConfigCommon";
 import { updateUI } from "visual/redux/actions2";
 import { leftSidebarSelector } from "visual/redux/selectors";
+import { DrawerContentTypes } from "visual/redux/types";
 import { t } from "visual/utils/i18n";
 import Link from "../Options/types/Link";
 
@@ -27,8 +28,7 @@ const Component = (props: Props): ReactElement => {
     (isOpen: boolean) => {
       dispatch(
         updateUI("leftSidebar", {
-          drawerContentType:
-            isOpen && id === LeftSidebarOptionsIds.cms ? id : null
+          drawerContentType: isOpen ? (id as DrawerContentTypes) : null
         })
       );
     },
@@ -67,7 +67,7 @@ const Component = (props: Props): ReactElement => {
 };
 
 export const custom = (option?: Props) => ({
-  id: LeftSidebarOptionsIds.cms,
+  id: LeftSidebarOptionsIds.custom,
   type: "custom",
   Component: () => (
     <Component

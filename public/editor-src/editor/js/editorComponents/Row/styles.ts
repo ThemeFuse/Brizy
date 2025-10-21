@@ -132,7 +132,7 @@ export function styleRow(data: DynamicStylesProps<ElementModel>): OutputStyle {
 
   if (_isEditor) {
     styles[".brz &&"].interval.push(
-      "cssStyleVisibleEditorDisplayNoneOrBlock|||editor"
+      "cssStyleVisibleEditorDisplayNoneOrFlex|||editor"
     );
   } else {
     styles[".brz &&"].interval.push("cssStyleVisible|||preview");

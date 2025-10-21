@@ -1,8 +1,8 @@
 export function formatLink(input: string): string {
   const value = input.trim();
 
-  // Return as-is if already a tel: or mailto: link
-  if (/^(tel:|mailto:)/i.test(value)) {
+  // Return as-is if already a full URL, tel: or mailto: link
+  if (/^(https?:\/\/|tel:|mailto:)/i.test(value)) {
     return value;
   }
 
