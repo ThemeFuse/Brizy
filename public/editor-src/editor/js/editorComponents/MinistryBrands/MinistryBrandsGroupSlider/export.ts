@@ -15,7 +15,6 @@ export default function ($node: JQuery): void {
     const prevArrow = container.find(".brz-swiper-arrow_prev")[0];
     const nextArrow = container.find(".brz-swiper-arrow_next")[0];
 
-    // @ts-expect-error "slick" doesn't exist in .ts
     $this.slick({
       slidesToShow: $slidesToShow,
       slidesToScroll: 1,

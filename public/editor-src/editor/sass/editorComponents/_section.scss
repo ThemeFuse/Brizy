@@ -67,6 +67,10 @@
       display: none;
     }
   }
+
+  &:has(.brz-menu__item-dropdown--active, .brz-menu__item--opened) {
+    z-index: z("section-menu-opened");
+  }
 }
 
 // Section Menu

@@ -1,3 +1,4 @@
+import { Str } from "@brizy/readers";
 import { FontFamilyType } from "visual/types/Fonts";
 import { FontTransform } from "visual/types/Style";
 import * as SizeSuffix from "visual/utils/fonts/SizeSuffix";
@@ -15,7 +16,7 @@ export interface FontStyle {
 export const fontStyle = (fontStyle: string): FontStyle => ({ fontStyle });
 
 export const isFontStyle = (p: Patch): p is FontStyle =>
-  typeof (p as Partial<FontStyle>).fontStyle === "string";
+  "fontStyle" in p && Str.is(p.fontStyle);
 // endregion
 
 // region FontFamily

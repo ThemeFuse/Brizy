@@ -14,6 +14,7 @@ export interface DynamicContentProps {
 export interface ThirdPartyProps {
   device?: DeviceMode;
   DynamicContent?: ComponentType<DynamicContentProps>;
+  onChange?: (value: Record<string, string | number | boolean>) => void;
 }
 
 export interface ContainerProps {

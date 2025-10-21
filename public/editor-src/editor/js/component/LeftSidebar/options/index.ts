@@ -62,7 +62,6 @@ const getItems = ({
   editorMode
 }: GetItemsProps): Record<LeftSidebarOptionsIds, OptionType> => {
   const { ui, urls } = config;
-  const leftSidebar = ui?.leftSidebar ?? {};
 
   const pageSettingsOptions = getPageSettings(ui);
   const moreOptions = getMoreOptions(ui);
@@ -77,11 +76,6 @@ const getItems = ({
   const helpIcon = config?.ui?.help?.showIcon;
 
   return {
-    [LeftSidebarOptionsIds.cms]: custom({
-      // TODO: Temporarily fix, will be fixed here https://github.com/bagrinsergiu/blox-editor/issues/29257
-      id: LeftSidebarOptionsIds.cms,
-      ...leftSidebar[LeftSidebarOptionsIds.cms]
-    }),
     [LeftSidebarOptionsIds.addElements]: getBaseDrawer,
     [LeftSidebarOptionsIds.reorderBlock]: getBlocksSortable({
       helpIcon,

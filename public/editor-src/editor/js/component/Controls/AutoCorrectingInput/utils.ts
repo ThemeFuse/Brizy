@@ -13,8 +13,19 @@ export function decimalLength(number: number): number {
   return decimal ? decimal.length : 0;
 }
 
-export function correctNumber(number: number, min: number, max: number, step: number): number {
-  return roundByStep(clamp(number, min, max), step, min);
+export function correctNumber(
+  number: number,
+  min: number,
+  max: number,
+  step: number
+): number {
+  const clampedNumber = clamp(number, min, max);
+
+  if (step === Math.floor(step)) {
+    return Math.round(clampedNumber / step) * step;
+  }
+
+  return roundByStep(clampedNumber, step, min);
 }
 
 export const preciseAdd = preciseOperation.bind(null, "add");

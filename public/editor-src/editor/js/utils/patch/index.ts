@@ -1,6 +1,7 @@
+import { Obj } from "@brizy/readers";
 import { toArray } from "visual/utils/array";
-import { MValue } from "visual/utils/value";
 import { Getter } from "visual/utils/model";
+import { MValue } from "visual/utils/value";
 
 export type Patcher<V, M extends P, P> = (v: V, m: M) => MValue<P>;
 
@@ -87,3 +88,22 @@ export function apply<V, P extends Record<string, unknown>, M extends P>(
   );
 }
 // =============================================================================
+
+export function filterPatchValues(
+  obj: unknown
+): Record<string, unknown> | null {
+  if (!Obj.isObject(obj) || Array.isArray(obj)) {
+    return null;
+  }
+
+  const result: Record<string, unknown> = {};
+
+  for (const [key, value] of Object.entries(obj)) {
+    const type = typeof value;
+    if (type === "string" || type === "number" || type === "boolean") {
+      result[key] = value;
+    }
+  }
+
+  return result;
+}
