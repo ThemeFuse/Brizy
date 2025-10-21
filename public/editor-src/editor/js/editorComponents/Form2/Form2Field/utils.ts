@@ -69,6 +69,8 @@ const matchTypeToName = ({
       return t("URL");
     case "FileUpload":
       return t("FileUpload");
+    case "Calculated":
+      return t("Calculated");
     default:
       return "";
   }

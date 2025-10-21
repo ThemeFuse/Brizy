@@ -19,51 +19,58 @@ const meta = {
 };
 
 // this component is needed to avoid ContextMenuProvider to render a wrapper div  because that breaks our layout
-const ContextMenuWrapper = forwardRef(({ id, children }, wrapperRef) => {
-  const { show } = useContextMenu({ id });
+const ContextMenuWrapper = forwardRef(
+  ({ id, children, onContextMenu }, wrapperRef) => {
+    const { show } = useContextMenu({ id });
 
-  const handleContextMenu = useCallback(
-    (e) => {
-      if (!e.shiftKey) {
-        const iframe = parent.document.querySelector("#brz-ed-iframe");
+    const handleContextMenu = useCallback(
+      (e) => {
+        if (!e.shiftKey) {
+          const iframe = parent.document.querySelector("#brz-ed-iframe");
 
-        const iframeBounding = iframe.getBoundingClientRect();
+          const iframeBounding = iframe.getBoundingClientRect();
 
-        show({
-          id,
-          event: e,
-          position: {
-            x: e.clientX + iframeBounding.x,
-            y: e.clientY
+          if (onContextMenu) {
+            onContextMenu();
           }
-        });
-      }
-    },
-    [id]
-  );
 
-  useEffect(() => {
-    const element = wrapperRef.current;
+          show({
+            id,
+            event: e,
+            position: {
+              x: e.clientX + iframeBounding.x,
+              y: e.clientY
+            }
+          });
+        }
+      },
+      [id, onContextMenu]
+    );
 
-    if (element) {
-      element.addEventListener("contextmenu", handleContextMenu);
-    }
+    useEffect(() => {
+      const element = wrapperRef.current;
 
-    return () => {
       if (element) {
-        element.removeEventListener("contextmenu", handleContextMenu);
+        element.addEventListener("contextmenu", handleContextMenu);
       }
-    };
-  }, [id]);
 
-  return children;
-});
+      return () => {
+        if (element) {
+          element.removeEventListener("contextmenu", handleContextMenu);
+        }
+      };
+    }, [id]);
+
+    return children;
+  }
+);
 
 export const ContextMenuProvider = ({
   getItems: _getItems,
   children,
   id,
-  componentId
+  componentId,
+  onContextMenu
 }) => {
   const ref = useRef(null);
   const rootRef = useRef(null);
@@ -148,7 +155,7 @@ export const ContextMenuProvider = ({
 
   return (
     <ContextMenuContext.Provider value={value}>
-      <ContextMenuWrapper id={id} ref={ref}>
+      <ContextMenuWrapper id={id} ref={ref} onContextMenu={onContextMenu}>
         {typeof children === "function" ? children({ ref }) : children}
       </ContextMenuWrapper>
       {root && (

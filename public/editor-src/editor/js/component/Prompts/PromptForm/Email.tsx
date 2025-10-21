@@ -24,6 +24,11 @@ import {
 import * as AppsComponent from "./Apps";
 import { HelperCopy } from "./Step/common/HelperToolip";
 
+// Extended AppData type to include notification data
+interface AppDataWithNotification extends AppData {
+  notification?: IntegrationType;
+}
+
 type Props = BaseIntegrationProps & {
   formId: string;
   formFields: FormField[];
@@ -59,7 +64,7 @@ class Email extends BaseIntegration<Props, State, Context> {
     notifications: []
   };
 
-  appsData: AppData[] = [];
+  appsData: AppDataWithNotification[] = [];
   appsComponent = AppsComponent;
   proExceptions = !isPro(this.props.config);
   isWp = isWp(this.props.config);
@@ -91,11 +96,21 @@ class Email extends BaseIntegration<Props, State, Context> {
     const data = await getForm({ formId }, config);
 
     if (data) {
+      const notifications = [
+        ...(data.notifications?.length ? data.notifications : []),
+        ...(data.integrationList?.length ? data.integrationList : [])
+      ];
+
+      this.appsData = this.enhanceAppsDataWithNotifications(
+        this.appsData,
+        notifications
+      );
+
       this.setState({
         connectedApps: this.getConnectedApps(data.integrations),
         emailTemplate: data.emailTemplate || "",
         hasEmailTemplate: data.hasEmailTemplate,
-        notifications: data.notifications || [],
+        notifications,
         loading: false
       });
     } else {
@@ -105,6 +120,26 @@ class Email extends BaseIntegration<Props, State, Context> {
     }
 
     onLoading(false);
+  }
+
+  enhanceAppsDataWithNotifications(
+    appsData: AppDataWithNotification[],
+    notifications: IntegrationType[]
+  ): AppDataWithNotification[] {
+    return appsData.map((app) => {
+      const correspondingNotification = notifications.find(
+        (notification) => notification.type === app.id
+      );
+
+      if (correspondingNotification) {
+        return {
+          ...app,
+          notification: correspondingNotification
+        };
+      }
+
+      return app;
+    });
   }
 
   getContextValue(): Context {
@@ -118,7 +153,9 @@ class Email extends BaseIntegration<Props, State, Context> {
     };
   }
 
-  handleConnectApp = async (appData: AppData): Promise<void> => {
+  handleConnectApp = async (
+    appData: AppDataWithNotification
+  ): Promise<void> => {
     const { config } = this.props;
 
     const connectedApp = appData.id;
@@ -131,7 +168,8 @@ class Email extends BaseIntegration<Props, State, Context> {
         formId,
         id: connectedApp
       },
-      config
+      config,
+      connectedApp
     );
 
     if (!data) {
@@ -199,7 +237,9 @@ class Email extends BaseIntegration<Props, State, Context> {
       <EmailDisconnect
         handleRemoveDeletedApp={this.handleRemoveDeletedApp}
         app={this.appsData.find((app) => app.id === deletedApp.type)}
-        notification={notifications[deletedApp.id]}
+        notification={notifications.find(
+          (notification) => String(notification.id) === String(deletedApp?.id)
+        )}
         formId={formId}
       />
     ) : (

@@ -181,11 +181,11 @@ export function cssStyleSectionHeightStyle({ v, device }: CSSValue): string {
   const dvv = (key: string) => defaultValueValue({ v, key, device });
   const minHeightType = dvv("fullHeight");
 
-  const minHeight =
+  const minHeight = 
     minHeightType === "custom"
       ? `${dvv("sectionHeight")}${dvv("sectionHeightSuffix")}`
       : minHeightType === "on"
-        ? "100vh"
+        ? "var(--section-full-height, 100vh)"
         : "auto";
 
   return `min-height: ${minHeight};`;

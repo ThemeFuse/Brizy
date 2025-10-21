@@ -66,12 +66,25 @@
     transition:
       transform linear 0.2s,
       background-color linear 0.2s;
+
+    // Reset styles for custom dots
+    &:has(.brz-carousel-dot-custom) {
+      text-indent: 0;
+      border: none;
+      padding: 0;
+      opacity: 0.6;
+    }
   }
   .slick-active button {
     background-color: currentColor !important;
     transition:
       transform linear 0.2s,
       background-color linear 0.2s;
+
+    &:has(.brz-carousel-dot-custom) {
+      background-color: transparent !important;
+      opacity: 1;
+    }
   }
 
   // Type

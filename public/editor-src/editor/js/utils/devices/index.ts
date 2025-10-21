@@ -103,3 +103,12 @@ export const isIOS = () =>
   iosDevices.includes(navigator.platform) ||
   // iPad on iOS 13 detection
   (navigator.userAgent.includes("Mac") && "ontouchend" in document);
+
+export const isFirefox = () => {
+  // Navigator are not exists on server side
+  if (typeof navigator === "undefined") {
+    return false;
+  }
+
+  return navigator.userAgent.includes("Firefox");
+};

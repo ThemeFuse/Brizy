@@ -1,7 +1,7 @@
 import { t } from "visual/utils/i18n";
 import { tabFilter } from "./tabFilter";
 import { tagsFilter } from "./tagsFilter";
-import { disableNavigation, maxColumn } from "./utils.common";
+import { disableNavigation, maxColumn } from "./utils";
 
 const getItems =
   (context) =>

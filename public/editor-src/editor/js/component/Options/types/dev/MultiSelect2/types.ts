@@ -16,6 +16,7 @@ export type Config = WithSize & {
   items?: number;
   scroll?: number;
   showArrow?: boolean;
+  fetchOnMount?: boolean;
   // DO NOT USE THIS KEY, this key is used only in Posts element because we can't normally change form "multiSelect" to "select-dev" because of dynamically id and different data structure
   useAsSimpleSelect?: boolean;
 };

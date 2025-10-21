@@ -41,7 +41,8 @@ export const EmailDisconnect = ({
         integration: id,
         notificationId: notification?.id || ""
       },
-      config
+      config,
+      id
     );
 
     if (success) {

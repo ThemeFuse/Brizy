@@ -6,6 +6,7 @@ import {
   Options as PopperOptions
 } from "@popperjs/core/lib/types";
 import { FlatpickrFn } from "flatpickr/dist/types/instance";
+import Formula from "fparser";
 import ImagesLoaded from "imagesloaded";
 import Isotope from "isotope-layout";
 import Lottie from "lottie-web";
@@ -49,6 +50,7 @@ interface BrizyLibs {
   Swiper: SwiperInstanceType;
   Autoplay: Autoplay;
   EffectFade: EffectFade;
+  Formula?: typeof Formula;
 }
 
 interface BrizyProLibs {
@@ -157,6 +159,7 @@ declare global {
       close?: () => void;
       open?: () => void;
     };
+    slick(data: unknown): JQuery;
   }
 
   type Primitive = undefined | null | string | number | boolean;

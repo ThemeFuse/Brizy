@@ -20,6 +20,12 @@ import { isEditor, isView } from "visual/providers/RenderProvider";
 import { pageSelector } from "visual/redux/selectors";
 import { defaultPostsSources, getCollectionTypesInfo } from "visual/utils/api";
 import { makePlaceholder } from "visual/utils/dynamicContent";
+import {
+  decodeSymbols,
+  encodeSymbols,
+  getLoopName,
+  stringifyAttributes
+} from "visual/utils/elements/posts";
 import { getCurrentPageId } from "visual/utils/env";
 import { tabletSyncOnChange } from "visual/utils/onChange";
 import { attachRefs } from "visual/utils/react";
@@ -36,14 +42,7 @@ import * as toolbarExtendFilter from "./toolbarExtendFilter";
 import * as toolbarExtendPagination from "./toolbarExtendPagination";
 import toolbarExtendParentFn from "./toolbarExtendParent";
 import { getLoopAttributes, getLoopTagsAttributes } from "./utils";
-import {
-  decodeSymbols,
-  encodeSymbols,
-  getLoopName,
-  getPlaceholderClassName,
-  getPlaceholderIcon,
-  stringifyAttributes
-} from "./utils.common";
+import { getPlaceholderClassName, getPlaceholderIcon } from "./utils.common";
 
 export class Posts extends EditorComponent {
   static defaultValue = defaultValue;
@@ -241,11 +240,16 @@ export class Posts extends EditorComponent {
   }
 
   handleValueChange(newValue, meta) {
-    if (meta.patch.source !== undefined) {
-      super.handleValueChange(
-        encodeSymbols({ ...newValue, tagsSource: "" }),
-        meta
-      );
+    const metaSource = meta.patch.source;
+    if (metaSource !== undefined) {
+      const value = encodeSymbols({ ...newValue, tagsSource: "" });
+
+      if (metaSource !== this.getValue().source) {
+        // INFO: reset field when source changes because each source has its own fields
+        value["field"] = "";
+      }
+
+      super.handleValueChange(value, meta);
     } else {
       super.handleValueChange(encodeSymbols(newValue), meta);
     }

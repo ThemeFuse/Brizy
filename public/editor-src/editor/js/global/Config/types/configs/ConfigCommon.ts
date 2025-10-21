@@ -145,7 +145,6 @@ export interface MenuData {
 }
 
 export enum LeftSidebarOptionsIds {
-  cms = "cms",
   addElements = "addElements",
   reorderBlock = "reorderBlock",
   globalStyle = "globalStyle",
@@ -176,7 +175,6 @@ export interface LeftSidebarOptionBase {
 
 interface LeftSidebarCommonOption extends LeftSidebarOptionBase {
   type:
-    | LeftSidebarOptionsIds.cms
     | LeftSidebarOptionsIds.reorderBlock
     | LeftSidebarOptionsIds.globalStyle
     | LeftSidebarOptionsIds.collaboration
@@ -928,11 +926,6 @@ interface _ConfigCommon<Mode> {
       };
       [LeftSidebarOptionsIds.more]?: {
         options?: Array<LeftSidebarMoreOptions>;
-      };
-      [LeftSidebarOptionsIds.cms]?: {
-        onOpen: (res: VoidFunction) => void;
-        onClose: VoidFunction;
-        icon?: string;
       };
 
       styles?: {

@@ -1,9 +1,9 @@
 import { expose } from "comlink";
 import { mergeDeep } from "timm";
 import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import { getTempConfig } from "../common/utils/getTempConfig";
 import { Static } from "./bootstrap/types";
 import { getProScriptUrl } from "./utils/getProScriptUrl";
-import { getTempConfig } from "./utils/getTempConfig";
 import { getThirdPartyScriptUrl } from "./utils/getThirdPartyScriptUrl";
 import "./utils/globals";
 

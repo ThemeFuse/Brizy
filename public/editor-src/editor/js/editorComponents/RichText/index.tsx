@@ -49,6 +49,7 @@ import {
   globalBlocksSelector
 } from "visual/redux/selectors";
 import { Block } from "visual/types/Block";
+import { isFirefox } from "visual/utils/devices";
 import { t } from "visual/utils/i18n";
 import { makeDataAttr } from "visual/utils/i18n/attribute";
 import { getLinkData } from "visual/utils/models/link";
@@ -1173,6 +1174,18 @@ class RichText extends EditorComponent<Value, Record<string, unknown>, State> {
                   >
                     <ContextMenu
                       {...this.makeContextMenuProps(contextMenuConfig)}
+                      onContextMenu={() => {
+                        const quil = this.quillRef.current?.quill;
+
+                        if (isFirefox() && quil) {
+                          const [leafBlot] = quil.getLeaf(0);
+
+                          this.quillRef.current?.quill?.setSelection(
+                            leafBlot.parent.length() / 2,
+                            0
+                          );
+                        }
+                      }}
                     >
                       {({
                         ref: contextMenuRef

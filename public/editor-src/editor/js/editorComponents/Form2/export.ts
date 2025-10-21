@@ -1,10 +1,13 @@
 import { Num, Str } from "@brizy/readers";
 import $ from "jquery";
 import PerfectScrollbar from "perfect-scrollbar";
+import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import { getFreeLibs } from "visual/libs";
-import { makeDataAttrString } from "visual/utils/i18n/attribute";
+import { isIOS } from "visual/utils/devices";
+import { makeAttr, makeDataAttrString } from "visual/utils/i18n/attribute";
 import { decodeFromString } from "visual/utils/string";
 import { MValue, isNullish } from "visual/utils/value";
+import { initCalculatedField } from "./initCalculatedField";
 import { initMultiStep } from "./initMultiStep";
 import {
   AllFormData,
@@ -28,6 +31,17 @@ const defaultResponseMessages: ResponseMessages = {
   invalid: "Please check your entry and try again",
   "invalid-email": "Please enter a valid email address (e.g., name@example.com)"
 };
+
+function disableIOSInputZoom() {
+  const viewport = document.querySelector<HTMLMetaElement>(
+    'meta[name="viewport"]'
+  );
+  if (!viewport) return;
+
+  if (!/maximum-scale/i.test(viewport.content)) {
+    viewport.content += ", maximum-scale=1";
+  }
+}
 
 const responseMessages = new Map<HTMLFormElement, ResponseMessages>();
 
@@ -133,6 +147,17 @@ export default function ($node: JQuery): void {
     initMultiStep(item);
     initForm(item);
   });
+
+  // For Calculated
+  const { Formula } = getFreeLibs();
+
+  if (Formula) {
+    root
+      .querySelectorAll<HTMLElement>(".brz-forms2__calculated")
+      .forEach((item) => {
+        initCalculatedField(item, Formula);
+      });
+  }
 
   // For Date
   root
@@ -271,6 +296,10 @@ export default function ($node: JQuery): void {
 
       initialized = true;
     });
+
+  if (isIOS()) {
+    disableIOSInputZoom();
+  }
 }
 
 const updatePattern = (form: HTMLElement): void => {
@@ -853,6 +882,16 @@ function resetFormValues(form: HTMLElement): void {
             break;
           }
           default: {
+            if (el.getAttribute(makeAttr("type")) === ElementTypes.Calculated) {
+              const defaultValue = el.getAttribute("defaultValue");
+              const resultNode = el.parentNode?.querySelector<HTMLElement>(
+                ".brz-forms2__calculated-result"
+              );
+
+              if (resultNode) {
+                resultNode.innerText = defaultValue ?? "";
+              }
+            }
             el.value = "";
           }
         }

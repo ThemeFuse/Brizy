@@ -1,57 +1,62 @@
-import { ShopifyTemplate } from "visual/global/Config/types/shopify/ShopifyTemplate";
-import { ECWID_CATEGORY_TYPE, ECWID_PRODUCT_TYPE } from "visual/utils/ecwid";
-import { t } from "visual/utils/i18n";
-import { GetManualTitle, VDecoded } from "../types";
+import { DeviceMode, V } from "visual/types";
+import * as Str from "visual/utils/reader/string";
+import { DESKTOP, MOBILE, TABLET } from "visual/utils/responsiveMode";
 
-export const createFieldCollectionId = (
-  collectionId: string,
-  fieldId?: string
-): string => {
-  return fieldId ? `${collectionId}:${fieldId}` : collectionId;
-};
+export const disableNavigation = (v: V): boolean => {
+  const { source } = v;
 
-export const getFieldIdCollectionId = (
-  s: string
-): { collectionId: string; fieldId?: string } => {
-  const [collectionId, fieldId] = s.split(":");
+  const lvl1OptionId = `symbol_${source}_incBy`;
+  const lv1OptionValue = Str.read(v[lvl1OptionId]) ?? "{}";
 
-  return fieldId ? { collectionId, fieldId } : { collectionId };
-};
+  let value = undefined;
 
-export const useAsSimpleSelectConditions = (vd: VDecoded): boolean => {
-  const { source, symbols } = vd;
-  const lvl1SymbolId = `${source}_incBy`;
+  try {
+    const parsedValue = JSON.parse(lv1OptionValue);
 
-  return (
-    (source === ShopifyTemplate.Product &&
-      !symbols[lvl1SymbolId]?.includes("manual")) ||
-    source === ShopifyTemplate.Article
-  );
-};
+    if (Array.isArray(parsedValue)) {
+      value = parsedValue[0];
+    }
+  } catch (e) {
+    if (process.env.NODE_ENV === "development") {
+      console.log(e);
+    }
+  }
 
-export const getManualTitle: GetManualTitle = ({ type, isManualSource }) => {
-  switch (type) {
+  if (value === undefined || (Array.isArray(value) && value.length === 0)) {
+    switch (source) {
+      case "shopify-collection":
+      case "shopify-blog":
+        return true;
+    }
+  }
+
+  switch (source) {
     case "shopify-product":
-      return t("Products");
-    case "shopify-collection":
-      return t("Collections");
+      switch (value) {
+        case "related":
+        case "shopify-collection":
+          return false;
+        case "manual":
+          return true;
+      }
+      return false;
     case "shopify-article":
-      return t("Posts");
-    case ECWID_PRODUCT_TYPE: {
-      if (isManualSource) {
-        return t("Products");
-      } else {
-        return t("Manual");
-      }
-    }
-    case ECWID_CATEGORY_TYPE: {
-      if (isManualSource) {
-        return t("Categories");
-      } else {
-        return t("Manual");
-      }
-    }
-    default:
-      return t("Manual");
+      return false;
+    case "shopify-collection":
+    case "shopify-page":
+    case "shopify-blog":
+      return true;
+  }
+
+  return false;
+};
+
+export const maxColumn = (device: DeviceMode): number => {
+  switch (device) {
+    case DESKTOP:
+      return 6;
+    case TABLET:
+    case MOBILE:
+      return 2;
   }
 };

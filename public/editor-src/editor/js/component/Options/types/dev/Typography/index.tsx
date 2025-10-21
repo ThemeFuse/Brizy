@@ -134,7 +134,7 @@ export const Typography = ({
             fontFamilyType: type
           });
           return withFontFamily
-            ? onChange({ ..._value, ...patch })
+            ? onChange(Patch.fullFont({ ..._value, ...patch }))
             : onChange(patch);
         }
         case "fontStyle": {

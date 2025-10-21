@@ -76,11 +76,10 @@ class AppList extends Component {
         {proExceptions && this.renderProException()}
         <Grid
           apps={apps}
-          render={(app, idx) => (
+          render={(app) => (
             <GridItem
               {...app}
               key={app.id}
-              idx={idx}
               loading={loadingApp === app.id}
               active={isActive(app.id)}
               isDeletable={hasDelete && isActive(app.id)}

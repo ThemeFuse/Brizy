@@ -90,6 +90,10 @@ export const fromElementModel: FromElementModel<"typography"> = (get) => {
 };
 
 export const toElementModel: ToElementModel<"typography"> = (v) => {
+  if (isFontStyle(v)) {
+    return { fontStyle: v.fontStyle };
+  }
+
   if (isFullFont(v)) {
     return {
       fontStyle: "",
@@ -136,10 +140,6 @@ export const toElementModel: ToElementModel<"typography"> = (v) => {
       fontWidth: v.fontWidth,
       fontSoftness: v.fontSoftness
     };
-  }
-
-  if (isFontStyle(v)) {
-    return { fontStyle: v.fontStyle };
   }
 
   if (isFontTransform(v)) {

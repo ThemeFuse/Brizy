@@ -1,6 +1,7 @@
 import { GetItems } from "visual/editorComponents/EditorComponent/types";
 import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
+import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
 import { getDynamicContentOption } from "visual/utils/options";
@@ -20,7 +21,8 @@ export const getItems: GetItems<Value, Props> = ({ v, device, component }) => {
   const isTime = type === "Time";
   const isFileUpload = type === "FileUpload";
   const isSelect = type === "Select";
-  const isHidden = type === "Hidden";
+  const isCalculated = type === ElementTypes.Calculated;
+  const isHidden = type === "Hidden" || isCalculated;
   const isNumber = type === "Number";
   const isParagraph = type === "Paragraph";
 
@@ -138,6 +140,21 @@ export const getItems: GetItems<Value, Props> = ({ v, device, component }) => {
       label: t("Max"),
       placeholder: t("Max"),
       devices: "desktop"
+    }
+  ];
+  const calculatedOptions = (): ToolbarItemType[] => [
+    {
+      id: "calculatedExpression",
+      type: "inputText",
+      label: t("Expression"),
+      disabled: !isCalculated,
+      devices: "desktop",
+      placeholder: t("{{Label1}}+{{Label2}}"),
+      helper: {
+        content: t(
+          "Use label names for fields to calculate values, e.g., {{Label1}} + {{Label2}}. Supports types: number, radio, select, checkbox."
+        )
+      }
     }
   ];
   const hiddenOptions = (): ToolbarItemType[] => [
@@ -310,7 +327,8 @@ export const getItems: GetItems<Value, Props> = ({ v, device, component }) => {
                 ...(isFileUpload ? fileUploadOptions() : []),
                 ...(isSelect ? selectOptions() : []),
                 ...(isNumber ? numberOptions() : []),
-                ...(!isHidden ? hiddenOptions() : [])
+                ...(!isHidden ? hiddenOptions() : []),
+                ...(isCalculated ? calculatedOptions() : [])
               ]
             },
             {

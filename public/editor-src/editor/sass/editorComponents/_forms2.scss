@@ -370,6 +370,13 @@
     }
   }
 
+  // Calculated Field Errors
+  &__calculated--invalid {
+    .brz-forms2__calculated-result {
+      color: #f00 !important;
+    }
+  }
+
   &__item input:focus-visible,
   &__item textarea:focus-visible,
   &__item .select2-selection:focus-visible,
