@@ -2,9 +2,9 @@
 Contributors: themefuse
 Tags: page builder, website builder, brizy, editor, visual editor, unyson, wysiwyg, landing page, drag-and-drop, design, landing page builder, front-end builder
 Requires at least: 4.5
-Tested up to: 6.8.2
+Tested up to: 6.8.3
 Requires PHP: 7.2.24
-Stable tag: 2.7.15
+Stable tag: 2.7.16
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -136,6 +136,18 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 11. **Resize columns by dragging the handle that appears in between**
 
 == Changelog ==
+
+= 2.7.16 - 2025-10-21 =
+
+* New: Counter – added “fix value” option for better number control
+* New: Context Menu – improved copy/paste styling on Firefox
+* New: Section – introduced CSS variable for full-height sections
+* New: Typography – improved custom-style handling
+* Fixed: Story – widget sizes preserved when pasting styles
+* Fixed: Story – custom attributes now work correctly
+* Fixed: Typography – toolbar now applies default font style properly
+* Fixed: Row – “show on device” visibility works correctly
+* Fixed: Link – absolute URLs keep their original link format
 
 = 2.7.15 - 2025-09-30 =
 * New: Rich-Text – added tags support for dynamic content
