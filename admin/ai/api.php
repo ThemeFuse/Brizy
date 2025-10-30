@@ -182,6 +182,7 @@ class Brizy_Admin_Ai_Api
 
         $imported    = $this->importPagesData($body);
         $projectData = $this->importProjectDataDelete($body);
+        $globalBlocks = $this->importGlobalBlocksData($body);
 
         $postId = 0;
         if (is_array($imported) && !empty($imported)) {
@@ -191,6 +192,7 @@ class Brizy_Admin_Ai_Api
         $editPageUrl = admin_url('post.php?action=in-front-editor&post='.$postId);
 
         wp_send_json_success(array(
+            'globalBlocks' => $globalBlocks,
             'pages'       => $imported,
             'pageId'      => $postId,
             'editPageUrl' => $editPageUrl,
@@ -257,6 +259,106 @@ class Brizy_Admin_Ai_Api
         }
 
         return json_decode($project->getDataAsJson());
+    }
+
+    private function importGlobalBlocksData($body)
+    {
+        $blocksManager = new Brizy_Admin_Blocks_Manager(Brizy_Admin_Blocks_Main::CP_GLOBAL);
+        $existingBlocks = $blocksManager->getEntities(['post_status' => 'any', 'posts_per_page' => -1]);
+        
+        foreach ($existingBlocks as $block) {
+            if ($block instanceof Brizy_Editor_Block) {
+                $blocksManager->deleteEntity($block);
+            }
+        }
+
+        if (!isset($body['globalBlocks']) || empty($body['globalBlocks'])) {
+            return [];
+        }
+    
+        $importedBlocks = [];
+        $blockManager = new Brizy_Admin_Blocks_Manager(Brizy_Admin_Blocks_Main::CP_GLOBAL);
+    
+        try {
+            foreach ($body['globalBlocks'] as $globalBlockData) {
+                if (is_string($globalBlockData)) {
+                    $globalBlockData = json_decode($globalBlockData, true);
+                }
+    
+                if (!is_array($globalBlockData) || !isset($globalBlockData['uid']) || !isset($globalBlockData['data'])) {
+                    continue;
+                }
+    
+                $uid = $globalBlockData['uid'];
+                $status = $globalBlockData['status'] ?? 'publish';
+
+                $block = $blockManager->createEntity($uid, $status);
+    
+                if (isset($globalBlockData['meta'])) {
+                    $meta = is_string($globalBlockData['meta']) ? $globalBlockData['meta'] : json_encode($globalBlockData['meta']);
+                    $block->setMeta($meta);
+                }
+    
+                if (isset($globalBlockData['data'])) {
+                    $data = is_string($globalBlockData['data']) ? $globalBlockData['data'] : json_encode($globalBlockData['data']);
+                    $block->setEditorData($data);
+                }
+
+                $block->set_needs_compile(true);
+    
+                if (isset($globalBlockData['title'])) {
+                    $block->setTitle($globalBlockData['title']);
+                }
+    
+                if (isset($globalBlockData['tags'])) {
+                    $tags = is_string($globalBlockData['tags']) ? $globalBlockData['tags'] : json_encode($globalBlockData['tags']);
+                    $block->setTags($tags);
+                }
+    
+                if (isset($globalBlockData['dependencies']) && is_array($globalBlockData['dependencies'])) {
+                    $block->setDependencies($globalBlockData['dependencies']);
+                }
+    
+                $positionData = $globalBlockData['position'];
+                if (is_string($positionData)) {
+                    $position = json_decode($positionData, true);
+                } elseif (is_array($positionData)) {
+                    $position = $positionData;
+                }
+                $positionObj = new Brizy_Editor_BlockPosition(
+                    $position['top'],
+                    $position['bottom'],
+                    $position['align']
+                );
+                $block->setPosition($positionObj);
+    
+                $block->set_compiler(Brizy_Editor_Entity::COMPILER_EXTERNAL);
+                $block->save();
+    
+                $defaultRules = [
+                    [
+                        'type' => 1,
+                        'appliedFor' => 1,
+                        'entityType' => 'page',
+                        'entityValues' => []
+                    ]
+                ];
+                $rulesData = json_encode($defaultRules);
+                $ruleManager = new Brizy_Admin_Rules_Manager();
+                $rules = $ruleManager->createRulesFromJson($rulesData, Brizy_Admin_Blocks_Main::CP_GLOBAL);
+                $ruleManager->addRules($block->getWpPostId(), $rules);
+    
+                $importedBlocks[] = $block->createResponse();
+                do_action('brizy_global_block_created', $block);
+            }
+    
+            Brizy_Editor_Block::cleanClassCache();
+    
+        } catch (Exception $exception) {
+            error_log('Error importing global blocks: ' . $exception->getMessage());
+        }
+    
+        return $importedBlocks;
     }
 
     private function importProjectDataKeep($body)
