@@ -44,12 +44,12 @@
                 ?>
             </h2>
             <?php if ( $isPro ): ?>
-                <a class="button button-primary brz-ai-button js-open-ai-selection-modal" href="#" title="<?php echo $l10n['buildWebsite']; ?>" style="font-size: 15px; font-weight: 600; padding: 14px 32px; height: auto; background: #1e3a8a; color: #fff; border: none; border-radius: 8px; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); display: inline-flex; align-items: center; gap: 8px; white-space: nowrap; align-self: flex-start; box-shadow: 0 2px 8px rgba(30, 58, 138, 0.3);">
+                <a class="button button-primary brz-ai-button js-open-ai-selection-modal" href="#" title="<?php echo $l10n['buildWebsite']; ?>" style="font-size: 15px; font-weight: 600; padding: 10px 32px; height: auto; background: #1e3a8a; color: #fff; border: none; border-radius: 8px; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); display: inline-flex; align-items: center; gap: 8px; white-space: nowrap; align-self: flex-start; box-shadow: 0 2px 8px rgba(30, 58, 138, 0.3);">
                     <span><?php echo $l10n['buildWebsite']; ?></span>
                     <img src="https://ai.brizy.io/build/assets/ai.D1GKryP0-v1.5.7.svg" alt="" style="width: 18px; height: 18px; display: inline-block; vertical-align: middle; flex-shrink: 0; margin-left: 2px;">
                 </a>
             <?php else: ?>
-                <button class="button button-primary button-disabled brz-ai-button-disabled" disabled title="<?php echo $l10n['requiresProLicense']; ?>" style="font-size: 15px; font-weight: 600; padding: 14px 32px; height: auto; background: #f3f4f6; color: #9ca3af; border: 1px solid #e5e7eb; border-radius: 8px; cursor: not-allowed; display: inline-flex; align-items: center; gap: 8px; white-space: nowrap; align-self: flex-start;">
+                <button class="button button-primary button-disabled brz-ai-button-disabled" disabled title="<?php echo $l10n['requiresProLicense']; ?>" style="font-size: 15px; font-weight: 600; padding: 10px 32px; height: auto; background: #f3f4f6; color: #9ca3af; border: 1px solid #e5e7eb; border-radius: 8px; cursor: not-allowed; display: inline-flex; align-items: center; gap: 8px; white-space: nowrap; align-self: flex-start;">
                     <span><?php echo $l10n['buildWebsite']; ?></span>
                     <img src="https://ai.brizy.io/build/assets/ai.D1GKryP0-v1.5.7.svg" alt="" style="width: 18px; height: 18px; display: inline-block; vertical-align: middle; flex-shrink: 0; margin-left: 2px; opacity: 0.5;">
                 </button>
