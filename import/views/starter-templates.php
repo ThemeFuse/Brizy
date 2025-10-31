@@ -27,7 +27,7 @@
     <div class="brz-ai-banner" style="margin: 30px 0; background: 
         radial-gradient(ellipse 120% 100% at 0% 0%, rgba(0, 110, 255, 0.25) 0%, rgba(0, 110, 255, 0.08) 20%, transparent 45%),
         linear-gradient(180deg, #ffffff 0%, #ffffff 35%, #fefefe 50%, rgba(253, 250, 255, 0.99) 60%, rgba(250, 245, 255, 0.98) 70%, rgba(245, 240, 255, 0.96) 80%, rgba(240, 235, 255, 0) 90%, rgba(237, 233, 254, 0) 100%); 
-        border-radius: 12px; padding: 48px 56px; display: flex; align-items: center; justify-content: space-between; gap: 48px; position: relative; overflow: hidden;">
+        border-radius: 12px; padding: 48px 56px; display: flex; align-items: center; justify-content: space-between; gap: 48px; position: relative; overflow: hidden; z-index: 0;">
         <div style="position: absolute; top: -50%; right: -10%; width: 300px; height: 300px; background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%); border-radius: 50%;"></div>
         
         <div style="flex-shrink: 0; position: relative; z-index: 1; display: flex; flex-direction: column; gap: 24px; min-width: 280px;">
