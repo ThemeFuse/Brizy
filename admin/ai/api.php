@@ -449,7 +449,7 @@ class Brizy_Admin_Ai_Api
 
             $pageStructure = array(
                 'post_title'     => $pageTitle,
-                'post_name'      => $pageSlug.'-'.uniqid(),
+                'post_name'      => $pageSlug,
                 'post_status'    => 'publish',
                 'post_type'      => 'page',
                 'post_author'    => get_current_user_id() ? get_current_user_id() : 1,
