@@ -44,7 +44,7 @@
                 ?>
             </h2>
             <?php if ( $isPro ): ?>
-                <a class="button button-primary brz-ai-button js-open-ai-selection-modal" href="#" title="<?php echo $l10n['buildWebsite']; ?>" style="font-size: 15px; font-weight: 600; padding: 10px 32px; height: auto; background: #1e3a8a; color: #fff; border: none; border-radius: 8px; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); display: inline-flex; align-items: center; gap: 8px; white-space: nowrap; align-self: flex-start; box-shadow: 0 2px 8px rgba(30, 58, 138, 0.3);">
+                <a class="button button-primary brz-ai-button js-open-ai-selection-modal" href="#" title="<?php echo $l10n['buildWebsite']; ?>" style="font-size: 15px; font-weight: 600; padding: 10px 32px; height: auto; background: #1e3a8a; color: #fff; border: none; border-radius: 8px; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); display: inline-flex; align-items: center; gap: 8px; white-space: nowrap; align-self: flex-start; box-shadow: 0 2px 8px rgba(30, 58, 138, 0.3);" onmouseover="this.style.background='#2563eb'" onmouseout="this.style.background='#1e3a8a'">
                     <span><?php echo $l10n['buildWebsite']; ?></span>
                     <img src="https://ai.brizy.io/build/assets/ai.D1GKryP0-v1.5.7.svg" alt="" style="width: 18px; height: 18px; display: inline-block; vertical-align: middle; flex-shrink: 0; margin-left: 2px;">
                 </a>
@@ -234,10 +234,3 @@
     </script>
 
 </div>
-
-<style>
-    .brz-ai-button:hover {
-        background: #2563eb !important;
-    }
-</style>
-
