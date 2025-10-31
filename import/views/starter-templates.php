@@ -23,6 +23,77 @@
             <input placeholder="<?php echo $l10n['search']; ?>..." type="search" aria-describedby="live-search-desc" id="wp-filter-search-input" class="wp-filter-search js-demo-input-search">
         </form>
     </div>
+    <!-- ai-core -->
+    <div class="brz-ai-banner" style="margin: 30px 0; background: 
+        radial-gradient(ellipse 120% 100% at 0% 0%, rgba(0, 110, 255, 0.25) 0%, rgba(0, 110, 255, 0.08) 20%, transparent 45%),
+        linear-gradient(180deg, #ffffff 0%, #ffffff 35%, #fefefe 50%, rgba(253, 250, 255, 0.99) 60%, rgba(250, 245, 255, 0.98) 70%, rgba(245, 240, 255, 0.96) 80%, rgba(240, 235, 255, 0) 90%, rgba(237, 233, 254, 0) 100%); 
+        border-radius: 12px; padding: 48px 56px; display: flex; align-items: center; justify-content: space-between; gap: 48px; position: relative; overflow: hidden;">
+        <div style="position: absolute; top: -50%; right: -10%; width: 300px; height: 300px; background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%); border-radius: 50%;"></div>
+        
+        <div style="flex-shrink: 0; position: relative; z-index: 1; display: flex; flex-direction: column; gap: 24px; min-width: 280px;">
+            <h2 style="font-size: 36px; font-weight: 700; line-height: 1.2; color: #1a1a1a; margin: 0; letter-spacing: -0.5px;">
+                <?php 
+                $title = $l10n['aiBannerTitle'];
+                $highlight = $l10n['aiBannerTitleHighlight'];
+                $titleParts = explode($highlight, $title);
+                if (count($titleParts) == 2) {
+                    echo esc_html($titleParts[0]) . '<span style="color: #8b5cf6; position: relative; display: inline-block; font-weight: 700; border-bottom: 2px solid #8b5cf6; padding-bottom: 2px;">' . esc_html($highlight) . '</span>' . esc_html($titleParts[1]);
+                } else {
+                    echo esc_html($title);
+                }
+                ?>
+            </h2>
+            <?php if ( $isPro ): ?>
+                <a class="button button-primary brz-ai-button js-open-ai-selection-modal" href="#" title="<?php echo $l10n['buildWebsite']; ?>" style="font-size: 15px; font-weight: 600; padding: 14px 32px; height: auto; background: #1e3a8a; color: #fff; border: none; border-radius: 8px; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); display: inline-flex; align-items: center; gap: 8px; white-space: nowrap; align-self: flex-start; box-shadow: 0 2px 8px rgba(30, 58, 138, 0.3);">
+                    <span><?php echo $l10n['buildWebsite']; ?></span>
+                    <img src="https://ai.brizy.io/build/assets/ai.D1GKryP0-v1.5.7.svg" alt="" style="width: 18px; height: 18px; display: inline-block; vertical-align: middle; flex-shrink: 0; margin-left: 2px;">
+                </a>
+            <?php else: ?>
+                <button class="button button-primary button-disabled brz-ai-button-disabled" disabled title="<?php echo $l10n['requiresProLicense']; ?>" style="font-size: 15px; font-weight: 600; padding: 14px 32px; height: auto; background: #f3f4f6; color: #9ca3af; border: 1px solid #e5e7eb; border-radius: 8px; cursor: not-allowed; display: inline-flex; align-items: center; gap: 8px; white-space: nowrap; align-self: flex-start;">
+                    <span><?php echo $l10n['buildWebsite']; ?></span>
+                    <img src="https://ai.brizy.io/build/assets/ai.D1GKryP0-v1.5.7.svg" alt="" style="width: 18px; height: 18px; display: inline-block; vertical-align: middle; flex-shrink: 0; margin-left: 2px; opacity: 0.5;">
+                </button>
+                <p class="description" style="margin: 12px 0 0 0; font-size: 14px; line-height: 1.6; color: #6b7280; font-weight: 400;">
+                    <?php echo $l10n['requiresProMessage']; ?> 
+                    <a href="<?php echo $goProUrl; ?>" target="_blank" class="brz-ai-pro-link" style="color: #D62C64; text-decoration: none; font-weight: 600; border-bottom: 2px solid #D62C64; transition: all 0.2s ease; padding-bottom: 2px;">
+                        <?php echo $l10n['getProLicense']; ?>
+                    </a>
+                </p>
+            <?php endif; ?>
+        </div>
+
+        <div style="flex: 1; position: relative; z-index: 1; max-width: 500px; display: flex; align-items: center; justify-content: center;">
+            <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 18px;">
+                <li style="display: flex; align-items: flex-start; font-size: 16px; color: #4a4a4a; line-height: 1.6;">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" style="margin-right: 14px; margin-top: 2px; flex-shrink: 0;">
+                        <path d="M20 6L9 17l-5-5" stroke="#8b5cf6" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    <span><?php echo esc_html($l10n['aiBannerFeature1']); ?></span>
+                </li>
+                <li style="display: flex; align-items: flex-start; font-size: 16px; color: #4a4a4a; line-height: 1.6;">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" style="margin-right: 14px; margin-top: 2px; flex-shrink: 0;">
+                        <path d="M20 6L9 17l-5-5" stroke="#8b5cf6" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    <span><?php echo esc_html($l10n['aiBannerFeature2']); ?></span>
+                </li>
+                <li style="display: flex; align-items: flex-start; font-size: 16px; color: #4a4a4a; line-height: 1.6;">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" style="margin-right: 14px; margin-top: 2px; flex-shrink: 0;">
+                        <path d="M20 6L9 17l-5-5" stroke="#8b5cf6" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    <span><?php echo esc_html($l10n['aiBannerFeature3']); ?></span>
+                </li>
+            </ul>
+        </div>
+
+        <div style="flex-shrink: 0; position: relative; z-index: 1;">
+            <a href="https://ai.brizy.io/" target="_blank" rel="noopener noreferrer" title="<?php echo esc_attr($l10n['aiBrizy']); ?>" class="brz-ai-logo-link" style="display: inline-block; line-height: 0;">
+                <div class="brz-ai-logo-container" style="padding: 20px;">
+                    <img src="https://ai.brizy.io/build/assets/logo.CXF5cPzn-v1.5.7.svg" alt="<?php echo esc_attr($l10n['aiLogoAlt']); ?>" style="width: 100px; height: 100px; display: block;">
+                </div>
+            </a>
+        </div>
+    </div>
+    <!-- ai-core -->
     <div class="theme-browser content-filterable rendered">
         <div class="themes wp-clearfix">
 	        <?php foreach( $demos as $demo ): ?>
@@ -164,4 +235,9 @@
 
 </div>
 
+<style>
+    .brz-ai-button:hover {
+        background: #2563eb !important;
+    }
+</style>
 
