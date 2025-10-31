@@ -152,6 +152,7 @@ class Brizy_Editor {
 			Brizy_Admin_Json_Main::_init();
 			Brizy_Admin_Layouts_Main::_init();
 			Brizy_Admin_Membership_Membership::_init();
+			Brizy_Admin_Ai_Main::_init();
 			// the cloud will be always initialized with the exception when the white label is enabled
 			if ( ! ( class_exists( 'BrizyPro_Admin_WhiteLabel' ) && BrizyPro_Admin_WhiteLabel::_init()->getEnabled() ) ) {
 				Brizy_Admin_Cloud::_init();
