@@ -5,10 +5,6 @@ use BrizyPlaceholders\ContextInterface;
 
 class Brizy_Content_Placeholders_RecaptchaSiteKey extends Brizy_Content_Placeholders_Abstract
 {
-    public function support($placeholderName)
-    {
-        return 'recaptcha_site_key' === $placeholderName;
-    }
 
     public function getValue(ContextInterface $context, ContentPlaceholder $contentPlaceholder)
     {

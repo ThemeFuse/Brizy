@@ -28,7 +28,8 @@ class Brizy_Content_Placeholders_EditorPlaceholderWrapper extends Brizy_Content_
         $display = Brizy_Content_Placeholders_Abstract::DISPLAY_INLINE,
         $attrs = [],
         $varyAttrs = null
-    ) {
+    )
+    {
         $this->setLabel($label);
         $this->setPlaceholder($placeholder);
         $this->setDisplay($display);
@@ -53,7 +54,7 @@ class Brizy_Content_Placeholders_EditorPlaceholderWrapper extends Brizy_Content_
 
         unset($attributes['content']);
 
-        $placeholderProvider = new Brizy_Content_PlaceholderProvider($context);
+        $placeholderProvider = Brizy_Content_PlaceholderProvider::getInstance($context);
         $extractor = new Extractor($placeholderProvider);
         $context->setProvider($placeholderProvider);
 
