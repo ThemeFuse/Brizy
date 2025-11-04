@@ -90,7 +90,6 @@ class Brizy_Admin_Symbols_Api extends Brizy_Admin_AbstractApi {
 				$symbol = $this->manager->get( $asymbol->getUid() );
 				if ( $symbol ) {
 					$symbol->patchFrom( $asymbol );
-					$symbol->incrementVersion();
 				} else {
 					$symbol = $asymbol;
 				}

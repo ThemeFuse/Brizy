@@ -173,15 +173,11 @@ class Brizy_Admin_Symbols_Symbol extends Brizy_Admin_Serializable {
 		}
 	}
 
-	public function incrementVersion() {
-		$this->setVersion( $this->getVersion() + 1 );
-	}
-
 	public function convertToOptionValue() {
 		return array(
 			'uid'     => $this->getUid(),
 			'label'   => $this->getLabel(),
-			'model'    => $this->getModel(),
+			'data'    => $this->getModel(),
 			'className'    => $this->getClassName(),
 			'componentTarget'    => $this->getComponentTarget(),
 			'version' => $this->getVersion(),
