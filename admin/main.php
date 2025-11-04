@@ -239,6 +239,11 @@ class Brizy_Admin_Main {
                 'jquery',
                 'underscore'
         ), BRIZY_VERSION, true );
+        wp_enqueue_script( Brizy_Editor::get_slug() . '-admin-ai-js', $urlBuilder->plugin_url( 'admin/static/js/ai.js' ), array(
+                Brizy_Editor::get_slug() . '-admin-js',
+                'jquery'
+        ), BRIZY_VERSION, true );
+
         $get_post_focal = get_post_meta( get_the_ID(), 'brizy_attachment_focal_point', true );
         wp_localize_script( Brizy_Editor::get_slug() . '-admin-js', 'Brizy_Admin_Data', array(
                 'url'           => admin_url( 'admin-ajax.php' ),
@@ -256,10 +261,24 @@ class Brizy_Admin_Main {
                 'editorVersion' => BRIZY_EDITOR_VERSION,
                 'pluginVersion' => BRIZY_VERSION,
                 'nonce'         => wp_create_nonce( 'brizy-admin-nonce' ),
+                'aiNonce'       => wp_create_nonce( 'brizy-api' ),
                 'l10n'          => [
                         'deactivateFeedbackSubmitBtn' => __( 'Submit & Deactivate', 'brizy' ),
                         'deactivateFeedbackSkipBtn'   => __( 'Skip & Deactivate', 'brizy' ),
-                ]
+                        'aiCreatingSessionTitle'        => __( 'Creating AI session', 'brizy' ),
+                        'aiCreatingSessionDesc'         => __( 'Waiting for server response. Please wait…', 'brizy' ),
+                        'aiSendingProjectTitle'         => __( 'Sending project', 'brizy' ),
+                        'aiSendingProjectDesc'          => __( 'Please wait while we send your project data...', 'brizy' ),
+                        'aiGenerateTemplateTitle'       => __( 'Generating template', 'brizy' ),
+                        'aiGenerateTemplateDesc'        => __( 'Please wait. This may take a few minutes.', 'brizy' ),
+                ],
+                'aiActions' => array(
+                    'createSession'    => Brizy_Admin_Ai_Api::AJAX_CREATE_SESSION,
+                    'generateTemplate' => Brizy_Admin_Ai_Api::AJAX_GENERATE_TEMPLATE,
+                    'importDelete'     => Brizy_Admin_Ai_Api::AJAX_IMPORT_DELETE,
+                    'importKeep'       => Brizy_Admin_Ai_Api::AJAX_IMPORT_KEEP,
+                    'sendProject'      => Brizy_Admin_Ai_Api::AJAX_SEND_PROJECT,
+                ),
         ) );
     }
 
