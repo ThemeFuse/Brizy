@@ -207,6 +207,8 @@ class Brizy_Admin_Ai_Api
                 $postId = (int) $imported[0]['id'];
             }
 
+            $this->recompileProject($postId);
+
             $editPageUrl = admin_url('post.php?action=in-front-editor&post=' . $postId);
 
             wp_send_json_success(array(
@@ -707,4 +709,26 @@ class Brizy_Admin_Ai_Api
 
         return $fonts;
     }
+
+    private function recompileProject($postId)
+    {
+        if (empty($postId) || $postId <= 0) {
+            return;
+        }
+
+        $pageUrl = get_permalink($postId);
+
+        if (!$pageUrl) {
+            return;
+        }
+
+        $httpClient = new Brizy_Editor_Http_Client();
+
+        try {
+            $httpClient->request($pageUrl, [], 'GET');
+        } catch (Exception $e) {
+            // Ignore errors
+        }
+    }
+    
 }
