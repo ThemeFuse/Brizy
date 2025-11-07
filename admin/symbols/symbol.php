@@ -13,13 +13,16 @@ class Brizy_Admin_Symbols_Symbol extends Brizy_Admin_Serializable {
 
 	private $model;
 
-	public function __construct( $uid = null, $label = null, $model = null, $version = null, $className = null, $componentTarget = null ) {
+	private $compiledStyles;
+
+	public function __construct( $uid = null, $label = null, $model = null, $version = null, $className = null, $componentTarget = null, $compiledStyles=null ) {
 		$this->setUid( $uid );
 		$this->setLabel( $label );
 		$this->setModel( $model );
 		$this->setVersion( $version );
 		$this->setClassName( $className );
 		$this->setComponentTarget( $componentTarget );
+		$this->setCompiledStyles( $compiledStyles );
 	}
 
 	/**
@@ -106,6 +109,38 @@ class Brizy_Admin_Symbols_Symbol extends Brizy_Admin_Serializable {
 		$this->componentTarget = $componentTarget;
 	}
 
+	/**
+	 * @return mixed
+	 */
+	public function getCompiledStyles() {
+		return $this->compiledStyles;
+	}
+
+	/**
+	 * @param mixed $compiledStyles
+	 *
+	 * @return Brizy_Admin_Symbols_Symbol
+	 */
+	public function setCompiledStyles( $compiledStyles ) {
+		$this->compiledStyles = $compiledStyles;
+
+		return $this;
+	}
+
+    /**
+     * @return bool
+     */
+    public function getCompiledAssetGroup()
+    {
+        $page_styles = $this->getCompiledStyles();
+        $assets = [];
+        foreach ($page_styles['styles'] as $style) {
+            $assets[] = BrizyMerge\Assets\Asset::instanceFromJsonData($style);
+        }
+
+        return new \BrizyMerge\Assets\AssetGroup(null, [], [], [], [], $assets);
+    }
+
 
 	/**
 	 * @param $data
@@ -123,7 +158,8 @@ class Brizy_Admin_Symbols_Symbol extends Brizy_Admin_Serializable {
 		isset( $data['data'] ) && ! empty( $data['data'] ) ? $data['data'] : null,
 		isset( $data['version'] ) ? $data['version'] : null,
 		isset( $data['className'] ) ? $data['className'] : null,
-		isset( $data['componentTarget'] ) ? $data['componentTarget'] : null
+		isset( $data['componentTarget'] ) ? $data['componentTarget'] : null,
+		isset( $data['compiledStyles'] ) ? $data['compiledStyles'] : null
 
 		);
 	}
@@ -139,13 +175,15 @@ class Brizy_Admin_Symbols_Symbol extends Brizy_Admin_Serializable {
 		if ( is_null( $json ) ) {
 			throw new Exception( 'Invalid parameter provided' );
 		}
+		$compiledStyles = json_decode(stripslashes($json['compiled']), true);
 
 		return new self( isset( $json->uid ) ? $json->uid : null,
 		isset( $json->label ) ? $json->label : null,
 		isset( $json->data ) ? $json->data : null,
 		isset( $json->version ) ? $json->version : null ,
 		isset( $json->className ) ? $json->className : null,
-		isset( $json->componentTarget ) ? $json->componentTarget : null
+		isset( $json->componentTarget ) ? $json->componentTarget : null,
+		isset( $json->compiledStyles ) ? $json->compiledStyles : null
 		);
 	}
 
@@ -171,6 +209,9 @@ class Brizy_Admin_Symbols_Symbol extends Brizy_Admin_Serializable {
 		if ( ! is_null( $patch->getComponentTarget() ) && ! empty( $patch->getComponentTarget() ) ) {
 			$this->setComponentTarget( $patch->getComponentTarget() );
 		}
+		if ( ! is_null( $patch->getCompiledStyles() ) && ! empty( $patch->getCompiledStyles() ) ) {
+			$this->setCompiledStyles( $patch->getCompiledStyles() );
+		}
 	}
 
 	public function convertToOptionValue() {
@@ -180,6 +221,7 @@ class Brizy_Admin_Symbols_Symbol extends Brizy_Admin_Serializable {
 			'data'    => $this->getModel(),
 			'className'    => $this->getClassName(),
 			'componentTarget'    => $this->getComponentTarget(),
+			'compiledStyles'    => $this->getCompiledStyles(),
 			'version' => $this->getVersion(),
 		);
 	}
