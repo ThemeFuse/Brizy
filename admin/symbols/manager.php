@@ -138,6 +138,10 @@ class Brizy_Admin_Symbols_Manager {
 		if ( is_null( $symbol->getComponentTarget() ) || empty( $symbol->getComponentTarget() ) ) {
 			throw new Exception( 'Please provide the component target' );
 		}
+
+		if ( is_null( $symbol->getCompiledStyles() ) || empty( $symbol->getCompiledStyles() ) ) {
+			throw new Exception( 'Please provide the compiled styles' );
+		}
 	}
 
 }
