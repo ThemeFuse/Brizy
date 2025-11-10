@@ -4,7 +4,7 @@ Tags: page builder, website builder, brizy, editor, visual editor, unyson, wysiw
 Requires at least: 4.5
 Tested up to: 6.8.3
 Requires PHP: 7.2.24
-Stable tag: 2.7.16
+Stable tag: 2.7.17
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -136,6 +136,15 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 11. **Resize columns by dragging the handle that appears in between**
 
 == Changelog ==
+
+= 2.7.17 - 2025-11-10 =
+* New: Navigator component
+* Fixed: Flatten families object before getCopiedValue processing
+* Fixed: Empty button link appends '#' at the end
+* Fixed: Icon prompt not loading icons on first render
+* Improved: Audio added possibility to hide custom audio via config
+* Improved: Placeholder loading performance
+* Improved: Builder code refactoring — moved all from redux/selectors.js to new selector-new.ts and renamed selector-new
 
 = 2.7.16 - 2025-10-21 =
 

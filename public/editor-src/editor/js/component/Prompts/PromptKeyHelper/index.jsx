@@ -232,6 +232,14 @@ export default class PromptKeyHelper extends Component {
                   {t("Clear formatting")}
                 </span>
               </div>
+              <div className="brz-ed-hotkeys-combination-container-column-list">
+                <span className="brz-ed-hotkeys-combination-container-column-label">
+                  {isMac ? "cmd + E" : "ctrl + E"}
+                </span>
+                <span className="brz-ed-hotkeys-combination-container-column-label-2">
+                  {t("Explorer")}
+                </span>
+              </div>
             </div>
           </div>
         </div>

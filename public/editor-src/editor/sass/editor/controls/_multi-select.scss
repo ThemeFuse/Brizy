@@ -55,6 +55,9 @@
 
     .brz-ed-control__multiSelect--placeholder {
       color: rgba(255, 255, 255, 0.4);
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
     }
   }
 

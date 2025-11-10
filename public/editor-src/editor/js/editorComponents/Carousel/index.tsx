@@ -22,7 +22,7 @@ import { DCApiProxyInstance } from "visual/editorComponents/EditorComponent/Dyna
 import type { Meta } from "visual/editorComponents/ToolbarItemType";
 import { withMigrations } from "visual/editorComponents/tools/withMigrations";
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
-import { pageSelector } from "visual/redux/selectors-new";
+import { pageSelector } from "visual/redux/selectors";
 import type { PageCommon } from "visual/types/Page";
 import { defaultPostsSources } from "visual/utils/api";
 import { makePlaceholder } from "visual/utils/dynamicContent";

@@ -35,8 +35,12 @@ export interface Props extends OptionProps<undefined> {
 
 const selector = pipe(uiSelector, prop("rightSidebar"));
 
-export const SidebarTabs = ({ tabs, toolbar }: Props): ReactElement => {
-  const { alignment, lock, isOpen, activeTab, type } = useSelector(selector);
+export const SidebarTabs = ({
+  tabs,
+  toolbar,
+  location
+}: Props): ReactElement => {
+  const { alignment, lock, isOpen, activeTab, type, expanded } = useSelector(selector);
   const dispatch = useDispatch();
   const config = useConfig();
 
@@ -52,11 +56,12 @@ export const SidebarTabs = ({ tabs, toolbar }: Props): ReactElement => {
             isOpen,
             lock,
             activeTab,
-            type
+            type,
+            expanded
           }),
         dispatch
       )(),
-    [dispatch, alignment, isOpen, lock, activeTab, type]
+    [dispatch, alignment, isOpen, lock, activeTab, type, expanded]
   );
   const onAlign = useCallback(
     () =>
@@ -69,7 +74,8 @@ export const SidebarTabs = ({ tabs, toolbar }: Props): ReactElement => {
             isOpen,
             lock,
             activeTab,
-            type
+            type,
+            expanded
           }),
         dispatch,
         () => {
@@ -77,7 +83,7 @@ export const SidebarTabs = ({ tabs, toolbar }: Props): ReactElement => {
           tooltip?.close();
         }
       )(),
-    [dispatch, alignment, isOpen, lock, activeTab, type]
+    [dispatch, alignment, isOpen, lock, activeTab, type, expanded]
   );
   const onChange = useCallback(
     (x0: Literal) =>
@@ -88,11 +94,29 @@ export const SidebarTabs = ({ tabs, toolbar }: Props): ReactElement => {
             isOpen,
             lock,
             activeTab: `${activeTab}`,
-            type
+            type,
+            expanded
           }),
         dispatch
       )(x0),
-    [dispatch, alignment, isOpen, lock, type]
+    [dispatch, alignment, isOpen, lock, type, expanded]
+  );
+  const onExpand = useCallback(
+    () =>
+      pipe(
+        () => !expanded,
+        (expanded) =>
+          updateUI("rightSidebar", {
+            alignment,
+            isOpen,
+            lock,
+            activeTab,
+            type,
+            expanded
+          }),
+        dispatch
+      )(),
+    [dispatch, alignment, isOpen, lock, activeTab, type, expanded]
   );
 
   return (
@@ -102,7 +126,9 @@ export const SidebarTabs = ({ tabs, toolbar }: Props): ReactElement => {
       align={alignment}
       onAlign={onAlign}
       locked={!!lock}
+      expand={!!expanded}
       onLock={onLock}
+      onExpand={onExpand}
     >
       {tabs.map(({ id, title, label, className, options }) => (
         <Tab
@@ -118,6 +144,7 @@ export const SidebarTabs = ({ tabs, toolbar }: Props): ReactElement => {
             toolbar={toolbar}
             isPro={pro}
             upgradeToPro={config?.urls?.upgradeToPro}
+            location={location}
           />
         </Tab>
       ))}

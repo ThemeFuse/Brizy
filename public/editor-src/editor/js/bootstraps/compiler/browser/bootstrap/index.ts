@@ -12,9 +12,11 @@ import { GlobalBlockRecord, Props, Static } from "./types";
 
 export async function bootstrap(data: Props): Promise<Static> {
   const { config, page, project, editorMode } = data;
-  const { globalBlocks: _globalBlocks = [] } = config;
+  const { globalBlocks: _globalBlocks = [], symbols } = config;
   const { fonts } = project.data;
+
   const store = createStore();
+
   const globalBlocks =
     _globalBlocks?.reduce<GlobalBlockRecord>((acc, block) => {
       acc[block.uid] = block;
@@ -34,7 +36,8 @@ export async function bootstrap(data: Props): Promise<Static> {
       globalBlocks,
       config,
       projectStatus: {},
-      editorMode
+      editorMode,
+      symbols
     })
   );
   const pageBlocks = pageBlocksDataSelector(store.getState(), config);

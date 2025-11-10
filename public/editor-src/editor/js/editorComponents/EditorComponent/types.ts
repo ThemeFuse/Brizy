@@ -54,6 +54,7 @@ export interface ContextMenuItemButton {
   type: "button";
   title: string;
   inactive?: boolean;
+  icon?: string;
   helperText: (d: { isInSubMenu: boolean }) => string;
   onChange?: () => void;
 }
@@ -172,11 +173,12 @@ export interface ToolbarConfig {
   toolbarPlacement?: "top" | "bottom";
 }
 
-export interface ToolbarProps {
+export interface ToolbarProps<T extends ElementModel = ElementModel> {
   getValue: Getter;
   getDCOption: (type: TypeChoices) => MValue<Handler | Choices>;
   t: (key: string) => string;
   device: Responsive.ResponsiveMode;
+  onChange: (patch: Partial<Model<T>>) => void;
 }
 
 export interface ParsedToolbarData {

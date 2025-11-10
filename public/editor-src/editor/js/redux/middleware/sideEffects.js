@@ -214,7 +214,7 @@ function handleHydrate(callbacks) {
       typographyStyle.innerHTML = makeGlobalStylesTypography({
         fontStyles,
         store: store,
-        config
+        config: globalConfig
       });
 
       document.head.appendChild(typographyStyle);

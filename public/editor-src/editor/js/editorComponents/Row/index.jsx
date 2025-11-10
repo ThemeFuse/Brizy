@@ -318,7 +318,7 @@ class Row extends EditorComponent {
       cssClass,
       customAttributes
     } = v;
-    const id = getCSSId(v);
+    const id = getCSSId(v) || this.getId();
     const classNameRowContainer = classNames(
       "brz-row__container",
       className,

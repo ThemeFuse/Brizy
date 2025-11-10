@@ -23,6 +23,8 @@ import { project } from "./project";
 import { screenshots } from "./screenshots";
 import { storeWasChanged } from "./storeWasChanged";
 import { styles } from "./styles";
+import { symbols } from "./symbols";
+import { symbolsCSS } from "./symbolsCSS";
 import { syncAllowed } from "./syncAllowed";
 import { ui } from "./ui";
 
@@ -47,7 +49,9 @@ export default historyReducerEnhancer(
       ui,
       storeWasChanged,
       extraStyles,
-      blocksHtml
+      blocksHtml,
+      symbols,
+      symbolsCSS
     },
     {
       screenshots
@@ -61,7 +65,8 @@ export default historyReducerEnhancer(
       "currentStyle",
       "extraFontStyles",
       "storeWasChanged",
-      "extraStyles"
+      "extraStyles",
+      "symbols"
     ],
     onBeforeUpdate: (state, action, history) => {
       if (

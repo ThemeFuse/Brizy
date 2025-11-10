@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { createFont } from "visual/component/Prompts/PromptFonts/api";
 import { Context } from "visual/component/Prompts/common/GlobalApps/Context";
 import { addFonts } from "visual/redux/actions2";
-import { fontsSelector } from "visual/redux/selectors-new";
+import { fontsSelector } from "visual/redux/selectors";
 import { pendingRequest } from "visual/utils/api";
 import { getWeightTypes } from "visual/utils/fonts/getFontWeight";
 import { t } from "visual/utils/i18n";

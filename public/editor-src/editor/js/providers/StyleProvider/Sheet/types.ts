@@ -14,4 +14,5 @@ export interface CSSOrdered {
   default: Array<Data>;
   rules: Array<Data>;
   custom: Array<Data>;
+  symbol: Array<Data>;
 }

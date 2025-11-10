@@ -3,6 +3,7 @@ import { GetConfig } from "visual/providers/ConfigProvider/types";
 import { RenderType } from "visual/providers/RenderProvider";
 import { Store } from "visual/redux/store";
 import { BreakpointsNames } from "visual/utils/breakpoints/types";
+import { addPaletteVarsToModel } from "visual/utils/color/Palette";
 import { getTypographyValues } from "visual/utils/options/Typography/utils";
 import { ResponsiveMode } from "visual/utils/responsiveMode";
 import { State } from "visual/utils/stateMode";
@@ -28,20 +29,25 @@ export const normalizeOptionModel = <T extends OptionName = OptionName>({
   renderContext: RenderType;
   getConfig: GetConfig;
 }): OptionValue<T> => {
-  if (type === "typography") {
-    const { device, state } = extraData;
-
-    return getTypographyValues({
-      device: device as ResponsiveMode,
-      state,
-      store,
-      value: optionModel as OptionValue<"typography">,
-      renderContext,
-      getConfig
-    }) as OptionValue<T>;
+  switch (type) {
+    case "typography":
+      return getTypographyValues({
+        device: extraData.device as ResponsiveMode,
+        state: extraData.state,
+        store,
+        value: optionModel as OptionValue<"typography">,
+        renderContext,
+        getConfig
+      }) as OptionValue<T>;
+    case "colorPicker":
+    case "backgroundColor":
+    case "border":
+    case "boxShadow":
+    case "textShadow":
+      return addPaletteVarsToModel(optionModel, getConfig()) as OptionValue<T>;
+    default:
+      return optionModel;
   }
-
-  return optionModel;
 };
 
 export const getCSSByOptionType = <

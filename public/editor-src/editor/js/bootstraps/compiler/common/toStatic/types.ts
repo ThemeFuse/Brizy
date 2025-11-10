@@ -10,6 +10,7 @@ import {
   StylesFree,
   StylesPro
 } from "../transforms/assets";
+import type { SymbolAsset } from "../transforms/assets/makeSymbols";
 
 export interface UsedFonts {
   fonts: {
@@ -29,7 +30,10 @@ export interface Output {
     proStyles?: StylesPro;
     proScripts?: ScriptsPro;
   };
+  symbols: SymbolAsset[];
 }
+
+export type OutputWithoutSymbols = Omit<Output, "symbols">;
 
 type Block = Output & {
   id: string;

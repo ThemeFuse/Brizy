@@ -1,7 +1,9 @@
 import {
   getDeleteKeySubMenu,
-  getKeyModifierSubMenu
+  getKeyModifierSubMenu,
+  navigatorKeyModifier
 } from "visual/component/ContextMenu/utils";
+import { openNavigatorFromContextMenu } from "visual/component/Navigator/utils";
 import { hideToolbar } from "visual/component/Toolbar";
 import { t } from "visual/utils/i18n";
 
@@ -79,6 +81,14 @@ const getItems = (itemIndex) => (v, component) => {
             hideToolbar();
             component.removeItem(itemIndex);
           }
+        },
+        {
+          id: "showNavigator",
+          type: "button",
+          title: t("Explorer"),
+          icon: "nc-navigator",
+          helperText: () => navigatorKeyModifier,
+          onChange: () => openNavigatorFromContextMenu(component, itemIndex)
         }
       ]
     }

@@ -13,7 +13,8 @@ export const Popover = ({
   children,
   trigger,
   toolbar,
-  clickOutsideExceptions = []
+  clickOutsideExceptions = [],
+  inPortal
 }: Props): JSX.Element => {
   const _className = classNames("brz-ed-control__popover", className);
   const content = (
@@ -33,6 +34,7 @@ export const Popover = ({
         openOnClick={true}
         toolbar={toolbar}
         clickOutsideExceptions={clickOutsideExceptions}
+        inPortal={inPortal}
       >
         {trigger}
       </Tooltip>

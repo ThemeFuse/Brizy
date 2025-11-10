@@ -117,9 +117,13 @@ export class EcwidCart extends EditorComponent<Value> {
       const cnf = valueToEciwdConfig(v);
       const { step, prefilledCart } = v;
 
-      this.ecwid = EcwidService.init(config.modules.shop.storeId, {
+      const { locale: langLocale = "" } = config;
+      const { storeId } = config.modules.shop;
+
+      this.ecwid = EcwidService.init(storeId, {
         ...cnf,
-        prefetchScripts: true
+        prefetchScripts: true,
+        langLocale
       });
 
       this.ecwid.cart(this.containerRef.current, step, {
@@ -1521,8 +1525,13 @@ export class EcwidCart extends EditorComponent<Value> {
       content: "{{ecwid_store_id}}"
     });
 
+    const langLocale = makePlaceholder({
+      content: "{{ecwid_language_code}}"
+    });
+
     const attr = {
-      [makeAttr("shop-path")]: getEcwidShopPathPlaceholder()
+      [makeAttr("shop-path")]: getEcwidShopPathPlaceholder(),
+      [makeAttr("lang-locale")]: langLocale
     };
 
     return (

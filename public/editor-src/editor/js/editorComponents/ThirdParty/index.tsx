@@ -98,7 +98,8 @@ class ThirdParty extends EditorComponent<Value, Props> {
       getValue: this.getValueByOptionId,
       getDCOption: this.getDCOptionByType,
       t: this.translate,
-      device: this.getDeviceMode()
+      device: this.getDeviceMode(),
+      onChange: this.onChange
     });
 
     return (
@@ -143,7 +144,8 @@ class ThirdParty extends EditorComponent<Value, Props> {
       getValue: this.getValueByOptionId,
       getDCOption: this.getDCOptionByType,
       t: this.translate,
-      device: this.getDeviceMode()
+      device: this.getDeviceMode(),
+      onChange: this.onChange
     });
 
     const toolbarsRefs: RefObject<HTMLDivElement>[] = [];

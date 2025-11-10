@@ -4,7 +4,7 @@ import React from "react";
 import { ConnectedProps, connect } from "react-redux";
 import { RenderEmpty } from "visual/component/RightSidebar/Components/RenderEmpty";
 import { RenderItems } from "visual/component/RightSidebar/Components/RenderItems";
-import { CLEAR_ITEMS_TIMEOUT } from "visual/component/RightSidebar/utils";
+import { CLEAR_ITEMS_TIMEOUT, SIDEBAR_WIDTH_EXPANDED, SIDEBAR_WIDTH } from "visual/component/RightSidebar/utils";
 import { Scrollbar } from "visual/component/Scrollbar";
 import { OptionDefinition } from "visual/editorComponents/ToolbarItemType";
 import { updateUI } from "visual/redux/actions2";
@@ -16,7 +16,7 @@ import { HelpSidebar } from "./HelpSidebar";
 export let instance: RightSidebarInner | undefined;
 
 const mapStateToProps = (state: ReduxState) => {
-  const { isOpen, lock, alignment, activeTab, type } =
+  const { isOpen, lock, alignment, activeTab, type, expanded } =
     uiSelector(state).rightSidebar;
 
   return {
@@ -25,6 +25,7 @@ const mapStateToProps = (state: ReduxState) => {
     lock,
     alignment,
     activeTab,
+    expanded,
     deviceMode: deviceModeSelector(state)
   };
 };
@@ -40,7 +41,8 @@ export class RightSidebarInner extends React.Component<Props> {
     alignment: "right",
     deviceMode: "desktop",
     dispatch: (action) => action,
-    activeTab: undefined
+    activeTab: undefined,
+    expanded: false
   };
 
   getItems: undefined | (() => OptionDefinition[]);
@@ -69,7 +71,7 @@ export class RightSidebarInner extends React.Component<Props> {
   }
 
   onLockClick = (): void => {
-    const { isOpen, lock, alignment, activeTab, type } = this.props;
+    const { isOpen, lock, alignment, activeTab, type, expanded } = this.props;
     const items = this.getItems !== undefined ? this.getItems() : undefined;
     const newStore = {
       type,
@@ -79,7 +81,8 @@ export class RightSidebarInner extends React.Component<Props> {
       isOpen:
         lock !== undefined && (items === undefined || items.length === 0)
           ? false
-          : isOpen
+          : isOpen,
+      expanded
     };
 
     this.props.dispatch(updateUI("rightSidebar", newStore));
@@ -97,7 +100,7 @@ export class RightSidebarInner extends React.Component<Props> {
   }
 
   clearItems(): void {
-    const { lock, alignment, dispatch, activeTab, type } = this.props;
+    const { lock, alignment, dispatch, activeTab, type, expanded } = this.props;
 
     if (lock) {
       // items are cleared after a timeout to prevent switching unnecessarily to empty state
@@ -118,7 +121,8 @@ export class RightSidebarInner extends React.Component<Props> {
         isOpen: false,
         lock,
         alignment,
-        activeTab
+        activeTab,
+        expanded
       };
 
       dispatch(updateUI("rightSidebar", newStore));
@@ -150,20 +154,25 @@ export class RightSidebarInner extends React.Component<Props> {
   }
 
   render(): React.ReactNode {
-    const { isOpen, alignment, type } = this.props;
+    const { isOpen, alignment, type, expanded } = this.props;
     const sidebarClassName = classnames(
       "brz-ed-sidebar",
       "brz-ed-sidebar__right",
       {
         "brz-ed-sidebar__right--align-right": alignment === "right",
-        "brz-ed-sidebar__right--align-left": alignment === "left"
+        "brz-ed-sidebar__right--align-left": alignment === "left",
+        "brz-ed-sidebar__right-large": expanded
       }
     );
     const _items = this.getItems !== undefined ? this.getItems() : undefined;
     const renderData = this.getRenderItems(type, _items);
     return (
       <div className={sidebarClassName}>
-        <Sidebar isOpen={isOpen} alignment={alignment}>
+        <Sidebar 
+          isOpen={isOpen} 
+          alignment={alignment}
+          width={expanded ? SIDEBAR_WIDTH_EXPANDED : SIDEBAR_WIDTH}
+        >
           <Scrollbar theme="dark">
             <div className="brz-ed-sidebar__right__content">{renderData}</div>
           </Scrollbar>

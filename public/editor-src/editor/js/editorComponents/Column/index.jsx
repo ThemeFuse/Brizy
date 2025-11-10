@@ -342,7 +342,7 @@ class Column extends EditorComponent {
     const {
       meta: { inGrid, posts }
     } = this.props;
-    const id = getCSSId(v);
+    const id = getCSSId(v) || this.getId();
     const isInnerRow = this.isInnerRow();
 
     const config = this.getGlobalConfig();

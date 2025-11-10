@@ -15,8 +15,6 @@ export default class PromptIcon extends Component<Props, State> {
     onChange: noop
   };
 
-  containerRef = React.createRef<HTMLDivElement>();
-
   constructor(props: Props) {
     super(props);
     const { type, config } = props;
@@ -33,13 +31,11 @@ export default class PromptIcon extends Component<Props, State> {
   }
 
   componentDidUpdate() {
-    const node = this.containerRef.current;
+    const node =
+      typeof window !== "undefined" ? window.parent.document.body : null;
 
     if (node) {
-      loadFonts(
-        this.containerRef.current,
-        this.props.config.urls?.templateFonts
-      );
+      loadFonts(node, this.props.config.urls?.templateFonts);
     }
   }
 
@@ -82,7 +78,6 @@ export default class PromptIcon extends Component<Props, State> {
         type={type}
         opened={opened}
         config={config}
-        ref={this.containerRef}
         categoryId={categoryId}
         categories={categories}
         typeId={typeId}

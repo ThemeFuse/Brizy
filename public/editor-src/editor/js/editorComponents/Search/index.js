@@ -167,9 +167,13 @@ export default class Search extends EditorComponent {
             action={formAction}
             method="get"
           >
+            <label for="search-field" className="sr-only">
+              {label}
+            </label>
             {searchStyle !== "classic" && this.renderIcon()}
             <input
               name="s"
+              id="search-field"
               className="brz-input brz-search"
               placeholder={label}
             />

@@ -43,7 +43,8 @@ export const Tabs = ({
   value: { value },
   config,
   toolbar,
-  className
+  className,
+  location
 }: Props): ReactElement => {
   const {
     position = "top",
@@ -90,6 +91,7 @@ export const Tabs = ({
                 toolbar={toolbar}
                 isPro={pro}
                 upgradeToPro={cnfg?.urls?.upgradeToPro}
+                location={location}
               />
             </Tab>
           );

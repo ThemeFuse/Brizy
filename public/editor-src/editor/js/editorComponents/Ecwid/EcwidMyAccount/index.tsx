@@ -76,10 +76,12 @@ export class EcwidMyAccount extends EditorComponent<Value> {
     ) {
       const v = this.getValue();
       const cnf = valueToEciwdConfig(v);
+      const { locale: langLocale = "" } = config;
 
       this.ecwid = EcwidService.init(config.modules.shop.storeId, {
         ...cnf,
-        redirect: undefined
+        redirect: undefined,
+        langLocale
       });
       this.ecwid.myAccount(this.containerRef.current);
     }
@@ -584,8 +586,13 @@ export class EcwidMyAccount extends EditorComponent<Value> {
       content: "{{ecwid_store_id}}"
     });
 
+    const langLocale = makePlaceholder({
+      content: "{{ecwid_language_code}}"
+    });
+
     const attr = {
-      [makeAttr("shop-path")]: getEcwidShopPathPlaceholder()
+      [makeAttr("shop-path")]: getEcwidShopPathPlaceholder(),
+      [makeAttr("lang-locale")]: langLocale
     };
 
     return (

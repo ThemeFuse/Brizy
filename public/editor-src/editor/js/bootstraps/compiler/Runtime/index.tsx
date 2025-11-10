@@ -6,7 +6,8 @@ import {
   blocksHtmlSelector,
   globalPopupsInPageSelector,
   pageBlocksDataSelector,
-  pageDataDraftBlocksSelector
+  pageDataDraftBlocksSelector,
+  symbolsSelector
 } from "visual/redux/selectors";
 import { ReduxState } from "visual/redux/types";
 import { Block } from "visual/types/Block";
@@ -17,7 +18,8 @@ const mapState = (state: ReduxState): StateProps => ({
   page: pageDataDraftBlocksSelector(state),
   getBlockData: (c) => pageBlocksDataSelector(state, c),
   getGlobalPopups: (c) => globalPopupsInPageSelector(state, c),
-  blocksHTML: blocksHtmlSelector(state).blocks
+  blocksHTML: blocksHtmlSelector(state).blocks,
+  symbols: symbolsSelector(state).classes
 });
 
 const connector = connect(mapState);

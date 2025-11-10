@@ -39,6 +39,7 @@ import { Page, PageCommon } from "visual/types/Page";
 import { Project } from "visual/types/Project";
 import { Rule } from "visual/types/Rule";
 import { FontStyle, Palette } from "visual/types/Style";
+import type { CSSSymbol } from "visual/types/Symbols";
 import {
   AdobeAddAccount,
   AdobeFonts,
@@ -828,6 +829,8 @@ interface _ConfigCommon<Mode> {
 
   user?: User;
 
+  locale?: string;
+
   branding?: {
     name: string;
   };
@@ -899,6 +902,7 @@ interface _ConfigCommon<Mode> {
         linkUpload?: boolean;
         linkAnchor?: boolean;
         linkPopup?: boolean;
+        linkAction?: boolean;
       };
     };
 
@@ -1306,6 +1310,10 @@ interface _ConfigCommon<Mode> {
     menuSimple?: {
       getPlaceholderData?: GetPlaceholderData;
     };
+    audio?: {
+      disableSelectType?: boolean;
+      disableAutoplay?: boolean;
+    };
   };
 
   //#endregion
@@ -1389,6 +1397,12 @@ interface _ConfigCommon<Mode> {
 
     //#endregion
   };
+
+  //#region symbols
+
+  symbols?: CSSSymbol[];
+
+  //#endregion
 
   urls?: UrlsCommon;
 }

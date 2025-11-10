@@ -1,6 +1,5 @@
 import classNames from "classnames";
 import React, {
-  ComponentType,
   HTMLAttributes,
   ReactElement,
   ReactNode,
@@ -11,20 +10,14 @@ import React, {
 import Animation from "visual/component/Animation";
 import ContainerBorder from "visual/component/ContainerBorder";
 import ContextMenu, { ContextMenuExtend } from "visual/component/ContextMenu";
-import {
-  ElementModel,
-  ElementModelType
-} from "visual/component/Elements/Types";
+import { ElementModel } from "visual/component/Elements/Types";
 import { HoverAnimation } from "visual/component/HoverAnimation/HoverAnimation";
 import { getHoverAnimationOptions } from "visual/component/HoverAnimation/utils";
 import { ProBlocked } from "visual/component/ProBlocked";
 import { Roles, currentUserRole } from "visual/component/Roles";
 import { ScrollMotion } from "visual/component/ScrollMotions";
 import { makeOptionValueToMotion } from "visual/component/ScrollMotions/utils";
-import {
-  SortableElement,
-  SortableElementDataAttributes
-} from "visual/component/Sortable/SortableElement";
+import { SortableElement } from "visual/component/Sortable/SortableElement";
 import SortableHandle from "visual/component/Sortable/SortableHandle";
 import Toolbar, {
   ToolbarExtend as _ToolbarExtend
@@ -36,20 +29,20 @@ import EditorComponent, {
   Props as EDProps
 } from "visual/editorComponents/EditorComponent";
 import {
-  OnChangeMeta,
   ProElementTitle,
   ToolbarExtend
 } from "visual/editorComponents/EditorComponent/types";
 import { getProTitle } from "visual/editorComponents/EditorComponent/utils";
-import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
+import { Meta, ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
 import { Draggable } from "visual/editorComponents/tools/Draggable";
 import { Value as DraggableV } from "visual/editorComponents/tools/Draggable/entities/Value";
 import { getContainerSizes } from "visual/editorComponents/tools/Draggable/utils";
-import { WithClassName } from "visual/types/attributes";
+import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
+import { symbolsSelector } from "visual/redux/selectors";
 import { isPro } from "visual/utils/env";
 import { t } from "visual/utils/i18n";
 import { getWrapperContainerW } from "visual/utils/meta";
-import { CssId, getCSSId } from "visual/utils/models/cssId";
+import { getCSSId } from "visual/utils/models/cssId";
 import {
   defaultValueKey,
   defaultValueValue,
@@ -70,49 +63,27 @@ import { getAnimations } from "../../component/HoverAnimation/animations";
 import contextMenuConfig from "./contextMenu";
 import contextMenuConfigPro from "./contextMenuPro";
 import defaultValue from "./defaultValue.json";
+import {
+  isItemsWrapperPatch,
+  isSymbolsChildrenPatch,
+  symbolWrapperPatch
+} from "./patch";
 import * as sidebarConfig from "./sidebar";
 import * as sidebarExtendConfig from "./sidebarExtend";
 import { styleAnimation, styleWrapper } from "./styles";
 import * as toolbarConfig from "./toolbar";
 import * as toolbarExtendConfig from "./toolbarExtend";
-
-export interface Value extends ElementModel, CssId {
-  items: ElementModelType[];
-}
-
-type Component<P> = ComponentType<P> | keyof JSX.IntrinsicElements;
-type Props = {
-  meta: {
-    desktopW: number;
-    desktopWNoSpacing: number;
-    tabletW: number;
-    tabletWNoSpacing: number;
-    mobileW: number;
-    mobileWNoSpacing: number;
-    sectionPopup?: boolean;
-    sectionPopup2?: boolean;
-    wrapperAnimationId: string;
-    wrapperAnimationActive: boolean;
-  };
-};
-
-type Static = WithClassName & {
-  v: Value;
-  vs: Value;
-  vd: Value;
-  extraAttr?: SortableElementDataAttributes;
-  ref?: Ref<unknown>;
-  needWrapper?: boolean;
-};
+import { Component, Props, Static, Value } from "./types";
 
 export default class Wrapper extends EditorComponent<Value, Props> {
   static defaultValue = defaultValue;
   static experimentalDynamicContent = true;
+
   childToolbarExtend?: ToolbarExtend = undefined;
   toolbarRef = createRef<PortalToolbarType>();
 
-  static get componentId(): string {
-    return "Wrapper";
+  static get componentId(): ElementTypes.Wrapper {
+    return ElementTypes.Wrapper;
   }
 
   shouldComponentUpdate(nextProps: EDProps<Value, Props>): boolean {
@@ -132,16 +103,36 @@ export default class Wrapper extends EditorComponent<Value, Props> {
         ? getProTitle(model.type, model.value, this.getGlobalConfig())
         : undefined;
     }
-
     return undefined;
   }
 
-  handleValueChange(value: Value, meta: OnChangeMeta<Value>): void {
-    if (value.items.length === 0) {
+  handleWrapperChange(patch: Partial<Value>, meta?: Meta): Partial<Value> {
+    const { items } = patch;
+
+    const isItemsPatch = isItemsWrapperPatch(patch);
+
+    if (isItemsPatch && items?.length === 0) {
       this.selfDestruct();
-    } else {
-      super.handleValueChange(value, meta);
+      return {};
     }
+
+    const symbolPatch = isSymbolsChildrenPatch(meta)
+      ? symbolWrapperPatch({
+          patch,
+          symbols: symbolsSelector(this.getReduxStore().getState()).classes,
+          v: this.getValue()
+        })
+      : {};
+
+    return { ...patch, ...symbolPatch };
+  }
+
+  patchValue(patch: Partial<Value>, meta?: Meta) {
+    const wrapper = this.handleWrapperChange(patch, meta);
+
+    const newPatch = { ...patch, ...wrapper };
+
+    super.patchValue(newPatch, meta);
   }
 
   handleRemove = (): void => {
@@ -260,7 +251,7 @@ export default class Wrapper extends EditorComponent<Value, Props> {
   }: Static): ReactElement {
     const { customAttributes } = v;
     const proTitleElement = this.getTitleIfPro();
-    const cssId = getCSSId<Value>(v);
+    const cssId = getCSSId<Value>(v) || this.getId();
 
     if (proTitleElement && proTitleElement.title) {
       const content = (
