@@ -20,6 +20,7 @@ import EditorComponent, {
 } from "visual/editorComponents/EditorComponent";
 import { shouldRenderPopup } from "visual/editorComponents/tools/Popup";
 import { Wrapper } from "visual/editorComponents/tools/Wrapper";
+import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import { isStory } from "visual/providers/EditorModeProvider";
 import { isEditor } from "visual/providers/RenderProvider";
 import { blocksDataSelector, deviceModeSelector } from "visual/redux/selectors";
@@ -59,8 +60,8 @@ class Icon extends EditorComponent<Value, Props> {
   tooltipReferenceElement: Element | null = null;
   isInitialisedTooltip = false;
 
-  static get componentId(): "Icon" {
-    return "Icon";
+  static get componentId(): ElementTypes.Icon {
+    return ElementTypes.Icon;
   }
 
   componentDidUpdate(prevProps: PrevProps<Value, Props>) {

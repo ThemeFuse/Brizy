@@ -13,6 +13,7 @@ export type Props = WithClassName &
     size: "small" | "medium" | "large" | "xlarge" | "auto";
     clickOutsideExceptions?: string[];
     placement: TooltipProps["placement"];
+    inPortal?: boolean;
   };
 
 interface Option {

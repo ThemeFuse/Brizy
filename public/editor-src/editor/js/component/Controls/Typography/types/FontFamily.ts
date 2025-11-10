@@ -11,16 +11,11 @@ export type FontsBlock = Partial<{
   [FontFamilyType.system]: Array<FontObject>;
 }>;
 
-export interface DividedFonts {
-  variableFonts: FontObject[];
-  normalFonts: FontsBlock;
-}
-
 export interface FontFamily {
   font: string;
   fontAddLabel: string;
   showFontFamily?: boolean;
-  fonts: DividedFonts;
+  fonts: FontsBlock;
   fontAdd?: VoidFunction;
 }
 

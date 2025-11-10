@@ -37,11 +37,11 @@ export const ImageUpload: Component = ({ onChange, value, config, label }) => {
         case "image":
           {
             onChange({
-              imageSrc: v.src,
-              imageFileName: v.fileName,
-              imageExtension: v.extension,
-              imageWidth: v.width,
-              imageHeight: v.height,
+              src: v.src,
+              fileName: v.fileName,
+              extension: v.extension,
+              width: v.width,
+              height: v.height,
               imageType: ImageType.Internal,
               alt: v.altTitle
             });
@@ -50,8 +50,8 @@ export const ImageUpload: Component = ({ onChange, value, config, label }) => {
         case "pointer":
           {
             onChange({
-              positionX: v.x,
-              positionY: v.y
+              x: v.x,
+              y: v.y
             });
           }
           break;

@@ -43,6 +43,7 @@ export type Props<Model, Patch = Model> = {
   toolbar?: ToolbarItemsInstance;
   label?: JSX.Element;
   description?: ReactNode;
+  location?: string;
 };
 
 export type Meta<T> = {

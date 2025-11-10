@@ -14,6 +14,7 @@ import {
   getUsedModelFontFamily
 } from "visual/utils/options/getDetailsModelFontFamily";
 import { getAssets } from "../transforms/assets";
+import { makeSymbols } from "../transforms/assets/makeSymbols";
 import { changeMenuUid } from "../transforms/changeMenuUid";
 import { customAttributes } from "../transforms/customAttributes";
 import { dynamicContent } from "../transforms/dynamicContent";
@@ -39,6 +40,9 @@ export const baseToStatic = (props: Props): Output => {
 
   // === Extract all css from CSS generator ===
   const dynamicCss = sheet.getCSSOrdered();
+
+  const symbols = makeSymbols(dynamicCss.symbol);
+
   // ===========
 
   const $pageHTML = cheerio.load(
@@ -64,7 +68,6 @@ export const baseToStatic = (props: Props): Output => {
   });
 
   const { fonts, adobeKitId } = usedFonts;
-
   const { freeScripts, freeStyles, proScripts, proStyles } = getAssets({
     $root: $pageHTML,
     fonts,
@@ -83,6 +86,7 @@ export const baseToStatic = (props: Props): Output => {
 
   return {
     html: body,
-    assets: { freeScripts, freeStyles, proScripts, proStyles }
+    assets: { freeScripts, freeStyles, proScripts, proStyles },
+    symbols
   };
 };

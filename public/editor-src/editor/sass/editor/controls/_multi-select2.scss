@@ -2,8 +2,10 @@
 
 .brz-ed-control__multiSelect2 {
   font-family: $default-font-family;
+  width: $control__fixed-multiselect-width;
   min-width: $control__fixed-multiselect-width;
   max-width: $control__fixed-multiselect-width;
+  flex-shrink: 0;
 
   &__value {
     display: flex;
@@ -84,9 +86,8 @@
   &__option {
     display: flex;
     align-items: center;
-    height: $control-height;
     margin: 0;
-    padding: 0 $control-padding;
+    padding: 7px $control-padding;
     border-bottom: 1px solid $control-border;
     font-size: $control-font-size;
     letter-spacing: $control-letter-spacing;
@@ -130,7 +131,7 @@
       word-break: break-all;
       overflow: hidden;
       display: -webkit-box;
-      -webkit-line-clamp: 1;
+      line-height: 1.2;
       flex-direction: column;
     }
   }

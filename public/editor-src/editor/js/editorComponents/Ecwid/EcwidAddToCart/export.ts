@@ -28,9 +28,12 @@ const handleClick = (
     const storeId = item.getAttribute(
       makeAttr("store-id")
     ) as EcwidStoreId | null;
+    const langLocale = item.getAttribute(makeAttr("lang-locale")) ?? "";
 
     if (storeId) {
-      EcwidService.init(storeId, { baseUrl }).loadScripts({ callback });
+      EcwidService.init(storeId, { baseUrl, langLocale }).loadScripts({
+        callback
+      });
     }
   } else {
     callback();

@@ -13,5 +13,5 @@ export const fromElementModel: Option.FromElementModel<"symbols"> = (get) => ({
 });
 
 export const toElementModel: Option.ToElementModel<"symbols"> = (value) => ({
-  value
+  value: value.value
 });

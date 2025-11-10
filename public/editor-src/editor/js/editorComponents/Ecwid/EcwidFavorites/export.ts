@@ -4,6 +4,7 @@ import { EcwidService } from "visual/libs/Ecwid";
 import type { EcwidConfig } from "visual/libs/Ecwid/types/EcwidConfig";
 import type { ExportFunction } from "visual/types";
 import { getEcwidShopPathFromAttribute } from "visual/utils/ecwid";
+import { makeAttr } from "visual/utils/i18n/attribute";
 import { parseFromString } from "visual/utils/string";
 import { blockClicksBySelectors } from "./utils";
 
@@ -21,6 +22,7 @@ export const fn: ExportFunction = ($node) => {
       const config = Str.read(node.getAttribute("data-storefront"));
       const cfg = config ? parseFromString<EcwidConfig>(config) : {};
       const baseUrl = getEcwidShopPathFromAttribute(node) ?? "";
+      const langLocale = node.getAttribute(makeAttr("lang-locale")) ?? "";
 
       const onPageLoaded = () => {
         const items = node.querySelectorAll<HTMLElement>(".grid-product");
@@ -31,7 +33,8 @@ export const fn: ExportFunction = ($node) => {
         EcwidService.init(storeId, {
           ...cfg,
           baseUrl,
-          onPageLoaded
+          onPageLoaded,
+          langLocale
         }).favorites(node);
       }
     });

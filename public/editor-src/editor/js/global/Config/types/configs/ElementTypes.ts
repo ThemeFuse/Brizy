@@ -34,8 +34,11 @@ export enum ElementTypes {
   Carousel = "Carousel",
   CarouselItems = "Carousel.Items",
   Tabs = "Tabs",
+  Tab = "Tab",
   Accordion = "Accordion",
+  AccordionItem = "AccordionItem",
   Switcher = "Switcher",
+  SwitcherTab = "SwitcherTab",
   Table = "Table",
   Timeline = "Timeline",
   Facebook = "Facebook",
@@ -157,6 +160,7 @@ export enum ElementTypes {
   SectionHeaderItem = "SectionHeaderItem",
   SectionHeaderStickyItem = "SectionHeaderStickyItem",
   SectionFooter = "SectionFooter",
+  Story = "Story",
   Checkbox = "Checkbox",
   Calculated = "Calculated",
   TableOfContents = "TableOfContents",
@@ -187,7 +191,11 @@ export enum ElementTypes {
   EcwidPrice = "EcwidPrice",
   EcwidAddToCart = "EcwidAddToCart",
   ThirdParty = "ThirdParty",
-  ThirdPartyItems = "ThirdParty.Items"
+  ThirdPartyItems = "ThirdParty.Items",
+  Cloneable = "Cloneable",
+  Wrapper = "Wrapper",
+  Wrapper2 = "Wrapper2",
+  StoryWrapper = "StoryWrapper"
 }
 
 export const readElementType = checkValue2(ElementTypes);

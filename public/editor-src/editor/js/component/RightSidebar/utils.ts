@@ -11,3 +11,6 @@ export const tabs: Tabs = {
 };
 
 export const CLEAR_ITEMS_TIMEOUT = 150;
+
+export const SIDEBAR_WIDTH = "280px";
+export const SIDEBAR_WIDTH_EXPANDED = "560px";

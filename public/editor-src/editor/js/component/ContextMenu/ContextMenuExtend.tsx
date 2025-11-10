@@ -1,7 +1,7 @@
-import React, { JSX, createContext, useMemo } from "react";
+import React, { type JSX, createContext, useMemo, useRef } from "react";
 import { rolesHOC } from "visual/component/Roles";
-import { ContextMenuItem } from "visual/editorComponents/EditorComponent/types";
-import { FCC } from "visual/utils/react/types";
+import type { ContextMenuItem } from "visual/editorComponents/EditorComponent/types";
+import type { FCC } from "visual/utils/react/types";
 
 type ContextType = {
   getParentContextMenuExtendItems: () => ContextMenuItem[];
@@ -17,9 +17,14 @@ export const ContextMenuExtendProvider: FCC<Props> = ({
   getItems,
   children
 }) => {
+  const getItemsRef = useRef(getItems);
+  getItemsRef.current = getItems;
+
   const value = useMemo(
-    () => ({ getParentContextMenuExtendItems: getItems }),
-    [getItems]
+    () => ({
+      getParentContextMenuExtendItems: () => getItemsRef.current()
+    }),
+    []
   );
 
   return (

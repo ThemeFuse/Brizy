@@ -2,6 +2,7 @@ import { Obj } from "@brizy/readers";
 import { getIn, setIn } from "timm";
 import Editor from "visual/global/Editor";
 import { DESKTOP, RESPONSIVE } from "visual/utils/devices";
+import { flattenDefaultValue } from "visual/utils/models/flattenDefaultValue";
 import { defaultValueValue } from "visual/utils/onChange";
 import { ACTIVE, HOVER, NORMAL } from "visual/utils/stateMode";
 import { capByPrefix } from "../string";
@@ -12,6 +13,8 @@ const filterKeys = [
   "tablet",
   "mobile"
 ];
+
+const fontFamilyFlattenDefaultValue = flattenDefaultValue(["families"]);
 
 export function getElementOfArrayLoop(list, currentValue, operation) {
   let currentIndex = list.findIndex((item) => item === currentValue);
@@ -147,7 +150,9 @@ function getStyles({ value, type }, deviceMode, rules = {}) {
 export function setStyles(data) {
   const { componentValue, deviceMode, depth = 0, rules } = data;
   let i = data.i ?? 0;
-  const styles = getStyles(componentValue, deviceMode, rules);
+  const styles = fontFamilyFlattenDefaultValue(
+    getStyles(componentValue, deviceMode, rules)
+  );
 
   let newValue = setIn(
     componentValue,

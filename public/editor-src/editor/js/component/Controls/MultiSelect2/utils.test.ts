@@ -1,4 +1,4 @@
-import { toggleItemValue, _valueTitle } from "./utils";
+import { _valueTitle, toggleItemValue } from "./utils";
 
 test.each([
   [
@@ -35,7 +35,7 @@ test.each([
       { title: "C", value: "c" }
     ],
     ["a", "b", "c"],
-    "3 Selected"
+    "All 3 selected"
   ],
   [
     [
@@ -47,7 +47,7 @@ test.each([
     undefined
   ]
 ])("Testing 'valueTitle' function", (items, value, expected) => {
-  const t: (key: string) => string = key => key;
+  const t: (key: string) => string = (key) => key;
   const valueTitle = _valueTitle(t);
 
   expect(valueTitle(items, value)).toEqual(expected);

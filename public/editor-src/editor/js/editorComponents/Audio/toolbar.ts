@@ -7,7 +7,7 @@ import { getDynamicContentOption } from "visual/utils/options";
 import { HOVER, NORMAL } from "visual/utils/stateMode";
 import { Value } from "./types";
 
-export const getItems: GetItems<Value> = ({ v, device, context }) => {
+export const getItems: GetItems<Value> = ({ v, device, context, component }) => {
   const dvv = (key: string) => defaultValueValue({ v, key, device });
 
   const bgColorOpacity = dvv("bgColorOpacity");
@@ -29,6 +29,9 @@ export const getItems: GetItems<Value> = ({ v, device, context }) => {
 
   const type = dvv("type");
   const customType = type === "custom";
+
+  const audioConfig = component.getGlobalConfig().elements?.audio;
+  const disableAutoplay = audioConfig?.disableAutoplay;
 
   return [
     {
@@ -77,7 +80,7 @@ export const getItems: GetItems<Value> = ({ v, device, context }) => {
                   id: "autoPlay",
                   label: t("Autoplay"),
                   type: "switch",
-                  disabled: customType
+                  disabled: customType || disableAutoplay
                 }
               ]
             },

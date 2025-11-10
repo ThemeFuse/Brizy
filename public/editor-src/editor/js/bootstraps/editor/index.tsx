@@ -4,7 +4,7 @@ import React from "react";
 import { createRoot } from "react-dom/client";
 import { omit } from "timm";
 import { Editor } from "visual/bootstraps/module/Editor";
-import { Project } from "visual/types/Project";
+import type { Project } from "visual/types/Project";
 import { flatMap } from "visual/utils/array";
 import { getBlocksInPage } from "visual/utils/blocks";
 import { ConfigError, PageError, ProjectError } from "visual/utils/errors";

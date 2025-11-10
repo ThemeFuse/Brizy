@@ -127,16 +127,11 @@ class DrawerPopover extends React.Component {
         exceptions={clickOutsideExceptions}
       >
         {({ ref }) => (
-          <div
-            className={className}
-            title={title}
-            onClick={this.handleClick}
-            ref={ref}
-          >
+          <div className={className} onClick={this.handleClick} ref={ref}>
             <Manager>
               <Reference>
                 {({ ref }) => (
-                  <div ref={ref}>
+                  <div ref={ref} title={title}>
                     <EditorIcon icon={icon} />
                   </div>
                 )}

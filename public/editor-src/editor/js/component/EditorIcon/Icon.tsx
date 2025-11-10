@@ -11,7 +11,11 @@ import { CarouselArrowStyle3 } from "@brizy/builder-icons/src/Icons/CarouselArro
 import { CarouselArrowTopLeft } from "@brizy/builder-icons/src/Icons/CarouselArrowTopLeft";
 import { CarouselArrowTopRight } from "@brizy/builder-icons/src/Icons/CarouselArrowTopRight";
 import { Chart } from "@brizy/builder-icons/src/Icons/Chart";
+import { Close } from "@brizy/builder-icons/src/Icons/Close";
+import { Collapse } from "@brizy/builder-icons/src/Icons/Collapse";
+import { Contract } from "@brizy/builder-icons/src/Icons/Contract";
 import { EditMenuItem } from "@brizy/builder-icons/src/Icons/EditMenuItem";
+import { Expand } from "@brizy/builder-icons/src/Icons/Expand";
 import { InstagramFeed } from "@brizy/builder-icons/src/Icons/InstagramFeed";
 import { LinkedinFeed } from "@brizy/builder-icons/src/Icons/LinkedinFeed";
 import { PayPal } from "@brizy/builder-icons/src/Icons/PayPal";
@@ -100,7 +104,11 @@ const Icons = {
   "t2-carousel-arrow-bottom-left": CarouselArrowBottomLeft,
   "t2-carousel-arrow-bottom-middle": CarouselArrowBottomMiddle,
   "t2-carousel-arrow-middle-left": CarouselArrowMiddleLeft,
-  "t2-carousel-arrow-middle-right": CarouselArrowMiddleRight
+  "t2-carousel-arrow-middle-right": CarouselArrowMiddleRight,
+  "t2-close": Close,
+  "t2-collapse": Collapse,
+  "t2-expand": Expand,
+  "t2-contract": Contract
 };
 
 export type IconNames = keyof typeof Icons;

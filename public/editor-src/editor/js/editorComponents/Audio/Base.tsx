@@ -8,7 +8,7 @@ import {
   styleWrapperAudio
 } from "visual/editorComponents/Audio/styles";
 import { isEditor } from "visual/providers/RenderProvider";
-import { currentStyleSelector } from "visual/redux/selectors-new";
+import { currentStyleSelector } from "visual/redux/selectors";
 import EditorComponent from "../EditorComponent";
 import defaultValue from "./defaultValue.json";
 import type { Value } from "./types";

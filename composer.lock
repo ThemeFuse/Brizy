@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "846af9544276d9b8212f7038c391bc02",
+    "content-hash": "de71bb0b8fc86a024ca285f0d8f83aba",
     "packages": [
         {
             "name": "bagrinsergiu/brizy-merge-page-assets",
@@ -12,7 +12,7 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/bagrinsergiu/brizy-merge-page-assets.git",
-                "reference": "02950716142303539b3b50527aca3d90d5762f4c"
+                "reference": "d95ec788b720aa1ad886a4bcb6e0803648340f93"
             },
             "require": {
                 "ext-json": "*",
@@ -34,7 +34,7 @@
                 "brizy",
                 "brizy merge assets"
             ],
-            "time": "2025-08-04T11:01:01+00:00"
+            "time": "2025-09-16T13:21:28+00:00"
         },
         {
             "name": "bagrinsergiu/brizy-migration-utils",
@@ -69,11 +69,11 @@
         },
         {
             "name": "bagrinsergiu/content-placeholder",
-            "version": "v3.x-dev",
+            "version": "dev-lazy-register",
             "source": {
                 "type": "git",
                 "url": "https://github.com/bagrinsergiu/brizy-content-placeholder.git",
-                "reference": "ad9e738fae4fb84808ed2b29b500bed6b06cbd17"
+                "reference": "36732b34d07d56172ff7edd24c30abe6df858ca6"
             },
             "require": {
                 "php": ">=7.1.0",
@@ -99,7 +99,7 @@
                 "content",
                 "placeholders"
             ],
-            "time": "2025-05-27T05:44:21+00:00"
+            "time": "2025-09-26T09:57:37+00:00"
         },
         {
             "name": "enshrined/svg-sanitize",
@@ -245,12 +245,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/nikic/PHP-Parser.git",
-                "reference": "86365c8e3f68698c52abe1a386fc751b4c5dd322"
+                "reference": "c95b500f87e5fa2e598228e958667136125e0f5f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/86365c8e3f68698c52abe1a386fc751b4c5dd322",
-                "reference": "86365c8e3f68698c52abe1a386fc751b4c5dd322",
+                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/c95b500f87e5fa2e598228e958667136125e0f5f",
+                "reference": "c95b500f87e5fa2e598228e958667136125e0f5f",
                 "shasum": ""
             },
             "require": {
@@ -265,11 +265,6 @@
                 "bin/php-parse"
             ],
             "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "4.9-dev"
-                }
-            },
             "autoload": {
                 "psr-4": {
                     "PhpParser\\": "lib/PhpParser"
@@ -293,7 +288,7 @@
                 "issues": "https://github.com/nikic/PHP-Parser/issues",
                 "source": "https://github.com/nikic/PHP-Parser/tree/4.x"
             },
-            "time": "2025-05-07T20:42:24+00:00"
+            "time": "2025-08-13T12:16:18+00:00"
         },
         {
             "name": "phplrt/ast-contracts",
@@ -1240,7 +1235,7 @@
                 "shim"
             ],
             "support": {
-                "source": "https://github.com/symfony/polyfill-php73/tree/v1.32.0"
+                "source": "https://github.com/symfony/polyfill-php73/tree/v1.33.0"
             },
             "funding": [
                 {
@@ -1249,6 +1244,10 @@
                 },
                 {
                     "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://github.com/nicolas-grekas",
                     "type": "github"
                 },
                 {
@@ -1446,6 +1445,7 @@
     "minimum-stability": "dev",
     "stability-flags": {
         "bagrinsergiu/brizy-merge-page-assets": 20,
+        "bagrinsergiu/content-placeholder": 20,
         "tburry/pquery": 20
     },
     "prefer-stable": false,

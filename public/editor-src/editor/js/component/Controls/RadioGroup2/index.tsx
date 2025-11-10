@@ -29,12 +29,15 @@ export function RadioGroup2<T>({
           }
         );
 
+        const { title, value } = item.props;
+
         return (
           <div
             className={_className}
             key={i}
-            onClick={(): void => onChange(item.props.value)}
-            title={item.props.title}
+            onClick={(): void => onChange(value)}
+            title={title}
+            data-value={value}
           >
             {item}
           </div>

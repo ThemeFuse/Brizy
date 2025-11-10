@@ -7,7 +7,7 @@ import {
   alignIcon,
   alignTitle
 } from "visual/component/Controls/RightSidebarTabs/utils";
-import { leftSidebarSelector } from "visual/redux/selectors-new";
+import { leftSidebarSelector } from "visual/redux/selectors";
 import { SidebarAlign } from "visual/redux/types";
 import { makeBzelmAttr } from "visual/utils/i18n/attribute";
 import { SidebarExtraControls } from "../AddElements/SidebarExtraControls";

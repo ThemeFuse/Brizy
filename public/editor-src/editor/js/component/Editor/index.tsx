@@ -5,10 +5,12 @@ import { RuntimeCompiler } from "visual/bootstraps/compiler/Runtime";
 import BottomPanel from "visual/component/BottomPanel";
 import HotKeys from "visual/component/HotKeys";
 import { LeftSidebar } from "visual/component/LeftSidebar";
+import NavigatorRoot from "visual/component/Navigator";
 import Notifications from "visual/component/Notifications";
 import Portal from "visual/component/Portal";
 import Prompts from "visual/component/Prompts";
 import { RightSidebar } from "visual/component/RightSidebar";
+import UIEvents from "visual/global/UIEvents";
 import { getCommonEditorMode } from "visual/providers/EditorModeProvider";
 import Page from "./Editor/Page";
 import Popup from "./Editor/Popup";
@@ -42,6 +44,10 @@ class Editor extends React.Component<Props> {
           });
         }
         break;
+      case "ctrl+E":
+      case "cmd+E": {
+        UIEvents.emit("navigator.open", { elementId: null });
+      }
     }
   };
 
@@ -97,6 +103,9 @@ class Editor extends React.Component<Props> {
         <Portal node={element}>
           <ToastContainer />
         </Portal>
+        <Portal node={element}>
+          <NavigatorRoot />
+        </Portal>
       </>
     );
   }
@@ -115,7 +124,9 @@ class Editor extends React.Component<Props> {
             "right_cmd+/",
             "ctrl+L",
             "cmd+L",
-            "right_cmd+L"
+            "right_cmd+L",
+            "ctrl+E",
+            "cmd+E"
           ]}
           id="key-helper-editor"
           onKeyDown={this.handleKeyDown}

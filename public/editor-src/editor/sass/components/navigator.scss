@@ -1,0 +1,200 @@
+.brz-navigator {
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  z-index: z("navigator");
+  border-radius: 10px;
+  box-shadow:
+    0 0 0 1px rgba(151, 151, 151, 1),
+    0 0 5px 0 rgba(0, 0, 0, 0.5);
+  background-color: $navigator-bg;
+  font-family: $default-font-family;
+  color: $navigator-text-color;
+  user-select: none;
+
+  &-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    cursor: grab;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 600;
+    padding-block: 12px;
+    border-bottom: 1px solid $navigator-separator-color;
+    padding-inline: 20px;
+    font-size: 16px;
+
+    &-title {
+      font-size: 12px;
+      flex: 1;
+      justify-content: center;
+    }
+
+    &-dragging {
+      cursor: grabbing;
+    }
+
+    &__expanded {
+      transform: rotate(180deg);
+    }
+
+    span {
+      display: flex;
+    }
+
+    svg {
+      color: $navigator-color-gray;
+      transition: transform 0.25s ease;
+    }
+  }
+
+  &-footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: $navigator-text-color;
+    border-top: 1px solid $navigator-separator-color;
+
+    svg {
+      width: 24px;
+    }
+  }
+
+  &-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+
+    li {
+      padding: 0;
+    }
+
+    &-item {
+      display: flex;
+      align-items: center;
+      width: 100%;
+      height: 42px;
+      gap: 5px;
+      border-bottom: 1px solid $navigator-separator-color;
+      font-weight: 600;
+      font-size: 15px;
+      cursor: pointer;
+      padding-left: calc(var(--spacing) + var(--drag-pad));
+      transition: all 0.2s ease;
+
+      &-invalid {
+        cursor: not-allowed;
+        opacity: 0.5;
+      }
+
+      &:hover,
+      &-active {
+        background-color: $brand__primary;
+        color: $navigator-active-color;
+
+        .brz-navigator-list-item {
+          &-icon-show,
+          &-icon-trash {
+            display: block;
+          }
+
+          &-icon-drag {
+            display: flex;
+          }
+        }
+      }
+
+      &-expanded {
+        .brz-navigator-list-item-icon-arrow {
+          transform: rotate(180deg);
+        }
+      }
+
+      &-icon-arrow {
+        transform: rotate(90deg);
+        font-size: 12px;
+        transition: transform 0.25s ease;
+      }
+
+      &-icon-drag {
+        position: absolute;
+        inset-inline-start: 10px;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        font-size: 18px;
+        color: $navigator-text-color;
+      }
+
+      &-icon-widget {
+        width: 16px;
+        height: 16px;
+      }
+
+      &-icon-show,
+      &-icon-trash {
+        display: none;
+        position: absolute;
+      }
+
+      &-icon-show {
+        inset-inline-end: 30px;
+      }
+
+      &-icon-trash {
+        inset-inline-end: 10px;
+      }
+    }
+
+    &-item-wrapper {
+      list-style: none;
+      position: relative;
+      transition: all 0.2s ease;
+
+      &-clone {
+        width: 100%;
+        display: inline-block;
+        pointer-events: none;
+        background-color: $brand__primary;
+
+        .brz-navigator-list-item {
+          padding-right: 24px;
+        }
+
+        .brz-navigator-list-item-invalid {
+          background-color: $navigator-not-allowed-color;
+          color: $navigator-text-color;
+          opacity: 1;
+        }
+      }
+
+      &-children {
+        position: absolute;
+        top: -10px;
+        right: -10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        background-color: $navigator-bg;
+        border: 1px solid $navigator-text-color;
+        font-size: 0.8rem;
+        font-weight: 600;
+        color: $navigator-text-color;
+        padding: 5px;
+      }
+
+      &-ghost {
+        opacity: 0.5;
+      }
+    }
+  }
+
+  .brz-scrollbar__view {
+    overscroll-behavior: contain;
+  }
+}

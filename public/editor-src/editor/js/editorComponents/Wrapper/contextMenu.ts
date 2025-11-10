@@ -1,9 +1,41 @@
+import { Str } from "@brizy/readers";
+import type { Dispatch } from "redux";
+import { getIn } from "timm";
+import type { ElementModel } from "visual/component/Elements/Types";
+import type { ContextGetItems } from "visual/editorComponents/EditorComponent/types";
+import {
+  createClassName,
+  createPatch,
+  createWrapperClassName,
+  flattenDefaultValue
+} from "visual/editorComponents/EditorComponent/utils";
+import {
+  ElementTypes,
+  readElementType
+} from "visual/global/Config/types/configs/ElementTypes";
+import { type SymbolsCreatePayload, createSymbol } from "visual/redux/actions2";
+import { symbolsSelector } from "visual/redux/selectors";
 import { getFlatShortcodes } from "visual/shortcodeComponents/utils";
 import { ECWID_CATEGORY_TYPE, ECWID_PRODUCT_TYPE } from "visual/utils/ecwid";
 import { t } from "visual/utils/i18n";
+import { isModel } from "visual/utils/models";
+import { omitSymbolsKey } from "visual/utils/symbols";
+import { type ElementModelWithSymbols } from "visual/utils/symbols/types";
+import {
+  getComponentDefaultValue,
+  getComponentRulesValue
+} from "visual/utils/traverse/common";
+import { uuid } from "visual/utils/uuid";
 import { getThirdPartyShortcodeTitle } from "./utils";
 
-export const getTranslationsMap = () => ({
+type Title<T extends ElementModel = ElementModel> = (v: T) => string;
+
+type Translation<T extends ElementModel = ElementModel> = Record<
+  string,
+  string | Title<T>
+>;
+
+export const getTranslationsMap = (): Translation => ({
   RichText: t("Text"),
   Image: t("Image"),
   Video: t("Video"),
@@ -217,30 +249,44 @@ export const getTranslationsMap = () => ({
   Leadific: t("Leadific")
 });
 
-export default {
-  getItems
-};
-
-function getItems(v, component) {
+const getItems: ContextGetItems<ElementModel> = (v, component) => {
   const config = component.getGlobalConfig();
+  const store = component.getReduxStore().getState();
+  const symbols = symbolsSelector(store);
+
   const shortcodes = getFlatShortcodes(config);
   const { items } = v;
+  const model = items?.[0] ?? {};
+
+  if (!isModel(model)) {
+    return [];
+  }
+
+  const { type: _type, value } = model;
+  const type = readElementType(_type);
 
   const flattedShortcodes = Object.values(shortcodes).flat();
-  const { icon = "" } =
-    flattedShortcodes.find(
-      (item) => item.component.resolve.value.items?.type === items[0]?.type
-    ) || {};
+  const { icon } = flattedShortcodes
+    .map((item) => ({
+      type: getIn(item.component.resolve, ["value", "items", 0, "type"] ?? ""),
+      icon: item.component.icon
+    }))
+    .find((item) => item.type === type) ?? { icon: "" };
 
   const translates = getTranslationsMap();
-  const thirdPartyId = items[0]?.value?.thirdPartyId;
-  let title =
-    translates[items[0]?.type] ??
-    getThirdPartyShortcodeTitle(flattedShortcodes, thirdPartyId); // TODO: See if we'll need icons & prop
+  const thirdPartyId = value?.thirdPartyId;
+  let title = type
+    ? translates[type]
+    : getThirdPartyShortcodeTitle(flattedShortcodes, Str.read(thirdPartyId)); // TODO: See if we'll need icons & prop
 
   if (typeof title === "function") {
-    title = title(items[0]?.value);
+    title = title(value);
   }
+
+  const currentSymbolUid = (value as ElementModelWithSymbols)?.classes?.[0];
+
+  const symbolModel = symbols.classes.find((s) => s.uid === currentSymbolUid)
+    ?.model.v;
 
   return [
     {
@@ -248,7 +294,91 @@ function getItems(v, component) {
       type: "group",
       title,
       icon,
-      items: []
+      items: [
+        {
+          id: "symbol",
+          type: "button",
+          title: t("Create Symbol"),
+          helperText: () => "",
+          disabled: true,
+          onChange: () => {
+            if (type && value) {
+              const dispatch = component.getReduxDispatch() as Dispatch;
+              const defaultValue = getComponentDefaultValue(type);
+              const rulesValue = getComponentRulesValue(store, value);
+              const wrapperDefaultValue = getComponentDefaultValue(
+                ElementTypes.Wrapper
+              );
+              const wrapperRulesValue = component.getStylesValue();
+
+              const defaultStyle = flattenDefaultValue(
+                defaultValue?.style ?? {}
+              );
+              const defaultWrapperStyle = flattenDefaultValue(
+                getComponentDefaultValue(ElementTypes.Wrapper)?.style ?? {}
+              );
+
+              const childrenSymbolId = uuid();
+              const wrapperSymbolId = uuid();
+
+              const className = `brz-${type.toLowerCase()}-${childrenSymbolId}`;
+              const label = createClassName(type, symbols.classes);
+              const wrapperLabel = createWrapperClassName(
+                ElementTypes.Wrapper,
+                type,
+                symbols.classes
+              );
+              const wrapperClassName = `brz-${ElementTypes.Wrapper.toLowerCase()}-${wrapperSymbolId}`;
+
+              const patch =
+                createPatch({ ...symbolModel, ...value }, defaultStyle).style ??
+                ({} as ElementModel);
+
+              const wrapperPatch = {
+                ...(createPatch(v, defaultWrapperStyle).style ??
+                  ({} as ElementModel)),
+                childrenId: childrenSymbolId
+              };
+
+              const newSymbols: SymbolsCreatePayload = {
+                element: undefined,
+                cssClasses: [
+                  {
+                    uid: childrenSymbolId,
+                    label,
+                    className,
+                    type,
+                    model: {
+                      vd: omitSymbolsKey(defaultValue?.style ?? {}),
+                      vs: rulesValue ?? {},
+                      v: omitSymbolsKey(patch)
+                    }
+                  },
+                  {
+                    uid: uuid(),
+                    label: wrapperLabel,
+                    className: wrapperClassName,
+                    type: ElementTypes.Wrapper,
+                    model: {
+                      vd: omitSymbolsKey(wrapperDefaultValue?.style ?? {}),
+                      vs: wrapperRulesValue ?? {},
+                      v: omitSymbolsKey(wrapperPatch)
+                    }
+                  }
+                ]
+              };
+
+              dispatch(createSymbol(newSymbols));
+            } else {
+              console.warn("Missing Type & Value");
+            }
+          }
+        }
+      ]
     }
   ];
-}
+};
+
+export default {
+  getItems
+};

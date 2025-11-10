@@ -3,6 +3,7 @@ import { isPopup, isStory } from "visual/providers/EditorModeProvider";
 import { t } from "visual/utils/i18n";
 import { toolbarElementForm2Apps } from "visual/utils/toolbar";
 import type { Value } from "./types";
+import { getEnabledLinkOptions } from "visual/global/Config/types/configs/featuresValue";
 
 export const getItems: GetItems<Value> = ({
   v,
@@ -22,6 +23,8 @@ export const getItems: GetItems<Value> = ({
   const inPopup2 = Boolean(
     component.props.meta && component.props.meta.sectionPopup2
   );
+
+  const { linkAction } = getEnabledLinkOptions(component.getGlobalConfig());
 
   const _isPopup = isPopup(editorMode);
 
@@ -122,7 +125,7 @@ export const getItems: GetItems<Value> = ({
                   label: t("Close Popup"),
                   type: "switch",
                   devices: "desktop",
-                  disabled: !(inPopup2 || _isPopup)
+                  disabled: !(inPopup2 || _isPopup) || !linkAction
                 }
               ]
             }

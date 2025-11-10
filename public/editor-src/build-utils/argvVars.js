@@ -22,6 +22,7 @@ module.exports = function (argv) {
   const ANALYZE_EDITOR = Boolean(argv_["analyze_editor"]);
   const AUTHORIZATION_URL = argv_["authUrl"]; // https://auth.brizylocal.com/authorize
   const CHECK_BUNDLE_SIZE = Boolean(argv_["check-bundle-size"]);
+  const WITH_TRANSLATIONS = Boolean(argv_["with-translations"]);
 
   const paths = {
     editor: path.resolve(__dirname, "../editor"),
@@ -48,6 +49,7 @@ module.exports = function (argv) {
     ANALYZE_EDITOR,
     AUTHORIZATION_URL,
     CHECK_BUNDLE_SIZE,
+    WITH_TRANSLATIONS,
     paths
   };
 

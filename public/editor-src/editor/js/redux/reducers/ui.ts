@@ -14,7 +14,8 @@ const defaultState: UIState = {
     isOpen: false,
     lock: undefined,
     alignment: "right",
-    activeTab: undefined
+    activeTab: undefined,
+    expanded: false
   },
   showHiddenElements: false,
   currentRole: "default",

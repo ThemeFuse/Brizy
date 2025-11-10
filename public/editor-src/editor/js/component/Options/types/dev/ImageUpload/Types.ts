@@ -1,8 +1,8 @@
 import React from "react";
 import { Props as OptionProps } from "visual/component/Options/Type";
 import { WithClassName, WithConfig } from "visual/types/attributes";
+import { Patch, SizePatch } from "visual/utils/options/ImageUpload/Patch";
 import { Image } from "./model";
-import { Patch, SizePatch } from "./types/Patch";
 
 export type Extensions = "svg" | "png" | "jpg" | "jpeg" | "gif" | "webp";
 

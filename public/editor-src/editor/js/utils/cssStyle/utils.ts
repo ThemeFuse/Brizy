@@ -568,3 +568,6 @@ export const getCssStyleFnAndMode = (
 
   return { styleFn: fnName, mode: "" };
 };
+
+export const isHoverKey = (s: string): boolean => s.startsWith("hover");
+export const isActiveKey = (s: string): boolean => s.startsWith("active");

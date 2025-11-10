@@ -4,6 +4,7 @@ import { EcwidService } from "visual/libs/Ecwid";
 import type { EcwidConfig } from "visual/libs/Ecwid/types/EcwidConfig";
 import type { ExportFunction } from "visual/types";
 import { getEcwidShopPathFromAttribute } from "visual/utils/ecwid";
+import { makeAttr } from "visual/utils/i18n/attribute";
 import { parseFromString } from "visual/utils/string";
 import { parseUrlParameters } from "visual/utils/url/parseUrlParameters";
 
@@ -59,6 +60,7 @@ export const fn: ExportFunction = ($node) => {
     const config = Str.read(node.getAttribute("data-storefront"));
     const cfg = config ? parseFromString<EcwidConfig>(config) : {};
     const baseUrl = getEcwidShopPathFromAttribute(node) ?? "";
+    const langLocale = node.getAttribute(makeAttr("lang-locale")) ?? "";
 
     if (storeId) {
       observer.observe(node, { childList: true, subtree: true });
@@ -67,7 +69,8 @@ export const fn: ExportFunction = ($node) => {
 
       EcwidService.init(storeId, {
         ...cfg,
-        baseUrl
+        baseUrl,
+        langLocale
       }).search(node, params);
     }
   });

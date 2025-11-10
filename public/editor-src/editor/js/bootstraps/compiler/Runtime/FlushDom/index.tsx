@@ -1,9 +1,13 @@
-import React, { JSX, memo, useEffect, useRef } from "react";
-import { useStore } from "react-redux";
+import React, { type JSX, memo, useEffect, useRef } from "react";
+import { useDispatch, useSelector, useStore } from "react-redux";
 import { useConfig } from "visual/providers/ConfigProvider";
+import { useStyleProvider } from "visual/providers/StyleProvider";
+import { updateSymbolsCSS } from "visual/redux/actions2";
+import { symbolsSelector } from "visual/redux/selectors";
+import type { SymbolCSS } from "visual/types/Symbols";
 import { Queue } from "visual/utils/queue/Queue";
 import { QueueWorker } from "visual/utils/queue/QueueWorker";
-import { Props } from "./types";
+import type { Props } from "./types";
 import { addQueueDebounced } from "./utils";
 
 // process 5 blocks in parallel
@@ -15,7 +19,29 @@ const _FlushDom = (props: Props): JSX.Element => {
   const config = useConfig();
   const queue = useRef(new Queue());
   const queueWorker = useRef(new QueueWorker(queue.current, CONCURRENCY_LIMIT));
+
+  const dispatch = useDispatch();
+  const symbols = useSelector(symbolsSelector);
+  const { sheet } = useStyleProvider();
+  const cssOrdered = sheet.getCSSOrdered();
   // const { mode } = useEditorMode();
+
+  useEffect(() => {
+    const symbolsCSS = cssOrdered.symbol.reduce((acc, curr) => {
+      const symbol = symbols.classes.find(
+        (s) => s.className === curr.className
+      );
+      if (symbol) {
+        acc[symbol.uid] = {
+          css: curr.cssText
+        };
+      }
+
+      return acc;
+    }, {} as SymbolCSS);
+
+    dispatch(updateSymbolsCSS(symbolsCSS));
+  }, [cssOrdered.symbol, symbols, dispatch]);
 
   useEffect(() => {
     const worker = queueWorker.current;

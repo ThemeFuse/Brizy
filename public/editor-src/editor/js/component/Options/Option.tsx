@@ -26,6 +26,7 @@ export interface LegacyProps extends WithClassName {
 type ComponentOptionProps = Omit<Props["data"], "label"> & {
   toolbar?: ToolbarItemsInstance;
   label: ReactElement;
+  location?: string;
 };
 
 class Option extends React.Component<Props> {
@@ -66,11 +67,13 @@ class Option extends React.Component<Props> {
         helper,
         className: __className,
         type,
+        id,
         ...optionProps
       },
       isPro,
       upgradeToPro,
-      className: _className = ""
+      className: _className = "",
+      location
     } = this.props;
 
     const className = classNames(
@@ -94,13 +97,16 @@ class Option extends React.Component<Props> {
         display={display}
         lock={optionProps.isPro && !isPro}
         upgradeToPro={upgradeToPro}
+        id={id}
       >
         <Component
           toolbar={this.props.toolbar}
+          id={id}
           {...optionProps}
           className={__className}
           onChange={this.onChange}
           label={Label}
+          location={location}
         />
       </OptionWrapper>
     );

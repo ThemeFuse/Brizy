@@ -118,7 +118,8 @@ export class Typography extends PureComponent<Props> {
       onIconClick,
       showFontSize,
       showFontStyles,
-      isFontStyleSettingsDisabled
+      isFontStyleSettingsDisabled,
+      label
     } = this.props;
 
     const typographyStyleClassName = classnames(
@@ -137,126 +138,129 @@ export class Typography extends PureComponent<Props> {
     );
 
     return (
-      <div className={_className}>
-        {showFontFamily && (
-          <FontFamily
-            onChange={this.onFontFamily}
-            value={font}
-            fonts={fonts}
-            addFont={fontAdd}
-            addFontLabel={fontAddLabel}
-          />
-        )}
+      <>
+        {label}
+        <div className={_className}>
+          {showFontFamily && (
+            <FontFamily
+              onChange={this.onFontFamily}
+              value={font}
+              fonts={fonts}
+              addFont={fontAdd}
+              addFontLabel={fontAddLabel}
+            />
+          )}
 
-        {showTextTransform && (
-          <FontTransform
-            onBoldChange={this.onBold}
-            onItalicChange={this.onItalic}
-            onUppercaseChange={this.onUppercase}
-            onUnderlineChange={this.onUnderline}
-            onLowercaseChange={this.onLowercase}
-            onStrikeChange={this.onStrike}
-            onScriptChange={this.onScript}
-            script={script}
-            scriptChoices={scriptChoices}
-            bold={bold}
-            italic={italic}
-            underline={underline}
-            strike={strike}
-            uppercase={uppercase}
-            lowercase={lowercase}
-          />
-        )}
+          {showTextTransform && (
+            <FontTransform
+              onBoldChange={this.onBold}
+              onItalicChange={this.onItalic}
+              onUppercaseChange={this.onUppercase}
+              onUnderlineChange={this.onUnderline}
+              onLowercaseChange={this.onLowercase}
+              onStrikeChange={this.onStrike}
+              onScriptChange={this.onScript}
+              script={script}
+              scriptChoices={scriptChoices}
+              bold={bold}
+              italic={italic}
+              underline={underline}
+              strike={strike}
+              uppercase={uppercase}
+              lowercase={lowercase}
+            />
+          )}
 
-        <div className={typographyStyleClassName}>
-          <div className="brz-ed__col brz-ed__col-1-1">
-            {icons?.length && showFontStyles ? (
-              <div className="brz-ed-control__typography-styles_icon">
-                {icons?.map((icon, index) => (
-                  <Icon
-                    key={index}
-                    icon={icon}
-                    active={icon === activeIcon}
-                    onClick={onIconClick}
-                  />
-                ))}
-              </div>
-            ) : (
-              <>
-                <Label title={styleLabel}>{styleLabel}</Label>
-                <FontStyle
-                  styles={styles}
-                  openSettings={styleOpenSettings}
-                  onChange={this.onFontStyle}
-                  value={style}
-                  isFontStyleSettingsDisabled={isFontStyleSettingsDisabled}
-                />
-              </>
-            )}
-          </div>
-          <div className="brz-ed__col brz-ed__col-1-2">
-            {showFontSize ? (
-              <Label title={sizeLabel}>{sizeLabel}</Label>
-            ) : (
-              <div className="brz-control__typography-suffix">
-                <Label title={sizeLabel}>{sizeLabel}</Label>
-                <Select2<SizeSuffix>
-                  value={sizeSuffix}
-                  onChange={this.onFontSizeSuffix}
-                  editable={false}
-                  size="short"
-                >
-                  {sizeSuffixes.map(({ value, title }) => (
-                    <Item<SizeSuffix> key={value} value={value}>
-                      {title}
-                    </Item>
+          <div className={typographyStyleClassName}>
+            <div className="brz-ed__col brz-ed__col-1-1">
+              {icons?.length && showFontStyles ? (
+                <div className="brz-ed-control__typography-styles_icon">
+                  {icons?.map((icon, index) => (
+                    <Icon
+                      key={index}
+                      icon={icon}
+                      active={icon === activeIcon}
+                      onClick={onIconClick}
+                    />
                   ))}
-                </Select2>
-              </div>
-            )}
-            <Stepper
-              min={sizeMin}
-              max={sizeMax}
-              step={sizeStep}
-              value={size}
-              onChange={this.onFontSize}
+                </div>
+              ) : (
+                <>
+                  <Label title={styleLabel}>{styleLabel}</Label>
+                  <FontStyle
+                    styles={styles}
+                    openSettings={styleOpenSettings}
+                    onChange={this.onFontStyle}
+                    value={style}
+                    isFontStyleSettingsDisabled={isFontStyleSettingsDisabled}
+                  />
+                </>
+              )}
+            </div>
+            <div className="brz-ed__col brz-ed__col-1-2 brz-ed-control__typography-size">
+              {showFontSize ? (
+                <Label title={sizeLabel}>{sizeLabel}</Label>
+              ) : (
+                <div className="brz-control__typography-suffix">
+                  <Label title={sizeLabel}>{sizeLabel}</Label>
+                  <Select2<SizeSuffix>
+                    value={sizeSuffix}
+                    onChange={this.onFontSizeSuffix}
+                    editable={false}
+                    size="short"
+                  >
+                    {sizeSuffixes.map(({ value, title }) => (
+                      <Item<SizeSuffix> key={value} value={value}>
+                        {title}
+                      </Item>
+                    ))}
+                  </Select2>
+                </div>
+              )}
+              <Stepper
+                min={sizeMin}
+                max={sizeMax}
+                step={sizeStep}
+                value={size}
+                onChange={this.onFontSize}
+              />
+            </div>
+            <FontWeight
+              label={weightLabel}
+              weight={weight}
+              variableFontWeight={variableFontWeight}
+              fontWidth={fontWidth}
+              fontSoftness={fontSoftness}
+              onFontWeightChange={this.onFontWeight}
+              onVariableFontWeightChange={this.onVariableWeight}
+              onFontWidthChange={this.onFontWidth}
+              onSoftnessChange={this.onSoftness}
+              variations={variations}
+              weights={weights}
             />
-          </div>
-          <FontWeight
-            label={weightLabel}
-            weight={weight}
-            variableFontWeight={variableFontWeight}
-            fontWidth={fontWidth}
-            fontSoftness={fontSoftness}
-            onFontWeightChange={this.onFontWeight}
-            onVariableFontWeightChange={this.onVariableWeight}
-            onFontWidthChange={this.onFontWidth}
-            onSoftnessChange={this.onSoftness}
-            variations={variations}
-            weights={weights}
-          />
-          <div className="brz-ed__col brz-ed__col-1-2">
-            <Label title={lineHeightLabel}>{lineHeightLabel}</Label>
-            <Stepper
-              min={lineHeightMin}
-              max={lineHeightMax}
-              step={lineHeightStep}
-              value={lineHeight}
-              onChange={this.onLineHeight}
-            />
-          </div>
-          <div className="brz-ed__col brz-ed__col-1-2">
-            <Label title={letterSpacingLabel}>{letterSpacingLabel}</Label>
-            <Stepper
-              min={letterSpacingMin}
-              max={letterSpacingMax}
-              step={letterSpacingStep}
-              value={letterSpacing}
-              onChange={this.onLetterSpacing}
-            />
+            <div className="brz-ed__col brz-ed__col-1-2 brz-ed-control__typography-line-height">
+              <Label title={lineHeightLabel}>{lineHeightLabel}</Label>
+              <Stepper
+                min={lineHeightMin}
+                max={lineHeightMax}
+                step={lineHeightStep}
+                value={lineHeight}
+                onChange={this.onLineHeight}
+              />
+            </div>
+            <div className="brz-ed__col brz-ed__col-1-2 brz-ed-control__typography-letter-spacing">
+              <Label title={letterSpacingLabel}>{letterSpacingLabel}</Label>
+              <Stepper
+                min={letterSpacingMin}
+                max={letterSpacingMax}
+                step={letterSpacingStep}
+                value={letterSpacing}
+                onChange={this.onLetterSpacing}
+              />
+            </div>
           </div>
         </div>
-      </div>
+      </>
     );
   }
 }

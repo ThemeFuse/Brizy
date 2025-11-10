@@ -1,5 +1,9 @@
-import { getKeyModifierSubMenu } from "visual/component/ContextMenu/utils";
+import {
+  getKeyModifierSubMenu,
+  navigatorKeyModifier
+} from "visual/component/ContextMenu/utils";
 import { ElementModel } from "visual/component/Elements/Types";
+import { openNavigatorFromContextMenu } from "visual/component/Navigator/utils";
 import type { Editor } from "visual/editorComponents/EditorComponent";
 import {
   ContextGetItems,
@@ -45,6 +49,14 @@ const getItems =
             inactive: !canPaste,
             // @ts-expect-error need transform EditorArrayComponent to ts
             onChange: () => component.pasteStyles(itemIndex)
+          },
+          {
+            id: "showNavigator",
+            type: "button",
+            title: t("Explorer"),
+            icon: "nc-navigator",
+            helperText: () => navigatorKeyModifier,
+            onChange: () => openNavigatorFromContextMenu(component, itemIndex)
           }
         ]
       }

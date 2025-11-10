@@ -1,8 +1,13 @@
 import classnames from "classnames";
-import React, { ReactElement, ReactNode, RefObject, createRef } from "react";
+import React, {
+  type ReactElement,
+  type ReactNode,
+  type RefObject,
+  createRef
+} from "react";
 import { omit } from "timm";
 import BoxResizer from "visual/component/BoxResizer";
-import { Patch } from "visual/component/BoxResizer/types";
+import type { Patch } from "visual/component/BoxResizer/types";
 import { Text } from "visual/component/ContentOptions/types";
 import CustomCSS from "visual/component/CustomCSS";
 import { HoverAnimation } from "visual/component/HoverAnimation/HoverAnimation";
@@ -11,7 +16,7 @@ import Link from "visual/component/Link";
 import { ThemeIcon } from "visual/component/ThemeIcon";
 import Toolbar from "visual/component/Toolbar";
 import { Tooltip } from "visual/component/Tooltip";
-import { TooltipImperativeProps } from "visual/component/Tooltip/types";
+import type { TooltipImperativeProps } from "visual/component/Tooltip/types";
 import {
   getToolbarPlacement,
   getTooltipPlacement,
@@ -19,14 +24,14 @@ import {
 } from "visual/component/Tooltip/utils";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import EditorComponent, {
-  Props as PrevProps
+  type Props as PrevProps
 } from "visual/editorComponents/EditorComponent";
 import { shouldRenderPopup } from "visual/editorComponents/tools/Popup";
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import { isStory } from "visual/providers/EditorModeProvider";
 import { isEditor } from "visual/providers/RenderProvider";
 import { blocksDataSelector } from "visual/redux/selectors";
-import { Block } from "visual/types/Block";
+import type { Block } from "visual/types/Block";
 import { makeDataAttr } from "visual/utils/i18n/attribute";
 import { getCSSId } from "visual/utils/models/cssId";
 import { getLinkData } from "visual/utils/models/link";
@@ -38,8 +43,8 @@ import { DESKTOP } from "visual/utils/responsiveMode";
 import * as State from "visual/utils/stateMode";
 import { camelCase } from "visual/utils/string";
 import * as Str from "visual/utils/string/specs";
-import { Literal } from "visual/utils/types/Literal";
-import { MValue } from "visual/utils/value";
+import type { Literal } from "visual/utils/types/Literal";
+import type { MValue } from "visual/utils/value";
 import * as tooltipSidebarConfig from "../tools/Tooltip/tooltipSidebar";
 import * as tooltipToolbarConfig from "../tools/Tooltip/tooltipToolbar";
 import { Wrapper } from "../tools/Wrapper";
@@ -52,7 +57,7 @@ import {
   styleTooltip
 } from "./styles";
 import * as toolbarConfig from "./toolbar";
-import { PatchValue, Props, Value } from "./types";
+import type { PatchValue, Props, Value } from "./types";
 import { getHoverClassName, hasSizing, isButtonFillHover } from "./utils";
 
 const resizerPoints = [

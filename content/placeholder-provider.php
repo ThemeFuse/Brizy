@@ -3,8 +3,10 @@
 use BrizyPlaceholders\PlaceholderInterface;
 use BrizyPlaceholders\RegistryInterface;
 
-class Brizy_Content_PlaceholderProvider implements RegistryInterface
+class Brizy_Content_PlaceholderProvider extends \BrizyPlaceholders\Registry implements RegistryInterface
 {
+
+    static private $instance = null;
 
     /**
      * @var array of implements Brizy_Editor_Content_PlaceholdersProviderInterface
@@ -24,32 +26,20 @@ class Brizy_Content_PlaceholderProvider implements RegistryInterface
      *
      * @param Brizy_Content_Context $context
      */
-    public function __construct($context = null)
+    private function __construct($context = null)
     {
         $this->providers[] = new Brizy_Content_Providers_FreeProvider();
         $this->providers = apply_filters('brizy_providers', $this->providers, null);
     }
 
-    /**
-     * @return array
-     */
-    public function getPlaceholders()
+    static public function getInstance($context = null)
     {
-        $out = array();
-
-        if (self::$cache_all_placeholders) {
-            return self::$cache_all_placeholders;
+        if (self::$instance === null) {
+            self::$instance = new self($context);
         }
 
-        foreach ($this->providers as $provider) {
-            $out = array_merge($out, $provider->getPlaceholders());
-        }
-
-        self::$cache_all_placeholders = $out;
-
-        return $out;
+        return self::$instance;
     }
-
 
     /**
      * @return array
@@ -89,28 +79,6 @@ class Brizy_Content_PlaceholderProvider implements RegistryInterface
     }
 
     /**
-     * @param $name
-     *
-     * @return \BrizyPlaceholders\PlaceholderInterface
-     */
-//    public function getPlaceholder($name)
-//    {
-//        return $this->getPlaceholderSupportingName($name);
-//    }
-
-    /**
-     * @inheritDoc
-     */
-//    public function getPlaceholdersByGroup($groupName)
-//    {
-//        $getGroupedPlaceholders = $this->getGroupedPlaceholders();
-//
-//        if (isset($getGroupedPlaceholders[$groupName])) {
-//            return $getGroupedPlaceholders[$groupName];
-//        }
-//    }
-
-    /**
      * @inheritDoc
      */
     public function getPlaceholderSupportingName($name)
@@ -123,6 +91,11 @@ class Brizy_Content_PlaceholderProvider implements RegistryInterface
     }
 
     public function registerPlaceholder(PlaceholderInterface $instance)
+    {
+        throw new Exception('Try to use a specific registry to register the placeholder');
+    }
+
+    public function registerPlaceholderName(string $placeholderName, callable $factory)
     {
         throw new Exception('Try to use a specific registry to register the placeholder');
     }
