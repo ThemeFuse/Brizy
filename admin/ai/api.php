@@ -47,7 +47,7 @@ class Brizy_Admin_Ai_Api
         add_action($sendProject, array($this, 'aiSendProject'));
     }
 
-    private function getLicenseKey()
+    public function aiCreateSession()
     {
         $licenseKey = '';
 
@@ -57,13 +57,6 @@ class Brizy_Admin_Ai_Api
                 $licenseKey = $licenseData['key'];
             }
         }
-
-        return $licenseKey;
-    }
-
-    public function aiCreateSession()
-    {
-        $licenseKey = $this->getLicenseKey();
 
         if (empty($licenseKey)) {
             wp_send_json_error(array(
@@ -95,21 +88,24 @@ class Brizy_Admin_Ai_Api
 
         try {
             $headers = [
-                'X-API-Key' => $licenseKey
+                'X-API-Key' => $licenseKey,
+                'Content-Type' => 'application/json'
             ];
 
             $options = [
                 'headers' => $headers
             ];
 
-            $createSession = $httpClient->request(
+            $response = $httpClient->request(
                 Brizy_Config::getAiCreateSessionUrl(),
                 $options,
                 'POST'
-            )->get_response_body();
+            );
+
+            $createSession = $response->get_response_body();
 
             if ($createSession) {
-                if ($createSession['aiUrl']) {
+                if (isset($createSession['aiUrl']) && isset($createSession['sessionId'])) {
                     $siteUrl = get_site_url();
 
                     $createSession['aiUrl'] = $createSession['aiUrl'] . '&callbackUrl=' . $siteUrl;
@@ -119,7 +115,7 @@ class Brizy_Admin_Ai_Api
                     wp_send_json_error($createSession, 400);
                 }
             } else {
-                wp_send_json_error('No response received from the API.', 400);
+                wp_send_json_error($createSession, 400);
             }
         } catch (Exception $e) {
             wp_send_json_error($e->getMessage(), 500);
