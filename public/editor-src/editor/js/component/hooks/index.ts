@@ -1,14 +1,15 @@
 import {
-  DependencyList,
+  type DependencyList,
+  type RefObject,
   useCallback,
   useEffect,
   useMemo,
   useRef,
   useState
 } from "react";
-import { MonoTypeOperatorFunction, Subject } from "rxjs";
+import { type MonoTypeOperatorFunction, Subject } from "rxjs";
 import { debounceTime, throttleTime } from "rxjs/operators";
-import { TimerType } from "visual/types/TimerType";
+import type { TimerType } from "visual/types/TimerType";
 
 const eq = <T>(a: T, b: T): boolean => a === b;
 
@@ -26,23 +27,28 @@ export function useDebouncedEffect(
   }, [deps, fn, ms]);
 }
 
+const useLatest = <T>(value: T): RefObject<T> => {
+  const ref = useRef(value);
+  ref.current = value;
+  return ref;
+};
+
 export function useThrottleEffect(
   fn: () => void,
   ms?: number,
   deps?: DependencyList
 ): void {
-  const { current } = useRef<{ t?: TimerType; f: VoidFunction }>({ f: fn });
+  const fnRef = useLatest(fn);
+  const timerRef = useRef<TimerType>();
 
   useEffect(() => {
-    current.f = fn;
-
-    if (current.t === undefined) {
-      current.t = setTimeout(() => {
-        current.f();
-        current.t = undefined;
+    if (timerRef.current === undefined) {
+      timerRef.current = setTimeout(() => {
+        fnRef.current?.();
+        timerRef.current = undefined;
       }, ms) as unknown as TimerType;
     }
-  }, [deps, current, fn, ms]);
+  }, [deps, fnRef, timerRef, ms]);
 }
 
 const createTimedCallback =

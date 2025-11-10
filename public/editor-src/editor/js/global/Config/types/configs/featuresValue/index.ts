@@ -46,6 +46,7 @@ interface LinkOptions {
   linkUpload: boolean;
   linkAnchor: boolean;
   linkPopup: boolean;
+  linkAction: boolean
 }
 
 export const getEnabledLinkOptions = (config: ConfigCommon): LinkOptions => {
@@ -57,7 +58,8 @@ export const getEnabledLinkOptions = (config: ConfigCommon): LinkOptions => {
       linkExternal: true,
       linkUpload: true,
       linkAnchor: true,
-      linkPopup: true
+      linkPopup: true,
+      linkAction: true
     };
   }
 
@@ -66,7 +68,8 @@ export const getEnabledLinkOptions = (config: ConfigCommon): LinkOptions => {
     linkExternal: false,
     linkUpload: false,
     linkAnchor: false,
-    linkPopup: false
+    linkPopup: false,
+    linkAction: false
   };
 
   return Object.keys(initial).reduce<LinkOptions>((acc, key) => {

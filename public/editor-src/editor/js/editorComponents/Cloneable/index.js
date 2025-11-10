@@ -219,7 +219,7 @@ export default class Cloneable extends EditorComponent {
   renderForEdit(v, vs, vd) {
     const { showBorder, propsClassName } = this.props;
     const { customClassName, cssClass, customAttributes, customCSS } = v;
-    const id = getCSSId(v);
+    const id = getCSSId(v) || this.getId();
 
     const animationClassName = this.getAnimationClassName(v, vs, vd);
 

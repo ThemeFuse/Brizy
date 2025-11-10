@@ -10,6 +10,7 @@ import { FontSize } from "./FontSize";
 import { FontStyle, FontStyle as FontStyleType } from "./FontStyle";
 import { FontWeight } from "./FontWeight";
 import { Value } from "./Value";
+import { JSX } from "react";
 
 type changeValue = Value[keyof Value] | Font;
 type changeMeta = {
@@ -36,6 +37,7 @@ export interface TypographyProps
   showFontSize?: boolean;
   showFontStyles?: boolean;
   isFontStyleSettingsDisabled?: boolean;
+  label?: JSX.Element;
 }
 
 export interface FontStyleProps {

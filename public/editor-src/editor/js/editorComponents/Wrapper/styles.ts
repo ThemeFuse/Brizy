@@ -1,8 +1,9 @@
+import type { ElementModel } from "visual/component/Elements/Types";
 import { isEditor } from "visual/providers/RenderProvider";
-import { DynamicStylesProps } from "visual/types";
+import type { DynamicStylesProps } from "visual/types";
 import { renderStyles } from "visual/utils/cssStyle";
 import type { OutputStyle, Styles } from "visual/utils/cssStyle/types";
-import type { Value } from "./index";
+import type { Value } from "./types";
 
 export function styleWrapper(data: DynamicStylesProps<Value>): OutputStyle {
   const { renderContext } = data.contexts;
@@ -43,7 +44,9 @@ export function styleWrapper(data: DynamicStylesProps<Value>): OutputStyle {
   return renderStyles({ ...data, styles });
 }
 
-export function styleAnimation(data: DynamicStylesProps<Value>): OutputStyle {
+export function styleAnimation<T extends ElementModel | Value>(
+  data: DynamicStylesProps<T>
+): OutputStyle {
   const styles: Styles = {
     ".brz &&": {
       standart: ["cssStyleAnimationAll"]

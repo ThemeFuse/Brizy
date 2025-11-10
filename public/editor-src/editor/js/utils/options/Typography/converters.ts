@@ -90,13 +90,15 @@ export const fromElementModel: FromElementModel<"typography"> = (get) => {
 };
 
 export const toElementModel: ToElementModel<"typography"> = (v) => {
+  const patch: Partial<Value> = {}
+
   if (isFontStyle(v)) {
-    return { fontStyle: v.fontStyle };
+    patch["fontStyle"] = v.fontStyle
   }
 
   if (isFullFont(v)) {
     return {
-      fontStyle: "",
+      ...patch,
       fontFamily: v.fontFamily,
       fontFamilyType: v.fontFamilyType,
       fontSize: v.fontSize,
@@ -114,12 +116,12 @@ export const toElementModel: ToElementModel<"typography"> = (v) => {
       uppercase: v.uppercase,
       lowercase: v.lowercase,
       ...(!isNothing(v.script) ? { script: v.script } : {})
-    };
+    }
   }
 
   if (isFontFamily(v)) {
     return {
-      fontStyle: "",
+      ...patch,
       fontFamily: v.fontFamily,
       fontFamilyType: v.fontFamilyType,
       fontWeight: v.fontWeight
@@ -128,7 +130,7 @@ export const toElementModel: ToElementModel<"typography"> = (v) => {
 
   if (isFontSettings(v)) {
     return {
-      fontStyle: "",
+      ...patch,
       fontFamily: v.fontFamily,
       fontFamilyType: v.fontFamilyType,
       fontSize: v.fontSize,
@@ -154,5 +156,5 @@ export const toElementModel: ToElementModel<"typography"> = (v) => {
     };
   }
 
-  return {};
+  return patch
 };

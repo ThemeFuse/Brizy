@@ -11,7 +11,8 @@ export const areStatesEqual = (
     state.blocksData === prevState.blocksData &&
     state.globalBlocks === prevState.globalBlocks &&
     state.fonts === prevState.fonts &&
-    state.project.data.font === prevState.project.data.font
+    state.project.data.font === prevState.project.data.font &&
+    state.symbols === prevState.symbols
   );
 };
 

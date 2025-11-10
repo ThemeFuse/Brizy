@@ -59,6 +59,7 @@ const {
   ANALYZE_EDITOR,
   AUTHORIZATION_URL,
   CHECK_BUNDLE_SIZE,
+  WITH_TRANSLATIONS,
   paths
 } = argvVars(process.argv);
 const WP = TARGET === "WP";
@@ -761,7 +762,7 @@ exports.build = gulp.series.apply(undefined, [
     : []),
 
   // cloud
-  ...(CLOUD && IS_PRODUCTION
+  ...(CLOUD && WITH_TRANSLATIONS
     ? [gulp.parallel.apply(undefined, [cloudTranslations])]
     : []),
 

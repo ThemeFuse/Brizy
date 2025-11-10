@@ -5,7 +5,9 @@ import React, {
   ReactElement,
   Ref,
   forwardRef,
+  useCallback,
   useEffect,
+  useMemo,
   useRef
 } from "react";
 import { useConfig } from "visual/providers/ConfigProvider";
@@ -80,24 +82,36 @@ const _Link = (
     }
   }, []);
 
+  const attributes = useMemo(
+    () => ({
+      ...(_href ? { href: _href } : {}),
+      ...makeDataAttr({ name: "link-type", value: type }),
+      ...slide,
+      ...attrs,
+      ...(id && { id }),
+      ...(ariaLabel && { "aria-label": ariaLabel })
+    }),
+    [_href, type, slide, attrs, id, ariaLabel]
+  );
+
+  const handleAttachRef = useCallback(
+    (v: HTMLAnchorElement | null): void => {
+      attachRef(v, ref || null);
+      attachRef(v, innerRef || null);
+    },
+    [ref, innerRef]
+  );
+
   return (
     <a
       className={_className}
-      href={_href}
       target={_target}
       rel={_rel}
       style={style}
-      {...makeDataAttr({ name: "link-type", value: type })}
-      {...slide}
-      {...attrs}
-      ref={(v: HTMLAnchorElement | null): void => {
-        attachRef(v, ref || null);
-        attachRef(v, innerRef || null);
-      }}
-      {...(id && { id })}
-      {...(ariaLabel && { "aria-label": ariaLabel })}
+      ref={handleAttachRef}
       draggable={draggable}
       onClick={onClick}
+      {...attributes}
     >
       {children}
     </a>

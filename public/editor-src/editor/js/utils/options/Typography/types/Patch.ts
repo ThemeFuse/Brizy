@@ -26,7 +26,10 @@ export interface FontFamily {
   fontWeight: Weight;
 }
 
-export const fontFamily = (v: Value): FontFamily => ({
+type WithFontStyle<T> = T & FontStyle
+
+export const fontFamily = (v: Value): WithFontStyle<FontFamily> => ({
+  fontStyle: "",
   fontFamilyType: v.fontFamilyType,
   fontWeight: v.fontWeight,
   fontFamily: v.fontFamily
@@ -50,7 +53,8 @@ export interface FontSettings {
   fontSoftness: number;
 }
 
-export const fontSettings = (v: Value): FontSettings => ({
+export const fontSettings = (v: Value): WithFontStyle<FontSettings> => ({
+  fontStyle: "",
   fontFamily: v.fontFamily,
   fontFamilyType: v.fontFamilyType,
   fontSize: v.fontSize,
@@ -83,7 +87,8 @@ export const isFontTransform = (p: Patch): p is FontTransform =>
     p
   );
 
-export const textTransform = (v: Value): FontTransform => ({
+export const textTransform = (v: Value): WithFontStyle<FontTransform> => ({
+  fontStyle: "",
   bold: v.bold,
   italic: v.italic,
   underline: v.underline,

@@ -20,7 +20,7 @@ export const FontWeight = ({
   onSoftnessChange
 }: Props): JSX.Element => {
   return (
-    <div className="brz-ed__col brz-ed__col-1-2">
+    <div className="brz-ed__col brz-ed__col-1-2 brz-ed-control__typography-font-weight">
       <Label title={label}>{label}</Label>
       {variations ? (
         <VariationFont

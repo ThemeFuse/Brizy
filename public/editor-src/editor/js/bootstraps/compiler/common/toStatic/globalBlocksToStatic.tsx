@@ -1,15 +1,16 @@
 import React, { useCallback } from "react";
-import { ElementModel } from "visual/component/Elements/Types";
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import type { ElementModel } from "visual/component/Elements/Types";
+import type { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import EditorGlobal from "visual/global/Editor";
 import { useConfig } from "visual/providers/ConfigProvider";
-import { EditorMode } from "visual/providers/EditorModeProvider";
+import type { EditorMode } from "visual/providers/EditorModeProvider";
 import { ServerStyleSheet } from "visual/providers/StyleProvider/ServerStyleSheet";
-import { Store } from "visual/redux/store";
-import { GlobalBlockNormal } from "visual/types/GlobalBlock";
+import type { Store } from "visual/redux/store";
+import type { GlobalBlockNormal } from "visual/types/GlobalBlock";
 import { Providers } from "../controls/Providers";
+import type { SymbolAsset } from "../transforms/assets/makeSymbols";
 import { baseToStatic } from "./baseToStatic";
-import { GlobalBlockStatic } from "./types";
+import type { GlobalBlockStatic } from "./types";
 
 interface Props {
   store: Store;
@@ -18,7 +19,10 @@ interface Props {
   editorMode: EditorMode;
 }
 
-type GlobalBlocksOutput = Array<GlobalBlockStatic>;
+interface GlobalBlocksOutput {
+  outputs: Array<GlobalBlockStatic>;
+  symbols: SymbolAsset[];
+}
 
 const RenderPage = (props: {
   store: Store;
@@ -58,7 +62,8 @@ export const globalBlocksToStatic = (props: Props): GlobalBlocksOutput => {
     uid: block.uid,
     data: block.data
   }));
-  const outputs: GlobalBlocksOutput = [];
+  const outputs: GlobalBlocksOutput["outputs"] = [];
+  const symbols: SymbolAsset[] = [];
 
   for (const block of pageBlocks) {
     const sheet = new ServerStyleSheet();
@@ -83,6 +88,8 @@ export const globalBlocksToStatic = (props: Props): GlobalBlocksOutput => {
         sheet: sheet.instance,
         config
       });
+
+      symbols.push(...output.symbols);
       outputs.push({
         uid: block.uid,
         blocks: [{ id: block.uid, ...output }]
@@ -92,5 +99,5 @@ export const globalBlocksToStatic = (props: Props): GlobalBlocksOutput => {
     }
   }
 
-  return outputs;
+  return { outputs, symbols };
 };

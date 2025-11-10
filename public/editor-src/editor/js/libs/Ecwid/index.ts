@@ -310,8 +310,11 @@ export class EcwidService {
 
       const script = document.createElement("script");
 
+      const { langLocale } = this.config;
+      const langLocaleParam = langLocale ? `&lang=${langLocale}` : "";
+
       script.id = `ecwid-script`;
-      script.src = `https://app.ecwid.com/script.js?${this.storeId}&data_platform=code`;
+      script.src = `https://app.ecwid.com/script.js?${this.storeId}&data_platform=code${langLocaleParam}`;
       script.type = "text/javascript";
       script.onload = () => {
         Ecwid.OnAPILoaded.add(() => {

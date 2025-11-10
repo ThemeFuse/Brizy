@@ -1,41 +1,53 @@
-import { Str } from "@brizy/readers";
+import { Obj, Str } from "@brizy/readers";
 import classNames from "classnames";
 import { flatten, identity, noop } from "es-toolkit";
-import React, { ReactNode } from "react";
+import { produce } from "immer";
+import React, { type ReactNode } from "react";
 import { mergeDeep } from "timm";
 import {
-  ElementDefaultValue,
-  ElementModel,
+  type ElementDefaultValue,
+  type ElementModel,
   ModelType
 } from "visual/component/Elements/Types";
-import { OptionName, OptionValue } from "visual/component/Options/types";
-import {
+import type { OptionName, OptionValue } from "visual/component/Options/types";
+import type {
   Meta,
   OptionDefinition,
   ToolbarItemType
 } from "visual/editorComponents/ToolbarItemType";
-import { Props as WrapperProps } from "visual/editorComponents/tools/Wrapper";
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import type { Props as WrapperProps } from "visual/editorComponents/tools/Wrapper";
+import type { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import Editor from "visual/global/Editor";
 import * as GlobalState from "visual/global/StateMode";
-import { EditorMode } from "visual/providers/EditorModeProvider";
-import { RenderType, isView } from "visual/providers/RenderProvider";
+import type { EditorMode } from "visual/providers/EditorModeProvider";
+import { type RenderType, isView } from "visual/providers/RenderProvider";
 import { createCache, createSheet } from "visual/providers/StyleProvider/Sheet";
-import { deviceModeSelector, rulesSelector } from "visual/redux/selectors";
-import { Store } from "visual/redux/store";
-import { ReduxState } from "visual/redux/types";
+import { updateSymbol } from "visual/redux/actions2";
+import {
+  deviceModeSelector,
+  pageDataNoRefsSelector,
+  symbolsSelector
+} from "visual/redux/selectors";
+import type { Store } from "visual/redux/store";
+import type { ReduxState } from "visual/redux/types";
 import {
   getFlatShortcodes,
   getShortcode
 } from "visual/shortcodeComponents/utils";
-import { DynamicStylesProps } from "visual/types";
-import { WithClassName } from "visual/types/attributes";
+import type { DynamicStylesProps } from "visual/types";
+import type { CSSSymbol } from "visual/types/Symbols";
+import type { WithClassName } from "visual/types/attributes";
+import { murmurhash2 } from "visual/utils/crypto";
 import {
   filterMergedStylesByDevice,
   filterStylesByDevice,
   getCSSObjects
 } from "visual/utils/cssStyle/cssStyle2";
-import { GeneratedCSS, OutputStyle } from "visual/utils/cssStyle/types";
+import type {
+  GeneratedCSS,
+  OutputStyle,
+  OutputStyleWithSymbol
+} from "visual/utils/cssStyle/types";
 import {
   addBreakpointsToFilteredCSS,
   concatFinalCSS,
@@ -45,13 +57,14 @@ import {
 } from "visual/utils/cssStyle/utils";
 import { isPro } from "visual/utils/env";
 import { applyFilter } from "visual/utils/filters";
+import { createFullModelPath } from "visual/utils/models";
 import { defaultValueKey } from "visual/utils/onChange/device";
 import {
-  Choices,
-  Handler,
+  type Choices,
+  type Handler,
   getDynamicContentOption
 } from "visual/utils/options/getDynamicContentOption";
-import { TypeChoices } from "visual/utils/options/types";
+import type { TypeChoices } from "visual/utils/options/types";
 import { mergeOptions, optionMap } from "visual/utils/options/utils";
 import { getOptionModel } from "visual/utils/options/utils/fromElementModel";
 import { toElementModel } from "visual/utils/options/utils/toElementModel";
@@ -62,17 +75,19 @@ import * as Responsive from "visual/utils/responsiveMode";
 import * as State from "visual/utils/stateMode";
 import { NORMAL } from "visual/utils/stateMode";
 import { bindStateToOption } from "visual/utils/stateMode/editorComponent";
-import { Literal } from "visual/utils/types/Literal";
+import { CSS_MODEL_KEY, validateSymbolModel } from "visual/utils/symbols";
+import { getComponentRulesValue } from "visual/utils/traverse/common";
+import type { Literal } from "visual/utils/types/Literal";
 import { uuid } from "visual/utils/uuid";
-import { MValue, isT } from "visual/utils/value";
+import { type MValue, isT } from "visual/utils/value";
 import {
-  DCObjResult,
+  type DCObjResult,
   getDCObjEditor,
   getDCObjPreview
 } from "./DynamicContent/getDCObj";
 import { dcKeyToKey, isDCKey, keyDCInfo } from "./DynamicContent/utils";
 import { EditorComponentContext } from "./EditorComponentContext";
-import {
+import type {
   ComponentsMeta,
   ConfigGetter,
   ContextGetItems,
@@ -89,6 +104,7 @@ import {
 } from "./types";
 import {
   createOptionId,
+  createPatch,
   filterCSSOptions,
   filterProOptions,
   flattenDefaultValue,
@@ -149,6 +165,7 @@ export class EditorComponent<
   };
   static defaultValue: ElementDefaultValue = {};
   static experimentalDynamicContent = false;
+  static cssModelKey: MValue<string> = undefined;
   static contextType = EditorComponentContext;
   declare context: React.ContextType<typeof EditorComponentContext>;
   componentConfig: ConfigGetter | undefined;
@@ -250,6 +267,32 @@ export class EditorComponent<
       return true;
     }
 
+    // check global symbols & element
+    if (props.reduxState.symbols !== nextProps.reduxState.symbols) {
+      const { element, classes } = nextProps.reduxState.symbols;
+
+      // rerender when classes are deleted
+      if (props.reduxState.symbols.classes.length > classes.length) {
+        return true;
+      }
+
+      // check if classes exist in current element editing
+      const data = pageDataNoRefsSelector(props.reduxState);
+      const curPath = createFullModelPath(data, [this.getId()]);
+      const nextPath = element?.path ?? [];
+      let included = true;
+
+      for (let i = 0, len = curPath.length; i < len; i++) {
+        if (included) {
+          included = curPath[i] === nextPath[i];
+        } else {
+          return false;
+        }
+      }
+
+      return true;
+    }
+
     // console.log("scu", this.getComponentId(), false);
     return false;
   }
@@ -292,7 +335,8 @@ export class EditorComponent<
         getValue: () => undefined,
         getDCOption: () => undefined,
         t: (k) => k,
-        device: this.getDeviceMode()
+        device: this.getDeviceMode(),
+        onChange: noop
       });
 
       this._initialToolbarsConfig = toolbars;
@@ -329,6 +373,10 @@ export class EditorComponent<
     return this.props.defaultValue
       ? { ...defaultValueFlat, ...this.props.defaultValue } // allows defaultValue overriding
       : defaultValueFlat;
+  }
+
+  getDefaultStylesValue(): M {
+    return (this.constructor as typeof EditorComponent).defaultValue.style as M;
   }
 
   getDefaultValueProcessed(): DefaultValueProcessed<M> {
@@ -374,18 +422,8 @@ export class EditorComponent<
 
   getStylesValue(): ElementModel | null {
     const dbValue = this.getDBValue();
-    const currentStyleRules: Record<string, ElementModel | undefined> =
-      rulesSelector(this.getReduxState());
 
-    if ("_styles" in dbValue && dbValue._styles && currentStyleRules) {
-      return dbValue._styles.reduce((acc: Partial<M>, style: string) => {
-        const ruleStyle = currentStyleRules[style];
-
-        return ruleStyle ? Object.assign(acc, ruleStyle) : acc;
-      }, {});
-    }
-
-    return null;
+    return getComponentRulesValue(this.getReduxState(), dbValue);
   }
 
   getToolbarOptions = (
@@ -530,8 +568,32 @@ export class EditorComponent<
   }
 
   css = (componentId: string, id: string, css: OutputStyle) => {
+    const customStylesClassName = this.getCustomStylesClassName(css[2]);
     const cache = createCache({ id, componentId, sheet: this.context.sheet });
-    const sheet = createSheet({ cache, css });
+    const sheet = createSheet({
+      cache,
+      css,
+      customStylesClassName
+    });
+    return sheet.className;
+  };
+
+  cssWithSymbol = (componentId: string, id: string, _css: OutputStyle) => {
+    const hasSymbol = !!this.getClassValue(this.getValue());
+
+    const css = (
+      hasSymbol ? [_css[0], _css[1], "", _css[2]] : _css
+    ) as OutputStyleWithSymbol;
+
+    const customStyles = css[2];
+    const cache = createCache({ id, componentId, sheet: this.context.sheet });
+    const customStylesClassName = this.getGlobalClassNameWithDefault(
+      this.getValue(),
+      customStyles
+    );
+
+    const sheet = createSheet({ cache, css, customStylesClassName });
+
     return sheet.className;
   };
 
@@ -539,11 +601,13 @@ export class EditorComponent<
     toolbars,
     sidebars,
     stylesFn,
+    withSymbol,
     extraClassNames
   }: {
     toolbars: NewToolbarConfig<M, P, S>[];
     sidebars?: NewToolbarConfig<M, P, S>[];
     stylesFn?: (data: DynamicStylesProps<M>) => OutputStyle;
+    withSymbol?: boolean;
     extraClassNames?: Array<string | Record<string, boolean>>;
   }) {
     const model = this.getValue2();
@@ -572,9 +636,14 @@ export class EditorComponent<
       sheet: this.context.sheet
     });
 
+    const customStylesClassName = withSymbol
+      ? this.getGlobalClassNameWithDefault(this.getValue(), _css[2])
+      : this.getCustomStylesClassName(_css[2]);
+
     const sheet = createSheet({
       cache,
       css: _css,
+      customStylesClassName,
       className: extraClassNames
     });
 
@@ -675,24 +744,167 @@ export class EditorComponent<
     const stylesValue = this.getStylesValue();
     const dbValue = this.getDBValue();
 
-    const v = { ...defaultValue, ...stylesValue, ...dbValue };
+    const vs = { ...defaultValue, ...stylesValue };
+    const _v = { ...vs, ...dbValue };
+    const dbGlobalValue = this.getGlobalValue(_v);
+
+    const hasRules = Obj.length(stylesValue ?? {}) > 0;
+
+    const v = dbGlobalValue
+      ? {
+          ..._v,
+          ...dbGlobalValue.vd,
+          ...(hasRules
+            ? { ...stylesValue, ...dbGlobalValue.vs, ...dbValue }
+            : {}),
+          ...dbGlobalValue?.v
+        }
+      : _v;
 
     return {
       v: (this.constructor as typeof EditorComponent).experimentalDynamicContent
         ? Object.assign(v, this.getDCValue(v))
         : v,
-      vs: { ...defaultValue, ...stylesValue },
+      vs,
       vd: defaultValue
     };
   }
 
-  patchValue(patch: Partial<Model<M>>, meta: Meta = {}): void {
-    const newValue = { ...this.getDBValue(), ...patch };
+  getCSSOptionId(): string | undefined {
+    return (this.constructor as typeof EditorComponent).cssModelKey;
+  }
 
-    this.handleValueChange(newValue, {
-      ...meta,
-      patch
-    });
+  getGlobalValue(v: M): MValue<CSSSymbol["model"]> {
+    const globalClass = this.getClassValue(v);
+
+    return globalClass?.model;
+  }
+
+  getGlobalClassName(v: M): MValue<string> {
+    const globalClass = this.getClassValue(v);
+
+    return globalClass?.className;
+  }
+
+  getCustomStylesClassName(css: string): string {
+    const elementID = this.getId();
+
+    return `brz-css-${murmurhash2(css + elementID)}`;
+  }
+
+  getGlobalClassNameWithDefault(v: M, css: string): string {
+    const globalClass = this.getClassValue(v);
+
+    return (
+      globalClass?.className ??
+      (css ? this.getCustomStylesClassName(css) : `brz-css-${uuid(4)}`)
+    );
+  }
+
+  getClassUid(v: M): MValue<string> {
+    const optionId = this.getCSSOptionId();
+    const _classes = optionId && v[optionId];
+
+    if (Array.isArray(_classes) && _classes.length > 0) {
+      return _classes[0];
+    }
+
+    return undefined;
+  }
+
+  getClassValue(v: M): MValue<CSSSymbol> {
+    const classUid = this.getClassUid(v);
+
+    if (classUid) {
+      // WARNING: we use getStore instead of this.getReduxState()
+      // because the page does not rerender when changing cssClasses,
+      // thus we might get false (outdated) results
+      const state = this.getReduxStore().getState();
+      const { classes: cssClasses } = symbolsSelector(state);
+
+      return cssClasses.find((cls) => cls.uid === classUid);
+    }
+
+    return undefined;
+  }
+
+  handlePatchValue(patch: Partial<Model<M>>, meta: Meta = {}): void {
+    const dbValue = this.getDBValue();
+    const v = this.getValue();
+    const classUid = this.getClassUid(v);
+
+    if (classUid) {
+      if (patch[CSS_MODEL_KEY]) {
+        const newPatch = { ...meta, patch };
+        const newValue = { ...dbValue, ...patch };
+        this.handleValueChange(newValue, newPatch);
+        return;
+      }
+
+      const defaultStyles = this.getDefaultStylesValue();
+      const patches = createPatch<Partial<Model<M>>>(patch, defaultStyles);
+
+      if (patches.style) {
+        const symbol = this.getClassValue(v);
+
+        if (symbol) {
+          // WARNING: we use getStore instead of this.getReduxState()
+          // because the page does not rerender when changing cssClasses,
+          // and thus we might get false (outdated) results
+          const state = this.getReduxStore().getState();
+          const dispatch = this.getReduxDispatch();
+          const element = {
+            uid: this.getId(),
+            path: createFullModelPath(pageDataNoRefsSelector(state), [
+              this.getId()
+            ])
+          };
+
+          const updatedSymbol = produce(symbol, (draft) => {
+            draft.model = {
+              ...draft.model,
+              v: {
+                ...draft.model.v,
+                ...patches.style
+              }
+            };
+          });
+
+          if (validateSymbolModel(updatedSymbol.model)) {
+            const cssClasses = {
+              element,
+              cssClass: updatedSymbol
+            };
+
+            dispatch(updateSymbol(cssClasses));
+          }
+        } else {
+          // when global class are missing need delete current classUid
+          // and create a normal patch
+          const optionId = this.getCSSOptionId();
+
+          if (optionId) {
+            const newPatch = { ...patches.style, [optionId]: [] };
+            const newValue = { ...dbValue, ...newPatch };
+            this.handleValueChange(newValue, { ...meta, patch: newPatch });
+          }
+        }
+      }
+
+      if (patches.content) {
+        const newPatch = patches.content;
+        const newValue = { ...dbValue, ...newPatch };
+        this.handleValueChange(newValue, { ...meta, patch: newPatch });
+      }
+    } else {
+      const newPatch = { ...meta, patch };
+      const newValue = { ...dbValue, ...patch };
+      this.handleValueChange(newValue, newPatch);
+    }
+  }
+
+  patchValue(patch: Partial<Model<M>>, meta: Meta = {}): void {
+    this.handlePatchValue(patch, meta);
   }
 
   validatePatch(

@@ -2,27 +2,25 @@
 import { ImageType } from "visual/utils/image/types";
 
 export type ImageDataPatch = {
-  imageSrc: string;
-  imageFileName: string;
-  imageExtension: string;
-  imageWidth: number;
-  imageHeight: number;
+  src: string;
+  fileName: string;
+  extension: string;
+  width: number;
+  height: number;
   imageType: ImageType;
   alt?: string;
 };
 
-export const isImageDataPatch = (p: Patch): p is ImageDataPatch =>
-  "imageSrc" in p;
+export const isImageDataPatch = (p: Patch): p is ImageDataPatch => "src" in p;
 // endregion
 
 // region PositionPatch
 export type PositionPatch = {
-  positionX: number;
-  positionY: number;
+  x: number;
+  y: number;
 };
 
-export const isPositionPatch = (p: Patch): p is PositionPatch =>
-  "positionX" in p;
+export const isPositionPatch = (p: Patch): p is PositionPatch => "x" in p;
 // endregion
 
 // region SizePatch

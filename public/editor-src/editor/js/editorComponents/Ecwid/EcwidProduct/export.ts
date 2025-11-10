@@ -4,6 +4,7 @@ import { EcwidService } from "visual/libs/Ecwid";
 import { EcwidConfig } from "visual/libs/Ecwid/types/EcwidConfig";
 import { ExportFunction } from "visual/types";
 import { getEcwidShopPathFromAttribute } from "visual/utils/ecwid";
+import { makeAttr } from "visual/utils/i18n/attribute";
 import * as Num from "visual/utils/reader/number";
 import { parseFromString } from "visual/utils/string";
 import {
@@ -19,6 +20,7 @@ export const fn: ExportFunction = ($node) => {
     const config = Str.read(node.getAttribute("data-storefront"));
     const cfg = config ? parseFromString<EcwidConfig>(config) : {};
     const baseUrl = getEcwidShopPathFromAttribute(node) ?? "";
+    const langLocale = node.getAttribute(makeAttr("lang-locale")) ?? "";
     const textFieldPlaceholderText = node.getAttribute(
       "data-textFieldplaceholderText"
     );
@@ -60,9 +62,7 @@ export const fn: ExportFunction = ($node) => {
         );
       }
 
-      const _cfg = cfg
-        ? { ...cfg, baseUrl, onPageLoadCallbacks }
-        : { onPageLoadCallbacks };
+      const _cfg = { ...(cfg ?? {}), baseUrl, onPageLoadCallbacks, langLocale };
 
       EcwidService.init(storeId, _cfg).product(_productId, node);
     }

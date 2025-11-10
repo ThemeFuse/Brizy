@@ -1,8 +1,8 @@
 import classNames from "classnames";
 import { css } from "visual/utils/cssStyle/css/tujur";
-import { OutputStyle } from "visual/utils/cssStyle/types";
-import { MValue } from "visual/utils/value";
-import { CSSOrdered, CSSSheet } from "./types";
+import type { OutputStyleWithSymbol } from "visual/utils/cssStyle/types";
+import type { MValue } from "visual/utils/value";
+import type { CSSOrdered, CSSSheet } from "./types";
 
 export class Sheet {
   private css = new Map<string, CSSSheet>();
@@ -10,7 +10,8 @@ export class Sheet {
   private cssOrdered: CSSOrdered = {
     default: [],
     rules: [],
-    custom: []
+    custom: [],
+    symbol: []
   };
 
   constructor(doc?: Document) {
@@ -83,16 +84,22 @@ export function createCache({
 
 interface Options {
   cache: Cache;
-  css: OutputStyle;
+  css: OutputStyleWithSymbol;
+  customStylesClassName: string;
   className?: Array<string | Record<string, boolean>>;
 }
 
 export function createSheet(options: Options): { className: string } {
-  const { className, css: _css, cache } = options;
-  const { componentId, id, sheet } = cache;
+  const { className, css: _css, cache, customStylesClassName } = options;
+  const { componentId, sheet } = cache;
 
   // Append to Body & return theirs classNames(`brz-css-${hash} brz-css-${hash}`)
-  const dynamicClassNames = css(componentId, id, _css, sheet);
+  const dynamicClassNames = css(
+    componentId,
+    customStylesClassName,
+    _css,
+    sheet
+  );
   const cls = classNames(className, dynamicClassNames);
 
   return { className: cls };

@@ -102,6 +102,8 @@ export interface EcwidConfig {
   product_details_layout?: string;
   product_filters_position_search_page?: "LEFT" | "RIGHT";
 
+  langLocale?: string;
+
   prefetchScripts?: boolean;
   onPageLoadCallbacks?: VoidFunction[];
 }

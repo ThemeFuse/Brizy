@@ -3,7 +3,7 @@ import { omit } from "timm";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import { isEditor } from "visual/providers/RenderProvider";
-import { blocksDataSelector } from "visual/redux/selectors-new";
+import { blocksDataSelector } from "visual/redux/selectors";
 import { Block } from "visual/types/Block";
 import EditorComponent from "../EditorComponent";
 import defaultValue from "./defaultValue.json";

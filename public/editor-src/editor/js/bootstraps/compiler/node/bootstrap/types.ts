@@ -1,10 +1,11 @@
-import {
+import type {
   Asset,
   ScriptsFree,
   ScriptsPro,
   StylesFree,
   StylesPro
 } from "../../common/transforms/assets";
+import type { SymbolAsset } from "../../common/transforms/assets/makeSymbols";
 
 export interface Output {
   id: string;
@@ -34,4 +35,5 @@ export interface Static {
   };
   project: ProjectOutput;
   globalBlocks?: Array<GlobalBlockStatic>;
+  symbols: SymbolAsset[];
 }

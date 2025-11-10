@@ -4,8 +4,10 @@ import {
 } from "visual/component/Elements/Types";
 import { ToolbarConfig } from "visual/editorComponents/EditorComponent/types";
 import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
+import { createStore } from "visual/redux/store";
 import { DeviceMode } from "visual/types";
 import { ALL, Device, RESPONSIVE } from "visual/utils/devices";
+import { flattenDefaultValue as flattenDefaultValue_ } from "visual/utils/models/flattenDefaultValue";
 import {
   DESKTOP,
   MOBILE,
@@ -16,7 +18,6 @@ import {
 import { Literal } from "visual/utils/types/Literal";
 import {
   createOptionId,
-  flattenDefaultValue_,
   getOptionValueByDevice,
   getResponsiveModeByDevice,
   getToolbarData,
@@ -25,7 +26,6 @@ import {
   optionMode,
   setOptionPrefix
 } from "../utils";
-import { createStore } from "visual/redux/store";
 
 // region Mocks
 jest.mock("visual/component/Options/types/dev/Typography/index.tsx", () => ({
@@ -297,7 +297,7 @@ describe("Testing 'makeToolbarPropsFromConfigDefaults' function", () => {
   });
 });
 
-describe("Testing 'flattenDefaultValue_' function", () => {
+describe("Testing 'flattenDefaultValue' function", () => {
   const flattenDefaultValue = flattenDefaultValue_([
     "content",
     "style",

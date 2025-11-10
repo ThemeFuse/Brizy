@@ -1,16 +1,19 @@
 {
-  "title": "Title",
-  "titlePopulation": "",
-  "titlePopulationEntityType": "",
-  "titlePopulationEntityId": "",
+  "content": {
+    "title": "Title",
+    "titlePopulation": "",
+    "titlePopulationEntityType": "",
+    "titlePopulationEntityId": "",
 
-  "description": "Description",
-  "descriptionPopulation": "",
-  "descriptionPopulationEntityType": "",
-  "descriptionPopulationEntityId": "",
+    "description": "Description",
+    "descriptionPopulation": "",
+    "descriptionPopulationEntityType": "",
+    "descriptionPopulationEntityId": "",
 
-  "closeButtonState": "on",
-  "descriptionState": "on",
+    "closeButtonState": "on",
+    "descriptionState": "on"
+  },
+
   "style": {
     "width": "100",
     "widthSuffix": "%",

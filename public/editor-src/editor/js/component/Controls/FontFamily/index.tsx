@@ -1,171 +1,70 @@
 import classNames from "classnames";
-import React, { Component, SyntheticEvent } from "react";
+import React, {
+  SyntheticEvent,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef
+} from "react";
 import EditorIcon from "visual/component/EditorIcon";
 import { Scrollbar } from "visual/component/Scrollbar";
-import { FontFamilyType } from "visual/types/Fonts";
 import {
   ScrollbarType,
   scrollToActiveFont
 } from "visual/utils/fonts/scrollHelpers";
-import { FONT_INITIAL } from "visual/utils/fonts/utils";
-import { t } from "visual/utils/i18n";
-import { FontList, FontObject, FontSizes, FontWithType, Props } from "./types";
+import { FCC } from "visual/utils/react/types";
+import { FontFamilyItem } from "./Item";
+import { Props } from "./types";
+import { normalizeFonts } from "./utils";
 
-const fontSizeMap: FontSizes = {
-  default: "17px", // 16
-  great_vibes: "18px", // 18
-  alex_brush: "18px",
-  allura: "18px",
-  parisienne: "18px"
-};
+export const FontFamily: FCC<Props> = ({
+  fonts,
+  value,
+  onChange,
+  addFont,
+  addFontLabel,
+  className
+}) => {
+  const scrollbarRef = useRef<ScrollbarType>(null);
+  const normalizedFonts = useMemo(() => normalizeFonts(fonts), [fonts]);
 
-const getSystemFont = () => [
-  {
-    id: FONT_INITIAL,
-    family: FONT_INITIAL,
-    title: t("Default system font"),
-    weights: [400]
-  }
-];
+  useEffect(() => {
+    scrollToActiveFont(scrollbarRef);
+  }, []);
 
-export class FontFamily extends Component<Props> {
-  scrollbarRef: React.RefObject<ScrollbarType>;
+  const handleOpenFonts = useCallback(
+    (event: SyntheticEvent<HTMLDivElement>) => {
+      event.preventDefault();
+      if (addFont) {
+        addFont();
+      }
+    },
+    [addFont]
+  );
 
-  constructor(props: Props) {
-    super(props);
-    this.scrollbarRef = React.createRef();
-  }
+  const _className = classNames("brz-ed-font__typography", className);
 
-  handleOpenFonts = (event: SyntheticEvent<HTMLDivElement>) => {
-    event.preventDefault();
-    if (this.props.addFont) {
-      this.props.addFont();
-    }
-  };
-
-  componentDidMount(): void {
-    scrollToActiveFont(this.scrollbarRef);
-  }
-
-  renderFontList({ fonts, type }: FontList) {
-    const { value, onChange } = this.props;
-
-    return fonts.map((font: FontObject) => {
-      const { id, family, title, variations } = font;
-
-      const fontId = id as keyof FontSizes;
-      const fontWithType: FontWithType = { ...font, type };
-
-      const isActive = id === value;
-      const className = classNames("brz-ed-font__name", {
-        active: isActive
-      });
-      const style = {
-        fontFamily: family,
-        fontSize: fontSizeMap[fontId] || fontSizeMap.default
-      };
-
-      const needVariableBadge = variations?.length;
-      return (
+  return (
+    <div className={_className}>
+      <Scrollbar theme="dark" ref={scrollbarRef}>
+        {normalizedFonts.map((font) => (
+          <FontFamilyItem
+            key={font.id}
+            font={font}
+            isActive={font.id === value}
+            onChange={onChange}
+          />
+        ))}
+      </Scrollbar>
+      {addFont && (
         <div
-          key={id}
-          className={className}
-          style={style}
-          onClick={() => onChange(fontWithType)}
+          className="brz-ed-font__typography-adder"
+          onClick={handleOpenFonts}
         >
-          {title}
-          {needVariableBadge && (
-            <span className="brz-ed-font-variable-badge" title={t("VARIABLE")}>
-              {t("VARIABLE")}
-            </span>
-          )}
+          <EditorIcon icon="nc-add" />
+          {addFontLabel}
         </div>
-      );
-    });
-  }
-
-  render() {
-    const {
-      fonts: { normalFonts, variableFonts }
-    } = this.props;
-
-    const {
-      config: configFonts = [],
-      blocks: blocksFonts = [],
-      google: googleFonts = [],
-      upload: uploadFonts = [],
-      adobe: adobeFonts = [],
-      system: systemFonts = getSystemFont()
-    } = normalFonts;
-
-    const needSeparator =
-      uploadFonts.length > 0 || googleFonts.length > 0 || adobeFonts.length > 0;
-
-    const needSeparatorForVariable = variableFonts.length > 0;
-
-    const className = classNames(
-      "brz-ed-font__typography",
-      this.props.className
-    );
-
-    return (
-      <div className={className}>
-        <Scrollbar theme="dark" ref={this.scrollbarRef}>
-          {variableFonts.length > 0 &&
-            this.renderFontList({
-              fonts: variableFonts,
-              type: FontFamilyType.upload
-            })}
-
-          {needSeparatorForVariable && (
-            <hr className="brz-hr brz-ed-font__separator" />
-          )}
-
-          {adobeFonts.length > 0 &&
-            this.renderFontList({
-              fonts: adobeFonts,
-              type: FontFamilyType.adobe
-            })}
-
-          {uploadFonts.length > 0 &&
-            this.renderFontList({
-              fonts: uploadFonts,
-              type: FontFamilyType.upload
-            })}
-
-          {googleFonts.length > 0 &&
-            this.renderFontList({
-              fonts: googleFonts,
-              type: FontFamilyType.google
-            })}
-
-          {needSeparator && <hr className="brz-hr brz-ed-font__separator" />}
-
-          {blocksFonts &&
-            this.renderFontList({
-              fonts: blocksFonts,
-              type: FontFamilyType.google
-            })}
-
-          {this.renderFontList({
-            fonts: systemFonts,
-            type: FontFamilyType.system
-          })}
-          {this.renderFontList({
-            fonts: configFonts,
-            type: FontFamilyType.google
-          })}
-        </Scrollbar>
-        {this.props.addFont && (
-          <div
-            className="brz-ed-font__typography-adder"
-            onClick={this.handleOpenFonts}
-          >
-            <EditorIcon icon="nc-add" />
-            {this.props.addFontLabel}
-          </div>
-        )}
-      </div>
-    );
-  }
-}
+      )}
+    </div>
+  );
+};

@@ -109,7 +109,7 @@ export interface ScriptsPro {
   libsSelectors: string[];
 }
 
-interface CSS {
+export interface CSS {
   className: string;
   cssText: string;
 }

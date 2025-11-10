@@ -7,7 +7,7 @@ import { updateUI } from "visual/redux/actions2";
 import {
   deviceModeSelector,
   leftSidebarSelector
-} from "visual/redux/selectors-new";
+} from "visual/redux/selectors";
 import { DrawerContentTypes, ReduxState } from "visual/redux/types";
 import { DeviceMode } from "visual/types";
 import Icon from "../../Icon";

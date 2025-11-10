@@ -32,11 +32,13 @@ class InitStore extends Component<Props> {
       throw new Error("Missing project data in config");
     }
 
+    const { editorMode } = props;
+
     const { isSyncAllowed = false } = config.cloud || {};
 
     const store = createStore({
       middleware: getMiddleware({
-        editorMode: this.props.editorMode,
+        editorMode,
         getConfig: this.getConfig
       })
     });
@@ -55,7 +57,8 @@ class InitStore extends Component<Props> {
         authorized: getAuthorized(config),
         syncAllowed: isSyncAllowed,
         config,
-        editorMode: this.props.editorMode
+        editorMode,
+        symbols: config.symbols
       })
     );
 

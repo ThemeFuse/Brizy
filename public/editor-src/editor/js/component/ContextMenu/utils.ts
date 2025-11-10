@@ -71,3 +71,4 @@ export const pasteKeyModifier = isMac ? "⌘ + V" : "ctrl + V";
 export const pasteStylesKeyModifier = isMac ? "⌘ + ⇧ + V" : "Ctrl + ⇧ + V";
 export const duplicateKeyModifier = isMac ? "⌘ + D" : "Ctrl + D";
 export const deleteKeyModifier = isMac ? "⌘ + delete" : "ctrl + delete";
+export const navigatorKeyModifier = isMac ? "⌘ + E" : "ctrl + E";

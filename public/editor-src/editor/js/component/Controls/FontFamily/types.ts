@@ -1,7 +1,4 @@
-import { DividedFonts } from "visual/component/Controls/Typography/types/FontFamily";
-import { VariationFont } from "visual/types/Fonts";
-import { FontFamilyType } from "visual/types/Fonts";
-import { Weight } from "visual/utils/fonts/Weight";
+import { FontFamilyType, VariationFont } from "visual/types/Fonts";
 
 export type FontsBlock = Partial<{
   config: Array<FontObject>;
@@ -18,7 +15,7 @@ export interface Props {
   value: string;
   className?: string;
   addFontLabel: string;
-  fonts: DividedFonts;
+  fonts: FontsBlock;
   isAddNewFontDisabled?: boolean;
 }
 export interface FontSizes {
@@ -38,13 +35,7 @@ export interface FontObject {
   variations?: VariationFont[];
 }
 
-export interface FontWithType {
-  id: string;
-  type: FontFamilyType;
-  weights: Weight[];
-}
 
-export interface FontList {
-  fonts: Array<FontObject>;
+export type FontWithType = FontObject & {
   type: FontFamilyType;
-}
+};
