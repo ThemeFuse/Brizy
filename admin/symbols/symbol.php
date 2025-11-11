@@ -175,6 +175,11 @@ class Brizy_Admin_Symbols_Symbol extends Brizy_Admin_Serializable {
 		if ( is_null( $json ) ) {
 			throw new Exception( 'Invalid parameter provided' );
 		}
+		$compiledStyles = null;
+		if(isset($json->compiledStyles) && !empty($json->compiledStyles))
+		{
+			$compiledStyles = json_decode(stripslashes($json->compiledStyles), true);
+		}
 
 		return new self( isset( $json->uid ) ? $json->uid : null,
 		isset( $json->label ) ? $json->label : null,
@@ -182,7 +187,7 @@ class Brizy_Admin_Symbols_Symbol extends Brizy_Admin_Serializable {
 		isset( $json->version ) ? $json->version : null ,
 		isset( $json->className ) ? $json->className : null,
 		isset( $json->componentTarget ) ? $json->componentTarget : null,
-		isset( $json->compiledStyles ) ? $json->compiledStyles : null,
+		$compiledStyles
 		);
 	}
 
