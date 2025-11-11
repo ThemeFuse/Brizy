@@ -176,7 +176,7 @@ class Brizy_Admin_Symbols_Symbol extends Brizy_Admin_Serializable {
 			throw new Exception( 'Invalid parameter provided' );
 		}
 		$compiledStyles = null;
-		if($json->compiledStyles)
+		if(isset($json->compiledStyles))
 		{
 			$compiledStyles = json_decode(stripslashes($json->compiledStyles), true);
 		}
