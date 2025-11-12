@@ -18,7 +18,7 @@ class Brizy_Admin_Symbols_Manager {
 				$result[] = Brizy_Admin_Symbols_Symbol::createFromJsonObject( $obj );
 			}
 
-		} elseif(!is_null($jsonObj)) {
+		} elseif ( ! is_null( $jsonObj ) ) {
 			$result[] = Brizy_Admin_Symbols_Symbol::createFromJsonObject( $jsonObj );
 		}
 
@@ -31,7 +31,6 @@ class Brizy_Admin_Symbols_Manager {
 	public function getList() {
 		$symbolsEncoded = get_option( self::BRIZY_SYMBOLS_KEY, base64_encode( "[]" ) );
 		$jsonSymbols    = json_decode( base64_decode( $symbolsEncoded ) );
-
 		$symbols = [];
 		foreach ( $jsonSymbols as $symbol ) {
 			$symbols[] = Brizy_Admin_Symbols_Symbol::createFromJsonObject( $symbol );
@@ -46,7 +45,6 @@ class Brizy_Admin_Symbols_Manager {
 	public function get( $uid ) {
 
 		$symbols = $this->getList();
-
 		foreach ( $symbols as $symbol ) {
 			if ( $symbol->getUid() == $uid ) {
 				return $symbol;
@@ -64,15 +62,12 @@ class Brizy_Admin_Symbols_Manager {
 		if ( ! $aSymbol ) {
 			throw new Exception( "Unable to delete NULL symbol" );
 		}
-
 		$symbols = $this->getList();
-
 		foreach ( $symbols as $i => $symbol ) {
 			if ( $symbol->getUid() == $aSymbol->getUid() ) {
 				unset( $symbols[ $i ] );
 			}
 		}
-
 		$this->saveAllSymbols( $symbols );
 	}
 
@@ -86,7 +81,6 @@ class Brizy_Admin_Symbols_Manager {
 			throw new Exception( "Unable to save NULL symbol" );
 		}
 		$symbols = $this->getList();
-
 		foreach ( $symbols as $i => $symbol ) {
 			if ( $symbol->getUid() == $aSymbol->getUid() ) {
 				$symbols[ $i ] = $aSymbol;
@@ -112,34 +106,26 @@ class Brizy_Admin_Symbols_Manager {
 		if ( is_null( $symbol->getUid() ) || empty( $symbol->getUid() ) ) {
 			throw new Exception( 'Please provide the symbol uid' );
 		}
-
 		if ( is_null( $symbol->getVersion() ) || empty( $symbol->getVersion() ) ) {
 			throw new Exception( 'Please provide the symbol version' );
 		}
-
 		$currentSymbol = $this->get( $symbol->getUid() );
-
 		if ( $currentSymbol && ( $currentSymbol->getVersion() + 1 != $symbol->getVersion() ) ) {
 			throw new Exception( 'Invalid symbol version. Please refresh and try again.' );
 		}
-
 		if ( is_null( $symbol->getLabel() ) || empty( $symbol->getLabel() ) ) {
 			throw new Exception( 'Please provide the symbol label' );
 		}
-
 		if ( is_null( $symbol->getModel() ) || empty( $symbol->getModel() ) ) {
 			throw new Exception( 'Please provide the symbol model' );
 		}
-
 		if ( is_null( $symbol->getClassName() ) || empty( $symbol->getClassName() ) ) {
 			throw new Exception( 'Please provide a valid class name' );
 		}
-
 		if ( is_null( $symbol->getComponentTarget() ) || empty( $symbol->getComponentTarget() ) ) {
 			throw new Exception( 'Please provide the component target' );
 		}
-
-		if ( is_null( $symbol->getCompiledStyles() ) || empty( $symbol->getCompiledStyles() ) ) {
+		if ( $symbol->getVersion() > 1 && is_null( $symbol->getCompiledStyles() ) || empty( $symbol->getCompiledStyles() ) ) {
 			throw new Exception( 'Please provide the compiled styles' );
 		}
 	}
