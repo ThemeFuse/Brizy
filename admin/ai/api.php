@@ -130,6 +130,23 @@ class Brizy_Admin_Ai_Api
             return;
         }
 
+        $licenseKey = '';
+
+        if (class_exists('BrizyPro_Admin_License')) {
+            $licenseData = BrizyPro_Admin_License::_init()->getCurrentLicense();
+            if (!empty($licenseData['key'])) {
+                $licenseKey = $licenseData['key'];
+            }
+        }
+
+        if (empty($licenseKey)) {
+            wp_send_json_error(array(
+                'message' => 'License key is required.',
+            ), 403);
+
+            return;
+        }
+
         $sessionId = isset($_REQUEST['sessionId']) ? sanitize_text_field($_REQUEST['sessionId']) : '';
 
         if (empty($sessionId)) {
@@ -141,9 +158,18 @@ class Brizy_Admin_Ai_Api
         $httpClient = new Brizy_Editor_Http_Client();
 
         try {
+            $headers = [
+                'X-API-Key' => $licenseKey,
+                'Content-Type' => 'application/json'
+            ];
+
+            $options = [
+                'headers' => $headers
+            ];
+
             $response = $httpClient->request(
                 Brizy_Config::getAiGeneratedTemplateUrl() . $sessionId,
-                [],
+                $options,
                 'GET'
             );
 
