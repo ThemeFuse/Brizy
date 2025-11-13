@@ -384,16 +384,14 @@ class Brizy_Admin_Ai_Api
     {
         $project = Brizy_Editor_Project::get();
 
-        $decodedProject = json_decode($body['project'], true);
-
-        if ($decodedProject === null || !isset($decodedProject['data'])) {
+        if (!isset($body['project'])) {
             wp_send_json_error('Invalid project data structure', 400);
 
-            return null;
+            return null;        
         }
-        $bodyProjectData = $decodedProject['data'];
 
-        $project->setDataAsJson($bodyProjectData);
+        $projectData = $body['project'];
+        $project->setDataAsJson($projectData);
 
         $current_data_version = $project->getCurrentDataVersion();
         $project->setDataVersion($current_data_version + 1);
@@ -679,7 +677,7 @@ class Brizy_Admin_Ai_Api
                     if ($key === 'adobe' || $key === 'upload' || $key === 'system') {
                         continue;
                     }
-                    
+
                     if (is_object($value) && isset($value->data) && is_array($value->data)) {
                         $allGoogleFonts = array_merge($allGoogleFonts, $value->data);
                     }
@@ -688,7 +686,7 @@ class Brizy_Admin_Ai_Api
 
             if (!empty($allGoogleFonts)) {
                 $filteredFonts = [];
-                
+
                 foreach ($allGoogleFonts as $font) {
                     if (is_object($font) && isset($font->deleted) && $font->deleted === true) {
                         continue;
@@ -752,5 +750,5 @@ class Brizy_Admin_Ai_Api
             // Ignore errors
         }
     }
-    
+
 }
