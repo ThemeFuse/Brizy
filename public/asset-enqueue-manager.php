@@ -103,14 +103,15 @@ class Brizy_Public_AssetEnqueueManager {
 	}
 
 	public function isPostEnqueued( $post ) {
-		$id = null;
-		if ( $post instanceof WP_Post ) {
-			$id = $post->ID;
-		} else if ( $post instanceof Brizy_Editor_Entity ) {
-			$id = $post->getWpPostId();
-		} else {
-			$id = (int) $post;
-		}
+
+        $id = null;
+        if ($post instanceof WP_Post) {
+            $id = $post->ID;
+        } else if ($post instanceof Brizy_Editor_Entity) {
+            $id = $post->getWpPostId();
+        } else {
+            $id = (int)$post;
+        }
 
 		return isset( $this->posts[ $id ] );
 	}

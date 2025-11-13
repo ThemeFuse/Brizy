@@ -69,6 +69,7 @@ import {
 import { ScreenshotData } from "@/types/Screenshots";
 import { APISymbol, CSSSymbol } from "@/types/Symbols";
 import { t } from "@/utils/i18n";
+import { apiSymbolToCSSSymbol } from "@/utils/symbols";
 import { Arr, Json, Obj, Str } from "@brizy/readers";
 import { isT, mPipe, pass } from "fp-utilities";
 import queryString from "query-string";
@@ -3160,8 +3161,8 @@ export const deleteAccount = async (id: string): Promise<SuccessResponse> => {
 
 //#region Symbols
 
-// without model
-export const getSymbolsList = async (): Promise<Array<CSSSymbol>> => {
+///// TODO: should be removed when symbols will be in config
+export const getSymbols = async (): Promise<Array<CSSSymbol>> => {
   const config = getConfig();
 
   if (!config) {
@@ -3189,55 +3190,14 @@ export const getSymbolsList = async (): Promise<Array<CSSSymbol>> => {
   throw new Error(t("Failed to get symbols"));
 };
 
-export const getSymbolsByUid = async (
-  uids: Array<string>
-): Promise<Array<CSSSymbol>> => {
-  const config = getConfig();
-
-  if (!config) {
-    throw new Error(t("Invalid __BRZ_PLUGIN_ENV__"));
-  }
-
-  if (uids.length === 0) {
-    return [];
-  }
-
-  const { editorVersion, url: _url, hash, actions } = config;
-
-  const url = makeUrl(
-    _url,
-    makeFormEncode({
-      hash,
-      action: actions.symbolFilteredList,
-      version: editorVersion,
-      uid: uids
-    })
-  );
-
-  const response = await request(url, { method: "GET" });
-
-  if (response.ok) {
-    const rj = await response.json();
-
-    if (rj.success && Array.isArray(rj.data)) {
-      return rj.data.map(apiSymbolToCSSSymbol);
-    }
-  }
-
-  throw new Error(t("Failed to get symbols"));
-};
-
 export const createSymbols = async (
-  _symbols: Array<Omit<CSSSymbol, "id">>
+  symbols: Array<Omit<CSSSymbol, "id">>
 ): Promise<Array<CSSSymbol>> => {
   const config = getConfig();
 
   if (!config) {
     throw new Error(t("Invalid __BRZ_PLUGIN_ENV__"));
   }
-
-  ///// TODO: test this
-  const symbols = _symbols.map(incrementSymbolVersion);
 
   const { editorVersion, url: _url, hash, actions } = config;
 
@@ -3335,13 +3295,17 @@ export const deleteSymbols = async (
     version: editorVersion
   });
 
-  const body = new URLSearchParams();
-  uids.forEach((uid) => {
-    body.append("uid[]", uid);
-  });
+  const symbolsData = uids.map((uid) => ({
+    uid: uid
+  }));
+
+  const body = JSON.stringify(symbolsData);
 
   const response = await request(url, {
     method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
     body
   });
 

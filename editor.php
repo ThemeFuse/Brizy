@@ -299,14 +299,13 @@ class Brizy_Editor
     }
 
     public function registerCustomPostTemplates()
-    {
-        Brizy_Editor_Project::registerCustomPostType();
-        Brizy_Admin_Layouts_Main::registerCustomPosts();
-        Brizy_Admin_Fonts_Main::registerCustomPosts();
-        Brizy_Admin_FormEntries::registerCustomPost();
-        Brizy_Admin_Stories_Main::registerCustomPosts();
-        Brizy_Admin_Popups_Main::registerCustomPosts();
-        Brizy_Admin_Symbols_Main::registerCustomPosts();
+    {Brizy_Editor_Project::registerCustomPostType();
+		Brizy_Admin_Layouts_Main::registerCustomPosts();
+		Brizy_Admin_Fonts_Main::registerCustomPosts();
+		Brizy_Admin_FormEntries::registerCustomPost();
+		Brizy_Admin_Stories_Main::registerCustomPosts();
+		Brizy_Admin_Popups_Main::registerCustomPosts();
+		Brizy_Admin_Symbols_Main::registerCustomPosts();
 		Brizy_Admin_Blocks_Main::registerCustomPosts();
 		Brizy_Admin_Templates::registerCustomPostTemplate();
 	}

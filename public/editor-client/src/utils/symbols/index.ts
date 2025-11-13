@@ -1,5 +1,26 @@
 import { SymbolState } from "@/state/symbols";
-import { CSSSymbol } from "@/types/Symbols";
+import { APISymbol, CSSSymbol } from "@/types/Symbols";
+
+export const incrementSymbolVersion = (symbol: CSSSymbol): CSSSymbol => {
+  return {
+    ...symbol,
+    version: (symbol.version ?? 0) + 1
+  };
+};
+
+export const apiSymbolToCSSSymbol = ({
+  data,
+  componentTarget,
+  compiledStyles,
+  ...symbol
+}: APISymbol): CSSSymbol => {
+  return {
+    ...symbol,
+    type: componentTarget,
+    model: typeof data === "string" ? JSON.parse(data) : data,
+    compiledData: compiledStyles
+  };
+};
 
 export const beforeSymbolsUpdate = (symbolsState: SymbolState): CSSSymbol[] => {
   const updateCandidates = symbolsState.current.filter(

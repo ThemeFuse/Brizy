@@ -110,7 +110,6 @@ interface Actions {
 
   symbolCreate: string;
   symbolList: string;
-  symbolFilteredList: string;
   symbolDelete: string;
   symbolUpdate: string;
 }
@@ -552,13 +551,10 @@ const actionsReader = parseStrict<PLUGIN_ENV["actions"], Actions>({
     mPipe(Obj.readKey("symbolUpdate"), Str.read),
     throwOnNullish("Invalid actions: symbolUpdate")
   ),
+  ///// TODO: this action should be deleted when symbols will be in config
   symbolList: pipe(
     mPipe(Obj.readKey("symbolList"), Str.read),
     throwOnNullish("Invalid actions: symbolList")
-  ),
-  symbolFilteredList: pipe(
-    mPipe(Obj.readKey("symbolFilteredList"), Str.read),
-    throwOnNullish("Invalid actions: symbolFilteredList")
   )
 });
 
