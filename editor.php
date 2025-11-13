@@ -290,6 +290,7 @@ class Brizy_Editor {
 		Brizy_Admin_FormEntries::registerCustomPost();
 		Brizy_Admin_Stories_Main::registerCustomPosts();
 		Brizy_Admin_Popups_Main::registerCustomPosts();
+		Brizy_Admin_Symbols_Main::registerCustomPosts();
 		Brizy_Admin_Blocks_Main::registerCustomPosts();
 		Brizy_Admin_Templates::registerCustomPostTemplate();
 	}

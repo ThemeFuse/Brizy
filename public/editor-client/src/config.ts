@@ -107,6 +107,11 @@ interface Actions {
 
   downloadLayouts: string;
   downloadBlocks: string;
+
+  symbolCreate: string;
+  symbolList: string;
+  symbolDelete: string;
+  symbolUpdate: string;
 }
 
 interface ProjectStatus {
@@ -533,6 +538,23 @@ const actionsReader = parseStrict<PLUGIN_ENV["actions"], Actions>({
   downloadBlocks: pipe(
     mPipe(Obj.readKey("downloadBlocks"), Str.read),
     throwOnNullish("Invalid actions: downloadBlocks")
+  ),
+  symbolCreate: pipe(
+    mPipe(Obj.readKey("symbolCreate"), Str.read),
+    throwOnNullish("Invalid actions: symbolCreate")
+  ),
+  symbolDelete: pipe(
+    mPipe(Obj.readKey("symbolDelete"), Str.read),
+    throwOnNullish("Invalid actions: symbolDelete")
+  ),
+  symbolUpdate: pipe(
+    mPipe(Obj.readKey("symbolUpdate"), Str.read),
+    throwOnNullish("Invalid actions: symbolUpdate")
+  ),
+  ///// TODO: this action should be deleted when symbols will be in config
+  symbolList: pipe(
+    mPipe(Obj.readKey("symbolList"), Str.read),
+    throwOnNullish("Invalid actions: symbolList")
   )
 });
 

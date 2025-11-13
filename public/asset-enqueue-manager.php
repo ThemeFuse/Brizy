@@ -87,7 +87,6 @@ class Brizy_Public_AssetEnqueueManager
 
     public function isPostEnqueued($post)
     {
-
         $id = null;
         if ($post instanceof WP_Post) {
             $id = $post->ID;
