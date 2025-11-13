@@ -216,7 +216,7 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 			$block->set_needs_compile( true );
 
 			if ( is_array( $dependencies ) && count( $dependencies ) > 0 ) {
-				$block->setDependencies( $dependencies );
+				$block->setDependencies(array_map([Brizy_Editor_Dependency::class,'createFromSerializedData'], $dependencies));
 			}
 			if ( $status == 'publish' && $compiledData ) {
 
@@ -310,7 +310,8 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 				$block->setTags( stripslashes( $this->param( 'tags' ) ) );
 			}
 			if ( is_array( $dependencies ) ) {
-				$block->setDependencies( $dependencies );
+				$block->setDependencies(array_map([Brizy_Editor_Dependency::class,'createFromSerializedData'], $dependencies));
+
 			}
 			if ( ! current_user_can( 'edit_pages' ) ) {
 				$this->error( 403, 'Unauthorized.' );
@@ -394,7 +395,7 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 					$block->setTitle( stripslashes( $this->param( 'title' )[ $i ] ) );
 				}
 				if ( is_array( $this->param( 'dependencies' )[ $i ] ) && count( $this->param( 'dependencies' )[ $i ] ) > 0 ) {
-					$block->setDependencies( $this->param( 'dependencies' )[ $i ] );
+					$block->setDependencies( array_map([Brizy_Editor_Dependency::class,'createFromSerializedData'], $this->param( 'dependencies' )[ $i ]) );
 				}
 				if ( isset( $this->param( 'tags' )[ $i ] ) ) {
 					$block->setTags( stripslashes( $this->param( 'tags' )[ $i ] ) );

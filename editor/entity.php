@@ -462,5 +462,4 @@ abstract class Brizy_Editor_Entity extends Brizy_Admin_Serializable
 
         return $this;
     }
-
 }

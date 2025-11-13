@@ -21,6 +21,7 @@ esbuild
     entryPoints: [`${paths.src}/index.ts`],
     outfile: `${paths.build}/index.js`,
     bundle: true,
+    external: ["react"],
     loader: { ".ts": "ts" },
     minify: IS_PRODUCTION,
     watch: WATCH,

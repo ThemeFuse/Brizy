@@ -44,6 +44,7 @@ import { savedBlocks } from "./savedBlocks/savedBlocks";
 import { savedLayouts } from "./savedBlocks/savedLayouts";
 import { savedPopups } from "./savedBlocks/savedPopups";
 import { screenshots } from "./screenshots";
+import { symbols } from "./symbols";
 
 const config = getConfig();
 
@@ -101,7 +102,8 @@ const api = {
   sidebars,
   block: {
     getExportBlockUrl
-  }
+  },
+  symbols
 };
 
 if (window.__VISUAL_CONFIG__) {
