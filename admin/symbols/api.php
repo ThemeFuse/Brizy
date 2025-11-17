@@ -121,13 +121,14 @@ class Brizy_Admin_Symbols_Api extends Brizy_Admin_AbstractApi {
 	public function actionDelete() {
 
 		$this->verifyNonce( self::nonce );
-		$uid = $this->param( 'uid' );
+		$uids = (array) $this->param( 'uid' );
 		try {
-			if ( ! $uid ) {
+			if ( ! $uids ) {
 				throw new Exception( "'uid' parameter is missing" );
 			}
-
-			$this->manager->deleteSymbol( $uid );
+			foreach ( $uids as $uid ) {
+				$this->manager->deleteSymbol( $uid );
+			}
 
 		} catch ( Exception $e ) {
 			$this->error( 400, "Error: " . $e->getMessage() );
