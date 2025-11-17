@@ -3,19 +3,6 @@
 if (!defined('ABSPATH')) {
     die('Direct access forbidden.');
 }
-
-/**
- * Admin API class for integrating AI features in Brizy.
- * Handles AJAX endpoints and request security.
- *
- * Parameters:
- * - nonce (string): Nonce used for request security verification.
- * - AJAX_CREATE_SESSION (string): AJAX endpoint for creating an AI session.
- * - AJAX_GENERATE_TEMPLATE (string): AJAX endpoint for AI template generation.
- * - AJAX_IMPORT_DELETE (string): AJAX endpoint for deleting AI imports.
- * - AJAX_IMPORT_KEEP (string): AJAX endpoint for keeping AI imports.
- * - AJAX_SEND_PROJECT (string): AJAX endpoint for sending AI projects.
- */
 class Brizy_Admin_Ai_Api extends Brizy_Admin_AbstractApi
 {
     const nonce = 'brizy-api';
@@ -62,21 +49,27 @@ class Brizy_Admin_Ai_Api extends Brizy_Admin_AbstractApi
         add_action($pref . self::AJAX_IMPORT_KEEP, array($this, 'aiImportKeep'));
         add_action($pref . self::AJAX_SEND_PROJECT, array($this, 'aiSendProject'));
     }
-    
-    private function licenseKey()
-    {
-        if (class_exists('BrizyPro_Admin_License')) {
-            $licenseData = BrizyPro_Admin_License::_init()->getCurrentLicense();
-            if (!empty($licenseData['key'])) {
-                return $licenseData['key'];
-            } else {
-                wp_send_json_error(array(
-                    'message' => 'License key is required.',
-                ), 403);
 
-                return null;
-            }
+    private function getLicenseKey()
+    {
+        if (!class_exists('BrizyPro_Admin_License')) {
+            return null;
         }
+
+        $licenseData = BrizyPro_Admin_License::_init()->getCurrentLicense();
+
+        return !empty($licenseData['key']) ? $licenseData['key'] : null;
+    }
+
+    private function requireLicenseKey()
+    {
+        $licenseKey = $this->getLicenseKey();
+
+        if (empty($licenseKey)) {
+            $this->error(403, 'License key is required.');
+        }
+
+        return $licenseKey;
     }
 
     private function sessionIdParam(
@@ -109,7 +102,7 @@ class Brizy_Admin_Ai_Api extends Brizy_Admin_AbstractApi
     {
         $this->verifyNonce(self::nonce);
 
-        $licenseKey = $this->licenseKey();
+        $licenseKey = $this->requireLicenseKey();
 
         $httpClient = new Brizy_Editor_Http_Client();
 
@@ -157,7 +150,7 @@ class Brizy_Admin_Ai_Api extends Brizy_Admin_AbstractApi
     {
         $this->verifyNonce(self::nonce);
 
-        $licenseKey = $this->licenseKey();
+        $licenseKey = $this->requireLicenseKey();
 
         $sessionId = $this->sessionIdParam($_REQUEST);
 
