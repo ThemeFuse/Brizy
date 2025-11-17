@@ -4,7 +4,19 @@ if (!defined('ABSPATH')) {
     die('Direct access forbidden.');
 }
 
-class Brizy_Admin_Ai_Api
+/**
+ * Admin API class for integrating AI features in Brizy.
+ * Handles AJAX endpoints and request security.
+ *
+ * Parameters:
+ * - nonce (string): Nonce used for request security verification.
+ * - AJAX_CREATE_SESSION (string): AJAX endpoint for creating an AI session.
+ * - AJAX_GENERATE_TEMPLATE (string): AJAX endpoint for AI template generation.
+ * - AJAX_IMPORT_DELETE (string): AJAX endpoint for deleting AI imports.
+ * - AJAX_IMPORT_KEEP (string): AJAX endpoint for keeping AI imports.
+ * - AJAX_SEND_PROJECT (string): AJAX endpoint for sending AI projects.
+ */
+class Brizy_Admin_Ai_Api extends Brizy_Admin_AbstractApi
 {
     const nonce = 'brizy-api';
 
@@ -27,62 +39,103 @@ class Brizy_Admin_Ai_Api
 
     public function __construct()
     {
-        $this->registerAjaxActions();
+        parent::__construct();
     }
 
-    private function registerAjaxActions()
+    protected function getRequestNonce()
+    {
+        return $this->param('hash');
+    }
+
+    protected function verifyNonce($action)
+    {
+        $this->checkNonce($action);
+    }
+
+    protected function initializeApiActions()
     {
         $pref = 'wp_ajax_' . Brizy_Editor::prefix();
 
-        $createSession    = $pref . self::AJAX_CREATE_SESSION;
-        $generateTemplate = $pref . self::AJAX_GENERATE_TEMPLATE;
-        $importDelete     = $pref . self::AJAX_IMPORT_DELETE;
-        $importKeep       = $pref . self::AJAX_IMPORT_KEEP;
-        $sendProject      = $pref . self::AJAX_SEND_PROJECT;
+        add_action($pref . self::AJAX_CREATE_SESSION, array($this, 'aiCreateSession'));
+        add_action($pref . self::AJAX_GENERATE_TEMPLATE, array($this, 'aiGenerateTemplate'));
+        add_action($pref . self::AJAX_IMPORT_DELETE, array($this, 'aiImportDelete'));
+        add_action($pref . self::AJAX_IMPORT_KEEP, array($this, 'aiImportKeep'));
+        add_action($pref . self::AJAX_SEND_PROJECT, array($this, 'aiSendProject'));
+    }
+    
+    private function licenseKey()
+    {
+        if (class_exists('BrizyPro_Admin_License')) {
+            $licenseData = BrizyPro_Admin_License::_init()->getCurrentLicense();
+            if (!empty($licenseData['key'])) {
+                return $licenseData['key'];
+            } else {
+                wp_send_json_error(array(
+                    'message' => 'License key is required.',
+                ), 403);
 
-        add_action($createSession, array($this, 'aiCreateSession'));
-        add_action($generateTemplate, array($this, 'aiGenerateTemplate'));
-        add_action($importDelete, array($this, 'aiImportDelete'));
-        add_action($importKeep, array($this, 'aiImportKeep'));
-        add_action($sendProject, array($this, 'aiSendProject'));
+                return null;
+            }
+        }
+    }
+
+    private function sessionIdParam(
+        $request
+    ){
+        $sessionId = isset($request['sessionId']) ? sanitize_text_field($request['sessionId']) : '';
+
+        if (empty($sessionId)) {
+            wp_send_json_error('sessionId parameter is required', 400);
+
+            return null;
+        }
+
+        return $sessionId;
+    }
+
+    private function aiUrlParam(
+        $request
+    ){
+        $aiUrl = isset($request['aiUrl']) ? sanitize_text_field($request['aiUrl']) : '';
+
+        if (empty($aiUrl)) {
+            wp_send_json_error('aiUrl parameter is required', 400);
+
+            return null;
+        }
+
+        return $aiUrl;
+    }
+
+    private function bodyParam(
+        $request
+    ){
+        $body = isset($request['body']) ? sanitize_text_field($request['body']) : '';
+    
+        if (empty($body)) {
+            wp_send_json_error('body parameter is required', 400);
+        }
+        
+        return $body;
+    }
+
+    private function editorPageUrl(
+        $postId
+    ){
+        if (empty($postId)) {
+            wp_send_json_error('postId parameter is required', 400);
+
+            return null;
+        }
+
+        return admin_url('post.php?action=in-front-editor&post=' . $postId);
     }
 
     public function aiCreateSession()
     {
-        $licenseKey = '';
+        $this->verifyNonce(self::nonce);
 
-        if (class_exists('BrizyPro_Admin_License')) {
-            $licenseData = BrizyPro_Admin_License::_init()->getCurrentLicense();
-            if (!empty($licenseData['key'])) {
-                $licenseKey = $licenseData['key'];
-            }
-        }
-
-        if (empty($licenseKey)) {
-            wp_send_json_error(array(
-                'message' => 'License key is required.',
-            ), 403);
-
-            return;
-        }
-
-        if (!isset($_REQUEST['action'])) {
-            wp_send_json_error('Action parameter is required', 400);
-
-            return;
-        }
-
-        if (!isset($_REQUEST['hash'])) {
-            wp_send_json_error('Hash parameter is required', 400);
-
-            return;
-        }
-
-        if (!wp_verify_nonce($_REQUEST['hash'], self::nonce)) {
-            wp_send_json_error('Invalid nonce', 400);
-
-            return;
-        }
+        $licenseKey = $this->licenseKey();
 
         $httpClient = new Brizy_Editor_Http_Client();
 
@@ -104,19 +157,19 @@ class Brizy_Admin_Ai_Api
 
             $createSession = $response->get_response_body();
 
-            if ($createSession) {
-                if (isset($createSession['aiUrl']) && isset($createSession['sessionId'])) {
-                    $siteUrl = get_site_url();
+            if (!$createSession) {
+                wp_send_json_error('No response received from the API.', 400);
 
-                    $createSession['aiUrl'] = $createSession['aiUrl'] . '&callbackUrl=' . $siteUrl;
-
-                    wp_send_json_success($createSession);
-                } else {
-                    wp_send_json_error($createSession, 400);
-                }
-            } else {
-                wp_send_json_error($createSession, 400);
+                return null;
             }
+
+           $this->aiUrlParam($createSession);
+
+           $this->sessionIdParam($createSession);
+
+            $createSession['aiUrl'] = $createSession['aiUrl'] . '&callbackUrl=' . get_site_url();
+
+            wp_send_json_success($createSession);
         } catch (Exception $e) {
             wp_send_json_error($e->getMessage(), 500);
         }
@@ -124,36 +177,11 @@ class Brizy_Admin_Ai_Api
 
     public function aiGenerateTemplate()
     {
-        if (!isset($_REQUEST['hash']) || !wp_verify_nonce($_REQUEST['hash'], self::nonce)) {
-            wp_send_json_error('Invalid nonce', 400);
+        $this->verifyNonce(self::nonce);
 
-            return;
-        }
+        $licenseKey = $this->licenseKey();
 
-        $licenseKey = '';
-
-        if (class_exists('BrizyPro_Admin_License')) {
-            $licenseData = BrizyPro_Admin_License::_init()->getCurrentLicense();
-            if (!empty($licenseData['key'])) {
-                $licenseKey = $licenseData['key'];
-            }
-        }
-
-        if (empty($licenseKey)) {
-            wp_send_json_error(array(
-                'message' => 'License key is required.',
-            ), 403);
-
-            return;
-        }
-
-        $sessionId = isset($_REQUEST['sessionId']) ? sanitize_text_field($_REQUEST['sessionId']) : '';
-
-        if (empty($sessionId)) {
-            wp_send_json_error('sessionId parameter is required', 400);
-
-            return;
-        }
+        $sessionId = $this->sessionIdParam($_REQUEST);
 
         $httpClient = new Brizy_Editor_Http_Client();
 
@@ -175,11 +203,13 @@ class Brizy_Admin_Ai_Api
 
             $body = $response->get_response_body();
 
-            if ($body) {
-                wp_send_json_success($body);
-            } else {
+            if (!$body) {
                 wp_send_json_error('No response received from the API.', 400);
+
+                return null;
             }
+
+            wp_send_json_success($body);
         } catch (Exception $e) {
             wp_send_json_error($e->getMessage(), 500);
         }
@@ -187,116 +217,88 @@ class Brizy_Admin_Ai_Api
 
     public function aiImportDelete()
     {
-        if (!isset($_REQUEST['hash']) || !wp_verify_nonce($_REQUEST['hash'], self::nonce)) {
-            wp_send_json_error('Invalid nonce', 400);
+        $this->verifyNonce(self::nonce);
 
-            return;
-        }
-
-        if (!isset($_REQUEST['body'])) {
-            wp_send_json_error('Body parameter is required', 400);
-
-            return;
-        }
+        $this->bodyParam($_REQUEST);
 
         $body = json_decode(stripslashes($_REQUEST['body']), true);
-
-        if ($body === null) {
+        if (!$body) {
             wp_send_json_error('Invalid JSON in body parameter', 400);
 
-            return;
+            return null;
         }
 
-        if (!isset($body['project']) || !isset($body['pages'])) {
-            wp_send_json_error('Invalid data structure', 400);
+        $this->deletePageData();
 
-            return;
+        $imported = $this->importPagesData($body);
+        if (!$imported) {
+            wp_send_json_error('Error importing pages', 400);
+
+            return null;
         }
 
-        try {
-            $this->deletePageData();
-
-            $imported    = $this->importPagesData($body);
-            $projectData = $this->importProjectDataDelete($body);
-            $globalBlocks = $this->importGlobalBlocksData($body);
-
-            if ($projectData === null) {
-                return;
-            }
-
-            $postId = 0;
-            if (is_array($imported) && !empty($imported)) {
-                $postId = (int) $imported[0]['id'];
-            }
-
-            $this->recompileProject($postId);
-
-            $editPageUrl = admin_url('post.php?action=in-front-editor&post=' . $postId);
-
-            wp_send_json_success(array(
-                'globalBlocks' => $globalBlocks,
-                'pages'       => $imported,
-                'pageId'      => $postId,
-                'editPageUrl' => $editPageUrl,
-                'projectData' => $projectData,
-            ));
-        } catch (Exception $e) {
-            wp_send_json_error($e->getMessage(), 500);
+        $projectData = $this->importProjectDataDelete($body);
+        if (!$projectData) {
+            wp_send_json_error('Error importing project', 400);
+            
+            return null;
         }
+
+        $globalBlocks = $this->importGlobalBlocksData($body);
+
+        $postId = 0;
+        if (is_array($imported) && !empty($imported)) {
+            $postId = (int) $imported[0]['id'];
+        }
+
+        $this->recompileProject($postId);
+
+        $editPageUrl = $this->editorPageUrl($postId);
+
+        wp_send_json_success(array(
+            'globalBlocks' => $globalBlocks,
+            'pages'       => $imported,
+            'pageId'      => $postId,
+            'projectData' => $projectData,
+            'editPageUrl' => $editPageUrl,
+        ));
     }
 
     public function aiImportKeep()
     {
-        if (!isset($_REQUEST['hash']) || !wp_verify_nonce($_REQUEST['hash'], self::nonce)) {
-            wp_send_json_error('Invalid nonce', 400);
+        $this->verifyNonce(self::nonce);
 
-            return;
-        }
-
-        if (!isset($_REQUEST['body'])) {
-            wp_send_json_error('Body parameter is required', 400);
-
-            return;
-        }
+        $this->bodyParam($_REQUEST);
 
         $body = json_decode(stripslashes($_REQUEST['body']), true);
-
-        if ($body === null) {
+        if (!$body) {
             wp_send_json_error('Invalid JSON in body parameter', 400);
 
-            return;
+            return null;
         }
 
-        if (!isset($body['project']) || !isset($body['pages'])) {
-            wp_send_json_error('Invalid data structure', 400);
+        $imported = $this->importPagesData($body);
+        if (!$imported) {
+            wp_send_json_error('Error importing pages', 400);
 
-            return;
+            return null;
         }
 
-        try {
-            $imported    = $this->importPagesData($body);
-            $projectData = $this->importProjectDataKeep($body);
+        $projectData = $this->importProjectDataKeep($body);
 
-            if ($projectData === null) {
-                return;
-            }
-
-            $postId = 0;
-            if (is_array($imported) && !empty($imported)) {
-                $postId = (int) $imported[0]['id'];
-            }
-
-            $editPageUrl = admin_url('post.php?action=in-front-editor&post=' . $postId);
-
-            wp_send_json_success(array(
-                'pages'       => $imported,
-                'pageId'      => $postId,
-                'editPageUrl' => $editPageUrl,
-                'projectData' => $projectData,
-            ));
-        } catch (Exception $e) {
-            wp_send_json_error($e->getMessage(), 500);
+        $postId = 0;
+        if (is_array($imported) && !empty($imported)) {
+            $postId = (int) $imported[0]['id'];
         }
+
+        $editPageUrl = $this->editorPageUrl($postId);
+
+        wp_send_json_success(array(
+            'pages'       => $imported,
+            'pageId'      => $postId,
+            'editPageUrl' => $editPageUrl,
+            'projectData' => $projectData,
+        ));
     }
 
     private function importProjectDataKeep($body)
@@ -389,7 +391,7 @@ class Brizy_Admin_Ai_Api
         $project = Brizy_Editor_Project::get();
 
         if (!isset($body['project'])) {
-            wp_send_json_error('Invalid project data structure', 400);
+            wp_send_json_error('Invalid project structure', 400);
 
             return null;
         }
@@ -534,6 +536,12 @@ class Brizy_Admin_Ai_Api
 
     private function importPagesData($body)
     {
+        if (!isset($body['pages'])) {
+            wp_send_json_error('Invalid pages structure', 400);
+
+            return null;
+        }
+
         $imported = [];
 
         foreach ($body['pages'] as $page) {
