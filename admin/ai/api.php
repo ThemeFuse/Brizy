@@ -304,7 +304,11 @@ class Brizy_Admin_Ai_Api
         $project = Brizy_Editor_Project::get();
 
         $projectData     = json_decode($project->getDataAsJson(), true);
-        $bodyProjectData = json_decode(json_decode($body['project'], true)['data'], true);
+        $bodyProjectData = json_decode($body['project'], true);
+
+        if (isset($bodyProjectData['data'])) {
+            $bodyProjectData = json_decode($bodyProjectData['data'], true);
+        }
 
         $mergeProjectDataStyles = array_merge($projectData['styles'], $bodyProjectData['styles']);
         $keepProjectDataStyles  = [];
@@ -387,7 +391,7 @@ class Brizy_Admin_Ai_Api
         if (!isset($body['project'])) {
             wp_send_json_error('Invalid project data structure', 400);
 
-            return null;        
+            return null;
         }
 
         $projectData = $body['project'];
