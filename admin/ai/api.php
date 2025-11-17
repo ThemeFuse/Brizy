@@ -93,32 +93,6 @@ class Brizy_Admin_Ai_Api extends Brizy_Admin_AbstractApi
         return $sessionId;
     }
 
-    private function aiUrlParam(
-        $request
-    ){
-        $aiUrl = isset($request['aiUrl']) ? sanitize_text_field($request['aiUrl']) : '';
-
-        if (empty($aiUrl)) {
-            wp_send_json_error('aiUrl parameter is required', 400);
-
-            return null;
-        }
-
-        return $aiUrl;
-    }
-
-    private function bodyParam(
-        $request
-    ){
-        $body = isset($request['body']) ? sanitize_text_field($request['body']) : '';
-    
-        if (empty($body)) {
-            wp_send_json_error('body parameter is required', 400);
-        }
-        
-        return $body;
-    }
-
     private function editorPageUrl(
         $postId
     ){
@@ -156,14 +130,18 @@ class Brizy_Admin_Ai_Api extends Brizy_Admin_AbstractApi
             );
 
             $createSession = $response->get_response_body();
-
             if (!$createSession) {
                 wp_send_json_error('No response received from the API.', 400);
 
                 return null;
             }
 
-           $this->aiUrlParam($createSession);
+            $aiUrl = isset($createSession['aiUrl']);
+            if (empty($aiUrl)) {
+                wp_send_json_error('aiUrl parameter is required', 400);
+    
+                return null;
+            }
 
            $this->sessionIdParam($createSession);
 
@@ -219,7 +197,12 @@ class Brizy_Admin_Ai_Api extends Brizy_Admin_AbstractApi
     {
         $this->verifyNonce(self::nonce);
 
-        $this->bodyParam($_REQUEST);
+        $body = isset($_REQUEST['body']);
+        if (empty($body)) {
+            wp_send_json_error('body parameter is required', 400);
+
+            return null;
+        }
 
         $body = json_decode(stripslashes($_REQUEST['body']), true);
         if (!$body) {
@@ -268,7 +251,12 @@ class Brizy_Admin_Ai_Api extends Brizy_Admin_AbstractApi
     {
         $this->verifyNonce(self::nonce);
 
-        $this->bodyParam($_REQUEST);
+        $body = isset($_REQUEST['body']);
+        if (empty($body)) {
+            wp_send_json_error('body parameter is required', 400);
+
+            return null;
+        }
 
         $body = json_decode(stripslashes($_REQUEST['body']), true);
         if (!$body) {
