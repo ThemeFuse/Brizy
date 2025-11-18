@@ -11,6 +11,7 @@ import {
   SavedBlockMeta,
   SavedLayout
 } from "@/types/SavedBlocks";
+import { APISymbol, CSSSymbol } from "@/types/Symbols";
 import { t } from "@/utils/i18n";
 import { isNullish } from "@/utils/isNullish";
 import { encode } from "js-base64";
@@ -290,6 +291,34 @@ export const stringifyGlobalBlock = (
     tags: globalBlock.tags,
     uid: globalBlock.uid,
     status: globalBlock.status
+  };
+};
+
+//#endregion
+
+//#region symbols
+
+export const incrementSymbolVersion = (symbol: CSSSymbol): CSSSymbol => {
+  return {
+    ...symbol,
+    version: (symbol.version ?? 0) + 1
+  };
+};
+
+export const apiSymbolToCSSSymbol = ({
+  data,
+  componentTarget,
+  compiledStyles,
+  ...symbol
+}: APISymbol): CSSSymbol => {
+  return {
+    ...symbol,
+    type: componentTarget,
+    model: typeof data === "string" ? JSON.parse(data) : data,
+    compiledData:
+      typeof compiledStyles === "string"
+        ? JSON.parse(compiledStyles)
+        : compiledStyles
   };
 };
 

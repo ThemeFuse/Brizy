@@ -1,25 +1,27 @@
-import { createSymbols, deleteSymbols, getSymbols } from "@/api";
+import {
+  createSymbols,
+  deleteSymbols,
+  getSymbolsByUid,
+  getSymbolsList
+} from "@/api";
 import { symbolsState } from "@/state/symbols";
 import { CSSSymbol } from "@/types/Symbols";
-import { incrementSymbolVersion } from "@/utils/symbols";
 
 interface Symbols {
-  ///// TODO: remove "get" handler when symbols will be in config
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  get: any;
+  getList: () => Promise<Array<CSSSymbol>>;
+  getByUid: (uid: string[]) => Promise<CSSSymbol[]>;
   create: (symbols: CSSSymbol[]) => void;
   update: (symbol: CSSSymbol) => void;
   remove: (symbols: CSSSymbol[]) => void;
 }
 
 export const symbols: Symbols = {
-  get: getSymbols,
+  getList: getSymbolsList,
+  getByUid: getSymbolsByUid,
   create: async (symbols: CSSSymbol[]) => {
-    const symbolsToCreate = symbols.map(incrementSymbolVersion);
-
-    if (symbolsToCreate.length > 0) {
+    if (symbols.length > 0) {
       try {
-        const createdSymbols = await createSymbols(symbolsToCreate);
+        const createdSymbols = await createSymbols(symbols);
 
         if (createdSymbols.length > 0) {
           symbolsState._published.push(...createdSymbols);
