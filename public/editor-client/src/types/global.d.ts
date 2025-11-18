@@ -27,6 +27,7 @@ import { Posts } from "./Posts";
 import { Data } from "./Publish";
 import { SavedBlocks, SavedLayouts, SavedPopups } from "./SavedBlocks";
 import { Screenshots } from "./Screenshots";
+import { APISymbol } from "./Symbols";
 
 declare class WPMediaLibrary {
   get: (selector: string) => import("backbone").Collection;
@@ -207,6 +208,8 @@ export interface VISUAL_CONFIG {
       handler: (res: Response<MenuSimple[]>, rej: Response<string>) => void;
     };
   };
+
+  symbols?: APISymbol[];
 }
 
 declare global {

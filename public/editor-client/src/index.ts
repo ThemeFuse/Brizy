@@ -9,6 +9,7 @@ import get from "lodash/get";
 import merge from "lodash/merge";
 import set from "lodash/set";
 import { doAiRequest } from "./aiText";
+import { apiSymbolToCSSSymbol } from "./api/adapter";
 import { autoSave } from "./autoSave";
 import { getCollectionItems } from "./collectionItems/getCollectionItems";
 import { searchCollectionItems } from "./collectionItems/searchCollectionItems";
@@ -162,4 +163,13 @@ if (window.__VISUAL_CONFIG__) {
   const existingForm = get(window.__VISUAL_CONFIG__, ["integrations", "form"]);
   const updatedForm = merge({}, existingForm, form);
   set(window.__VISUAL_CONFIG__, ["integrations", "form"], updatedForm);
+
+  // symbols
+  if (window.__VISUAL_CONFIG__.symbols) {
+    set(
+      window.__VISUAL_CONFIG__,
+      ["symbols"],
+      window.__VISUAL_CONFIG__.symbols.map(apiSymbolToCSSSymbol)
+    );
+  }
 }
