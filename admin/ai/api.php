@@ -284,8 +284,9 @@ class Brizy_Admin_Ai_Api extends Brizy_Admin_AbstractApi
         ));
     }
 
-    private function importProjectDataKeep($body)
-    {
+    private function importProjectDataKeep(
+        $body
+    ){
         $project = Brizy_Editor_Project::get();
         $currentProjectPostId = $project->getWpPost()->ID;
 
@@ -306,8 +307,9 @@ class Brizy_Admin_Ai_Api extends Brizy_Admin_AbstractApi
         return $mergedData;
     }
 
-    private function importProjectDataDelete($body)
-    {
+    private function importProjectDataDelete(
+        $body
+    ){
         $project = Brizy_Editor_Project::get();
 
         if (!isset($body['project'])) {
@@ -316,8 +318,7 @@ class Brizy_Admin_Ai_Api extends Brizy_Admin_AbstractApi
             return null;
         }
 
-        $projectData = $body['project'];
-        $project->setDataAsJson($projectData);
+        $project->setDataAsJson($body['project']);
 
         $current_data_version = $project->getCurrentDataVersion();
         $project->setDataVersion($current_data_version + 1);
@@ -326,16 +327,12 @@ class Brizy_Admin_Ai_Api extends Brizy_Admin_AbstractApi
 
         $project->set_uses_editor(true);
 
-        try {
-            $project->save(0);
-            $project->savePost();
-        } catch (Exception $e) {
-            wp_send_json_error($e->getMessage(), 400);
+        $project->save(0);
+        $project->savePost();
 
-            return null;
-        }
+        $project = $project->getDataAsJson();
 
-        return json_decode($project->getDataAsJson());
+        return json_decode($project);
     }
 
     private function importGlobalBlocksData($body)
