@@ -287,86 +287,11 @@ class Brizy_Admin_Ai_Api extends Brizy_Admin_AbstractApi
     private function importProjectDataKeep($body)
     {
         $project = Brizy_Editor_Project::get();
-
-        $projectData     = json_decode($project->getDataAsJson(), true);
-        $bodyProjectData = json_decode($body['project'], true);
-
-        if (isset($bodyProjectData['data'])) {
-            $bodyProjectData = json_decode($bodyProjectData['data'], true);
-        }
-
-        $mergeProjectDataStyles = array_merge($projectData['styles'], $bodyProjectData['styles']);
-        $keepProjectDataStyles  = [];
-        $idsProjectDataStyles   = [];
-        foreach ($mergeProjectDataStyles as $styles) {
-            if (!in_array($styles['id'], $idsProjectDataStyles)) {
-                $idsProjectDataStyles[]  = $styles['id'];
-                $keepProjectDataStyles[] = $styles;
-            }
-        }
-        $projectData['styles'] = $keepProjectDataStyles;
-
-        $mergeProjectDataFontsBlocks = array_merge(
-            $projectData['fonts']['blocks']['data'],
-            $bodyProjectData['fonts']['blocks']['data']
-        );
-        $keepProjectDataFontsBlocks  = [];
-        $idsProjectDataFontsBlocks   = [];
-        foreach ($mergeProjectDataFontsBlocks as $fontsBlocks) {
-            if (!in_array($fontsBlocks['brizyId'], $idsProjectDataFontsBlocks)) {
-                $idsProjectDataFontsBlocks[]  = $fontsBlocks['brizyId'];
-                $keepProjectDataFontsBlocks[] = $fontsBlocks;
-            }
-        }
-        $projectData['fonts']['blocks']['data'] = $keepProjectDataFontsBlocks;
-
-        $mergeProjectDataFontsConfig = array_merge(
-            $projectData['fonts']['config']['data'],
-            $bodyProjectData['fonts']['config']['data']
-        );
-        $keepProjectDataFontsConfig  = [];
-        $idsProjectDataFontsConfig   = [];
-        foreach ($mergeProjectDataFontsConfig as $fontsConfig) {
-            if (!in_array($fontsConfig['brizyId'], $idsProjectDataFontsConfig)) {
-                $idsProjectDataFontsConfig[]  = $fontsConfig['brizyId'];
-                $keepProjectDataFontsConfig[] = $fontsConfig;
-            }
-        }
-        $projectData['fonts']['config']['data'] = $keepProjectDataFontsConfig;
-
-        if ($projectData['fonts']['google']['data'] && $bodyProjectData['fonts']['google']['data']) {
-            $mergeProjectDataFontsGoogle = array_merge(
-                $projectData['fonts']['google']['data'],
-                $bodyProjectData['fonts']['google']['data']
-            );
-            $keepProjectDataFontsGoogle  = [];
-            $idsProjectDataFontsGoogle   = [];
-            foreach ($mergeProjectDataFontsGoogle as $fontsGoogle) {
-                if (!in_array($fontsGoogle['brizyId'], $idsProjectDataFontsGoogle)) {
-                    $idsProjectDataFontsGoogle[]  = $fontsGoogle['brizyId'];
-                    $keepProjectDataFontsGoogle[] = $fontsGoogle;
-                }
-            }
-            $projectData['fonts']['google']['data'] = $keepProjectDataFontsGoogle;
-        }
-
-        $project->setDataAsJson(json_encode($projectData));
-
-        $current_data_version = $project->getCurrentDataVersion();
-        $project->setDataVersion($current_data_version + 1);
-
-        $project->set_compiler(Brizy_Editor_Entity::COMPILER_EXTERNAL);
-
-        $project->set_uses_editor(true);
-
-        try {
-            $project->save(0);
-            $project->savePost();
-        } catch (Exception $e) {
-            wp_send_json_error('Error import project data:', $e->getMessage(), 400);
-        }
-
-        return json_decode($project->getDataAsJson());
+        $currentProjectGlobals = $project->getDecodedData();
+        $projectData = $body['project'];
+        $mergeStrategy = Brizy_Editor_Data_ProjectMergeStrategy::getMergerInstance( BRIZY_VERSION );
+        $mergedData    = $mergeStrategy->merge( $currentProjectGlobals, $projectData );
+        return $mergedData;
     }
 
     private function importProjectDataDelete($body)
