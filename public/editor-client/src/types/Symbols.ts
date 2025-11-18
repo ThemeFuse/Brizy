@@ -3,6 +3,7 @@ interface CommonSymbolProps {
   label: string;
   className: string;
   version: number;
+  linkedSymbolId?: string;
 }
 
 export interface CSSSymbol extends CommonSymbolProps {

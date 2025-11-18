@@ -3238,7 +3238,8 @@ export const createSymbols = async (
     version: symbol.version,
     className: symbol.className,
     componentTarget: symbol.type,
-    compiledStyles: symbol.compiledData
+    compiledStyles: symbol.compiledData,
+    linkedSymbolId: symbol.linkedSymbolId ?? null
   }));
 
   const body = JSON.stringify(symbolsData);
