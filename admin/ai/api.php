@@ -287,10 +287,22 @@ class Brizy_Admin_Ai_Api extends Brizy_Admin_AbstractApi
     private function importProjectDataKeep($body)
     {
         $project = Brizy_Editor_Project::get();
+        $currentProjectPostId = $project->getWpPost()->ID;
+
+        $currentProjectStorage = Brizy_Editor_Storage_Project::instance($currentProjectPostId);
+
         $currentProjectGlobals = $project->getDecodedData();
         $projectData = $body['project'];
-        $mergeStrategy = Brizy_Editor_Data_ProjectMergeStrategy::getMergerInstance( BRIZY_VERSION );
-        $mergedData    = $mergeStrategy->merge( $currentProjectGlobals, $projectData );
+
+        $backupData = $currentProjectStorage->get_storage();
+        update_post_meta($currentProjectPostId, 'brizy-project-import-backup-' . md5(time()), $backupData);
+
+        $mergeStrategy = Brizy_Editor_Data_ProjectMergeStrategy::getMergerInstance(BRIZY_VERSION);
+        $mergedData = $mergeStrategy->merge($currentProjectGlobals, $projectData);
+
+        $project->setDataAsJson(json_encode($mergedData));
+        $project->saveStorage();
+
         return $mergedData;
     }
 
