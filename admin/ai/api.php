@@ -3,6 +3,7 @@
 if (!defined('ABSPATH')) {
     die('Direct access forbidden.');
 }
+
 class Brizy_Admin_Ai_Api extends Brizy_Admin_AbstractApi
 {
     const nonce = 'brizy-api';
@@ -34,8 +35,9 @@ class Brizy_Admin_Ai_Api extends Brizy_Admin_AbstractApi
         return $this->param('hash');
     }
 
-    protected function verifyNonce($action)
-    {
+    protected function verifyNonce(
+        $action
+    ){
         $this->checkNonce($action);
     }
 
