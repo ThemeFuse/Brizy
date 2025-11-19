@@ -5,8 +5,8 @@ class Brizy_Editor_Dependency extends \Brizy_Admin_Serializable {
 	const TYPE_SYMBOL = 'symbol';
 	const TYPE_GLOBAL_BLOCK = 'global_block';
 
-	private $type;
-	private $uid;
+	protected $type;
+	protected $uid;
 
 	public function __construct( $type, $uid ) {
 		$this->type = $type;
@@ -71,6 +71,17 @@ class Brizy_Editor_Dependency extends \Brizy_Admin_Serializable {
 		}
 
 		return new self( $data['type'], $data['uid'] );
+	}
+
+	static public function createFromObjectData( $data ) {
+		if ( is_null( $data ) ) {
+			throw new Exception( 'Invalid parameter provided' );
+		}
+		if ( ! isset( $data->type ) || ! isset( $data->uid ) ) {
+			throw new Exception( 'Invalid symbol data provided' );
+		}
+
+		return new self( $data->type, $data->uid );
 	}
 
 }

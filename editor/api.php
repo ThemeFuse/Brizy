@@ -423,7 +423,7 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi
 
             }
             if (is_array($dependencies)) {
-                $this->post->setDependencies(array_map([Brizy_Editor_Dependency::class,'createFromSerializedData'], $dependencies));
+                $this->post->setDependencies(array_map([Brizy_Editor_Dependency::class,'createFromObjectData'], $dependencies));
             }
             if ($data) {
                 $this->post->setEditorData($data);

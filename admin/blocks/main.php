@@ -64,6 +64,7 @@ class Brizy_Admin_Blocks_Main
 
         add_filter('brizy_editor_config', [$this, 'addPageGlobalBlocks'], 10, 2);
         add_filter('brizy_editor_config', [$this, 'compilePageGlobalBlocks'], 10, 2);
+        add_action('brizy_preview_mode', array($this, 'initializePreviewActions'));
         Brizy_Admin_Blocks_Api::_init();
     }
 
@@ -125,14 +126,6 @@ class Brizy_Admin_Blocks_Main
      */
     public function enqueueMatchedGlobalBlockAssets($post = null)
     {
-//		if ( ! in_array( get_post_type( $id ), [ self::CP_GLOBAL, Brizy_Admin_Popups_Main::CP_POPUP ] ) ) {
-//			$matching_brizy_blocks = $this->getMatchingBrizyBlocks( get_post( $id ) );
-//			foreach ( $matching_brizy_blocks as $block ) {
-//				if ( ! $manager->isPostEnqueued( $block->getWpPostId() ) ) {
-//					$manager->enqueuePost( $block );
-//				}
-//			}
-//		}
         $wpPost = null;
         if ($post instanceof Brizy_Editor_Post) {
             $wpPost = $post->getWpPost();
