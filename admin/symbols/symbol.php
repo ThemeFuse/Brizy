@@ -208,10 +208,6 @@ class Brizy_Admin_Symbols_Symbol extends Brizy_Admin_Serializable {
 		if ( is_null( $json ) ) {
 			throw new Exception( 'Invalid parameter provided' );
 		}
-		$compiledStyles = null;
-		if ( isset( $json->compiledStyles ) && ! empty( $json->compiledStyles ) ) {
-			$compiledStyles = json_decode( stripslashes( $json->compiledStyles ), true );
-		}
 
 		return new self( (int) $postId,
 		isset( $json->uid ) ? $json->uid : null,
@@ -220,7 +216,7 @@ class Brizy_Admin_Symbols_Symbol extends Brizy_Admin_Serializable {
 		isset( $json->version ) ? $json->version : null,
 		isset( $json->className ) ? $json->className : null,
 		isset( $json->componentTarget ) ? $json->componentTarget : null,
-		$compiledStyles,
+		isset( $json->compiledStyles ) ? $json->compiledStyles : null,
 		isset( $json->linkedSymbolId ) ? $json->linkedSymbolId : null );
 	}
 
@@ -270,7 +266,7 @@ class Brizy_Admin_Symbols_Symbol extends Brizy_Admin_Serializable {
 
 	public function convertToFullOptionValue() {
 		$item                   = $this->convertToOptionValue();
-		$item['compiledStyles'] = json_encode( $this->getCompiledStyles() );
+		$item['compiledStyles'] = $this->getCompiledStyles();
 		$item['data']           = $this->getModel();
 
 		return $item;
