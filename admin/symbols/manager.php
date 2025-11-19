@@ -166,14 +166,14 @@ class Brizy_Admin_Symbols_Manager {
 		if ( is_null( $symbol->getLabel() ) || empty( $symbol->getLabel() ) ) {
 			throw new Exception( 'Please provide the symbol label' );
 		}
-		if ( is_null( $symbol->getModel() ) || empty( $symbol->getModel() ) ) {
-			throw new Exception( 'Please provide the symbol model' );
-		}
 		if ( is_null( $symbol->getClassName() ) || empty( $symbol->getClassName() ) ) {
 			throw new Exception( 'Please provide a valid class name' );
 		}
 		if ( is_null( $symbol->getComponentTarget() ) || empty( $symbol->getComponentTarget() ) ) {
 			throw new Exception( 'Please provide the component target' );
+		}
+		if ( $symbol->getVersion() > 1 && ( is_null( $symbol->getModel() ) || empty( $symbol->getModel() ) ) ) {
+			throw new Exception( 'Please provide the symbol model' );
 		}
 		if ( $symbol->getVersion() > 1 && ( is_null( $symbol->getCompiledStyles() ) || empty( $symbol->getCompiledStyles() ) ) ) {
 			throw new Exception( 'Please provide the compiled styles' );
