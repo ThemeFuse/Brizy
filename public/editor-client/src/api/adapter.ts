@@ -315,10 +315,7 @@ export const apiSymbolToCSSSymbol = ({
     ...symbol,
     type: componentTarget,
     model: typeof data === "string" ? JSON.parse(data) : data,
-    compiledData:
-      typeof compiledStyles === "string"
-        ? JSON.parse(compiledStyles)
-        : compiledStyles
+    compiledData: compiledStyles
   };
 };
 
