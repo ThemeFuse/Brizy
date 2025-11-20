@@ -131,10 +131,10 @@ class Brizy_Admin_Ai_Api extends Brizy_Admin_AbstractApi
                 return null;
             }
 
-            $aiUrl = isset($createSession['aiUrl']);
+            $aiUrl = isset($createSession['aiUrl']) ? $createSession['aiUrl'] : '';
             if (empty($aiUrl)) {
                 wp_send_json_error('aiUrl parameter is required', 400);
-    
+
                 return null;
             }
 
@@ -192,7 +192,7 @@ class Brizy_Admin_Ai_Api extends Brizy_Admin_AbstractApi
     {
         $this->verifyNonce(self::nonce);
 
-        $body = isset($_REQUEST['body']);
+        $body = isset($_REQUEST['body']) ? $_REQUEST['body'] : '';
         if (empty($body)) {
             wp_send_json_error('body parameter is required', 400);
 
@@ -218,7 +218,7 @@ class Brizy_Admin_Ai_Api extends Brizy_Admin_AbstractApi
         $projectData = $this->importProjectDataDelete($body);
         if (!$projectData) {
             wp_send_json_error('Error importing project', 400);
-            
+
             return null;
         }
 
@@ -246,7 +246,7 @@ class Brizy_Admin_Ai_Api extends Brizy_Admin_AbstractApi
     {
         $this->verifyNonce(self::nonce);
 
-        $body = isset($_REQUEST['body']);
+        $body = isset($_REQUEST['body']) ? $_REQUEST['body'] : '';
         if (empty($body)) {
             wp_send_json_error('body parameter is required', 400);
 
@@ -335,8 +335,9 @@ class Brizy_Admin_Ai_Api extends Brizy_Admin_AbstractApi
         return json_decode($project);
     }
 
-    private function importGlobalBlocksData($body)
-    {
+    private function importGlobalBlocksData(
+        $body
+    ){
         $blocksManager = new Brizy_Admin_Blocks_Manager(Brizy_Admin_Blocks_Main::CP_GLOBAL);
         $existingBlocks = $blocksManager->getEntities(['post_status' => 'any', 'posts_per_page' => -1]);
 
@@ -451,8 +452,9 @@ class Brizy_Admin_Ai_Api extends Brizy_Admin_AbstractApi
         return $importedBlocks;
     }
 
-    private function importPagesData($body)
-    {
+    private function importPagesData(
+        $body
+    ){
         if (!isset($body['pages'])) {
             wp_send_json_error('Invalid pages structure', 400);
 
@@ -543,49 +545,47 @@ class Brizy_Admin_Ai_Api extends Brizy_Admin_AbstractApi
 
     public function aiSendProject()
     {
-        if (!isset($_REQUEST['hash']) || !wp_verify_nonce($_REQUEST['hash'], self::nonce)) {
-            wp_send_json_error('Invalid nonce', 400);
-            return;
-        }
+        $this->verifyNonce(self::nonce);
 
-        $sessionId = isset($_REQUEST['sessionId']) ? sanitize_text_field($_REQUEST['sessionId']) : '';
+        $sessionId = $this->sessionIdParam($_REQUEST);
 
-        if (empty($sessionId)) {
-            wp_send_json_error('sessionId parameter is required', 400);
-            return;
+        $projectData = Brizy_Editor_Project::get()->createResponse();
+        $url = Brizy_Config::getAiSetProjectDataUrl() . $sessionId;
+        $httpClient = new Brizy_Editor_Http_Client();
+
+        $project = Brizy_Editor_Project::get();
+        $compiledStyles = $project->getCompiledStyles();
+
+        $typography = '';
+        if (!empty($compiledStyles['styles'][0]['content']['content'])) {
+            $typography = $compiledStyles['styles'][0]['content']['content'];
         }
+        $projectFonts = $this->getProjectFonts();
+
+        $data = [
+            'projectData' => $projectData,
+            'projectTypography' => $typography,
+            'projectFonts' => $projectFonts,
+        ];
+
+        $options = [
+            'body' => json_encode(['data' => $data]),
+            'headers' => [
+                'Content-Type' => 'application/json',
+            ],
+        ];
+
 
         try {
-            $projectData = Brizy_Editor_Project::get()->createResponse();
-            $url = Brizy_Config::getAiSetProjectDataUrl() . $sessionId;
-            $httpClient = new Brizy_Editor_Http_Client();
-
-            $project = Brizy_Editor_Project::get();
-            $typography = $project->getCompiledStyles()['styles'][0]['content']['content'];
-            $projectFonts = $this->getProjectFonts();
-
-            $data = [
-                'projectData' => $projectData,
-                'projectTypography' => $typography,
-                'projectFonts' => $projectFonts,
-            ];
-
-            $options = [
-                'body' => json_encode(['data' => $data]),
-                'headers' => [
-                    'Content-Type' => 'application/json',
-                ],
-            ];
-
             $request = $httpClient->request($url, $options, 'POST');
 
             $response = $request->get_response_body();
 
-            if ($response) {
-                wp_send_json_success($response);
-            } else {
-                wp_send_json_error('No response received from the external API.', 500);
+            if (!$response) {
+                wp_send_json_error( 'No response received from the external API.', 500);
             }
+
+            return wp_send_json_success($response);
         } catch (Exception $e) {
             wp_send_json_error($e->getMessage(), 500);
         }
