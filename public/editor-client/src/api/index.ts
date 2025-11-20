@@ -3199,6 +3199,8 @@ export const createSymbols = async (
     throw new Error(t("Invalid __BRZ_PLUGIN_ENV__"));
   }
 
+  const symbols = _symbols.map(incrementSymbolVersion);
+
   const { editorVersion, url: _url, hash, actions } = config;
 
   const url = makeUrl(_url, {

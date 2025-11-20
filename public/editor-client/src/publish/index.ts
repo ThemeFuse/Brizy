@@ -1,10 +1,7 @@
 import { updateGlobalBlocks, updatePage, updateProject } from "@/api";
-import { symbolsState, SymbolState } from "@/state/symbols";
 import { GlobalBlock } from "@/types/GlobalBlocks";
 import { Publish } from "@/types/Publish";
 import { t } from "@/utils/i18n";
-import { snapshot } from "valtio";
-import { updateSymbols } from "./symbols";
 
 // Size of each batch
 const batchSize = 60;
@@ -19,7 +16,6 @@ async function updateGlobalBlocksLazy(items: Array<GlobalBlock>) {
 export const publish: Publish = {
   async handler(res, rej, args) {
     const { projectData, pageData, globalBlocks } = args;
-    const symbols = snapshot(symbolsState) as SymbolState;
 
     const errors: Array<string> = [];
 
@@ -47,13 +43,13 @@ export const publish: Publish = {
       }
     }
 
-    if (symbols.current.length > 0) {
-      try {
-        await updateSymbols();
-      } catch (e) {
-        errors.push(t("Failed to update symbols"));
-      }
-    }
+    // if (symbols.current.length > 0) {
+    //   try {
+    //     await updateSymbols(symbols);
+    //   } catch (e) {
+    //     errors.push(t("Failed to update symbols"));
+    //   }
+    // }
 
     if (errors.length > 0) {
       rej(errors.join(";"));
