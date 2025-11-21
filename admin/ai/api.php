@@ -593,68 +593,113 @@ class Brizy_Admin_Ai_Api extends Brizy_Admin_AbstractApi
 
     private function getProjectFonts()
     {
-        $fonts   = [];
         $project = Brizy_Editor_Project::get();
+        $projectData = $project->getDecodedData();
+        
+        $fonts   = [];
 
-        try {
-            $projectData = $project->getDecodedData();
-            $allGoogleFonts = [];
-
-            if (is_object($projectData) && isset($projectData->fonts) && is_object($projectData->fonts)) {
-                $fontsObject = $projectData->fonts;
-                foreach (get_object_vars($fontsObject) as $key => $value) {
-                    if ($key === 'adobe' || $key === 'upload' || $key === 'system') {
-                        continue;
-                    }
-
-                    if (is_object($value) && isset($value->data) && is_array($value->data)) {
-                        $allGoogleFonts = array_merge($allGoogleFonts, $value->data);
-                    }
-                }
-            }
-
-            if (!empty($allGoogleFonts)) {
-                $filteredFonts = [];
-
-                foreach ($allGoogleFonts as $font) {
-                    if (is_object($font) && isset($font->deleted) && $font->deleted === true) {
-                        continue;
-                    }
-
-                    if (is_object($font) && isset($font->family) && isset($font->variants)) {
-                        $filteredFonts[] = $font;
-                    }
-                }
-
-                if (!empty($filteredFonts)) {
-                    $families = [];
-
-                    foreach ($filteredFonts as $font) {
-                        if (is_object($font) && isset($font->family) && isset($font->variants)) {
-                            $fontFamily = str_replace(' ', '+', $font->family);
-                            $weights = is_array($font->variants) ? implode(',', $font->variants) : $font->variants;
-
-                            $families[] = $fontFamily . ':' . $weights;
-                        }
-                    }
-
-                    if (!empty($families)) {
-                        $family  = implode('|', $families);
-                        $fontUrl = 'https://fonts.bunny.net/css?family=' . $family . '&subset=arabic,bengali,cyrillic,cyrillic-ext,devanagari,greek,greek-ext,gujarati,hebrew,khmer,korean,latin-ext,tamil,telugu,thai,vietnamese&display=swap';
-
-                        $fonts[] = [
-                            'name'    => 'google',
-                            'type'    => 'google-font',
-                            'url'     => $fontUrl,
-                            'content' => '',
-                            'fonts'   => $filteredFonts
-                        ];
-                    }
-                }
-            }
-        } catch (Exception $e) {
-            error_log('Error getting project fonts: ' . $e->getMessage());
+        if (!is_object($projectData)) {
+            wp_send_json_error('Invalid project data.', 400);
+            return $fonts;
         }
+        if (!isset($projectData->fonts)) {
+            wp_send_json_error('Fonts not found in project data.', 400);
+            return $fonts;
+        }
+
+        $projectDataFonts = $projectData->fonts;
+
+        $projectFonts = [];
+        foreach (get_object_vars($projectDataFonts) as $key => $value) {
+            switch ($key) {
+                case 'adobe':
+                case 'upload':
+                case 'system':
+                case 'config':
+                case 'blocks':
+                // case 'google':
+                    continue;
+            }
+
+            if (!isset($value->data)) {
+                continue;
+            }
+            if (!is_array($value->data)) {
+                continue;
+            }
+
+            $projectFonts = array_merge($projectFonts, $value->data);
+        }
+    
+        if (empty($projectFonts)) {
+            wp_send_json_error('Fonts not found.', 400);
+            return $fonts;
+        }
+
+        $filteredFonts = [];
+        foreach ($projectFonts as $projectFont) {
+            if (!is_object($projectFont)) {
+                continue;
+            }
+            if (isset($projectFont->deleted)) {
+                continue;
+            }
+            if ($projectFont->deleted === true) {
+                continue;
+            }
+            if (!isset($projectFont->family)) {
+                continue;
+            }
+            if (!isset($projectFont->variants)) {
+                continue;
+            }
+
+            $filteredFonts[] = $projectFont;
+        }
+        
+        if (empty($filteredFonts)) {
+            wp_send_json_error('Fonts not found.', 400);
+            return $fonts;
+        }
+
+        $fontFamiliWeights = [];
+        foreach ($filteredFonts as $filteredFont) {
+            if (!is_object($filteredFont)) {
+                continue;
+            }
+            if (!isset($filteredFont->family)) {
+                continue;
+            }
+            if (!isset($filteredFont->variants)) {
+                continue;
+            }
+
+            $fontFamily = str_replace(' ', '+', $filteredFont->family);
+            if (is_array($filteredFont->variants)) {
+                $fontWeights = implode(',', $filteredFont->variants);
+            } else {
+                $fontWeights = $filteredFont->variants;
+            }
+
+            $fontFamiliWeights[] = $fontFamily . ':' . $fontWeights;
+        }
+
+        if (empty($fontFamiliWeights)) {
+            wp_send_json_error('Fonts not found.', 400);
+            return $fonts;
+        }
+
+        $familyFonts  = implode('|', $fontFamiliWeights);
+        
+        $fontUrl = 'https://fonts.bunny.net/css?family=' . $familyFonts . '&subset=arabic,bengali,cyrillic,cyrillic-ext,devanagari,greek,greek-ext,gujarati,hebrew,khmer,korean,latin-ext,tamil,telugu,thai,vietnamese&display=swap';
+
+        $fonts[] = [
+            'name'    => 'google',
+            'type'    => 'google-font',
+            'url'     => $fontUrl,
+            'content' => '',
+            'fonts'   => $filteredFonts
+        ];
 
         return $fonts;
     }
