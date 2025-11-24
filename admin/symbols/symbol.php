@@ -32,6 +32,26 @@ class Brizy_Admin_Symbols_Symbol extends Brizy_Admin_Serializable {
 	}
 
 	/**
+	 * @return Brizy_Editor_CompiledSectionManager
+	 */
+	public function getCompiledSectionManager() {
+		if ( ! $this->manager ) {
+			$this->manager = new Brizy_Editor_CompiledSectionManager( '{"blocks":[ { "assets": } ]}' );
+			$this->manager->setStyles( $this->getCompiledStyles() );
+		}
+
+		return $this->manager;
+	}
+
+	public function getWpPost() {
+		if ( $this->getId() ) {
+			return get_post( $this->getId() );
+		}
+
+		return null;
+	}
+
+	/**
 	 * @return mixed
 	 */
 	public function getId() {
@@ -175,7 +195,7 @@ class Brizy_Admin_Symbols_Symbol extends Brizy_Admin_Serializable {
 	public function getCompiledAssetGroup() {
 		$page_styles = $this->getCompiledStyles();
 		$assets      = [];
-		foreach ( $page_styles['styles'] as $style ) {
+		foreach ( (array)$page_styles['styles'] as $style ) {
 			$assets[] = BrizyMerge\Assets\Asset::instanceFromJsonData( $style );
 		}
 
@@ -209,15 +229,7 @@ class Brizy_Admin_Symbols_Symbol extends Brizy_Admin_Serializable {
 			throw new Exception( 'Invalid parameter provided' );
 		}
 
-		return new self( (int) $postId,
-		isset( $json->uid ) ? $json->uid : null,
-		isset( $json->label ) ? $json->label : null,
-		isset( $json->data ) ? $json->data : null,
-		isset( $json->version ) ? $json->version : null,
-		isset( $json->className ) ? $json->className : null,
-		isset( $json->componentTarget ) ? $json->componentTarget : null,
-		isset( $json->compiledStyles ) ? $json->compiledStyles : null,
-		isset( $json->linkedSymbolId ) ? $json->linkedSymbolId : null );
+		return new self( (int) $postId, isset( $json->uid ) ? $json->uid : null, isset( $json->label ) ? $json->label : null, isset( $json->data ) ? $json->data : null, isset( $json->version ) ? $json->version : null, isset( $json->className ) ? $json->className : null, isset( $json->componentTarget ) ? $json->componentTarget : null, isset( $json->compiledStyles ) ? $json->compiledStyles : null, isset( $json->linkedSymbolId ) ? $json->linkedSymbolId : null );
 	}
 
 
@@ -258,7 +270,7 @@ class Brizy_Admin_Symbols_Symbol extends Brizy_Admin_Serializable {
 			'className'       => $this->getClassName(),
 			'componentTarget' => $this->getComponentTarget(),
 			'version'         => $this->getVersion(),
-			'linkedSymbolId'         => $this->getLinkedSymbolId(),
+			'linkedSymbolId'  => $this->getLinkedSymbolId(),
 		);
 
 		return $item;
