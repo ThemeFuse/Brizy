@@ -50,14 +50,9 @@ class Brizy_Admin_Symbols_Api extends Brizy_Admin_AbstractApi {
 		add_action( $pref . self::LIST_ACTION, array( $this, 'actionGetList' ) );
 		add_action( $pref . self::FILTERED_LIST_ACTION, array( $this, 'actionGetListFiltered' ) );
 		add_action( $pref . self::ITEM_ACTION, array( $this, 'actionGetItem' ) );
-		add_filter( 'brizy_editor_config', array( $this, 'editorConfig' ), 10, 2 );
 	}
 
-	public function editorConfig( $config, $context = null ) {
-		$config['symbols'] = $this->manager->getList();
 
-		return $config;
-	}
 
 	public function actionGetItem() {
 		$this->verifyNonce( self::nonce );

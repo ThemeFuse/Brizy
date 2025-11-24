@@ -695,6 +695,7 @@ class Brizy_Editor_Post extends Brizy_Editor_Entity
             $this->manager = new Brizy_Editor_CompiledSectionManager($this->getCompiledSections());
         }
 
+
         return $this->manager;
     }
 

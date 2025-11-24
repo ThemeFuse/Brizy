@@ -20,6 +20,7 @@ class Brizy_Admin_Symbols_Main {
 	public function initialize() {
 		self::registerCustomPosts();
 		Brizy_Admin_Symbols_Api::_init();
+		add_filter( 'brizy_editor_config', array( $this, 'editorConfig' ), 10, 2 );
 	}
 
 	static public function registerCustomPosts() {
@@ -59,5 +60,14 @@ class Brizy_Admin_Symbols_Main {
 			'supports'            => array( 'title', 'post_content', 'revisions' ),
 		) );
 		remove_post_type_support( self::CP_SYMBOL, 'page-attributes' );
+	}
+
+	public function editorConfig( $config, $context = null ) {
+		$collector         = new Brizy_Editor_Dependency_Collector();
+		$config['symbols'] = array_values( array_map( function ( Brizy_Admin_Symbols_Symbol $p ) {
+			return $p->convertToFullOptionValue();
+		}, $collector->collect( Brizy_Editor_Post::get( (int) $config['wp']['page'] ) ) ) );
+
+		return $config;
 	}
 }

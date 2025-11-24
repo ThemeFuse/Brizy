@@ -3,8 +3,10 @@
 use BrizyMerge\AssetAggregator;
 use BrizyMerge\Assets\Asset;
 use BrizyMerge\Assets\AssetGroup;
+use MongoDB\BSON\Symbol;
 
 class Brizy_Public_AssetEnqueueManager {
+	private $symbols = [];
 	private $posts = [];
 	private $scripts = [];
 	private $styles = [];
@@ -64,24 +66,28 @@ class Brizy_Public_AssetEnqueueManager {
 		if ( ! isset( $this->posts[ $id ] ) ) {
 			$this->posts[ $id ] = $post;
 			do_action( 'brizy_preview_enqueue_post', $id );
-			if ( is_array( $post->getDependencies() ) ) {
-				$manager = new Brizy_Admin_Symbols_Manager();
-				foreach ( $post->getDependencies() as $dependency ) {
-					if ( $dependency->getType() === Brizy_Editor_Dependency::TYPE_SYMBOL ) {
-						$symbolPost = $manager->getByUID( $dependency->getUID() );
-						if ( $symbolPost ) {
-							$this->enqueuePost( $symbolPost );
-						}
-					}
-					if ( $dependency->getType() === Brizy_Editor_Dependency::TYPE_GLOBAL_BLOCK ) {
-						$manager = new Brizy_Admin_Blocks_Manager( Brizy_Admin_Blocks_Main::CP_GLOBAL );
-						$block   = $manager->getBlockByUid( $dependency->getUID() );
-						if ( $block ) {
-							$this->enqueuePost( $block );
-						}
-					}
+
+			$collector = new Brizy_Editor_Dependency_Collector();
+			array_map( function ( $p ) {
+				switch ( true ) {
+					case $p instanceof Brizy_Admin_Symbols_Symbol: $this->enqueueSymbol( $p ); break;
+					default: $this->enqueuePost( $p );
 				}
-			}
+			}, $collector->collect( $post ) );
+		}
+	}
+
+	/**
+	 * @param Brizy_Admin_Symbols_Symbol $symbol
+	 */
+	public function enqueueSymbol( $symbol ) {
+		if ( ! ( $symbol = apply_filters( 'brizy_asset_enqueue_symbol', $symbol ) ) ) {
+			return;
+		}
+		$id = $symbol->getId();
+		if ( ! isset( $this->symbols[ $id ] ) ) {
+			$this->symbols[ $id ] = $symbol;
+			do_action( 'brizy_preview_enqueue_symbol', $id );
 		}
 	}
 
@@ -151,6 +157,13 @@ class Brizy_Public_AssetEnqueueManager {
 		$styles = [];
 		if ( is_array( $this->project->getCompiledStyles() ) ) {
 			foreach ( $this->project->getCompiledAssetGroup()->getPageStyles() as $asset ) {
+				if ( $asset = apply_filters( 'brizy_add_style', $asset ) ) {
+					$this->styles[ $this->getHandle( $asset ) ] = $asset;
+				}
+			}
+		}
+		foreach ( $this->symbols as $symbol ) {
+			foreach ( $symbol->getCompiledAssetGroup()->getPageStyles() as $asset ) {
 				if ( $asset = apply_filters( 'brizy_add_style', $asset ) ) {
 					$this->styles[ $this->getHandle( $asset ) ] = $asset;
 				}
