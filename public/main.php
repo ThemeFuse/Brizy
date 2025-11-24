@@ -285,7 +285,8 @@ class Brizy_Public_Main
     }
 
 	/**
-	 * @param Brizy_Editor_Post $post
+	 * @param Brizy_Editor_Post|null $post
+	 *
 	 * @return bool
 	 */
     public static function is_editing_page_with_editor_on_iframe($post = null)

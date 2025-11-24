@@ -193,12 +193,14 @@ class Brizy_Admin_Symbols_Symbol extends Brizy_Admin_Serializable {
 	 */
 	public function getCompiledAssetGroup() {
 		$page_styles = $this->getCompiledStyles();
+		$page_styles = json_decode($page_styles,true);
 		$assets      = [];if ( isset( $page_styles['styles'] ) && is_array( $page_styles['styles'] ) ) {
 		foreach ( (array)$page_styles['styles'] as $style ) {
 			$assets[] = BrizyMerge\Assets\Asset::instanceFromJsonData( $style );
 		}}
 
-		return new \BrizyMerge\Assets\AssetGroup( null, [], [], [], [], $assets );
+        return new \BrizyMerge\Assets\AssetGroup(null, [], [], [], [], $assets);
+
 	}
 
 
