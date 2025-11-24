@@ -72,24 +72,6 @@ class Brizy_Admin_Symbols_Symbol extends Brizy_Admin_Serializable {
 	/**
 	 * @return mixed
 	 */
-	public function getId() {
-		return $this->id;
-	}
-
-	/**
-	 * @param mixed $id
-	 *
-	 * @return Brizy_Admin_Symbols_Symbol
-	 */
-	public function setId( $id ) {
-		$this->id = $id;
-
-		return $this;
-	}
-
-	/**
-	 * @return mixed
-	 */
 	public function getUid() {
 		return $this->uid;
 	}
@@ -212,7 +194,7 @@ class Brizy_Admin_Symbols_Symbol extends Brizy_Admin_Serializable {
 	public function getCompiledAssetGroup() {
 		$page_styles = $this->getCompiledStyles();
 		$assets      = [];if ( isset( $page_styles['styles'] ) && is_array( $page_styles['styles'] ) ) {
-		foreach ( $page_styles['styles'] as $style ) {
+		foreach ( (array)$page_styles['styles'] as $style ) {
 			$assets[] = BrizyMerge\Assets\Asset::instanceFromJsonData( $style );
 		}}
 
