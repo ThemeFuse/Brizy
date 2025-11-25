@@ -162,13 +162,14 @@ class Brizy_Public_AssetEnqueueManager {
 				}
 			}
 		}
+		$styles = [];
+
 		foreach ( $this->symbols as $symbol ) {
-			foreach ( $symbol->getCompiledAssetGroup()->getPageStyles() as $asset ) {
-				if ( $asset = apply_filters( 'brizy_add_style', $asset ) ) {
-					$this->styles[ $this->getHandle( $asset ) ] = $asset;
-				}
+			if(count($symbol->getCompiledAssetGroup()->getPageStyles())) {
+				$styles[] = $symbol->getCompiledAssetGroup();
 			}
 		}
+
 		foreach ( $this->posts as $editorPost ) {
 			$sectionSet = $editorPost->getCompiledSectionManager();
 			$postGroups = $sectionSet->getAssetsGroups();
@@ -185,8 +186,8 @@ class Brizy_Public_AssetEnqueueManager {
 				}
 				$styles = array_merge( $styles, $postGroups['proStyles'] );
 			}
-
 		}
+
 		$assetAggregator = new AssetAggregator( $styles );
 		foreach ( $assetAggregator->getAssetList() as $asset ) {
 			/*
