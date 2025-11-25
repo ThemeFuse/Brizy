@@ -301,8 +301,35 @@ class Brizy_Admin_Ai_Api extends Brizy_Admin_AbstractApi
         $mergeStrategy = Brizy_Editor_Data_ProjectMergeStrategy::getMergerInstance(BRIZY_VERSION);
         $mergedData = $mergeStrategy->merge($currentProjectGlobals, $projectData);
 
+        $mergedData = $this->reorderStyles($mergedData);
+
         $project->setDataAsJson(json_encode($mergedData));
         $project->saveStorage();
+
+        return $mergedData;
+    }
+
+    private function reorderStyles(
+        $mergedData
+    ){
+        if (isset($mergedData->styles) && is_array($mergedData->styles) && !empty($mergedData->styles)) {
+            $aiGenerationIndex = null;
+            $firstStyle = $mergedData->styles[0];
+            
+            foreach ($mergedData->styles as $index => $style) {
+                if (isset($style->title) && $style->title === 'AI-Generation') {
+                    $aiGenerationIndex = $index;
+                    break;
+                }
+            }
+            
+            if ($aiGenerationIndex !== null && $aiGenerationIndex !== 0) {
+                $aiGenerationStyle = $mergedData->styles[$aiGenerationIndex];
+                
+                $mergedData->styles[$aiGenerationIndex] = $firstStyle;
+                $mergedData->styles[0] = $aiGenerationStyle;
+            }
+        }
 
         return $mergedData;
     }
