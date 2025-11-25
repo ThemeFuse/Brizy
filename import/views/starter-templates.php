@@ -46,12 +46,12 @@
             <?php if ( $isPro ): ?>
                 <a class="button button-primary brz-ai-button js-open-ai-selection-modal" href="#" title="<?php echo $l10n['buildWebsite']; ?>" style="font-size: 15px; font-weight: 600; padding: 10px 32px; height: auto; background: #1e3a8a; color: #fff; border: none; border-radius: 8px; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); display: inline-flex; align-items: center; gap: 8px; white-space: nowrap; align-self: flex-start; box-shadow: 0 2px 8px rgba(30, 58, 138, 0.3);" onmouseover="this.style.background='#2563eb'" onmouseout="this.style.background='#1e3a8a'">
                     <span><?php echo $l10n['buildWebsite']; ?></span>
-                    <img src="https://ai.brizy.io/build/assets/ai.D1GKryP0-v1.5.7.svg" alt="" style="width: 18px; height: 18px; display: inline-block; vertical-align: middle; flex-shrink: 0; margin-left: 2px;">
+                    <img src="https://ai.brizy.io/build/assets/ai.D1GKryP0-v1.5.8.svg" alt="" style="width: 18px; height: 18px; display: inline-block; vertical-align: middle; flex-shrink: 0; margin-left: 2px;">
                 </a>
             <?php else: ?>
                 <button class="button button-primary button-disabled brz-ai-button-disabled" disabled title="<?php echo $l10n['requiresProLicense']; ?>" style="font-size: 15px; font-weight: 600; padding: 10px 32px; height: auto; background: #f3f4f6; color: #9ca3af; border: 1px solid #e5e7eb; border-radius: 8px; cursor: not-allowed; display: inline-flex; align-items: center; gap: 8px; white-space: nowrap; align-self: flex-start;">
                     <span><?php echo $l10n['buildWebsite']; ?></span>
-                    <img src="https://ai.brizy.io/build/assets/ai.D1GKryP0-v1.5.7.svg" alt="" style="width: 18px; height: 18px; display: inline-block; vertical-align: middle; flex-shrink: 0; margin-left: 2px; opacity: 0.5;">
+                    <img src="https://ai.brizy.io/build/assets/ai.D1GKryP0-v1.5.8.svg" alt="" style="width: 18px; height: 18px; display: inline-block; vertical-align: middle; flex-shrink: 0; margin-left: 2px; opacity: 0.5;">
                 </button>
                 <p class="description" style="margin: 12px 0 0 0; font-size: 14px; line-height: 1.6; color: #6b7280; font-weight: 400;">
                     <?php echo $l10n['requiresProMessage']; ?> 
@@ -88,7 +88,7 @@
         <div style="flex-shrink: 0; position: relative; z-index: 1;">
             <a href="https://ai.brizy.io/" target="_blank" rel="noopener noreferrer" title="<?php echo esc_attr($l10n['aiBrizy']); ?>" class="brz-ai-logo-link" style="display: inline-block; line-height: 0;">
                 <div class="brz-ai-logo-container" style="padding: 20px;">
-                    <img src="https://ai.brizy.io/build/assets/logo.CXF5cPzn-v1.5.7.svg" alt="<?php echo esc_attr($l10n['aiLogoAlt']); ?>" style="width: 100px; height: 100px; display: block;">
+                    <img src="https://ai.brizy.io/build/assets/logo.CXF5cPzn-v1.5.8.svg" alt="<?php echo esc_attr($l10n['aiLogoAlt']); ?>" style="width: 100px; height: 100px; display: block;">
                 </div>
             </a>
         </div>
