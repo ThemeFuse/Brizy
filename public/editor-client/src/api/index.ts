@@ -3220,7 +3220,6 @@ export const createSymbols = async (
     throw new Error(t("Invalid __BRZ_PLUGIN_ENV__"));
   }
 
-  ///// TODO: test this
   const symbols = _symbols.map(incrementSymbolVersion);
 
   const { editorVersion, url: _url, hash, actions } = config;
@@ -3238,7 +3237,8 @@ export const createSymbols = async (
     version: symbol.version,
     className: symbol.className,
     componentTarget: symbol.type,
-    compiledStyles: symbol.compiledData
+    compiledStyles: symbol.compiledData,
+    linkedSymbolId: symbol.linkedSymbolId ?? null
   }));
 
   const body = JSON.stringify(symbolsData);
@@ -3282,7 +3282,8 @@ export const updateSymbols = async (
     version: symbol.version,
     className: symbol.className,
     componentTarget: symbol.type,
-    compiledStyles: symbol.compiledData
+    compiledStyles: symbol.compiledData,
+    linkedSymbolId: symbol.linkedSymbolId ?? null
   }));
 
   const body = JSON.stringify(symbolsData);
