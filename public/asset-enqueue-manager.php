@@ -349,7 +349,7 @@ class Brizy_Public_AssetEnqueueManager {
 	 * @return string
 	 */
 	private function getHandle( Asset $asset ) {
-		return Brizy_Editor::prefix() . '-asset-' . $asset->getName() . '-' . $asset->getScore();
+		return Brizy_Editor::prefix() . '-asset-' . spl_object_hash($asset);
 	}
 
 	private function replacePlaceholders( AssetGroup $ag, $post, $context ) {
