@@ -89,12 +89,20 @@ class Brizy_Admin_Ai_Api extends Brizy_Admin_AbstractApi
     }
 
     private function editorPageUrl(
-        $postId
+        $imported
     ){
-        if (empty($postId)) {
+        if (empty($imported)) {
             wp_send_json_error('postId parameter is required', 400);
 
             return null;
+        }
+
+        $postId = $imported[0]['id'];
+        
+        foreach ($imported as $page) {
+            if ($page['title'] == 'Home' || $page['slug'] == 'home') {
+                $postId = $page['id'];
+            }
         }
 
         return admin_url('post.php?action=in-front-editor&post=' . $postId);
@@ -231,7 +239,7 @@ class Brizy_Admin_Ai_Api extends Brizy_Admin_AbstractApi
 
         $this->recompileProject($postId);
 
-        $editPageUrl = $this->editorPageUrl($postId);
+        $editPageUrl = $this->editorPageUrl($imported);
 
         wp_send_json_success(array(
             'globalBlocks' => $globalBlocks,
