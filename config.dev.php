@@ -72,10 +72,14 @@ class Brizy_Config
     // this file will be stored in uploads/brizy/
     const PROJECT_STLYES_FILE_PATH = DIRECTORY_SEPARATOR.'project'.DIRECTORY_SEPARATOR.'styles.css';
 
-    const AI_CREATE_SESSION_URL = 'http://172.17.0.1:8000/api/create-session';
-    const AI_GENERATED_TEMPLATE_URL = 'http://172.17.0.1:8000/api/generated-template/';
-    const AI_SEND_PROJECT_DATA_URL = 'http://172.17.0.1:8000/api/send-project/';
+    // const AI_CREATE_SESSION_URL = 'http://172.17.0.1:8000/api/create-session';
+    // const AI_GENERATED_TEMPLATE_URL = 'http://172.17.0.1:8000/api/generated-template/';
+    // const AI_SEND_PROJECT_DATA_URL = 'http://172.17.0.1:8000/api/send-project/';
 
+    const AI_CREATE_SESSION_URL = 'https://phplaravel-1109775-4078837.cloudwaysapps.com/api/create-session';
+    const AI_GENERATED_TEMPLATE_URL = 'https://phplaravel-1109775-4078837.cloudwaysapps.com/api/generated-template/';
+    const AI_SEND_PROJECT_DATA_URL = 'https://phplaravel-1109775-4078837.cloudwaysapps.com/api/send-project/';
+    
     static public function getCompilerUrls()
     {
         $host = self::getEnvValue('COMPILER_HOST');
