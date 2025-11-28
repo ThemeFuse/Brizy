@@ -282,7 +282,7 @@ class Brizy_Admin_Ai_Api extends Brizy_Admin_AbstractApi
             $postId = (int) $imported[0]['id'];
         }
 
-        $editPageUrl = $this->editorPageUrl($postId);
+        $editPageUrl = $this->editorPageUrl($imported);
 
         wp_send_json_success(array(
             'pages'       => $imported,
