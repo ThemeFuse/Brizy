@@ -13,7 +13,7 @@ class Done extends Component {
 
   render() {
     const { app } = this.context;
-    const { exists, fontName } = app.data;
+    const { exists, fontName } = app.data ?? {};
 
     return exists ? (
       <DoneWithWarning onDone={this.handleClose}>

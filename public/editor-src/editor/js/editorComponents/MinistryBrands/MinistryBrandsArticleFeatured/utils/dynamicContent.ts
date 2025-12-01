@@ -25,7 +25,8 @@ export const getPlaceholder = (v: Value): string => {
     nonfeatures,
     showPreview,
     detailPageButtonText,
-    detailPage
+    detailPage,
+    showContent
   } = v;
 
   const attr = [
@@ -49,6 +50,7 @@ export const getPlaceholder = (v: Value): string => {
     getAttr(showMetaHeadings, "show_meta_headings"),
     getAttr(showMetaIcons, "show_meta_icons"),
     getAttr(showPreview, "show_preview"),
+    getAttr(showContent, "show_content"),
     `detail_page_button_text='${detailPageButtonText}'`,
     `detail_page='${getDetail(detailPage)}'`
   ];

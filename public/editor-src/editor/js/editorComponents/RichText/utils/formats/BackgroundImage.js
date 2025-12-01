@@ -7,7 +7,7 @@ let Inline = Quill.import("blots/inline");
 
 export const getBackgroundImage = (getConfig) => {
   class BackgroundImage extends Inline {
-    // static className = "text-mask";
+    static className = "text-mask";
     static create(value) {
       const node = super.create(value);
       this.setValue(value, node);
@@ -26,8 +26,7 @@ export const getBackgroundImage = (getConfig) => {
         const imageHeight =
           parseInt(node.getAttribute("data-image_height")) || null;
         const imageExtension = node.getAttribute("data-image_extension");
-        const imageFileName =
-          node.getAttribute("data-image_file_name") || "image";
+        const imageFileName = node.getAttribute("data-image_file_name") ?? "";
 
         if (!node.classList.contains("brz-population-mask")) {
           imagePopulation = null;
@@ -108,7 +107,7 @@ export const getBackgroundImage = (getConfig) => {
         node.style.backgroundPosition = `${imagePositionX}% ${imagePositionY}%`;
         node.removeAttribute("data-image_population");
         node.setAttribute("data-image_src", imageSrc);
-        node.setAttribute("data-image_file_name", imageFileName);
+        node.setAttribute("data-image_file_name", imageFileName ?? "");
         node.setAttribute("data-image_width", imageWidth);
         node.setAttribute("data-image_height", imageHeight);
         node.setAttribute("data-image_extension", imageExtension);

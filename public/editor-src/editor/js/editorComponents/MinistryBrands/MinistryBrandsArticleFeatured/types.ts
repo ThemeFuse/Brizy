@@ -24,6 +24,7 @@ export interface Value extends ElementModel {
   features: Switch;
   nonfeatures: Switch;
   showPreview: Switch;
+  showContent: Switch;
   detailPageButtonText: string;
   detailPage: string;
   source: string;

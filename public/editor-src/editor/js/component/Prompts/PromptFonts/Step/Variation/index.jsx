@@ -206,11 +206,12 @@ class Variation extends Component {
         error: t("Something went wrong")
       });
     } else {
-      const { exists, ...font } = data;
+      const { exists: isFontAlreadyUploaded, ...font } = data;
       const { id: fontId } = font;
       const { dispatch, fonts } = this.props;
+      const uploadedFont = fonts.find((f) => f.id === fontId);
 
-      if (exists) {
+      if (isFontAlreadyUploaded && uploadedFont) {
         // If the font already exists, update the font name and mark it as existing
         onChange(id, {
           ...appData,
@@ -218,10 +219,8 @@ class Variation extends Component {
           exists: true
         });
 
-        const uploadedFont = fonts.find((f) => f.id === fontId);
-
         // If the existing uploaded font was previously marked as deleted, restore it
-        if (uploadedFont?.deleted) {
+        if (uploadedFont.deleted) {
           dispatch(
             addFonts([
               { type: "upload", fonts: [{ ...uploadedFont, deleted: false }] }

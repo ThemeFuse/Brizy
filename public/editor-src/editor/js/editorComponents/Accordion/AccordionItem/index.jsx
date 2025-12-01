@@ -5,6 +5,7 @@ import { TextEditor } from "visual/component/Controls/TextEditor";
 import { ThemeIcon } from "visual/component/ThemeIcon";
 import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
+import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import { isEditor, isView } from "visual/providers/RenderProvider";
 import { makeDataAttr } from "visual/utils/i18n/attribute";
 import { collapse, expand } from "../utils";
@@ -15,7 +16,7 @@ import * as toolbar from "./toolbar";
 
 class AccordionItem extends EditorComponent {
   static get componentId() {
-    return "AccordionItem";
+    return ElementTypes.AccordionItem;
   }
 
   static defaultValue = defaultValue;

@@ -1,6 +1,7 @@
 import classnames from "classnames";
 import React from "react";
 import EditorComponent from "visual/editorComponents/EditorComponent";
+import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import Items from "./Items";
 import defaultValue from "./defaultValue.json";
 import * as sidebarExtendConfig from "./sidebar";
@@ -14,7 +15,7 @@ class TableBody extends EditorComponent {
   static defaultValue = defaultValue;
 
   static get componentId() {
-    return "TableBody";
+    return ElementTypes.TableBody;
   }
 
   renderForEdit(v, vs, vd) {

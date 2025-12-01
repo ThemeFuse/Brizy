@@ -6,6 +6,7 @@ import { ElementModel } from "visual/component/Elements/Types";
 import { ThemeIcon } from "visual/component/ThemeIcon";
 import PortalToolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
+import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import { isView } from "visual/providers/RenderProvider";
 import { makePlaceholder } from "visual/utils/dynamicContent";
 import { makeDataAttr } from "visual/utils/i18n/attribute";
@@ -28,8 +29,8 @@ export interface Value extends ElementModel {
 export class AddToCart extends EditorComponent<Value> {
   static defaultValue = defaultValue;
 
-  static get componentId(): "AddToCart" {
-    return "AddToCart";
+  static get componentId(): ElementTypes.AddToCart {
+    return ElementTypes.AddToCart;
   }
 
   handleTextChange = (patch: { [k: string]: string }): void =>

@@ -3,6 +3,7 @@ import React from "react";
 import CustomCSS from "visual/component/CustomCSS";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import EditorComponent from "visual/editorComponents/EditorComponent";
+import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import { NORMAL } from "visual/utils/stateMode";
 import defaultValue from "./defaultValue.json";
 import { calculateMeta } from "./meta";
@@ -21,7 +22,7 @@ class Table extends EditorComponent {
   static defaultValue = defaultValue;
 
   static get componentId() {
-    return "Table";
+    return ElementTypes.Table;
   }
 
   getMeta(v) {

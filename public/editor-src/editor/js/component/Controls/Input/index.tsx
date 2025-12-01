@@ -40,8 +40,15 @@ export const InputWithDebounce = ({
   placeholder = ""
 }: Omit<Props, "onBlur">): JSX.Element => {
   const [_value, setValue] = useState(value);
+  // Tracks the most recent input value (for use on unmount)
+  const latestValueRef = useRef(_value);
 
+  // Tracks the last value that was actually sent via onChange
   const lastUpdate = useRef(_value);
+
+  useEffect(() => {
+    latestValueRef.current = _value;
+  }, [_value]);
 
   useEffect(() => {
     if (lastUpdate.current !== value) {
@@ -60,6 +67,15 @@ export const InputWithDebounce = ({
     1000,
     [onChange, _value]
   );
+
+  useEffect(() => {
+    return () => {
+      if (latestValueRef.current !== lastUpdate.current) {
+        lastUpdate.current = latestValueRef.current;
+        onChange(latestValueRef.current);
+      }
+    };
+  }, [onChange]);
 
   const handleBlur = useCallback(() => {
     if (lastUpdate.current !== _value) {

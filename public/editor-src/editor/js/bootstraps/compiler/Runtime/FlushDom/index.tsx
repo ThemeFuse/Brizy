@@ -2,13 +2,13 @@ import React, { type JSX, memo, useEffect, useRef } from "react";
 import { useDispatch, useSelector, useStore } from "react-redux";
 import { useConfig } from "visual/providers/ConfigProvider";
 import { useStyleProvider } from "visual/providers/StyleProvider";
-import { updateSymbolsCSS } from "visual/redux/actions2";
+import { initializeBlocksHtml, updateSymbolsCSS } from "visual/redux/actions2";
 import { symbolsSelector } from "visual/redux/selectors";
 import type { SymbolCSS } from "visual/types/Symbols";
 import { Queue } from "visual/utils/queue/Queue";
 import { QueueWorker } from "visual/utils/queue/QueueWorker";
 import type { Props } from "./types";
-import { addQueueDebounced } from "./utils";
+import { addQueue, addQueueDebounced } from "./utils";
 
 // process 5 blocks in parallel
 const CONCURRENCY_LIMIT = 5;
@@ -42,6 +42,16 @@ const _FlushDom = (props: Props): JSX.Element => {
 
     dispatch(updateSymbolsCSS(symbolsCSS));
   }, [cssOrdered.symbol, symbols, dispatch]);
+
+  useEffect(() => {
+    if (blocks.length === 0) {
+      dispatch(initializeBlocksHtml());
+      return;
+    }
+
+    addQueue(queue.current, blocks, store, config);
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- We need only to run this effect once
+  }, []);
 
   useEffect(() => {
     const worker = queueWorker.current;

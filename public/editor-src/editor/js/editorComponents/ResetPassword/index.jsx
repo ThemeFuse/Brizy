@@ -3,6 +3,7 @@ import React from "react";
 import CustomCSS from "visual/component/CustomCSS";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import EditorComponent from "visual/editorComponents/EditorComponent";
+import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import { isEditor } from "visual/providers/RenderProvider";
 import { makeDataAttr } from "visual/utils/i18n/attribute";
 import { Wrapper } from "../tools/Wrapper";
@@ -21,7 +22,7 @@ class ResetPassword extends EditorComponent {
   static defaultValue = defaultValue;
 
   static get componentId() {
-    return "ResetPassword";
+    return ElementTypes.ResetPassword;
   }
 
   componentDidMount() {

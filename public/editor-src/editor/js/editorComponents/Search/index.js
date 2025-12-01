@@ -6,6 +6,7 @@ import { ThemeIcon } from "visual/component/ThemeIcon";
 import Toolbar from "visual/component/Toolbar";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import EditorComponent from "visual/editorComponents/EditorComponent";
+import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import { attachRefs } from "visual/utils/react";
 import { Wrapper } from "../tools/Wrapper";
 import defaultValue from "./defaultValue.json";
@@ -20,7 +21,7 @@ export default class Search extends EditorComponent {
   inputRef = React.createRef();
 
   static get componentId() {
-    return "Search";
+    return ElementTypes.Search;
   }
 
   handleResizerChange = (patch) => this.patchValue(patch);

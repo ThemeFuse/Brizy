@@ -5,6 +5,7 @@ import ContextMenu from "visual/component/ContextMenu";
 import CustomCSS from "visual/component/CustomCSS";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { getTagNameFromFontStyle } from "visual/editorComponents/tools/HtmlTag";
+import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import {
   defaultValueValue,
   validateKeyByProperty
@@ -30,7 +31,7 @@ class Accordion extends EditorComponent {
   static defaultValue = defaultValue;
 
   static get componentId() {
-    return "Accordion";
+    return ElementTypes.Accordion;
   }
 
   handleAllTagChange = (allTag) => {

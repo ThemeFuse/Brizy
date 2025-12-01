@@ -109,8 +109,14 @@ describe("Testing 'fromElementModel' function", function () {
     expect(r.spread).toBe(0);
   });
 
-  test("If spread and blur are 0, then type, palette, opacity are set to their empty values", () => {
-    const _db: ElementModel = { ...db, spread: 0, blur: 0 };
+  test("If all fields (blur, spread, horizontal, vertical) are 0, then type, palette, opacity are set to their empty values", () => {
+    const _db: ElementModel = {
+      ...db,
+      spread: 0,
+      blur: 0,
+      horizontal: 0,
+      vertical: 0
+    };
     const r = fromElementModel((k) => _db[k] as MValue<Literal>);
 
     expect(r.type).toBe(T.NONE);
@@ -118,20 +124,60 @@ describe("Testing 'fromElementModel' function", function () {
     expect(r.opacity).toBe(Opacity.empty);
   });
 
-  test("If spread or blur is not empty, do not empty type, palette, opacity", () => {
-    [
-      { blur: 1, spread: 0 },
-      { blur: 0, spread: 1 },
-      { blur: 1, spread: 1 }
-    ].map((v) => {
-      const _db: ElementModel = { ...db, ...v };
+  test.each([
+    {
+      blur: 1,
+      spread: 0,
+      horizontal: 0,
+      vertical: 0,
+      description: "only blur is non-zero"
+    },
+    {
+      blur: 0,
+      spread: 1,
+      horizontal: 0,
+      vertical: 0,
+      description: "only spread is non-zero"
+    },
+    {
+      blur: 0,
+      spread: 0,
+      horizontal: 1,
+      vertical: 0,
+      description: "only horizontal is non-zero"
+    },
+    {
+      blur: 0,
+      spread: 0,
+      horizontal: 0,
+      vertical: 1,
+      description: "only vertical is non-zero"
+    },
+    {
+      blur: 1,
+      spread: 1,
+      horizontal: 0,
+      vertical: 0,
+      description: "blur and spread are non-zero"
+    },
+    {
+      blur: 0,
+      spread: 0,
+      horizontal: 1,
+      vertical: 1,
+      description: "horizontal and vertical are non-zero"
+    }
+  ])(
+    "If $description, do not empty type, palette, opacity",
+    ({ blur, spread, horizontal, vertical }) => {
+      const _db: ElementModel = { ...db, blur, spread, horizontal, vertical };
       const r = fromElementModel((k) => _db[k] as MValue<Literal>);
 
       expect(r.type).toBe(_db.value);
       expect(r.palette).toBe(_db.colorPalette);
       expect(r.opacity).toBe(_db.colorOpacity);
-    });
-  });
+    }
+  );
 
   test("If type is '', it is transformed to 'none'", () => {
     const _db: ElementModel = { ...db, value: "" };

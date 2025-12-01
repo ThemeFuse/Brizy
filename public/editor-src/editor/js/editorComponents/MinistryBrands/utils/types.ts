@@ -37,3 +37,32 @@ export interface EkklesiaModuleFields<
   value: Record<string, string>;
   module: EkklesiaParams<T>;
 }
+
+export enum MBMetaPrefixKey {
+  metaTitle = "metaTitle",
+  metaPosition = "metaPosition",
+  metaGroup = "metaGroup",
+  metaCellphone = "metaCellphone",
+  metaWorkphone = "metaWorkphone",
+  metaDate = "metaDate",
+  metaCategory = "metaCategory",
+  metaSeries = "metaSeries",
+  metaPreacher = "metaPreacher",
+  metaPassage = "metaPassage",
+  metaDay = "metaDay",
+  metaTimes = "metaTimes",
+  metaStatus = "metaStatus",
+  metaChildcare = "metaChildcare",
+  metaResourceLink = "metaResourceLink",
+  metaLocation = "metaLocation",
+  metaAddress = "metaAddress",
+  metaRoom = "metaRoom",
+  metaCoordinator = "metaCoordinator",
+  metaCoordinatorEmail = "metaCoordinatorEmail",
+  metaCoordinatorPhone = "metaCoordinatorPhone",
+  metaCost = "metaCost",
+  metaWebsite = "metaWebsite",
+  metaAuthor = "metaAuthor",
+  metaText = "metaText",
+  metaEmail = "metaEmail"
+}

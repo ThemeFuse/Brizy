@@ -278,15 +278,30 @@ class ControlInner extends Component<Props, State> {
     );
   };
 
-  renderIcon(title: string, icon: string, proElement: boolean): ReactElement {
+  renderIcon({
+    title,
+    icon,
+    proElement,
+    truncate = true
+  }: {
+    title: string;
+    icon: string;
+    proElement: boolean;
+    truncate?: boolean;
+  }): ReactElement {
+    const titleClassNames = classnames(
+      "brz-span brz-ed-sidebar__add-elements__text",
+      {
+        "brz-ed-sidebar__add-elements__text--truncate": truncate
+      }
+    );
+
     const iconNode = (
       <>
         <div className="brz-ed-sidebar__add-elements__icon">
           <EditorIcon icon={icon} />
         </div>
-        <span className="brz-span brz-ed-sidebar__add-elements__text">
-          {title}
-        </span>
+        <span className={titleClassNames}>{title}</span>
       </>
     );
 
@@ -338,11 +353,12 @@ class ControlInner extends Component<Props, State> {
       const clickPinMode = (): void =>
         this.handlePinnedElementsChange(component.id);
 
-      const iconElem = this.renderIcon(
-        component.title,
-        component.icon,
-        !this.isPro && shortcodeIsPro
-      );
+      const iconElem = this.renderIcon({
+        title: component.title,
+        icon: component.icon,
+        proElement: !this.isPro && shortcodeIsPro,
+        truncate: component.truncate
+      });
 
       const iconContainer = (
         <div

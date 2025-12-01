@@ -7,6 +7,7 @@ import { TextEditor } from "visual/component/Controls/TextEditor";
 import CustomCSS from "visual/component/CustomCSS";
 import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
+import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import "visual/libs/countdown2/jquery.countdown";
 import { makeDataAttr } from "visual/utils/i18n/attribute";
 import { attachRefs } from "visual/utils/react";
@@ -29,7 +30,7 @@ class Countdown2 extends EditorComponent {
   seconds = React.createRef();
 
   static get componentId() {
-    return "Countdown2";
+    return ElementTypes.Countdown2;
   }
 
   handleTextChange = (propertyName, value) => {

@@ -1,5 +1,6 @@
 import { Num } from "@brizy/readers";
 import { Placement } from "@popperjs/core";
+import { makeAttr } from "visual/utils/i18n/attribute";
 import { parseFromString } from "visual/utils/string";
 import { setupTooltip } from "../../component/Tooltip/utils.export";
 import { TooltipAttributes } from "./types";
@@ -12,7 +13,7 @@ export default function ($node: JQuery) {
   }
 
   const tooltipNodes = node.querySelectorAll<HTMLElement>(
-    ".brz-rich-text [data-tooltip]"
+    `.brz-rich-text [${makeAttr("tooltip")}], .brz-rich-text [data-tooltip]`
   );
 
   if (tooltipNodes.length === 0) {
@@ -36,14 +37,17 @@ export default function ($node: JQuery) {
       cls.startsWith("brz-css-")
     );
 
-    const dataTooltip = item.getAttribute("data-tooltip");
+    const dataTooltip =
+      item.getAttribute(makeAttr("tooltip")) ??
+      item.getAttribute("data-tooltip") ??
+      "{}";
 
     const {
       tooltipOffset,
       tooltipText,
       tooltipPlacement = "top",
       tooltipTriggerClick = "hover"
-    } = parseFromString<TooltipAttributes>(dataTooltip ?? "") ?? {};
+    } = parseFromString<TooltipAttributes>(dataTooltip) ?? {};
 
     const parent = item.closest(".brz-rich-text")?.parentElement;
 

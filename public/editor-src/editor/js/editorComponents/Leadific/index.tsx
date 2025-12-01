@@ -5,6 +5,7 @@ import Link from "visual/component/Link";
 import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { shouldRenderPopup } from "visual/editorComponents/tools/Popup";
+import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import { isEditor } from "visual/providers/RenderProvider";
 import { blocksDataSelector } from "visual/redux/selectors";
 import { Block } from "visual/types/Block";
@@ -24,8 +25,8 @@ class Leadific extends EditorComponent<Value, Props> {
   static defaultValue = defaultValue;
   static experimentalDynamicContent = true;
 
-  static get componentId(): string {
-    return "Leadific";
+  static get componentId(): ElementTypes.Leadific {
+    return ElementTypes.Leadific;
   }
 
   componentDidMount(): void {

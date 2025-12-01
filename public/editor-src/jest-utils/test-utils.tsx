@@ -26,11 +26,11 @@ function renderWithProviders(ui: ReactElement, options?: Options) {
   const { renderContext = "editor", ...rest } = options ?? {};
 
   const Wrapper = ({ children }: { children: ReactNode }) => (
-    <ConfigProvider config={config}>
-      <Provider store={store}>
+    <Provider store={store}>
+      <ConfigProvider config={config}>
         <RenderProvider renderType={renderContext}>{children}</RenderProvider>
-      </Provider>
-    </ConfigProvider>
+      </ConfigProvider>
+    </Provider>
   );
 
   return { store, ...render(ui, { wrapper: Wrapper, ...rest }) };

@@ -1,5 +1,6 @@
+import { checkValue2 } from "visual/utils/checkValue";
 import { t } from "visual/utils/i18n";
-import { Switch } from "./types";
+import { MBMetaPrefixKey, Switch } from "./types";
 
 export const getAttr = (option: Switch, key: string): string => {
   return option === "on" ? `${key}='1'` : `${key}='0'`;
@@ -87,17 +88,26 @@ export const getEkklesiaMessages = () => ({
   sermon_layout: t(
     "Ministry Content - Sermon Layout - module fields have been updated."
   ),
-  article_detail: t(
-    "Ministry Content - Article Detail - module fields have been updated."
+  staff_featured: t(
+    "Ministry Content - Staff Featured - module fields have been updated."
   ),
-  article_list: t(
-    "Ministry Content - Article List - module fields have been updated."
+  article_layout: t(
+    "Ministry Content - Article Layout - module fields have been updated."
   ),
   staff_detail: t(
     "Ministry Content - Staff Detail - module fields have been updated."
   ),
+  article_list: t(
+    "Ministry Content - Article List - module fields have been updated."
+  ),
+  article_detail: t(
+    "Ministry Content - Article Detail - module fields have been updated."
+  ),
   article_featured: t(
     "Ministry Content - Article Featured - module fields have been updated."
+  ),
+  staff_list: t(
+    "Ministry Content - Staff List - module fields have been updated."
   )
 });
 
@@ -117,3 +127,5 @@ export const getButtonMaxBorderRadius = (
 
   return Math.round((contentHeight + 24 + tempBorderWidth * 2) / 2);
 };
+
+export const getMetaPrefixKey = checkValue2<MBMetaPrefixKey>(MBMetaPrefixKey);

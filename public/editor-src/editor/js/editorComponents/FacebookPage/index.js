@@ -6,6 +6,7 @@ import CustomCSS from "visual/component/CustomCSS";
 import Facebook from "visual/component/Facebook";
 import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
+import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import { makePlaceholder } from "visual/utils/dynamicContent";
 import { makeDataAttr } from "visual/utils/i18n/attribute";
 import { attachRefs } from "visual/utils/react";
@@ -18,7 +19,7 @@ class FacebookPage extends EditorComponent {
   static defaultValue = defaultValue;
 
   static get componentId() {
-    return "FacebookPage";
+    return ElementTypes.FacebookPage;
   }
 
   getAppData() {

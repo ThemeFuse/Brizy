@@ -1,13 +1,32 @@
+import { Obj } from "@brizy/readers";
 import { difference } from "es-toolkit";
+import {
+  type AnyAction,
+  type Dispatch,
+  Middleware,
+  type MiddlewareAPI
+} from "redux";
 import { wInMobilePage, wInTabletPage } from "visual/config/columns";
+import { GetConfig } from "visual/providers/ConfigProvider/types";
+import type { ReduxAction } from "visual/redux/actions2";
+import type { Store } from "visual/redux/store";
+import type { ReduxState, ReduxStateWithHistory } from "visual/redux/types";
 import { StoreChanged } from "visual/redux/types";
+import type {
+  AdobeFont,
+  Font,
+  Fonts,
+  GoogleFont,
+  SystemFont,
+  UploadedFont
+} from "visual/types/Fonts";
 import {
   makeGlobalStylesColorPalette,
   makeRichTextColorPaletteCSS
 } from "visual/utils/color";
 import { makeVariablesColor } from "visual/utils/cssVariables";
 import { addClass, removeClass } from "visual/utils/dom/classNames";
-import { makeAdobeFontsUrl } from "visual/utils/fonts/makeAdobeFontsUrl.ts";
+import { makeAdobeFontsUrl } from "visual/utils/fonts/makeAdobeFontsUrl";
 import { makeDefaultFontCSS } from "visual/utils/fonts/makeDefaultFontCSS";
 import {
   makeSubsetGoogleFontsUrl,
@@ -45,84 +64,123 @@ import {
   unDeletedFontsSelector
 } from "../selectors";
 
-export default (config) => (store) => (next) => (action) => {
-  const callbacks = {
-    onBeforeNext: [],
-    onAfterNext: []
+interface SideEffectsConfig {
+  document: Document;
+  parentDocument?: Document;
+  getConfig: GetConfig;
+}
+
+interface CallbackTaskParams {
+  config: SideEffectsConfig;
+  state: ReduxState;
+  oldState: ReduxState;
+  store: MiddlewareAPI<Dispatch<AnyAction>, ReduxState>;
+  action: ReduxAction;
+}
+
+interface Callbacks {
+  onBeforeNext: Array<(params: CallbackTaskParams) => void>;
+  onAfterNext: Array<(params: CallbackTaskParams) => void>;
+}
+
+type DiffFontResult =
+  | { type: "google" | "config" | "blocks"; fonts: GoogleFont[] }
+  | { type: "adobe"; fonts: AdobeFont[] }
+  | { type: "upload"; fonts: UploadedFont[] }
+  | { type: "system"; fonts: SystemFont[] };
+
+export default (
+    config: SideEffectsConfig
+  ): Middleware<Record<string, never>, ReduxState, Dispatch<ReduxAction>> =>
+  (store) =>
+  (next) =>
+  (action) => {
+    const callbacks: Callbacks = {
+      onBeforeNext: [],
+      onAfterNext: []
+    };
+
+    // show warning if the user wants to leave
+    // without publishing / updating changes
+    handleStoreChange(callbacks);
+
+    if (action.type === HYDRATE) {
+      handleHydrate(callbacks);
+    }
+
+    if (
+      action.type === ActionTypes.IMPORT_TEMPLATE ||
+      action.type === ActionTypes.IMPORT_KIT ||
+      action.type === ActionTypes.IMPORT_STORY ||
+      action.type === ADD_BLOCK ||
+      action.type === ADD_FONTS ||
+      action.type === DELETE_FONTS ||
+      action.type === UPDATE_DEFAULT_FONT
+    ) {
+      handleFontsChange(callbacks);
+    }
+
+    if (
+      action.type === ActionTypes.IMPORT_TEMPLATE ||
+      action.type === ActionTypes.UPDATE_CURRENT_STYLE_ID ||
+      action.type === ActionTypes.UPDATE_CURRENT_STYLE ||
+      action.type === ActionTypes.REMOVE_GLOBAL_STYLE ||
+      action.type === ActionTypes.REGENERATE_COLORS ||
+      action.type === ActionTypes.REGENERATE_TYPOGRAPHY ||
+      action.type === UPDATE_EXTRA_FONT_STYLES ||
+      action.type === ActionTypes.IMPORT_STORY
+    ) {
+      handleStylesChange(callbacks);
+    }
+
+    if (action.type === UPDATE_UI && action.key === "deviceMode") {
+      handleDeviceModeChange(callbacks);
+    }
+
+    if (action.type === UPDATE_UI && action.key === "showHiddenElements") {
+      handleHiddenElementsChange(callbacks);
+    }
+
+    if (action.type === UPDATE_UI && action.key === "currentRole") {
+      handleCurrentRoleChange(callbacks);
+    }
+
+    if (action.type === ActionTypes.COPY_ELEMENT) {
+      handleCopiedElementChange(callbacks);
+    }
+
+    if (action.type === UNDO || action.type === REDO) {
+      handleHistoryChange(callbacks);
+    }
+
+    if (action.type === UPDATE_UI && action.key === "currentLanguage") {
+      handleCurrentLanguageChange(callbacks);
+    }
+
+    const oldState = store.getState();
+
+    // Now is not used
+    // uncomment if need
+    // callbacks.onBeforeNext.forEach(task => task({ config, state: oldState, action }));
+
+    next(action);
+
+    const state = store.getState();
+    callbacks.onAfterNext.forEach(
+      (task: (params: CallbackTaskParams) => void) => {
+        const taskParams: CallbackTaskParams = {
+          config,
+          state,
+          oldState,
+          store,
+          action
+        };
+        task(taskParams);
+      }
+    );
   };
 
-  // show warning if the user wants to leave
-  // without publishing / updating changes
-  handleStoreChange(callbacks);
-
-  if (action.type === HYDRATE) {
-    handleHydrate(callbacks);
-  }
-
-  if (
-    action.type === ActionTypes.IMPORT_TEMPLATE ||
-    action.type === ActionTypes.IMPORT_KIT ||
-    action.type === ActionTypes.IMPORT_STORY ||
-    action.type === ADD_BLOCK ||
-    action.type === ADD_FONTS ||
-    action.type === DELETE_FONTS ||
-    action.type === UPDATE_DEFAULT_FONT
-  ) {
-    handleFontsChange(callbacks);
-  }
-
-  if (
-    action.type === ActionTypes.IMPORT_TEMPLATE ||
-    action.type === ActionTypes.UPDATE_CURRENT_STYLE_ID ||
-    action.type === ActionTypes.UPDATE_CURRENT_STYLE ||
-    action.type === ActionTypes.REMOVE_GLOBAL_STYLE ||
-    action.type === ActionTypes.REGENERATE_COLORS ||
-    action.type === ActionTypes.REGENERATE_TYPOGRAPHY ||
-    action.type === UPDATE_EXTRA_FONT_STYLES ||
-    action.type === ActionTypes.IMPORT_STORY
-  ) {
-    handleStylesChange(callbacks);
-  }
-
-  if (action.type === UPDATE_UI && action.key === "deviceMode") {
-    handleDeviceModeChange(callbacks);
-  }
-
-  if (action.type === UPDATE_UI && action.key === "showHiddenElements") {
-    handleHiddenElementsChange(callbacks);
-  }
-
-  if (action.type === UPDATE_UI && action.key === "currentRole") {
-    handleCurrentRoleChange(callbacks);
-  }
-
-  if (action.type === ActionTypes.COPY_ELEMENT) {
-    handleCopiedElementChange(callbacks);
-  }
-
-  if (action.type === UNDO || action.type === REDO) {
-    handleHistoryChange(callbacks);
-  }
-
-  if (action.type === UPDATE_UI && action.key === "currentLanguage") {
-    handleCurrentLanguageChange(callbacks);
-  }
-
-  const oldState = store.getState();
-
-  // Now is not used
-  // uncomment if need
-  // callbacks.onBeforeNext.forEach(task => task({ config, state: oldState, action }));
-
-  next(action);
-
-  const state = store.getState();
-  callbacks.onAfterNext.forEach((task) =>
-    task({ config, state, oldState, store, action })
-  );
-};
-
-function handleStoreChange(callbacks) {
+function handleStoreChange(callbacks: Callbacks): void {
   callbacks.onAfterNext.push(({ state, oldState }) => {
     const oldStateWasChanged = storeWasChangedSelector(oldState);
     const storeWasChanged = storeWasChangedSelector(state);
@@ -144,16 +202,23 @@ function handleStoreChange(callbacks) {
   });
 }
 
-function handleHydrate(callbacks) {
+function handleHydrate(callbacks: Callbacks): void {
   callbacks.onAfterNext.push(({ state, store, config, action }) => {
     const { document, parentDocument } = config;
-    const currentFonts = projectFontsData(unDeletedFontsSelector(state));
+    const currentFonts = projectFontsData(unDeletedFontsSelector(state)) as {
+      google?: GoogleFont[];
+      adobe?: AdobeFont[];
+      upload?: UploadedFont[];
+      system?: unknown[];
+    };
     const { colorPalette, fontStyles: _fontStyles } =
       currentStyleSelector(state);
     const extraFontStyles = extraFontStylesSelector(state);
     const fontStyles = [..._fontStyles, ...extraFontStyles];
     const adobeKitId = state?.fonts?.adobe?.id;
-    const { config: globalConfig } = action.payload;
+    const { config: globalConfig } = (
+      action as { payload: { config: ReturnType<GetConfig> } }
+    ).payload;
 
     if (document.getElementById("brz-project-default-font") === null) {
       // Generate default @fontFace uses in project font
@@ -213,7 +278,7 @@ function handleHydrate(callbacks) {
       typographyStyle.id = "brz-typography-styles";
       typographyStyle.innerHTML = makeGlobalStylesTypography({
         fontStyles,
-        store: store,
+        store: store as Store,
         config: globalConfig
       });
 
@@ -269,7 +334,7 @@ function handleHydrate(callbacks) {
   });
 }
 
-function handleFontsChange(callbacks) {
+function handleFontsChange(callbacks: Callbacks): void {
   callbacks.onAfterNext.push(({ config, state, oldState, action }) => {
     const oldFonts = fontsSelector(oldState);
     const oldDefaultFont = defaultFontSelector(oldState);
@@ -289,29 +354,31 @@ function handleFontsChange(callbacks) {
       const adobeKitId = state?.fonts?.adobe?.id;
 
       diffFonts(oldState.fonts, state.fonts).forEach(({ type, fonts }) => {
-        let href;
+        let href: string | undefined;
 
         if (type === "upload") {
-          href = makeUploadFontsUrl(fonts, globalConfig);
+          href = makeUploadFontsUrl(fonts as UploadedFont[], globalConfig);
         } else if (type === "adobe") {
           if (adobeKitId) href = makeAdobeFontsUrl(adobeKitId);
         } else {
-          href = makeSubsetGoogleFontsUrl(fonts);
+          href = makeSubsetGoogleFontsUrl(fonts as GoogleFont[]);
         }
 
-        const addedFont = document.createElement("link");
-        addedFont.href = href;
-        addedFont.setAttribute("type", "text/css");
-        addedFont.setAttribute("rel", "stylesheet");
+        if (href) {
+          const addedFont = document.createElement("link");
+          addedFont.href = href;
+          addedFont.setAttribute("type", "text/css");
+          addedFont.setAttribute("rel", "stylesheet");
 
-        document.head.appendChild(addedFont);
-        parentDocument.head.appendChild(addedFont.cloneNode());
+          document.head.appendChild(addedFont);
+          parentDocument?.head.appendChild(addedFont.cloneNode());
+        }
       });
     }
   });
 }
 
-function handleStylesChange(callbacks) {
+function handleStylesChange(callbacks: Callbacks): void {
   callbacks.onAfterNext.push(({ state, store, config: _config }) => {
     const { colorPalette, fontStyles: _fontStyles } =
       currentStyleSelector(state);
@@ -340,45 +407,51 @@ function handleStylesChange(callbacks) {
       const fontStyles = [..._fontStyles, ...extraFontStyles];
       globalFontStyles.innerHTML = makeGlobalStylesTypography({
         fontStyles,
-        store,
+        store: store as Store,
         config
       });
     }
   });
 }
 
-function handleDeviceModeChange(callbacks) {
+function handleDeviceModeChange(callbacks: Callbacks): void {
   callbacks.onAfterNext.push(({ config, action, state, store }) => {
     const { document, parentDocument } = config;
     const {
       ui: { activeElement }
     } = state;
-    const {
-      innerHeight,
-      document: viewportDocument,
-      scrollTo
-    } = document.defaultView;
+    const defaultView = document.defaultView;
+    if (!defaultView) return;
 
-    const isActiveElementInView = activeElement
-      ? isElementInViewport(activeElement, innerHeight)
+    const { innerHeight, document: viewportDocument, scrollTo } = defaultView;
+
+    const activeElementHTMLElement =
+      activeElement instanceof HTMLElement ? activeElement : null;
+    const isActiveElementInView = activeElementHTMLElement
+      ? isElementInViewport(activeElementHTMLElement, innerHeight)
       : false;
-    let sections = [];
+    let sections: HTMLElement[] = [];
 
     if (!isActiveElementInView) {
       store.dispatch(updateUI("activeElement", null));
       sections = getClosestSections(viewportDocument, innerHeight);
     }
 
-    const mode = action.value;
+    const mode = Obj.readKey("value")(action);
 
-    const blocksIframe = parentDocument.getElementById("brz-ed-iframe");
+    const blocksIframe = parentDocument?.getElementById("brz-ed-iframe");
+    if (!blocksIframe) return;
+
     const oldIframeClassName = blocksIframe.className;
     const newIframeClassName = addClass(
       removeClass(oldIframeClassName, /^brz-ed-iframe--/),
       `brz-ed-iframe--${mode}`
     );
 
-    const brz = document.getElementsByClassName("brz")[0];
+    const brzElement = document.getElementsByClassName("brz")[0];
+    if (!brzElement || !(brzElement instanceof HTMLElement)) return;
+    const brz = brzElement;
+
     const oldBrzClassName = brz.className;
     const newBrzClassName = addClass(
       removeClass(oldBrzClassName, /^brz-ed--/),
@@ -399,9 +472,9 @@ function handleDeviceModeChange(callbacks) {
       brz.className = newBrzClassName;
       blocksIframe.style.maxWidth = iframeMaxWidth;
 
-      isActiveElementInView
+      isActiveElementInView && activeElementHTMLElement
         ? scrollToActiveElement({
-            activeElement,
+            activeElement: activeElementHTMLElement,
             document: viewportDocument,
             scrollTo,
             innerHeight,
@@ -417,10 +490,11 @@ function handleDeviceModeChange(callbacks) {
   });
 }
 
-function handleHiddenElementsChange(callbacks) {
+function handleHiddenElementsChange(callbacks: Callbacks): void {
   callbacks.onAfterNext.push(({ config, action }) => {
     const { document } = config;
-    const value = action.value;
+    const value = Obj.readKey("value")(action);
+    if (typeof value !== "boolean") return;
 
     if (value) {
       document.body.style.removeProperty("--elements-visibility");
@@ -430,38 +504,43 @@ function handleHiddenElementsChange(callbacks) {
   });
 }
 
-function handleCurrentRoleChange(callbacks) {
+function handleCurrentRoleChange(callbacks: Callbacks): void {
   callbacks.onAfterNext.push(({ config, oldState, action }) => {
     const { document } = config;
     const oldRole = currentRoleSelector(oldState).replace(/\//g, "");
-    const newRole = action.value.replace(/\//g, "");
+    const newRole = Obj.readKey("value")(action);
+    if (typeof newRole !== "string") return;
+
+    const newRoleValue = newRole.replace(/\//g, "");
 
     document.body.style.removeProperty(`--role-${oldRole}`);
 
-    if (newRole !== "default") {
-      document.body.style.setProperty(`--role-${newRole}`, "none");
+    if (newRoleValue !== "default") {
+      document.body.style.setProperty(`--role-${newRoleValue}`, "none");
     }
   });
 }
 
-function handleCurrentLanguageChange(callbacks) {
+function handleCurrentLanguageChange(callbacks: Callbacks): void {
   callbacks.onAfterNext.push(({ config, oldState, action }) => {
     const { document } = config;
     const oldLanguage = currentLanguageSelector(oldState).replace(/\//g, "");
-    const newLanguage = action.value.replace(/\//g, "");
+    const newLanguage = Obj.readKey("value")(action);
+    if (typeof newLanguage !== "string") return;
+    const newLanguageValue = newLanguage.replace(/\//g, "");
 
     document.body.style.removeProperty(`--lang-${oldLanguage}`);
 
-    if (newLanguage !== "default") {
-      document.body.style.setProperty(`--lang-${newLanguage}`, "none");
+    if (newLanguageValue !== "default") {
+      document.body.style.setProperty(`--lang-${newLanguageValue}`, "none");
     }
   });
 }
 
-function handleCopiedElementChange(callbacks) {
+function handleCopiedElementChange(callbacks: Callbacks): void {
   callbacks.onAfterNext.push(({ action }) => {
     const oldCopiedStyles = localStorage.getItem("copiedStyles");
-    const newCopiedStyles = JSON.stringify(action.value);
+    const newCopiedStyles = JSON.stringify(Obj.readKey("value")(action));
 
     if (oldCopiedStyles !== newCopiedStyles) {
       localStorage.setItem("copiedStyles", newCopiedStyles);
@@ -469,9 +548,11 @@ function handleCopiedElementChange(callbacks) {
   });
 }
 
-function handleHistoryChange(callbacks) {
+function handleHistoryChange(callbacks: Callbacks): void {
   callbacks.onAfterNext.push(({ state, store, config: _config }) => {
-    const { currSnapshot, prevSnapshot } = historySelector(state);
+    const { currSnapshot, prevSnapshot } = historySelector(
+      state as ReduxStateWithHistory
+    );
     const currStyleId = currSnapshot?.currentStyleId;
     const prevStyleId = prevSnapshot?.currentStyleId;
     const currStyle = currSnapshot?.currentStyle;
@@ -505,7 +586,7 @@ function handleHistoryChange(callbacks) {
         const fontStyles = [..._fontStyles, ...extraFontStyles];
         globalFontStyles.innerHTML = makeGlobalStylesTypography({
           fontStyles,
-          store,
+          store: store as Store,
           config
         });
       }
@@ -513,23 +594,28 @@ function handleHistoryChange(callbacks) {
   });
 }
 
-function handleBeforeUnload(e) {
+function handleBeforeUnload(e: BeforeUnloadEvent): void {
   e.preventDefault();
   e.returnValue = "Do you really want to close?";
 }
 
-function diffFonts(oldFonts, fonts) {
-  return Object.entries(fonts).reduce((acc, [type, { data }]) => {
-    const oldFont = oldFonts[type];
-
-    if (!oldFont) {
-      return [...acc, { type, fonts: data }];
+function diffFonts(oldFonts: Fonts, fonts: Fonts): DiffFontResult[] {
+  return Object.entries(fonts).reduce((acc, [type, fontData]) => {
+    if (!fontData || !("data" in fontData)) {
+      return acc;
     }
 
-    if (oldFont.data !== data) {
-      return [...acc, { type, fonts: difference(data, oldFont.data) }];
+    const oldFont = oldFonts[type as keyof Fonts];
+
+    if (!oldFont) {
+      return [...acc, { type, fonts: fontData.data } as DiffFontResult];
+    }
+
+    if ("data" in oldFont && oldFont.data !== fontData.data) {
+      const diffResult = difference(fontData.data, oldFont.data as Font[]);
+      return [...acc, { type, fonts: diffResult } as DiffFontResult];
     }
 
     return acc;
-  }, []);
+  }, [] as DiffFontResult[]);
 }

@@ -70,7 +70,6 @@ export const getItems = <
       type: "advancedSettings",
       position: 110,
       title: t("Settings"),
-      roles: ["admin"],
       devices: "desktop"
     }
   ];
