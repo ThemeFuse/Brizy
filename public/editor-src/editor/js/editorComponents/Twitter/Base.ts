@@ -1,3 +1,4 @@
+import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import { defaultValueValue } from "visual/utils/onChange";
 import { DESKTOP, ResponsiveMode } from "visual/utils/responsiveMode";
 import EditorComponent from "../EditorComponent";
@@ -10,8 +11,8 @@ export class BaseTwitter extends EditorComponent<Value> {
   isUnMounted = false;
   currentDeviceMode: ResponsiveMode = DESKTOP;
 
-  static get componentId(): "Twitter" {
-    return "Twitter";
+  static get componentId(): ElementTypes.Twitter {
+    return ElementTypes.Twitter;
   }
   dvv = (key: string): string => {
     const v = this.getValue();

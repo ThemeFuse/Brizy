@@ -19,7 +19,7 @@ export const getItems: GetItems<Value, Props> = (props) => {
       type: "popover",
       devices: "desktop",
       config: {
-        icon: "t2-article-detail",
+        icon: "t2-article-featured",
         title: t("Article Featured")
       },
       position: 60,

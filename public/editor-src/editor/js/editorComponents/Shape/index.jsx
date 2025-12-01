@@ -4,6 +4,7 @@ import BoxResizer from "visual/component/BoxResizer";
 import CustomCSS from "visual/component/CustomCSS";
 import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
+import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import { attachRefs } from "visual/utils/react";
 import { Wrapper } from "../tools/Wrapper";
 import defaultValue from "./defaultValue.json";
@@ -26,7 +27,7 @@ class Shape extends EditorComponent {
   static defaultValue = defaultValue;
 
   static get componentId() {
-    return "Shape";
+    return ElementTypes.Shape;
   }
 
   handleResizerChange = (patch) => this.patchValue(patch);

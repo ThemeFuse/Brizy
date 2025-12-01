@@ -30,7 +30,24 @@
     "calculatedExpression": "",
     "calculatedText": "Total :",
 
-    "columns": 1
+    "columns": 1,
+
+    "customAttributes": "",
+    "customAttributesPopulation": "",
+    "customAttributesPopulationEntityType": "",
+    "customAttributesPopulationEntityId": "",
+
+    "customClassName": "",
+
+    "customID": "",
+
+    "cssIDPopulation": "",
+    "cssIDPopulationEntityType": "",
+    "cssIDPopulationEntityId": "",
+
+    "cssClassPopulation": "",
+    "cssClassPopulationEntityType": "",
+    "cssClassPopulationEntityId": ""
   },
 
   "style": {

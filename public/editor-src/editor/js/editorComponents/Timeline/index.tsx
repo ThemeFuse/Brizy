@@ -6,6 +6,7 @@ import EditorComponent, {
   Props as EProps
 } from "visual/editorComponents/EditorComponent";
 import { ComponentsMeta } from "visual/editorComponents/EditorComponent/types";
+import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import { getContainerW, getMargin } from "visual/utils/meta";
 import { defaultValueValue } from "visual/utils/onChange";
 import * as Num from "visual/utils/reader/number";
@@ -59,8 +60,8 @@ interface GetWidth {
 export default class Timeline extends EditorComponent<Value, Props> {
   static defaultValue = defaultValue;
 
-  static get componentId(): "Timeline" {
-    return "Timeline";
+  static get componentId(): ElementTypes.Timeline {
+    return ElementTypes.Timeline;
   }
 
   componentDidMount(): void {

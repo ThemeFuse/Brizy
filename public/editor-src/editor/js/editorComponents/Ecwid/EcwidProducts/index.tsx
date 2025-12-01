@@ -6,6 +6,7 @@ import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { Wrapper } from "visual/editorComponents/tools/Wrapper";
 import { isCloud } from "visual/global/Config/types/configs/Cloud";
+import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import { EcwidService } from "visual/libs/Ecwid";
 import { eq } from "visual/libs/Ecwid/types/EcwidConfig";
 import { isView } from "visual/providers/RenderProvider";
@@ -40,8 +41,8 @@ export class EcwidProducts extends EditorComponent<Value> {
   private containerRef = createRef<HTMLDivElement>();
   private ecwid: EcwidService | undefined;
 
-  static get componentId(): "EcwidProducts" {
-    return "EcwidProducts";
+  static get componentId(): ElementTypes.EcwidProducts {
+    return ElementTypes.EcwidProducts;
   }
 
   componentDidMount(): void {

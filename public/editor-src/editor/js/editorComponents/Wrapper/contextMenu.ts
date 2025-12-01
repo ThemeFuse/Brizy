@@ -224,6 +224,7 @@ export const getTranslationsMap = (): Translation => ({
   Variant: t("Variant"),
 
   // Ministry Brands
+  MinistryBrandsStaffList: t("Staff List"),
   MinistryBrandsGroupLayout: t("Group Layout"),
   MinistryBrandsGroupSlider: t("Group Slider"),
   MinistryBrandsEventLayout: t("Event Layout"),
@@ -240,9 +241,12 @@ export const getTranslationsMap = (): Translation => ({
   MinistryBrandsEventDetail: t("Event Detail"),
   MinistryBrandsFormWidget: t("FMS Forms"),
   MinistryBrandsPrayerWidget: t("Prayer Widget"),
-  MinistryBrandsArticleDetail: t("Article Detail"),
-  MinistryBrandsArticleList: t("Article List"),
+  MinistryBrandsStaffFeatured: t("Staff Featured"),
+  MinistryBrandsArticleLayout: t("Article Layout"),
+  MinistryBrandsStaffLayout: t("Staff Layout"),
   MinistryBrandsStaffDetail: t("Staff Detail"),
+  MinistryBrandsArticleList: t("Article List"),
+  MinistryBrandsArticleDetail: t("Article Detail"),
   MinistryBrandsArticleFeatured: t("Article Featured"),
 
   // Leadific

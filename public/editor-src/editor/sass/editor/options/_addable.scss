@@ -29,10 +29,7 @@
 .brz-ed-addable {
   &__icon-wrapper {
     @apply flex items-center gap-2 cursor-pointer;
-    color: $control-color;
-    &:hover {
-      color: $control-color--active;
-    }
+    color: $control-color--active;
   }
 
   &__group {
@@ -65,7 +62,7 @@
 
       &__expand-btn {
         @apply cursor-pointer transition-transform shrink-0;
-        color:$control-color;
+        color: $control-color;
       }
     }
 
@@ -101,5 +98,9 @@
       color: $addable__sidebar__add_button--active;
     }
   }
-}
 
+  &__extra-label {
+    color: $control-color--active;
+    white-space: nowrap;
+  }
+}

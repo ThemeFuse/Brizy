@@ -10,15 +10,7 @@ import { updateEkklesiaFields } from "visual/utils/api";
 import { attachRefs } from "visual/utils/react";
 import * as sidebarConfig from "../sidebar";
 import * as sidebarExtendButtons from "../sidebarExtendButtons";
-import {
-  sidebarMinistryBrandsMetaCategory,
-  sidebarMinistryBrandsMetaDate,
-  sidebarMinistryBrandsMetaGroup,
-  sidebarMinistryBrandsMetaPassage,
-  sidebarMinistryBrandsMetaPreacher,
-  sidebarMinistryBrandsMetaSeries,
-  sidebarMinistryBrandsMetaTitle
-} from "../sidebars/sidebars";
+import { sidebarMinistryBrandsMeta } from "../sidebars/sidebars";
 import * as toolbarExtendButtons from "../toolbarExtendButtons";
 import * as toolbarImage from "../toolbarImage";
 import * as toolbarMedia from "../toolbarMedia";
@@ -29,6 +21,7 @@ import * as toolbarPreview from "../toolbarPreview";
 import * as toolbarTitle from "../toolbarTitle";
 import * as toolbarMetaItemLinkColor from "../toolbars/toolbarMetaItemLinkColor";
 import { getEkklesiaMessages } from "../utils/helpers";
+import { MBMetaPrefixKey } from "../utils/types";
 import defaultValue from "./defaultValue.json";
 import { style } from "./styles";
 import * as toolbarExtendParent from "./toolbarExtendParent";
@@ -94,7 +87,7 @@ export class MinistryBrandsSermonList extends EditorComponent<Value, Props> {
       <Toolbar
         {...this.makeToolbarPropsFromConfig2(
           toolbarTitle,
-          sidebarMinistryBrandsMetaTitle,
+          sidebarMinistryBrandsMeta(MBMetaPrefixKey.metaTitle),
           {
             allowExtend: false
           }
@@ -105,7 +98,7 @@ export class MinistryBrandsSermonList extends EditorComponent<Value, Props> {
           <Toolbar
             {...this.makeToolbarPropsFromConfig2(
               toolbarConfig,
-              sidebarMinistryBrandsMetaDate,
+              sidebarMinistryBrandsMeta(MBMetaPrefixKey.metaDate),
               {
                 allowExtend: false
               }
@@ -116,7 +109,7 @@ export class MinistryBrandsSermonList extends EditorComponent<Value, Props> {
               <Toolbar
                 {...this.makeToolbarPropsFromConfig2(
                   toolbarConfig,
-                  sidebarMinistryBrandsMetaCategory,
+                  sidebarMinistryBrandsMeta(MBMetaPrefixKey.metaCategory),
                   {
                     allowExtend: false
                   }
@@ -127,7 +120,7 @@ export class MinistryBrandsSermonList extends EditorComponent<Value, Props> {
                   <Toolbar
                     {...this.makeToolbarPropsFromConfig2(
                       toolbarConfig,
-                      sidebarMinistryBrandsMetaGroup,
+                      sidebarMinistryBrandsMeta(MBMetaPrefixKey.metaGroup),
                       {
                         allowExtend: false
                       }
@@ -138,7 +131,7 @@ export class MinistryBrandsSermonList extends EditorComponent<Value, Props> {
                       <Toolbar
                         {...this.makeToolbarPropsFromConfig2(
                           toolbarConfig,
-                          sidebarMinistryBrandsMetaSeries,
+                          sidebarMinistryBrandsMeta(MBMetaPrefixKey.metaSeries),
                           {
                             allowExtend: false
                           }
@@ -149,7 +142,9 @@ export class MinistryBrandsSermonList extends EditorComponent<Value, Props> {
                           <Toolbar
                             {...this.makeToolbarPropsFromConfig2(
                               toolbarConfig,
-                              sidebarMinistryBrandsMetaPreacher,
+                              sidebarMinistryBrandsMeta(
+                                MBMetaPrefixKey.metaPreacher
+                              ),
                               {
                                 allowExtend: false
                               }
@@ -160,7 +155,9 @@ export class MinistryBrandsSermonList extends EditorComponent<Value, Props> {
                               <Toolbar
                                 {...this.makeToolbarPropsFromConfig2(
                                   toolbarConfig,
-                                  sidebarMinistryBrandsMetaPassage,
+                                  sidebarMinistryBrandsMeta(
+                                    MBMetaPrefixKey.metaPassage
+                                  ),
                                   {
                                     allowExtend: false
                                   }
@@ -171,7 +168,9 @@ export class MinistryBrandsSermonList extends EditorComponent<Value, Props> {
                                   <Toolbar
                                     {...this.makeToolbarPropsFromConfig2(
                                       toolbarMetaItemLinkColor,
-                                      sidebarMinistryBrandsMetaPassage,
+                                      sidebarMinistryBrandsMeta(
+                                        MBMetaPrefixKey.metaPassage
+                                      ),
                                       {
                                         allowExtend: false
                                       }

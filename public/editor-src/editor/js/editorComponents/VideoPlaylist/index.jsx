@@ -3,6 +3,7 @@ import React from "react";
 import BoxResizer from "visual/component/BoxResizer";
 import CustomCSS from "visual/component/CustomCSS";
 import EditorComponent from "visual/editorComponents/EditorComponent";
+import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import { Wrapper } from "../tools/Wrapper";
 import Items from "./Items";
 import defaultValue from "./defaultValue.json";
@@ -19,7 +20,7 @@ class VideoPlaylist extends EditorComponent {
   state = { currentIndex: 0 };
 
   static get componentId() {
-    return "VideoPlaylist";
+    return ElementTypes.VideoPlaylist;
   }
 
   componentDidMount() {

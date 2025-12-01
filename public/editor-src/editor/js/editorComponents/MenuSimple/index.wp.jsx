@@ -3,6 +3,7 @@ import React from "react";
 import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { DynamicContentHelper } from "visual/editorComponents/WordPress/common/DynamicContentHelper";
+import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import { getMenus } from "visual/utils/api";
 import { makePlaceholder } from "visual/utils/dynamicContent";
 import { DCMenuProxyInstance } from "./DC/DCMenuProxyInstance";
@@ -21,7 +22,7 @@ export default class MenuSimpleWP extends EditorComponent {
     // NOTE: initially we only had MenuSimple (then called WPNavigation) for WordPress.
     // After we needed to make it work for cloud as well, it was renamed to SimpleMenu,
     // but since we don't have a good migration system yet, the old componentId still remains
-    return "WPNavigation";
+    return ElementTypes.WPNavigation;
   }
 
   componentDidMount() {

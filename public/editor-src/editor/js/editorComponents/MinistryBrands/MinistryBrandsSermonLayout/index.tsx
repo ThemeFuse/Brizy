@@ -4,18 +4,11 @@ import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { DynamicContentHelper } from "visual/editorComponents/WordPress/common/DynamicContentHelper";
 import { Wrapper } from "visual/editorComponents/tools/Wrapper";
+import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import { attachRefs } from "visual/utils/react";
 import * as sidebarExtendButtons from "../sidebarExtendButtons";
 import * as sidebarExtendFilters from "../sidebarExtendFilters";
-import {
-  sidebarMinistryBrandsMetaCategory,
-  sidebarMinistryBrandsMetaDate,
-  sidebarMinistryBrandsMetaGroup,
-  sidebarMinistryBrandsMetaPassage,
-  sidebarMinistryBrandsMetaPreacher,
-  sidebarMinistryBrandsMetaSeries,
-  sidebarMinistryBrandsMetaTitle
-} from "../sidebars/sidebars";
+import { sidebarMinistryBrandsMeta } from "../sidebars/sidebars";
 import * as toolbarExtendButtons from "../toolbarExtendButtons";
 import * as toolbarExtendFilters from "../toolbarExtendFilters";
 import * as toolbarImage from "../toolbarImage";
@@ -27,6 +20,7 @@ import * as toolbarPagination from "../toolbarPagination";
 import * as toolbarPreview from "../toolbarPreview";
 import * as toolbarTitle from "../toolbarTitle";
 import * as toolbarMetaItemLinkColor from "../toolbars/toolbarMetaItemLinkColor";
+import { MBMetaPrefixKey } from "../utils/types";
 import defaultValue from "./defaultValue.json";
 import * as sidebarConfig from "./sidebar";
 import { style } from "./styles";
@@ -38,8 +32,8 @@ export class MinistryBrandsSermonLayout extends EditorComponent<Value, Props> {
   static defaultValue = defaultValue;
   static experimentalDynamicContent = true;
 
-  static get componentId(): "MinistryBrandsSermonLayout" {
-    return "MinistryBrandsSermonLayout";
+  static get componentId(): ElementTypes.MinistryBrandsSermonLayout {
+    return ElementTypes.MinistryBrandsSermonLayout;
   }
 
   componentDidMount(): void {
@@ -77,7 +71,7 @@ export class MinistryBrandsSermonLayout extends EditorComponent<Value, Props> {
       <Toolbar
         {...this.makeToolbarPropsFromConfig2(
           toolbarTitle,
-          sidebarMinistryBrandsMetaTitle,
+          sidebarMinistryBrandsMeta(MBMetaPrefixKey.metaTitle),
           {
             allowExtend: false
           }
@@ -88,7 +82,7 @@ export class MinistryBrandsSermonLayout extends EditorComponent<Value, Props> {
           <Toolbar
             {...this.makeToolbarPropsFromConfig2(
               toolbarConfig,
-              sidebarMinistryBrandsMetaDate,
+              sidebarMinistryBrandsMeta(MBMetaPrefixKey.metaDate),
               {
                 allowExtend: false
               }
@@ -99,7 +93,7 @@ export class MinistryBrandsSermonLayout extends EditorComponent<Value, Props> {
               <Toolbar
                 {...this.makeToolbarPropsFromConfig2(
                   toolbarConfig,
-                  sidebarMinistryBrandsMetaCategory,
+                  sidebarMinistryBrandsMeta(MBMetaPrefixKey.metaCategory),
                   {
                     allowExtend: false
                   }
@@ -110,7 +104,7 @@ export class MinistryBrandsSermonLayout extends EditorComponent<Value, Props> {
                   <Toolbar
                     {...this.makeToolbarPropsFromConfig2(
                       toolbarConfig,
-                      sidebarMinistryBrandsMetaGroup,
+                      sidebarMinistryBrandsMeta(MBMetaPrefixKey.metaGroup),
                       {
                         allowExtend: false
                       }
@@ -121,7 +115,7 @@ export class MinistryBrandsSermonLayout extends EditorComponent<Value, Props> {
                       <Toolbar
                         {...this.makeToolbarPropsFromConfig2(
                           toolbarConfig,
-                          sidebarMinistryBrandsMetaSeries,
+                          sidebarMinistryBrandsMeta(MBMetaPrefixKey.metaSeries),
                           {
                             allowExtend: false
                           }
@@ -132,7 +126,9 @@ export class MinistryBrandsSermonLayout extends EditorComponent<Value, Props> {
                           <Toolbar
                             {...this.makeToolbarPropsFromConfig2(
                               toolbarConfig,
-                              sidebarMinistryBrandsMetaPreacher,
+                              sidebarMinistryBrandsMeta(
+                                MBMetaPrefixKey.metaPreacher
+                              ),
                               {
                                 allowExtend: false
                               }
@@ -143,7 +139,9 @@ export class MinistryBrandsSermonLayout extends EditorComponent<Value, Props> {
                               <Toolbar
                                 {...this.makeToolbarPropsFromConfig2(
                                   toolbarConfig,
-                                  sidebarMinistryBrandsMetaPassage,
+                                  sidebarMinistryBrandsMeta(
+                                    MBMetaPrefixKey.metaPassage
+                                  ),
                                   {
                                     allowExtend: false
                                   }
@@ -165,7 +163,9 @@ export class MinistryBrandsSermonLayout extends EditorComponent<Value, Props> {
                                       <Toolbar
                                         {...this.makeToolbarPropsFromConfig2(
                                           toolbarMetaItemLinkColor,
-                                          sidebarMinistryBrandsMetaPassage,
+                                          sidebarMinistryBrandsMeta(
+                                            MBMetaPrefixKey.metaPassage
+                                          ),
                                           {
                                             allowExtend: false
                                           }

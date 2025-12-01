@@ -1,4 +1,4 @@
-import { Obj } from "@brizy/readers";
+import { Obj, Str } from "@brizy/readers";
 import classnames from "classnames";
 import React from "react";
 import { getIn } from "timm";
@@ -9,6 +9,8 @@ import { Model } from "visual/editorComponents/EditorComponent/types";
 import { withMigrations } from "visual/editorComponents/tools/withMigrations";
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import { makePlaceholder } from "visual/utils/dynamicContent";
+import { getCSSId } from "visual/utils/models/cssId";
+import { parseCustomAttributes } from "visual/utils/string/parseCustomAttributes";
 import { uuid } from "visual/utils/uuid";
 import { migrations } from "../migrations/Form2Field";
 import Form2FieldItems from "./Items";
@@ -68,13 +70,26 @@ class Form2Field extends EditorComponent<Value, Props> {
       toolbarExtend: _toolbarExtend
     } = this.props;
 
-    const { type, active, label, activeRadio } = v;
+    const {
+      type,
+      active,
+      label,
+      activeRadio,
+      customAttributes,
+      cssClass,
+      customClassName: _customClassName
+    } = v;
+
+    const cssId = getCSSId(v);
+    const customAttributesParsed = parseCustomAttributes(customAttributes);
+    const customClassName = Str.read(cssClass || _customClassName);
 
     const Component = types[type];
 
     const classNameField = classnames(
       "brz-forms2__item",
       className,
+      customClassName,
       this.css(
         `${this.getComponentId()}-field`,
         `${this.getId()}-field`,
@@ -98,7 +113,7 @@ class Form2Field extends EditorComponent<Value, Props> {
     const toolbarExtend = isSelect
       ? toolbarExtendSelect
       : isRadioOrCheckbox
-        ? this.makeToolbarPropsFromConfig2(toolbar)
+        ? this.makeToolbarPropsFromConfig2(toolbar, sidebar)
         : _toolbarExtend;
 
     const itemProps = this.makeSubcomponentProps({
@@ -115,7 +130,11 @@ class Form2Field extends EditorComponent<Value, Props> {
     });
 
     return (
-      <div className={classNameField}>
+      <div
+        className={classNameField}
+        {...(cssId ? { id: cssId } : {})}
+        {...customAttributesParsed}
+      >
         {labelType === "outside" && (
           // @ts-expect-error: Need transform toolbarExtendLabel to TS
           <Toolbar {...toolbarExtendLabel}>
@@ -207,10 +226,17 @@ class Form2Field extends EditorComponent<Value, Props> {
       label,
       required,
       activeRadio,
-      defaultValue
+      defaultValue,
+      customAttributes,
+      cssClass,
+      customClassName: _customClassName
     } = v;
     const name = customFieldName ?? _id;
     const Component = types[type];
+
+    const cssId = getCSSId(v);
+    const customAttributesParsed = parseCustomAttributes(customAttributes);
+    const customClassName = Str.read(cssClass || _customClassName);
 
     const uidPlaceholder = makePlaceholder({
       content: "{{ random_id }}",
@@ -221,6 +247,7 @@ class Form2Field extends EditorComponent<Value, Props> {
     const classNameField = classnames(
       "brz-forms2__item",
       className,
+      customClassName,
       { "brz-d-none": type === ElementTypes.Hidden },
       this.css(
         `${this.getComponentId()}-field`,
@@ -271,7 +298,11 @@ class Form2Field extends EditorComponent<Value, Props> {
       : defaultValue;
 
     return (
-      <Translate className={classNameField}>
+      <Translate
+        className={classNameField}
+        {...(cssId ? { id: cssId } : {})}
+        {...customAttributesParsed}
+      >
         {labelType === "outside" && (
           <Label
             id={labelId}

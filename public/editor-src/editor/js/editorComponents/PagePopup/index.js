@@ -6,6 +6,7 @@ import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 // should we move this util folder to another place?
 import { changeValueAfterDND } from "visual/editorComponents/Page/utils";
+import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import UIEvents from "visual/global/UIEvents";
 import { addBlock, addGlobalPopup } from "visual/redux/actions2";
 import { setIds, stripSystemKeys } from "visual/utils/models";
@@ -14,7 +15,7 @@ import defaultValue from "./defaultValue.json";
 
 class PagePopup extends EditorComponent {
   static get componentId() {
-    return "PagePopup";
+    return ElementTypes.PagePopup;
   }
 
   static defaultValue = defaultValue;

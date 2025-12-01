@@ -25,7 +25,8 @@ export default function () {
               detailButtonColorPalette: "color8",
               detailButtonBgColorPalette: "color3",
               hoverDetailButtonBgColorOpacity: 0.8,
-              metaLinksColorPalette: "color4"
+              metaLinksColorPalette: "color3",
+              hoverMetaLinksColorPalette: "color4"
             }
           }
         ]

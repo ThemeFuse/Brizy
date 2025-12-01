@@ -20,6 +20,7 @@ import Toolbar, { ToolbarExtend } from "visual/component/Toolbar";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { shouldRenderPopup } from "visual/editorComponents/tools/Popup";
+import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import { isEditor } from "visual/providers/RenderProvider";
 import { blocksDataSelector, deviceModeSelector } from "visual/redux/selectors";
 import { isPro, isRTL } from "visual/utils/env";
@@ -60,7 +61,7 @@ class Column extends EditorComponent {
   toolbarRef = React.createRef();
 
   static get componentId() {
-    return "Column";
+    return ElementTypes.Column;
   }
 
   shouldComponentUpdate(nextProps) {

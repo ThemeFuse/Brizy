@@ -7,6 +7,7 @@ import CustomCSS from "visual/component/CustomCSS";
 import { ThemeIcon } from "visual/component/ThemeIcon";
 import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
+import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import {
   defaultValueValue,
   validateKeyByProperty
@@ -32,7 +33,7 @@ class Switcher extends EditorComponent {
   static defaultValue = defaultValue;
 
   static get componentId() {
-    return "Switcher";
+    return ElementTypes.Switcher;
   }
 
   componentDidMount() {

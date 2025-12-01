@@ -6,27 +6,20 @@ import EditorComponent from "visual/editorComponents/EditorComponent";
 import { Model } from "visual/editorComponents/EditorComponent/types";
 import { DynamicContentHelper } from "visual/editorComponents/WordPress/common/DynamicContentHelper";
 import { Wrapper } from "visual/editorComponents/tools/Wrapper";
+import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import { updateEkklesiaFields } from "visual/utils/api";
 import { attachRefs } from "visual/utils/react";
 import { read as readNum } from "visual/utils/reader/number";
 import { read as readString } from "visual/utils/reader/string";
 import * as sidebarConfig from "../sidebar";
 import * as sidebarExtendButtons from "../sidebarExtendButtons";
-import {
-  sidebarMinistryBrandsMetaCategory,
-  sidebarMinistryBrandsMetaChildcare,
-  sidebarMinistryBrandsMetaDay,
-  sidebarMinistryBrandsMetaGroup,
-  sidebarMinistryBrandsMetaResourceLink,
-  sidebarMinistryBrandsMetaStatus,
-  sidebarMinistryBrandsMetaTimes,
-  sidebarMinistryBrandsMetaTitle
-} from "../sidebars/sidebars";
+import { sidebarMinistryBrandsMeta } from "../sidebars/sidebars";
 import * as toolbarImage from "../toolbarImage";
 import * as toolbarMetaIcons from "../toolbarMetaIcons";
 import * as toolbarTitle from "../toolbarTitle";
 import * as toolbarMetaItemLinkColor from "../toolbars//toolbarMetaItemLinkColor";
 import { getEkklesiaMessages } from "../utils/helpers";
+import { MBMetaPrefixKey } from "../utils/types";
 import defaultValue from "./defaultValue.json";
 import { style } from "./styles";
 import * as toolbarArrow from "./toolbarArrow";
@@ -41,8 +34,8 @@ export class MinistryBrandsGroupSlider extends EditorComponent<Value, Props> {
   static defaultValue = defaultValue;
   static experimentalDynamicContent = true;
 
-  static get componentId(): "MinistryBrandsGroupSlider" {
-    return "MinistryBrandsGroupSlider";
+  static get componentId(): ElementTypes.MinistryBrandsGroupSlider {
+    return ElementTypes.MinistryBrandsGroupSlider;
   }
 
   async componentDidMount(): Promise<void> {
@@ -133,7 +126,7 @@ export class MinistryBrandsGroupSlider extends EditorComponent<Value, Props> {
               <Toolbar
                 {...this.makeToolbarPropsFromConfig2(
                   toolbarMeta,
-                  sidebarMinistryBrandsMetaDay,
+                  sidebarMinistryBrandsMeta(MBMetaPrefixKey.metaDay),
                   {
                     allowExtend: false
                   }
@@ -144,7 +137,7 @@ export class MinistryBrandsGroupSlider extends EditorComponent<Value, Props> {
                   <Toolbar
                     {...this.makeToolbarPropsFromConfig2(
                       toolbarMeta,
-                      sidebarMinistryBrandsMetaTimes,
+                      sidebarMinistryBrandsMeta(MBMetaPrefixKey.metaTimes),
                       {
                         allowExtend: false
                       }
@@ -155,7 +148,9 @@ export class MinistryBrandsGroupSlider extends EditorComponent<Value, Props> {
                       <Toolbar
                         {...this.makeToolbarPropsFromConfig2(
                           toolbarMeta,
-                          sidebarMinistryBrandsMetaCategory,
+                          sidebarMinistryBrandsMeta(
+                            MBMetaPrefixKey.metaCategory
+                          ),
                           {
                             allowExtend: false
                           }
@@ -166,7 +161,9 @@ export class MinistryBrandsGroupSlider extends EditorComponent<Value, Props> {
                           <Toolbar
                             {...this.makeToolbarPropsFromConfig2(
                               toolbarMeta,
-                              sidebarMinistryBrandsMetaGroup,
+                              sidebarMinistryBrandsMeta(
+                                MBMetaPrefixKey.metaGroup
+                              ),
                               {
                                 allowExtend: false
                               }
@@ -177,7 +174,9 @@ export class MinistryBrandsGroupSlider extends EditorComponent<Value, Props> {
                               <Toolbar
                                 {...this.makeToolbarPropsFromConfig2(
                                   toolbarMeta,
-                                  sidebarMinistryBrandsMetaStatus,
+                                  sidebarMinistryBrandsMeta(
+                                    MBMetaPrefixKey.metaStatus
+                                  ),
                                   {
                                     allowExtend: false
                                   }
@@ -188,7 +187,9 @@ export class MinistryBrandsGroupSlider extends EditorComponent<Value, Props> {
                                   <Toolbar
                                     {...this.makeToolbarPropsFromConfig2(
                                       toolbarMeta,
-                                      sidebarMinistryBrandsMetaChildcare,
+                                      sidebarMinistryBrandsMeta(
+                                        MBMetaPrefixKey.metaChildcare
+                                      ),
                                       {
                                         allowExtend: false
                                       }
@@ -199,7 +200,9 @@ export class MinistryBrandsGroupSlider extends EditorComponent<Value, Props> {
                                       <Toolbar
                                         {...this.makeToolbarPropsFromConfig2(
                                           toolbarMeta,
-                                          sidebarMinistryBrandsMetaResourceLink,
+                                          sidebarMinistryBrandsMeta(
+                                            MBMetaPrefixKey.metaResourceLink
+                                          ),
                                           {
                                             allowExtend: false
                                           }
@@ -221,7 +224,9 @@ export class MinistryBrandsGroupSlider extends EditorComponent<Value, Props> {
                                               <Toolbar
                                                 {...this.makeToolbarPropsFromConfig2(
                                                   toolbarTitle,
-                                                  sidebarMinistryBrandsMetaTitle,
+                                                  sidebarMinistryBrandsMeta(
+                                                    MBMetaPrefixKey.metaTitle
+                                                  ),
                                                   {
                                                     allowExtend: false
                                                   }
@@ -243,7 +248,9 @@ export class MinistryBrandsGroupSlider extends EditorComponent<Value, Props> {
                                                       <Toolbar
                                                         {...this.makeToolbarPropsFromConfig2(
                                                           toolbarMetaItemLinkColor,
-                                                          sidebarMinistryBrandsMetaResourceLink,
+                                                          sidebarMinistryBrandsMeta(
+                                                            MBMetaPrefixKey.metaResourceLink
+                                                          ),
                                                           {
                                                             allowExtend: false
                                                           }

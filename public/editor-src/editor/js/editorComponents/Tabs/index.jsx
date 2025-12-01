@@ -4,6 +4,7 @@ import React from "react";
 import ContextMenu from "visual/component/ContextMenu";
 import CustomCSS from "visual/component/CustomCSS";
 import EditorComponent from "visual/editorComponents/EditorComponent";
+import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import { makeDataAttr } from "visual/utils/i18n/attribute";
 import { getContainerW } from "visual/utils/meta";
 import {
@@ -30,7 +31,7 @@ export default class Tabs extends EditorComponent {
   };
 
   static get componentId() {
-    return "Tabs";
+    return ElementTypes.Tabs;
   }
 
   getMeta(v) {

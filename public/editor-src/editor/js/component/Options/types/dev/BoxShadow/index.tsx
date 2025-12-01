@@ -93,7 +93,7 @@ export const BoxShadow = ({
         }
         case "blur": {
           const blur = Blur.fromNumber(m.blur);
-          blur && onChange(setBlur(blur, value));
+          typeof blur === "number" && onChange(setBlur(blur, value));
           break;
         }
         case "hex": {

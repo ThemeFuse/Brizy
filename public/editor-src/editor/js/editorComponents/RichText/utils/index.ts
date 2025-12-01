@@ -14,6 +14,7 @@ import { ReduxState } from "visual/redux/types";
 import { explodePlaceholder } from "visual/utils/dynamicContent";
 import type { DCPlaceholderStartObj } from "visual/utils/dynamicContent/types";
 import { pipe } from "visual/utils/fp";
+import { makeAttr } from "visual/utils/i18n/attribute";
 import type { Value as LinkValue } from "visual/utils/models/link";
 import { getDynamicContentChoices } from "visual/utils/options";
 import { findDCChoiceByPlaceholder } from "visual/utils/options/Population/utils";
@@ -79,8 +80,7 @@ function quillUtils(renderContext: RenderType) {
     }
 
     function getParagraphsArray($: cheerio.Root | JQuery<HTMLElement>) {
-      const selector =
-        ":header, p, pre, li, div:not(.brz-temp-div), span[data-tooltip]";
+      const selector = `:header, p, pre, li, div:not(.brz-temp-div), span[data-tooltip], span[${makeAttr("tooltip")}]`;
 
       return isJQueryHTMLElement($) ? $.find(selector) : $(selector);
     }

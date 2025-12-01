@@ -694,9 +694,12 @@
       margin: 0 -5px;
       max-width: 54px;
       display: block;
-      overflow: hidden;
-      white-space: nowrap;
-      text-overflow: ellipsis;
+
+      &--truncate {
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+      }
     }
 
     &--separator {

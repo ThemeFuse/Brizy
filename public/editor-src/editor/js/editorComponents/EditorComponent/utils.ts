@@ -468,6 +468,12 @@ export function getOptionValueByDevice({
       defaultValueValue({ v, device, key: createOptionId(id, k) })
     );
   }
+
+  if (id in v) {
+    return { value: v[id] };
+  }
+
+  return undefined;
 }
 
 export const getElementModelKeyFn: GetElementModelKeyFn =

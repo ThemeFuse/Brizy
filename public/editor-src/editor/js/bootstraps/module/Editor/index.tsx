@@ -18,9 +18,9 @@ export const Editor = (props: Props): JSX.Element => {
   return (
     <I18nextProvider i18n={i18n}>
       <RenderProvider renderType="editor">
-        <ConfigProvider config={config}>
-          <RegisterParts config={config}>
-            <InitStore config={config} editorMode={editorMode}>
+        <InitStore config={config} editorMode={editorMode}>
+          <ConfigProvider config={config}>
+            <RegisterParts config={config}>
               <EditorModeProvider mode={editorMode}>
                 <StyleProvider>
                   <AlphaConfigProvider>
@@ -30,9 +30,9 @@ export const Editor = (props: Props): JSX.Element => {
                   </AlphaConfigProvider>
                 </StyleProvider>
               </EditorModeProvider>
-            </InitStore>
-          </RegisterParts>
-        </ConfigProvider>
+            </RegisterParts>
+          </ConfigProvider>
+        </InitStore>
       </RenderProvider>
     </I18nextProvider>
   );

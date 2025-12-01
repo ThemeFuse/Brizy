@@ -3,7 +3,10 @@
   ".brz-sermonList",
   ".brz-sermonDetail",
   ".brz-sermonFeatured",
-  ".brz-articleDetail",
+  ".brz-staffFeatured",
+  ".brz-articleLayout",
+  ".brz-staffLayout",
   ".brz-articleList",
+  ".brz-articleDetail",
   ".brz-articleFeatured"
 ]

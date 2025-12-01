@@ -15,6 +15,7 @@ import Placeholder from "visual/component/Placeholder";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { DCApiProxyInstance } from "visual/editorComponents/EditorComponent/DynamicContent/DCApiProxyInstance";
 import { withMigrations } from "visual/editorComponents/tools/withMigrations";
+import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import { isWp } from "visual/global/Config/types/configs/WP";
 import { isEditor, isView } from "visual/providers/RenderProvider";
 import { pageSelector } from "visual/redux/selectors";
@@ -138,7 +139,7 @@ export class Posts extends EditorComponent {
   }
 
   static get componentId() {
-    return "Posts";
+    return ElementTypes.Posts;
   }
 
   handleAllTagChange = (allTag) => {

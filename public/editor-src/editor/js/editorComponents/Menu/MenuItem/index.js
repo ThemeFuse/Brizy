@@ -9,6 +9,7 @@ import Portal from "visual/component/Portal";
 import { SortableZIndex } from "visual/component/Sortable/SortableZIndex";
 import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
+import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import { isEditor, isView } from "visual/providers/RenderProvider";
 import { isPro } from "visual/utils/env";
 import { getBlockData } from "visual/utils/models";
@@ -54,7 +55,7 @@ class MenuItem extends EditorComponent {
   isPro = isPro(this.getGlobalConfig());
 
   static get componentId() {
-    return "MenuItem";
+    return ElementTypes.MenuItem;
   }
 
   componentDidUpdate(nextProps) {

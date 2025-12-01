@@ -6,6 +6,7 @@ import CustomCSS from "visual/component/CustomCSS";
 import Toolbar, { hideToolbar } from "visual/component/Toolbar";
 //import Config from "visual/global/Config";
 import EditorComponent from "visual/editorComponents/EditorComponent";
+import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import { makePlaceholder } from "visual/utils/dynamicContent";
 import { attachRefs } from "visual/utils/react";
 import defaultValue from "./defaultValue.json";
@@ -19,7 +20,7 @@ class FacebookComments extends EditorComponent {
   static defaultValue = defaultValue;
 
   static get componentId() {
-    return "FacebookComments";
+    return ElementTypes.FacebookComments;
   }
 
   getAppDataEditor() {

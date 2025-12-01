@@ -6,6 +6,7 @@ import { Static } from "./bootstrap/types";
 import { getProScriptUrl } from "./utils/getProScriptUrl";
 import { getThirdPartyScriptUrl } from "./utils/getThirdPartyScriptUrl";
 import "./utils/globals";
+import { preloadComponents } from "./utils/preloadComponents";
 
 // @ts-expect-error: Config in worker
 global.__VISUAL_CONFIG__ = {};
@@ -35,6 +36,9 @@ class Core {
 
     // @ts-expect-error: Config in worker
     const config: ConfigCommon = mergeDeep(global.__VISUAL_CONFIG__, _config);
+
+    // Preload elements
+    preloadComponents(config);
 
     const { bootstrap } = await import("./bootstrap");
 

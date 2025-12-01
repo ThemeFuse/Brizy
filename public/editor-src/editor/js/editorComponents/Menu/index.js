@@ -13,6 +13,7 @@ import { wInMMenu } from "visual/config/columns";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { HamburgerIcon } from "visual/editorComponents/Menu/controls/HamburgerIcon";
+import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import UIEvents from "visual/global/UIEvents";
 import { isView } from "visual/providers/RenderProvider";
 import { makePlaceholder } from "visual/utils/dynamicContent";
@@ -51,7 +52,7 @@ export default class Menu extends EditorComponent {
   isPro = isPro(this.getGlobalConfig());
 
   static get componentId() {
-    return "Menu";
+    return ElementTypes.Menu;
   }
 
   getMeta(v) {

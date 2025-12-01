@@ -12,11 +12,9 @@ export default function ($node: JQuery<HTMLElement>) {
   );
 
   headLineWrapper.forEach((headline) => {
-    const target = headline.firstElementChild;
-
-    if (isHTMLElement(target)) {
+    if (isHTMLElement(headline)) {
       const headLineOptions = getHeadlineOptions(headline);
-      new Headline(target, headLineOptions);
+      new Headline(headline, headLineOptions);
     }
   });
 }
