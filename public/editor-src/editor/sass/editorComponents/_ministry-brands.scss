@@ -1,5 +1,6 @@
 .brz-ministryBrands {
   width: 100%;
+
   &__item--meta--links,
   a,
   & > a {
@@ -25,38 +26,6 @@
     display: flex;
     flex-direction: column;
     align-items: inherit;
-  }
-
-  &__item--media {
-    width: 100%;
-    position: relative;
-    overflow: hidden;
-    padding-bottom: 56.25%;
-
-    &::after {
-      content: "";
-      width: 100%;
-      height: 100%;
-      position: absolute;
-      top: 0;
-      left: 0;
-      pointer-events: none;
-    }
-
-    iframe,
-    video,
-    img {
-      position: absolute;
-      top: 0;
-      left: 0;
-    }
-
-    iframe,
-    video {
-      width: 100%;
-      height: 100%;
-      border: 0 !important;
-    }
   }
 
   img,
@@ -111,6 +80,74 @@
     & > span.pagination_ellipsis,
     & > a:not(:last-child) {
       margin-right: 0.5rem;
+    }
+  }
+
+  p.brz-groupLayout__pagination,
+  p.brz-staffList__pagination,
+  p.brz-staffLayout__pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    text-align: center;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    line-height: 1;
+
+    & > * {
+      margin: 0 0.25rem;
+    }
+
+    a#off {
+      cursor: default;
+    }
+
+  }
+
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover,
+  input:-webkit-autofill:focus {
+    transition: background-color 50000s ease-in-out 0s;
+    -webkit-text-fill-color: inherit !important;
+  }
+}
+
+.brz-ministryBrands {
+  .brz-ministryBrands__item--media {
+    overflow: hidden;
+
+    &::after {
+      content: "";
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+    }
+  }
+
+  &:not(.brz-staffLayout):not(.brz-staffList__wrapper):not(.brz-staffDetail__wrapper):not(.brz-staffFeatured__wrapper) {
+    .brz-ministryBrands__item--media {
+      width: 100%;
+      position: relative;
+      padding-bottom: 56.25%;
+
+      iframe,
+      video,
+      img {
+        position: absolute;
+        top: 0;
+        left: 0;
+      }
+
+      iframe,
+      video {
+        width: 100%;
+        height: 100%;
+        border: 0 !important;
+      }
     }
   }
 }

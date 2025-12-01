@@ -2,6 +2,7 @@ import { isEqual } from "es-toolkit";
 import React from "react";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { OnChangeMeta } from "visual/editorComponents/EditorComponent/types";
+import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import Editor from "visual/global/Editor";
 import { updateGlobalBlock } from "visual/redux/actions2";
 import { canUseCondition } from "visual/utils/blocks";
@@ -11,8 +12,8 @@ import { Props, Value } from "./types";
 class GlobalBlock extends EditorComponent<Value, Props> {
   static defaultValue = {};
 
-  static get componentId(): "GlobalBlock" {
-    return "GlobalBlock";
+  static get componentId(): ElementTypes.GlobalBlock {
+    return ElementTypes.GlobalBlock;
   }
 
   optionalSCU(nextProps: Props) {

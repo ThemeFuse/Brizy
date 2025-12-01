@@ -16,7 +16,8 @@ type RBlocksHtml = (s: BlocksHtml, a: ReduxAction, f: ReduxState) => BlocksHtml;
 const defaultState = {
   inProcessing: 0,
   inPending: false,
-  blocks: {}
+  blocks: {},
+  initialized: false
 };
 
 const getBlockHtml = (
@@ -159,6 +160,10 @@ export const blocksHtml: RBlocksHtml = (
       return produce(state, (draft) => {
         draft.inProcessing = stats;
 
+        if (!draft.initialized) {
+          draft.initialized = true;
+        }
+
         if (stats === 0) {
           draft.inPending = false;
         }
@@ -166,6 +171,12 @@ export const blocksHtml: RBlocksHtml = (
         if (stats > 0 && !draft.inPending) {
           draft.inPending = true;
         }
+      });
+    }
+
+    case ActionTypes.INITIALIZE_BLOCKS_HTML: {
+      return produce(state, (draft) => {
+        draft.initialized = true;
       });
     }
 

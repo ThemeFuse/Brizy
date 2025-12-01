@@ -4,6 +4,7 @@ import React from "react";
 import CustomCSS from "visual/component/CustomCSS";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import EditorComponent from "visual/editorComponents/EditorComponent";
+import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import { makeAttr, makeDataAttr } from "../../utils/i18n/attribute";
 import defaultValue from "./defaultValue.json";
 import * as sidebarExtendButton from "./sidebarExtendButton";
@@ -19,7 +20,7 @@ export default class Form extends EditorComponent {
   };
 
   static get componentId() {
-    return "Form";
+    return ElementTypes.Form;
   }
 
   componentDidMount() {

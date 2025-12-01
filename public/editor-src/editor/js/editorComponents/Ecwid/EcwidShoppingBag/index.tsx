@@ -12,6 +12,7 @@ import {
 } from "visual/editorComponents/Icon/utils";
 import { Wrapper } from "visual/editorComponents/tools/Wrapper";
 import { isCloud } from "visual/global/Config/types/configs/Cloud";
+import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import { EcwidService } from "visual/libs/Ecwid";
 import { isView } from "visual/providers/RenderProvider";
 import { makePlaceholder } from "visual/utils/dynamicContent";
@@ -30,8 +31,8 @@ export class EcwidShoppingBag extends EditorComponent<Value> {
   static defaultValue = defaultValue;
   private uniqueId = `${EcwidShoppingBag.componentId}-${uniqueId()}`;
 
-  static get componentId(): "EcwidShoppingBag" {
-    return "EcwidShoppingBag";
+  static get componentId(): ElementTypes.EcwidShoppingBag {
+    return ElementTypes.EcwidShoppingBag;
   }
 
   handleResizerChange = (patch: Patch): void => {

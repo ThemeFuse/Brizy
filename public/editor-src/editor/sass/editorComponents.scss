@@ -207,6 +207,9 @@
 // Ministry Brands Group Layout
 @import "editorComponents/ministry-groupLayout";
 
+// Ministry Brands Staff Layout
+@import "editorComponents/ministry-staffLayout";
+
 // // Ministry Brands Group Slider
 @import "editorComponents/ministry-groupSlider";
 
@@ -221,6 +224,9 @@
 
 // Ministry Brands Sermon List
 @import "editorComponents/ministry-sermonList";
+
+// Ministry Brands Staff List
+@import "editorComponents/ministry-staffList";
 
 // Ministry Sermon Featured
 @import "editorComponents/ministry-sermonFeatured";
@@ -249,16 +255,22 @@
 // Ministry Brands Form Widget
 @import "editorComponents/ministry-formWidget";
 
-// Ministry Brands Article Detail
-@import "editorComponents/ministry-articleDetail";
+// Ministry Brands Staff Featured
+@import "editorComponents/ministry-staffFeatured";
 
-// Ministry Brands Article List
-@import "editorComponents/ministry-articleList";
-// Ministry Brands Article Featured
-@import "editorComponents/ministry-articleFeatured";
+// Ministry Brands Article Layout
+@import "editorComponents/ministry-articleLayout";
 
 // Ministry Brands Staff Detail
 @import "editorComponents/ministry-staffDetail";
+// Ministry Brands Article Featured
+@import "editorComponents/ministry-articleFeatured";
+
+// Ministry Brands Article List
+@import "editorComponents/ministry-articleList";
+
+// Ministry Brands Article Detail
+@import "editorComponents/ministry-articleDetail";
 
 // Leadific
 @import "editorComponents/leadific";

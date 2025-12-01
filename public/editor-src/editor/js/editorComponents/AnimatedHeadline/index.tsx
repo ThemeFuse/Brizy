@@ -1,5 +1,5 @@
 import { Str } from "@brizy/readers";
-import React from "react";
+import React, { createRef } from "react";
 import { AnimatedHeadline as Control } from "visual/component/AnimatedHeadline";
 import { AnimationStyle } from "visual/component/AnimatedHeadline/types";
 import CustomCSS from "visual/component/CustomCSS";
@@ -23,6 +23,8 @@ class AnimatedHeadline extends EditorComponent<Value, ElementProps> {
 
   static defaultValue = defaultValue;
   static experimentalDynamicContent = true;
+
+  wrapperRef = createRef<HTMLDivElement>();
 
   getAttributes(): Record<string, string> {
     const v = this.getValue();
@@ -72,10 +74,11 @@ class AnimatedHeadline extends EditorComponent<Value, ElementProps> {
               <Wrapper
                 {...this.makeWrapperProps({
                   className,
-                  ref: (el) => attachRefs(el, [toolbarRef, cssRef])
+                  ref: (el) =>
+                    attachRefs(el, [toolbarRef, cssRef, this.wrapperRef])
                 })}
               >
-                <Control {...options} />
+                <Control {...options} ref={this.wrapperRef} />
               </Wrapper>
             )}
           </CustomCSS>

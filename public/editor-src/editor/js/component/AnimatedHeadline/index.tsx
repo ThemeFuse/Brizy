@@ -1,21 +1,27 @@
-import React, { useEffect, useRef } from "react";
-import { FCC } from "visual/utils/react/types";
+import { forwardRef, useEffect, useRef } from "react";
+import { isHTMLElement } from "visual/utils/dom/isHTMLElement";
 import { Headline } from "./Headline";
 import { Settings } from "./types";
 
-export const AnimatedHeadline: FCC<Settings> = (settings) => {
-  const controller = useRef<Headline | null>(null);
-  const wrapper = useRef<HTMLDivElement | null>(null);
+export const AnimatedHeadline = forwardRef<HTMLDivElement, Settings>(
+  (settings, wrapperRef) => {
+    const controller = useRef<Headline | null>(null);
 
-  useEffect(() => {
-    if (wrapper.current) {
-      controller.current = new Headline(wrapper.current, settings);
-    }
+    useEffect(() => {
+      const ref =
+        typeof wrapperRef == "function"
+          ? wrapperRef(null)
+          : wrapperRef?.current;
 
-    return () => {
-      return controller.current?.clearAnimation();
-    };
-  }, [settings]);
+      if (isHTMLElement(ref)) {
+        controller.current = new Headline(ref, settings);
+      }
 
-  return <div ref={wrapper} />;
-};
+      return () => {
+        return controller.current?.clearAnimation();
+      };
+    }, [settings, wrapperRef]);
+
+    return null;
+  }
+);

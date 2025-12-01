@@ -48,7 +48,7 @@ function compile(blocksData: Array<Block>, store: Store, config: ConfigCommon) {
   };
 }
 
-function addQueue(
+export function addQueue(
   queue: Queue<unknown>,
   blocks: Array<Block>,
   store: Store,

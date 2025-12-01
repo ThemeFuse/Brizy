@@ -35,11 +35,4 @@ export function getGroupsOrder(
   }));
 }
 
-export const clickExceptions: Array<(n: HTMLElement) => boolean> = [
-  (node) => {
-    return (
-      node.closest(".brz-ed-addable__icon:not(.brz-ed-addable__icon--open)") ===
-      null
-    );
-  }
-];
+export const clickExceptions = [".brz-ed-option-type__addable"];

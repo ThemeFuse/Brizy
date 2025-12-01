@@ -19,6 +19,7 @@ import {
   wInTabletPage
 } from "visual/config/columns";
 import EditorComponent from "visual/editorComponents/EditorComponent";
+import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import { deviceModeSelector } from "visual/redux/selectors";
 import { clamp } from "visual/utils/math";
 import { hasMembership } from "visual/utils/membership";
@@ -46,7 +47,7 @@ export default class SectionHeaderItem extends EditorComponent {
   };
 
   static get componentId() {
-    return "SectionHeaderItem";
+    return ElementTypes.SectionHeaderItem;
   }
 
   getDBValue() {

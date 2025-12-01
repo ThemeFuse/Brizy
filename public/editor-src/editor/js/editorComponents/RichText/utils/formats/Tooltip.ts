@@ -1,4 +1,5 @@
 import Quill from "quill";
+import { makeAttr } from "visual/utils/i18n/attribute";
 import { encodeToString, parseFromString } from "visual/utils/string";
 import { uuid } from "visual/utils/uuid";
 import { TooltipFormat } from "../../types";
@@ -19,12 +20,19 @@ class TooltipBlot extends Inline {
     return node;
   }
 
+  static getTooltipAttributes(node: Element) {
+    return (
+      node.getAttribute(makeAttr("tooltip")) ??
+      node.getAttribute("data-tooltip")
+    );
+  }
+
   static formats(node: Element) {
-    return node.getAttribute("data-tooltip");
+    return TooltipBlot.getTooltipAttributes(node);
   }
 
   static setAttributes(node: Element, value: string) {
-    const current = node.getAttribute("data-tooltip");
+    const current = TooltipBlot.getTooltipAttributes(node);
     const currentParsed = parseFromString<TooltipFormat>(current ?? "{}") ?? {};
 
     const patch = parseFromString<Partial<TooltipFormat>>(value ?? "{}") ?? {};
@@ -37,9 +45,12 @@ class TooltipBlot extends Inline {
     const { enableTooltip } = updated;
 
     if (enableTooltip === "on") {
-      node.setAttribute("data-tooltip", encodeToString(updated));
+      // INFO: The data-tooltip attribute was for old users, we need to remove it to avoid conflicts
+      node.removeAttribute("data-tooltip");
+      node.setAttribute(makeAttr("tooltip"), encodeToString(updated));
     } else {
       node.removeAttribute("data-tooltip");
+      node.removeAttribute(makeAttr("tooltip"));
     }
   }
 
@@ -48,7 +59,7 @@ class TooltipBlot extends Inline {
       return super.format(name, value);
     }
 
-    const currentAttr = this.domNode.getAttribute("data-tooltip");
+    const currentAttr = TooltipBlot.getTooltipAttributes(this.domNode);
     const currentParsed = parseFromString<TooltipFormat>(currentAttr ?? "{}");
     const incomingParsed = parseFromString<TooltipFormat>(value ?? "{}");
 

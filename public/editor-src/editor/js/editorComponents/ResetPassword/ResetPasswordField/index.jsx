@@ -5,6 +5,7 @@ import EditorIcon from "visual/component/EditorIcon";
 import { ThemeIcon } from "visual/component/ThemeIcon";
 import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
+import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import { isEditor } from "visual/providers/RenderProvider";
 import defaultValue from "./defaultValue";
 import { style } from "./styles";
@@ -29,7 +30,7 @@ class ResetPasswordField extends EditorComponent {
   };
 
   static get componentId() {
-    return "ResetPasswordField";
+    return ElementTypes.ResetPasswordField;
   }
 
   handleActive = (active) => {

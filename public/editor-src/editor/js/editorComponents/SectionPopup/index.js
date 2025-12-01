@@ -18,6 +18,7 @@ import {
 } from "visual/config/columns";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import EditorComponent from "visual/editorComponents/EditorComponent";
+import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import { isEditor } from "visual/providers/RenderProvider";
 import { deviceModeSelector } from "visual/redux/selectors";
 import { makeDataAttr } from "visual/utils/i18n/attribute";
@@ -63,7 +64,7 @@ class SectionPopup extends EditorComponent {
   }
 
   static get componentId() {
-    return "SectionPopup";
+    return ElementTypes.SectionPopup;
   }
 
   componentDidMount() {

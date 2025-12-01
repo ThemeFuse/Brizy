@@ -6,6 +6,7 @@ import CustomCSS from "visual/component/CustomCSS";
 import { ThemeIcon } from "visual/component/ThemeIcon";
 import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
+import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import { attachRefs } from "visual/utils/react";
 import { Wrapper } from "../tools/Wrapper";
 import defaultValue from "./defaultValue.json";
@@ -30,8 +31,8 @@ const resizerRestrictions = {
   }
 };
 class Line extends EditorComponent<Value, Props> {
-  static get componentId(): string {
-    return "Line";
+  static get componentId(): ElementTypes.Line {
+    return ElementTypes.Line;
   }
   static defaultValue = defaultValue;
   static experimentalDynamicContent = true;

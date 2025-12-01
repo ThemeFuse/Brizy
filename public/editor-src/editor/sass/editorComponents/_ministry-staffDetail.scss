@@ -2,10 +2,6 @@
   overflow: hidden;
 
   &__item {
-    & > * {
-      margin: 0 0 0.5rem 0;
-    }
-
     &--social {
       display: flex;
       padding: 0;
@@ -29,6 +25,11 @@
       justify-content: center;
       align-items: center;
     }
+  }
+
+  .brz-ministryBrands__item--media {
+    position: relative;
+    width: 100%;
   }
 
   ul {

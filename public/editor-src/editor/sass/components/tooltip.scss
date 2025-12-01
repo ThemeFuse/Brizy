@@ -32,7 +32,7 @@
   }
 }
 
-.brz:not(.brz-ed) {
+&:not(.brz-ed) {
   .brz-tooltip {
     display: none;
 

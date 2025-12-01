@@ -11,6 +11,7 @@ import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { Wrapper } from "visual/editorComponents/tools/Wrapper";
 import { CMS } from "visual/global/Config/types/configs/Cloud";
+import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import { makePlaceholder } from "visual/utils/dynamicContent";
 import { makeDataAttr } from "visual/utils/i18n/attribute";
 import { attachRefs } from "visual/utils/react";
@@ -64,8 +65,8 @@ export default class Translation extends EditorComponent<Value, Props, State> {
   content = React.createRef<HTMLDivElement>();
   state = { isOpen: false };
 
-  static get componentId(): "Translation" {
-    return "Translation";
+  static get componentId(): ElementTypes.Translation {
+    return ElementTypes.Translation;
   }
 
   handleOutside = (): void => {

@@ -1,7 +1,7 @@
-import { DynamicStylesProps } from "visual/types";
+import type { DynamicStylesProps } from "visual/types";
 import { renderStyles } from "visual/utils/cssStyle";
-import { OutputStyle, Styles } from "visual/utils/cssStyle/types";
-import { Value } from "./types";
+import type { OutputStyle, Styles } from "visual/utils/cssStyle/types";
+import type { Value } from "./types";
 
 export function style(data: DynamicStylesProps<Value>): OutputStyle {
   const { v } = data;
@@ -24,28 +24,32 @@ export function style(data: DynamicStylesProps<Value>): OutputStyle {
       ]
     },
     ".brz && .brz-articleList__container": {
-      standart: ["cssStyleElementOfMinistryBrandsColumnsNumberWithSpacing"]
+      standart: [
+        "cssStyleElementOfMinistryBrandsColumnsNumberWithSpacing",
+        "cssStyleElementOfMinistryBrandsContainerHorizontalAlign"
+      ]
     },
     ".brz && .brz-articleList__item": {
-      standart: ["cssStyleElementOfMinistryBrandsHorizontalAlign"]
+      standart: [
+        "cssStyleElementOfMinistryBrandsHorizontalAlign",
+        "cssStyleElementOfMinistryBrandsMetaItemsSpacing"
+      ]
     },
     ".brz && .brz-ministryBrands__item--media": {
       standart: [
         "cssStyleElementOfMinistryBrandsImageWidth",
-        "cssStyleElementOfMinistryBrandsImagePadding"
+        "cssStyleElementOfMinistryBrandsImagePadding",
+        "cssStyleMinistryElementMediaBorderRadius"
       ]
     },
     ".brz && .brz-ministryBrands__item--media:hover": {
       standart: [
         "cssStyleElementOfMinistryBrandsImgBorder",
         ...(maskShape === "none"
-          ? []
+          ? ["cssStyleElementOfMinistryBrandsImgBoxShadow"]
           : ["cssStyleElementOfMinistryBrandsImgMaskShadow"])
       ],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
-      ]
+      interval: ["cssStyleHoverTransition", "cssStylePropertyHoverTransition"]
     },
     ".brz && .brz-ministryBrands__item--media::after": {
       standart: [
@@ -53,18 +57,13 @@ export function style(data: DynamicStylesProps<Value>): OutputStyle {
         "cssStyleMaskCustomShape",
         "cssStyleMaskSize",
         "cssStyleMaskPosition",
-        "cssStyleMaskRepeat",
-        "cssStyleMinistryElementMediaBorderRadius"
+        "cssStyleMaskRepeat"
       ]
     },
     ".brz && .brz-ministryBrands__item--media:hover::after": {
       standart: [
         "cssStyleElementOfMinistryBrandsImgBgColor",
-        "cssStyleElementOfMinistryBrandsImgBgGradient",
-
-        ...(maskShape === "none"
-          ? ["cssStyleElementOfMinistryBrandsImgBoxShadow"]
-          : [])
+        "cssStyleElementOfMinistryBrandsImgBgGradient"
       ],
       interval: [
         "cssStyleHoverTransition",
@@ -87,19 +86,6 @@ export function style(data: DynamicStylesProps<Value>): OutputStyle {
         "cssStylePropertyHoverTransitionColor"
       ]
     },
-    ".brz && .brz-ministryBrands__item--media :is(img,video,iframe)": {
-      standart: ["cssStyleMinistryElementMediaBorderRadius"]
-    },
-    ".brz && .brz-articleList__item--meta--title": {
-      standart: ["cssStyleElementOfMinistryBrandsTitleTypography"]
-    },
-    ".brz && .brz-articleList__item--meta--title:hover": {
-      standart: ["cssStyleElementOfMinistryBrandsTitleColor"],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
-      ]
-    },
     ".brz && .brz-articleList__item--meta": {
       standart: ["getAllCssStyleTypography"]
     },
@@ -107,6 +93,53 @@ export function style(data: DynamicStylesProps<Value>): OutputStyle {
       standart: ["cssStyleColor"],
       interval: ["cssStyleHoverTransition"]
     },
+    ".brz && .brz-articleList__item--meta.brz-ministryBrands__item--meta-title":
+      {
+        standart: [
+          "cssStyleElementOfMinistryBrandsTitleTypography",
+          "cssStyleElementMinistryBrandsMetaItemTitleMargin",
+          "cssStyleElementMinistryBrandsMetaItemTitlePadding"
+        ]
+      },
+    ".brz && .brz-articleList__item--meta.brz-ministryBrands__item--meta-title:hover":
+      {
+        standart: ["cssStyleElementOfMinistryBrandsTitleColor"],
+        interval: [
+          "cssStyleHoverTransition",
+          "cssStylePropertyHoverTransitionColor"
+        ]
+      },
+    ".brz && .brz-ministryBrands__item--meta-date": {
+      standart: [
+        "cssStyleElementMinistryBrandsMetaItemDateMargin",
+        "cssStyleElementMinistryBrandsMetaItemDatePadding"
+      ]
+    },
+    ".brz && .brz-ministryBrands__item--meta-category": {
+      standart: [
+        "cssStyleElementMinistryBrandsMetaItemCategoryMargin",
+        "cssStyleElementMinistryBrandsMetaItemCategoryPadding"
+      ]
+    },
+    ".brz && .brz-ministryBrands__item--meta-group": {
+      standart: [
+        "cssStyleElementMinistryBrandsMetaItemGroupMargin",
+        "cssStyleElementMinistryBrandsMetaItemGroupPadding"
+      ]
+    },
+    ".brz && .brz-ministryBrands__item--meta-series": {
+      standart: [
+        "cssStyleElementMinistryBrandsMetaItemSeriesMargin",
+        "cssStyleElementMinistryBrandsMetaItemSeriesPadding"
+      ]
+    },
+    ".brz && .brz-ministryBrands__item--meta-author": {
+      standart: [
+        "cssStyleElementMinistryBrandsMetaItemAuthorMargin",
+        "cssStyleElementMinistryBrandsMetaItemAuthorPadding"
+      ]
+    },
+
     ".brz && .brz-ministryBrands__meta--icons": {
       standart: ["cssStyleElementOfMinistryBrandsMetaIconsSpacing"]
     },
@@ -125,7 +158,10 @@ export function style(data: DynamicStylesProps<Value>): OutputStyle {
       interval: ["cssStyleHoverTransition"]
     },
     ".brz && .brz-ministryBrands__item--meta--button": {
-      standart: ["cssStyleElementMinistryBrandsButtonsTypography"]
+      standart: [
+        "cssStyleElementMinistryBrandsButtonsTypography",
+        "cssStyleElementMinistryBrandsButtonsBorderRadius"
+      ]
     },
     ".brz && .brz-ministryBrands__item--meta--button:hover": {
       standart: [
@@ -135,10 +171,10 @@ export function style(data: DynamicStylesProps<Value>): OutputStyle {
         "cssStyleElementMinistryBrandsButtonsBoxShadow",
         "cssStyleElementMinistryBrandsButtonsBorder"
       ],
-      interval: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
-      ]
+      interval: ["cssStyleMinistryBrandsButtonsHoverTransition"]
+    },
+    ".brz && .brz-ministryBrands__item--meta--button a": {
+      standart: ["cssStyleElementMinistryBrandsButtonsSize"]
     },
     ".brz && .brz-ministryBrands__pagination a": {
       standart: ["cssStyleElementOfMinistryBrandsPaginationTypography"]

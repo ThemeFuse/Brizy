@@ -147,7 +147,11 @@ export const Addable: Component = (props) => {
         onClick={handleToggleSidebar}
         className="brz-ed-addable__icon-wrapper"
       >
-        {config?.extraLabel && <span>{config.extraLabel}</span>}
+        {config?.extraLabel && (
+          <span className="brz-ed-addable__extra-label">
+            {config.extraLabel}
+          </span>
+        )}
         <EditorIcon icon={icon} className={openButtonClassname} />
       </div>
 

@@ -1,4 +1,5 @@
 import { ExportFunction } from "visual/types";
+import { attachMailtoLinkHandler } from "../utils.export";
 
 export const fn: ExportFunction = ($root) => {
   const root = $root.get(0);
@@ -18,5 +19,6 @@ export const fn: ExportFunction = ($root) => {
         history.back();
       }
     });
+    attachMailtoLinkHandler(element);
   });
 };

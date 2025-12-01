@@ -43,13 +43,19 @@ export const fromElementModel: FromElementModel<"boxShadow"> = (get) => {
       mPipe(() => get("colorOpacity"), Num.read, Opacity.fromNumber)() ??
       Opacity.empty,
     blur: mPipe(() => get("blur"), Num.read, Blur.fromNumber)() ?? Blur.empty,
-    spread: mPipe(() => get("spread"), Num.read)() ?? 0
+    spread: mPipe(() => get("spread"), Num.read)() ?? 0,
+    vertical: mPipe(() => get("vertical"), Num.read)() ?? defaultValue.vertical,
+    horizontal:
+      mPipe(() => get("horizontal"), Num.read)() ?? defaultValue.horizontal
   };
 
   const isEmpty =
     partial.type === T.empty ||
     partial.opacity === Opacity.empty ||
-    (partial.blur === Blur.empty && partial.spread === 0);
+    (partial.blur === Blur.empty &&
+      partial.spread === 0 &&
+      partial.vertical === 0 &&
+      partial.horizontal === 0);
 
   return {
     type: isEmpty ? defaultValue.type : partial.type,
@@ -65,8 +71,8 @@ export const fromElementModel: FromElementModel<"boxShadow"> = (get) => {
       defaultValue.tempOpacity,
     palette: isEmpty
       ? defaultValue.palette
-      : mPipe(() => get("colorPalette"), Str.read, Palette.fromString)() ??
-        Palette.empty,
+      : (mPipe(() => get("colorPalette"), Str.read, Palette.fromString)() ??
+        Palette.empty),
     tempPalette:
       mPipe(() => get("tempColorPalette"), Str.read, Palette.fromString)() ??
       defaultValue.tempPalette,
@@ -77,11 +83,9 @@ export const fromElementModel: FromElementModel<"boxShadow"> = (get) => {
     spread: isEmpty ? defaultValue.spread : partial.spread,
     tempSpread:
       mPipe(() => get("tempSpread"), Num.read)() ?? defaultValue.tempSpread,
-    vertical: isEmpty ? 0 : Num.read(get("vertical")) ?? defaultValue.vertical,
+    vertical: isEmpty ? defaultValue.vertical : partial.vertical,
     tempVertical: Num.read(get("tempVertical")) ?? defaultValue.tempVertical,
-    horizontal: isEmpty
-      ? 0
-      : Num.read(get("horizontal")) ?? defaultValue.horizontal,
+    horizontal: isEmpty ? defaultValue.horizontal : partial.horizontal,
     tempHorizontal:
       Num.read(get("tempHorizontal")) ?? defaultValue.tempHorizontal
   };

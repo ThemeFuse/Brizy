@@ -5,18 +5,12 @@ import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { DynamicContentHelper } from "visual/editorComponents/WordPress/common/DynamicContentHelper";
 import { Wrapper } from "visual/editorComponents/tools/Wrapper";
+import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import { updateEkklesiaFields } from "visual/utils/api";
 import { attachRefs } from "visual/utils/react";
 import * as sidebarConfig from "../sidebar";
 import * as sidebarExtendButtons from "../sidebarExtendButtons";
-import {
-  sidebarMinistryBrandsMetaAddress,
-  sidebarMinistryBrandsMetaCategory,
-  sidebarMinistryBrandsMetaDate,
-  sidebarMinistryBrandsMetaGroup,
-  sidebarMinistryBrandsMetaLocation,
-  sidebarMinistryBrandsMetaTitle
-} from "../sidebars/sidebars";
+import { sidebarMinistryBrandsMeta } from "../sidebars/sidebars";
 import * as toolbarDate from "../toolbarDate";
 import * as toolbarExtendButtons from "../toolbarExtendButtons";
 import * as toolbarImage from "../toolbarImage";
@@ -29,6 +23,7 @@ import * as toolbarRegisterButton from "../toolbarRegisterButton";
 import * as toolbarTitle from "../toolbarTitle";
 import * as toolbarMetaItemLinkColor from "../toolbars/toolbarMetaItemLinkColor";
 import { getEkklesiaMessages } from "../utils/helpers";
+import { MBMetaPrefixKey } from "../utils/types";
 import defaultValue from "./defaultValue.json";
 import { style } from "./styles";
 import * as toolbarExtendParent from "./toolbarExtendParent";
@@ -39,8 +34,8 @@ export class MinistryBrandsEventList extends EditorComponent<Value, Props> {
   static defaultValue = defaultValue;
   static experimentalDynamicContent = true;
 
-  static get componentId(): "MinistryBrandsEventList" {
-    return "MinistryBrandsEventList";
+  static get componentId(): ElementTypes.MinistryBrandsEventList {
+    return ElementTypes.MinistryBrandsEventList;
   }
 
   async componentDidMount(): Promise<void> {
@@ -94,7 +89,7 @@ export class MinistryBrandsEventList extends EditorComponent<Value, Props> {
       <Toolbar
         {...this.makeToolbarPropsFromConfig2(
           toolbarTitle,
-          sidebarMinistryBrandsMetaTitle,
+          sidebarMinistryBrandsMeta(MBMetaPrefixKey.metaTitle),
           {
             allowExtend: false
           }
@@ -105,7 +100,7 @@ export class MinistryBrandsEventList extends EditorComponent<Value, Props> {
           <Toolbar
             {...this.makeToolbarPropsFromConfig2(
               toolbarDate,
-              sidebarMinistryBrandsMetaDate,
+              sidebarMinistryBrandsMeta(MBMetaPrefixKey.metaDate),
               {
                 allowExtend: false
               }
@@ -116,7 +111,7 @@ export class MinistryBrandsEventList extends EditorComponent<Value, Props> {
               <Toolbar
                 {...this.makeToolbarPropsFromConfig2(
                   toolbarMetaTypography,
-                  sidebarMinistryBrandsMetaCategory,
+                  sidebarMinistryBrandsMeta(MBMetaPrefixKey.metaCategory),
                   {
                     allowExtend: false
                   }
@@ -127,7 +122,7 @@ export class MinistryBrandsEventList extends EditorComponent<Value, Props> {
                   <Toolbar
                     {...this.makeToolbarPropsFromConfig2(
                       toolbarMetaTypography,
-                      sidebarMinistryBrandsMetaGroup,
+                      sidebarMinistryBrandsMeta(MBMetaPrefixKey.metaGroup),
                       {
                         allowExtend: false
                       }
@@ -138,7 +133,9 @@ export class MinistryBrandsEventList extends EditorComponent<Value, Props> {
                       <Toolbar
                         {...this.makeToolbarPropsFromConfig2(
                           toolbarMetaTypography,
-                          sidebarMinistryBrandsMetaLocation,
+                          sidebarMinistryBrandsMeta(
+                            MBMetaPrefixKey.metaLocation
+                          ),
                           {
                             allowExtend: false
                           }
@@ -149,7 +146,9 @@ export class MinistryBrandsEventList extends EditorComponent<Value, Props> {
                           <Toolbar
                             {...this.makeToolbarPropsFromConfig2(
                               toolbarMetaTypography,
-                              sidebarMinistryBrandsMetaAddress,
+                              sidebarMinistryBrandsMeta(
+                                MBMetaPrefixKey.metaAddress
+                              ),
                               {
                                 allowExtend: false
                               }
@@ -204,7 +203,9 @@ export class MinistryBrandsEventList extends EditorComponent<Value, Props> {
                                               <Toolbar
                                                 {...this.makeToolbarPropsFromConfig2(
                                                   toolbarMetaItemLinkColor,
-                                                  sidebarMinistryBrandsMetaAddress,
+                                                  sidebarMinistryBrandsMeta(
+                                                    MBMetaPrefixKey.metaAddress
+                                                  ),
                                                   {
                                                     allowExtend: false
                                                   }
