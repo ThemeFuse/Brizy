@@ -1,5 +1,8 @@
 import type { ElementModel } from "visual/component/Elements/Types";
-import type { ContextMenuItem } from "visual/editorComponents/EditorComponent/types";
+import type {
+  ContextGetItems,
+  ContextMenuItem
+} from "visual/editorComponents/EditorComponent/types";
 import {
   ElementTypes,
   readElementType
@@ -15,19 +18,21 @@ export const getTranslationsMap = (): Partial<{
 
 const suffix = "Container";
 
-export default {
-  getItems: (v: ElementModel): ContextMenuItem[] => {
-    const type = readElementType(v.items?.[0]?.type);
-    const translation = getTranslationsMap();
-    const title = type ? (translation[type] ?? "") + ` ${suffix}` : suffix;
+const getItems: ContextGetItems<ElementModel> = (v): ContextMenuItem[] => {
+  const type = readElementType(v.items?.[0]?.type);
+  const translation = getTranslationsMap();
+  const title = type ? (translation[type] ?? "") + ` ${suffix}` : suffix;
 
-    return [
-      {
-        id: "main",
-        type: "group",
-        title,
-        items: []
-      }
-    ];
-  }
+  return [
+    {
+      id: "main",
+      type: "group",
+      title,
+      items: []
+    }
+  ];
+};
+
+export default {
+  getItems
 };

@@ -39,7 +39,10 @@ export const storeWasChanged: RStoreWasChanged = (state, action) => {
     case ActionTypes.IMPORT_TEMPLATE:
     case ActionTypes.IMPORT_STORY: // @ts-expect-error: don't have in ts
     case "UNDO": // @ts-expect-error: don't have in ts
-    case "REDO": {
+    case "REDO":
+    case ActionTypes.CREATE_SYMBOL:
+    case ActionTypes.UPDATE_SYMBOL:
+    case ActionTypes.DELETE_SYMBOL: {
       return StoreChanged.changed;
     }
     case "PUBLISH": {

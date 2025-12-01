@@ -1,6 +1,7 @@
 import React from "react";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import EditorComponent from "visual/editorComponents/EditorComponent";
+import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import defaultValue from "./defaultValue.json";
 
 const HEAD_ITEM_INDEX = 0;
@@ -8,7 +9,7 @@ const ASIDE_ITEM_INDEX = 1;
 
 class TableRow extends EditorComponent {
   static get componentId() {
-    return "TableRow";
+    return ElementTypes.TableRow;
   }
 
   static defaultProps = {

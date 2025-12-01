@@ -23,6 +23,7 @@ import {
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { SectionPopup2Instances as Instances } from "visual/editorComponents/SectionPopup2/instances";
+import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import { isPopup } from "visual/providers/EditorModeProvider";
 import { isEditor, isView } from "visual/providers/RenderProvider";
 import { makePlaceholder } from "visual/utils/dynamicContent";
@@ -84,7 +85,7 @@ class SectionPopup2 extends EditorComponent {
   }
 
   static get componentId() {
-    return "SectionPopup2";
+    return ElementTypes.SectionPopup2;
   }
 
   componentDidMount() {

@@ -18,6 +18,7 @@ import Toolbar, { ToolbarExtend } from "visual/component/Toolbar";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { shouldRenderPopup } from "visual/editorComponents/tools/Popup";
+import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import { isPopup } from "visual/providers/EditorModeProvider";
 import { isEditor } from "visual/providers/RenderProvider";
 import { blocksDataSelector, deviceModeSelector } from "visual/redux/selectors";
@@ -55,7 +56,7 @@ class Row extends EditorComponent {
   toolbarRef = React.createRef();
 
   static get componentId() {
-    return "Row";
+    return ElementTypes.Row;
   }
 
   componentDidMount() {
@@ -318,7 +319,7 @@ class Row extends EditorComponent {
       cssClass,
       customAttributes
     } = v;
-    const id = getCSSId(v);
+    const id = getCSSId(v) || this.getId();
     const classNameRowContainer = classNames(
       "brz-row__container",
       className,

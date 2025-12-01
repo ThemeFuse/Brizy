@@ -233,14 +233,62 @@ describe("Testing '_setOpacity' function", function () {
 });
 
 describe("Testing 'fieldsEnabled' function", function () {
-  test.each(["blur", "spread"])(
+  test.each(["blur", "spread", "horizontal", "vertical"])(
     "Fields are enabled if '%s' value is higher then 0",
     (k) => expect(fieldsEnabled({ ...model, [k]: 1 })).toBe(true)
   );
 
-  test("Fields are not enabled if blur and spread values are 0", () => {
-    expect(fieldsEnabled({ ...model, blur: Blur.empty, spread: 0 })).toBe(
-      false
-    );
+  test("Fields are not enabled only if all values (blur, spread, horizontal, vertical) are 0", () => {
+    expect(
+      fieldsEnabled({
+        ...model,
+        blur: Blur.empty,
+        spread: 0,
+        horizontal: 0,
+        vertical: 0
+      })
+    ).toBe(false);
+  });
+
+  test("Fields are enabled if any value is non-zero", () => {
+    expect(
+      fieldsEnabled({
+        ...model,
+        blur: Blur.empty,
+        spread: 0,
+        horizontal: 0,
+        vertical: 1
+      })
+    ).toBe(true);
+
+    expect(
+      fieldsEnabled({
+        ...model,
+        blur: Blur.empty,
+        spread: 0,
+        horizontal: 1,
+        vertical: 0
+      })
+    ).toBe(true);
+
+    expect(
+      fieldsEnabled({
+        ...model,
+        blur: Blur.empty,
+        spread: 1,
+        horizontal: 0,
+        vertical: 0
+      })
+    ).toBe(true);
+
+    expect(
+      fieldsEnabled({
+        ...model,
+        blur: Blur.unsafe(1),
+        spread: 0,
+        horizontal: 0,
+        vertical: 0
+      })
+    ).toBe(true);
   });
 });

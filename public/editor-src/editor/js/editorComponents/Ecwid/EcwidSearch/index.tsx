@@ -80,11 +80,13 @@ export class EcwidSearch extends EditorComponent<Value> {
       const v = this.getValue();
       const cnf = valueToEciwdConfig(v);
 
+      const { locale: langLocale = "" } = config;
       const { storeId } = config.modules.shop;
 
       if (storeId) {
         this.ecwid = EcwidService.init(storeId, {
           ...cnf,
+          langLocale,
           onPageLoadCallbacks: [this.openSortBySelect]
         });
 
@@ -674,8 +676,13 @@ export class EcwidSearch extends EditorComponent<Value> {
       content: "{{ecwid_store_id}}"
     });
 
+    const langLocale = makePlaceholder({
+      content: "{{ecwid_language_code}}"
+    });
+
     const attr = {
-      [makeAttr("shop-path")]: getEcwidShopPathPlaceholder()
+      [makeAttr("shop-path")]: getEcwidShopPathPlaceholder(),
+      [makeAttr("lang-locale")]: langLocale
     };
 
     return (

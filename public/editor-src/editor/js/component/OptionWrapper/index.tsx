@@ -1,10 +1,10 @@
 import classNames from "classnames";
 import React from "react";
 import { t } from "visual/utils/i18n";
+import { FCC } from "visual/utils/react/types";
 import Tooltip from "../Controls/Tooltip";
 import EditorIcon from "../EditorIcon";
 import { ProInfo } from "../ProInfo";
-import { FCC } from "visual/utils/react/types";
 
 export type Props = {
   className?: string;
@@ -12,6 +12,7 @@ export type Props = {
   title?: string;
   lock?: boolean;
   upgradeToPro?: string;
+  id?: string;
 };
 
 export const OptionWrapper: FCC<Props> = ({
@@ -20,7 +21,8 @@ export const OptionWrapper: FCC<Props> = ({
   display = "inline",
   title,
   lock,
-  upgradeToPro
+  upgradeToPro,
+  id
 }) => {
   const _className = classNames(
     "brz-ed-option-wrapper",
@@ -32,7 +34,7 @@ export const OptionWrapper: FCC<Props> = ({
   );
 
   return (
-    <div className={_className} title={title}>
+    <div className={_className} title={title} data-option-id={id}>
       {children}
       {lock === true ? (
         <span className="brz-ed-option-wrapper__lock">

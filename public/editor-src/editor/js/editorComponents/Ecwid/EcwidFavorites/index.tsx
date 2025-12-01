@@ -63,7 +63,13 @@ export class EcwidFavorites extends EditorComponent<Value> {
       const v = this.getValue();
       const cnf = valueToEciwdConfig(v);
 
-      this.ecwid = EcwidService.init(storeId, { ...cnf, redirect: undefined });
+      const { locale: langLocale = "" } = config;
+
+      this.ecwid = EcwidService.init(storeId, {
+        ...cnf,
+        redirect: undefined,
+        langLocale
+      });
       this.ecwid.favorites(this.containerRef.current);
     }
   }
@@ -308,8 +314,13 @@ export class EcwidFavorites extends EditorComponent<Value> {
       content: "{{ecwid_store_id}}"
     });
 
+    const langLocale = makePlaceholder({
+      content: "{{ecwid_language_code}}"
+    });
+
     const attr = {
-      [makeAttr("shop-path")]: getEcwidShopPathPlaceholder()
+      [makeAttr("shop-path")]: getEcwidShopPathPlaceholder(),
+      [makeAttr("lang-locale")]: langLocale
     };
 
     return (

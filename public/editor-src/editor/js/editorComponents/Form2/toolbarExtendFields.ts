@@ -13,21 +13,6 @@ export const getItems: GetItems<Value> = () => {
           type: "tabs",
           tabs: [
             {
-              id: "field",
-              options: [
-                {
-                  id: "padding",
-                  type: "slider",
-                  label: t("Spacing"),
-                  config: {
-                    min: 0,
-                    max: 100,
-                    units: [{ title: "px", value: "px" }]
-                  }
-                }
-              ]
-            },
-            {
               id: "advanced",
               options: [
                 {
@@ -47,6 +32,28 @@ export const getItems: GetItems<Value> = () => {
               ]
             }
           ]
+        }
+      ]
+    },
+    {
+      id: "toolbarSettings",
+      type: "popover",
+      config: {
+        icon: "nc-cog",
+        title: t("Settings")
+      },
+      position: 110,
+      options: [
+        {
+          id: "padding",
+          type: "slider",
+          label: t("Spacing"),
+          position: 20,
+          config: {
+            min: 0,
+            max: 100,
+            units: [{ title: "px", value: "px" }]
+          }
         }
       ]
     }

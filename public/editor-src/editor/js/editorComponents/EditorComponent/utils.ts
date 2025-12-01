@@ -1,32 +1,30 @@
 import { Bool, Obj } from "@brizy/readers";
 import deepMerge from "deepmerge";
-import { flatten, intersection } from "es-toolkit";
+import { flatten, intersection, lowerFirst } from "es-toolkit";
 import { isEmpty } from "es-toolkit/compat";
 import { mPipe, or } from "fp-utilities";
 import { getIn } from "timm";
-import {
-  ElementDefaultValue,
-  ElementModel
-} from "visual/component/Elements/Types";
-import { FromElementModelGetter } from "visual/component/Options/Type";
-import { OptionName, OptionValue } from "visual/component/Options/types";
-import {
+import { ElementModel } from "visual/component/Elements/Types";
+import type { FromElementModelGetter } from "visual/component/Options/Type";
+import type { OptionName, OptionValue } from "visual/component/Options/types";
+import type {
   GetElementModelKeyFn,
   ParsedToolbarData,
   ProElementTitle,
   ToolbarConfig
 } from "visual/editorComponents/EditorComponent/types";
 import {
-  OptionDefinition,
-  ToolbarItemType,
+  type OptionDefinition,
+  type ToolbarItemType,
   hasId,
   is as isToolbarItemType
 } from "visual/editorComponents/ToolbarItemType";
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
-import { Store } from "visual/redux/store";
+import type { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import type { Store } from "visual/redux/store";
 import { getFlatShortcodes } from "visual/shortcodeComponents/utils";
-import { DeviceMode, UserRole } from "visual/types";
-import { Dictionary } from "visual/types/utils";
+import type { DeviceMode, UserRole } from "visual/types";
+import type { CSSSymbol } from "visual/types/Symbols";
+import { isActiveKey, isHoverKey } from "visual/utils/cssStyle";
 import * as Device from "visual/utils/devices";
 import {
   ALL,
@@ -36,6 +34,7 @@ import {
   supportsMode
 } from "visual/utils/devices";
 import { isPro } from "visual/utils/env";
+import { flattenDefaultValue as flattenDefaultValue_ } from "visual/utils/models/flattenDefaultValue";
 import { findDeep } from "visual/utils/object";
 import { defaultValueKey, defaultValueValue } from "visual/utils/onChange";
 import { defaultValueKey2 } from "visual/utils/onChange/device";
@@ -179,32 +178,6 @@ export const makeToolbarPropsFromConfigDefaults = (
   };
 };
 
-interface FlattenDefaultValueFn {
-  (keys: string[]): (defaultValue: ElementDefaultValue) => ElementModel;
-}
-
-export const flattenDefaultValue_: FlattenDefaultValueFn = (keys) => {
-  const keysMap: Dictionary<boolean> = keys.reduce((acc, k) => {
-    acc[k] = true;
-    return acc;
-  }, {} as Dictionary<boolean>);
-
-  return function inner(
-    defaultValue: ElementDefaultValue | ElementModel
-  ): ElementModel {
-    const ret: ElementModel = {};
-
-    for (const [k, v] of Object.entries(defaultValue)) {
-      if (keysMap[k] && Obj.isObject(v)) {
-        Object.assign(ret, inner(v));
-      } else {
-        ret[k] = v;
-      }
-    }
-
-    return ret;
-  };
-};
 export const flattenDefaultValue = flattenDefaultValue_([
   "animation",
   "content",
@@ -495,6 +468,12 @@ export function getOptionValueByDevice({
       defaultValueValue({ v, device, key: createOptionId(id, k) })
     );
   }
+
+  if (id in v) {
+    return { value: v[id] };
+  }
+
+  return undefined;
 }
 
 export const getElementModelKeyFn: GetElementModelKeyFn =
@@ -516,3 +495,75 @@ export const getElementModelKeyFn: GetElementModelKeyFn =
       state
     });
   };
+
+export const createClassName = (
+  _type: string,
+  classes: Array<CSSSymbol>
+): string => {
+  const type = _type.toLowerCase();
+  const availableClasses = classes.filter(
+    (css) => css.type.toLowerCase() === type
+  );
+
+  return `brz-${type}-${availableClasses.length + 1}`;
+};
+
+export const createDuplicatedClassName = (className: string): string =>
+  `${className}-Copy`;
+
+export const createWrapperClassName = (
+  _type: string,
+  _childrenType: string,
+  classes: Array<CSSSymbol>
+): string => {
+  const type = _type.toLowerCase();
+  const childrenType = _childrenType.toLowerCase();
+  const availableClasses = classes.filter(
+    (css) => css.type.toLowerCase() === type
+  );
+
+  return `brz-${type}-${childrenType}-${availableClasses.length + 1}`;
+};
+
+const mergePatch = <M>(patches: M, patch: M): M => {
+  return { ...patches, ...patch };
+};
+
+export function createPatch<M extends ElementModel>(
+  patch: M,
+  styles: ElementModel
+) {
+  const keys: { styles: Array<M>; content: Array<M> } = {
+    styles: [],
+    content: []
+  };
+
+  Object.entries(patch).forEach(([key, value]) => {
+    if (key in styles) {
+      keys.styles.push({ [key]: value } as M);
+    } else {
+      const normalStateKey = isHoverKey(key)
+        ? lowerFirst(key.replace("hover", ""))
+        : isActiveKey(key)
+          ? lowerFirst(key.replace("active", ""))
+          : key;
+
+      if (normalStateKey in styles) {
+        keys.styles.push({ [key]: value } as M);
+      } else {
+        keys.content.push({ [key]: value } as M);
+      }
+    }
+  });
+
+  const style =
+    keys.styles.length > 0
+      ? keys.styles.reduce(mergePatch, {} as M)
+      : undefined;
+  const content =
+    keys.content.length > 0
+      ? keys.content.reduce(mergePatch, {} as M)
+      : undefined;
+
+  return { style, content };
+}

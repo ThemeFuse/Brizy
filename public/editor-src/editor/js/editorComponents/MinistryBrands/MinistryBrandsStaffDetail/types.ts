@@ -8,7 +8,7 @@ export interface Props extends WithClassName {
 }
 
 export interface Value extends ElementModel {
-  recentStaff: "";
+  recentStaff: string;
   showImage: Switch;
   showTitle: Switch;
   showPosition: Switch;
@@ -24,4 +24,6 @@ export interface Value extends ElementModel {
   showMetaHeadings: Switch;
   showAboutText: Switch;
   showMetaIcons: Switch;
+  showPreviousPage: Switch;
+  showFullEmail: Switch;
 }

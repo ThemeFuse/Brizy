@@ -21,7 +21,7 @@ import { CSS } from "@dnd-kit/utilities";
 import React, { useCallback, useMemo, useState } from "react";
 import { createPortal } from "react-dom";
 import { useSelector } from "react-redux";
-import { deviceModeSelector } from "visual/redux/selectors-new";
+import { deviceModeSelector } from "visual/redux/selectors";
 import type { OptionGroup, SortableGroupProps, SortableProps } from "../types";
 import { getGroupsOrder } from "../utils";
 import { Group } from "./Group";

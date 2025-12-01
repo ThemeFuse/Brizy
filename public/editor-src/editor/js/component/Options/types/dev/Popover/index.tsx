@@ -17,7 +17,8 @@ export const Popover: FCP<Props, ReactElement | null> = ({
   options,
   toolbar,
   label,
-  id
+  id,
+  location
 }) => {
   const onOpenDirect = config?.onOpenDirect ?? false;
   const toolbarExceptions = useMemo(
@@ -65,6 +66,7 @@ export const Popover: FCP<Props, ReactElement | null> = ({
         size={config?.size ?? "medium"}
         toolbar={toolbar}
         clickOutsideExceptions={clickOutsideExceptions}
+        inPortal={location === "rightSidebar"}
       >
         <Options
           wrapOptions={false}
@@ -72,6 +74,7 @@ export const Popover: FCP<Props, ReactElement | null> = ({
           toolbar={toolbar}
           isPro={pro}
           upgradeToPro={cnfg?.urls?.upgradeToPro}
+          location={location}
         />
       </Control>
     </>

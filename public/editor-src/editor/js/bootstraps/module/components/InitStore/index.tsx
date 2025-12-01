@@ -1,19 +1,19 @@
 import React, { Component } from "react";
 import { Provider } from "react-redux";
 import { readPageData } from "visual/bootstraps/common/adapter";
-import { PublishData } from "visual/global/Config/types/configs/ConfigCommon";
 import { GetConfig } from "visual/providers/ConfigProvider/types";
 import { editorRendered, hydrate } from "visual/redux/actions";
-import { fetchPageSuccess } from "visual/redux/actions2";
 import { Store, createStore } from "visual/redux/store";
 import { addFilter } from "visual/utils/filters";
 import { parseGlobalBlocksToRecord } from "visual/utils/reader/globalBlocks";
 import { getAuthorized } from "visual/utils/user/getAuthorized";
 import { getMiddleware } from "./getMiddleware";
 import { Props } from "./types";
+import { waitForPendingAndDispatch } from "./utils";
 
 class InitStore extends Component<Props> {
   private readonly store: Store;
+  private unsubscribeFunctions: VoidFunction[] = [];
 
   getConfig: GetConfig = () => this.props.config;
 
@@ -32,11 +32,13 @@ class InitStore extends Component<Props> {
       throw new Error("Missing project data in config");
     }
 
+    const { editorMode } = props;
+
     const { isSyncAllowed = false } = config.cloud || {};
 
     const store = createStore({
       middleware: getMiddleware({
-        editorMode: this.props.editorMode,
+        editorMode,
         getConfig: this.getConfig
       })
     });
@@ -55,7 +57,8 @@ class InitStore extends Component<Props> {
         authorized: getAuthorized(config),
         syncAllowed: isSyncAllowed,
         config,
-        editorMode: this.props.editorMode
+        editorMode,
+        symbols: config.symbols
       })
     );
 
@@ -67,40 +70,30 @@ class InitStore extends Component<Props> {
 
     // For External API
     config.onUpdate = (res) => {
-      const onDone = (r: PublishData) => {
-        store.dispatch(fetchPageSuccess());
-        res(r);
-      };
-
-      store.dispatch({
-        type: "PUBLISH",
-        payload: {
-          status: store.getState().page.status,
-          type: "external",
-          editorMode: this.props.editorMode,
-          config,
-          res: onDone
-        }
-      });
+      const unsubscribe = waitForPendingAndDispatch(
+        "external",
+        store,
+        res,
+        editorMode,
+        config
+      );
+      if (unsubscribe) {
+        this.unsubscribeFunctions.push(unsubscribe);
+      }
     };
 
     // For External API
     config.onCompile = (res) => {
-      const onDone = (r: PublishData) => {
-        store.dispatch(fetchPageSuccess());
-        res(r);
-      };
-
-      store.dispatch({
-        type: "PUBLISH",
-        payload: {
-          status: store.getState().page.status,
-          type: "externalForce",
-          editorMode: this.props.editorMode,
-          config,
-          res: onDone
-        }
-      });
+      const unsubscribe = waitForPendingAndDispatch(
+        "externalForce",
+        store,
+        res,
+        editorMode,
+        config
+      );
+      if (unsubscribe) {
+        this.unsubscribeFunctions.push(unsubscribe);
+      }
     };
 
     // Add the getConfig filter to retrieve the configuration
@@ -111,6 +104,12 @@ class InitStore extends Component<Props> {
   componentDidMount() {
     // @ts-expect-error: Actions types to ts
     this.store.dispatch(editorRendered());
+  }
+
+  componentWillUnmount() {
+    // Clean up all subscriptions to prevent memory leaks
+    this.unsubscribeFunctions.forEach((unsubscribe) => unsubscribe());
+    this.unsubscribeFunctions = [];
   }
 
   render() {

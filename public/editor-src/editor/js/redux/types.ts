@@ -1,19 +1,20 @@
 import { LeftSidebarOptionsIds } from "visual/global/Config/types/configs/ConfigCommon";
-import {
+import type {
   Authorized,
   DeviceMode,
   Error,
   SyncAllowed,
   UserRole
 } from "visual/types";
-import { Block, BlocksHTML } from "visual/types/Block";
-import { Fonts } from "visual/types/Fonts";
-import { GlobalBlock } from "visual/types/GlobalBlock";
-import { Page } from "visual/types/Page";
-import { Project } from "visual/types/Project";
-import { Screenshot } from "visual/types/Screenshot";
-import { ExtraFontStyle, Style } from "visual/types/Style";
-import { HistoryEnhancerState } from "./history/types";
+import type { Block, BlocksHTML } from "visual/types/Block";
+import type { Fonts } from "visual/types/Fonts";
+import type { GlobalBlock } from "visual/types/GlobalBlock";
+import type { Page } from "visual/types/Page";
+import type { Project } from "visual/types/Project";
+import type { Screenshot } from "visual/types/Screenshot";
+import type { ExtraFontStyle, Style } from "visual/types/Style";
+import type { CSSSymbol, SymbolCSS } from "visual/types/Symbols";
+import type { HistoryEnhancerState } from "./history/types";
 
 export enum StoreChanged {
   pending = "pending",
@@ -37,6 +38,16 @@ export type SidebarAlign = "left" | "right";
 export type ReduxState = {
   project: Project;
   page: Page;
+  symbols: {
+    element:
+      | undefined
+      | {
+          uid: string;
+          path: string[];
+        };
+    classes: CSSSymbol[];
+  };
+  symbolsCSS: SymbolCSS;
   globalBlocks: {
     [key: string]: GlobalBlock;
   };
@@ -51,6 +62,7 @@ export type ReduxState = {
     blocks: {
       [key: string]: BlocksHTML;
     };
+    initialized: boolean;
   };
   fonts: Fonts;
   ui: {
@@ -65,6 +77,7 @@ export type ReduxState = {
       lock: "manual" | "auto" | undefined;
       alignment: SidebarAlign;
       activeTab: string | undefined;
+      expanded: boolean;
     };
     showHiddenElements: boolean;
     currentRole: UserRole;

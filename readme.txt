@@ -4,7 +4,7 @@ Tags: page builder, website builder, brizy, editor, visual editor, unyson, wysiw
 Requires at least: 4.5
 Tested up to: 6.8.3
 Requires PHP: 7.2.24
-Stable tag: 2.7.16
+Stable tag: 2.7.18
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -136,6 +136,29 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 11. **Resize columns by dragging the handle that appears in between**
 
 == Changelog ==
+
+= 2.7.18 - 2025-12-01 =
+* Improved: Input Text - retains its value when the toolbar is closed instantly
+* Improved: Removed old JavaScript code for cleaner performance
+* Fixed: Rich-Text – added static className support for background image blots
+* Fixed: Rich-Text – dynamic content for third-party integrations now replaces correctly
+* Fixed: Rich-Text – image mask restored for third-party instances
+* Fixed: Rich-Text – preview now shows latest edits for third-party use
+* Fixed: Rich-Text – links now work properly in third-party preview
+* Fixed: Media Library – select menu now opens correctly
+* Fixed: Addable – improved third-party compatibility and behavior
+* Fixed: Icons – outline icons display correctly in the editor
+* Fixed: Box Shadow – blur 0 now applies properly
+* Fixed: Tabs – toolbar now opens the correct tab
+
+= 2.7.17 - 2025-11-10 =
+* New: Navigator component
+* Fixed: Flatten families object before getCopiedValue processing
+* Fixed: Empty button link appends '#' at the end
+* Fixed: Icon prompt not loading icons on first render
+* Improved: Audio added possibility to hide custom audio via config
+* Improved: Placeholder loading performance
+* Improved: Builder code refactoring — moved all from redux/selectors.js to new selector-new.ts and renamed selector-new
 
 = 2.7.16 - 2025-10-21 =
 

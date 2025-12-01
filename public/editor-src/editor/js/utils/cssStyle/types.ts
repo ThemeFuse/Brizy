@@ -20,6 +20,7 @@ import { BreakpointsNames } from "../breakpoints/types";
 export type AllCSSKeys = BreakpointsNames | Exclude<State, "normal">;
 
 export type OutputStyle = [string, string, string];
+export type OutputStyleWithSymbol = [string, string, string, string?];
 
 export interface Styles {
   [k: string]: {

@@ -7,8 +7,9 @@ import {
   styleIcon,
   styleWrapperAudio
 } from "visual/editorComponents/Audio/styles";
+import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import { isEditor } from "visual/providers/RenderProvider";
-import { currentStyleSelector } from "visual/redux/selectors-new";
+import { currentStyleSelector } from "visual/redux/selectors";
 import EditorComponent from "../EditorComponent";
 import defaultValue from "./defaultValue.json";
 import type { Value } from "./types";
@@ -18,7 +19,7 @@ export class BaseAudio extends EditorComponent<Value> {
   static experimentalDynamicContent = true;
 
   static get componentId() {
-    return "Audio";
+    return ElementTypes.Audio;
   }
 
   getAudioClassNames(v: Value, vs: Value, vd: Value) {

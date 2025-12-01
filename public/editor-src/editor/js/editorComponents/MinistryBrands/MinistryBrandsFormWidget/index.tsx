@@ -4,6 +4,7 @@ import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { DynamicContentHelper } from "visual/editorComponents/WordPress/common/DynamicContentHelper";
 import { Wrapper } from "visual/editorComponents/tools/Wrapper";
+import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import { updateEkklesiaFields } from "visual/utils/api";
 import { makePlaceholder } from "visual/utils/dynamicContent";
 import { getEkklesiaMessages } from "../utils/helpers";
@@ -12,8 +13,8 @@ import * as toolbarConfig from "./toolbarConfig";
 import { Props, Value } from "./types";
 
 export class MinistryBrandsFormWidget extends EditorComponent<Value, Props> {
-  static get componentId(): "MinistryBrandsFormWidget" {
-    return "MinistryBrandsFormWidget";
+  static get componentId(): ElementTypes.MinistryBrandsFormWidget {
+    return ElementTypes.MinistryBrandsFormWidget;
   }
 
   static defaultValue = defaultValue;

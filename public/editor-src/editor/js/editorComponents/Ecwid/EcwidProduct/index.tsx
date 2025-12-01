@@ -134,8 +134,11 @@ export class EcwidProduct extends EditorComponent<Value> {
       isCloud(config) &&
       config.modules?.shop?.type === "ecwid"
     ) {
+      const { locale: langLocale = "" } = config;
+
       const cnf: EcwidConfig = {
         ...valueToEciwdConfig(this.getValue()),
+        langLocale,
         onPageLoadCallbacks: [
           this.handleTextFieldPlaceholder,
           this.handleTextareaPlaceholder,
@@ -1683,6 +1686,10 @@ export class EcwidProduct extends EditorComponent<Value> {
       content: "{{ecwid_store_id}}"
     });
 
+    const langLocale = makePlaceholder({
+      content: "{{ecwid_language_code}}"
+    });
+
     const attr = {
       "data-product-id": productId,
       "data-default-product-id": defaultProductId,
@@ -1691,7 +1698,8 @@ export class EcwidProduct extends EditorComponent<Value> {
       "data-textFieldplaceholderText": textFieldPlaceholderText,
       "data-textareaplaceholderText": textareaPlaceholderText,
       "data-datepickerplaceholderText": datepickerPlaceholderText,
-      [makeAttr("shop-path")]: getEcwidShopPathPlaceholder()
+      [makeAttr("shop-path")]: getEcwidShopPathPlaceholder(),
+      [makeAttr("lang-locale")]: langLocale
     };
 
     return (

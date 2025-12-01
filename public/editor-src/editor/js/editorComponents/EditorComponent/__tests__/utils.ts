@@ -4,8 +4,10 @@ import {
 } from "visual/component/Elements/Types";
 import { ToolbarConfig } from "visual/editorComponents/EditorComponent/types";
 import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
+import { createStore } from "visual/redux/store";
 import { DeviceMode } from "visual/types";
 import { ALL, Device, RESPONSIVE } from "visual/utils/devices";
+import { flattenDefaultValue as flattenDefaultValue_ } from "visual/utils/models/flattenDefaultValue";
 import {
   DESKTOP,
   MOBILE,
@@ -13,10 +15,8 @@ import {
   TABLET,
   empty
 } from "visual/utils/responsiveMode";
-import { Literal } from "visual/utils/types/Literal";
 import {
   createOptionId,
-  flattenDefaultValue_,
   getOptionValueByDevice,
   getResponsiveModeByDevice,
   getToolbarData,
@@ -25,7 +25,6 @@ import {
   optionMode,
   setOptionPrefix
 } from "../utils";
-import { createStore } from "visual/redux/store";
 
 // region Mocks
 jest.mock("visual/component/Options/types/dev/Typography/index.tsx", () => ({
@@ -297,7 +296,7 @@ describe("Testing 'makeToolbarPropsFromConfigDefaults' function", () => {
   });
 });
 
-describe("Testing 'flattenDefaultValue_' function", () => {
+describe("Testing 'flattenDefaultValue' function", () => {
   const flattenDefaultValue = flattenDefaultValue_([
     "content",
     "style",
@@ -676,20 +675,22 @@ describe("Testing 'getOptionValueByDevice' function ", () => {
     zoom: 13,
     tabletCountry: "Moldova",
     mobileCountry: "Moldova",
-    variant: "primary"
+    variant: "primary",
+    customOnChange: "test",
+    nullableCustomOnChange: null
   };
   const store = createStore();
 
   const testCasesByDevice: {
     input: { id: string; currentDevice: DeviceMode };
-    result: Literal;
+    result: Record<string, unknown> | undefined | null;
   }[] = [
     {
       input: {
         id: "address",
         currentDevice: "desktop"
       },
-      result: "Chisinau"
+      result: { value: "Chisinau" }
     },
 
     {
@@ -697,62 +698,84 @@ describe("Testing 'getOptionValueByDevice' function ", () => {
         id: "variant",
         currentDevice: "tablet"
       },
-      result: "primary"
+      result: { value: "primary" }
     },
     {
       input: {
         id: "borderStyle",
         currentDevice: "desktop"
       },
-      result: ""
+      result: { value: "" }
     },
     {
       input: {
         id: "zoom",
         currentDevice: "mobile"
       },
-      result: 13
+      result: { unit: "", value: 13 }
     },
     {
       input: {
         id: "zoom",
         currentDevice: "tablet"
       },
-      result: 13
+      result: { unit: "", value: 13 }
     },
     {
       input: {
         id: "zoom",
         currentDevice: "desktop"
       },
-      result: 13
+      result: { unit: "", value: 13 }
     },
     {
       input: {
         id: "country",
         currentDevice: "desktop"
       },
-      result: ""
+      result: { value: "" }
     },
     {
       input: {
         id: "country",
         currentDevice: "tablet"
       },
-      result: "Moldova"
+      result: { value: "Moldova" }
     },
     {
       input: {
         id: "country",
         currentDevice: "mobile"
       },
-      result: "Moldova"
+      result: { value: "Moldova" }
+    },
+    {
+      input: {
+        id: "customOnChange",
+        currentDevice: "desktop"
+      },
+      result: { value: "test" }
+    },
+
+    {
+      input: {
+        id: "nullableCustomOnChange",
+        currentDevice: "desktop"
+      },
+      result: { value: null }
+    },
+
+    {
+      input: {
+        id: "customOnChange2",
+        currentDevice: "desktop"
+      },
+      result: undefined
     }
   ];
 
   test.each(testCasesByDevice)("getValueByDevice", ({ input, result }) => {
-    const { value } =
-      getOptionValueByDevice({ ...input, v, toolbarConfig, store }) ?? {};
+    const value = getOptionValueByDevice({ ...input, v, toolbarConfig, store });
 
     expect(value).toStrictEqual(result);
   });

@@ -4,6 +4,7 @@ import Placeholder from "visual/component/Placeholder";
 import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { DynamicContent } from "visual/editorComponents/EditorComponent/DynamicContent/DynamicContent";
+import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import { isEditor } from "visual/providers/RenderProvider";
 import { makePlaceholder } from "visual/utils/dynamicContent";
 import { t } from "visual/utils/i18n";
@@ -20,7 +21,7 @@ export default class MenuSimple extends EditorComponent {
     // NOTE: initially we only had MenuSimple (then called WPNavigation) for WordPress.
     // After we needed to make it work for cloud as well, it was renamed to SimpleMenu,
     // but since we don't have a good migration system yet, the old componentId still remains
-    return "WPNavigation";
+    return ElementTypes.WPNavigation;
   }
 
   getDBValue() {

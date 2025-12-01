@@ -24,6 +24,7 @@ import {
   ToolbarExtend
 } from "visual/editorComponents/EditorComponent/types";
 import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
+import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import { CssId } from "visual/utils/models/cssId";
 import {
   defaultValueValue,
@@ -50,7 +51,7 @@ type Item = {
   value: ElementModel;
 };
 
-interface Value extends ElementModel, CssId {
+export interface Value extends ElementModel, CssId {
   items: Item[];
   customAttributes: string;
 }
@@ -63,8 +64,8 @@ export class StoryWrapper extends EditorComponent<Value, Props> {
   static defaultValue = defaultValue;
   toolbarRef = createRef<PortalToolbarType>();
 
-  static get componentId(): string {
-    return "StoryWrapper";
+  static get componentId(): ElementTypes.StoryWrapper {
+    return ElementTypes.StoryWrapper;
   }
 
   handleExtendParentToolbar = (childToolbarExtend: ToolbarExtend): void => {

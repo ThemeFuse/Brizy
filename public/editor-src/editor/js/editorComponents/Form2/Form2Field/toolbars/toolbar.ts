@@ -126,20 +126,37 @@ export const getItems: GetItems<Value, Props> = ({ v, device, component }) => {
   ];
   const numberOptions = (): ToolbarItemType[] => [
     {
-      id: "min",
-      type: "inputText",
-      position: 20,
-      label: t("Min"),
-      placeholder: t("Min"),
-      devices: "desktop"
-    },
-    {
-      id: "max",
-      type: "inputText",
-      position: 30,
-      label: t("Max"),
-      placeholder: t("Max"),
-      devices: "desktop"
+      id: "grid",
+      type: "grid",
+      config: { separator: true },
+      position: 11,
+      devices: "desktop",
+      columns: [
+        {
+          id: "col-1",
+          size: 1,
+          options: [
+            {
+              id: "min",
+              type: "number",
+              label: t("Min"),
+              devices: "desktop"
+            }
+          ]
+        },
+        {
+          id: "col-2",
+          size: 1,
+          options: [
+            {
+              id: "max",
+              type: "number",
+              label: t("Max"),
+              devices: "desktop"
+            }
+          ]
+        }
+      ]
     }
   ];
   const calculatedOptions = (): ToolbarItemType[] => [
@@ -275,7 +292,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device, component }) => {
                     size: "medium"
                   },
                   disabled: isFileUpload,
-                  position: 11,
+                  position: 15,
                   helper: {
                     content:
                       isCheckbox || isSelect
@@ -285,42 +302,6 @@ export const getItems: GetItems<Value, Props> = ({ v, device, component }) => {
                         : t("Enter the default value for the field.")
                   },
                   population: richTextDC
-                },
-                {
-                  id: "fileSizeErrorMessage",
-                  type: "inputText",
-                  position: 15,
-                  label: t("File size error message"),
-                  placeholder: t("..type error message"),
-                  devices: "desktop",
-                  disabled: !isFileUpload
-                },
-                {
-                  id: "fileTypeErrorMessage",
-                  type: "inputText",
-                  position: 15,
-                  label: t("File type error message"),
-                  placeholder: t("..type error message"),
-                  devices: "desktop",
-                  disabled: !isFileUpload
-                },
-                {
-                  id: "numberMinMessage",
-                  type: "inputText",
-                  position: 15,
-                  label: t("Min number error message"),
-                  placeholder: t("..type error message"),
-                  devices: "desktop",
-                  disabled: !isNumber
-                },
-                {
-                  id: "numberMaxMessage",
-                  type: "inputText",
-                  position: 15,
-                  label: t("Max number error message"),
-                  placeholder: t("..type error message"),
-                  devices: "desktop",
-                  disabled: !isNumber
                 },
                 ...(isDateOrTime ? dateOrTimeOptions() : []),
                 ...(isCheckboxOrRadio ? checkboxOrRadioOptions() : []),
@@ -339,12 +320,49 @@ export const getItems: GetItems<Value, Props> = ({ v, device, component }) => {
                 {
                   id: "customFieldName",
                   type: "select",
+                  position: 20,
                   label: thirtyOptionLabel,
                   disabled: typeof thirtyOptionHandler !== "function",
                   choices: {
                     load: getThirtyOptions(fieldId, config)
                   }
-                }
+                },
+                {
+                  id: "fileSizeErrorMessage",
+                  type: "inputText",
+                  position: 40,
+                  label: t("File size error message"),
+                  placeholder: t("..type error message"),
+                  devices: "desktop",
+                  disabled: !isFileUpload
+                },
+                {
+                  id: "fileTypeErrorMessage",
+                  type: "inputText",
+                  position: 50,
+                  label: t("File type error message"),
+                  placeholder: t("..type error message"),
+                  devices: "desktop",
+                  disabled: !isFileUpload
+                },
+                {
+                  id: "numberMinMessage",
+                  type: "inputText",
+                  position: 40,
+                  label: t("Min error message"),
+                  placeholder: t("..type error message"),
+                  devices: "desktop",
+                  disabled: !isNumber
+                },
+                {
+                  id: "numberMaxMessage",
+                  type: "inputText",
+                  position: 50,
+                  label: t("Max error message"),
+                  placeholder: t("..type error message"),
+                  devices: "desktop",
+                  disabled: !isNumber
+                },
               ]
             },
             {

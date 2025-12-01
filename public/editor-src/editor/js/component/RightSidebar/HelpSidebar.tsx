@@ -18,7 +18,7 @@ export const HelpSidebar = (): ReactElement => {
   const isRtl = useIsRTL();
 
   const selector = pipe(uiSelector, prop("rightSidebar"));
-  const { alignment, lock, isOpen, activeTab, type } = useSelector(selector);
+  const { alignment, lock, isOpen, activeTab, type, expanded } = useSelector(selector);
 
   const { ui, urls } = useConfig();
   const dataLinks = useMemo(() => ui?.help?.video ?? [], [ui?.help?.video]);
@@ -42,11 +42,12 @@ export const HelpSidebar = (): ReactElement => {
             isOpen,
             lock,
             activeTab,
-            type
+            type,
+            expanded
           }),
         dispatch
       )(),
-    [dispatch, alignment, isOpen, lock, activeTab, type]
+    [dispatch, alignment, isOpen, lock, activeTab, type, expanded]
   );
 
   const onAlign = useCallback(
@@ -60,11 +61,30 @@ export const HelpSidebar = (): ReactElement => {
             isOpen,
             lock,
             activeTab,
-            type
+            type,
+            expanded
           }),
         dispatch
       )(),
-    [dispatch, alignment, isOpen, lock, activeTab, type]
+    [dispatch, alignment, isOpen, lock, activeTab, type, expanded]
+  );
+
+  const onExpand = useCallback(
+    () =>
+      pipe(
+        () => !expanded,
+        (expanded) =>
+          updateUI("rightSidebar", {
+            alignment,
+            isOpen,
+            lock,
+            activeTab,
+            type,
+            expanded
+          }),
+        dispatch
+      )(),
+    [dispatch, alignment, isOpen, lock, activeTab, type, expanded]
   );
 
   return (
@@ -75,6 +95,8 @@ export const HelpSidebar = (): ReactElement => {
       onAlign={onAlign}
       locked={!!lock}
       onLock={onLock}
+      expand={!!expanded}
+      onExpand={onExpand}
     >
       {[
         <Tab key={1} value="1" title={t("Help")} label={t("Help")}>

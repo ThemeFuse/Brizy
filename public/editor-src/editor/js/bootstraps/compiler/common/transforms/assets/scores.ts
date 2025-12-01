@@ -10,4 +10,6 @@ export const DYNAMIC_DEFAULT_CSS = 50;
 export const DYNAMIC_RULES_CSS = 51;
 export const DYNAMIC_CUSTOM_CSS = 52;
 
+export const SYMBOL_CSS = DYNAMIC_CUSTOM_CSS;
+
 export const CUSTOM_CODE = 60;

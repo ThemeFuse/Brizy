@@ -6,6 +6,7 @@ import { Text } from "visual/component/ContentOptions/types";
 import CustomCSS from "visual/component/CustomCSS";
 import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
+import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import { attachRefs } from "visual/utils/react";
 import { Wrapper } from "../tools/Wrapper";
 import defaultValue from "./defaultValue.json";
@@ -18,7 +19,7 @@ export default class StarRating extends EditorComponent {
   static experimentalDynamicContent = true;
 
   static get componentId() {
-    return "StarRating";
+    return ElementTypes.StarRating;
   }
 
   handleTextChange = (patch) => {

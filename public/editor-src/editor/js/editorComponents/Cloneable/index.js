@@ -11,6 +11,7 @@ import SortableHandle from "visual/component/Sortable/SortableHandle";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { Draggable } from "visual/editorComponents/tools/Draggable";
 import { getContainerSizes } from "visual/editorComponents/tools/Draggable/utils";
+import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import { isPro } from "visual/utils/env";
 import { getWrapperContainerW } from "visual/utils/meta";
 import { getCSSId } from "visual/utils/models/cssId";
@@ -45,7 +46,7 @@ export default class Cloneable extends EditorComponent {
   containerBorder = React.createRef();
 
   static get componentId() {
-    return "Cloneable";
+    return ElementTypes.Cloneable;
   }
 
   shouldComponentUpdate(nextProps) {
@@ -219,7 +220,7 @@ export default class Cloneable extends EditorComponent {
   renderForEdit(v, vs, vd) {
     const { showBorder, propsClassName } = this.props;
     const { customClassName, cssClass, customAttributes, customCSS } = v;
-    const id = getCSSId(v);
+    const id = getCSSId(v) || this.getId();
 
     const animationClassName = this.getAnimationClassName(v, vs, vd);
 

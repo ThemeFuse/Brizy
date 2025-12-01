@@ -4,7 +4,7 @@ Contributors: themefuse<br>
 Requires at least: 4.5<br>
 Tested up to: 6.8.3<br>
 Requires PHP: 7.2.24<br>
-Stable tag: 2.7.16<br>
+Stable tag: 2.7.18<br>
 License: GPLv3<br>
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -135,6 +135,29 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 [Privacy policy](https://brizy.io/privacy/)
 
 ## Changelog
+
+### 2.7.18 - 2025-12-01
+* Improved: Input Text - retains its value when the toolbar is closed instantly
+* Improved: Removed old JavaScript code for cleaner performance
+* Fixed: Rich-Text – added static className support for background image blots
+* Fixed: Rich-Text – dynamic content for third-party integrations now replaces correctly
+* Fixed: Rich-Text – image mask restored for third-party instances
+* Fixed: Rich-Text – preview now shows latest edits for third-party use
+* Fixed: Rich-Text – links now work properly in third-party preview
+* Fixed: Media Library – select menu now opens correctly
+* Fixed: Addable – improved third-party compatibility and behavior
+* Fixed: Icons – outline icons display correctly in the editor
+* Fixed: Box Shadow – blur 0 now applies properly
+* Fixed: Tabs – toolbar now opens the correct tab
+
+### 2.7.17 - 2025-11-10
+* New: Navigator component
+* Fixed: Flatten families object before getCopiedValue processing
+* Fixed: Empty button link appends '#' at the end
+* Fixed: Icon prompt not loading icons on first render
+* Improved: Audio added possibility to hide custom audio via config
+* Improved: Placeholder loading performance
+* Improved: Builder code refactoring — moved all from redux/selectors.js to new selector-new.ts and renamed selector-new
 
 ### 2.7.16 - 2025-10-21
 

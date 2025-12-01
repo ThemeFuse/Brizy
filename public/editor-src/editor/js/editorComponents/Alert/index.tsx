@@ -1,16 +1,17 @@
 import classnames from "classnames";
-import React, { ReactElement } from "react";
+import React, { type ReactElement, RefObject } from "react";
 import BoxResizer from "visual/component/BoxResizer";
-import { Patch } from "visual/component/BoxResizer/types";
+import type { Patch } from "visual/component/BoxResizer/types";
 import { Text } from "visual/component/ContentOptions/types";
 import CustomCSS from "visual/component/CustomCSS";
-import { ElementModel } from "visual/component/Elements/Types";
+import type { ElementModel } from "visual/component/Elements/Types";
 import { ThemeIcon } from "visual/component/ThemeIcon";
 import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
-import { ComponentsMeta } from "visual/editorComponents/EditorComponent/types";
+import type { ComponentsMeta } from "visual/editorComponents/EditorComponent/types";
+import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import { isView } from "visual/providers/RenderProvider";
-import { WithClassName } from "visual/types/attributes";
+import type { WithClassName } from "visual/types/attributes";
 import { makeDataAttr } from "visual/utils/i18n/attribute";
 import { Wrapper } from "../tools/Wrapper";
 import defaultValue from "./defaultValue.json";
@@ -51,8 +52,8 @@ class Alert extends EditorComponent<Value, Props> {
   static defaultValue = defaultValue;
   static experimentalDynamicContent = true;
 
-  static get componentId(): string {
-    return "Alert";
+  static get componentId(): ElementTypes.Alert {
+    return ElementTypes.Alert;
   }
 
   handleResizerChange = (patch: Patch): void => this.patchValue(patch);
@@ -72,7 +73,14 @@ class Alert extends EditorComponent<Value, Props> {
     this.props.extendParentToolbar(toolbarExtend);
   }
 
-  renderAlert(v: Value): ReactElement {
+  renderAlert(
+    v: Value,
+    data?: {
+      titleRef?: RefObject<HTMLDivElement> | null;
+      descriptionRef?: RefObject<HTMLDivElement> | null;
+      iconRef?: RefObject<HTMLDivElement> | null;
+    }
+  ): ReactElement {
     const { showCloseButtonAfter } = v;
 
     const iconClassnames = classnames("brz-alert-close", {
@@ -81,62 +89,31 @@ class Alert extends EditorComponent<Value, Props> {
 
     return (
       <>
-        <Toolbar
-          {...this.makeToolbarPropsFromConfig2(
-            toolbarExtendTitle,
-            sidebarDisabled
-          )}
-        >
-          {({ ref }) => (
-            /* when we use dymanic content <Text/> component does re-render and toolbar above loses his reference */
-            /* in this case wraping in another span solve the problem */
-            <span ref={ref}>
-              <Text
-                className="brz-alert-title"
-                id="title"
-                v={v}
-                onChange={this.handleTextChange}
-              />
-            </span>
-          )}
-        </Toolbar>
+        <span ref={data?.titleRef}>
+          <Text
+            className="brz-alert-title"
+            id="title"
+            v={v}
+            onChange={this.handleTextChange}
+          />
+        </span>
 
-        <Toolbar
-          {...this.makeToolbarPropsFromConfig2(
-            toolbarExtendDescription,
-            sidebarDisabled
-          )}
-        >
-          {({ ref }) => (
-            /* when we use dymanic content <Text/> component does re-render and toolbar above loses his reference */
-            /* in this case wraping in another span solve the problem */
-            <span ref={ref}>
-              <Text
-                className="brz-alert-description"
-                id="description"
-                v={v}
-                onChange={this.handleTextChange}
-              />
-            </span>
-          )}
-        </Toolbar>
+        <span ref={data?.descriptionRef}>
+          <Text
+            className="brz-alert-description"
+            id="description"
+            v={v}
+            onChange={this.handleTextChange}
+          />
+        </span>
 
-        <Toolbar
-          {...this.makeToolbarPropsFromConfig2(
-            toolbarExtendCloseButton,
-            sidebarDisabled
-          )}
-        >
-          {({ ref }) => (
-            <span className={iconClassnames} ref={ref}>
-              <ThemeIcon
-                name="close-popup"
-                className="brz-alert-close-icon"
-                type="editor"
-              />
-            </span>
-          )}
-        </Toolbar>
+        <span className={iconClassnames} ref={data?.iconRef}>
+          <ThemeIcon
+            name="close-popup"
+            className="brz-alert-close-icon"
+            type="editor"
+          />
+        </span>
       </>
     );
   }
@@ -156,22 +133,57 @@ class Alert extends EditorComponent<Value, Props> {
         })
       )
     );
+
     return (
-      <CustomCSS selectorName={this.getId()} css={v.customCSS}>
-        {({ ref: cssRef }) => (
-          <Wrapper {...this.makeWrapperProps({ className, ref: cssRef })}>
-            <BoxResizer
-              points={resizerPoints}
-              restrictions={resizerRestrictions}
-              meta={this.props.meta}
-              value={v}
-              onChange={this.handleResizerChange}
-            >
-              {this.renderAlert(v)}
-            </BoxResizer>
-          </Wrapper>
+      <Toolbar
+        {...this.makeToolbarPropsFromConfig2(
+          toolbarExtendTitle,
+          sidebarDisabled
         )}
-      </CustomCSS>
+      >
+        {({ ref: titleRef }) => (
+          <Toolbar
+            {...this.makeToolbarPropsFromConfig2(
+              toolbarExtendDescription,
+              sidebarDisabled
+            )}
+          >
+            {({ ref: descriptionRef }) => (
+              <Toolbar
+                {...this.makeToolbarPropsFromConfig2(
+                  toolbarExtendCloseButton,
+                  sidebarDisabled
+                )}
+              >
+                {({ ref: iconRef }) => (
+                  <CustomCSS selectorName={this.getId()} css={v.customCSS}>
+                    {({ ref: cssRef }) => (
+                      <Wrapper
+                        {...this.makeWrapperProps({ className, ref: cssRef })}
+                      >
+                        <BoxResizer
+                          points={resizerPoints}
+                          restrictions={resizerRestrictions}
+                          meta={this.props.meta}
+                          value={this.getValue2().v}
+                          context={this}
+                          onChange={this.handleResizerChange}
+                        >
+                          {this.renderAlert(v, {
+                            titleRef,
+                            descriptionRef,
+                            iconRef
+                          })}
+                        </BoxResizer>
+                      </Wrapper>
+                    )}
+                  </CustomCSS>
+                )}
+              </Toolbar>
+            )}
+          </Toolbar>
+        )}
+      </Toolbar>
     );
   }
 
@@ -192,6 +204,7 @@ class Alert extends EditorComponent<Value, Props> {
         })
       )
     );
+
     return (
       <CustomCSS selectorName={this.getId()} css={v.customCSS}>
         <Wrapper

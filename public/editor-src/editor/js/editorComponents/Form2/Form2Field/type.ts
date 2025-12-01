@@ -42,6 +42,10 @@ export interface Value extends Omit<ElementModel, "items"> {
   numberMaxMessage: string;
   placeholder?: string;
   label?: string;
+  customID: string;
+  cssID: string;
+  cssIDPopulation: string;
+  customAttributes: string;
 }
 
 export interface InputTypeChoice {

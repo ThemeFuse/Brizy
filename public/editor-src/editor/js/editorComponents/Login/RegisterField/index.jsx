@@ -7,6 +7,7 @@ import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { style } from "visual/editorComponents/Login/LoginField/styles";
 import { isWp } from "visual/global/Config";
+import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import { isEditor } from "visual/providers/RenderProvider";
 import defaultValue from "./defaultValue";
 import * as toolbarConfig from "./toolbar";
@@ -43,7 +44,7 @@ class RegisterField extends EditorComponent {
   isWp = isWp(this.getGlobalConfig());
 
   static get componentId() {
-    return "RegisterField";
+    return ElementTypes.RegisterField;
   }
 
   handleLabelChange = (label) => {

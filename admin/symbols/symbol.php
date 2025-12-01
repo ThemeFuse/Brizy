@@ -123,7 +123,8 @@ class Brizy_Admin_Symbols_Symbol extends Brizy_Admin_Serializable {
 		isset( $data['data'] ) && ! empty( $data['data'] ) ? $data['data'] : null,
 		isset( $data['version'] ) ? $data['version'] : null,
 		isset( $data['className'] ) ? $data['className'] : null,
-		isset( $data['componentVersion'] ) ? $data['componentVersion'] : null
+		isset( $data['componentTarget'] ) ? $data['componentTarget'] : null
+
 		);
 	}
 
@@ -144,7 +145,7 @@ class Brizy_Admin_Symbols_Symbol extends Brizy_Admin_Serializable {
 		isset( $json->data ) ? $json->data : null,
 		isset( $json->version ) ? $json->version : null ,
 		isset( $json->className ) ? $json->className : null,
-		isset( $json->componentVersion ) ? $json->componentVersion : null
+		isset( $json->componentTarget ) ? $json->componentTarget : null
 		);
 	}
 
@@ -172,15 +173,11 @@ class Brizy_Admin_Symbols_Symbol extends Brizy_Admin_Serializable {
 		}
 	}
 
-	public function incrementVersion() {
-		$this->setVersion( $this->getVersion() + 1 );
-	}
-
 	public function convertToOptionValue() {
 		return array(
 			'uid'     => $this->getUid(),
 			'label'   => $this->getLabel(),
-			'model'    => $this->getModel(),
+			'data'    => $this->getModel(),
 			'className'    => $this->getClassName(),
 			'componentTarget'    => $this->getComponentTarget(),
 			'version' => $this->getVersion(),

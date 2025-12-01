@@ -1,6 +1,4 @@
-import { flatten, partition } from "es-toolkit";
-import { FontObject } from "visual/component/Controls/FontFamily/types";
-import { DividedFonts } from "visual/component/Controls/Typography/types/FontFamily";
+import { flatten } from "es-toolkit";
 import { Store } from "visual/redux/store";
 import { DeviceMode } from "visual/types";
 import { FontFamilyType } from "visual/types/Fonts";
@@ -118,20 +116,3 @@ export const getValue = (data: {
   }
 };
 
-const isVariableFont = (font: FontObject) => !!font.variations?.length;
-
-export const divideFonts = (fonts: FontsBlock): DividedFonts =>
-  Object.entries(fonts).reduce<DividedFonts>(
-    (acc, [fontName, fontData]) => {
-      const [variableFonts, normalFonts] = partition(fontData, isVariableFont);
-
-      return {
-        variableFonts: [...acc.variableFonts, ...variableFonts],
-        normalFonts: {
-          ...acc.normalFonts,
-          [fontName]: normalFonts
-        }
-      };
-    },
-    { variableFonts: [], normalFonts: {} }
-  );

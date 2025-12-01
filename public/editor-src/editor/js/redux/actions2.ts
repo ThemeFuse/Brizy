@@ -32,6 +32,7 @@ import { ShopifyPage } from "visual/types/Page";
 import { Project } from "visual/types/Project";
 import { Screenshot } from "visual/types/Screenshot";
 import { ExtraFontStyle } from "visual/types/Style";
+import type { CSSSymbol, SymbolCSS } from "visual/types/Symbols";
 import { ArrayType } from "visual/utils/array/types";
 import { uuid } from "visual/utils/uuid";
 import { DELETE_GLOBAL_BLOCK } from "./actions";
@@ -74,6 +75,7 @@ export type ActionHydrate = {
     syncAllowed: ReduxState["syncAllowed"];
     config: ConfigCommon;
     editorMode: EditorMode;
+    symbols: CSSSymbol[];
   };
 };
 
@@ -341,6 +343,46 @@ export type ActionUpdateBlockHTMLStats = {
   };
 };
 
+export interface SymbolsPayload {
+  element:
+    | undefined
+    | {
+        uid: string;
+        path: Array<string>;
+      };
+  cssClass: CSSSymbol;
+}
+
+export type SymbolsCreatePayload = Pick<SymbolsPayload, "element"> & {
+  cssClasses: CSSSymbol[];
+};
+
+export type SymbolsDeletePayload = string[];
+
+export interface ActionCreateSymbol {
+  type: ActionTypes.CREATE_SYMBOL;
+  payload: SymbolsCreatePayload;
+}
+
+export interface ActionUpdateSymbol {
+  type: ActionTypes.UPDATE_SYMBOL;
+  payload: SymbolsPayload;
+}
+
+export interface ActionDeleteSymbol {
+  type: ActionTypes.DELETE_SYMBOL;
+  payload: SymbolsDeletePayload;
+}
+
+interface ActionUpdateSymbolsCSS {
+  type: ActionTypes.UPDDATE_SYMBOLS_CSS;
+  payload: SymbolCSS;
+}
+
+export type ActionInitializeBlocksHtml = {
+  type: ActionTypes.INITIALIZE_BLOCKS_HTML;
+};
+
 export type ReduxAction =
   | ActionHydrate
   | ActionUpdateGlobalBlock
@@ -391,7 +433,12 @@ export type ReduxAction =
   | EditGlobalStyleName
   | UpdateCurrentStyleId
   | RegenerateColors
-  | RegenerateTypography;
+  | RegenerateTypography
+  | ActionCreateSymbol
+  | ActionUpdateSymbol
+  | ActionDeleteSymbol
+  | ActionUpdateSymbolsCSS
+  | ActionInitializeBlocksHtml;
 
 export type ActionUpdateAuthorized = {
   type: "UPDATE_AUTHORIZATION";
@@ -745,6 +792,32 @@ export const updateStoreWasChanged = (
   };
 };
 
+export const createSymbol = (
+  payload: SymbolsCreatePayload
+): ActionCreateSymbol => ({
+  type: ActionTypes.CREATE_SYMBOL,
+  payload
+});
+
+export const updateSymbol = (payload: SymbolsPayload): ActionUpdateSymbol => ({
+  type: ActionTypes.UPDATE_SYMBOL,
+  payload
+});
+
+export const deleteSymbol = (
+  payload: SymbolsDeletePayload
+): ActionDeleteSymbol => ({
+  type: ActionTypes.DELETE_SYMBOL,
+  payload
+});
+
+export const updateSymbolsCSS = (
+  payload: SymbolCSS
+): ActionUpdateSymbolsCSS => ({
+  type: ActionTypes.UPDDATE_SYMBOLS_CSS,
+  payload
+});
+
 // pages
 
 export function updateBlocks({
@@ -1018,6 +1091,12 @@ export const updatePageIsHomePage = ({
   };
 };
 
+export const initializeBlocksHtml = (): ActionInitializeBlocksHtml => {
+  return {
+    type: ActionTypes.INITIALIZE_BLOCKS_HTML
+  };
+};
+
 //#region Add New Global Style
 
 export enum ActionTypes {
@@ -1040,7 +1119,12 @@ export enum ActionTypes {
   "UPDATE_BLOCK_HTML" = "UPDATE_BLOCK_HTML",
   "UPDATE_BLOCKS_HTML" = "UPDATE_BLOCKS_HTML",
   "UPDATE_BLOCK_HTML_STATS" = "UPDATE_BLOCK_HTML_STATS",
-  "UPDATE_GLOBAL_BLOCK_METADATA" = "UPDATE_GLOBAL_BLOCK_METADATA"
+  "UPDATE_GLOBAL_BLOCK_METADATA" = "UPDATE_GLOBAL_BLOCK_METADATA",
+  "CREATE_SYMBOL" = "CREATE_SYMBOL",
+  "UPDATE_SYMBOL" = "UPDATE_SYMBOL",
+  "DELETE_SYMBOL" = "DELETE_SYMBOL",
+  "UPDDATE_SYMBOLS_CSS" = "UPDDATE_SYMBOLS_CSS",
+  "INITIALIZE_BLOCKS_HTML" = "INITIALIZE_BLOCKS_HTML"
 }
 
 // templates

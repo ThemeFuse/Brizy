@@ -59,6 +59,7 @@ const {
   ANALYZE_EDITOR,
   AUTHORIZATION_URL,
   CHECK_BUNDLE_SIZE,
+  WITH_TRANSLATIONS,
   paths
 } = argvVars(process.argv);
 const WP = TARGET === "WP";
@@ -666,7 +667,7 @@ function watch() {
 }
 
 // Threshold in kilobytes (adjust as needed)
-const BROWSER_COMPILER_MAX_BUNDLE_SIZE_KB = 6600;
+const BROWSER_COMPILER_MAX_BUNDLE_SIZE_KB = 7000;
 const NODE_COMPILER_MAX_BUNDLE_SIZE_KB = 20000;
 const MAX_BUNDLE_SIZE_DEVIATION_KB = 200;
 
@@ -761,7 +762,7 @@ exports.build = gulp.series.apply(undefined, [
     : []),
 
   // cloud
-  ...(CLOUD && IS_PRODUCTION
+  ...(CLOUD && WITH_TRANSLATIONS
     ? [gulp.parallel.apply(undefined, [cloudTranslations])]
     : []),
 

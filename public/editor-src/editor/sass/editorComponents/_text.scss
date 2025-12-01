@@ -300,7 +300,9 @@
     max-width: 100%;
   }
 
-  &__population-tooltip *, [data-tooltip] {
+  &__population-tooltip *,
+  [data-tooltip],
+  [data-brz-tooltip] {
     text-decoration: underline !important;
     text-decoration-style: dashed !important;
     text-underline-offset: 5px;
@@ -328,13 +330,15 @@
     font-size: inherit;
   }
 
-  span, .brz-rich-text-context-wrapper {
+  span,
+  .brz-rich-text-context-wrapper {
     display: inline-block;
     position: relative;
     z-index: 0;
   }
 
-  span::before, .brz-rich-text-context-wrapper::before {
+  span::before,
+  .brz-rich-text-context-wrapper::before {
     content: "";
     position: absolute;
     top: 0;

@@ -1,15 +1,17 @@
+import { omit } from "es-toolkit";
 import React, { useCallback } from "react";
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import type { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import EditorGlobal from "visual/global/Editor";
 import { useConfig } from "visual/providers/ConfigProvider";
-import { EditorMode } from "visual/providers/EditorModeProvider";
+import type { EditorMode } from "visual/providers/EditorModeProvider";
 import { ServerStyleSheet } from "visual/providers/StyleProvider/ServerStyleSheet";
 import { pageBlocksRawSelector } from "visual/redux/selectors";
-import { Store } from "visual/redux/store";
-import { Block } from "visual/types/Block";
+import type { Store } from "visual/redux/store";
+import type { Block } from "visual/types/Block";
 import { Providers } from "../controls/Providers";
+import type { SymbolAsset } from "../transforms/assets/makeSymbols";
 import { baseToStatic } from "./baseToStatic";
-import { Output } from "./types";
+import type { OutputWithoutSymbols } from "./types";
 
 interface Props {
   store: Store;
@@ -55,7 +57,8 @@ export const pageToStatic = (
   props: Props
 ): {
   rootClassNames: Array<string>;
-  blocks: Array<Output & { id: string }>;
+  blocks: Array<OutputWithoutSymbols & { id: string }>;
+  symbols: SymbolAsset[];
 } => {
   const { store, config, editorMode } = props;
   const reduxState = store.getState();
@@ -63,6 +66,9 @@ export const pageToStatic = (
   const rootClassNames = [
     "brz brz-root__container brz-reset-all brz-root__container-page"
   ];
+
+  const symbols: SymbolAsset[] = [];
+
   const blocks = pageBlocks.map((block) => {
     const sheet = new ServerStyleSheet();
 
@@ -77,11 +83,20 @@ export const pageToStatic = (
       </Providers>
     );
 
+    const staticData = baseToStatic({
+      Page,
+      sheet: sheet.instance,
+      store,
+      config
+    });
+
+    symbols.push(...staticData.symbols);
+
     return {
       id: block.value._id,
-      ...baseToStatic({ Page, sheet: sheet.instance, store, config })
+      ...omit(staticData, ["symbols"])
     };
   });
 
-  return { rootClassNames, blocks };
+  return { rootClassNames, blocks, symbols };
 };

@@ -1,6 +1,6 @@
 import React from "react";
 import { ReactReduxContext } from "react-redux";
-import { toCode, _modifier } from "./utils";
+import { _modifier, toCode } from "./utils";
 
 let listeningKeys = {};
 let downKeysMap = [];
@@ -108,6 +108,10 @@ class HotKeysPlugin extends React.Component {
   };
 
   handleKeyDown = (e) => {
+    if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "e") {
+      e.preventDefault(); // disable browser default ctrl+e behavior
+    }
+
     if (
       downKeysMap.includes(_modifier["⌘"]) ||
       downKeysMap.includes(_modifier["right_⌘"])

@@ -23,10 +23,7 @@ import { getWeightChoices } from "visual/utils/fonts/getFontWeight";
 import { fontTransform } from "visual/utils/fonts/transform";
 import { mPipe } from "visual/utils/fp";
 import { t } from "visual/utils/i18n";
-import {
-  divideFonts,
-  getValue
-} from "visual/utils/options/Typography/componentUtils";
+import { getValue } from "visual/utils/options/Typography/componentUtils";
 import { Config } from "visual/utils/options/Typography/types/Config";
 import { Font } from "visual/utils/options/Typography/types/Font";
 import { FontObject } from "visual/utils/options/Typography/types/FontObject";
@@ -61,7 +58,8 @@ export const Typography = ({
   value,
   onChange,
   config,
-  className
+  className,
+  label
 }: Props): ReactElement => {
   const dispatch = useDispatch();
   const store = useStore();
@@ -217,8 +215,6 @@ export const Typography = ({
 
   const variations = useMemo(() => _value.variations, [_value.variations]);
 
-  const dividedFonts = useMemo(() => divideFonts(fonts), [fonts]);
-
   const _setDeviceMode = useCallback(
     (device: DeviceMode) => {
       dispatch(setDeviceMode(device));
@@ -258,7 +254,7 @@ export const Typography = ({
     <Control
       onChange={_onChange}
       showFontFamily={fontFamily}
-      fonts={dividedFonts}
+      fonts={fonts}
       font={_value.fontFamily}
       fontAdd={fontAddFunc}
       fontAddLabel={t("Add New Font")}
@@ -306,6 +302,7 @@ export const Typography = ({
       showFontSize={_isStory}
       showFontStyles={!_isStory}
       isFontStyleSettingsDisabled={isFontStyleSettingsDisabled}
+      label={label}
     />
   );
 };

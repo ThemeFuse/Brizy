@@ -38,11 +38,33 @@ exports.preview = (options) => {
         }
       ]
     },
+    optimization: {
+      usedExports: true,
+      minimize: options.IS_PRODUCTION,
+      minimizer: [
+        new TerserPlugin({
+          terserOptions: {
+            compress: {
+              drop_console: options.IS_PRODUCTION,
+              dead_code: true,
+              pure_funcs: options.IS_PRODUCTION ? ['console.log', 'console.info', 'console.debug'] : []
+            },
+            mangle: options.IS_PRODUCTION,
+            format: {
+              comments: false
+            }
+          },
+          extractComments: false
+        })
+      ]
+    },
     externals: {
       jquery: "jQuery"
     },
     performance: {
-      hints: false
+      hints: options.IS_PRODUCTION ? "warning" : false,
+      maxEntrypointSize: 512000,
+      maxAssetSize: 512000
     },
     devtool: editorConfig.devtool,
     watch: editorConfig.watch

@@ -5,6 +5,7 @@ import CustomCSS from "visual/component/CustomCSS";
 import Placeholder from "visual/component/Placeholder";
 import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
+import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import { isEditor } from "visual/providers/RenderProvider";
 import { attachRefs } from "visual/utils/react";
 import { Wrapper } from "../tools/Wrapper";
@@ -28,7 +29,7 @@ class SoundCloud extends EditorComponent {
   static defaultValue = defaultValue;
 
   static get componentId() {
-    return "SoundCloud";
+    return ElementTypes.SoundCloud;
   }
 
   handleResizerChange = (patch) => this.patchValue(patch);

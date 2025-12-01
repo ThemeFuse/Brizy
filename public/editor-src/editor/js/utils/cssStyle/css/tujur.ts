@@ -1,28 +1,30 @@
 import { Sheet } from "visual/providers/StyleProvider/Sheet";
-import { murmurhash2 } from "visual/utils/crypto";
 import { makeAttr } from "visual/utils/i18n/attribute";
 import { uuid } from "visual/utils/uuid";
+import type { OutputStyleWithSymbol } from "../types";
 import { addUuid, getNodeWithNewReference } from "./utils";
 
 // ====== tujur ======
 export function css(
-  defaultID: string,
-  elementID: string,
-  [defaultStyle, rulesStyle, elementStyle]: [string, string, string],
+  _componentId: string,
+  symbolClassName: string,
+  [defaultStyle, rulesStyle, elementStyle, symbolStyle]: OutputStyleWithSymbol,
   sheet: Readonly<Sheet>
 ) {
   let defaultData;
   const isBrowser = typeof window !== "undefined";
   const cssOrdered = sheet.getCSSOrdered();
+  const componentId = _componentId.toLowerCase();
+  const defaultClassName = `brz-css-d-${componentId}`;
+  const rulesClassName = `brz-css-r-${componentId}`;
 
   if (defaultStyle) {
-    defaultData = sheet.get(defaultID);
+    defaultData = sheet.get(defaultClassName);
     // we don't treat the else clause because we assume that
     // default styles will be the same for a given id no matter
     // how many times this function will be called
     if (!defaultData) {
-      const className = `brz-css-${murmurhash2(defaultStyle + elementID)}`;
-      const cssText = replacePlaceholders(defaultStyle, className);
+      const cssText = replacePlaceholders(defaultStyle, defaultClassName);
       let node;
 
       if (isBrowser) {
@@ -32,22 +34,21 @@ export function css(
         addUuid(node);
 
         if (process.env.NODE_ENV === "development") {
-          node.setAttribute(makeAttr("css"), `default-${defaultID}`);
+          node.setAttribute(makeAttr("css"), `default-${_componentId}`);
         }
         node.appendChild(doc.createTextNode(""));
         node.childNodes[0].nodeValue = cssText;
-
         insertStyleNodeIntoDOM("default", { node, doc, sheet });
       }
 
       defaultData = {
         node,
-        className,
+        className: defaultClassName,
         cssText
       };
 
       cssOrdered.default.push(defaultData);
-      sheet.set(defaultID, defaultData);
+      sheet.set(defaultClassName, defaultData);
     } else {
       const { node, className, cssText } = defaultData;
       const cssTextNext = replacePlaceholders(defaultStyle, className);
@@ -64,12 +65,9 @@ export function css(
 
   let rulesData;
   if (rulesStyle) {
-    const rulesStyleHash = murmurhash2(rulesStyle);
-
-    rulesData = sheet.get(rulesStyleHash);
+    rulesData = sheet.get(rulesClassName);
     if (!rulesData) {
-      const className = `brz-css-${murmurhash2(rulesStyle + elementID)}`;
-      const cssText = replacePlaceholders(rulesStyle, className);
+      const cssText = replacePlaceholders(rulesStyle, rulesClassName);
       let node;
 
       if (isBrowser) {
@@ -79,7 +77,7 @@ export function css(
         addUuid(node);
 
         if (process.env.NODE_ENV === "development") {
-          node.setAttribute(makeAttr("css"), `rules-${defaultID}`);
+          node.setAttribute(makeAttr("css"), `rules-${_componentId}`);
         }
         node.appendChild(doc.createTextNode(""));
         node.childNodes[0].nodeValue = cssText;
@@ -89,21 +87,23 @@ export function css(
 
       rulesData = {
         node,
-        className,
+        className: rulesClassName,
         cssText
       };
 
       cssOrdered.rules.push(rulesData);
-      sheet.set(rulesStyleHash, rulesData);
+      sheet.set(rulesClassName, rulesData);
     }
   }
 
   let elementData;
   if (elementStyle) {
-    elementData = sheet.get(elementID);
+    elementData = sheet.get(symbolClassName);
+
     if (!elementData) {
-      const className = `brz-css-${murmurhash2(elementStyle + elementID)}`;
+      const className = symbolClassName;
       const cssText = replacePlaceholders(elementStyle, className);
+
       let node;
 
       if (isBrowser) {
@@ -113,7 +113,7 @@ export function css(
         addUuid(node);
 
         if (process.env.NODE_ENV === "development") {
-          node.setAttribute(makeAttr("css"), `custom-${defaultID}`);
+          node.setAttribute(makeAttr("css"), `custom-${_componentId}`);
         }
         node.appendChild(doc.createTextNode(""));
         node.childNodes[0].nodeValue = cssText;
@@ -128,7 +128,8 @@ export function css(
       };
 
       cssOrdered.custom.push(elementData);
-      sheet.set(elementID, elementData);
+
+      sheet.set(symbolClassName, elementData);
     } else {
       const { className, cssText } = elementData;
       let { node } = elementData;
@@ -155,10 +156,71 @@ export function css(
     }
   }
 
+  let symbolData;
+  if (symbolStyle) {
+    symbolData = sheet.get(symbolClassName);
+
+    if (!symbolData) {
+      const className = symbolClassName;
+      const cssText = replacePlaceholders(symbolStyle, className);
+
+      let node;
+
+      if (isBrowser) {
+        const doc = sheet.getDoc() ?? document;
+        node = doc.createElement("style");
+
+        addUuid(node);
+
+        if (process.env.NODE_ENV === "development") {
+          node.setAttribute(makeAttr("css"), `symbol-${_componentId}`);
+        }
+        node.appendChild(doc.createTextNode(""));
+        node.childNodes[0].nodeValue = cssText;
+
+        insertStyleNodeIntoDOM("custom", { node, doc, sheet });
+      }
+
+      symbolData = {
+        node,
+        className,
+        cssText
+      };
+
+      cssOrdered.symbol.push(symbolData);
+
+      sheet.set(symbolClassName, symbolData);
+    } else {
+      const { className, cssText } = symbolData;
+      let { node } = symbolData;
+      const cssTextNext = replacePlaceholders(symbolStyle, className);
+
+      if (cssTextNext !== cssText) {
+        if (node && !document.head.contains(node)) {
+          const doc = sheet.getDoc() ?? document;
+
+          const newRef = getNodeWithNewReference(node, doc);
+
+          if (newRef) {
+            node = newRef;
+            symbolData.node = newRef;
+          }
+        }
+
+        if (node) {
+          node.childNodes[0].nodeValue = cssTextNext;
+        }
+
+        symbolData.cssText = cssTextNext;
+      }
+    }
+  }
+
   return [
     ...(defaultData ? [defaultData.className] : []),
     ...(rulesData ? [rulesData.className] : []),
-    ...(elementData ? [elementData.className] : [])
+    ...(elementData ? [elementData.className] : []),
+    ...(symbolData ? [symbolData.className] : [])
   ].join(" ");
 }
 

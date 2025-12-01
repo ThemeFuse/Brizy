@@ -91,12 +91,17 @@ export class EcwidAddToCart extends EditorComponent<Value> {
           })
         : getEcwidProductId(entityId);
 
+    const langLocale = makePlaceholder({
+      content: "{{ecwid_language_code}}"
+    });
+
     const attributes = {
       [makeAttr("store-id")]: makePlaceholder({
         content: "{{ecwid_store_id}}"
       }),
       [makeAttr("product-id")]: productId,
-      [makeAttr("shop-path")]: getEcwidShopPathPlaceholder()
+      [makeAttr("shop-path")]: getEcwidShopPathPlaceholder(),
+      [makeAttr("lang-locale")]: langLocale
     };
 
     return (

@@ -5,19 +5,12 @@ import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { DynamicContentHelper } from "visual/editorComponents/WordPress/common/DynamicContentHelper";
 import { Wrapper } from "visual/editorComponents/tools/Wrapper";
+import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import { updateEkklesiaFields } from "visual/utils/api";
 import { attachRefs } from "visual/utils/react";
 import * as sidebarConfig from "../sidebar";
 import * as sidebarExtendButtons from "../sidebarExtendButtons";
-import {
-  sidebarMinistryBrandsMetaCategory,
-  sidebarMinistryBrandsMetaDate,
-  sidebarMinistryBrandsMetaGroup,
-  sidebarMinistryBrandsMetaPassage,
-  sidebarMinistryBrandsMetaPreacher,
-  sidebarMinistryBrandsMetaSeries,
-  sidebarMinistryBrandsMetaTitle
-} from "../sidebars/sidebars";
+import { sidebarMinistryBrandsMeta } from "../sidebars/sidebars";
 import * as toolbarExtendButtons from "../toolbarExtendButtons";
 import * as toolbarImage from "../toolbarImage";
 import * as toolbarLinksColor from "../toolbarLinksColor";
@@ -28,6 +21,7 @@ import * as toolbarPreview from "../toolbarPreview";
 import * as toolbarTitle from "../toolbarTitle";
 import * as toolbarMetaItemLinkColor from "../toolbars/toolbarMetaItemLinkColor";
 import { getEkklesiaMessages } from "../utils/helpers";
+import { MBMetaPrefixKey } from "../utils/types";
 import defaultValue from "./defaultValue.json";
 import { style } from "./styles";
 import * as toolbarExtendParent from "./toolbarExtendParent";
@@ -38,8 +32,8 @@ export class MinistryBrandsSermonDetail extends EditorComponent<Value, Props> {
   static defaultValue = defaultValue;
   static experimentalDynamicContent = true;
 
-  static get componentId(): "MinistryBrandsSermonDetail" {
-    return "MinistryBrandsSermonDetail";
+  static get componentId(): ElementTypes.MinistryBrandsSermonDetail {
+    return ElementTypes.MinistryBrandsSermonDetail;
   }
 
   async componentDidMount(): Promise<void> {
@@ -89,7 +83,7 @@ export class MinistryBrandsSermonDetail extends EditorComponent<Value, Props> {
       <Toolbar
         {...this.makeToolbarPropsFromConfig2(
           toolbarTitle,
-          sidebarMinistryBrandsMetaTitle,
+          sidebarMinistryBrandsMeta(MBMetaPrefixKey.metaTitle),
           {
             allowExtend: false
           }
@@ -100,7 +94,7 @@ export class MinistryBrandsSermonDetail extends EditorComponent<Value, Props> {
           <Toolbar
             {...this.makeToolbarPropsFromConfig2(
               toolbarMetaTypography,
-              sidebarMinistryBrandsMetaDate,
+              sidebarMinistryBrandsMeta(MBMetaPrefixKey.metaDate),
               {
                 allowExtend: false
               }
@@ -111,7 +105,7 @@ export class MinistryBrandsSermonDetail extends EditorComponent<Value, Props> {
               <Toolbar
                 {...this.makeToolbarPropsFromConfig2(
                   toolbarMetaTypography,
-                  sidebarMinistryBrandsMetaCategory,
+                  sidebarMinistryBrandsMeta(MBMetaPrefixKey.metaCategory),
                   {
                     allowExtend: false
                   }
@@ -122,7 +116,7 @@ export class MinistryBrandsSermonDetail extends EditorComponent<Value, Props> {
                   <Toolbar
                     {...this.makeToolbarPropsFromConfig2(
                       toolbarMetaTypography,
-                      sidebarMinistryBrandsMetaGroup,
+                      sidebarMinistryBrandsMeta(MBMetaPrefixKey.metaGroup),
                       {
                         allowExtend: false
                       }
@@ -133,7 +127,7 @@ export class MinistryBrandsSermonDetail extends EditorComponent<Value, Props> {
                       <Toolbar
                         {...this.makeToolbarPropsFromConfig2(
                           toolbarMetaTypography,
-                          sidebarMinistryBrandsMetaSeries,
+                          sidebarMinistryBrandsMeta(MBMetaPrefixKey.metaSeries),
                           {
                             allowExtend: false
                           }
@@ -144,7 +138,9 @@ export class MinistryBrandsSermonDetail extends EditorComponent<Value, Props> {
                           <Toolbar
                             {...this.makeToolbarPropsFromConfig2(
                               toolbarMetaTypography,
-                              sidebarMinistryBrandsMetaPreacher,
+                              sidebarMinistryBrandsMeta(
+                                MBMetaPrefixKey.metaPreacher
+                              ),
                               {
                                 allowExtend: false
                               }
@@ -155,7 +151,9 @@ export class MinistryBrandsSermonDetail extends EditorComponent<Value, Props> {
                               <Toolbar
                                 {...this.makeToolbarPropsFromConfig2(
                                   toolbarMetaTypography,
-                                  sidebarMinistryBrandsMetaPassage,
+                                  sidebarMinistryBrandsMeta(
+                                    MBMetaPrefixKey.metaPassage
+                                  ),
                                   {
                                     allowExtend: false
                                   }
@@ -188,7 +186,9 @@ export class MinistryBrandsSermonDetail extends EditorComponent<Value, Props> {
                                           <Toolbar
                                             {...this.makeToolbarPropsFromConfig2(
                                               toolbarMetaItemLinkColor,
-                                              sidebarMinistryBrandsMetaPassage,
+                                              sidebarMinistryBrandsMeta(
+                                                MBMetaPrefixKey.metaPassage
+                                              ),
                                               {
                                                 allowExtend: false
                                               }

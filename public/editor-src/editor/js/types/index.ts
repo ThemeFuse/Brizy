@@ -107,6 +107,7 @@ export type Shortcode = {
     icon: string;
     id: string;
     resolve: ElementModel;
+    truncate?: boolean;
     position?: number;
     hidden?: boolean;
     config?: Record<string, unknown>;

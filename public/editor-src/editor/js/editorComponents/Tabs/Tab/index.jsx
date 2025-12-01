@@ -6,6 +6,7 @@ import { TextEditor } from "visual/component/Controls/TextEditor";
 import { ThemeIcon } from "visual/component/ThemeIcon";
 import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
+import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import { isView } from "visual/providers/RenderProvider";
 import Items from "./Items";
 import defaultValue from "./defaultValue.json";
@@ -18,7 +19,7 @@ class Tab extends EditorComponent {
   static defaultValue = defaultValue;
 
   static get componentId() {
-    return "Tab";
+    return ElementTypes.Tab;
   }
 
   handleLabelChange = (labelText) => {
