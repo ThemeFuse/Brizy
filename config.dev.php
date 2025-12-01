@@ -72,14 +72,6 @@ class Brizy_Config
     // this file will be stored in uploads/brizy/
     const PROJECT_STLYES_FILE_PATH = DIRECTORY_SEPARATOR.'project'.DIRECTORY_SEPARATOR.'styles.css';
 
-    // const AI_CREATE_SESSION_URL = 'http://172.17.0.1:8000/api/create-session';
-    // const AI_GENERATED_TEMPLATE_URL = 'http://172.17.0.1:8000/api/generated-template/';
-    // const AI_SEND_PROJECT_DATA_URL = 'http://172.17.0.1:8000/api/send-project/';
-
-    const AI_CREATE_SESSION_URL = 'https://phplaravel-1109775-4078837.cloudwaysapps.com/api/create-session';
-    const AI_GENERATED_TEMPLATE_URL = 'https://phplaravel-1109775-4078837.cloudwaysapps.com/api/generated-template/';
-    const AI_SEND_PROJECT_DATA_URL = 'https://phplaravel-1109775-4078837.cloudwaysapps.com/api/send-project/';
-    
     static public function getCompilerUrls()
     {
         $host = self::getEnvValue('COMPILER_HOST');
@@ -152,20 +144,5 @@ class Brizy_Config
     static public function getTermsOfServiceUrl()
     {
         return apply_filters('brizy_config_terms_of_service_url', self::TERMS_OF_SERVICE_URL);
-    }
-
-    static public function getAiCreateSessionUrl()
-    {
-        return apply_filters('brizy_ai_create_session_url', self::AI_CREATE_SESSION_URL);
-    }
-
-    static public function getAiGeneratedTemplateUrl()
-    {
-        return apply_filters('brizy_ai_generated_template_url', self::AI_GENERATED_TEMPLATE_URL);
-    }
-
-    static public function getAiSetProjectDataUrl()
-    {
-        return apply_filters('brizy_ai_send_project_data_url', self::AI_SEND_PROJECT_DATA_URL);
     }
 }

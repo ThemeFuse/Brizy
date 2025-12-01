@@ -239,10 +239,6 @@ class Brizy_Admin_Main {
                 'jquery',
                 'underscore'
         ), BRIZY_VERSION, true );
-        wp_enqueue_script( Brizy_Editor::get_slug() . '-admin-ai-js', $urlBuilder->plugin_url( 'admin/static/js/ai.js' ), array(
-                Brizy_Editor::get_slug() . '-admin-js',
-                'jquery'
-        ), BRIZY_VERSION, true );
 
         $get_post_focal = get_post_meta( get_the_ID(), 'brizy_attachment_focal_point', true );
         wp_localize_script( Brizy_Editor::get_slug() . '-admin-js', 'Brizy_Admin_Data', array(
@@ -272,13 +268,13 @@ class Brizy_Admin_Main {
                         'aiGenerateTemplateTitle'       => __( 'Generating template', 'brizy' ),
                         'aiGenerateTemplateDesc'        => __( 'Please wait. This may take a few minutes.', 'brizy' ),
                 ],
-                'aiActions' => array(
-                    'createSession'    => Brizy_Admin_Ai_Api::AJAX_CREATE_SESSION,
-                    'generateTemplate' => Brizy_Admin_Ai_Api::AJAX_GENERATE_TEMPLATE,
-                    'importDelete'     => Brizy_Admin_Ai_Api::AJAX_IMPORT_DELETE,
-                    'importKeep'       => Brizy_Admin_Ai_Api::AJAX_IMPORT_KEEP,
-                    'sendProject'      => Brizy_Admin_Ai_Api::AJAX_SEND_PROJECT,
-                ),
+                'aiActions' => class_exists('BrizyPro_Admin_AiCore') ? array(
+                    'createSession'    => BrizyPro_Admin_AiCore::AJAX_CREATE_SESSION,
+                    'generateTemplate' => BrizyPro_Admin_AiCore::AJAX_GENERATE_TEMPLATE,
+                    'importDelete'     => BrizyPro_Admin_AiCore::AJAX_IMPORT_DELETE,
+                    'importKeep'       => BrizyPro_Admin_AiCore::AJAX_IMPORT_KEEP,
+                    'sendProject'      => BrizyPro_Admin_AiCore::AJAX_SEND_PROJECT,
+                ) : array(),
         ) );
     }
 
