@@ -239,7 +239,6 @@ class Brizy_Admin_Main {
                 'jquery',
                 'underscore'
         ), BRIZY_VERSION, true );
-
         $get_post_focal = get_post_meta( get_the_ID(), 'brizy_attachment_focal_point', true );
         wp_localize_script( Brizy_Editor::get_slug() . '-admin-js', 'Brizy_Admin_Data', array(
                 'url'           => admin_url( 'admin-ajax.php' ),
