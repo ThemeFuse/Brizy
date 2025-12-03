@@ -362,7 +362,7 @@ jQuery(document).ready(function ($) {
 
             $( document ).on( 'click', '.js-demo-install', function( e ) {
                 e.preventDefault();
-
+                
                 $( '.brz-demo-modal-content' ).html( $( '#brz-demo-modal-content-installing' ).html() );
 
                 $.ajax( {
