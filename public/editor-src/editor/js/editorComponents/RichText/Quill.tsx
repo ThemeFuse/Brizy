@@ -248,7 +248,13 @@ export class QuillComponent extends React.Component<Props> {
     const prevGlobalBlocksLength = Object.keys(this.props.globalBlocks).length;
     const nextGlobalBlocksLength = Object.keys(nextProps.globalBlocks).length;
 
-    if (!isEqual(fonts, this.props.fonts) || value !== this.lastUpdatedValue) {
+    const hasFocus = this.quill && this.quill.hasFocus();
+    const isListOpen = this.props.isListOpen === true;
+
+    const reinitForValue = value !== this.lastUpdatedValue;
+
+    const shouldReinitValue = reinitForValue && !hasFocus && !isListOpen;
+    if (!isEqual(fonts, this.props.fonts) || shouldReinitValue) {
       return true;
     }
 
