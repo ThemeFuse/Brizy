@@ -29,25 +29,28 @@ exports.editor = (options) => {
 };
 
 exports.export = (options) => {
-  const { sourceMap, jsc, env } = exports.editor(options);
-  const clonedEnv = JSON.parse(JSON.stringify(env));
-  const clonedJsc = JSON.parse(JSON.stringify(jsc));
-
-  clonedEnv.targets = "node 20";
-
-  clonedJsc.minify = {
-    ...clonedJsc.minify,
-    // removed all comments & console
-    compress: options.IS_PRODUCTION ? { drop_console: true } : false
-  };
-
   return {
     module: {
       type: "commonjs"
     },
-    sourceMap,
-    jsc: clonedJsc,
-    env: clonedEnv
+    sourceMap: !options.IS_PRODUCTION,
+    minify: options.IS_PRODUCTION,
+    jsc: {
+      parser: {
+        syntax: "typescript",
+        tsx: true
+      },
+      experimental: {
+        // Enable Loadable for SSR and webworker to render component not fallback
+        cacheRoot: "node_modules/.cache/.swc",
+        plugins: [["@swc/plugin-loadable-components", {}]]
+      }
+    },
+    env: {
+      targets: "node 20",
+      mode: "usage",
+      coreJs: coreJSVersion
+    }
   };
 };
 
@@ -103,11 +106,13 @@ exports.preview = (options) => {
     }
   };
 
-  clonedJsc.minify = options.IS_PRODUCTION ? {
-    compress: {
-      drop_console: true
-    }
-  } : undefined;
+  clonedJsc.minify = options.IS_PRODUCTION
+    ? {
+        compress: {
+          drop_console: true
+        }
+      }
+    : undefined;
 
   return {
     module: {
@@ -119,7 +124,7 @@ exports.preview = (options) => {
     jsc: clonedJsc,
     env: clonedEnv,
     isModule: true,
-    minify: false 
+    minify: false
   };
 };
 
