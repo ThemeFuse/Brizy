@@ -2,11 +2,11 @@ import { expose } from "comlink";
 import { mergeDeep } from "timm";
 import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { getTempConfig } from "../common/utils/getTempConfig";
+import { preloadComponents } from "../common/utils/preloadComponents";
 import { Static } from "./bootstrap/types";
 import { getProScriptUrl } from "./utils/getProScriptUrl";
 import { getThirdPartyScriptUrl } from "./utils/getThirdPartyScriptUrl";
 import "./utils/globals";
-import { preloadComponents } from "./utils/preloadComponents";
 
 // @ts-expect-error: Config in worker
 global.__VISUAL_CONFIG__ = {};
