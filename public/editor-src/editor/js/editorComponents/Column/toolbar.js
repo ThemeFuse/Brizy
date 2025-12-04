@@ -103,6 +103,9 @@ export const getItems = ({
     linkExternal
   } = getEnabledLinkOptions(config);
 
+  const isHeightMaxSuffixPx = dvv("heightMaxSuffix") === "px";
+  const isMaxHeight = dvv("heightStyle") === "max-height";
+
   return [
     {
       id: `showOn${deviceCapitalize}`,
@@ -566,8 +569,16 @@ export const getItems = ({
               type: "select",
               choices: [
                 { title: t("Auto"), value: "auto" },
-                { title: t("Custom"), value: "custom" }
-              ]
+                { title: t("Custom"), value: "custom" },
+                { title: t("Max Height"), value: "max-height" }
+              ],
+              ...(isMaxHeight && {
+                helper: {
+                  content: t(
+                    "Set the maximum height for the column. If the content exceeds this height, it will become scrollable."
+                  )
+                }
+              })
             },
             {
               id: "height",
@@ -577,6 +588,22 @@ export const getItems = ({
                 min: 20,
                 max: 999,
                 units: [{ value: "px", title: "px" }]
+              }
+            },
+            {
+              id: "heightMax",
+              type: "slider",
+              disabled: !isMaxHeight,
+              config: {
+                min: 20,
+                max: isHeightMaxSuffixPx ? 999 : 100,
+                units: [
+                  { value: "px", title: "px" },
+                  {
+                    value: "%",
+                    title: "%"
+                  }
+                ]
               }
             }
           ]

@@ -1,5 +1,5 @@
-import QuickLRU from "quick-lru";
 import { DOMParser, XMLSerializer } from "@xmldom/xmldom";
+import QuickLRU from "quick-lru";
 import {
   children,
   closestByClassName,
@@ -14,9 +14,7 @@ import {
 const cache = new QuickLRU({ maxSize: 100 });
 
 onerror = (e) => {
-  /* eslint-disable no-console */
   console.error(e);
-  /* eslint-enabled no-console */
 };
 
 onmessage = async (e) => {
@@ -326,7 +324,6 @@ function fetchResource(url) {
     return Promise.resolve(cache.get(url));
   }
 
-  /* eslint-disable no-console */
   return fetch(url, { credentials: "omit" })
     .then((r) => {
       if (r.ok) {
@@ -341,7 +338,6 @@ function fetchResource(url) {
       return base64;
     })
     .catch((e) => console.error("worker fetch:", e));
-  /* eslint-enabled no-console */
 }
 
 function getResourceDownloadUrl(src, { siteUrl, proxyUrl }) {
@@ -358,9 +354,7 @@ function blobToDataUri(blob) {
     reader.onload = function () {
       resolve(this.result);
     };
-    /* eslint-disable no-console */
     reader.onerror = () => console.error("failed to decode image");
-    /* eslint-enabled no-console */
     reader.readAsDataURL(blob);
   });
 }

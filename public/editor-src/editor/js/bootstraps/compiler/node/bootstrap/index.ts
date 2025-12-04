@@ -86,9 +86,7 @@ export async function bootstrap(config: ConfigCommon): Promise<Static> {
     })
   );
 
-  const compiledProject = {
-    styles: compileProject(config, store)
-  };
+  const compiledProject = compileProject(config, store);
 
   const commonConfig = { store, config, editorMode };
   let globalPopupsStatic = undefined;

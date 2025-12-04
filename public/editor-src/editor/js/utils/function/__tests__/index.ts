@@ -9,13 +9,9 @@ describe("Testing isFunction", function () {
     [[], false],
     ["", false],
     [1, false],
-    // eslint-disable-next-line  @typescript-eslint/no-empty-function
     [() => {}, true],
-    // eslint-disable-next-line  @typescript-eslint/no-empty-function
     [function () {}, true],
-    // eslint-disable-next-line  @typescript-eslint/no-empty-function
     [function test() {}, true],
-    // eslint-disable-next-line  @typescript-eslint/no-empty-function
     [(() => () => {})(), true],
     [isFunction, true]
   ])("'%s' is function: ", (input, output) =>

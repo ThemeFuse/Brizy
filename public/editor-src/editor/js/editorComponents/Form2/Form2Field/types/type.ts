@@ -42,4 +42,15 @@ export interface CheckboxProps {
   children: React.JSX.Element | React.JSX.Element[];
   active: Record<string, boolean>;
   defaultValue?: string;
+  items?: ElementModelType2[];
+  onChange?: (value: Record<string, unknown>) => void;
+}
+
+export interface UserAgreementCheckboxProps {
+  active: Record<string, boolean>;
+  onChange?: (value: Record<string, unknown>) => void;
+  label?: string;
+  userAgreementLabel: string;
+  enableCustomHtml?: string;
+  customHtml?: string;
 }

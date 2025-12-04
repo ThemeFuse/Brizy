@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-use-before-define */
 import { ECWID_CATEGORY_TYPE, ECWID_PRODUCT_TYPE } from "visual/utils/ecwid";
 import { readSymbol } from "visual/utils/elements/posts";
 import * as Num from "visual/utils/reader/number";

@@ -4,6 +4,7 @@ import { CheckGroupItem as CheckboxControlsItem } from "visual/component/Control
 import { TextEditor } from "visual/component/Controls/TextEditor";
 import EditorIcon from "visual/component/EditorIcon";
 import Link from "visual/component/Link";
+import { isUserAgreementCheckbox } from "visual/editorComponents/Form2/utils";
 import { CheckboxItemProps } from "./type";
 
 function Item(props: CheckboxItemProps, ref: ForwardedRef<HTMLDivElement>) {
@@ -61,9 +62,11 @@ function Item(props: CheckboxItemProps, ref: ForwardedRef<HTMLDivElement>) {
         />
         <span className="brz-span brz-invisible">{value}</span>
       </div>
-      <div className="brz-forms2__checkbox-option-icon" onClick={onRemove}>
-        <EditorIcon icon="nc-trash" />
-      </div>
+      {!isUserAgreementCheckbox(type) && (
+        <div className="brz-forms2__checkbox-option-icon" onClick={onRemove}>
+          <EditorIcon icon="nc-trash" />
+        </div>
+      )}
     </CheckboxControlsItem>
   ) : (
     <CheckboxControlsItem

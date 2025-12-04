@@ -52,11 +52,11 @@ export function cssStyleElementCarouselArrowSize({
 
   switch (size) {
     case "small":
-      return `font-size:32px;`;
+      return "font-size:32px;";
     case "medium":
-      return `font-size:48px;`;
+      return "font-size:48px;";
     case "large":
-      return `font-size:64px;`;
+      return "font-size:64px;";
     case "custom":
       return `font-size:${customSize}${customSizeSuffix};`;
   }

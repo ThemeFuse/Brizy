@@ -2,13 +2,14 @@ import React, { JSX, useCallback, useContext, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteFont } from "visual/redux/actions2";
 import { fontsSelector, projectSelector } from "visual/redux/selectors";
+import { TypedDispatch } from "visual/redux/store";
 import { pendingRequest } from "visual/utils/api";
 import { t } from "visual/utils/i18n";
+import { snakeCase } from "visual/utils/string";
 import { Context } from "../../common/GlobalApps/Context";
 import { Disconnect } from "../../common/GlobalApps/StepsView";
 import { isAdobeDisconnectData } from "./types";
 import { adobeDisconnectReader } from "./utils";
-import { snakeCase } from "visual/utils/string";
 
 const AdobeDisconnect = (): JSX.Element => {
   const { app, onDisconnectApp, onChangePrev, onChange } = useContext(Context);
@@ -17,7 +18,7 @@ const AdobeDisconnect = (): JSX.Element => {
     : {};
 
   const fonts = useSelector(fontsSelector);
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<TypedDispatch>();
 
   const projectData = useSelector(projectSelector).data;
   const defaultFont = projectData?.font;

@@ -15,6 +15,7 @@ import {
   updateSymbol
 } from "visual/redux/actions2";
 import { symbolsSelector } from "visual/redux/selectors";
+import { TypedDispatch } from "visual/redux/store";
 import type { FCC } from "visual/utils/react/types";
 import { uuid } from "visual/utils/uuid";
 import { type Choice, OnChangeCases } from "../EditableSelect/types";
@@ -31,7 +32,7 @@ export const Symbols: FCC<Props> = ({ label, value, config, onChange }) => {
   const { type } = config ?? {};
 
   const { classes } = useSelector(symbolsSelector);
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<TypedDispatch>();
 
   const symbols = useMemo(
     () =>

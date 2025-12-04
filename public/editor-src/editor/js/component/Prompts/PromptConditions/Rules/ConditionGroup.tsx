@@ -168,7 +168,7 @@ class ConditionGroup extends React.Component<ConditionGroupProps> {
           );
 
           if (items.length === 0) {
-            throw new Error(`No results found`);
+            throw new Error("No results found");
           }
 
           const updatedRuleList2 = {

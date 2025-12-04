@@ -1,10 +1,10 @@
 import classnames from "classnames";
 import { debounce } from "es-toolkit/compat";
 import React from "react";
-import Scrollbars from "react-custom-scrollbars";
 import { connect } from "react-redux";
 import ClickOutside from "visual/component/ClickOutside";
 import Portal from "visual/component/Portal";
+import { Scrollbar, ScrollbarRef } from "visual/component/Scrollbar";
 import { ThemeIcon } from "visual/component/ThemeIcon";
 import Toolbar from "visual/component/Toolbar";
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
@@ -27,7 +27,7 @@ const SelectConnector = connect(mapState);
 class Select extends TextField {
   content = React.createRef<HTMLDivElement>();
   dropdown = React.createRef<HTMLDivElement>();
-  scrollbar = React.createRef<Scrollbars>();
+  scrollbar = React.createRef<ScrollbarRef>();
   state: SelectState = {
     isOpen: false
   };
@@ -146,10 +146,11 @@ class Select extends TextField {
               className="brz-forms2__select-list"
               style={dropdownStyle}
             >
-              <Scrollbars
+              <Scrollbar
                 ref={this.scrollbar}
                 autoHeight={true}
                 autoHeightMax={this.getHeight()}
+                theme="light"
               >
                 {children}
                 {isDesktop && (
@@ -160,7 +161,7 @@ class Select extends TextField {
                     iconClassName="brz-forms2__select-item__icon"
                   />
                 )}
-              </Scrollbars>
+              </Scrollbar>
             </div>
           )}
         </Toolbar>

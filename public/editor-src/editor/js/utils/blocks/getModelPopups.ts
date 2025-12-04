@@ -1,24 +1,31 @@
 import { uniqBy } from "es-toolkit";
 import type { ElementModel } from "visual/component/Elements/Types";
+import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import type { Block } from "visual/types/Block";
 import type { GlobalBlock } from "visual/types/GlobalBlock";
-import { objectTraverse2 } from "visual/utils/object";
+import { modelTraverse } from "../traverse";
 
 export function getModelPopups(
   model: ElementModel,
   allGlobalBlocks: Record<string, GlobalBlock>
 ): Array<Block> {
   const popups: Array<Block> = [];
+  const popupType: string[] = [
+    ElementTypes.SectionPopup,
+    ElementTypes.SectionPopup2
+  ];
 
-  objectTraverse2(model, (obj: Record<string, unknown>) => {
-    const popupList = obj.linkPopupPopups ?? obj.popups;
+  const conditions = {
+    [ElementTypes.GlobalBlock]: (obj: Block) => {
+      const block = allGlobalBlocks[obj.value._id];
 
-    if (Array.isArray(popupList)) {
-      popups.push(...popupList);
+      if (block && popupType.includes(block.data.type)) {
+        popups.push(obj);
+      }
     }
-  });
+  };
 
-  const uniquePopups = uniqBy(popups, (p) => p.value._id);
+  modelTraverse(model, conditions);
 
-  return uniquePopups.filter((p) => allGlobalBlocks[p.value._id]);
+  return uniqBy(popups, (p) => p.value._id);
 }

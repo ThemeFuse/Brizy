@@ -4,7 +4,7 @@ import { useTranslation } from "visual/providers/I18nProvider";
 import { makePlaceholder } from "visual/utils/dynamicContent";
 import { DynamicContentProps as Props } from "../types";
 
-const _DynamicContent = (props: Props): ReactElement => {
+const DynamicContentComponent = (props: Props): ReactElement => {
   const {
     placeholder: _placeholder,
     tagName = "div",
@@ -40,5 +40,5 @@ const _DynamicContent = (props: Props): ReactElement => {
   );
 };
 
-const DynamicContent = memo(_DynamicContent);
+const DynamicContent = memo(DynamicContentComponent);
 export { DynamicContent };

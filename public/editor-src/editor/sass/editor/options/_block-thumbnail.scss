@@ -1,9 +1,6 @@
 // Block Anchor
 .brz-ed-option__block-thumbnail {
   width: 100%;
-  .brz-scrollColor__dark {
-    right: -10px;
-  }
 
   &-item {
     margin-bottom: 0px;
@@ -80,8 +77,9 @@
     height: 22px;
     background: $thumbnail__block__item__anchor-bg;
     color: $thumbnail__block__item__anchor-color;
-    font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
-      "Courier New", monospace;
+    font-family:
+      SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New",
+      monospace;
     font-size: 13px;
     font-weight: 600;
 

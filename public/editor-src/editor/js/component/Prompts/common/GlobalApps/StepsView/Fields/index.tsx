@@ -1,7 +1,6 @@
 import { noop } from "es-toolkit";
 import { match } from "fp-utilities";
 import React, { ChangeEvent, Component, ReactElement, ReactNode } from "react";
-import Scrollbars from "react-custom-scrollbars";
 import { Alert } from "visual/component/Alert";
 import ReactSelect from "visual/component/Controls/ReactSelect";
 import { SingleValue } from "visual/component/Controls/ReactSelect/types";
@@ -10,6 +9,7 @@ import SelectItem from "visual/component/Controls/Select/SelectItem";
 import { Switch } from "visual/component/Controls/Switch";
 import Tooltip from "visual/component/Controls/Tooltip";
 import EditorIcon from "visual/component/EditorIcon";
+import { Scrollbar } from "visual/component/Scrollbar";
 import { t } from "visual/utils/i18n";
 import { Button } from "../../../Button";
 import {
@@ -216,13 +216,9 @@ export class Fields extends Component<Props> {
     });
 
     return (
-      <Scrollbars
-        autoHeight={true}
-        autoHeightMax="100%"
-        style={{ height: "auto" }}
-      >
+      <Scrollbar theme="light" autoHeight={true} autoHeightMax="100%">
         {options}
-      </Scrollbars>
+      </Scrollbar>
     );
   }
 

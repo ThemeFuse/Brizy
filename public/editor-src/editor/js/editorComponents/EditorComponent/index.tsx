@@ -28,7 +28,7 @@ import {
   pageDataNoRefsSelector,
   symbolsSelector
 } from "visual/redux/selectors";
-import type { Store } from "visual/redux/store";
+import type { Store, TypedDispatch } from "visual/redux/store";
 import type { ReduxState } from "visual/redux/types";
 import {
   getFlatShortcodes,
@@ -126,7 +126,7 @@ export type Props<
   path: string[];
   reduxStore: Store;
   reduxState: ReduxState;
-  reduxDispatch: unknown;
+  reduxDispatch: TypedDispatch;
   meta: ComponentsMeta;
   onChange: {
     (v: M | null, meta: OnChangeMeta<M>): void;
@@ -726,7 +726,6 @@ export class EditorComponent<
     }
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   getDCValueHook(keys: ECKeyDCInfo[], _v: M): ECKeyDCInfo[] {
     return keys;
   }
@@ -968,7 +967,6 @@ export class EditorComponent<
         (_, v) => (Array.isArray(v) ? "[...]" : v),
         2
       );
-
       console.error(
         `${this.getComponentId()} element\n\nKeys not in defaultValue:\n${missingKeysFormatted}\nTried to update with:\n${valueFormatted}`
       );
@@ -1174,7 +1172,6 @@ export class EditorComponent<
     ): OptionDefinition[] => {
       if (process.env.NODE_ENV === "development") {
         if (!config.getItems) {
-          // eslint-disable-next-line no-console
           console.warn(
             `${this.getComponentId()}. getItems not found in toolbarConfig`
           );

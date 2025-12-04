@@ -1,12 +1,13 @@
-import { Str, Num } from "@brizy/readers";
+import { Num, Str } from "@brizy/readers";
+import { DeviceMode } from "visual/types";
 import { roundTo } from "visual/utils/math";
 import { capitalize } from "visual/utils/string";
 import { MValue } from "visual/utils/value";
 import {
   Aligns,
   DimensionSuffix,
-  DimensionSuffixs,
   DimensionSuffixVariants,
+  DimensionSuffixs,
   Meta,
   Restriction,
   RestrictionMapping,
@@ -21,13 +22,12 @@ import {
   ValueMapping
 } from "./types";
 import {
+  RESTRICTIONS,
   calcOffsetX,
   calcOffsetXBySize,
   calcOffsetY,
-  calcOffsetYBySize,
-  RESTRICTIONS
+  calcOffsetYBySize
 } from "./utils";
-import { DeviceMode } from "visual/types";
 
 const normalizeKeyForCurrentDeviceMode = (
   key: keyof Restrictions | Aligns | keyof DimensionSuffix,
@@ -112,7 +112,7 @@ export const resizerTransformPatch: TransformPatch = (
       device
     );
     const normalizedHeightSuffixKey = normalizeKeyForCurrentDeviceMode(
-      `heightSuffix`,
+      "heightSuffix",
       device
     );
 

@@ -109,7 +109,6 @@ import VideoPlaylist from "./VideoPlaylist";
 import VideoPlaylistItem from "./VideoPlaylist/VideoPlaylistItem";
 import Wrapper from "./Wrapper";
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function getShortcodes(_config: ConfigCommon) {
   return {
     Page: {

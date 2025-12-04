@@ -106,9 +106,7 @@ export async function makeNodeScreenshot(
   try {
     cloned = await cloneAndInlineStyles(node);
   } catch (e) {
-    /* eslint-disable no-console */
     console.error("cloneinline", e);
-    /* eslint-enabled no-console */
   }
 
   const options = calcOptions(node);

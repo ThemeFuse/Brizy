@@ -48,7 +48,8 @@ export function styleColumn(
         "cssStyleZIndex|||preview",
         "cssStyleFlexColumn",
         "cssStyleSizeMaxWidth",
-        "cssStyleFlexColumnVerticalAlign"
+        "cssStyleFlexColumnVerticalAlign",
+        "cssStyleColumnContainerHeight"
       ]
     },
     ".brz && > .brz-ed-sortable--empty": {
@@ -156,7 +157,7 @@ export function styleItems(
   data: DynamicStylesProps<ElementModel>
 ): OutputStyle {
   const styles = {
-    ".brz &&": {
+    ".brz &&.brz-column__items": {
       standart: [
         "cssStyleZIndex|||editor",
         "cssStyleMargin",

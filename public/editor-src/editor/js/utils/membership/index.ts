@@ -15,7 +15,7 @@ export type Role = {
 export const hasMembership = (m: M, mRoles: string): boolean => {
   try {
     return !!JSON.parse(mRoles).length && m === "on";
-  } catch (e) {
+  } catch (_) {
     return false;
   }
 };

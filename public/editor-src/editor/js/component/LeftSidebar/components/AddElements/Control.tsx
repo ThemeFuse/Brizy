@@ -200,8 +200,7 @@ class ControlInner extends Component<Props, State> {
     const { disabledElements } = this.state;
 
     if (disabledElements[id]) {
-      // eslint-disable-next-line no-unused-vars,@typescript-eslint/no-unused-vars
-      const { [id]: currentShortcode, ...rest } = disabledElements;
+      const { [id]: _, ...rest } = disabledElements;
 
       this.setState({
         disabledElements: rest

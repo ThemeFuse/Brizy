@@ -37,7 +37,7 @@ const normalizeAdobeWeights = (weights) => {
   return Array.from(result).sort((a, b) => a - b);
 };
 
-const tripId = (str) => str.toLowerCase().replace(/\s+/g, "_");
+export const tripId = (str) => str.toLowerCase().replace(/\s+/g, "_");
 
 export const findFonts = (fonts = [], fontId = "", type = "google") => {
   if (type === "upload") {

@@ -1,15 +1,16 @@
 import { ElementType } from "react";
 
-class BaseAppElement {
+class _BaseAppElement {
   static onBeforeLoad(c: unknown, p: unknown): void | Promise<void> {
+    // eslint-disable-next-line no-console
     console.log("onBeforeLoad", c, p);
   }
 }
 
-type TBaseAppElementTypes = typeof BaseAppElement;
+type TBaseAppElementTypes = typeof _BaseAppElement;
 export type BaseAppElementTypes = Omit<
   TBaseAppElementTypes,
-  "BaseAppElement" | "prototype"
+  "_BaseAppElement" | "prototype"
 >;
 
 type BaseAppSteps = undefined | ElementType | BaseAppElementTypes;

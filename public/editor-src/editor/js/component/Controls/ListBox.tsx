@@ -1,8 +1,8 @@
 import classnames from "classnames";
-import React, { Component, RefObject } from "react";
-import Scrollbars from "react-custom-scrollbars";
+import React, { Component, RefObject, createRef } from "react";
 import { t } from "visual/utils/i18n";
 import { isOptgroup } from "visual/utils/options/Population/utils";
+import { Scrollbar, ScrollbarRef } from "../Scrollbar";
 
 type Props = {
   className: string;
@@ -25,26 +25,6 @@ interface State {
   active: string | null;
 }
 
-const renderTrack = ({ style }: Props): React.ReactElement => {
-  return (
-    <div
-      style={{ ...style, top: 0, bottom: 0, right: "3px", width: "3px" }}
-      className="track-vertical"
-    />
-  );
-};
-const renderThumbs = ({ style }: Props) => {
-  return (
-    <div
-      style={{
-        ...style,
-        borderRadius: "inherit",
-        backgroundColor: "rgba(129, 138, 145, 0.5)"
-      }}
-    />
-  );
-};
-
 const UP_KEY = 38;
 const DOWN_KEY = 40;
 const ENTER_KEY = 13;
@@ -63,7 +43,7 @@ class ListBox extends Component<Props, State> {
     active: null
   };
 
-  scrollbar: RefObject<Scrollbars> = React.createRef();
+  scrollbar: RefObject<ScrollbarRef> = createRef();
 
   componentDidMount() {
     document.addEventListener("keydown", this.handleKeyDown);
@@ -176,16 +156,13 @@ class ListBox extends Component<Props, State> {
 
     return (
       <div className={className} style={style} ref={containerRef}>
-        <Scrollbars
+        <Scrollbar
           ref={this.scrollbar}
-          renderTrackVertical={() => renderTrack(this.props)}
-          renderThumbVertical={renderThumbs}
-          autoHeight={true}
           autoHeightMin={minHeight}
           autoHeightMax={maxHeight}
         >
           {content}
-        </Scrollbars>
+        </Scrollbar>
       </div>
     );
   }

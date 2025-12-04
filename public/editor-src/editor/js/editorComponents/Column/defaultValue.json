@@ -111,6 +111,9 @@
     "height": 400,
     "heightSuffix": "px",
 
+    "heightMax": 400,
+    "heightMaxSuffix": "px",
+
     "tabletHeightStyle": "auto",
     "tabletHeight": 400,
     "tabletHeightSuffix": "px",

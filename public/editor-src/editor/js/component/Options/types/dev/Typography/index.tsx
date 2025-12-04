@@ -7,7 +7,7 @@ import { currentUserRole } from "visual/component/Roles";
 import { LeftSidebarOptionsIds } from "visual/global/Config/types/configs/ConfigCommon";
 import { useConfig } from "visual/providers/ConfigProvider";
 import { isStory, useEditorMode } from "visual/providers/EditorModeProvider";
-import { setDeviceMode, updateUI } from "visual/redux/actions2";
+import { ReduxAction, setDeviceMode, updateUI } from "visual/redux/actions2";
 import {
   deviceModeSelector,
   unDeletedFontsSelector
@@ -62,7 +62,7 @@ export const Typography = ({
   label
 }: Props): ReactElement => {
   const dispatch = useDispatch();
-  const store = useStore();
+  const store = useStore<ReduxState, ReduxAction>();
   const device = useSelector(deviceModeSelector);
   const unDeletedFonts = useSelector<ReduxState, ReduxState["fonts"]>(
     unDeletedFontsSelector

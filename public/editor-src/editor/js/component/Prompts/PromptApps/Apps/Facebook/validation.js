@@ -1,7 +1,7 @@
 export default async function validation(data) {
   try {
     return await validationFacebook(data);
-  } catch (error) {
+  } catch (_) {
     return false;
   }
 }

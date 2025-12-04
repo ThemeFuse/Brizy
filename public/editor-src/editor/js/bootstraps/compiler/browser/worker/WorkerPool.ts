@@ -130,7 +130,7 @@ class WorkerPool {
           })
           .catch((error: Error) => {
             if (process.env["NODE_NEV"] === "development") {
-              console.error(`Error processing task:`, error);
+              console.error("Error processing task:", error);
             }
             task.onError(error);
           })

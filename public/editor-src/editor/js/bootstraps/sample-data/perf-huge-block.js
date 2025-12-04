@@ -9,7 +9,6 @@ export default function perfHugeBlock(data) {
   );
 }
 
-/* eslint-disable */
 export const pageData = {
   _id: uuid(),
   items: [

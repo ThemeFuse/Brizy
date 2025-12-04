@@ -12,7 +12,6 @@ import {
   deviceModeSelector,
   drawerContentTypeSelector
 } from "visual/redux/selectors";
-import { ReduxState } from "visual/redux/types";
 import { attachRefs } from "visual/utils/react";
 import DrawerOptions from "./components/Options";
 import { getOptions } from "./options";
@@ -21,12 +20,8 @@ export const LeftSidebar = (): ReactElement => {
   const config = useConfig();
   const dispatch = useDispatch();
   const { mode: editorMode } = useEditorMode();
-  const { deviceMode, drawerContentType } = useSelector(
-    (state: ReduxState) => ({
-      deviceMode: deviceModeSelector(state),
-      drawerContentType: drawerContentTypeSelector(state)
-    })
-  );
+  const deviceMode = useSelector(deviceModeSelector);
+  const drawerContentType = useSelector(drawerContentTypeSelector);
 
   const handleClickOutside = useCallback(
     () =>

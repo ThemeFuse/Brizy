@@ -34,6 +34,7 @@ async function extractFromEditor(paths) {
         translations.add(translation);
       }
     } else {
+      // eslint-disable-next-line no-console
       console.warn(`The content of the file are empty ${file}`);
     }
   }
@@ -60,7 +61,7 @@ function extractTranslationsFromT(code, file) {
         }
       }
     });
-  } catch (e) {
+  } catch (_) {
     console.error("Syntax error inside: ", file);
   }
 

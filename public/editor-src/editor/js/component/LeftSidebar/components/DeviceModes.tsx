@@ -4,8 +4,9 @@ import { useDispatch, useStore } from "react-redux";
 import HotKeys from "visual/component/HotKeys";
 import { LeftSidebarOptionsIds } from "visual/global/Config/types/configs/ConfigCommon";
 import UIEvents from "visual/global/UIEvents";
-import { setDeviceMode } from "visual/redux/actions2";
+import { ReduxAction, setDeviceMode } from "visual/redux/actions2";
 import { deviceModeSelector } from "visual/redux/selectors";
+import { ReduxState } from "visual/redux/types";
 import { DeviceMode } from "visual/types";
 import { t } from "visual/utils/i18n";
 import { FCC } from "visual/utils/react/types";
@@ -124,7 +125,7 @@ const minusShortcuts = [
 ];
 
 const WithHotKeys: FCC = ({ children }) => {
-  const store = useStore();
+  const store = useStore<ReduxState, ReduxAction>();
   const dispatch = useDispatch();
 
   const handleHotKeys = useCallback(

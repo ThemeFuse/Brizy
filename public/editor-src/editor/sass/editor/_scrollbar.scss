@@ -1,9 +1,39 @@
-.brz-scrollbar__wrapper .brz-scrollbar__view {
-  /* Hide default scrollbar for Chrome, Safari and Opera */
-  &::-webkit-scrollbar {
-    display: none;
+.brz-scrollbar__wrapper {
+  position: relative;
+
+  .brz-scrollbar__view {
+    overflow: auto;
+
+    &::-webkit-scrollbar,
+    &::-webkit-scrollbar-thumb {
+      border-radius: 8px;
+      width: 6px;
+    }
+
+    &::-webkit-scrollbar {
+      background-color: transparent;
+    }
+
+    &.brz-scrollColor__dark {
+      &::-webkit-scrollbar-thumb {
+        background-color: $scrollbar__sidebar-color;
+      }
+    }
+
+    &.brz-scrollColor__light {
+      &::-webkit-scrollbar-thumb {
+        background-color: $scrollbar__popup__apps-color;
+      }
+    }
+
+    @-moz-document url-prefix() {
+      &.brz-scrollColor__dark {
+        scrollbar-color: $scrollbar__sidebar-color transparent;
+      }
+
+      &.brz-scrollColor__light {
+        scrollbar-color: $scrollbar__popup__apps-color transparent;
+      }
+    }
   }
-  /* Hide default scrollbar for IE, Edge and Firefox */
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
 }

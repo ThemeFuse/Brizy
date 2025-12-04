@@ -37,8 +37,8 @@ export const storeWasChanged: RStoreWasChanged = (state, action) => {
     case ActionTypes.REGENERATE_COLORS:
     case "UPDATE_EXTRA_FONT_STYLES":
     case ActionTypes.IMPORT_TEMPLATE:
-    case ActionTypes.IMPORT_STORY: // @ts-expect-error: don't have in ts
-    case "UNDO": // @ts-expect-error: don't have in ts
+    case ActionTypes.IMPORT_STORY:
+    case "UNDO":
     case "REDO":
     case ActionTypes.CREATE_SYMBOL:
     case ActionTypes.UPDATE_SYMBOL:

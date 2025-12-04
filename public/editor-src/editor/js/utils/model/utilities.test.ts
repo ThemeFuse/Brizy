@@ -23,6 +23,7 @@ test("Prevent jest complaining that files has not tests", () => {});
  * @param {string} key
  * @param {number[]|string[]} valid a list of valid values
  */
+// eslint-disable-next-line jest/no-export
 export const testGetter = <T extends Record<any, any>, K extends keyof T>(
   getter: Getter<T[K], T>,
   key: K,
@@ -59,6 +60,7 @@ export const testGetter = <T extends Record<any, any>, K extends keyof T>(
  * @param {V[]} valid a list of valid values
  * @param {*[]} invalid a list of valid values
  */
+// eslint-disable-next-line jest/no-export
 export const testGetterValidation = <
   T extends Record<any, any>,
   K extends keyof T
@@ -99,6 +101,7 @@ export const testGetterValidation = <
  * @param {M} m Model instance
  * @param {V[]} valid a list of valid values
  */
+// eslint-disable-next-line jest/no-export
 export const testSetter = <T extends Record<any, any>, V extends T[keyof T]>(
   setter: Setter<V, T>,
   getter: Getter<V, T>,
@@ -140,6 +143,7 @@ export const testSetter = <T extends Record<any, any>, V extends T[keyof T]>(
  * @param {M} m Model instance
  * @param {V[]} valid a list of valid values
  */
+// eslint-disable-next-line jest/no-export
 export const testSetterValidation = <
   T extends Record<any, any>,
   V extends T[keyof T]
@@ -174,6 +178,7 @@ export const testSetterValidation = <
  * @param {V} empty
  * @param {[]} valid
  */
+// eslint-disable-next-line jest/no-export
 export const testSetterTemp = <
   T extends Record<any, any>,
   V extends T[keyof T]
@@ -222,6 +227,7 @@ export const testSetterTemp = <
  * @param {Array<[Getter, Value, Value]>} getters A list of getters paired with their empty and none empty value
  */
 export type Toggle<T extends Record<any, any>> = (enable: boolean, m: T) => T;
+// eslint-disable-next-line jest/no-export
 export const testModelToggle = <T extends Record<any, any>>(
   toggle: Toggle<T>,
   m: T,

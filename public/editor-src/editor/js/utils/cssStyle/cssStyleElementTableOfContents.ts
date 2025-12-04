@@ -92,8 +92,8 @@ export function cssStyleElementTOCWordWrap({
 
   const wordWrap = dvv("wordWrap");
 
-  const wrappedStyle = `word-break:break-all;`;
-  const overflowedStyle = `word-break:initial;overflow-x:auto;`;
+  const wrappedStyle = "word-break:break-all;";
+  const overflowedStyle = "word-break:initial;overflow-x:auto;";
 
   return wordWrap === "on" ? wrappedStyle : overflowedStyle;
 }

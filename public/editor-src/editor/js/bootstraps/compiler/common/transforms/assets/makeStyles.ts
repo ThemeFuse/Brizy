@@ -21,6 +21,7 @@ import {
   StylesPro
 } from "./index";
 import {
+  CRITICAL_SCORE,
   CUSTOM_CODE,
   DEPENDENCY_SCORE,
   DYNAMIC_CUSTOM_CSS,
@@ -78,7 +79,7 @@ const makePageFontsPrefetch = (
   return [];
 };
 
-const makePageFonts = (data: {
+export const makePageFonts = (data: {
   fonts: Fonts;
   extra?: ExtraFontData;
   config: Config;
@@ -263,7 +264,14 @@ export const makeStyles = (data: Data): MakeStyles => {
     content: {
       type: "file",
       url: compileAssetUrl("editor/css/preview.min.css", config),
-      attr: withRel({ class: "brz-link brz-link-preview" }, config as Config)
+      attr: withRel(
+        {
+          class: "brz-link brz-link-preview",
+          media: "print",
+          onload: "this.media='all'"
+        },
+        config as Config
+      )
     },
     pro: false
   };
@@ -326,6 +334,8 @@ export const makeStyles = (data: Data): MakeStyles => {
         attr: withRel(
           {
             class: "brz-link brz-link-preview-lib",
+            media: "print",
+            onload: "this.media='all'",
             ...makeDataAttr({ name: "group", value: name })
           },
           config as Config
@@ -361,6 +371,26 @@ export const makeStyles = (data: Data): MakeStyles => {
     const genericPro: Asset[] = [];
     const libsProSelectors = new Set<string>();
     const libsProMap: AssetLibsMap[] = [];
+
+    // Critical CSS - loads first and blocks rendering for fast initial paint
+    const criticalPro: Asset = {
+      name: "critical",
+      score: CRITICAL_SCORE,
+      content: {
+        type: "file",
+        url: compileAssetProUrl(proConfig, "css/preview-priority.pro.min.css"),
+        attr: withRel(
+          { class: "brz-link brz-link-preview-critical" },
+          config as Config
+        )
+      },
+      pro: true
+    };
+
+    // Add critical CSS to generic array so it loads early
+    genericPro.push(criticalPro);
+
+    // Non-critical CSS - lazy loaded after initial render
     const mainPro: Asset = {
       name: "main",
       score: MAIN_SCORE,
@@ -368,7 +398,11 @@ export const makeStyles = (data: Data): MakeStyles => {
         type: "file",
         url: compileAssetProUrl(proConfig, "css/preview.pro.min.css"),
         attr: withRel(
-          { class: "brz-link brz-link-preview-pro" },
+          {
+            class: "brz-link brz-link-preview-pro",
+            media: "print",
+            onload: "this.media='all'"
+          },
           config as Config
         )
       },
@@ -390,6 +424,8 @@ export const makeStyles = (data: Data): MakeStyles => {
           attr: withRel(
             {
               class: "brz-link brz-link-preview-lib-pro",
+              media: "print",
+              onload: "this.media='all'",
               ...makeDataAttr({ name: "group", value: name })
             },
             config as Config

@@ -32,10 +32,8 @@ export const makeUploadFontsUrl = (
 export const makePrefetchFonts = (config: ConfigCommon): string[] => {
   const prefetchFonts = config.urls?.prefetchFonts;
   const links = [
-    /* eslint-disable quotes */
     '<link class="brz-link brz-link-bunny-fonts-prefetch" rel="dns-prefetch" href="//fonts.bunny.net">',
     '<link class="brz-link brz-link-bunny-fonts-preconnect" rel="preconnect" href="https://fonts.bunny.net/" crossorigin>'
-    /* eslint-enabled quotes */
   ];
 
   if (prefetchFonts) {

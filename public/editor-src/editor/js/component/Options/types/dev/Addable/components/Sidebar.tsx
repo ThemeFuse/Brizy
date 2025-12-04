@@ -71,7 +71,7 @@ function SidebarContent(props: SidebarContentProps) {
 
   return (
     <>
-      <Scrollbar theme="dark">
+      <Scrollbar theme="dark" absolute>
         <div className="brz-ed-addable__items">{children}</div>
       </Scrollbar>
       <button className="brz-ed-addable__add-new" onClick={onAddGroup}>

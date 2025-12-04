@@ -206,7 +206,7 @@ const CollapsibleToolbar = forwardRef<_CollapsibleToolbar, FCProps>(
 
 export default connect<
   { device: DeviceMode },
-  // eslint-disable-next-line @typescript-eslint/ban-types
+  // eslint-disable-next-line @typescript-eslint/no-empty-object-type
   {},
   CollapsibleToolbarProps,
   ReduxState

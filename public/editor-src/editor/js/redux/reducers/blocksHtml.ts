@@ -104,8 +104,7 @@ export const blocksHtml: RBlocksHtml = (
       return defaultState;
     }
 
-    // @ts-expect-error: Currently not missing from ActionTypes
-    case "UNDO": // @ts-expect-error: Currently not missing from ActionTypes
+    case "UNDO":
     case "REDO":
     case ActionTypes.IMPORT_TEMPLATE:
     case "UPDATE_BLOCKS":

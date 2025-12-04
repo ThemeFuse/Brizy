@@ -37,6 +37,7 @@ export const authorsLoad =
       }));
     } catch (e) {
       if (process.env.NODE_ENV === "development") {
+        // eslint-disable-next-line no-console
         console.log(e);
       }
 
@@ -56,6 +57,7 @@ export const authorsSearch =
       }));
     } catch (e) {
       if (process.env.NODE_ENV === "development") {
+        // eslint-disable-next-line no-console
         console.log(e);
       }
 
@@ -83,6 +85,7 @@ export const termsLoad =
       }));
     } catch (e) {
       if (process.env.NODE_ENV === "development") {
+        // eslint-disable-next-line no-console
         console.log(e);
       }
 
@@ -102,6 +105,7 @@ export const termsSearch =
       }));
     } catch (e) {
       if (process.env.NODE_ENV === "development") {
+        // eslint-disable-next-line no-console
         console.log(e);
       }
 
@@ -128,6 +132,7 @@ export const manualLoad =
       }));
     } catch (e) {
       if (process.env.NODE_ENV === "development") {
+        // eslint-disable-next-line no-console
         console.log(e);
       }
 
@@ -153,6 +158,7 @@ export const manualSearch =
       }));
     } catch (e) {
       if (process.env.NODE_ENV === "development") {
+        // eslint-disable-next-line no-console
         console.log(e);
       }
 
@@ -180,6 +186,7 @@ export const tagsFilterLoad =
       }));
     } catch (e) {
       if (process.env.NODE_ENV === "development") {
+        // eslint-disable-next-line no-console
         console.log(e);
       }
 

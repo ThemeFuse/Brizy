@@ -37,7 +37,7 @@ export const getUsedModelsUpload = ({
 
       while ((hrefs = hrefRgx.exec(text))) {
         try {
-          const [, href] = hrefs; // eslint-disable-line @typescript-eslint/no-unused-vars
+          const [, href] = hrefs;
           const { type, upload } = decodeFromString<{
             type: string;
             upload: string;
@@ -48,6 +48,7 @@ export const getUsedModelsUpload = ({
           }
         } catch (e) {
           if (process.env.NODE_ENV === "development") {
+            // eslint-disable-next-line no-console
             console.log(e);
           }
         }

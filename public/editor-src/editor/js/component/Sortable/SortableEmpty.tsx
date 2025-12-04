@@ -12,8 +12,9 @@ import { hideToolbar } from "visual/component/Toolbar";
 import { LeftSidebarOptionsIds } from "visual/global/Config/types/configs/ConfigCommon";
 import UIEvents from "visual/global/UIEvents";
 import { renderHOC } from "visual/providers/RenderProvider/renderHOC";
-import { updateUI } from "visual/redux/actions2";
+import { ReduxAction, updateUI } from "visual/redux/actions2";
 import { deviceModeSelector } from "visual/redux/selectors";
+import { ReduxState } from "visual/redux/types";
 import { makeAttr, makeDataAttr } from "visual/utils/i18n/attribute";
 import SortablePlugin from "./plugin";
 import { SortablePluginOptions } from "./plugin/types";
@@ -49,7 +50,7 @@ type Props = {
 
 const Sortable = (props: Props) => {
   const { type, path, disabled, acceptElements } = props;
-  const store = useStore();
+  const store = useStore<ReduxState, ReduxAction>();
   const dispatch = useDispatch();
   const nodeRef = useRef<HTMLDivElement>(null);
   const handleBeforeStart = useCallback<
@@ -127,7 +128,6 @@ const Sortable = (props: Props) => {
   }, [dispatch]);
 
   useEffect(() => {
-    // eslint-disable-next-line react/no-find-dom-node
     const node = nodeRef.current;
 
     if (!node) {

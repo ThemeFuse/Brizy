@@ -19,6 +19,7 @@ import {
   globalBlocksAssembledSelector,
   pageBlocksSelector
 } from "visual/redux/selectors";
+import { TypedDispatch } from "visual/redux/store";
 import { Block } from "visual/types/Block";
 import { insertItem } from "visual/utils/models";
 import { FCC } from "visual/utils/react/types";
@@ -31,7 +32,7 @@ export const PromptAddPopup: FCC<Props> = ({
   config,
   onChange
 }) => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<TypedDispatch>();
 
   const globalConfig = useConfig();
 

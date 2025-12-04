@@ -51,7 +51,7 @@ export const isValidSelector = (selector: string) => {
   try {
     document.createDocumentFragment().querySelector(selector);
     return true;
-  } catch (e) {
+  } catch (_) {
     return false;
   }
 };

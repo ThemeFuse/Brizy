@@ -141,3 +141,19 @@
     color: #818a91;
   }
 }
+
+.brz-ed-control__multiSelect,
+.brz-ed-control__multiSelect2 {
+  // Scroll
+  .brz-scrollbar__view {
+    &::-webkit-scrollbar {
+      width: 3px !important;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      width: 3px !important;
+      background-color: #7b7b7b !important;
+      border-radius: 2px !important;
+    }
+  }
+}

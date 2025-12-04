@@ -1,11 +1,6 @@
 import { Obj } from "@brizy/readers";
 import { difference } from "es-toolkit";
-import {
-  type AnyAction,
-  type Dispatch,
-  Middleware,
-  type MiddlewareAPI
-} from "redux";
+import { type Dispatch, Middleware, type MiddlewareAPI, isAction } from "redux";
 import { wInMobilePage, wInTabletPage } from "visual/config/columns";
 import { GetConfig } from "visual/providers/ConfigProvider/types";
 import type { ReduxAction } from "visual/redux/actions2";
@@ -74,7 +69,7 @@ interface CallbackTaskParams {
   config: SideEffectsConfig;
   state: ReduxState;
   oldState: ReduxState;
-  store: MiddlewareAPI<Dispatch<AnyAction>, ReduxState>;
+  store: MiddlewareAPI<Dispatch<ReduxAction>, ReduxState>;
   action: ReduxAction;
 }
 
@@ -94,7 +89,13 @@ export default (
   ): Middleware<Record<string, never>, ReduxState, Dispatch<ReduxAction>> =>
   (store) =>
   (next) =>
-  (action) => {
+  (_action) => {
+    if (!isAction(_action)) {
+      return next(_action);
+    }
+
+    const action = _action as ReduxAction;
+
     const callbacks: Callbacks = {
       onBeforeNext: [],
       onAfterNext: []
@@ -163,21 +164,21 @@ export default (
     // uncomment if need
     // callbacks.onBeforeNext.forEach(task => task({ config, state: oldState, action }));
 
-    next(action);
+    const result = next(action);
 
     const state = store.getState();
-    callbacks.onAfterNext.forEach(
-      (task: (params: CallbackTaskParams) => void) => {
-        const taskParams: CallbackTaskParams = {
-          config,
-          state,
-          oldState,
-          store,
-          action
-        };
-        task(taskParams);
-      }
-    );
+    callbacks.onAfterNext.forEach((task) => {
+      const taskParams: CallbackTaskParams = {
+        config,
+        state,
+        oldState,
+        store,
+        action
+      };
+      task(taskParams);
+    });
+
+    return result;
   };
 
 function handleStoreChange(callbacks: Callbacks): void {

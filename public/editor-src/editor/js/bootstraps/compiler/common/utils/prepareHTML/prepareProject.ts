@@ -13,16 +13,19 @@ export function prepareProject(
   store: Store
 ): PublishedProject {
   const { compiler } = config;
-  const styles = compileProject(config, store);
+  const compiled = compileProject(config, store);
 
   if (compiler?.assets === "html") {
+    const { styles, fonts } = compiled;
+
     return {
       ...project,
       compiled: {
-        styles: styles.map(makeStyles)
+        styles: styles.map(makeStyles),
+        fonts: fonts.map(makeStyles)
       }
     };
   }
 
-  return { ...project, compiled: { styles } };
+  return { ...project, compiled };
 }

@@ -13,6 +13,7 @@ import Tel from "./Tel";
 import Text from "./Text";
 import Time from "./Time";
 import Url from "./Url";
+import UserAgreementCheckbox from "./UserAgreementCheckbox";
 
 const types = {
   Text,
@@ -22,6 +23,7 @@ const types = {
   Select,
   Radio,
   Checkbox,
+  UserAgreementCheckbox,
   Date,
   Url,
   Time,

@@ -226,7 +226,7 @@ export const handleSubmitResponse =
             // maybe divide in Cloud and WP
             handleSubmitSuccess(form, elementType, node);
           } else {
-            addAlerts(form, data.errors || [`An error has occured.`], "error");
+            addAlerts(form, data.errors || ["An error has occured."], "error");
           }
         })
         .catch((err: string) => {

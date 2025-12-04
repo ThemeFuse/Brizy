@@ -1,14 +1,15 @@
 import { noop } from "es-toolkit";
 import React, {
+  CSSProperties,
   Component,
   ComponentType,
   PropsWithChildren,
   ReactElement,
   ReactNode
 } from "react";
-import Scrollbars from "react-custom-scrollbars";
 import EditorIcon from "visual/component/EditorIcon";
 import { ToastNotification } from "visual/component/Notifications";
+import { Scrollbar } from "visual/component/Scrollbar";
 import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import {
   CustomTemplatePage,
@@ -82,6 +83,10 @@ const storyGrid = {
       }
     }
   ]
+};
+
+const widthStyle: CSSProperties = {
+  width: "100%"
 };
 
 export default class List extends Component<Props, State> {
@@ -318,7 +323,7 @@ export default class List extends Component<Props, State> {
               className="brz-ed-popup-two-body__content brz-ed-popup-two-blocks-body-layouts"
               {...attr}
             >
-              <Scrollbars>
+              <Scrollbar theme="light" absolute style={widthStyle}>
                 {filteredThumbnails.length > 0 ? (
                   <ThumbnailGrid<Data>
                     data={filteredThumbnails}
@@ -337,7 +342,7 @@ export default class List extends Component<Props, State> {
                     </p>
                   </div>
                 )}
-              </Scrollbars>
+              </Scrollbar>
             </div>
           </>
         )}

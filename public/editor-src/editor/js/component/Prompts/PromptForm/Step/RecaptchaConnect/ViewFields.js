@@ -1,9 +1,9 @@
-import {noop} from "es-toolkit";
-import React, {Component} from "react";
+import { noop } from "es-toolkit";
+import React, { Component } from "react";
 import InputPlaceholder from "visual/component/Controls/InputPlaceholder";
-import {Scrollbar} from "visual/component/Scrollbar";
-import {t} from "visual/utils/i18n";
-import {Button} from "../../../common/Button";
+import { Scrollbar } from "visual/component/Scrollbar";
+import { t } from "visual/utils/i18n";
+import { Button } from "../../../common/Button";
 
 class ViewFields extends Component {
   static defaultProps = {
@@ -83,11 +83,10 @@ class ViewFields extends Component {
 
   renderDescriptions() {
     const description = t(
-      "I have deselected \"Verify the origins of reCAPTCHA solutions and clicked \"Save Changes\" under \"Key Settings > Advanced Settings\" in my Google reCAPTCHA page"
+      'I have deselected "Verify the origins of reCAPTCHA solutions and clicked "Save Changes" under "Key Settings > Advanced Settings" in my Google reCAPTCHA page'
     );
 
     return (
-      /* eslint-disable react/no-unescaped-entities */
       <div className="brz-ed-popup-common__confirmation">
         <label className="brz-label">
           <input
@@ -99,7 +98,6 @@ class ViewFields extends Component {
           <span dangerouslySetInnerHTML={{ __html: description }} />
         </label>
       </div>
-      /* eslint-enabled react/no-unescaped-entities */
     );
   }
 

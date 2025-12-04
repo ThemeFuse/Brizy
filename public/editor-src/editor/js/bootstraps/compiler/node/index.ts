@@ -22,6 +22,7 @@ async function Core(data: unknown): Promise<Compiled> {
   try {
     await registerThirdParty(_config);
   } catch (e) {
+    // eslint-disable-next-line no-console
     console.warn("IMPORT THIRD PARTY SCRIPT ERROR: ", e);
   }
 

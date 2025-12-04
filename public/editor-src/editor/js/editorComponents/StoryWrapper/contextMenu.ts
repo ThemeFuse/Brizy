@@ -1,6 +1,5 @@
 import { Obj } from "@brizy/readers";
 import { get } from "es-toolkit/compat";
-import { Dispatch } from "redux";
 import { ElementModelType2 } from "visual/component/Elements/Types";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { readElementType } from "visual/global/Config/types/configs/ElementTypes";
@@ -121,7 +120,7 @@ function getItems(v: Value, component: EditorComponent) {
                   ...value
                 },
                 store,
-                onChange: component.getReduxDispatch() as Dispatch
+                dispatch: component.getReduxDispatch()
               });
             }
           }

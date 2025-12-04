@@ -116,7 +116,7 @@ export const makeScripts = (
           type: "file",
           url: compileAssetProUrl(proConfig, `js/${name}.pro.min.js`),
           attr: {
-            class: `brz-script brz-script-preview-lib-pro`,
+            class: "brz-script brz-script-preview-lib-pro",
             defer: "true",
             ...makeDataAttr({ name: "group", value: name })
           }

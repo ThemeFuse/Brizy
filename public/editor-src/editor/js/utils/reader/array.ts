@@ -10,10 +10,7 @@ export const read: Reader<Array<unknown>> = (v) => {
 };
 
 export const readWithItemReader =
-  <T>(
-    itemReader: Reader<T>
-    // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-  ): Reader<Array<T>> =>
+  <T>(itemReader: Reader<T>): Reader<Array<T>> =>
   (v) => {
     if (Array.isArray(v)) {
       const tmp = (v as Array<unknown>).map(itemReader);

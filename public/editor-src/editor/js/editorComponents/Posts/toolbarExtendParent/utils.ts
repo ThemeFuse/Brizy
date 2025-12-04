@@ -18,6 +18,7 @@ export const disableNavigation = (v: V): boolean => {
     }
   } catch (e) {
     if (process.env.NODE_ENV === "development") {
+      // eslint-disable-next-line no-console
       console.log(e);
     }
   }

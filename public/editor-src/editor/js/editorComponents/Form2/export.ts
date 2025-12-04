@@ -494,7 +494,7 @@ function validateFormItem(node: HTMLFormElement): boolean {
 
   if (
     isRequired &&
-    brzType === "Checkbox" &&
+    (brzType === "Checkbox" || brzType === "UserAgreementCheckbox") &&
     ![...(parentElem?.querySelectorAll("input") ?? [])].some(
       ({ checked }) => checked
     )

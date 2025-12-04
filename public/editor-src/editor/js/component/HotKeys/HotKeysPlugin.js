@@ -131,7 +131,6 @@ class HotKeysPlugin extends React.Component {
     const pressedKeys = downKeysMap.join("+");
     if (listeningKeys[pressedKeys]) {
       // to think how to do it less hackly
-      /* eslint-disable no-unused-vars */
       // Extracting the store from redux-context to minimize performance issues
       // caused by re-rendering all components on the page
       const { store } = this.context;
@@ -141,17 +140,18 @@ class HotKeysPlugin extends React.Component {
         state
       );
       if (e.type === "keydown") {
+        // eslint-disable-next-line no-unused-vars
         filteredItems.forEach(({ onKeyDown, onKeyUp, ...rest }) => {
           this.props.shouldKeyDownHandle(e, rest) && onKeyDown(e, rest);
         });
       }
       if (e.type === "keyup") {
         filteredItems.forEach(
+          // eslint-disable-next-line no-unused-vars
           ({ onKeyDown, onKeyUp, ...rest }) =>
             this.props.shouldKeyUpHandle(e, rest) && onKeyUp(e, rest)
         );
       }
-      /* eslint-enabled no-unused-vars */
     }
   }
 

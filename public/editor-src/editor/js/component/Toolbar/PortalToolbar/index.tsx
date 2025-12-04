@@ -294,7 +294,7 @@ class _PortalToolbar
     try {
       const node = this.ref.current;
       return node !== null && node.contains(clickTarget);
-    } catch (e) {
+    } catch (_) {
       return false;
     }
   };

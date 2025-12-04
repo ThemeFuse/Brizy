@@ -6,15 +6,16 @@ import { useConfig } from "visual/providers/ConfigProvider";
 import { EditorComponentProvider } from "visual/providers/EditorComponentProvider";
 import { useEditorMode } from "visual/providers/EditorModeProvider";
 import { useTranslation } from "visual/providers/I18nProvider";
-import { updateBlocks } from "visual/redux/actions2";
+import { ReduxAction, updateBlocks } from "visual/redux/actions2";
 import { pageBlocksSelector, stateSelector } from "visual/redux/selectors";
+import { ReduxState } from "visual/redux/types";
 import { areStatesEqual, getPageId } from "../utils";
 import { OnChange } from "./types";
 
 const Popup = (): JSX.Element => {
   const state = useSelector(stateSelector, areStatesEqual);
   const items = useSelector(pageBlocksSelector);
-  const store = useStore();
+  const store = useStore<ReduxState, ReduxAction>();
   const dispatch = useDispatch();
   const config = useConfig();
   const { mode } = useEditorMode();

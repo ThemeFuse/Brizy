@@ -6,9 +6,9 @@ import * as BaseEffect from "../BaseEffect";
 import * as ET from "../EffectType";
 import { EffectType, isEffect } from "../EffectType";
 import {
-  fadeFromEffect,
   LegacyEffectType,
-  LegacyFadeType
+  LegacyFadeType,
+  fadeFromEffect
 } from "../LegacyEffectType";
 import { LegacyModel } from "../LegacyModel";
 

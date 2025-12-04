@@ -27,12 +27,12 @@ export const customAttributes = ($: cheerio.Root): void => {
 
       if (arr) {
         try {
-          // eslint-disable-next-line @typescript-eslint/no-unused-vars
           const [_, eventName] = arr;
           $node.attr(eventName, value);
           $node.removeAttr(name);
         } catch (e) {
           if (process.env.NODE_ENV === "development") {
+            // eslint-disable-next-line no-console
             console.log(e);
           }
         }

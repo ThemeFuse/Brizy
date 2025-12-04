@@ -137,7 +137,7 @@ class Icon extends EditorComponent<Value, Props> {
     /**
      * Since the EditorArrayComponent is still in JS
      * TS cannot read properly it's return type
-     * @ts-expect-error */
+     * @ts-expect-error unknown is not assignable */
     return <EditorArrayComponent {...popupsProps} />;
   }
 

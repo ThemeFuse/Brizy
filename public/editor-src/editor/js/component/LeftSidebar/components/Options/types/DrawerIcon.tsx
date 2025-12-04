@@ -8,7 +8,7 @@ import {
   deviceModeSelector,
   leftSidebarSelector
 } from "visual/redux/selectors";
-import { DrawerContentTypes, ReduxState } from "visual/redux/types";
+import { DrawerContentTypes } from "visual/redux/types";
 import { DeviceMode } from "visual/types";
 import Icon from "../../Icon";
 
@@ -31,10 +31,8 @@ function DrawerIcon({
 }: DrawerIconProps) {
   const config = useConfig();
   const dispatch = useDispatch();
-  const { deviceMode, leftSidebar } = useSelector((state: ReduxState) => ({
-    deviceMode: deviceModeSelector(state),
-    leftSidebar: leftSidebarSelector(state)
-  }));
+  const deviceMode = useSelector(deviceModeSelector);
+  const leftSidebar = useSelector(leftSidebarSelector);
 
   const { drawerContentType } = leftSidebar;
 

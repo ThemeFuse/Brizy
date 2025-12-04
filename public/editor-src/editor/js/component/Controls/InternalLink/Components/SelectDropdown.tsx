@@ -1,10 +1,10 @@
 import classNames from "classnames";
 import React, { ForwardedRef, ReactElement, useEffect } from "react";
-import Scrollbars from "react-custom-scrollbars";
+import { Scrollbar } from "visual/component/Scrollbar";
 import { Search } from "./Search";
 import { SelectDropdownProps } from "./types";
 
-const _SelectDropdown = (
+const SelectDropdownComponent = (
   {
     style,
     searchIsLoading,
@@ -35,20 +35,7 @@ const _SelectDropdown = (
     <div ref={ref} className={className} style={style} {...attr}>
       <Search loading={searchIsLoading} onChange={onSearchChange} />
 
-      <Scrollbars
-        autoHeight={true}
-        autoHeightMax={maxHeight}
-        renderThumbVertical={(props): ReactElement => {
-          return (
-            <div
-              className={"brz-ed-control__multiSelect__scroll-thumb"}
-              {...props}
-            />
-          );
-        }}
-      >
-        {children}
-      </Scrollbars>
+      <Scrollbar autoHeightMax={maxHeight}>{children}</Scrollbar>
     </div>
   );
 };
@@ -56,4 +43,4 @@ const _SelectDropdown = (
 export const SelectDropdown = React.forwardRef<
   HTMLDivElement,
   SelectDropdownProps
->(_SelectDropdown);
+>(SelectDropdownComponent);

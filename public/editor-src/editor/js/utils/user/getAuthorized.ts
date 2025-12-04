@@ -22,7 +22,7 @@ const getStorageAuthorized = (): Authorized => {
         return "disconnect";
       }
     }
-  } catch (e) {
+  } catch (_) {
     return "disconnect";
   }
 };

@@ -93,6 +93,5 @@ export function isOneOf<
 ): (v: T) => v is A | B | C | D | E | F | G | H;
 export function isOneOf<T>(ps: Array<(v: T) => boolean>): (v: T) => boolean;
 export function isOneOf<T>(ps: Array<(v: T) => boolean>): (v: T) => boolean {
-  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-  return (v: T) => ps.some(p => p(v));
+  return (v: T) => ps.some((p) => p(v));
 }

@@ -13,6 +13,7 @@ export interface Value extends ElementModel, LinkValue {
   textPopulation: string;
   className: string;
   popups: Array<ElementModelType2>;
+  dcLinkPopupPopups: Array<ElementModelType2>;
   customCSS: string;
 
   tooltipOffset: number;

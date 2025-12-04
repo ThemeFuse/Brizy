@@ -146,11 +146,11 @@ export function cssStyleSizeWidthHeight({
 
   switch (size) {
     case "small":
-      return `width:16px;height:16px;`;
+      return "width:16px;height:16px;";
     case "medium":
-      return `width:24px;height:24px;`;
+      return "width:24px;height:24px;";
     case "large":
-      return `width:32px;height:32px;`;
+      return "width:32px;height:32px;";
     case "custom":
       return `width:${customSize}${customSizeSuffix};height:${customSize}${customSizeSuffix};`;
     case undefined:
@@ -475,11 +475,11 @@ export function cssStyleSizeFontSizeIcon({
 
   switch (size) {
     case "small":
-      return `font-size:16px;`;
+      return "font-size:16px;";
     case "medium":
-      return `font-size:24px;`;
+      return "font-size:24px;";
     case "large":
-      return `font-size:32px;`;
+      return "font-size:32px;";
     case "custom":
       return `font-size:${customSize}${customSizeSuffix};`;
     case undefined:
@@ -502,11 +502,11 @@ export function cssStyleSizeMinWidthIcon({
 
   switch (size) {
     case "small":
-      return `min-width:16px;`;
+      return "min-width:16px;";
     case "medium":
-      return `min-width:24px;`;
+      return "min-width:24px;";
     case "large":
-      return `min-width:32px;`;
+      return "min-width:32px;";
     case "custom":
       return `min-width:${customSize}${customSizeSuffix};`;
     case undefined:
@@ -529,11 +529,11 @@ export function cssStyleFontSizeIconOldOption({
 
   switch (size) {
     case "small":
-      return `font-size:32px;`;
+      return "font-size:32px;";
     case "medium":
-      return `font-size:48px;`;
+      return "font-size:48px;";
     case "large":
-      return `font-size:64px;`;
+      return "font-size:64px;";
     case "custom":
       return `font-size:${customSize}${customSizeSuffix};`;
     case undefined:

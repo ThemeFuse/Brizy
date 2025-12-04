@@ -61,7 +61,7 @@ export function pollingSendHeartBeat(heartBeat: number, config: ConfigCommon) {
             } else {
               polling();
             }
-          } catch (e) {
+          } catch (_) {
             polling();
           }
         }, heartBeat);

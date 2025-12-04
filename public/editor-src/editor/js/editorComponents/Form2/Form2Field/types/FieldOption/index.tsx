@@ -1,5 +1,6 @@
 import { Obj } from "@brizy/readers";
 import classnames from "classnames";
+import { noop } from "es-toolkit";
 import { isEmpty } from "es-toolkit/compat";
 import React from "react";
 import { omit } from "timm";
@@ -209,6 +210,45 @@ class Form2FieldOption extends EditorComponent<Value, Props> {
     );
   }
 
+  renderUserAgreementCheckboxItem(
+    v: Value,
+    isEditor: boolean
+  ): React.JSX.Element {
+    const { active, handleChangeActive, label, type, name } = this.props;
+
+    const { value } = v;
+    const isActive = Obj.isObject(active) ? active[value] : false;
+
+    return (
+      <>
+        <Toolbar {...this.makeToolbarPropsFromConfig2(toolbar)}>
+          {({ ref }) => (
+            <CheckboxItem
+              type={type}
+              label={label}
+              value={value}
+              active={active}
+              name={name}
+              required={true}
+              isEditor={isEditor}
+              onRemove={noop}
+              handleChangeActive={handleChangeActive}
+              handleInputChange={this.handleInputChange}
+              renderCheckboxIconEditor={() =>
+                this.renderCheckboxIconEditor(isActive)
+              }
+              renderCheckboxIconPreview={this.renderCheckboxIconPreview}
+              ref={ref}
+            />
+          )}
+        </Toolbar>
+
+        {shouldRenderPopup(v, blocksDataSelector(this.getReduxState())) &&
+          this.renderPopups()}
+      </>
+    );
+  }
+
   renderForEdit(v: Value): React.JSX.Element | null {
     const { type } = this.props;
     const _isEditor = isEditor(this.props.renderContext);
@@ -219,6 +259,9 @@ class Form2FieldOption extends EditorComponent<Value, Props> {
       }
       case FormInput.Checkbox: {
         return this.renderCheckboxItem(v, _isEditor);
+      }
+      case FormInput.UserAgreementCheckbox: {
+        return this.renderUserAgreementCheckboxItem(v, _isEditor);
       }
       case FormInput.Radio: {
         return this.renderRadioItem(v, _isEditor);

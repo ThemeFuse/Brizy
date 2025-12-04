@@ -1,10 +1,10 @@
 import { Reader } from "./types";
 
-export const read: Reader<unknown> = v => {
+export const read: Reader<unknown> = (v) => {
   if (typeof v === "string") {
     try {
       return JSON.parse(v);
-    } catch (e) {
+    } catch (_) {
       return undefined;
     }
   }

@@ -36,6 +36,7 @@ import type { CSSSymbol, SymbolCSS } from "visual/types/Symbols";
 import { ArrayType } from "visual/utils/array/types";
 import { uuid } from "visual/utils/uuid";
 import { DELETE_GLOBAL_BLOCK } from "./actions";
+import { RedoAction, UndoAction } from "./history/types";
 import { ReduxState, StoreChanged } from "./types";
 
 type UIState = ReduxState["ui"];
@@ -438,7 +439,9 @@ export type ReduxAction =
   | ActionUpdateSymbol
   | ActionDeleteSymbol
   | ActionUpdateSymbolsCSS
-  | ActionInitializeBlocksHtml;
+  | ActionInitializeBlocksHtml
+  | UndoAction
+  | RedoAction;
 
 export type ActionUpdateAuthorized = {
   type: "UPDATE_AUTHORIZATION";

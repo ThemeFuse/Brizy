@@ -6,6 +6,7 @@
     "textPopulationEntityId": "",
 
     "popups": [],
+    "dcLinkPopupPopups": [],
 
     "offsetX": 0,
     "offsetY": 0,
@@ -426,6 +427,7 @@
     "linkPopulationEntityId": "",
     "linkUpload": "",
     "linkPopup": "",
+    "dcLinkPopup": "",
     "actionClosePopup": "off",
     "linkToSlide": 1
   },

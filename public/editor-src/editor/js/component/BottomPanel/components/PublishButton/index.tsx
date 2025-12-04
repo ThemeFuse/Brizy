@@ -474,7 +474,7 @@ class _PublishButton extends Component<Props, State> {
 
     try {
       screenshotsSupported = await browserSupports();
-    } catch (e) {
+    } catch (_) {
       screenshotsSupported = false;
     }
 
@@ -656,7 +656,7 @@ class _PublishButton extends Component<Props, State> {
                 break;
               }
             }
-          } catch (e) {
+          } catch (_) {
             ToastNotification.error(t("Something went wrong on publish"));
           }
 

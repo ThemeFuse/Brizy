@@ -8,7 +8,7 @@ export const getNetworkInfo = (network: Network) => {
         iconName: "facebook",
         iconType: "fa",
         labelText: "Facebook",
-        networkUrl: `https://www.facebook.com/sharer/sharer.php?u=`,
+        networkUrl: "https://www.facebook.com/sharer/sharer.php?u=",
         colorBgText: "#314d89",
         colorBgIcon: "#3B5990"
       };
@@ -17,7 +17,7 @@ export const getNetworkInfo = (network: Network) => {
         iconName: "logo-twitter",
         iconType: "glyph",
         labelText: "Twitter",
-        networkUrl: `https://twitter.com/share?url=`,
+        networkUrl: "https://twitter.com/share?url=",
         colorBgText: "#1794e1",
         colorBgIcon: "#1da1f0"
       };
@@ -26,7 +26,7 @@ export const getNetworkInfo = (network: Network) => {
         iconName: "logo-linkedin",
         iconType: "glyph",
         labelText: "Linkedin",
-        networkUrl: `https://www.linkedin.com/feed/?shareActive=true&text=`,
+        networkUrl: "https://www.linkedin.com/feed/?shareActive=true&text=",
         colorBgText: "#016daa",
         colorBgIcon: "#0077b5"
       };
@@ -35,7 +35,7 @@ export const getNetworkInfo = (network: Network) => {
         iconName: "logo-pinterest",
         iconType: "glyph",
         labelText: "Pinterest",
-        networkUrl: `https://pinterest.com/pin/create/button/?url=`,
+        networkUrl: "https://pinterest.com/pin/create/button/?url=",
         colorBgText: "#a50517",
         colorBgIcon: "#bd081c"
       };
@@ -44,7 +44,7 @@ export const getNetworkInfo = (network: Network) => {
         iconName: "logo-reddit",
         iconType: "glyph",
         labelText: "Reddit",
-        networkUrl: `https://reddit.com/submit/?url=`,
+        networkUrl: "https://reddit.com/submit/?url=",
         colorBgText: "#e13d00",
         colorBgIcon: "#ff4500"
       };
@@ -53,7 +53,7 @@ export const getNetworkInfo = (network: Network) => {
         iconName: "logo-vk",
         iconType: "glyph",
         labelText: "VK",
-        networkUrl: `https://vk.com/share.php?url=`,
+        networkUrl: "https://vk.com/share.php?url=",
         colorBgText: "#405e82",
         colorBgIcon: "#45668e"
       };
@@ -62,7 +62,7 @@ export const getNetworkInfo = (network: Network) => {
         iconName: "odnoklassniki-square",
         iconType: "fa",
         labelText: "OK",
-        networkUrl: `https://connect.ok.ru/offer?url=`,
+        networkUrl: "https://connect.ok.ru/offer?url=",
         colorBgText: "#e16918",
         colorBgIcon: "#f4731c"
       };
@@ -71,7 +71,7 @@ export const getNetworkInfo = (network: Network) => {
         iconName: "logo-tumblr",
         iconType: "glyph",
         labelText: "Tumblr",
-        networkUrl: `https://tumblr.com/widgets/share/tool?canonicalUrl=`,
+        networkUrl: "https://tumblr.com/widgets/share/tool?canonicalUrl=",
         colorBgText: "#2f3e51",
         colorBgIcon: "#35465c"
       };
@@ -80,7 +80,7 @@ export const getNetworkInfo = (network: Network) => {
         iconName: "logo-skype",
         iconType: "glyph",
         labelText: "Skype",
-        networkUrl: `https://web.skype.com/share?url=`,
+        networkUrl: "https://web.skype.com/share?url=",
         colorBgText: "#00a4e1",
         colorBgIcon: "#00aff0"
       };
@@ -89,7 +89,7 @@ export const getNetworkInfo = (network: Network) => {
         iconName: "telegram",
         iconType: "fa",
         labelText: "Telegram",
-        networkUrl: `https://t.me/share/url?url=`,
+        networkUrl: "https://t.me/share/url?url=",
         colorBgText: "#299ad1",
         colorBgIcon: "#2ca5e0"
       };
@@ -98,7 +98,7 @@ export const getNetworkInfo = (network: Network) => {
         iconName: "get-pocket",
         iconType: "fa",
         labelText: "Pocket",
-        networkUrl: `https://getpocket.com/edit?url=`,
+        networkUrl: "https://getpocket.com/edit?url=",
         colorBgText: "#ec374e",
         colorBgIcon: "#fe4961"
       };
@@ -107,7 +107,7 @@ export const getNetworkInfo = (network: Network) => {
         iconName: "xing-square",
         iconType: "fa",
         labelText: "XING",
-        networkUrl: `https://www.xing.com/spi/shares/new?url=`,
+        networkUrl: "https://www.xing.com/spi/shares/new?url=",
         colorBgText: "#015253",
         colorBgIcon: "#026466"
       };
@@ -116,7 +116,7 @@ export const getNetworkInfo = (network: Network) => {
         iconName: "logo-whatsapp",
         iconType: "glyph",
         labelText: "WhatsApp",
-        networkUrl: `https://wa.me/?text=`,
+        networkUrl: "https://wa.me/?text=",
         colorBgText: "#26c863",
         colorBgIcon: "#25d366"
       };
@@ -125,7 +125,7 @@ export const getNetworkInfo = (network: Network) => {
         iconName: "email-85",
         iconType: "glyph",
         labelText: "Email",
-        networkUrl: `https://mail.google.com/mail/u/0/?view=cm&to&su=`,
+        networkUrl: "https://mail.google.com/mail/u/0/?view=cm&to&su=",
         colorBgText: "#df4336",
         colorBgIcon: "#f14638"
       };

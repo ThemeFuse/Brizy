@@ -46,7 +46,7 @@ export function styleBgImage({
   const hover =
     hoverMedia === "image" && (hoverBgImageSrc !== "" || hoverBgPopulation)
       ? hoverBgPopulation
-        ? `var(--brz-hoverBackground-image)`
+        ? "var(--brz-hoverBackground-image)"
         : `url("${getImageUrl(
             {
               uid: hoverBgImageSrc,

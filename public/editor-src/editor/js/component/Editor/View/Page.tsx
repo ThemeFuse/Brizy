@@ -6,6 +6,7 @@ import { useConfig } from "visual/providers/ConfigProvider";
 import { EditorComponentProvider } from "visual/providers/EditorComponentProvider";
 import { useEditorMode } from "visual/providers/EditorModeProvider";
 import { useTranslation } from "visual/providers/I18nProvider";
+import { ReduxAction } from "visual/redux/actions2";
 import { pageBlocksRawSelector } from "visual/redux/selectors";
 import { ReduxState } from "visual/redux/types";
 import { getPageId } from "../utils";
@@ -14,7 +15,7 @@ export const Page = (): JSX.Element => {
   const { Page: BasePage } = EditorGlobal.getComponents();
   const pageBlocks = useSelector(pageBlocksRawSelector);
   const state = useSelector<ReduxState, ReduxState>((state) => state);
-  const store = useStore();
+  const store = useStore<ReduxState, ReduxAction>();
   const config = useConfig();
   const { mode } = useEditorMode();
   // @ts-expect-error: ConfigCommon to Config

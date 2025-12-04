@@ -2,7 +2,6 @@ import { Value } from "visual/component/Options/types/dev/Filters/types/Value";
 
 export const MAX = 200;
 
-// eslint-disable-next-line @typescript-eslint/no-empty-function
 export const empty = (): void => {};
 
 export const set =

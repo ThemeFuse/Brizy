@@ -89,7 +89,6 @@ export const getItems: GetItems<Value, Props> = ({ context }) => {
                       label: t("Custom Attributes"),
                       type: "codeMirror",
                       position: 45,
-                      // eslint-disable-next-line
                       placeholder: 'key1:"value1"\nkey2:"value2"',
                       display: "block",
                       devices: "desktop",

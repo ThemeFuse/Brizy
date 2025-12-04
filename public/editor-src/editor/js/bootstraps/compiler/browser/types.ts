@@ -47,10 +47,12 @@ export type GlobalBlockOutput = Output & {
 
 interface ProjectHtmlOutput {
   styles: Array<string>;
+  fonts?: Array<string>;
 }
 
 interface ProjectJsonOutput {
   styles: Array<Asset>;
+  fonts?: Array<Asset>;
 }
 
 export type ProjectOutput = ProjectHtmlOutput | ProjectJsonOutput;

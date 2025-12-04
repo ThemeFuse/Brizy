@@ -8,8 +8,8 @@ import React, {
   PropsWithChildren,
   ReactElement
 } from "react";
-import Scrollbars from "react-custom-scrollbars";
 import EditorIcon from "visual/component/EditorIcon";
+import { Scrollbar } from "visual/component/Scrollbar";
 import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { assetUrl } from "visual/utils/asset";
 import { t } from "visual/utils/i18n";
@@ -329,7 +329,7 @@ class Blocks extends Component<Props> {
 
     return (
       <div className="brz-ed-popup-two-body__content brz-flex-xs-column">
-        <Scrollbars style={scrollStyle}>
+        <Scrollbar style={scrollStyle} theme="light" absolute>
           <ThumbnailGrid<BlockData>
             showSync={thumbnailSync}
             showTitle={showTitle}
@@ -345,7 +345,7 @@ class Blocks extends Component<Props> {
             config={config}
             {...(isStory ? storyGrid : {})}
           />
-        </Scrollbars>
+        </Scrollbar>
         {showImportExport && (
           <Footer alignX="middle" alignY="middle">
             {showExport && this.renderExport()}

@@ -1,5 +1,6 @@
 const path = require("path");
 const webpack = require("webpack");
+// eslint-disable-next-line no-unused-vars
 const StatoscopeWebpackPlugin = require("@statoscope/webpack-plugin").default;
 const BundleAnalyzerPlugin =
   require("webpack-bundle-analyzer").BundleAnalyzerPlugin;

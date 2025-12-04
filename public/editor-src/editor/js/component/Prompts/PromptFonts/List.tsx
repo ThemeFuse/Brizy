@@ -1,14 +1,15 @@
 import classNames from "classnames";
 import React, { JSX, MouseEvent, useCallback, useMemo, useState } from "react";
-import Scrollbars from "react-custom-scrollbars";
 import { useDispatch, useSelector } from "react-redux";
 import EditorIcon from "visual/component/EditorIcon";
+import { Scrollbar } from "visual/component/Scrollbar";
 import { useConfig } from "visual/providers/ConfigProvider";
 import { deleteFont, updateDefaultFont } from "visual/redux/actions2";
 import {
   defaultFontSelector,
   unDeletedFontsSelector
 } from "visual/redux/selectors";
+import { TypedDispatch } from "visual/redux/store";
 import { Font, UploadedFont } from "visual/types/Fonts";
 import { deleteFont as apiDeleteFont, pendingRequest } from "visual/utils/api";
 import { fontTransform } from "visual/utils/fonts/transform";
@@ -24,7 +25,7 @@ export const List = (): JSX.Element => {
 
   const fonts = useSelector(unDeletedFontsSelector);
   const defaultFont = useSelector(defaultFontSelector);
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<TypedDispatch>();
   const config = useConfig();
 
   const handleUpdate = useCallback(
@@ -61,7 +62,7 @@ export const List = (): JSX.Element => {
   }, [fonts]);
 
   return (
-    <Scrollbars>
+    <Scrollbar theme="light" absolute>
       <div className="brz-ed-popup-fonts__lists brz-d-xs-flex brz-flex-xs-wrap">
         {sorted.map(({ fontGroupType, ...font }) => {
           const { id, brizyId, title, family } =
@@ -136,6 +137,6 @@ export const List = (): JSX.Element => {
           );
         })}
       </div>
-    </Scrollbars>
+    </Scrollbar>
   );
 };

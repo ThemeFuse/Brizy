@@ -145,7 +145,7 @@ export const isScreenshotSupported = async (
   try {
     const browserSupport = await browserSupports();
     return browserSupport && hasApiScreenshot(config);
-  } catch (e) {
+  } catch (_) {
     return false;
   }
 };

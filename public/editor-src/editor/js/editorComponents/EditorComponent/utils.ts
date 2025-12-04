@@ -342,7 +342,6 @@ function generateKeyValue<T extends OptionName>({
 function parseOption(
   acc: ParsedToolbarData,
   option: ToolbarItemType,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   _: Store
 ): ParsedToolbarData {
   const elementModel = toElementModel(option.type, (key) =>

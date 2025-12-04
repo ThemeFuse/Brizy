@@ -1,5 +1,4 @@
 import { Obj } from "@brizy/readers";
-import type { Dispatch } from "redux";
 import {
   copyKeyModifier,
   deleteKeyModifier,
@@ -12,6 +11,7 @@ import type {
   ElementModel,
   ElementModelType2
 } from "visual/component/Elements/Types";
+import { openNavigatorFromContextMenu } from "visual/component/Navigator/utils";
 import { hideToolbar } from "visual/component/Toolbar";
 import { readElementType } from "visual/global/Config/types/configs/ElementTypes";
 import { symbolsSelector } from "visual/redux/selectors";
@@ -20,7 +20,6 @@ import type { ElementModelWithSymbols } from "visual/utils/symbols/types";
 import type { MValue } from "visual/utils/value";
 import { handleComponentSymbolCreate } from "../../utils/symbols";
 import EditorArrayComponent from "../EditorArrayComponent";
-import { openNavigatorFromContextMenu } from "visual/component/Navigator/utils";
 
 const getItems =
   (itemIndex: number) => (v: ElementModel, component: EditorArrayComponent) => {
@@ -65,7 +64,7 @@ const getItems =
                     ...value
                   },
                   store,
-                  onChange: component.getReduxDispatch() as Dispatch
+                  dispatch: component.getReduxDispatch()
                 });
               }
             }

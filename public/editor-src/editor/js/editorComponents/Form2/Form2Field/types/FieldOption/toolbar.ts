@@ -1,4 +1,5 @@
 import type { GetItems } from "visual/editorComponents/EditorComponent/types";
+import { isUserAgreementCheckbox } from "visual/editorComponents/Form2/utils";
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
 import {
   ElementTypes,
@@ -24,7 +25,8 @@ export const getItems: GetItems<Value, Props> = ({
   const inPopup2 = Boolean(component.props.meta.sectionPopup2);
 
   const type = readElementType(component.props.type);
-  const isCheckbox = type === ElementTypes.Checkbox;
+  const isCheckbox =
+    type === ElementTypes.Checkbox || isUserAgreementCheckbox(type);
 
   const linkDC = getDynamicContentOption({
     options: context.dynamicContent.config,

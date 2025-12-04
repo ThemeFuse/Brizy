@@ -14,6 +14,7 @@ export function PreviewLog(props: { data: unknown }): ReactElement | null {
   }
 
   if (isEditor(renderType)) {
+    // eslint-disable-next-line no-console
     console.log(props.data);
 
     return null;

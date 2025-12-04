@@ -1,4 +1,5 @@
 export const DEPENDENCY_SCORE = 10;
+export const CRITICAL_SCORE = 15;
 export const LIBS_SCORE = 20;
 export const THIRD_PARTY_SCORE = 20;
 export const MAIN_SCORE = 30;

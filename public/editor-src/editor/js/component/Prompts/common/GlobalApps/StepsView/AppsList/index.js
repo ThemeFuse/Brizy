@@ -71,7 +71,7 @@ class AppList extends Component {
     const isActive = (id) => connectedApps.includes(id);
 
     return (
-      <Scrollbar theme="light">
+      <Scrollbar theme="light" absolute>
         {error && this.renderError()}
         {proExceptions && this.renderProException()}
         <Grid

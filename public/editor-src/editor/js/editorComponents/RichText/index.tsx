@@ -97,7 +97,6 @@ import { classNamesToV } from "./utils/transforms";
 const resizerPoints = ["centerLeft", "centerRight"];
 
 interface State {
-  formats: Formats;
   prepopulation: Formats["prepopulation"] | null;
   population: Formats["population"] | null;
   selectionCoords: Coords | null;
@@ -123,9 +122,9 @@ class RichText extends EditorComponent<Value, Record<string, unknown>, State> {
   tooltipRef = createRef<TooltipImperativeProps>();
   tooltipReferenceElement: Element | null = null;
   isTooltipPatched = false;
+  formats: Formats = {};
 
   state: State = {
-    formats: {},
     prepopulation: null,
     population: null,
     selectionCoords: null,
@@ -267,7 +266,7 @@ class RichText extends EditorComponent<Value, Record<string, unknown>, State> {
 
         this.quillRef.current.format("prepopulation", null);
         this.prepopulation = null;
-      } catch (e) {
+      } catch (_) {
         ToastNotification.error(t("Invalid Dynamic Option"));
       }
     };
@@ -296,9 +295,9 @@ class RichText extends EditorComponent<Value, Record<string, unknown>, State> {
   }) => {
     const { formats, selectionCoords, cursorIndex, node } = data;
 
-    const newState = {
-      formats
-    };
+    this.formats = formats;
+
+    const newState = {};
     const dynamicContentGroups = this.getGlobalConfig().dynamicContent?.groups;
 
     if (node) {
@@ -382,7 +381,11 @@ class RichText extends EditorComponent<Value, Record<string, unknown>, State> {
       const { res, rej, extra } = this.handleCustomDCOption(formats);
 
       dynamicContentGroups.richText.handler(res, rej, extra);
-      this.setState({ formats }, () => this.toolbarRef.current?.show());
+
+      this.formats = formats;
+      this.forceUpdate(() => {
+        this.toolbarRef.current?.show();
+      });
     }
   };
 
@@ -604,7 +607,6 @@ class RichText extends EditorComponent<Value, Record<string, unknown>, State> {
         break;
     }
   };
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
   handleKeyUp = () => {};
 
   getClassName(v: Value, vs: Value, vd: Value) {
@@ -786,11 +788,13 @@ class RichText extends EditorComponent<Value, Record<string, unknown>, State> {
       return { v, vs, vd };
     }
 
+    const formats = this.formats;
+
     return {
       v: {
         ...v,
-        ...this.state.formats,
-        tag: this.state.formats?.tagName
+        ...formats,
+        tag: formats.tagName
       },
       vs,
       vd
@@ -908,7 +912,9 @@ class RichText extends EditorComponent<Value, Record<string, unknown>, State> {
   }
 
   renderPopups(v: Value) {
-    const { popups } = v;
+    const { popups: _popups, dcLinkPopupPopups, textPopulation } = v;
+    const popups = textPopulation ? dcLinkPopupPopups : _popups;
+    const key = textPopulation ? "dcLinkPopupPopups" : "popups";
 
     // we disabled this optimization here, because we know nothing about
     // formats during compilation time, so this condition won't work
@@ -937,7 +943,7 @@ class RichText extends EditorComponent<Value, Record<string, unknown>, State> {
 
     const meta = this.props.meta;
     const popupsProps = this.makeSubcomponentProps({
-      bindWithKey: "popups",
+      bindWithKey: key,
       itemProps: (itemData: Block) => {
         const { blockId } = itemData;
         let {
@@ -976,13 +982,20 @@ class RichText extends EditorComponent<Value, Record<string, unknown>, State> {
     /**
      * Since the EditorArrayComponent is still in JS
      * TS cannot read properly it's return type
-     * @ts-expect-error */
+     * @ts-expect-error unknown is not assignable */
     return <EditorArrayComponent {...popupsProps} />;
   }
 
   renderLink(v: Value) {
     const { text, enableTooltip, tag } = v;
-    const linkData = getLinkData(v, this.getGlobalConfig());
+    const isDC = v.textPopulation;
+    const newV = {
+      ...v,
+      linkPopup: isDC ? v.dcLinkPopup : v.linkPopup,
+      linkType: isDC && v.linkType === "dcPopup" ? "popup" : v.linkType
+    };
+
+    const linkData = getLinkData(newV, this.getGlobalConfig());
 
     const Tag = getTag(tag);
 
@@ -1139,6 +1152,7 @@ class RichText extends EditorComponent<Value, Record<string, unknown>, State> {
     let content = (
       <Quill
         ref={this.quillRef}
+        // @ts-expect-error: Type 'Store' is not assignable to type 'Store & Store<any, UnknownAction, unknown>'
         store={this.getReduxStore()}
         sheet={this.context.sheet}
         componentId={this.getId()}
@@ -1283,10 +1297,12 @@ class RichText extends EditorComponent<Value, Record<string, unknown>, State> {
   renderForView(v: Value, vs: Value, vd: Value) {
     const config = this.getGlobalConfig();
     const { textPopulation, enableTooltip } = v;
+    const store = this.getReduxStore();
 
     let content = (
       <Quill
-        store={this.getReduxStore()}
+        // @ts-expect-error: Type 'Store' is not assignable to type 'Store & Store<any, UnknownAction, unknown>'. (ts 2322)
+        store={store}
         sheet={this.context.sheet}
         value={v.text}
         renderContext={this.props.renderContext}

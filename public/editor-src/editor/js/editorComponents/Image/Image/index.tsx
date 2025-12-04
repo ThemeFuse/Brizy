@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-use-before-define */
 import classnames from "classnames";
 import React, { JSX } from "react";
 import Placeholder from "visual/component/Placeholder";

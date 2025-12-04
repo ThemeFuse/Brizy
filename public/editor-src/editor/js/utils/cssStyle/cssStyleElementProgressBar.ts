@@ -39,7 +39,7 @@ export function cssStyleSizeProgressBarMaxWidthPercent({
 }: CSSValue & WithRenderContext): string {
   if (isView(renderContext)) {
     // INFO: is needed to avoid blinking, because in preview animation always starts from 0%
-    return `max-width: 0%;`;
+    return "max-width: 0%;";
   }
 
   return cssStyleSizeMaxWidthPrefixEmpty({

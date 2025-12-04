@@ -54,9 +54,9 @@ function isJQueryHTMLElement(instance: unknown): instance is JQueryStatic {
 
 function quillUtils(renderContext: RenderType) {
   const $doc = isEditor(renderContext)
-    ? // eslint-disable-next-line @typescript-eslint/no-var-requires
+    ? // eslint-disable-next-line @typescript-eslint/no-require-imports
       (require("jquery") as JQueryType)
-    : // eslint-disable-next-line @typescript-eslint/no-var-requires
+    : // eslint-disable-next-line @typescript-eslint/no-require-imports
       (require("cheerio") as cheerio.CheerioAPI);
 
   function mapElements(html: string, fn: JQueryCallback | cheerio.Selector) {
@@ -228,9 +228,7 @@ export const parseColor = (color = "", opacity: string | number) => {
   };
 };
 
-/* eslint-disable no-unused-vars */
 const getTagName = ($elem: JQuery<HTMLElement>) => {
-  /* eslint-enabled no-unused-vars */
   const preElem = $elem.closest("pre");
   const preTagName = preElem.prop("tagName")
     ? preElem.prop("tagName").toLowerCase()

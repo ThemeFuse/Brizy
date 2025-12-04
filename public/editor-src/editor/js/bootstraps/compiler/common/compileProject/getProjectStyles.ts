@@ -1,6 +1,13 @@
+import { uniqBy } from "es-toolkit/array";
 import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
-import { currentStyleSelector } from "visual/redux/selectors";
+import { currentStyleSelector, fontsSelector } from "visual/redux/selectors";
 import { Store } from "visual/redux/store";
+import {
+  AdobeFont,
+  FontFamilyType,
+  GoogleFont,
+  UploadedFont
+} from "visual/types/Fonts";
 import {
   makeGlobalStylesColorPalette,
   makeRichTextColorPaletteCSS
@@ -11,6 +18,7 @@ import {
   dynamicStyleIds,
   makeRichTextDynamicFontStylesCSS
 } from "visual/utils/fonts/makeRichTextFontStylesCSS";
+import { tripId } from "visual/utils/fonts/transform";
 import { isExternalPopup } from "visual/utils/models";
 import { MValue } from "visual/utils/value";
 import { projectClassName } from "../utils/projectClassName";
@@ -65,7 +73,10 @@ export const getProjectStyles = (
     getClassName
   );
 
-  const globalStyleColorPalette = makeGlobalStylesColorPalette(globalPalette, config);
+  const globalStyleColorPalette = makeGlobalStylesColorPalette(
+    globalPalette,
+    config
+  );
 
   return `${richTextColorPalette}${globalStyleColorPalette}${typographyStyles}`;
 };
@@ -90,4 +101,84 @@ export const getTypographyStyles = (
   }
 
   return makeRichTextDynamicFontStylesCSS(dynamicFontStylesToLoad, store);
+};
+
+export const getUsedProjectFonts = (
+  store: Store
+): {
+  googleFonts: GoogleFont[];
+  uploadedFonts: UploadedFont[];
+  adobeFonts: AdobeFont[];
+} => {
+  const fontStyles = getFontStyles({ store });
+  const uniqueFontStyles = uniqBy(fontStyles, (fs) => fs.fontFamily);
+  const fonts = fontsSelector(store.getState());
+  const googleFontSources = [
+    fonts.google?.data ?? [],
+    fonts.config?.data ?? [],
+    fonts.blocks?.data ?? []
+  ];
+  const googleFontByFamily = new Map<string, GoogleFont>();
+  const uploadedFontByFamily = new Map<string, UploadedFont>();
+  const adobeFontByFamily = new Map<string, AdobeFont>();
+
+  googleFontSources.forEach((collection) => {
+    collection.forEach((font) => {
+      if (!font.deleted && !googleFontByFamily.has(font.family)) {
+        googleFontByFamily.set(tripId(font.family), font);
+      }
+    });
+  });
+
+  (fonts.upload?.data ?? []).forEach((font) => {
+    if (!font.deleted && !uploadedFontByFamily.has(font.family)) {
+      uploadedFontByFamily.set(font.id, font);
+    }
+  });
+
+  (fonts.adobe?.data ?? []).forEach((font) => {
+    if (!adobeFontByFamily.has(font.family)) {
+      adobeFontByFamily.set(tripId(font.family), font);
+    }
+  });
+
+  const usedFonts = {
+    googleFonts: [] as GoogleFont[],
+    uploadedFonts: [] as UploadedFont[],
+    adobeFonts: [] as AdobeFont[]
+  };
+  const usedGoogleFamilies = new Set<string>();
+  const usedUploadFamilies = new Set<string>();
+  const usedAdobeFamilies = new Set<string>();
+
+  uniqueFontStyles.forEach((fontStyle) => {
+    if (fontStyle.fontFamilyType === FontFamilyType.google) {
+      const font = googleFontByFamily.get(fontStyle.fontFamily);
+
+      if (font && !usedGoogleFamilies.has(font.family)) {
+        usedGoogleFamilies.add(font.family);
+        usedFonts.googleFonts.push(font);
+      }
+    }
+
+    if (fontStyle.fontFamilyType === FontFamilyType.upload) {
+      const font = uploadedFontByFamily.get(fontStyle.fontFamily);
+
+      if (font && !usedUploadFamilies.has(font.family)) {
+        usedUploadFamilies.add(font.family);
+        usedFonts.uploadedFonts.push(font);
+      }
+    }
+
+    if (fontStyle.fontFamilyType === FontFamilyType.adobe) {
+      const font = adobeFontByFamily.get(fontStyle.fontFamily);
+
+      if (font && !usedAdobeFamilies.has(font.family)) {
+        usedAdobeFamilies.add(font.family);
+        usedFonts.adobeFonts.push(font);
+      }
+    }
+  });
+
+  return usedFonts;
 };

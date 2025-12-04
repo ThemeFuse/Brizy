@@ -36,7 +36,7 @@ export const getFontVariation = async (
         }));
     }
     return [];
-  } catch (e) {
+  } catch (_) {
     return [];
   }
 };

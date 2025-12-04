@@ -1,6 +1,6 @@
-import type { Dispatch } from "redux";
 import type { ElementModel } from "visual/component/Elements/Types";
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
+import { TypedDispatch } from "visual/redux/store";
 import type { ReduxState } from "visual/redux/types";
 
 export interface CSSSymbol {
@@ -36,5 +36,5 @@ export type HandleComponentSymbolCreate = (data: {
   type: ElementTypes;
   store: ReduxState;
   value: ElementModel;
-  onChange: Dispatch;
+  dispatch: TypedDispatch;
 }) => void;

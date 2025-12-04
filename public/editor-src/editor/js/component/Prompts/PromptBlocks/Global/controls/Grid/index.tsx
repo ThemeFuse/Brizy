@@ -1,5 +1,5 @@
 import React, { ReactElement } from "react";
-import Scrollbars from "react-custom-scrollbars";
+import { Scrollbar } from "visual/component/Scrollbar";
 import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import ThumbnailGrid from "../../../common/ThumbnailGrid";
 import { Thumbnail } from "../../types";
@@ -16,6 +16,10 @@ export interface Props<T extends Thumbnail> {
   upgradeToPro?: string;
   config: ConfigCommon;
 }
+
+const widthStyle = {
+  width: "100%"
+};
 
 const storyGrid = {
   columns: 5,
@@ -50,7 +54,7 @@ export const Grid = <T extends Thumbnail>(props: Props<T>): ReactElement => {
   } = props;
   return (
     <div className="brz-ed-popup-two-body__content">
-      <Scrollbars>
+      <Scrollbar theme="light" absolute style={widthStyle}>
         <ThumbnailGrid<T>
           showTitle={showTitle}
           data={data}
@@ -64,7 +68,7 @@ export const Grid = <T extends Thumbnail>(props: Props<T>): ReactElement => {
           config={config}
           {...(isStory ? storyGrid : {})}
         />
-      </Scrollbars>
+      </Scrollbar>
     </div>
   );
 };

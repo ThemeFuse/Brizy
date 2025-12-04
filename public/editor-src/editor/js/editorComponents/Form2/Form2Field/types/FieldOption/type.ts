@@ -31,7 +31,11 @@ export interface Value extends ElementModel {
 }
 
 export interface Props extends ElementProps {
-  type: FormInput.Select | FormInput.Radio | FormInput.Checkbox;
+  type:
+    | FormInput.Select
+    | FormInput.Radio
+    | FormInput.Checkbox
+    | FormInput.UserAgreementCheckbox;
 
   label?: string;
   placeholder: string;

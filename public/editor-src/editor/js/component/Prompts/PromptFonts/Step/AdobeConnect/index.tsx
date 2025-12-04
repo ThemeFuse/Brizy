@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { BaseIntegrationContext } from "visual/component/Prompts/common/GlobalApps/type";
 import { PromptView } from "visual/component/Prompts/common/PromptView";
 import { addFonts } from "visual/redux/actions2";
+import { TypedDispatch } from "visual/redux/store";
 import { addAdobeFonts, getAdobeFonts, pendingRequest } from "visual/utils/api";
 import { t } from "visual/utils/i18n";
 import { Context } from "../../../common/GlobalApps/Context";
@@ -19,7 +20,7 @@ const AdobeConnect = (): JSX.Element => {
     ? adobeConnectReader(app)
     : {};
 
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<TypedDispatch>();
 
   const [apiKeyValue, setApiKeyValue] = useState(getDefaultValue());
   const [nextLoading, setNextLoading] = useState(false);

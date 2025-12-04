@@ -1,6 +1,7 @@
 import $ from "jquery";
 import { getProLibs } from "visual/libs";
 import Gallery, { Settings } from "visual/libs/gallery";
+import { handleLightBoxZoom } from "visual/utils/export/lightbox";
 import { decodeFromString } from "visual/utils/string";
 import { IsotopeSettings, JustifySettings } from "./utils";
 import {
@@ -8,7 +9,6 @@ import {
   isJustified,
   removeUselessInfo
 } from "./utils.export";
-import { handleLightBoxZoom } from "visual/utils/export/lightbox";
 
 export default function ($node: JQuery): void {
   const { Isotope, ImagesLoaded, Gallery } = getProLibs();
@@ -90,7 +90,7 @@ export default function ($node: JQuery): void {
           }
         }
       }
-    } catch (error) {
+    } catch (_) {
       return;
     }
 
@@ -111,7 +111,7 @@ export default function ($node: JQuery): void {
         imagesSrc = decodeFromString<string[]>(
           bigImageWrapper.getAttribute("data-images") ?? "[]"
         ).filter(Boolean);
-      } catch (error) {
+      } catch (_) {
         return;
       }
 

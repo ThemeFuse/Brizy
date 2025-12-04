@@ -128,9 +128,7 @@ export function makeTaskQueue<T extends Array<unknown>>(
             // not sure how to deal with this yet
             // maybe add some retry mechanism later
             if (process.env.NODE_ENV === "development") {
-              /* eslint-disable no-console */
               console.error("screenshot error", e);
-              /* eslint-enabled no-console */
             }
           }
 

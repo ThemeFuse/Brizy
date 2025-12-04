@@ -44,6 +44,7 @@ export class I18n {
 
   static t(key: string): string {
     if (!I18n.instance) {
+      // eslint-disable-next-line no-console
       console.warn("Missing I18n Initialization");
       return key;
     }

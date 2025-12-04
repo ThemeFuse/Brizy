@@ -20,8 +20,9 @@ export function styleItemPaddingLeft({ v, device }) {
   )}px`;
 }
 
+// TODO: It seems like it's not being used, it's the same a "visual/editor/js/utils/style2/styleMargin.js"
 export function styleItemMarginTop({ v, device }) {
-  `${-defaultValueValue({ v, key: "itemPaddingTop", device })}px`;
+  return `${-defaultValueValue({ v, key: "itemPaddingTop", device })}px`;
 }
 
 export function styleItemMarginRight({ v, device }) {

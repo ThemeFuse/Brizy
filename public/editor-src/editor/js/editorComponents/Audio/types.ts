@@ -1,11 +1,6 @@
 import { ElementModel } from "visual/component/Elements/Types";
 
-enum BaseSwitchTypes {
-  on = "on",
-  off = "off"
-}
-
-type BaseSwitchType = keyof typeof BaseSwitchTypes;
+type BaseSwitchType = "on" | "off";
 
 interface SoundCloudAppeareanceOptions {
   artWork: BaseSwitchType;

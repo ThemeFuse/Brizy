@@ -16,7 +16,7 @@ export const getItems: GetItems<Value> = ({ v, device, state, editorMode }) => {
   const hoverName = readString(dvv("hoverName")) ?? "none";
 
   const hoverSelector =
-    hoverName === "none" ? ".brz-map_styles" : ` .brz-ui-ed-map-content`;
+    hoverName === "none" ? ".brz-map_styles" : " .brz-ui-ed-map-content";
 
   return [
     {

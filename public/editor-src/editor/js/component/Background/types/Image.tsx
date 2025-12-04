@@ -5,7 +5,9 @@ import { useStore } from "react-redux";
 import { isWp } from "visual/global/Config";
 import { useConfig } from "visual/providers/ConfigProvider";
 import { RenderType, isEditor } from "visual/providers/RenderProvider";
+import { ReduxAction } from "visual/redux/actions2.js";
 import { deviceModeSelector } from "visual/redux/selectors";
+import { ReduxState } from "visual/redux/types.js";
 import "../lib/jquery.parallax.js";
 import { useLayoutEffect } from "../utils";
 
@@ -45,7 +47,7 @@ const Image = ({
   children,
   renderContext
 }: Props): ReactElement => {
-  const store = useStore();
+  const store = useStore<ReduxState, ReduxAction>();
 
   // Using the direct Store because when the builder changes the deviceMode,
   // all components can't be re-rendered

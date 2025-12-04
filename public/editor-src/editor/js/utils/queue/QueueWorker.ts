@@ -47,6 +47,7 @@ export class QueueWorker<T> {
 
     if (waitForCurrent && this.processingPromises.size > 0) {
       return Promise.all(this.processingPromises.values()).then(() => {
+        // eslint-disable-next-line no-console
         console.log("All tasks completed");
       });
     }

@@ -45,4 +45,17 @@
       min-width: 0;
     }
   }
+
+  &--max-height {
+    .brz-column__items {
+      overflow-y: auto;
+      overflow-x: hidden;
+      z-index: 1;
+      scrollbar-width: thin;
+    }
+
+    .brz-wrapper {
+      min-height: auto;
+    }
+  }
 }

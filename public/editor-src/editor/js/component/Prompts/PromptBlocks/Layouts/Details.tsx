@@ -9,12 +9,12 @@ import React, {
   ReactElement,
   ReactNode
 } from "react";
-import Scrollbars from "react-custom-scrollbars";
 import { ConnectedProps, connect } from "react-redux";
 import EditorIcon from "visual/component/EditorIcon";
 import { ToastNotification } from "visual/component/Notifications";
 import { LayoutData } from "visual/component/Prompts/PromptBlocks/Layouts/types";
 import { PromptBlockTemplate } from "visual/component/Prompts/PromptBlocks/types";
+import { Scrollbar } from "visual/component/Scrollbar";
 import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { fontsSelector, stylesSelector } from "visual/redux/selectors";
 import { ReduxState } from "visual/redux/types";
@@ -358,7 +358,9 @@ class Details extends Component<AllProps, State> {
             </div>
 
             <div className="brz-ed-popup-two-details-page">
-              <Scrollbars>{renderSectionPage}</Scrollbars>
+              <Scrollbar theme="light" absolute>
+                {renderSectionPage}
+              </Scrollbar>
             </div>
           </div>
           <div className="brz-ed-popup-two-details-footer">
