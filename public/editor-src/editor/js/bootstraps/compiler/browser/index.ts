@@ -31,6 +31,7 @@ class Core {
     try {
       importScripts(...thirdPartyScriptsUrl);
     } catch (e) {
+      // eslint-disable-next-line no-console
       console.warn("IMPORT THIRD PARTY SCRIPT ERROR: ", e);
     }
 

@@ -7,11 +7,8 @@ import React, {
   useRef
 } from "react";
 import EditorIcon from "visual/component/EditorIcon";
-import { Scrollbar } from "visual/component/Scrollbar";
-import {
-  ScrollbarType,
-  scrollToActiveFont
-} from "visual/utils/fonts/scrollHelpers";
+import { Scrollbar, ScrollbarRef } from "visual/component/Scrollbar";
+import { scrollToActiveFont } from "visual/utils/fonts/scrollHelpers";
 import { FCC } from "visual/utils/react/types";
 import { FontFamilyItem } from "./Item";
 import { Props } from "./types";
@@ -25,7 +22,7 @@ export const FontFamily: FCC<Props> = ({
   addFontLabel,
   className
 }) => {
-  const scrollbarRef = useRef<ScrollbarType>(null);
+  const scrollbarRef = useRef<ScrollbarRef>(null);
   const normalizedFonts = useMemo(() => normalizeFonts(fonts), [fonts]);
 
   useEffect(() => {
@@ -46,7 +43,7 @@ export const FontFamily: FCC<Props> = ({
 
   return (
     <div className={_className}>
-      <Scrollbar theme="dark" ref={scrollbarRef}>
+      <Scrollbar theme="dark" ref={scrollbarRef} absolute>
         {normalizedFonts.map((font) => (
           <FontFamilyItem
             key={font.id}

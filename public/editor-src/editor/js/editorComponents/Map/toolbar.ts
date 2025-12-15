@@ -42,7 +42,7 @@ export const getItems: GetItems<Value> = ({
   const _isStory = isStory(editorMode);
 
   const hoverSelector =
-    hoverName === "none" ? ".brz-map_styles" : ` .brz-ui-ed-map-content`;
+    hoverName === "none" ? ".brz-map_styles" : " .brz-ui-ed-map-content";
 
   const hasElementPosition = ["fixed", "absolute"].includes(
     Str.read(dvv("elementPosition")) ?? ""

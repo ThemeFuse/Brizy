@@ -66,6 +66,7 @@ export enum FormInput {
   Select = "Select",
   Radio = "Radio",
   Checkbox = "Checkbox",
+  UserAgreementCheckbox = "UserAgreementCheckbox",
   Date = "Date",
   Url = "Url",
   Time = "Time",

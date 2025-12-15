@@ -8,8 +8,18 @@ interface ShowData {
   showFlags: boolean;
 }
 
-const getFlagElement = (showFlags: boolean, flag: string): string =>
-  showFlags ? `<img class="brz-translation__flag" src="${flag}" />` : "";
+interface Select2Item extends Record<string, unknown> {
+  element?: HTMLOptionElement;
+}
+
+const getFlagElement = (
+  showFlags: boolean,
+  flag: string,
+  code: string
+): string =>
+  showFlags
+    ? `<img class="brz-translation__flag" src="${flag}" alt="${code}" />`
+    : "";
 
 const getNameElement = (showName: boolean, name: string) =>
   showName ? `<span class="brz-span">${name}</span>` : "";
@@ -17,42 +27,33 @@ const getNameElement = (showName: boolean, name: string) =>
 const divInnerHTML = (
   item: Record<string, unknown>,
   flag: string,
-  showData: ShowData
+  showData: ShowData,
+  code: string
 ) =>
   getNameElement(showData.showName, read(item.text) ?? "English") +
-  getFlagElement(showData.showFlags, flag);
+  getFlagElement(showData.showFlags, flag, code);
 
-const handleTemplateResult =
-  (showData: ShowData) =>
-  (
-    // select2 doesn't have .ts
-    item: Record<string, unknown>
-  ) => {
-    // @ts-expect-error: select2 doesn't have .ts
-    const flag = item.element?.dataset?.flag ?? "";
+const handleTemplateResult = (showData: ShowData) => (item: Select2Item) => {
+  const flag = item.element?.dataset?.flag ?? "";
+  const code = item.element?.value ?? "";
 
-    const div = document.createElement("div");
-    div.className = "brz-translation__select-item";
-    div.innerHTML = divInnerHTML(item, flag, showData);
+  const div = document.createElement("div");
+  div.className = "brz-translation__select-item";
+  div.innerHTML = divInnerHTML(item, flag, showData, code);
 
-    return div;
-  };
+  return div;
+};
 
-const handleTemplateSelection =
-  (showData: ShowData) =>
-  (
-    // select2 doesn't have .ts
-    item: Record<string, unknown>
-  ) => {
-    // @ts-expect-error: select2 doesn't have .ts
-    const flag = item.element?.dataset?.flag ?? "";
+const handleTemplateSelection = (showData: ShowData) => (item: Select2Item) => {
+  const flag = item.element?.dataset?.flag ?? "";
+  const code = item.element?.value ?? "";
 
-    const div = document.createElement("div");
-    div.className = "brz-translation__select-item";
-    div.innerHTML = divInnerHTML(item, flag, showData);
+  const div = document.createElement("div");
+  div.className = "brz-translation__select-item";
+  div.innerHTML = divInnerHTML(item, flag, showData, code);
 
-    return div;
-  };
+  return div;
+};
 
 export default function ($node: JQuery): void {
   const root = $node.get(0);

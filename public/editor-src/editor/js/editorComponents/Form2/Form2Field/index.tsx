@@ -6,6 +6,7 @@ import Toolbar from "visual/component/Toolbar";
 import { Translate } from "visual/component/Translate";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { Model } from "visual/editorComponents/EditorComponent/types";
+import { isUserAgreementCheckbox } from "visual/editorComponents/Form2/utils";
 import { withMigrations } from "visual/editorComponents/tools/withMigrations";
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import { makePlaceholder } from "visual/utils/dynamicContent";
@@ -156,7 +157,7 @@ class Form2Field extends EditorComponent<Value, Props> {
         <Toolbar {...this.makeToolbarPropsFromConfig2(toolbar, sidebar)}>
           {({ ref }) => (
             <div ref={ref}>
-              {!isTypeWithItems && (
+              {(!isTypeWithItems || isUserAgreementCheckbox(type)) && (
                 <Component
                   {...v}
                   showPlaceholder={showPlaceholder}
@@ -312,7 +313,18 @@ class Form2Field extends EditorComponent<Value, Props> {
             type={type}
           />
         )}
-        {!isTypeWithItems ? (
+        {isUserAgreementCheckbox(type) ? (
+          <Component
+            {...v}
+            name={name}
+            labelId={labelId}
+            error={this.getError(v)}
+            showPlaceholder={showPlaceholder}
+            labelType={labelType}
+            renderContext={this.props.renderContext}
+            customFieldName={"terms"}
+          />
+        ) : !isTypeWithItems ? (
           <Component
             {...v}
             name={name}

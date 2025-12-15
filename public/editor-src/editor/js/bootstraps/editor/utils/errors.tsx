@@ -16,13 +16,11 @@ export const showError = (data: Data): void => {
   const { e, hideAfter, inRoot } = data;
   const isCustomError = e instanceof CustomError;
 
-  /* eslint-disable no-console */
   if (isCustomError) {
     console.error("editor bootstrap error", e.getMessage());
   } else {
     console.error("editor bootstrap error", e);
   }
-  /* eslint-enabled no-console */
 
   const message =
     isCustomError && e.getMessage()

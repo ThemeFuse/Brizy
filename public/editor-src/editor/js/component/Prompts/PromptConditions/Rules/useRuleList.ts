@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-use-before-define */
 import { useEffect, useMemo, useState } from "react";
 import { from, of } from "rxjs";
 import { catchError, map, tap } from "rxjs/operators";
@@ -275,7 +274,7 @@ export default function useRuleList(
                   existingItemsMap.set(newItem.value, mergedItem);
                 } else {
                   existingItemsMap.set(newItem.value, newItem);
-                } 
+                }
               });
 
               const updatedItems = Array.from(existingItemsMap.values());
@@ -418,7 +417,7 @@ async function fetchSelectedItem(
       value: id,
       status
     }));
-  } catch (error) {
+  } catch (_) {
     return [];
   }
 }

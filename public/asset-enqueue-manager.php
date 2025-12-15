@@ -146,11 +146,7 @@ class Brizy_Public_AssetEnqueueManager
         $styles = [];
 
         if (is_array($this->project->getCompiledStyles())) {
-            foreach ($this->project->getCompiledAssetGroup()->getPageStyles() as $asset) {
-                if ($asset = apply_filters('brizy_add_style', $asset)) {
-                    $this->styles[$this->getHandle($asset)] = $asset;
-                }
-            }
+            $styles[] = $this->project->getCompiledAssetGroup();
         }
 
         foreach ($this->posts as $editorPost) {
@@ -189,7 +185,6 @@ class Brizy_Public_AssetEnqueueManager
             if ($asset->getType() == Asset::TYPE_FILE) {
                 wp_register_style($handle, $this->getAssetUrl($asset), [], apply_filters('brizy_asset_version', BRIZY_EDITOR_VERSION, $asset));
                 wp_enqueue_style($handle);
-
             }
         }
         $collectInline = array_filter($this->styles, function ($asset) {

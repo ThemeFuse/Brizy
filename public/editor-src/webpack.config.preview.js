@@ -47,7 +47,9 @@ exports.preview = (options) => {
             compress: {
               drop_console: options.IS_PRODUCTION,
               dead_code: true,
-              pure_funcs: options.IS_PRODUCTION ? ['console.log', 'console.info', 'console.debug'] : []
+              pure_funcs: options.IS_PRODUCTION
+                ? ["console.log", "console.info", "console.debug"]
+                : []
             },
             mangle: options.IS_PRODUCTION,
             format: {

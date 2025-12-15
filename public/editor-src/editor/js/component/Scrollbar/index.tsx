@@ -1,59 +1,41 @@
-import classNames from "classnames";
-import React, {
-  CSSProperties,
-  ForwardRefRenderFunction,
-  ReactElement,
-  forwardRef,
-  useCallback
-} from "react";
-import { Scrollbars } from "react-custom-scrollbars";
-import { Props } from "./types";
-import { getThumbStyles, getViewStyles, wrapperStyles } from "./utils";
+import { Scrollbar as Component } from "@brizy/builder-ui-components/src/Scrollbar";
+import {
+  Props,
+  ScrollbarRef,
+  ScrollbarUpdateValues
+} from "@brizy/builder-ui-components/src/Scrollbar/types";
+import React, { ForwardRefRenderFunction, forwardRef } from "react";
 
-const _Scrollbar: ForwardRefRenderFunction<Scrollbars, Props> = (
-  { children, theme, autoHeightMax, className },
+const ScrollbarComponent: ForwardRefRenderFunction<ScrollbarRef, Props> = (
+  {
+    children,
+    theme,
+    autoHeightMax,
+    autoHeightMin,
+    className,
+    style,
+    absolute,
+    autoHeight,
+    onScroll,
+    onUpdate
+  },
   ref
-) => {
-  const viewClasName = classNames("brz-scrollbar__view", className);
-  const renderThumbs = useCallback(
-    (props: { style: CSSProperties }): ReactElement => (
-      <div
-        className={`brz-scrollColor__${theme}`}
-        {...props}
-        style={{ ...props.style, ...getThumbStyles }}
-      />
-    ),
-    [theme]
-  );
-  const renderView = useCallback(
-    (props: { style: CSSProperties }): ReactElement => (
-      <div
-        {...props}
-        style={{
-          ...props.style,
-          ...getViewStyles,
-          ...(autoHeightMax !== undefined && { maxHeight: autoHeightMax })
-        }}
-        className={viewClasName}
-      />
-    ),
-    [autoHeightMax, viewClasName]
-  );
+) => (
+  <Component
+    ref={ref}
+    className={className}
+    theme={theme}
+    autoHeightMax={autoHeightMax}
+    autoHeightMin={autoHeightMin}
+    style={style}
+    absolute={absolute}
+    autoHeight={autoHeight}
+    onScroll={onScroll}
+    onUpdate={onUpdate}
+  >
+    {children}
+  </Component>
+);
 
-  return (
-    <Scrollbars
-      ref={ref}
-      className="brz-scrollbar__wrapper"
-      style={wrapperStyles}
-      renderThumbHorizontal={renderThumbs}
-      renderThumbVertical={renderThumbs}
-      renderView={renderView}
-      autoHeight={!!autoHeightMax}
-      autoHeightMax={autoHeightMax}
-    >
-      {children}
-    </Scrollbars>
-  );
-};
-
-export const Scrollbar = forwardRef<Scrollbars, Props>(_Scrollbar);
+export const Scrollbar = forwardRef<ScrollbarRef, Props>(ScrollbarComponent);
+export type { ScrollbarRef, ScrollbarUpdateValues };

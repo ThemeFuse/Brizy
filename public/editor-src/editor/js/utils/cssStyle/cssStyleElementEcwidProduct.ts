@@ -399,11 +399,11 @@ export function cssStyleElementEcwidProductCheckboxSize({
 
   switch (size) {
     case "small":
-      return `min-width:16px;min-height:16px;`;
+      return "min-width:16px;min-height:16px;";
     case "medium":
-      return `min-width:24px;min-height:24px;`;
+      return "min-width:24px;min-height:24px;";
     case "large":
-      return `min-width:32px;min-height:32px;`;
+      return "min-width:32px;min-height:32px;";
     case "custom":
       return `min-width:${customSize}${customSizeSuffix};min-height:${customSize}${customSizeSuffix};`;
     case undefined:
@@ -440,11 +440,11 @@ export function cssStyleElementEcwidProductCheckboxPadding({
 
   switch (size) {
     case "small":
-      return `padding: 16${customSizeSuffix};`;
+      return "padding: 16${customSizeSuffix};";
     case "medium":
-      return `padding: 24${customSizeSuffix};`;
+      return "padding: 24${customSizeSuffix};";
     case "large":
-      return `padding: 32${customSizeSuffix};`;
+      return "padding: 32${customSizeSuffix};";
     case "custom":
       return `padding: ${customSize}${customSizeSuffix};`;
   }

@@ -118,7 +118,6 @@ class Option extends React.Component<Props> {
 
     if (!Component) {
       if (process.env.NODE_ENV === "development") {
-        // eslint-disable-next-line no-console
         console.error(`Option type "${type}" is not defined`);
       }
 

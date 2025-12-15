@@ -22,7 +22,9 @@ import { GetConfig } from "visual/providers/ConfigProvider/types";
 import { EditorMode } from "visual/providers/EditorModeProvider";
 import { RenderType, isEditor, isView } from "visual/providers/RenderProvider";
 import { useCSS } from "visual/providers/StyleProvider/useCSS";
+import { ReduxAction } from "visual/redux/actions2";
 import { deviceModeSelector } from "visual/redux/selectors";
+import { ReduxState } from "visual/redux/types";
 import { WithClassName } from "visual/types/attributes";
 import { defaultValueKey, defaultValueValue } from "visual/utils/onChange";
 import * as Position from "visual/utils/position/element";
@@ -90,7 +92,7 @@ export function WrapperComponent<T extends WithClassName & Record<any, any>>(
   ref: Ref<Element>
 ): ReactElement {
   const config = useConfig();
-  const store = useStore();
+  const store = useStore<ReduxState, ReduxAction>();
   const isAbsoluteOrFixed =
     v.elementPosition === "absolute" || v.elementPosition === "fixed";
   const modelClassName = useCSS({
@@ -168,7 +170,7 @@ export function WrapperComponent<T extends WithClassName & Record<any, any>>(
             /**
              * Type 'ComponentClass<T, any>' is not assignable to type
              * 'ComponentClass<WithClassName, any>'.
-             * @ts-expect-error */
+             * @ts-expect-error don't satisfy component type constraint */
             <Animation<ComponentType<T>>
               component={component ?? "div"}
               componentProps={{
@@ -194,7 +196,7 @@ export function WrapperComponent<T extends WithClassName & Record<any, any>>(
     /**
      * Type 'ComponentClass<T, any>' is not assignable to type
      * 'ComponentClass<WithClassName, any>'.
-     * @ts-expect-error */
+     * @ts-expect-error don't satisfy component type constraint */
     <Animation<ComponentType<T>>
       iterationCount={
         isView(renderContext) ?? (sectionPopup || sectionPopup2 ? Infinity : 1)

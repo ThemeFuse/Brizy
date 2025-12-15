@@ -18,6 +18,7 @@ export function preloadComponents(config: ConfigCommon) {
       try {
         component.preload();
       } catch (error) {
+        // eslint-disable-next-line no-console
         console.warn("Failed to preload component:", error);
       }
     }
@@ -31,6 +32,7 @@ export function preloadComponents(config: ConfigCommon) {
         try {
           component.preload();
         } catch (error) {
+          // eslint-disable-next-line no-console
           console.warn("Failed to preload Shopify component:", error);
         }
       }

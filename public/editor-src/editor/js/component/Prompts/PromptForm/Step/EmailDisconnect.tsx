@@ -73,7 +73,7 @@ export const EmailDisconnect = ({
     <Disconnect
       {...app}
       descriptions={t(
-        `Are you sure you want to delete your email connection ?`
+        "Are you sure you want to delete your email connection ?"
       )}
       nextLoading={nextLoading}
       prevLoading={prevLoading}

@@ -1,8 +1,8 @@
 import React, { FC, ReactNode } from "react";
-import Scrollbars from "react-custom-scrollbars";
 import Radio from "visual/component/Controls/Radio";
 import EditorIcon from "visual/component/EditorIcon";
 import { Button } from "visual/component/Prompts/common/Button";
+import { Scrollbar } from "visual/component/Scrollbar";
 import { useTranslation } from "visual/providers/I18nProvider";
 import { t } from "visual/utils/i18n";
 
@@ -61,11 +61,7 @@ export const ConnectAccount: FC<Props> = ({
         <ConnectAccountError error={error} hasAccounts={hasAccounts} />
       )}
       {hasAccounts && (
-        <Scrollbars
-          autoHeight={true}
-          autoHeightMax="100%"
-          style={{ height: "auto" }}
-        >
+        <Scrollbar theme="light" autoHeight={true} autoHeightMax="100%">
           <Radio
             className="brz-ed-popup-integrations-option__radio"
             name="list"
@@ -74,7 +70,7 @@ export const ConnectAccount: FC<Props> = ({
           >
             {options}
           </Radio>
-        </Scrollbars>
+        </Scrollbar>
       )}
       <div
         className="brz-ed-popup-integrations-new__option"

@@ -54,28 +54,28 @@ export const getHeadingText = (type: ShopifyTemplate): string => {
       return t("No blogs yet!");
   }
 
-  return t(`No products yet!`);
+  return t("No products yet!");
 };
 
 export const getContentText = (type: ShopifyTemplate): string => {
   switch (type) {
     case ShopifyTemplate.Product:
       return t(
-        `In order to view and select them in this screen, please add products to your shop.`
+        "In order to view and select them in this screen, please add products to your shop."
       );
     case ShopifyTemplate.Collection:
       return t(
-        `In order to view and select them in this screen, please add collections to your shop.`
+        "In order to view and select them in this screen, please add collections to your shop."
       );
     case ShopifyTemplate.Article:
     case ShopifyTemplate.Blog:
       return t(
-        `In order to view and select them in this screen, please add blogs to your shop.`
+        "In order to view and select them in this screen, please add blogs to your shop."
       );
   }
 
   return t(
-    `In order to view and select them in this screen, please add products to your shop.`
+    "In order to view and select them in this screen, please add products to your shop."
   );
 };
 

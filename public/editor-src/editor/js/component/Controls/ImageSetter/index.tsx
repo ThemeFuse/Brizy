@@ -214,6 +214,7 @@ export class ImageSetter<T extends ReactText> extends React.Component<
           })
           .catch((e) => {
             this.setState({ loading: false });
+            // eslint-disable-next-line no-console
             console.log(e);
             ToastNotification.error("Failed to upload file");
           });

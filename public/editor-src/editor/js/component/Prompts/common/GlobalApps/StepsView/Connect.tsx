@@ -59,7 +59,7 @@ class Connect extends Component<ConnectProps> {
     } = this.props;
 
     return (
-      <Scrollbar theme="light">
+      <Scrollbar theme="light" absolute>
         <div className="brz-ed-popup-integrations__connect">
           <div className="brz-ed-popup-integrations__connect-head">
             <img className="brz-img" src={img} title={title} alt={title} />

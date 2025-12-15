@@ -9,15 +9,16 @@ test("Prevent jest complaining that files has not tests", () => {});
  * @param {*[]} valid, a list of valid values that should be returned
  * @param {*[]} invalid, a list of invalid values that should be not returned
  */
+// eslint-disable-next-line jest/no-export
 export const testToValue = (f, valid, invalid) => {
-  describe("Testing reader function behaviors", function() {
+  describe("Testing reader function behaviors", function () {
     test("Return value if it is valid", () => {
-      valid.map(v => expect(f(v, {})).toBe(v));
+      valid.map((v) => expect(f(v, {})).toBe(v));
     });
 
     test("Return orElse if value is invalid", () => {
       const orElse = {};
-      invalid.map(v => expect(f(v, orElse)).toBe(orElse));
+      invalid.map((v) => expect(f(v, orElse)).toBe(orElse));
     });
   });
 };
@@ -29,10 +30,11 @@ export const testToValue = (f, valid, invalid) => {
  * @param {*} empty
  * @param {*[]} values, a list of valid values
  */
+// eslint-disable-next-line jest/no-export
 export const testMonoidBehavior = (f, empty, values) => {
-  describe("Testing function monoidal behaviors", function() {
+  describe("Testing function monoidal behaviors", function () {
     test("Identity. f(empty, a) === f(a, empty) === a", () => {
-      values.map(v => {
+      values.map((v) => {
         expect(f(empty, v)).toBe(v);
         expect(f(v, empty)).toBe(v);
       });

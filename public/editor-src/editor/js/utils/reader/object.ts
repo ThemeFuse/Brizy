@@ -50,10 +50,7 @@ export const readAsUnknownDict: Reader<Dictionary<unknown>> = (v) => {
 };
 
 export const readWithValueReader =
-  <T>(
-    valueReader: Reader<T>
-    // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-  ): Reader<Dictionary<T>> =>
+  <T>(valueReader: Reader<T>): Reader<Dictionary<T>> =>
   (v) => {
     const obj = readAsUnknownDict(v);
 

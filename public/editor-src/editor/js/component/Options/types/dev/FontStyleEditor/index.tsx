@@ -6,14 +6,16 @@ import React, {
   useRef,
   useState
 } from "react";
-import Scrollbars from "react-custom-scrollbars";
 import { useSelector, useStore } from "react-redux";
 import { FontStyle } from "visual/component/Controls/FontStyleEditor";
 import { FontStyleItem } from "visual/component/Controls/FontStyleEditor/FontStyle";
 import { Label } from "visual/component/Controls/LeftSidebar/Styling/Label";
 import { optionValueToModel } from "visual/component/Options/types/dev/FontStyleEditor/utils";
+import { ScrollbarRef } from "visual/component/Scrollbar";
 import { OptionDefinition } from "visual/editorComponents/ToolbarItemType";
+import { ReduxAction } from "visual/redux/actions2";
 import { deviceModeSelector } from "visual/redux/selectors";
+import { ReduxState } from "visual/redux/types";
 import { DeviceMode } from "visual/types";
 import { ModelFamilyType, getFontById } from "visual/utils/fonts/getFontById";
 import { t } from "visual/utils/i18n";
@@ -40,7 +42,7 @@ const dvv = (
 ): ModelFamilyType => defaultValueValue({ v, key, device, state: NORMAL });
 
 export const FontStyleEditor: FCC<Props> = ({ value, label, onChange }) => {
-  const scrollRef: Ref<Scrollbars> = useRef(null);
+  const scrollRef: Ref<ScrollbarRef> = useRef(null);
   const {
     fontStyles = [],
     extraFontStyles = [],
@@ -48,7 +50,7 @@ export const FontStyleEditor: FCC<Props> = ({ value, label, onChange }) => {
   } = value;
 
   const deviceMode = useSelector(deviceModeSelector);
-  const store = useStore();
+  const store = useStore<ReduxState, ReduxAction>();
 
   const [item, setItem] = useState({
     brzNewItem: false,
@@ -152,10 +154,12 @@ export const FontStyleEditor: FCC<Props> = ({ value, label, onChange }) => {
       if (index === 0) {
         requestAnimationFrame(() => {
           element.classList.add(animateClassName);
+          /* eslint-disable-next-line @typescript-eslint/no-unused-expressions */
           endAnimation;
         });
       } else {
         element.classList.add(animateClassName);
+        /* eslint-disable-next-line @typescript-eslint/no-unused-expressions */
         endAnimation;
       }
     });

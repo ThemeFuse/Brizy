@@ -1,10 +1,8 @@
-/* eslint-disable @typescript-eslint/no-use-before-define */
 import { archiveQuery, postsQuery } from "visual/utils/elements/posts";
 import { CloudQuery } from "visual/utils/elements/posts/types";
 import { CloudTagsQuery, V } from "./types";
 import { decodeV } from "./utils.common";
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export function getLoopTagsAttributes(_v: V): undefined | CloudTagsQuery {
   return undefined;
 }

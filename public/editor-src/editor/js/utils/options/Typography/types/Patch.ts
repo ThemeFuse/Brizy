@@ -26,7 +26,7 @@ export interface FontFamily {
   fontWeight: Weight;
 }
 
-type WithFontStyle<T> = T & FontStyle
+type WithFontStyle<T> = T & FontStyle;
 
 export const fontFamily = (v: Value): WithFontStyle<FontFamily> => ({
   fontStyle: "",

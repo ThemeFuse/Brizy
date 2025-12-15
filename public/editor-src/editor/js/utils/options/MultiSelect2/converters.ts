@@ -15,7 +15,7 @@ export const fromElementModel: FromElementModel<"multiSelect"> = (get) => {
   let value: Value;
   try {
     value = JSON.parse(Str.read(get("value")) ?? "[]");
-  } catch (e) {
+  } catch (_) {
     value = defaultValue.value;
   }
 

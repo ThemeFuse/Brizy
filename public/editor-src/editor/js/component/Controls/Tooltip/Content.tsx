@@ -172,7 +172,12 @@ export class TooltipContent extends React.Component<Props, State> {
     let placementStyle: CSSProperties = {};
 
     const getLeft = (): number => {
-      const { store } = this.context;
+      const store = this.context?.store;
+
+      if (!store) {
+        return 0;
+      }
+
       const deviceMode = deviceModeSelector(store.getState());
       const isDesktop = deviceMode === "desktop";
       const padding = isDesktop ? 31 : 0;

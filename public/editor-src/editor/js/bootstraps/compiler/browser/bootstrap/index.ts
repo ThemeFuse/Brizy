@@ -42,9 +42,7 @@ export async function bootstrap(data: Props): Promise<Static> {
   );
   const pageBlocks = pageBlocksDataSelector(store.getState(), config);
   const commonConfig = { store, config, editorMode };
-  const compiledProject = {
-    styles: compileProject(config, store)
-  };
+  const compiledProject = compileProject(config, store);
 
   if (isPopup(editorMode)) {
     const blockStatic = pageBlocks.map((block) => ({

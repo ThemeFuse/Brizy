@@ -43,6 +43,8 @@ const matchTypeToName = ({
   switch (componentType) {
     case "Checkbox":
       return t("Checkbox");
+    case "UserAgreementCheckbox":
+      return t("User Agreement");
     case "Text":
       return t("Text");
     case "Date":
