@@ -337,7 +337,8 @@ class Brizy_Public_AssetEnqueueManager
      */
     private function getHandle(Asset $asset)
     {
-        return Brizy_Editor::prefix() . '-asset-' . $asset->getName() . '-' . $asset->getScore();
+        $prefix = $asset->isPro() ? "pro" : "";
+        return Brizy_Editor::prefix() . "-asset-" . $asset->getName() . "-" . $asset->getScore() . "-" . $prefix;
     }
 
     private function replacePlaceholders(AssetGroup $ag, $post, $context)

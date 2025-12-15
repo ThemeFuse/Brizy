@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "de71bb0b8fc86a024ca285f0d8f83aba",
+    "content-hash": "9d8932377b92b4b0f298fef5c6623da3",
     "packages": [
         {
             "name": "bagrinsergiu/brizy-merge-page-assets",
@@ -12,7 +12,7 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/bagrinsergiu/brizy-merge-page-assets.git",
-                "reference": "d95ec788b720aa1ad886a4bcb6e0803648340f93"
+                "reference": "65470f7b4111e9deb84047617d9915606139821c"
             },
             "require": {
                 "ext-json": "*",
@@ -34,7 +34,7 @@
                 "brizy",
                 "brizy merge assets"
             ],
-            "time": "2025-09-16T13:21:28+00:00"
+            "time": "2025-12-23T13:17:39+00:00"
         },
         {
             "name": "bagrinsergiu/brizy-migration-utils",
@@ -69,11 +69,11 @@
         },
         {
             "name": "bagrinsergiu/content-placeholder",
-            "version": "dev-lazy-register",
+            "version": "v3.0.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/bagrinsergiu/brizy-content-placeholder.git",
-                "reference": "36732b34d07d56172ff7edd24c30abe6df858ca6"
+                "reference": "2061f9fa2f2289ee7b65946bc4243be57c773e31"
             },
             "require": {
                 "php": ">=7.1.0",
@@ -99,7 +99,7 @@
                 "content",
                 "placeholders"
             ],
-            "time": "2025-09-26T09:57:37+00:00"
+            "time": "2025-11-13T13:37:03+00:00"
         },
         {
             "name": "enshrined/svg-sanitize",
@@ -245,12 +245,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/nikic/PHP-Parser.git",
-                "reference": "c95b500f87e5fa2e598228e958667136125e0f5f"
+                "reference": "2707021f7aecb6f51281904fbda4c4acb9117a30"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/c95b500f87e5fa2e598228e958667136125e0f5f",
-                "reference": "c95b500f87e5fa2e598228e958667136125e0f5f",
+                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/2707021f7aecb6f51281904fbda4c4acb9117a30",
+                "reference": "2707021f7aecb6f51281904fbda4c4acb9117a30",
                 "shasum": ""
             },
             "require": {
@@ -288,7 +288,7 @@
                 "issues": "https://github.com/nikic/PHP-Parser/issues",
                 "source": "https://github.com/nikic/PHP-Parser/tree/4.x"
             },
-            "time": "2025-08-13T12:16:18+00:00"
+            "time": "2025-12-01T11:20:26+00:00"
         },
         {
             "name": "phplrt/ast-contracts",
@@ -1445,7 +1445,6 @@
     "minimum-stability": "dev",
     "stability-flags": {
         "bagrinsergiu/brizy-merge-page-assets": 20,
-        "bagrinsergiu/content-placeholder": 20,
         "tburry/pquery": 20
     },
     "prefer-stable": false,
@@ -1453,6 +1452,6 @@
     "platform": {
         "php": ">=5.6"
     },
-    "platform-dev": [],
-    "plugin-api-version": "2.2.0"
+    "platform-dev": {},
+    "plugin-api-version": "2.9.0"
 }
