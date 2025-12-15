@@ -1,11 +1,6 @@
 // Integration
 $option-color: #626b70;
 
-//Scrollbar Color Apps
-.brz-scrollColor__light {
-  background-color: $scrollbar__popup__apps-color;
-}
-
 // --
 .brz-ed-popup-integrations {
   font-family: $default-font-family;
@@ -114,8 +109,9 @@ $option-color: #626b70;
       &:after {
         border-color: $brand__primary__pro;
         background-color: rgba(255, 255, 255, 0.9);
-        transition: 0.2s linear border-color,
-        0.2s linear background-color;
+        transition:
+          0.2s linear border-color,
+          0.2s linear background-color;
       }
 
       .brz-ed-popup-integrations__app-icon {
@@ -145,8 +141,9 @@ $option-color: #626b70;
       width: 100%;
       height: 100%;
       border: 3px solid $popup__apps__item__after-border;
-      transition: 0.2s linear border-color,
-      0.2s linear background-color;
+      transition:
+        0.2s linear border-color,
+        0.2s linear background-color;
     }
 
     &:hover:after {
@@ -457,26 +454,6 @@ $option-color: #626b70;
     height: 100%;
     display: flex;
     flex-direction: column;
-
-    .brz-scrollbar__wrapper {
-      & > div:nth-child(2) {
-        bottom: -15px !important;
-      }
-
-      & > div:last-child {
-        inset-inline-end: -15px !important;
-      }
-    }
-
-    // scroll in safari
-    > div:not(.brz-ed-popup-integrations-step__buttons) {
-      flex-shrink: 1;
-      display: flex;
-
-      > div:first-child {
-        flex: 1;
-      }
-    }
   }
 
   &-step__buttons {
@@ -554,7 +531,8 @@ $option-color: #626b70;
     }
   }
 
-  &--delete, &--tooltip {
+  &--delete,
+  &--tooltip {
     cursor: pointer;
     color: $option-color;
     transition: 0.2s linear color;
@@ -578,7 +556,6 @@ $option-color: #626b70;
   &--tooltip {
     inset-inline-end: 30px;
   }
-
 
   &--delete {
     inset-inline-end: 10px;
@@ -653,7 +630,8 @@ $option-color: #626b70;
       font-weight: 500;
     }
 
-    &-home-page, &-header-footer {
+    &-home-page,
+    &-header-footer {
       .brz-ed-control__switch {
         display: flex;
         justify-content: flex-end;
@@ -755,7 +733,7 @@ $option-color: #626b70;
   }
 
   &-step__warning-icon {
-    color: #F27C38;
+    color: #f27c38;
   }
 
   &-step__done-content {

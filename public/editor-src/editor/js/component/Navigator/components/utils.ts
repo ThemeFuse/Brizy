@@ -350,7 +350,7 @@ export const getLayoutSettings = (): SizeSettings => {
       };
     }
     return initialSize;
-  } catch (e) {
+  } catch (_) {
     return initialSize;
   }
 };

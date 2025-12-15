@@ -1111,6 +1111,10 @@ interface _ConfigCommon<Mode> {
   // `OnCompile` forces the page, project to compile, bypassing state comparisons.
   onCompile: (res: Response<PublishData>) => void;
 
+  // onChangeTheme are triggered outside the editor when
+  // the thirty party app want to update the theme
+  onChangeTheme?: (theme: Theme) => void;
+
   //#endregion
 
   //#region API

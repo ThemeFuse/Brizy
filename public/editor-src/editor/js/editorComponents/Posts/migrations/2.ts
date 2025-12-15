@@ -17,7 +17,6 @@ type V2 = {
   symbols: Dictionary<string> | undefined;
 };
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function never(_: never): never {
   throw new Error("Didn't expect to get here");
 }
@@ -98,7 +97,6 @@ function migrateOrder(v: ElementModel): V2["order"] {
 }
 
 function removeUndefinedKeys(v: ElementModel): Record<string, unknown> {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const filtered = Object.entries(v).filter(([_, val]) => val !== undefined);
 
   return objectFromEntries(filtered);

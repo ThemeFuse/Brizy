@@ -30,6 +30,7 @@ const tailwindcss = require("tailwindcss");
 
 const chalk = require("chalk");
 const del = require("del");
+const merge = require("merge-stream");
 
 const { uniq } = require("es-toolkit");
 
@@ -457,15 +458,16 @@ function proEditorCSS() {
     .pipe(gulpPlugins.if(!IS_PRODUCTION, gulpPlugins.sourcemaps.write()))
     .pipe(gulp.dest(dest));
 }
+
 function proExportCSS() {
-  const src = [
-    paths.packages + "/component/src/**/*.scss",
-    paths.editor + "/sass/main.export.pro.scss"
-  ];
   const dest = paths.buildPro + "/css";
 
-  return gulp
-    .src(src, { base: paths.editor })
+  const criticalSrc = [
+    paths.editor + "/sass/main.export.pro.critical.scss"
+  ];
+
+  const criticalTask = gulp
+    .src(criticalSrc, { base: paths.editor })
     .pipe(
       gulpPlugins
         .postcss(postsCssProcessors, {
@@ -473,12 +475,35 @@ function proExportCSS() {
           failOnError: false
         })
         .on("error", (err) => {
-          console.log("Sass Syntax Error", err);
+          console.log("Critical CSS Sass Syntax Error", err);
+        })
+    )
+    .pipe(gulpPlugins.concat("preview-priority.pro.min.css"))
+    .pipe(cleanCSS())
+    .pipe(gulp.dest(dest));
+
+  const nonCriticalSrc = [
+    paths.packages + "/component/src/**/*.scss",
+    paths.editor + "/sass/main.export.pro.noncritical.scss"
+  ];
+
+  const nonCriticalTask = gulp
+    .src(nonCriticalSrc, { base: paths.editor })
+    .pipe(
+      gulpPlugins
+        .postcss(postsCssProcessors, {
+          syntax: postcssSCSS,
+          failOnError: false
+        })
+        .on("error", (err) => {
+          console.log("Non-critical CSS Sass Syntax Error", err);
         })
     )
     .pipe(gulpPlugins.concat("preview.pro.min.css"))
     .pipe(cleanCSS())
-    .pipe(gulp.dest(dest));
+    .pipe(gulp.dest(dest)); 
+
+  return merge(criticalTask, nonCriticalTask);
 }
 function proExportLibsCSS() {
   const { pro } = LibsConfig;

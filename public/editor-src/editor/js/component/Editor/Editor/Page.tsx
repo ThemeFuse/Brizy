@@ -8,18 +8,19 @@ import { useConfig } from "visual/providers/ConfigProvider";
 import { EditorComponentProvider } from "visual/providers/EditorComponentProvider";
 import { useEditorMode } from "visual/providers/EditorModeProvider";
 import { useTranslation } from "visual/providers/I18nProvider";
-import { updateBlocks } from "visual/redux/actions2";
+import { ReduxAction, updateBlocks } from "visual/redux/actions2";
 import {
   pageDataDraftBlocksSelector,
   stateSelector
 } from "visual/redux/selectors";
+import { ReduxState } from "visual/redux/types";
 import { areStatesEqual, getPageId } from "../utils";
 import { OnChange } from "./types";
 
 const Page = (): JSX.Element => {
   const dispatch = useDispatch();
   const state = useSelector(stateSelector, areStatesEqual);
-  const store = useStore();
+  const store = useStore<ReduxState, ReduxAction>();
   const config = useConfig();
   const { mode } = useEditorMode();
   const { t } = useTranslation();

@@ -57,12 +57,14 @@ async function loadModule(modulePath: string) {
       // Warn if world-writable
       const mode = stats.mode & 0o777;
       if (mode & 0o002) {
+        // eslint-disable-next-line no-console
         console.warn(
           `⚠ Warning: File is world-writable: ${filePath} (mode: ${mode.toString(8)})`
         );
       }
     }
 
+    // eslint-disable-next-line no-console
     console.log(`Loading module: ${filePath}`);
 
     // Load using Function workaround
@@ -79,10 +81,12 @@ export async function registerThirdParty(config: ConfigCommon) {
   const scripts = config.thirdPartyUrls || [];
 
   if (scripts.length === 0) {
+    // eslint-disable-next-line no-console
     console.log("No third-party modules to load");
     return { loaded: 0, failed: 0, results: [] };
   }
 
+  // eslint-disable-next-line no-console
   console.log(`Starting to load ${scripts.length} third-party module(s)...`);
 
   const results = await Promise.allSettled(
@@ -92,7 +96,7 @@ export async function registerThirdParty(config: ConfigCommon) {
       try {
         const module = await loadModule(scriptUrl);
         const loadTime = Date.now() - startTime;
-
+        // eslint-disable-next-line no-console
         console.log(
           `✓ [${index + 1}/${scripts.length}] Loaded in ${loadTime}ms: ${scriptUrl}`
         );
@@ -129,10 +133,12 @@ export async function registerThirdParty(config: ConfigCommon) {
 
   // Log summary
   if (failed > 0) {
+    // eslint-disable-next-line no-console
     console.warn(
       `⚠ Module loading completed: ${successful.length} succeeded, ${failed} failed`
     );
   } else {
+    // eslint-disable-next-line no-console
     console.log(`✓ All ${successful.length} module(s) loaded successfully`);
   }
 

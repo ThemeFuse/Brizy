@@ -165,7 +165,6 @@ const getItemsSimple =
     ];
   };
 
-// eslint-disable-next-line no-unused-vars
 const getItemsMMenu =
   () =>
   ({ v, device }) => {

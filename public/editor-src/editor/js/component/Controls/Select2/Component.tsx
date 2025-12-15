@@ -10,12 +10,12 @@ import React, {
   useRef,
   useState
 } from "react";
-import { Scrollbars, positionValues } from "react-custom-scrollbars";
 import { usePopper } from "react-popper";
 import { SelectItem } from "visual/component/Controls/Select2/SelectItem";
 import { Tag } from "visual/component/Controls/Select2/Tag";
 import EditorIcon from "visual/component/EditorIcon";
 import { OnChange } from "visual/component/Options/Type";
+import { Scrollbar, ScrollbarUpdateValues } from "visual/component/Scrollbar";
 import { WithClassName } from "visual/types/attributes";
 import { makeDataAttr } from "visual/utils/i18n/attribute";
 import { Position } from "visual/utils/position/Position";
@@ -70,10 +70,17 @@ export function Component<T extends Literal>({
   const inputRef = useRef<HTMLInputElement>(null);
   const [height, setHeight] = useState(0);
   const [mount, setMount] = useState(false);
+
   useEffect(() => setHeight(0), [children.length]);
-  const onScrollUpdate = ({ scrollHeight }: positionValues): void => {
-    height || setHeight(dropdownHeight(scrollHeight, children.length, scroll));
-  };
+
+  const onScrollUpdate = useCallback(
+    ({ scrollHeight }: ScrollbarUpdateValues): void => {
+      height ||
+        setHeight(dropdownHeight(scrollHeight, children.length, scroll));
+    },
+    [children.length, scroll, height]
+  );
+
   const _onSelect = useCallback(
     (v: T) => mCompose(onSelect, property("value"), property("props"))(v),
     [onSelect]
@@ -184,25 +191,15 @@ export function Component<T extends Literal>({
                       value: attributes.popper?.["data-popper-placement"]
                     })}
                   >
-                    <Scrollbars
+                    <Scrollbar
                       onUpdate={onScrollUpdate}
                       autoHeight={true}
                       autoHeightMax={maxHeight ?? height}
-                      renderThumbVertical={(props): ReactElement => {
-                        return (
-                          <div
-                            className={
-                              "brz-ed-control__multiSelect__scroll-thumb"
-                            }
-                            {...props}
-                          />
-                        );
-                      }}
                     >
                       <ul {...getMenuProps()} className="brz-ul">
                         {items}
                       </ul>
-                    </Scrollbars>
+                    </Scrollbar>
                   </div>
                 </div>
               )}

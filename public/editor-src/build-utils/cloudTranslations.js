@@ -44,6 +44,7 @@ async function handleTranslationComparison({
     try {
       existingTranslations = require(translationsJsonPath);
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.warn(
         "Failed to parse existing translations.json:",
         error.message
@@ -53,7 +54,7 @@ async function handleTranslationComparison({
   }
 
   const newTranslations = Object.fromEntries(
-    extractedTranslations.map(t => [t, t])
+    extractedTranslations.map((t) => [t, t])
   );
 
   const addedTranslations = [];
@@ -84,9 +85,11 @@ async function handleTranslationComparison({
       );
       const diffContent = addedTranslations.join("\n");
       fs.writeFileSync(diffFilePath, diffContent, "utf8");
+      // eslint-disable-next-line no-console
       console.log(`Translation diff file saved to: ${diffFilePath}`);
     }
   } else {
+    // eslint-disable-next-line no-console
     console.log("No translation changes detected - skipping file updates");
   }
 }

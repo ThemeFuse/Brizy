@@ -134,7 +134,6 @@ export class StoryWrapper extends EditorComponent<Value, Props> {
                     attributes: attr,
                     className: this.getWrapperClassName(v, vs, vd),
                     animationClass: this.getAnimationClassName(v, vs, vd),
-                    // eslint-disable-next-line react/display-name
                     renderContent: (
                       children: ReactElement
                     ): React.ReactNode => {
@@ -168,7 +167,7 @@ export class StoryWrapper extends EditorComponent<Value, Props> {
                 /**
                  * Since the EditorArrayComponent is still in JS
                  * TS cannot read properly it's return type
-                 * @ts-expect-error */
+                 * @ts-expect-error unknown is not assignable */
                 <EditorArrayComponent {...itemsProps} />
               );
             }}
@@ -198,7 +197,7 @@ export class StoryWrapper extends EditorComponent<Value, Props> {
     /**
      * Since the EditorArrayComponent is still in JS
      * TS cannot read properly it's return type
-     * @ts-expect-error */
+     * @ts-expect-error unknown is not assignable */
     return <EditorArrayComponent {...itemsProps} />;
   }
 

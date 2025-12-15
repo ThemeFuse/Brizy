@@ -3,7 +3,6 @@ import { makeDataAttrString } from "visual/utils/i18n/attribute";
 import { getTranslatedResponseMessages } from "../Form2/utils";
 
 const recaptchaSelector =
-  // eslint-disable-next-line
   '.brz-g-recaptcha[data-sitekey]:not([data-sitekey=""])';
 
 const defaultMessages = {

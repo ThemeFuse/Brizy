@@ -5,6 +5,7 @@ import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
 import { getDynamicContentOption } from "visual/utils/options";
+import { isUserAgreementCheckbox } from "../../utils";
 import { Props, Value } from "../type";
 import { getThirtyOptions, inputTypesChoice } from "../utils";
 
@@ -31,7 +32,9 @@ export const getItems: GetItems<Value, Props> = ({ v, device, component }) => {
   const thirtyOptionLabel = thirtyOption?.label ?? t("Field Name");
   const fieldId = component.getId();
 
-  const isCheckboxOrRadio = isCheckbox || isRadio;
+  const isCheckboxOrRadioWithColumns = isCheckbox || isRadio;
+  const isCheckboxOrRadio =
+    isCheckboxOrRadioWithColumns || isUserAgreementCheckbox(type);
   const isDateOrTime = isDate || isTime;
 
   const fileUploadSizes: { title: string; value: string }[] = [];
@@ -180,7 +183,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device, component }) => {
       label: t("Required"),
       type: "switch",
       position: 100,
-      disabled: isHidden,
+      disabled: isHidden || isUserAgreementCheckbox(type),
       devices: "desktop"
     }
   ];
@@ -256,6 +259,8 @@ export const getItems: GetItems<Value, Props> = ({ v, device, component }) => {
     type: DCTypes.richText
   });
 
+  const enableCustomHtml = dvv("enableCustomHtml") !== "on";
+
   return [
     {
       id: "toolbarCurrentElement",
@@ -284,27 +289,57 @@ export const getItems: GetItems<Value, Props> = ({ v, device, component }) => {
                   choices: inputTypes
                 },
                 {
-                  id: "defaultValue",
-                  label: t("Default Value"),
-                  type: "inputText",
+                  id: "borderRadiusTypeGroup",
+                  type: "group",
                   devices: "desktop",
-                  config: {
-                    size: "medium"
-                  },
-                  disabled: isFileUpload,
-                  position: 15,
-                  helper: {
-                    content:
-                      isCheckbox || isSelect
-                        ? t(
-                            "Enter the default value for the field. If needed, use a comma-separated list. For example, 'Option 1,Option 2'"
-                          )
-                        : t("Enter the default value for the field.")
-                  },
-                  population: richTextDC
+                  disabled: !isUserAgreementCheckbox(type),
+                  options: [
+                    {
+                      id: "enableCustomHtml",
+                      type: "switch",
+                      label: t("Enable custom HTML"),
+                      helper: {
+                        content: t(
+                          "Enable custom HTML to add custom HTML to the field."
+                        )
+                      }
+                    },
+                    {
+                      id: "customHtml",
+                      type: "textarea",
+                      disabled: enableCustomHtml,
+                      display: "block"
+                    }
+                  ]
                 },
+                ...(!isUserAgreementCheckbox(type)
+                  ? ([
+                      {
+                        id: "defaultValue",
+                        label: t("Default Value"),
+                        type: "inputText",
+                        devices: "desktop",
+                        config: {
+                          size: "medium"
+                        },
+                        disabled: isFileUpload,
+                        position: 15,
+                        helper: {
+                          content:
+                            isCheckbox || isSelect
+                              ? t(
+                                  "Enter the default value for the field. If needed, use a comma-separated list. For example, 'Option 1,Option 2'"
+                                )
+                              : t("Enter the default value for the field.")
+                        },
+                        population: richTextDC
+                      }
+                    ] as unknown as ToolbarItemType[])
+                  : []),
                 ...(isDateOrTime ? dateOrTimeOptions() : []),
-                ...(isCheckboxOrRadio ? checkboxOrRadioOptions() : []),
+                ...(isCheckboxOrRadioWithColumns
+                  ? checkboxOrRadioOptions()
+                  : []),
                 ...(isFileUpload ? fileUploadOptions() : []),
                 ...(isSelect ? selectOptions() : []),
                 ...(isNumber ? numberOptions() : []),
@@ -362,7 +397,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device, component }) => {
                   placeholder: t("..type error message"),
                   devices: "desktop",
                   disabled: !isNumber
-                },
+                }
               ]
             },
             {

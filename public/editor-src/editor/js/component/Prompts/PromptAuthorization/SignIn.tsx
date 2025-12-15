@@ -2,7 +2,6 @@ import classnames from "classnames";
 import { noop } from "es-toolkit";
 import { produce } from "immer";
 import React, { Component } from "react";
-import Scrollbars from "react-custom-scrollbars";
 import { ConnectedProps, connect } from "react-redux";
 import { Alert } from "visual/component/Alert";
 import InputPlaceholder from "visual/component/Controls/InputPlaceholder";
@@ -10,6 +9,7 @@ import { Spacer } from "visual/component/Controls/Spacer";
 import { Button } from "visual/component/Prompts/common/Button";
 import { Loading } from "visual/component/Prompts/common/Loading";
 import { validateEmail } from "visual/component/Prompts/common/utils";
+import { Scrollbar } from "visual/component/Scrollbar";
 import { updateAuthorization, updateSyncAllowed } from "visual/redux/actions2";
 import {
   checkCompatibility,
@@ -136,6 +136,7 @@ class SignIn extends Component<SingInProps, SignInState> {
             if (checkCompatibilityAfter) {
               checkCompatibility(config).then((r) => {
                 if (!r.success) {
+                  // eslint-disable-next-line no-console
                   console.warn("Something went wrong", r);
                 } else {
                   if (r?.isSyncAllowed) {
@@ -274,7 +275,7 @@ class SignIn extends Component<SingInProps, SignInState> {
       } = this.state;
 
       return (
-        <Scrollbars className="brz-text-lg-center">
+        <Scrollbar theme="light" className="brz-text-lg-center" absolute>
           <div className="brz-ed-popup-integrations__connect-head">
             <Spacer space="73px" />
             <p className="brz-p">{signInDescription}</p>
@@ -324,7 +325,7 @@ class SignIn extends Component<SingInProps, SignInState> {
               onClickIcon={this.handleRecover}
             />
           </div>
-        </Scrollbars>
+        </Scrollbar>
       );
     }
   }

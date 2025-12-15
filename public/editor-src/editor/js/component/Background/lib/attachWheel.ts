@@ -25,7 +25,7 @@ const handleWheel = (e: Event) => {
     return;
   }
 
-  const [_, nodeCb] = [...nodeStack][count - 1]; // eslint-disable-line @typescript-eslint/no-unused-vars
+  const [_, nodeCb] = [...nodeStack][count - 1];
   nodeCb?.(e);
 };
 

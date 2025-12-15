@@ -4,7 +4,11 @@ import React from "react";
 import { ConnectedProps, connect } from "react-redux";
 import { RenderEmpty } from "visual/component/RightSidebar/Components/RenderEmpty";
 import { RenderItems } from "visual/component/RightSidebar/Components/RenderItems";
-import { CLEAR_ITEMS_TIMEOUT, SIDEBAR_WIDTH_EXPANDED, SIDEBAR_WIDTH } from "visual/component/RightSidebar/utils";
+import {
+  CLEAR_ITEMS_TIMEOUT,
+  SIDEBAR_WIDTH,
+  SIDEBAR_WIDTH_EXPANDED
+} from "visual/component/RightSidebar/utils";
 import { Scrollbar } from "visual/component/Scrollbar";
 import { OptionDefinition } from "visual/editorComponents/ToolbarItemType";
 import { updateUI } from "visual/redux/actions2";
@@ -168,12 +172,12 @@ export class RightSidebarInner extends React.Component<Props> {
     const renderData = this.getRenderItems(type, _items);
     return (
       <div className={sidebarClassName}>
-        <Sidebar 
-          isOpen={isOpen} 
+        <Sidebar
+          isOpen={isOpen}
           alignment={alignment}
           width={expanded ? SIDEBAR_WIDTH_EXPANDED : SIDEBAR_WIDTH}
         >
-          <Scrollbar theme="dark">
+          <Scrollbar theme="dark" absolute>
             <div className="brz-ed-sidebar__right__content">{renderData}</div>
           </Scrollbar>
         </Sidebar>
