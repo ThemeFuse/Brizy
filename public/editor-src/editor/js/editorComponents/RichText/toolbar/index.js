@@ -112,6 +112,7 @@ const getItems =
     });
 
     const linkPopup = v.linkPopup;
+    const dcLinkPopup = v.dcLinkPopup;
 
     const disableAiText =
       !!v.population ||
@@ -722,7 +723,7 @@ const getItems =
               {
                 id: "popup",
                 label: t("Popup"),
-                disabled: !linkPopupEnabled,
+                disabled: !linkPopupEnabled || isDC,
                 options: [
                   {
                     id: "linkPopup",
@@ -733,15 +734,28 @@ const getItems =
                       canDelete: device === "desktop"
                     },
                     disabled: disablePopup || _isStory,
-                    ...(v.textPopulation
-                      ? {}
-                      : {
-                          dependencies: ({ linkPopup, linkPopupPopups }) =>
-                            onChange({
-                              ...handleChangeLink(v, { linkPopup }),
-                              popups: linkPopupPopups
-                            })
-                        })
+                    dependencies: ({ linkPopup, linkPopupPopups }) =>
+                      onChange({
+                        ...handleChangeLink(v, { linkPopup }),
+                        popups: linkPopupPopups
+                      })
+                  }
+                ]
+              },
+              {
+                id: "dcPopup",
+                label: t("Popup"),
+                disabled: !linkPopupEnabled || !isDC,
+                options: [
+                  {
+                    id: "dcLinkPopup",
+                    type: "promptAddPopup",
+                    label: t("Popup"),
+                    config: {
+                      popupKey: `${component.getId()}_${dcLinkPopup}`,
+                      canDelete: device === "desktop"
+                    },
+                    disabled: disablePopup || _isStory
                   }
                 ]
               },

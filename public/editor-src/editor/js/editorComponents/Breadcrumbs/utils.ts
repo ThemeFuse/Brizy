@@ -1,9 +1,9 @@
+import { Obj, Str } from "@brizy/readers";
 import { parseStrict } from "fp-utilities";
 import { Breadcrumb } from "visual/editorComponents/Breadcrumbs/types";
 import { mPipe, pipe } from "visual/utils/fp";
 import { readWithItemReader } from "visual/utils/reader/array";
 import { onNullish, throwOnNullish } from "visual/utils/value";
-import { Obj, Str } from "@brizy/readers";
 
 const breadcrumbParser = parseStrict<unknown, Breadcrumb>({
   title: pipe(
@@ -23,7 +23,7 @@ export const readBreadcrumbs = (content: unknown[]): Breadcrumb[] => {
       readWithItemReader(breadcrumbParser),
       onNullish([] as Breadcrumb[])
     )(content);
-  } catch (e) {
+  } catch (_) {
     return [];
   }
 };

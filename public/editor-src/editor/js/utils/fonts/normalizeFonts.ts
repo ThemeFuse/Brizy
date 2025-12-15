@@ -39,6 +39,7 @@ export const normalizeFonts = async ({
   try {
     uploadedFonts = await getUploadedFonts(config, uploadedFontsIds);
   } catch (e) {
+    // eslint-disable-next-line no-console
     console.log(e);
   }
 

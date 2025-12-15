@@ -12,6 +12,8 @@ import { Unsubscribe } from "redux";
 import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { ConfigContext } from "visual/providers/ConfigProvider/context";
 import { GetConfig } from "visual/providers/ConfigProvider/types";
+import { ReduxAction } from "visual/redux/actions2";
+import { ReduxState } from "visual/redux/types";
 
 export const ConfigProvider: FC<
   PropsWithChildren<{ config: ConfigCommon }>
@@ -21,7 +23,7 @@ export const ConfigProvider: FC<
   });
 
   const storeSubscription = useRef<Unsubscribe | null>(null);
-  const store = useStore();
+  const store = useStore<ReduxState, ReduxAction>();
   const onLoad = config.onLoad;
 
   useEffect(() => {

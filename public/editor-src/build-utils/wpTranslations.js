@@ -25,7 +25,6 @@ function generateWPFileContent({ translations, IS_PRODUCTION }) {
   }_Texts`;
   const arrBody = translations
     .map((t) => {
-      // eslint-disable-next-line
       const _t = t.replace(/"/g, '\\"');
       return `\t\t\t"${_t}" => __("${_t}", "brizy")`;
     })

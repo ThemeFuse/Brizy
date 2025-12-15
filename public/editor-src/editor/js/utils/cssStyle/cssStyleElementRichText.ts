@@ -1070,7 +1070,7 @@ export function cssStyleElementRichTextDCUppercase({
 
   const capitalize = dvv("dynamicTextCapitalize");
 
-  return readToggle(capitalize) ? `text-transform : uppercase !important;` : "";
+  return readToggle(capitalize) ? "text-transform : uppercase !important;" : "";
 }
 
 export function cssStyleElementRichTextAlign({

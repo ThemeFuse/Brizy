@@ -46,3 +46,6 @@ export const getTranslatedResponseMessages = (
       [status]: translatedMessage
     };
   }, {} as ResponseMessages);
+
+export const isUserAgreementCheckbox = (type: string | undefined): boolean =>
+  type === "UserAgreementCheckbox";

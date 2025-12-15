@@ -1,15 +1,11 @@
 import { isEqual } from "es-toolkit";
 import React, { JSX } from "react";
-import { connect } from "react-redux";
-import { Dispatch } from "redux";
+import { ConnectedProps, connect } from "react-redux";
 import { LabelWithButton } from "visual/component/Controls/LeftSidebar/Styling/LabelWithButton";
 import { ToastNotification } from "visual/component/Notifications";
 import Options from "visual/component/Options";
 import { OnChangeActionTypes } from "visual/component/Options/types/dev/EditableSelect/types";
-import {
-  ConfigCommon,
-  LeftSidebarOptionsIds
-} from "visual/global/Config/types/configs/ConfigCommon";
+import { LeftSidebarOptionsIds } from "visual/global/Config/types/configs/ConfigCommon";
 import { useConfig } from "visual/providers/ConfigProvider";
 import {
   addNewGlobalStyle,
@@ -32,31 +28,35 @@ import {
   stylesSelector
 } from "visual/redux/selectors";
 import { ReduxState } from "visual/redux/types";
-import { ExtraFontStyle, FontStyles, Palette, Style } from "visual/types/Style";
+import { FontStyles, Palette, Style } from "visual/types/Style";
 import { isExtraFontStyle } from "visual/types/utils";
 import { getGlobalColors, getGlobalTypography } from "visual/utils/api";
 import { brizyToBranding } from "visual/utils/branding";
 import { t } from "visual/utils/i18n";
 import { uuid } from "visual/utils/uuid";
+import { Action, OwnProps, State, StateProps } from "./types";
 
-interface StateProps {
-  styles: Style[];
-  currentStyle: ReduxState["currentStyle"];
-  extraFontStyles: ExtraFontStyle[];
-  extraStyles: Style[];
-  config: ConfigCommon;
-}
+const mapStateToProps = (state: ReduxState): StateProps => ({
+  styles: stylesSelector(state),
+  extraStyles: extraStylesSelector(state),
+  currentStyle: currentStyleSelector(state),
+  extraFontStyles: extraFontStylesSelector(state)
+});
 
-interface DispatchProps {
-  dispatch: Dispatch;
-}
+const mapDispatchToProps = {
+  addNewGlobalStyle,
+  removeGlobalStyle,
+  editGlobalStyleName,
+  updateCurrentStyleId,
+  updateCurrentStyle,
+  getRegenerateColors,
+  getRegenerateTypography,
+  updateExtraFontStyles
+};
 
-type Props = StateProps & DispatchProps;
+const connector = connect(mapStateToProps, mapDispatchToProps);
 
-interface State {
-  loadingColor: boolean;
-  loadingTypography: boolean;
-}
+type Props = ConnectedProps<typeof connector> & OwnProps;
 
 class _DrawerComponent extends React.Component<Props, State> {
   constructor(props: Props) {
@@ -67,45 +67,44 @@ class _DrawerComponent extends React.Component<Props, State> {
     };
   }
 
-  handleCurrentStyleChange = ({
-    type,
-    payload
-  }: {
-    type: string;
-    payload: string;
-  }) => {
-    const { dispatch } = this.props;
+  handleCurrentStyleChange = ({ type, payload }: Action) => {
+    const {
+      currentStyle,
+      addNewGlobalStyle,
+      removeGlobalStyle,
+      editGlobalStyleName,
+      updateCurrentStyleId
+    } = this.props;
 
     switch (type) {
       case OnChangeActionTypes.duplicate: {
         const newStyle = {
-          ...this.props.currentStyle,
+          ...currentStyle,
           id: uuid(),
           title: payload
         };
 
-        dispatch(addNewGlobalStyle(newStyle));
+        addNewGlobalStyle(newStyle);
         break;
       }
       case OnChangeActionTypes.remove: {
-        dispatch(removeGlobalStyle(payload));
+        removeGlobalStyle(payload);
         break;
       }
       case OnChangeActionTypes.edit: {
-        dispatch(editGlobalStyleName(payload));
+        editGlobalStyleName(payload);
         break;
       }
       case OnChangeActionTypes.change: {
-        dispatch(updateCurrentStyleId(payload));
+        updateCurrentStyleId(payload);
         break;
       }
     }
   };
 
   handleColorPaletteChange = (value: Palette[]) => {
-    const { currentStyle, dispatch } = this.props;
-
-    dispatch(updateCurrentStyle({ ...currentStyle, colorPalette: value }));
+    const { currentStyle, updateCurrentStyle } = this.props;
+    updateCurrentStyle({ ...currentStyle, colorPalette: value });
   };
 
   getRegeneratedStyle = (styles: Style[]): Style => {
@@ -121,7 +120,7 @@ class _DrawerComponent extends React.Component<Props, State> {
   handleRegenerateColors = async () => {
     try {
       this.setState({ loadingColor: true });
-      const { dispatch, styles, config } = this.props;
+      const { styles, config, getRegenerateColors } = this.props;
 
       const colorPalette = await getGlobalColors(config);
 
@@ -129,8 +128,8 @@ class _DrawerComponent extends React.Component<Props, State> {
 
       this.setState({ loadingColor: false });
 
-      dispatch(getRegenerateColors({ ...style, colorPalette }));
-    } catch (e) {
+      getRegenerateColors({ ...style, colorPalette });
+    } catch (_) {
       this.setState({ loadingColor: false });
       ToastNotification.error(t("Missing regenerate methods in config.api"));
     }
@@ -139,7 +138,7 @@ class _DrawerComponent extends React.Component<Props, State> {
   handleRegenerateTypography = async () => {
     try {
       this.setState({ loadingTypography: true });
-      const { dispatch, styles, config } = this.props;
+      const { styles, config, getRegenerateTypography } = this.props;
 
       const fontStyles = await getGlobalTypography(config);
 
@@ -147,21 +146,26 @@ class _DrawerComponent extends React.Component<Props, State> {
 
       this.setState({ loadingTypography: false });
 
-      dispatch(getRegenerateTypography({ ...style, fontStyles }));
-    } catch (e) {
+      getRegenerateTypography({ ...style, fontStyles });
+    } catch (_) {
       this.setState({ loadingTypography: false });
       ToastNotification.error(t("Missing regenerate methods in config.api"));
     }
   };
 
   handleFontStylesChange = (value: FontStyles[]) => {
-    const { currentStyle, extraFontStyles, dispatch } = this.props;
+    const {
+      currentStyle,
+      extraFontStyles,
+      updateExtraFontStyles,
+      updateCurrentStyle
+    } = this.props;
     const { fontStyles } = currentStyle;
     const mergedFontStyles = [...fontStyles, ...extraFontStyles];
 
     if (value.length > mergedFontStyles.length) {
       const extraFontStyles = value.filter(isExtraFontStyle);
-      dispatch(updateExtraFontStyles(extraFontStyles));
+      updateExtraFontStyles(extraFontStyles);
 
       return;
     }
@@ -174,15 +178,13 @@ class _DrawerComponent extends React.Component<Props, State> {
           }
 
           if (fs.deletable === "off") {
-            dispatch(
-              updateCurrentStyle({
-                ...currentStyle,
-                fontStyles: value.filter((fs) => fs.deletable === "off")
-              })
-            );
+            updateCurrentStyle({
+              ...currentStyle,
+              fontStyles: value.filter((fs) => fs.deletable === "off")
+            });
           } else {
             const extraFontStyles = value.filter(isExtraFontStyle);
-            dispatch(updateExtraFontStyles(extraFontStyles));
+            updateExtraFontStyles(extraFontStyles);
           }
         }
       }
@@ -297,22 +299,8 @@ const DrawerComponent = (props: Omit<Props, "config">): JSX.Element => {
   return <_DrawerComponent {...props} config={config} />;
 };
 
-const mapStateToProps = (state: ReduxState): Omit<StateProps, "config"> => ({
-  styles: stylesSelector(state),
-  extraStyles: extraStylesSelector(state),
-  currentStyle: currentStyleSelector(state),
-  extraFontStyles: extraFontStylesSelector(state)
-});
-
-const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
-  dispatch
-});
-
 export const getStyling = (() => {
-  const drawerComponent = connect(
-    mapStateToProps,
-    mapDispatchToProps
-  )(DrawerComponent);
+  const drawerComponent = connector(DrawerComponent);
 
   return () => ({
     id: LeftSidebarOptionsIds.globalStyle,

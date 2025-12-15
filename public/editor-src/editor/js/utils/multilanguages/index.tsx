@@ -19,7 +19,7 @@ export type Language = {
 export const hasMultiLanguage = (m: M, mLanguages: string): boolean => {
   try {
     return !!JSON.parse(mLanguages).length && m === "on";
-  } catch (e) {
+  } catch (_) {
     return false;
   }
 };

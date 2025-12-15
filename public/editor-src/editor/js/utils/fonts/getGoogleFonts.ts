@@ -25,13 +25,13 @@ export const getGoogleFonts = async ({
           const fonts = await fetchItems(assetUrl("googleFonts.json", config));
           res(fonts);
         })();
-      } catch (e) {
+      } catch (_) {
         rej(t("Missing google fonts json"));
       }
     }
 
     if (isView(renderContext) && COMPILER_TYPE === "node") {
-      // eslint-disable-next-line @typescript-eslint/no-var-requires
+      // eslint-disable-next-line @typescript-eslint/no-require-imports
       const fonts = require("visual/config/googleFonts.json");
       return res(fonts.items);
     }

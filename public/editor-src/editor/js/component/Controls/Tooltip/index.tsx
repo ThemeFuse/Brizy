@@ -59,9 +59,7 @@ export class Tooltip extends React.Component<Props> {
     clickOutsideExceptions: [],
     nodeRef: undefined,
     children: undefined,
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
     onOpen: () => {},
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
     onClose: () => {}
   };
 

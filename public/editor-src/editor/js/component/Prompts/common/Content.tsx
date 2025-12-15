@@ -1,10 +1,10 @@
-import React, { ReactNode } from "react";
 import classNames from "classnames";
-import Scrollbars from "react-custom-scrollbars";
-import { Spacer } from "visual/component/Controls/Spacer";
+import React, { ReactNode } from "react";
 import { Alert } from "visual/component/Alert";
-import { Loading } from "./Loading";
+import { Spacer } from "visual/component/Controls/Spacer";
+import { Scrollbar } from "visual/component/Scrollbar";
 import { FCC } from "visual/utils/react/types";
+import { Loading } from "./Loading";
 
 export interface Props {
   spacing?: boolean;
@@ -58,13 +58,9 @@ export const Content: FCC<Props> = (props) => {
 
       {error && <Alert message={error} type="error" />}
 
-      <Scrollbars
-        autoHeight={true}
-        autoHeightMax="100%"
-        style={{ height: "auto" }}
-      >
+      <Scrollbar autoHeight={true} autoHeightMax="100%" theme="light">
         {children}
-      </Scrollbars>
+      </Scrollbar>
 
       {footer && (
         <>

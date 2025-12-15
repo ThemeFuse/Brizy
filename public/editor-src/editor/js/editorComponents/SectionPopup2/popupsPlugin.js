@@ -4,7 +4,7 @@ import { makeAttr } from "visual/utils/i18n/attribute";
 const getFromStorage = (key) => {
   try {
     return localStorage.getItem(key);
-  } catch (e) {
+  } catch (_) {
     return null;
   }
 };
@@ -12,7 +12,8 @@ const getFromStorage = (key) => {
 const setToStorage = (key, value) => {
   try {
     localStorage.setItem(key, value);
-  } catch (e) {
+  } catch (_) {
+    // eslint-disable-next-line no-console
     console.warn("Could not access to localStorage");
   }
 };

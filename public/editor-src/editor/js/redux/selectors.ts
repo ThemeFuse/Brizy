@@ -17,8 +17,10 @@ import { Font } from "visual/types/Fonts";
 import { GlobalBlock, GlobalBlockPopup } from "visual/types/GlobalBlock";
 import { NonEmptyArray } from "visual/utils/array/types";
 import { canUseCondition, createGlobalBlockSymbol } from "visual/utils/blocks";
-import { getPositions } from "visual/utils/blocks/blocksConditions";
-import { getSurroundedGBIds } from "visual/utils/blocks/blocksConditions";
+import {
+  getPositions,
+  getSurroundedGBIds
+} from "visual/utils/blocks/blocksConditions";
 import { getModelPopups } from "visual/utils/blocks/getModelPopups";
 import { getGroupFontsById } from "visual/utils/fonts/getFontById";
 import { mapModels } from "visual/utils/models";
@@ -713,18 +715,15 @@ export const globalPopupsInPageSelector = createSelector(
   globalBlocksAssembled2Selector,
   (page, globalBlocks) => {
     const popups = new Map<string, GlobalBlockPopup>();
-    objectTraverse2(page, (obj: Record<string, unknown>) => {
-      const popupList = obj.linkPopupPopups ?? obj.popups;
-      if (Array.isArray(popupList)) {
-        popupList.forEach((popup) => {
-          if (popup.type === "GlobalBlock" && globalBlocks[popup.value._id]) {
-            popups.set(
-              popup.value._id,
-              globalBlocks[popup.value._id] as GlobalBlockPopup
-            );
-          }
-        });
-      }
+    page.forEach((block) => {
+      const globalPopups = getModelPopups(block, globalBlocks);
+
+      globalPopups.forEach((popup) => {
+        popups.set(
+          popup.value._id,
+          globalBlocks[popup.value._id] as GlobalBlockPopup
+        );
+      });
     });
 
     return [...popups].map(([, data]) => data);

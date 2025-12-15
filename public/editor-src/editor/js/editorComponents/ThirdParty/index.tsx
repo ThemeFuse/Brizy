@@ -224,6 +224,7 @@ class ThirdParty extends EditorComponent<Value, Props> {
     if (values) {
       this.patchValue(values);
     } else {
+      // eslint-disable-next-line no-console
       console.warn(
         "Invalid patch values provided to ThirdParty component:",
         patch

@@ -1,9 +1,10 @@
-import { apply, Patcher, patcher, filterPatchValues } from "./index";
 import { Getter } from "visual/utils/model";
+import { Patcher, apply, filterPatchValues, patcher } from "./index";
 
 /**
  * Testing patch function behavior
  */
+// eslint-disable-next-line jest/no-export
 export const testPatchFunction = <V, M extends P, P>(
   patch: Patcher<V, M, P>,
   getter: Getter<V, M>,
@@ -12,7 +13,7 @@ export const testPatchFunction = <V, M extends P, P>(
 ) => {
   describe("Testing patch function behaviour", function () {
     test("If value is equal to current value, return undefined", () => {
-      valid.forEach(v => {
+      valid.forEach((v) => {
         const p = patch(v, m);
         if (p) {
           expect(patch(v, { ...m, ...p })).toEqual(undefined);
@@ -21,7 +22,7 @@ export const testPatchFunction = <V, M extends P, P>(
     });
 
     test("If value is valid, return object containing the value", () => {
-      valid.forEach(v => {
+      valid.forEach((v) => {
         const p = patch(v, m);
         if (p) {
           expect(getter({ ...m, ...p })).toBe(v);
@@ -43,7 +44,7 @@ describe("Testing 'patcher' function", function () {
   testPatchFunction(patch, getter, valid, m);
 
   test("Return same object as the original patch function would return", () => {
-    valid.forEach(v => expect(patch(v, m)).toEqual(fn(v)));
+    valid.forEach((v) => expect(patch(v, m)).toEqual(fn(v)));
   });
 });
 
@@ -96,7 +97,7 @@ describe("Testing 'filterPatchValues' function", function () {
     expect(filterPatchValues(false)).toBe(null);
     expect(filterPatchValues([])).toBe(null);
     expect(filterPatchValues([1, 2, 3])).toBe(null);
-    expect(filterPatchValues(() => { })).toBe(null);
+    expect(filterPatchValues(() => {})).toBe(null);
     expect(filterPatchValues(Symbol("test"))).toBe(null);
   });
 
@@ -113,7 +114,7 @@ describe("Testing 'filterPatchValues' function", function () {
       undefinedValue: undefined,
       arrayValue: [1, 2, 3],
       objectValue: { nested: "value" },
-      functionValue: () => { },
+      functionValue: () => {},
       symbolValue: Symbol("test")
     };
 
@@ -181,20 +182,20 @@ describe("Testing 'filterPatchValues' function", function () {
 
   test("should preserve object structure and key names", () => {
     const input = {
-      "camelCase": "value1",
-      "snake_case": "value2",
+      camelCase: "value1",
+      snake_case: "value2",
       "kebab-case": "value3",
       "with spaces": "value4",
-      "with123numbers": "value5",
+      with123numbers: "value5",
       "special!@#$%chars": "value6"
     };
 
     const expected = {
-      "camelCase": "value1",
-      "snake_case": "value2",
+      camelCase: "value1",
+      snake_case: "value2",
       "kebab-case": "value3",
       "with spaces": "value4",
-      "with123numbers": "value5",
+      with123numbers: "value5",
       "special!@#$%chars": "value6"
     };
 
@@ -207,7 +208,7 @@ describe("Testing 'filterPatchValues' function", function () {
       undefinedValue: undefined,
       arrayValue: [1, 2, 3],
       objectValue: { nested: "value" },
-      functionValue: () => { }
+      functionValue: () => {}
     };
 
     expect(filterPatchValues(input)).toEqual({});

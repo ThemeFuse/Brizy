@@ -551,8 +551,8 @@ export class QuillComponent extends React.Component<Props> {
     const startIndex = this.currentSelection?.index ?? 0;
 
     setTimeout(() => {
-      if (this.contentEditable?.current?.innerHTML) {
-        this.reinitPluginWithValue(this.contentEditable.current.innerHTML, {
+      if (this.quill?.root.innerHTML) {
+        this.reinitPluginWithValue(this.quill?.root.innerHTML, {
           restoreSelectionIndex: startIndex + pastedData.length + 1
         });
       }
@@ -680,10 +680,11 @@ export class QuillComponent extends React.Component<Props> {
       try {
         markup = changeRichText(markup, store, getConfig());
       } catch (e) {
-        let msg = "Something wen wrong with richText VIEW compilation";
+        let msg = "Something went wrong with richText VIEW compilation";
         if (process.env.NODE_ENV === "development") {
           msg += `: ${e}`;
         }
+        // eslint-disable-next-line no-console
         console.log(msg);
       }
 
@@ -947,7 +948,6 @@ export class QuillComponent extends React.Component<Props> {
     this.setGeneratedCss();
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   // applyLegacyKeys(line: any): void {
   //   const legacyKeys = [
   //     "fontStyle",
