@@ -4,7 +4,7 @@ Tags: page builder, website builder, brizy, editor, visual editor, unyson, wysiw
 Requires at least: 4.5
 Tested up to: 6.9
 Requires PHP: 7.2.24
-Stable tag: 2.7.19
+Stable tag: 2.7.20
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -136,6 +136,23 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 11. **Resize columns by dragging the handle that appears in between**
 
 == Changelog ==
+
+= 2.7.20 - 2025-12-15 =
+* New:  Translations now add country codes to image alt text
+* New:  Form agreement checkbox option
+* New:  Column element includes a max-height option
+* New:  Block kits selection issue resolved
+* Fixed:  Tabs toolbar no longer opens incorrect tabs
+* Fixed:  RichText slider options no longer trigger infinite re-render
+* Fixed:  Page compilation error resolved
+* Fixed:  Video element default link now works correctly
+* Fixed:  Global style font changes now apply correctly in preview
+* Improved:  Lazy loading added for preview.pro.min.css
+* Improved:  Builder upgraded to the latest Redux version
+* Improved:  State management migrated from Recoil to Valtio
+* Improved:  ESLint and related dependencies updated
+* Improved:  Testing Library React dependencies updated
+* Improved:  Editor now uses an internal scrollbar instead of react-custom-scrollbars
 
 = 2.7.19 - 2025-12-03 =
 * Fixed: Richtext does not works correctly for emails
