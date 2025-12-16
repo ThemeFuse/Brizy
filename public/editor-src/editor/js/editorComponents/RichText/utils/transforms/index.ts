@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-use-before-define */
 import { ElementModel } from "visual/component/Elements/Types";
 import { isNumeric } from "visual/utils/math";
 import {

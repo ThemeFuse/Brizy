@@ -30,7 +30,29 @@
     "calculatedExpression": "",
     "calculatedText": "Total :",
 
-    "columns": 1
+    "columns": 1,
+
+    "customAttributes": "",
+    "customAttributesPopulation": "",
+    "customAttributesPopulationEntityType": "",
+    "customAttributesPopulationEntityId": "",
+
+    "customClassName": "",
+
+    "customID": "",
+
+    "cssIDPopulation": "",
+    "cssIDPopulationEntityType": "",
+    "cssIDPopulationEntityId": "",
+
+    "cssClassPopulation": "",
+    "cssClassPopulationEntityType": "",
+    "cssClassPopulationEntityId": "",
+
+    "userAgreementLabel": "I agree to the terms and conditions",
+
+    "enableCustomHtml": "off",
+    "customHtml": ""
   },
 
   "style": {

@@ -27,6 +27,7 @@ import {
   setPalette
 } from "visual/utils/options/ColorPicker/model";
 import * as Utils from "visual/utils/options/ColorPicker/utils";
+import { paletteHex } from "visual/utils/options/ColorPicker/utils";
 
 const setOpacity = Utils.setOpacity.bind(null, _setOpacity);
 
@@ -59,6 +60,8 @@ export const ColorPicker = ({
   }, [style]);
 
   const globalConfig = useConfig();
+
+  const { hex, palette: paletteValue } = value;
 
   const className = classNames(
     "brz-ed-option__colorPicker",
@@ -128,6 +131,11 @@ export const ColorPicker = ({
     [isPaletteHidden, colorPalette]
   );
 
+  const colorHex = useMemo(
+    () => paletteHex(paletteValue, palette ?? []) ?? hex,
+    [palette, paletteValue, hex]
+  );
+
   return (
     <>
       {label}
@@ -139,7 +147,7 @@ export const ColorPicker = ({
           palette={palette}
           paletteOpenSettings={enableGlobalStyle ? openLeftSidebar : undefined}
         />
-        <ColorPickerInputs value={value.hex} onChange={onHexChange} />
+        <ColorPickerInputs value={colorHex} onChange={onHexChange} />
       </div>
     </>
   );

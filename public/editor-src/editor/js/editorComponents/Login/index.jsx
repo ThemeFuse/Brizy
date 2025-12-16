@@ -14,6 +14,7 @@ import * as toolbarRegisterInfo from "visual/editorComponents/Login/toolbarRegis
 import * as toolbarRegisterLink from "visual/editorComponents/Login/toolbarRegisterLink";
 import { DynamicContentHelper } from "visual/editorComponents/WordPress/common/DynamicContentHelper";
 import { isWp } from "visual/global/Config";
+import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import { isEditor } from "visual/providers/RenderProvider";
 import { makePlaceholder } from "visual/utils/dynamicContent";
 import { t } from "visual/utils/i18n";
@@ -43,7 +44,7 @@ class Login extends EditorComponent {
   isWp = isWp(this.getGlobalConfig());
 
   static get componentId() {
-    return "Login";
+    return ElementTypes.Login;
   }
 
   canRegister = () => {

@@ -21,9 +21,9 @@ export function Providers(props: Props): JSX.Element {
   return (
     <StyleSheetManager sheet={sheet}>
       <I18nextProvider i18n={i18n}>
-        <ConfigProvider config={config}>
-          <RegisterParts config={config}>
-            <ReduxProvider store={store}>
+        <ReduxProvider store={store}>
+          <ConfigProvider config={config}>
+            <RegisterParts config={config}>
               <RenderProvider renderType="view">
                 <EditorModeProvider mode={editorMode}>
                   <StyleProvider>
@@ -33,9 +33,9 @@ export function Providers(props: Props): JSX.Element {
                   </StyleProvider>
                 </EditorModeProvider>
               </RenderProvider>
-            </ReduxProvider>
-          </RegisterParts>
-        </ConfigProvider>
+            </RegisterParts>
+          </ConfigProvider>
+        </ReduxProvider>
       </I18nextProvider>
     </StyleSheetManager>
   );

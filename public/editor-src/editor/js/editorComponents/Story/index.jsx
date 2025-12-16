@@ -1,7 +1,8 @@
 import classnames from "classnames";
 import React from "react";
-import { isEditor } from "visual/providers/RenderProvider";
 import EditorComponent from "visual/editorComponents/EditorComponent";
+import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
+import { isEditor } from "visual/providers/RenderProvider";
 import { makeDataAttr } from "visual/utils/i18n/attribute";
 import StoryItems from "./Items";
 import defaultValue from "./defaultValue.json";
@@ -18,7 +19,7 @@ class Story extends EditorComponent {
   static experimentalDynamicContent = true;
 
   static get componentId() {
-    return "Story";
+    return ElementTypes.Story;
   }
 
   getMeta() {

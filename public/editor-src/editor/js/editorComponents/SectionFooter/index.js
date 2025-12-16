@@ -22,6 +22,7 @@ import {
 } from "visual/config/columns";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { isCloud, isShopify } from "visual/global/Config/types/configs/Cloud";
+import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import {
   makeEndPlaceholder,
   makePlaceholder,
@@ -61,7 +62,7 @@ class SectionFooter extends EditorComponent {
   };
 
   static get componentId() {
-    return "SectionFooter";
+    return ElementTypes.SectionFooter;
   }
 
   getDBValue() {

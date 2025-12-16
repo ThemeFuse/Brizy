@@ -36,6 +36,7 @@ import type { CSSSymbol, SymbolCSS } from "visual/types/Symbols";
 import { ArrayType } from "visual/utils/array/types";
 import { uuid } from "visual/utils/uuid";
 import { DELETE_GLOBAL_BLOCK } from "./actions";
+import { RedoAction, UndoAction } from "./history/types";
 import { ReduxState, StoreChanged } from "./types";
 
 type UIState = ReduxState["ui"];
@@ -379,6 +380,10 @@ interface ActionUpdateSymbolsCSS {
   payload: SymbolCSS;
 }
 
+export type ActionInitializeBlocksHtml = {
+  type: ActionTypes.INITIALIZE_BLOCKS_HTML;
+};
+
 export type ReduxAction =
   | ActionHydrate
   | ActionUpdateGlobalBlock
@@ -433,7 +438,10 @@ export type ReduxAction =
   | ActionCreateSymbol
   | ActionUpdateSymbol
   | ActionDeleteSymbol
-  | ActionUpdateSymbolsCSS;
+  | ActionUpdateSymbolsCSS
+  | ActionInitializeBlocksHtml
+  | UndoAction
+  | RedoAction;
 
 export type ActionUpdateAuthorized = {
   type: "UPDATE_AUTHORIZATION";
@@ -1086,6 +1094,12 @@ export const updatePageIsHomePage = ({
   };
 };
 
+export const initializeBlocksHtml = (): ActionInitializeBlocksHtml => {
+  return {
+    type: ActionTypes.INITIALIZE_BLOCKS_HTML
+  };
+};
+
 //#region Add New Global Style
 
 export enum ActionTypes {
@@ -1112,7 +1126,8 @@ export enum ActionTypes {
   "CREATE_SYMBOL" = "CREATE_SYMBOL",
   "UPDATE_SYMBOL" = "UPDATE_SYMBOL",
   "DELETE_SYMBOL" = "DELETE_SYMBOL",
-  "UPDDATE_SYMBOLS_CSS" = "UPDDATE_SYMBOLS_CSS"
+  "UPDDATE_SYMBOLS_CSS" = "UPDDATE_SYMBOLS_CSS",
+  "INITIALIZE_BLOCKS_HTML" = "INITIALIZE_BLOCKS_HTML"
 }
 
 // templates

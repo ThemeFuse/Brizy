@@ -1,5 +1,4 @@
 import { Str } from "@brizy/readers";
-import type { Dispatch } from "redux";
 import { getIn } from "timm";
 import type { ElementModel } from "visual/component/Elements/Types";
 import type { ContextGetItems } from "visual/editorComponents/EditorComponent/types";
@@ -224,6 +223,7 @@ export const getTranslationsMap = (): Translation => ({
   Variant: t("Variant"),
 
   // Ministry Brands
+  MinistryBrandsStaffList: t("Staff List"),
   MinistryBrandsGroupLayout: t("Group Layout"),
   MinistryBrandsGroupSlider: t("Group Slider"),
   MinistryBrandsEventLayout: t("Event Layout"),
@@ -240,9 +240,12 @@ export const getTranslationsMap = (): Translation => ({
   MinistryBrandsEventDetail: t("Event Detail"),
   MinistryBrandsFormWidget: t("FMS Forms"),
   MinistryBrandsPrayerWidget: t("Prayer Widget"),
-  MinistryBrandsArticleDetail: t("Article Detail"),
-  MinistryBrandsArticleList: t("Article List"),
+  MinistryBrandsStaffFeatured: t("Staff Featured"),
+  MinistryBrandsArticleLayout: t("Article Layout"),
+  MinistryBrandsStaffLayout: t("Staff Layout"),
   MinistryBrandsStaffDetail: t("Staff Detail"),
+  MinistryBrandsArticleList: t("Article List"),
+  MinistryBrandsArticleDetail: t("Article Detail"),
   MinistryBrandsArticleFeatured: t("Article Featured"),
 
   // Leadific
@@ -268,6 +271,7 @@ const getItems: ContextGetItems<ElementModel> = (v, component) => {
   const flattedShortcodes = Object.values(shortcodes).flat();
   const { icon } = flattedShortcodes
     .map((item) => ({
+      // eslint-disable-next-line no-constant-binary-expression
       type: getIn(item.component.resolve, ["value", "items", 0, "type"] ?? ""),
       icon: item.component.icon
     }))
@@ -303,7 +307,7 @@ const getItems: ContextGetItems<ElementModel> = (v, component) => {
           disabled: true,
           onChange: () => {
             if (type && value) {
-              const dispatch = component.getReduxDispatch() as Dispatch;
+              const dispatch = component.getReduxDispatch();
               const defaultValue = getComponentDefaultValue(type);
               const rulesValue = getComponentRulesValue(store, value);
               const wrapperDefaultValue = getComponentDefaultValue(
@@ -370,6 +374,7 @@ const getItems: ContextGetItems<ElementModel> = (v, component) => {
 
               dispatch(createSymbol(newSymbols));
             } else {
+              // eslint-disable-next-line no-console
               console.warn("Missing Type & Value");
             }
           }

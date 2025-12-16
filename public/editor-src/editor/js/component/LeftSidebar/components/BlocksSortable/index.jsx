@@ -245,7 +245,7 @@ const DrawerComponent = (props) => {
   const config = useConfig();
 
   return (
-    <Scrollbar theme="dark">
+    <Scrollbar theme="dark" absolute>
       <_DrawerComponent {...props} config={config} />
     </Scrollbar>
   );

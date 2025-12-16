@@ -8,6 +8,7 @@ import { Roles } from "visual/component/Roles";
 import { currentUserRole } from "visual/component/Roles";
 import { CollapsibleToolbar, ToolbarExtend } from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
+import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import { attachRefs } from "visual/utils/react";
 import defaultValue from "./defaultValue.json";
 import Items from "./items";
@@ -25,7 +26,7 @@ class StoryItem extends EditorComponent {
   collapsibleToolbarRef = React.createRef();
 
   static get componentId() {
-    return "StoryItem";
+    return ElementTypes.StoryItem;
   }
 
   shouldUpdateBecauseOfParent(nextProps) {

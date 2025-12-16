@@ -14,6 +14,7 @@ import { ReduxState } from "visual/redux/types";
 import { explodePlaceholder } from "visual/utils/dynamicContent";
 import type { DCPlaceholderStartObj } from "visual/utils/dynamicContent/types";
 import { pipe } from "visual/utils/fp";
+import { makeAttr } from "visual/utils/i18n/attribute";
 import type { Value as LinkValue } from "visual/utils/models/link";
 import { getDynamicContentChoices } from "visual/utils/options";
 import { findDCChoiceByPlaceholder } from "visual/utils/options/Population/utils";
@@ -53,9 +54,9 @@ function isJQueryHTMLElement(instance: unknown): instance is JQueryStatic {
 
 function quillUtils(renderContext: RenderType) {
   const $doc = isEditor(renderContext)
-    ? // eslint-disable-next-line @typescript-eslint/no-var-requires
+    ? // eslint-disable-next-line @typescript-eslint/no-require-imports
       (require("jquery") as JQueryType)
-    : // eslint-disable-next-line @typescript-eslint/no-var-requires
+    : // eslint-disable-next-line @typescript-eslint/no-require-imports
       (require("cheerio") as cheerio.CheerioAPI);
 
   function mapElements(html: string, fn: JQueryCallback | cheerio.Selector) {
@@ -79,8 +80,7 @@ function quillUtils(renderContext: RenderType) {
     }
 
     function getParagraphsArray($: cheerio.Root | JQuery<HTMLElement>) {
-      const selector =
-        ":header, p, pre, li, div:not(.brz-temp-div), span[data-tooltip]";
+      const selector = `:header, p, pre, li, div:not(.brz-temp-div), span[data-tooltip], span[${makeAttr("tooltip")}]`;
 
       return isJQueryHTMLElement($) ? $.find(selector) : $(selector);
     }
@@ -228,9 +228,7 @@ export const parseColor = (color = "", opacity: string | number) => {
   };
 };
 
-/* eslint-disable no-unused-vars */
 const getTagName = ($elem: JQuery<HTMLElement>) => {
-  /* eslint-enabled no-unused-vars */
   const preElem = $elem.closest("pre");
   const preTagName = preElem.prop("tagName")
     ? preElem.prop("tagName").toLowerCase()

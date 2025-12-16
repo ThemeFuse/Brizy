@@ -29,7 +29,8 @@ export default function () {
               paginationColorPalette: "color3",
               hoverPaginationColorPalette: "color4",
               activePaginationColorPalette: "color2",
-              metaLinksColorPalette: "color4"
+              metaLinksColorPalette: "color3",
+              hoverMetaLinksColorPalette: "color4"
             }
           }
         ]

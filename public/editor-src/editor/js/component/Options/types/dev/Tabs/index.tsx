@@ -61,10 +61,22 @@ export const Tabs = ({
   const pro = usePro();
 
   useEffect(() => {
-    if (saveTab) {
-      onChange({ value: _value });
+    if (!value) {
+      return;
     }
-  }, [_value, saveTab, onChange]);
+
+    const currentTab = tabs.find((tab) => tab.id === _value);
+    const currentValue = currentTab?.id ?? tabs[0]?.id;
+
+    // Sometimes if in the model the value is setted to the tab but the tab is disabled, we need to force the value to the first tab
+    if (saveTab && currentValue !== value) {
+      onChange({ value: currentValue });
+    }
+
+    if (currentValue !== _value) {
+      setValue(currentValue);
+    }
+  }, [_value, saveTab, onChange, value, tabs]);
 
   return (
     <Control

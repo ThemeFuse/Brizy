@@ -2,25 +2,31 @@ import React, { type JSX, memo, useEffect, useRef } from "react";
 import { useDispatch, useSelector, useStore } from "react-redux";
 import { useConfig } from "visual/providers/ConfigProvider";
 import { useStyleProvider } from "visual/providers/StyleProvider";
-import { updateSymbolsCSS } from "visual/redux/actions2";
+import {
+  ReduxAction,
+  initializeBlocksHtml,
+  updateSymbolsCSS
+} from "visual/redux/actions2";
 import { symbolsSelector } from "visual/redux/selectors";
+import { TypedDispatch } from "visual/redux/store";
+import { ReduxState } from "visual/redux/types";
 import type { SymbolCSS } from "visual/types/Symbols";
 import { Queue } from "visual/utils/queue/Queue";
 import { QueueWorker } from "visual/utils/queue/QueueWorker";
 import type { Props } from "./types";
-import { addQueueDebounced } from "./utils";
+import { addQueue, addQueueDebounced } from "./utils";
 
 // process 5 blocks in parallel
 const CONCURRENCY_LIMIT = 5;
 
-const _FlushDom = (props: Props): JSX.Element => {
+const FlushDomComponent = (props: Props): JSX.Element => {
   const { blocks } = props;
-  const store = useStore();
+  const store = useStore<ReduxState, ReduxAction>();
   const config = useConfig();
   const queue = useRef(new Queue());
   const queueWorker = useRef(new QueueWorker(queue.current, CONCURRENCY_LIMIT));
 
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<TypedDispatch>();
   const symbols = useSelector(symbolsSelector);
   const { sheet } = useStyleProvider();
   const cssOrdered = sheet.getCSSOrdered();
@@ -42,6 +48,16 @@ const _FlushDom = (props: Props): JSX.Element => {
 
     dispatch(updateSymbolsCSS(symbolsCSS));
   }, [cssOrdered.symbol, symbols, dispatch]);
+
+  useEffect(() => {
+    if (blocks.length === 0) {
+      dispatch(initializeBlocksHtml());
+      return;
+    }
+
+    addQueue(queue.current, blocks, store, config);
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- We need only to run this effect once
+  }, []);
 
   useEffect(() => {
     const worker = queueWorker.current;
@@ -67,5 +83,5 @@ const _FlushDom = (props: Props): JSX.Element => {
   return <></>;
 };
 
-export const FlushDom = memo(_FlushDom);
+export const FlushDom = memo(FlushDomComponent);
 export type { Props };

@@ -1,11 +1,12 @@
 import React from "react";
 import EditorComponent from "visual/editorComponents/EditorComponent";
+import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import defaultValue from "./defaultValue.json";
 import Items from "./items";
 
 class TableCol extends EditorComponent {
   static get componentId() {
-    return "TableCol";
+    return ElementTypes.TableCol;
   }
 
   static defaultProps = {

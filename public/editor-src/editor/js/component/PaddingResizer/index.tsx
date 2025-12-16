@@ -1,7 +1,9 @@
 import React, { useCallback, useRef } from "react";
 import { useStore } from "react-redux";
 import { isView } from "visual/providers/RenderProvider";
+import { ReduxAction } from "visual/redux/actions2";
 import { deviceModeSelector } from "visual/redux/selectors";
+import { ReduxState } from "visual/redux/types";
 import { FCC } from "visual/utils/react/types";
 import Handle from "./Handle";
 import { DragInfo, Props, Value } from "./types";
@@ -14,7 +16,7 @@ type ChangedTypes = keyof Omit<
 const PaddingResizer: FCC<Props> = (props) => {
   const { value, onChange, onStart, onEnd, children, renderContext } = props;
   const startPositionRef = useRef<null | number>(null);
-  const store = useStore();
+  const store = useStore<ReduxState, ReduxAction>();
 
   const handleDrag = useCallback(
     (_type: "paddingTop" | "paddingBottom", { deltaY }: DragInfo) => {

@@ -2,6 +2,7 @@ import { expose } from "comlink";
 import { mergeDeep } from "timm";
 import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { getTempConfig } from "../common/utils/getTempConfig";
+import { preloadComponents } from "../common/utils/preloadComponents";
 import { Static } from "./bootstrap/types";
 import { getProScriptUrl } from "./utils/getProScriptUrl";
 import { getThirdPartyScriptUrl } from "./utils/getThirdPartyScriptUrl";
@@ -30,11 +31,15 @@ class Core {
     try {
       importScripts(...thirdPartyScriptsUrl);
     } catch (e) {
+      // eslint-disable-next-line no-console
       console.warn("IMPORT THIRD PARTY SCRIPT ERROR: ", e);
     }
 
     // @ts-expect-error: Config in worker
     const config: ConfigCommon = mergeDeep(global.__VISUAL_CONFIG__, _config);
+
+    // Preload elements
+    preloadComponents(config);
 
     const { bootstrap } = await import("./bootstrap");
 

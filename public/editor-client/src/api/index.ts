@@ -1795,7 +1795,7 @@ export const getDefaultLayoutsPages = async (
 ): Promise<LayoutsPagesResult> => {
   const fullUrl = makeUrl(url, {
     project_id: id,
-    per_page: "20"
+    per_page: "50"
   });
 
   const response = await request(fullUrl, {
@@ -3143,51 +3143,38 @@ export const deleteAccount = async (id: string): Promise<SuccessResponse> => {
 //#endregion
 
 //#region Symbols
-
 // without model
 export const getSymbolsList = async (): Promise<Array<CSSSymbol>> => {
   const config = getConfig();
-
   if (!config) {
     throw new Error(t("Invalid __BRZ_PLUGIN_ENV__"));
   }
-
   const { editorVersion, url: _url, hash, actions } = config;
-
   const url = makeUrl(_url, {
     hash,
     action: actions.symbolList,
     version: editorVersion
   });
-
   const response = await request(url, { method: "GET" });
-
   if (response.ok) {
     const rj = await response.json();
-
     if (rj.success && Array.isArray(rj.data)) {
       return rj.data.map(apiSymbolToCSSSymbol);
     }
   }
-
   throw new Error(t("Failed to get symbols"));
 };
-
 export const getSymbolsByUid = async (
   uids: Array<string>
 ): Promise<Array<CSSSymbol>> => {
   const config = getConfig();
-
   if (!config) {
     throw new Error(t("Invalid __BRZ_PLUGIN_ENV__"));
   }
-
   if (uids.length === 0) {
     return [];
   }
-
   const { editorVersion, url: _url, hash, actions } = config;
-
   const url = makeUrl(
     _url,
     makeFormEncode({
@@ -3197,40 +3184,29 @@ export const getSymbolsByUid = async (
       uid: uids
     })
   );
-
   const response = await request(url, { method: "GET" });
-
   if (response.ok) {
     const rj = await response.json();
-
     if (rj.success && Array.isArray(rj.data)) {
       return rj.data.map(apiSymbolToCSSSymbol);
     }
   }
-
   throw new Error(t("Failed to get symbols"));
 };
-
 export const createSymbols = async (
   _symbols: Array<Omit<CSSSymbol, "id">>
 ): Promise<Array<CSSSymbol>> => {
   const config = getConfig();
-
   if (!config) {
     throw new Error(t("Invalid __BRZ_PLUGIN_ENV__"));
   }
-
-  ///// TODO: test this
   const symbols = _symbols.map(incrementSymbolVersion);
-
   const { editorVersion, url: _url, hash, actions } = config;
-
   const url = makeUrl(_url, {
     hash,
     action: actions.symbolCreate,
     version: editorVersion
   });
-
   const symbolsData = symbols.map((symbol) => ({
     uid: symbol.uid,
     label: symbol.label,
@@ -3238,11 +3214,10 @@ export const createSymbols = async (
     version: symbol.version,
     className: symbol.className,
     componentTarget: symbol.type,
-    compiledStyles: symbol.compiledData
+    compiledStyles: symbol.compiledData,
+    linkedSymbolId: symbol.linkedSymbolId ?? null
   }));
-
   const body = JSON.stringify(symbolsData);
-
   const response = await persistentRequest<Array<APISymbol>>(url, {
     method: "POST",
     headers: {
@@ -3250,31 +3225,24 @@ export const createSymbols = async (
     },
     body
   });
-
   if (!response.ok) {
     throw new Error(t("Failed to create symbols"));
   }
-
   return response.data.map(apiSymbolToCSSSymbol);
 };
-
 export const updateSymbols = async (
   symbols: Array<CSSSymbol>
 ): Promise<Array<CSSSymbol>> => {
   const config = getConfig();
-
   if (!config) {
     throw new Error(t("Invalid __BRZ_PLUGIN_ENV__"));
   }
-
   const { editorVersion, url: _url, hash, actions } = config;
-
   const url = makeUrl(_url, {
     hash,
     action: actions.symbolUpdate,
     version: editorVersion
   });
-
   const symbolsData = symbols.map((symbol) => ({
     uid: symbol.uid,
     label: symbol.label,
@@ -3282,7 +3250,8 @@ export const updateSymbols = async (
     version: symbol.version,
     className: symbol.className,
     componentTarget: symbol.type,
-    compiledStyles: symbol.compiledData
+    compiledStyles: symbol.compiledData,
+    linkedSymbolId: symbol.linkedSymbolId ?? null
   }));
 
   const body = JSON.stringify(symbolsData);
@@ -3294,52 +3263,40 @@ export const updateSymbols = async (
     },
     body
   });
-
   if (!response.ok) {
     throw new Error(t("Failed to update symbols"));
   }
-
   return response.data.map(apiSymbolToCSSSymbol);
 };
-
 export const deleteSymbols = async (
   uids: Array<string>
 ): Promise<ResponseWithSuccessStatus> => {
   const config = getConfig();
-
   if (!config) {
     throw new Error(t("Invalid __BRZ_PLUGIN_ENV__"));
   }
-
   const { editorVersion, url: _url, hash, actions } = config;
-
   const url = makeUrl(_url, {
     hash,
     action: actions.symbolDelete,
     version: editorVersion
   });
-
   const body = new URLSearchParams();
   uids.forEach((uid) => {
     body.append("uid[]", uid);
   });
-
   const response = await request(url, {
     method: "POST",
     body
   });
-
   if (response.ok) {
     const rj = await response.json();
-
     if (rj.success) {
       return {
         success: true
       };
     }
   }
-
   throw new Error(t("Failed to delete symbols"));
 };
-
 //#endregion

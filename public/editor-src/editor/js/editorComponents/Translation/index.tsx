@@ -1,16 +1,17 @@
 import classnames from "classnames";
 import React, { ReactElement, ReactNode, RefObject } from "react";
-import Scrollbars from "react-custom-scrollbars";
 import { Popper } from "react-popper";
 import ClickOutside from "visual/component/ClickOutside";
 import CustomCSS from "visual/component/CustomCSS";
 import { ElementModel } from "visual/component/Elements/Types";
 import Portal from "visual/component/Portal";
+import { Scrollbar } from "visual/component/Scrollbar";
 import { ThemeIcon } from "visual/component/ThemeIcon";
 import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { Wrapper } from "visual/editorComponents/tools/Wrapper";
 import { CMS } from "visual/global/Config/types/configs/Cloud";
+import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import { makePlaceholder } from "visual/utils/dynamicContent";
 import { makeDataAttr } from "visual/utils/i18n/attribute";
 import { attachRefs } from "visual/utils/react";
@@ -52,6 +53,7 @@ const renderOption = (
       {showFlags === "on" && flagsUrl && (
         <img
           className="brz-translation__flag"
+          alt={item.code}
           src={getFlagUrl(flagsUrl, item.code)}
         />
       )}
@@ -64,8 +66,8 @@ export default class Translation extends EditorComponent<Value, Props, State> {
   content = React.createRef<HTMLDivElement>();
   state = { isOpen: false };
 
-  static get componentId(): "Translation" {
-    return "Translation";
+  static get componentId(): ElementTypes.Translation {
+    return ElementTypes.Translation;
   }
 
   handleOutside = (): void => {
@@ -143,7 +145,7 @@ export default class Translation extends EditorComponent<Value, Props, State> {
                     className={"brz-translation__select-list"}
                     style={style}
                   >
-                    <Scrollbars autoHeight={true}>
+                    <Scrollbar autoHeight={true} theme="light">
                       {langOptions.map((item, index) => (
                         <div
                           key={index}
@@ -158,7 +160,7 @@ export default class Translation extends EditorComponent<Value, Props, State> {
                           )}
                         </div>
                       ))}
-                    </Scrollbars>
+                    </Scrollbar>
                   </div>
                 )}
               </Popper>

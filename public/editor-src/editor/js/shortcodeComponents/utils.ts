@@ -10,10 +10,12 @@ const getThirdPartyShortcodeConfig = (element: {
   id: string;
   title?: string;
   icon?: string;
+  truncate?: boolean;
 }): Shortcode["component"] => ({
   id: element.id,
   title: element.title ?? "Component",
   icon: element.icon ?? "nc-wp-shortcode-element",
+  truncate: element.truncate ?? true,
   resolve: {
     type: "Wrapper",
     value: {

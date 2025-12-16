@@ -8,8 +8,11 @@ export const isElementInViewport = (
   return top >= -elementHeight && bottom <= innerHeight + elementHeight;
 };
 
-export const getClosestSections = (document: Document, innerHeight: number) => {
-  const sections = [...document.querySelectorAll(".brz-section")];
+export const getClosestSections = (
+  document: Document,
+  innerHeight: number
+): HTMLElement[] => {
+  const sections = [...document.querySelectorAll<HTMLElement>(".brz-section")];
   const verticalCenter = innerHeight / 2;
 
   return sections.sort((a, b) => {

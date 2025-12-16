@@ -51,7 +51,7 @@ export const toggleColor = (enable: boolean, m: Value): Value => {
  * @return {object}
  */
 export const toggleType = (enable: boolean, m: Value): Value => {
-  const value = enable ? T.noEmpty(getType(m)) ?? m.tempType : T.NONE;
+  const value = enable ? (T.noEmpty(getType(m)) ?? m.tempType) : T.NONE;
 
   return setType(value, m);
 };
@@ -88,7 +88,7 @@ export const toggleFields = (enable: boolean, m: Value): Value => {
  * @return {boolean}
  */
 export const fieldsEnabled = (m: Value): boolean =>
-  !!(getBlur(m) || getSpread(m));
+  !!(getBlur(m) || getSpread(m) || getHorizontal(m) || getVertical(m));
 
 export const getTypeTitle = (type: T.Type): string => {
   switch (type) {

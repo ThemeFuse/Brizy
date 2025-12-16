@@ -77,7 +77,7 @@ const Notification = () => {
     clearError();
     try {
       await sendHeartBeatTakeOver(config.api);
-    } catch (e) {
+    } catch (_) {
       ToastNotification.error(t("Take over failed please refresh the page"));
     }
   }, [clearError, config.api, t]);

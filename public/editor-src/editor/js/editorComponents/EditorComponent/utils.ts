@@ -342,7 +342,6 @@ function generateKeyValue<T extends OptionName>({
 function parseOption(
   acc: ParsedToolbarData,
   option: ToolbarItemType,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   _: Store
 ): ParsedToolbarData {
   const elementModel = toElementModel(option.type, (key) =>
@@ -468,6 +467,12 @@ export function getOptionValueByDevice({
       defaultValueValue({ v, device, key: createOptionId(id, k) })
     );
   }
+
+  if (id in v) {
+    return { value: v[id] };
+  }
+
+  return undefined;
 }
 
 export const getElementModelKeyFn: GetElementModelKeyFn =

@@ -55,7 +55,9 @@
       "metaLinksTypographyFontFamily": "lato",
       "filterTypographyFontFamily": "lato",
       "detailButtonTypographyFontFamily": "lato",
-      "mediaLinksTypographyFontFamily": "lato"
+      "mediaLinksTypographyFontFamily": "lato",
+      "resultsHeadingTypographyFontFamily": "lato",
+      "noResultsTypographyFontFamily": "lato"
     },
 
     "filterTypographyFontStyle": "",

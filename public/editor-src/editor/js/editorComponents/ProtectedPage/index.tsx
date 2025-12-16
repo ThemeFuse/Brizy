@@ -9,6 +9,7 @@ import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import EditorComponent, {
   Props as EProps
 } from "visual/editorComponents/EditorComponent";
+import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import { makeDataAttr } from "visual/utils/i18n/attribute";
 import { attachRefs } from "visual/utils/react";
 import { encodeToString } from "visual/utils/string";
@@ -42,8 +43,8 @@ export type Props = EProps<Value, Record<string, unknown>>;
 export default class ProtectedPage extends EditorComponent<Value, Props> {
   static defaultValue = defaultValue;
 
-  static get componentId(): "ProtectedPage" {
-    return "ProtectedPage";
+  static get componentId(): ElementTypes.ProtectedPage {
+    return ElementTypes.ProtectedPage;
   }
 
   handleResizerChange = (patch: Partial<ElementModel>): void => {
@@ -78,7 +79,7 @@ export default class ProtectedPage extends EditorComponent<Value, Props> {
     /**
      * Since the EditorArrayComponent is still in JS
      * TS cannot read properly it's return type
-     * @ts-expect-error */
+     * @ts-expect-error unknown is not assignable */
     return <EditorArrayComponent {...itemProps} />;
   }
 

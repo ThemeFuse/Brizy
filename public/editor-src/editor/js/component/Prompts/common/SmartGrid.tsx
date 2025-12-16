@@ -1,19 +1,18 @@
 import React, {
   ReactElement,
-  Ref,
   RefCallback,
   forwardRef,
   useCallback
 } from "react";
-import Scrollbars from "react-custom-scrollbars";
 import {
   FixedSizeGrid,
   GridChildComponentProps,
   ReactElementType
 } from "react-window";
+import { Scrollbar, ScrollbarRef } from "visual/component/Scrollbar";
 import { useIsRTL } from "visual/global/hooks";
 
-type RefType = (r: Ref<ReactElement>) => void;
+type RefType = (r: HTMLDivElement | null) => void;
 
 type CustomScrollbars = {
   onScroll: () => void;
@@ -41,10 +40,9 @@ const CustomScrollbars = ({
   style,
   children
 }: CustomScrollbars): ReactElement => {
-  const refSetter = useCallback<RefCallback<Scrollbars>>(
+  const refSetter = useCallback<RefCallback<ScrollbarRef>>(
     (scrollbarsRef) => {
-      if (scrollbarsRef) {
-        // @ts-expect-error: react-custom-scrollbars
+      if (scrollbarsRef && scrollbarsRef.view) {
         forwardedRef(scrollbarsRef.view);
       } else {
         forwardedRef(null);
@@ -54,13 +52,15 @@ const CustomScrollbars = ({
   );
 
   return (
-    <Scrollbars
+    <Scrollbar
       ref={refSetter}
       style={{ ...style, overflow: "hidden" }}
+      theme="light"
+      absolute
       onScroll={onScroll}
     >
       {children}
-    </Scrollbars>
+    </Scrollbar>
   );
 };
 

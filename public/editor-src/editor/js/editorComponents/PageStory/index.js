@@ -3,13 +3,14 @@ import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 // should we move this util folder to another place?
 import { changeValueAfterDND } from "visual/editorComponents/Page/utils";
+import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import UIEvents from "visual/global/UIEvents";
 import { uuid } from "visual/utils/uuid";
 import defaultValue from "./defaultValue.json";
 
 class PageStory extends EditorComponent {
   static get componentId() {
-    return "PageStory";
+    return ElementTypes.PageStory;
   }
 
   static defaultValue = defaultValue;

@@ -19,6 +19,7 @@ import {
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { shouldRenderPopup } from "visual/editorComponents/tools/Popup";
+import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import { isEditor } from "visual/providers/RenderProvider";
 import { blocksDataSelector } from "visual/redux/selectors";
 import { clamp } from "visual/utils/math";
@@ -50,7 +51,7 @@ class SectionItem extends EditorComponent {
   };
 
   static get componentId() {
-    return "SectionItem";
+    return ElementTypes.SectionItem;
   }
 
   getDBValue() {

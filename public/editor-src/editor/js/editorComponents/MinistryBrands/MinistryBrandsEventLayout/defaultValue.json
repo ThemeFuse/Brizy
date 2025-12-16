@@ -82,7 +82,9 @@
       "calendarHeadingTypographyFontFamily": "lato",
       "calendarDaysTypographyFontFamily": "lato",
       "eventsTypographyFontFamily": "lato",
-      "detailButtonTypographyFontFamily": "lato"
+      "detailButtonTypographyFontFamily": "lato",
+      "resultsHeadingTypographyFontFamily": "lato",
+      "noResultsTypographyFontFamily": "lato"
     },
 
     "layoutViewTypographyFontStyle": "",

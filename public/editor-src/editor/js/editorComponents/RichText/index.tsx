@@ -41,6 +41,7 @@ import {
   DCTypes,
   isDCItemHandler
 } from "visual/global/Config/types/DynamicContent";
+import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import { isPopup, isStory } from "visual/providers/EditorModeProvider";
 import { isEditor, isView } from "visual/providers/RenderProvider";
 import {
@@ -51,7 +52,7 @@ import {
 import { Block } from "visual/types/Block";
 import { isFirefox } from "visual/utils/devices";
 import { t } from "visual/utils/i18n";
-import { makeDataAttr } from "visual/utils/i18n/attribute";
+import { makeAttr, makeDataAttr } from "visual/utils/i18n/attribute";
 import { getLinkData } from "visual/utils/models/link";
 import { defaultValueKey2 } from "visual/utils/onChange/device";
 import {
@@ -96,7 +97,6 @@ import { classNamesToV } from "./utils/transforms";
 const resizerPoints = ["centerLeft", "centerRight"];
 
 interface State {
-  formats: Formats;
   prepopulation: Formats["prepopulation"] | null;
   population: Formats["population"] | null;
   selectionCoords: Coords | null;
@@ -121,9 +121,10 @@ class RichText extends EditorComponent<Value, Record<string, unknown>, State> {
   prepopulation: string | null = null;
   tooltipRef = createRef<TooltipImperativeProps>();
   tooltipReferenceElement: Element | null = null;
+  isTooltipPatched = false;
+  formats: Formats = {};
 
   state: State = {
-    formats: {},
     prepopulation: null,
     population: null,
     selectionCoords: null,
@@ -158,8 +159,8 @@ class RichText extends EditorComponent<Value, Record<string, unknown>, State> {
 
   // Can be enabled by Config
 
-  static get componentId() {
-    return "RichText";
+  static get componentId(): ElementTypes.RichText {
+    return ElementTypes.RichText;
   }
 
   handleResizerChange = (patch: BoxResizerPatch) => this.patchValue(patch);
@@ -265,7 +266,7 @@ class RichText extends EditorComponent<Value, Record<string, unknown>, State> {
 
         this.quillRef.current.format("prepopulation", null);
         this.prepopulation = null;
-      } catch (e) {
+      } catch (_) {
         ToastNotification.error(t("Invalid Dynamic Option"));
       }
     };
@@ -294,10 +295,14 @@ class RichText extends EditorComponent<Value, Record<string, unknown>, State> {
   }) => {
     const { formats, selectionCoords, cursorIndex, node } = data;
 
-    const newState = {
-      formats
-    };
+    this.formats = formats;
+
+    const newState = {};
     const dynamicContentGroups = this.getGlobalConfig().dynamicContent?.groups;
+
+    if (node) {
+      this.handleUpdateTooltipReferenceFromQuill(node);
+    }
 
     if (
       isDCItemHandler(dynamicContentGroups?.richText) &&
@@ -346,10 +351,6 @@ class RichText extends EditorComponent<Value, Record<string, unknown>, State> {
       });
     }
 
-    if (node) {
-      this.handleUpdateTooltipReferenceFromQuill(node);
-    }
-
     this.setState(newState, () => {
       const { enableTooltip } = formats;
 
@@ -380,13 +381,21 @@ class RichText extends EditorComponent<Value, Record<string, unknown>, State> {
       const { res, rej, extra } = this.handleCustomDCOption(formats);
 
       dynamicContentGroups.richText.handler(res, rej, extra);
-      this.setState({ formats }, () => this.toolbarRef.current?.show());
+
+      this.formats = formats;
+      this.forceUpdate(() => {
+        this.toolbarRef.current?.show();
+      });
     }
   };
 
   handleTextChange = (text: string) => {
     let popups: Value["popups"] | undefined;
-    this.handleTextChangeEnd();
+    const patch: Patch = {};
+
+    if (text !== this.getValue().text) {
+      patch.text = text;
+    }
 
     // making use of the popups hack
     if (this.tmpPopups) {
@@ -398,12 +407,15 @@ class RichText extends EditorComponent<Value, Record<string, unknown>, State> {
     const modelPopups = popups ?? this.getValue().popups;
     const filteredPopups = getFilteredPopups(text, modelPopups, blocksData);
 
-    this.patchValue({
-      text,
-      ...(filteredPopups.length !== modelPopups.length
-        ? { popups: filteredPopups }
-        : {})
-    });
+    if (filteredPopups.length !== modelPopups.length) {
+      patch.popups = filteredPopups;
+    }
+
+    if (Object.keys(patch).length > 0) {
+      this.patchValue(patch);
+    }
+
+    this.handleTextChangeEnd();
   };
 
   getPopups = (): ElementModelType2[] => {
@@ -430,7 +442,8 @@ class RichText extends EditorComponent<Value, Record<string, unknown>, State> {
   };
 
   handlePopulationSet = (value: string) => {
-    if (this.quillRef.current === null) {
+    const quill = this.quillRef.current;
+    if (quill === null) {
       return;
     }
 
@@ -438,9 +451,9 @@ class RichText extends EditorComponent<Value, Record<string, unknown>, State> {
       prepopulationData: { index: cursorIndex }
     } = this.state;
 
-    this.quillRef.current.formatPrepopulation();
+    quill.formatPrepopulation();
 
-    const finalCursorIndex = this.quillRef.current.getSelectionRange().index;
+    const finalCursorIndex = quill.getSelectionRange().index;
 
     const dcConfig = this.context.dynamicContent.config;
 
@@ -449,7 +462,7 @@ class RichText extends EditorComponent<Value, Record<string, unknown>, State> {
       : undefined;
 
     if (dcOption) {
-      this.quillRef.current.formatPopulation({
+      quill.formatPopulation({
         label: dcOption.label,
         display: dcOption.display ?? "inline",
         placeholder: value
@@ -461,14 +474,17 @@ class RichText extends EditorComponent<Value, Record<string, unknown>, State> {
     };
 
     if (isNumber(cursorIndex) && isNumber(finalCursorIndex)) {
-      this.quillRef.current.deleteText(
-        cursorIndex,
-        finalCursorIndex - cursorIndex
-      );
+      quill.deleteText(cursorIndex, finalCursorIndex - cursorIndex);
       stateData.index = null;
     }
 
-    this.quillRef.current.format("prepopulation", null);
+    quill.format("prepopulation", null);
+    const text = quill.getCurrentValue();
+
+    if (text !== this.getValue().text) {
+      this.patchValue({ text });
+    }
+
     this.setPrepopulationData(stateData);
   };
 
@@ -591,7 +607,6 @@ class RichText extends EditorComponent<Value, Record<string, unknown>, State> {
         break;
     }
   };
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
   handleKeyUp = () => {};
 
   getClassName(v: Value, vs: Value, vd: Value) {
@@ -747,10 +762,21 @@ class RichText extends EditorComponent<Value, Record<string, unknown>, State> {
       this.quillRef.current.formatMultiple(link);
     }
 
-    const needUpdateTooltip = shouldUpdateTooltipByPatch(patch);
+    this.handleTooltipPatch(patch);
 
-    if (needUpdateTooltip) {
-      this.tooltipRef.current?.updatePopper();
+    // We need to retrieve the final value from the Quill editor after all formatting (like links) has been applied.
+    const currentValue = this.quillRef.current?.getCurrentValue();
+
+    const shouldUpdateText =
+      !("text" in patch) &&
+      currentValue &&
+      currentValue !== this.getValue().text;
+
+    if (shouldUpdateText) {
+      newPatch = {
+        ...newPatch,
+        text: currentValue
+      };
     }
 
     super.patchValue(newPatch, meta);
@@ -762,16 +788,28 @@ class RichText extends EditorComponent<Value, Record<string, unknown>, State> {
       return { v, vs, vd };
     }
 
+    const formats = this.formats;
+
     return {
       v: {
         ...v,
-        ...this.state.formats,
-        tag: this.state.formats?.tagName
+        ...formats,
+        tag: formats.tagName
       },
       vs,
       vd
     };
   }
+
+  handleTooltipPatch = (patch: Patch) => {
+    const needUpdateTooltip = shouldUpdateTooltipByPatch(patch);
+
+    if (needUpdateTooltip) {
+      this.tooltipRef.current?.updatePopper();
+    }
+
+    this.isTooltipPatched = "tooltip" in patch;
+  };
 
   renderPopulationHelper() {
     const { prepopulation, population, selectionCoords } = this.state;
@@ -874,7 +912,9 @@ class RichText extends EditorComponent<Value, Record<string, unknown>, State> {
   }
 
   renderPopups(v: Value) {
-    const { popups } = v;
+    const { popups: _popups, dcLinkPopupPopups, textPopulation } = v;
+    const popups = textPopulation ? dcLinkPopupPopups : _popups;
+    const key = textPopulation ? "dcLinkPopupPopups" : "popups";
 
     // we disabled this optimization here, because we know nothing about
     // formats during compilation time, so this condition won't work
@@ -903,7 +943,7 @@ class RichText extends EditorComponent<Value, Record<string, unknown>, State> {
 
     const meta = this.props.meta;
     const popupsProps = this.makeSubcomponentProps({
-      bindWithKey: "popups",
+      bindWithKey: key,
       itemProps: (itemData: Block) => {
         const { blockId } = itemData;
         let {
@@ -942,13 +982,20 @@ class RichText extends EditorComponent<Value, Record<string, unknown>, State> {
     /**
      * Since the EditorArrayComponent is still in JS
      * TS cannot read properly it's return type
-     * @ts-expect-error */
+     * @ts-expect-error unknown is not assignable */
     return <EditorArrayComponent {...popupsProps} />;
   }
 
   renderLink(v: Value) {
     const { text, enableTooltip, tag } = v;
-    const linkData = getLinkData(v, this.getGlobalConfig());
+    const isDC = v.textPopulation;
+    const newV = {
+      ...v,
+      linkPopup: isDC ? v.dcLinkPopup : v.linkPopup,
+      linkType: isDC && v.linkType === "dcPopup" ? "popup" : v.linkType
+    };
+
+    const linkData = getLinkData(newV, this.getGlobalConfig());
 
     const Tag = getTag(tag);
 
@@ -974,10 +1021,17 @@ class RichText extends EditorComponent<Value, Record<string, unknown>, State> {
           </div>
         );
       } else {
+        const hasDCPlaceholderGetter =
+          typeof this.getGlobalConfig().dynamicContent?.getPlaceholderData ===
+          "function";
+
+        // For third-party integrations that don't implement `getPlaceholderData`, we should display their original placeholder instead.
+        const _text = hasDCPlaceholderGetter ? text : v.textPopulation;
+
         content = (
           <Tag
             className="brz-blocked"
-            dangerouslySetInnerHTML={{ __html: text }}
+            dangerouslySetInnerHTML={{ __html: _text }}
           />
         );
       }
@@ -1006,7 +1060,7 @@ class RichText extends EditorComponent<Value, Record<string, unknown>, State> {
   };
 
   handleUpdateTooltipReferenceFromQuill(el: Element | null) {
-    const nodeWithTooltip = el?.closest("[data-tooltip]");
+    const nodeWithTooltip = el?.closest(`[${makeAttr("tooltip")}]`);
 
     if (nodeWithTooltip) {
       this.tooltipReferenceElement = nodeWithTooltip;
@@ -1029,6 +1083,10 @@ class RichText extends EditorComponent<Value, Record<string, unknown>, State> {
   };
 
   handleTextChangeEnd = () => {
+    if (this.isTooltipPatched) {
+      return;
+    }
+
     this.handleToolbarOpen();
     this.shouldOpenToolbar = true;
 
@@ -1094,6 +1152,7 @@ class RichText extends EditorComponent<Value, Record<string, unknown>, State> {
     let content = (
       <Quill
         ref={this.quillRef}
+        // @ts-expect-error: Type 'Store' is not assignable to type 'Store & Store<any, UnknownAction, unknown>'
         store={this.getReduxStore()}
         sheet={this.context.sheet}
         componentId={this.getId()}
@@ -1238,10 +1297,12 @@ class RichText extends EditorComponent<Value, Record<string, unknown>, State> {
   renderForView(v: Value, vs: Value, vd: Value) {
     const config = this.getGlobalConfig();
     const { textPopulation, enableTooltip } = v;
+    const store = this.getReduxStore();
 
     let content = (
       <Quill
-        store={this.getReduxStore()}
+        // @ts-expect-error: Type 'Store' is not assignable to type 'Store & Store<any, UnknownAction, unknown>'. (ts 2322)
+        store={store}
         sheet={this.context.sheet}
         value={v.text}
         renderContext={this.props.renderContext}

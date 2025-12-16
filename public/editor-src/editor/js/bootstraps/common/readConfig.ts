@@ -16,7 +16,7 @@ export function readConfig(c: unknown): ConfigCommon {
     const globalBlocks = parseGlobalBlocks(config.globalBlocks);
 
     return { ...config, pageData, globalBlocks } as ConfigCommon;
-  } catch (e) {
+  } catch (_) {
     throw new Error("Fail to parse config");
   }
 }

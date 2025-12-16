@@ -525,7 +525,7 @@ export function cssStyleElementOfMinistryBrandsSpacing({
   const spacingSuffix =
     readString(dvv(capByPrefix(prefix, "spacingSuffix"))) ?? "px";
 
-  return `gap: ${spacing}${spacingSuffix}`;
+  return `gap: ${spacing}${spacingSuffix};`;
 }
 
 export function cssStyleElementOfMinistryBrandsMetaItemsSpacing({
@@ -1286,6 +1286,24 @@ export function cssStyleElementMinistryBrandsMetaItemCategoryMargin({
   return cssStyleMargin({ v, device, state, prefix });
 }
 
+export function cssStyleElementMinistryBrandsMetaItemWorkphoneMargin({
+  v,
+  device,
+  state,
+  prefix = "metaWorkphone"
+}: CSSValue): string {
+  return cssStyleMargin({ v, device, state, prefix });
+}
+
+export function cssStyleElementMinistryBrandsMetaItemCellphoneMargin({
+  v,
+  device,
+  state,
+  prefix = "metaCellphone"
+}: CSSValue): string {
+  return cssStyleMargin({ v, device, state, prefix });
+}
+
 export function cssStyleElementMinistryBrandsMetaItemCategoryPadding({
   v,
   device,
@@ -1296,6 +1314,31 @@ export function cssStyleElementMinistryBrandsMetaItemCategoryPadding({
     device,
     state,
     prefix: "metaCategory"
+  });
+}
+
+export function cssStyleElementMinistryBrandsMetaItemWorkphonePadding({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStylePaddingFourFields({
+    v,
+    device,
+    state,
+    prefix: "metaWorkphone"
+  });
+}
+export function cssStyleElementMinistryBrandsMetaItemCellphonePadding({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStylePaddingFourFields({
+    v,
+    device,
+    state,
+    prefix: "metaCellphone"
   });
 }
 
@@ -1314,6 +1357,58 @@ export function cssStyleElementMinistryBrandsMetaItemGroupPadding({
   state
 }: CSSValue): string {
   return cssStylePaddingFourFields({ v, device, state, prefix: "metaGroup" });
+}
+
+export function cssStyleElementOfMinistryBrandsMetaFullEmailTypography({
+  v,
+  device,
+  state,
+  store,
+  getConfig,
+  renderContext
+}: CSSValue & WithRenderContext): string {
+  return getAllCssStyleTypography({
+    v,
+    device,
+    state,
+    store,
+    getConfig,
+    renderContext,
+    prefix: "metaEmail"
+  });
+}
+
+export function cssStyleElementOfMinistryBrandsMetaFullEmailColor({
+  v,
+  device,
+  state,
+  store,
+  getConfig
+}: CSSValue): string {
+  return cssStyleColor({
+    v,
+    device,
+    state,
+    store,
+    getConfig,
+    prefix: "metaEmailColor"
+  });
+}
+
+export function cssStyleElementMinistryBrandsMetaItemEmailMargin({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStyleMargin({ v, device, state, prefix: "metaEmail" });
+}
+
+export function cssStyleElementMinistryBrandsMetaItemEmailPadding({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStylePaddingFourFields({ v, device, state, prefix: "metaEmail" });
 }
 
 export function cssStyleElementMinistryBrandsMetaItemSeriesMargin({
@@ -1648,6 +1743,173 @@ export function cssStyleElementMinistryBrandsMetaItemWebsitePadding({
   });
 }
 
+export const cssStyleElementMinistryResultsHeadingTypography = ({
+  v,
+  device,
+  state,
+  store,
+  getConfig,
+  renderContext
+}: CSSValue & WithRenderContext): string => {
+  return getAllCssStyleTypography({
+    v,
+    device,
+    state,
+    store,
+    getConfig,
+    renderContext,
+    prefix: "resultsHeadingTypography"
+  });
+};
+
+export const cssStyleElementMinistryNoResultsParagraphTypography = ({
+  v,
+  device,
+  state,
+  store,
+  getConfig,
+  renderContext
+}: CSSValue & WithRenderContext): string => {
+  return getAllCssStyleTypography({
+    v,
+    device,
+    state,
+    store,
+    getConfig,
+    renderContext,
+    prefix: "noResultsTypography"
+  });
+};
+
+export const cssStyleElementMinistryResultsHeadingColor = ({
+  v,
+  device,
+  state,
+  store,
+  getConfig
+}: CSSValue): string => {
+  return cssStyleColor({
+    v,
+    device,
+    state,
+    store,
+    getConfig,
+    prefix: "resultsHeadingColor"
+  });
+};
+
+export const cssStyleElementMinistryNoResultsParagraphColor = ({
+  v,
+  device,
+  state,
+  store,
+  getConfig
+}: CSSValue): string => {
+  return cssStyleColor({
+    v,
+    device,
+    state,
+    store,
+    getConfig,
+    prefix: "noResultsColor"
+  });
+};
+
+export function cssStyleElementMinistryBrandsButtonsBorderRadius({
+  v,
+  device,
+  state,
+  store,
+  getConfig
+}: CSSValue): string {
+  return cssStyleBorderRadiusType({
+    v,
+    device,
+    state,
+    store,
+    getConfig,
+    prefix: "buttons"
+  });
+}
+
+export function cssStyleElementMinistryBrandsButtonsSize({
+  v,
+  device,
+  state,
+  getConfig,
+  store
+}: CSSValue): string {
+  return cssStyleElementButtonSize({
+    v,
+    device,
+    state,
+    store,
+    getConfig,
+    prefix: "detailButton"
+  });
+}
+
+export function cssStyleMinistryBrandsButtonsHoverTransition({
+  v,
+  device,
+  state,
+  store,
+  getConfig
+}: CSSValue) {
+  return cssStyleHoverTransition({
+    v,
+    device,
+    state,
+    store,
+    getConfig,
+    prefix: "buttons"
+  });
+}
+
+export function cssStyleElementMinistryBrandsMetaItemPositionMargin({
+  v,
+  device,
+  state,
+  prefix = "metaPosition"
+}: CSSValue): string {
+  return cssStyleMargin({ v, device, state, prefix });
+}
+
+export function cssStyleElementMinistryBrandsMetaItemPositionPadding({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStylePaddingFourFields({
+    v,
+    device,
+    state,
+    prefix: "metaPosition"
+  });
+}
+
+export function cssStyleElementMinistryBrandsMetaItemAuthorMargin({
+  v,
+  device,
+  state,
+  prefix = "metaAuthor"
+}: CSSValue): string {
+  return cssStyleMargin({ v, device, state, prefix });
+}
+
+export function cssStyleElementMinistryBrandsMetaItemAuthorPadding({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  return cssStylePaddingFourFields({
+    v,
+    device,
+    state,
+    prefix: "metaAuthor"
+  });
+}
+
 export function cssStyleElementOfMinistryBrandsSocialColor({
   v,
   device,
@@ -1733,126 +1995,147 @@ export const cssStyleElementOfMinistryBrandsSocialBorder = ({
   });
 };
 
-export const cssStyleElementMinistryResultsHeadingTypography = ({
+export function cssStyleElementOfMinistryBrandsMetaTitleTypography({
   v,
   device,
   state,
   store,
   getConfig,
   renderContext
-}: CSSValue & WithRenderContext): string => {
+}: CSSValue & WithRenderContext): string {
   return getAllCssStyleTypography({
     v,
     device,
     state,
     store,
     getConfig,
-    prefix: "resultsHeadingTypography",
+    prefix: "metaTitle",
     renderContext
   });
-};
+}
 
-export const cssStyleElementMinistryNoResultsParagraphTypography = ({
+export function cssStyleElementOfMinistryBrandsMetaTitleColor({
+  v,
+  device,
+  state,
+  store,
+  getConfig
+}: CSSValue): string {
+  return cssStyleColor({
+    v,
+    device,
+    state,
+    store,
+    getConfig,
+    prefix: "metaTitleColor"
+  });
+}
+
+export function cssStyleElementOfMinistryBrandsMetaPositionTypography({
   v,
   device,
   state,
   store,
   getConfig,
   renderContext
-}: CSSValue & WithRenderContext): string => {
+}: CSSValue & WithRenderContext): string {
   return getAllCssStyleTypography({
     v,
     device,
     state,
     store,
     getConfig,
-    prefix: "noResultsTypography",
+    prefix: "metaPosition",
     renderContext
   });
-};
+}
 
-export const cssStyleElementMinistryResultsHeadingColor = ({
-  v,
-  device,
-  state,
-  store,
-  getConfig
-}: CSSValue): string => {
-  return cssStyleColor({
-    v,
-    device,
-    state,
-    store,
-    getConfig,
-    prefix: "resultsHeadingColor"
-  });
-};
-
-export const cssStyleElementMinistryNoResultsParagraphColor = ({
-  v,
-  device,
-  state,
-  store,
-  getConfig
-}: CSSValue): string => {
-  return cssStyleColor({
-    v,
-    device,
-    state,
-    store,
-    getConfig,
-    prefix: "noResultsColor"
-  });
-};
-
-export function cssStyleElementMinistryBrandsButtonsBorderRadius({
+export function cssStyleElementOfMinistryBrandsMetaPositionColor({
   v,
   device,
   state,
   store,
   getConfig
 }: CSSValue): string {
-  return cssStyleBorderRadiusType({
+  return cssStyleColor({
     v,
     device,
     state,
     store,
     getConfig,
-    prefix: "buttons"
+    prefix: "metaPositionColor"
   });
 }
 
-export function cssStyleElementMinistryBrandsButtonsSize({
+export function cssStyleElementOfMinistryBrandsMetaTextTypography({
+  v,
+  device,
+  state,
+  store,
+  getConfig,
+  renderContext
+}: CSSValue & WithRenderContext): string {
+  return getAllCssStyleTypography({
+    v,
+    device,
+    state,
+    store,
+    renderContext,
+    getConfig,
+    prefix: "metaText"
+  });
+}
+
+export function cssStyleElementOfMinistryBrandsMetaTextColor({
   v,
   device,
   state,
   store,
   getConfig
 }: CSSValue): string {
-  return cssStyleElementButtonSize({
+  return cssStyleColor({
     v,
     device,
     state,
     store,
     getConfig,
-    prefix: "detailButton"
+    prefix: "metaTextColor"
   });
 }
 
-export function cssStyleMinistryBrandsButtonsHoverTransition({
+export function cssStyleElementOfMinistryBrandsSocialDescriptionTypography({
+  v,
+  device,
+  state,
+  store,
+  getConfig,
+  renderContext
+}: CSSValue & WithRenderContext): string {
+  return getAllCssStyleTypography({
+    v,
+    device,
+    state,
+    store,
+    getConfig,
+    renderContext,
+    prefix: "socialDescription"
+  });
+}
+
+export function cssStyleElementOfMinistryBrandsSocialDescriptionColor({
   v,
   device,
   state,
   store,
   getConfig
-}: CSSValue) {
-  return cssStyleHoverTransition({
+}: CSSValue): string {
+  return cssStyleColor({
     v,
     device,
     state,
     store,
     getConfig,
-    prefix: "buttons"
+    prefix: "socialDescriptionColor"
   });
 }
 
@@ -1896,4 +2179,16 @@ export function cssStyleElementOfMinistryBrandsItemPadding({
   state
 }: CSSValue): string {
   return cssStylePaddingFourFields({ v, device, state, prefix: "item" });
+}
+
+export function cssStyleElementOfMinistryBrandsImageAspectRatio({
+  v,
+  device,
+  state
+}: CSSValue): string {
+  const dvv = (key: string): unknown =>
+    defaultValueValue({ v, key, device, state });
+
+  const aspectRatio = dvv("imgAspectRatio");
+  return aspectRatio ? `aspect-ratio: ${aspectRatio};` : "";
 }

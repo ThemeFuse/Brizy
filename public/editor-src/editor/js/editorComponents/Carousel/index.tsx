@@ -177,7 +177,7 @@ class Carousel extends EditorComponent<Value, Props, State> {
 
         if (loop) {
           const loopPlaceholder = makePlaceholder({
-            content: `{{brizy_dc_post_loop}}`,
+            content: "{{brizy_dc_post_loop}}",
             attrStr: loop
           });
           loops.push(loopPlaceholder);

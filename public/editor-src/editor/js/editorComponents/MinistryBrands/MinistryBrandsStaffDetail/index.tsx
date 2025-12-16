@@ -1,8 +1,9 @@
 import classnames from "classnames";
-import React, { ReactNode } from "react";
+import React from "react";
 import { ToastNotification } from "visual/component/Notifications";
 import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
+import { toolbarMinistryBrandsMeta } from "visual/editorComponents/MinistryBrands/toolbars/toolbars";
 import { getEkklesiaMessages } from "visual/editorComponents/MinistryBrands/utils/helpers";
 import { DynamicContentHelper } from "visual/editorComponents/WordPress/common/DynamicContentHelper";
 import { Wrapper } from "visual/editorComponents/tools/Wrapper";
@@ -10,12 +11,14 @@ import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import { updateEkklesiaFields } from "visual/utils/api";
 import { attachRefs } from "visual/utils/react";
 import * as sidebarConfig from "../sidebar";
-import * as toolbarImage from "../toolbarImage";
+import { sidebarMinistryBrandsMeta } from "../sidebars/sidebars";
 import * as toolbarMetaIcons from "../toolbarMetaIcons";
 import * as toolbarMetaLinks from "../toolbarMetaLinks";
 import * as toolbarMetaTypography from "../toolbarMetaTypography";
 import * as toolbarPreview from "../toolbarPreview";
 import * as toolbarTitle from "../toolbarTitle";
+import * as toolbarImage from "../toolbars/toolbarMinistryStaffImage";
+import { MBMetaPrefixKey } from "../utils/types";
 import defaultValue from "./defaultValue.json";
 import { style } from "./styles";
 import * as toolbarExtendParent from "./toolbarExtendParent";
@@ -57,7 +60,7 @@ export class MinistryBrandsStaffDetail extends EditorComponent<Value, Props> {
     }
   }
 
-  renderForEdit(v: Value, vs: Value, vd: Value): ReactNode {
+  renderForEdit(v: Value, vs: Value, vd: Value): JSX.Element {
     const className = classnames(
       "brz-staffDetail__wrapper",
       "brz-ministryBrands",
@@ -83,90 +86,163 @@ export class MinistryBrandsStaffDetail extends EditorComponent<Value, Props> {
       >
         {({ ref: mediaRef }) => (
           <Toolbar
-            {...this.makeToolbarPropsFromConfig2(toolbarTitle, undefined, {
-              allowExtend: false
-            })}
-            selector=".brz-staffDetail__item--meta--title"
+            {...this.makeToolbarPropsFromConfig2(
+              toolbarTitle,
+              sidebarMinistryBrandsMeta(MBMetaPrefixKey.metaTitle),
+              {
+                allowExtend: false
+              }
+            )}
+            selector=".brz-ministryBrands__item--meta-title"
           >
             {({ ref: titleRef }) => (
               <Toolbar
                 {...this.makeToolbarPropsFromConfig2(
                   toolbarMetaTypography,
-                  undefined,
+                  sidebarMinistryBrandsMeta(MBMetaPrefixKey.metaPosition),
                   {
                     allowExtend: false
                   }
                 )}
-                selector=".brz-staffDetail__item--meta"
+                selector=".brz-ministryBrands__item--meta-position"
               >
-                {({ ref: itemMetaRef }) => (
+                {({ ref: positionRef }) => (
                   <Toolbar
                     {...this.makeToolbarPropsFromConfig2(
-                      toolbarMetaIcons,
-                      undefined,
+                      toolbarMetaTypography,
+                      sidebarMinistryBrandsMeta(MBMetaPrefixKey.metaGroup),
                       {
                         allowExtend: false
                       }
                     )}
-                    selector=".brz-ministryBrands__meta--icons"
+                    selector=".brz-ministryBrands__item--meta-groups"
                   >
-                    {({ ref: metaIconsRef }) => (
+                    {({ ref: groupsRef }) => (
                       <Toolbar
                         {...this.makeToolbarPropsFromConfig2(
-                          toolbarSocial,
-                          undefined,
+                          toolbarMetaTypography,
+                          sidebarMinistryBrandsMeta(
+                            MBMetaPrefixKey.metaWorkphone
+                          ),
                           {
                             allowExtend: false
                           }
                         )}
-                        selector=".brz-staffDetail__item--social a"
+                        selector=".brz-ministryBrands__item--meta-workphone"
                       >
-                        {({ ref: socialRef }) => (
+                        {({ ref: workphoneRef }) => (
                           <Toolbar
                             {...this.makeToolbarPropsFromConfig2(
-                              toolbarPreview,
-                              undefined,
+                              toolbarMetaTypography,
+                              sidebarMinistryBrandsMeta(
+                                MBMetaPrefixKey.metaCellphone
+                              ),
                               {
                                 allowExtend: false
                               }
                             )}
-                            selector=".brz-staffDetail__item--about"
+                            selector=".brz-ministryBrands__item--meta-cellphone"
                           >
-                            {({ ref: aboutRef }) => (
+                            {({ ref: emailRef }) => (
                               <Toolbar
                                 {...this.makeToolbarPropsFromConfig2(
-                                  toolbarMetaLinks,
-                                  undefined,
+                                  toolbarMinistryBrandsMeta(
+                                    MBMetaPrefixKey.metaEmail
+                                  ),
+                                  sidebarMinistryBrandsMeta(
+                                    MBMetaPrefixKey.metaEmail
+                                  ),
                                   {
                                     allowExtend: false
                                   }
                                 )}
-                                selector=".brz-ministryBrands__item--meta--links--previous"
+                                selector=".brz-ministryBrands__item--meta-full-email"
                               >
-                                {({ ref: previousRef }) => (
-                                  <Wrapper
-                                    {...this.makeWrapperProps({
-                                      className,
-                                      ref: (el) => {
-                                        attachRefs(el, [
-                                          mediaRef,
-                                          titleRef,
-                                          itemMetaRef,
-                                          metaIconsRef,
-                                          socialRef,
-                                          aboutRef,
-                                          previousRef
-                                        ]);
+                                {({ ref: cellphoneRef }) => (
+                                  <Toolbar
+                                    {...this.makeToolbarPropsFromConfig2(
+                                      toolbarMetaIcons,
+                                      undefined,
+                                      {
+                                        allowExtend: false
                                       }
-                                    })}
+                                    )}
+                                    selector=".brz-ministryBrands__meta--icons"
                                   >
-                                    <DynamicContentHelper
-                                      placeholder={getPlaceholder(v)}
-                                      props={{ className: "brz-staffDetail" }}
-                                      blocked={false}
-                                      tagName="div"
-                                    />
-                                  </Wrapper>
+                                    {({ ref: iconsRef }) => (
+                                      <Toolbar
+                                        {...this.makeToolbarPropsFromConfig2(
+                                          toolbarSocial,
+                                          undefined,
+                                          {
+                                            allowExtend: false
+                                          }
+                                        )}
+                                        selector=".brz-staffDetail__item--social a"
+                                      >
+                                        {({ ref: socialRef }) => (
+                                          <Toolbar
+                                            {...this.makeToolbarPropsFromConfig2(
+                                              toolbarPreview,
+                                              undefined,
+                                              {
+                                                allowExtend: false
+                                              }
+                                            )}
+                                            selector=".brz-staffDetail__item--about"
+                                          >
+                                            {({ ref: aboutRef }) => (
+                                              <Toolbar
+                                                {...this.makeToolbarPropsFromConfig2(
+                                                  toolbarMetaLinks,
+                                                  undefined,
+                                                  {
+                                                    allowExtend: false
+                                                  }
+                                                )}
+                                                selector=".brz-ministryBrands__item--meta--links--previous"
+                                              >
+                                                {({ ref: previousRef }) => (
+                                                  <Wrapper
+                                                    {...this.makeWrapperProps({
+                                                      className,
+                                                      ref: (el) => {
+                                                        attachRefs(el, [
+                                                          mediaRef,
+                                                          titleRef,
+                                                          positionRef,
+                                                          groupsRef,
+                                                          workphoneRef,
+                                                          cellphoneRef,
+                                                          iconsRef,
+                                                          socialRef,
+                                                          aboutRef,
+                                                          previousRef,
+                                                          emailRef
+                                                        ]);
+                                                      }
+                                                    })}
+                                                  >
+                                                    <DynamicContentHelper
+                                                      placeholder={getPlaceholder(
+                                                        v
+                                                      )}
+                                                      props={{
+                                                        className:
+                                                          "brz-staffDetail"
+                                                      }}
+                                                      blocked={false}
+                                                      tagName="div"
+                                                    />
+                                                  </Wrapper>
+                                                )}
+                                              </Toolbar>
+                                            )}
+                                          </Toolbar>
+                                        )}
+                                      </Toolbar>
+                                    )}
+                                  </Toolbar>
                                 )}
                               </Toolbar>
                             )}

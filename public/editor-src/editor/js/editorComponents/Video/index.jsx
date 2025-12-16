@@ -10,6 +10,7 @@ import Placeholder from "visual/component/Placeholder";
 import { ThemeIcon } from "visual/component/ThemeIcon";
 import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
+import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import { isStory } from "visual/providers/EditorModeProvider";
 import { isView } from "visual/providers/RenderProvider";
 import { customFileUrl } from "visual/utils/customFile";
@@ -39,7 +40,7 @@ class Video extends EditorComponent {
   };
 
   static get componentId() {
-    return "Video";
+    return ElementTypes.Video;
   }
 
   getDBValue() {

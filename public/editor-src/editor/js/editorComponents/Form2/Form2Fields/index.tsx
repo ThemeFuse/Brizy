@@ -1,6 +1,7 @@
 import classnames from "classnames";
 import React from "react";
 import EditorComponent from "visual/editorComponents/EditorComponent";
+import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import { FormFields } from "./Components/FormFields";
 import Form2FieldsItems from "./Items";
 import defaultValue from "./defaultValue.json";
@@ -16,8 +17,8 @@ import type { Props, Value } from "./types";
 class Form2Fields extends EditorComponent<Value, Props> {
   static defaultValue = defaultValue;
 
-  static get componentId(): "Form2Fields" {
-    return "Form2Fields";
+  static get componentId(): ElementTypes.Form2Fields {
+    return ElementTypes.Form2Fields;
   }
 
   renderForEdit(v: Value, vs: Value, vd: Value): React.JSX.Element {
