@@ -35,13 +35,11 @@ import {
   APIPopup,
   DefaultBlock,
   DefaultBlockWithID,
-  FontStyle,
   Kit,
   KitDataResult,
   KitItem,
   LayoutsAPI,
   LayoutsPagesResult,
-  Palette,
   StoriesAPI,
   StoryPagesResult,
   Style
@@ -69,7 +67,6 @@ import {
 import { ScreenshotData } from "@/types/Screenshots";
 import { APISymbol, CSSSymbol } from "@/types/Symbols";
 import { t } from "@/utils/i18n";
-import { apiSymbolToCSSSymbol } from "@/utils/symbols";
 import { Arr, Json, Obj, Str } from "@brizy/readers";
 import { isT, mPipe, pass } from "fp-utilities";
 import queryString from "query-string";
@@ -1192,15 +1189,13 @@ export function sendHeartBeat(config: Config) {
     actions: { heartBeat },
     url: _url,
     hash,
-    editorVersion: version,
-    pageId
+    editorVersion: version
   } = config;
 
   const url = makeUrl(_url, {
     action: heartBeat,
     version,
-    hash,
-    pageId
+    hash
   });
   return request(url, { method: "GET" }).then((r) => r.json());
 }
@@ -1668,32 +1663,20 @@ export const deleteIcon = async (uid: string): Promise<Response> => {
 
 //#region AI Global Styles
 
-export const getStyles = async (config: Config, previousColorPalette: Palette[]) => {
+export const getStyles = async (config: Config) => {
   const { aiGlobalStyleUrl } = config;
 
-  const url = `${aiGlobalStyleUrl}/api/generate-color-palette`;
-
-  return await request(url, {
-    method: "POST",
-    body: JSON.stringify({
-      previousColorPalette
-    })
-  }).then((r) => r.json());
+  return await fetch(`${aiGlobalStyleUrl}/api/template/style`).then((r) =>
+    r.json()
+  );
 };
 
-export const getTypography = async (
-  config: Config,
-  previousFontStyles: FontStyle[]
-) => {
+export const getTypography = async (config: Config) => {
   const { aiGlobalStyleUrl } = config;
 
-  const url = `${aiGlobalStyleUrl}/api/generate-fonts`;
-  return await request(url, {
-    method: "POST",
-    body: JSON.stringify({
-      previousFontStyles
-    })
-  }).then((r) => r.json());
+  return await fetch(`${aiGlobalStyleUrl}/api/template/typography`).then((r) =>
+    r.json()
+  );
 };
 
 //#endregion
@@ -3160,55 +3143,70 @@ export const deleteAccount = async (id: string): Promise<SuccessResponse> => {
 //#endregion
 
 //#region Symbols
-
-///// TODO: should be removed when symbols will be in config
-export const getSymbols = async (): Promise<Array<CSSSymbol>> => {
+// without model
+export const getSymbolsList = async (): Promise<Array<CSSSymbol>> => {
   const config = getConfig();
-
   if (!config) {
     throw new Error(t("Invalid __BRZ_PLUGIN_ENV__"));
   }
-
   const { editorVersion, url: _url, hash, actions } = config;
-
   const url = makeUrl(_url, {
     hash,
     action: actions.symbolList,
     version: editorVersion
   });
-
   const response = await request(url, { method: "GET" });
-
   if (response.ok) {
     const rj = await response.json();
-
     if (rj.success && Array.isArray(rj.data)) {
       return rj.data.map(apiSymbolToCSSSymbol);
     }
   }
-
   throw new Error(t("Failed to get symbols"));
 };
-
-export const createSymbols = async (
-  symbols: Array<Omit<CSSSymbol, "id">>
+export const getSymbolsByUid = async (
+  uids: Array<string>
 ): Promise<Array<CSSSymbol>> => {
   const config = getConfig();
-
   if (!config) {
     throw new Error(t("Invalid __BRZ_PLUGIN_ENV__"));
   }
-
-  const symbols = _symbols.map(incrementSymbolVersion);
-
+  if (uids.length === 0) {
+    return [];
+  }
   const { editorVersion, url: _url, hash, actions } = config;
-
+  const url = makeUrl(
+    _url,
+    makeFormEncode({
+      hash,
+      action: actions.symbolFilteredList,
+      version: editorVersion,
+      uid: uids
+    })
+  );
+  const response = await request(url, { method: "GET" });
+  if (response.ok) {
+    const rj = await response.json();
+    if (rj.success && Array.isArray(rj.data)) {
+      return rj.data.map(apiSymbolToCSSSymbol);
+    }
+  }
+  throw new Error(t("Failed to get symbols"));
+};
+export const createSymbols = async (
+  _symbols: Array<Omit<CSSSymbol, "id">>
+): Promise<Array<CSSSymbol>> => {
+  const config = getConfig();
+  if (!config) {
+    throw new Error(t("Invalid __BRZ_PLUGIN_ENV__"));
+  }
+  const symbols = _symbols.map(incrementSymbolVersion);
+  const { editorVersion, url: _url, hash, actions } = config;
   const url = makeUrl(_url, {
     hash,
     action: actions.symbolCreate,
     version: editorVersion
   });
-
   const symbolsData = symbols.map((symbol) => ({
     uid: symbol.uid,
     label: symbol.label,
@@ -3219,9 +3217,7 @@ export const createSymbols = async (
     compiledStyles: symbol.compiledData,
     linkedSymbolId: symbol.linkedSymbolId ?? null
   }));
-
   const body = JSON.stringify(symbolsData);
-
   const response = await persistentRequest<Array<APISymbol>>(url, {
     method: "POST",
     headers: {
@@ -3229,31 +3225,24 @@ export const createSymbols = async (
     },
     body
   });
-
   if (!response.ok) {
     throw new Error(t("Failed to create symbols"));
   }
-
   return response.data.map(apiSymbolToCSSSymbol);
 };
-
 export const updateSymbols = async (
   symbols: Array<CSSSymbol>
 ): Promise<Array<CSSSymbol>> => {
   const config = getConfig();
-
   if (!config) {
     throw new Error(t("Invalid __BRZ_PLUGIN_ENV__"));
   }
-
   const { editorVersion, url: _url, hash, actions } = config;
-
   const url = makeUrl(_url, {
     hash,
     action: actions.symbolUpdate,
     version: editorVersion
   });
-
   const symbolsData = symbols.map((symbol) => ({
     uid: symbol.uid,
     label: symbol.label,
@@ -3274,56 +3263,40 @@ export const updateSymbols = async (
     },
     body
   });
-
   if (!response.ok) {
     throw new Error(t("Failed to update symbols"));
   }
-
   return response.data.map(apiSymbolToCSSSymbol);
 };
-
 export const deleteSymbols = async (
   uids: Array<string>
 ): Promise<ResponseWithSuccessStatus> => {
   const config = getConfig();
-
   if (!config) {
     throw new Error(t("Invalid __BRZ_PLUGIN_ENV__"));
   }
-
   const { editorVersion, url: _url, hash, actions } = config;
-
   const url = makeUrl(_url, {
     hash,
     action: actions.symbolDelete,
     version: editorVersion
   });
-
-  const symbolsData = uids.map((uid) => ({
-    uid: uid
-  }));
-
-  const body = JSON.stringify(symbolsData);
-
+  const body = new URLSearchParams();
+  uids.forEach((uid) => {
+    body.append("uid[]", uid);
+  });
   const response = await request(url, {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
     body
   });
-
   if (response.ok) {
     const rj = await response.json();
-
     if (rj.success) {
       return {
         success: true
       };
     }
   }
-
   throw new Error(t("Failed to delete symbols"));
 };
-
 //#endregion
