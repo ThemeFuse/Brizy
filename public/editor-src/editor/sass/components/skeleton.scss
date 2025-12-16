@@ -1,0 +1,17 @@
+.brz-skeleton {
+  border-radius: 0.375rem;
+  animation: skeleton 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  height: 20px;
+  width: 100%;
+  background-color: oklch(97% 0 0);
+}
+
+@keyframes skeleton {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}

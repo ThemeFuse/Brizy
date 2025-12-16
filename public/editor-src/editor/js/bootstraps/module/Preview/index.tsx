@@ -72,17 +72,17 @@ export const Preview = (props: Props): JSX.Element => {
   return (
     <I18nextProvider>
       <RenderProvider renderType="view">
-        <ConfigProvider config={config}>
-          <RegisterParts config={config}>
-            <InitStore config={config} editorMode={mode}>
+        <InitStore config={config} editorMode={mode}>
+          <ConfigProvider config={config}>
+            <RegisterParts config={config}>
               <EditorModeProvider mode={mode}>
                 <StyleProvider>
                   <Page editorMode={mode} />
                 </StyleProvider>
               </EditorModeProvider>
-            </InitStore>
-          </RegisterParts>
-        </ConfigProvider>
+            </RegisterParts>
+          </ConfigProvider>
+        </InitStore>
       </RenderProvider>
     </I18nextProvider>
   );

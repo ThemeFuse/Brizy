@@ -1,12 +1,12 @@
 import { noop } from "es-toolkit";
 import React, { Component } from "react";
-import Scrollbars from "react-custom-scrollbars";
 import Radio from "visual/component/Controls/Radio";
 import RadioItem from "visual/component/Controls/Radio/RadioItem";
 import Select from "visual/component/Controls/Select";
 import SelectItem from "visual/component/Controls/Select/SelectItem";
 import EditorIcon from "visual/component/EditorIcon";
 import { Button } from "visual/component/Prompts/common/Button";
+import { Scrollbar } from "visual/component/Scrollbar";
 import { t } from "visual/utils/i18n";
 
 class RadioFields extends Component {
@@ -50,18 +50,14 @@ class RadioFields extends Component {
     const { active, lists, onActive } = this.props;
     const options = lists.map(({ name, id }) => {
       return (
-        <RadioItem value={id} key={id}>
+        <RadioItem value={id} key={id} isEditor>
           {name ? name : `List ${id}`}
         </RadioItem>
       );
     });
 
     return (
-      <Scrollbars
-        autoHeight={true}
-        autoHeightMax="100%"
-        style={{ height: "auto" }}
-      >
+      <Scrollbar theme="light" autoHeightMax="100%" autoHeight>
         <Radio
           className="brz-ed-popup-integrations-option__radio"
           name="list"
@@ -70,7 +66,7 @@ class RadioFields extends Component {
         >
           {options}
         </Radio>
-      </Scrollbars>
+      </Scrollbar>
     );
   }
 

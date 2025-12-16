@@ -1,10 +1,27 @@
+import { ElementModel } from "visual/component/Elements/Types";
+import { Params } from "visual/editorComponents/EditorComponent/types";
 import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
 import { t } from "visual/utils/i18n";
+import { defaultValueValue } from "visual/utils/onChange";
 import { capByPrefix } from "visual/utils/string";
+import { getMetaPrefixKey } from "../utils/helpers";
 
-export const getItems = ({ key }: { key: string }): ToolbarItemType[] => {
-  const marginId = capByPrefix(key, "margin");
-  const paddingId = capByPrefix(key, "padding");
+export const getItems = <
+  M extends ElementModel,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  P extends Record<string, any> = Record<string, unknown>,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  S extends Record<string, any> = Record<string, unknown>
+>(
+  data: Params<M, P, S>
+): ToolbarItemType[] => {
+  const { v, device } = data;
+  const dvv = (key: string): unknown => defaultValueValue({ v, key, device });
+
+  const metaPrefixKey = getMetaPrefixKey(dvv("metaPrefixKey")) ?? "";
+
+  const marginId = capByPrefix(metaPrefixKey, "margin");
+  const paddingId = capByPrefix(metaPrefixKey, "padding");
 
   return [
     {

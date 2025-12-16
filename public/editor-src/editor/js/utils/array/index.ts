@@ -228,7 +228,7 @@ export const fromString = <T>(
 ): Array<T> | undefined => {
   try {
     return read(reader, JSON.parse(v));
-  } catch (e) {
+  } catch (_) {
     return undefined;
   }
 };

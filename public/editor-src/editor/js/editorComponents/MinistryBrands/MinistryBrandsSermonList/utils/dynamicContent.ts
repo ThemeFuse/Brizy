@@ -53,7 +53,7 @@ export const getPlaceholder = (v: Value): string => {
     getAttr(showMetaIcons, "show_meta_icons"),
     `detail_url='${getDetail(detailPage)}'`,
     `detail_page_button_text='${detailPageButton}'`,
-    `sticky_space='0'`
+    "sticky_space='0'"
   ];
 
   return makePlaceholder({

@@ -6,6 +6,7 @@ import { ThemeIcon } from "visual/component/ThemeIcon";
 import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { ToolbarExtend } from "visual/editorComponents/EditorComponent/types";
+import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import defaultValue from "./defaultValue.json";
 import Items from "./items";
 import { style } from "./styles";
@@ -36,8 +37,8 @@ export interface Props {
 export default class TimelineTab extends EditorComponent<Value, Props> {
   static defaultValue = defaultValue;
 
-  static get componentId(): "TimelineTab" {
-    return "TimelineTab";
+  static get componentId(): ElementTypes.TimelineTab {
+    return ElementTypes.TimelineTab;
   }
 
   handleLabelChange = (labelText: string): void => {

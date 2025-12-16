@@ -198,7 +198,7 @@ export class AnimatedHamburgerIcon {
 
   // ----------------- Animations -----------------
   private animateTilt: AnimationFn = (on) => {
-    this.container.style.transform = on ? `rotate(90deg)` : "none";
+    this.container.style.transform = on ? "rotate(90deg)" : "none";
     this.bars[0].style.transform = on
       ? `rotate(45deg) translate(${this.move}px, ${this.move}px)`
       : "none";

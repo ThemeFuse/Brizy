@@ -86,6 +86,16 @@ export const getItems: GetItems<Value, Props> = (props) => {
                     max: 6,
                     spinner: true
                   }
+                },
+                {
+                  id: "containerHorizontalAlign",
+                  label: "Container Align",
+                  type: "select",
+                  choices: [
+                    { value: "left", title: t("Left") },
+                    { value: "center", title: t("Center") },
+                    { value: "right", title: t("Right") }
+                  ]
                 }
               ]
             },
@@ -260,6 +270,16 @@ export const getItems: GetItems<Value, Props> = (props) => {
           config: {
             min: 0,
             max: 100,
+            units: [{ value: "px", title: "px" }]
+          }
+        },
+        {
+          id: "metaItemSpacing",
+          label: t("Items Spacing"),
+          type: "slider",
+          config: {
+            min: 0,
+            max: 150,
             units: [{ value: "px", title: "px" }]
           }
         },

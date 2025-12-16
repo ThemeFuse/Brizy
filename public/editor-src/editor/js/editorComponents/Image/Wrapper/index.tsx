@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-use-before-define */
 import { Num } from "@brizy/readers";
 import classnames from "classnames";
 import React, { useCallback } from "react";

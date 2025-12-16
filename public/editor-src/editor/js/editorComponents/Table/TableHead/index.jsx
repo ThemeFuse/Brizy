@@ -2,6 +2,7 @@ import classnames from "classnames";
 import React from "react";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import EditorComponent from "visual/editorComponents/EditorComponent";
+import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import defaultValue from "./defaultValue.json";
 import * as sidebarExtendConfig from "./sidebar";
 import { style } from "./styles";
@@ -14,7 +15,7 @@ class TableHead extends EditorComponent {
   static defaultValue = defaultValue;
 
   static get componentId() {
-    return "TableHead";
+    return ElementTypes.TableHead;
   }
 
   renderForEdit(v, vs, vd) {

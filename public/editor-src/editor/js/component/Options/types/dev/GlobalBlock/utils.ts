@@ -25,7 +25,7 @@ export const createScreenshot = async (
         _thumbnailHeight: height,
         _thumbnailTime: Date.now()
       };
-    } catch (e) {
+    } catch (_) {
       return undefined;
     }
   }

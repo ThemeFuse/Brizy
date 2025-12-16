@@ -30,6 +30,7 @@ import getMap from "./Map";
 import getMenuSimple from "./MenuSimple";
 import getMinistryBrandsArticleDetail from "./MinistryBrands/MinistryBrandsArticleDetail";
 import getMinistryBrandsArticleFeatured from "./MinistryBrands/MinistryBrandsArticleFeatured";
+import getMinistryBrandsArticleLayout from "./MinistryBrands/MinistryBrandsArticleLayout";
 import getMinistryBrandsArticleList from "./MinistryBrands/MinistryBrandsArticleList";
 import getMinistryBrandsEventCalendar from "./MinistryBrands/MinistryBrandsEventCalendar";
 import getMinistryBrandsEventDetail from "./MinistryBrands/MinistryBrandsEventDetail";
@@ -48,6 +49,9 @@ import getMinistryBrandsSermonFeatured from "./MinistryBrands/MinistryBrandsSerm
 import getMinistryBrandsSermonLayout from "./MinistryBrands/MinistryBrandsSermonLayout";
 import getMinistryBrandsSermonList from "./MinistryBrands/MinistryBrandsSermonList";
 import getMinistryBrandsStaffDetail from "./MinistryBrands/MinistryBrandsStaffDetail";
+import getMinistryBrandsStaffFeatured from "./MinistryBrands/MinistryBrandsStaffFeatured";
+import getMinistryBrandsStaffLayout from "./MinistryBrands/MinistryBrandsStaffLayout";
+import getMinistryBrandsStaffList from "./MinistryBrands/MinistryBrandsStaffList";
 import getPaypal from "./Paypal";
 import getPostExcerpt from "./PostExcerpt";
 import getPostTitle from "./PostTitle";
@@ -253,6 +257,8 @@ export function getProShortCodes(
     MinistryBrandsEventCalendar: false,
     MinistryBrandsSermonLayout: false,
     MinistryBrandsSermonList: false,
+    MinistryBrandsStaffList: false,
+    MinistryBrandsStaffLayout: false,
     MinistryBrandsSermonFeatured: false,
     MinistryBrandsSermonDetail: false,
     MinistryBrandsGroupList: false,
@@ -263,9 +269,11 @@ export function getProShortCodes(
     MinistryBrandsEventDetail: false,
     MinistryBrandsFormWidget: false,
     MinistryBrandsPrayerWidget: false,
-    MinistryBrandsArticleDetail: false,
-    MinistryBrandsArticleList: false,
+    MinistryBrandsStaffFeatured: false,
+    MinistryBrandsArticleLayout: false,
     MinistryBrandsStaffDetail: false,
+    MinistryBrandsArticleList: false,
+    MinistryBrandsArticleDetail: false,
     MinistryBrandsArticleFeatured: false,
 
     Paypal: false,
@@ -426,11 +434,14 @@ export const ShortCodesKeywords: Record<string, string> = {
   MinistryBrandsFormWidget:
     "Ministry Brands Form Widget organization form group submission",
   MinistryBrandsPrayerWidget: "Ministry Brands Prayer prayer request",
-  MinistryBrandsArticleDetail:
-    "Ministry Brands Article Detail article details information",
+  MinistryBrandsStaffFeatured: "Ministry Brands Staff Featured staff featured",
+  MinistryBrandsArticleLayout:
+    "Ministry Brands Article Layout article layout content structure",
+  MinistryBrandsStaffDetail: "Ministry Brands Staff Detail staff details",
   MinistryBrandsArticleList:
     "Ministry Brands Article List article list collection",
-  MinistryBrandsStaffDetail: "Ministry Brands Staff Detail staff details",
+  MinistryBrandsArticleDetail:
+    "Ministry Brands Article Detail article details information",
 
   Leadific: "Leadific engagement",
 
@@ -587,6 +598,10 @@ export function getSampleShortCodes(config: ConfigCommon) {
     MinistryBrandsArticleList: getMinistryBrandsArticleList(),
     MinistryBrandsStaffDetail: getMinistryBrandsStaffDetail(),
     MinistryBrandsArticleFeatured: getMinistryBrandsArticleFeatured(),
+    MinistryBrandsStaffList: getMinistryBrandsStaffList(),
+    MinistryBrandsStaffLayout: getMinistryBrandsStaffLayout(),
+    MinistryBrandsStaffFeatured: getMinistryBrandsStaffFeatured(),
+    MinistryBrandsArticleLayout: getMinistryBrandsArticleLayout(),
 
     Leadific: getLeadific(),
 

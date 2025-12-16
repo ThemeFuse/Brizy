@@ -365,7 +365,8 @@
   // Form Errors
   &__item--error {
     .brz-control__check-group,
-    .brz-control__radio {
+    .brz-control__radio,
+    .brz-forms2__user-agreement-checkbox {
       color: #f00 !important;
     }
   }
@@ -405,6 +406,43 @@
 
     &--uncheck,
     &--check {
+      cursor: pointer;
+    }
+
+    .brz-a.brz-forms2__checkbox-option-name {
+      color: inherit;
+    }
+
+    .brz-input {
+      &:checked ~ .brz-label {
+        .brz-control__check-group--check {
+          display: inline-block;
+        }
+
+        .brz-control__check-group--uncheck {
+          display: none;
+        }
+      }
+    }
+  }
+
+  // User Agreement Checkbox on Preview
+  .brz-forms2__user-agreement-checkbox {
+    .brz-label {
+      font: inherit;
+      display: inherit;
+      align-items: inherit;
+      justify-content: inherit;
+      width: 100%;
+      cursor: pointer;
+    }
+
+    .brz-control__check-group--check {
+      display: none;
+    }
+
+    .brz-control__check-group--uncheck,
+    .brz-control__check-group--check {
       cursor: pointer;
     }
 
@@ -815,6 +853,7 @@
 &.brz:not(.brz-ed) {
   .brz-control__radio .brz-input,
   .brz-control__check-group .brz-input,
+  .brz-forms2__user-agreement-checkbox .brz-input,
   .brz-input__upload .brz-input:not(.brz-input__upload-placeholder) {
     opacity: 0;
     pointer-events: none;

@@ -25,6 +25,7 @@ import { Store } from "visual/redux/store";
 import { ReduxState } from "visual/redux/types";
 import { css1 } from "visual/utils/cssStyle";
 import { makePlaceholder } from "visual/utils/dynamicContent";
+import { makeAttr } from "visual/utils/i18n/attribute";
 import * as Arr from "visual/utils/reader/array";
 import { diff } from "visual/utils/reader/object";
 import { encodeToString, parseFromString } from "visual/utils/string";
@@ -114,10 +115,9 @@ export class QuillComponent extends React.Component<Props> {
   quillClass?: ReturnType<typeof GetQuill>;
 
   private lastUpdatedValue = "";
-  save = debounce((text: string) => {
-    this.lastUpdatedValue = text;
+  save = debounce(() => {
     if (typeof this.props.onTextChange === "function") {
-      this.props.onTextChange(text);
+      this.props.onTextChange(this.lastUpdatedValue);
     }
   }, 500);
 
@@ -161,7 +161,6 @@ export class QuillComponent extends React.Component<Props> {
     const reinitForFonts = !isEqual(fonts, this.props.fonts);
     const reinitForValue = value !== this.lastUpdatedValue || forceUpdate;
     const quill = this.quill as _Quill;
-
     if (
       isEditor(this.props.renderContext) &&
       (reinitForValue || reinitForFonts) &&
@@ -249,7 +248,13 @@ export class QuillComponent extends React.Component<Props> {
     const prevGlobalBlocksLength = Object.keys(this.props.globalBlocks).length;
     const nextGlobalBlocksLength = Object.keys(nextProps.globalBlocks).length;
 
-    if (!isEqual(fonts, this.props.fonts) || value !== this.lastUpdatedValue) {
+    const hasFocus = this.quill && this.quill.hasFocus();
+    const isListOpen = this.props.isListOpen === true;
+
+    const reinitForValue = value !== this.lastUpdatedValue;
+
+    const shouldReinitValue = reinitForValue && !hasFocus && !isListOpen;
+    if (!isEqual(fonts, this.props.fonts) || shouldReinitValue) {
       return true;
     }
 
@@ -401,7 +406,8 @@ export class QuillComponent extends React.Component<Props> {
         });
       }
 
-      this.save(quill.root.innerHTML);
+      this.lastUpdatedValue = quill.root.innerHTML;
+      this.save();
 
       requestAnimationFrame(() => {
         if (!quill.getSelection() && quill.hasFocus()) {
@@ -436,6 +442,16 @@ export class QuillComponent extends React.Component<Props> {
     }
 
     return domNode;
+  }
+
+  /**
+   * Returns the last updated value from the Quill editor.
+   * Note: This may include changes that haven't been propagated to the parent
+   * component yet due to the 500ms debounce on text changes.
+   * @returns The current HTML content of the Quill editor
+   */
+  getCurrentValue(): string {
+    return this.lastUpdatedValue;
   }
 
   destroyPlugin(): void {
@@ -535,8 +551,8 @@ export class QuillComponent extends React.Component<Props> {
     const startIndex = this.currentSelection?.index ?? 0;
 
     setTimeout(() => {
-      if (this.contentEditable?.current?.innerHTML) {
-        this.reinitPluginWithValue(this.contentEditable.current.innerHTML, {
+      if (this.quill?.root.innerHTML) {
+        this.reinitPluginWithValue(this.quill?.root.innerHTML, {
           restoreSelectionIndex: startIndex + pastedData.length + 1
         });
       }
@@ -558,7 +574,8 @@ export class QuillComponent extends React.Component<Props> {
 
     if (isEditor(renderContext) && typeof this.quillUtils !== "undefined") {
       return this.quillUtils.mapElements(html, ($elem: JQuery) => {
-        const isTooltip = !!$elem.attr("data-tooltip");
+        const isTooltip =
+          !!$elem.attr(makeAttr("tooltip")) || !!$elem.attr("data-tooltip");
 
         if (isTooltip) {
           return;
@@ -577,7 +594,8 @@ export class QuillComponent extends React.Component<Props> {
     } else {
       return this.quillUtils.mapElements(html, ($elem: cheerio.Cheerio) => {
         const uniqId = uuid(5);
-        const tooltipAttr = $elem.attr("data-tooltip");
+        const tooltipAttr =
+          $elem.attr(makeAttr("tooltip")) || $elem.attr("data-tooltip");
 
         if (tooltipAttr) {
           const { v } = this.props;
@@ -618,7 +636,8 @@ export class QuillComponent extends React.Component<Props> {
               tooltipTriggerClick === "on" ? "click" : "hover"
           });
 
-          $elem.attr("data-tooltip", encoded);
+          $elem.removeAttr("data-tooltip");
+          $elem.attr(makeAttr("tooltip"), encoded);
           $elem.addClass(className);
 
           return;
@@ -661,10 +680,11 @@ export class QuillComponent extends React.Component<Props> {
       try {
         markup = changeRichText(markup, store, getConfig());
       } catch (e) {
-        let msg = "Something wen wrong with richText VIEW compilation";
+        let msg = "Something went wrong with richText VIEW compilation";
         if (process.env.NODE_ENV === "development") {
           msg += `: ${e}`;
         }
+        // eslint-disable-next-line no-console
         console.log(msg);
       }
 
@@ -928,7 +948,6 @@ export class QuillComponent extends React.Component<Props> {
     this.setGeneratedCss();
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   // applyLegacyKeys(line: any): void {
   //   const legacyKeys = [
   //     "fontStyle",

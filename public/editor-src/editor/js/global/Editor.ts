@@ -18,16 +18,22 @@ const thirdPartyShortcodes: Record<
 const Editor = {
   // components
 
-  registerComponent(component: EditorComponent): void {
+  registerComponent({
+    id,
+    component
+  }: {
+    id: string;
+    component: EditorComponent;
+  }): void {
     if (process.env.NODE_ENV === "development") {
-      if (!component.componentId) {
+      if (!id) {
         throw new Error(
           "an EditorComponent must have a static componentId property"
         );
       }
     }
 
-    components[component.componentId] = component;
+    components[id] = component;
   },
 
   getComponents(): Record<string, EditorComponent | null> {
@@ -59,6 +65,7 @@ const Editor = {
     }
 
     if (thirdPartyShortcodes[id]) {
+      // eslint-disable-next-line no-console
       console.warn("Already registered third-party element config", id);
       return;
     }

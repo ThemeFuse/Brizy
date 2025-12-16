@@ -420,14 +420,14 @@ function pageWPSplitRules(data: RuleData): ReferenceRule {
       }
 
       if (isReferenceAllIn(v)) {
-        const [_, taxonomy] = v.split("|"); // eslint-disable-line @typescript-eslint/no-unused-vars
+        const [_, taxonomy] = v.split("|");
         const taxonomies = postTerms.filter((p) => p.taxonomy === taxonomy);
 
         return taxonomies.length > 0;
       }
 
       if (isReferenceAllChild(v)) {
-        const [_, taxonomy] = v.split("|"); // eslint-disable-line @typescript-eslint/no-unused-vars
+        const [_, taxonomy] = v.split("|");
         const taxonomies = postTermParents.filter(
           (p) => p.taxonomy === taxonomy
         );

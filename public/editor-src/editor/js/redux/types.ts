@@ -62,6 +62,7 @@ export type ReduxState = {
     blocks: {
       [key: string]: BlocksHTML;
     };
+    initialized: boolean;
   };
   fonts: Fonts;
   ui: {

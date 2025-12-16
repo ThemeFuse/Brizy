@@ -30,7 +30,8 @@ export default function () {
               activePaginationColorPalette: "color2",
               previewTypographyFontStyle: "paragraph",
               previewColorPalette: "color7",
-              metaLinksColorPalette: "color4",
+              metaLinksColorPalette: "color3",
+              hoverMetaLinksColorPalette: "color4",
               filterBgColorPalette: "color6"
             }
           }

@@ -57,7 +57,7 @@ export const handleCreateSaveBlock = async ({
 
   try {
     screenshotsSupported = await browserSupports();
-  } catch (e) {
+  } catch (_) {
     screenshotsSupported = false;
   }
 

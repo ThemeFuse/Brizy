@@ -9,13 +9,6 @@
     text-decoration: none;
   }
 
-  input:-webkit-autofill,
-  input:-webkit-autofill:hover,
-  input:-webkit-autofill:focus {
-    transition: background-color 50000s ease-in-out 0s;
-    -webkit-text-fill-color: inherit !important;
-  }
-
   &__container {
     display: grid;
     width: 100%;
@@ -24,20 +17,6 @@
   }
 
   &__item {
-    &--meta {
-      &--title {
-        a {
-          color: inherit;
-        }
-      }
-    }
-&--meta {
-      &--title {
-        a {
-          color: inherit;
-        }
-      }
-    }
     &--meta {
       &--title {
         a {

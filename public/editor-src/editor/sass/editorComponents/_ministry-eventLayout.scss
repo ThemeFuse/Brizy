@@ -16,13 +16,6 @@
     text-decoration: none;
   }
 
-  input:-webkit-autofill,
-  input:-webkit-autofill:hover,
-  input:-webkit-autofill:focus {
-    transition: background-color 50000s ease-in-out 0s;
-    -webkit-text-fill-color: inherit !important;
-  }
-
   &--view {
     ul {
       display: flex;

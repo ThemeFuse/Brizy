@@ -6,10 +6,10 @@ import React, {
   useEffect,
   useState
 } from "react";
-import { Scrollbars } from "react-custom-scrollbars";
 import { Manager, Popper, Reference } from "react-popper";
 import ClickOutside from "visual/component/ClickOutside";
 import EditorIcon from "visual/component/EditorIcon";
+import { Scrollbar } from "visual/component/Scrollbar";
 import { t } from "visual/utils/i18n";
 import {
   MultiSelectItemProps as ItemProps,
@@ -210,17 +210,9 @@ function SelectDropdown<T>({
           <EditorIcon icon="nc-circle-02" className={spinnerClassName} />
         </div>
       )}
-      <Scrollbars
+      <Scrollbar
         autoHeight={true}
         autoHeightMax={150} // hardcoded for 5 items * 30px each
-        renderThumbVertical={(props): ReactElement => {
-          return (
-            <div
-              className={"brz-ed-control__multiSelect__scroll-thumb"}
-              {...props}
-            />
-          );
-        }}
       >
         <ul className="brz-ul">
           {items.map((item) => (
@@ -235,7 +227,7 @@ function SelectDropdown<T>({
           ))}
           {search && searchIsEmpty && <SelectItemNoResults />}
         </ul>
-      </Scrollbars>
+      </Scrollbar>
     </div>
   );
 }

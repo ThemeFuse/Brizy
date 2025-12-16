@@ -20,6 +20,7 @@ import Toolbar, { ToolbarExtend } from "visual/component/Toolbar";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { shouldRenderPopup } from "visual/editorComponents/tools/Popup";
+import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import { isEditor } from "visual/providers/RenderProvider";
 import { blocksDataSelector, deviceModeSelector } from "visual/redux/selectors";
 import { isPro, isRTL } from "visual/utils/env";
@@ -60,7 +61,7 @@ class Column extends EditorComponent {
   toolbarRef = React.createRef();
 
   static get componentId() {
-    return "Column";
+    return ElementTypes.Column;
   }
 
   shouldComponentUpdate(nextProps) {
@@ -338,7 +339,15 @@ class Column extends EditorComponent {
   }
 
   renderForEdit(v, vs, vd) {
-    const { items, customClassName, cssClass, customAttributes } = v;
+    const {
+      items,
+      customClassName,
+      cssClass,
+      customAttributes,
+      heightStyle,
+      mobileHeightStyle,
+      tabletHeightStyle
+    } = v;
     const {
       meta: { inGrid, posts }
     } = this.props;
@@ -346,6 +355,12 @@ class Column extends EditorComponent {
     const isInnerRow = this.isInnerRow();
 
     const config = this.getGlobalConfig();
+
+    const isMaxHeight = [
+      heightStyle,
+      mobileHeightStyle,
+      tabletHeightStyle
+    ].includes("max-height");
 
     const classNameColumn = classnames(
       "brz-columns",
@@ -362,7 +377,8 @@ class Column extends EditorComponent {
           contexts: this.getContexts()
         })
       ),
-      cssClass || customClassName
+      cssClass || customClassName,
+      { "brz-columns--max-height": isMaxHeight }
     );
 
     const animationClassName = this.getAnimationClassName(v, vs, vd);
@@ -460,8 +476,22 @@ class Column extends EditorComponent {
   }
 
   renderForView(v, vs, vd) {
-    const { tagName, customClassName, cssClass, customAttributes } = v;
+    const {
+      tagName,
+      customClassName,
+      cssClass,
+      customAttributes,
+      heightStyle,
+      mobileHeightStyle,
+      tabletHeightStyle
+    } = v;
     const { sectionPopup, sectionPopup2 } = this.props.meta;
+
+    const isMaxHeight = [
+      heightStyle,
+      mobileHeightStyle,
+      tabletHeightStyle
+    ].includes("max-height");
 
     const id = getCSSId(v);
     const classNameColumn = classnames(
@@ -477,7 +507,8 @@ class Column extends EditorComponent {
           contexts: this.getContexts()
         })
       ),
-      cssClass || customClassName
+      cssClass || customClassName,
+      { "brz-columns--max-height": isMaxHeight }
     );
 
     const animationClassName = this.getAnimationClassName(v, vs, vd);

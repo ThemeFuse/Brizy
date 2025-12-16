@@ -28,6 +28,7 @@ import {
   DBMigration,
   withMigrations
 } from "visual/editorComponents/tools/withMigrations";
+import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import { isStory } from "visual/providers/EditorModeProvider";
 import { isEditor, isView } from "visual/providers/RenderProvider";
 import { blocksDataSelector } from "visual/redux/selectors";
@@ -152,8 +153,8 @@ class Image extends EditorComponent<Value, Props, State> {
     };
   }
 
-  static get componentId() {
-    return "Image";
+  static get componentId(): ElementTypes.Image {
+    return ElementTypes.Image;
   }
 
   componentDidMount() {

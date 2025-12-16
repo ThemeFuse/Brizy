@@ -1,8 +1,8 @@
 import { noop, without } from "es-toolkit";
 import React, { Component } from "react";
-import Scrollbars from "react-custom-scrollbars";
 import Select from "visual/component/Controls/Select";
 import SelectItem from "visual/component/Controls/Select/SelectItem";
+import { Scrollbar } from "visual/component/Scrollbar";
 import { t } from "visual/utils/i18n";
 import { Button } from "../../Button";
 import { isMaxFields } from "../../utils";
@@ -92,13 +92,9 @@ class SelectFields extends Component {
     );
 
     return (
-      <Scrollbars
-        autoHeight={true}
-        autoHeightMax="100%"
-        style={{ height: "auto" }}
-      >
+      <Scrollbar autoHeight={true} autoHeightMax="100%" theme="light">
         {options}
-      </Scrollbars>
+      </Scrollbar>
     );
   }
 

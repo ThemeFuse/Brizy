@@ -18,7 +18,7 @@ export default function ($node: JQuery): void {
   const cartClient = new CartApiMock();
   const productClient = new ProductApiMock();
 
-  node.querySelectorAll(`.brz-shopify-quantity`).forEach((item) => {
+  node.querySelectorAll(".brz-shopify-quantity").forEach((item) => {
     const t = item.getAttribute(makeAttr("product-handle")) as
       | ProductHandle
       | "";

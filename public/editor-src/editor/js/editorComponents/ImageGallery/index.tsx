@@ -10,6 +10,7 @@ import EditorComponent, {
   Props as NextProps
 } from "visual/editorComponents/EditorComponent";
 import { ComponentsMeta } from "visual/editorComponents/EditorComponent/types";
+import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import { SizeType } from "visual/global/Config/types/configs/common";
 import { isEditor, isView } from "visual/providers/RenderProvider";
 import {
@@ -87,8 +88,8 @@ class ImageGallery extends EditorComponent<Value, Props> {
     this.initIsotope();
   }, 500);
 
-  static get componentId(): "ImageGallery" {
-    return "ImageGallery";
+  static get componentId(): ElementTypes.ImageGallery {
+    return ElementTypes.ImageGallery;
   }
 
   handleAllTagChange = (allTag: string): void => {

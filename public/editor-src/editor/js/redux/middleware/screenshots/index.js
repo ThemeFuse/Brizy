@@ -265,9 +265,8 @@ async function pageBlockTaskCb(
       screenshot = await makeNodeScreenshot(node, config);
     } catch (e) {
       if (process.env.NODE_ENV === "development") {
-        /* eslint-disable no-console */
+        /* eslint-disable-next-line no-console */
         console.warn(e);
-        /* eslint-enabled no-console */
       }
       return;
     }
@@ -368,9 +367,8 @@ async function globalBlockTaskCb(
       screenshot = await makeNodeScreenshot(node, config);
     } catch (e) {
       if (process.env.NODE_ENV === "development") {
-        /* eslint-disable no-console */
+        /* eslint-disable-next-line no-console */
         console.warn(e);
-        /* eslint-enabled no-console */
       }
       return;
     }

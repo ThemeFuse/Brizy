@@ -49,10 +49,19 @@ export const getItems: GetItems<Value, Props> = (props) => {
               label: t("Display"),
               options: [
                 {
-                  id: "showMetaIcons",
+                  id: "showMetaHeadings",
                   type: "switch",
-                  label: t("Meta Icons"),
+                  label: t("Meta Headings"),
                   devices: "desktop"
+                },
+                {
+                  id: "showMetaIcons",
+                  label: t("Meta Icons"),
+                  type: "switch",
+                  devices: "desktop",
+                  helper: {
+                    content: t("Show icons when Meta Headings are enabled")
+                  }
                 },
                 {
                   id: "showImage",
@@ -63,7 +72,7 @@ export const getItems: GetItems<Value, Props> = (props) => {
                 {
                   id: "showTitle",
                   type: "switch",
-                  label: t("Title"),
+                  label: t("Name"),
                   devices: "desktop"
                 },
                 {
@@ -97,6 +106,15 @@ export const getItems: GetItems<Value, Props> = (props) => {
                   devices: "desktop"
                 },
                 {
+                  id: "showFullEmail",
+                  type: "switch",
+                  devices: "desktop",
+                  label: t("Full Email"),
+                  helper: {
+                    content: t("Show full email address instead of a mail icon")
+                  }
+                },
+                {
                   id: "showFacebook",
                   type: "switch",
                   label: t("Facebook"),
@@ -105,7 +123,7 @@ export const getItems: GetItems<Value, Props> = (props) => {
                 {
                   id: "showTwitter",
                   type: "switch",
-                  label: t("Twitter"),
+                  label: t("Twitter(X)"),
                   devices: "desktop"
                 },
                 {
@@ -123,13 +141,7 @@ export const getItems: GetItems<Value, Props> = (props) => {
                 {
                   id: "showRss",
                   type: "switch",
-                  label: t("Rss"),
-                  devices: "desktop"
-                },
-                {
-                  id: "showMetaHeadings",
-                  type: "switch",
-                  label: t("Meta Headings"),
+                  label: t("RSS Feed"),
                   devices: "desktop"
                 },
                 {
@@ -137,6 +149,12 @@ export const getItems: GetItems<Value, Props> = (props) => {
                   type: "switch",
                   label: t("About Text"),
                   devices: "desktop"
+                },
+                {
+                  id: "showPreviousPage",
+                  type: "switch",
+                  devices: "desktop",
+                  label: t("Previous Page")
                 }
               ]
             }

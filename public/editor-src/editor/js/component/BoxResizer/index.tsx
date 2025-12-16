@@ -4,7 +4,9 @@ import { rolesHOC } from "visual/component/Roles";
 import { hideToolbar, showLastHiddenToolbar } from "visual/component/Toolbar";
 import { isStory, useEditorMode } from "visual/providers/EditorModeProvider";
 import { renderHOC } from "visual/providers/RenderProvider/renderHOC";
+import { ReduxAction } from "visual/redux/actions2";
 import { deviceModeSelector } from "visual/redux/selectors";
+import { ReduxState } from "visual/redux/types";
 import { Resizer } from "./Resizer";
 import {
   resizerTransformPatch,
@@ -32,7 +34,7 @@ let startValue: RM | null = null;
 
 const BoxResizer = forwardRef<HTMLElement, Props>(
   ({ value, onChange, meta = {}, ...props }, ref): ReactElement => {
-    const store = useStore();
+    const store = useStore<ReduxState, ReduxAction>();
     const { mode } = useEditorMode();
     const _isStory = isStory(mode);
 

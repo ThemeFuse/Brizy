@@ -10,6 +10,7 @@ import { CustomTag } from "visual/component/CustomTag";
 import { Roles } from "visual/component/Roles";
 import Toolbar, { ToolbarExtend } from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
+import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import { makePlaceholder } from "visual/utils/dynamicContent";
 import { getContainerW } from "visual/utils/meta";
 import { getCSSId } from "visual/utils/models/cssId";
@@ -38,7 +39,7 @@ class SectionMegaMenu extends EditorComponent {
   toolbarRef = React.createRef();
 
   static get componentId() {
-    return "SectionMegaMenu";
+    return ElementTypes.SectionMegaMenu;
   }
 
   componentDidMount() {

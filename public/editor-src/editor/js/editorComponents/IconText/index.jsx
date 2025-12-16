@@ -4,6 +4,7 @@ import React from "react";
 import CustomCSS from "visual/component/CustomCSS";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import EditorComponent from "visual/editorComponents/EditorComponent";
+import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import defaultValue from "./defaultValue.json";
 import * as sidebarExtendButton from "./sidebarExtendButton";
 import * as sidebarExtendParent from "./sidebarExtendParent";
@@ -25,7 +26,7 @@ class IconText extends EditorComponent {
   };
 
   static get componentId() {
-    return "IconText";
+    return ElementTypes.IconText;
   }
 
   componentDidMount() {

@@ -1,5 +1,6 @@
 import React from "react";
 import EditorComponent from "visual/editorComponents/EditorComponent";
+import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import UIEvents from "visual/global/UIEvents";
 import { uuid } from "visual/utils/uuid";
 import Blocks from "./Blocks";
@@ -8,7 +9,7 @@ import { changeValueAfterDND } from "./utils";
 
 class Page extends EditorComponent {
   static get componentId() {
-    return "Page";
+    return ElementTypes.Page;
   }
 
   static defaultValue = defaultValue;

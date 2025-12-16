@@ -131,7 +131,7 @@ class ApiConnect extends Component {
           onChangeProgress({ showProgress: true });
           onChangeNext();
           return;
-        } catch (e) {
+        } catch (_) {
           this.setState({
             nextLoading: false,
             error: t("Fail to authenticate")

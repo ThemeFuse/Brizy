@@ -282,7 +282,7 @@ const calculateFieldValue = (
       if (inputValue) {
         inputValue.value = value;
       }
-    } catch (error) {
+    } catch (_) {
       // If formula is invalid, show error message and add invalid class
       calculatedField.innerText = "Invalid formula";
 

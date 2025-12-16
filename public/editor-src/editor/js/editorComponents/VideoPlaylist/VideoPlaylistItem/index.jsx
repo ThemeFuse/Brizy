@@ -10,6 +10,7 @@ import { isCustomVideo } from "visual/component/Controls/VideoPlaylist/utils";
 import CustomCSS from "visual/component/CustomCSS";
 import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
+import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import { getImageUrl } from "visual/utils/image";
 import { attachRefs } from "visual/utils/react";
 import { getUrlQueryParam } from "visual/utils/url";
@@ -26,7 +27,7 @@ class VideoPlaylistItem extends EditorComponent {
   static defaultValue = defaultValue;
 
   static get componentId() {
-    return "VideoPlaylistItem";
+    return ElementTypes.VideoPlaylistItem;
   }
 
   handleTitleChange = (title) => {

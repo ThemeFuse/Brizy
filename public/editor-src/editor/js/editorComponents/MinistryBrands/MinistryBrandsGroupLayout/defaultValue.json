@@ -79,7 +79,9 @@
       "previewTypographyFontFamily": "lato",
       "paginationTypographyFontFamily": "lato",
       "metaLinksTypographyFontFamily": "lato",
-      "detailButtonTypographyFontFamily": "lato"
+      "detailButtonTypographyFontFamily": "lato",
+      "resultsHeadingTypographyFontFamily": "lato",
+      "noResultsTypographyFontFamily": "lato"
     },
 
     "filterTypographyFontStyle": "",
