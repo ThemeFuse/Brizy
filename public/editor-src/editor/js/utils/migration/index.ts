@@ -1,4 +1,5 @@
 import { ElementModel } from "visual/component/Elements/Types";
+import { RenderType } from "visual/providers/RenderProvider";
 
 export interface Deps<T> {
   [k: string]: T;
@@ -6,7 +7,11 @@ export interface Deps<T> {
 
 export type Migration<D extends Deps<unknown>> = {
   version: number;
-  cb: (value: ElementModel, deps?: D) => ElementModel;
+  cb: (
+    value: ElementModel,
+    deps?: D,
+    renderContext?: RenderType
+  ) => ElementModel;
 };
 
 function compareVersions(m1: number, m2: number): -1 | 0 | 1 {
@@ -45,7 +50,8 @@ export function findMigrations<D extends Deps<unknown>>(
 export function migrate<D extends Deps<unknown>>(
   migrations: Migration<D>[],
   value: ElementModel,
-  deps?: D
+  deps?: D,
+  renderContext?: RenderType
 ): ElementModel {
-  return migrations.reduce((acc, m) => m.cb(acc, deps), value);
+  return migrations.reduce((acc, m) => m.cb(acc, deps, renderContext), value);
 }
