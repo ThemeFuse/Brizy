@@ -16,6 +16,7 @@ export default function (config: ConfigCommon) {
             type: ElementTypes.RichText,
             value: {
               _styles: ["richText"],
+              _version: 3,
               ...config.contentDefaults?.[ElementTypes.RichText]
             }
           }
