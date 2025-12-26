@@ -313,9 +313,26 @@ class Brizy_Admin_Fonts_Manager {
 			'id'      => get_post_meta( $font->ID, 'brizy_post_uid', true ),
 			'family'  => $font->post_title,
 			'type'    => get_post_meta( $font->ID, 'brizy-font-type', true ),
-			'weights' => array_map( function ( $v ) {
-				return $v['meta_value'];
-			}, $weights )
+			'weights' => array_map( function ( $v ) use ( $font ) {
+            	$weight = $v['meta_value'];
+				
+        		$attachments = get_posts( array(
+            	    'post_type'      => 'attachment',
+            	    'post_parent'    => $font->ID,
+            	    'meta_key'       => 'brizy-font-weight',
+            	    'meta_value'     => $weight,
+            	    'posts_per_page' => -1
+            	) );
+				
+            	foreach ( $attachments as $att ) {
+            	    $type = get_post_meta( $att->ID, 'brizy-font-file-type', true );
+            	    if ( $type && stripos( $type, 'italic' ) !== false ) {
+            	        return $weight . 'italic';
+            	    }
+            	}
+			
+            	return $weight;
+        	}, $weights )
 		);
 	}
 
