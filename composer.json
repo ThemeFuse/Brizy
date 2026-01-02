@@ -19,8 +19,11 @@
     "symfony/dotenv": "^3",
     "tburry/pquery": "dev-master"
   },
-  "config": {
-    "platform-check": false
+ "config": {
+    "platform-check": false,
+    "audit": {
+      "block-insecure": false
+    }
   },
   "repositories": [
     {
