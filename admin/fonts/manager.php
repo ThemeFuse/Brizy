@@ -23,23 +23,7 @@ class Brizy_Admin_Fonts_Manager {
 		$result = array();
 
 		foreach ( $fonts as $font ) {
-
-			$weights = $wpdb->get_results( $wpdb->prepare(
-				"SELECT m.meta_value FROM {$wpdb->posts} p 
-						JOIN {$wpdb->postmeta} m ON  m.post_id=p.ID  && m.meta_key='brizy-font-weight'
-						WHERE p.post_parent=%d
-						",
-				array( $font->ID ) ), ARRAY_A
-			);
-
-			$result[] = array(
-				'id'      => get_post_meta( $font->ID, 'brizy_post_uid', true ),
-				'family'  => $font->post_title,
-				'type'    => get_post_meta( $font->ID, 'brizy-font-type', true ),
-				'weights' => array_values( array_unique( array_map( function ( $v ) {
-					return $v['meta_value'];
-				}, $weights ) ) )
-			);
+			$result[] = $this->getFontReturnData( $font );
 		}
 
 		return $result;
@@ -302,9 +286,14 @@ class Brizy_Admin_Fonts_Manager {
 		global $wpdb;
 
 		$weights = $wpdb->get_results( $wpdb->prepare(
-			"SELECT DISTINCT m.meta_value FROM {$wpdb->posts} p 
-						JOIN {$wpdb->postmeta} m ON  m.post_id=p.ID && p.post_parent=%d && m.meta_key='brizy-font-weight'
-						",
+			"
+				SELECT
+					DISTINCT CONCAT(m.meta_value, IF( LOCATE('italic', m2.meta_value) > 0, 'italic', '' ) ) as meta_value
+				FROM wp_posts p
+					JOIN wp_postmeta m ON m.post_id=p.ID AND m.meta_key='brizy-font-weight'
+					JOIN wp_postmeta m2 ON m2.post_id=p.ID AND m2.meta_key='brizy-font-file-type'
+				WHERE p.post_parent=%d
+			",
 			array( $font->ID ) ), ARRAY_A
 		);
 
@@ -314,53 +303,9 @@ class Brizy_Admin_Fonts_Manager {
 			'family'  => $font->post_title,
 			'type'    => get_post_meta( $font->ID, 'brizy-font-type', true ),
 			'weights' => array_map( function ( $v ) use ( $font ) {
-            	$weight = $v['meta_value'];
-				
-        		$attachments = get_posts( array(
-            	    'post_type'      => 'attachment',
-            	    'post_parent'    => $font->ID,
-            	    'meta_key'       => 'brizy-font-weight',
-            	    'meta_value'     => $weight,
-            	    'posts_per_page' => -1
-            	) );
-				
-            	foreach ( $attachments as $att ) {
-            	    $type = get_post_meta( $att->ID, 'brizy-font-file-type', true );
-            	    if ( $type && stripos( $type, 'italic' ) !== false ) {
-            	        return $weight . 'italic';
-            	    }
-            	}
-			
-            	return $weight;
+
+            	return $v['meta_value'];
         	}, $weights )
-		);
-	}
-
-
-	/**
-	 * @param wpdb $wpdb
-	 * @param $font
-	 *
-	 * @return array
-	 */
-	private function getFontReturnDataForExport( $font ) {
-		global $wpdb;
-
-		$weights = $wpdb->get_results( $wpdb->prepare(
-			"SELECT DISTINCT m.meta_value FROM {$wpdb->posts} p 
-						JOIN {$wpdb->postmeta} m ON  m.post_id=p.ID && p.post_parent=%d && m.meta_key='brizy-font-weight'
-						",
-			array( $font->ID ) ), ARRAY_A
-		);
-
-
-		return array(
-			'id'      => get_post_meta( $font->ID, 'brizy_post_uid', true ),
-			'family'  => $font->post_title,
-			'type'    => get_post_meta( $font->ID, 'brizy-font-type', true ),
-			'weights' => array_map( function ( $v ) {
-				return $v['meta_value'];
-			}, $weights )
 		);
 	}
 }
