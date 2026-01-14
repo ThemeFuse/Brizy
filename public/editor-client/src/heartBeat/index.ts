@@ -1,12 +1,16 @@
 import { sendHeartBeat, sendHeartBeatTakeOver } from "../api";
 import { SendHeartBeat } from "../api/types";
-import { Config } from "../config";
+import { getConfig } from "../config";
+import { resetNonce } from "./utils";
 
-export function heartBeat(config: Config): SendHeartBeat {
-  return {
+export function heartBeat(): SendHeartBeat {  return {
     async sendHandler(res, rej) {
       try {
-        res(await sendHeartBeat(config));
+        const config = getConfig();
+        const data = await sendHeartBeat(config);
+
+        resetNonce(data);
+        res(data);
       } catch (e) {
         rej(`API Client: Failed to heartBeat, error: \n\t ${e}`);
       }
