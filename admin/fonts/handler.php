@@ -67,13 +67,14 @@ class Brizy_Admin_Fonts_Handler extends Brizy_Public_AbstractProxy {
 				}
 
 				foreach ( $types as $type => $url ) {
+					$isItalic = stripos( $type, 'italic' ) !== false;
 
 					$css .= "
 						@font-face {
 				            font-family: '$family';
-				            font-style: " . ( ( $style = trim( preg_replace( "/\d+/", "", $weight ) ) ) ? $style : 'normal' ) . ";
+				            font-style: " . ( ( $style = trim( preg_replace( "/\d+/", "", $weight ) ) ) ? $style : ($isItalic ? 'italic' : 'normal') ) . ";
 				            font-weight: " . trim( preg_replace( "/[^\d]+/", "", $weight ) ) . ";
-				            src: local('$family'), url($url) format('" . ( $type == 'ttf' ? 'truetype' : $type ) . "');
+				            src: local('$family'), url($url) format('" . ( $type == 'ttf' ? 'truetype' : ($isItalic ? 'truetype' : $type) ) . "');
 				        }
 					";
 				}
