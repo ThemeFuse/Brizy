@@ -101,6 +101,9 @@ class Brizy_Compatibilities_Init {
 		if ( class_exists( 'COMPLIANZ' ) ) {
 			new Brizy_Compatibilities_ComplianzGpdr();
 		}
+		if ( class_exists( '\DevOwl\RealCookieBanner\Core' ) ) {
+			new Brizy_Compatibilities_RealCookieBanner();
+		}
 		if ( class_exists( 'WP_Import' ) ) {
 			new Brizy_Compatibilities_WordpressImporter();
 		}
