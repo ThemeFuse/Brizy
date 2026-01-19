@@ -110,6 +110,9 @@ class Brizy_Compatibilities_Init {
 		if ( class_exists( 'WP_Optimize' ) ) {
 			new Brizy_Compatibilities_WpOptimize();
 		}
+		if ( function_exists( 'page_optimize_bail' ) ) {
+			new Brizy_Compatibilities_PageOptimize();
+		}
 		if ( defined( 'JETPACK__PLUGIN_FILE' ) ) {
 			new Brizy_Compatibilities_Jetpack();
 		}
