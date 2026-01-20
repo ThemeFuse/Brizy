@@ -65,6 +65,7 @@ const Editor = {
     }
 
     if (thirdPartyShortcodes[id]) {
+      // eslint-disable-next-line no-console
       console.warn("Already registered third-party element config", id);
       return;
     }

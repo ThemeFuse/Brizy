@@ -382,7 +382,7 @@ const SortableTree = () => {
       onDragCancel={resetState}
     >
       <SortableContext items={sortedIds} strategy={verticalListSortingStrategy}>
-        <Scrollbar theme="dark">
+        <Scrollbar theme="dark" absolute>
           <ul className="brz-navigator-list">
             {flattenedVisibleItems.map((item) => (
               <SortableTreeItem

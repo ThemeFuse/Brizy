@@ -101,7 +101,7 @@ class Leadific extends EditorComponent<Value, Props> {
     const text = (
       <DynamicContentHelper
         placeholder={makePlaceholder({
-          content: `{{brizy_leadific_field}}`,
+          content: "{{brizy_leadific_field}}",
           attr: { key: leadificCustomFields }
         })}
         props={{ className: "brz-leadific__content" }}

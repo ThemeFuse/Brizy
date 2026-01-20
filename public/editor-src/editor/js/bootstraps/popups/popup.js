@@ -43,6 +43,7 @@ const makeDataAttr = (name, value) => {
             }
           })
           .catch(function (r) {
+            // eslint-disable-next-line no-console
             console.log("Error", r);
           });
       }

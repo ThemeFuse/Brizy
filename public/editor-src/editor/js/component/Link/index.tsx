@@ -37,7 +37,7 @@ type Props = PropsWithChildren<
   }
 >;
 
-const _Link = (
+const LinkComponent = (
   {
     className,
     style,
@@ -118,5 +118,5 @@ const _Link = (
   );
 };
 
-export const Link = forwardRef(_Link) as typeof _Link;
+export const Link = forwardRef(LinkComponent) as typeof LinkComponent;
 export default Link;

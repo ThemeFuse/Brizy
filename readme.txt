@@ -2,9 +2,9 @@
 Contributors: themefuse
 Tags: page builder, website builder, brizy, editor, visual editor, unyson, wysiwyg, landing page, drag-and-drop, design, landing page builder, front-end builder
 Requires at least: 4.5
-Tested up to: 6.8.3
+Tested up to: 6.9
 Requires PHP: 7.2.24
-Stable tag: 2.7.18
+Stable tag: 2.7.21
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -137,19 +137,43 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 
 == Changelog ==
 
+= 2.7.21 - 2025-12-18 =
+* Fixed: Text copy and paste shows editable text in preview
+
+= 2.7.20 - 2025-12-15 =
+* New:  Translations now add country codes to image alt text
+* New:  Form agreement checkbox option
+* New:  Column element includes a max-height option
+* New:  Block kits selection issue resolved
+* Fixed:  Tabs toolbar no longer opens incorrect tabs
+* Fixed:  RichText slider options no longer trigger infinite re-render
+* Fixed:  Page compilation error resolved
+* Fixed:  Video element default link now works correctly
+* Fixed:  Global style font changes now apply correctly in preview
+* Improved:  Lazy loading added for preview.pro.min.css
+* Improved:  Builder upgraded to the latest Redux version
+* Improved:  State management migrated from Recoil to Valtio
+* Improved:  ESLint and related dependencies updated
+* Improved:  Testing Library React dependencies updated
+* Improved:  Editor now uses an internal scrollbar instead of react-custom-scrollbars
+
+= 2.7.19 - 2025-12-03 =
+* Fixed: Richtext does not works correctly for emails
+
+
 = 2.7.18 - 2025-12-01 =
 * Improved: Input Text - retains its value when the toolbar is closed instantly
 * Improved: Removed old JavaScript code for cleaner performance
-* Fixed: Rich-Text – added static className support for background image blots
-* Fixed: Rich-Text – dynamic content for third-party integrations now replaces correctly
-* Fixed: Rich-Text – image mask restored for third-party instances
-* Fixed: Rich-Text – preview now shows latest edits for third-party use
-* Fixed: Rich-Text – links now work properly in third-party preview
-* Fixed: Media Library – select menu now opens correctly
-* Fixed: Addable – improved third-party compatibility and behavior
-* Fixed: Icons – outline icons display correctly in the editor
-* Fixed: Box Shadow – blur 0 now applies properly
-* Fixed: Tabs – toolbar now opens the correct tab
+* Fixed: Rich-Text - added static className support for background image blots
+* Fixed: Rich-Text - dynamic content for third-party integrations now replaces correctly
+* Fixed: Rich-Text - image mask restored for third-party instances
+* Fixed: Rich-Text - preview now shows latest edits for third-party use
+* Fixed: Rich-Text - links now work properly in third-party preview
+* Fixed: Media Library - select menu now opens correctly
+* Fixed: Addable - improved third-party compatibility and behavior
+* Fixed: Icons - outline icons display correctly in the editor
+* Fixed: Box Shadow - blur 0 now applies properly
+* Fixed: Tabs - toolbar now opens the correct tab
 
 = 2.7.17 - 2025-11-10 =
 * New: Navigator component
@@ -162,62 +186,62 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 
 = 2.7.16 - 2025-10-21 =
 
-* New: Counter – added “fix value” option for better number control
-* New: Context Menu – improved copy/paste styling on Firefox
-* New: Section – introduced CSS variable for full-height sections
-* New: Typography – improved custom-style handling
-* Fixed: Story – widget sizes preserved when pasting styles
-* Fixed: Story – custom attributes now work correctly
-* Fixed: Typography – toolbar now applies default font style properly
-* Fixed: Row – “show on device” visibility works correctly
-* Fixed: Link – absolute URLs keep their original link format
+* New: Counter - added “fix value” option for better number control
+* New: Context Menu - improved copy/paste styling on Firefox
+* New: Section - introduced CSS variable for full-height sections
+* New: Typography - improved custom-style handling
+* Fixed: Story - widget sizes preserved when pasting styles
+* Fixed: Story - custom attributes now work correctly
+* Fixed: Typography - toolbar now applies default font style properly
+* Fixed: Row - “show on device” visibility works correctly
+* Fixed: Link - absolute URLs keep their original link format
 
 = 2.7.15 - 2025-09-30 =
-* New: Rich-Text – added tags support for dynamic content
-* New: Rich-Text – toolbar now toggles automatically while typing
-* New: Forms – dynamic IDs for checkboxes and radio fields
-* New: Third-Party – new toolbar placement option
-* Fixed: Colors – updated Brizy UI version to resolve styling issues
+* New: Rich-Text - added tags support for dynamic content
+* New: Rich-Text - toolbar now toggles automatically while typing
+* New: Forms - dynamic IDs for checkboxes and radio fields
+* New: Third-Party - new toolbar placement option
+* Fixed: Colors - updated Brizy UI version to resolve styling issues
 
 = 2.7.14 - 2025-09-04 =
-* New: Links – phone numbers and email addresses now automatically prepend tel: and mailto:
-* New: Image – option to enable/disable lazy loading
-* New: Rich-Text – toolbar now opens directly next to the selected text
-* New: Webhooks – display name shown instead of full URL
-* New: Posts – placeholder added when no content is available
-* New: Conditions – improved selection for global block conditions
-* Fixed: Global Blocks – updating a global block no longer causes infinite loading
-* Fixed: Context Menu – no empty context menu appears for the first container inside a popup
-* Fixed: Section – elements are correctly added inside Section Slider (fade mode)
+* New: Links - phone numbers and email addresses now automatically prepend tel: and mailto:
+* New: Image - option to enable/disable lazy loading
+* New: Rich-Text - toolbar now opens directly next to the selected text
+* New: Webhooks - display name shown instead of full URL
+* New: Posts - placeholder added when no content is available
+* New: Conditions - improved selection for global block conditions
+* Fixed: Global Blocks - updating a global block no longer causes infinite loading
+* Fixed: Context Menu - no empty context menu appears for the first container inside a popup
+* Fixed: Section - elements are correctly added inside Section Slider (fade mode)
 
 = 2.7.13 - 2025-09-01 =
 * Fixed: Security enhancements
 
 
 = 2.7.12 - 2025-08-26 =
-* New: Rich-Text – tooltip option added
-* New: Update Button – hover color now white for better visibility
-* New: Section – hotkeys for faster block actions
-* Fixed: Jenkins – workspace now cleaned after each build, tags publish correctly
-* Fixed: Links – smooth scroll behavior
-* Fixed: Links – “rel” attribute now includes 'noreferrer' for blank pages
-* Fixed: Links – block linking now works correctly
-* Fixed: reCAPTCHA – z-index styles corrected
-* Fixed: Controls (Select2) – popper now renders correctly
-* Fixed: Form – submit button no longer “jumps” on hover
-* Fixed: Form – select field in Mega Menu works correctly in editor
-* Fixed: Button – alignment Fixed when using hover animations
-* Fixed: Editor – padding removed between content and scrollbar in tablet/mobile view
-* Fixed: Visual – file upload from 'ElementModel' always returns a model
-* Fixed: Context Menu – now closes properly in Firefox
-* Fixed: Screenshots – block screenshot ID updates when backend provides New ID
-* Fixed: Publish Button – no more infinite loading when saving a draft
-* Fixed: Global Blocks – link redirects to global blocks work correctly
-* Fixed: Background – overlay now works on responsive devices even if opacity is 0 on desktop
-* Fixed: Animated Headline – text no longer wraps into multiple rows incorrectly
-* Fixed: Section – global blocks are no longer duplicated
-* Fixed: Rich-Text – tooltip retrieves dynamic CSS correctly in preview
-* Fixed: Compiler – missing sections in preview now render properly
+* New: Rich-Text - tooltip option added
+* New: Update Button - hover color now white for better visibility
+* New: Section - hotkeys for faster block actions
+* Fixed: Jenkins - workspace now cleaned after each build, tags publish correctly
+* Fixed: Links - smooth scroll behavior
+* Fixed: Links - “rel” attribute now includes 'noreferrer' for blank pages
+* Fixed: Links - block linking now works correctly
+* Fixed: reCAPTCHA - z-index styles corrected
+* Fixed: Controls (Select2) - popper now renders correctly
+* Fixed: Form - submit button no longer “jumps” on hover
+* Fixed: Form - select field in Mega Menu works correctly in editor
+* Fixed: Button - alignment Fixed when using hover animations
+* Fixed: Editor - padding removed between content and scrollbar in tablet/mobile view
+* Fixed: Visual - file upload from 'ElementModel' always returns a model
+* Fixed: Context Menu - now closes properly in Firefox
+* Fixed: Screenshots - block screenshot ID updates when backend provides New ID
+* Fixed: Publish Button - no more infinite loading when saving a draft
+* Fixed: Global Blocks - link redirects to global blocks work correctly
+* Fixed: Background - overlay now works on responsive devices even if opacity is 0 on desktop
+* Fixed: Animated Headline - text no longer wraps into multiple rows incorrectly
+* Fixed: Section - global blocks are no longer duplicated
+* Fixed: Rich-Text - tooltip retrieves dynamic CSS correctly in preview
+* Fixed: Compiler - missing sections in preview now render properly
 * Improved: Image element converted to TypeScript for better stability and maintainability
 
 = 2.7.11 - 2025-08-18 =
@@ -246,25 +270,25 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 * New: Captions support for video and audio elements
 * New: Title display for uploaded audio tracks
 * New: Stop-animation option for Carousel and Section Slider
-* New: Multi-step form – set custom width for navigation buttons
+* New: Multi-step form - set custom width for navigation buttons
 * New: Form validation errors for empty fields and invalid emails
 * New: Added a third-party container for integrations
 * New: Context menu now closes reliably after use
-* New: White Label – “Brizy” name is hidden in exported block/layout JSON files
+* New: White Label - “Brizy” name is hidden in exported block/layout JSON files
 * Improved: Video element height handling
-* Improved: Image element – better width/height calculation
-* Improved: Image element – smoother re-render process
+* Improved: Image element - better width/height calculation
+* Improved: Image element - smoother re-render process
 * Improved: Pass media configuration to browser compiler
 * Improved: Added utility function to get image source for third-party components
 * Improved: Select dropdown positioning
 * Improved: Widget positioning in accessibility mode
-* Improved: Rich-text – consistent “em” font size in dynamic content
+* Improved: Rich-text - consistent “em” font size in dynamic content
 * Improved: Split some visual editor components into editor/preview files for faster loading, plus cleaned up imports
-* Fixed: CSS – styleBgColorHex now works correctly with palette colours
-* Fixed: Form – fields now receive focus correctly
-* Fixed: Internal Link – search now finds items correctly
-* Fixed: Sections – smoother scrolling between sections in Blocksy theme
-* Fixed: Row – reverse columns option works as expected
+* Fixed: CSS - styleBgColorHex now works correctly with palette colours
+* Fixed: Form - fields now receive focus correctly
+* Fixed: Internal Link - search now finds items correctly
+* Fixed: Sections - smoother scrolling between sections in Blocksy theme
+* Fixed: Row - reverse columns option works as expected
 * Fixed: Image links now update correctly when moving a staging site to production
 
 = 2.7.4 - 2025-07-23 =
@@ -288,8 +312,8 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 * New: Fonts upload is handled by the faster API client
 * New: Context menu closes reliably after use
 * New: First‑Block Adder height refined for cleaner layouts
-* Improved: Compiled Sections – pages are rendered server‑side for faster load times
-* Improved: Rich‑Text toolbar – bold, italic and underline work consistently
+* Improved: Compiled Sections - pages are rendered server‑side for faster load times
+* Improved: Rich‑Text toolbar - bold, italic and underline work consistently
 * Improved: Visual settings can now be adjusted via add/apply filters
 * Improved: Sidebar alignment and other UI optimisations
 * Improved: Colour palette and UI contrast tweaks
@@ -299,38 +323,38 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 * Improved: CSS generator works faster on large pages
 * Improved: Smaller compiler bundle and section‑level runtime compilation
 * Improved: Deep context‑menu trees load more quickly
-* Fixed: Conditional Display – no more slow‑downs on sites with a large user base when the rule checks the logged‑in user
-* Fixed: Button – hover fill effect not working
-* Fixed: Button – fill effect not working for hover (duplicate issue resolved)
-* Fixed: Button – box resizer wrong position in Story mode
-* Fixed: Builder – chartType selector is stable
-* Fixed: Builder – global theme CSS variables load correctly
-* Fixed: Left Sidebar – collapsed‑category state is saved
-* Fixed: Left Sidebar (RTL) – layout displays correctly
-* Fixed: Rich‑Text – @ address sign renders correctly
-* Fixed: Rich‑Text – opacity values below 1 apply
-* Fixed: Section – duplicate display‑style values removed
-* Fixed: Section – background video plays only on active slide
-* Fixed: RTL – dropdowns and selects display properly
-* Fixed: RTL – prompt dialogs align correctly
-* Fixed: RTL – menu dropdowns support RTL
-* Fixed: RTL – overall UI layout no longer breaks
-* Fixed: Colours – UI palette improvements
-* Fixed: Right Sidebar – separator now inherits theme colour
-* Fixed: Editor – no more crashes on archive pages
-* Fixed: Form – select field uses correct font size with Blocksy theme
-* Fixed: Menu – free menu works in editor mode
-* Fixed: Build Environment – added develop branch for WP Free
-* Fixed: Toolbar – section‑header toolbar no longer hidden behind menus
-* Fixed: Animated Headline – loop‑off option previews correctly
-* Fixed: Internal Link – alignment options now respected
-* Fixed: Visual – config via filter applies correctly
-* Fixed: Roles – user permission fixes applied
-* Fixed: Colours – additional UI colour tweaks
-* Fixed: Visual – sidebar alignment & minor optimisations
-* Fixed: Fonts – upload process via API client stable
-* Fixed: First‑Block Adder – height calculation fixed
-* Fixed: Context Menu – closes properly on exit
+* Fixed: Conditional Display - no more slow‑downs on sites with a large user base when the rule checks the logged‑in user
+* Fixed: Button - hover fill effect not working
+* Fixed: Button - fill effect not working for hover (duplicate issue resolved)
+* Fixed: Button - box resizer wrong position in Story mode
+* Fixed: Builder - chartType selector is stable
+* Fixed: Builder - global theme CSS variables load correctly
+* Fixed: Left Sidebar - collapsed‑category state is saved
+* Fixed: Left Sidebar (RTL) - layout displays correctly
+* Fixed: Rich‑Text - @ address sign renders correctly
+* Fixed: Rich‑Text - opacity values below 1 apply
+* Fixed: Section - duplicate display‑style values removed
+* Fixed: Section - background video plays only on active slide
+* Fixed: RTL - dropdowns and selects display properly
+* Fixed: RTL - prompt dialogs align correctly
+* Fixed: RTL - menu dropdowns support RTL
+* Fixed: RTL - overall UI layout no longer breaks
+* Fixed: Colours - UI palette improvements
+* Fixed: Right Sidebar - separator now inherits theme colour
+* Fixed: Editor - no more crashes on archive pages
+* Fixed: Form - select field uses correct font size with Blocksy theme
+* Fixed: Menu - free menu works in editor mode
+* Fixed: Build Environment - added develop branch for WP Free
+* Fixed: Toolbar - section‑header toolbar no longer hidden behind menus
+* Fixed: Animated Headline - loop‑off option previews correctly
+* Fixed: Internal Link - alignment options now respected
+* Fixed: Visual - config via filter applies correctly
+* Fixed: Roles - user permission fixes applied
+* Fixed: Colours - additional UI colour tweaks
+* Fixed: Visual - sidebar alignment & minor optimisations
+* Fixed: Fonts - upload process via API client stable
+* Fixed: First‑Block Adder - height calculation fixed
+* Fixed: Context Menu - closes properly on exit
 
 = 2.6.22 - 2025-06-10 =
 * Improved: Enhanced performance for image resizing.
@@ -1127,7 +1151,7 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 = 2.3.29 - 2022-02-03 =
 * Fixed: Font url validation
 * Fixed: Do shortcode on render brizy content of the shop page
-* Fixed: Brizy and Complianz – GDPR/CCPA Cookie Consent plugin incompatibility
+* Fixed: Brizy and Complianz - GDPR/CCPA Cookie Consent plugin incompatibility
 * Fixed: Saves scripts relative to the plugin main folder
 * Fixed: WPML menu switcher, WPML sync menu, WPML fatal error on duplicate non brizy posts
 * Fixed: Brizy Overview dashboard widget

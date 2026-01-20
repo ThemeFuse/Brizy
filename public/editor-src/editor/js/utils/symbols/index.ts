@@ -59,7 +59,7 @@ export const handleComponentSymbolCreate: HandleComponentSymbolCreate = ({
   type,
   value,
   store,
-  onChange
+  dispatch
 }) => {
   const { label, model } = getSymbolData({ type, value, store });
 
@@ -79,7 +79,7 @@ export const handleComponentSymbolCreate: HandleComponentSymbolCreate = ({
     ]
   };
 
-  onChange(createSymbol(payload));
+  dispatch(createSymbol(payload));
 };
 
 export const validateSymbolModel = (_model: unknown): MValue<boolean> => {

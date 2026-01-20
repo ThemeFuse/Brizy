@@ -26,6 +26,7 @@ export const createRestrictToTopWindowEdges = (
     try {
       topWindow =
         typeof window !== "undefined" ? (window.top ?? window) : undefined;
+      /* eslint-disable-next-line @typescript-eslint/no-unused-expressions */
       topWindow && topWindow.innerWidth; // cross-origin safety check
     } catch {
       topWindow = undefined;

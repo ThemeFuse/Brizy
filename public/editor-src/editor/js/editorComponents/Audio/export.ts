@@ -215,7 +215,6 @@ export default function ($node: JQuery): void {
           if (audio.muted) {
             volumeProgressNode.style.width = "0%";
           } else {
-            audio.volume;
             volumeProgressNode.style.width = `${(audio.volume * 100).toFixed(
               2
             )}%`;

@@ -1,9 +1,9 @@
 import { noop } from "es-toolkit";
 import React, { Component } from "react";
-import Scrollbars from "react-custom-scrollbars";
 import Select from "visual/component/Controls/Select";
 import SelectItem from "visual/component/Controls/Select/SelectItem";
 import EditorIcon from "visual/component/EditorIcon";
+import { Scrollbar } from "visual/component/Scrollbar";
 import { EditorModeContext } from "visual/providers/EditorModeProvider";
 import { t } from "visual/utils/i18n";
 import { makeBzelmAttr } from "visual/utils/i18n/attribute";
@@ -34,6 +34,10 @@ const storyGrid = {
       }
     }
   ]
+};
+
+const widthStyle = {
+  width: "100%"
 };
 
 class Blocks extends Component {
@@ -178,7 +182,7 @@ class Blocks extends Component {
     }
 
     const showImportKit =
-      kits.filter(({ id }) => id !== selectedKit).length > 0;
+      kits.filter(({ id }) => id !== selectedKit).length > 1;
     const showType = types.length > 1;
     const showCategories = categories.length > 1;
 
@@ -248,7 +252,7 @@ class Blocks extends Component {
               )}
 
               <div className="brz-ed-popup-two-body__content" {...attr}>
-                <Scrollbars>
+                <Scrollbar theme="light" absolute style={widthStyle}>
                   {filteredThumbnails.length > 0 ? (
                     <EditorModeContext.Consumer>
                       {({ mode }) => (
@@ -270,7 +274,7 @@ class Blocks extends Component {
                       </p>
                     </div>
                   )}
-                </Scrollbars>
+                </Scrollbar>
               </div>
             </>
           );

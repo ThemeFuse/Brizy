@@ -15,7 +15,6 @@ interface V3 {
 type GetCollectionTypesInfoResult = Context["collectionTypesInfo"];
 
 function removeUndefinedKeys(v: ElementModel): Record<string, unknown> {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const filtered = Object.entries(v).filter(([_, val]) => val !== undefined);
 
   return objectFromEntries(filtered);
@@ -68,6 +67,7 @@ function migrateSymbols(
               });
             } catch (e) {
               if (process.env.NODE_ENV === "development") {
+                // eslint-disable-next-line no-console
                 console.log(e);
               }
             }
@@ -83,6 +83,7 @@ function migrateSymbols(
         }
       } catch (e) {
         if (process.env.NODE_ENV === "development") {
+          // eslint-disable-next-line no-console
           console.log(e);
         }
       }

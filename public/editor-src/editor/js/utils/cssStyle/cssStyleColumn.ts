@@ -11,12 +11,29 @@ export function cssStyleColumnHeight({
 }: CSSValue): string {
   const dvv = (key: string): unknown => defaultValueValue({ v, key, device });
   const heightStyle = dvv("heightStyle");
+  const heightMax = dvv("heightMax");
+  const heightMaxSuffix = dvv("heightMaxSuffix");
 
-  if (heightStyle === "custom") {
-    return cssStyleSizeMinHeightPx({ v, device, store, state, getConfig });
-  } else {
-    return "min-height:100%;";
+  switch (heightStyle) {
+    case "custom":
+      return `${cssStyleSizeMinHeightPx({ v, device, store, state, getConfig })} max-height:none; justify-content: inherit;`;
+    case "max-height":
+      return `max-height:${heightMax}${heightMaxSuffix}; min-height:unset; justify-content: flex-start;`;
+    default:
+      return "min-height:100%; max-height:none; justify-content: inherit;";
   }
+}
+
+export function cssStyleColumnContainerHeight({ v, device }: CSSValue): string {
+  const dvv = (key: string): unknown => defaultValueValue({ v, key, device });
+  const heightStyle = dvv("heightStyle");
+  const heightMax = dvv("heightMax");
+  const heightMaxSuffix = dvv("heightMaxSuffix");
+  if (heightStyle === "max-height") {
+    return `max-height:${heightMax}${heightMaxSuffix};`;
+  }
+
+  return "max-height:none;";
 }
 
 export function cssStyleEmptyColumnHeight({

@@ -6,10 +6,10 @@ function svgFromString(svgString: string): Element | null {
 
 const createZoomControls = (mfpContent: Element): HTMLElement | null => {
   const maximizeIcon = svgFromString(
-    `<svg viewBox="0 0 16 16" width="1em" height="1em" class="zoom-in" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6.667 1.333a5.333 5.333 0 1 1 0 10.667 5.333 5.333 0 0 1 0-10.667z" stroke="currentColor"/><path d="m14 14-2.9-2.9M6.667 4.667v4m-2-2h4" stroke="currentColor" stroke-linecap="round"/></svg>`
+    '<svg viewBox="0 0 16 16" width="1em" height="1em" class="zoom-in" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6.667 1.333a5.333 5.333 0 1 1 0 10.667 5.333 5.333 0 0 1 0-10.667z" stroke="currentColor"/><path d="m14 14-2.9-2.9M6.667 4.667v4m-2-2h4" stroke="currentColor" stroke-linecap="round"/></svg>'
   );
   const minimizeIcon = svgFromString(
-    `<svg viewBox="0 0 16 16" width="1em" height="1em" class="zoom-out" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6.667 1.333a5.333 5.333 0 1 1 0 10.667 5.333 5.333 0 0 1 0-10.667z" stroke="currentColor"/><path d="m14 14-2.9-2.9M4.667 6.667h4" stroke="currentColor" stroke-linecap="round"/></svg>`
+    '<svg viewBox="0 0 16 16" width="1em" height="1em" class="zoom-out" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6.667 1.333a5.333 5.333 0 1 1 0 10.667 5.333 5.333 0 0 1 0-10.667z" stroke="currentColor"/><path d="m14 14-2.9-2.9M4.667 6.667h4" stroke="currentColor" stroke-linecap="round"/></svg>'
   );
 
   if (!maximizeIcon || !minimizeIcon) {

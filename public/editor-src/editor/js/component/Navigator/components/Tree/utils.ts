@@ -391,7 +391,6 @@ const mergeNode = (t: Block, byId: Map<string, Block>): Block => {
 
   // Handle new values that should override original values
   if (t.value._isNewValue) {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { _isNewValue, ...newValueProps } = t.value;
     nextValue = { ...nextValue, ...newValueProps };
   }

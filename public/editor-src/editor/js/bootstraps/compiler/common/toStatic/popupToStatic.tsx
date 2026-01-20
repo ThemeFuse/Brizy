@@ -93,11 +93,12 @@ export const popupToStatic = (props: Props): Output => {
   const projectAssets = compileProject(config, store);
   const pageStylesPath = ["assets", "freeStyles", "pageStyles"];
   const pageStyles = (getIn(output, pageStylesPath) ?? []) as Array<Asset>;
-  const newPageStyles = addFirst(pageStyles, projectAssets);
+  const pageFontsPath = ["assets", "freeStyles", "pageFonts"];
+  const pageFonts = (getIn(output, pageFontsPath) ?? []) as Array<Asset>;
+  const newPageStyles = addFirst(pageStyles, projectAssets.styles);
+  const newPageFonts = addFirst(pageFonts, projectAssets.fonts);
 
-  return setIn(
-    output,
-    ["assets", "freeStyles", "pageStyles"],
-    newPageStyles
-  ) as Output;
+  const newOutput = setIn(output, pageStylesPath, newPageStyles) as Output;
+
+  return setIn(newOutput, pageFontsPath, newPageFonts) as Output;
 };

@@ -1,4 +1,3 @@
-/* eslint-disable no-inner-declarations */
 import parchment from "parchment";
 import Attributor from "parchment/dist/src/attributor/attributor";
 import ClassAttributor from "parchment/dist/src/attributor/class";

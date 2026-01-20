@@ -244,7 +244,7 @@ function _withRef<
   return <_Animation {...props} forwardedRef={ref} />;
 }
 
-// eslint-disable-next-line react/display-name,@typescript-eslint/no-explicit-any
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const Animation = forwardRef<Element, Props<any>>(
   _withRef
 ) as typeof _withRef;

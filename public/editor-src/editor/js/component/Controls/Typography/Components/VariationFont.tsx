@@ -120,6 +120,7 @@ export const VariationFont = ({
             <Scrollbar
               theme="dark"
               className="brz-ed-control__typography-variation-scrollbar"
+              absolute
             >
               <div ref={ref}>
                 {_variations.map(({ title, value, onChange, min, max }) => {

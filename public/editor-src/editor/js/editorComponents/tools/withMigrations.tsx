@@ -59,7 +59,12 @@ export function withMigrations<
             .then((r) => {
               // @ts-expect-error: { _version: number; }' is assignable to the constraint of type 'M'
               this.dbValueMigrated = {
-                ...migrate(foundMigrations, this.props.dbValue, r),
+                ...migrate(
+                  foundMigrations,
+                  this.props.dbValue,
+                  r,
+                  this.props.renderContext
+                ),
                 _version: foundMigrations[foundMigrations.length - 1].version
               };
 
@@ -67,6 +72,7 @@ export function withMigrations<
             })
             .catch((e) => {
               if (process.env.NODE_ENV === "development") {
+                /* eslint-disable-next-line no-console */
                 console.log(e);
               }
               throw e;
@@ -74,7 +80,12 @@ export function withMigrations<
         } else {
           // @ts-expect-error: { _version: number; }' is assignable to the constraint of type 'M'
           this.dbValueMigrated = {
-            ...migrate(foundMigrations, this.props.dbValue),
+            ...migrate(
+              foundMigrations,
+              this.props.dbValue,
+              undefined,
+              this.props.renderContext
+            ),
             _version: foundMigrations[foundMigrations.length - 1].version
           };
         }

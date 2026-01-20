@@ -1,5 +1,4 @@
 import { Str } from "@brizy/readers";
-import type { Dispatch } from "redux";
 import { getIn } from "timm";
 import type { ElementModel } from "visual/component/Elements/Types";
 import type { ContextGetItems } from "visual/editorComponents/EditorComponent/types";
@@ -272,6 +271,7 @@ const getItems: ContextGetItems<ElementModel> = (v, component) => {
   const flattedShortcodes = Object.values(shortcodes).flat();
   const { icon } = flattedShortcodes
     .map((item) => ({
+      // eslint-disable-next-line no-constant-binary-expression
       type: getIn(item.component.resolve, ["value", "items", 0, "type"] ?? ""),
       icon: item.component.icon
     }))
@@ -307,7 +307,7 @@ const getItems: ContextGetItems<ElementModel> = (v, component) => {
           disabled: true,
           onChange: () => {
             if (type && value) {
-              const dispatch = component.getReduxDispatch() as Dispatch;
+              const dispatch = component.getReduxDispatch();
               const defaultValue = getComponentDefaultValue(type);
               const rulesValue = getComponentRulesValue(store, value);
               const wrapperDefaultValue = getComponentDefaultValue(
@@ -374,6 +374,7 @@ const getItems: ContextGetItems<ElementModel> = (v, component) => {
 
               dispatch(createSymbol(newSymbols));
             } else {
+              // eslint-disable-next-line no-console
               console.warn("Missing Type & Value");
             }
           }

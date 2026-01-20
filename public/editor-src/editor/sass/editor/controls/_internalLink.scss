@@ -115,6 +115,18 @@
       box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.5);
       transform: none;
 
+      .brz-scrollbar__view {
+        &::-webkit-scrollbar {
+          width: 3px !important;
+        }
+
+        &::-webkit-scrollbar-thumb {
+          width: 3px !important;
+          background-color: #7b7b7b !important;
+          border-radius: 2px !important;
+        }
+      }
+
       &--with-search {
         .brz-ed-control__multiSelect2__option:first-child {
           border-top: 1px solid rgba(255, 255, 255, 0.07);

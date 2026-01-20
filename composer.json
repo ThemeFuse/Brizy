@@ -13,14 +13,17 @@
     "knplabs/gaufrette": "0.7",
     "bagrinsergiu/brizy-migration-utils": "^1.4",
     "bagrinsergiu/brizy-merge-page-assets": "dev-master",
-    "bagrinsergiu/content-placeholder": "dev-lazy-register",
+    "bagrinsergiu/content-placeholder": "3.0.8",
     "enshrined/svg-sanitize": "^0.13",
     "select2/select2": "^4.0",
     "symfony/dotenv": "^3",
     "tburry/pquery": "dev-master"
   },
-  "config": {
-    "platform-check": false
+ "config": {
+    "platform-check": false,
+    "audit": {
+      "block-insecure": false
+    }
   },
   "repositories": [
     {

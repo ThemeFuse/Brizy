@@ -3,7 +3,7 @@ export const getCollapsedCategories = (): string[] => {
 
   try {
     return JSON.parse(collapsedCategories ?? "[]");
-  } catch (e) {
+  } catch (_) {
     return [];
   }
 };

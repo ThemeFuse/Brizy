@@ -2,13 +2,13 @@ import classnames from "classnames";
 import { noop } from "es-toolkit";
 import { produce } from "immer";
 import React, { Component } from "react";
-import Scrollbars from "react-custom-scrollbars";
 import { ConnectedProps, connect } from "react-redux";
 import { Alert } from "visual/component/Alert";
 import InputPlaceholder from "visual/component/Controls/InputPlaceholder";
 import { Spacer } from "visual/component/Controls/Spacer";
 import { Button } from "visual/component/Prompts/common/Button";
 import { Loading } from "visual/component/Prompts/common/Loading";
+import { Scrollbar } from "visual/component/Scrollbar";
 import { SuccessResponse } from "visual/global/Config/types/configs/common";
 import { updateAuthorization, updateSyncAllowed } from "visual/redux/actions2";
 import { checkCompatibility, signUp } from "visual/utils/api";
@@ -182,6 +182,7 @@ class SignUp extends Component<SingUpProps, SignUpState> {
               checkCompatibility(config).then((r) => {
                 const { success, isSyncAllowed } = r;
                 if (!success) {
+                  // eslint-disable-next-line no-console
                   console.warn("Something went wrong", r);
                 } else {
                   if (isSyncAllowed) {
@@ -240,7 +241,7 @@ class SignUp extends Component<SingUpProps, SignUpState> {
       } = this.state;
 
       return (
-        <Scrollbars className="brz-text-lg-center">
+        <Scrollbar theme="light" className="brz-text-lg-center" absolute>
           <div className="brz-ed-popup-integrations__connect-head">
             <Spacer space="17px" />
             <p className="brz-p">{signUpDescription}</p>
@@ -274,7 +275,7 @@ class SignUp extends Component<SingUpProps, SignUpState> {
               </Button>
             </div>
           </div>
-        </Scrollbars>
+        </Scrollbar>
       );
     }
   }
