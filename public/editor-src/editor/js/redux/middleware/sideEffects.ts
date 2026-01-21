@@ -221,6 +221,8 @@ function handleHydrate(callbacks: Callbacks): void {
       action as { payload: { config: ReturnType<GetConfig> } }
     ).payload;
 
+    const googleFontsUrl = globalConfig.urls?.googleFonts;
+
     if (document.getElementById("brz-project-default-font") === null) {
       // Generate default @fontFace uses in project font
       const defaultFont = getDefaultFontDetailsSelector(state);
@@ -239,7 +241,10 @@ function handleHydrate(callbacks: Callbacks): void {
     ) {
       const googleFonts = document.createElement("link");
       googleFonts.id = "brz-project-font-links";
-      googleFonts.href = makeSubsetGoogleFontsUrl(currentFonts.google);
+      googleFonts.href = makeSubsetGoogleFontsUrl(
+        currentFonts.google,
+        googleFontsUrl
+      );
       googleFonts.setAttribute("type", "text/css");
       googleFonts.setAttribute("rel", "stylesheet");
       document.head.appendChild(googleFonts);
@@ -349,6 +354,7 @@ function handleFontsChange(callbacks: Callbacks): void {
     const { document, parentDocument, getConfig } = config;
 
     const globalConfig = getConfig();
+    const googleFontsUrl = globalConfig.urls?.googleFonts;
 
     // Generate new Link for new Fonts
     if (action.type !== DELETE_FONTS) {
@@ -362,7 +368,10 @@ function handleFontsChange(callbacks: Callbacks): void {
         } else if (type === "adobe") {
           if (adobeKitId) href = makeAdobeFontsUrl(adobeKitId);
         } else {
-          href = makeSubsetGoogleFontsUrl(fonts as GoogleFont[]);
+          href = makeSubsetGoogleFontsUrl(
+            fonts as GoogleFont[],
+            googleFontsUrl
+          );
         }
 
         if (href) {

@@ -1,11 +1,11 @@
 import { mPipe } from "fp-utilities";
 import { ElementModel } from "visual/component/Elements/Types";
+import { SizeType } from "visual/global/Config/types/configs/common";
 import { Dictionary } from "visual/types/utils";
 import * as Obj from "visual/utils/reader/object";
 import { read } from "visual/utils/reader/string";
 import { MValue } from "visual/utils/value";
 import { MigrationImage } from "./types";
-import { SizeType } from "visual/global/Config/types/configs/common";
 
 interface DCPlaceholderObj {
   name: string;
@@ -64,7 +64,7 @@ const correction = (v: ElementModel): ElementModel => {
 
 export const m2: MigrationImage = {
   version: 2,
-  cb(v) {
+  cb({ v }) {
     if (!Obj.isObject(v)) {
       throw new Error(`Image migration failed ${v}`);
     }

@@ -36,11 +36,12 @@ export const getFontLinks = ({
   config
 }: Fonts): FontLinks => {
   const { adobeKitId } = extra ?? {};
+  const googleFontsUrl = config.urls?.googleFonts;
 
   const gFonts = google.filter(filteredByDeleted);
   const uFonts = upload.filter(filteredByDeleted);
   const googleLinks = gFonts.length
-    ? makeSubsetGoogleFontsUrl(gFonts)
+    ? makeSubsetGoogleFontsUrl(gFonts, googleFontsUrl)
     : undefined;
   const uploadLinks = uFonts.length
     ? makeUploadFontsUrl(uFonts, config)

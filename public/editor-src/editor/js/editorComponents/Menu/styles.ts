@@ -27,7 +27,7 @@ export function styleMenuContainer(
 
 export function styleMenu(data: DynamicStylesProps<Value>): OutputStyle {
   const styles = {
-    ".brz && .brz-menu__ul": {
+    ".brz && > .brz-menu__ul": {
       interval: [
         "cssStyleTypography2FontSize",
         "cssStyleTypography2FontWeight",
@@ -43,23 +43,23 @@ export function styleMenu(data: DynamicStylesProps<Value>): OutputStyle {
         "cssStyleElementMMenuListViewMargin"
       ]
     },
-    ".brz &&:hover .brz-menu__ul": {
+    ".brz &&:hover > .brz-menu__ul": {
       standart: ["cssStyleColor"]
     },
-    ".brz && .brz-menu__ul > .brz-menu__item > .brz-a": {
+    ".brz && > .brz-menu__ul > .brz-menu__item > .brz-a": {
       standart: [
         "cssStyleElementMenuIconPosition",
         "cssStyleElementMenuPadding"
       ]
     },
-    ".brz && .brz-menu__ul > .brz-menu__item > .brz-a:hover": {
+    ".brz && > .brz-menu__ul > .brz-menu__item > .brz-a:hover": {
       standart: ["cssStyleColor", "cssStyleElementMenuLinkBgColor"]
     },
-    ".brz && .brz-menu__ul > .brz-menu__item.brz-menu__item--opened > .brz-a:hover":
+    ".brz && > .brz-menu__ul > .brz-menu__item.brz-menu__item--opened > .brz-a:hover":
       {
         standart: ["cssStyleElementMenuColor", "cssStyleElementMenuLinkBgColor"]
       },
-    ".brz && .brz-menu__ul > .brz-menu__item.brz-menu__item--opened:hover": {
+    ".brz && > .brz-menu__ul > .brz-menu__item.brz-menu__item--opened:hover": {
       standart: [
         "cssStyleElementMenuColor",
         "cssStyleElementMenuBgColor",
@@ -68,7 +68,7 @@ export function styleMenu(data: DynamicStylesProps<Value>): OutputStyle {
     },
 
     // Current
-    ".brz && .brz-menu__ul > .brz-menu__item.brz-menu__item--current:not(.brz-menu__item.brz-menu__item--current:active):hover":
+    ".brz && > .brz-menu__ul > .brz-menu__item.brz-menu__item--current:not(.brz-menu__item.brz-menu__item--current:active):hover":
       {
         standart: [
           "cssStyleElementMenuCurrentColor",
@@ -76,7 +76,7 @@ export function styleMenu(data: DynamicStylesProps<Value>): OutputStyle {
           "cssStyleElementMenuCurrentBorder"
         ]
       },
-    ".brz && .brz-menu__ul > .brz-menu__item.brz-menu__item--current > .brz-a:not(.brz-a:active):hover":
+    ".brz && > .brz-menu__ul > .brz-menu__item.brz-menu__item--current > .brz-a:not(.brz-a:active):hover":
       {
         standart: [
           "cssStyleElementMenuCurrentColor",
@@ -86,46 +86,47 @@ export function styleMenu(data: DynamicStylesProps<Value>): OutputStyle {
     ".brz && > .brz-ed-border": {
       interval: ["cssStyleVisibleEditorDisplayNoneOrBlock|||editor"]
     },
-    ".brz && .brz-menu__ul > .brz-menu__item > .brz-a > .brz-icon-svg": {
+    ".brz && > .brz-menu__ul > .brz-menu__item > .brz-a > .brz-icon-svg": {
       interval: ["cssStyleElementMenuIconSize"],
       standart: ["cssStyleElementMenuIconSpacing"]
     },
-    ".brz && .brz-menu__ul > .brz-menu__item > .brz-a:hover > .brz-icon-svg.brz-icon-svg-custom":
+    ".brz && > .brz-menu__ul > .brz-menu__item > .brz-a:hover > .brz-icon-svg.brz-icon-svg-custom":
       {
         standart: ["cssStyleCustomIconColor"]
       },
-    ".brz && .brz-menu__ul > .brz-menu__item.brz-menu__item--current > .brz-a:not(.brz-a:active):hover > .brz-icon-svg.brz-icon-svg-custom":
+    ".brz && > .brz-menu__ul > .brz-menu__item.brz-menu__item--current > .brz-a:not(.brz-a:active):hover > .brz-icon-svg.brz-icon-svg-custom":
       {
         standart: ["cssStyleMenuCustomIconActiveColor"]
       },
-    ".brz && .brz-menu__ul > .brz-menu__item.brz-menu__item--current:not(.brz-menu__item.brz-menu__item--current:active):hover > .brz-icon-svg.brz-icon-svg-custom":
+    ".brz && > .brz-menu__ul > .brz-menu__item.brz-menu__item--current:not(.brz-menu__item.brz-menu__item--current:active):hover > .brz-icon-svg.brz-icon-svg-custom":
       {
         standart: ["cssStyleMenuCustomIconActiveColor"]
       },
-    ".brz && .brz-menu__ul > .brz-menu__item": {
+    ".brz && > .brz-menu__ul > .brz-menu__item": {
       standart: ["cssStyleElementMenuBorderRadius"],
       interval: ["cssStyleElementMMenuItemPadding"]
     },
-    ".brz && .brz-menu__ul > .brz-menu__item:hover": {
+    ".brz && > .brz-menu__ul > .brz-menu__item:hover": {
       standart: [
         "cssStyleElementMenuColor",
         "cssStyleElementMenuBgColor",
         "cssStyleElementMenuBorder"
       ]
     },
-    ".brz && .brz-menu__ul > .brz-menu__item > a": {
+    ".brz && > .brz-menu__ul > .brz-menu__item > a": {
       standart: ["cssStyleElementMenuBorderRadius"]
     },
 
-    ".brz && .brz-menu__ul > .brz-menu__item:first-child": {
+    ".brz && > .brz-menu__ul > .brz-menu__item:first-child": {
       interval: ["cssStyleElementMMenuItemPaddingTopZero"]
     },
-    ".brz && .brz-menu__ul > .brz-menu__item:last-child": {
+    ".brz && > .brz-menu__ul > .brz-menu__item:last-child": {
       interval: ["cssStyleElementMMenuItemPaddingBottomZero"]
     },
 
     // SubMenu
-    ".brz && .brz-menu__sub-menu": {
+    // Also includes dropdown responsive styles (cssStyleElementMenuDropdown)
+    ".brz && > .brz-menu__ul > .brz-menu__item-dropdown .brz-menu__sub-menu": {
       interval: [
         "cssStyleElementMenuSubMenuFontSize",
         "cssStyleElementMenuSubMenuFontWeight",
@@ -133,83 +134,93 @@ export function styleMenu(data: DynamicStylesProps<Value>): OutputStyle {
         "cssStyleElementMenuSubMenuLetterSpacing",
         "cssStyleElementMenuSubMenuFontVariation",
         "cssStyleElementMenuSubMenuTextTransform",
-        "cssStyleMenuDropdownPosition"
+        "cssStyleMenuDropdownPosition",
+        "cssStyleElementMenuDropdown"
       ],
       standart: ["cssStyleElementMenuSubMenuFontFamily", "cssStyleBorderRadius"]
     },
-    ".brz && .brz-menu__sub-menu:hover": {
-      standart: [
-        "cssStyleElementMenuSubMenuColor",
-        "cssStyleElementMenuSubMenuBgColor",
-        "cssStyleBoxShadow"
-      ]
-    },
-    ".brz && .brz-menu__sub-menu .brz-menu__item > .brz-a": {
-      standart: ["cssStyleElementMenuSubMenuIconPosition"]
-    },
-    ".brz &&:hover .brz-menu__sub-menu .brz-a:hover": {
-      standart: ["cssStyleElementMenuSubMenuColor"]
-    },
-    ".brz && .brz-menu__sub-menu .brz-a > .brz-icon-svg": {
-      standart: [
-        "cssStyleElementMenuSubMenuIconSpacing",
-        "cssStyleElementMenuSubMenuIconSize"
-      ]
-    },
+    ".brz && > .brz-menu__ul > .brz-menu__item-dropdown .brz-menu__sub-menu:hover":
+      {
+        standart: [
+          "cssStyleElementMenuSubMenuColor",
+          "cssStyleElementMenuSubMenuBgColor",
+          "cssStyleBoxShadow"
+        ]
+      },
+    ".brz && > .brz-menu__ul > .brz-menu__item-dropdown .brz-menu__sub-menu .brz-menu__item > .brz-a":
+      {
+        standart: ["cssStyleElementMenuSubMenuIconPosition"]
+      },
+    ".brz &&:hover > .brz-menu__ul > .brz-menu__item-dropdown .brz-menu__sub-menu .brz-a:hover":
+      {
+        standart: ["cssStyleElementMenuSubMenuColor"]
+      },
+    ".brz && > .brz-menu__ul > .brz-menu__item-dropdown .brz-menu__sub-menu .brz-a > .brz-icon-svg":
+      {
+        standart: [
+          "cssStyleElementMenuSubMenuIconSpacing",
+          "cssStyleElementMenuSubMenuIconSize"
+        ]
+      },
 
     // Current SubMenu
-    ".brz &&:hover .brz-menu__sub-menu > .brz-menu__item.brz-menu__item--current > .brz-a":
+    ".brz &&:hover > .brz-menu__ul > .brz-menu__item-dropdown .brz-menu__sub-menu > .brz-menu__item.brz-menu__item--current > .brz-a":
       {
         standart: ["cssStyleElementMenuSubMenuCurrentColor"]
       },
-    ".brz &&:hover .brz-menu__sub-menu > .brz-menu__item.brz-menu__item--current":
+    ".brz &&:hover > .brz-menu__ul > .brz-menu__item-dropdown .brz-menu__sub-menu > .brz-menu__item.brz-menu__item--current":
       {
         standart: ["cssStyleElementMenuSubMenuCurrentBgColor"]
       },
-    ".brz &&:hover .brz-menu__sub-menu > .brz-menu__item.brz-menu__item--current:hover":
+    ".brz &&:hover > .brz-menu__ul > .brz-menu__item-dropdown .brz-menu__sub-menu > .brz-menu__item.brz-menu__item--current:hover":
       {
         standart: ["cssStyleElementMenuSubMenuCurrentBgColor"]
       },
-    ".brz &&:hover .brz-menu__item--current .brz-menu__sub-menu": {
-      standart: ["cssStyleElementMenuSubMenuCurrentBoxShadow"]
-    },
-    ".brz && .brz-menu__sub-menu > .brz-menu__item > .brz-a:hover > .brz-icon-svg.brz-icon-svg-custom":
+    ".brz &&:hover > .brz-menu__ul > .brz-menu__item-dropdown > .brz-menu__item--current .brz-menu__sub-menu":
+      {
+        standart: ["cssStyleElementMenuSubMenuCurrentBoxShadow"]
+      },
+    ".brz && > .brz-menu__ul > .brz-menu__item-dropdown .brz-menu__sub-menu > .brz-menu__item > .brz-a:hover > .brz-icon-svg.brz-icon-svg-custom":
       {
         standart: ["cssStyleElementMenuSubMenuCustomIconColor"]
       },
-    ".brz && .brz-menu__sub-menu > .brz-menu__item:not(.brz-menu__item.brz-menu__item--current):hover > .brz-a > .brz-icon-svg.brz-icon-svg-custom":
+    ".brz && > .brz-menu__ul > .brz-menu__item-dropdown .brz-menu__sub-menu > .brz-menu__item:not(.brz-menu__item.brz-menu__item--current):hover > .brz-a > .brz-icon-svg.brz-icon-svg-custom":
       {
         standart: ["cssStyleElementMenuSubMenuCustomIconColor"]
       },
-    ".brz &&:hover .brz-menu__sub-menu > .brz-menu__item.brz-menu__item--current > .brz-a > .brz-icon-svg.brz-icon-svg-custom":
+    ".brz &&:hover > .brz-menu__ul > .brz-menu__item-dropdown .brz-menu__sub-menu > .brz-menu__item.brz-menu__item--current > .brz-a > .brz-icon-svg.brz-icon-svg-custom":
       {
         standart: ["cssStyleMenuSubMenuCustomIconActiveColor"]
       },
     // Background Color for Dropdown
-    ".brz && .brz-menu__item-dropdown .brz-menu__item:hover": {
-      standart: [
-        "cssStyleElementMenuSubMenuBgColor",
-        "cssStyleElementMenuSubMenuColor"
-      ]
-    },
+    ".brz && > .brz-menu__ul > .brz-menu__item-dropdown .brz-menu__item:hover":
+      {
+        standart: [
+          "cssStyleElementMenuSubMenuBgColor",
+          "cssStyleElementMenuSubMenuColor"
+        ]
+      },
     // Color for dropdown arrow
-    ".brz && .brz-menu__sub-menu .brz-menu__item-dropdown:hover .brz-a:hover:after":
+    ".brz && > .brz-menu__ul > .brz-menu__item-dropdown .brz-menu__sub-menu .brz-menu__item-dropdown:hover .brz-a:hover:after":
       {
         standart: ["cssStyleElementMenuSubMenuBorderColor"]
       },
 
     // Dropdown Menu Items
-    ".brz &&:hover .brz-menu__sub-menu > .brz-menu__item": {
-      standart: ["cssStyleElementMenuSubMenuBorderBottom"]
-    },
+    ".brz &&:hover > .brz-menu__ul > .brz-menu__item-dropdown .brz-menu__sub-menu > .brz-menu__item":
+      {
+        standart: ["cssStyleElementMenuSubMenuBorderBottom"]
+      },
 
     // Position Dropdown
-    ".brz && [data-popper-placement='left-start']": {
-      interval: ["cssStyleMenuDropdownPositionLeft"]
-    },
-    ".brz && [data-popper-placement='right-start']": {
-      interval: ["cssStyleMenuDropdownPositionRight"]
-    },
+    ".brz && > .brz-menu__ul > .brz-menu__item-dropdown [data-popper-placement='left-start']":
+      {
+        interval: ["cssStyleMenuDropdownPositionLeft"]
+      },
+    ".brz && > .brz-menu__ul > .brz-menu__item-dropdown [data-popper-placement='right-start']":
+      {
+        interval: ["cssStyleMenuDropdownPositionRight"]
+      },
 
     // First Level of Dropdown
     ".brz && > .brz-menu__ul > .brz-menu__item-dropdown > .brz-menu__sub-menu":
@@ -220,40 +231,40 @@ export function styleMenu(data: DynamicStylesProps<Value>): OutputStyle {
       { interval: ["cssStyleMenuFirstDropdownPositionRight"] },
 
     // Dropdown responsive open / close
-    ".brz && .brz-menu__item-dropdown .brz-menu__sub-menu": {
-      interval: ["cssStyleElementMenuDropdown"]
-    },
-    ".brz &&:hover .brz-menu__item.brz-menu__item--opened > .brz-menu__sub-menu":
+    ".brz &&:hover > .brz-menu__ul > .brz-menu__item.brz-menu__item--opened > .brz-menu__sub-menu":
       {
         interval: ["cssStyleElementMenuDropdownOpened"]
       },
-    ".brz &&.brz-menu__preview:hover .brz-menu__item:hover > .brz-menu__sub-menu":
+    ".brz &&.brz-menu__preview:hover > .brz-menu__ul > .brz-menu__item:hover > .brz-menu__sub-menu":
       {
         interval: ["cssStyleElementMenuDropdownOpened"]
       },
-    ".brz && .brz-menu__sub-menu .brz-menu__item-dropdown > .brz-a:after": {
-      interval: ["cssStyleElementMenuDropdownArrow"]
-    },
+    ".brz && > .brz-menu__ul > .brz-menu__item-dropdown .brz-menu__sub-menu .brz-menu__item-dropdown > .brz-a:after":
+      {
+        interval: ["cssStyleElementMenuDropdownArrow"]
+      },
 
     // Inner dropdown responsive open / close
-    ".brz && .brz-menu__sub-menu .brz-menu__item-dropdown .brz-menu__sub-menu":
+    ".brz && > .brz-menu__ul > .brz-menu__item-dropdown .brz-menu__sub-menu .brz-menu__item-dropdown .brz-menu__sub-menu":
       { interval: ["cssStyleElementMenuInnerDropdown"] },
-    ".brz && .brz-menu__sub-menu .brz-menu__item--opened > .brz-menu__sub-menu":
+    ".brz && > .brz-menu__ul > .brz-menu__item-dropdown .brz-menu__sub-menu .brz-menu__item--opened > .brz-menu__sub-menu":
       { interval: ["cssStyleElementMenuDropdownInnerOpened"] },
-    ".brz &&.brz-menu__preview .brz-menu__sub-menu .brz-menu__item > .brz-menu__sub-menu":
+    ".brz &&.brz-menu__preview > .brz-menu__ul > .brz-menu__item-dropdown .brz-menu__sub-menu .brz-menu__item > .brz-menu__sub-menu":
       { interval: ["cssStyleElementMenuDropdownInnerOpened"] },
 
     // MegaMenu responsive open / close
-    ".brz && .brz-mega-menu__dropdown": {
-      interval: ["cssStyleElementMegaMenuOpened"]
-    },
-    ".brz &&.brz-menu__preview:hover .brz-menu__item:hover > .brz-mega-menu__portal":
+    ".brz && > .brz-menu__ul > .brz-menu__item-mega-menu .brz-mega-menu__dropdown":
+      {
+        interval: ["cssStyleElementMegaMenuOpened"]
+      },
+    ".brz &&.brz-menu__preview:hover > .brz-menu__ul > .brz-menu__item:hover > .brz-mega-menu__portal":
       {
         interval: ["cssStyleElementMenuDropdownOpened"]
       },
-    ".brz && .brz-menu__item-mega-menu .brz-mega-menu__portal": {
-      interval: ["cssStyleElementMenuDropdown"]
-    },
+    ".brz && > .brz-menu__ul > .brz-menu__item-mega-menu .brz-mega-menu__portal":
+      {
+        interval: ["cssStyleElementMenuDropdown"]
+      },
     ".brz && .brz-menu__item-dropdown .brz-menu__item, .brz && .brz-menu__sub-menu .brz-menu__item-dropdown .brz-a:after, .brz && .brz-menu__sub-menu > .brz-menu__item.brz-menu__item--current > .brz-a > .brz-icon-svg.brz-icon-svg-custom, .brz && .brz-menu__sub-menu > .brz-menu__item:not(.brz-menu__item.brz-menu__item--current) > .brz-a > .brz-icon-svg.brz-icon-svg-custom, .brz && .brz-menu__sub-menu > .brz-menu__item > .brz-a > .brz-icon-svg.brz-icon-svg-custom, .brz && .brz-menu__item--current .brz-menu__sub-menu, .brz && .brz-menu__sub-menu > .brz-menu__item.brz-menu__item--current, .brz &&:hover .brz-menu__ul, .brz && .brz-menu__ul > .brz-menu__item > .brz-a, .brz && .brz-menu__ul > .brz-menu__item.brz-menu__item--opened > .brz-a, .brz && .brz-menu__ul > .brz-menu__item.brz-menu__item--opened, .brz && .brz-menu__ul > .brz-menu__item.brz-menu__item--current:not(.brz-menu__item.brz-menu__item--current:active), .brz && .brz-menu__ul > .brz-menu__item.brz-menu__item--current > .brz-a:not(.brz-a:active), .brz && .brz-menu__ul > .brz-menu__item > .brz-a > .brz-icon-svg.brz-icon-svg-custom, .brz && .brz-menu__ul > .brz-menu__item.brz-menu__item--current > .brz-a:not(.brz-a:active) > .brz-icon-svg.brz-icon-svg-custom, .brz && .brz-menu__ul > .brz-menu__item.brz-menu__item--current:not(.brz-menu__item.brz-menu__item--current:active) > .brz-icon-svg.brz-icon-svg-custom, .brz && .brz-menu__ul > .brz-menu__item, .brz && .brz-menu__sub-menu, .brz &&:hover .brz-menu__sub-menu .brz-a, .brz && .brz-menu__sub-menu > .brz-menu__item.brz-menu__item--current > .brz-a, .brz && .brz-menu__sub-menu > .brz-menu__item.brz-menu__item--current":
       {
         standart: [

@@ -136,4 +136,8 @@
       height: 100%;
     }
   }
+
+  form.brz-form:has(.brz-forms2__messages) {
+    margin-bottom: 0;
+  }
 }

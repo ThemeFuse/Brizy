@@ -111,6 +111,7 @@
 
   // Video Player
   @include custom-video;
+  @include custom-video-fullscreen-window-show;
   @include media-caption;
 }
 

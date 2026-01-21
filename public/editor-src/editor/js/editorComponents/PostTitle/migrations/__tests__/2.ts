@@ -7,7 +7,9 @@ describe("Testing PostTitle migration of sourceType and sourceID", () => {
       sourceID: ""
     };
 
-    expect(m2.cb(v)).toStrictEqual({
+    expect(
+      m2.cb({ v, vs: v, vd: v, renderContext: "editor" as const })
+    ).toStrictEqual({
       ...v,
       textPopulationEntityType: "",
       textPopulationEntityId: ""
@@ -20,7 +22,9 @@ describe("Testing PostTitle migration of sourceType and sourceID", () => {
       sourceID: ""
     };
 
-    expect(m2.cb(v)).toStrictEqual({
+    expect(
+      m2.cb({ v, vs: v, vd: v, renderContext: "editor" as const })
+    ).toStrictEqual({
       ...v,
       textPopulationEntityType: "post",
       textPopulationEntityId: ""
@@ -33,7 +37,9 @@ describe("Testing PostTitle migration of sourceType and sourceID", () => {
       sourceID: "123"
     };
 
-    expect(m2.cb(v)).toStrictEqual({
+    expect(
+      m2.cb({ v, vs: v, vd: v, renderContext: "editor" as const })
+    ).toStrictEqual({
       ...v,
       textPopulationEntityType: "",
       textPopulationEntityId: "123"
@@ -46,7 +52,9 @@ describe("Testing PostTitle migration of sourceType and sourceID", () => {
       sourceID: "123"
     };
 
-    expect(m2.cb(v)).toStrictEqual({
+    expect(
+      m2.cb({ v, vs: v, vd: v, renderContext: "editor" as const })
+    ).toStrictEqual({
       ...v,
       textPopulationEntityType: "post",
       textPopulationEntityId: "123"
@@ -59,7 +67,9 @@ describe("Testing PostTitle migration of sourceType and sourceID", () => {
       asd2: 1234
     };
 
-    expect(m2.cb(v)).toStrictEqual({
+    expect(
+      m2.cb({ v, vs: v, vd: v, renderContext: "editor" as const })
+    ).toStrictEqual({
       ...v,
       textPopulationEntityType: "",
       textPopulationEntityId: ""

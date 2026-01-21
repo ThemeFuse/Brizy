@@ -31,6 +31,11 @@
     "showLastName": "on",
     "showUsername": "on",
     "showPhoneNumber": "on",
+    "showAgreeTerms": "off",
+    "termsAgreementLabel": "I agree to the Terms and Conditions",
+
+    "enableCustomHtml": "off",
+    "customHtml": "",
 
     "defaultRoles": "[]",
 
@@ -53,6 +58,7 @@
     "labelHorizontalAlign": "left",
     "lostHorizontalAlign": "left",
     "rememberMeHorizontalAlign": "left",
+    "agreementHorizontalAlign": "left",
 
     "submitWidth": 100,
     "submitWidthSuffix": "%",
@@ -67,6 +73,7 @@
       "checkboxFontFamily": "lato",
       "tabletCheckboxFontFamily": null,
       "mobileCheckboxFontFamily": null,
+      "agreementFontFamily": "lato",
       "lostFontFamily": "lato",
       "tabletLostFontFamily": null,
       "mobileLostFontFamily": null,
@@ -408,6 +415,27 @@
     "checkboxUppercase": false,
     "checkboxLowercase": false,
 
+    "agreementColorHex": "#73777f",
+    "agreementColorOpacity": 0.7,
+    "agreementColorPalette": "",
+
+    "agreementFontStyle": "",
+    "agreementFontFamilyType": "google",
+    "agreementFontSize": 16,
+    "agreementFontSizeSuffix": "px",
+    "agreementFontWeight": 400,
+    "agreementLineHeight": 1.5,
+    "agreementLetterSpacing": 0,
+    "agreementVariableFontWeight": 400,
+    "agreementFontWidth": 100,
+    "agreementFontSoftness": 0,
+    "agreementBold": false,
+    "agreementItalic": false,
+    "agreementUnderline": false,
+    "agreementStrike": false,
+    "agreementUppercase": false,
+    "agreementLowercase": false,
+
     "lostFontStyle": "",
     "lostFontFamilyType": "google",
     "lostFontSize": 16,
@@ -483,6 +511,14 @@
     "tabletCheckboxLineHeight": 1.5,
     "tabletCheckboxFontWeight": 400,
     "tabletCheckboxLetterSpacing": 0,
+
+    "tabletAgreementFontFamilyType": null,
+    "tabletAgreementFontStyle": "",
+    "tabletAgreementFontSize": 14,
+    "tabletAgreementFontSizeSuffix": "px",
+    "tabletAgreementLineHeight": 1.5,
+    "tabletAgreementFontWeight": 400,
+    "tabletAgreementLetterSpacing": 0,
 
     "tabletLostFontFamilyType": null,
     "tabletLostFontStyle": "",
@@ -639,6 +675,14 @@
     "mobileCheckboxLineHeight": 1.5,
     "mobileCheckboxFontWeight": 400,
     "mobileCheckboxLetterSpacing": 0,
+
+    "mobileAgreementFontFamilyType": null,
+    "mobileAgreementFontStyle": "",
+    "mobileAgreementFontSize": 14,
+    "mobileAgreementFontSizeSuffix": "px",
+    "mobileAgreementLineHeight": 1.5,
+    "mobileAgreementFontWeight": 400,
+    "mobileAgreementLetterSpacing": 0,
 
     "mobileLostFontFamilyType": null,
     "mobileLostFontStyle": "",

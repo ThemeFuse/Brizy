@@ -25,7 +25,7 @@
   width: 100%;
   background-size: cover;
   background-position: 50% 50%;
-  inset-inline-start: 0; 
+  inset-inline-start: 0;
   top: -50vh;
   height: 100vh;
   transition: all 0s ease !important;
@@ -99,5 +99,17 @@
 
   &-rotate-180 {
     transform: rotate(180deg);
+  }
+}
+
+@keyframes gradient-animation {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
   }
 }

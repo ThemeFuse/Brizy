@@ -27,6 +27,14 @@
         width: 100%;
       }
     }
+
+    .brz-ed-control__multiSelect2__value {
+      .brz-icon-svg.brz-control__select--arrow {
+        top: 50%;
+        transform: translateY(-50%);
+        margin-top: 0;
+      }
+    }
   }
   &.brz-ed-grid__option {
     padding: 0;

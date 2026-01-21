@@ -8,6 +8,7 @@ import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import { ChartType as ChartInstanceType } from "visual/types/global";
 import { hexToRgba } from "visual/utils/color";
 import { addFilter, applyFilter } from "visual/utils/filters";
+import { isVariableFont } from "visual/utils/options/Typography/utils";
 import { attachRefs } from "visual/utils/react";
 import { capByPrefix } from "visual/utils/string";
 import defaultValue from "./defaultValue.json";
@@ -50,6 +51,11 @@ class Chart extends EditorComponent<Value, Props> {
 
   componentDidMount(): void {
     this.initChart();
+    document.fonts.ready.then(() => {
+      if (this.chart) {
+        this.chart.update();
+      }
+    });
     addFilter("initBrizyPro", () => this.initChart());
   }
 
@@ -71,6 +77,39 @@ class Chart extends EditorComponent<Value, Props> {
     }
   }
 
+  getTypographyConfig() {
+    const {
+      dataLabelTypographyFontFamily,
+      dataLabelTypographyFontSize,
+      dataLabelTypographyFontWeight,
+      dataLabelTypographyBold,
+      dataLabelTypographyVariableFontWeight,
+      dataLabelTypographyItalic,
+      dataLabelTypographyUppercase,
+      dataLabelTypographyLowercase
+    } = this.getValue();
+
+    const isVariableFontValue = isVariableFont(
+      dataLabelTypographyFontFamily,
+      this.getReduxStore()
+    );
+
+    const fontWeight = isVariableFontValue
+      ? dataLabelTypographyVariableFontWeight
+      : dataLabelTypographyFontWeight;
+
+    const dataLabelTypography = {
+      fontFamily: dataLabelTypographyFontFamily,
+      fontSize: dataLabelTypographyFontSize ?? 12,
+      fontWeight: dataLabelTypographyBold ? 700 : fontWeight,
+      italic: dataLabelTypographyItalic ?? false,
+      uppercase: dataLabelTypographyUppercase ?? false,
+      lowercase: dataLabelTypographyLowercase ?? false
+    };
+
+    return dataLabelTypography;
+  }
+
   getChartData() {
     const v = this.getValue();
     const {
@@ -89,6 +128,7 @@ class Chart extends EditorComponent<Value, Props> {
 
     const borderColor = hexToRgba(borderColorHex, borderColorOpacity) ?? "";
 
+    const dataLabelTypography = this.getTypographyConfig();
     return {
       chartType,
       items: chartItems,
@@ -96,7 +136,8 @@ class Chart extends EditorComponent<Value, Props> {
       borderColor,
       label: chartType === ChartType.bar ? barLabel : lineLabel,
       borderSize,
-      fill
+      fill,
+      dataLabelTypography
     };
   }
 

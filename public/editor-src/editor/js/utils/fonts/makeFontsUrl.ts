@@ -1,7 +1,10 @@
 import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { GoogleFont, UploadedFont } from "visual/types/Fonts";
 
-export const makeSubsetGoogleFontsUrl = (fonts: GoogleFont[]): string => {
+export const makeSubsetGoogleFontsUrl = (
+  fonts: GoogleFont[],
+  baseUrl = "https://fonts.bunny.net/css"
+): string => {
   const family = fonts.reduce((acc, curr) => {
     const family = curr.family.replace(/\s/g, "+");
     const weights = curr.variants.join();
@@ -10,7 +13,7 @@ export const makeSubsetGoogleFontsUrl = (fonts: GoogleFont[]): string => {
   }, "");
 
   // was https://fonts.googleapis.com/css
-  return `https://fonts.bunny.net/css?family=${family}&subset=arabic,bengali,cyrillic,cyrillic-ext,devanagari,greek,greek-ext,gujarati,hebrew,khmer,korean,latin-ext,tamil,telugu,thai,vietnamese&display=swap`;
+  return `${baseUrl}?family=${family}&subset=arabic,bengali,cyrillic,cyrillic-ext,devanagari,greek,greek-ext,gujarati,hebrew,khmer,korean,latin-ext,tamil,telugu,thai,vietnamese&display=swap`;
 };
 
 // {editorFonts}fontId:400|fontId:400,700
@@ -31,9 +34,11 @@ export const makeUploadFontsUrl = (
 // prefetch assets
 export const makePrefetchFonts = (config: ConfigCommon): string[] => {
   const prefetchFonts = config.urls?.prefetchFonts;
+  const googleFontsUrl = config.urls?.googleFonts ?? "https://fonts.bunny.net";
+
   const links = [
-    '<link class="brz-link brz-link-bunny-fonts-prefetch" rel="dns-prefetch" href="//fonts.bunny.net">',
-    '<link class="brz-link brz-link-bunny-fonts-preconnect" rel="preconnect" href="https://fonts.bunny.net/" crossorigin>'
+    `<link class="brz-link brz-link-bunny-fonts-prefetch" rel="dns-prefetch" href="${googleFontsUrl}">`,
+    `<link class="brz-link brz-link-bunny-fonts-preconnect" rel="preconnect" href="${googleFontsUrl}" crossorigin>`
   ];
 
   if (prefetchFonts) {

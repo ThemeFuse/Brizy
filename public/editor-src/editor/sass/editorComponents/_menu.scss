@@ -82,6 +82,13 @@ $dropdown-arrow-size: 7px;
           transition: border-color 0.2s linear;
         }
       }
+
+      .brz-menu__item .brz-a {
+        width: 100%;
+        padding: 15px 35px 15px 15px;
+
+        @include word-wrap;
+      }
     }
 
     .brz-menu__item {
@@ -120,13 +127,6 @@ $dropdown-arrow-size: 7px;
         transition:
           background-color 0.2s linear,
           border-bottom-color 0.2s linear;
-
-        .brz-a {
-          width: 100%;
-          padding: 15px 35px 15px 15px;
-
-          @include word-wrap;
-        }
       }
     }
   }
@@ -434,7 +434,9 @@ $dropdown-arrow-size: 7px;
 
     &:not(.brz-menu__mmenu) {
       .brz-menu__item:hover > .brz-menu__sub-menu,
-      .brz-menu__item:hover > .brz-mega-menu__portal {
+      .brz-menu__item:hover > .brz-mega-menu__portal,
+      .brz-menu__item-dropdown--active > .brz-menu__sub-menu,
+      .brz-menu__item--opened > .brz-mega-menu__portal {
         visibility: visible;
         opacity: 1;
         z-index: z("mega-menu");

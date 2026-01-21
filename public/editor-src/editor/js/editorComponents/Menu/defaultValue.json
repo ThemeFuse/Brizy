@@ -16,7 +16,9 @@
 
     "images": {
       "bgImageSrc": ""
-    }
+    },
+
+    "accessibleMenu": true
   },
 
   "toolbar": {

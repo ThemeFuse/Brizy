@@ -1,12 +1,19 @@
+@use "sass:color";
+
 // Buttons Size
-@mixin button-size($padding-vertical, $padding-horizontal, $font-size, $line-height) {
+@mixin button-size(
+  $padding-vertical,
+  $padding-horizontal,
+  $font-size,
+  $line-height
+) {
   padding: $padding-vertical $padding-horizontal;
   font-size: $font-size;
   line-height: $line-height;
 }
 
 // Variant hover/focus/active
-@mixin button-variant ($bg-default, $color-default, $border-default) {
+@mixin button-variant($bg-default, $color-default, $border-default) {
   color: $color-default;
   background-color: $bg-default;
   border-color: $border-default;
@@ -14,19 +21,19 @@
   &:focus,
   &.focus {
     color: $color-default;
-    background-color: darken($bg-default, 10%);
-    border-color: darken($border-default, 15%);
+    background-color: color.adjust($bg-default, $lightness: -10%);
+    border-color: color.adjust($border-default, $lightness: -15%);
   }
 
   &:hover {
     color: $color-default;
-    background-color: darken($bg-default, 10%);
-    border-color: darken($border-default, 10%);
+    background-color: color.adjust($bg-default, $lightness: -10%);
+    border-color: color.adjust($border-default, $lightness: -10%);
   }
   &:active,
   &.active {
     color: $color-default;
-    background-color: darken($bg-default, 10%);
-    border-color: darken($border-default, 10%);
+    background-color: color.adjust($bg-default, $lightness: -10%);
+    border-color: color.adjust($border-default, $lightness: -10%);
   }
 }

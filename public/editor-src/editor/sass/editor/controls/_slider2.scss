@@ -1,8 +1,9 @@
+@use "sass:string";
 @import "../../variables";
 
 // UI Slider 2
 @function encodeHex($colour) {
-  @return "%23"+str-slice("#{$colour}", 2, -1);
+  @return "%23" + string.slice("#{$colour}", 2, -1);
 }
 
 @mixin thumb {
@@ -18,7 +19,9 @@
   background-position: center;
   margin-top: -7px;
   cursor: pointer;
-  transition: border-color .2s ease, box-shadow .2s ease;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
 
   &:active {
     border-color: $slider__control__handle-border--active;

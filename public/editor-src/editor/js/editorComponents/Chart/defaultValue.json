@@ -72,7 +72,8 @@
     "widthSuffix": "px",
 
     "families": {
-      "fontFamily": "lato"
+      "fontFamily": "lato",
+      "dataLabelTypographyFontFamily": "lato"
     },
 
     "borderSize": 1,
@@ -153,6 +154,23 @@
 
     "chartLineItemsTwitterColorHex": "#55ACEE",
     "chartLineItemsTwitterColorOpacity": 1,
-    "chartLineItemsTwitterColorPalette": ""
+    "chartLineItemsTwitterColorPalette": "",
+
+    "dataLabelTypographyFontStyle": "",
+    "dataLabelTypographyFontFamilyType": "google",
+    "dataLabelTypographyFontSize": 12,
+    "dataLabelTypographyFontSizeSuffix": "px",
+    "dataLabelTypographyFontWeight": 400,
+    "dataLabelTypographyLetterSpacing": 0,
+    "dataLabelTypographyLineHeight": 1,
+    "dataLabelTypographyVariableFontWeight": 400,
+    "dataLabelTypographyFontWidth": 100,
+    "dataLabelTypographyFontSoftness": 0,
+    "dataLabelTypographyBold": false,
+    "dataLabelTypographyItalic": false,
+    "dataLabelTypographyUnderline": false,
+    "dataLabelTypographyStrike": false,
+    "dataLabelTypographyUppercase": false,
+    "dataLabelTypographyLowercase": false
   }
 }

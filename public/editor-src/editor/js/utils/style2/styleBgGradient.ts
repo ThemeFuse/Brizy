@@ -1,16 +1,28 @@
-import { Num, Str } from "@brizy/readers";
+import { Arr, Num, Str } from "@brizy/readers";
+import { GradientStop } from "visual/component/Controls/BackgroundColor/entities";
 import { ElementModel } from "visual/component/Elements/Types";
+import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { getColor } from "visual/utils/color";
 import { hexToBlendedRgba } from "visual/utils/color/RGB";
 import { defaultValueValue } from "visual/utils/onChange";
 import { capByPrefix } from "visual/utils/string";
 import { styleState } from "visual/utils/style";
+import { readGradientStop } from "../options/BackgroundColor/converters";
 import { State } from "../stateMode";
-import { CSSValue } from "./types";
+import { CSSValue, GradientStop as NormalGradientStop } from "./types";
 import { gradientCssDeclaration } from "./utils";
 
 const getState = (v: ElementModel, state: State): string =>
   styleState({ v, state }) === "hover" ? "hover" : state;
+
+export const normalizeGradientStops = (
+  stops: GradientStop[],
+  config: ConfigCommon
+): NormalGradientStop[] =>
+  stops.map((stop) => ({
+    position: stop.position,
+    color: getColor(stop.palette, stop.hex, stop.opacity, config) ?? ""
+  }));
 
 export const styleBgBlendGradient = ({
   v,
@@ -107,6 +119,14 @@ export function styleBgGradient({
   const gradientRadialDegree = Num.read(
     dvv(capByPrefix(prefix, "gradientRadialDegree"))
   );
+  const gradientSpeed = Num.read(dvv(capByPrefix(prefix, "gradientSpeed")));
+
+  const _gradientStops: GradientStop[] =
+    Arr.readWithItemReader(readGradientStop)(
+      dvv(capByPrefix(prefix, "gradientStops"))
+    ) ?? [];
+
+  const gradientStops = normalizeGradientStops(_gradientStops, config);
 
   return gradientCssDeclaration({
     colorType: bgColorType,
@@ -121,6 +141,8 @@ export function styleBgGradient({
       gradientColorHex,
       gradientColorOpacity,
       config
-    )
+    ),
+    gradientSpeed,
+    gradientStops
   });
 }

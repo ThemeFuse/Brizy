@@ -13,9 +13,16 @@ export const FontStyle = ({
   openSettings,
   onChange,
   value,
-  isFontStyleSettingsDisabled
+  isFontStyleSettingsDisabled,
+  disabled
 }: Props): JSX.Element => {
-  const _className = classNames("brz-ed-control__font-style", className);
+  const _className = classNames(
+    "brz-ed-control__font-style",
+    {
+      "brz-ed-control__typography--disabled-field": disabled
+    },
+    className
+  );
   const config = useConfig();
   const disableSettings =
     isFontStyleSettingsDisabled || (isCloud(config) && isShopify(config));

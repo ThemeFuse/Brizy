@@ -111,6 +111,23 @@ export function style(data: DynamicStylesProps<ElementModel>): OutputStyle {
     ".brz && .brz-login-form .brz-control__check-group-option:hover": {
       standart: ["cssStyleElementForm2FieldsCheckboxColor"]
     },
+    ".brz && .brz-login-form .brz-login-form__field-terms-agreement .brz-control__check-group .brz-control__check-group-option":
+      {
+        standart: [
+          "cssStyleElementLoginAgreementFontFamily",
+          "cssStyleElementLoginAgreementFontSize",
+          "cssStyleElementLoginAgreementFontWeight",
+          "cssStyleElementLoginAgreementLetterSpacing",
+          "cssStyleElementLoginAgreementLineHeight",
+          "cssStyleElementLoginAgreementFontVariation",
+          "cssStyleElementLoginAgreementTextTransform",
+          "cssStyleElementLoginAgreementAlign"
+        ]
+      },
+    ".brz && .brz-login-form .brz-login-form__field-terms-agreement .brz-control__check-group-option:hover":
+      {
+        standart: ["cssStyleElementLoginAgreementColor"]
+      },
     ".brz && .brz-login-form .brz-login__register-info": {
       standart: [
         "cssStyleElementLoginRegisterInfoTypography2FontFamily",

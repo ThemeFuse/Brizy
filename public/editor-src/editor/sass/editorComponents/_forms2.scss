@@ -387,6 +387,23 @@
     transition: none !important;
     outline: 2px solid blue !important;
   }
+
+  &__messages {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+
+    .brz-forms2__alert {
+      display: flex;
+      background: transparent;
+      padding: 0;
+    }
+
+    &:has(> *) {
+      padding: 0 7.5px;
+    }
+  }
 }
 
 &.brz:not(.brz-ed) {

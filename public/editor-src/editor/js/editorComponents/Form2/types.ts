@@ -11,6 +11,11 @@ export interface Value extends ElementModel {
   customCSS: string;
 
   actionClosePopup: "on" | "off";
+  showMessages: "on" | "off";
+
+  messageSuccess: string;
+  messageError: string;
+  messageEmptyRequired: string;
 }
 
 export interface State {

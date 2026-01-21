@@ -62,6 +62,23 @@ export const WRAPPER_TYPES: Set<string> = new Set([
 
 const CLONEABLE_ITEMS: string[] = [ElementTypes.Button, ElementTypes.Icon];
 
+export const CUSTOM_ID_TYPES: Set<string> = new Set([
+  ElementTypes.Row,
+  ElementTypes.Column,
+  ElementTypes.Button,
+  ElementTypes.Icon,
+  ElementTypes.Wrapper,
+  ElementTypes.StoryWrapper,
+  ElementTypes.Cloneable,
+  ElementTypes.Form2Field,
+  ElementTypes.Section,
+  ElementTypes.Leadific
+]);
+
+export function supportsCustomId(type: string): boolean {
+  return CUSTOM_ID_TYPES.has(type);
+}
+
 export function supportsShowOnDevice(type: string): boolean {
   return WRAPPER_TYPES.has(type) || CLONEABLE_ITEMS.includes(type);
 }
@@ -361,4 +378,104 @@ export function makeBlock(
       ...extra
     }
   } as Block;
+}
+
+export const isBlockLevel = (type: string): boolean => {
+  return [
+    ElementTypes.Section,
+    ElementTypes.SectionHeader,
+    ElementTypes.SectionFooter,
+    ElementTypes.SectionMegaMenu,
+    ElementTypes.SectionPopup,
+    ElementTypes.SectionPopup2
+  ].includes(type as ElementTypes);
+};
+
+type UpdateTarget = {
+  block: Block;
+  property: "anchorName" | "customID";
+};
+
+const findUpdateTargetForTitle = (
+  blocks: Block[],
+  id: string,
+  parent: Block | null = null
+): UpdateTarget | null => {
+  for (const block of blocks) {
+    if (block.value._id === id) {
+      // If block level, update anchorName
+      if (isBlockLevel(block.type)) {
+        return { block, property: "anchorName" };
+      }
+
+      // If block supports customID, update it
+      if (supportsCustomId(block.type)) {
+        return { block, property: "customID" };
+      }
+
+      // If parent supports customID, update parent
+      if (parent && supportsCustomId(parent.type)) {
+        return { block: parent, property: "customID" };
+      }
+
+      return null;
+    }
+
+    if (Array.isArray(block.value.items)) {
+      const result = findUpdateTargetForTitle(block.value.items, id, block);
+      if (result) {
+        return result;
+      }
+    }
+  }
+  return null;
+};
+
+const updateBlockInDraftForTitle = (
+  draft: Draft<Block[]>,
+  targetId: string,
+  property: "anchorName" | "customID",
+  value: string
+): boolean => {
+  for (const block of draft) {
+    if (block.value._id === targetId) {
+      block.value[property] = value;
+      return true;
+    }
+
+    if (Array.isArray(block.value.items)) {
+      if (
+        updateBlockInDraftForTitle(
+          block.value.items as Draft<Block[]>,
+          targetId,
+          property,
+          value
+        )
+      ) {
+        return true;
+      }
+    }
+  }
+  return false;
+};
+
+export function updateBlockTitle(
+  blocks: Block[],
+  id: string,
+  title: string
+): Block[] {
+  const target = findUpdateTargetForTitle(blocks, id);
+
+  if (!target) {
+    return blocks;
+  }
+
+  return produce(blocks, (draft) => {
+    updateBlockInDraftForTitle(
+      draft,
+      target.block.value._id,
+      target.property,
+      title
+    );
+  });
 }

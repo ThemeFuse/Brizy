@@ -17,7 +17,13 @@ export const toBgControlValue = (v: Value): BgValue => {
     end: v.end,
     active: v.active,
     degree: v.gradientType === "radial" ? v.linearDegree : v.linearDegree,
-    gradientType: v.gradientType
+    gradientType: v.gradientType,
+    gradientSpeed: v.gradientSpeed,
+    gradientStops: v.gradientStops,
+    activeStopIndex: v.activeStopIndex,
+    gradientHex: v.gradientHex,
+    gradientOpacity: v.gradientOpacity,
+    gradientPalette: v.gradientPalette
   };
 };
 

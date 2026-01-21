@@ -16,6 +16,7 @@ import { Label } from "./Label";
 type status = ReduxState["page"]["status"];
 
 interface Item {
+  disabled?: boolean;
   title: string;
   icon?: string;
   roles?: string[];
@@ -40,12 +41,22 @@ const Addons = ({ items }: { items: Item[] }): ReactElement => {
 
   const overlay = useMemo(() => {
     return items.map((item, index) => {
-      const { title, icon, roles = [], loading, onClick, attr } = item;
+      const {
+        title,
+        icon,
+        roles = [],
+        loading,
+        onClick,
+        attr,
+        disabled
+      } = item;
+
       const content = (
         <TooltipItem
           className="brz-ed-fixed-bottom-panel-popover__item"
-          onClick={onClick}
+          disabled={disabled}
           attr={attr}
+          onClick={onClick}
         >
           {loading ? (
             <EditorIcon icon="nc-circle-02" className="brz-ed-animated--spin" />

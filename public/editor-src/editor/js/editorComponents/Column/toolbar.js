@@ -401,7 +401,10 @@ export const getItems = ({
                 {
                   id: "",
                   type: "backgroundColor",
-                  states: [NORMAL, HOVER]
+                  states: [NORMAL, HOVER],
+                  config: {
+                    withAnimatedGradient: true
+                  }
                 }
               ]
             },

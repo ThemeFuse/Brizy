@@ -213,6 +213,18 @@ export const getItems: GetItems<Value> = ({
               ]
             },
             {
+              id: "tabPrefixSuffixColor",
+              label: t("Prefix & Suffix"),
+              options: [
+                {
+                  id: "prefixSuffixColor",
+                  type: "colorPicker",
+                  states: [NORMAL, HOVER],
+                  disabled: !(isRadial || isSimple)
+                }
+              ]
+            },
+            {
               id: "tabBg",
               label: t("Bg"),
               options: [

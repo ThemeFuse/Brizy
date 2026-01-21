@@ -1,5 +1,7 @@
+@use "sass:map";
+
 // Fixes Container
-$containers-width: map-get($container-max-widths, "lg");
+$containers-width: map.get($container-max-widths, "lg");
 
 // Desktop
 .brz-container,

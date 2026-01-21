@@ -137,7 +137,7 @@ export class Dropdown {
     this.close();
   };
 
-  private open(): void {
+  public open(): void {
     const popper = this.itemPopper;
 
     if (popper) {
@@ -151,7 +151,13 @@ export class Dropdown {
     }
   }
 
-  private close(): void {
+  public isOpen(): boolean {
+    return (
+      this.item?.classList.contains("brz-menu__item-dropdown--active") ?? false
+    );
+  }
+
+  public close(): void {
     this.item?.classList.remove("brz-menu__item-dropdown--active");
     this.settings.onClose?.();
   }
