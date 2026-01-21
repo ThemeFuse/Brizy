@@ -156,7 +156,10 @@ const webpackConfig = (options) => {
               loader: "sass-loader",
               options: {
                 // !!IMPORTANT!! used inside "resolve-url-loader"
-                sourceMap: true
+                sourceMap: true,
+                sassOptions: {
+                  silenceDeprecations: ["legacy-js-api"]
+                }
               }
             }
           ]

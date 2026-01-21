@@ -213,6 +213,34 @@ export const getItems: GetItems<Value, Props> = ({ v, device }) => {
       ]
     },
     {
+      id: "toolbarTypography",
+      type: "popover",
+      config: {
+        icon: "nc-font",
+        size: device === "desktop" ? "large" : "auto",
+        title: t("Data Labels Typography")
+      },
+      devices: "desktop",
+      position: 80,
+      options: [
+        {
+          id: "dataLabelTypography",
+          type: "typography",
+          config: {
+            fontFamily: device === "desktop",
+            disabledFields: [
+              "lineHeight",
+              "fontSizeSuffix",
+              "fontStyle",
+              "letterSpacing",
+              "strike",
+              "underline"
+            ]
+          }
+        }
+      ]
+    },
+    {
       id: "toolbarColor",
       type: "popover",
       config: {

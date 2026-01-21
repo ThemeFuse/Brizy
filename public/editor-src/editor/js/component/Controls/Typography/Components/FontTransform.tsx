@@ -20,7 +20,8 @@ export const FontTransform: FC<Props> = ({
   onUnderlineChange,
   onStrikeChange,
   onLowercaseChange,
-  onScriptChange
+  onScriptChange,
+  disabledFields
 }) => {
   const handleChangeBold = useCallback(() => {
     onBoldChange(!bold);
@@ -52,37 +53,43 @@ export const FontTransform: FC<Props> = ({
         icon: "nc-bold",
         title: t("Bold"),
         value: bold,
-        onChange: handleChangeBold
+        onChange: handleChangeBold,
+        disabled: disabledFields?.includes("bold")
       },
       {
         icon: "nc-italic",
         title: t("Italic"),
         value: italic,
-        onChange: handleChangeItalic
+        onChange: handleChangeItalic,
+        disabled: disabledFields?.includes("italic")
       },
       {
         icon: "nc-tp-underline",
         title: t("Underline"),
         value: underline,
-        onChange: handleChangeUnderline
+        onChange: handleChangeUnderline,
+        disabled: disabledFields?.includes("underline")
       },
       {
         icon: "nc-tp-strike",
         title: t("Strike"),
         value: strike,
-        onChange: handleChangeStrike
+        onChange: handleChangeStrike,
+        disabled: disabledFields?.includes("strike")
       },
       {
         icon: "nc-tp-capitalize",
         title: t("Uppercase"),
         value: uppercase,
-        onChange: handleChangeUppercase
+        onChange: handleChangeUppercase,
+        disabled: disabledFields?.includes("uppercase")
       },
       {
         icon: "nc-tp-lowercase",
         title: t("Lowercase"),
         value: lowercase,
-        onChange: handleChangeLowercase
+        onChange: handleChangeLowercase,
+        disabled: disabledFields?.includes("lowercase")
       }
     ],
     [
@@ -97,13 +104,14 @@ export const FontTransform: FC<Props> = ({
       handleChangeUnderline,
       handleChangeStrike,
       handleChangeUppercase,
-      handleChangeLowercase
+      handleChangeLowercase,
+      disabledFields
     ]
   );
 
   return (
     <div className="brz-ed-control__typography-font-transform">
-      {options.map(({ icon, title, value, onChange }) => (
+      {options.map(({ icon, title, value, onChange, disabled }) => (
         <ToggleButton
           key={title}
           value={value}
@@ -111,6 +119,9 @@ export const FontTransform: FC<Props> = ({
           title={title}
           onClick={onChange}
           reverseTheme={true}
+          className={
+            disabled ? "brz-ed-control__typography--disabled-field" : ""
+          }
         />
       ))}
       {scriptChoices && (

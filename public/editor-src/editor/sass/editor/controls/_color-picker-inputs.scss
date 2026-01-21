@@ -6,6 +6,7 @@
   flex-wrap: nowrap;
   justify-content: space-between;
   margin-top: $control-padding;
+  align-items: center;
 
   &__hex-container {
     display: flex;
@@ -17,7 +18,9 @@
     font-size: 11px;
     color: $gray-light;
     cursor: pointer;
-    transition: color 200ms, filter 200ms;
+    transition:
+      color 200ms,
+      filter 200ms;
 
     &--active {
       color: $gray-lighter;

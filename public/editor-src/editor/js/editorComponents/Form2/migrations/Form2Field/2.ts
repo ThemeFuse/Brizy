@@ -27,7 +27,7 @@ const migrateFieldOptions = (v: Partial<Value>): Form2FieldOption[] => {
 
 export const m2: Migration<Deps<unknown>> = {
   version: 2,
-  cb(v) {
+  cb({ v }) {
     if (!Obj.isObject(v)) {
       throw new Error(`Form2 Select, Radio, Checkbox migration failed ${v}`);
     }

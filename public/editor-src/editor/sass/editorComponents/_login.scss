@@ -123,6 +123,10 @@
         border-color: #f00;
       }
     }
+
+    .brz-login__field-empty .brz-label {
+      color: #f00;
+    }
   }
 
   .brz-control__check-group-option {
@@ -146,7 +150,8 @@
 
   .brz-login-form__field-lost-password,
   .brz-login-form__field-register-link,
-  .brz-login-form__field-login-link {
+  .brz-login-form__field-login-link,
+  .brz-login-form__field-terms-agreement {
     width: 100%;
     cursor: pointer;
   }

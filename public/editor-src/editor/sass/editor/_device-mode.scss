@@ -1,4 +1,6 @@
-$containers-width: map-get($container-max-widths, "lg");
+@use "sass:map";
+
+$containers-width: map.get($container-max-widths, "lg");
 
 // Device Mode Styles
 #brz-ed-iframe {

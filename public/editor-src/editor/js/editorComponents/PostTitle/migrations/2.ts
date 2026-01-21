@@ -19,7 +19,7 @@ const migrateSourceID = (v: ElementModel) => {
 
 export const m2: Migration<Deps<unknown>> = {
   version: 2,
-  cb(v) {
+  cb({ v }) {
     if (!Obj.isObject(v)) {
       throw new Error(`PostTitle sourceType && sourceID migration failed ${v}`);
     }

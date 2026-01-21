@@ -1,3 +1,4 @@
+import { GradientStop } from "visual/component/Controls/BackgroundColor/entities";
 import {
   FromElementModel,
   ToElementModel
@@ -8,7 +9,10 @@ import { mPipe } from "visual/utils/fp";
 import * as Math from "visual/utils/math";
 import * as Num from "visual/utils/math/number";
 import * as Palette from "visual/utils/options/ColorPicker/entities/palette";
+import * as Arr from "visual/utils/reader/array";
+import * as Obj from "visual/utils/reader/object";
 import * as Str from "visual/utils/string/specs";
+import { MValue } from "visual/utils/value";
 import * as GradientActivePointer from "./entities/GradientActivePointer";
 import * as GradientType from "./entities/GradientType";
 import * as Type from "./entities/Type";
@@ -32,7 +36,35 @@ export const defaultValue: Value = {
   end: 100,
   active: "start",
   linearDegree: 0,
-  radialDegree: 0
+  radialDegree: 0,
+  gradientSpeed: 1,
+  gradientStops: [],
+  activeStopIndex: 0
+};
+
+export const readGradientStop = (value: unknown): MValue<GradientStop> => {
+  const obj = Obj.read(value);
+
+  if (!obj) {
+    return undefined;
+  }
+
+  const position = Num.read(Obj.readKey("position")(obj));
+  const hex =
+    mPipe(Obj.readKey("hex"), Str.read, Hex.fromString)(obj) ?? undefined;
+  const opacity = Num.read(Obj.readKey("opacity")(obj));
+  const palette = Str.read(Obj.readKey("palette")(obj)) ?? "";
+
+  if (position === undefined || hex === undefined || opacity === undefined) {
+    return undefined;
+  }
+
+  return {
+    position,
+    hex,
+    opacity,
+    palette
+  };
 };
 
 export const fromElementModel: FromElementModel<"backgroundColor"> = (get) => {
@@ -95,12 +127,21 @@ export const fromElementModel: FromElementModel<"backgroundColor"> = (get) => {
     linearDegree:
       Num.read(get("gradientLinearDegree")) ?? defaultValue.linearDegree,
     radialDegree:
-      Num.read(get("gradientRadialDegree")) ?? defaultValue.radialDegree
+      Num.read(get("gradientRadialDegree")) ?? defaultValue.radialDegree,
+    gradientSpeed: Num.read(get("gradientSpeed")) ?? defaultValue.gradientSpeed,
+    gradientStops:
+      mPipe(
+        () => get("gradientStops"),
+        Arr.readWithItemReader(readGradientStop)
+      )() ?? defaultValue.gradientStops,
+    activeStopIndex:
+      Num.read(get("activeStopIndex")) ?? defaultValue.activeStopIndex
   };
 };
 
 export const toElementModel: ToElementModel<"backgroundColor"> = (v) => {
   const pointer = v.active === "start" ? "startPointer" : "finishPointer";
+
   return {
     bgColorType: v.type,
     tempBgColorType: v.tempType,
@@ -119,6 +160,13 @@ export const toElementModel: ToElementModel<"backgroundColor"> = (v) => {
     gradientFinishPointer: v.end,
     gradientActivePointer: pointer,
     gradientLinearDegree: v.linearDegree,
-    gradientRadialDegree: v.radialDegree
+    gradientRadialDegree: v.radialDegree,
+    ...(v.type === "animated-gradient"
+      ? {
+          gradientSpeed: v.gradientSpeed,
+          gradientStops: v.gradientStops,
+          activeStopIndex: v.activeStopIndex
+        }
+      : {})
   };
 };

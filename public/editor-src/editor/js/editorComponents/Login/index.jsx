@@ -1,8 +1,12 @@
 import classnames from "classnames";
 import { noop } from "es-toolkit";
 import React from "react";
+import { CheckGroup as CheckboxControls } from "visual/component/Controls/CheckGroup";
+import { CheckGroupItem as CheckboxControlsItem } from "visual/component/Controls/CheckGroup/CheckGroupItem";
 import { TextEditor } from "visual/component/Controls/TextEditor";
 import CustomCSS from "visual/component/CustomCSS";
+import EditorIcon from "visual/component/EditorIcon";
+import { ThemeIcon } from "visual/component/ThemeIcon";
 import Toolbar from "visual/component/Toolbar";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import EditorComponent from "visual/editorComponents/EditorComponent";
@@ -31,6 +35,7 @@ import * as sidebarExtendParent from "./sidebarExtendParent";
 import * as sidebarLoginLink from "./sidebarLoginLink";
 import { style } from "./styles";
 import * as toolbarExtend from "./toolbarExtend";
+import * as toolbarExtendAgreement from "./toolbarExtendAgreement";
 import * as toolbarExtendCheckbox from "./toolbarExtendCheckbox";
 import * as toolbarExtendLabel from "./toolbarExtendLabel";
 import * as toolbarExtendLostPasswordConfig from "./toolbarExtendLostPassword";
@@ -40,6 +45,9 @@ class Login extends EditorComponent {
   static defaultValue = defaultValue;
   static defaultProps = {
     extendParentToolbar: noop
+  };
+  state = {
+    termsActive: {}
   };
   isWp = isWp(this.getGlobalConfig());
 
@@ -51,6 +59,14 @@ class Login extends EditorComponent {
     return this.isWp
       ? this.getGlobalConfig().wp.usersCanRegister === "1"
       : true;
+  };
+
+  handleTermsActive = (termsActive) => {
+    this.setState({ termsActive });
+  };
+
+  handleTermsLabelChange = (termsAgreementLabel) => {
+    this.patchValue({ termsAgreementLabel });
   };
 
   componentDidMount() {
@@ -358,13 +374,104 @@ class Login extends EditorComponent {
     );
   }
 
+  renderTermsIconForEdit = ({ active }) => (
+    <div className="brz-control__check-group-icon">
+      <EditorIcon
+        className="brz-d-block"
+        icon={active ? "nc-check-square-on" : "nc-check-square-off"}
+      />
+    </div>
+  );
+
+  renderTermsIconForView = () => (
+    <>
+      <div className="brz-control__check-group-icon brz-control__check-group--check">
+        <ThemeIcon
+          className="brz-d-block"
+          name="check-square-on"
+          type="editor"
+        />
+      </div>
+      <div className="brz-control__check-group-icon brz-control__check-group--uncheck">
+        <ThemeIcon
+          className="brz-d-block"
+          name="check-square-off"
+          type="editor"
+        />
+      </div>
+    </>
+  );
+
+  renderTermsAgreement(v) {
+    const { termsActive } = this.state;
+    const { termsAgreementLabel, enableCustomHtml, customHtml } = v;
+    const isEditorMode = isEditor(this.props.renderContext);
+    const isCustomHtml = enableCustomHtml === "on" && customHtml;
+
+    return (
+      <div className="brz-login-form__field brz-login-form__field-terms-agreement">
+        <div className="brz-login__item">
+          <Toolbar
+            {...this.makeToolbarPropsFromConfig2(toolbarExtendAgreement, null, {
+              allowExtend: false
+            })}
+          >
+            {({ ref }) => (
+              <CheckboxControls
+                defaultValue={termsActive}
+                onChange={this.handleTermsActive}
+                ref={ref}
+              >
+                <CheckboxControlsItem
+                  name="agreeterms"
+                  value="yes"
+                  isEditor={isEditorMode}
+                  required={true}
+                  renderIcons={
+                    isEditorMode
+                      ? this.renderTermsIconForEdit
+                      : this.renderTermsIconForView
+                  }
+                >
+                  {isEditorMode ? (
+                    isCustomHtml ? (
+                      <div
+                        style={{ pointerEvents: "none" }}
+                        dangerouslySetInnerHTML={{ __html: customHtml }}
+                      />
+                    ) : (
+                      <TextEditor
+                        value={termsAgreementLabel}
+                        onChange={this.handleTermsLabelChange}
+                      />
+                    )
+                  ) : isCustomHtml ? (
+                    <div dangerouslySetInnerHTML={{ __html: customHtml }} />
+                  ) : (
+                    termsAgreementLabel
+                  )}
+                </CheckboxControlsItem>
+              </CheckboxControls>
+            )}
+          </Toolbar>
+        </div>
+      </div>
+    );
+  }
+
   renderLoginForm(v) {
-    const { showLostPassword, showRegisterLink, registerLink, lostPassword } =
-      v;
+    const {
+      showLostPassword,
+      showRegisterLink,
+      registerLink,
+      lostPassword,
+      showAgreeTerms
+    } = v;
 
     return (
       <>
         {this.renderLoginFields(v)}
+        {showAgreeTerms === "on" && this.renderTermsAgreement(v)}
         {this.renderButton(v.items.length, "login")}
         {showLostPassword === "on" &&
           this.renderLostYourPasswordLink(lostPassword)}
@@ -376,11 +483,18 @@ class Login extends EditorComponent {
   }
 
   renderRegisterForm(v) {
-    const { showLostPassword, loginLink, showLoginLink, lostPassword } = v;
+    const {
+      showLostPassword,
+      loginLink,
+      showLoginLink,
+      lostPassword,
+      showAgreeTerms
+    } = v;
 
     return (
       <>
         {this.renderRegisterFields(v)}
+        {showAgreeTerms === "on" && this.renderTermsAgreement(v)}
         {this.renderButton(v.items.length, "register")}
         {showLoginLink === "on" && this.renderLoginLink(loginLink)}
         {showLostPassword === "on" &&

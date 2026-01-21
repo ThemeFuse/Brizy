@@ -5,12 +5,21 @@ interface Props {
   prefix?: string;
   suffix?: string;
   className: string;
+  prefixClassName?: string;
+  suffixClassName?: string;
 }
 
-export const Text: FCC<Props> = ({ className, prefix, suffix, children }) => (
+export const Text: FCC<Props> = ({
+  className,
+  prefix,
+  suffix,
+  children,
+  prefixClassName,
+  suffixClassName
+}) => (
   <div className={className}>
-    {prefix && <span>{prefix}</span>}
+    {prefix && <span className={prefixClassName}>{prefix}</span>}
     <span className="brz-counter-numbers">{children}</span>
-    {suffix && <span>{suffix}</span>}
+    {suffix && <span className={suffixClassName}>{suffix}</span>}
   </div>
 );

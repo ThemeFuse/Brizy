@@ -3,6 +3,7 @@ import {
   ConfigCommon,
   LeftSidebarMoreOptionsIds
 } from "visual/global/Config/types/configs/ConfigCommon";
+import UIEvents from "visual/global/UIEvents";
 import { Option } from "./index";
 
 export const getMoreOptions = (ui: ConfigCommon["ui"]): Array<Option> => {
@@ -24,6 +25,15 @@ export const getMoreOptions = (ui: ConfigCommon["ui"]): Array<Option> => {
               mode: "stack",
               prompt: "keyHelper"
             });
+          }
+        });
+      } else if (option.type === LeftSidebarMoreOptionsIds.explorer) {
+        _options.push({
+          ...option,
+          id: option.type,
+          onClick: (e: MouseEvent): void => {
+            e.preventDefault();
+            UIEvents.emit("navigator.open");
           }
         });
       } else {

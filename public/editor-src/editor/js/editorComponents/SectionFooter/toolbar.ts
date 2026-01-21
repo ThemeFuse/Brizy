@@ -65,7 +65,6 @@ export const getItems: GetItems = ({ v, device, component, context }) => {
   const imageMedia = dvv("media") === "image";
   const coverBg = dvv("bgSize") === BgSize.Cover;
   const deviceCapitalize = capitalize(device);
-
   return [
     {
       id: `showOn${deviceCapitalize}`,
@@ -344,7 +343,10 @@ export const getItems: GetItems = ({ v, device, component, context }) => {
                 {
                   id: "",
                   type: "backgroundColor",
-                  states: [NORMAL, HOVER]
+                  states: [NORMAL, HOVER],
+                  config: {
+                    withAnimatedGradient: true
+                  }
                 }
               ]
             },

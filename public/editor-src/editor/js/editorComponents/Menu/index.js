@@ -20,6 +20,7 @@ import { makePlaceholder } from "visual/utils/dynamicContent";
 import { isPro } from "visual/utils/env";
 import { applyFilter } from "visual/utils/filters";
 import { t } from "visual/utils/i18n";
+import { makeDataAttr } from "visual/utils/i18n/attribute";
 import { defaultValueKey, defaultValueValue } from "visual/utils/onChange";
 import { attachRefs } from "visual/utils/react";
 import { DESKTOP, MOBILE, TABLET } from "visual/utils/responsiveMode";
@@ -554,7 +555,8 @@ export default class Menu extends EditorComponent {
       mMenuAnimation,
       mMenuSize,
       tabletMMenuSize,
-      mobileMMenuSize
+      mobileMMenuSize,
+      accessibleMenu
     } = v;
 
     const isSlider = this.props.meta?.section?.isSlider;
@@ -577,6 +579,12 @@ export default class Menu extends EditorComponent {
         }
       : {};
 
+    const attributes = {
+      ...mMenuProps,
+      ...(accessibleMenu &&
+        makeDataAttr({ name: "menu-accessible", value: "true" }))
+    };
+
     const className = classnames(
       "brz-menu__container",
       this.css(
@@ -594,7 +602,7 @@ export default class Menu extends EditorComponent {
 
     return (
       <CustomCSS selectorName={id} css={customCSS}>
-        <div className={className} {...mMenuProps}>
+        <div className={className} {...attributes}>
           {this.renderMenuForView(v, vs, vd)}
           {hasMMenu && (
             <>

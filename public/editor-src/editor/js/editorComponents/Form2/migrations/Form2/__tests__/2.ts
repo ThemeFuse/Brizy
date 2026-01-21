@@ -291,7 +291,12 @@ describe("Testing form m2 migration", () => {
       }
     ]
   ])("Multistep buttons width", (v, expected) => {
-    const migrated = m2.cb(v);
+    const migrated = m2.cb({
+      v,
+      vs: v,
+      vd: v,
+      renderContext: "editor" as const
+    });
     expect(migrated).toStrictEqual(expected);
   });
 });

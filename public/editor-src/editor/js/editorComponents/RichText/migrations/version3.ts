@@ -45,7 +45,7 @@ const changeRichText = (html: string, renderContext: RenderType): string => {
 
 export const m3: MigrationRichText = {
   version: 3,
-  cb(v, _, renderContext) {
+  cb({ v, renderContext }) {
     const model = Obj.read(v);
     if (!model) {
       throw new Error(`RichText text migration failed ${v}`);

@@ -3,11 +3,14 @@ import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import type { Block } from "visual/types/Block";
 import { makeBlock } from "../utils";
 import {
+  CUSTOM_ID_TYPES,
   WRAPPER_TYPES,
   getCurrentWrapperElementId,
   removeBlockWithWrapper,
   setHiddenElement,
-  supportsShowOnDevice
+  supportsCustomId,
+  supportsShowOnDevice,
+  updateBlockTitle
 } from "../utils";
 
 describe("Navigator context/utils", () => {
@@ -190,5 +193,318 @@ describe("Navigator context/utils", () => {
     const removed3 = removeBlockWithWrapper(blocksWith1Item, "BTN1");
     const secChildren3 = removed3[0].value.items as Block[];
     expect(secChildren3.find((b) => b.value._id === "CLONE")).toBeUndefined(); // Cloneable should be removed
+  });
+
+  describe("supportsCustomId", () => {
+    test("returns true for blocks that support customID", () => {
+      expect(supportsCustomId(ElementTypes.Row)).toBe(true);
+      expect(supportsCustomId(ElementTypes.Column)).toBe(true);
+      expect(supportsCustomId(ElementTypes.Button)).toBe(true);
+      expect(supportsCustomId(ElementTypes.Icon)).toBe(true);
+      expect(supportsCustomId(ElementTypes.Wrapper)).toBe(true);
+      expect(supportsCustomId(ElementTypes.StoryWrapper)).toBe(true);
+      expect(supportsCustomId(ElementTypes.Cloneable)).toBe(true);
+      expect(supportsCustomId(ElementTypes.Form2Field)).toBe(true);
+      expect(supportsCustomId(ElementTypes.Section)).toBe(true);
+      expect(supportsCustomId(ElementTypes.Leadific)).toBe(true);
+    });
+
+    test("returns false for blocks that don't support customID", () => {
+      expect(supportsCustomId(ElementTypes.RichText)).toBe(false);
+      expect(supportsCustomId(ElementTypes.Image)).toBe(false);
+      expect(supportsCustomId(ElementTypes.Spacer)).toBe(false);
+      expect(supportsCustomId(ElementTypes.Video)).toBe(false);
+    });
+
+    test("CUSTOM_ID_TYPES set contains correct types", () => {
+      expect(CUSTOM_ID_TYPES.has(ElementTypes.Row)).toBe(true);
+      expect(CUSTOM_ID_TYPES.has(ElementTypes.Column)).toBe(true);
+      expect(CUSTOM_ID_TYPES.has(ElementTypes.Button)).toBe(true);
+      expect(CUSTOM_ID_TYPES.has(ElementTypes.Icon)).toBe(true);
+      expect(CUSTOM_ID_TYPES.has(ElementTypes.Wrapper)).toBe(true);
+      expect(CUSTOM_ID_TYPES.has(ElementTypes.StoryWrapper)).toBe(true);
+      expect(CUSTOM_ID_TYPES.has(ElementTypes.Cloneable)).toBe(true);
+      expect(CUSTOM_ID_TYPES.has(ElementTypes.Form2Field)).toBe(true);
+      expect(CUSTOM_ID_TYPES.has(ElementTypes.Section)).toBe(true);
+      expect(CUSTOM_ID_TYPES.has(ElementTypes.Leadific)).toBe(true);
+    });
+  });
+
+  describe("updateBlockTitle", () => {
+    test("updates anchorName for block level blocks (Section)", () => {
+      const blocks: Block[] = [
+        makeBlock("S", ElementTypes.Section, [], { anchorName: "old-anchor" })
+      ];
+
+      const updated = updateBlockTitle(blocks, "S", "new-anchor");
+
+      expect(updated[0].value.anchorName).toBe("new-anchor");
+      // Original blocks should not be mutated
+      expect(blocks[0].value.anchorName).toBe("old-anchor");
+    });
+
+    test("updates anchorName for block level blocks (SectionHeader)", () => {
+      const blocks: Block[] = [
+        makeBlock("SH", ElementTypes.SectionHeader, [], {
+          anchorName: "old-header"
+        })
+      ];
+
+      const updated = updateBlockTitle(blocks, "SH", "new-header");
+
+      expect(updated[0].value.anchorName).toBe("new-header");
+    });
+
+    test("updates anchorName for block level blocks (SectionFooter)", () => {
+      const blocks: Block[] = [
+        makeBlock("SF", ElementTypes.SectionFooter, [], {
+          anchorName: "old-footer"
+        })
+      ];
+
+      const updated = updateBlockTitle(blocks, "SF", "new-footer");
+
+      expect(updated[0].value.anchorName).toBe("new-footer");
+    });
+
+    test("updates customID for blocks that support it (Row)", () => {
+      const blocks: Block[] = [
+        makeBlock("R", ElementTypes.Row, [], { customID: "old-row-id" })
+      ];
+
+      const updated = updateBlockTitle(blocks, "R", "new-row-id");
+
+      expect(updated[0].value.customID).toBe("new-row-id");
+      // Original blocks should not be mutated
+      expect(blocks[0].value.customID).toBe("old-row-id");
+    });
+
+    test("updates customID for blocks that support it (Column)", () => {
+      const blocks: Block[] = [
+        makeBlock("C", ElementTypes.Column, [], { customID: "old-col-id" })
+      ];
+
+      const updated = updateBlockTitle(blocks, "C", "new-col-id");
+
+      expect(updated[0].value.customID).toBe("new-col-id");
+    });
+
+    test("updates customID for blocks that support it (Button)", () => {
+      const blocks: Block[] = [
+        makeBlock("BTN", ElementTypes.Button, [], { customID: "old-btn-id" })
+      ];
+
+      const updated = updateBlockTitle(blocks, "BTN", "new-btn-id");
+
+      expect(updated[0].value.customID).toBe("new-btn-id");
+    });
+
+    test("updates customID for blocks that support it (Icon)", () => {
+      const blocks: Block[] = [
+        makeBlock("ICON", ElementTypes.Icon, [], { customID: "old-icon-id" })
+      ];
+
+      const updated = updateBlockTitle(blocks, "ICON", "new-icon-id");
+
+      expect(updated[0].value.customID).toBe("new-icon-id");
+    });
+
+    test("updates customID for blocks that support it (Wrapper)", () => {
+      const blocks: Block[] = [
+        makeBlock("W", ElementTypes.Wrapper, [], { customID: "old-wrapper-id" })
+      ];
+
+      const updated = updateBlockTitle(blocks, "W", "new-wrapper-id");
+
+      expect(updated[0].value.customID).toBe("new-wrapper-id");
+    });
+
+    test("updates customID for blocks that support it (Cloneable)", () => {
+      const blocks: Block[] = [
+        makeBlock("CLONE", ElementTypes.Cloneable, [], {
+          customID: "old-clone-id"
+        })
+      ];
+
+      const updated = updateBlockTitle(blocks, "CLONE", "new-clone-id");
+
+      expect(updated[0].value.customID).toBe("new-clone-id");
+    });
+
+    test("updates parent customID when block doesn't support it but parent does", () => {
+      const blocks: Block[] = [
+        makeBlock(
+          "R",
+          ElementTypes.Row,
+          [makeBlock("RICHTEXT", ElementTypes.RichText)],
+          { customID: "old-row-id" }
+        )
+      ];
+
+      const updated = updateBlockTitle(blocks, "RICHTEXT", "new-title");
+
+      // Parent Row should have customID updated
+      expect(updated[0].value.customID).toBe("new-title");
+      // RichText block should remain unchanged
+      const richtext = (updated[0].value.items as Block[])[0];
+      expect(richtext.value._id).toBe("RICHTEXT");
+    });
+
+    test("updates parent customID for nested blocks", () => {
+      const blocks: Block[] = [
+        makeBlock(
+          "R",
+          ElementTypes.Row,
+          [
+            makeBlock(
+              "C",
+              ElementTypes.Column,
+              [makeBlock("RICHTEXT", ElementTypes.RichText)],
+              { customID: "old-col-id" }
+            )
+          ],
+          { customID: "old-row-id" }
+        )
+      ];
+
+      const updated = updateBlockTitle(blocks, "RICHTEXT", "new-title");
+
+      // Nearest parent that supports customID (Column) should be updated
+      const col = (updated[0].value.items as Block[])[0];
+      expect(col.value.customID).toBe("new-title");
+      // Row should remain unchanged
+      expect(updated[0].value.customID).toBe("old-row-id");
+    });
+
+    test("returns unchanged blocks when block doesn't support customID and has no parent that does", () => {
+      const blocks: Block[] = [makeBlock("RICHTEXT", ElementTypes.RichText)];
+
+      const updated = updateBlockTitle(blocks, "RICHTEXT", "new-title");
+
+      // Should return the same blocks unchanged
+      expect(updated).toEqual(blocks);
+      expect(updated[0].value._id).toBe("RICHTEXT");
+    });
+
+    test("returns unchanged blocks when block ID is not found", () => {
+      const blocks: Block[] = [
+        makeBlock("R", ElementTypes.Row, [], { customID: "row-id" })
+      ];
+
+      const updated = updateBlockTitle(blocks, "NONEXISTENT", "new-title");
+
+      // Should return the same blocks unchanged
+      expect(updated).toEqual(blocks);
+      expect(updated[0].value.customID).toBe("row-id");
+    });
+
+    test("preserves all other properties when updating", () => {
+      const blocks: Block[] = [
+        makeBlock("R", ElementTypes.Row, [], {
+          customID: "old-id",
+          cssId: "css-id",
+          cssClass: "css-class",
+          customClassName: "custom-class",
+          showOnDesktop: "on",
+          showOnTablet: "on",
+          showOnMobile: "on"
+        })
+      ];
+
+      const updated = updateBlockTitle(blocks, "R", "new-id");
+
+      expect(updated[0].value.customID).toBe("new-id");
+      expect(updated[0].value.cssId).toBe("css-id");
+      expect(updated[0].value.cssClass).toBe("css-class");
+      expect(updated[0].value.customClassName).toBe("custom-class");
+      expect(updated[0].value.showOnDesktop).toBe("on");
+      expect(updated[0].value.showOnTablet).toBe("on");
+      expect(updated[0].value.showOnMobile).toBe("on");
+    });
+
+    test("handles nested structure correctly", () => {
+      const blocks: Block[] = [
+        makeBlock(
+          "S",
+          ElementTypes.Section,
+          [
+            makeBlock(
+              "R",
+              ElementTypes.Row,
+              [
+                makeBlock(
+                  "C",
+                  ElementTypes.Column,
+                  [
+                    makeBlock("BTN", ElementTypes.Button, [], {
+                      customID: "old-btn-id"
+                    })
+                  ],
+                  { customID: "old-col-id" }
+                )
+              ],
+              { customID: "old-row-id" }
+            )
+          ],
+          { anchorName: "old-section-anchor" }
+        )
+      ];
+
+      // Update Button - should update Button's customID
+      const updatedBtn = updateBlockTitle(blocks, "BTN", "new-btn-id");
+      const btn = (
+        (updatedBtn[0].value.items as Block[])[0].value.items as Block[]
+      )[0].value.items as Block[];
+      expect(btn[0].value.customID).toBe("new-btn-id");
+
+      // Update Column - should update Column's customID
+      const updatedCol = updateBlockTitle(blocks, "C", "new-col-id");
+      const col = (
+        (updatedCol[0].value.items as Block[])[0].value.items as Block[]
+      )[0];
+      expect(col.value.customID).toBe("new-col-id");
+
+      // Update Section - should update Section's anchorName
+      const updatedSec = updateBlockTitle(blocks, "S", "new-section-anchor");
+      expect(updatedSec[0].value.anchorName).toBe("new-section-anchor");
+    });
+
+    test("handles multiple blocks at root level", () => {
+      const blocks: Block[] = [
+        makeBlock("S1", ElementTypes.Section, [], {
+          anchorName: "section-1"
+        }),
+        makeBlock("S2", ElementTypes.Section, [], {
+          anchorName: "section-2"
+        }),
+        makeBlock("R", ElementTypes.Row, [], { customID: "row-1" })
+      ];
+
+      const updated = updateBlockTitle(blocks, "S2", "new-section-2");
+
+      expect(updated[0].value.anchorName).toBe("section-1"); // Unchanged
+      expect(updated[1].value.anchorName).toBe("new-section-2"); // Updated
+      expect(updated[2].value.customID).toBe("row-1"); // Unchanged
+    });
+
+    test("creates customID property if it doesn't exist", () => {
+      const blocks: Block[] = [
+        makeBlock("R", ElementTypes.Row, []) // No customID in value
+      ];
+
+      const updated = updateBlockTitle(blocks, "R", "new-id");
+
+      expect(updated[0].value.customID).toBe("new-id");
+    });
+
+    test("creates anchorName property if it doesn't exist", () => {
+      const blocks: Block[] = [
+        makeBlock("S", ElementTypes.Section, []) // No anchorName in value
+      ];
+
+      const updated = updateBlockTitle(blocks, "S", "new-anchor");
+
+      expect(updated[0].value.anchorName).toBe("new-anchor");
+    });
   });
 });

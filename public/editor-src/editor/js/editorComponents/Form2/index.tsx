@@ -1,10 +1,11 @@
 import classnames from "classnames";
 import { noop } from "es-toolkit";
-import React, { FormEvent } from "react";
+import React, { FormEvent, JSX } from "react";
 import BoxResizer from "visual/component/BoxResizer";
 import CustomCSS from "visual/component/CustomCSS";
 import { ElementPatch, ElementProps } from "visual/component/Elements/Types";
 import { ThemeIcon } from "visual/component/ThemeIcon";
+import Toolbar from "visual/component/Toolbar";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { getBoxResizerParams } from "visual/editorComponents/Form2/utils";
@@ -12,12 +13,14 @@ import { Wrapper } from "visual/editorComponents/tools/Wrapper";
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import { isStory } from "visual/providers/EditorModeProvider";
 import { isView } from "visual/providers/RenderProvider";
+import { t } from "visual/utils/i18n";
 import { makeAttr, makeDataAttr } from "visual/utils/i18n/attribute";
 import * as Attr from "visual/utils/string/parseCustomAttributes";
 import { MValue } from "visual/utils/value";
 import { withMigrations } from "../tools/withMigrations";
 import { Button, MSButtons, SubmitButton } from "./Components/Buttons";
 import { Form } from "./Components/Form";
+import { Message } from "./Components/Message";
 import defaultValue from "./defaultValue.json";
 import { migrations } from "./migrations/Form2";
 import * as sidebarExtendButton from "./sidebarExtendButton";
@@ -27,7 +30,16 @@ import * as toolbarExtendButton from "./toolbarExtendButton";
 import * as toolbarExtendFields from "./toolbarExtendFields";
 import * as toolbarExtendMultiStepBtn from "./toolbarExtendMultiStepBtn";
 import * as toolbarExtendParent from "./toolbarExtendParent";
-import type { State, Value } from "./types";
+import * as sidebarEmptyMessageContainer from "./toolbarsFormMessages/sidebarEmptyMessageContainer";
+import * as sidebarErrorMessageContainer from "./toolbarsFormMessages/sidebarErrorMessageContainer";
+import * as sidebarSuccessMessageContainer from "./toolbarsFormMessages/sidebarSuccessMessageContainer";
+import * as toolbarEmptyMessage from "./toolbarsFormMessages/toolbarEmptyMessage";
+import * as toolbarEmptyMessageContainer from "./toolbarsFormMessages/toolbarEmptyMessageContainer";
+import * as toolbarErrorMessage from "./toolbarsFormMessages/toolbarErrorMessage";
+import * as toolbarErrorMessageContainer from "./toolbarsFormMessages/toolbarErrorMessageContainer";
+import * as toolbarSuccessMessage from "./toolbarsFormMessages/toolbarSuccessMessage";
+import * as toolbarSuccessMessageContainer from "./toolbarsFormMessages/toolbarSuccessMessageContainer";
+import { MessageStatus, type State, type Value } from "./types";
 
 class Form2 extends EditorComponent<Value, ElementProps, State> {
   static defaultValue = defaultValue;
@@ -71,7 +83,7 @@ class Form2 extends EditorComponent<Value, ElementProps, State> {
     this.setState({ active });
   };
 
-  renderMultiStep(v: Value): React.JSX.Element {
+  renderMultiStep(v: Value): JSX.Element {
     const { active } = this.state;
     const { label, placeholder, viewType, multistep } = v;
 
@@ -125,7 +137,7 @@ class Form2 extends EditorComponent<Value, ElementProps, State> {
     });
   }
 
-  renderPrevButton(): React.JSX.Element {
+  renderPrevButton(): JSX.Element {
     const itemsProps = this.getPrevAndNextButtonsItemProps(3, 4);
 
     const style = {
@@ -134,13 +146,13 @@ class Form2 extends EditorComponent<Value, ElementProps, State> {
 
     return (
       <Button className="brz-form-ms-prev-button" style={style}>
-        {/*@ts-expect-error EditorArrayComponent should be converted to .ts*/}
+        {/* @ts-expect-error EditorArrayComponent should be converted to .ts */}
         <EditorArrayComponent {...itemsProps} />
       </Button>
     );
   }
 
-  renderNextButton(): React.JSX.Element {
+  renderNextButton(): JSX.Element {
     const itemsProps = this.getPrevAndNextButtonsItemProps(4, 5);
 
     return (
@@ -151,7 +163,7 @@ class Form2 extends EditorComponent<Value, ElementProps, State> {
     );
   }
 
-  renderMsButtons(v: Value): React.JSX.Element {
+  renderMsButtons(v: Value): JSX.Element {
     const { active } = this.state;
     const totalSteps = this.getTotalSteps(v);
 
@@ -197,7 +209,7 @@ class Form2 extends EditorComponent<Value, ElementProps, State> {
     );
   }
 
-  renderFields(v: Value): React.JSX.Element {
+  renderFields(v: Value): JSX.Element {
     const { label, placeholder } = v;
     const itemsProps = this.makeSubcomponentProps({
       bindWithKey: "items",
@@ -219,10 +231,7 @@ class Form2 extends EditorComponent<Value, ElementProps, State> {
     return <EditorArrayComponent {...itemsProps} />;
   }
 
-  renderButton(
-    v: Value,
-    itemProps?: Record<string, unknown>
-  ): React.JSX.Element {
+  renderButton(v: Value, itemProps?: Record<string, unknown>): JSX.Element {
     const { multistep } = v;
     const IS_VIEW = isView(this.props.renderContext);
 
@@ -264,7 +273,7 @@ class Form2 extends EditorComponent<Value, ElementProps, State> {
             attributes={Attr.mRead(v.customAttributes)}
             ref={cssRef}
           >
-            {/*@ts-expect-error EditorArrayComponent should be converted to .ts*/}
+            {/* @ts-expect-error EditorArrayComponent should be converted to .ts */}
             <EditorArrayComponent {...itemsProps} />
             {IS_VIEW && (
               <ThemeIcon
@@ -279,9 +288,126 @@ class Form2 extends EditorComponent<Value, ElementProps, State> {
     );
   }
 
-  renderForEdit(v: Value, vs: Value, vd: Value): React.JSX.Element {
+  renderMessagesWrapper(children?: JSX.Element): JSX.Element {
+    const messagesClassName = this.getCSSClassnames({
+      id: `${this.getId()}-messages`,
+      componentId: `${this.getComponentId()}-messages`,
+      toolbars: [
+        toolbarSuccessMessageContainer,
+        toolbarErrorMessageContainer,
+        toolbarEmptyMessageContainer,
+        toolbarSuccessMessage,
+        toolbarErrorMessage,
+        toolbarEmptyMessage
+      ],
+      sidebars: [
+        sidebarSuccessMessageContainer,
+        sidebarErrorMessageContainer,
+        sidebarEmptyMessageContainer
+      ],
+      extraClassNames: ["brz-forms2__messages"]
+    });
+
+    return <div className={messagesClassName}>{children}</div>;
+  }
+
+  renderMessages(v: Value): JSX.Element {
+    const { messageSuccess, messageError, messageEmptyRequired } = v;
+
+    const content = (
+      <>
+        <Toolbar
+          {...this.makeToolbarPropsFromConfig2(
+            toolbarSuccessMessageContainer,
+            sidebarSuccessMessageContainer,
+            { allowExtend: false }
+          )}
+        >
+          {({ ref }) => (
+            <Toolbar
+              {...this.makeToolbarPropsFromConfig2(
+                toolbarSuccessMessage,
+                undefined,
+                {
+                  allowExtend: false
+                }
+              )}
+            >
+              {({ ref: secondToolbarRef }) => (
+                <Message
+                  ref={ref}
+                  textRef={secondToolbarRef}
+                  status={MessageStatus.Success}
+                  text={messageSuccess || t("Your email was sent successfully")}
+                />
+              )}
+            </Toolbar>
+          )}
+        </Toolbar>
+        <Toolbar
+          {...this.makeToolbarPropsFromConfig2(
+            toolbarErrorMessageContainer,
+            sidebarErrorMessageContainer,
+            { allowExtend: false }
+          )}
+        >
+          {({ ref }) => (
+            <Toolbar
+              {...this.makeToolbarPropsFromConfig2(
+                toolbarErrorMessage,
+                undefined,
+                { allowExtend: false }
+              )}
+            >
+              {({ ref: secondToolbarRef }) => (
+                <Message
+                  ref={ref}
+                  textRef={secondToolbarRef}
+                  status={MessageStatus.Error}
+                  text={messageError || t("Your email was not sent")}
+                />
+              )}
+            </Toolbar>
+          )}
+        </Toolbar>
+        <Toolbar
+          {...this.makeToolbarPropsFromConfig2(
+            toolbarEmptyMessageContainer,
+            sidebarEmptyMessageContainer,
+            { allowExtend: false }
+          )}
+        >
+          {({ ref }) => (
+            <Toolbar
+              {...this.makeToolbarPropsFromConfig2(
+                toolbarEmptyMessage,
+                undefined,
+                { allowExtend: false }
+              )}
+            >
+              {({ ref: secondToolbarRef }) => (
+                <Message
+                  ref={ref}
+                  textRef={secondToolbarRef}
+                  status={MessageStatus.Empty}
+                  text={
+                    messageEmptyRequired ||
+                    t("Please fill in the required fields")
+                  }
+                />
+              )}
+            </Toolbar>
+          )}
+        </Toolbar>
+      </>
+    );
+
+    return this.renderMessagesWrapper(content);
+  }
+
+  renderForEdit(v: Value, vs: Value, vd: Value): JSX.Element {
     const { meta } = this.props;
-    const { multistep, customCSS } = v;
+    const { multistep, showMessages, customCSS } = v;
     const { points, restrictions } = getBoxResizerParams();
 
     const isMultistepEnabled = multistep === "on";
@@ -315,6 +441,7 @@ class Form2 extends EditorComponent<Value, ElementProps, State> {
             {this.renderMsButtons(v)}
           </>
         )}
+        {showMessages === "on" && this.renderMessages(v)}
       </Form>
     );
 
@@ -341,7 +468,7 @@ class Form2 extends EditorComponent<Value, ElementProps, State> {
     );
   }
 
-  renderForView(v: Value, vs: Value, vd: Value): React.JSX.Element {
+  renderForView(v: Value, vs: Value, vd: Value): JSX.Element {
     const config = this.getGlobalConfig();
 
     const {
@@ -429,6 +556,7 @@ class Form2 extends EditorComponent<Value, ElementProps, State> {
                 {this.renderMsButtons(v)}
               </>
             )}
+            {this.renderMessagesWrapper()}
           </Form>
         </Wrapper>
       </CustomCSS>

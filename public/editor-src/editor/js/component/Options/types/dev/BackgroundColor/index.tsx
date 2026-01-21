@@ -22,6 +22,7 @@ export type Props = O.Props<Value> &
       opacity?: boolean;
       withNone?: boolean;
       isPaletteHidden?: boolean;
+      withAnimatedGradient?: boolean;
     };
   };
 
@@ -44,16 +45,38 @@ export const BackgroundColor = ({
   }, [isPaletteHidden, style]);
 
   const globalConfig = useConfig();
+  const isAnimated = value.type === "animated-gradient";
+  const isGradient = value.type === "gradient" || isAnimated;
 
   const _onChange: ComponentProps<typeof Bg>["onChange"] = (v, m) => {
-    const isStart = !(value.type === "gradient" && value.active === "end");
+    const isStart = !(isGradient && value.active === "end");
 
     const isChanging = !!m.isChanging;
 
     switch (m.isChanged) {
-      case "type":
-        onChange(Model.setType(v.type, value));
+      case "type": {
+        const newValue = Model.setType(v.type, value);
+
+        if (v.type === "animated-gradient" && !newValue.gradientStops?.length) {
+          newValue.gradientStops = [
+            {
+              position: newValue.start,
+              hex: newValue.hex,
+              opacity: newValue.opacity,
+              palette: newValue.palette
+            },
+            {
+              position: newValue.end,
+              hex: newValue.gradientHex ?? value.gradientHex,
+              opacity: newValue.gradientOpacity ?? value.gradientOpacity,
+              palette: newValue.gradientPalette ?? value.gradientPalette
+            }
+          ];
+        }
+
+        onChange(newValue);
         break;
+      }
       case "gradientType":
         onChange(Model.setGradientType(v.gradientType, value));
         break;
@@ -67,7 +90,7 @@ export const BackgroundColor = ({
         onChange(Model.setActive(v.active, value));
         break;
       case "degree": {
-        if (value.type === "gradient") {
+        if (isGradient) {
           const setter =
             value.gradientType === "radial"
               ? Model.setRadialDegree
@@ -97,6 +120,22 @@ export const BackgroundColor = ({
         palette !== undefined && onChange(setter(palette, value));
         break;
       }
+      case "gradientSpeed": {
+        onChange({ ...value, gradientSpeed: v.gradientSpeed });
+        break;
+      }
+      case "gradientStops": {
+        onChange({
+          ...value,
+          gradientStops: v.gradientStops,
+          activeStopIndex: v.activeStopIndex ?? value.activeStopIndex
+        });
+        break;
+      }
+      case "activeStopIndex": {
+        onChange({ ...value, activeStopIndex: v.activeStopIndex });
+        break;
+      }
     }
   };
   const openSidebar = () => {
@@ -106,9 +145,20 @@ export const BackgroundColor = ({
       })
     );
   };
+
+  const activeStop = value.activeStopIndex ?? 0;
+  const activeGradient = value.gradientStops?.[activeStop];
+  const hex = activeGradient && isAnimated ? activeGradient.hex : value.hex;
+  const palette =
+    activeGradient && isAnimated ? activeGradient.palette : value.palette;
+
   const _value: Value = {
     ...value,
-    hex: paletteHex(value.palette, colorPalette ?? []) ?? value.hex,
+    palette: Palette.fromString(palette) ?? value.palette,
+    hex:
+      paletteHex(palette, colorPalette ?? []) ??
+      Hex.fromString(hex) ??
+      "#000000",
     gradientHex:
       paletteHex(value.gradientPalette, colorPalette ?? []) ?? value.gradientHex
   };
@@ -133,6 +183,7 @@ export const BackgroundColor = ({
         opacity={config?.opacity ?? true}
         withNone={config?.withNone ?? true}
         gradientColors={[_value.hex, _value.gradientHex]}
+        withAnimatedGradient={config?.withAnimatedGradient ?? false}
       />
     </>
   );

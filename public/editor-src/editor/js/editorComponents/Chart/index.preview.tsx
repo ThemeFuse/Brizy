@@ -7,7 +7,11 @@ import EditorComponent from "visual/editorComponents/EditorComponent";
 import { Wrapper } from "visual/editorComponents/tools/Wrapper";
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import { hexToRgba } from "visual/utils/color";
+import { isVariableFont } from "visual/utils/options/Typography/utils";
+import { DESKTOP } from "visual/utils/responsiveMode";
+import { NORMAL } from "visual/utils/stateMode";
 import { capByPrefix, encodeToString } from "visual/utils/string";
+import { styleTypography2FontFamily } from "visual/utils/style2";
 import defaultValue from "./defaultValue.json";
 import * as sidebarConfig from "./sidebar";
 import * as toolbarConfig from "./toolbar";
@@ -19,6 +23,49 @@ class Chart extends EditorComponent<Value, Props> {
 
   static get componentId(): ElementTypes.Chart {
     return ElementTypes.Chart;
+  }
+
+  getTypographyConfig() {
+    const {
+      dataLabelTypographyFontFamily,
+      dataLabelTypographyFontSize,
+      dataLabelTypographyFontWeight,
+      dataLabelTypographyBold,
+      dataLabelTypographyVariableFontWeight,
+      dataLabelTypographyItalic,
+      dataLabelTypographyUppercase,
+      dataLabelTypographyLowercase
+    } = this.getValue();
+
+    const isVariableFontValue = isVariableFont(
+      dataLabelTypographyFontFamily,
+      this.getReduxStore()
+    );
+
+    const fontFamily = styleTypography2FontFamily({
+      v: this.getValue(),
+      device: DESKTOP,
+      state: NORMAL,
+      store: this.getReduxStore(),
+      getConfig: () => this.getGlobalConfig(),
+      renderContext: this.props.renderContext,
+      prefix: "dataLabelTypography"
+    });
+
+    const fontWeight = isVariableFontValue
+      ? dataLabelTypographyVariableFontWeight
+      : dataLabelTypographyFontWeight;
+
+    const dataLabelTypography = {
+      fontFamily,
+      fontSize: dataLabelTypographyFontSize ?? 12,
+      fontWeight: dataLabelTypographyBold ? 700 : fontWeight,
+      italic: dataLabelTypographyItalic ?? false,
+      uppercase: dataLabelTypographyUppercase ?? false,
+      lowercase: dataLabelTypographyLowercase ?? false
+    };
+
+    return dataLabelTypography;
   }
 
   getAttributes(): Record<string, string> {
@@ -67,10 +114,13 @@ class Chart extends EditorComponent<Value, Props> {
     const chartTypeItemsKey = capByPrefix("chart", `${chartType}Items`);
     const chartItems = encodeToString(getChartItems(v, chartTypeItemsKey));
 
+    const dataLabelTypography = this.getTypographyConfig();
+
     const attributes = {
       "data-chart-type": chartType,
       "data-items": chartItems,
-      ...this.getAttributes()
+      ...this.getAttributes(),
+      "data-label-typography": encodeToString(dataLabelTypography)
     };
 
     return (

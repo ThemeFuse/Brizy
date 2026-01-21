@@ -119,7 +119,8 @@ export class Typography extends PureComponent<Props> {
       showFontSize,
       showFontStyles,
       isFontStyleSettingsDisabled,
-      label
+      label,
+      disabledFields
     } = this.props;
 
     const typographyStyleClassName = classnames(
@@ -135,6 +136,45 @@ export class Typography extends PureComponent<Props> {
         "brz-ed-control__typography--lg": showTextTransform
       },
       className
+    );
+
+    const fontSizeLabelClassName = classnames({
+      "brz-ed-control__typography--disabled-field":
+        disabledFields?.includes("fontSize")
+    });
+
+    const fontSizeSuffixClassName = classnames(
+      "brz-control__typography-suffix",
+      {
+        "brz-ed-control__typography--disabled-field":
+          disabledFields?.includes("fontSizeSuffix")
+      }
+    );
+
+    const stepperFontSizeClassName = classnames({
+      "brz-ed-control__typography--disabled-field":
+        disabledFields?.includes("fontSize")
+    });
+
+    const fontWeightClassName = classnames({
+      "brz-ed-control__typography--disabled-field":
+        disabledFields?.includes("fontWeight")
+    });
+
+    const lineHeightClassName = classnames(
+      "brz-ed__col brz-ed__col-1-2 brz-ed-control__typography-line-height",
+      {
+        "brz-ed-control__typography--disabled-field":
+          disabledFields?.includes("lineHeight")
+      }
+    );
+
+    const letterSpacingClassName = classnames(
+      "brz-ed__col brz-ed__col-1-2 brz-ed-control__typography-letter-spacing",
+      {
+        "brz-ed-control__typography--disabled-field":
+          disabledFields?.includes("letterSpacing")
+      }
     );
 
     return (
@@ -168,6 +208,7 @@ export class Typography extends PureComponent<Props> {
               strike={strike}
               uppercase={uppercase}
               lowercase={lowercase}
+              disabledFields={disabledFields}
             />
           )}
 
@@ -192,6 +233,7 @@ export class Typography extends PureComponent<Props> {
                     openSettings={styleOpenSettings}
                     onChange={this.onFontStyle}
                     value={style}
+                    disabled={disabledFields?.includes("fontStyle")}
                     isFontStyleSettingsDisabled={isFontStyleSettingsDisabled}
                   />
                 </>
@@ -199,9 +241,11 @@ export class Typography extends PureComponent<Props> {
             </div>
             <div className="brz-ed__col brz-ed__col-1-2 brz-ed-control__typography-size">
               {showFontSize ? (
-                <Label title={sizeLabel}>{sizeLabel}</Label>
+                <Label title={sizeLabel} className={fontSizeLabelClassName}>
+                  {sizeLabel}
+                </Label>
               ) : (
-                <div className="brz-control__typography-suffix">
+                <div className={fontSizeSuffixClassName}>
                   <Label title={sizeLabel}>{sizeLabel}</Label>
                   <Select2<SizeSuffix>
                     value={sizeSuffix}
@@ -223,6 +267,7 @@ export class Typography extends PureComponent<Props> {
                 step={sizeStep}
                 value={size}
                 onChange={this.onFontSize}
+                className={stepperFontSizeClassName}
               />
             </div>
             <FontWeight
@@ -237,8 +282,9 @@ export class Typography extends PureComponent<Props> {
               onSoftnessChange={this.onSoftness}
               variations={variations}
               weights={weights}
+              className={fontWeightClassName}
             />
-            <div className="brz-ed__col brz-ed__col-1-2 brz-ed-control__typography-line-height">
+            <div className={lineHeightClassName}>
               <Label title={lineHeightLabel}>{lineHeightLabel}</Label>
               <Stepper
                 min={lineHeightMin}
@@ -248,7 +294,7 @@ export class Typography extends PureComponent<Props> {
                 onChange={this.onLineHeight}
               />
             </div>
-            <div className="brz-ed__col brz-ed__col-1-2 brz-ed-control__typography-letter-spacing">
+            <div className={letterSpacingClassName}>
               <Label title={letterSpacingLabel}>{letterSpacingLabel}</Label>
               <Stepper
                 min={letterSpacingMin}

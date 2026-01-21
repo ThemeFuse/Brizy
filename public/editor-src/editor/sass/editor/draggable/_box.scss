@@ -8,7 +8,7 @@
     position: absolute;
     width: $resize__shortcode-width;
     height: $resize__shortcode-height;
-    border-radius: round(math.div($resize__shortcode-width, 2));
+    border-radius: math.round(math.div($resize__shortcode-width, 2));
     border: 2px solid #fff;
     opacity: 1;
     visibility: visible;

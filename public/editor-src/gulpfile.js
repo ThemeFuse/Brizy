@@ -74,7 +74,8 @@ const brizyUIDistPath = path.resolve(
 const postsCssProcessors = [
   sass({
     includePaths: ["node_modules", "../node_modules"],
-    errLogToConsole: true
+    errLogToConsole: true,
+    silenceDeprecations: ["legacy-js-api", "import"]
   }),
   autoprefixer({
     browsers: ["last 2 versions"]
@@ -462,9 +463,7 @@ function proEditorCSS() {
 function proExportCSS() {
   const dest = paths.buildPro + "/css";
 
-  const criticalSrc = [
-    paths.editor + "/sass/main.export.pro.critical.scss"
-  ];
+  const criticalSrc = [paths.editor + "/sass/main.export.pro.critical.scss"];
 
   const criticalTask = gulp
     .src(criticalSrc, { base: paths.editor })
@@ -501,7 +500,7 @@ function proExportCSS() {
     )
     .pipe(gulpPlugins.concat("preview.pro.min.css"))
     .pipe(cleanCSS())
-    .pipe(gulp.dest(dest)); 
+    .pipe(gulp.dest(dest));
 
   return merge(criticalTask, nonCriticalTask);
 }
