@@ -141,17 +141,23 @@
       }
     }
   }
+}
 
+@mixin custom-video-fullscreen-window-show {
   .brz-video-custom-fullScreen-window-show {
-    video {
-      padding-bottom: 50px;
-    }
-
     .brz-video-custom-video-controls {
       position: absolute;
       left: 0;
       right: 0;
       bottom: 0;
+    }
+  }
+}
+
+@mixin custom-video-padding-bottom {
+  .brz-video-custom-fullScreen-window-show {
+    video {
+      padding-bottom: 50px;
     }
   }
 }

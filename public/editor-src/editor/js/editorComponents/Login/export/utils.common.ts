@@ -2,6 +2,8 @@ import { makeAttr } from "visual/utils/i18n/attribute";
 import { Role } from "visual/utils/membership";
 import { decodeFromString } from "visual/utils/string";
 
+const INPUT_TYPE_CHECKBOX = "checkbox";
+
 export enum ElementType {
   login = "login",
   register = "register",
@@ -90,29 +92,38 @@ export const validatePasswordsMin = (passField: HTMLInputElement): boolean => {
   }
 };
 
+const isInputEmpty = (input: HTMLInputElement): boolean => {
+  return input.type === INPUT_TYPE_CHECKBOX
+    ? !input.checked
+    : input.value === "";
+};
+
 export const getValidateInputs = (
   inputs: NodeListOf<HTMLInputElement>,
   errorMessages: Record<string, string>
 ): { success: boolean; messages: string[] } => {
   const { emptyFieldsError } = errorMessages;
+  let hasEmptyField = false;
 
   inputs.forEach((input) => {
-    input.classList.remove("brz-login__field-empty");
+    const isCheckbox = input.type === INPUT_TYPE_CHECKBOX;
+    const targetElement = isCheckbox
+      ? input.closest<HTMLElement>(".brz-login__item")
+      : input;
 
-    if (input.required && input.value === "") {
-      input.classList.add("brz-login__field-empty");
+    if (targetElement) {
+      targetElement.classList.remove("brz-login__field-empty");
+
+      if (input.required && isInputEmpty(input)) {
+        targetElement.classList.add("brz-login__field-empty");
+        hasEmptyField = true;
+      }
     }
   });
 
-  const inputEmpty = [...inputs].some(
-    (input) => input.required && input.value === ""
-  );
-
-  if (inputEmpty) {
-    return { success: false, messages: [emptyFieldsError] };
-  }
-
-  return { success: true, messages: [] };
+  return hasEmptyField
+    ? { success: false, messages: [emptyFieldsError] }
+    : { success: true, messages: [] };
 };
 
 export const getValidateRegisterInputs = (

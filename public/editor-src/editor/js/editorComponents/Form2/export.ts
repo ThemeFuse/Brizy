@@ -824,11 +824,20 @@ function getFormMessage({
   form
 }: GetFormMessageData): HTMLDivElement {
   const alert = document.createElement("div");
+  const textContainer = document.createElement("div");
+  const textInner = document.createElement("span");
+
   const messages = form ? responseMessages.get(form) : undefined;
   const message = messages ? messages[status] : undefined;
 
   alert.className = `brz-forms2__alert brz-forms2__alert--${status}`;
-  alert.innerHTML = text || message || defaultResponseMessages[status];
+  textContainer.className = "brz-forms2__alert-text";
+  textInner.className = "brz-forms2__alert-text--inner";
+
+  textInner.innerHTML = text || message || defaultResponseMessages[status];
+
+  textContainer.appendChild(textInner);
+  alert.appendChild(textContainer);
 
   return alert;
 }
@@ -849,7 +858,15 @@ export function clearFormMessages(form: HTMLElement): void {
 
 function showFormMessage(form: HTMLElement, message: HTMLElement): void {
   clearFormMessages(form);
-  form.appendChild(message);
+
+  const messagesWrapper = form.querySelector(".brz-forms2__messages");
+
+  if (messagesWrapper) {
+    messagesWrapper.appendChild(message);
+  } else {
+    // for users who have not yet recompiled their HTML after the feature update for message styling
+    form.appendChild(message);
+  }
 }
 
 function closePopupForm(popupId: string): void {

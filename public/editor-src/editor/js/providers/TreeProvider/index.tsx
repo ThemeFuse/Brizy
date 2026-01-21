@@ -25,6 +25,7 @@ import {
   setAll,
   setHiddenElement,
   setProperty,
+  updateBlockTitle,
   updateGlobalBlocksOnChange
 } from "./utils";
 
@@ -164,6 +165,38 @@ export const TreeContextProvider: FC<PropsWithChildren> = ({ children }) => {
     [config, dispatch, store]
   );
 
+  const updateItemTitle = useCallback(
+    (id: string, title: string) => {
+      const state = store.getState();
+      const blocks = pageDataNoRefsSelector(state);
+      const globalBlocks = globalBlocksSelector(state);
+      const originalBlocks = blocks.items;
+      const updatedBlocks = updateBlockTitle(originalBlocks, id, title);
+
+      // Check if changes affect global blocks first
+      const affectedGlobalBlock = checkForGlobalBlockChanges(
+        updatedBlocks,
+        Object.keys(globalBlocks),
+        id,
+        originalBlocks
+      );
+
+      if (affectedGlobalBlock) {
+        // Only dispatch global block updates with pre-identified IDs
+        updateGlobalBlocksOnChange(
+          affectedGlobalBlock,
+          globalBlocks,
+          config,
+          dispatch
+        );
+      } else {
+        // Only dispatch regular block updates
+        dispatch(updateBlocks({ blocks: updatedBlocks, meta: {}, config }));
+      }
+    },
+    [store, config, dispatch]
+  );
+
   const value = useMemo(
     () => ({
       activeId,
@@ -175,7 +208,8 @@ export const TreeContextProvider: FC<PropsWithChildren> = ({ children }) => {
       toggleShowElement,
       onClickItem: handleClickItem,
       onRemoveItem: handleRemoveItem,
-      setActiveId
+      setActiveId,
+      updateItemTitle
     }),
     [
       toggleExpandAll,
@@ -185,7 +219,8 @@ export const TreeContextProvider: FC<PropsWithChildren> = ({ children }) => {
       toggleShowElement,
       handleClickItem,
       activeId,
-      handleRemoveItem
+      handleRemoveItem,
+      updateItemTitle
     ]
   );
 

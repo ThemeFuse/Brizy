@@ -568,7 +568,7 @@ export class EditorComponent<
   }
 
   css = (componentId: string, id: string, css: OutputStyle) => {
-    const customStylesClassName = this.getCustomStylesClassName(css[2]);
+    const customStylesClassName = this.getCustomStylesClassName(id);
     const cache = createCache({ id, componentId, sheet: this.context.sheet });
     const sheet = createSheet({
       cache,
@@ -589,7 +589,8 @@ export class EditorComponent<
     const cache = createCache({ id, componentId, sheet: this.context.sheet });
     const customStylesClassName = this.getGlobalClassNameWithDefault(
       this.getValue(),
-      customStyles
+      customStyles,
+      id
     );
 
     const sheet = createSheet({ cache, css, customStylesClassName });
@@ -602,13 +603,17 @@ export class EditorComponent<
     sidebars,
     stylesFn,
     withSymbol,
-    extraClassNames
+    extraClassNames,
+    id,
+    componentId
   }: {
     toolbars: NewToolbarConfig<M, P, S>[];
     sidebars?: NewToolbarConfig<M, P, S>[];
     stylesFn?: (data: DynamicStylesProps<M>) => OutputStyle;
     withSymbol?: boolean;
     extraClassNames?: Array<string | Record<string, boolean>>;
+    id?: string;
+    componentId?: string;
   }) {
     const model = this.getValue2();
     const { v, vs, vd } = model;
@@ -630,15 +635,17 @@ export class EditorComponent<
       ? concatFinalCSS(cssFromStylesFn, cssFromToolbarOptions)
       : cssFromToolbarOptions;
 
+    const elementId = id ?? this.getId();
+
     const cache = createCache({
-      id: this.getId(),
-      componentId: this.getComponentId(),
+      id: elementId,
+      componentId: componentId ?? this.getComponentId(),
       sheet: this.context.sheet
     });
 
     const customStylesClassName = withSymbol
-      ? this.getGlobalClassNameWithDefault(this.getValue(), _css[2])
-      : this.getCustomStylesClassName(_css[2]);
+      ? this.getGlobalClassNameWithDefault(this.getValue(), _css[2], elementId)
+      : this.getCustomStylesClassName(elementId);
 
     const sheet = createSheet({
       cache,
@@ -785,18 +792,16 @@ export class EditorComponent<
     return globalClass?.className;
   }
 
-  getCustomStylesClassName(css: string): string {
-    const elementID = this.getId();
-
-    return `brz-css-${murmurhash2(css + elementID)}`;
+  getCustomStylesClassName(elementId: string): string {
+    return `brz-css-${murmurhash2(elementId)}`;
   }
 
-  getGlobalClassNameWithDefault(v: M, css: string): string {
+  getGlobalClassNameWithDefault(v: M, css: string, elementId: string): string {
     const globalClass = this.getClassValue(v);
 
     return (
       globalClass?.className ??
-      (css ? this.getCustomStylesClassName(css) : `brz-css-${uuid(4)}`)
+      (css ? this.getCustomStylesClassName(elementId) : `brz-css-${uuid(4)}`)
     );
   }
 

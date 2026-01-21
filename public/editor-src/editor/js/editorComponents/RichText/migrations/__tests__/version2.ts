@@ -204,6 +204,8 @@ describe("Testing RichText migration", () => {
       }
     ]
   ])("no. %#", (v, expected) => {
-    expect(m2.cb(v)).toStrictEqual(expected);
+    expect(m2.cb({ v, vs: v, vd: v, renderContext: "editor" })).toStrictEqual(
+      expected
+    );
   });
 });

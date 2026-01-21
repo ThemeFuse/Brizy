@@ -185,7 +185,8 @@ export function buildTree(flattenedItems: FlattenedItem[]): TreeItems {
     type: "",
     title: "",
     icon: null,
-    isHidden: false
+    isHidden: false,
+    suffixTitle: null
   };
 
   const nodes: Record<string, TreeItem> = { [root.id]: root };
@@ -587,7 +588,8 @@ export function handleSpecialCases(
         parentId: parentId,
         depth: depth,
         index: 0,
-        children: []
+        children: [],
+        suffixTitle: null
       };
 
       // Update the item to be a child of the new Cloneable
@@ -626,7 +628,8 @@ export function handleSpecialCases(
       parentId: parentId,
       depth: depth,
       index: 0,
-      children: []
+      children: [],
+      suffixTitle: null
     };
 
     // Update the column to be a child of the row

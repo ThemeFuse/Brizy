@@ -2,7 +2,12 @@ import { m2 } from "../2";
 
 describe("testing m2 migration", () => {
   test.each([{}])("'type' and 'source' defaults", (v) => {
-    const migrated = m2.cb(v);
+    const migrated = m2.cb({
+      v,
+      vs: v,
+      vd: v,
+      renderContext: "editor" as const
+    });
     expect(migrated).toStrictEqual({
       type: "posts",
       source: "post",
@@ -178,7 +183,12 @@ describe("testing m2 migration", () => {
     ]
     //#endregion
   ])("type = posts", (v, expected) => {
-    const migrated = m2.cb(v);
+    const migrated = m2.cb({
+      v,
+      vs: v,
+      vd: v,
+      renderContext: "editor" as const
+    });
     expect(migrated).toStrictEqual(expected);
   });
 
@@ -227,7 +237,12 @@ describe("testing m2 migration", () => {
     ]
     //#endregion
   ])("type = archives", (v, expected) => {
-    const migrated = m2.cb(v);
+    const migrated = m2.cb({
+      v,
+      vs: v,
+      vd: v,
+      renderContext: "editor" as const
+    });
     expect(migrated).toStrictEqual(expected);
   });
 
@@ -408,7 +423,12 @@ describe("testing m2 migration", () => {
     ]
     //#endregion
   ])("type = products", (v, expected) => {
-    const migrated = m2.cb(v);
+    const migrated = m2.cb({
+      v,
+      vs: v,
+      vd: v,
+      renderContext: "editor" as const
+    });
     expect(migrated).toStrictEqual(expected);
   });
 
@@ -477,7 +497,12 @@ describe("testing m2 migration", () => {
     ]
     //#endregion
   ])("type = archives-product", (v, expected) => {
-    const migrated = m2.cb(v);
+    const migrated = m2.cb({
+      v,
+      vs: v,
+      vd: v,
+      renderContext: "editor" as const
+    });
     expect(migrated).toStrictEqual(expected);
   });
 
@@ -521,7 +546,12 @@ describe("testing m2 migration", () => {
     ]
     //#endregion
   ])("type = upsell", (v, expected) => {
-    const migrated = m2.cb(v);
+    const migrated = m2.cb({
+      v,
+      vs: v,
+      vd: v,
+      renderContext: "editor" as const
+    });
     expect(migrated).toStrictEqual(expected);
   });
 });

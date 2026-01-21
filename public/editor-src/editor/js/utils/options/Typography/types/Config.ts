@@ -16,4 +16,5 @@ export interface Config {
 
   isAddNewFontDisabled?: boolean;
   isFontStyleSettingsDisabled?: boolean;
+  disabledFields?: string[];
 }

@@ -65,7 +65,6 @@ export const getItems: GetItems<Value> = ({
 
   const imageMedia = dvv("media") === "image";
   const coverBg = dvv("bgSize") === BgSize.Cover;
-
   return [
     {
       id: "toolbarCurrentElement",
@@ -246,7 +245,10 @@ export const getItems: GetItems<Value> = ({
                 {
                   id: "",
                   type: "backgroundColor",
-                  states: [NORMAL, HOVER]
+                  states: [NORMAL, HOVER],
+                  config: {
+                    withAnimatedGradient: true
+                  }
                 }
               ]
             },

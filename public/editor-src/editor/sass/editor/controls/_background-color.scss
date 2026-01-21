@@ -1,7 +1,24 @@
 @import "../../mixins/input";
 
+%brz-ed-control__backgroundColor-degreeIndicator {
+  position: relative;
+
+  &:after {
+    content: "";
+    position: absolute;
+    width: 5px;
+    height: 5px;
+    display: block;
+    border: 1px solid $options__label-color;
+    border-radius: 100%;
+    top: 1px;
+    right: -3px;
+  }
+}
+
 .brz-ed-control__backgroundColor {
-  &--degree .brz-input {
+  &--degree .brz-input,
+  &--speed .brz-input {
     @include small-input;
     flex: none;
     width: 30px;
@@ -13,19 +30,50 @@
     margin-left: auto;
     width: auto;
 
-    &--linear+.brz-ed-control__backgroundColor--degree {
+    &--linear + .brz-ed-control__backgroundColor--degree {
+      @extend %brz-ed-control__backgroundColor-degreeIndicator;
+    }
+  }
+
+  &__animatedGradientLabel {
+    color: $control__variant-color;
+    font-size: 13px;
+    font-weight: 600;
+    margin-right: 5px;
+  }
+
+  &__animatedGradientTrash {
+    color: $control__variant-color;
+    cursor: pointer;
+  }
+
+  &__animatedGradientTrash__disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  &--animatedGradient {
+    .brz-ed-control__backgroundColor--degree {
+      @extend %brz-ed-control__backgroundColor-degreeIndicator;
+
+      .brz-input {
+        right: 3px;
+      }
+    }
+
+    .brz-ed-control__animated-gradient-range {
       position: relative;
 
-      &:after {
-        content: "";
+      &__add-stop {
         position: absolute;
-        width: 5px;
-        height: 5px;
-        display: block;
-        border: 1px solid $options__label-color;
-        border-radius: 100%;
-        top: 1px;
-        right: -3px;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+        cursor:
+          url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16"><path d="M10 2.75V6h3.25c.69 0 1.25.56 1.25 1.25v1.5c0 .69-.56 1.25-1.25 1.25H10v3.25c0 .69-.56 1.25-1.25 1.25h-1.5c-.69 0-1.25-.56-1.25-1.25V10H2.75c-.69 0-1.25-.56-1.25-1.25v-1.5C1.5 6.56 2.06 6 2.75 6H6V2.75c0-.69.56-1.25 1.25-1.25h1.5c.69 0 1.25.56 1.25 1.25Z" stroke="%23fff" fill="%232c2c2c" fill-rule="evenodd"/></svg>'),
+          crosshair;
       }
     }
   }

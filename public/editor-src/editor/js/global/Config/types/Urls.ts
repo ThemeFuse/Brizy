@@ -4,6 +4,7 @@ export interface UrlsCommon {
   projectCloneLink: string;
   assets: string;
   editorFonts: string;
+  googleFonts?: string;
   prefetchFonts?: string;
   pagePreview?: string;
   preview: string;

@@ -1,4 +1,6 @@
 @use "sass:math";
+@use "sass:color";
+@use "sass:string";
 
 //Default colors
 $white: #ffffff;
@@ -121,7 +123,10 @@ $brand__options: var(--brand__options, $gray-1);
 $brand__primary__pro: var(--brand__primary__pro, $red-3);
 $brand__options-border: var(--toolbars-icons-separators, rgba($white, 0.1));
 $link-color: var(--active-color, $blue-21);
-$link-color--hover: var(--active-color, darken($blue-21, 10%));
+$link-color--hover: var(
+  --active-color,
+  color.adjust($blue-21, $lightness: -10%)
+);
 $required: var(--required, $red-1);
 
 // Collor picker pointer from range (HUE, ALPHA, SATURATION)
@@ -379,10 +384,10 @@ $left_sidebar__main__search__placeholder-color: var(
   --input-placeholder-text,
   $gray-19
 );
-$left_sidebar__main__separator__title-color: unquote(
+$left_sidebar__main__separator__title-color: string.unquote(
   "rgb(from var(--text-labels, #818a91) r g b)"
 );
-$left_sidebar__main__separator__arrow-color: unquote(
+$left_sidebar__main__separator__arrow-color: string.unquote(
   "rgb(from var(--text-labels, #818a91) r g b)"
 );
 $left_sidebar__main__separator__line-bg: var(
@@ -644,23 +649,23 @@ $bottom_toolbar-color--active: var(--active-color, $blue-21);
 $bottom_toolbar-bg: var(--ui-main-color, $black-10);
 $bottom_toolbar-border: var(--toolbars-icons-separators, rgba($white, 0.15));
 $bottom_toolbar-box-shadow: $shadows;
-$bottom_toolbar__btn-border: unquote(
+$bottom_toolbar__btn-border: string.unquote(
   "rgb(from var(--icons-color, #006799) r g b / 0.3)"
 );
-$bottom_toolbar__btn__disabled-border: unquote(
+$bottom_toolbar__btn__disabled-border: string.unquote(
   "rgb(from var(--icons-color, #006799) r g b / 0.15)"
 );
-$bottom_toolbar__disable-color: unquote(
+$bottom_toolbar__disable-color: string.unquote(
   "rgb(from var(--icons-color, #ffffff) r g b / 0.5)"
 );
 $bottom_toolbar__btn-color: var(--icons-color, $white);
 $bottom_toolbar__btn-color--hover: var(--ui-main-color, $white);
 $bottom_toolbar__btn-bg: var(--active-color, $blue-1);
 $bottom_toolbar__btn-bg--hover: var(--active-color, $blue-4);
-$bottom_toolbar__btn__disable-bg: unquote(
+$bottom_toolbar__btn__disable-bg: string.unquote(
   "rgb(from var(--active-color, #3dbfe8) r g b / 0.35)"
 );
-$bottom_toolbar__btn__disable-color: unquote(
+$bottom_toolbar__btn__disable-color: string.unquote(
   "rgb(from var(--icons-color, #ffffff) r g b / 0.35)"
 );
 $bottom_toolbar__tooltip-color: var(--ui-main-color, $gray-3);
@@ -722,13 +727,13 @@ $floating__button__grey-bg: var(--floating__button__grey-bg, $gray-5);
 $floating__button__blue-bg: var(--floating__button__blue-bg, $blue-1);
 $floating__button__red-bg: var(--floating__button__red-bg, $pink);
 $floating__button__tail-bg: var(--active-color, $blue-21);
-$floating__button__second__tail-bg: unquote(
+$floating__button__second__tail-bg: string.unquote(
   "rgb(from var(--active-color, #3dbfe8) r g b / 0.8)"
 );
 
 // Integrations Stages
 // Styles
-$integrations__stages__item: unquote(
+$integrations__stages__item: string.unquote(
   "rgb(from var(--active-color, #22b0da) r g b / 0.25)"
 );
 
@@ -769,7 +774,7 @@ $resize__blue-bg: var(--column-lvl1-border, $blue-21);
 $resize__red-bg: var(--column-lvl2-border, $pink);
 $resize__shortcode-width: 11px;
 $resize__shortcode-height: $resize__shortcode-width;
-$resize__point-position: ceil(math.div(-$resize__shortcode-width, 2));
+$resize__point-position: math.ceil(math.div(-$resize__shortcode-width, 2));
 
 // Adder container for add blocks
 $block__adder__desc-color: var(--block__adder__desc-color, $gray-20);
@@ -925,10 +930,10 @@ $popup__header__tabs-bg: var(--sidebar-background, $gray-4);
 $popup__block__title-color: var(--ui-main-color, $black-10);
 $popup__block__action-color: var(--ui-main-color, #2c3039);
 $popup__block__dropdown-item-color: var(--ui-main-color, $black);
-$popup__block__dropdown-placeholder-color: unquote(
+$popup__block__dropdown-placeholder-color: string.unquote(
   "rgb(from var(--ui-main-color, #000) r g b / 0.83)"
 );
-$popup__header__tabs__item-bg: unquote(
+$popup__header__tabs__item-bg: string.unquote(
   "rgb(from var(--sidebar-header, #292e37) r g b / 0.5)"
 );
 $popup__header__tabs__item-bg--hover: var(--sidebar-header, $black-1);
@@ -937,7 +942,7 @@ $popup__header__tabs__btn-color: var(
   $gray-22
 );
 $popup__header__tabs__btn-color--hover: var(--icons-color, $white);
-$popup__header__tabs__item-color: unquote(
+$popup__header__tabs__item-color: string.unquote(
   "rgb(from var(--text-labels, #ffffff) r g b / 0.5)"
 );
 $popup__header__tabs__item-color--hover: var(--text-labels, $white);
@@ -945,16 +950,16 @@ $popup__header__tabs__item__content-heading: var(
   --popup__header__tabs__item__content-heading,
   $black-9
 );
-$popup__header__tabs__item-border-right-color: unquote(
+$popup__header__tabs__item-border-right-color: string.unquote(
   "rgb(from var(--sidebar-separators, #000000) r g b / 0.7)"
 );
-$popup__header__tabs__item__before-border-right-color: unquote(
+$popup__header__tabs__item__before-border-right-color: string.unquote(
   "rgb(from var(--sidebar-separators, #ffffff) r g b / 0.05)"
 );
-$popup__header__tabs__item-border-left-color: unquote(
+$popup__header__tabs__item-border-left-color: string.unquote(
   "rgb(from var(--sidebar-separators, #000000) r g b / 0.7)"
 );
-$popup__header__tabs__item__after-border-left-color: unquote(
+$popup__header__tabs__item__after-border-left-color: string.unquote(
   "rgb(from var(--sidebar-separators, #ffffff) r g b / 0.05)"
 );
 

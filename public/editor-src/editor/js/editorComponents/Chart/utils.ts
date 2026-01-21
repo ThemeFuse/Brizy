@@ -19,10 +19,11 @@ export const getLineOrBarData = (
   chartItems: ChartDataValue[],
   label: string,
   borderWidth: number,
-  fill: Switch
+  fill: Switch,
+  textTransform: TextTransform
 ): ChartDataType<ChartType.line> | ChartDataType<ChartType.bar> => {
   const data = chartItems.map((item) => ({
-    label: item.label,
+    label: getTextTransform(item.label, textTransform),
     borderColor: hexToRgba(item.color.hex, item.color.opacity),
     backgroundColor: hexToRgba(item.color.hex, 0.5),
     data: splitNumber(item.value) ?? [],
@@ -36,12 +37,23 @@ export const getLineOrBarData = (
   };
 };
 
+type TextTransform = "uppercase" | "lowercase" | "none";
+
+const getTextTransform = (text: string, textTransform: TextTransform) => {
+  if (textTransform === "uppercase") return text.toUpperCase();
+  if (textTransform === "lowercase") return text.toLowerCase();
+  return text;
+};
+
 export const getPieData = (
   chartPieItems: ChartDataValue[],
   borderWidth: number,
-  borderColor: string
+  borderColor: string,
+  textTransform: TextTransform
 ) => {
-  const labels = chartPieItems.map((item) => item.label);
+  const labels = chartPieItems.map((item) =>
+    getTextTransform(item.label, textTransform)
+  );
   const data = chartPieItems.map((item) => Num.read(item.value) ?? 0);
   const backgroundColor = chartPieItems.map((item) =>
     hexToRgba(item.color.hex, item.color.opacity)
@@ -60,6 +72,15 @@ export const getPieData = (
   };
 };
 
+export interface TypographyConfig {
+  fontFamily: string;
+  fontSize: number;
+  fontWeight: number;
+  italic?: boolean;
+  uppercase?: boolean;
+  lowercase?: boolean;
+}
+
 interface ChartValue {
   chartType: ChartType;
   items: ChartDataValue[];
@@ -68,7 +89,31 @@ interface ChartValue {
   label: string;
   borderSize: number;
   fill: Switch;
+  dataLabelTypography?: TypographyConfig;
 }
+
+const buildFontConfig = (
+  typography?: TypographyConfig
+): Record<string, unknown> | undefined => {
+  if (!typography) {
+    return undefined;
+  }
+
+  const { fontFamily, fontSize, fontWeight, italic } = typography;
+
+  // Build font style string
+  const styleParts: string[] = [];
+  if (italic) styleParts.push("italic");
+
+  const fontStyle = styleParts.length > 0 ? styleParts.join(" ") : "normal";
+
+  return {
+    family: fontFamily,
+    size: fontSize,
+    style: fontStyle,
+    weight: fontWeight?.toString() || "400"
+  };
+};
 
 export const getChart = (
   value: ChartValue,
@@ -82,25 +127,63 @@ export const getChart = (
     borderColor,
     label,
     borderSize,
-    fill
+    fill,
+    dataLabelTypography
   } = value;
+
+  const fontConfig = buildFontConfig(dataLabelTypography);
+
+  const baseOptions: Record<string, unknown> = {
+    animation: {
+      duration: 0
+    }
+  };
+
+  if (fontConfig) {
+    // Apply typography to legend labels (for pie charts) and axis labels (for bar/line charts)
+    baseOptions.plugins = {
+      legend: {
+        labels: {
+          font: fontConfig
+        }
+      }
+    };
+
+    if (chartType !== ChartType.pie) {
+      baseOptions.scales = {
+        x: {
+          ticks: {
+            font: fontConfig
+          }
+        },
+        y: {
+          ticks: {
+            font: fontConfig
+          }
+        }
+      };
+    }
+  }
+
+  const textTransform = dataLabelTypography?.uppercase
+    ? "uppercase"
+    : dataLabelTypography?.lowercase
+      ? "lowercase"
+      : "none";
 
   switch (chartType) {
     case ChartType.pie:
       return new Chart(item, {
         type: chartType,
-        data: getPieData(items, borderWidth, borderColor),
-        options: {
-          animation: {
-            duration: 0
-          }
-        }
+        data: getPieData(items, borderWidth, borderColor, textTransform),
+        options: baseOptions
       });
     case ChartType.line:
     case ChartType.bar: {
       return new Chart(item, {
         type: chartType,
-        data: getLineOrBarData(items, label, borderSize, fill)
+        data: getLineOrBarData(items, label, borderSize, fill, textTransform),
+        options: baseOptions
       });
     }
   }

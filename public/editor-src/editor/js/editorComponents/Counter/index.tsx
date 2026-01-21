@@ -13,6 +13,7 @@ import {
 import EditorComponent, {
   Props as PrevProps
 } from "visual/editorComponents/EditorComponent";
+import { withMigrations } from "visual/editorComponents/tools/withMigrations";
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import { makeDataAttr } from "visual/utils/i18n/attribute";
 import { roundTo } from "visual/utils/math";
@@ -24,6 +25,7 @@ import { Chart } from "./Components/Chart";
 import { Text } from "./Components/Text";
 import { resizerTransformPatch, resizerTransformValue } from "./converters";
 import defaultValue from "./defaultValue.json";
+import { migrations } from "./migrations";
 import * as sidebarConfig from "./sidebar";
 import { style, styleChart, styleNumber } from "./styles";
 import * as toolbarConfig from "./toolbar";
@@ -195,6 +197,8 @@ class Counter extends EditorComponent<Value, ElementProps, State> {
                     />
                     <Text
                       className={classNameNumber}
+                      prefixClassName="brz-counter-figures--prefix"
+                      suffixClassName="brz-counter-figures--suffix"
                       prefix={prefixLabel}
                       suffix={suffixLabel}
                     >
@@ -204,6 +208,8 @@ class Counter extends EditorComponent<Value, ElementProps, State> {
                 ) : (
                   <Text
                     className={classNameNumber}
+                    prefixClassName="brz-counter-figures--prefix"
+                    suffixClassName="brz-counter-figures--suffix"
                     prefix={Str.read(prefixLabel)}
                     suffix={Str.read(suffixLabel)}
                   >
@@ -219,4 +225,4 @@ class Counter extends EditorComponent<Value, ElementProps, State> {
   }
 }
 
-export default Counter;
+export default withMigrations(Counter, migrations);

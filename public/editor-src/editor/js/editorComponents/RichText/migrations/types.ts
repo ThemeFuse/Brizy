@@ -1,11 +1,7 @@
 import { ElementModel } from "visual/component/Elements/Types";
-import { RenderType } from "visual/providers/RenderProvider";
+import { MigrationValues } from "visual/utils/migration";
 
 export interface MigrationRichText {
   version: number;
-  cb: (
-    v: ElementModel,
-    deps?: unknown,
-    renderContext?: RenderType
-  ) => ElementModel;
+  cb: ({ v, vd, vs, renderContext }: MigrationValues) => ElementModel;
 }

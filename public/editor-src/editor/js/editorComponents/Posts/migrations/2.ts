@@ -104,7 +104,7 @@ function removeUndefinedKeys(v: ElementModel): Record<string, unknown> {
 
 export const m2: Migration<Deps<unknown>> = {
   version: 2,
-  cb(v) {
+  cb({ v }) {
     if (!Obj.isObject(v)) {
       throw new Error(`Posts migration 2 input failed ${v}`);
     }

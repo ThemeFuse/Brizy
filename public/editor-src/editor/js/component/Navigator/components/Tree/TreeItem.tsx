@@ -1,13 +1,16 @@
 import classnames from "classnames";
 import React, {
   CSSProperties,
+  ChangeEvent,
+  KeyboardEvent,
   MouseEvent,
   RefObject,
   forwardRef,
   useCallback,
   useEffect,
   useMemo,
-  useRef
+  useRef,
+  useState
 } from "react";
 import EditorIcon from "visual/component/EditorIcon";
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
@@ -33,18 +36,22 @@ export const TreeItem = forwardRef<HTMLDivElement, TreeItemProps>(
     },
     ref
   ) => {
+    const { title, icon, collapsed, id, isHidden, type, suffixTitle } = item;
+    const [isEditing, setIsEditing] = useState(false);
+    const [editedTitle, setEditedTitle] = useState(suffixTitle ?? "");
+
     const {
       toggleExpand,
       toggleShowElement,
       activeId,
       onClickItem,
-      onRemoveItem
+      onRemoveItem,
+      updateItemTitle
     } = useTreeContext();
 
     const isStoryMode = isStory(useEditorMode().mode);
 
     const internalRef = useRef<HTMLElement>(null);
-    const { title, icon, collapsed, id, isHidden, type } = item;
 
     const itemClasses = classnames("brz-navigator-list-item", {
       "brz-navigator-list-item-active": activeId === id,
@@ -104,6 +111,10 @@ export const TreeItem = forwardRef<HTMLDivElement, TreeItemProps>(
       }
     }, [activeId, id, ref]);
 
+    useEffect(() => {
+      setEditedTitle(suffixTitle ?? "");
+    }, [suffixTitle]);
+
     const handleAttachRefs = useCallback(
       (el: HTMLElement | null) => {
         attachRefs(el, [ref as RefObject<HTMLElement>, internalRef]);
@@ -125,12 +136,39 @@ export const TreeItem = forwardRef<HTMLDivElement, TreeItemProps>(
 
     const handleProperties = isSectionItem ? undefined : handleProps;
 
+    const handleDoubleClickItem = useCallback(
+      () => setIsEditing(true),
+      [setIsEditing]
+    );
+
+    const handleUpdateTitle = useCallback(() => {
+      setIsEditing(false);
+      updateItemTitle(id, editedTitle);
+    }, [id, editedTitle, updateItemTitle]);
+
+    const handleEditTitle = useCallback(
+      (e: ChangeEvent<HTMLInputElement>) => {
+        setEditedTitle(e.target.value);
+      },
+      [setEditedTitle]
+    );
+
+    const handleKeyDownTitle = useCallback(
+      (e: KeyboardEvent) => {
+        if (e.key === "Enter") {
+          handleUpdateTitle();
+        }
+      },
+      [handleUpdateTitle]
+    );
+
     return (
       <li
         ref={wrapperRef}
         className={wrapperClasses}
         style={wrapperStyle}
         onClick={handleClickItem}
+        onDoubleClick={handleDoubleClickItem}
       >
         <div className={itemClasses} ref={handleAttachRefs} style={style}>
           {handleProperties && (
@@ -154,7 +192,20 @@ export const TreeItem = forwardRef<HTMLDivElement, TreeItemProps>(
               className="brz-navigator-list-item-icon-widget"
             />
           )}
-          {title}
+          {isEditing ? (
+            <input
+              type="text"
+              value={editedTitle}
+              onChange={handleEditTitle}
+              onBlur={handleUpdateTitle}
+              onKeyDown={handleKeyDownTitle}
+              autoFocus
+            />
+          ) : (
+            <span onDoubleClick={handleDoubleClickItem}>
+              {title} {suffixTitle ? ` ${suffixTitle}` : ""}
+            </span>
+          )}
           {!clone && (
             <>
               {!hideShowButton && (

@@ -118,6 +118,10 @@
     "gradientColorOpacity": 1,
     "gradientColorPalette": "",
 
+    "gradientSpeed": 5,
+    "gradientStops": [],
+    "activeStopIndex": 0,
+
     "tempGradientColorOpacity": 1,
     "tempGradientColorPalette": "",
 

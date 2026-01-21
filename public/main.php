@@ -273,10 +273,11 @@ class Brizy_Public_Main
         return $classes;
     }
 
-    /**
-     * @return bool
-     */
-    public static function is_editing_page_with_editor(Brizy_Editor_Post $post = null)
+	/**
+	 * @param Brizy_Editor_Post $post
+	 * @return bool
+	 */
+    public static function is_editing_page_with_editor($post = null)
     {
 
         return is_admin() &&
@@ -284,15 +285,20 @@ class Brizy_Public_Main
             ($post ? $post->uses_editor() : true);
     }
 
-    /**
-     * @return bool
-     */
-    public static function is_editing_page_with_editor_on_iframe(Brizy_Editor_Post $post = null)
+	/**
+	 * @param Brizy_Editor_Post $post
+	 * @return bool
+	 */
+    public static function is_editing_page_with_editor_on_iframe($post = null)
     {
         return !is_admin() && !empty($_REQUEST['is-editor-iframe']) && ($post ? $post->uses_editor() : true);
     }
 
-    public static function is_editing(Brizy_Editor_Post $post = null)
+	/**
+	 * @param Brizy_Editor_Post $post
+	 * @return bool
+	 */
+    public static function is_editing($post = null)
     {
         return self::is_editing_page_with_editor($post) || self::is_editing_page_with_editor_on_iframe($post);
     }

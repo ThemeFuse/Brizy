@@ -1,6 +1,12 @@
-import { findMigrations, migrate } from "../index";
+import { MigrationValues, findMigrations, migrate } from "../index";
 
-const noop = <T extends Record<string, unknown>>(r: T): T => r;
+const noop = <T extends Record<string, unknown>>(values: {
+  vd: T;
+  vs: T;
+  v: T;
+}): T => {
+  return values.v;
+};
 
 test.each([
   [
@@ -68,10 +74,9 @@ describe("testing 'migrate' function", () => {
       {
         version: 1,
 
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        cb(value: any) {
+        cb({ v }: MigrationValues) {
           return {
-            ...value,
+            ...v,
             b: "b"
           };
         }
@@ -82,7 +87,14 @@ describe("testing 'migrate' function", () => {
       b: "b"
     };
 
-    expect(migrate(migrations, value)).toEqual(expected);
+    expect(
+      migrate(migrations, {
+        vd: value,
+        vs: value,
+        v: value,
+        renderContext: "editor" as const
+      })
+    ).toEqual(expected);
   });
 
   test("multiple migrations", () => {
@@ -93,7 +105,7 @@ describe("testing 'migrate' function", () => {
       {
         version: 1,
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        cb(value: any) {
+        cb({ v: value }: MigrationValues) {
           return {
             b: "b" + value.a
           };
@@ -102,7 +114,7 @@ describe("testing 'migrate' function", () => {
       {
         version: 2,
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        cb(value: any) {
+        cb({ v: value }: MigrationValues) {
           return {
             c: "c" + value.b
           };
@@ -111,7 +123,7 @@ describe("testing 'migrate' function", () => {
       {
         version: 3,
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        cb(value: any) {
+        cb({ v: value }: MigrationValues) {
           return {
             d: "d" + value.c
           };
@@ -122,7 +134,14 @@ describe("testing 'migrate' function", () => {
       d: "dcba"
     };
 
-    expect(migrate(migrations, value)).toEqual(expected);
+    expect(
+      migrate(migrations, {
+        vd: value,
+        vs: value,
+        v: value,
+        renderContext: "editor" as const
+      })
+    ).toEqual(expected);
   });
 
   test("throws error", () => {
@@ -133,7 +152,7 @@ describe("testing 'migrate' function", () => {
       {
         version: 1,
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        cb(value: any) {
+        cb({ v: value }: any) {
           return {
             b: "b" + value.undefined.property
           };
@@ -142,7 +161,12 @@ describe("testing 'migrate' function", () => {
     ];
 
     expect(() => {
-      migrate(migrations, value);
+      migrate(migrations, {
+        vd: value,
+        vs: value,
+        v: value,
+        renderContext: "editor" as const
+      });
     }).toThrow();
   });
 
@@ -158,7 +182,7 @@ describe("testing 'migrate' function", () => {
       {
         version: 1,
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        cb(value: any, dep: any) {
+        cb({ v: value }: MigrationValues, dep: any) {
           return {
             ...value,
             b: value.a + dep.test
@@ -171,6 +195,12 @@ describe("testing 'migrate' function", () => {
       b: "a1"
     };
 
-    expect(migrate(migrations, value, deps)).toStrictEqual(expected);
+    expect(
+      migrate(
+        migrations,
+        { vd: value, vs: value, v: value, renderContext: "editor" as const },
+        deps
+      )
+    ).toStrictEqual(expected);
   });
 });

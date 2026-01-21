@@ -86,6 +86,10 @@
     "colorOpacity": 1,
     "colorPalette": "color3",
 
+    "prefixSuffixColorHex": "#239ddb",
+    "prefixSuffixColorOpacity": 1,
+    "prefixSuffixColorPalette": "color3",
+
     "tempColorOpacity": 1,
     "tempColorPalette": "color3",
 

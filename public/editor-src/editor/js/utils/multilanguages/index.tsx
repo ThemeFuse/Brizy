@@ -1,7 +1,12 @@
 import { match } from "fp-utilities";
 import { Config } from "visual/global/Config/types";
 import {
+  ShopModules,
+  isEcwidShop
+} from "visual/global/Config/types/configs/Base";
+import {
   CMS,
+  Cloud,
   isCMS,
   isCloud,
   isShopify
@@ -36,7 +41,12 @@ export const getTranslationsLanguages = (config: ConfigCommon): Language[] => {
       isCloud,
       match(
         [isCMS, (c: CMS): Language[] => c.availableTranslations],
-        [isShopify, () => []]
+        [isShopify, () => []],
+        [
+          (c: ConfigCommon): c is Cloud =>
+            isEcwidShop(c.modules?.shop as ShopModules),
+          (c) => c.availableTranslations
+        ]
       )
     ]
   );

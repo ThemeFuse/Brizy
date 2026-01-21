@@ -287,6 +287,17 @@ class Brizy_Editor_Post extends Brizy_Editor_Entity
         } else {
             remove_action('post_updated', 'wp_save_post_revision');
         }
+
+        // for the case when the current post is a future post.. and the status set is publish..
+        // we need to reset the dates and the shceduled cron for the post.
+        $post = get_post($this->getWpPostId());
+
+        if($post->post_status == 'future' && $postarr['post_status']=='publish') {
+            $postarr['post_date'] = current_time('mysql');
+            $postarr['post_date_gmt'] = current_time('mysql',1);
+            wp_clear_scheduled_hook('publish_future_post', [$this->getWpPostId()]);
+        }
+
         wp_update_post($postarr);
         $this->createUid();
     }

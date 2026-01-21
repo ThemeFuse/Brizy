@@ -11,6 +11,7 @@ import {
   cssStyleTypography2LetterSpacing,
   cssStyleTypography2LineHeight
 } from "visual/utils/cssStyle/cssStyleTypography2";
+import { NORMAL } from "visual/utils/stateMode";
 import { defaultValueValue } from "../onChange";
 import { cssStyleTextAlign } from "./cssStyleAlign";
 
@@ -212,6 +213,151 @@ export function cssStyleElementLoginRememberMeAlign({
     getConfig,
     store,
     prefix: "rememberMe"
+  });
+}
+
+// Align Agreement
+export function cssStyleElementLoginAgreementAlign({
+  v,
+  device,
+  state,
+  getConfig,
+  store
+}) {
+  return cssStyleFlexHorizontalAlign({
+    v,
+    device,
+    state,
+    getConfig,
+    store,
+    prefix: "agreement"
+  });
+}
+
+export function cssStyleElementLoginAgreementColor({
+  v,
+  device,
+  state,
+  getConfig,
+  store
+}) {
+  return cssStyleColor({
+    v,
+    device,
+    state,
+    getConfig,
+    store,
+    prefix: "agreementColor"
+  });
+}
+
+export function cssStyleElementLoginAgreementFontFamily({
+  v,
+  device,
+  store,
+  getConfig,
+  renderContext
+}) {
+  return cssStyleTypography2FontFamily({
+    v,
+    device,
+    store,
+    getConfig,
+    prefix: "agreement",
+    renderContext
+  });
+}
+
+export function cssStyleElementLoginAgreementFontSize({
+  v,
+  device,
+  getConfig,
+  store
+}) {
+  return cssStyleTypography2FontSize({
+    v,
+    device,
+    store,
+    getConfig,
+    prefix: "agreement"
+  });
+}
+
+export function cssStyleElementLoginAgreementFontWeight({
+  v,
+  device,
+  getConfig,
+  store
+}) {
+  return cssStyleTypography2LineHeight({
+    v,
+    device,
+    store,
+    getConfig,
+    prefix: "agreement"
+  });
+}
+
+export function cssStyleElementLoginAgreementLetterSpacing({
+  v,
+  device,
+  getConfig,
+  store
+}) {
+  return cssStyleTypography2FontWeight({
+    v,
+    device,
+    store,
+    getConfig,
+    prefix: "agreement"
+  });
+}
+
+export function cssStyleElementLoginAgreementLineHeight({
+  v,
+  device,
+  getConfig,
+  store
+}) {
+  return cssStyleTypography2LetterSpacing({
+    v,
+    device,
+    state: NORMAL,
+    store,
+    getConfig,
+    prefix: "agreement"
+  });
+}
+
+export function cssStyleElementLoginAgreementFontVariation({
+  v,
+  device,
+  getConfig,
+  store
+}) {
+  return cssStyleTypography2FontVariation({
+    v,
+    device,
+    store,
+    getConfig,
+    prefix: "agreement"
+  });
+}
+
+export function cssStyleElementLoginAgreementTextTransform({
+  v,
+  device,
+  state,
+  getConfig,
+  store
+}) {
+  return cssStyleTextTransforms({
+    v,
+    device,
+    state,
+    getConfig,
+    store,
+    prefix: "agreement"
   });
 }
 

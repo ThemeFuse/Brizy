@@ -5,7 +5,7 @@ import { ArrowStyle } from "../types";
 
 export const m3: Migration<Deps<unknown>> = {
   version: 3,
-  cb(v) {
+  cb({ v }) {
     if (!Obj.isObject(v)) {
       throw new Error(`Carousel migration 3 input failed ${v}`);
     }

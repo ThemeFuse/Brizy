@@ -3,7 +3,7 @@ import { getProLibs } from "visual/libs";
 import { checkValue2 } from "visual/utils/checkValue";
 import { parseFromString } from "visual/utils/string";
 import { ChartType, readChartDataValues } from "./types";
-import { getChart } from "./utils";
+import { TypographyConfig, getChart } from "./utils";
 
 export default function ($node: JQuery) {
   const node = $node.get(0);
@@ -20,7 +20,8 @@ export default function ($node: JQuery) {
       borderWidth,
       label,
       fill,
-      borderSize
+      borderSize,
+      labelTypography
     } = chart.dataset;
 
     const chartItems = parseFromString(items ?? "");
@@ -30,6 +31,9 @@ export default function ($node: JQuery) {
     const labelValue = label ?? "";
     const fillValue = fill === "on" ? "on" : "off";
     const chartTypeValue = checkValue2(ChartType)(chartType);
+    const dataLabelTypography = parseFromString<TypographyConfig>(
+      labelTypography ?? "null"
+    );
 
     const chartItem = chart.querySelector("canvas");
     const _items = readChartDataValues(chartItems);
@@ -40,7 +44,7 @@ export default function ($node: JQuery) {
       return;
     }
 
-    getChart(
+    const chartInstance = getChart(
       {
         chartType: chartTypeValue,
         items: _items,
@@ -48,10 +52,17 @@ export default function ($node: JQuery) {
         borderColor: borderColorValue,
         borderSize: borderSizeValue,
         label: labelValue,
-        fill: fillValue
+        fill: fillValue,
+        dataLabelTypography
       },
       chartItem,
       Chart
     );
+
+    if (dataLabelTypography && chartInstance) {
+      document.fonts.ready.then(() => {
+        chartInstance.update();
+      });
+    }
   });
 }

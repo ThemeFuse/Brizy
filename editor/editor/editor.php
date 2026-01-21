@@ -267,6 +267,11 @@ class Brizy_Editor_Editor_Editor
                 "roles" => ["admin"],
             ],
             [
+                "type" => "explorer",
+                "label" => __bt("Explorer", "Explorer", 'brizy'),
+                "icon" => "nc-navigator",
+            ],
+            [
                 "type" => "shortcuts",
                 "icon" => "nc-alert-circle-que",
                 "label" => __bt("Shortcuts", "Shortcuts", 'brizy'),

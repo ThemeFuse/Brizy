@@ -97,7 +97,7 @@ function migrateSymbols(
 
 export const m3: Migration<GetCollectionTypesInfoResult> = {
   version: 3,
-  cb(v, collection) {
+  cb({ v }, collection) {
     if (!Obj.isObject(v)) {
       throw new Error(`Posts migration 3 input failed ${v}`);
     }

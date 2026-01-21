@@ -2,7 +2,12 @@ import { m2 } from "../2";
 
 describe("testing m2 migration", () => {
   test.each([{}])("'source' defaults", (v) => {
-    const migrated = m2.cb(v);
+    const migrated = m2.cb({
+      v,
+      vs: v,
+      vd: v,
+      renderContext: "editor" as const
+    });
     expect(migrated).toStrictEqual({
       source: "post"
     });
@@ -115,7 +120,12 @@ describe("testing m2 migration", () => {
     ]
     //#endregion
   ])("type = posts", (v, expected) => {
-    const migrated = m2.cb(v);
+    const migrated = m2.cb({
+      v,
+      vs: v,
+      vd: v,
+      renderContext: "editor" as const
+    });
     expect(migrated).toStrictEqual(expected);
   });
 
@@ -193,7 +203,12 @@ describe("testing m2 migration", () => {
     ]
     //#endregion
   ])("type = products", (v, expected) => {
-    const migrated = m2.cb(v);
+    const migrated = m2.cb({
+      v,
+      vs: v,
+      vd: v,
+      renderContext: "editor" as const
+    });
     expect(migrated).toStrictEqual(expected);
   });
 });

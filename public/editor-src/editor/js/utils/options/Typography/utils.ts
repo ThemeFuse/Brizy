@@ -10,8 +10,12 @@ import {
   unDeletedFontsSelector
 } from "visual/redux/selectors";
 import { Store } from "visual/redux/store";
+import { UploadedFont } from "visual/types/Fonts";
 import { TextScripts } from "visual/types/Style";
-import { getDefaultFont } from "visual/utils/fonts/getFontById";
+import {
+  getDefaultFont,
+  getGroupFontsById
+} from "visual/utils/fonts/getFontById";
 import { t } from "visual/utils/i18n";
 import { TypographyValues } from "visual/utils/options/Typography/types";
 import * as Union from "visual/utils/reader/union";
@@ -153,4 +157,22 @@ export const createScriptChoices = (
   });
 
   return choices;
+};
+
+export const isVariableFont = (fontFamilyId: string, store: Store): boolean => {
+  const reduxState = store.getState();
+  const fonts = unDeletedFontsSelector(reduxState);
+  const fontGroup = getGroupFontsById(fonts, fontFamilyId);
+
+  if (!fontGroup) {
+    return false;
+  }
+
+  const { font } = fontGroup;
+  // Only UploadedFont has variations property
+  // Use type assertion since we've checked the font exists in store
+  const fontWithVariations = font as Partial<UploadedFont>;
+  return (
+    !!fontWithVariations.variations && fontWithVariations.variations.length > 0
+  );
 };

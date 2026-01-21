@@ -55,12 +55,14 @@ export const getButtonLabel = (
     case StoreChanged.unchanged: {
       switch (status) {
         case "draft":
-        case "future":
         case "private": {
           return t("Save Draft");
         }
         case "publish": {
           return t("Publish");
+        }
+        case "future": {
+          return t("Save Scheduled");
         }
       }
     }

@@ -11,12 +11,14 @@ export interface TreeContextType {
   onClickItem: (id: string) => void;
   onRemoveItem: (id: string) => void;
   setActiveId: (id: string | null) => void;
+  updateItemTitle: (id: string, title: string) => void;
 }
 
 export interface TreeItem {
   id: string;
   type: string;
   title: string;
+  suffixTitle: string | null;
   children: TreeItem[] | null;
   icon: string | null;
   collapsed?: boolean;
