@@ -22,7 +22,7 @@
     "fp-utilities": "^1.1.4",
     "franc": "^6.1.0",
     "js-base64": "^3.7.5",
-    "lodash": "^4.17.21",
+    "lodash": "^4.17.23",
     "query-string": "^9.1.1"
   },
   "devDependencies": {
