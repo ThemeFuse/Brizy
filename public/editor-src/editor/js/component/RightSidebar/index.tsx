@@ -2,8 +2,6 @@ import { Sidebar } from "@brizy/builder-ui-components";
 import classnames from "classnames";
 import React from "react";
 import { ConnectedProps, connect } from "react-redux";
-import { RenderEmpty } from "visual/component/RightSidebar/Components/RenderEmpty";
-import { RenderItems } from "visual/component/RightSidebar/Components/RenderItems";
 import {
   CLEAR_ITEMS_TIMEOUT,
   SIDEBAR_WIDTH,
@@ -15,6 +13,8 @@ import { updateUI } from "visual/redux/actions2";
 import { deviceModeSelector, uiSelector } from "visual/redux/selectors";
 import { ReduxState } from "visual/redux/types";
 import { t } from "visual/utils/i18n";
+import { RenderEmpty } from "./Components/RenderEmpty";
+import { RenderItems } from "./Components/RenderItems";
 import { HelpSidebar } from "./HelpSidebar";
 
 export let instance: RightSidebarInner | undefined;
@@ -170,6 +170,7 @@ export class RightSidebarInner extends React.Component<Props> {
     );
     const _items = this.getItems !== undefined ? this.getItems() : undefined;
     const renderData = this.getRenderItems(type, _items);
+
     return (
       <div className={sidebarClassName}>
         <Sidebar

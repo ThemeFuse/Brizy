@@ -5,6 +5,7 @@ import {
   WithOnChange,
   WithValue
 } from "visual/types/attributes";
+import { HorizontalScrollContainer } from "../HorizontalScrollContainer";
 import * as Tab from "./Tab";
 import { TabList } from "./TabList";
 
@@ -15,6 +16,7 @@ export type Props<T> = WithClassName &
     align: "start" | "center" | "end";
     position: "top" | "left";
     children: ReactElement<Tab.Props<T>>[];
+    horizontalScroll?: boolean;
   };
 
 export function Tabs<T>({
@@ -24,9 +26,12 @@ export function Tabs<T>({
   value,
   onChange,
   align,
-  position
+  position,
+  horizontalScroll = false
 }: Props<T>): ReactElement | null {
-  const _className = classNames("brz-ed-control__tabs-wrapper", className);
+  const _className = classNames("brz-ed-control__tabs-wrapper", className, {
+    "brz-ed-control__tabs-wrapper--horizontal-scroll": horizontalScroll
+  });
 
   if (children.length === 0) {
     return null;
@@ -46,16 +51,26 @@ export function Tabs<T>({
     </div>
   );
 
+  const tabList = (
+    <TabList<T>
+      active={active.props.value}
+      align={align}
+      position={position}
+      onChange={onChange}
+    >
+      {children}
+    </TabList>
+  );
+
+  const tabListContent = horizontalScroll ? (
+    <HorizontalScrollContainer>{tabList}</HorizontalScrollContainer>
+  ) : (
+    tabList
+  );
+
   return showTabs ? (
     <div className={_className}>
-      <TabList<T>
-        active={active.props.value}
-        align={align}
-        position={position}
-        onChange={onChange}
-      >
-        {children}
-      </TabList>
+      {tabListContent}
       {activeTab}
     </div>
   ) : (

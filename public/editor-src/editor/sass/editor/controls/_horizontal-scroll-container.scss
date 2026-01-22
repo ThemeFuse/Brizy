@@ -1,0 +1,67 @@
+@import "../../variables";
+
+.brz-ed-horizontal-scroll-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+
+  .brz-ed-horizontal-scroll-content {
+    flex: 1 1 auto;
+    overflow-x: auto;
+    overflow-y: hidden;
+    display: flex;
+    scrollbar-width: none;
+    height: 100%;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
+  .brz-ed-horizontal-scroll-arrow {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    border: none;
+    background-color: $right_sidebar__header__tabs-bg;
+    cursor: pointer;
+    z-index: 2;
+    transition: opacity 0.2s ease;
+    padding: 0;
+
+    .brz-icon-svg {
+      font-size: 10px;
+      color: $right_sidebar__icon-color;
+    }
+
+    &:hover {
+      .brz-icon-svg {
+        color: $right_sidebar__icon-color--hover;
+      }
+    }
+
+    &--left {
+      left: 0;
+      background: linear-gradient(
+        to right,
+        $right_sidebar__header__tabs-bg 60%,
+        transparent
+      );
+    }
+
+    &--right {
+      right: 0;
+      background: linear-gradient(
+        to left,
+        $right_sidebar__header__tabs-bg 60%,
+        transparent
+      );
+    }
+  }
+}

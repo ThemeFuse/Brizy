@@ -4,7 +4,7 @@
   flex: 1 1 auto;
   max-width: 100%;
 
-  &>.brz-ed-control__tab__content {
+  & > .brz-ed-control__tab__content {
     padding: 7px 30px 30px;
   }
 
@@ -55,19 +55,20 @@
       flex: 1 1 auto;
       margin: 0 !important;
       display: flex;
+      flex-wrap: nowrap;
       border: none;
       height: 100%;
 
       .brz-ed-control__tab {
         padding: 0 20px;
         margin: 0 !important;
-        flex: 1 1 auto;
-        max-width: 50%;
+        flex: 0 0 auto;
         border: none;
         text-align: center;
         height: 100%;
         display: flex;
         justify-content: center;
+        white-space: nowrap;
 
         &.active {
           background-color: $right_sidebar__header__tabs-bg--active;
@@ -86,6 +87,15 @@
       .brz-ed-arrow::after {
         border-bottom-color: $right_sidebar__tooltip-bg;
       }
+    }
+
+    &-controls {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      height: 48px;
+      padding-right: 10px;
+      background-color: var(--sidebar-header, #383e48);
     }
   }
 }
