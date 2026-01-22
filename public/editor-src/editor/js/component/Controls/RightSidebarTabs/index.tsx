@@ -1,6 +1,7 @@
 import classNames from "classnames";
 import React, { ReactElement, useMemo } from "react";
 import { WithValue } from "visual/types/attributes";
+import { HorizontalScrollContainer } from "../HorizontalScrollContainer";
 import { Props as TabProps } from "../Tabs2/Tab";
 import { TabList, Props as TabListProps } from "../Tabs2/TabList";
 import { Icon } from "./Icon";
@@ -25,10 +26,14 @@ export interface Props<T> extends WithValue<T> {
   onLock?: VoidFunction;
   expand: Expand;
   onExpand?: VoidFunction;
+  config?: {
+    horizontalScroll?: boolean;
+  };
 }
 
 export function RightSidebarTabs<T>({
   children,
+  config,
   value,
   onChange,
   align,
@@ -38,6 +43,15 @@ export function RightSidebarTabs<T>({
   expand,
   onExpand
 }: Props<T>): ReactElement {
+  const { horizontalScroll = false } = config ?? {};
+
+  const sidebarTabsClassName = classNames(
+    "brz-ed-control__right-sidebar-tabs",
+    {
+      "brz-ed-control__right-sidebar-tabs--horizontal-scroll": horizontalScroll
+    }
+  );
+
   const active: Child<T> | undefined = useMemo(
     () => children.find((t) => t.props.value === value) ?? children[0],
     [children, value]
@@ -57,8 +71,57 @@ export function RightSidebarTabs<T>({
     [active]
   );
 
-  return (
-    <div className="brz-ed-control__right-sidebar-tabs">
+  const renderControls = () => (
+    <>
+      {onAlign && (
+        <Icon
+          icon={alignIcon(align)}
+          title={alignTitle(align)}
+          onClick={onAlign}
+        />
+      )}
+      {onLock && (
+        <Icon
+          icon={lockedIcon(locked)}
+          title={lockedTitle(locked)}
+          onClick={onLock}
+        />
+      )}
+      {onExpand && (
+        <Icon
+          icon={expandIcon(expand)}
+          title={expandTitle(expand)}
+          onClick={onExpand}
+        />
+      )}
+    </>
+  );
+
+  const renderScrollableTabsContent = () => (
+    <div className={sidebarTabsClassName}>
+      {horizontalScroll && (
+        <div className="brz-ed-control__right-sidebar-tabs__header-controls">
+          {renderControls()}
+        </div>
+      )}
+      <div className="brz-ed-control__right-sidebar-tabs__header">
+        <HorizontalScrollContainer>
+          <TabList<T>
+            onChange={onChange}
+            active={active?.props.value}
+            align={"start"}
+            position={"top"}
+          >
+            {children}
+          </TabList>
+        </HorizontalScrollContainer>
+      </div>
+      {activeTab}
+    </div>
+  );
+
+  const renderTabsContent = () => (
+    <div className={sidebarTabsClassName}>
       <div className="brz-ed-control__right-sidebar-tabs__header">
         <TabList<T>
           onChange={onChange}
@@ -93,4 +156,7 @@ export function RightSidebarTabs<T>({
       {activeTab}
     </div>
   );
+
+  return horizontalScroll ? renderScrollableTabsContent() : renderTabsContent();
 }
+

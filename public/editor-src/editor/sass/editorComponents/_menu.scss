@@ -120,8 +120,6 @@ $dropdown-arrow-size: 7px;
 
     // SubMenu Dropdown
     .brz-menu__item:has(.brz-menu__sub-menu) {
-      position: relative;
-
       .brz-menu__item {
         padding: 0;
         transition:
