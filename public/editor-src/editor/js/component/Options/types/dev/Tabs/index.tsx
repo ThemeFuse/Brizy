@@ -21,6 +21,7 @@ export type Config = {
   saveTab?: boolean;
   position?: CProps<Literal>["position"];
   align?: CProps<Literal>["align"];
+  horizontalScroll?: boolean;
 };
 
 type OptionTab = {
@@ -50,7 +51,8 @@ export const Tabs = ({
     position = "top",
     align = "center",
     saveTab,
-    showSingle = false
+    showSingle = false,
+    horizontalScroll = false
   } = config ?? {};
 
   const [_value, setValue] = useState(value);
@@ -85,6 +87,7 @@ export const Tabs = ({
       onChange={_onChange}
       position={position}
       showSingle={showSingle}
+      horizontalScroll={horizontalScroll}
       className={className}
     >
       {sortBy(tabs, [({ position = 100 }) => position]).map(
