@@ -266,6 +266,7 @@ class Brizy_Admin_Main {
                         'aiSendingProjectDesc'          => __( 'Please wait while we send your project data...', 'brizy' ),
                         'aiGenerateTemplateTitle'       => __( 'Generating template', 'brizy' ),
                         'aiGenerateTemplateDesc'        => __( 'Please wait. This may take a few minutes.', 'brizy' ),
+                        'aiContinueButton'             => __( 'Continue', 'brizy' ),
                 ],
                 'aiActions' => class_exists('BrizyPro_Admin_AiCore') ? array(
                     'createSession'    => BrizyPro_Admin_AiCore::AJAX_CREATE_SESSION,
