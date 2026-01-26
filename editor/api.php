@@ -68,9 +68,13 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi
 
     protected function initializeApiActions()
     {
+        $n = 'wp_ajax_nopriv_'.Brizy_Editor::prefix();
+        add_action($n . self::AJAX_HEARTBEAT, array($this, 'heartbeat'));
+        
         if (!Brizy_Editor_User::is_user_allowed()) {
             return;
         }
+        
         $p = 'wp_ajax_' . Brizy_Editor::prefix();
         add_action($p . self::AJAX_REMOVE_LOCK, array($this, 'removeProjectLock'));
         add_action($p . self::AJAX_HEARTBEAT, array($this, 'heartbeat'));
@@ -162,6 +166,41 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi
 
     public function heartbeat()
     {
+        if (!is_user_logged_in()) {
+            $response = [];
+            $response['status'] = 'unauthenticated';
+            $response['code'] = 401;
+            $this->success($response);
+            return;
+        }
+
+        $nonce = $this->getRequestNonce();
+        if (empty($nonce) || !wp_verify_nonce($nonce, self::nonce)) {
+            $newNonce = wp_create_nonce(self::nonce);
+            $response = [];
+            $response['status'] = 'nonce_expired';
+            $response['code'] = 403;
+            $response['hash'] = $newNonce;
+            
+            $pageId = $this->param('pageId');
+            if ($pageId) {
+                try {
+                    $post = Brizy_Editor_Post::get((int)$pageId);
+                    $editor = new Brizy_Editor_Editor_Editor(Brizy_Editor_Project::get(), $post);
+                    $response['pagePreview'] = $editor->getPreviewUrl($post->getWpPost());
+                    
+                    $adminNonce = wp_create_nonce('brizy-admin-nonce');
+                    $response['changeTemplate'] = set_url_scheme(admin_url('admin-post.php?post=' . $post->getWpPostId() . '&action=_brizy_change_template&hash=' . $adminNonce));
+                } catch (Exception $e) {
+                    $response['pagePreview'] = null;
+                    $response['changeTemplate'] = null;
+                }
+            }
+            
+            $this->success($response);
+            return;
+        }
+
         $this->verifyNonce(self::nonce);
         if (Brizy_Editor::get()->checkIfProjectIsLocked() === false) {
             Brizy_Editor::get()->lockProject();

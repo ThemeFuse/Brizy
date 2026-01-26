@@ -89,7 +89,7 @@ const api = {
   fonts: {
     adobeFont: adobeFont()
   },
-  heartBeat: heartBeat(config),
+  heartBeat: heartBeat(),
   menu: {
     getMenus: getMenus()
   },
