@@ -274,6 +274,7 @@ class Brizy_Admin_Main {
                     'importDelete'     => BrizyPro_Admin_AiCore::AJAX_IMPORT_DELETE,
                     'importKeep'       => BrizyPro_Admin_AiCore::AJAX_IMPORT_KEEP,
                     'sendProject'      => BrizyPro_Admin_AiCore::AJAX_SEND_PROJECT,
+                    'getPostSlug'      => BrizyPro_Admin_AiCore::AJAX_GET_POST_SLUG,
                 ) : array(),
         ) );
     }
