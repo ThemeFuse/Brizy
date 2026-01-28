@@ -256,10 +256,26 @@ class Brizy_Admin_Main {
                 'editorVersion' => BRIZY_EDITOR_VERSION,
                 'pluginVersion' => BRIZY_VERSION,
                 'nonce'         => wp_create_nonce( 'brizy-admin-nonce' ),
+                'aiNonce'       => wp_create_nonce( 'brizy-api' ),
                 'l10n'          => [
                         'deactivateFeedbackSubmitBtn' => __( 'Submit & Deactivate', 'brizy' ),
                         'deactivateFeedbackSkipBtn'   => __( 'Skip & Deactivate', 'brizy' ),
-                ]
+                        'aiCreatingSessionTitle'        => __( 'Creating AI session', 'brizy' ),
+                        'aiCreatingSessionDesc'         => __( 'Waiting for server response. Please wait…', 'brizy' ),
+                        'aiSendingProjectTitle'         => __( 'Sending project', 'brizy' ),
+                        'aiSendingProjectDesc'          => __( 'Please wait while we send your project data...', 'brizy' ),
+                        'aiGenerateTemplateTitle'       => __( 'Generating template', 'brizy' ),
+                        'aiGenerateTemplateDesc'        => __( 'Please wait. This may take a few minutes.', 'brizy' ),
+                        'aiContinueButton'             => __( 'Continue', 'brizy' ),
+                ],
+                'aiActions' => class_exists('BrizyPro_Admin_AiCore') ? array(
+                    'createSession'    => BrizyPro_Admin_AiCore::AJAX_CREATE_SESSION,
+                    'generateTemplate' => BrizyPro_Admin_AiCore::AJAX_GENERATE_TEMPLATE,
+                    'importDelete'     => BrizyPro_Admin_AiCore::AJAX_IMPORT_DELETE,
+                    'importKeep'       => BrizyPro_Admin_AiCore::AJAX_IMPORT_KEEP,
+                    'sendProject'      => BrizyPro_Admin_AiCore::AJAX_SEND_PROJECT,
+                    'getPostSlug'      => BrizyPro_Admin_AiCore::AJAX_GET_POST_SLUG,
+                ) : array(),
         ) );
     }
 
