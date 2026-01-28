@@ -3,9 +3,9 @@ import { ElementType, clearAlerts, getValidateInputs } from "./utils.common";
 const getRequiredInputsSelector = (elementType: ElementType): string => {
   switch (elementType) {
     case ElementType.login:
-      return "input[name='log'], input[name='pwd']";
+      return "input[name='log'], input[name='pwd'], input[name='agreeterms']";
     case ElementType.register:
-      return "input[name='user_login'], input[name='user_email']";
+      return "input[name='user_login'], input[name='user_email'], input[name='agreeterms']";
     case ElementType.forgot:
       return "input[name='user_login']";
     case ElementType.authorized:
@@ -52,8 +52,12 @@ export const getData = (
   inputs.forEach((item) => {
     const { name, value, type } = item;
 
-    if (type === "checkbox" && name === "rememberme" && item.checked) {
-      formData.set("rememberme", "true");
+    if (type === "checkbox") {
+      if (name === "rememberme" && item.checked) {
+        formData.set("rememberme", "true");
+      } else if (name === "agreeterms") {
+        formData.set("agreeterms", item.checked ? "true" : "false");
+      }
     } else {
       formData.set(name, value);
     }

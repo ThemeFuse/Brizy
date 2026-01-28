@@ -16,7 +16,8 @@ const OptionTypes = {
   membership: Roles,
   template: Template,
   language: Languages,
-  shortcuts: Link
+  shortcuts: Link,
+  explorer: Link
 };
 
 export default OptionTypes;

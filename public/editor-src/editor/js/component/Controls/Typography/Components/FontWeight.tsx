@@ -1,3 +1,4 @@
+import classNames from "classnames";
 import React from "react";
 import { Select2 } from "visual/component/Controls/Select2";
 import { Item } from "visual/component/Controls/Select2/Item";
@@ -17,10 +18,16 @@ export const FontWeight = ({
   onFontWeightChange,
   onVariableFontWeightChange,
   onFontWidthChange,
-  onSoftnessChange
+  onSoftnessChange,
+  className
 }: Props): JSX.Element => {
   return (
-    <div className="brz-ed__col brz-ed__col-1-2 brz-ed-control__typography-font-weight">
+    <div
+      className={classNames(
+        "brz-ed__col brz-ed__col-1-2 brz-ed-control__typography-font-weight",
+        className
+      )}
+    >
       <Label title={label}>{label}</Label>
       {variations ? (
         <VariationFont

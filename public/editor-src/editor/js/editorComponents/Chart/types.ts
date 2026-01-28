@@ -55,6 +55,23 @@ export interface Value extends ElementModel {
   borderColorHex: string;
   borderColorPalette: string;
   borderColorOpacity: number;
+  dataLabelTypographyFontStyle: string;
+  dataLabelTypographyFontFamily: string;
+  dataLabelTypographyFontFamilyType: string;
+  dataLabelTypographyFontSize: number;
+  dataLabelTypographyFontSizeSuffix: string;
+  dataLabelTypographyFontWeight: number;
+  dataLabelTypographyLetterSpacing: number;
+  dataLabelTypographyLineHeight: number;
+  dataLabelTypographyVariableFontWeight: number;
+  dataLabelTypographyFontWidth: number;
+  dataLabelTypographyFontSoftness: number;
+  dataLabelTypographyBold: boolean;
+  dataLabelTypographyItalic: boolean;
+  dataLabelTypographyUnderline: boolean;
+  dataLabelTypographyStrike: boolean;
+  dataLabelTypographyUppercase: boolean;
+  dataLabelTypographyLowercase: boolean;
 }
 
 export interface Props extends WithClassName {

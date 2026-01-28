@@ -18,9 +18,6 @@ export function styleFormFields(data: DynamicStylesProps<Value>): OutputStyle {
     ".brz &&:hover": {
       standart: ["cssStyleColor"]
     },
-    ".brz && ~ .brz-forms2__alert": {
-      standart: ["cssStyleTypography2FontFamily"]
-    },
     ".brz && .brz-forms2__field": {
       standart: ["cssStyleTextTransforms"]
     },

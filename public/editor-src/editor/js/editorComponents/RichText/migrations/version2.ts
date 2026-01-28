@@ -66,7 +66,7 @@ const replace = mPipe(replaceDataPopulation, replaceDataImagePopulation);
 
 export const m2: MigrationRichText = {
   version: 2,
-  cb(v) {
+  cb({ v }) {
     const model = Obj.read(v);
     if (!model) {
       throw new Error(`RichText text migration failed ${v}`);

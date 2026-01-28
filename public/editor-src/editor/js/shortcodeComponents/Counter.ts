@@ -13,7 +13,8 @@ export default function () {
           {
             type: "Counter",
             value: {
-              _styles: ["counter"]
+              _styles: ["counter"],
+              _version: 2
             }
           }
         ]

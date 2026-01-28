@@ -1,3 +1,4 @@
+import { GradientStop } from "visual/component/Controls/BackgroundColor/entities";
 import { Hex } from "visual/utils/color/Hex";
 import { Opacity } from "visual/utils/cssProps/opacity";
 import { Palette } from "visual/utils/options/ColorPicker/entities/palette";
@@ -24,4 +25,7 @@ export type Value = {
   active: GradientActivePointer;
   linearDegree: number;
   radialDegree: number;
+  gradientSpeed?: number;
+  gradientStops?: GradientStop[];
+  activeStopIndex?: number;
 };

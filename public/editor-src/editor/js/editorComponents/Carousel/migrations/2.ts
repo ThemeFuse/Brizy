@@ -86,7 +86,7 @@ function getSource(v: ElementModel): V2["source"] {
 
 export const m2: Migration<Deps<unknown>> = {
   version: 2,
-  cb(v) {
+  cb({ v }) {
     if (!Obj.isObject(v)) {
       throw new Error(`Carousel migration 2 input failed ${v}`);
     }

@@ -70,8 +70,7 @@ describe("Navigator components/utils", () => {
     const sec = tree[0];
     expect(sec.id).toBe("S1");
     expect(sec.title).toMatch(/Section/);
-    expect(sec.title).toMatch(/#hero/); // suffix included
-
+    expect(sec.suffixTitle).toBe("#hero");
     const row = sec.children![0];
     expect(row.type).toBe(ElementTypes.Row);
     expect(row.isHidden).toBe(true); // derived from showOn* off on wrapper
@@ -115,6 +114,7 @@ describe("Navigator components/utils", () => {
         icon: null,
         isHidden: false,
         collapsed: true,
+        suffixTitle: null,
         children: [
           {
             id: "B",
@@ -123,6 +123,7 @@ describe("Navigator components/utils", () => {
             icon: null,
             isHidden: false,
             collapsed: true,
+            suffixTitle: null,
             children: [
               {
                 id: "C",
@@ -131,7 +132,8 @@ describe("Navigator components/utils", () => {
                 icon: null,
                 isHidden: false,
                 collapsed: true,
-                children: null
+                children: null,
+                suffixTitle: null
               }
             ]
           }
@@ -374,7 +376,8 @@ describe("Navigator components/utils", () => {
                     isHidden: false,
                     title: "RichText",
                     type: "RichText",
-                    visible: true
+                    visible: true,
+                    suffixTitle: null
                   }
                 ],
                 collapsed: true,
@@ -383,7 +386,8 @@ describe("Navigator components/utils", () => {
                 isHidden: false,
                 title: "Wrapper",
                 type: "Wrapper",
-                visible: false
+                visible: false,
+                suffixTitle: null
               },
               {
                 children: [
@@ -395,7 +399,8 @@ describe("Navigator components/utils", () => {
                     isHidden: false,
                     title: "RichText",
                     type: "RichText",
-                    visible: true
+                    visible: true,
+                    suffixTitle: null
                   }
                 ],
                 collapsed: true,
@@ -404,7 +409,8 @@ describe("Navigator components/utils", () => {
                 isHidden: false,
                 title: "Wrapper",
                 type: "Wrapper",
-                visible: false
+                visible: false,
+                suffixTitle: null
               },
               {
                 children: [
@@ -416,7 +422,8 @@ describe("Navigator components/utils", () => {
                     isHidden: false,
                     title: "Spacer",
                     type: "Spacer",
-                    visible: true
+                    visible: true,
+                    suffixTitle: null
                   }
                 ],
                 collapsed: true,
@@ -425,7 +432,8 @@ describe("Navigator components/utils", () => {
                 isHidden: false,
                 title: "Wrapper",
                 type: "Wrapper",
-                visible: false
+                visible: false,
+                suffixTitle: null
               },
               {
                 children: [
@@ -437,7 +445,8 @@ describe("Navigator components/utils", () => {
                     isHidden: false,
                     title: "Video",
                     type: "Video",
-                    visible: true
+                    visible: true,
+                    suffixTitle: null
                   }
                 ],
                 collapsed: true,
@@ -446,7 +455,8 @@ describe("Navigator components/utils", () => {
                 isHidden: false,
                 title: "Wrapper",
                 type: "Wrapper",
-                visible: false
+                visible: false,
+                suffixTitle: null
               }
             ],
             collapsed: true,
@@ -455,7 +465,8 @@ describe("Navigator components/utils", () => {
             isHidden: false,
             title: "SectionItem",
             type: "SectionItem",
-            visible: false
+            visible: false,
+            suffixTitle: null
           }
         ],
         collapsed: true,
@@ -464,7 +475,8 @@ describe("Navigator components/utils", () => {
         isHidden: false,
         title: "Section",
         type: "Section",
-        visible: true
+        visible: true,
+        suffixTitle: null
       }
     ];
 

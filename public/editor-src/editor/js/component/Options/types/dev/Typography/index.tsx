@@ -91,7 +91,8 @@ export const Typography = ({
     icons,
     scriptChoices,
     isFontStyleSettingsDisabled,
-    isAddNewFontDisabled
+    isAddNewFontDisabled,
+    disabledFields
   } = config ?? {};
 
   const fonts = useMemo<FontsBlock>(
@@ -303,6 +304,7 @@ export const Typography = ({
       showFontStyles={!_isStory}
       isFontStyleSettingsDisabled={isFontStyleSettingsDisabled}
       label={label}
+      disabledFields={disabledFields}
     />
   );
 };

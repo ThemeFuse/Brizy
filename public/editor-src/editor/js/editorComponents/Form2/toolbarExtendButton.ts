@@ -1,9 +1,9 @@
 import type { GetItems } from "visual/editorComponents/EditorComponent/types";
+import { getEnabledLinkOptions } from "visual/global/Config/types/configs/featuresValue";
 import { isPopup, isStory } from "visual/providers/EditorModeProvider";
 import { t } from "visual/utils/i18n";
 import { toolbarElementForm2Apps } from "visual/utils/toolbar";
 import type { Value } from "./types";
-import { getEnabledLinkOptions } from "visual/global/Config/types/configs/featuresValue";
 
 export const getItems: GetItems<Value> = ({
   v,
@@ -80,6 +80,17 @@ export const getItems: GetItems<Value> = ({
               id: "message",
               label: t("Message"),
               options: [
+                {
+                  id: "showMessages",
+                  label: t("Show Messages"),
+                  type: "switch",
+                  devices: "desktop",
+                  helper: {
+                    content: t(
+                      "This option only works in editor mode for styling purposes."
+                    )
+                  }
+                },
                 {
                   id: "messageSuccess",
                   label: t("Success"),

@@ -34,7 +34,12 @@ describe("testing m3 migration", () => {
       { sliderArrows: "none", arrowStyle: "style-3", someOtherProp: "value" }
     ]
   ])("migration cases", (input, expected) => {
-    const migrated = m3.cb(input);
+    const migrated = m3.cb({
+      v: input,
+      vs: input,
+      vd: input,
+      renderContext: "editor" as const
+    });
     expect(migrated).toStrictEqual(expected);
   });
 });

@@ -47,6 +47,10 @@ export function withMigrations<
 
       const config = this.getGlobalConfig();
 
+      const vd = this.getDefaultValue();
+      const stylesValue = this.getStylesValue();
+      const vs = { ...vd, ...stylesValue };
+
       if (foundMigrations.length > 0) {
         if (deps?.getValue) {
           this.state = {
@@ -61,9 +65,13 @@ export function withMigrations<
               this.dbValueMigrated = {
                 ...migrate(
                   foundMigrations,
-                  this.props.dbValue,
-                  r,
-                  this.props.renderContext
+                  {
+                    vd,
+                    vs,
+                    v: this.props.dbValue,
+                    renderContext: this.props.renderContext
+                  },
+                  r
                 ),
                 _version: foundMigrations[foundMigrations.length - 1].version
               };
@@ -80,12 +88,12 @@ export function withMigrations<
         } else {
           // @ts-expect-error: { _version: number; }' is assignable to the constraint of type 'M'
           this.dbValueMigrated = {
-            ...migrate(
-              foundMigrations,
-              this.props.dbValue,
-              undefined,
-              this.props.renderContext
-            ),
+            ...migrate(foundMigrations, {
+              vd,
+              vs,
+              v: this.props.dbValue,
+              renderContext: this.props.renderContext
+            }),
             _version: foundMigrations[foundMigrations.length - 1].version
           };
         }

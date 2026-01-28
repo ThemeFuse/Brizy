@@ -4,7 +4,7 @@ Tags: page builder, website builder, brizy, editor, visual editor, unyson, wysiw
 Requires at least: 4.5
 Tested up to: 6.9
 Requires PHP: 7.2.24
-Stable tag: 2.7.21
+Stable tag: 2.7.23
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -136,6 +136,20 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 11. **Resize columns by dragging the handle that appears in between**
 
 == Changelog ==
+
+= 2.7.23 - 2026-01-22 =
+* New: Scrollable tabs
+
+= 2.7.22 - 2026-01-21 =
+* New:Change element titles by double-clicking them in the Explorer
+* New:Animated gradient option
+* New:Custom color options for counter prefix and suffix
+* Improved: Keyboard accessibility for Mega Menu and Dropdown
+* Improved: Publish button now supports pages with scheduled status
+* Improved: Updated internal libraries and dependencies
+* Fixed: Buttons now preserve global styles even when customized
+* Fixed: Custom videos correctly fill the screen in fullscreen mode
+* Fixed: CSS generator output issues resolved
 
 = 2.7.21 - 2025-12-18 =
 * Fixed: Text copy and paste shows editable text in preview

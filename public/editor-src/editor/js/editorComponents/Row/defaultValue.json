@@ -195,6 +195,10 @@
 
     "bgColorType": "solid",
 
+    "gradientSpeed": 5,
+    "gradientStops": [],
+    "activeStopIndex": 0,
+
     "gradientActivePointer": "startPointer",
     "gradientStartPointer": 0,
     "gradientFinishPointer": 100,

@@ -54,6 +54,11 @@
     }
   }
 
+  &--disabled-field {
+    opacity: 0.5;
+    pointer-events: none;
+  }
+
   .brz-ed-font__typography {
     display: grid;
     grid-template-rows: 1fr auto;

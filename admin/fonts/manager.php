@@ -288,10 +288,10 @@ class Brizy_Admin_Fonts_Manager {
 		$weights = $wpdb->get_results( $wpdb->prepare(
 			"
 				SELECT
-					DISTINCT CONCAT(m.meta_value, IF( LOCATE('italic', m2.meta_value) > 0, 'italic', '' ) ) as meta_value
-				FROM wp_posts p
-					JOIN wp_postmeta m ON m.post_id=p.ID AND m.meta_key='brizy-font-weight'
-					JOIN wp_postmeta m2 ON m2.post_id=p.ID AND m2.meta_key='brizy-font-file-type'
+					DISTINCT CONCAT(m.meta_value, IF( LOCATE('italic', LOWER(m2.meta_value)) > 0, 'italic', '' ) ) as meta_value
+				FROM {$wpdb->posts} p
+					JOIN {$wpdb->postmeta} m ON m.post_id=p.ID AND m.meta_key='brizy-font-weight'
+					JOIN {$wpdb->postmeta} m2 ON m2.post_id=m.post_id AND m2.meta_key='brizy-font-file-type'
 				WHERE p.post_parent=%d
 			",
 			array( $font->ID ) ), ARRAY_A

@@ -110,7 +110,9 @@ export function getColorPalette(
   return hex;
 }
 
-function parseRgb(colorString: string): MValue<[number, number, number]> {
+export function parseRgb(
+  colorString: string
+): MValue<[number, number, number]> {
   const matches = rgbRegex.exec(colorString);
 
   if (!matches) {

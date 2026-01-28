@@ -1,3 +1,4 @@
+import { JSX } from "react";
 import { Choice } from "visual/component/Controls/Toggle/types";
 import { OnChange } from "visual/component/Options/Type";
 import { VariationFont } from "visual/types/Fonts";
@@ -10,7 +11,6 @@ import { FontSize } from "./FontSize";
 import { FontStyle, FontStyle as FontStyleType } from "./FontStyle";
 import { FontWeight } from "./FontWeight";
 import { Value } from "./Value";
-import { JSX } from "react";
 
 type changeValue = Value[keyof Value] | Font;
 type changeMeta = {
@@ -38,6 +38,7 @@ export interface TypographyProps
   showFontStyles?: boolean;
   isFontStyleSettingsDisabled?: boolean;
   label?: JSX.Element;
+  disabledFields?: string[];
 }
 
 export interface FontStyleProps {
@@ -47,6 +48,7 @@ export interface FontStyleProps {
   onChange: (v: Value["fontStyle"]) => void;
   value: FontStyleType["style"];
   isFontStyleSettingsDisabled?: boolean;
+  disabled?: boolean;
 }
 
 export interface FontWeightProps extends FontWeight {
@@ -57,6 +59,7 @@ export interface FontWeightProps extends FontWeight {
   onSoftnessChange: OnChange<Value["fontSoftness"]>;
   isVariable?: boolean;
   variations?: VariationFont[];
+  className?: string;
 }
 
 export type FontVariationProps = Omit<
@@ -78,4 +81,5 @@ export interface FontTransformProps extends FontTransform {
   onLowercaseChange: OnChange<FontTransform["lowercase"]>;
   onScriptChange: OnChange<WithValue<FontTransform["script"]>>;
   scriptChoices?: Choice<FontTransform["script"]>[];
+  disabledFields?: string[];
 }

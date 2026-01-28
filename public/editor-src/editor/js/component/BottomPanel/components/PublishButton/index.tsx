@@ -74,7 +74,11 @@ import {
 
 type Page = ReduxState["page"];
 
-type LoadingType = "updateLoading" | "draftLoading" | "saveAndPublishLoading";
+type LoadingType =
+  | "updateLoading"
+  | "publishLoading"
+  | "draftLoading"
+  | "saveAndPublishLoading";
 
 const _getMode = match(
   [isCloud, match([isShopify, getMode], [isCMS, (): undefined => undefined])],
@@ -124,6 +128,7 @@ interface State {
 class _PublishButton extends Component<Props, State> {
   state = {
     updateLoading: false,
+    publishLoading: false,
     layoutLoading: false,
     draftLoading: false,
     saveAndPublishLoading: false,
@@ -133,6 +138,7 @@ class _PublishButton extends Component<Props, State> {
   draftLoading: Promise<void> | undefined;
   updateLoading: Promise<void> | undefined;
   saveAndPublishLoading: Promise<void> | undefined;
+  publishLoading: Promise<void> | undefined;
 
   configComputedValues: {
     isCloud: boolean;
@@ -142,7 +148,7 @@ class _PublishButton extends Component<Props, State> {
   };
 
   pendingToPublish?: {
-    status: "draft" | "publish";
+    status: Page["status"];
     type: LoadingType;
     mode: EditorMode;
   };
@@ -170,12 +176,18 @@ class _PublishButton extends Component<Props, State> {
           this.handleDraft(type, mode);
           break;
         }
+        case "future": {
+          const { mode, type } = pendingStatus;
+          this.pendingToPublish = undefined;
+          this.handleScheduled(type, mode);
+          break;
+        }
       }
     }
   }
 
   publish = (
-    loading: "updateLoading" | "draftLoading",
+    loading: "updateLoading" | "publishLoading" | "draftLoading",
     editorMode: EditorMode
   ): void => {
     const { storeWasChanged } = this.props;
@@ -265,8 +277,19 @@ class _PublishButton extends Component<Props, State> {
     }
   };
 
+  scheduled = (
+    loading: "updateLoading" | "draftLoading",
+    editorMode: EditorMode
+  ): void => {
+    this.handleScheduled(loading, editorMode);
+  };
+
   handlePublishWithRules(
-    loading: "updateLoading" | "draftLoading" | "saveAndPublishLoading",
+    loading:
+      | "updateLoading"
+      | "publishLoading"
+      | "draftLoading"
+      | "saveAndPublishLoading",
     editorMode: EditorMode
   ): void {
     const { page } = this.props;
@@ -299,7 +322,7 @@ class _PublishButton extends Component<Props, State> {
   }
 
   handlePublishWithLayout(
-    loading: "updateLoading" | "draftLoading",
+    loading: "updateLoading" | "publishLoading" | "draftLoading",
     editorMode: EditorMode
   ): void {
     const { page } = this.props;
@@ -430,12 +453,9 @@ class _PublishButton extends Component<Props, State> {
       this.setState({ [loading]: true });
     }
 
-    const { status } = this.props.page;
-    const pageStatus = status === "future" ? "future" : "draft";
-
     return (this[loading] = this.props
       .updatePageStatus({
-        status: pageStatus,
+        status: "draft",
         editorMode: editorMode,
         config: this.props.config
       })
@@ -449,6 +469,52 @@ class _PublishButton extends Component<Props, State> {
           console.error("could not switch to draft", e);
         }
         ToastNotification.error(t("Could not switch to draft"));
+        this.setState({ [loading]: false });
+        this[loading] = undefined;
+      }));
+  }
+
+  handleScheduled(loading: LoadingType, editorMode: EditorMode): Promise<void> {
+    const { compilationProcess } = this.props;
+
+    if (compilationProcess) {
+      if (this.state[loading]) {
+        return Promise.resolve();
+      }
+
+      this.pendingToPublish = {
+        status: "future",
+        type: loading,
+        mode: editorMode
+      };
+      this.setState({ [loading]: true });
+      return Promise.resolve();
+    }
+
+    if (this[loading]) {
+      return this[loading] as Promise<void>;
+    }
+
+    if (!this.state[loading]) {
+      this.setState({ [loading]: true });
+    }
+
+    return (this[loading] = this.props
+      .updatePageStatus({
+        status: "future",
+        editorMode: editorMode,
+        config: this.props.config
+      })
+      .then(() => {
+        this.props.fetchPageSuccess();
+        this.setState({ [loading]: false });
+        this[loading] = undefined;
+      })
+      .catch((e) => {
+        if (process.env.NODE_ENV === "development") {
+          console.error("could not save scheduled", e);
+        }
+        ToastNotification.error(t("Could not save scheduled"));
         this.setState({ [loading]: false });
         this[loading] = undefined;
       }));
@@ -671,6 +737,7 @@ class _PublishButton extends Component<Props, State> {
     const { mode, isEnabledSavedLayouts } = this.configComputedValues;
 
     const items = [];
+    const isFutureStatus = page.status === "future";
 
     if (!isPopup(editorMode) && !isStory(editorMode)) {
       items.push({
@@ -696,11 +763,15 @@ class _PublishButton extends Component<Props, State> {
 
     return [
       ...items,
+      // INFO: when is scheduled page, we use below option only as publish
       {
         title: getTooltipPageTitle(page.status),
         icon: getTooltipPageIcon(page.status),
-        loading: this.state.draftLoading,
+        loading: isFutureStatus
+          ? this.state.publishLoading
+          : this.state.draftLoading,
         attr: this.getBzelmAttr(true),
+        disabled: isFutureStatus && this.state.draftLoading,
         onClick: (): void => {
           switch (page.status) {
             case "publish": {
@@ -711,9 +782,26 @@ class _PublishButton extends Component<Props, State> {
               this.publish("draftLoading", editorMode);
               break;
             }
+            case "future":
+              this.publish("publishLoading", editorMode);
+              break;
           }
         }
       },
+      ...(isFutureStatus
+        ? [
+            // INFO: when is scheduled page, we use below option only as draft
+            {
+              title: t("Switch to Draft"),
+              icon: "nc-switch",
+              loading: this.state.draftLoading,
+              disabled: isFutureStatus && this.state.publishLoading,
+              onClick: (): void => {
+                this.draft("draftLoading", editorMode);
+              }
+            }
+          ]
+        : []),
       ...(isTemplateOrRulesMode(mode)
         ? [this.getSaveAndPublishOption(editorMode)]
         : [])
@@ -736,9 +824,11 @@ class _PublishButton extends Component<Props, State> {
             return t("Update");
           }
           case "draft":
-          case "future":
           case "private": {
             return t("Save Draft");
+          }
+          case "future": {
+            return t("Save Scheduled");
           }
         }
       }
@@ -749,10 +839,19 @@ class _PublishButton extends Component<Props, State> {
     e.preventDefault();
     const { storeWasChanged, page } = this.props;
 
-    storeWasChanged === "changed" &&
-      (page.status === "publish"
-        ? this.handlePublish("updateLoading", editorMode)
-        : this.handleDraft("updateLoading", editorMode));
+    if (storeWasChanged === StoreChanged.changed) {
+      switch (page.status) {
+        case "publish":
+          this.handlePublish("updateLoading", editorMode);
+          break;
+        case "draft":
+          this.handleDraft("updateLoading", editorMode);
+          break;
+        case "future":
+          this.handleScheduled("updateLoading", editorMode);
+          break;
+      }
+    }
   };
 
   render(): ReactElement {
@@ -777,8 +876,9 @@ class _PublishButton extends Component<Props, State> {
                   switch (this.props.page.status) {
                     case "publish":
                       return this.publish("updateLoading", mode);
-                    case "draft":
                     case "future":
+                      return this.scheduled("updateLoading", mode);
+                    case "draft":
                     case "private":
                       return this.draft("updateLoading", mode);
                   }

@@ -18,6 +18,11 @@ export type CSSValue<
   getConfig: GetConfig;
 };
 
+export interface GradientStop {
+  color: string;
+  position: number;
+}
+
 export interface GradientCssDeclaration {
   colorType?: string;
   gradientType?: string;
@@ -27,4 +32,6 @@ export interface GradientCssDeclaration {
   gradientFinishPointer?: number;
   gradientColor?: string;
   bgColor?: string;
+  gradientSpeed?: number;
+  gradientStops?: GradientStop[];
 }

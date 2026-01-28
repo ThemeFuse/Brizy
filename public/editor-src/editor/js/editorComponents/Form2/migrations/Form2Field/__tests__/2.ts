@@ -87,7 +87,7 @@ describe("Testing form m2 migration", () => {
       }
     ]
   ])("Options array to ElementModel", (v, resolve) => {
-    const migrated = m2.cb(v);
+    const migrated = m2.cb({ v, vs: v, vd: v, renderContext: "editor" });
     expect(migrated).toStrictEqual(resolve);
   });
 });

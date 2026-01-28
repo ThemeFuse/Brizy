@@ -21,6 +21,7 @@ describe("Navigator Tree utils", () => {
         title: "",
         icon: null,
         isHidden: false,
+        suffixTitle: null,
         children: [
           {
             id: "B",
@@ -28,7 +29,8 @@ describe("Navigator Tree utils", () => {
             title: "",
             icon: null,
             isHidden: false,
-            children: null
+            children: null,
+            suffixTitle: null
           }
         ]
       }
@@ -51,6 +53,7 @@ describe("Navigator Tree utils", () => {
         icon: null,
         isHidden: false,
         visible: true,
+        suffixTitle: null,
         children: [
           {
             id: "B",
@@ -59,6 +62,7 @@ describe("Navigator Tree utils", () => {
             icon: null,
             isHidden: false,
             visible: false,
+            suffixTitle: null,
             children: [
               {
                 id: "C",
@@ -67,7 +71,8 @@ describe("Navigator Tree utils", () => {
                 icon: null,
                 isHidden: false,
                 visible: true,
-                children: null
+                children: null,
+                suffixTitle: null
               }
             ]
           }

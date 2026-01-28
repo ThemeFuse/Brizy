@@ -16,6 +16,7 @@ export type Props = OptionProps<undefined> &
 export const Group: FCP<Props, ReactElement> = ({
   className,
   options,
+  label,
   toolbar
 }) => {
   const config = useConfig();
@@ -23,14 +24,17 @@ export const Group: FCP<Props, ReactElement> = ({
   const pro = usePro();
 
   return (
-    <Control className={className}>
-      <Options
-        wrapOptions={false}
-        data={options}
-        toolbar={toolbar}
-        isPro={pro}
-        upgradeToPro={config?.urls?.upgradeToPro}
-      />
-    </Control>
+    <>
+      {label}
+      <Control className={className}>
+        <Options
+          wrapOptions={false}
+          data={options}
+          toolbar={toolbar}
+          isPro={pro}
+          upgradeToPro={config?.urls?.upgradeToPro}
+        />
+      </Control>
+    </>
   );
 };

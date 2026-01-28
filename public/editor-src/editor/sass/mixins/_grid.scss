@@ -1,3 +1,5 @@
+@use "sass:math";
+
 /// Grid system
 //
 // Generate semantic grid columns with these mixins.
@@ -13,7 +15,10 @@
 }
 
 // For each breakpoint, define the maximum width of the container in a media query
-@mixin make-container-max-widths($max-widths: $container-max-widths, $breakpoints: $grid-breakpoints) {
+@mixin make-container-max-widths(
+  $max-widths: $container-max-widths,
+  $breakpoints: $grid-breakpoints
+) {
   @each $breakpoint, $container-max-width in $max-widths {
     @include media-breakpoint-up($breakpoint, $breakpoints) {
       max-width: $container-max-width;
@@ -25,9 +30,7 @@
   @if $enable-flex {
     display: flex;
     flex-wrap: wrap;
-  }
-
-  @else {
+  } @else {
     @include clearfix();
   }
 
@@ -42,41 +45,43 @@
   padding-left: ($gutter / 2);
 
   @if $enable-flex {
-    flex: 0 0 percentage($size / $columns);
+    flex: 0 0 math.percentage(math.div($size, $columns));
     // Add a `max-width` to ensure content within each column does not blow out
     // the width of the column. Applies to IE10+ and Firefox. Chrome and Safari
     // do not appear to require this.
-    max-width: percentage($size / $columns);
-  }
-
-  @else {
+    max-width: math.percentage(math.div($size, $columns));
+  } @else {
     float: left;
-    width: percentage($size / $columns);
+    width: math.percentage(math.div($size, $columns));
   }
 }
 
 @mixin make-col-offset($size, $columns: $grid-columns) {
-  margin-left: percentage($size / $columns);
+  margin-left: math.percentage(math.div($size, $columns));
 }
 
 @mixin make-col-push($size, $columns: $grid-columns) {
-  left: if($size > 0, percentage($size / $columns), auto);
+  @if $size > 0 {
+    left: math.percentage(math.div($size, $columns));
+  } @else {
+    left: auto;
+  }
 }
 
 @mixin make-col-pull($size, $columns: $grid-columns) {
-  right: if($size > 0, percentage($size / $columns), auto);
+  @if $size > 0 {
+    right: math.percentage(math.div($size, $columns));
+  } @else {
+    right: auto;
+  }
 }
 
 @mixin make-col-modifier($type, $size, $columns) {
   @if $type == push {
     @include make-col-push($size, $columns);
-  }
-
-  @else if $type == pull {
+  } @else if $type == pull {
     @include make-col-pull($size, $columns);
-  }
-
-  @else if $type == offset {
+  } @else if $type == offset {
     @include make-col-offset($size, $columns);
   }
 }

@@ -5,13 +5,16 @@ export interface Deps<T> {
   [k: string]: T;
 }
 
+export interface MigrationValues {
+  v: ElementModel;
+  vs: ElementModel;
+  vd: ElementModel;
+  renderContext: RenderType;
+}
+
 export type Migration<D extends Deps<unknown>> = {
   version: number;
-  cb: (
-    value: ElementModel,
-    deps?: D,
-    renderContext?: RenderType
-  ) => ElementModel;
+  cb: (values: MigrationValues, deps?: D) => ElementModel;
 };
 
 function compareVersions(m1: number, m2: number): -1 | 0 | 1 {
@@ -49,9 +52,16 @@ export function findMigrations<D extends Deps<unknown>>(
 
 export function migrate<D extends Deps<unknown>>(
   migrations: Migration<D>[],
-  value: ElementModel,
-  deps?: D,
-  renderContext?: RenderType
+  values: {
+    v: ElementModel;
+    vs: ElementModel;
+    vd: ElementModel;
+    renderContext: RenderType;
+  },
+  deps?: D
 ): ElementModel {
-  return migrations.reduce((acc, m) => m.cb(acc, deps, renderContext), value);
+  return migrations.reduce(
+    (acc, m) => m.cb({ ...values, v: acc }, deps),
+    values.v
+  );
 }

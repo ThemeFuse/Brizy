@@ -15,6 +15,11 @@ import * as Str from "visual/utils/reader/string";
 import { parseFromString } from "visual/utils/string";
 import { uuid } from "visual/utils/uuid";
 import { AnimatedHamburgerIcon } from "./HamburgerIcon";
+import {
+  MenuAccessibilityKeyboard,
+  MenuItemApi,
+  MenuItemType
+} from "./accessibility";
 import { MMenuAnimationTypes, Settings } from "./types";
 import {
   getParentMegaMenuUid,
@@ -34,6 +39,16 @@ const dropdowns = new Map<
   InstanceType<Required<BrizyProLibs>["Dropdown"]>,
   Settings
 >();
+
+const dropdownsMenuItems = new Map<
+  HTMLElement,
+  InstanceType<Required<BrizyProLibs>["Dropdown"]>
+>();
+
+const megaMenuItems = new Map<HTMLElement, MenuItemApi>();
+
+const isMegaMenuOpened = (item: HTMLElement): boolean =>
+  item.classList.contains("brz-menu__item--opened");
 
 let lastCurrentDevice = getCurrentDevice();
 
@@ -216,6 +231,59 @@ const setOpen =
     }
   };
 
+export const initAccesibility = (root: HTMLElement) => {
+  const menus = root.querySelectorAll(".brz-menu:not(.brz-menu__mmenu)");
+
+  menus.forEach((menu) => {
+    const isAccessibleMenu =
+      menu
+        .closest(".brz-menu__container")
+        ?.getAttribute(makeAttr("menu-accessible")) === "true";
+
+    if (!isAccessibleMenu) {
+      return;
+    }
+
+    const menuItems = menu.querySelectorAll<HTMLElement>(".brz-menu__item");
+    const menuItemsArray = Array.from(menuItems);
+
+    const menuItemsWithType = menuItemsArray.map((item) => {
+      const type = MenuAccessibilityKeyboard.getMenuItemType(item);
+      const children = Array.from(
+        item.querySelectorAll<HTMLElement>(".brz-menu__item")
+      );
+
+      let api: MenuItemApi = {
+        open: () => {},
+        close: () => {},
+        isOpen: () => false
+      };
+
+      if (type === MenuItemType.MegaMenu) {
+        const megaMenu = megaMenuItems.get(item);
+        if (megaMenu) {
+          api = megaMenu;
+        }
+      } else if (type === MenuItemType.Dropdown) {
+        const dropdown = dropdownsMenuItems.get(item);
+        if (dropdown) {
+          api = dropdown;
+        }
+      }
+
+      return {
+        item,
+        type,
+        api,
+        children
+      };
+    });
+
+    const menuAccessibility = new MenuAccessibilityKeyboard(menuItemsWithType);
+    menuAccessibility.init();
+  });
+};
+
 const mouseMove = ({ target }: Event): void => {
   if (target instanceof Element) {
     const menuItem = target.closest(".brz-menu__item-mega-menu");
@@ -341,9 +409,13 @@ const init = (item: HTMLElement, root: HTMLElement): void => {
 
   const dataSettings = megaMenu.dataset.settings ?? "";
   const settings = JSON.parse(decodeURIComponent(dataSettings));
+  const isAccessibleMenu =
+    item
+      .closest(".brz-menu__container")
+      ?.getAttribute(makeAttr("menu-accessible")) === "true";
 
   // for desktop and tablet megaMenu appended to root
-  if (device === "tablet" || device === "desktop") {
+  if (device === "tablet" || (device === "desktop" && !isAccessibleMenu)) {
     appendItemToRoot(item, root);
   }
 
@@ -368,6 +440,12 @@ const init = (item: HTMLElement, root: HTMLElement): void => {
     // @ts-expect-error: Property 'popper' does not exist on type 'HTMLElement'.
     item.popper = popper;
     item.addEventListener("mouseenter", setOpen(popper, item, temporaryUid));
+    megaMenuItems.set(item, {
+      // @ts-expect-error: Property 'popper' does not exist on type 'HTMLElement'.
+      open: setOpen(item.popper, item, temporaryUid),
+      close: () => setClose(temporaryUid),
+      isOpen: () => isMegaMenuOpened(item)
+    });
   }
 };
 
@@ -515,10 +593,12 @@ export default function ($node: JQuery): void {
           });
 
           dropdowns.set(dropdown, settings);
+          dropdownsMenuItems.set(item, dropdown);
         }
       });
   }
 
+  initAccesibility(root);
   const debounceMouseMove = debounce(mouseMove, 150);
 
   window.addEventListener("resize", resize(root));

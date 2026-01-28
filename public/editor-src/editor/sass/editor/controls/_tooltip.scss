@@ -103,6 +103,11 @@
     font-weight: 600;
     padding: 16px 25px;
     border-bottom: 1px solid $bottom_panel__popover-border;
+
+    &--disabled {
+      opacity: 0.5;
+      pointer-events: none;
+    }
   }
 
   &__item:last-child {

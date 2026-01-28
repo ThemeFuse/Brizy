@@ -18,6 +18,7 @@
     letter-spacing: $control-letter-spacing;
     color: $options__control-color;
     cursor: pointer;
+    position: relative;
 
     &--placeholder {
       color: $options__control__placeholder-color;

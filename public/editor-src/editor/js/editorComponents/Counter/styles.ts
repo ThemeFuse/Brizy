@@ -35,7 +35,14 @@ export function style(data: DynamicStylesProps<Value>): OutputStyle {
       {
         standart: ["cssStyleFill"]
       },
-    ".brz && .brz-counter-figures, .brz && .brz-counter-pie-chart, .brz && .brz-counter-radial-chart, .brz && .brz-counter-chart-pie":
+    ".brz &&:hover .brz-counter-figures--prefix": {
+      standart: ["cssStyleElementCounterPrefixSuffixColor"]
+    },
+    // Do not merge it with the one above because :hover does not work
+    ".brz &&:hover .brz-counter-figures--suffix": {
+      standart: ["cssStyleElementCounterPrefixSuffixColor"]
+    },
+    ".brz && .brz-counter-figures, .brz && .brz-counter-pie-chart, .brz && .brz-counter-radial-chart, .brz && .brz-counter-chart-pie, .brz && .brz-counter-figures--prefix, .brz && .brz-counter-figures--suffix":
       {
         standart: [
           "cssStyleHoverTransition",

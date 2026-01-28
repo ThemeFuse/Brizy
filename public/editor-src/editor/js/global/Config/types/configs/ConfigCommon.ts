@@ -47,6 +47,7 @@ import {
   PostsSources,
   RulePostGroupList
 } from "visual/utils/api/types";
+import { Language } from "visual/utils/multilanguages";
 import { Literal } from "visual/utils/types/Literal";
 import { GetCollectionItem_collectionItem as CollectionItem } from "../../types/GetCollectionItem";
 import { CollectionTypesInfo } from "../../types/Posts";
@@ -165,7 +166,8 @@ export enum LeftSidebarPageSettingsOptionsIds {
 
 export enum LeftSidebarMoreOptionsIds {
   link = "link",
-  shortcuts = "shortcuts"
+  shortcuts = "shortcuts",
+  explorer = "explorer"
 }
 
 export interface LeftSidebarOptionBase {
@@ -1409,6 +1411,8 @@ interface _ConfigCommon<Mode> {
   //#endregion
 
   urls?: UrlsCommon;
+
+  availableTranslations?: Language[];
 }
 
 export type ConfigCommon = _ConfigCommon<Mode>;

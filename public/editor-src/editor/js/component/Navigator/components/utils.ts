@@ -240,8 +240,6 @@ export const buildTree = (
         title = title + " " + t("(Global Block)");
       }
 
-      const finalTitle = suffix ? `${title} ${suffix}` : title;
-
       const currentShortcode = Obj.readKey(_type)(shortcodes);
       const icon = Obj.isObject(currentShortcode)
         ? Str.read(currentShortcode.icon)
@@ -253,7 +251,8 @@ export const buildTree = (
         type,
         children: null,
         icon: icon ?? null,
-        title: finalTitle,
+        title,
+        suffixTitle: suffix || null,
         collapsed: true,
         isHidden,
         visible: !invalidElement

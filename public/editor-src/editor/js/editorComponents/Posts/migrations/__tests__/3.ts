@@ -13,7 +13,10 @@ type EachTests = [
 
 describe("testing m3 migration", () => {
   test.each<EachTests>([[{}, undefined, {}]])("Symbols Empty", (v, d, r) => {
-    const migrated = m3.cb(v, d);
+    const migrated = m3.cb(
+      { v, vs: v, vd: v, renderContext: "editor" as const },
+      d
+    );
     expect(migrated).toStrictEqual(r);
   });
 
@@ -27,7 +30,10 @@ describe("testing m3 migration", () => {
   test.each<EachTests>([[sourceBlogs, undefined, sourceBlogs]])(
     "Symbols source = 'blogs'",
     (v, d, r) => {
-      const migrated = m3.cb(v, d);
+      const migrated = m3.cb(
+        { v, vs: v, vd: v, renderContext: "editor" as const },
+        d
+      );
       expect(migrated).toStrictEqual(r);
     }
   );
@@ -111,7 +117,10 @@ describe("testing m3 migration", () => {
       }
     ]
   ])("Symbols source = 'posts'", (v, d, r) => {
-    const migrated = m3.cb(v, d);
+    const migrated = m3.cb(
+      { v, vs: v, vd: v, renderContext: "editor" as const },
+      d
+    );
     expect(migrated).toStrictEqual(r);
   });
 });

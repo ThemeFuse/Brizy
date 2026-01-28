@@ -180,6 +180,10 @@
     "gradientLinearDegree": 90,
     "gradientRadialDegree": 90,
 
+    "gradientSpeed": 5,
+    "gradientStops": [],
+    "activeStopIndex": 0,
+
     "bgColorHex": "#000000",
     "bgColorOpacity": 0,
     "bgColorPalette": "",

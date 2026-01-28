@@ -47,7 +47,7 @@ export function cssStyleTextItalic({
   });
   const value = readTextTransformValue(italic, "italic");
 
-  return value ? `font-style:${value};` : "";
+  return value ? `font-style:${value};` : "font-style:inherit;";
 }
 
 export function cssStyleTextDecoration({
@@ -67,7 +67,9 @@ export function cssStyleTextDecoration({
     prefix
   });
 
-  return decoration ? `text-decoration:${decoration} !important;` : "";
+  return decoration
+    ? `text-decoration:${decoration} !important;`
+    : "text-decoration:inherit !important;";
 }
 
 export function cssStyleTextUpperLowerCase({

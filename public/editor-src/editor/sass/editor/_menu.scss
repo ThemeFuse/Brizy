@@ -4,7 +4,9 @@
     visibility: visible;
     opacity: 1;
     z-index: z("mega-menu");
-    transition: 0.2s visibility linear, 0.2s opacity linear;
+    transition:
+      0.2s visibility linear,
+      0.2s opacity linear;
   }
 
   // Custom Navbar title in Editor Mode
@@ -13,6 +15,12 @@
 
     & > .brz-mm-navbar {
       display: none;
+    }
+  }
+
+  &:not(.brz-mm-menu) {
+    .brz-menu__item:has(.brz-menu__sub-menu) {
+      position: relative;
     }
   }
 }

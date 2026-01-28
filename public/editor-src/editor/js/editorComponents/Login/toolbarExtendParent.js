@@ -149,6 +149,12 @@ export const getItems =
                     devices: "desktop",
                     disabled: (!isForgot && !isLogin) || !canRegister,
                     type: "switch"
+                  },
+                  {
+                    id: "showAgreeTerms",
+                    label: t("Agree Terms"),
+                    devices: "desktop",
+                    type: "switch"
                   }
                 ]
               }

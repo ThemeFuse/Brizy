@@ -35,12 +35,15 @@ export interface Props extends OptionProps<undefined> {
 
 const selector = pipe(uiSelector, prop("rightSidebar"));
 
+const tabsConfig = { horizontalScroll: true };
+
 export const SidebarTabs = ({
   tabs,
   toolbar,
   location
 }: Props): ReactElement => {
-  const { alignment, lock, isOpen, activeTab, type, expanded } = useSelector(selector);
+  const { alignment, lock, isOpen, activeTab, type, expanded } =
+    useSelector(selector);
   const dispatch = useDispatch();
   const config = useConfig();
 
@@ -129,6 +132,7 @@ export const SidebarTabs = ({
       expand={!!expanded}
       onLock={onLock}
       onExpand={onExpand}
+      config={tabsConfig}
     >
       {tabs.map(({ id, title, label, className, options }) => (
         <Tab
