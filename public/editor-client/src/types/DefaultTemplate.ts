@@ -13,10 +13,11 @@ export interface DefaultBlock {
 }
 
 export interface RegeneratedGlobalStyles<T1, T2> {
-  regenerateColors: (res: Response<T1>, rej: Response<string>) => void;
+  regenerateColors: (res: Response<T1>, rej: Response<string>, extra: { colorPalette: T1 }) => void;
   regenerateTypography: (
-    res: Response<Promise<T2>>,
-    rej: Response<string>
+    res: Response<T2>,
+    rej: Response<string>,
+    extra: { fontStyles: T2 }
   ) => void;
   label: string;
 }
