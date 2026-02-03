@@ -270,11 +270,10 @@ class Brizy_Admin_Main {
                 ],
                 'aiActions' => class_exists('BrizyPro_Admin_AiCore') ? array(
                     'createSession'    => BrizyPro_Admin_AiCore::AJAX_CREATE_SESSION,
-                    'generateTemplate' => BrizyPro_Admin_AiCore::AJAX_GENERATE_TEMPLATE,
+                    'getTemplate'      => BrizyPro_Admin_AiCore::AJAX_GET_TEMPLATE,
                     'importDelete'     => BrizyPro_Admin_AiCore::AJAX_IMPORT_DELETE,
                     'importKeep'       => BrizyPro_Admin_AiCore::AJAX_IMPORT_KEEP,
-                    'sendProject'      => BrizyPro_Admin_AiCore::AJAX_SEND_PROJECT,
-                    'getPostSlug'      => BrizyPro_Admin_AiCore::AJAX_GET_POST_SLUG,
+                    // 'getPostSlug'      => BrizyPro_Admin_AiCore::AJAX_GET_POST_SLUG,
                 ) : array(),
         ) );
     }
