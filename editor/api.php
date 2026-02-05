@@ -186,7 +186,7 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi
             if ($pageId) {
                 try {
                     $post = Brizy_Editor_Post::get((int)$pageId);
-                    $editor = new Brizy_Editor_Editor_Editor(Brizy_Editor_Project::get(), $post);
+                    $editor = Brizy_Editor_Editor_Editor::get(Brizy_Editor_Project::get(), $post);
                     $response['pagePreview'] = $editor->getPreviewUrl($post->getWpPost());
                     
                     $adminNonce = wp_create_nonce('brizy-admin-nonce');
