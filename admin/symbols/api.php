@@ -63,7 +63,7 @@ class Brizy_Admin_Symbols_Api extends Brizy_Admin_AbstractApi {
 	 * @return null|void
 	 */
 	public function actionGetList() {
-		$this->verifyNonce( self::nonce );
+		$this->verifyAuthorization( self::nonce );
 
 		try {
 			$symbols = $this->manager->getList();
@@ -79,7 +79,7 @@ class Brizy_Admin_Symbols_Api extends Brizy_Admin_AbstractApi {
 
 	public function actionCreateOrUpdate() {
 
-		$this->verifyNonce( self::nonce );
+		$this->verifyAuthorization( self::nonce );
 
 		$data = file_get_contents( "php://input" );
 
@@ -106,7 +106,7 @@ class Brizy_Admin_Symbols_Api extends Brizy_Admin_AbstractApi {
 
 	public function actionDelete() {
 
-		$this->verifyNonce( self::nonce );
+		$this->verifyAuthorization( self::nonce );
 		$data = file_get_contents( "php://input" );
 		try {
 			$asymbols = $this->manager->createFromJson( $data );

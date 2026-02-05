@@ -71,7 +71,7 @@ class Brizy_Admin_Cloud_Api extends Brizy_Admin_AbstractApi {
 
 	public function actionSignIn() {
 
-		$this->verifyNonce( self::nonce );
+		$this->verifyAuthorization( self::nonce );
 
 		$data = file_get_contents( "php://input" );
 
@@ -104,7 +104,7 @@ class Brizy_Admin_Cloud_Api extends Brizy_Admin_AbstractApi {
 
 	public function actionSignUp() {
 
-		$this->verifyNonce( self::nonce );
+		$this->verifyAuthorization( self::nonce );
 
 		$data = file_get_contents( "php://input" );
 
@@ -136,7 +136,7 @@ class Brizy_Admin_Cloud_Api extends Brizy_Admin_AbstractApi {
 
 	public function actionSignOut() {
 
-		$this->verifyNonce( self::nonce );
+		$this->verifyAuthorization( self::nonce );
 
 		// clear version in case something gets wonrg.
 		Brizy_Admin_Cloud_Client::clearVersionCache();
@@ -154,7 +154,7 @@ class Brizy_Admin_Cloud_Api extends Brizy_Admin_AbstractApi {
 
 	public function actionResetPassword() {
 
-		$this->verifyNonce( self::nonce );
+		$this->verifyAuthorization( self::nonce );
 
 		$data = file_get_contents( "php://input" );
 

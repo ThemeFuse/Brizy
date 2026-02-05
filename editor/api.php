@@ -113,7 +113,7 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi
     public function addPostTaxonomies()
     {
 
-        $this->verifyNonce(self::nonce);
+        $this->verifyAuthorization(self::nonce);
         if (empty($postType = $this->param('post_type'))) {
             $this->error(400, 'Bad request');
         }
@@ -132,7 +132,7 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi
 
     public function addDynamicContent()
     {
-        $this->verifyNonce(self::nonce);
+        $this->verifyAuthorization(self::nonce);
         $context = Brizy_Content_ContextFactory::createContext(Brizy_Editor_Project::get(), $this->get_post());
         $provider = Brizy_Content_PlaceholderProvider::getInstance($context);
         $placeholders = $provider->getGroupedPlaceholdersForApiResponse();
@@ -142,7 +142,7 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi
 
     public function lock_project()
     {
-        $this->verifyNonce(self::nonce);
+        $this->verifyAuthorization(self::nonce);
         if (Brizy_Editor::get()->checkIfProjectIsLocked() === false) {
             Brizy_Editor::get()->lockProject();
         }
@@ -152,7 +152,7 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi
 
     public function removeProjectLock()
     {
-        $this->verifyNonce(self::nonce);
+        $this->verifyAuthorization(self::nonce);
         if (Brizy_Editor::get()->checkIfProjectIsLocked() === false) {
             Brizy_Editor::get()->removeProjectLock();
         }
@@ -162,7 +162,7 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi
 
     public function heartbeat()
     {
-        $this->verifyNonce(self::nonce);
+        $this->verifyAuthorization(self::nonce);
         if (Brizy_Editor::get()->checkIfProjectIsLocked() === false) {
             Brizy_Editor::get()->lockProject();
         }
@@ -172,7 +172,7 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi
 
     public function takeOver()
     {
-        $this->verifyNonce(self::nonce);
+        $this->verifyAuthorization(self::nonce);
         Brizy_Editor::get()->lockProject();
         $editor = new Brizy_Editor_Editor_Editor(Brizy_Editor_Project::get(), null);
         $this->success($editor->getProjectStatus());
@@ -186,7 +186,7 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi
 
     public function set_featured_image()
     {
-        $this->verifyNonce(self::nonce);
+        $this->verifyAuthorization(self::nonce);
         if (!isset($_REQUEST['attachmentId'])) {
             $this->error(400, 'Bad request');
         }
@@ -200,7 +200,7 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi
 
     public function set_featured_image_focal_point()
     {
-        $this->verifyNonce(self::nonce);
+        $this->verifyAuthorization(self::nonce);
         if (!isset($_REQUEST['attachmentId']) || !isset($_REQUEST['pointX']) || !isset($_REQUEST['pointY'])) {
             $this->error(400, 'Bad request');
         }
@@ -217,7 +217,7 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi
 
     public function remove_featured_image()
     {
-        $this->verifyNonce(self::nonce);
+        $this->verifyAuthorization(self::nonce);
         if ($this->post && $this->post->uses_editor()) {
             delete_post_thumbnail($this->post->getWpPostId());
             delete_post_meta($this->post->getWpPostId(), 'brizy_attachment_focal_point');
@@ -285,7 +285,7 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi
 
     {
         try {
-            $this->verifyNonce(self::nonce);
+            $this->verifyAuthorization(self::nonce);
             $data = Brizy_Editor_Project::get()->createResponse();
             $this->success($data);
         } catch (Exception $exception) {
@@ -300,7 +300,7 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi
     public function set_project()
     {
         try {
-            $this->verifyNonce(self::nonce);
+            $this->verifyAuthorization(self::nonce);
             // update project globas
             $meta = stripslashes($this->param('data'));
             $compiledStyles = json_decode(stripslashes($this->param('compiled')), true);
@@ -344,7 +344,7 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi
     public function get_item()
     {
         try {
-            $this->verifyNonce(self::nonce);
+            $this->verifyAuthorization(self::nonce);
             if (!$this->post) {
                 throw new Exception('Invalid post provided');
             }
@@ -364,7 +364,7 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi
     public function get_post_info()
     {
         try {
-            $this->verifyNonce(self::nonce);
+            $this->verifyAuthorization(self::nonce);
             $postId = (int)$this->param('post_id');
             $defaultFields = ['ID', 'post_title', 'post_content'];
             $post_fields = array_intersect((array)$this->param('fields'), $defaultFields);
@@ -393,7 +393,7 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi
     public function update_item()
     {
         try {
-            $this->verifyNonce(self::nonce);
+            $this->verifyAuthorization(self::nonce);
             $data = $this->sanitizeJson(stripslashes($this->param('data')));
             $atemplate = $this->param('template');
             $dependencies = json_decode(stripslashes($this->param('dependencies')));
@@ -458,7 +458,7 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi
     {
         try {
 
-            $this->verifyNonce(self::nonce);
+            $this->verifyAuthorization(self::nonce);
             if (isset($_REQUEST['shortcode'])) {
                 $shortcode = stripslashes($_REQUEST['shortcode']);
             } else {
@@ -478,7 +478,7 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi
     public function placeholder_content()
     {
         try {
-            $this->verifyNonce(self::nonce);
+            $this->verifyAuthorization(self::nonce);
             $postId = $this->param('post_id');
             $placeholders = $this->param('placeholders');
             if (!$placeholders) {
@@ -512,7 +512,7 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi
     {
         global $post, $wp_query;
         try {
-            $this->verifyNonce(self::nonce);
+            $this->verifyAuthorization(self::nonce);
             $posts = $this->param('p');
             $contents = [];
             foreach ($posts as $postId => $placeholders) {
@@ -694,7 +694,7 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi
     {
 
         global $wp_post_types;
-        $this->verifyNonce(self::nonce);
+        $this->verifyAuthorization(self::nonce);
         $searchTerm = $this->param('filterTerm');
         $postType = $this->param('postType') ? $this->param('postType') : null;
         $excludePostType = $this->param('excludePostTypes') ? $this->param('excludePostTypes') : array();
@@ -712,7 +712,7 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi
     public function get_sidebars()
     {
         global $wp_registered_sidebars;
-        $this->verifyNonce(self::nonce);
+        $this->verifyAuthorization(self::nonce);
         $items = array();
         foreach ($wp_registered_sidebars as $sidebar) {
             $item = array(
@@ -737,7 +737,7 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi
     {
 
         try {
-            $this->verifyNonce(self::nonce);
+            $this->verifyAuthorization(self::nonce);
             $taxonomy = $this->param('taxonomy');
             $terms = (array)get_terms(array('taxonomy' => $taxonomy, 'hide_empty' => false));
             $this->success(array_values($terms));
@@ -754,7 +754,7 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi
     public function get_terms_by()
     {
 
-        $this->verifyNonce(self::nonce);
+        $this->verifyAuthorization(self::nonce);
         $args = [];
         foreach (['taxonomy', 'search', 'include'] as $field) {
             $value = $this->param($field);
@@ -783,7 +783,7 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi
      */
     public function search_post()
     {
-        $this->verifyNonce(self::nonce);
+        $this->verifyAuthorization(self::nonce);
         $args = ['numberposts' => -1];
         $args['post_type'] = array_values(get_post_types(['public' => true]));
         // exclude attachments
@@ -840,7 +840,7 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi
 
     public function get_users()
     {
-        $this->verifyNonce(self::nonce);
+        $this->verifyAuthorization(self::nonce);
         $args = [];
         $search = $this->param('search');
         $page = $this->param('search') ?: 1;
@@ -881,7 +881,7 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi
     {
         try {
             session_write_close();
-            $this->verifyNonce(self::nonce);
+            $this->verifyAuthorization(self::nonce);
             $apost = (int)$_REQUEST['post_id'];
             $attachment_id = (int)$_REQUEST['attachment_id'];
             if (!$attachment_id || get_post_status($attachment_id) === false) {
@@ -904,7 +904,7 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi
     {
         try {
             session_write_close();
-            $this->verifyNonce(self::nonce);
+            $this->verifyAuthorization(self::nonce);
             $attachmentId = isset($_REQUEST['attachment_id']) ? (int)$_REQUEST['attachment_id'] : null;
             if (!$attachmentId || get_post_status($attachmentId) === false) {
                 $this->error(400, 'Invalid attachment id');
@@ -935,7 +935,7 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi
     {
         try {
 
-            $this->verifyNonce(self::nonce);
+            $this->verifyAuthorization(self::nonce);
             $templateId = $this->param('template_id');
             $templateType = $this->param('template_type');
             if (get_post_type($templateId) != Brizy_Admin_Templates::CP_TEMPLATE) {
