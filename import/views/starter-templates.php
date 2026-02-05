@@ -23,7 +23,7 @@
             <input placeholder="<?php echo $l10n['search']; ?>..." type="search" aria-describedby="live-search-desc" id="wp-filter-search-input" class="wp-filter-search js-demo-input-search">
         </form>
     </div>
-    <!-- ai-core -->
+
     <style>
         .brz-ai-banner {
             flex-wrap: wrap;
@@ -174,7 +174,7 @@
         <div style="position: absolute; top: -50%; right: -10%; width: 300px; height: 300px; background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%); border-radius: 50%;"></div>
         
         <div class="brz-ai-banner-left" style="flex: 0 1 auto; position: relative; z-index: 1; display: flex; flex-direction: column; gap: 24px; min-width: 280px; max-width: 100%; box-sizing: border-box;">
-            <h2 style="font-size: 36px; font-weight: 700; line-height: 1.2; color: #1a1a1a; margin: 0; letter-spacing: -0.5px;">
+            <div style="font-size: 36px; font-weight: 700; line-height: 1.2; color: #1a1a1a; margin: 0; letter-spacing: -0.5px;">
                 <?php 
                 $title = $l10n['aiBannerTitle'];
                 $highlight = $l10n['aiBannerTitleHighlight'];
@@ -185,7 +185,7 @@
                     echo esc_html($title);
                 }
                 ?>
-            </h2>
+            </div>
             <?php if ( $isPro ): ?>
                 <a class="button button-primary brz-ai-button js-open-ai-selection-modal" href="#" title="<?php echo $l10n['buildWebsite']; ?>" style="font-size: 15px; font-weight: 600; padding: 10px 32px; height: auto; background: #1e3a8a; color: #fff; border: none; border-radius: 8px; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); display: inline-flex; align-items: center; gap: 8px; white-space: nowrap; align-self: flex-start; box-shadow: 0 2px 8px rgba(30, 58, 138, 0.3);" onmouseover="this.style.background='#2563eb'" onmouseout="this.style.background='#1e3a8a'">
                     <span><?php echo $l10n['buildWebsite']; ?></span>
@@ -266,7 +266,7 @@
             </a>
         </div>
     </div>
-    <!-- ai-core -->
+
     <div class="theme-browser content-filterable rendered">
         <div class="themes wp-clearfix">
 	        <?php foreach( $demos as $demo ): ?>
