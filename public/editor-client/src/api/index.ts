@@ -107,7 +107,10 @@ export function request(
   // some settings into config like we do for brizy cloud
   // In WP referer must be root window not iframe
   const { fetch } = window.parent || window;
-  return fetch(url, config);
+  return fetch(url, { 
+    ...config, 
+    credentials: 'include'
+  });
 }
 
 export function persistentRequest<T>(
@@ -1186,13 +1189,15 @@ export function sendHeartBeat(config: Config) {
     actions: { heartBeat },
     url: _url,
     hash,
-    editorVersion: version
+    editorVersion: version,
+    pageId
   } = config;
 
   const url = makeUrl(_url, {
     action: heartBeat,
     version,
-    hash
+    hash,
+    pageId
   });
   return request(url, { method: "GET" }).then((r) => r.json());
 }
