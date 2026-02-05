@@ -9,9 +9,6 @@ class Brizy_Editor_AuthModal
     public function __construct()
     {
         add_action('wp_footer', [$this, 'authModal']);
-
-        add_action('wp_ajax_' . Brizy_Editor::prefix() . '_login_handler', [$this, 'handleLogin']);
-        add_action('wp_ajax_nopriv_' . Brizy_Editor::prefix() . '_login_handler', [$this, 'handleLogin']);
     }
 
     public function authModal()
@@ -69,7 +66,6 @@ class Brizy_Editor_AuthModal
                 var authModal = document.getElementById('brizy-auth-modal');
                 var iframe = document.getElementById('brizy-auth-iframe');
                 var ajaxurl = "<?php echo admin_url('admin-ajax.php'); ?>";
-                var loginAction = "<?php echo Brizy_Editor::prefix(); ?>_login_handler";
 
                 function closeAuthModal() {
                     if (authModal && authModal.classList.contains('is-visible')) {
@@ -95,32 +91,29 @@ class Brizy_Editor_AuthModal
                         try {
                             var form = iframe.contentWindow.document.getElementById('loginform');
                             if (form && !form.getAttribute('data-handler')) {
-                                form.addEventListener('submit', function(e) {
-                                    e.preventDefault();
-
-                                    var formData = new FormData(form);
-                                    formData.append('action', loginAction);
-
-                                    var xhr = new XMLHttpRequest();
-                                    xhr.open('POST', ajaxurl, true);
-                                    xhr.onload = function() {
-                                        var response = JSON.parse(xhr.responseText);
-                                        if (response.success) {
-                                            updateHashInConfig();
-                                            closeAuthModal();
-                                        }
-                                    };
-                                    xhr.send(formData);
-                                });
                                 form.setAttribute('data-handler', '1');
+                            } else {
+                                try {
+                                    var body = iframe.contentWindow.document.body;
+                                    if (body && body.innerHTML.indexOf('logged in successfully') !== -1) {
+                                        updateHashInConfig(function() {
+                                            closeAuthModal();
+                                        });
+                                    }
+                                } catch (e) {
+                                    updateHashInConfig(function() {
+                                        closeAuthModal();
+                                    });
+                                }
                             }
                         } catch (e) {}
                     };
                 }
 
-                function updateHashInConfig() {
+                function updateHashInConfig(callback) {
                     var config = window.__BRZ_PLUGIN_ENV__;
                     if (!config || !config.url || !config.actions || !config.actions.heartBeat) {
+                        if (callback) callback();
                         return;
                     }
 
@@ -186,12 +179,16 @@ class Brizy_Editor_AuthModal
                                     window.__VISUAL_CONFIG__.urls.changeTemplate = data.changeTemplate;
                                 }
                             }
+                            
+                            if (callback) callback();
                         } catch (e) {
                             console.error('Error updating hash in config:', e);
+                            if (callback) callback();
                         }
                     };
                     xhr.onerror = function() {
                         console.error('Error sending heartbeat request');
+                        if (callback) callback();
                     };
                     xhr.send();
                 }
@@ -200,27 +197,5 @@ class Brizy_Editor_AuthModal
         </script>
 
         <?php
-    }
-
-    public function handleLogin()
-    {
-        if (empty($_POST['log']) || empty($_POST['pwd'])) {
-            wp_send_json_error();
-            return;
-        }
-
-        $user = wp_signon([
-            'user_login' => sanitize_user($_POST['log']),
-            'user_password' => $_POST['pwd'],
-            'remember' => isset($_POST['rememberme'])
-        ], is_ssl());
-
-        if (is_wp_error($user)) {
-            wp_send_json_error();
-            return;
-        }
-
-        wp_set_current_user($user->ID);
-        wp_send_json_success();
     }
 }
