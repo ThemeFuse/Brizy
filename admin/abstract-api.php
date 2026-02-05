@@ -22,8 +22,8 @@ abstract class Brizy_Admin_AbstractApi {
 	 * @param $action
 	 */
 	protected function verifyUserCanEdit() {
-		if (!Brizy_Editor_User::is_user_allowed()) {
-            $this->error( 400, "Invalid editor version. Please refresh the page and try again" );
+		if (!Brizy_Editor_User::is_user_allowed($this->param('post'))) {
+            $this->error( 400, "You are not allowed to edit this post" );
         }
 	}
 	protected function verifyAuthorization( $action ) {
