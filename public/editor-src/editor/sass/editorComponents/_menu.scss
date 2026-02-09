@@ -35,6 +35,7 @@ $dropdown-arrow-size: 7px;
 
     // DropDown
     .brz-menu__sub-menu {
+      position: absolute;
       margin: 0;
       padding: 0;
       visibility: hidden;

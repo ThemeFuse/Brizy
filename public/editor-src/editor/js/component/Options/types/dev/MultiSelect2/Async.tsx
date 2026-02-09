@@ -71,6 +71,9 @@ type RAction =
       type: "load_fail";
     }
   | {
+      type: "refetch_all";
+    }
+  | {
       type: "search_changed";
       search: string;
     }
@@ -93,6 +96,11 @@ type RAction =
     };
 
 function reducer(state: RState, action: RAction): RState {
+  // Only for dependency-change refetch: transition to LOADING_ALL from any state
+  if (action.type === "refetch_all") {
+    return { ...state, state: "LOADING_ALL" };
+  }
+
   switch (state.state) {
     case "INACTIVE":
       switch (action.type) {
@@ -304,8 +312,15 @@ export const Async = ({
     useAsSimpleSelect = false,
     showArrow = false,
     search = true,
-    fetchOnMount = false
+    fetchOnMount = false,
+    dependencies
   } = config ?? {};
+
+  const dependenciesKey = useMemo(
+    () => JSON.stringify(dependencies ?? []),
+    [dependencies]
+  );
+  const prevDependenciesKeyRef = useRef<string | null>(null);
 
   const _onChange = useCallback<OnChange<Value>>(
     (v): void => {
@@ -341,10 +356,19 @@ export const Async = ({
     [onChange, vChoices, sChoices, allChoices, search]
   );
 
-  // Load all choices at first render when fetchOnMount is true
+  // Load all choices when fetchOnMount is true: initial load or when dependencies change
   useEffect(() => {
-    if (fetchOnMount && allChoices.length === 0) {
-      dispatch({ type: "loading_all" });
+    const dependenciesChanged =
+      prevDependenciesKeyRef.current !== null &&
+      prevDependenciesKeyRef.current !== dependenciesKey;
+    const shouldLoad =
+      fetchOnMount && (allChoices.length === 0 || dependenciesChanged);
+
+    if (shouldLoad) {
+      prevDependenciesKeyRef.current = dependenciesKey;
+      dispatch(
+        dependenciesChanged ? { type: "refetch_all" } : { type: "loading_all" }
+      );
 
       const controller = new AbortController();
       choices
@@ -364,7 +388,7 @@ export const Async = ({
         controller.abort();
       };
     }
-  }, [fetchOnMount, choices, allChoices.length]);
+  }, [fetchOnMount, choices, allChoices.length, dependenciesKey]);
 
   // Handle loading selected values
   useEffect(() => {

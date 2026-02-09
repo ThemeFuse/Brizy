@@ -22,6 +22,8 @@
 
     "quantityDisplay": "off",
 
+    "goToCheckoutDisplay": "on",
+
     "wholesalePricesDisplay": "off",
 
     "attributesDisplay": "off",

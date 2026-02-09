@@ -2,6 +2,24 @@
   &.brz-ecwid-product-wrapper {
     width: 100%;
     max-width: 100%;
+
+    &--hide-go-to-checkout {
+      .ecwid
+        div
+        .ecwid-productBrowser
+        div
+        div
+        div
+        .ec-wrapper
+        .ec-store
+        .ec-store__content-wrapper
+        .product-details-module
+        .product-details-module__content
+        .details-product-purchase__controls
+        .details-product-purchase__checkout-controls {
+        display: none !important;
+      }
+    }
   }
 
   .ecwid
