@@ -73,7 +73,7 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 	}
 
 	public function actionDownloadBlocks() {
-		$this->verifyNonce( self::nonce );
+		$this->verifyAuthorization( self::nonce );
 		if ( ! $this->param( 'uid' ) ) {
 			$this->error( 400, 'Invalid block uid param' );
 		}
@@ -125,7 +125,7 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 
 	public function actionUploadBlocks() {
 		try {
-			$this->verifyNonce( self::nonce );
+			$this->verifyAuthorization( self::nonce );
 			if ( ! isset( $_FILES['files'] ) ) {
 				$this->error( 400, __( 'Invalid block file' ) );
 			}
@@ -164,7 +164,7 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 	}
 
 	public function actionGetGlobalBlocks() {
-		$this->verifyNonce( self::nonce );
+		$this->verifyAuthorization( self::nonce );
 		try {
 			$fields      = $this->param( 'fields' ) ? $this->param( 'fields' ) : [];
 			$bockManager = new Brizy_Admin_Blocks_Manager( Brizy_Admin_Blocks_Main::CP_GLOBAL );
@@ -180,7 +180,7 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 	}
 
 	public function actionCreateGlobalBlock() {
-		$this->verifyNonce( self::nonce );
+		$this->verifyAuthorization( self::nonce );
 		if ( ! $this->param( 'uid' ) ) {
 			$this->error( 400, 'Invalid uid' );
 		}
@@ -256,7 +256,7 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 	}
 
 	public function actionUpdateGlobalBlock() {
-		$this->verifyNonce( self::nonce );
+		$this->verifyAuthorization( self::nonce );
 		try {
 
 			if ( ! $this->param( 'uid' ) ) {
@@ -343,7 +343,7 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 	}
 
 	public function actionUpdateGlobalBlocks() {
-		$this->verifyNonce( self::nonce );
+		$this->verifyAuthorization( self::nonce );
 		try {
 
 			if ( ! current_user_can( 'edit_pages' ) ) {
@@ -436,7 +436,7 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 	}
 
 	public function actionDeleteGlobalBlock() {
-		$this->verifyNonce( self::nonce );
+		$this->verifyAuthorization( self::nonce );
 		if ( ! current_user_can( 'edit_pages' ) ) {
 			$this->error( 403, 'Unauthorized.' );
 		}
@@ -454,7 +454,7 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 	}
 
 	public function actionGetSavedBlocks() {
-		$this->verifyNonce( self::nonce );
+		$this->verifyAuthorization( self::nonce );
 		try {
 			$fields      = $this->param( 'fields' ) ? $this->param( 'fields' ) : [];
 			$bockManager = new Brizy_Admin_Blocks_Manager( Brizy_Admin_Blocks_Main::CP_SAVED );
@@ -472,7 +472,7 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 	}
 
 	public function actionGetSavedBlockByUid() {
-		$this->verifyNonce( self::nonce );
+		$this->verifyAuthorization( self::nonce );
 		if ( ! $this->param( 'uid' ) ) {
 			$this->error( 400, 'Invalid uid' );
 		}
@@ -492,7 +492,7 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 	}
 
 	public function actionCreateSavedBlock() {
-		$this->verifyNonce( self::nonce );
+		$this->verifyAuthorization( self::nonce );
 		if ( ! current_user_can( 'edit_pages' ) ) {
 			$this->error( 403, 'Unauthorized.' );
 		}
@@ -532,7 +532,7 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 	}
 
 	public function actionUpdateSavedBlock() {
-		$this->verifyNonce( self::nonce );
+		$this->verifyAuthorization( self::nonce );
 		if ( ! current_user_can( 'edit_pages' ) ) {
 			$this->error( 403, 'Unauthorized.' );
 		}
@@ -578,7 +578,7 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 	}
 
 	public function actionDeleteSavedBlock() {
-		$this->verifyNonce( self::nonce );
+		$this->verifyAuthorization( self::nonce );
 		if ( ! current_user_can( 'edit_pages' ) ) {
 			$this->error( 403, 'Unauthorized.' );
 		}
@@ -604,7 +604,7 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 	public function actionUpdateBlockPositions() {
 
 		global $wpdb;
-		$this->verifyNonce( self::nonce );
+		$this->verifyAuthorization( self::nonce );
 		if ( ! current_user_can( 'edit_pages' ) ) {
 			$this->error( 403, 'Unauthorized.' );
 		}

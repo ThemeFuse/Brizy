@@ -52,7 +52,7 @@ class Brizy_Admin_Layouts_Api extends Brizy_Admin_AbstractApi
 
     public function actionDownloadLayouts()
     {
-        $this->verifyNonce(self::nonce);
+        $this->verifyAuthorization(self::nonce);
 
         if (!$this->param('uid')) {
             $this->error(400, 'Invalid layout uid param');
@@ -108,7 +108,7 @@ class Brizy_Admin_Layouts_Api extends Brizy_Admin_AbstractApi
 
     public function actionGetLayoutByUid()
     {
-        $this->verifyNonce(self::nonce);
+        $this->verifyAuthorization(self::nonce);
 
         try {
             $uid = $this->param('uid');
@@ -137,7 +137,7 @@ class Brizy_Admin_Layouts_Api extends Brizy_Admin_AbstractApi
 
     public function actionGetLayouts()
     {
-        $this->verifyNonce(self::nonce);
+        $this->verifyAuthorization(self::nonce);
 
         try {
             $layoutManager = new Brizy_Admin_Layouts_Manager();
@@ -164,7 +164,7 @@ class Brizy_Admin_Layouts_Api extends Brizy_Admin_AbstractApi
 
     public function actionCreateLayout()
     {
-        $this->verifyNonce(self::nonce);
+        $this->verifyAuthorization(self::nonce);
 
         if (!$this->param('uid')) {
             $this->error(400, 'Invalid uid');
@@ -225,7 +225,7 @@ class Brizy_Admin_Layouts_Api extends Brizy_Admin_AbstractApi
 
     public function actionUpdateLayout()
     {
-        $this->verifyNonce(self::nonce);
+        $this->verifyAuthorization(self::nonce);
 	    if ( ! current_user_can( 'edit_pages' ) ) {
 		    $this->error( 403, 'Unauthorized.' );
 	    }
@@ -285,7 +285,7 @@ class Brizy_Admin_Layouts_Api extends Brizy_Admin_AbstractApi
 
     public function actionDeleteLayout()
     {
-        $this->verifyNonce(self::nonce);
+        $this->verifyAuthorization(self::nonce);
 	    if ( ! current_user_can( 'edit_pages' ) ) {
 		    $this->error( 403, 'Unauthorized.' );
 	    }

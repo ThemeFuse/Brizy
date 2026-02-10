@@ -58,7 +58,7 @@ class Brizy_Admin_Fonts_Api extends Brizy_Admin_AbstractApi {
 
 	public function actionGetFonts() {
 
-		$this->verifyNonce( self::nonce );
+		$this->verifyAuthorization( self::nonce );
 
 		$manager = new Brizy_Admin_Fonts_Manager();
 
@@ -68,7 +68,7 @@ class Brizy_Admin_Fonts_Api extends Brizy_Admin_AbstractApi {
 	public function actionCreateFont() {
 		try {
 
-			$this->verifyNonce( self::nonce );
+			$this->verifyAuthorization( self::nonce );
 
 			if ( ! ( $fontUidId = $this->param( 'id' ) ) ) {
 				$this->error( 400, 'Invalid font uid' );
@@ -128,7 +128,7 @@ class Brizy_Admin_Fonts_Api extends Brizy_Admin_AbstractApi {
 
 	public function actionDeleteFont() {
 
-		$this->verifyNonce( self::nonce );
+		$this->verifyAuthorization( self::nonce );
 
 		if ( ! ( $fontId = $this->param( 'id' ) ) ) {
 			$this->error( 400, 'Invalid font id' );

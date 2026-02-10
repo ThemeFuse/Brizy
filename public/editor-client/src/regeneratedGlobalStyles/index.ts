@@ -6,25 +6,27 @@ import {
   Palette,
   RegeneratedGlobalStyles
 } from "../types/DefaultTemplate";
+import { normalizeFontStyles } from "./utils";
 
 export const getRegeneratedGlobalStyles = (
   config: Config
-): RegeneratedGlobalStyles<Palette, FontStyle> => {
+): RegeneratedGlobalStyles<Palette[], FontStyle[]> => {
   return {
-    async regenerateColors(res, rej) {
+    async regenerateColors(res, rej, extra) {
       try {
-        const styles = await getStyles(config);
+        const styles = await getStyles(config, extra.colorPalette);
 
         res(styles.colorPalette);
       } catch (e) {
         rej(t("Failed to load Regenerated Styles"));
       }
     },
-    async regenerateTypography(res, rej) {
+    async regenerateTypography(res, rej, extra) {
       try {
-        const data = await getTypography(config);
+        const data = await getTypography(config, extra.fontStyles);
+        const normalizedFontStyles = normalizeFontStyles(data.fontStyles);
 
-        res(data.fontStyles);
+        res(normalizedFontStyles);
       } catch (e) {
         rej(t("Failed to load Regenerated Typography"));
       }

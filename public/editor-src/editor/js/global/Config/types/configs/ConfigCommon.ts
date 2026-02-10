@@ -937,11 +937,17 @@ interface _ConfigCommon<Mode> {
       styles?: {
         regenerateColors: (
           res: Response<Palette[]>,
-          rej: Response<string>
+          rej: Response<string>,
+          extra: {
+            colorPalette: Palette[];
+          }
         ) => void;
         regenerateTypography: (
           res: Response<FontStyle[]>,
-          rej: Response<string>
+          rej: Response<string>,
+          extra: {
+            fontStyles: FontStyle[];
+          }
         ) => void;
         label: string;
       };

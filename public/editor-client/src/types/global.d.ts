@@ -255,5 +255,7 @@ declare global {
     wp?: {
       media?: WPMediaFrame;
     };
+    brizyCloseAuthModal?:VoidFunction;
+    brizyOpenAuthModal?:VoidFunction;
   }
 }

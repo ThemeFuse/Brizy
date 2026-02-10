@@ -17,6 +17,11 @@ export type Config = WithSize & {
   scroll?: number;
   showArrow?: boolean;
   fetchOnMount?: boolean;
+  /**
+   * When any of these values change, the async multiselect will refetch choices (load/search).
+   * Note:it works only with fetchOnMount=true
+   */
+  dependencies?: unknown[];
   // DO NOT USE THIS KEY, this key is used only in Posts element because we can't normally change form "multiSelect" to "select-dev" because of dynamically id and different data structure
   useAsSimpleSelect?: boolean;
 };

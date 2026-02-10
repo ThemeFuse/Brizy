@@ -296,11 +296,13 @@ export class EcwidProduct extends EditorComponent<Value> {
   };
 
   getWrapperClassName() {
+    const { goToCheckoutDisplay } = this.getValue();
+
     return this.getCSSClassnames({
       toolbars: [toolbarOptionColor],
       sidebars: [sidebarOptionColor],
       stylesFn: style,
-      extraClassNames: ["brz-ecwid-wrapper", "brz-ecwid-product-wrapper"]
+      extraClassNames: ["brz-ecwid-wrapper", "brz-ecwid-product-wrapper", {"brz-ecwid-product-wrapper--hide-go-to-checkout": goToCheckoutDisplay==="off"}]
     });
   }
 

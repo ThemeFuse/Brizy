@@ -67,7 +67,7 @@ class Brizy_Editor_Accounts_Api extends Brizy_Admin_AbstractApi {
 
 
 	public function actionGetAccount() {
-		$this->verifyNonce( self::nonce );
+		$this->verifyAuthorization( self::nonce );
 		if ( ! $this->param( 'id' ) ) {
 			$this->error( 400, 'Invalid account id' );
 		}
@@ -88,7 +88,7 @@ class Brizy_Editor_Accounts_Api extends Brizy_Admin_AbstractApi {
 
 
 	public function actionGetAccounts() {
-		$this->verifyNonce( self::nonce );
+		$this->verifyAuthorization( self::nonce );
 
 		$filter = array();
 
@@ -110,7 +110,7 @@ class Brizy_Editor_Accounts_Api extends Brizy_Admin_AbstractApi {
 	}
 
 	public function actionAddAccount() {
-		$this->verifyNonce( self::nonce );
+		$this->verifyAuthorization( self::nonce );
 		try {
 			$manager  = new Brizy_Editor_Accounts_ServiceAccountManager( Brizy_Editor_Project::get() );
 			$instance = Brizy_Editor_Accounts_AbstractAccount::createFromJson( json_decode( file_get_contents( 'php://input' ) ) );
@@ -124,7 +124,7 @@ class Brizy_Editor_Accounts_Api extends Brizy_Admin_AbstractApi {
 	}
 
 	public function actionUpdateAccount() {
-		$this->verifyNonce( self::nonce );
+		$this->verifyAuthorization( self::nonce );
 		try {
 			$manager  = new Brizy_Editor_Accounts_ServiceAccountManager( Brizy_Editor_Project::get() );
 			$instance = Brizy_Editor_Accounts_AbstractAccount::createFromJson( json_decode( file_get_contents( 'php://input' ) ) );
@@ -137,7 +137,7 @@ class Brizy_Editor_Accounts_Api extends Brizy_Admin_AbstractApi {
 	}
 
 	public function actionDeleteAccount() {
-		$this->verifyNonce( self::nonce );
+		$this->verifyAuthorization( self::nonce );
 		try {
 
 			if ( ! $this->param( 'id' ) ) {

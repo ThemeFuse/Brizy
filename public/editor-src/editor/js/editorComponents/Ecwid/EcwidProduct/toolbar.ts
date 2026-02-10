@@ -154,6 +154,11 @@ export const getItems: GetItems<Value> = ({ v, device, state, component }) => {
                   type: "switch"
                 },
                 {
+                  id: "goToCheckoutDisplay",
+                  label: t("Go to checkout"),
+                  type: "switch"
+                },
+                {
                   id: "wholesalePricesDisplay",
                   label: t("Wholesale Prices"),
                   type: "switch"

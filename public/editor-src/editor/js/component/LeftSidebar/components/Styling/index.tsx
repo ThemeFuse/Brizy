@@ -120,9 +120,8 @@ class _DrawerComponent extends React.Component<Props, State> {
   handleRegenerateColors = async () => {
     try {
       this.setState({ loadingColor: true });
-      const { styles, config, getRegenerateColors } = this.props;
-
-      const colorPalette = await getGlobalColors(config);
+      const { styles, config, getRegenerateColors,currentStyle } = this.props;
+      const colorPalette = await getGlobalColors(config, currentStyle.colorPalette);
 
       const style = this.getRegeneratedStyle(styles);
 
@@ -138,9 +137,9 @@ class _DrawerComponent extends React.Component<Props, State> {
   handleRegenerateTypography = async () => {
     try {
       this.setState({ loadingTypography: true });
-      const { styles, config, getRegenerateTypography } = this.props;
+      const { styles, config, getRegenerateTypography,currentStyle } = this.props;
 
-      const fontStyles = await getGlobalTypography(config);
+      const fontStyles = await getGlobalTypography(config, currentStyle.fontStyles);
 
       const style = this.getRegeneratedStyle(styles);
 

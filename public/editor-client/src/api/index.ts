@@ -19,10 +19,10 @@ import {
   CreateIntegrationAccountData,
   CreateIntegrationListData,
   FormData as FormDataType,
-  IntegrationType,
   IntegrationAccountApiKeyResponse,
   IntegrationAccountResponse,
   IntegrationResponse,
+  IntegrationType,
   NormalizeAccountsResolve,
   UpdateIntegrationData
 } from "@/form/types";
@@ -35,11 +35,13 @@ import {
   APIPopup,
   DefaultBlock,
   DefaultBlockWithID,
+  FontStyle,
   Kit,
   KitDataResult,
   KitItem,
   LayoutsAPI,
   LayoutsPagesResult,
+  Palette,
   StoriesAPI,
   StoryPagesResult,
   Style
@@ -107,7 +109,10 @@ export function request(
   // some settings into config like we do for brizy cloud
   // In WP referer must be root window not iframe
   const { fetch } = window.parent || window;
-  return fetch(url, config);
+  return fetch(url, { 
+    ...config, 
+    credentials: 'include'
+  });
 }
 
 export function persistentRequest<T>(
@@ -1186,13 +1191,15 @@ export function sendHeartBeat(config: Config) {
     actions: { heartBeat },
     url: _url,
     hash,
-    editorVersion: version
+    editorVersion: version,
+    pageId
   } = config;
 
   const url = makeUrl(_url, {
     action: heartBeat,
     version,
-    hash
+    hash,
+    pageId
   });
   return request(url, { method: "GET" }).then((r) => r.json());
 }
@@ -1660,20 +1667,32 @@ export const deleteIcon = async (uid: string): Promise<Response> => {
 
 //#region AI Global Styles
 
-export const getStyles = async (config: Config) => {
+export const getStyles = async (config: Config, previousColorPalette: Palette[]) => {
   const { aiGlobalStyleUrl } = config;
 
-  return await fetch(`${aiGlobalStyleUrl}/api/template/style`).then((r) =>
-    r.json()
-  );
+  const url = `${aiGlobalStyleUrl}/api/generate-color-palette`;
+
+  return await request(url, {
+    method: "POST",
+    body: JSON.stringify({
+      previousColorPalette
+    })
+  }).then((r) => r.json());
 };
 
-export const getTypography = async (config: Config) => {
+export const getTypography = async (
+  config: Config,
+  previousFontStyles: FontStyle[]
+) => {
   const { aiGlobalStyleUrl } = config;
 
-  return await fetch(`${aiGlobalStyleUrl}/api/template/typography`).then((r) =>
-    r.json()
-  );
+  const url = `${aiGlobalStyleUrl}/api/generate-fonts`;
+  return await request(url, {
+    method: "POST",
+    body: JSON.stringify({
+      previousFontStyles
+    })
+  }).then((r) => r.json());
 };
 
 //#endregion
@@ -2649,10 +2668,12 @@ export const getForm = async (formId: string): Promise<FormDataType> => {
   if (success) {
     return {
       ...data,
-      integrationList: data.integrations.map((integration: IntegrationType) => ({
-        ...integration,
-        type: integration.id
-      }))
+      integrationList: data.integrations.map(
+        (integration: IntegrationType) => ({
+          ...integration,
+          type: integration.id
+        })
+      )
     };
   }
 

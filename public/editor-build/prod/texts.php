@@ -784,6 +784,7 @@ class Brizy_Public_EditorBuild_Prod_Texts {
 			"Go Back" => __("Go Back", "brizy"),
 			"Go to" => __("Go to", "brizy"),
 			"Go to Checkout" => __("Go to Checkout", "brizy"),
+			"Go to checkout" => __("Go to checkout", "brizy"),
 			"Google Fonts" => __("Google Fonts", "brizy"),
 			"Gradient" => __("Gradient", "brizy"),
 			"Grid" => __("Grid", "brizy"),
