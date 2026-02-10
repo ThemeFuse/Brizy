@@ -51,14 +51,12 @@ class Brizy_Editor_BlockScreenshotApi extends Brizy_Admin_AbstractApi
         $pref_nopriv = 'wp_ajax_nopriv_'.Brizy_Editor::prefix();
         add_action($pref.self::AJAX_CREATE_BLOCK_SCREENSHOT, array($this, 'saveBlockScreenShot'));
         add_action($pref.self::AJAX_UPDATE_BLOCK_SCREENSHOT, array($this, 'saveBlockScreenShot'));
-        add_action($pref_nopriv.self::AJAX_CREATE_BLOCK_SCREENSHOT, array($this, 'saveBlockScreenShot'));
-        add_action($pref_nopriv.self::AJAX_UPDATE_BLOCK_SCREENSHOT, array($this, 'saveBlockScreenShot'));
     }
 
     public function saveBlockScreenShot()
     {
 
-        $this->verifyNonce(self::nonce);
+        $this->verifyAuthorization(self::nonce);
 
         session_write_close();
 
