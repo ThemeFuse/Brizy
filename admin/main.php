@@ -275,6 +275,7 @@ class Brizy_Admin_Main {
                     'importDelete'  => BrizyPro_Admin_AiCore::AJAX_IMPORT_DELETE,
                     'importKeep'    => BrizyPro_Admin_AiCore::AJAX_IMPORT_KEEP,
                     'getPost'       => BrizyPro_Admin_AiCore::AJAX_GET_POST,
+                    'aiImportPage'  => BrizyPro_Admin_AiCore::AJAX_IMPORT_PAGE,
                 ) : array(),
                 'isLicenseValid' => class_exists('BrizyPro_Admin_License') ? BrizyPro_Admin_License::_init()->isValidLicense() : false,
         ) );
