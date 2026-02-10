@@ -2,9 +2,9 @@
 Contributors: themefuse
 Tags: page builder, website builder, brizy, editor, visual editor, unyson, wysiwyg, landing page, drag-and-drop, design, landing page builder, front-end builder
 Requires at least: 4.5
-Tested up to: 6.9
+Tested up to: 6.9.1
 Requires PHP: 7.2.24
-Stable tag: 2.7.23
+Stable tag: 2.7.24
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -136,6 +136,12 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 11. **Resize columns by dragging the handle that appears in between**
 
 == Changelog ==
+
+= 2.7.24 - 2026-02-10 =
+* Fixed: Generate global styles bug
+* Fixed: Menu Jump bug
+* Fixed: Access control bug
+* Improved:  Extend multiselects for data refetching
 
 = 2.7.23 - 2026-01-22 =
 * New: Scrollable tabs
