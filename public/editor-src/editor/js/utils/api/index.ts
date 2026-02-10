@@ -1237,7 +1237,8 @@ export const sendToAi = (
 //#region Ai Global Styles
 
 export const getGlobalColors = (
-  config: ConfigCommon
+  config: ConfigCommon,
+  colorPalette: Palette[]
 ): Promise<Array<Palette>> => {
   return new Promise((res, rej) => {
     const { styles } = config.ui?.leftSidebar ?? {};
@@ -1246,13 +1247,16 @@ export const getGlobalColors = (
     if (!get) {
       rej(t("API: No regenerate color found."));
     } else {
-      get(res, rej);
+      get(res, rej, {
+        colorPalette
+      });
     }
   });
 };
 
 export const getGlobalTypography = (
-  config: ConfigCommon
+  config: ConfigCommon,
+  fontStyles: FontStyle[]
 ): Promise<Array<FontStyle>> => {
   return new Promise((res, rej) => {
     const { styles } = config.ui?.leftSidebar ?? {};
@@ -1261,7 +1265,9 @@ export const getGlobalTypography = (
     if (!get) {
       rej(t("API: No regenerate typography found."));
     } else {
-      get(res, rej);
+      get(res, rej, {
+        fontStyles
+      });
     }
   });
 };
