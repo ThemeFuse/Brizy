@@ -255,12 +255,30 @@ class Brizy_Admin_Main {
                 ),
                 'editorVersion' => BRIZY_EDITOR_VERSION,
                 'pluginVersion' => BRIZY_VERSION,
+                'aiNonce'       => wp_create_nonce( 'brizy-api' ),
                 'nonce'         => wp_create_nonce( 'brizy-admin-nonce' ),
-                'l10n'          => [
-                        'deactivateFeedbackSubmitBtn' => __( 'Submit & Deactivate', 'brizy' ),
-                        'deactivateFeedbackSkipBtn'   => __( 'Skip & Deactivate', 'brizy' ),
-                ]
-        ) );
+            'l10n'          => [
+                'deactivateFeedbackSubmitBtn' => __('Submit & Deactivate', 'brizy'),
+                'deactivateFeedbackSkipBtn'   => __('Skip & Deactivate', 'brizy'),
+                'aiCreatingSessionTitle'      => __('Creating AI session', 'brizy'),
+                'aiCreatingSessionDesc'       => __('Waiting for server response. Please wait…', 'brizy'),
+                'aiSendingProjectTitle'       => __('Sending project', 'brizy'),
+                'aiSendingProjectDesc'        => __('Please wait while we send your project data...', 'brizy'),
+                'aiGenerateTemplateTitle'     => __('Generating template', 'brizy'),
+                'aiGenerateTemplateDesc'      => __('Please wait. This may take a few minutes.', 'brizy'),
+                'aiContinueButton'            => __('Continue', 'brizy'),
+                'aiGenerateButton'            => __('Generate With Brizy - AI', 'brizy'),
+            ],
+            'aiActions' => class_exists('BrizyPro_Admin_AiCore') ? array(
+                'createSession' => BrizyPro_Admin_AiCore::AJAX_CREATE_SESSION,
+                'getTemplate'   => BrizyPro_Admin_AiCore::AJAX_GET_TEMPLATE,
+                'importDelete'  => BrizyPro_Admin_AiCore::AJAX_IMPORT_DELETE,
+                'importKeep'    => BrizyPro_Admin_AiCore::AJAX_IMPORT_KEEP,
+                'getPost'       => BrizyPro_Admin_AiCore::AJAX_GET_POST,
+                'aiImportPage'  => BrizyPro_Admin_AiCore::AJAX_IMPORT_PAGE,
+            ) : array(),
+            'isLicenseValid' => class_exists('BrizyPro_Admin_License') ? BrizyPro_Admin_License::_init()->isValidLicense() : false,
+        ));
     }
 
     /**
