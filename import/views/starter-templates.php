@@ -11,9 +11,9 @@
                 <div class="brz-demo-filter-terms">
                     <select class="select2">
                         <option value=""><?php echo $l10n['allCategories']; ?></option>
-	                    <?php foreach( $terms as $term ): ?>
+                        <?php foreach ($terms as $term): ?>
                             <option value="<?php echo $term['id']; ?>"><?php echo $term['name']; ?></option>
-	                    <?php endforeach; ?>
+                        <?php endforeach; ?>
                     </select>
                 </div>
             </li>
@@ -271,8 +271,8 @@
         <div class="brz-ai-banner-right" style="flex: 0 0 auto; position: relative; z-index: 1; box-sizing: border-box;">
             <a href="https://ai.brizy.io/" target="_blank" rel="noopener noreferrer" title="<?php echo esc_attr($l10n['aiBrizy']); ?>" class="brz-ai-logo-link" style="display: inline-block; line-height: 0;">
                 <div class="brz-ai-logo-container" style="padding: 20px;">
-                    <svg width="100px" height="38px" viewBox="0 0 113.968401 43.0000985" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="display: block;" role="img" aria-label="<?php echo esc_attr($l10n['aiLogoAlt']); ?>">
-                        <title>AI Logo mark left</title>
+                    <svg width="200px" height="76px" viewBox="0 0 113.968401 43.0000985" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="display: block;" role="img" aria-label="<?php echo esc_attr($l10n['aiLogoAlt']); ?>">
+                        <title>Brizy</title>
                         <defs>
                             <linearGradient x1="20.7992038%" y1="10.9100695%" x2="78.7439783%" y2="89.0416553%" id="linearGradient-1">
                                 <stop stop-color="#00C0FF" offset="0%"></stop>
@@ -295,26 +295,26 @@
 
     <div class="theme-browser content-filterable rendered">
         <div class="themes wp-clearfix">
-	        <?php foreach( $demos as $demo ): ?>
-                <div class="theme <?php echo ( $demo['pro'] ? 'brz-demo-is-pro' : 'brz-demo-is-free' ); ?>" data-terms="<?php echo implode( ',', $demo['terms'] ); ?>" data-keywords="<?php echo $demo['keywords']; ?>" data-name="<?php echo $demo['name']; ?>" data-preview-link="<?php echo $demo['url']; ?>">
+            <?php foreach ($demos as $demo): ?>
+                <div class="theme <?php echo ($demo['pro'] ? 'brz-demo-is-pro' : 'brz-demo-is-free'); ?>" data-terms="<?php echo implode(',', $demo['terms']); ?>" data-keywords="<?php echo $demo['keywords']; ?>" data-name="<?php echo $demo['name']; ?>" data-preview-link="<?php echo $demo['url']; ?>">
                     <div class="theme-screenshot" style="height: 400px">
                         <img src="<?php echo $demo['photo']; ?>" loading=lazy>
                     </div>
                     <span class="brz-demo-badge">
-                        <?php echo ( $demo['pro'] ? $l10n['pro'] : $l10n['free'] ); ?>
+                        <?php echo ($demo['pro'] ? $l10n['pro'] : $l10n['free']); ?>
                     </span>
                     <span class="more-details"><?php echo $l10n['livePreview']; ?></span>
                     <div class="theme-id-container">
                         <h3 class="theme-name"><?php echo $demo['name']; ?></h3>
                         <div class="theme-actions">
-	                        <?php $goPro = $demo['pro'] && ! $isPro; ?>
-                            <a class="button <?php echo ( $goPro ? 'brz-demo-item-gopro' : 'brz-demo-item-install' ); ?>" href="<?php echo ( $goPro ? $goProUrl : '#' ); ?>" target="_blank" data-demo-id="<?php echo $demo['id']; ?>">
-	                            <?php echo ( $goPro ? $l10n['goPro'] : $l10n['install'] ); ?>
+                            <?php $goPro = $demo['pro'] && ! $isPro; ?>
+                            <a class="button <?php echo ($goPro ? 'brz-demo-item-gopro' : 'brz-demo-item-install'); ?>" href="<?php echo ($goPro ? $goProUrl : '#'); ?>" target="_blank" data-demo-id="<?php echo $demo['id']; ?>">
+                                <?php echo ($goPro ? $l10n['goPro'] : $l10n['install']); ?>
                             </a>
                         </div>
                     </div>
                 </div>
-	        <?php endforeach; ?>
+            <?php endforeach; ?>
         </div>
     </div>
 
@@ -359,7 +359,7 @@
             </svg>
             <h3 class="brz-demo-modal-content-h3"><?php echo $l10n['t4']; ?></h3>
             <p class="brz-demo-modal-content-p"><?php echo $l10n['t5']; ?></p>
-            <a href="<?php echo admin_url( 'post.php?action=in-front-editor&post=' . get_option( 'page_on_front' ) ); ?>" class="button button-primary js-demo-data-close-modal brz-demo-modal-content-button js-demo-data-edit-homepage"> <?php echo $l10n['t15']; ?> </a>
+            <a href="<?php echo admin_url('post.php?action=in-front-editor&post=' . get_option('page_on_front')); ?>" class="button button-primary js-demo-data-close-modal brz-demo-modal-content-button js-demo-data-edit-homepage"> <?php echo $l10n['t15']; ?> </a>
         </div>
     </script>
 
@@ -385,7 +385,7 @@
     </script>
 
     <script id="brz-demo-modal-content-install" type="text/template">
-	    <div class="brz-demo-modal-content-install-container">
+        <div class="brz-demo-modal-content-install-container">
             <div>
                 <svg width="56px" height="56px" viewBox="0 0 56 56" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                     <g id="WP-Starter-Templates" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round">
@@ -433,5 +433,3 @@
     </script>
 
 </div>
-
-
