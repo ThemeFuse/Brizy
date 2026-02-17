@@ -274,6 +274,8 @@ class Brizy_Admin_Main {
                 'aiContinueButton'            => __('Continue', 'brizy'),
                 'aiGenerateButton'            => __('Generate With Brizy - AI', 'brizy'),
             ],
+            syntax error special
+            muta asta in pro.
             'aiActions' => class_exists('BrizyPro_Admin_AiCore') ? array(
                 'createSession' => BrizyPro_Admin_AiCore::AJAX_CREATE_SESSION,
                 'getTemplate'   => BrizyPro_Admin_AiCore::AJAX_GET_TEMPLATE,
