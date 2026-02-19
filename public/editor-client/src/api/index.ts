@@ -107,10 +107,7 @@ export function request(
   // some settings into config like we do for brizy cloud
   // In WP referer must be root window not iframe
   const { fetch } = window.parent || window;
-  return fetch(url, { 
-    ...config, 
-    credentials: 'include'
-  });
+  return fetch(url, config);
 }
 
 export function persistentRequest<T>(
