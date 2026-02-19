@@ -14,8 +14,8 @@ class Brizy_Editor_CompiledSectionManager {
 	}
 
 	public function merge( array $compiledSections, $capabilityIgnore = false ) {
-		$this->data['rootClassNames'] = isset( $compiledSections['rootClassNames'] ) ? $compiledSections['rootClassNames'] : [];
-		$this->data['rootAttributes'] = isset( $compiledSections['rootAttributes'] ) ? $compiledSections['rootAttributes'] : [];
+		$this->data['rootClassNames'] = isset( $compiledSections['rootClassNames'] ) ? array_map( 'sanitize_html_class', $compiledSections['rootClassNames'] ) : [];
+		$this->data['rootAttributes'] = isset( $compiledSections['rootAttributes'] ) ? $this->sanitizeRootAttributes( $compiledSections['rootAttributes'] ) : [];
 		foreach ( $compiledSections['blocks'] as &$block ) {
 			if ( $block['html'] == '' ) {
 				$block['html']   = $this->getSection( $block['id'] )['html'];
@@ -104,26 +104,52 @@ class Brizy_Editor_CompiledSectionManager {
 	 * @return string
 	 */
 	public function getHtml() {
-		$classStr = implode( ' ', $this->data['rootClassNames'] ?: [] );
-		$attribs  = $this->data['rootAttributes'] ?: [];
-		$attrStr  = array_reduce( array_keys( $attribs ),                       // We pass in the array_keys instead of the array here
-			function ( $carry, $key ) use ( $attribs ) {    // ... then we 'use' the actual array here
-				return $carry . ' ' . $key . '="' . htmlspecialchars( $attribs[ $key ] ) . '"';
-			}, '' );
+		$classStr = esc_attr( implode( ' ', array_map( 'sanitize_html_class', $this->data['rootClassNames'] ?: [] ) ) );
+		$attribs  = $this->sanitizeRootAttributes( $this->data['rootAttributes'] ?: [] );
+		$attrStr  = $this->buildAttributeString( $attribs );
 		$html     = $this->buildHtml();
 
 		return "<div class=\"{$classStr}\" {$attrStr}>{{ brizy_dc_global_blocks position=\"top\" }} {$html} {{ brizy_dc_global_blocks position=\"bottom\" }}</div>";
 	}
 
 	public function wrapHtml( $content ) {
-		$classStr = implode( ' ', isset( $this->data['rootClassNames'] ) ? $this->data['rootClassNames'] : [] );
-		$attribs  = isset( $this->data['rootAttributes'] ) ? $this->data['rootAttributes'] : [];
-		$attrStr  = array_reduce( array_keys( $attribs ),                       // We pass in the array_keys instead of the array here
-			function ( $carry, $key ) use ( $attribs ) {    // ... then we 'use' the actual array here
-				return $carry . ' ' . $key . '="' . htmlspecialchars( $attribs[ $key ] ) . '"';
-			}, '' );
+		$classStr = esc_attr( implode( ' ', array_map( 'sanitize_html_class', isset( $this->data['rootClassNames'] ) ? $this->data['rootClassNames'] : [] ) ) );
+		$attribs  = $this->sanitizeRootAttributes( isset( $this->data['rootAttributes'] ) ? $this->data['rootAttributes'] : [] );
+		$attrStr  = $this->buildAttributeString( $attribs );
 
 		return "<div class=\"{$classStr}\" {$attrStr}>{$content}</div>";
+	}
+
+	private function sanitizeRootAttributes( $attributes ) {
+		if ( ! is_array( $attributes ) ) {
+			return [];
+		}
+
+		$sanitized = [];
+
+		foreach ( $attributes as $key => $value ) {
+			$key = strtolower( trim( (string) $key ) );
+
+			// Only allow valid data-brz-* attribute names (lowercase letters, digits, hyphens, underscores)
+			if ( ! preg_match( '/^data-brz(-[a-z0-9_]+)+$/', $key ) ) {
+				continue;
+			}
+
+			if ( is_bool( $value ) ) {
+				$sanitized[ $key ] = $value;
+			} else {
+				$sanitized[ $key ] = sanitize_text_field( (string) $value );
+			}
+		}
+
+		return $sanitized;
+	}
+
+	private function buildAttributeString( $attribs ) {
+		return array_reduce( array_keys( $attribs ),
+			function ( $carry, $key ) use ( $attribs ) {
+				return $carry . ' ' . esc_attr( $key ) . '="' . esc_attr( $attribs[ $key ] ) . '"';
+			}, '' );
 	}
 
 	public function getAssetsGroups() {
