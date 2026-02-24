@@ -120,29 +120,30 @@ class Brizy_Editor_CompiledSectionManager {
 		return "<div class=\"{$classStr}\" {$attrStr}>{$content}</div>";
 	}
 
+	private function sanitizeRootAttribute( $value ) {
+		if ( is_bool( $value ) ) {
+			return $value;
+		}
+
+		return sanitize_text_field( (string) $value );
+	}
+
 	private function sanitizeRootAttributes( $attributes ) {
 		if ( ! is_array( $attributes ) ) {
 			return [];
 		}
 
-		$sanitized = [];
+		$filtered = [];
 
 		foreach ( $attributes as $key => $value ) {
 			$key = strtolower( trim( (string) $key ) );
 
-			// Only allow valid data-brz-* attribute names (lowercase letters, digits, hyphens, underscores)
-			if ( ! preg_match( '/^data-brz(-[a-z0-9_]+)+$/', $key ) ) {
-				continue;
-			}
-
-			if ( is_bool( $value ) ) {
-				$sanitized[ $key ] = $value;
-			} else {
-				$sanitized[ $key ] = sanitize_text_field( (string) $value );
+			if ( preg_match( '/^data-brz(-[a-z0-9_]+)+$/', $key ) ) {
+				$filtered[ $key ] = $value;
 			}
 		}
 
-		return $sanitized;
+		return array_map( [ $this, 'sanitizeRootAttribute' ], $filtered );
 	}
 
 	private function buildAttributeString( $attribs ) {
