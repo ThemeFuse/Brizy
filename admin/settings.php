@@ -205,13 +205,15 @@ class Brizy_Admin_Settings
         $prepared_types = array_map(array($this, 'is_selected'), $list_post_types);
         $svgEnabled = Brizy_Admin_Svg_Main::isSvgEnabled();
         $jsonEnabled = Brizy_Admin_Json_Main::isJsonEnabled();
+		$gettingStartedVideoEnabled = Brizy_Admin_GettingStarted::isVideoEnabled();
 
         return Brizy_Admin_View::render('settings/general', [
                 'types' => $prepared_types,
                 'svgUploadEnabled' => $svgEnabled,
-                'jsonUploadEnabled' => $jsonEnabled
-        ]);
-    }
+                'jsonUploadEnabled' => $jsonEnabled,
+				'gettingStartedVideoEnabled' => $gettingStartedVideoEnabled
+			] );
+	}
 
     private function get_roles_tab()
     {
@@ -261,13 +263,15 @@ class Brizy_Admin_Settings
         $array_diff = array_diff($post_types, $allowed_post_types);
         $svgEnabled = isset($_POST['svg-upload-enabled']) ? (bool)$_POST['svg-upload-enabled'] : false;
         $jsonEnabled = isset($_POST['json-upload-enabled']) ? (bool)$_POST['json-upload-enabled'] : false;
-        if (count($array_diff) > 0) {
-            //error
-            Brizy_Admin_Flash::instance()->add_error('Invalid post type selected');
-            $error_count++;
-        }
-        Brizy_Editor_Storage_Common::instance()->set('svg-upload', $svgEnabled);
-        Brizy_Editor_Storage_Common::instance()->set('json-upload', $jsonEnabled);
+        $gettingStartedVideoEnabled = isset( $_POST['getting-started-video-enabled'] );
+		if ( count( $array_diff ) > 0 ) {
+			//error
+			Brizy_Admin_Flash::instance()->add_error( 'Invalid post type selected' );
+			$error_count ++;
+		}
+		Brizy_Editor_Storage_Common::instance()->set( 'svg-upload', $svgEnabled );
+		Brizy_Editor_Storage_Common::instance()->set( 'json-upload', $jsonEnabled );
+		Brizy_Editor_Storage_Common::instance()->set( 'getting-started-video-enabled', $gettingStartedVideoEnabled );
         if ($error_count == 0) {
             $this->selected_post_types = $post_types;
             Brizy_Editor_Storage_Common::instance()->set('post-types', $post_types);

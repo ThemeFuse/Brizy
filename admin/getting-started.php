@@ -17,8 +17,21 @@ class Brizy_Admin_GettingStarted
         add_action('network_admin_menu', [$this, 'addSubmenuPageGettingStarted'], 20);
     }
 
-    public function addSubmenuPageGettingStarted()
-    {
+    /**
+	 * Whether the Getting Started page should show the YouTube video embed.
+	 * When false, shows a GDPR-safe thumbnail + link instead.
+	 *
+	 * @return bool
+	 */
+	public static function isVideoEnabled() {
+		try {
+			return (bool) Brizy_Editor_Storage_Common::instance()->get( 'getting-started-video-enabled', true );
+		} catch ( Exception $e ) {
+			return true;
+		}
+	}
+
+	public function addSubmenuPageGettingStarted() {
 
         add_submenu_page(
             current_action() == 'network_admin_menu' ? Brizy_Admin_NetworkSettings::menu_slug() : Brizy_Admin_Settings::menu_slug(),
@@ -42,10 +55,15 @@ class Brizy_Admin_GettingStarted
             $brandedOrLabelImgUrl = BRIZY_PLUGIN_URL . '/admin/static/img/getting-started/brizy-branded/';
         }
 
-        $args = [
-            'isWhiteLabel' => $isWhiteLabel,
-            'imgPath' => $brandedOrLabelImgUrl,
-        ];
+        // GDPR: Allow disabling the Getting Started YouTube embed to prevent data transfer without consent.
+		$showYoutubeEmbed = self::isVideoEnabled();
+		$showYoutubeEmbed = apply_filters( 'brizy_getting_started_show_youtube_video', $showYoutubeEmbed );
+
+		$args = [
+			'isWhiteLabel'       => $isWhiteLabel,
+			'imgPath'            => $brandedOrLabelImgUrl,
+			'showYoutubeEmbed'   => $showYoutubeEmbed,
+		];
 
         try {
             Brizy_Editor_View::render(BRIZY_PLUGIN_PATH . '/admin/views/getting-started', $args);
