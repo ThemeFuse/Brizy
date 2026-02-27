@@ -24,198 +24,26 @@
         </form>
     </div>
 
-    <style>
-        .brz-ai-banner {
-            flex-wrap: wrap;
-            box-sizing: border-box;
-        }
+    <div class="brz-ai-banner">
+        <div class="brz-ai-banner-bg-circle"></div>
 
-        .brz-ai-banner-left,
-        .brz-ai-banner-center,
-        .brz-ai-banner-right {
-            box-sizing: border-box;
-        }
-
-        @media screen and (max-width: 1024px) {
-            .brz-ai-banner {
-                gap: 32px !important;
-                padding: 40px 32px !important;
-            }
-
-            .brz-ai-banner-center {
-                max-width: 100% !important;
-                flex: 1 1 100% !important;
-                order: 3 !important;
-            }
-
-            .brz-ai-banner-right {
-                flex: 0 0 auto !important;
-                order: 2 !important;
-            }
-        }
-
-        @media screen and (max-width: 768px) {
-            .brz-ai-banner {
-                flex-direction: column !important;
-                padding: 32px 24px !important;
-                gap: 32px !important;
-                margin: 20px 0 !important;
-                align-items: stretch !important;
-            }
-
-            .brz-ai-banner-left {
-                min-width: auto !important;
-                width: 100% !important;
-                flex: 1 1 100% !important;
-                order: 1 !important;
-            }
-
-            .brz-ai-banner-left h2 {
-                font-size: clamp(24px, 5vw, 28px) !important;
-                line-height: 1.3 !important;
-                word-wrap: break-word !important;
-                overflow-wrap: break-word !important;
-            }
-
-            .brz-ai-banner-left .brz-ai-button,
-            .brz-ai-banner-left .brz-ai-button-disabled {
-                width: 100% !important;
-                max-width: 100% !important;
-                justify-content: center !important;
-                align-self: stretch !important;
-                box-sizing: border-box !important;
-            }
-
-            .brz-ai-banner-center {
-                max-width: 100% !important;
-                width: 100% !important;
-                flex: 1 1 100% !important;
-                justify-content: flex-start !important;
-                order: 2 !important;
-            }
-
-            .brz-ai-banner-center ul {
-                width: 100% !important;
-                max-width: 100% !important;
-            }
-
-            .brz-ai-banner-center ul li {
-                font-size: clamp(14px, 3.5vw, 16px) !important;
-                word-wrap: break-word !important;
-                overflow-wrap: break-word !important;
-            }
-
-            .brz-ai-banner-right {
-                width: 100% !important;
-                flex: 1 1 100% !important;
-                display: flex !important;
-                justify-content: center !important;
-                order: 3 !important;
-            }
-
-            .brz-ai-banner-right .brz-ai-logo-container {
-                padding: 16px !important;
-                text-align: center !important;
-                width: 100% !important;
-            }
-
-            .brz-ai-banner-right .brz-ai-logo-container svg {
-                width: clamp(70px, 20vw, 100px) !important;
-                height: auto !important;
-                max-width: 100px !important;
-                margin: 0 auto !important;
-            }
-        }
-
-        @media screen and (max-width: 480px) {
-            .brz-ai-banner {
-                padding: 24px 16px !important;
-                gap: 24px !important;
-                margin: 16px 0 !important;
-            }
-
-            .brz-ai-banner-left h2 {
-                font-size: clamp(20px, 6vw, 24px) !important;
-                letter-spacing: -0.3px !important;
-            }
-
-            .brz-ai-banner-left .brz-ai-button,
-            .brz-ai-banner-left .brz-ai-button-disabled {
-                font-size: 14px !important;
-                padding: 10px 20px !important;
-                white-space: normal !important;
-            }
-
-            .brz-ai-banner-center ul {
-                gap: 14px !important;
-            }
-
-            .brz-ai-banner-center ul li {
-                font-size: clamp(13px, 3.2vw, 15px) !important;
-                line-height: 1.5 !important;
-            }
-
-            .brz-ai-banner-center ul li svg {
-                width: 20px !important;
-                height: 20px !important;
-                margin-right: 10px !important;
-                flex-shrink: 0 !important;
-            }
-
-            .brz-ai-banner-right .brz-ai-logo-container {
-                padding: 12px !important;
-            }
-
-            .brz-ai-banner-right .brz-ai-logo-container svg {
-                width: clamp(60px, 18vw, 80px) !important;
-                max-width: 80px !important;
-            }
-        }
-
-        @media screen and (max-width: 360px) {
-            .brz-ai-banner {
-                padding: 20px 12px !important;
-                gap: 20px !important;
-            }
-
-            .brz-ai-banner-left h2 {
-                font-size: 20px !important;
-            }
-
-            .brz-ai-banner-center ul li {
-                font-size: 13px !important;
-            }
-
-            .brz-ai-banner-center ul li svg {
-                width: 18px !important;
-                height: 18px !important;
-                margin-right: 8px !important;
-            }
-        }
-    </style>
-    <div class="brz-ai-banner" style="margin: 30px 0; background: 
-        radial-gradient(ellipse 120% 100% at 0% 0%, rgba(0, 110, 255, 0.25) 0%, rgba(0, 110, 255, 0.08) 20%, transparent 45%),
-        linear-gradient(180deg, #ffffff 0%, #ffffff 35%, #fefefe 50%, rgba(253, 250, 255, 0.99) 60%, rgba(250, 245, 255, 0.98) 70%, rgba(245, 240, 255, 0.96) 80%, rgba(240, 235, 255, 0) 90%, rgba(237, 233, 254, 0) 100%); 
-        border-radius: 12px; padding: 48px 56px; display: flex; align-items: center; justify-content: space-between; gap: 48px; position: relative; overflow: hidden; z-index: 0; width: 100%; box-sizing: border-box; max-width: 100%;">
-        <div style="position: absolute; top: -50%; right: -10%; width: 300px; height: 300px; background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%); border-radius: 50%;"></div>
-
-        <div class="brz-ai-banner-left" style="flex: 0 1 auto; position: relative; z-index: 1; display: flex; flex-direction: column; gap: 24px; min-width: 280px; max-width: 100%; box-sizing: border-box;">
-            <div style="font-size: 36px; font-weight: 700; line-height: 1.2; color: #1a1a1a; margin: 0; letter-spacing: -0.5px;">
+        <div class="brz-ai-banner-left">
+            <div class="brz-ai-banner-title">
                 <?php
                 $title = $l10n['aiBannerTitle'];
                 $highlight = $l10n['aiBannerTitleHighlight'];
                 $titleParts = explode($highlight, $title);
                 if (count($titleParts) == 2) {
-                    echo esc_html($titleParts[0]) . '<span style="color: #8b5cf6; position: relative; display: inline-block; font-weight: 700; border-bottom: 2px solid #8b5cf6; padding-bottom: 2px;">' . esc_html($highlight) . '</span>' . esc_html($titleParts[1]);
+                    echo esc_html($titleParts[0]) . '<span class="brz-ai-banner-title-highlight">' . esc_html($highlight) . '</span>' . esc_html($titleParts[1]);
                 } else {
                     echo esc_html($title);
                 }
                 ?>
             </div>
             <?php if ($isPro): ?>
-                <a class="button button-primary brz-ai-button js-open-ai-selection-modal" href="#" title="<?php echo $l10n['buildWebsite']; ?>" style="font-size: 15px; font-weight: 600; padding: 10px 32px; height: auto; background: #1e3a8a; color: #fff; border: none; border-radius: 8px; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); display: inline-flex; align-items: center; gap: 8px; white-space: nowrap; align-self: flex-start; box-shadow: 0 2px 8px rgba(30, 58, 138, 0.3);" onmouseover="this.style.background='#2563eb'" onmouseout="this.style.background='#1e3a8a'">
-                    <span><?php echo $l10n['buildWebsite']; ?></span>
-                    <svg width="18px" height="18px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="display: inline-block; vertical-align: middle; flex-shrink: 0; margin-left: 2px;">
+                <a class="button button-primary brz-ai-button js-open-ai-selection-modal" href="#" title="<?php echo esc_attr($l10n['buildWebsite']); ?>">
+                    <span><?php echo esc_html($l10n['buildWebsite']); ?></span>
+                    <svg class="brz-ai-button-icon" width="18px" height="18px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                         <title>AI Icon</title>
                         <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
                             <g id="Step-2" transform="translate(-1149, -610)" fill="#FFFFFF" fill-rule="nonzero">
@@ -225,9 +53,9 @@
                     </svg>
                 </a>
             <?php else: ?>
-                <button class="button button-primary button-disabled brz-ai-button-disabled" disabled title="<?php echo $l10n['requiresProLicense']; ?>" style="font-size: 15px; font-weight: 600; padding: 10px 32px; height: auto; background: #f3f4f6; color: #9ca3af; border: 1px solid #e5e7eb; border-radius: 8px; cursor: not-allowed; display: inline-flex; align-items: center; gap: 8px; white-space: nowrap; align-self: flex-start;">
-                    <span><?php echo $l10n['buildWebsite']; ?></span>
-                    <svg width="18px" height="18px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="display: inline-block; vertical-align: middle; flex-shrink: 0; margin-left: 2px; opacity: 0.5;">
+                <button class="button button-primary button-disabled brz-ai-button-disabled" disabled title="<?php echo esc_attr($l10n['requiresProLicense']); ?>">
+                    <span><?php echo esc_html($l10n['buildWebsite']); ?></span>
+                    <svg class="brz-ai-button-icon" width="18px" height="18px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                         <title>AI Icon</title>
                         <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
                             <g id="Step-2" transform="translate(-1149, -610)" fill="#FFFFFF" fill-rule="nonzero">
@@ -236,42 +64,42 @@
                         </g>
                     </svg>
                 </button>
-                <p class="description" style="margin: 12px 0 0 0; font-size: 14px; line-height: 1.6; color: #6b7280; font-weight: 400;">
-                    <?php echo $l10n['requiresProMessage']; ?>
-                    <a href="<?php echo $goProUrl; ?>" target="_blank" class="brz-ai-pro-link" style="color: #D62C64; text-decoration: none; font-weight: 600; border-bottom: 2px solid #D62C64; transition: all 0.2s ease; padding-bottom: 2px;">
-                        <?php echo $l10n['getProLicense']; ?>
+                <p class="description brz-ai-pro-message">
+                    <?php echo esc_html($l10n['requiresProMessage']); ?>
+                    <a href="<?php echo $goProUrl; ?>" target="_blank" class="brz-ai-pro-link">
+                        <?php echo esc_html($l10n['getProLicense']); ?>
                     </a>
                 </p>
             <?php endif; ?>
         </div>
 
-        <div class="brz-ai-banner-center" style="flex: 1 1 auto; position: relative; z-index: 1; max-width: 500px; min-width: 0; display: flex; align-items: center; justify-content: center; box-sizing: border-box;">
-            <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 18px; width: 100%; max-width: 100%; box-sizing: border-box;">
-                <li style="display: flex; align-items: flex-start; font-size: 16px; color: #4a4a4a; line-height: 1.6; width: 100%; max-width: 100%; box-sizing: border-box;">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" style="margin-right: 14px; margin-top: 2px; flex-shrink: 0;">
+        <div class="brz-ai-banner-center">
+            <ul class="brz-ai-feature-list">
+                <li class="brz-ai-feature-item">
+                    <svg class="brz-ai-feature-icon" width="24" height="24" viewBox="0 0 24 24" fill="none">
                         <path d="M20 6L9 17l-5-5" stroke="#8b5cf6" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
                     </svg>
-                    <span style="flex: 1; min-width: 0; word-wrap: break-word; overflow-wrap: break-word;"><?php echo esc_html($l10n['aiBannerFeature1']); ?></span>
+                    <span><?php echo esc_html($l10n['aiBannerFeature1']); ?></span>
                 </li>
-                <li style="display: flex; align-items: flex-start; font-size: 16px; color: #4a4a4a; line-height: 1.6; width: 100%; max-width: 100%; box-sizing: border-box;">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" style="margin-right: 14px; margin-top: 2px; flex-shrink: 0;">
+                <li class="brz-ai-feature-item">
+                    <svg class="brz-ai-feature-icon" width="24" height="24" viewBox="0 0 24 24" fill="none">
                         <path d="M20 6L9 17l-5-5" stroke="#8b5cf6" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
                     </svg>
-                    <span style="flex: 1; min-width: 0; word-wrap: break-word; overflow-wrap: break-word;"><?php echo esc_html($l10n['aiBannerFeature2']); ?></span>
+                    <span><?php echo esc_html($l10n['aiBannerFeature2']); ?></span>
                 </li>
-                <li style="display: flex; align-items: flex-start; font-size: 16px; color: #4a4a4a; line-height: 1.6; width: 100%; max-width: 100%; box-sizing: border-box;">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" style="margin-right: 14px; margin-top: 2px; flex-shrink: 0;">
+                <li class="brz-ai-feature-item">
+                    <svg class="brz-ai-feature-icon" width="24" height="24" viewBox="0 0 24 24" fill="none">
                         <path d="M20 6L9 17l-5-5" stroke="#8b5cf6" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
                     </svg>
-                    <span style="flex: 1; min-width: 0; word-wrap: break-word; overflow-wrap: break-word;"><?php echo esc_html($l10n['aiBannerFeature3']); ?></span>
+                    <span><?php echo esc_html($l10n['aiBannerFeature3']); ?></span>
                 </li>
             </ul>
         </div>
 
-        <div class="brz-ai-banner-right" style="flex: 0 0 auto; position: relative; z-index: 1; box-sizing: border-box;">
-            <a href="https://ai.brizy.io/" target="_blank" rel="noopener noreferrer" title="<?php echo esc_attr($l10n['aiBrizy']); ?>" class="brz-ai-logo-link" style="display: inline-block; line-height: 0;">
-                <div class="brz-ai-logo-container" style="padding: 20px;">
-                    <svg width="200px" height="76px" viewBox="0 0 113.968401 43.0000985" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="display: block;" role="img" aria-label="<?php echo esc_attr($l10n['aiLogoAlt']); ?>">
+        <div class="brz-ai-banner-right">
+            <a href="https://ai.brizy.io/" target="_blank" rel="noopener noreferrer" title="<?php echo esc_attr($l10n['aiBrizy']); ?>" class="brz-ai-logo-link">
+                <div class="brz-ai-logo-container">
+                    <svg width="200px" height="76px" viewBox="0 0 113.968401 43.0000985" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" role="img" aria-label="<?php echo esc_attr($l10n['aiLogoAlt']); ?>">
                         <title>Brizy</title>
                         <defs>
                             <linearGradient x1="20.7992038%" y1="10.9100695%" x2="78.7439783%" y2="89.0416553%" id="linearGradient-1">

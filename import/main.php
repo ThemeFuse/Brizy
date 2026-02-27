@@ -74,7 +74,7 @@ class Brizy_Import_Main {
 				'getProLicense'      	 => __( 'Buy Pro', 'brizy' ),
 				'aiBannerTitle'          => __( 'Generate amazing websites with AI', 'brizy' ),
 				'aiBannerTitleHighlight' => __( 'with AI', 'brizy' ),
-				'aiBannerFeature1'   	 => __( 'Useable websites, no gimmicks', 'brizy' ),
+				'aiBannerFeature1'   	 => __( 'Usable websites, no gimmicks', 'brizy' ),
 				'aiBannerFeature2'   	 => __( 'Tailor-made texts & images included', 'brizy' ),
 				'aiBannerFeature3'   	 => __( 'Full editing control after generation', 'brizy' ),
 				'aiBrizy'            	 => __( 'AI Brizy', 'brizy' ),
@@ -130,6 +130,13 @@ class Brizy_Import_Main {
 			$urlBuilder->plugin_url('vendor/select2/select2/dist/css/select2.min.css'),
 			[],
 			true
+		);
+
+		wp_enqueue_style(
+			'brizy-ai-banner',
+			$urlBuilder->plugin_url('import/static/css/ai-banner.css'),
+			[],
+			BRIZY_VERSION
 		);
 
 		wp_enqueue_script(

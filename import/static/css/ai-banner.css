@@ -1,0 +1,371 @@
+/* AI Banner - Main Container */
+.brz-ai-banner {
+    margin: 30px 0;
+    background:
+        radial-gradient(ellipse 120% 100% at 0% 0%, rgba(0, 110, 255, 0.25) 0%, rgba(0, 110, 255, 0.08) 20%, transparent 45%),
+        linear-gradient(180deg, #ffffff 0%, #ffffff 35%, #fefefe 50%, rgba(253, 250, 255, 0.99) 60%, rgba(250, 245, 255, 0.98) 70%, rgba(245, 240, 255, 0.96) 80%, rgba(240, 235, 255, 0) 90%, rgba(237, 233, 254, 0) 100%);
+    border-radius: 12px;
+    padding: 48px 56px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 48px;
+    position: relative;
+    overflow: hidden;
+    z-index: 0;
+    width: 100%;
+    box-sizing: border-box;
+    max-width: 100%;
+    flex-wrap: wrap;
+}
+
+/* Decorative Background Circle */
+.brz-ai-banner-bg-circle {
+    position: absolute;
+    top: -50%;
+    right: -10%;
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+    border-radius: 50%;
+}
+
+/* Left Column */
+.brz-ai-banner-left {
+    flex: 0 1 auto;
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    min-width: 280px;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+/* Title */
+.brz-ai-banner-title {
+    font-size: 36px;
+    font-weight: 700;
+    line-height: 1.2;
+    color: #1a1a1a;
+    margin: 0;
+    letter-spacing: -0.5px;
+}
+
+/* "with AI" Highlight */
+.brz-ai-banner-title-highlight {
+    color: #8b5cf6;
+    position: relative;
+    display: inline-block;
+    font-weight: 700;
+    border-bottom: 2px solid #8b5cf6;
+    padding-bottom: 2px;
+}
+
+/* Pro CTA Button */
+.brz-ai-button {
+    font-size: 15px;
+    font-weight: 600;
+    padding: 10px 32px;
+    height: auto;
+    background: #1e3a8a;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    white-space: nowrap;
+    align-self: flex-start;
+    box-shadow: 0 2px 8px rgba(30, 58, 138, 0.3);
+}
+
+.brz-ai-button:hover {
+    background: #2563eb;
+}
+
+/* Disabled CTA Button */
+.brz-ai-button-disabled {
+    font-size: 15px;
+    font-weight: 600;
+    padding: 10px 32px;
+    height: auto;
+    background: #f3f4f6;
+    color: #9ca3af;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    cursor: not-allowed;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    white-space: nowrap;
+    align-self: flex-start;
+}
+
+/* Button Icon */
+.brz-ai-button-icon {
+    display: inline-block;
+    vertical-align: middle;
+    flex-shrink: 0;
+    margin-left: 2px;
+}
+
+.brz-ai-button-disabled .brz-ai-button-icon {
+    opacity: 0.5;
+}
+
+/* Pro Message */
+.brz-ai-pro-message {
+    margin: 12px 0 0 0;
+    font-size: 14px;
+    line-height: 1.6;
+    color: #6b7280;
+    font-weight: 400;
+}
+
+/* Pro Link */
+.brz-ai-pro-link {
+    color: #D62C64;
+    text-decoration: none;
+    font-weight: 600;
+    border-bottom: 2px solid #D62C64;
+    transition: all 0.2s ease;
+    padding-bottom: 2px;
+}
+
+/* Center Column */
+.brz-ai-banner-center {
+    flex: 1 1 auto;
+    position: relative;
+    z-index: 1;
+    max-width: 500px;
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+}
+
+/* Feature List */
+.brz-ai-feature-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+/* Feature Item */
+.brz-ai-feature-item {
+    display: flex;
+    align-items: flex-start;
+    font-size: 16px;
+    color: #4a4a4a;
+    line-height: 1.6;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+/* Feature Icon */
+.brz-ai-feature-icon {
+    margin-right: 14px;
+    margin-top: 2px;
+    flex-shrink: 0;
+}
+
+/* Feature Text */
+.brz-ai-feature-item span {
+    flex: 1;
+    min-width: 0;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
+/* Right Column */
+.brz-ai-banner-right {
+    flex: 0 0 auto;
+    position: relative;
+    z-index: 1;
+    box-sizing: border-box;
+}
+
+/* Logo Link */
+.brz-ai-logo-link {
+    display: inline-block;
+    line-height: 0;
+}
+
+/* Logo Container */
+.brz-ai-logo-container {
+    padding: 20px;
+}
+
+/* Logo SVG */
+.brz-ai-logo-container svg {
+    display: block;
+}
+
+/* Responsive Breakpoints */
+@media screen and (max-width: 1024px) {
+    .brz-ai-banner {
+        gap: 32px !important;
+        padding: 40px 32px !important;
+    }
+
+    .brz-ai-banner-center {
+        max-width: 100% !important;
+        flex: 1 1 100% !important;
+        order: 3 !important;
+    }
+
+    .brz-ai-banner-right {
+        flex: 0 0 auto !important;
+        order: 2 !important;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .brz-ai-banner {
+        flex-direction: column !important;
+        padding: 32px 24px !important;
+        gap: 32px !important;
+        margin: 20px 0 !important;
+        align-items: stretch !important;
+    }
+
+    .brz-ai-banner-left {
+        min-width: auto !important;
+        width: 100% !important;
+        flex: 1 1 100% !important;
+        order: 1 !important;
+    }
+
+    .brz-ai-banner-left h2 {
+        font-size: clamp(24px, 5vw, 28px) !important;
+        line-height: 1.3 !important;
+        word-wrap: break-word !important;
+        overflow-wrap: break-word !important;
+    }
+
+    .brz-ai-banner-left .brz-ai-button,
+    .brz-ai-banner-left .brz-ai-button-disabled {
+        width: 100% !important;
+        max-width: 100% !important;
+        justify-content: center !important;
+        align-self: stretch !important;
+        box-sizing: border-box !important;
+    }
+
+    .brz-ai-banner-center {
+        max-width: 100% !important;
+        width: 100% !important;
+        flex: 1 1 100% !important;
+        justify-content: flex-start !important;
+        order: 2 !important;
+    }
+
+    .brz-ai-banner-center ul {
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+
+    .brz-ai-banner-center ul li {
+        font-size: clamp(14px, 3.5vw, 16px) !important;
+        word-wrap: break-word !important;
+        overflow-wrap: break-word !important;
+    }
+
+    .brz-ai-banner-right {
+        width: 100% !important;
+        flex: 1 1 100% !important;
+        display: flex !important;
+        justify-content: center !important;
+        order: 3 !important;
+    }
+
+    .brz-ai-banner-right .brz-ai-logo-container {
+        padding: 16px !important;
+        text-align: center !important;
+        width: 100% !important;
+    }
+
+    .brz-ai-banner-right .brz-ai-logo-container svg {
+        width: clamp(70px, 20vw, 100px) !important;
+        height: auto !important;
+        max-width: 100px !important;
+        margin: 0 auto !important;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .brz-ai-banner {
+        padding: 24px 16px !important;
+        gap: 24px !important;
+        margin: 16px 0 !important;
+    }
+
+    .brz-ai-banner-left h2 {
+        font-size: clamp(20px, 6vw, 24px) !important;
+        letter-spacing: -0.3px !important;
+    }
+
+    .brz-ai-banner-left .brz-ai-button,
+    .brz-ai-banner-left .brz-ai-button-disabled {
+        font-size: 14px !important;
+        padding: 10px 20px !important;
+        white-space: normal !important;
+    }
+
+    .brz-ai-banner-center ul {
+        gap: 14px !important;
+    }
+
+    .brz-ai-banner-center ul li {
+        font-size: clamp(13px, 3.2vw, 15px) !important;
+        line-height: 1.5 !important;
+    }
+
+    .brz-ai-banner-center ul li svg {
+        width: 20px !important;
+        height: 20px !important;
+        margin-right: 10px !important;
+        flex-shrink: 0 !important;
+    }
+
+    .brz-ai-banner-right .brz-ai-logo-container {
+        padding: 12px !important;
+    }
+
+    .brz-ai-banner-right .brz-ai-logo-container svg {
+        width: clamp(60px, 18vw, 80px) !important;
+        max-width: 80px !important;
+    }
+}
+
+@media screen and (max-width: 360px) {
+    .brz-ai-banner {
+        padding: 20px 12px !important;
+        gap: 20px !important;
+    }
+
+    .brz-ai-banner-left h2 {
+        font-size: 20px !important;
+    }
+
+    .brz-ai-banner-center ul li {
+        font-size: 13px !important;
+    }
+
+    .brz-ai-banner-center ul li svg {
+        width: 18px !important;
+        height: 18px !important;
+        margin-right: 8px !important;
+    }
+}
