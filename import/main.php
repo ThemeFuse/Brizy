@@ -88,12 +88,14 @@ class Brizy_Import_Main {
 		try {
 			$args          = array_merge( $args, $this->provider->getAllDemos() );
 			$args['count'] = count( $args['demos'] );
-
-			Brizy_Editor_View::render( BRIZY_PLUGIN_PATH . '/import/views/starter-templates', $args );
-
 		} catch ( Exception $e ) {
-			echo $e->getMessage();
+			$args['demos']          = [];
+			$args['terms']          = [];
+			$args['count']          = 0;
+			$args['templatesError'] = $e->getMessage();
 		}
+
+		Brizy_Editor_View::render( BRIZY_PLUGIN_PATH . '/import/views/starter-templates', $args );
 	}
 
 	public function ajaxImportDemo() {

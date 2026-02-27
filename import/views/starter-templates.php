@@ -122,7 +122,7 @@
     </div>
 
     <div class="theme-browser content-filterable rendered">
-        <div class="themes wp-clearfix">
+        <?php if ( ! empty( $templatesError ) ) : ?><div class="notice notice-error" style="margin: 16px 0;"><p><?php echo esc_html( $templatesError ); ?></p></div><?php endif; ?>
             <?php foreach ($demos as $demo): ?>
                 <div class="theme <?php echo ($demo['pro'] ? 'brz-demo-is-pro' : 'brz-demo-is-free'); ?>" data-terms="<?php echo implode(',', $demo['terms']); ?>" data-keywords="<?php echo $demo['keywords']; ?>" data-name="<?php echo $demo['name']; ?>" data-preview-link="<?php echo $demo['url']; ?>">
                     <div class="theme-screenshot" style="height: 400px">
