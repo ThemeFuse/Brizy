@@ -162,6 +162,24 @@ class Brizy_Editor_AuthModal
                                 if (_w && _w.__BRZ_PLUGIN_ENV__) {
                                     _w.__BRZ_PLUGIN_ENV__.hash = newHash;
                                     if (_w.__BRZ_PLUGIN_ENV__.actions) _w.__BRZ_PLUGIN_ENV__.actions.hash = newHash;
+
+                                    if (_w.__BRZ_PLUGIN_ENV__.api && _w.__BRZ_PLUGIN_ENV__.api.customIcon) {
+                                        var c = _w.__BRZ_PLUGIN_ENV__.api.customIcon;
+                                        try {
+                                            var setHashInUrl = function(url, h) {
+                                                if (!url || typeof url !== 'string') return url;
+                                                try {
+                                                    var u = new URL(url, _w.location.origin);
+                                                    u.searchParams.set('hash', h);
+                                                    return u.toString();
+                                                } catch (e) { return url; }
+                                            };
+                                            if (c.getIconsUrl) c.getIconsUrl = setHashInUrl(c.getIconsUrl, newHash);
+                                            if (c.uploadIconUrl) c.uploadIconUrl = setHashInUrl(c.uploadIconUrl, newHash);
+                                            if (c.deleteIconUrl) c.deleteIconUrl = setHashInUrl(c.deleteIconUrl, newHash);
+                                        } catch (e) { /* ignore */ }
+                                    }
+
                                 }
                                 if (_w && _w.__VISUAL_CONFIG__) {
                                     if (!_w.__VISUAL_CONFIG__.api) _w.__VISUAL_CONFIG__.api = {};
