@@ -12,7 +12,7 @@
 		</div>
 
 		<?php if ( ! $isWhiteLabel ) : ?>
-			<?php if ( ! empty( $showYoutubeEmbed ) ) : ?>
+			<?php if ( $showYoutubeEmbed ) : ?>
 				<iframe class="brz-video-page" src="https://www.youtube.com/embed/xiym9N3B_Hk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 			<?php else : ?>
 				<a class="brz-video-placeholder" href="https://www.youtube.com/watch?v=xiym9N3B_Hk" target="_blank" rel="noopener noreferrer">

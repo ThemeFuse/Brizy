@@ -25,10 +25,11 @@ class Brizy_Admin_GettingStarted
 	 */
 	public static function isVideoEnabled() {
 		try {
-			return (bool) Brizy_Editor_Storage_Common::instance()->get( 'getting-started-video-enabled', true );
+			$enabled = (bool) Brizy_Editor_Storage_Common::instance()->get( 'getting-started-video-enabled', true );
 		} catch ( Exception $e ) {
-			return true;
+			$enabled = true;
 		}
+		return $enabled;
 	}
 
 	public function addSubmenuPageGettingStarted() {
@@ -57,12 +58,11 @@ class Brizy_Admin_GettingStarted
 
         // GDPR: Allow disabling the Getting Started YouTube embed to prevent data transfer without consent.
 		$showYoutubeEmbed = self::isVideoEnabled();
-		$showYoutubeEmbed = apply_filters( 'brizy_getting_started_show_youtube_video', $showYoutubeEmbed );
 
 		$args = [
 			'isWhiteLabel'       => $isWhiteLabel,
 			'imgPath'            => $brandedOrLabelImgUrl,
-			'showYoutubeEmbed'   => $showYoutubeEmbed,
+			'showYoutubeEmbed'   => (bool) $showYoutubeEmbed,
 		];
 
         try {
