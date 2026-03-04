@@ -13,14 +13,11 @@ export const resetNonce = ({ data }: ResetNonceProps) => {
   const isUnauthenticated =
     data?.status === "unauthenticated" && data?.code === 401;
 
+  var _w = window.parent !== window && typeof window.parent.brizyOpenAuthModal === "function" ? window.parent : window;
   if (isUnauthenticated) {
-    if (typeof window.brizyOpenAuthModal === "function") {
-      window.brizyOpenAuthModal();
-    }
+    if (typeof _w.brizyOpenAuthModal === "function") _w.brizyOpenAuthModal();
   } else {
-    if (typeof window.brizyCloseAuthModal === "function") {
-      window.brizyCloseAuthModal();
-    }
+    if (typeof _w.brizyCloseAuthModal === "function") _w.brizyCloseAuthModal();
   }
 
   const isNonceExpired = data?.status === "nonce_expired" && data?.code === 403;
@@ -44,12 +41,8 @@ export const resetNonce = ({ data }: ResetNonceProps) => {
     set(window.__VISUAL_CONFIG__, ["urls", "pagePreview"], pagePreview);
     set(window.__VISUAL_CONFIG__, ["urls", "changeTemplate"], changeTemplate);
 
-    if (typeof window.brizyCloseAuthModal === "function") {
-      window.brizyCloseAuthModal();
-    }
+    if (typeof _w.brizyCloseAuthModal === "function") _w.brizyCloseAuthModal();
   } else {
-    if (typeof window.brizyOpenAuthModal === "function") {
-      window.brizyOpenAuthModal();
-    }
+    if (typeof _w.brizyOpenAuthModal === "function") _w.brizyOpenAuthModal();
   }
 };
