@@ -66,7 +66,19 @@ class Brizy_Import_Main {
 				't12'           => __( 'Delete existing content', 'brizy' ),
 				't13'           => __( 'Choose this option if you want to start fresh and delete your current content. A backup is advisable, there is no turning back from this.', 'brizy' ),
 				't14'           => __( 'Deletes your current content', 'brizy' ),
-                't15'            => __( 'Edit Website', 'brizy' ),
+                't15'           => __( 'Edit Website', 'brizy' ),
+				'generateWithAI'     	 => __( 'Generate with AI', 'brizy' ),
+				'buildWebsite'       	 => __( 'Build Website', 'brizy' ),
+                'requiresProLicense' 	 => __( 'This feature requires a Pro license', 'brizy' ),
+				'requiresProMessage' 	 => __( 'AI generation requires a Pro license.', 'brizy' ),
+				'getProLicense'      	 => __( 'Buy Pro', 'brizy' ),
+				'aiBannerTitle'          => __( 'Generate amazing websites with AI', 'brizy' ),
+				'aiBannerTitleHighlight' => __( 'with AI', 'brizy' ),
+				'aiBannerFeature1'   	 => __( 'Usable websites, no gimmicks', 'brizy' ),
+				'aiBannerFeature2'   	 => __( 'Tailor-made texts & images included', 'brizy' ),
+				'aiBannerFeature3'   	 => __( 'Full editing control after generation', 'brizy' ),
+				'aiBrizy'            	 => __( 'AI Brizy', 'brizy' ),
+				'aiLogoAlt'          	 => __( 'AI', 'brizy' ),
             ],
 			'supportUrl' => Brizy_Config::getSupportUrl(),
 			'goProUrl'   => Brizy_Config::getUpgradeUrl(),
@@ -76,12 +88,14 @@ class Brizy_Import_Main {
 		try {
 			$args          = array_merge( $args, $this->provider->getAllDemos() );
 			$args['count'] = count( $args['demos'] );
-
-			Brizy_Editor_View::render( BRIZY_PLUGIN_PATH . '/import/views/starter-templates', $args );
-
 		} catch ( Exception $e ) {
-			echo $e->getMessage();
+			$args['demos']          = [];
+			$args['terms']          = [];
+			$args['count']          = 0;
+			$args['templatesError'] = $e->getMessage();
 		}
+
+		Brizy_Editor_View::render( BRIZY_PLUGIN_PATH . '/import/views/starter-templates', $args );
 	}
 
 	public function ajaxImportDemo() {
@@ -118,6 +132,13 @@ class Brizy_Import_Main {
 			$urlBuilder->plugin_url('vendor/select2/select2/dist/css/select2.min.css'),
 			[],
 			true
+		);
+
+		wp_enqueue_style(
+			'brizy-ai-banner',
+			$urlBuilder->plugin_url('import/static/css/ai-banner.css'),
+			[],
+			BRIZY_VERSION
 		);
 
 		wp_enqueue_script(
