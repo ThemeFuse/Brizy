@@ -10,13 +10,15 @@ class Brizy_Import_Main
 
         $this->provider = new Brizy_Import_Provider();
 
-        if (defined('WP_CLI') && WP_CLI) {
-            WP_CLI::add_command('brizy demo', Brizy_Import_WpCli::class);
-        } else {
-            add_action('admin_menu', [$this, 'addSubmenuPageTemplates'], 11);
-            add_action('wp_ajax_brizy-import-demo', [$this, 'ajaxImportDemo']);
-            add_action('admin_enqueue_scripts', [$this, 'adminEnqueueScripts']);
-        }
+		if ( defined( 'WP_CLI' ) && WP_CLI ) {
+			WP_CLI::add_command( 'brizy demo', Brizy_Import_WpCli::class );
+		} else {
+			add_action( 'admin_menu',                 [ $this, 'addSubmenuPageTemplates' ], 11 );
+			add_action( 'wp_ajax_brizy-import-demo',  [ $this, 'ajaxImportDemo' ] );
+			add_action( 'admin_enqueue_scripts',      [ $this, 'adminEnqueueScripts' ] );
+			add_filter( 'admin_footer_text',          [ $this, 'hideAdminFooterTextOnStarterTemplates' ], 999 );
+			add_filter( 'update_footer',              [ $this, 'hideAdminFooterTextOnStarterTemplates' ], 999 );
+		}
 
         add_filter('http_request_args', [$this, 'doNotRejectUnsafeUrl'], 999);
     }
@@ -162,4 +164,17 @@ class Brizy_Import_Main
         $args['reject_unsafe_urls'] = false;
         return $args;
     }
+
+	/**
+	 * Hide "Thank you for creating with WordPress" and version footer on Starter Templates page.
+	 *
+	 * @param string $text Footer text.
+	 * @return string
+	 */
+	public function hideAdminFooterTextOnStarterTemplates( $text ) {
+		if ( isset( $_GET['page'] ) && $_GET['page'] === 'starter-templates' ) {
+			return '';
+		}
+		return $text;
+	}
 }
