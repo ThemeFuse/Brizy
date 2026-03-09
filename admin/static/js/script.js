@@ -441,7 +441,7 @@ jQuery(document).ready(function ($) {
                 filterLink  = $( '.js-filter-link.current' ).attr( 'data-sort' ),
                 count       = 0;
 
-            $( '.themes .theme' ).each( function() {
+            $( '.brz-wrap-demodata .themes .theme' ).each( function() {
                 var keywords          = $( this ).data( 'keywords' ),
                     name              = $( this ).data( 'name' ),
                     terms             = String( $( this ).data( 'terms' ) ).split(','),
