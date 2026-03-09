@@ -4,7 +4,7 @@ Tags: page builder, website builder, brizy, editor, visual editor, unyson, wysiw
 Requires at least: 4.5
 Tested up to: 6.9.1
 Requires PHP: 7.2.24
-Stable tag: 2.7.24
+Stable tag: 2.8.0
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -136,6 +136,9 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 11. **Resize columns by dragging the handle that appears in between**
 
 == Changelog ==
+
+= 2.8.0 - 2026-03-09 =
+* New: AI integration for WordPress
 
 = 2.7.24 - 2026-02-10 =
 * Fixed: Generate global styles bug
