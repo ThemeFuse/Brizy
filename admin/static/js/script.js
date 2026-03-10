@@ -244,6 +244,7 @@ jQuery(document).ready(function ($) {
             }
 
             if (typeof Brizy_Admin_Data !== 'undefined' &&
+                !Brizy_Admin_Data.isWhiteLabel &&
                 Brizy_Admin_Data.aiActions &&
                 Object.keys(Brizy_Admin_Data.aiActions).length > 0 &&
                 !$('.brz-ai-button.js-open-ai-selection-modal').length) {

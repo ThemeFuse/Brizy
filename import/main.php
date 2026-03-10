@@ -42,7 +42,10 @@ class Brizy_Import_Main {
 
 	public function renderTemplatesPage() {
 
+		$isWhiteLabel = class_exists( 'BrizyPro_Admin_WhiteLabel' ) && BrizyPro_Admin_WhiteLabel::_init()->getEnabled();
+
 		$args = [
+			'isWhiteLabel' => $isWhiteLabel,
 			'l10n'       => [
 				'all'           => __( 'All', 'brizy' ),
 				'livePreview'   => __( 'Live Preview', 'brizy' ),
