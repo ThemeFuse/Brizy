@@ -268,7 +268,8 @@ class Brizy_Admin_Main
                 'pluginVersion' => BRIZY_VERSION,
                 'aiNonce' => wp_create_nonce('brizy-api'),
                 'nonce' => wp_create_nonce('brizy-admin-nonce'),
-                'l10n' => [
+                'isWhiteLabel'  => class_exists( 'BrizyPro_Admin_WhiteLabel' ) && BrizyPro_Admin_WhiteLabel::_init()->getEnabled(),
+            'l10n' => [
                         'deactivateFeedbackSubmitBtn' => __('Submit & Deactivate', 'brizy'),
                         'deactivateFeedbackSkipBtn' => __('Skip & Deactivate', 'brizy'),
                         'aiCreatingSessionTitle' => __('Creating AI session', 'brizy'),
