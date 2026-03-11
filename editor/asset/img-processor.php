@@ -52,14 +52,13 @@ class Brizy_Editor_Asset_ImgProcessor implements Brizy_Editor_Content_ProcessorI
 				continue;
 			}
 
-			if ( empty( $vars[ $this->sizeKey ] ) ) {
-				$args[ $this->sizeKey ] = 'full';
-			}
+			// Use requested size (thumbnail, medium, large, etc.) or default to full when missing.
+			$size = ! empty( $vars[ $this->sizeKey ] ) ? $vars[ $this->sizeKey ] : 'full';
 
 			$imgs[] = [
 				'url'  => $url,
 				'uid'  => $vars[ $this->uidKey ],
-				'size' => $vars[ $this->sizeKey ],
+				'size' => $size,
 			];
 		}
 
