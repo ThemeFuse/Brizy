@@ -1,0 +1,76 @@
+@use "sass:math";
+@use "../../variables";
+@use "../../mixins/input";
+
+// --- Number Control
+.brz-ed .brz-ed-control__number {
+  @include input.input;
+  @include input.size;
+  display: flex;
+  align-items: center;
+  padding: 0;
+  position: relative;
+
+  .brz-input {
+    @include input.input;
+    background: none;
+    border: none;
+
+    &::-webkit-inner-spin-button,
+    &::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+  }
+
+  &--arrows {
+    position: relative;
+    width: 35%;
+    flex-basis: 35%;
+    height: variables.$control-height;
+    margin-inline-start: 5px;
+  }
+
+  &--up,
+  &--down {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: math.div(variables.$control-height, 2);
+    line-height: math.div(variables.$control-height, 2);
+    font-size: 8px;
+    position: absolute;
+    inset-inline-end: 0;
+    cursor: pointer;
+    color: variables.$control-color;
+    -webkit-transition: color 0.2s linear;
+    transition: color 0.2s linear;
+
+    .brz-icon-svg {
+      position: absolute;
+      inset-inline-end: 10px;
+      top: auto;
+    }
+
+    &:hover {
+      color: variables.$brand__primary;
+    }
+  }
+
+  &--up {
+    top: 0;
+
+    .brz-icon-svg {
+      bottom: 1px;
+    }
+  }
+
+  &--down {
+    bottom: 0;
+
+    .brz-icon-svg {
+      top: 1px;
+    }
+  }
+}

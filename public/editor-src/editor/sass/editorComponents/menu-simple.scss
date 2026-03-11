@@ -1,0 +1,256 @@
+@use "../mixins/breakpoints";
+
+.brz .brz-menu-simple {
+  .menu {
+    display: flex;
+    align-items: center;
+    flex-flow: row wrap;
+    list-style: none;
+    margin: 0 auto;
+    padding: 0;
+
+    .menu-item {
+      position: relative;
+      text-align: left;
+      list-style: none;
+
+      a span {
+        display: block;
+      }
+      &:hover > .sub-menu {
+        display: block;
+      }
+    }
+    .sub-menu {
+      position: absolute;
+      top: 0;
+      left: 0;
+      padding: 15px 0;
+      text-align: center;
+      text-transform: none;
+      list-style: none;
+      margin: 0 !important;
+      display: none;
+      width: 280px;
+      background-color: #33344b;
+      z-index: 110;
+
+      .menu-item {
+        display: block;
+        margin: 0;
+        padding: 0;
+      }
+      .sub-menu {
+        left: 100%;
+      }
+      a {
+        display: block;
+        line-height: 1.2em;
+        padding: 10px 12%;
+        color: #fcfcfc;
+
+        &:hover {
+          background: rgba(36, 36, 53, 0.94);
+        }
+      }
+    }
+    & > .menu-item {
+      display: inline-block;
+      flex: 0 1 auto;
+      padding-top: 5px;
+      padding-bottom: 5px;
+
+      & > .sub-menu {
+        top: 100%;
+      }
+    }
+
+    // If default menu hasn't items
+    & > ul {
+      margin: 0 !important;
+
+      .page_item:not(:first-child) {
+        margin-left: 15px;
+      }
+    }
+  }
+  &__toggle .menu {
+    display: flex;
+    flex-flow: row wrap;
+  }
+  &__icon {
+    display: none;
+    padding: 15px;
+    position: relative;
+    cursor: pointer;
+    user-select: none;
+    margin: 0;
+
+    &--bars {
+      display: block;
+      height: 2px;
+      position: relative;
+      transition: background 0.2s ease-out;
+      width: 18px;
+
+      &:before,
+      &:after {
+        background-color: currentColor;
+        content: "";
+        display: block;
+        height: 100%;
+        position: absolute;
+        transition: all 0.2s ease-out;
+        width: 100%;
+      }
+      &:before {
+        top: 5px;
+      }
+      &:after {
+        top: -5px;
+      }
+    }
+  }
+  .brz-input {
+    display: none;
+
+    &:checked ~ div .menu {
+      display: flex;
+      max-height: 100%;
+    }
+    &:checked ~ .brz-menu-simple__icon .brz-menu-simple__icon--bars {
+      background: transparent;
+    }
+    &:checked ~ .brz-menu-simple__icon .brz-menu-simple__icon--bars:before {
+      transform: rotate(-45deg);
+    }
+    &:checked ~ .brz-menu-simple__icon .brz-menu-simple__icon--bars:after {
+      transform: rotate(45deg);
+    }
+    &:checked
+      ~ .brz-menu-simple__icon:not(.steps)
+      .brz-menu-simple__icon--bars:before,
+    &:checked
+      ~ .brz-menu-simple__icon:not(.steps)
+      .brz-menu-simple__icon--bars:after {
+      top: 0;
+    }
+  }
+  &--cloud a {
+    text-decoration: none;
+  }
+}
+
+// Menu Pro
+// Style for Menu Pro when pro is disabled
+.brz .brz-menu {
+  &__ul {
+    margin: 0;
+    padding: 0;
+    font-family: inherit;
+  }
+  &__item {
+    list-style: none;
+  }
+}
+
+// Responsive
+.brz:not(.brz-ed) {
+  @include breakpoints.media-breakpoint-down(ms) {
+    .brz-menu-simple {
+      width: auto;
+      text-align: center;
+
+      &__toggle--mobile {
+        .menu {
+          display: none;
+          flex-flow: column nowrap;
+          max-height: 0;
+          align-items: flex-start;
+          transition: max-height 0.2s ease-out;
+
+          .sub-menu {
+            position: relative;
+            display: block;
+            width: 100%;
+            left: 15px;
+            padding: 0;
+            background-color: transparent;
+
+            .menu-item a {
+              padding: 5px;
+
+              &:hover {
+                background-color: transparent;
+              }
+            }
+            .sub-menu {
+              display: block;
+              left: 15px;
+            }
+          }
+          & > .menu-item {
+            padding: 0;
+
+            & > .sub-menu {
+              top: 100%;
+              padding: 5px 0;
+            }
+          }
+        }
+        .brz-menu-simple__icon {
+          display: inline-block;
+        }
+      }
+    }
+  }
+
+  @include breakpoints.media-breakpoint-between(sm, sm) {
+    .brz-menu-simple {
+      width: auto;
+      text-align: center;
+
+      &__toggle--tablet {
+        .menu {
+          display: none;
+          flex-flow: column nowrap;
+          max-height: 0;
+          align-items: flex-start;
+          transition: max-height 0.2s ease-out;
+
+          .sub-menu {
+            position: relative;
+            display: block;
+            width: 100%;
+            left: 15px;
+            padding: 0;
+            background-color: transparent;
+
+            .menu-item a {
+              padding: 5px;
+
+              &:hover {
+                background-color: transparent;
+              }
+            }
+            .sub-menu {
+              display: block;
+              left: 15px;
+            }
+          }
+          & > .menu-item {
+            padding: 0;
+
+            & > .sub-menu {
+              top: 100%;
+              padding: 5px 0;
+            }
+          }
+        }
+        .brz-menu-simple__icon {
+          display: inline-block;
+        }
+      }
+    }
+  }
+}

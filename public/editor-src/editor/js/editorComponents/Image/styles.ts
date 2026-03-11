@@ -102,6 +102,7 @@ export function styleContent(data: Props): OutputStyle {
 
 export function styleWrapper(data: Props): OutputStyle {
   const { v } = data;
+  const { showFilter } = data.props;
 
   const { maskShape = "none" } = v;
 
@@ -123,7 +124,7 @@ export function styleWrapper(data: Props): OutputStyle {
     },
     ".brz &&:hover": {
       standart: [
-        "cssStyleElementImageFilter|||editor",
+        ...(showFilter ? ["cssStyleElementImageFilter|||editor"] : []),
         ...(maskShape === "none"
           ? [
               "cssStyleBorder|||editor",

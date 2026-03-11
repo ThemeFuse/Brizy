@@ -1,0 +1,18 @@
+@use "../../variables";
+
+//---
+.brz-ed .brz-ed-option-wrapper {
+  &.brz-ed-option-type__population {
+    &,
+    &-dev {
+      .brz-ed-option-population:not(.brz-control__select-population) {
+        border: none;
+        padding: 0;
+        min-height: unset;
+        flex: 1 1 auto;
+        justify-content: flex-end;
+        margin-left: initial;
+      }
+    }
+  }
+}

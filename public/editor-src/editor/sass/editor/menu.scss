@@ -1,0 +1,67 @@
+@use "../variables" as *;
+@use "../functions/z-index";
+
+// Editor Shortcode Menu
+.brz-ed .brz-menu__editor {
+  .brz-menu__item--opened > .brz-menu__sub-menu {
+    visibility: visible;
+    opacity: 1;
+    z-index: z("mega-menu");
+    transition:
+      0.2s visibility linear,
+      0.2s opacity linear;
+  }
+
+  // Custom Navbar title in Editor Mode
+  .brz-mm-panel_has-navbar {
+    padding-top: 0;
+
+    & > .brz-mm-navbar {
+      display: none;
+    }
+  }
+
+  &:not(.brz-mm-menu) {
+    .brz-menu__item:has(.brz-menu__sub-menu) {
+      position: relative;
+    }
+  }
+}
+
+// MMenu
+.brz-ed.brz-mm-wrapper_opened {
+  .brz-root__container {
+    position: relative;
+  }
+
+  // Popups
+  .brz-section__header,
+  .brz-root__container {
+    z-index: 1;
+  }
+  .brz-popup,
+  .brz-popup2,
+  .brz-section__header--animated {
+    z-index: 2;
+  }
+}
+.brz-ed .brz-mm-menu__item-empty .brz-mm-btn,
+.brz-ed .brz-mm-menu__item-mega-menu .brz-mm-menu__sub-menu,
+.brz-mm-menu__item-dropdown .brz-mega-menu__mmenu {
+  display: none;
+}
+// Fixed by devices
+.brz-ed.brz-ed--desktop .brz-mm-menu--desktop {
+  position: fixed;
+}
+.brz-ed.brz-ed--tablet .brz-mm-menu--tablet {
+  position: fixed;
+}
+
+.brz-ed .brz-mega-menu__portal {
+  &--tablet,
+  &--mobile {
+    padding-left: $mobile-paddings !important;
+    padding-right: $mobile-paddings !important;
+  }
+}

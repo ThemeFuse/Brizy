@@ -1,0 +1,48 @@
+@use "../../mixins/input";
+@use "../../variables";
+
+.brz-ed .brz-ed-control__number-unit {
+  margin-inline-start: variables.$space__between__controls;
+  flex: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  &__input {
+    position: relative;
+    flex: 0;
+
+    .brz-invisible {
+      @include input.small-input;
+      word-break: keep-all;
+      white-space: nowrap;
+      line-height: unset;
+    }
+
+    input {
+      @include input.small-input;
+
+      position: absolute;
+      width: 100%;
+    }
+  }
+
+  &__unit {
+    flex: none;
+    margin-inline-start: 5px;
+    color: variables.$options__label-color;
+    cursor: pointer;
+
+    &--active {
+      color: variables.$brand__primary;
+    }
+  }
+
+  .brz-ed-control__multiSelect.brz-ed-control__multiSelect--size-medium.brz-slider__select.brz-ed-control__select-single {
+    min-width: 25px;
+    margin-inline-start: 3px;
+  }
+  .brz-ed-control__multiSelect--value-container.brz-ed-control__multiSelect--value-container {
+    padding: 0;
+  }
+}

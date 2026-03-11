@@ -54,3 +54,10 @@ export interface UserAgreementCheckboxProps {
   enableCustomHtml?: string;
   customHtml?: string;
 }
+
+export interface PhoneOption {
+  code: string;
+  flag: string;
+  dialCode: string;
+  name: string;
+}

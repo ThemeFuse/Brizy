@@ -1,4 +1,4 @@
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import type { Config } from "visual/global/Config";
 import { EditorMode } from "visual/providers/EditorModeProvider";
 import { GlobalBlock } from "visual/types/GlobalBlock";
 import { Page } from "visual/types/Page";
@@ -24,7 +24,7 @@ export interface Static {
 }
 
 export interface Props {
-  config: ConfigCommon;
+  config: Config;
   page: Page;
   project: Project;
   editorMode: EditorMode;

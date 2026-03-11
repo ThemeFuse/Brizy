@@ -1,0 +1,14 @@
+@use "../../variables";
+@use "../../mixins/input";
+
+// --- Input Control
+.brz-ed .brz-ed-control__textarea {
+  @include input.textarea;
+
+  height: 136px;
+  flex: 1 1 auto;
+}
+
+.brz-ed .brz-ed-control__textarea2 {
+  @include input.textarea;
+}

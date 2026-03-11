@@ -41,6 +41,12 @@ import * as toolbarExtendLabel from "./toolbarExtendLabel";
 import * as toolbarExtendLostPasswordConfig from "./toolbarExtendLostPassword";
 import toolbarExtendParentFn from "./toolbarExtendParent";
 
+// SCSS import - automatically tracked during static rendering
+import(
+  // @ts-expect-error: .scss?chunk=Login files
+  /* webpackChunkName: "login" */ "sass/editorComponents/login.scss?componentId=Login&chunk=login"
+);
+
 class Login extends EditorComponent {
   static defaultValue = defaultValue;
   static defaultProps = {

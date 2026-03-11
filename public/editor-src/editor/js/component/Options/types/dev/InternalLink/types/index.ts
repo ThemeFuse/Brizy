@@ -1,3 +1,4 @@
+import { type DebouncedFunction } from "es-toolkit";
 import * as Option from "visual/component/Options/Type";
 import { WithClassName, WithConfig, WithSize } from "visual/types/attributes";
 import { MValue } from "visual/utils/value";
@@ -8,9 +9,7 @@ interface Config extends WithSize {
   sourceLabel?: string;
 }
 
-type OnChange = (s: string) => void;
-
-export type DebouncedSearch = OnChange & _.Cancelable;
+export type DebouncedSearch = DebouncedFunction<(s: string) => void>;
 
 export type Props = Option.Props<MValue<ChoiceWithPermalink>> &
   WithConfig<Config> &

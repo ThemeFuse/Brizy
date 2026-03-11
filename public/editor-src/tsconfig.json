@@ -5,13 +5,11 @@
     "baseUrl": ".",
     "paths": {
       "visual/*": ["editor/js/*"],
+      "sass/*": ["editor/sass/*"],
       "test-utils": ["./jest-utils/test-utils"]
     }
   },
-  "include": [
-    "editor/**/*.ts",
-    "editor/**/*.tsx"
-  ],
+  "include": ["editor/**/*.ts", "editor/**/*.tsx"],
   "exclude": [
     "node_modules",
     "build",
@@ -21,4 +19,3 @@
     "**/libs/**"
   ]
 }
-

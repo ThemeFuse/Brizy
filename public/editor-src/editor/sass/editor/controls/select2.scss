@@ -1,0 +1,121 @@
+@use "../../functions/z-index";
+@use "../../variables";
+
+// Select 2 Downshift
+.brz-ed .brz-control__select2 {
+  font-family: variables.$default-font-family;
+
+  // Input
+  &-value-container {
+    line-height: variables.$control-height;
+    height: variables.$control-height;
+    border-radius: variables.$control-border-radius;
+    font-size: variables.$control-font-size;
+    letter-spacing: variables.$control-letter-spacing;
+  }
+
+  &-value-container-tag {
+    border-radius: variables.$control-border-radius;
+    font-size: variables.$control-font-size;
+    letter-spacing: variables.$control-letter-spacing;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    padding-top: 5px;
+  }
+
+  &-value-container-tag .brz-control__select2-value {
+    height: 20px !important;
+    flex: 1;
+    margin-bottom: 5px;
+  }
+
+  &-value {
+    font: inherit;
+    letter-spacing: inherit;
+    width: 100%;
+    height: 100%;
+    outline: none;
+    border: none;
+    background: none;
+    padding-left: variables.$control-padding;
+    padding-right: variables.$control-padding;
+  }
+
+  &-tag {
+    height: 20px;
+    padding: 5px;
+    line-height: 1;
+    color: #fff;
+    margin: 0 2px 5px;
+
+    .brz-icon-svg {
+      cursor: pointer;
+      font-size: 10px;
+      margin-left: 4px;
+      transition: 0.2s color linear;
+    }
+
+    .brz-icon-svg:hover {
+      color: variables.$brand__primary;
+      transition: 0.2s color linear;
+    }
+  }
+
+  // Dropdown
+  &-menu {
+    font-family: variables.$default-font-family;
+    z-index: z-index.z("select-portal");
+    width: 200px;
+    box-shadow: 0 1px 10px 0 rgba(18, 34, 35, 0.1);
+    margin-top: 3px; // ? placement
+    border-radius: variables.$control-border-radius;
+  }
+
+  &-option {
+    cursor: pointer;
+    padding-left: variables.$control-padding;
+    padding-right: variables.$control-padding;
+    font-size: variables.$control-font-size;
+    letter-spacing: variables.$control-letter-spacing;
+    line-height: variables.$control-height;
+    height: variables.$control-height;
+    transition: color 0.15s linear;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: variables.$brand__options;
+
+    &:last-child {
+      border-bottom-color: transparent;
+    }
+
+    &:hover,
+    &--active {
+      transition: color 0.15s linear;
+      color: variables.$brand__primary;
+    }
+  }
+}
+
+// Light
+.brz-ed .brz-control__select2--light {
+  .brz-control__select2-value-container,
+  .brz-control__select2-value-container-tag {
+    background-color: #fff;
+    color: #383e48;
+  }
+
+  .brz-control__select2-tag {
+    background-color: #383e48;
+    color: #fff;
+  }
+
+  .brz-control__select2-menu {
+    background-color: #fff;
+  }
+
+  .brz-control__select2-option {
+    border-bottom: 1px solid #e6e6e6;
+  }
+}

@@ -1,0 +1,25 @@
+@use "../../mixins/classes" as *;
+
+// Generated className marginTop and marginBottom from 0 to 100
+.brz-ed {
+  @include generate-stepwise-classes(0, 100, 1, brz-mt-lg, margin, top);
+  @include generate-stepwise-classes(0, 100, 1, brz-mb-lg, margin, bottom);
+}
+
+// Desktop
+.brz-ed.brz-ed--desktop {
+  @include generate-stepwise-classes(0, 100, 1, brz-mt-lg, margin, top);
+  @include generate-stepwise-classes(0, 100, 1, brz-mb-lg, margin, bottom);
+}
+
+// Tablet
+.brz-ed.brz-ed--tablet {
+  @include generate-stepwise-classes(0, 100, 1, brz-mt-sm, margin, top);
+  @include generate-stepwise-classes(0, 100, 1, brz-mb-sm, margin, bottom);
+}
+
+// Mobile
+.brz-ed.brz-ed--mobile {
+  @include generate-stepwise-classes(0, 100, 1, brz-mt-xs, margin, top);
+  @include generate-stepwise-classes(0, 100, 1, brz-mb-xs, margin, bottom);
+}

@@ -16,6 +16,12 @@ import * as toolbarConfig from "./toolbar";
 import { Value } from "./types";
 import { getAnimationOptions } from "./utils";
 
+// SCSS import - automatically tracked during static rendering
+import(
+  // @ts-expect-error: .scss?componentId=animatedHeadline files
+  /* webpackChunkName: "animatedHeadline" */ "sass/editorComponents/animated-headline.scss?componentId=AnimatedHeadline&chunk=animatedHeadline"
+);
+
 class AnimatedHeadline extends EditorComponent<Value, ElementProps> {
   static get componentId(): ElementTypes.AnimatedHeadline {
     return ElementTypes.AnimatedHeadline;

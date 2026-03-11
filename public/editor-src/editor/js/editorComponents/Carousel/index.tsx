@@ -226,7 +226,8 @@ class Carousel extends EditorComponent<Value, Props, State> {
                 link: [],
                 richText: []
               }
-            }
+            },
+            componentTypes: this.context.componentTypes
           };
         });
 

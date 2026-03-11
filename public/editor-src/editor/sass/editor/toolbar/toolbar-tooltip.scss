@@ -1,0 +1,59 @@
+@use "sass:math";
+@use "../../variables";
+
+// --- Tooltip
+.brz-ed .brz-ed-popover__tooltip {
+  &.brz-ed-tooltip--opened .brz-ed-tooltip__content {
+    color: variables.$toolbar__popover_tooltip-color;
+
+    .brz-ed-popover__tooltip--icon-custom {
+      border-color: variables.$toolbar__popover_tooltip-color;
+    }
+  }
+
+  // Icon Custom
+  &--icon-custom {
+    width: 16px;
+    height: 16px;
+    border: 2px solid variables.$toolbar__item-color;
+    border-radius: 2px;
+    transition: border-color 0.2s linear;
+  }
+}
+
+.brz-ed .brz-ed-tooltip__overlay {
+  cursor: auto;
+  background-color: variables.$toolbar-bg;
+  box-shadow: 0 1px 8px 1px
+    variables.$popover_tooltips__helper__overlay-box-shadow;
+  border-radius: variables.$toolbar-border-radius;
+
+  .brz-ed-tooltip--top-start,
+  .brz-ed-tooltip--right-end {
+    border-radius: variables.$toolbar-border-radius
+      variables.$toolbar-border-radius variables.$toolbar-border-radius
+      math.div(variables.$toolbar-border-radius, 2);
+  }
+
+  .brz-ed-tooltip--top-end,
+  .brz-ed-tooltip--left-end {
+    border-radius: variables.$toolbar-border-radius
+      variables.$toolbar-border-radius
+      math.div(variables.$toolbar-border-radius, 2)
+      variables.$toolbar-border-radius;
+  }
+
+  .brz-ed-tooltip--bottom-start,
+  .brz-ed-tooltip--right-start {
+    border-radius: math.div(variables.$toolbar-border-radius, 2)
+      variables.$toolbar-border-radius variables.$toolbar-border-radius
+      variables.$toolbar-border-radius;
+  }
+
+  .brz-ed-tooltip--bottom-end,
+  .brz-ed-tooltip--left-start {
+    border-radius: variables.$toolbar-border-radius
+      math.div(variables.$toolbar-border-radius, 2)
+      variables.$toolbar-border-radius variables.$toolbar-border-radius;
+  }
+}

@@ -268,6 +268,7 @@ class ThirdParty extends EditorComponent<Value, Props> {
             <ThirdPartyContextProvider editorProps={itemsProps}>
               <Component
                 {...v}
+                dynamicClassName={wrapperClassName}
                 device={device}
                 DynamicContent={this.getDynamiContent}
                 onChange={this.onChange}

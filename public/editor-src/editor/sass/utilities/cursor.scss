@@ -1,0 +1,17 @@
+.brz .brz-cursor {
+  &-none {
+    cursor: none !important;
+  }
+
+  &-wait {
+    cursor: wait !important;
+  }
+
+  &-pointer {
+    cursor: pointer !important;
+  }
+
+  &-auto {
+    cursor: auto !important;
+  }
+}

@@ -1,0 +1,100 @@
+@use "../../variables";
+
+// --- Focal Point Option
+.brz-ed .brz-ed-control__focal-point {
+  position: relative;
+  text-align: center;
+
+  &:after {
+    display: inline-block;
+    height: 100%;
+    vertical-align: middle;
+    content: "";
+  }
+
+  &__setter {
+    text-align: center;
+    display: inline-block;
+    vertical-align: middle;
+    position: relative;
+    width: 100%;
+
+    &:before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: variables.$focal_point__before-bg;
+    }
+
+    .brz-img {
+      max-width: variables.$focal_point__img-size;
+      max-height: variables.$focal_point__img-size;
+      height: 100%;
+    }
+  }
+
+  &__point {
+    position: absolute;
+    z-index: 10;
+    width: variables.$focal_point-size;
+    height: variables.$focal_point-size;
+    transform: translate(-50%, -50%);
+    background-color: variables.$focal_point-bg;
+    border: 2px solid #fff;
+    border-radius: variables.$focal_point-size;
+    cursor: pointer;
+  }
+
+  &__upload {
+    width: variables.$focal_point-width;
+    height: variables.$focal_point-height;
+    border: 1px dashed variables.$focal_point-border;
+    background-color: variables.$focal_point__upload-bg;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    font-size: variables.$focal_point__upload-font-size;
+    color: variables.$focal_point__upload-color;
+    transition: all 0.2s linear;
+
+    &:hover {
+      border-color: variables.$focal_point-border--hover;
+      color: variables.$focal_point__upload-color--hover;
+    }
+
+    .brz-icon-svg {
+      font-size: inherit !important;
+    }
+
+    // Loading icon animation
+    &--loading {
+      cursor: progress;
+    }
+  }
+
+  &__delete {
+    position: absolute;
+    right: -4px;
+    top: -4px;
+    z-index: 11;
+    font-size: variables.$focal_point__delete-font-size;
+    width: variables.$focal_point__delete-font-size;
+    height: variables.$focal_point__delete-font-size;
+    background-color: variables.$focal_point__delete-bg;
+    border-radius: 50%;
+    color: variables.$focal_point__delete-color;
+    cursor: pointer;
+
+    .brz-icon-svg {
+      font-size: inherit !important;
+    }
+  }
+
+  &__label--disable .brz-ed-control__focal-point__upload {
+    cursor: no-drop;
+  }
+}

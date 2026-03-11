@@ -19,6 +19,7 @@ import { initEkklesiaPopups } from "visual/libs/group-7";
 import { Store } from "visual/redux/store";
 import Chart from "../libs/Chart";
 import Gallery from "../libs/gallery";
+import SlimSelect from "slim-select";
 
 export type GalleryIsotope = Isotope;
 export type GalleryJustified = Gallery;
@@ -51,6 +52,7 @@ interface BrizyLibs {
   Autoplay: Autoplay;
   EffectFade: EffectFade;
   Formula?: typeof Formula;
+  SlimSelect?: typeof SlimSelect;
 }
 
 interface BrizyProLibs {

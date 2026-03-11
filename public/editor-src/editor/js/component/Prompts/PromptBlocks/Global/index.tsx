@@ -63,7 +63,7 @@ class Global<T extends BlockMetaType> extends Component<_Props<T>> {
     const globalBlocksInPage = getGlobalBlocksInPage(config);
 
     const blocks = Object.values(globalBlocks).filter(
-      ({ data, meta = {} }) => !data.deleted && meta.type === type
+      ({ meta = {} }) => meta.type === type
     );
     const { screenshot } = config.urls ?? {};
 
@@ -108,7 +108,6 @@ class Global<T extends BlockMetaType> extends Component<_Props<T>> {
     );
     const fonts = await normalizeFonts({
       config: config,
-      renderContext: "editor",
       newFonts: fontsDiff
     });
 

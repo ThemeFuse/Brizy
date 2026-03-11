@@ -1,0 +1,213 @@
+.brz-image-comparison {
+  position: relative;
+
+  width: 100%;
+  height: 100%;
+
+  &__slider-wrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+  }
+
+  .brz-ed-image__wrapper {
+    &::after {
+      z-index: 1;
+    }
+
+    .brz-picture:has(.brz-shortcode__placeholder) {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  &__range {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100% !important;
+    height: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background-color: transparent !important;
+    border: none !important;
+    appearance: none;
+    outline: none !important;
+    cursor: ew-resize;
+    z-index: 3;
+    touch-action: none !important;
+
+    &::-webkit-slider-thumb {
+      appearance: none;
+      width: 1px !important;
+      height: 100% !important;
+      background: transparent !important;
+      border: none !important;
+      cursor: ew-resize;
+    }
+
+    &::-webkit-slider-runnable-track {
+      background: transparent !important;
+      border: none !important;
+      height: 100% !important;
+      border-radius: 0 !important;
+      cursor: ew-resize !important;
+    }
+
+    &::-moz-range-thumb {
+      width: 1px !important;
+      height: 100% !important;
+      background: transparent !important;
+      border: none !important;
+      border: none !important;
+      cursor: ew-resize;
+    }
+
+    &--active {
+      cursor: grabbing;
+    }
+
+    &--editor {
+      pointer-events: none;
+      cursor: default;
+    }
+
+    &--vertical {
+      cursor: ns-resize !important;
+      writing-mode: vertical-lr !important;
+      width: 100%;
+      height: 100%;
+
+      &::-webkit-slider-thumb {
+        width: 100%;
+        height: 1px !important;
+        cursor: ns-resize;
+      }
+
+      &::-moz-range-thumb {
+        width: 100%;
+        height: 1px;
+        cursor: ns-resize;
+      }
+
+      &.brz-image-comparison__range--active {
+        cursor: grabbing;
+      }
+    }
+  }
+
+  &__picture {
+    position: absolute;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+
+    // Background picture (not overlay) should be relative to establish height
+    &:not(&--overlay) {
+      position: relative;
+      z-index: 0;
+    }
+
+    &--overlay {
+      z-index: 1;
+      position: absolute !important;
+      width: 100% !important;
+      height: 100% !important;
+      top: 0;
+      left: 0;
+    }
+
+    img,
+    .brz-img {
+      width: 100% !important;
+      height: 100% !important;
+      margin: 0 !important;
+      object-fit: cover;
+      display: block;
+      opacity: 1 !important;
+    }
+  }
+
+  &__slider-wrapper--vertical {
+    .brz-image-comparison__picture--overlay {
+      width: 100% !important;
+    }
+  }
+
+  &__slider-wrapper--horizontal {
+    picture {
+      height: 100% !important;
+    }
+  }
+
+  &__slider {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    z-index: 2;
+    transform: translateX(-50%);
+    pointer-events: none;
+    transition: background-color 0.2s ease;
+    background-color: #ffffff;
+
+    &--vertical {
+      top: auto;
+      bottom: auto;
+      left: 0;
+      right: 0;
+      width: 100%;
+      height: 2px;
+      transform: translateY(-50%) translateX(0);
+    }
+  }
+
+  &__thumb {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: ew-resize;
+    pointer-events: auto;
+    transition:
+      background-color 0.2s ease,
+      transform 0.2s ease;
+
+    &:hover {
+      transform: translate(-50%, -50%) scale(1.1);
+    }
+
+    .brz-image-comparison__slider--active & {
+      transform: translate(-50%, -50%) scale(1.15);
+    }
+
+    .brz-image-comparison__slider--vertical & {
+      cursor: ns-resize;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+  }
+
+  &__thumb-icon {
+    width: 20px;
+    height: 20px;
+    display: block;
+    transition: transform 0.2s ease;
+
+    &--vertical {
+      transform: rotate(90deg);
+    }
+  }
+}

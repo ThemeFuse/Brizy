@@ -58,7 +58,8 @@ export type ReduxState = {
   };
   blocksHtml: {
     inProcessing: number;
-    inPending: boolean;
+    storeGeneration: number;
+    compiledGeneration: number;
     blocks: {
       [key: string]: BlocksHTML;
     };

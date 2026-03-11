@@ -7,7 +7,11 @@ import { read as readNumber } from "visual/utils/reader/number";
 import "./lib/jquery.background-video";
 import "./lib/jquery.parallax";
 import { Effect, Transition } from "./type";
-import { getSlideType, handleSwiperResize, readTransition } from "./utils";
+import {
+  getSlideType,
+  handleSwiperResize,
+  readTransition
+} from "./utils/common";
 
 const fn: ExportFunction = ($node) => {
   const $parallax = $node.find(".brz-bg-image-parallax");

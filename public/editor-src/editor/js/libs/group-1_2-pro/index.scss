@@ -1,2 +1,2 @@
-@import "../group-1-pro/index";
-@import "../group-2-pro/index";
+@use "../group-1-pro/index" as group-1-pro;
+@use "../group-2-pro/index" as group-2-pro;

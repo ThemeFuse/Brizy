@@ -38,6 +38,8 @@ import { ShopifyVariantStyleImage } from "@brizy/builder-icons/src/Icons/Shopify
 import { ShopifyVariantStyleRadio } from "@brizy/builder-icons/src/Icons/ShopifyVariantStyleRadio";
 import { ShopifyVariantStyleSelect } from "@brizy/builder-icons/src/Icons/ShopifyVariantStyleSelect";
 import { ShopifyVendor } from "@brizy/builder-icons/src/Icons/ShopifyVendor";
+import { HorisontalThumb } from "@brizy/builder-icons/src/Icons/HorisontalThumb";
+import { VerticalThumb } from "@brizy/builder-icons/src/Icons/VerticalThumb";
 import { MinistryBrandsArticleDetail } from "@brizy/ui-icons/es/icons/MinistryBrandsArticleDetail";
 import { MinistryBrandsArticleLayout } from "@brizy/ui-icons/es/icons/MinistryBrandsArticleLayout";
 import { MinistryBrandsEventCalendar } from "@brizy/ui-icons/es/icons/MinistryBrandsEventCalendar";
@@ -116,7 +118,9 @@ const Icons = {
   "t2-close": Close,
   "t2-collapse": Collapse,
   "t2-expand": Expand,
-  "t2-contract": Contract
+  "t2-contract": Contract,
+  "t2-horisontal-thumb": HorisontalThumb,
+  "t2-vertical-thumb": VerticalThumb
 };
 
 export type IconNames = keyof typeof Icons;

@@ -12,6 +12,12 @@ import * as sidebarConfig from "./sidebar";
 import { style } from "./styles";
 import toolbarConfigFn from "./toolbar";
 
+// SCSS import - automatically tracked during static rendering
+import(
+  // @ts-expect-error: .scss?chunk=wpnavigation files
+  /* webpackChunkName: "wpnavigation" */ "sass/editorComponents/menu-simple.scss?componentId=WPNavigation&chunk=wpnavigation"
+);
+
 export default class MenuSimpleWP extends EditorComponent {
   static defaultValue = defaultValue;
   state = {

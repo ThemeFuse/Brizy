@@ -1,0 +1,15 @@
+@use "../mixins/media-caption";
+
+.brz .brz-audio {
+  @include media-caption.media-caption;
+
+  &-caption {
+    position: absolute;
+    bottom: 0;
+    z-index: 3;
+
+    &:empty {
+      display: none;
+    }
+  }
+}

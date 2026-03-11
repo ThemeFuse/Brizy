@@ -216,8 +216,8 @@ export const isProjectLocked = (p: unknown): p is ProjectLocked => {
   return (
     Obj.isObject(p) &&
     conformsTo(p, {
-      locked: (l) => l === true,
-      lockedBy: (obj) => conformsTo(obj, { user_email: Str.is })
+      locked: (l: unknown) => l === true,
+      lockedBy: (obj: unknown) => conformsTo(obj, { user_email: Str.is })
     })
   );
 };

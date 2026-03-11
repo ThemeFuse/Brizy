@@ -193,7 +193,6 @@ class BlocksContainer extends Component {
       projectFonts
     );
     const fonts = await normalizeFonts({
-      renderContext: "editor",
       newFonts: fontsDiff,
       config
     });
@@ -238,7 +237,6 @@ class BlocksContainer extends Component {
         );
         const fonts = await normalizeFonts({
           config,
-          renderContext: "editor",
           newFonts: getBlocksStylesFonts(stylesFonts, projectFonts)
         });
 

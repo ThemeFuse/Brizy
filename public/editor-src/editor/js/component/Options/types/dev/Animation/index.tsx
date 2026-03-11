@@ -22,6 +22,7 @@ import { setDuration } from "visual/utils/options/Animation/types/WithDuration";
 import { setInfiniteAnimation } from "visual/utils/options/Animation/types/WithInfiniteAnimation";
 import * as Attention from "visual/utils/options/Animation/types/effects/Attention";
 import * as Fade from "visual/utils/options/Animation/types/effects/Fade";
+import * as Reveal from "visual/utils/options/Animation/types/effects/Reveal";
 import {
   defaultEffects,
   getDirections,
@@ -149,6 +150,30 @@ export const Animation = ({
             value={value.direction}
             onChange={onChangeDirection(value, onChange)}
           />
+        );
+      }
+
+      case EffectType.Reveal: {
+        const onChangeTiming: OnChange<Reveal.Timing> = (timing) =>
+          onChange(Reveal.setTiming(timing, value));
+        const timingDirections = Object.values(Reveal.Timing).map((k) => [
+          k,
+          Reveal.getTimingTitle(k)
+        ]) as Array<[Reveal.Timing, string]>;
+        return (
+          <>
+            <Direction
+              directions={getDirections(type)}
+              value={value.direction}
+              onChange={onChangeDirection(value, onChange)}
+            />
+            <Direction<Reveal.Timing>
+              directions={timingDirections}
+              value={value.timing}
+              label={t("Timing")}
+              onChange={onChangeTiming}
+            />
+          </>
         );
       }
 

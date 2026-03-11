@@ -13,7 +13,7 @@ export default function (config: ConfigCommon) {
         _styles: ["wrapper"],
         items: [
           {
-            type: "WPPostContent",
+            type: ElementTypes.WPPostContent,
             value: {
               _styles: ["WPPostContent", "PostExcerpt"],
               ...config.contentDefaults?.[ElementTypes.ShopifyDescription]

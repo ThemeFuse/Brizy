@@ -31,7 +31,10 @@ export const waitForPendingAndDispatch = (
     });
   };
 
-  const checkPending = () => store.getState().blocksHtml.inPending;
+  const checkPending = () => {
+    const { storeGeneration, compiledGeneration } = store.getState().blocksHtml;
+    return storeGeneration !== compiledGeneration;
+  };
 
   if (checkPending()) {
     const unsubscribe = store.subscribe(() => {

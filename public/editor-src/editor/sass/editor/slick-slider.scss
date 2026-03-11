@@ -1,0 +1,7 @@
+// Import default sliders styles from libs
+@use "../../js/libs/group-2/index";
+
+// base
+.brz-ed .brz-slick-slider .slick-slide > div {
+  height: 100%;
+}

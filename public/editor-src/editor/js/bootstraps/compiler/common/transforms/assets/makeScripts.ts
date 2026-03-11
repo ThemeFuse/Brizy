@@ -40,6 +40,9 @@ export const makeScripts = (
     pro: false
   };
 
+  // find lib selector in the page
+  const searchedLibs = new Set<string>();
+
   // libs
   free.forEach((lib) => {
     const { name, selectors } = lib;
@@ -61,8 +64,13 @@ export const makeScripts = (
       pro: false
     });
 
-    // find lib selector in the page
     selectors.forEach((selector) => {
+      if (searchedLibs.has(selector)) {
+        return;
+      }
+
+      searchedLibs.add(selector);
+
       if ($doc(selector).length) {
         libsSelectors.add(selector);
       }
@@ -89,6 +97,7 @@ export const makeScripts = (
   if (proConfig) {
     const genericPro: Asset[] = [];
     const libsProSelectors = new Set<string>();
+    const searchedLibs = new Set<string>();
     const libsProMap: AssetLibsMap[] = [];
     const mainPro: Asset = {
       name: "main",
@@ -126,6 +135,12 @@ export const makeScripts = (
 
       // find lib selector in the page
       selectors.forEach((selector) => {
+        if (searchedLibs.has(selector)) {
+          return;
+        }
+
+        searchedLibs.add(selector);
+
         if ($doc(selector).length) {
           libsProSelectors.add(selector);
         }

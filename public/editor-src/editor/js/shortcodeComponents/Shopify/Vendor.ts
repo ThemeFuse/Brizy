@@ -8,7 +8,7 @@ export default function (config: ConfigCommon) {
     title: t("Vendor"),
     icon: "t2-shopify-vendor",
     resolve: {
-      type: "Wrapper",
+      type: ElementTypes.Wrapper,
       value: {
         _styles: ["wrapper"],
         items: [

@@ -1,0 +1,20 @@
+@use "../../variables";
+
+$box-width: 37px;
+$box-height: variables.$control-height;
+
+.brz-ed .brz-ed-option__toggle-button {
+  width: $box-width;
+  height: $box-height;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: variables.$control-bg;
+  color: #fff;
+  border-radius: variables.$control-border-radius;
+
+  &-active {
+    color: variables.$white;
+    background-color: variables.$brand__primary;
+  }
+}

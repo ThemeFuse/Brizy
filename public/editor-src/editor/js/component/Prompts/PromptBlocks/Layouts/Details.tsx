@@ -41,7 +41,8 @@ const animationStyle = {
   animationName: "fadeIn",
   animationFillMode: "both",
   animationDelay: "200ms",
-  animationDuration: "200ms"
+  animationDuration: "200ms",
+  animationTiming: "ease-in-out"
 };
 
 const mapState = (
@@ -204,7 +205,6 @@ class Details extends Component<AllProps, State> {
 
       const fonts = await normalizeFonts({
         config,
-        renderContext: "editor",
         newFonts: getBlocksStylesFonts(modelFonts, usedFonts)
       });
 

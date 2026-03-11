@@ -7,6 +7,7 @@ import Hidden from "./Hidden";
 import Number from "./Number";
 import Paragraph from "./Paragraph";
 import Password from "./Password";
+import Phone from "./Phone";
 import Radio from "./Radio";
 import Select from "./Select";
 import Tel from "./Tel";
@@ -31,7 +32,8 @@ const types = {
   Hidden,
   Tel,
   Password,
-  Calculated
+  Calculated,
+  Phone
 };
 
 export default types;

@@ -6,9 +6,11 @@ import * as Attention from "./effects/Attention";
 import * as Bounce from "./effects/Bounce";
 import * as Buzz from "./effects/Buzz";
 import * as Fade from "./effects/Fade";
+import * as Fill from "./effects/Fill";
 import * as Move from "./effects/Move";
 import * as None from "./effects/None";
 import * as Pulse from "./effects/Pulse";
+import * as Reveal from "./effects/Reveal";
 import * as Rotate from "./effects/Rotate";
 import * as Rotate2 from "./effects/Rotate2";
 import * as Scale from "./effects/Scale";
@@ -16,7 +18,6 @@ import * as Skew from "./effects/Skew";
 import * as Slide from "./effects/Slide";
 import * as Wobble from "./effects/Wobble";
 import * as Zoom from "./effects/Zoom";
-import * as Fill from "./effects/Fill";
 
 export type Value =
   | Attention.Attention
@@ -33,7 +34,8 @@ export type Value =
   | Skew.Skew
   | Move.Move
   | Rotate2.Rotate2
-  | Fill.Fill;
+  | Fill.Fill
+  | Reveal.Reveal;
 
 export const isNone = (v: Value): v is None.None => v.type === EffectType.None;
 
@@ -55,7 +57,8 @@ export const fromLegacyModel = Parse.or<LegacyModel, Value>([
   Skew.fromLegacyModel,
   Move.fromLegacyModel,
   Rotate2.fromLegacyModel,
-  Fill.fromLegacyModel
+  Fill.fromLegacyModel,
+  Reveal.fromLegacyModel
 ]);
 
 export const toLegacyModel = (v: Value): LegacyModel => {
@@ -90,6 +93,8 @@ export const toLegacyModel = (v: Value): LegacyModel => {
       return Rotate2.toLegacyModel(v);
     case EffectType.Fill:
       return Fill.toLegacyModel(v);
+    case EffectType.Reveal:
+      return Reveal.toLegacyModel(v);
   }
 };
 
@@ -229,6 +234,16 @@ export function setType(type: EffectType, v: Value): Value {
       return {
         type: EffectType.Fill,
         direction: Fill.Direction.brzFade,
+        duration: v.duration,
+        delay: v.delay,
+        infiniteAnimation: v.infiniteAnimation
+      };
+    }
+    case EffectType.Reveal: {
+      return {
+        type: EffectType.Reveal,
+        direction: Reveal.Direction.up,
+        timing: Reveal.Timing.easeInOut,
         duration: v.duration,
         delay: v.delay,
         infiniteAnimation: v.infiniteAnimation

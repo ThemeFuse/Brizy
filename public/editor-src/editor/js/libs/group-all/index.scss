@@ -1,6 +1,7 @@
-@import "../group-1/index";
-@import "../group-2/index";
-@import "../group-3/index";
-@import "../group-4/index";
-@import "../group-5/index";
-@import "../group-7/index";
+@use "../group-1/index" as group-1;
+@use "../group-2/index" as group-2;
+@use "../group-3/index" as group-3;
+@use "../group-4/index" as group-4;
+@use "../group-5/index" as group-5;
+@use "../group-6/index" as group-6;
+@use "../group-7/index" as group-7;

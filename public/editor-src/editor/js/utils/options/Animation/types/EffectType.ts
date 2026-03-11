@@ -19,7 +19,8 @@ export enum EffectType {
   Skew = "skew",
   Move = "move",
   Rotate2 = "rotate2",
-  Fill = "fill"
+  Fill = "fill",
+  Reveal = "reveal"
 }
 
 export const fromLegacyEffectType = (v: LegacyEffectType): EffectType => {
@@ -142,6 +143,12 @@ export const fromLegacyEffectType = (v: LegacyEffectType): EffectType => {
     case LegacyEffectType.brzGrowRotate: {
       return EffectType.Rotate2;
     }
+    case LegacyEffectType.brzRevealUp:
+    case LegacyEffectType.brzRevealDown:
+    case LegacyEffectType.brzRevealLeft:
+    case LegacyEffectType.brzRevealRight: {
+      return EffectType.Reveal;
+    }
   }
 };
 
@@ -200,6 +207,9 @@ export const effectTypeIcon = (t: EffectType): string => {
     case EffectType.Fill: {
       return "nc-hover-fill";
     }
+    case EffectType.Reveal: {
+      return "nc-reveal";
+    }
   }
 };
 
@@ -252,6 +262,9 @@ export function effectTypeTitle(type: EffectType): string {
     }
     case EffectType.Fill: {
       return t("Fill");
+    }
+    case EffectType.Reveal: {
+      return t("Reveal");
     }
   }
 }

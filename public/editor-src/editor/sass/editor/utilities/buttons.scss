@@ -1,0 +1,305 @@
+@use "../../variables";
+
+// Default Buttons
+.brz-ed .brz-ed-btn {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid transparent;
+  text-align: center;
+  vertical-align: middle;
+  touch-action: manipulation;
+  cursor: pointer;
+  background-image: none;
+  white-space: nowrap;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  font-family: variables.$default-font-family;
+  font-size: 14px;
+  padding: 12px 18px;
+  line-height: 1;
+  outline: none;
+  -webkit-appearance: initial;
+
+  &:active {
+    outline: 0;
+    background-image: none;
+  }
+
+  &:focus {
+    outline: none;
+  }
+
+  // Button with icon
+  &-icon {
+    .brz-icon-svg {
+      margin-inline-start: 10px;
+      vertical-align: middle;
+    }
+
+    span {
+      display: inline-block;
+      vertical-align: middle;
+    }
+  }
+
+  &-icon--left {
+    .brz-icon-svg {
+      margin-inline-start: 0;
+      margin-inline-end: 10px;
+    }
+  }
+
+  // Loading
+  &--loading {
+    pointer-events: none !important;
+    transition: none;
+
+    .brz-icon-svg {
+      margin: 0;
+      animation-name: spin;
+      animation-duration: 1s;
+      animation-iteration-count: infinite;
+      animation-timing-function: linear;
+    }
+  }
+
+  // Disabled
+  &--disabled {
+    pointer-events: none !important;
+    color: #fff !important;
+    background-color: rgba(#292e37, 0.5) !important;
+    border-color: transparent !important;
+  }
+}
+
+// Corners
+.brz-ed .brz-ed-btn-rounded {
+  border-radius: 3px;
+}
+
+.brz-ed .brz-ed-btn-round {
+  border-radius: 100px;
+}
+
+// Size
+.brz-ed .brz-ed-btn-sm {
+  padding: 11px 17px;
+  font-size: 14px;
+
+  &.brz-ed-btn-icon {
+    .brz-icon-svg {
+      font-size: 12px;
+    }
+  }
+
+  &.brz-ed-btn--loading {
+    font-size: 16px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+}
+
+.brz-ed .brz-ed-btn-xs {
+  font-size: 10px;
+  padding: 9px 18px;
+}
+
+.brz-ed .brz-ed-btn-xs-2 {
+  font-size: 13px;
+  padding: 6px 18px;
+  line-height: 1.1;
+}
+
+.brz-ed .brz-ed-btn-full {
+  width: 100%;
+}
+
+.brz-ed .brz-ed-btn-width-1 {
+  min-width: 130px;
+}
+
+.brz-ed .brz-ed-btn-width-2 {
+  min-width: 193px;
+}
+
+.brz-ed .brz-ed-btn-width-3 {
+  min-width: 102px;
+}
+
+.brz-ed .brz-ed-btn-width-4 {
+  min-width: 116px;
+}
+
+// Colors
+//
+// Default
+.brz-ed .brz-ed-btn-default {
+  border-color: transparent;
+  background-color: transparent;
+  color: #626b70;
+
+  &:hover {
+    border-color: transparent;
+    background-color: transparent;
+  }
+}
+
+// Dark
+.brz-ed .brz-ed-btn-dark {
+  border-color: #3b474b;
+  background-color: #3b474b;
+  color: #fff;
+
+  &:hover {
+    border-color: #283337;
+    background-color: #283337;
+  }
+}
+
+.brz-ed .brz-ed-btn-dark-outline {
+  color: #3b474b;
+  border-color: #3b474b;
+  background-color: #fff;
+
+  &:hover {
+    background-color: #3b474b;
+    color: #fff !important;
+  }
+}
+
+// Teal
+.brz-ed .brz-ed-btn-teal {
+  border-color: transparent !important;
+  background-color: variables.$floating__button__tail-bg !important;
+  color: #fff !important;
+
+  &:hover {
+    border-color: transparent !important;
+    background-color: variables.$floating__button__second__tail-bg !important;
+  }
+}
+
+.brz-ed .brz-ed-btn-teal-outline {
+  color: #34beea;
+  border-color: #34beea;
+  background-color: transparent;
+
+  &:hover,
+  &:focus {
+    background-color: #34beea;
+    color: #fff !important;
+  }
+}
+
+// Blue
+.brz-ed .brz-ed-btn-blue {
+  border-color: variables.$floating__button__blue-bg !important;
+  background-color: variables.$floating__button__blue-bg !important;
+  color: #fff !important;
+
+  &:hover {
+    border-color: #0092cc !important;
+    background-color: #0092cc !important;
+  }
+}
+
+// Green
+.brz-ed .brz-ed-btn-green {
+  border-color: #8dc63f;
+  background-color: #8dc63f;
+  color: #fff !important;
+
+  &:hover,
+  &:focus {
+    border-color: #8dc63f;
+    background-color: #8dc63f;
+  }
+}
+
+.brz-ed .brz-ed-btn-green-outline {
+  color: #8dc63f;
+  border-color: #8dc63f;
+  background-color: transparent;
+
+  &:hover {
+    background-color: #8dc63f;
+    color: #fff !important;
+  }
+}
+
+// Gray
+.brz-ed .brz-ed-btn-gray {
+  border-color: transparent;
+  background-color: #818a91;
+  color: #fff !important;
+
+  &:hover,
+  &:focus {
+    border-color: transparent;
+    background-color: rgba(129, 138, 145, 0.8);
+  }
+}
+
+.brz-ed .brz-ed-btn-gray-outline {
+  color: rgba(#292e37, 0.5);
+  border-color: rgba(#292e37, 0.5);
+  background-color: transparent;
+
+  &:hover {
+    background-color: rgba(#292e37, 0.5);
+    color: #fff !important;
+  }
+}
+
+// Red
+.brz-ed .brz-ed-btn-red {
+  border-color: variables.$floating__button__red-bg;
+  background-color: variables.$floating__button__red-bg;
+  color: #fff !important;
+
+  &:hover,
+  &:focus {
+    border-color: transparent;
+    background-color: #df3c3c;
+  }
+}
+
+.brz-ed .brz-ed-btn-red-outline {
+  color: #df3c3c;
+  border-color: #df3c3c;
+  background-color: transparent;
+
+  &:hover {
+    background-color: #df3c3c;
+    color: #fff !important;
+  }
+}
+
+// PRO
+.brz-ed .brz-ed-btn-pro {
+  border-color: transparent;
+  background-color: variables.$brand__primary__pro;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+
+  &:hover,
+  &:focus {
+    border-color: transparent;
+    opacity: 0.8;
+  }
+}
+
+// Hover
+//
+// Teal
+.brz-ed .brz-ed-btn-teal--hover:hover {
+  border-color: variables.$floating__button__tail-bg !important;
+  background-color: variables.$floating__button__tail-bg !important;
+}
+
+.brz-ed .brz-ed-btn-red--hover:hover {
+  border-color: variables.$floating__button__red-bg !important;
+  background-color: variables.$floating__button__red-bg !important;
+}

@@ -287,4 +287,224 @@ describe("Testing `bindStateToOption` function", () => {
       expect(bindStateToOption(states(), input, DESKTOP)).toStrictEqual(result);
     });
   });
+
+  describe("Dealing with statesConfig", () => {
+    const statesConfig1 = {
+      normal: { icon: "nc-icon-1", title: "Normal State" },
+      hover: { icon: "nc-icon-2", title: "Hover State" }
+    };
+
+    const statesConfig2 = {
+      normal: { icon: "nc-icon-3", title: "Normal State Override" },
+      active: { icon: "nc-icon-4", title: "Active State" }
+    };
+
+    test("Popover with options that have statesConfig should pass it to stateMode option", () => {
+      const optionsWithStatesConfig: ToolbarItemType[] = [
+        {
+          id: "test1",
+          type: "number"
+        },
+        {
+          id: "test2",
+          type: "inputText",
+          states: ["normal", "hover"],
+          statesConfig: statesConfig1
+        }
+      ];
+
+      const popover: ToolbarItemType = {
+        id: "my-option",
+        type: "popover",
+        options: optionsWithStatesConfig
+      };
+
+      const result = bindStateToOption(states(), popover, DESKTOP);
+
+      expect(result.type).toBe("popover");
+      expect((result as any).options).toHaveLength(1);
+      expect((result as any).options[0].type).toBe("stateMode");
+      expect((result as any).options[0].statesConfig).toStrictEqual(
+        statesConfig1
+      );
+    });
+
+    test("Popover with multiple options that have statesConfig should merge them", () => {
+      const optionsWithMultipleStatesConfig: ToolbarItemType[] = [
+        {
+          id: "test1",
+          type: "inputText",
+          states: ["normal", "hover"],
+          statesConfig: statesConfig1
+        },
+        {
+          id: "test2",
+          type: "number",
+          states: ["normal", "active"],
+          statesConfig: statesConfig2
+        }
+      ];
+
+      const popover: ToolbarItemType = {
+        id: "my-option",
+        type: "popover",
+        options: optionsWithMultipleStatesConfig
+      };
+
+      const result = bindStateToOption(states(), popover, DESKTOP);
+
+      expect(result.type).toBe("popover");
+      expect((result as any).options[0].type).toBe("stateMode");
+      // Later configs should override earlier ones
+      expect((result as any).options[0].statesConfig).toStrictEqual({
+        normal: statesConfig2.normal, // Overridden by statesConfig2
+        hover: statesConfig1.hover,
+        active: statesConfig2.active
+      });
+    });
+
+    test("Popover with options that have no statesConfig should not include statesConfig", () => {
+      const popover: ToolbarItemType = {
+        id: "my-option",
+        type: "popover",
+        options: optionsWithState
+      };
+
+      const result = bindStateToOption(states(), popover, DESKTOP);
+
+      expect(result.type).toBe("popover");
+      expect((result as any).options[0].type).toBe("stateMode");
+      expect((result as any).options[0].statesConfig).toBeUndefined();
+    });
+
+    test("Tabs with options that have statesConfig should pass it to stateMode option", () => {
+      const tabOptionsWithStatesConfig: ToolbarItemType[] = [
+        {
+          id: "test1",
+          type: "number"
+        },
+        {
+          id: "test2",
+          type: "inputText",
+          states: ["normal", "hover"],
+          statesConfig: statesConfig1
+        }
+      ];
+
+      const input: ToolbarItemType = {
+        id: "my-option",
+        type: "tabs",
+        tabs: [
+          { id: "1", options: tabOptionsWithStatesConfig },
+          { id: "2", options }
+        ]
+      };
+
+      const result = bindStateToOption(states(), input, DESKTOP);
+
+      expect(result.type).toBe("tabs");
+      expect((result as any).tabs[0].options[0].type).toBe("stateMode");
+      expect((result as any).tabs[0].options[0].statesConfig).toStrictEqual(
+        statesConfig1
+      );
+      // Second tab should not have statesConfig
+      expect((result as any).tabs[1].options).toBe(options);
+    });
+
+    test("Tabs with multiple tabs having statesConfig should pass it correctly to each", () => {
+      const tab1Options: ToolbarItemType[] = [
+        {
+          id: "test1",
+          type: "inputText",
+          states: ["normal", "hover"],
+          statesConfig: statesConfig1
+        }
+      ];
+
+      const tab2Options: ToolbarItemType[] = [
+        {
+          id: "test2",
+          type: "number",
+          states: ["normal", "active"],
+          statesConfig: statesConfig2
+        }
+      ];
+
+      const input: ToolbarItemType = {
+        id: "my-option",
+        type: "tabs",
+        tabs: [
+          { id: "1", options: tab1Options },
+          { id: "2", options: tab2Options }
+        ]
+      };
+
+      const result = bindStateToOption(states(), input, DESKTOP);
+
+      expect(result.type).toBe("tabs");
+      expect((result as any).tabs[0].options[0].statesConfig).toStrictEqual(
+        statesConfig1
+      );
+      expect((result as any).tabs[1].options[0].statesConfig).toStrictEqual(
+        statesConfig2
+      );
+    });
+
+    test("Popover with mixed options (some with statesConfig, some without) should only collect from those with it", () => {
+      const mixedOptions: ToolbarItemType[] = [
+        {
+          id: "test1",
+          type: "number"
+        },
+        {
+          id: "test2",
+          type: "inputText",
+          states: ["normal", "hover"],
+          statesConfig: statesConfig1
+        },
+        {
+          id: "test3",
+          type: "switch",
+          states: ["normal", "hover"]
+        }
+      ];
+
+      const popover: ToolbarItemType = {
+        id: "my-option",
+        type: "popover",
+        options: mixedOptions
+      };
+
+      const result = bindStateToOption(states(), popover, DESKTOP);
+
+      expect(result.type).toBe("popover");
+      expect((result as any).options[0].type).toBe("stateMode");
+      // Should only have statesConfig from test2
+      expect((result as any).options[0].statesConfig).toStrictEqual(
+        statesConfig1
+      );
+    });
+
+    test("Popover with options that have statesConfig but no states should not wrap in stateMode", () => {
+      const optionsWithoutStates: ToolbarItemType[] = [
+        {
+          id: "test1",
+          type: "number",
+          statesConfig: statesConfig1
+        }
+      ];
+
+      const popover: ToolbarItemType = {
+        id: "my-option",
+        type: "popover",
+        options: optionsWithoutStates
+      };
+
+      const result = bindStateToOption(states(), popover, DESKTOP);
+
+      expect(result.type).toBe("popover");
+      // Should not wrap in stateMode since no options have states
+      expect((result as any).options).toBe(optionsWithoutStates);
+    });
+  });
 });

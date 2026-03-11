@@ -1,12 +1,14 @@
 import { Num, Str } from "@brizy/readers";
 import $ from "jquery";
 import PerfectScrollbar from "perfect-scrollbar";
+import { Option } from "slim-select";
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import { getFreeLibs } from "visual/libs";
 import { isIOS } from "visual/utils/devices";
 import { makeAttr, makeDataAttrString } from "visual/utils/i18n/attribute";
 import { decodeFromString } from "visual/utils/string";
 import { MValue, isNullish } from "visual/utils/value";
+import { PhoneOption } from "./Form2Field/types/type";
 import { initCalculatedField } from "./initCalculatedField";
 import { initMultiStep } from "./initMultiStep";
 import {
@@ -18,6 +20,7 @@ import {
   MessageStatus,
   ResponseMessages
 } from "./types";
+import { flagsToSelectPhoneOptions, isPhoneType } from "./utils";
 import { getTranslatedResponseMessages } from "./utils";
 
 let isSubmitEnabled = true;
@@ -149,13 +152,99 @@ export default function ($node: JQuery): void {
   });
 
   // For Calculated
-  const { Formula } = getFreeLibs();
+  const { Formula, SlimSelect } = getFreeLibs();
 
   if (Formula) {
     root
       .querySelectorAll<HTMLElement>(".brz-forms2__calculated")
       .forEach((item) => {
         initCalculatedField(item, Formula);
+      });
+  }
+
+  // For Phone
+  if (SlimSelect) {
+    const translatedFlagsHTML = Array.from(
+      root.querySelector<HTMLSelectElement>(
+        ".brz-forms2__field-phone--translated-data select"
+      )?.children ?? []
+    );
+
+    const flags: PhoneOption[] = (
+      translatedFlagsHTML as HTMLOptionElement[]
+    ).map((option) => {
+      const flag = option.getAttribute("data-flag") ?? "";
+      const dialCode = option.getAttribute("data-dial-code") ?? "";
+
+      return {
+        flag,
+        dialCode,
+        name: option.textContent ?? "",
+        code: option.value
+      };
+    });
+
+    const defaultDialCode =
+      flags.find((flag) => flag.code === "US")?.dialCode ?? "";
+
+    // Remove all divs that contain the translated strings because we already have the data
+    root
+      .querySelectorAll<HTMLElement>(
+        ".brz-forms2__field-phone--translated-data"
+      )
+      .forEach((container) => {
+        container.remove();
+      });
+
+    root
+      .querySelectorAll<HTMLElement>(".brz-forms2__field-phone")
+      .forEach((item) => {
+        const select = item.querySelector<HTMLSelectElement>(
+          ".brz-forms2__phone--country select"
+        );
+
+        if (select) {
+          const contentLocation = item.querySelector<HTMLElement>(
+            ".brz-forms2__phone--country"
+          );
+
+          const currentValueNode = item.querySelector<HTMLElement>(
+            ".brz-forms2__phone--country-selected"
+          );
+          const currentValueNodeInner = item.querySelector<HTMLElement>(
+            ".brz-forms2__phone--country-selected span"
+          );
+
+          const input = item.querySelector<HTMLInputElement>(
+            ".brz-forms2__phone--number input.brz-input"
+          );
+          input?.setAttribute("data-dial-code", defaultDialCode);
+
+          const selectInstance = new SlimSelect({
+            select,
+            settings: {
+              contentLocation
+            },
+            data: flagsToSelectPhoneOptions(flags),
+            events: {
+              afterChange: (data: Option[]) => {
+                const v = data[0].value;
+                const currentFlag = flags.find((flag) => flag.code === v);
+
+                if (currentFlag && currentValueNodeInner) {
+                  currentValueNodeInner.textContent = currentFlag.flag;
+                  input?.setAttribute("data-dial-code", currentFlag.dialCode);
+                }
+              }
+            }
+          });
+
+          if (currentValueNode) {
+            currentValueNode.addEventListener("click", () => {
+              selectInstance.open();
+            });
+          }
+        }
       });
   }
 
@@ -464,6 +553,69 @@ function validateFormItem(node: HTMLFormElement): boolean {
     }
   }
 
+  if (brzType === "Phone") {
+    const phoneDigits = value.replace(/\D/g, "");
+    const minLength = 4;
+    const maxLength = 15;
+    const hasInvalidChars = /\D/.test(value);
+
+    if (value && hasInvalidChars) {
+      const messages = getFormMessage({
+        status: MessageStatus.Error,
+        form,
+        text:
+          _error?.phoneInvalidCharsError ||
+          "Phone number must contain only digits"
+      });
+
+      if (form) {
+        showFormMessage(form, messages);
+      }
+
+      parentElem?.classList.add(
+        "brz-forms2__item--error",
+        "brz-forms2__item--error-pattern"
+      );
+      result = false;
+    } else if (value && phoneDigits.length < minLength) {
+      const messages = getFormMessage({
+        status: MessageStatus.Error,
+        form,
+        text:
+          _error?.phoneMinLengthError ||
+          `Phone number is too short, minimum ${minLength} digits required`
+      });
+
+      if (form) {
+        showFormMessage(form, messages);
+      }
+
+      parentElem?.classList.add(
+        "brz-forms2__item--error",
+        "brz-forms2__item--error-pattern"
+      );
+      result = false;
+    } else if (value && phoneDigits.length > maxLength) {
+      const messages = getFormMessage({
+        status: MessageStatus.Error,
+        form,
+        text:
+          _error?.phoneMaxLengthError ||
+          `Phone number is too long, maximum ${maxLength} digits allowed`
+      });
+
+      if (form) {
+        showFormMessage(form, messages);
+      }
+
+      parentElem?.classList.add(
+        "brz-forms2__item--error",
+        "brz-forms2__item--error-pattern"
+      );
+      result = false;
+    }
+  }
+
   const isSelect = node.closest(".brz-forms2__field-select");
 
   if (isSelect) {
@@ -511,7 +663,7 @@ function validateFormItem(node: HTMLFormElement): boolean {
 
 export function validateForm(form: HTMLElement): boolean {
   const elements = form.querySelectorAll<HTMLFormElement>(
-    "input[pattern], textarea[pattern], input[required], textarea[required], input[type='file'], select[required]"
+    "input[pattern], textarea[pattern], input[required], textarea[required], input[type='file'], select[required], input[type='tel']"
   );
   let submitForm = true;
 
@@ -660,7 +812,18 @@ function handleSubmit(form: HTMLElement, allData: AllFormData) {
   } = nodeForm.dataset;
 
   const url = Str.read(nodeForm.getAttribute("action")) ?? "";
-  const { formData, data } = allData;
+  const { formData, data: _data } = allData;
+
+  const data = _data.map((item) => {
+    if (isPhoneType(item.type) && item.value) {
+      return {
+        ...item,
+        value: `${item.dialCode}${item.value}`
+      };
+    }
+
+    return item;
+  });
 
   formData.append("data", JSON.stringify(data));
   if (brzProjectId) {
@@ -736,9 +899,13 @@ function getFormData(form: HTMLElement): AllFormData {
   form
     .querySelectorAll(".brz-forms2__item:not(.brz-forms2__item-button)")
     .forEach((node) => {
-      const elements = node.querySelectorAll<HTMLFormElement>(
-        "input, textarea, select"
-      );
+      const isPhone = node.querySelector(".brz-forms2__field-phone");
+
+      // When the type is phone, we need to extract exactly our input
+      // because otherwise the input and select from the slim-select library will be extracted as well
+      const selector = isPhone ? "input.brz-input" : "input, textarea, select";
+
+      const elements = node.querySelectorAll<HTMLFormElement>(selector);
 
       if (elements.length === 0) {
         return;
@@ -806,6 +973,10 @@ function getFormData(form: HTMLElement): AllFormData {
 
         if (brzType === "Hidden") {
           dataValue.value = value || brzPlaceholder || brzLabel;
+        }
+
+        if (isPhoneType(brzType)) {
+          dataValue.dialCode = node.dataset.dialCode;
         }
       }
 

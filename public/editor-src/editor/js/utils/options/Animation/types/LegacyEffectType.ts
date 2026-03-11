@@ -97,7 +97,12 @@ export enum LegacyEffectType {
   brzShutterInHorizontal = "brz-shutter-in-horizontal",
   brzShutterOutHorizontal = "brz-shutter-out-horizontal",
   brzShutterInVertical = "brz-shutter-in-vertical",
-  brzShutterOutVertical = "brz-shutter-out-vertical"
+  brzShutterOutVertical = "brz-shutter-out-vertical",
+
+  brzRevealUp = "brz-reveal-up",
+  brzRevealDown = "brz-reveal-down",
+  brzRevealLeft = "brz-reveal-left",
+  brzRevealRight = "brz-reveal-right"
 }
 
 export const fromString = (v: string): LegacyEffectType | undefined =>

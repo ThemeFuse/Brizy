@@ -334,6 +334,7 @@ export type ActionUpdateBlocksHTML = {
   type: ActionTypes.UPDATE_BLOCKS_HTML;
   payload: {
     blocks: Array<{ id: string; block: BlockHtml }>;
+    generation?: number;
   };
 };
 
@@ -1015,6 +1016,7 @@ export function updateBlockHtml(payload: {
 
 export function updateBlocksHtml(payload: {
   blocks: Array<{ id: string; block: BlockHtml }>;
+  generation?: number;
 }): ActionUpdateBlocksHTML {
   return {
     type: ActionTypes.UPDATE_BLOCKS_HTML,

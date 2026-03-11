@@ -1,5 +1,20 @@
 const coreJSVersion = "3.41";
 
+const previewBrowserlist = [
+  "> 0.5%",
+  "last 2 versions",
+  "not dead",
+  "fully supports es6-module",
+  "not op_mini all", // Exclude Opera Mini - too limited for modern features
+  "not kaios <= 3", // Exclude KaiOS - feature phone platform with limited support
+  "not edge < 79", // Exclude old non-Chromium Edge (modern Edge is 79+)
+  "not chrome < 90", // Exclude Chrome older than 90 (2021+)
+  "not opera < 76", // Exclude Opera older than 76 (2021+)
+  "not safari < 14", // Exclude Safari older than 14 (2020+)
+  "not ios_saf < 14", // Exclude iOS Safari older than 14 (2020+)(IntersectionObserver)
+  "not firefox < 88" // Exclude Firefox older than 88 (2021+)
+];
+
 exports.editor = (options) => {
   return {
     module: {
@@ -47,7 +62,7 @@ exports.export = (options) => {
       }
     },
     env: {
-      targets: "node 20",
+      targets: "node 24",
       mode: "usage",
       coreJs: coreJSVersion
     }
@@ -88,43 +103,42 @@ exports.webworker = (options) => {
   };
 };
 
+exports.previewBrowserlist = previewBrowserlist;
+
 exports.preview = (options) => {
-  const { module, sourceMap, jsc, env } = exports.editor(options);
-  const clonedEnv = JSON.parse(JSON.stringify(env));
-  const clonedJsc = JSON.parse(JSON.stringify(jsc));
-
-  clonedEnv.targets.browsers = [
-    "> 0.5%",
-    "last 2 versions",
-    "not dead",
-    "fully supports es6-module"
-  ];
-
-  clonedJsc.transform = {
-    optimizer: {
-      simplify: true
-    }
-  };
-
-  clonedJsc.minify = options.IS_PRODUCTION
-    ? {
-        compress: {
-          drop_console: true
-        }
-      }
-    : undefined;
-
   return {
+    isModule: true,
+    minify: false,
     module: {
-      ...module,
+      type: "es6",
       strict: true,
       strictMode: true
     },
-    sourceMap,
-    jsc: clonedJsc,
-    env: clonedEnv,
-    isModule: true,
-    minify: false
+    sourceMap: !options.IS_PRODUCTION,
+    jsc: {
+      transform: {
+        optimizer: {
+          simplify: true
+        }
+      },
+      parser: {
+        syntax: "typescript"
+      },
+      ...(options.IS_PRODUCTION
+        ? {
+            minify: {
+              compress: {
+                drop_console: true
+              }
+            }
+          }
+        : undefined)
+    },
+    env: {
+      targets: {
+        browsers: previewBrowserlist
+      }
+    }
   };
 };
 

@@ -1,15 +1,18 @@
-.brz-navigator {
+@use "../functions/z-index";
+@use "../variables";
+
+.brz-ed .brz-navigator {
   position: fixed;
   display: flex;
   flex-direction: column;
-  z-index: z("navigator");
+  z-index: z-index.z("navigator");
   border-radius: 10px;
   box-shadow:
     0 0 0 1px rgba(151, 151, 151, 1),
     0 0 5px 0 rgba(0, 0, 0, 0.5);
-  background-color: $navigator-bg;
-  font-family: $default-font-family;
-  color: $navigator-text-color;
+  background-color: variables.$navigator-bg;
+  font-family: variables.$default-font-family;
+  color: variables.$navigator-text-color;
   user-select: none;
 
   &-header {
@@ -22,7 +25,7 @@
     letter-spacing: 1px;
     font-weight: 600;
     padding-block: 12px;
-    border-bottom: 1px solid $navigator-separator-color;
+    border-bottom: 1px solid variables.$navigator-separator-color;
     padding-inline: 20px;
     font-size: 16px;
 
@@ -45,7 +48,7 @@
     }
 
     svg {
-      color: $navigator-color-gray;
+      color: variables.$navigator-color-gray;
       transition: transform 0.25s ease;
     }
   }
@@ -54,8 +57,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    color: $navigator-text-color;
-    border-top: 1px solid $navigator-separator-color;
+    color: variables.$navigator-text-color;
+    border-top: 1px solid variables.$navigator-separator-color;
 
     svg {
       width: 24px;
@@ -77,7 +80,7 @@
       width: 100%;
       height: 42px;
       gap: 5px;
-      border-bottom: 1px solid $navigator-separator-color;
+      border-bottom: 1px solid variables.$navigator-separator-color;
       font-weight: 600;
       font-size: 15px;
       cursor: pointer;
@@ -91,8 +94,8 @@
 
       &:hover,
       &-active {
-        background-color: $brand__primary;
-        color: $navigator-active-color;
+        background-color: variables.$brand__primary;
+        color: variables.$navigator-active-color;
 
         .brz-navigator-list-item {
           &-icon-show,
@@ -125,7 +128,7 @@
         align-items: center;
         justify-content: center;
         font-size: 18px;
-        color: $navigator-text-color;
+        color: variables.$navigator-text-color;
       }
 
       &-icon-widget {
@@ -157,15 +160,15 @@
         width: 100%;
         display: inline-block;
         pointer-events: none;
-        background-color: $brand__primary;
+        background-color: variables.$brand__primary;
 
         .brz-navigator-list-item {
           padding-right: 24px;
         }
 
         .brz-navigator-list-item-invalid {
-          background-color: $navigator-not-allowed-color;
-          color: $navigator-text-color;
+          background-color: variables.$navigator-not-allowed-color;
+          color: variables.$navigator-text-color;
           opacity: 1;
         }
       }
@@ -180,11 +183,11 @@
         width: 24px;
         height: 24px;
         border-radius: 50%;
-        background-color: $navigator-bg;
-        border: 1px solid $navigator-text-color;
+        background-color: variables.$navigator-bg;
+        border: 1px solid variables.$navigator-text-color;
         font-size: 0.8rem;
         font-weight: 600;
-        color: $navigator-text-color;
+        color: variables.$navigator-text-color;
         padding: 5px;
       }
 

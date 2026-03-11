@@ -1,0 +1,53 @@
+@use "../../variables";
+@use "./input.scss";
+
+// Color Fields Grid
+.brz-ed .brz-ed-grid__gradient {
+  min-height: 40px;
+  padding-bottom: 8px;
+  border-bottom: 0px;
+  margin-bottom: 0px;
+  align-items: center;
+}
+
+// Gradient // Unghi // Marime
+.brz-ed .brz-ed-grid__gradient__size,
+.brz-ed .brz-ed-grid__gradient__degree {
+  &.brz-ed-option__input-number-wrap,
+  .brz-ed-option__input-number-wrap {
+    @extend .brz-ed-option__input-outline;
+
+    background-color: transparent;
+    height: unset;
+    display: block;
+    .brz-input {
+      width: 30px;
+      height: unset;
+      text-indent: 0;
+      border-radius: 0;
+      &:focus {
+        background-color: transparent;
+      }
+    }
+  }
+}
+
+// Gradient // Unghi // Marime
+.brz-ed .brz-ed-grid__gradient__size {
+  &.brz-ed-option__input-number-wrap,
+  .brz-ed-option__input-number-wrap {
+    position: relative;
+
+    &::before {
+      content: "";
+      position: absolute;
+      width: 5px;
+      height: 5px;
+      display: block;
+      border: 1px solid variables.$options__label-color;
+      border-radius: 100%;
+      top: 1px;
+      right: -3px;
+    }
+  }
+}

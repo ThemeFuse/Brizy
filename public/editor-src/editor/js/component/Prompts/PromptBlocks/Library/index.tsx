@@ -231,7 +231,6 @@ class Library extends Component<
 
     const fonts = await normalizeFonts({
       config: config,
-      renderContext: "editor",
       newFonts: getBlocksStylesFonts(
         [...blockFonts, ...stylesFonts],
         projectFonts

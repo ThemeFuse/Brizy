@@ -1,0 +1,7 @@
+@use "../../variables";
+@use "../../mixins/arrow";
+
+// Arrows
+.brz-ed {
+  @include arrow.arrow(variables.$toolbar__arrow-size, variables.$toolbar-bg);
+}

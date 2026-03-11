@@ -1,0 +1,153 @@
+// Base Toastify scss
+@use "react-toastify/dist/ReactToastify.min.css";
+@use "../variables" as *;
+@use "../functions/z-index";
+
+// Notification
+// Core
+.brz-ed .brz-ed-notification {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: z-index.z("notifications");
+  width: 100%;
+  height: 100%;
+  background-color: rgba(28, 28, 28, 0.9);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &__body {
+    max-width: 450px;
+    min-height: 220px;
+    background-color: $black-10;
+    border-radius: 7px;
+    box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.5);
+    font-family: $default-font-family;
+    font-weight: 600;
+    font-size: 13px;
+    color: #fff;
+    padding: 20px 50px;
+    position: relative;
+  }
+
+  &__head {
+    margin-bottom: 12px;
+  }
+
+  &__content {
+    margin-bottom: 25px;
+    line-height: 1.8;
+  }
+
+  &__take-over {
+    margin-left: 25px;
+  }
+
+  &__warning {
+    color: #ffe265;
+    font-size: 18px;
+  }
+
+  &__close-icon {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+  }
+
+  &__button-continue {
+    cursor: pointer;
+    outline: none;
+    color: #818a91;
+    font-family: inherit;
+    font-size: inherit;
+    font-weight: inherit;
+    line-height: inherit;
+    background: none;
+    border: none;
+  }
+
+  &__remove-gb {
+    &--cancel {
+      display: flex;
+      align-items: center;
+      color: rgba(129, 138, 145, 1);
+      cursor: pointer;
+      outline: none;
+      font-family: inherit;
+      font-size: 14px;
+      font-weight: inherit;
+      line-height: inherit;
+      background: none;
+      border: none;
+      margin-right: 20px;
+
+      svg {
+        margin-right: 5px;
+      }
+    }
+
+    &--confirmation {
+      min-width: 128px;
+      min-height: 28px;
+    }
+  }
+}
+
+// Uses lib toast-notification
+.brz-ed .Toastify__toast-container {
+  position: fixed;
+  z-index: z-index.z("notifications");
+  transform: translate3d(0, 0, var(--toastify-z-index));
+}
+.brz-ed .Toastify__toast {
+  border-radius: 46px;
+  padding: 6px 26px;
+  box-shadow: 0 2px 4px 0 rgba($black, 0.2);
+  min-height: 46px;
+  pointer-events: all;
+  font-size: 13px;
+  font-weight: 600;
+  background-color: $notification_bg;
+  opacity: 1;
+  font-family: $default-font-family;
+
+  &--error {
+    color: $notification-error;
+    border: 2px solid $notification-error;
+
+    svg {
+      fill: $notification-error;
+      font-size: 16px;
+    }
+  }
+  &--success {
+    color: $notification-success;
+    border: 2px solid $notification-success;
+
+    svg {
+      fill: $notification_success;
+      font-size: 16px;
+    }
+  }
+  &--info {
+    color: $notification_info;
+    border: 2px solid $notification-info;
+
+    svg {
+      fill: $notification-info;
+      font-size: 16px;
+    }
+  }
+  &--warning {
+    color: $notification-warn;
+    border: 2px solid $notification-warn;
+
+    svg {
+      fill: $notification-warn;
+      font-size: 16px;
+    }
+  }
+}

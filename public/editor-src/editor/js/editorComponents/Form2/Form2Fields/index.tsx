@@ -11,6 +11,7 @@ import * as sidebarExtendSelect from "./sidebarExtendSelect";
 import { styleFormFields, styleFormSelect } from "./styles";
 import * as toolbarExtend from "./toolbarExtend";
 import * as toolbarExtendLabel from "./toolbarExtendLabel";
+import * as toolbarExtendPhoneSelect from "./toolbarExtendPhoneSelect";
 import * as toolbarExtendSelect from "./toolbarExtendSelect";
 import type { Props, Value } from "./types";
 
@@ -38,6 +39,7 @@ class Form2Fields extends EditorComponent<Value, Props> {
         styleFormFields(stylesData)
       )
     );
+
     const selectClassName = classnames(
       this.css(
         `${this.getComponentId()}-field_select`,
@@ -45,6 +47,12 @@ class Form2Fields extends EditorComponent<Value, Props> {
         styleFormSelect(stylesData)
       )
     );
+
+    const phoneSelectClassName = this.getCSSClassnames({
+      id: `${this.getId()}-phone-select`,
+      componentId: `${this.getComponentId()}-phone-select`,
+      toolbars: [toolbarExtendPhoneSelect]
+    });
 
     const toolbarProps = {
       toolbarExtendLabel: this.makeToolbarPropsFromConfig2(
@@ -56,6 +64,11 @@ class Form2Fields extends EditorComponent<Value, Props> {
       toolbarExtendSelect: this.makeToolbarPropsFromConfig2(
         toolbarExtendSelect,
         sidebarExtendSelect,
+        { allowExtend: false }
+      ),
+      toolbarExtendPhoneSelect: this.makeToolbarPropsFromConfig2(
+        toolbarExtendPhoneSelect,
+        undefined,
         { allowExtend: false }
       )
     };
@@ -72,6 +85,7 @@ class Form2Fields extends EditorComponent<Value, Props> {
         placeholder,
         className,
         selectClassName,
+        phoneSelectClassName,
         ...toolbarProps
       }
     });

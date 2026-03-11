@@ -1,6 +1,7 @@
 import LibsConfig from "visual/bootstraps/libs.json";
 import { Config, isWp } from "visual/global/Config";
 import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import { SCSSSheet } from "visual/providers/StyleProvider/SCSSSheet";
 import { ExtraFontData } from "visual/types/Fonts";
 import { compileAssetProUrl, compileAssetUrl } from "visual/utils/asset";
 import { makePrefetchFonts } from "visual/utils/fonts/makeFontsUrl";
@@ -20,8 +21,8 @@ import {
   StylesFree,
   StylesPro
 } from "./index";
+import { makeSCSS } from "./makeSCSS";
 import {
-  CRITICAL_SCORE,
   CUSTOM_CODE,
   DEPENDENCY_SCORE,
   DYNAMIC_CUSTOM_CSS,
@@ -38,7 +39,7 @@ type MakeStyles = {
   pro?: StylesPro;
 };
 
-const withRel = (
+export const withRel = (
   attr: Record<string, string>,
   config: Config
 ): Record<string, string> => {
@@ -251,34 +252,29 @@ interface Data {
   $root: cheerio.Root;
   fonts: Fonts;
   css: DynamicCSS;
-  config: ConfigCommon;
+  config: Config;
+  usedComponents: Array<string>;
   extra?: { adobeKitId?: string };
 }
 export const makeStyles = (data: Data): MakeStyles => {
-  const { $root, fonts, css, config, extra } = data;
+  const { $root, fonts, css, config, usedComponents, extra } = data;
   const { free = [], pro = [] } = LibsConfig;
+  const scssSheet = new SCSSSheet();
 
   const main: Asset = {
     name: "main",
     score: MAIN_SCORE,
     content: {
       type: "file",
-      url: compileAssetUrl("editor/css/preview.min.css", config),
-      attr: withRel(
-        {
-          class: "brz-link brz-link-preview",
-          media: "print",
-          onload: "this.media='all'"
-        },
-        config as Config
-      )
+      url: compileAssetUrl("editor/css/main.base.min.css", config),
+      attr: withRel({ class: "brz-link brz-link-preview" }, config)
     },
     pro: false
   };
   const generic: Asset[] = [];
 
   // project fonts
-  const pageFonts = makePageFonts({ fonts, extra, config: config as Config });
+  const pageFonts = makePageFonts({ fonts, extra, config });
 
   // page styles
   const pageStyles = makePageFontsPrefetch(fonts, config);
@@ -286,6 +282,10 @@ export const makeStyles = (data: Data): MakeStyles => {
   // page meta viewport
   const metaViewport = makePageMetaViewport();
   generic.push(metaViewport);
+
+  // Put all SCSS files
+  const scssFiles = makeSCSS({ config, usedComponents, scssSheet });
+  generic.push(...scssFiles);
 
   // custom CSS
   const customCSS = makeCustomCSS($root);
@@ -319,6 +319,9 @@ export const makeStyles = (data: Data): MakeStyles => {
   const libsMap: AssetLibsMap[] = [];
   const libsSelectors = new Set<string>();
 
+  // find lib selector in the page
+  const searchedLibs = new Set<string>();
+
   // libs
   free.forEach((lib) => {
     const { name, selectors } = lib;
@@ -338,7 +341,7 @@ export const makeStyles = (data: Data): MakeStyles => {
             onload: "this.media='all'",
             ...makeDataAttr({ name: "group", value: name })
           },
-          config as Config
+          config
         )
       },
       pro: false
@@ -347,6 +350,12 @@ export const makeStyles = (data: Data): MakeStyles => {
     // selectors
     // find lib selector in the page
     selectors.forEach((selector) => {
+      if (searchedLibs.has(selector)) {
+        return;
+      }
+
+      searchedLibs.add(selector);
+
       if ($root(selector).length) {
         libsSelectors.add(selector);
       }
@@ -370,25 +379,8 @@ export const makeStyles = (data: Data): MakeStyles => {
   if (proConfig) {
     const genericPro: Asset[] = [];
     const libsProSelectors = new Set<string>();
+    const searchedLibs = new Set<string>();
     const libsProMap: AssetLibsMap[] = [];
-
-    // Critical CSS - loads first and blocks rendering for fast initial paint
-    const criticalPro: Asset = {
-      name: "critical",
-      score: CRITICAL_SCORE,
-      content: {
-        type: "file",
-        url: compileAssetProUrl(proConfig, "css/preview-priority.pro.min.css"),
-        attr: withRel(
-          { class: "brz-link brz-link-preview-critical" },
-          config as Config
-        )
-      },
-      pro: true
-    };
-
-    // Add critical CSS to generic array so it loads early
-    genericPro.push(criticalPro);
 
     // Non-critical CSS - lazy loaded after initial render
     const mainPro: Asset = {
@@ -396,14 +388,14 @@ export const makeStyles = (data: Data): MakeStyles => {
       score: MAIN_SCORE,
       content: {
         type: "file",
-        url: compileAssetProUrl(proConfig, "css/preview.pro.min.css"),
+        url: compileAssetProUrl(proConfig, "css/main.base.pro.min.css"),
         attr: withRel(
           {
             class: "brz-link brz-link-preview-pro",
             media: "print",
             onload: "this.media='all'"
           },
-          config as Config
+          config
         )
       },
       pro: true
@@ -428,15 +420,20 @@ export const makeStyles = (data: Data): MakeStyles => {
               onload: "this.media='all'",
               ...makeDataAttr({ name: "group", value: name })
             },
-            config as Config
+            config
           )
         },
         pro: true
       });
 
-      // selectors
       // find lib selector in the page
       selectors.forEach((selector) => {
+        if (searchedLibs.has(selector)) {
+          return;
+        }
+
+        searchedLibs.add(selector);
+
         if ($root(selector).length) {
           libsProSelectors.add(selector);
         }

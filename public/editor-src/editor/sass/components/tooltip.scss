@@ -1,5 +1,7 @@
-.brz-tooltip {
-  z-index: z("tooltip-overlay");
+@use "../functions/z-index.scss";
+
+.brz .brz-tooltip {
+  z-index: z-index.z("tooltip-overlay");
 
   &--arrow {
     width: 0;
@@ -32,7 +34,7 @@
   }
 }
 
-&:not(.brz-ed) {
+.brz:not(.brz-ed) {
   .brz-tooltip {
     display: none;
 

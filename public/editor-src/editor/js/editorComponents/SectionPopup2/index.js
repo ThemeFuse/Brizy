@@ -313,11 +313,30 @@ class SectionPopup2 extends EditorComponent {
       customClassName,
       customAttributes,
       columnsHeightStyle,
+      scrollPage,
+      clickOutsideToClose,
+      showCloseButtonAfter,
       customCSS
     } = v;
     const id = this.getId();
     const isGlobal = isPopup(this.props.editorMode);
     const inMegaMenu = meta.megaMenu;
+    const config = this.getGlobalConfig();
+    const popupSettings = config.ui?.popupSettings ?? {};
+    const scrollPageBehind = popupSettings.scrollPageBehind;
+    const clickOutside = popupSettings.clickOutsideToClose;
+
+    let attr = {};
+    if (scrollPage === "on" && scrollPageBehind === true) {
+      attr[makeAttr("scroll_page")] = "true";
+    }
+    if (clickOutsideToClose === "on" && clickOutside === true) {
+      attr[makeAttr("click_outside_to_close")] = "true";
+    }
+    if (showCloseButtonAfter) {
+      attr[makeAttr("show-close-button-after")] = showCloseButtonAfter;
+    }
+
     const classNamePopup = classnames(
       "brz-popup2",
       "brz-popup2__editor",
@@ -359,6 +378,7 @@ class SectionPopup2 extends EditorComponent {
                 ref={(el) => attachRefs(el, [containerBorderRef, cssRef])}
                 {...parseCustomAttributes(customAttributes)}
                 {...containerBorderAttr}
+                {...attr}
               >
                 {!isGlobal && (
                   <button

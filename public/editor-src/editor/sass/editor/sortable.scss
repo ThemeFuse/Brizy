@@ -1,0 +1,231 @@
+@use "../variables" as *;
+
+$borderColor: #42c2eb;
+$helperSize: 30px;
+
+// --
+.brz-ed-sorting {
+  cursor: move;
+
+  .brz-root__container .brz-ed-draggable-overlay {
+    pointer-events: all !important;
+  }
+
+  .brz-ed-container-plus {
+    visibility: hidden;
+    pointer-events: none;
+  }
+
+  .sortable-helper {
+    pointer-events: none;
+  }
+
+  .sortable-chosen,
+  .brz-ed-collapsible__icon {
+    visibility: hidden !important;
+  }
+
+  .sortable-hovered:not(.brz-ed-border__sortable):not(.brz-ed-container-trigger) {
+    position: relative;
+  }
+
+  .sortable-hovered.brz-ed-container-trigger {
+    background-color: #03080f;
+
+    &:after {
+      opacity: 1 !important;
+      background-color: #fff !important;
+    }
+  }
+
+  // Top / Bottom
+  .sortable-hovered-top:not(.brz-ed-container-trigger):not(.brz-ed-border__sortable) {
+    &:before {
+      opacity: 1 !important;
+      transform: scaleY(2);
+      border-radius: 4px;
+    }
+  }
+
+  .sortable-hovered-bottom:not(.brz-ed-container-trigger):not(.brz-ed-border__sortable) {
+    &:after {
+      opacity: 1 !important;
+      transform: scaleY(2);
+      border-radius: 4px;
+    }
+  }
+
+  // Left / Right
+  .sortable-hovered-left:after,
+  .sortable-hovered-right:after {
+    top: 0;
+    width: 2px;
+    height: 100%;
+  }
+
+  .sortable-hovered-left {
+    &[data-brz-border--grey]>.brz-ed-border__inner {
+      border-left-color: $by__block__border__grey;
+    }
+
+    &[data-brz-border--blue]>.brz-ed-border__inner {
+      border-left-color: $by__block__border__blue;
+    }
+
+    &[data-brz-border--red]>.brz-ed-border__inner {
+      border-left-color: $by__block__border__red;
+    }
+
+    >.brz-ed-border__inner {
+      border-left-width: 4px;
+      border-radius: 4px;
+      transition: none;
+      top: -2px !important;
+      bottom: -2px !important;
+      left: -1px !important;
+    }
+  }
+
+  .sortable-hovered-right {
+    &[data-brz-border--grey]>.brz-ed-border__inner {
+      border-right-color: $by__block__border__grey;
+    }
+
+    &[data-brz-border--blue]>.brz-ed-border__inner {
+      border-right-color: $by__block__border__blue;
+    }
+
+    &[data-brz-border--red]>.brz-ed-border__inner {
+      border-right-color: $by__block__border__red;
+    }
+
+    >.brz-ed-border__inner {
+      border-right-width: 4px;
+      border-radius: 4px;
+      transition: none;
+      right: -3px !important;
+      top: -2px !important;
+      bottom: -2px !important;
+    }
+  }
+}
+
+.sortable-helper {
+  width: $helperSize;
+  height: $helperSize;
+  border-radius: 50%;
+  background-color: $brand__primary;
+  cursor: move;
+}
+
+.sortable-placeholder {
+  outline: 1px solid $brand__primary;
+}
+
+// Sortable Empty
+.brz-ed .brz-ed-sortable--empty {
+  position: relative;
+  min-height: 125px;
+  width: calc(100% - 20px);
+  height: calc(100% - 20px);
+  margin: 10px;
+
+  .brz-ed-border__inner {
+    opacity: 0.6;
+  }
+
+  [data-brz-border--grey] {
+    border-color: $by__block__border__grey;
+  }
+
+  .brz-ed-container-trigger {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    margin: 0;
+  }
+}
+
+.sortable-chosen {
+  &[data-brz-border--grey]>.brz-ed-border__inner {
+    border-color: $by__block__border__grey;
+  }
+
+  &[data-brz-border--blue]>.brz-ed-border__inner {
+    border-color: $by__block__border__blue;
+  }
+
+  &[data-brz-border--red]>.brz-ed-border__inner {
+    border-color: $by__block__border__red;
+  }
+
+  >.brz-ed-border__inner {
+    top: -1px;
+    bottom: -1px;
+    visibility: visible !important;
+  }
+
+  &[data-brz-border="column__posts"]>.brz-ed-border__inner {
+    top: -2px;
+    bottom: -2px;
+  }
+}
+
+// receivers
+.sortable-receiver:not(.brz-ed-sortable--empty) {
+
+  >.brz-row__container,
+  >.brz-wrapper,
+  >.brz-wrapper-clone {
+    position: relative;
+
+    &:first-child:before,
+    &.sortable-chosen+div:before,
+    &:after {
+      content: "";
+      height: 2px;
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: -10px;
+      background-color: $floating__button__grey-bg;
+      opacity: 0.3;
+    }
+
+    &:first-child:before,
+    &.sortable-chosen+div:before {
+      top: -10px;
+      bottom: auto;
+    }
+  }
+
+  >[data-brz-border="column"] {
+    &[data-brz-border--grey]>.brz-ed-border__inner {
+      border-left-color: $by__block__border__grey;
+      border-right-color: $by__block__border__grey;
+    }
+
+    &[data-brz-border--blue]>.brz-ed-border__inner {
+      border-left-color: $by__block__border__blue;
+      border-right-color: $by__block__border__blue;
+    }
+
+    &[data-brz-border--red]>.brz-ed-border__inner {
+      border-left-color: $by__block__border__red;
+      border-right-color: $by__block__border__red;
+    }
+
+    >.brz-ed-border__inner {
+      top: -1px;
+      bottom: -1px;
+      transition: none;
+    }
+  }
+
+  // Hack create space between row an column
+  &.brz-row {
+    margin-top: 5px;
+    margin-bottom: 5px;
+  }
+}

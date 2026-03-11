@@ -1,0 +1,11 @@
+.brz-ed .brz-popup {
+  &[data-brz-border="popup"] {
+    position: fixed;
+  }
+  &__editor {
+    display: none;
+  }
+  &--opened {
+    display: flex;
+  }
+}

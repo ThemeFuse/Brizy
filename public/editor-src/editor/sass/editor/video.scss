@@ -1,0 +1,14 @@
+.brz-ed .brz-custom-video {
+  padding-bottom: 0;
+
+  .brz-video-custom-progress {
+    width: 25%;
+  }
+}
+
+.brz-ed .brz-youtube-video,
+.brz-ed .brz-vimeo-video {
+  iframe {
+    pointer-events: none;
+  }
+}

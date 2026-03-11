@@ -1,0 +1,69 @@
+@use "../../variables";
+
+.brz-ed .brz-ed-option-wrapper {
+  position: relative;
+
+  &.brz-ed-option__block {
+    flex-direction: row;
+    align-items: center;
+    flex-wrap: wrap;
+
+    & > * {
+      flex: 1 1 auto;
+      max-width: 100%;
+    }
+    & > .brz-ed-option__label,
+    & > .brz-control__select-population {
+      flex: none;
+    }
+    & > .brz-ed-option__label {
+      width: 100%;
+    }
+
+    .brz-ed-control__input2 {
+      flex: 1 1 auto;
+
+      input {
+        width: 100%;
+      }
+    }
+
+    .brz-ed-control__multiSelect2__value {
+      .brz-icon-svg.brz-control__select--arrow {
+        top: 50%;
+        transform: translateY(-50%);
+        margin-top: 0;
+      }
+    }
+  }
+  &.brz-ed-grid__option {
+    padding: 0;
+  }
+
+  &__isLocked > *:not(.brz-ed-option-wrapper__lock) {
+    pointer-events: none;
+    opacity: 0.4;
+  }
+
+  &__lock {
+    top: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+
+    &__icon {
+      cursor: pointer;
+      color: variables.$brand__primary__pro;
+      width: 11px;
+      height: 11px;
+      border: 10px solid #fff;
+      background: #fff;
+      box-sizing: content-box;
+      border-radius: 50%;
+    }
+  }
+}

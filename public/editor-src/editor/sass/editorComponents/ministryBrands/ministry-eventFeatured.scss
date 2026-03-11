@@ -1,0 +1,20 @@
+.brz .brz-eventFeatured {
+  overflow: hidden;
+  ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  &__item {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+
+    &--meta--title {
+      a {
+        color: inherit;
+      }
+    }
+  }
+}

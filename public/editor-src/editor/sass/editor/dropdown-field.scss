@@ -1,0 +1,37 @@
+@use "../variables";
+
+// DropDown Field
+.brz-ed .brz-ed-dropdown {
+  display: inline-block;
+  position: relative;
+  background: #999;
+}
+
+.brz-ed .brz-ed-dropdown-options {
+  background: #999;
+  position: absolute;
+  min-width: 100%;
+  left: 0;
+  top: 100%;
+  z-index: 50;
+
+  >div>div:first-child {
+    border-right-width: 0 !important;
+  }
+}
+
+.brz-ed .brz-ed-dropdown-current {
+  cursor: pointer;
+}
+
+.brz-ed .brz-ed-dropdown-option-item {
+  font-family: variables.$default-font-family;
+  cursor: pointer;
+  color: #fff;
+  padding-left: 24px;
+}
+
+.brz-ed .brz-ed-dropdown-option-item:hover,
+.brz-ed .brz-ed-dropdown-option-item.brz-ed-dropdown-option-item-active {
+  color: #34beea;
+}

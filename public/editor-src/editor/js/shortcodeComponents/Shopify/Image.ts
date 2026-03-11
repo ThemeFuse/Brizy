@@ -13,7 +13,7 @@ export default function (config: ConfigCommon) {
         _styles: ["wrapper", "wrapper--image"],
         items: [
           {
-            type: "Image",
+            type: ElementTypes.Image,
             value: {
               _styles: ["image"],
               ...config?.contentDefaults?.[ElementTypes.ShopifyImage]

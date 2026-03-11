@@ -1,18 +1,18 @@
 // --- Imports
 // Draggable Default
-@import "draggable/draggable";
+@use "draggable/draggable";
 
 // Column
-@import "draggable/column";
+@use "draggable/column";
 
 // Padding (For Section)
-@import "draggable/padding";
+@use "draggable/padding";
 
 // Box (For Shortcodes like Image/Map/Embed)
-@import "draggable/box";
+@use "draggable/box";
 
 // Box Resizer
-@import "draggable/boxResizer2";
+@use "draggable/boxResizer2";
 
 // Resizer
-@import "draggable/resizer";
+@use "draggable/resizer";

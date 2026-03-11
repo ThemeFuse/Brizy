@@ -1,0 +1,483 @@
+@use "../default-variables";
+@use "../mixins/clearfix";
+@use "../mixins/hover";
+@use "../mixins/reset-text";
+
+// Shortcode Text
+.brz .brz-rich-text {
+  -webkit-font-smoothing: antialiased;
+  flex: 1 1 auto;
+  min-width: 0;
+
+  .brz-ed-box__resizer {
+    max-width: 100%;
+  }
+
+  .brz-capitalize-on {
+    text-transform: uppercase;
+
+    // rich-text can have span inside span(usually this happens with DC)
+    // text-transform - doesn't apply for children
+    // this way we use this hack
+    span {
+      text-transform: uppercase;
+    }
+  }
+
+  .brz-lowercase-on {
+    text-transform: lowercase;
+
+    span {
+      text-transform: lowercase;
+    }
+  }
+
+  .brz-tp-script-sub,
+  .brz-tp-script-super {
+    font-size: inherit;
+
+    span,
+    sub,
+    sup {
+      font-size: inherit;
+    }
+  }
+
+  @include reset-text.word-wrap;
+
+  > * {
+    white-space: pre-wrap;
+  }
+
+  i,
+  em {
+    font-style: italic;
+  }
+
+  ul li,
+  ol li {
+    margin-inline-start: 1em;
+  }
+
+  ol > li,
+  ul > li {
+    list-style-type: none;
+  }
+
+  ol li {
+    counter-reset: list-1 list-2 list-3 list-4 list-5 list-6 list-7 list-8;
+    counter-increment: list-0;
+  }
+
+  // bullet point list
+  ul li::before,
+  ol li.ql-indent-1:before,
+  ol li.ql-indent-3:before,
+  ol li.ql-indent-5:before,
+  ol li.ql-indent-7:before {
+    content: "\2022";
+    display: inline-block;
+    min-width: 1em;
+    margin-inline-start: -1em;
+  }
+
+  // ordered list
+  ol li:before,
+  ol li.ql-indent-2:before,
+  ol li.ql-indent-4:before,
+  ol li.ql-indent-6:before,
+  ol li.ql-indent-8:before {
+    display: inline-block;
+    min-width: 1em;
+    margin-inline-start: -1em;
+  }
+
+  ol li:before {
+    content: counter(list-0, decimal) ".";
+  }
+
+  ol li.ql-indent-1 {
+    counter-increment: list-1;
+  }
+
+  ol li.ql-indent-1 {
+    counter-reset: list-2 list-3 list-4 list-5 list-6 list-7 list-8;
+  }
+
+  ol li.ql-indent-2 {
+    counter-increment: list-2;
+  }
+
+  ol li.ql-indent-2:before {
+    content: counter(list-2, decimal) ".";
+  }
+
+  ol li.ql-indent-2 {
+    counter-reset: list-3 list-4 list-5 list-6 list-7 list-8;
+  }
+
+  ol li.ql-indent-3 {
+    counter-increment: list-3;
+  }
+
+  ol li.ql-indent-3 {
+    counter-reset: list-4 list-5 list-6 list-7 list-8;
+  }
+
+  ol li.ql-indent-4 {
+    counter-increment: list-4;
+  }
+
+  ol li.ql-indent-4:before {
+    content: counter(list-4, decimal) ".";
+  }
+
+  ol li.ql-indent-4 {
+    counter-reset: list-5 list-6 list-7 list-8;
+  }
+
+  ol li.ql-indent-5 {
+    counter-increment: list-5;
+  }
+
+  ol li.ql-indent-5 {
+    counter-reset: list-6 list-7 list-8;
+  }
+
+  ol li.ql-indent-6 {
+    counter-increment: list-6;
+  }
+
+  ol li.ql-indent-6:before {
+    content: counter(list-6, decimal) ".";
+  }
+
+  ol li.ql-indent-6 {
+    counter-reset: list-7 list-8;
+  }
+
+  ol li.ql-indent-7 {
+    counter-increment: list-7;
+  }
+
+  ol li.ql-indent-7 {
+    counter-reset: list-8;
+  }
+
+  ol li.ql-indent-8 {
+    counter-increment: list-8;
+  }
+
+  ol li.ql-indent-8:before {
+    content: counter(list-8, decimal) ".";
+  }
+
+  ol li.ql-indent-8 {
+    counter-reset: reset;
+  }
+
+  .ql-editor {
+    white-space: pre-wrap;
+  }
+
+  .brz-text-mask,
+  .brz-image-gradient {
+    caret-color: #000;
+    color: transparent !important;
+    -webkit-background-clip: text;
+    -webkit-box-decoration-break: clone;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+
+    &::selection {
+      -webkit-text-fill-color: initial;
+      background: #3dbfe8;
+      color: #ffffff;
+    }
+  }
+
+  // Text Reset
+  > div > h1,
+  > div > h2,
+  > div > h3,
+  > div > h4,
+  > div > h5,
+  > div > h6 {
+    margin-top: 0;
+    margin-bottom: 0;
+    padding: 0;
+    text-transform: inherit;
+    text-decoration: inherit;
+
+    &:before {
+      display: none;
+    }
+  }
+
+  > div > p,
+  span {
+    margin-top: 0;
+    margin-bottom: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    text-transform: inherit;
+    text-decoration: inherit;
+  }
+
+  span {
+    font-family: inherit;
+    font-size: inherit;
+    font-weight: inherit;
+    line-height: inherit;
+    letter-spacing: inherit;
+    text-decoration: inherit;
+    text-transform: inherit;
+  }
+
+  p {
+    display: block;
+  }
+
+  a,
+  em,
+  span {
+    display: inline;
+  }
+
+  ol,
+  ul,
+  dl {
+    margin: 0;
+    padding: 0;
+  }
+
+  ol,
+  ul {
+    margin-inline-start: 1em;
+  }
+
+  ol ol,
+  ul ul,
+  ol ul,
+  ul ol {
+    margin: 0;
+  }
+
+  strong {
+    font-weight: bold;
+  }
+
+  .link--anchor,
+  .link--story,
+  .link--upload,
+  .link--external,
+  .link--popup,
+  .link--page,
+  .link--dynamic {
+    text-decoration: default-variables.$link-decoration;
+
+    @include hover.hover {
+      text-decoration: default-variables.$link-hover-decoration;
+    }
+  }
+
+  .brz-tp__dc-block {
+    @include clearfix.clearfix;
+
+    ul {
+      font-family: inherit;
+
+      li {
+        display: list-item;
+        list-style-type: inherit;
+
+        &:before {
+          content: none;
+        }
+      }
+    }
+  }
+
+  .brz-tp__dc-block iframe,
+  .brz-tp__dc-block object,
+  .brz-tp__dc-block video,
+  .brz-tp__dc-block img {
+    max-width: 100%;
+  }
+
+  &__population-tooltip *,
+  [data-tooltip],
+  [data-brz-tooltip] {
+    text-decoration: underline !important;
+    text-decoration-style: dashed !important;
+    text-underline-offset: 5px;
+  }
+}
+
+// RichText with QuillJs
+.brz .brz-rich-text__custom {
+  a {
+    text-decoration: default-variables.$link-decoration;
+    background-color: transparent; // Remove the gray background on active links in IE 10.
+    -webkit-text-decoration-skip: objects; // Remove gaps in links underline in iOS 8+ and Safari 8+.
+
+    &[href] :not(.brz-ed-content-dc-link) {
+      @include hover.hover {
+        text-decoration: default-variables.$link-hover-decoration;
+      }
+    }
+  }
+}
+
+// RichText with Dynamic content
+.brz .brz-rich-text__population {
+  .brz-rich-text-context-wrapper {
+    font-size: inherit;
+  }
+
+  span,
+  .brz-rich-text-context-wrapper {
+    display: inline-block;
+    position: relative;
+    z-index: 0;
+  }
+
+  span::before,
+  .brz-rich-text-context-wrapper::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -1;
+  }
+}
+
+.brz .brz-rich-text__population-cloud {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  p {
+    margin: 0;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: default-variables.$link-decoration;
+
+    @include hover.hover {
+      text-decoration: default-variables.$link-hover-decoration;
+    }
+  }
+
+  blockquote {
+    border-left: 4px solid #ccc;
+    margin: 5px 0 5px;
+    padding: 0 0 0 16px;
+  }
+}
+
+.brz .brz-rich-text {
+  // Indent
+  .ql-indent-1 {
+    padding-left: 3em;
+  }
+
+  .ql-indent-2 {
+    padding-left: 6em;
+  }
+
+  .ql-indent-3 {
+    padding-left: 9em;
+  }
+
+  .ql-indent-4 {
+    padding-left: 12em;
+  }
+
+  .ql-indent-5 {
+    padding-left: 15em;
+  }
+
+  .ql-indent-6 {
+    padding-left: 18em;
+  }
+
+  .ql-indent-7 {
+    padding-left: 21em;
+  }
+
+  .ql-indent-8 {
+    padding-left: 24em;
+  }
+
+  .ql-indent-9 {
+    padding-left: 27em;
+  }
+
+  // Align
+  .ql-align-center {
+    text-align: center;
+  }
+
+  .ql-align-right {
+    text-align: right;
+  }
+
+  .ql-align-justify {
+    text-align: justify;
+  }
+}
+
+// Simple text
+.brz .brz-text__editor {
+  min-width: 10px;
+
+  &:empty:before {
+    content: "\00a0\00a0";
+  }
+}
+
+.brz .brz-population-mask {
+  &.brz-population-mask__style {
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+}
+
+// Story rich text
+.brz .brz-story .brz-rich-text {
+  ol,
+  ul {
+    margin-left: 0;
+  }
+}
+
+.brz .story-slider-dot .brz-rich-text {
+  ol,
+  ul {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+// Only preview
+.brz:not(.brz-ed) {
+  .brz-population-mask {
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent !important;
+  }
+
+  .brz-story .brz-rich-text > div {
+    width: 100%;
+  }
+
+  .brz-rich-text .brz-tp__dc-block-st1 > * {
+    margin: 0;
+  }
+}

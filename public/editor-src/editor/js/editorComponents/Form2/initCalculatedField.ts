@@ -21,33 +21,53 @@ export const initCalculatedField = (
       calculatedField.getAttribute(makeAttr("calc-expression"))
     );
 
-    const _expression =
-      expression && decodeFromString<string>(expression).replace(/\s+/g, "");
+    if (expression) {
+      const decodedExpression = decodeFromString<string>(expression);
 
-    if (_expression) {
-      const operators = ["+", "-", "*", "/"];
+      // Extract original field names BEFORE removing spaces
+      // This preserves field names with spaces like "Number one"
+      const originalFields: string[] = [];
+      const fieldNameRegex = /\{\{([^}]+)\}\}/g;
+      let match;
+      while ((match = fieldNameRegex.exec(decodedExpression)) !== null) {
+        originalFields.push(match[1].trim());
+      }
 
-      // remove extra spaces and parantheses and get field names from "{{ }}"
-      const _fields = _expression
-        .replace(/\s+/g, "")
-        .replace(/[()]/g, "")
-        .split(/\{{([^}}]+)\}}/)
-        .filter((item) => !operators.includes(item) && item.length);
+      // Create mapping from normalized (no spaces) to original field names
+      const fieldMapping = new Map<string, string>();
+      originalFields.forEach((originalField) => {
+        const normalizedField = originalField.replace(/\s+/g, "");
+        fieldMapping.set(normalizedField, originalField);
+      });
 
-      const values: string[] = [];
-      const result = "";
+      // Normalize expression for formula parsing (remove spaces)
+      const _expression = decodedExpression.replace(/\s+/g, "");
 
-      if (form) {
-        setCalculatedListeners(
-          _fields,
-          form,
-          values,
-          result,
-          _expression,
-          calculatedField,
-          inputValue,
-          Formula
-        );
+      if (_expression) {
+        const operators = ["+", "-", "*", "/"];
+
+        // Extract normalized field names from "{{ }}"
+        const _fields = _expression
+          .replace(/[()]/g, "")
+          .split(/\{{([^}}]+)\}}/)
+          .filter((item) => !operators.includes(item) && item.length);
+
+        const values: string[] = [];
+        const result = "";
+
+        if (form) {
+          setCalculatedListeners(
+            _fields,
+            fieldMapping,
+            form,
+            values,
+            result,
+            _expression,
+            calculatedField,
+            inputValue,
+            Formula
+          );
+        }
       }
 
       if (
@@ -108,6 +128,7 @@ export const getValueInNullCase = (
 
 const setCalculatedListeners = (
   _fields: string[],
+  fieldMapping: Map<string, string>,
   form: HTMLElement,
   values: string[],
   result: string,
@@ -117,8 +138,10 @@ const setCalculatedListeners = (
   Formula: typeof _Formula
 ) => {
   _fields.forEach((field, i) => {
+    // Use original field name (with spaces) for querying form fields
+    const originalField = fieldMapping.get(field) || field;
     const input = form.querySelector<HTMLInputElement>(
-      `[${makeAttr("label")}='${field}']`
+      `[${makeAttr("label")}='${originalField}']`
     );
 
     const type = input?.type;
@@ -155,7 +178,7 @@ const setCalculatedListeners = (
         }
         case "radio": {
           const radios = form.querySelectorAll<HTMLInputElement>(
-            `input[type='radio'][${makeAttr("label")}='${field}']`
+            `input[type='radio'][${makeAttr("label")}='${originalField}']`
           );
 
           radios.forEach((radio) => {
@@ -192,7 +215,7 @@ const setCalculatedListeners = (
         }
         case "checkbox": {
           const checkboxes = form.querySelectorAll<HTMLInputElement>(
-            `input[type='checkbox'][${makeAttr("label")}='${field}']`
+            `input[type='checkbox'][${makeAttr("label")}='${originalField}']`
           );
 
           let total = 0;
@@ -282,7 +305,8 @@ const calculateFieldValue = (
       if (inputValue) {
         inputValue.value = value;
       }
-    } catch (_) {
+    } catch (e) {
+      console.error(e);
       // If formula is invalid, show error message and add invalid class
       calculatedField.innerText = "Invalid formula";
 

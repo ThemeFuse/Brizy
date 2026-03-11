@@ -1,8 +1,9 @@
 import { omit } from "es-toolkit";
 import React, { useCallback } from "react";
-import type { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import type { Config } from "visual/global/Config";
 import EditorGlobal from "visual/global/Editor";
 import { useConfig } from "visual/providers/ConfigProvider";
+import { ComponentTypes } from "visual/providers/EditorComponentProvider/ComponentTypes";
 import type { EditorMode } from "visual/providers/EditorModeProvider";
 import { ServerStyleSheet } from "visual/providers/StyleProvider/ServerStyleSheet";
 import { pageBlocksRawSelector } from "visual/redux/selectors";
@@ -15,7 +16,7 @@ import type { OutputWithoutSymbols } from "./types";
 
 interface Props {
   store: Store;
-  config: ConfigCommon;
+  config: Config;
   editorMode: EditorMode;
 }
 
@@ -71,6 +72,7 @@ export const pageToStatic = (
 
   const blocks = pageBlocks.map((block) => {
     const sheet = new ServerStyleSheet();
+    const componentTypes = new ComponentTypes();
 
     const Page = (
       <Providers
@@ -78,6 +80,7 @@ export const pageToStatic = (
         sheet={sheet.instance}
         config={config}
         editorMode={editorMode}
+        componentTypes={componentTypes}
       >
         <RenderPage block={block} store={store} editorMode={editorMode} />
       </Providers>
@@ -86,6 +89,7 @@ export const pageToStatic = (
     const staticData = baseToStatic({
       Page,
       sheet: sheet.instance,
+      componentTypes,
       store,
       config
     });

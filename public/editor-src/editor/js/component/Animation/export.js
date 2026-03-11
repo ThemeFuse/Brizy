@@ -32,13 +32,14 @@ export default function ($node) {
     return;
   }
 
-  const isCarouselInPage = $node.find(".brz-carousel").length > 0;
+  const isAnimatedCarouselInPage = $node.find(".brz-carousel .brz-animated").length > 0;
 
-  if (isCarouselInPage) {
-    window.Brz.on("elements.carousel.ready", () => {
-      initAnimation($node, Animation);
+
+  initAnimation($node, Animation);
+
+  if (isAnimatedCarouselInPage) {
+    window.Brz.onAlways("elements.carousel.ready", ($carousel) => {
+      initAnimation($carousel, Animation);
     });
-  } else {
-    initAnimation($node, Animation);
   }
 }

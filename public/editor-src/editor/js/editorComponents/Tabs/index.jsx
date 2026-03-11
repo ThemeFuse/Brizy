@@ -23,6 +23,12 @@ import { styleAnimation, styleTabs } from "./styles";
 import * as toolbarExtend from "./toolbarExtend";
 import * as toolbarExtendParent from "./toolbarExtendParent";
 
+// SCSS import - automatically tracked during static rendering
+import(
+  // @ts-expect-error: .scss?chunk=tabs files
+  /* webpackChunkName: "tabs" */ "sass/editorComponents/tabs.scss?componentId=Tabs&chunk=tabs"
+);
+
 export default class Tabs extends EditorComponent {
   static defaultValue = defaultValue;
   static defaultProps = {

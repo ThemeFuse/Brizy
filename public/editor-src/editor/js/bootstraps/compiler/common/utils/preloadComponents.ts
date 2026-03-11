@@ -1,40 +1,59 @@
+import { ElementModelType2 } from "visual/component/Elements/Types";
 import {
   ecwidLazyComponents,
   ministryBrandsLazyComponents,
   shopifyLazyComponents
 } from "visual/editorComponents";
-import { isCloud, isShopify } from "visual/global/Config/types/configs/Cloud";
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import { Config } from "visual/global/Config";
+import { isCloud } from "visual/global/Config/types/configs/Cloud";
+import { Page } from "visual/types/Page";
+import { mapModels } from "visual/utils/models";
 
-export function preloadComponents(config: ConfigCommon) {
+interface Data {
+  config: Config;
+  page: Page;
+}
+
+const getUsedModelComponents = (data: Data): Set<string> => {
+  const { page, config } = data;
+  const globalBlocks = config.globalBlocks ?? [];
+  const components = new Set<string>();
+
+  mapModels((model: ElementModelType2) => {
+    components.add(model.type);
+    return model;
+  }, page.data.items);
+
+  globalBlocks.forEach((block) => {
+    mapModels((model: ElementModelType2) => {
+      components.add(model.type);
+      return model;
+    }, block.data.value);
+  });
+
+  return components;
+};
+
+export function preloadComponents(data: Data) {
+  const { config } = data;
+
   // Preload lazy-loaded elements (MinistryBrands, Ecwid, Shopify)
   if (isCloud(config)) {
+    const usedComponents = getUsedModelComponents(data);
     const lazyComp = [
-      ...Object.values(ministryBrandsLazyComponents).map((e) => e.component),
-      ...Object.values(ecwidLazyComponents).map((e) => e.component)
+      ...Object.values(ministryBrandsLazyComponents),
+      ...Object.values(ecwidLazyComponents),
+      ...Object.values(shopifyLazyComponents)
     ];
 
-    for (const component of lazyComp) {
+    for (const { component, id } of lazyComp) {
       try {
-        component.preload();
+        if (usedComponents.has(id)) {
+          component.preload();
+        }
       } catch (error) {
         // eslint-disable-next-line no-console
         console.warn("Failed to preload component:", error);
-      }
-    }
-
-    if (isShopify(config)) {
-      const components = Object.values(shopifyLazyComponents).map(
-        (e) => e.component
-      );
-
-      for (const component of components) {
-        try {
-          component.preload();
-        } catch (error) {
-          // eslint-disable-next-line no-console
-          console.warn("Failed to preload Shopify component:", error);
-        }
       }
     }
   }

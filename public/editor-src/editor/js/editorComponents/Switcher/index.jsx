@@ -25,6 +25,12 @@ import * as toolbarConfig from "./toolbar";
 import * as toolbarExtendParentConfig from "./toolbarExtendParent";
 import * as toolbarSecondConfig from "./toolbarSecond";
 
+// SCSS import - automatically tracked during static rendering
+import(
+  // @ts-expect-error: .scss?chunk=Switcher files
+  /* webpackChunkName: "switcher" */ "sass/editorComponents/switcher.scss?componentId=Switcher&chunk=switcher"
+);
+
 class Switcher extends EditorComponent {
   static defaultProps = {
     meta: {},

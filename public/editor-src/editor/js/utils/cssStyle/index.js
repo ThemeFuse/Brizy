@@ -227,3 +227,6 @@ export * from "./cssStyleOptionTooltip";
 
 // Post Excerpt
 export * from "./cssStyleElementPostExcerpt";
+
+// Image Comparison
+export * from "./cssStyleElementImageComparison";

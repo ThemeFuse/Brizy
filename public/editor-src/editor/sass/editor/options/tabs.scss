@@ -1,0 +1,103 @@
+@use "../../variables";
+
+// Tabs
+.brz-ed .brz-ed-control-tabs-options {
+  position: relative;
+
+  > .brz-ed-options-tabs--label {
+    position: absolute;
+    top: 7px;
+  }
+
+  > .brz-ed-control__tabs {
+    border-bottom: 0;
+    justify-content: flex-end;
+
+    > .brz-ed-control__tab {
+      position: relative;
+      width: 37px;
+      height: 30px;
+      line-height: 30px;
+      background-color: #383e48;
+      color: #fff;
+      text-align: center;
+      transition:
+        0.2s linear background-color,
+        0.2s linear color;
+
+      .brz-icon-svg {
+        margin: 0;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+
+      &:after {
+        width: 1px;
+        height: 100%;
+        background-color: #4c525b;
+        margin: 0;
+        border-right: 0;
+        display: block;
+        position: absolute;
+        top: 0;
+        right: 0;
+      }
+
+      &.active {
+        background-color: variables.$brand__primary;
+      }
+
+      &:first-child {
+        border-radius: 3px 0 0 3px;
+      }
+
+      &:last-child {
+        border-radius: 0 3px 3px 0;
+      }
+    }
+  }
+}
+
+.brz-ed .brz-ed-tabs__option--inline,
+.brz-ed .brz-ed-tabs__options {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+// Tabs inline
+.brz-ed .brz-ed-tabs__option--inline {
+  position: relative;
+
+  .brz-ed-control__tabs {
+    margin-bottom: 0;
+  }
+}
+
+// Sidebar
+.brz-ed .brz-ed-grid__typography--sidebar {
+  width: 420px;
+
+  .brz-ed-control__tabs {
+    margin-bottom: 5px;
+  }
+}
+
+.brz-ed
+  .brz-ed-control__popover--content
+  .brz-ed-option-wrapper.brz-ed-option.brz-ed-option-type__tabs,
+.brz-ed
+  .brz-ed-control__popover--content
+  .brz-ed-option-wrapper.brz-ed-option.brz-ed-option-type__stateMode {
+  padding: 0;
+
+  &,
+  & > .brz-ed-control__tabs-wrapper {
+    width: 100%;
+  }
+
+  & .brz-ed-control__tabs-wrapper .brz-ed-control__backgroundColor {
+    width: variables.$toolbar_tooltip__md-width;
+  }
+}

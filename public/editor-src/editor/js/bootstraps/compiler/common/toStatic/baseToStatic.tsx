@@ -1,7 +1,8 @@
 import cheerio from "cheerio";
 import { ReactElement } from "react";
 import ReactDOMServer from "react-dom/server";
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import type { Config } from "visual/global/Config";
+import { ComponentTypes } from "visual/providers/EditorComponentProvider/ComponentTypes";
 import { Sheet } from "visual/providers/StyleProvider/Sheet";
 import {
   defaultFontSelector,
@@ -25,11 +26,12 @@ interface Props {
   store: Store;
   Page: ReactElement;
   sheet: Readonly<Sheet>;
-  config: ConfigCommon;
+  componentTypes: Readonly<ComponentTypes>;
+  config: Config;
 }
 
 export const baseToStatic = (props: Props): Output => {
-  const { store, sheet, config, Page } = props;
+  const { store, sheet, config, Page, componentTypes } = props;
   const reduxState = store.getState();
   const projectDefaultFontId = defaultFontSelector(reduxState);
 
@@ -41,6 +43,10 @@ export const baseToStatic = (props: Props): Output => {
   // === Extract all css from CSS generator ===
   const dynamicCss = sheet.getCSSOrdered();
 
+  // ===  Extract all used components from the page ===
+  const usedComponents = componentTypes.getAll();
+
+  // === Make css for symbols ===
   const symbols = makeSymbols(dynamicCss.symbol);
 
   // ===========
@@ -73,13 +79,17 @@ export const baseToStatic = (props: Props): Output => {
     fonts,
     css: dynamicCss,
     config,
-    extra: { adobeKitId }
+    extra: { adobeKitId },
+    usedComponents
   });
 
   const body = dynamicContent($pageHTML("body").html() ?? "");
 
   // Clear all css after execute
   sheet.purge();
+
+  // Clear all used components after execute
+  componentTypes.purge();
 
   // Clear all extracted FontFamilies
   clearFamilyCache();

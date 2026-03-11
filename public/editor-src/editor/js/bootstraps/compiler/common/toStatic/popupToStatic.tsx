@@ -1,8 +1,9 @@
 import React, { useCallback } from "react";
 import { addFirst, getIn, setIn } from "timm";
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import type { Config } from "visual/global/Config";
 import EditorGlobal from "visual/global/Editor";
 import { useConfig } from "visual/providers/ConfigProvider";
+import { ComponentTypes } from "visual/providers/EditorComponentProvider/ComponentTypes";
 import { EditorMode } from "visual/providers/EditorModeProvider";
 import { ServerStyleSheet } from "visual/providers/StyleProvider/ServerStyleSheet";
 import { Store } from "visual/redux/store";
@@ -18,7 +19,7 @@ import { Output } from "./types";
 interface Props {
   block: Block;
   store: Store;
-  config: ConfigCommon;
+  config: Config;
   editorMode: EditorMode;
 }
 
@@ -66,6 +67,7 @@ export const popupToStatic = (props: Props): Output => {
   // if we add external popup to brizy page - his global styles rewrite page global styles
   const className = isExternal ? projectClassName(config) : undefined;
   const sheet = new ServerStyleSheet();
+  const componentTypes = new ComponentTypes();
 
   const Page = (
     <Providers
@@ -73,6 +75,7 @@ export const popupToStatic = (props: Props): Output => {
       sheet={sheet.instance}
       config={config}
       editorMode={editorMode}
+      componentTypes={componentTypes}
     >
       <RenderPage
         block={block}
@@ -83,7 +86,13 @@ export const popupToStatic = (props: Props): Output => {
     </Providers>
   );
 
-  const output = baseToStatic({ store, Page, sheet: sheet.instance, config });
+  const output = baseToStatic({
+    store,
+    Page,
+    sheet: sheet.instance,
+    config,
+    componentTypes
+  });
 
   if (isInternal) {
     return output;

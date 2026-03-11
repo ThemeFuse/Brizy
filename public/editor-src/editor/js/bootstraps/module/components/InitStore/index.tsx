@@ -8,6 +8,7 @@ import { makeVariablesColor } from "visual/utils/cssVariables";
 import { addFilter } from "visual/utils/filters";
 import { parseGlobalBlocksToRecord } from "visual/utils/reader/globalBlocks";
 import { getAuthorized } from "visual/utils/user/getAuthorized";
+import { filterGlobalBlocksByRules } from "./filterGlobalBlocks";
 import { getMiddleware } from "./getMiddleware";
 import { Props } from "./types";
 import { waitForPendingAndDispatch } from "./utils";
@@ -44,7 +45,15 @@ class InitStore extends Component<Props> {
       })
     });
     const page = readPageData(_page);
-    const globalBlocks = parseGlobalBlocksToRecord(config.globalBlocks) ?? {};
+    const parsedGlobalBlocks =
+      parseGlobalBlocksToRecord(config.globalBlocks) ?? {};
+
+    const filteredPage = filterGlobalBlocksByRules(
+      parsedGlobalBlocks,
+      page,
+      config
+    );
+
     const { fonts } = project.data;
 
     store.dispatch(
@@ -52,8 +61,8 @@ class InitStore extends Component<Props> {
       hydrate({
         project,
         projectStatus,
-        page,
-        globalBlocks,
+        page: filteredPage,
+        globalBlocks: parsedGlobalBlocks,
         fonts,
         authorized: getAuthorized(config),
         syncAllowed: isSyncAllowed,
@@ -115,7 +124,11 @@ class InitStore extends Component<Props> {
 
         document.head.appendChild(configVariables);
 
-        if (window.parent && window.parent.document && window.parent !== window) {
+        if (
+          window.parent &&
+          window.parent.document &&
+          window.parent !== window
+        ) {
           const parentExistingStyle =
             window.parent.document.getElementById("themeVariables");
           if (parentExistingStyle) {

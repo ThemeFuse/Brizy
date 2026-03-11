@@ -1,0 +1,11 @@
+@use "../../variables";
+
+// Prompt icon toolbar
+.brz-ed .brz-ed-option__prompt-icon {
+  transition: color 0.2s linear;
+
+  &:hover {
+    transition: color 0.2s linear;
+    color: variables.$brand__primary;
+  }
+}

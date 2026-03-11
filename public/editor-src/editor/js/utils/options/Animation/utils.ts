@@ -13,6 +13,7 @@ import * as Fade from "./types/effects/Fade";
 import * as Fill from "./types/effects/Fill";
 import * as Move from "./types/effects/Move";
 import * as Pulse from "./types/effects/Pulse";
+import * as Reveal from "./types/effects/Reveal";
 import * as Rotate from "./types/effects/Rotate";
 import * as Rotate2 from "./types/effects/Rotate2";
 import * as Scale from "./types/effects/Scale";
@@ -115,6 +116,11 @@ export function getDirections<T extends EffectType>(
         k as GetDirection<T>,
         Zoom.getDirectionTitle(k)
       ]);
+    case EffectType.Reveal:
+      return Object.values(Reveal.Direction).map((k) => [
+        k as GetDirection<T>,
+        Reveal.getDirectionTitle(k)
+      ]);
     case EffectType.None:
     case EffectType.Attention:
     case EffectType.Attention2:
@@ -154,6 +160,7 @@ export const valueToType = (types: EffectType[], value: Value): EffectType => {
     case EffectType.Rotate2:
     case EffectType.Move:
     case EffectType.Wobble:
+    case EffectType.Reveal:
       return types.includes(value.type) ? value.type : EffectType.None;
   }
 };
@@ -164,7 +171,8 @@ export const defaultEffects: EffectType[] = [
   EffectType.Rotate,
   EffectType.Slide,
   EffectType.Zoom,
-  EffectType.Attention
+  EffectType.Attention,
+  EffectType.Reveal,
 ];
 
 export const tabEffects: EffectType[] = [

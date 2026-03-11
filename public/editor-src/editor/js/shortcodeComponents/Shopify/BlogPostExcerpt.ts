@@ -13,7 +13,7 @@ export default function (config: ConfigCommon) {
         _styles: ["wrapper", "wrapper-postExcerpt"],
         items: [
           {
-            type: "WPPostExcerpt",
+            type: ElementTypes.PostExcerpt,
             value: {
               _styles: ["blogPostExcerpt"],
               ...config.contentDefaults?.[ElementTypes.BlogPostExcerpt]

@@ -1,0 +1,34 @@
+.brz .brz-articleList {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow: hidden;
+
+  &__container {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    word-break: break-word;
+  }
+
+  &__item {
+    width: var(--columnSize);
+
+    &--media {
+      display: flex;
+      padding: 0;
+
+      li:not(:last-child) {
+        margin: 0 0.5rem 0 0;
+      }
+
+      &--audio {
+        width: 100%;
+      }
+    }
+  }
+
+  ul {
+    list-style-type: none;
+  }
+}

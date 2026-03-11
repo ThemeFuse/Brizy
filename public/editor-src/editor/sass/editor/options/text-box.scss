@@ -1,0 +1,89 @@
+@use "../../mixins/input";
+@use "../../variables";
+
+// TextField
+.brz-ed .brz-ed-option__text-box {
+  width: 48px;
+  border-bottom: 1px solid variables.$brand__options-border;
+  margin-left: 17px;
+  padding: 0 0 4px;
+
+  .brz-label {
+    display: flex;
+    align-items: center;
+    color: variables.$options__label-color;
+    font-family: variables.$default-font-family;
+    font-size: 13px;
+    font-weight: 400;
+    font-style: normal;
+    letter-spacing: 0;
+    text-transform: lowercase;
+    padding: 0;
+    margin: 0;
+  }
+
+  &__input,
+  &__helper {
+    position: relative;
+    font-weight: 400;
+    max-width: 90%;
+    line-height: 1;
+  }
+
+  &__helper {
+    font-family: inherit;
+    font-size: inherit;
+    margin-left: 3px;
+
+    &--active {
+      color: variables.$brand__primary;
+    }
+  }
+
+  &__input > .brz-invisible {
+    line-height: 1.1;
+  }
+
+  &--fixed-width {
+    width: 65px;
+    margin-left: 13px;
+    border-bottom-color: transparent;
+
+    .brz-label {
+      align-items: center;
+    }
+
+    .brz-ed-option__text-box__input {
+      margin-right: 2px;
+
+      &:after {
+        content: "";
+        width: 100%;
+        height: 1px;
+        background-color: variables.$brand__options-border;
+        position: absolute;
+        bottom: -3px;
+        left: 0;
+      }
+    }
+
+    .brz-ed-option__text-box__helper {
+      cursor: pointer;
+      margin-left: 5px;
+    }
+
+    .brz-ed-control__text-box--resizer {
+      position: relative;
+    }
+  }
+}
+
+.brz-ed .brz-ed-control__text-box--resizer {
+  @include input.small-input;
+
+  padding: 0;
+  position: absolute;
+  width: 105%;
+  height: 100%;
+  border: none;
+}

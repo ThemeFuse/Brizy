@@ -324,6 +324,9 @@ class SectionItem extends EditorComponent {
       )
     );
 
+    const config = this.getGlobalConfig();
+    const linkData = getLinkData(v, config);
+
     return (
       <ContainerBorder
         type="section__item"
@@ -352,6 +355,16 @@ class SectionItem extends EditorComponent {
                     ) && this.renderPopups()}
                   </ToolbarExtend>
                 </Roles>
+                {/* This is only for e2e testing */}
+                {linkData.href && (
+                  <Link
+                    className="brz-link-container brz-pointer-events-none"
+                    type={linkData.type}
+                    href={linkData.href}
+                    target={linkData.target}
+                    rel={linkData.rel}
+                  />
+                )}
               </div>
             )}
           </CustomCSS>

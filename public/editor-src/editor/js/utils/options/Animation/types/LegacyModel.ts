@@ -1,4 +1,4 @@
-import { mPipe, parseStrict } from "fp-utilities";
+import { mPipe, optional, parseStrict } from "fp-utilities";
 import { ElementModel } from "visual/component/Elements/Types";
 import * as Positive from "visual/utils/math/Positive";
 import * as Num from "visual/utils/math/number";
@@ -13,6 +13,7 @@ export type LegacyModel = {
   duration: Positive.Positive;
   delay: Positive.Positive;
   infiniteAnimation: boolean;
+  timing?: string;
 };
 
 export const fromElementModel = parseStrict<Get, LegacyModel>({
@@ -31,20 +32,26 @@ export const fromElementModel = parseStrict<Get, LegacyModel>({
   infiniteAnimation: or<Get, boolean>([
     mPipe(call("infiniteAnimation"), (v) => Boolean(v)),
     (): boolean => false
-  ])
+  ]),
+  timing: optional(mPipe(call("timing"), Str.read))
 });
 
 export const toElementModel = (v: LegacyModel): ElementModel => {
-  return {
+  const model: ElementModel = {
     name: v.name,
     duration: v.duration,
     delay: v.delay,
     infiniteAnimation: v.infiniteAnimation
   };
+  if (v.timing !== undefined) {
+    model.timing = v.timing;
+  }
+  return model;
 };
 
 export const eq: IsEqual<LegacyModel> = (a, b) =>
   a.name === b.name &&
   a.delay === b.delay &&
   a.duration === b.duration &&
-  a.infiniteAnimation === b.infiniteAnimation;
+  a.infiniteAnimation === b.infiniteAnimation &&
+  a.timing === b.timing;

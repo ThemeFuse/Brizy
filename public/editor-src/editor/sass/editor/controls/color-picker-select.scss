@@ -1,0 +1,41 @@
+@use "../../variables";
+@use "../../mixins/input";
+
+.brz-ed .brz-ed-control__colorPickerSelect {
+  position: relative;
+
+  &--select {
+    @include input.small-select;
+
+    position: absolute;
+    z-index: 10;
+    top: 4px;
+    inset-inline-start: 4px;
+    width: auto;
+    max-width: 120px;
+    min-width: auto;
+
+    .brz-ed-control__multiSelect {
+      &__menu {
+        max-width: 145px;
+        min-width: unset;
+      }
+
+      &--value-container {
+        background-color: variables.$control-bg;
+        display: inline-flex;
+        max-width: 100%;
+      }
+
+      &__option,
+      &--tag {
+        font-size: variables.$options__handle-font-size-small;
+
+        span {
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+      }
+    }
+  }
+}

@@ -1,4 +1,4 @@
-import { debounce } from "es-toolkit";
+import { debounce, type DebouncedFunction } from "es-toolkit";
 import React, { Component, ComponentType, MouseEvent, TouchEvent } from "react";
 import {
   ChangeFunction,
@@ -37,12 +37,11 @@ interface State {
 
 export const ColorWrap = (Picker: ComponentType<PickerProps>) => {
   class ColorPicker extends Component<Props, State> {
-    private debounce: ((
+    private debounce: DebouncedFunction<(
       fn: Props["onChange"],
       data: HSLAChange | HSVAChange,
       meta?: GlobalMeta
-    ) => void) &
-      _.Cancelable;
+    ) => void>;
     constructor(props: Props) {
       super(props);
 

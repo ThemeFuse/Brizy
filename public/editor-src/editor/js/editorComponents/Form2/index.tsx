@@ -41,6 +41,12 @@ import * as toolbarSuccessMessage from "./toolbarsFormMessages/toolbarSuccessMes
 import * as toolbarSuccessMessageContainer from "./toolbarsFormMessages/toolbarSuccessMessageContainer";
 import { MessageStatus, type State, type Value } from "./types";
 
+// SCSS import - automatically tracked during static rendering
+import(
+  // @ts-expect-error: .scss?componentId=forms2 files
+  /* webpackChunkName: "form2" */ "sass/editorComponents/forms2.scss?componentId=Form2&chunk=form2"
+);
+
 class Form2 extends EditorComponent<Value, ElementProps, State> {
   static defaultValue = defaultValue;
   static defaultProps = {

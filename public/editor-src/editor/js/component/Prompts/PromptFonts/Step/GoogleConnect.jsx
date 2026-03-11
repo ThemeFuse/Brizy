@@ -37,10 +37,7 @@ class GoogleConnect extends Component {
       onChange,
       config
     } = context;
-    const googleFonts = await getGoogleFonts({
-      config,
-      renderContext: "editor"
-    });
+    const googleFonts = await getGoogleFonts({ config });
 
     onChange(id, { ...data, fonts: googleFonts });
   }

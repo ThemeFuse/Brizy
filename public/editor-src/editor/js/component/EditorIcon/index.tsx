@@ -1,8 +1,7 @@
 import Loadable from "@loadable/component";
 import classnames from "classnames";
 import { noop } from "es-toolkit";
-import React, { CSSProperties, MouseEvent, RefObject, forwardRef } from "react";
-import { Config } from "visual/global/Config";
+import React, { CSSProperties, MouseEvent, Ref, forwardRef } from "react";
 import { useConfig } from "visual/providers/ConfigProvider";
 import { RenderFor } from "visual/providers/RenderProvider/RenderFor";
 import { editorIconUrl } from "visual/utils/icons";
@@ -15,11 +14,32 @@ export interface Props {
   onClick?: (e: MouseEvent<SVGElement>) => void;
 }
 
-const LoadableIcon = Loadable(() => import("./Icon"));
+interface LegacyProps extends Props {
+  innerRef: Ref<HTMLDivElement>;
+}
+
+export const LoadableIcon = Loadable(() => import("./Icon"));
 
 const isType2 = (i: string): i is IconNames => i.startsWith("t2-");
 
 const _PreviewIcon = (): null => null;
+
+const LegacyIcon = (props: LegacyProps) => {
+  const { icon = "nc-circle-add", className, onClick, style, innerRef } = props;
+  const config = useConfig();
+  const { editorIcons } = config.urls ?? {};
+
+  return (
+    <svg
+      className={className}
+      onClick={onClick}
+      style={style}
+      ref={innerRef as Ref<SVGSVGElement>}
+    >
+      <use xlinkHref={editorIconUrl({ icon, url: editorIcons }, config)} />
+    </svg>
+  );
+};
 
 const _EditorIcon = forwardRef<HTMLDivElement, Props>((props, ref) => {
   const {
@@ -28,9 +48,6 @@ const _EditorIcon = forwardRef<HTMLDivElement, Props>((props, ref) => {
     style = {},
     onClick = noop
   } = props;
-
-  const config = useConfig() as Config;
-  const { editorIcons } = config.urls;
 
   const className = classnames(
     "brz-icon-svg brz-ed-icon-svg align-[initial]",
@@ -45,14 +62,13 @@ const _EditorIcon = forwardRef<HTMLDivElement, Props>((props, ref) => {
       onClick={onClick}
     />
   ) : (
-    <svg
+    <LegacyIcon
+      icon={icon}
       className={className}
-      onClick={onClick}
       style={style}
-      ref={ref as RefObject<SVGSVGElement>}
-    >
-      <use xlinkHref={editorIconUrl({ icon, url: editorIcons }, config)} />
-    </svg>
+      innerRef={ref}
+      onClick={onClick}
+    />
   );
 });
 

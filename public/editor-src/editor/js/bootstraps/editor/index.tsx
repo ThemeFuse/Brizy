@@ -81,7 +81,6 @@ const _systemFont = {
       : {};
     const fontsDiff = await normalizeFonts({
       config,
-      renderContext: "editor",
       newFonts: getBlocksStylesFonts([...pageFonts, ...stylesFonts], {
         ...fonts,
         ...adobeFonts

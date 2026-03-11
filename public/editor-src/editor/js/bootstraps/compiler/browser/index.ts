@@ -1,9 +1,9 @@
 import { expose } from "comlink";
 import { mergeDeep } from "timm";
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import type { Config } from "visual/global/Config";
 import { getTempConfig } from "../common/utils/getTempConfig";
 import { preloadComponents } from "../common/utils/preloadComponents";
-import { Static } from "./bootstrap/types";
+import type { Static } from "./bootstrap/types";
 import { getProScriptUrl } from "./utils/getProScriptUrl";
 import { getThirdPartyScriptUrl } from "./utils/getThirdPartyScriptUrl";
 import "./utils/globals";
@@ -36,10 +36,10 @@ class Core {
     }
 
     // @ts-expect-error: Config in worker
-    const config: ConfigCommon = mergeDeep(global.__VISUAL_CONFIG__, _config);
+    const config: Config = mergeDeep(global.__VISUAL_CONFIG__, _config);
 
     // Preload elements
-    preloadComponents(config);
+    preloadComponents({ config, page });
 
     const { bootstrap } = await import("./bootstrap");
 

@@ -1,0 +1,201 @@
+@use "../../variables";
+
+// --- Tabs
+.brz-ed .brz-ed-control__tabs-wrapper {
+  width: 100%;
+}
+
+.brz-ed .brz-ed-control__tabs .brz-ed-control__tab {
+  // Reset margin that may be set from outside
+  margin: 0;
+}
+
+.brz-ed .brz-ed-control__tab__content {
+  flex: 1 1 auto;
+  max-width: 100%;
+}
+
+.brz-ed .brz-ed-control__tabs:not(.brz-ed-control__tabs__left) {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  padding-left: variables.$options__item-padding;
+  padding-right: variables.$options__item-padding;
+  border-bottom: 1px solid variables.$popover__tabs-border;
+  color: variables.$popover__tabs-color;
+  font-family: variables.$default-font-family;
+  font-size: variables.$popover__tabs-font-size;
+  float: none;
+
+  .brz-ed-control__tab {
+    cursor: pointer;
+    transition: color 0.2s linear;
+    border-bottom: 2px solid transparent;
+    height: variables.$popover__tabs-height;
+    display: inline-flex;
+    align-items: center;
+    margin: 0 0 -1px;
+    padding-top: 2px;
+    width: auto;
+
+    &:hover,
+    &.active {
+      color: variables.$popover__tabs-color--active;
+      transition: color 0.2s linear;
+    }
+
+    &.active {
+      border-bottom-color: variables.$popover__tabs-border--active;
+    }
+
+    &:not(:last-child) {
+      margin-inline-end: 15px;
+    }
+
+    .brz-span {
+      font-weight: 600;
+    }
+
+    // Tab with Icon
+    &__icon {
+      height: 42px;
+
+      .brz-icon-svg {
+        font-size: 16px;
+        flex: 1 0 auto;
+
+        & + .brz-span:not(:empty) {
+          margin-inline-start: 10px;
+        }
+      }
+    }
+  }
+}
+
+// Left Side Tabs
+.brz-ed .brz-ed-control__tabs__left {
+  position: absolute;
+  z-index: 0;
+  left: -38px;
+  top: 34px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+  .brz-ed-control__tab {
+    width: 30px;
+    height: 35px;
+    background-color: variables.$popover__tabs_left-bg;
+    box-shadow:
+      -3px 0 5px -4px variables.$popover__tabs_left-box-shadow,
+      -2px -4px 5px -4px variables.$popover__tabs_left-box-shadow,
+      -2px 4px 5px -4px variables.$popover__tabs_left-box-shadow;
+    border-top-left-radius: 7px;
+    border-bottom-left-radius: 7px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: variables.$popover__tabs_left-color;
+    font-size: 13px;
+    cursor: pointer;
+    margin: 0 0 1px;
+    position: relative;
+    left: 8px;
+
+    &.active {
+      color: variables.$popover__tabs_left-color--active;
+      background-color: variables.$popover__tabs_left-bg--active;
+    }
+  }
+}
+
+.brz-ed
+  .brz-ed-control__tabs__top
+  + .brz-ed-control__tab__content
+  .brz-ed-control__tabs__left {
+  top: 0;
+}
+
+// Tabs for editor sidebar
+.brz-ed .brz-ed-control__tabs__editor {
+  &.brz-ed-control__tabs__editor {
+    width: 144px;
+    margin-inline-start: 10px;
+    margin-inline-end: 10px;
+    padding: 0;
+
+    & + .brz-ed-control__tab__content {
+      margin-bottom: -9px;
+    }
+  }
+}
+
+.brz-ed-horizontal-scroll-container {
+  .brz-ed-horizontal-scroll-content {
+    width: 100%;
+
+    .brz-ed-control__tabs {
+      width: 100%;
+    }
+  }
+}
+
+.brz-ed-control__right-sidebar-tabs--horizontal-scroll {
+  .brz-ed-control__tabs-wrapper--horizontal-scroll {
+    .brz-ed-control__tabs {
+      flex-wrap: nowrap;
+
+      .brz-ed-control__tab {
+        flex: 0 0 auto;
+        max-width: none;
+        white-space: nowrap;
+
+        &:last-child {
+          margin-inline-end: 0;
+        }
+      }
+    }
+
+    .brz-ed-horizontal-scroll-container {
+      .brz-ed-horizontal-scroll-content {
+        width: 100%;
+      }
+
+      &--overflowed {
+        .brz-ed-control__tabs {
+          width: auto;
+        }
+      }
+
+      .brz-ed-horizontal-scroll-arrow {
+        margin-bottom: 15px;
+
+        &--left {
+          left: -31px;
+          background: linear-gradient(
+            to right,
+            var(
+                --brz-ui-global-card-background,
+                var(--brz-ui-card-background, var(--color-white, #fff))
+              )
+              60%,
+            transparent
+          );
+        }
+
+        &--right {
+          right: -31px;
+          background: linear-gradient(
+            to left,
+            var(
+                --brz-ui-global-card-background,
+                var(--brz-ui-card-background, var(--color-white, #fff))
+              )
+              60%,
+            transparent
+          );
+        }
+      }
+    }
+  }
+}

@@ -1,31 +1,31 @@
 // Imports
 // Icon
-@import "prompts/icon";
+@use "prompts/icon";
 
 // Adder
-@import "prompts/adder";
+@use "prompts/adder";
 
 // Popup
-@import "prompts/popup";
+@use "prompts/popup";
 
 // Blocks
-@import "prompts/blocks";
+@use "prompts/blocks";
 
 // Integrations
-@import "prompts/integration";
+@use "prompts/integration";
 
 // Hot Keys
-@import "prompts/hot-keys";
+@use "prompts/hot-keys";
 
 // Recaptcha
 // Adobe Fonts
-@import "prompts/commonPrompts";
+@use "prompts/commonPrompts";
 
 // Fonts
-@import "prompts/fonts";
+@use "prompts/fonts";
 
 // Conditions
-@import "prompts/conditions";
+@use "prompts/conditions";
 
 // Authorization
-@import "prompts/authorization";
+@use "prompts/authorization";
