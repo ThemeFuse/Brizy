@@ -1,0 +1,65 @@
+@use "../../variables";
+
+// Buttons
+.brz-ed .brz-ed-option__button {
+  transition: color 0.2s linear;
+
+  &:hover {
+    transition: color 0.2s linear;
+    color: variables.$toolbar__item-color--hover;
+  }
+}
+
+// Round Plus Button
+.brz-ed .floating-action-button {
+  position: relative;
+  width: variables.$block__adder__icon-size;
+  height: variables.$block__adder__icon-size;
+  border-radius: 50%;
+  background: variables.$block__adder__icon-bg;
+  cursor: pointer;
+  z-index: 10;
+  transition: background 200ms linear;
+
+  &:after,
+  &:before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    background: variables.$block__adder__icon__before-bg;
+    transform: translate(-50%, -50%);
+    transition: transform 200ms linear;
+  }
+
+  &:before {
+    width: 16px;
+    height: 2px;
+  }
+
+  &:after {
+    width: 2px;
+    height: 16px;
+  }
+
+  &:hover {
+    background: variables.$block__adder__icon-bg--hover;
+  }
+
+  &--icon {
+    color: #fff;
+    font-size: 16px;
+
+    .brz-icon-svg {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    &:after,
+    &:before {
+      display: none;
+    }
+  }
+}

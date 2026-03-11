@@ -22,5 +22,6 @@ export interface Value extends ElementModel {
   nonfeatures: Switch;
 
   showEventTime: Switch;
+  timeFormat: "12" | "24";
   showSubscribeToCalendarButton: Switch;
 }

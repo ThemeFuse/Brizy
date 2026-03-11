@@ -1,0 +1,15 @@
+.brz-ed .brz-ed-control__font-style {
+  display: flex;
+  align-items: center;
+
+  .brz-ed-control__font-style--settings {
+    margin-inline-start: 8px;
+    margin-bottom: 0;
+    font-size: 16px;
+    color: #828b92;
+    line-height: 1;
+    display: flex;
+    cursor: pointer;
+    transition: color 0.2s linear;
+  }
+}

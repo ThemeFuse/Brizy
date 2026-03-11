@@ -12,6 +12,12 @@ import * as sidebarConfig from "./sidebar";
 import { style } from "./styles";
 import * as toolbarConfig from "./toolbar";
 
+// SCSS import - automatically tracked during static rendering
+import(
+  // @ts-expect-error: .scss
+  /* webpackChunkName: "wpbreadcrumbs" */ "sass/editorComponents/breadcrumbs.scss?componentId=WPBreadcrumbs&chunk=wpbreadcrumbs"
+);
+
 class WPBreadcrumbs extends EditorComponent {
   static defaultValue = defaultValue;
 

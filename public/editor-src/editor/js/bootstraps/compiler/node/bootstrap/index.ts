@@ -1,6 +1,6 @@
 import deepMerge from "deepmerge";
 import { omit } from "es-toolkit";
-import type { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import type { Config } from "visual/global/Config";
 import { isPopup, isStory } from "visual/providers/EditorModeProvider";
 import { hydrate } from "visual/redux/actions";
 import { pageBlocksDataSelector } from "visual/redux/selectors";
@@ -28,7 +28,7 @@ import {
 } from "../../common/utils/prepareHTML/utils";
 import type { Static } from "./types";
 
-export async function bootstrap(config: ConfigCommon): Promise<Static> {
+export async function bootstrap(config: Config): Promise<Static> {
   const store = createStore();
   const project = config.projectData;
   const _page = config.pageData;
@@ -42,7 +42,8 @@ export async function bootstrap(config: ConfigCommon): Promise<Static> {
   }
 
   const page = readPageData(_page);
-  const globalBlocks = parseGlobalBlocksToRecord(config.globalBlocks) ?? {};
+  const globalBlocks =
+    parseGlobalBlocksToRecord(config.globalBlocks) ?? {};
   const { fonts } = project.data;
 
   // NEW FONTS FOUND
@@ -52,9 +53,7 @@ export async function bootstrap(config: ConfigCommon): Promise<Static> {
   // and add them to the project
   const parsedFonts = getUsedModelFontFamily();
   const blocksFonts: Array<GoogleFont> = [];
-
-  // TODO: Need to know what context is, because it is node compiler, set context="view"
-  const googleFonts = await getGoogleFonts({ config, renderContext: "view" });
+  const googleFonts = await getGoogleFonts({ config });
 
   getBlocksStylesFonts(parsedFonts, fonts).forEach(({ type, family }) => {
     if (type === "google" || type === "unknowns") {

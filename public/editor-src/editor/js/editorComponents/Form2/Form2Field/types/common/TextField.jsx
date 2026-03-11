@@ -4,6 +4,25 @@ import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import { isEditor } from "visual/providers/RenderProvider";
 import { makeDataAttr } from "visual/utils/i18n/attribute";
 
+// As example, if is date form field, then the input type will be "date", if is phone form field, then the input type will be "number"
+const formFieldTypesToInputTypesMap = {
+  button: "button",
+  checkbox: "checkbox",
+  color: "color",
+  date: "date",
+  email: "email",
+  file: "file",
+  hidden: "hidden",
+  number: "number",
+  password: "password",
+  radio: "radio",
+  tel: "tel",
+  text: "text",
+  time: "time",
+  url: "url",
+  phone: "tel"
+};
+
 function isExistingType(value) {
   const types = [
     "button",
@@ -19,10 +38,13 @@ function isExistingType(value) {
     "tel",
     "text",
     "time",
-    "url"
+    "url",
+    "phone"
   ];
+
   return types.includes(String(value.toLowerCase()));
 }
+
 export default class TextField extends Component {
   static get componentTitle() {
     return "Text";
@@ -70,6 +92,18 @@ export default class TextField extends Component {
     return showPlaceholder ? label : "";
   }
 
+  getTypeAttribute(_type) {
+    if (isExistingType(_type)) {
+      const type = formFieldTypesToInputTypesMap[_type.toLowerCase()];
+
+      if (type) {
+        return { type };
+      }
+    }
+
+    return {};
+  }
+
   getAttributes() {
     return {};
   }
@@ -89,6 +123,19 @@ export default class TextField extends Component {
     node && node.classList.remove("brz-ed-dd-cancel");
   };
 
+  hanleInputChange = (v, e) => {
+    const { labelType } = v;
+
+    if (labelType === "outside") {
+      this.handleChange({ placeholder: e.target.value });
+    } else {
+      this.handleChange({
+        label: e.target.value,
+        placeholder: e.target.value
+      });
+    }
+  };
+
   renderForEdit(v) {
     const { labelType, attr, showPlaceholder } = v;
 
@@ -103,7 +150,7 @@ export default class TextField extends Component {
         className={className}
         value={attr.placeholder}
         onChange={(e) => {
-          this.handleChange({ placeholder: e.target.value });
+          this.hanleInputChange(v, e);
         }}
       />
     ) : (
@@ -112,10 +159,7 @@ export default class TextField extends Component {
         ref={this.input}
         className={className}
         onChange={(e) => {
-          this.handleChange({
-            label: e.target.value,
-            placeholder: e.target.value
-          });
+          this.hanleInputChange(v, e);
         }}
       />
     );
@@ -174,7 +218,7 @@ export default class TextField extends Component {
         tabletColumns,
         mobileColumns,
         attr: {
-          ...(isExistingType(type) ? { type: type.toLocaleLowerCase() } : ""),
+          ...this.getTypeAttribute(type),
           id: labelId,
           name: name,
           defaultValue,

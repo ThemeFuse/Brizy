@@ -1,0 +1,33 @@
+.brz .brz-woo-attributes {
+  display: flex;
+  flex-direction: column;
+
+  table {
+    border: 0;
+  }
+
+  h2 {
+    margin: 0;
+  }
+
+  .woocommerce-product-attributes {
+    width: 100%;
+    margin: 0;
+
+    tr {
+      border-width: 0;
+      background-color: transparent;
+    }
+  }
+  .woocommerce-product-attributes-item__label,
+  .woocommerce-product-attributes-item__value {
+    width: 50%;
+    padding: 0;
+    font-style: normal;
+
+    p {
+      margin: 0;
+      padding: 0;
+    }
+  }
+}

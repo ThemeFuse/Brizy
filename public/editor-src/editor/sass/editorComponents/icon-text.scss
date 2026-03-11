@@ -1,0 +1,34 @@
+@use "../mixins/reset-text" as *;
+
+// Shortcode Icon Text
+.brz .brz-icon-text {
+  display: flex;
+  width: 100%;
+  text-align: left;
+  align-items: stretch;
+  flex-wrap: nowrap;
+
+  // Style for editor
+  .brz-text__editor,
+  .brz-text-btn {
+    width: 100%;
+  }
+  .brz-text__editor {
+    white-space: pre-wrap;
+  }
+
+  // Add word wrap for buttons
+  // if button is large break word
+  .brz-wrapper-clone {
+    @include word-wrap;
+  }
+
+  .brz-icon__container {
+    display: flex;
+
+    min-width: auto;
+    .brz-ed-box__resizer {
+      height: fit-content;
+    }
+  }
+}

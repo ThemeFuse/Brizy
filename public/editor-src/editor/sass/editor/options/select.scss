@@ -1,0 +1,168 @@
+@use "../../variables";
+
+// --- Select Option
+.brz-ed .brz-ed-option__select {
+  &__after {
+    margin-left: 8px;
+    margin-bottom: 0;
+    font-size: 16px;
+    color: variables.$options__label-color;
+    line-height: 1;
+    display: flex;
+    cursor: pointer;
+    transition: color 0.2s linear;
+
+    &:hover {
+      color: variables.$brand__primary;
+    }
+  }
+  .brz-control__select-current {
+    .brz-control__select-option {
+      border-bottom: none;
+
+      span {
+        top: 1px;
+      }
+    }
+  }
+  .brz-control__select-option {
+    display: flex;
+    align-items: center;
+
+    .brz-icon-svg,
+    span {
+      line-height: 1;
+    }
+    span {
+      position: relative;
+      top: 0.5px;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+    .brz-icon-svg {
+      font-size: 12px;
+      margin-left: 5px;
+      margin-right: 5px;
+    }
+    &__bg {
+      background-size: 100%;
+      background-repeat: no-repeat;
+      background-position: center;
+      width: 100%;
+      height: 12px;
+      filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(125deg)
+        brightness(103%) contrast(103%);
+
+      &.brz-ed-shape--5,
+      &.brz-ed-shape--6,
+      &.brz-ed-shape--40,
+      &.brz-ed-shape--42 {
+        height: 8px;
+      }
+    }
+    &.active .brz-control__select-option__bg {
+      filter: invert(73%) sepia(61%) saturate(2312%) hue-rotate(160deg)
+        brightness(97%) contrast(87%);
+    }
+  }
+  .brz-control__select-options .brz-control__select-option__bg:hover {
+    filter: invert(73%) sepia(61%) saturate(2312%) hue-rotate(160deg)
+      brightness(97%) contrast(87%);
+  }
+
+  // Taxonomy
+  &-taxonomy {
+    .brz-control__select-options {
+      width: 140px;
+    }
+  }
+}
+
+// Gradient
+.brz-ed .brz-ed__select--transparent {
+  border-bottom: 0px;
+  margin-bottom: 0px;
+
+  .brz-control__select {
+    width: fit-content;
+    margin: 0 30%;
+  }
+
+  .brz-control__select-current,
+  .brz-control__select-current:hover {
+    background-color: transparent;
+    line-height: 13px;
+    height: 13px;
+  }
+
+  .brz-control__select-current {
+    display: flex;
+
+    .brz-control__select-option {
+      line-height: 13px;
+      height: 13px;
+      padding-left: 0;
+      padding-right: 6px;
+    }
+    .brz-control__select--arrow {
+      margin-top: -0.4em;
+      position: relative;
+      right: auto;
+    }
+    &:hover {
+      cursor: pointer;
+    }
+  }
+  .brz-control__select-options {
+    width: fit-content;
+    margin-top: 10px;
+    margin-left: -10px;
+  }
+}
+
+.brz-ed .brz-ed__select--align-right .brz-control__select-current {
+  justify-content: flex-end;
+  margin-right: 7px;
+}
+
+.brz-ed .brz-ed-option-type__select {
+  &__spinner-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 112px;
+    height: variables.$control-height;
+    border-radius: variables.$control-border-radius;
+    background-color: variables.$options__control-bg;
+  }
+
+  &__spinner {
+    font-size: 12px;
+    color: #818a91;
+  }
+
+  .brz-ed-control__multiSelect--tag--value .brz-icon-svg {
+    font-size: 10px;
+  }
+}
+
+.brz-ed .brz-ed-shape {
+  background-size: 100%;
+  background-repeat: no-repeat;
+  background-position: center;
+  width: 100%;
+  height: 12px;
+  filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(125deg)
+    brightness(103%) contrast(103%);
+
+  &.brz-ed-shape--5,
+  &.brz-ed-shape--6,
+  &.brz-ed-shape--40,
+  &.brz-ed-shape--42 {
+    height: 8px;
+  }
+  &.icon--bottom {
+    transform: rotateX(180deg);
+  }
+}

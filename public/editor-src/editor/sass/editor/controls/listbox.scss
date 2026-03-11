@@ -1,0 +1,59 @@
+@use "../../variables";
+@use "../../functions/z-index";
+
+// --
+.brz-ed .brz-ed-listbox {
+  position: absolute;
+  background-color: variables.$brand__options;
+  z-index: z-index.z("toolbar");
+  border-radius: variables.$control-border-radius;
+  box-shadow: 0 2px 13px 0 variables.$control__dropdown-box-shadow;
+  color: #fff;
+  font-family: variables.$default-font-family;
+
+  &__optgroup-label,
+  &__item {
+    position: relative;
+    cursor: pointer;
+    color: #fff;
+    padding-left: variables.$control-padding;
+    padding-right: variables.$control-padding;
+    font-size: variables.$control-font-size;
+    letter-spacing: variables.$control-letter-spacing;
+    border-bottom: 1px solid variables.$control-border;
+    line-height: variables.$control-height;
+    height: variables.$control-height;
+    transition: color 0.15s linear;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    &:last-child {
+      border-bottom-color: transparent !important;
+    }
+  }
+
+  &__item--active,
+  &__item:hover {
+    color: variables.$brand__primary;
+    transition: color 0.15s linear;
+  }
+
+  &__item--disable {
+    cursor: default;
+  }
+
+  &__optgroup {
+    cursor: auto;
+    height: auto;
+    padding: 0;
+  }
+
+  &__optgroup-label {
+    color: variables.$options__label-color;
+  }
+
+  &__optgroup .brz-ed-listbox__item {
+    padding-left: 20px;
+  }
+}

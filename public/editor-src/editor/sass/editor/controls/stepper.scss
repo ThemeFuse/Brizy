@@ -1,0 +1,92 @@
+@use "sass:math";
+@use "../../variables";
+
+// --- Stepper
+.brz-ed .brz-ed-control__stepper {
+  position: relative;
+  width: variables.$control__sm-width;
+  height: variables.$control-height;
+  border-radius: variables.$control-border-radius;
+  overflow: hidden;
+  background: variables.$control-bg;
+  color: variables.$control-color;
+  text-align: left;
+  display: flex;
+  align-items: center;
+}
+
+.brz-ed .brz-ed-control__stepper--value,
+.brz-ed .brz-ed-control__stepper--arrows {
+  position: relative;
+  min-width: 0;
+}
+
+.brz-ed .brz-ed-control__stepper--value {
+  font-family: variables.$default-font-family;
+  font-size: variables.$control-font-size;
+  letter-spacing: variables.$control-letter-spacing;
+  line-height: 1;
+  width: 65%;
+  flex-basis: 65%;
+  padding-top: 2px;
+  max-width: 100%;
+
+  .brz-ed-control__input {
+    background-color: variables.$control-bg;
+    max-width: 100%;
+    padding: 0 0 0 5px;
+    margin: 0;
+    width: 100%;
+    text-align: center;
+    text-indent: 0;
+  }
+}
+
+.brz-ed .brz-ed-control__stepper--arrows {
+  width: 35%;
+  flex-basis: 35%;
+  height: variables.$control-height;
+}
+
+.brz-ed .brz-ed-control__stepper--up,
+.brz-ed .brz-ed-control__stepper--down {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: math.div(variables.$control-height, 2);
+  line-height: math.div(variables.$control-height, 2);
+  font-size: 8px;
+  position: absolute;
+  right: 0;
+  cursor: pointer;
+  color: variables.$control-color;
+  -webkit-transition: color 0.2s linear;
+  transition: color 0.2s linear;
+
+  .brz-icon-svg {
+    position: absolute;
+    right: 10px;
+    top: auto;
+  }
+
+  &:hover {
+    color: variables.$control-color--active;
+  }
+}
+
+.brz-ed .brz-ed-control__stepper--up {
+  top: 0;
+
+  .brz-icon-svg {
+    bottom: 1px;
+  }
+}
+
+.brz-ed .brz-ed-control__stepper--down {
+  bottom: 0;
+
+  .brz-icon-svg {
+    top: 1px;
+  }
+}

@@ -1,0 +1,156 @@
+@use "../variables";
+
+// Outline
+@mixin noOutline {
+
+  &,
+  &:focus,
+  &:active,
+  &:hover {
+    outline: 0;
+  }
+}
+
+// Placeholder
+@mixin placeholder {
+  &::-webkit-input-placeholder {
+    @content;
+  }
+
+  &:-moz-placeholder {
+    @content;
+  }
+
+  &::-moz-placeholder {
+    @content;
+  }
+
+  &:-ms-input-placeholder {
+    @content;
+  }
+}
+
+@mixin size {
+  &--auto {
+    width: auto;
+    flex: 1 1 auto;
+  }
+
+  &--short {
+    width: variables.$control__sm-width;
+    flex: 0 0 variables.$control__sm-width;
+  }
+
+  &--large {
+    width: variables.$control__lg-width;
+    flex: 0 0 variables.$control__lg-width;
+  }
+
+  &--medium {
+    width: variables.$control__md-width;
+    flex: 0 0 variables.$control__md-width;
+  }
+}
+
+@mixin textarea {
+  @include noOutline;
+  @include size;
+
+  font-family: variables.$default-font-family;
+  font-size: variables.$control-font-size;
+  letter-spacing: variables.$control-letter-spacing;
+  line-height: 22px;
+  background-color: variables.$control-bg;
+  color: variables.$textarea-placeholder-color;
+  width: auto;
+  height: auto;
+  padding: 5px 10px;
+  border-radius: variables.$control-border-radius;
+  border: 0;
+  outline: 0;
+  resize: none;
+
+  @include placeholder {
+    & {
+      color: rgba(234, 241, 255, 0.2);
+      font-style: italic;
+      font-size: 1em;
+    }
+  }
+}
+
+@mixin input {
+  font-family: variables.$default-font-family;
+  font-size: variables.$control-font-size;
+  font-style: normal;
+  font-weight: 400;
+  letter-spacing: 0;
+  background: variables.$control-bg none;
+  color: variables.$control__input-text;
+  flex: 1 1 auto;
+  height: variables.$control-height;
+  text-indent: 5px;
+  padding: 0 5px;
+  border-radius: variables.$control-border-radius;
+  border: 0;
+  outline: 0;
+  box-shadow: none;
+  text-shadow: none;
+  text-align: left;
+  margin-left: auto;
+  width: 100%;
+
+  &:focus,
+  &:active {
+    background-color: variables.$control-bg;
+    color: variables.$control__input-text;
+  }
+}
+
+@mixin small-input {
+  background-color: transparent;
+  color: variables.$picker__input-color;
+  font-size: variables.$control-font-size;
+  font-weight: 400;
+  border: none;
+  outline: 0;
+  padding: 2px 0;
+  line-height: 1;
+  -moz-appearance: textfield; // Remove spin button on Firefox
+  top: 0;
+  left: 0;
+  transition: 0.2s linear color;
+  border-bottom: 1px solid variables.$picker__input-border;
+
+  &:focus,
+  &:active {
+    background-color: transparent;
+    color: variables.$picker__input-color--active;
+    transition: 0.2s linear color;
+    box-shadow: none;
+    border-color: transparent;
+    outline: 0;
+  }
+
+  &::-webkit-inner-spin-button,
+  &::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+}
+
+@mixin small-select {
+  .brz-ed-control__multiSelect--value-container {
+    min-height: 24px;
+    background: transparent;
+  }
+
+  .brz-ed-control__multiSelect--tag {
+    font-size: variables.$control-font-size;
+  }
+
+  .brz-ed-control__multiSelect__option {
+    font-size: variables.$control-font-size;
+    height: 24px;
+  }
+}

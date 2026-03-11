@@ -16,6 +16,12 @@ import { style } from "./styles";
 import * as toolbarConfig from "./toolbar";
 import * as toolbarExtendParentConfig from "./toolbarExtend";
 
+// SCSS import - automatically tracked during static rendering
+import(
+  // @ts-expect-error: .scss?chunk=facebookComments files
+  /* webpackChunkName: "facebookComments" */ "sass/editorComponents/comments.scss?componentId=FacebookComments&chunk=facebookComments"
+);
+
 class FacebookComments extends EditorComponent {
   static defaultValue = defaultValue;
 

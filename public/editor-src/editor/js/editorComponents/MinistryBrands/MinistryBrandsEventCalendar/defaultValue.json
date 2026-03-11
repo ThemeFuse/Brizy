@@ -15,6 +15,7 @@
     "nonfeatures": "off",
 
     "showEventTime": "off",
+    "timeFormat": "24",
 
     "showSubscribeToCalendarButton": "on",
     "subscribeToCalendarText": "Subscribe",

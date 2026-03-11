@@ -505,6 +505,7 @@
     "animationName": "none",
     "animationDuration": 1000,
     "animationDelay": 1000,
+    "animationTiming": "ease-in-out",
     "animationInfiniteAnimation": false,
 
     "tempAnimationName": "none",

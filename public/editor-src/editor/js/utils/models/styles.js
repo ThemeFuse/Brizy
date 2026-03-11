@@ -91,11 +91,27 @@ const filterResponsiveKeys = (v, deviceMode) => {
   }, {});
 };
 
+const DISALLOWED_KEYS = [
+  "imageExtension",
+  "imageSrc",
+  "imageType",
+  "imageFileName",
+  "alt"
+];
+
 export function getStateModeKeys(v) {
   const dvv = (key, state) =>
     defaultValueValue({ v, key, device: DESKTOP, state });
 
   return Object.keys(v).reduce((stateModeKeys, key) => {
+    if (
+      DISALLOWED_KEYS.some((disallowedKey) =>
+        key.toLowerCase().includes(disallowedKey.toLowerCase())
+      )
+    ) {
+      return stateModeKeys;
+    }
+
     switch (true) {
       case key.startsWith("hover"):
         stateModeKeys[key] = dvv(key, HOVER);

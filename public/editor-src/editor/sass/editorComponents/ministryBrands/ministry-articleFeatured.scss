@@ -1,0 +1,20 @@
+.brz .brz-articleFeatured {
+  &__item {
+    li {
+      list-style: none;
+    }
+    &--media {
+      width: 100%;
+
+      &--links {
+        display: flex;
+        gap: 10px;
+        padding: 0;
+      }
+    }
+
+    &--meta--title a {
+      color: inherit;
+    }
+  }
+}

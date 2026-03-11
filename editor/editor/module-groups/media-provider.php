@@ -12,6 +12,7 @@ class Brizy_Editor_Editor_ModuleGroups_MediaProvider implements Brizy_Editor_Edi
 		return [
 			new Brizy_Editor_Editor_ModuleGroups_ModuleGroup( __( 'media', 'brizy' ), [
 				"ImageGallery",
+				"ImageComparison",
 				"Video",
 				"Audio",
 				"VideoPlaylist"

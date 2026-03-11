@@ -11,9 +11,6 @@ export const Link = (): ReactElement => {
   const title = makePlaceholder({
     content: "{{ menu_item_title }}"
   });
-  const titleAttr = makePlaceholder({
-    content: "{{ menu_item_attr_title }}"
-  });
   const href = makePlaceholder({
     content: "{{ menu_item_href }}"
   });
@@ -22,7 +19,7 @@ export const Link = (): ReactElement => {
   });
 
   return (
-    <a className="brz-a" target={target} href={href} title={titleAttr}>
+    <a className="brz-a" target={target} href={href}>
       {icon}
       <span className="brz-span" dangerouslySetInnerHTML={{ __html: title }} />
     </a>

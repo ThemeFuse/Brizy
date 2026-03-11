@@ -49,9 +49,9 @@ const getItems =
             type: "slider",
             disabled: isMMenu,
             config: {
-              min: 35,
+              min: 10,
               max: dvv("megaMenuWidthSuffix") === "px" ? 1170 : 100,
-              inputMin: 35,
+              inputMin: 10,
               units: [
                 { title: "%", value: "%" },
                 { title: "px", value: "px" },

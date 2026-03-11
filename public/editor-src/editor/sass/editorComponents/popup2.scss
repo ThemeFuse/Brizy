@@ -1,0 +1,109 @@
+@use "../functions/z-index";
+
+// Popups
+.brz .brz-popup2,
+.brz.brz-popup2 {
+  width: 100% !important;
+  height: 100%;
+  max-width: 100% !important;
+
+  &--fixed {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: z-index.z("section-popup");
+  }
+  &__close {
+    position: absolute;
+    z-index: 2;
+    color: #fff;
+    font-size: 0;
+    cursor: pointer;
+
+    .brz-icon-svg {
+      font-size: 26px;
+    }
+  }
+  .brz-container__wrap {
+    position: relative;
+    margin: 0;
+  }
+  .brz-container__wrap .brz-container {
+    height: 100%;
+  }
+  &__inner {
+    position: relative;
+    height: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
+
+    & > .brz-container__wrap {
+      max-height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+  }
+  &__vertical-align {
+    transform: rotate(270deg);
+  }
+}
+
+.brz .brz-popup2__custom2,
+.brz.brz-popup2__custom2 {
+  .brz-popup2__inner
+    .brz-container__wrap
+    > .brz-container
+    > .brz-row__container {
+    height: 100%;
+    max-height: 100%;
+
+    > .brz-row {
+      max-height: 100%;
+      overflow-x: hidden;
+      overflow-y: auto;
+    }
+  }
+}
+
+.brz .brz-popup2--inMegaMenu {
+  z-index: z-index.z("mega-menu") + 1;
+}
+
+// Popup for preview
+.brz .brz-popup2__preview,
+.brz.brz-popup2__preview {
+  &.brz-popup2--fixed {
+    z-index: -1;
+    visibility: hidden;
+    // translate(0, -110%) -110 have problems with animations and IntersectionObserver
+    transform: translate(0, -110%);
+    opacity: 0;
+    transition: 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) opacity;
+  }
+  &.brz-popup2--opened {
+    z-index: z-index.z("section-popup-opened");
+    visibility: visible;
+    transform: translate(0, 0);
+    opacity: 1;
+    transition: 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) opacity;
+
+    &.brz-popup2--inMegaMenu {
+      z-index: z-index.z("mega-menu") + 1;
+    }
+  }
+}
+
+// Internal Popup
+// When popup need to be like simple block
+// embedded from config is true
+.brz.brz-conditions-popup--static {
+  .brz-popup2 {
+    position: relative;
+    top: unset;
+    left: unset;
+    overflow-y: hidden;
+  }
+  .brz-popup2__close {
+    display: none;
+  }
+}

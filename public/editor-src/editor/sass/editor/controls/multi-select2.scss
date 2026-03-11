@@ -1,0 +1,161 @@
+@use "../../variables";
+@use "../../functions/z-index";
+
+.brz-ed .brz-ed-control__multiSelect2 {
+  font-family: variables.$default-font-family;
+  width: variables.$control__fixed-multiselect-width;
+  min-width: variables.$control__fixed-multiselect-width;
+  max-width: variables.$control__fixed-multiselect-width;
+  flex-shrink: 0;
+
+  &__value {
+    display: flex;
+    align-items: center;
+    min-height: variables.$control-height;
+    padding: 0 variables.$control-padding;
+    border-radius: variables.$control-border-radius;
+    background-color: variables.$options__control-bg;
+    font-size: variables.$control-font-size;
+    letter-spacing: variables.$control-letter-spacing;
+    color: variables.$options__control-color;
+    cursor: pointer;
+    position: relative;
+
+    &--placeholder {
+      color: variables.$options__control__placeholder-color;
+    }
+
+    &--loading {
+      justify-content: center;
+    }
+
+    .brz-span {
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+  }
+
+  &__dropdown-container {
+    position: relative;
+  }
+
+  &__dropdown {
+    z-index: z-index.z("select-portal");
+    width: 100%;
+    margin-top: 3px;
+    border-radius: variables.$control-border-radius;
+    background: variables.$options__control-bg;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.5);
+    transform: none !important;
+
+    &--with-search {
+      .brz-ed-control__multiSelect2__option:first-child {
+        border-top: 1px solid variables.$control-border;
+      }
+    }
+  }
+
+  &__search {
+    display: flex;
+    align-items: center;
+    padding: 0 variables.$control-padding;
+
+    .brz-input {
+      // flex-basis: 100%; // TODO: WHY DOES THIS NOT WORK !?
+      width: 100%;
+      height: variables.$control-height;
+      outline: 0;
+      border: none;
+      background: transparent;
+      color: #fff;
+
+      &::placeholder {
+        color: rgba(255, 255, 255, 0.4);
+        font-style: italic;
+      }
+    }
+
+    .brz-ed-control__multiSelect2__spinner {
+      margin-left: 5px;
+
+      &--hidden {
+        visibility: hidden;
+      }
+    }
+  }
+
+  &__option {
+    display: flex;
+    align-items: center;
+    margin: 0;
+    padding: 7px variables.$control-padding;
+    border-bottom: 1px solid variables.$control-border;
+    font-size: variables.$control-font-size;
+    letter-spacing: variables.$control-letter-spacing;
+    line-height: variables.$control-height;
+    color: variables.$control-color;
+    transition: color 0.15s linear;
+    cursor: pointer;
+
+    &:last-child {
+      border-bottom-color: transparent;
+    }
+
+    &--active,
+    &:hover {
+      color: variables.$brand__primary;
+    }
+
+    &--disabled {
+      cursor: initial;
+      color: rgba(255, 255, 255, 0.4);
+
+      &:hover {
+        color: rgba(255, 255, 255, 0.4);
+      }
+    }
+
+    &-checkbox {
+      flex-shrink: 0;
+      margin-right: 8px;
+      font-size: 12px;
+      color: variables.$multiSelect2__option-checkbox;
+      border: 1px solid variables.$gray-31;
+    }
+
+    &--active .brz-ed-control__multiSelect2__option-checkbox {
+      color: variables.$brand__primary;
+      border: 1px solid variables.$brand__primary;
+    }
+
+    &-text {
+      word-break: break-all;
+      overflow: hidden;
+      display: -webkit-box;
+      line-height: 1.2;
+      flex-direction: column;
+    }
+  }
+
+  .brz-ed-control__multiSelect2__spinner {
+    font-size: 12px;
+    color: #818a91;
+  }
+}
+
+.brz-ed .brz-ed-control__multiSelect,
+.brz-ed .brz-ed-control__multiSelect2 {
+  // Scroll
+  .brz-scrollbar__view {
+    &::-webkit-scrollbar {
+      width: 3px !important;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      width: 3px !important;
+      background-color: #7b7b7b !important;
+      border-radius: 2px !important;
+    }
+  }
+}

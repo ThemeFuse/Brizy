@@ -1,0 +1,21 @@
+@use "../default-variables" as *;
+
+@use "sass:map";
+
+// Fixes Container
+$containers-width: map.get($container-max-widths, "lg");
+
+// Desktop
+.brz .brz-container,
+.brz .brz-container__wrap {
+  width: 100%;
+}
+.brz .brz-container {
+  display: flex;
+  flex-direction: column;
+  width: var(--brz-section-container-width, 100%);
+}
+.brz .brz-container__wrap {
+  display: flex;
+  flex-wrap: wrap;
+}

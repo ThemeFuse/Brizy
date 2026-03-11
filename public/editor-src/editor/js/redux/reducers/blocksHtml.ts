@@ -15,7 +15,8 @@ type RBlocksHtml = (s: BlocksHtml, a: ReduxAction, f: ReduxState) => BlocksHtml;
 
 const defaultState = {
   inProcessing: 0,
-  inPending: false,
+  storeGeneration: 0,
+  compiledGeneration: 0,
   blocks: {},
   initialized: false
 };
@@ -112,12 +113,8 @@ export const blocksHtml: RBlocksHtml = (
     case "ADD_GLOBAL_BLOCK":
     case "ADD_GLOBAL_POPUP":
     case "UPDATE_GLOBAL_BLOCK": {
-      if (state.inPending) {
-        return state;
-      }
-
       return produce(state, (draft) => {
-        draft.inPending = true;
+        draft.storeGeneration += 1;
       });
     }
 
@@ -129,11 +126,18 @@ export const blocksHtml: RBlocksHtml = (
     }
 
     case ActionTypes.UPDATE_BLOCKS_HTML: {
-      const { blocks } = action.payload;
+      const { blocks, generation } = action.payload;
       return produce(state, (draft) => {
         blocks.forEach(({ id, block }) => {
           draft.blocks[id] = block;
         });
+
+        if (
+          generation !== undefined &&
+          generation > draft.compiledGeneration
+        ) {
+          draft.compiledGeneration = generation;
+        }
       });
     }
 
@@ -161,14 +165,6 @@ export const blocksHtml: RBlocksHtml = (
 
         if (!draft.initialized) {
           draft.initialized = true;
-        }
-
-        if (stats === 0) {
-          draft.inPending = false;
-        }
-
-        if (stats > 0 && !draft.inPending) {
-          draft.inPending = true;
         }
       });
     }

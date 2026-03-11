@@ -43,6 +43,9 @@ export function PreviewButton(): JSX.Element {
   const onClick = (event: MouseEvent<HTMLAnchorElement>) => {
     event.preventDefault();
 
+    // We need to get the preview url from the config because the config is updated in the window object
+    const currentPreviewUrl = config.urls.pagePreview ?? "";
+    const href = `${currentPreviewUrl}${suffix}`;
     const preview = previewWindow.current;
 
     if (preview) {

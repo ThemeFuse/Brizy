@@ -1,0 +1,43 @@
+// Variables
+@use "variables.scss" as *;
+
+// Mixins
+@use "mixins";
+
+// Overflow need to add for HTML | body
+@use "utilities/overflow";
+
+// RTL
+@use "utilities/rtl";
+
+// Fonts
+@use "editor/fonts";
+
+// Sortable
+@use "editor/sortable";
+
+// Icons main rules
+@use "editor/icons";
+
+// FontAwesome
+@use "editor/icons/fa";
+
+// Components Template
+// WordPress
+@use "wp.editor";
+
+// Components Editor
+
+@use "editor";
+
+// Used for mapping CSS variables to brizy/ui elements
+@use "editor/brizy-ui/theme";
+@use "@brizy/ui/dist/core";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.brz-ed ::selection {
+  color: $selection-color;
+}

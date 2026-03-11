@@ -67,6 +67,12 @@ import {
 } from "./utils";
 import { arrangeGridByTags } from "./utils.export";
 
+// SCSS import - automatically tracked during static rendering
+import(
+  // @ts-expect-error: .scss?chunk=ImageGallery files
+  /* webpackChunkName: "imagegallery" */ "sass/editorComponents/image-gallery.scss?componentId=ImageGallery&chunk=imagegallery"
+);
+
 class ImageGallery extends EditorComponent<Value, Props> {
   static defaultValue = defaultValue;
   static defaultProps = {

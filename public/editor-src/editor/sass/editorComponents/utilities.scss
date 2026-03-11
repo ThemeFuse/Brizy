@@ -1,2 +1,6 @@
+@use "sass:meta";
+
 // Animation
-@import "utilities/animation";
+.brz {
+  @include meta.load-css("utilities/animation");
+}

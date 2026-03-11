@@ -1,8 +1,9 @@
 import React, { useCallback } from "react";
 import type { ElementModel } from "visual/component/Elements/Types";
-import type { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import type { Config } from "visual/global/Config";
 import EditorGlobal from "visual/global/Editor";
 import { useConfig } from "visual/providers/ConfigProvider";
+import { ComponentTypes } from "visual/providers/EditorComponentProvider/ComponentTypes";
 import type { EditorMode } from "visual/providers/EditorModeProvider";
 import { ServerStyleSheet } from "visual/providers/StyleProvider/ServerStyleSheet";
 import type { Store } from "visual/redux/store";
@@ -15,7 +16,7 @@ import type { GlobalBlockStatic } from "./types";
 interface Props {
   store: Store;
   compiledBlocks: Array<GlobalBlockPopup>;
-  config: ConfigCommon;
+  config: Config;
   editorMode: EditorMode;
 }
 
@@ -67,6 +68,7 @@ export const globalPopupsToStatic = (props: Props): GlobalBlocksOutput => {
 
   for (const block of popupBlocks) {
     const sheet = new ServerStyleSheet();
+    const componentTypes = new ComponentTypes();
     const items = [block.data];
     const dbValue = { items };
 
@@ -76,6 +78,7 @@ export const globalPopupsToStatic = (props: Props): GlobalBlocksOutput => {
         sheet={sheet.instance}
         config={config}
         editorMode={editorMode}
+        componentTypes={componentTypes}
       >
         <RenderPage store={store} dbValue={dbValue} editorMode={editorMode} />
       </Providers>
@@ -86,7 +89,8 @@ export const globalPopupsToStatic = (props: Props): GlobalBlocksOutput => {
         Page,
         store,
         sheet: sheet.instance,
-        config
+        config,
+        componentTypes
       });
 
       symbols.push(...output.symbols);

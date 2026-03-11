@@ -250,7 +250,9 @@ class MenuItem extends EditorComponent {
   }
 
   renderMegaMenu(v, vs, vd) {
-    if (!this.isPro) {
+    const level = this.props.level;
+
+    if (!this.isPro || level > 0) {
       return null;
     }
 

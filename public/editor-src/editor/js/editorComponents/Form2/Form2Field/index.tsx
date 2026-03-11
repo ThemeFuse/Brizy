@@ -6,7 +6,10 @@ import Toolbar from "visual/component/Toolbar";
 import { Translate } from "visual/component/Translate";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { Model } from "visual/editorComponents/EditorComponent/types";
-import { isUserAgreementCheckbox } from "visual/editorComponents/Form2/utils";
+import {
+  isPhoneType,
+  isUserAgreementCheckbox
+} from "visual/editorComponents/Form2/utils";
 import { withMigrations } from "visual/editorComponents/tools/withMigrations";
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import { makePlaceholder } from "visual/utils/dynamicContent";
@@ -66,8 +69,10 @@ class Form2Field extends EditorComponent<Value, Props> {
       placeholder: showPlaceholder,
       className,
       selectClassName,
+      phoneSelectClassName,
       toolbarExtendLabel,
       toolbarExtendSelect,
+      toolbarExtendPhoneSelect,
       toolbarExtend: _toolbarExtend
     } = this.props;
 
@@ -107,6 +112,7 @@ class Form2Field extends EditorComponent<Value, Props> {
     const isSelect = type === ElementTypes.Select;
     const isRadio = type === ElementTypes.Radio;
     const isCheckbox = type === ElementTypes.Checkbox;
+    const isPhone = isPhoneType(type);
 
     const isRadioOrCheckbox = isRadio || isCheckbox;
     const isTypeWithItems = isSelect || isRadioOrCheckbox;
@@ -165,6 +171,9 @@ class Form2Field extends EditorComponent<Value, Props> {
                   {...(isSelect
                     ? { toolbarExtendSelect, selectClassName }
                     : {})}
+                  {...(isPhone
+                    ? { toolbarExtendPhoneSelect, phoneSelectClassName }
+                    : {})}
                   onChange={(value: Partial<Model<Value>>) =>
                     this.patchValue(value)
                   }
@@ -216,7 +225,8 @@ class Form2Field extends EditorComponent<Value, Props> {
       labelType,
       placeholder: showPlaceholder,
       className,
-      selectClassName
+      selectClassName,
+      phoneSelectClassName
     } = this.props;
 
     const {
@@ -291,6 +301,7 @@ class Form2Field extends EditorComponent<Value, Props> {
     });
 
     const isSelect = type === ElementTypes.Select;
+    const isPhone = isPhoneType(type);
     const isTypeWithItems =
       type === ElementTypes.Radio || type === ElementTypes.Checkbox || isSelect;
     // Re-order values only for Radio
@@ -334,6 +345,7 @@ class Form2Field extends EditorComponent<Value, Props> {
             labelType={labelType}
             renderContext={this.props.renderContext}
             {...(isSelect ? { selectClassName } : {})}
+            {...(isPhone ? { phoneSelectClassName } : {})}
           />
         ) : (
           <Component

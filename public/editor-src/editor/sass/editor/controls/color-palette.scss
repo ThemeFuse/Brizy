@@ -1,0 +1,66 @@
+@use "../../variables";
+
+// ColorPalette
+.brz-ed .brz-ed-control__color-palette {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  padding-top: 0;
+  border-bottom: 0;
+
+  &__item {
+    width: 18px;
+    height: 18px;
+    border-radius: 2px;
+    margin-left: 2px;
+    cursor: pointer;
+
+    border: 1px solid variables.$color_palette-border;
+
+    &:first-child {
+      margin-left: 0;
+    }
+
+    &.active {
+      border: 2px solid variables.$color_palette-border--active;
+    }
+  }
+
+  &__icon {
+    cursor: pointer;
+    font-size: 14px;
+    margin-left: 5px;
+    display: flex;
+    color: variables.$color_palette__icon-color;
+    transition: color 0.2s linear;
+
+    &:hover {
+      color: variables.$color_palette__icon-color--hover;
+    }
+  }
+}
+
+// ColorPalette Editor
+.brz-ed .brz-ed-option__color-palette-editor {
+  display: flex;
+  flex-wrap: wrap;
+
+  &__item {
+    width: 23px;
+    height: 23px;
+    border: 1px solid #5a5a5a;
+    border-radius: 2px;
+    margin-left: 3px;
+    cursor: pointer;
+    transition: border 0.2s linear;
+
+    &:hover,
+    &.active {
+      border: 2px solid variables.$brand__primary;
+    }
+
+    &:first-child {
+      margin-left: 0;
+    }
+  }
+}

@@ -178,7 +178,9 @@ export default class Section extends EditorComponent<Value, Props> {
       mobileAnimationInfiniteAnimation,
       translations,
       translationsLangs,
-      stopSlider
+      stopSlider,
+      sectionHeight,
+      sectionHeightSuffix
     } = v;
 
     const isSliderAutoPlay = sliderAutoPlay === "on";
@@ -205,6 +207,8 @@ export default class Section extends EditorComponent<Value, Props> {
           tabletVerticalAlign,
           mobileVerticalAlign,
           fullHeight,
+          sectionHeight,
+          sectionHeightSuffix,
           tabletFullHeight,
           mobileFullHeight,
           tagName,

@@ -28,7 +28,8 @@ export const styleBgBlendGradient = ({
   v,
   device,
   state,
-  prefix = ""
+  prefix = "",
+  getConfig
 }: CSSValue): string => {
   const _state = getState(v, state);
 
@@ -40,6 +41,8 @@ export const styleBgBlendGradient = ({
 
   const bgColorHex = Str.read(dvv(capByPrefix(prefix, "bgColorHex")));
 
+  const bgColorPalette = Str.read(dvv(capByPrefix(prefix, "bgColorPalette")));
+
   const gradientColorHex = Str.read(
     dvv(capByPrefix(prefix, "gradientColorHex"))
   );
@@ -47,6 +50,10 @@ export const styleBgBlendGradient = ({
   const bgColorOpacity = Num.read(dvv(capByPrefix(prefix, "bgColorOpacity")));
   const gradientColorOpacity = Num.read(
     dvv(capByPrefix(prefix, "gradientColorOpacity"))
+  );
+
+  const gradientColorPalette = Str.read(
+    dvv(capByPrefix(prefix, "gradientColorPalette"))
   );
 
   const gradientStartPointer = Num.read(
@@ -63,6 +70,27 @@ export const styleBgBlendGradient = ({
     dvv(capByPrefix(prefix, "gradientRadialDegree"))
   );
 
+  const config = getConfig();
+
+  const bgColor = bgColorPalette
+    ? getColor(bgColorPalette, bgColorHex ?? "", bgColorOpacity ?? 1, config)
+    : hexToBlendedRgba({
+        hex: bgColorHex,
+        opacity: bgColorOpacity
+      });
+
+  const gradientColor = gradientColorPalette
+    ? getColor(
+        gradientColorPalette,
+        gradientColorHex ?? "",
+        gradientColorOpacity ?? 1,
+        config
+      )
+    : hexToBlendedRgba({
+        hex: gradientColorHex,
+        opacity: gradientColorOpacity
+      });
+
   return gradientCssDeclaration({
     colorType,
     gradientType,
@@ -70,14 +98,8 @@ export const styleBgBlendGradient = ({
     gradientRadialDegree,
     gradientStartPointer,
     gradientFinishPointer,
-    bgColor: hexToBlendedRgba({
-      hex: bgColorHex,
-      opacity: bgColorOpacity
-    }),
-    gradientColor: hexToBlendedRgba({
-      hex: gradientColorHex,
-      opacity: gradientColorOpacity
-    })
+    bgColor,
+    gradientColor
   });
 };
 

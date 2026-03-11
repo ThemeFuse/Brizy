@@ -23,6 +23,12 @@ import * as toolbarExtendConfig from "./toolbarExtend";
 import * as toolbarExtendParentConfig from "./toolbarExtendParent";
 import * as toolbarFilterConfig from "./toolbarFilter";
 
+// SCSS import - automatically tracked during static rendering
+import(
+  // @ts-expect-error: .scss?chunk=Accordion files
+  /* webpackChunkName: "accordion" */ "sass/editorComponents/accordion.scss?componentId=Accordion&chunk=accordion"
+);
+
 class Accordion extends EditorComponent {
   static defaultProps = {
     meta: {},

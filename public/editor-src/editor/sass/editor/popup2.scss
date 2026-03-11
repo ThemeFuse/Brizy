@@ -1,0 +1,48 @@
+@use "../variables";
+
+// Popup v2
+.brz-ed .brz-popup2 {
+  &[data-brz-border="popup2"] {
+    position: fixed;
+  }
+
+  &__button-go-to-editor {
+    display: flex;
+    font-family: variables.$default-font-family;
+    position: absolute;
+    left: 40px;
+    top: 36px;
+    font-size: 13px;
+    font-weight: 600;
+    padding: 13px 23px 13px 18px;
+    color: #fff;
+    background-color: variables.$black-10;
+    border: none;
+    border-radius: 100px;
+    box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.5);
+    cursor: pointer;
+    z-index: 9999;
+    outline: none;
+    transition: 0.2s linear color;
+
+    &:hover {
+      color: #3dbfe8;
+      text-decoration: none;
+      transition: 0.2s linear color;
+    }
+
+    &:focus {
+      outline: none;
+    }
+  }
+
+  &__icon-go-to-editor {
+    vertical-align: text-top;
+    margin-block: auto;
+    margin-inline: 0 16px;
+  }
+
+  .brz-ed-collapsible > .brz-ed-collapsible__icon {
+    top: 34px;
+  }
+}

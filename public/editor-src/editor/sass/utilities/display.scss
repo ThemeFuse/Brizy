@@ -1,0 +1,55 @@
+@use "../default-variables";
+@use "../mixins/breakpoints";
+
+@use "sass:map";
+
+// Flex variation
+//
+// Custom styles for additional flex alignment options.
+.brz .brz-d-block {
+  display: block !important;
+}
+.brz .brz-d-inline-block {
+  display: inline-block !important;
+}
+.brz .brz-d-inline {
+  display: inline !important;
+}
+.brz .brz-d-none {
+  display: none !important;
+}
+.brz .brz-d-table {
+  width: 100%;
+  display: table;
+  position: relative;
+}
+.brz .brz-d-table-cell {
+  display: table-cell;
+}
+
+// Block blocked
+.brz .brz-blocked {
+  pointer-events: none;
+}
+
+.brz .brz-enabled {
+  pointer-events: all !important;
+}
+
+// Responsive Display flex
+.brz {
+  @each $breakpoint in map.keys(default-variables.$grid-breakpoints) {
+    @include breakpoints.media-breakpoint-up($breakpoint) {
+      // Display Flex/inline-flex
+      @if default-variables.$enable-flex {
+        .brz-d-#{$breakpoint}-flex {
+          display: flex;
+          min-width: 0;
+        }
+        .brz-d-#{$breakpoint}-inline-flex {
+          display: inline-flex;
+        }
+      }
+    }
+  }
+}

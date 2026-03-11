@@ -12,6 +12,12 @@ import { style } from "./styles";
 import * as toolbarExtendConfig from "./toolbarExtend";
 import * as toolbarExtendParentConfig from "./toolbarExtendParent";
 
+// SCSS import - automatically tracked during static rendering
+import(
+  // @ts-expect-error: .scss?chunk=table files
+  /* webpackChunkName: "table" */ "sass/editorComponents/table.scss?componentId=Table&chunk=table"
+);
+
 const HEAD_ITEM_INDEX = 0;
 const ASIDE_ITEM_INDEX = 1;
 

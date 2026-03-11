@@ -23,6 +23,12 @@ import * as toolbar from "./toolbar";
 import * as toolbarExtendSelect from "./toolbarSelect";
 import { getFlagUrl } from "./utils";
 
+// SCSS import - automatically tracked during static rendering
+import(
+  // @ts-expect-error: .scss?chunk=Translation files
+  /* webpackChunkName: "translation" */ "sass/editorComponents/translation.scss?componentId=Translation&chunk=translation"
+);
+
 export interface Value extends ElementModel {
   nameDisplay: "full" | "code";
   showFlags: "on" | "off";

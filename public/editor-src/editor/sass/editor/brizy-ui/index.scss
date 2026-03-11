@@ -1,17 +1,17 @@
-@import "theme";
+@use "theme";
 
 // from brizy-ui
-@import "@brizy/ui/lib/Button/style/index";
-@import "@brizy/ui/lib/Card/style/index";
-@import "@brizy/ui/lib/Divider/style/index";
-@import "@brizy/ui/lib/Dropdown/style/index";
-@import "@brizy/ui/lib/EditorIcon/style/index";
-@import "@brizy/ui/lib/Icon/style/index";
-@import "@brizy/ui/lib/Inline/style/index";
-@import "@brizy/ui/lib/Input/style/index";
-@import "@brizy/ui/lib/Layout/style/index";
-@import "@brizy/ui/lib/Space/style/index";
-@import "@brizy/ui/lib/Input/style/textarea";
-@import "@brizy/ui/lib/Typography/style/index";
-@import "@brizy/ui/lib/SelectEditable2/style/index";
-@import "@brizy/ui/lib/IconSet/style/index";
+@use "@brizy/ui/lib/Button/style/index" as Button;
+@use "@brizy/ui/lib/Card/style/index" as Card;
+@use "@brizy/ui/lib/Divider/style/index" as Divider;
+@use "@brizy/ui/lib/Dropdown/style/index" as Dropdown;
+@use "@brizy/ui/lib/EditorIcon/style/index" as EditorIcon;
+@use "@brizy/ui/lib/Icon/style/index" as Icon;
+@use "@brizy/ui/lib/Inline/style/index" as Inline;
+@use "@brizy/ui/lib/Input/style/index" as Input;
+@use "@brizy/ui/lib/Layout/style/index" as Layout;
+@use "@brizy/ui/lib/Space/style/index" as Space;
+@use "@brizy/ui/lib/Input/style/textarea";
+@use "@brizy/ui/lib/Typography/style/index" as Typography;
+@use "@brizy/ui/lib/SelectEditable2/style/index" as SelectEditable2;
+@use "@brizy/ui/lib/IconSet/style/index" as IconSet;

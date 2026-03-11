@@ -1,0 +1,145 @@
+@use "../../functions/z-index";
+@use "../../variables";
+
+.brz-ed .brz-ed-control__internalLink-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  .brz-ed-control__internalLink {
+    font-family: variables.$default-font-family;
+    min-width: variables.$control__lg-width;
+    max-width: variables.$control__lg-width;
+    position: relative;
+
+    &__value {
+      display: flex;
+      align-items: center;
+      min-height: variables.$control-height;
+      padding: 0 variables.$control-padding;
+      border-radius: variables.$control-border-radius;
+      background-color: variables.$options__control-bg;
+      font-size: variables.$control-font-size;
+      letter-spacing: variables.$control-letter-spacing;
+      color: #fff;
+      cursor: pointer;
+
+      &--loading {
+        justify-content: center;
+      }
+
+      &--placeholder {
+        color: rgba(255, 255, 255, 0.4);
+      }
+
+      .brz-span {
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+      }
+
+      .brz-ed-icon-svg {
+        cursor: pointer;
+        min-width: 13px;
+        margin-inline-start: auto;
+      }
+    }
+
+    &__option {
+      display: flex;
+      align-items: center;
+      height: variables.$control-height;
+      margin: 0;
+      padding: 0 variables.$control-padding;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+      font-size: variables.$control-font-size;
+      letter-spacing: variables.$control-letter-spacing;
+      line-height: variables.$control-height;
+      color: rgba(255, 255, 255, 0.85);
+      transition: color 0.15s linear;
+      cursor: pointer;
+      justify-content: space-between;
+
+      &:last-child {
+        border-bottom-color: transparent;
+      }
+
+      &--active,
+      &:hover {
+        color: variables.$brand__primary;
+      }
+
+      &--disabled {
+        cursor: initial;
+        color: rgba(255, 255, 255, 0.4);
+
+        &:hover {
+          color: rgba(255, 255, 255, 0.4);
+        }
+      }
+
+      &-text {
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+      }
+    }
+
+    &__search {
+      display: flex;
+      align-items: center;
+      padding: 0 variables.$control-padding;
+
+      .brz-input {
+        width: 100%;
+        height: variables.$control-height;
+        outline: 0;
+        border: none;
+        background: transparent;
+        color: #fff;
+
+        &::placeholder {
+          color: rgba(255, 255, 255, 0.4);
+          font-style: italic;
+        }
+      }
+
+      .brz-ed-control__internalLink__spinner {
+        margin-inline-start: 5px;
+      }
+    }
+
+    &__dropdown {
+      z-index: z-index.z("select-portal");
+      width: 100%;
+      margin-top: 3px;
+      border-radius: variables.$control-border-radius;
+      background: variables.$options__control-bg;
+      box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.5);
+      transform: none;
+
+      .brz-scrollbar__view {
+        &::-webkit-scrollbar {
+          width: 3px !important;
+        }
+
+        &::-webkit-scrollbar-thumb {
+          width: 3px !important;
+          background-color: #7b7b7b !important;
+          border-radius: 2px !important;
+        }
+      }
+
+      &--with-search {
+        .brz-ed-control__multiSelect2__option:first-child {
+          border-top: 1px solid rgba(255, 255, 255, 0.07);
+        }
+      }
+    }
+
+    &__spinner {
+      font-size: 12px;
+      color: #818a91;
+    }
+  }
+}

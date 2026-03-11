@@ -1,14 +1,6 @@
 import { addRecaptcha } from "visual/utils/api";
 
-export async function validation(data, config) {
-  try {
-    return await createRecaptcha(data, config);
-  } catch (error) {
-    return error;
-  }
-}
-
-function createRecaptcha(data, config) {
+export function createRecaptcha(data, config) {
   // Uses window.parent because have problems with inner iframe and recaptcha
   const _window = window.parent;
   const recaptchaDiv = createRecaptchaDiv(_window);
@@ -23,21 +15,28 @@ function createRecaptcha(data, config) {
           sitekey: data.sitekey,
           size: "invisible",
           callback: async (response) => {
-            // Validation response google hash and secretkey from the server
-            const { success } = await addRecaptcha(
-              {
-                group: "recaptcha",
-                service: "recaptcha",
-                ...data,
-                response
-              },
-              config
-            );
+            try {
+              // Validation response google hash and secretkey from the server
+              const { success } = await addRecaptcha(
+                {
+                  group: "recaptcha",
+                  service: "recaptcha",
+                  ...data,
+                  response
+                },
+                config
+              );
 
-            recaptchaDiv.remove();
-            recaptchaScript.remove();
+              recaptchaDiv.remove();
+              recaptchaScript.remove();
 
-            res(success);
+              res(success);
+            } catch (error) {
+              recaptchaDiv.remove();
+              recaptchaScript.remove();
+
+              rej(error);
+            }
           },
           "error-callback": () => {
             recaptchaDiv.remove();

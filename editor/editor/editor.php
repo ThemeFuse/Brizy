@@ -1121,7 +1121,7 @@ class Brizy_Editor_Editor_Editor
      * @throws Brizy_Editor_Exceptions_NotFound
      * @throws Brizy_Editor_Exceptions_UnsupportedPostType
      */
-    private function getPreviewUrl($wp_post)
+    public function getPreviewUrl($wp_post)
     {
 
         if ($wp_post->post_type == Brizy_Admin_Templates::CP_TEMPLATE) {

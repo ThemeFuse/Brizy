@@ -22,23 +22,26 @@ export const getHeight = (
 ): number => {
   const { resetTransition, resetTransform } = settings ?? {};
 
-  if (resetTransition) {
-    node.classList.add("brz-transition--none");
-  }
-  if (resetTransform) {
-    node.classList.add("brz-transform--none");
-  }
-  node.style.height = "auto";
-
-  const height = node.getBoundingClientRect().height;
+  const clone = node.cloneNode(true) as HTMLElement;
 
   if (resetTransition) {
-    node.classList.remove("brz-transition--none");
+    clone.classList.add("brz-transition--none");
   }
   if (resetTransform) {
-    node.classList.remove("brz-transform--none");
+    clone.classList.add("brz-transform--none");
   }
-  node.style.removeProperty("height");
+
+  clone.style.cssText = "position:absolute;visibility:hidden;height:auto;";
+
+  const parent = node.parentElement;
+
+  if (!parent) return 0;
+
+  parent.appendChild(clone);
+
+  const height = clone.getBoundingClientRect().height;
+
+  clone.remove();
 
   return height;
 };

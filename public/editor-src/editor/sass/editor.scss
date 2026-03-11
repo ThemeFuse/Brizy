@@ -1,215 +1,215 @@
 // Mixins
-@import "editor/mixins";
+@use "editor/mixins";
 
 // Generic
-@import "editor/generic";
+@use "editor/generic";
 
 // Utilities root path
-@import "utilities";
+@use "utilities";
 
 // Utilities
-@import "editor/utilities";
+@use "editor/utilities" as EDUtilities;
 
 // Icons base Style
-@import "icons";
+@use "icons";
 
 // Controls
-@import "editor/controls";
+@use "editor/controls";
 
 // Options
-@import "editor/options";
+@use "editor/options";
 
 // Prompts
-@import "editor/prompts";
+@use "editor/prompts";
 
 // Resizer
-@import "editor/draggable";
+@use "editor/draggable";
 
 // Sidebar
-@import "editor/sidebar";
+@use "editor/sidebar";
 
 // Toolbar
-@import "editor/toolbars";
+@use "editor/toolbars";
 
 // Border Container
-@import "editor/border-container";
+@use "editor/border-container";
 
 // Container Wrap
-@import "editor/container-wrap";
+@use "editor/container-wrap";
 
 // Content Editable
-@import "editor/content-editable";
+@use "editor/content-editable";
 
 // countdown2
-@import "editor/countdown2";
+@use "editor/countdown2";
 
 // counter
-@import "editor/counter";
+@use "editor/counter";
 
 // Device Mode
-@import "editor/device-mode";
+@use "editor/device-mode";
 
 // Dropdown-filed
-@import "editor/dropdown-field";
+@use "editor/dropdown-field";
 
 // Visual Fixed
-@import "editor/brz-ed-fixed";
+@use "editor/brz-ed-fixed";
 
 // Menu
-@import "editor/brz-ed-menu";
+@use "editor/brz-ed-menu";
 
 // Notifications
-@import "editor/notifications";
+@use "editor/notifications";
 
 // Curtain
 // @import "editor/page-curtain";
 
 // Saving Feedback
-@import "editor/saving-feedback"; // ??? review
+@use "editor/saving-feedback"; // ??? review +
 
 // Containers
-@import "editor/containers";
+@use "editor/containers";
 
 // Slick Slider
-@import "editor/slick-slider";
+@use "editor/slick-slider";
 
 // Carousel
-@import "editor/carousel";
+@use "editor/carousel";
 
 // Portal Loading
-@import "editor/portal-loading";
+@use "editor/portal-loading";
 
 // Forms
-@import "editor/forms";
+@use "editor/forms";
 
 // Forms
-@import "editor/forms2";
+@use "editor/forms2";
 
 // Buttons
-@import "editor/buttons";
+@use "editor/buttons";
 
 // Popup
-@import "editor/popup";
+@use "editor/popup";
 
 // Popup v2
-@import "editor/popup2";
+@use "editor/popup2";
 
 // Posts
-@import "editor/posts";
+@use "editor/posts";
 
 // Richtext
-@import "editor/text";
+@use "editor/text";
 
 // facebook
-@import "editor/facebook";
+@use "editor/facebook";
 
 // breadcrumbs
-@import "editor/breadcrumbs";
+@use "editor/breadcrumbs";
 
 // post info
-@import "editor/postinfo";
+@use "editor/postinfo";
 
 // audio
-@import "editor/audio";
+@use "editor/audio";
 
 // label
-@import "editor/label";
+@use "editor/label";
 
 // video
-@import "editor/video";
+@use "editor/video";
 
 // twitter
-@import "editor/twitter";
+@use "editor/twitter";
 
 // comments
-@import "editor/comments";
+@use "editor/comments";
 
 // Image
-@import "editor/image";
+@use "editor/image";
 
 // Rivyo Review
-@import "editor/rivyo-review";
+@use "editor/rivyo-review";
 
 // Calendly
-@import "editor/calendly";
+@use "editor/calendly";
 
 // WOO Cart
-@import "editor/woo-cart";
+@use "editor/woo-cart";
 
 // WOO Cart
-@import "editor/woo-attributes";
+@use "editor/woo-attributes";
 
 // MenuSimple
-@import "editor/menu-simple";
+@use "editor/menu-simple";
 
 // WOO Gallery
-@import "editor/woo-gallery";
+@use "editor/woo-gallery";
 
 // WOO Empty
-@import "editor/_placeholder-empty";
+@use "editor/placeholder-empty";
 
 // Badge
-@import "editor/controls/badge";
+@use "editor/controls/badge";
 
 // Section
-@import "editor/section";
+@use "editor/section";
 
 // Scrollbar
-@import "editor/scrollbar";
+@use "editor/scrollbar";
 
 // Login
-@import "editor/login";
+@use "editor/login";
 
 // ReviewGrowave
-@import "editor/growaveReview";
+@use "editor/growaveReview";
 
 //YotPoReview
-@import "editor/yotporeview";
+@use "editor/yotporeview";
 
 // Login
-@import "editor/badge-trusted";
+@use "editor/badge-trusted";
 
 // FeraReview
-@import "editor/fera-review";
+@use "editor/fera-review";
 
 // Eye Dropper
-@import "eye-dopper";
+@use "eye-dopper";
 
 // Ministry Brands
-@import "editor/ministry-brands";
+@use "editor/ministry-brands";
 
 // Ministry Brands Event Layout
-@import "editor/ministry-eventLayout";
+@use "editor/ministry-eventLayout";
 
 // Wordpress Shortcodes
-@import "editor/wp/shortcodes";
+@use "editor/wp/shortcodes";
 
 // Brizy ui
-@import "editor/brizy-ui";
+@use "editor/brizy-ui";
 
 // Publish button
-@import "editor/publish-button";
+@use "editor/publish-button";
 
 // Flipbox
-@import "editor/flipbox";
+@use "editor/flipbox";
 
 // InstagramFeed
-@import "editor/instagram-feed";
+@use "editor/instagram-feed";
 
 // Ecwid Cart
-@import "editor/ecwid-cart";
+@use "editor/ecwid-cart";
 
 // Ecwid Product
-@import "editor/ecwid-product";
+@use "editor/ecwid-product";
 
 // Ecwid Search
-@import "editor/ecwid-search";
+@use "editor/ecwid-search";
 
 // LinkedinFeed
-@import "editor/linkedin-feed";
+@use "editor/linkedin-feed";
 
 // Embed Code
-@import "editor/embed-code";
+@use "editor/embed-code";
 
 // Components
-@import "components";
+@use "components/index";

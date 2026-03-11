@@ -7,13 +7,17 @@ import {
 export default function ($node) {
   const isRtl = $node.closest("[dir='rtl']").length > 0;
   const makeArrow = (node) => {
-    const $svg = $(node).children(".brz-icon-svg").removeClass("brz-hidden");
+    const $svg = $(node).children(".brz-icon-svg");
 
-    // Delete Svg
-    $(node).children(".brz-icon-svg").remove();
+    if (!$svg.length) return () => "";
+
+    const $clone = $svg.clone().removeClass("brz-hidden");
+    const svgHTML = $clone[0].outerHTML;
+
+    $svg.remove();
 
     return (className) => {
-      return `<div class="brz-slick-slider__arrow ${className}">${$svg[0].outerHTML}</div>`;
+      return `<div class="brz-slick-slider__arrow ${className}">${svgHTML}</div>`;
     };
   };
 

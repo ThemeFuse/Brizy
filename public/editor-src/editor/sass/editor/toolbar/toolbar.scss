@@ -1,0 +1,279 @@
+@use "../../variables";
+@use "../../functions/z-index";
+
+// --- Toolbar
+.brz-ed #brz-toolbar-portal {
+  // Added Position Static for Portal becouse has problems with mmenu
+  position: static;
+}
+
+.brz-ed .brz-ed-toolbar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: z-index.z("toolbar");
+  will-change: top, right, bottom, left;
+
+  &__items {
+    background-color: variables.$toolbar-bg;
+    box-shadow: 0 1px 8px 1px variables.$toolbar-box-shadow;
+    border-radius: variables.$toolbar__item-height;
+    padding-left: 6px;
+    padding-right: 6px;
+  }
+
+  &__item {
+    position: relative;
+    height: variables.$toolbar__item-height;
+    font-size: variables.$toolbar-font-size;
+    line-height: 1;
+    color: variables.$toolbar__item-color;
+    border-inline-start: 1px solid variables.$toolbar-border;
+    margin-inline-start: -1px;
+    transition: 0.15s linear color;
+
+    &:first-child {
+      border-inline-start-color: transparent;
+    }
+
+    &:hover .brz-ed-tooltip__content {
+      color: variables.$toolbar__item-color--hover;
+      transition: 0.15s linear color;
+
+      .brz-ed-popover__tooltip--icon-custom {
+        border-color: variables.$toolbar__item-color--hover;
+      }
+    }
+
+    // Tooltip
+    &__tooltip {
+      font-size: 12px;
+      line-height: 1;
+      font-family: variables.$default-font-family;
+      visibility: hidden;
+      height: 27px;
+      width: auto;
+      min-width: 60px;
+      white-space: nowrap;
+      background-color: variables.$left_sidebar__elements__tooltips-bg;
+      color: variables.$left_sidebar__elements__tooltips-color;
+      text-align: center;
+      padding: 7px 10px;
+      border-radius: 14px;
+      box-shadow: 0 0 5px 0
+        variables.$left_sidebar__elements__tooltips-box-shadow;
+      position: absolute;
+      z-index: 1;
+      bottom: calc(100% + 8px);
+      left: 50%;
+      transform: translateX(-50%);
+      opacity: 0;
+
+      &:after {
+        content: "";
+        position: absolute;
+        top: 100%;
+        left: 50%;
+        margin-left: -4px;
+        border: 4px solid
+          variables.$left_sidebar__elements__tooltips__arrow-border;
+        border-top-color: variables.$left_sidebar__elements__tooltips__arrow-border-top-color;
+      }
+
+      &.active {
+        visibility: visible;
+        opacity: 1;
+      }
+    }
+  }
+
+  &__option {
+    padding: variables.$toolbar__item-padding 3px;
+    min-width: variables.$toolbar__item-height;
+    font-size: variables.$toolbar-font-size;
+    display: block;
+    cursor: pointer;
+    text-align: center;
+  }
+
+  &--active {
+    color: variables.$brand__primary !important;
+  }
+
+  &__arrow {
+    width: auto;
+
+    &:after {
+      left: 0;
+    }
+  }
+
+  .brz-ed-popover {
+    padding: 0;
+  }
+
+  .brz-ed-option__toggle,
+  .brz-ed-tooltip__content {
+    padding: variables.$toolbar__item-padding;
+  }
+
+  .brz-ed-option-wrapper {
+    padding: 0;
+  }
+}
+
+// Collapsible Defaults
+.brz-ed .brz-ed-collapsible {
+  position: relative;
+
+  // Handle Icon
+  &__icon {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: variables.$options__handle-size;
+    height: variables.$options__handle-size;
+    border-radius: variables.$options__handle-size;
+    font-size: variables.$options__handle-font-size;
+    line-height: variables.$options__handle-size + 4; // ?
+    background-color: variables.$toolbar-bg;
+    box-shadow: 0 1px 8px 1px variables.$toolbar-box-shadow;
+    color: variables.$toolbar__item-color;
+    cursor: pointer;
+    transition: 0.15s linear color;
+
+    &:hover {
+      color: variables.$toolbar__item-color--hover;
+    }
+  }
+
+  // Badge Icon
+  &__badge {
+    position: absolute;
+    display: grid;
+    grid-column-gap: 5px;
+    grid-auto-flow: column;
+    padding: 5px;
+    z-index: 10;
+    bottom: 42px;
+    right: 0;
+    font-size: 10px;
+    border-radius: 10px;
+    color: variables.$toolbar__badge-color;
+    background-color: variables.$toolbar__badge-bg;
+    transform: translate(25%, 25%);
+  }
+
+  // Toolbar
+  &__toolbar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-radius: variables.$options__handle-size;
+
+    .brz-ed-toolbar {
+      position: static;
+      top: auto;
+      right: auto;
+      padding: 0;
+    }
+  }
+}
+
+// Collapsible Toolbar Section
+.brz-ed .brz-ed-collapsible--section {
+  position: absolute;
+  top: 0;
+  right: 40px;
+  left: auto;
+  z-index: z-index.z("toolbar-collapsible");
+  opacity: 0;
+  transition: 0.15s linear opacity;
+  display: grid;
+  grid-template-columns: 100%;
+  grid-template-rows:
+    minmax(
+      calc(100% - #{variables.$options__handle-size}),
+      variables.$options__handle-size
+    )
+    variables.$options__handle-size;
+  max-height: 100%;
+
+  &:before {
+    content: "";
+  }
+
+  .brz-ed-collapsible__icon,
+  .brz-ed-collapsible__toolbar {
+    position: absolute;
+    top: auto;
+    right: 0;
+    bottom: 0;
+    left: auto;
+    margin: 4px 0 4px 4px;
+    height: variables.$options__handle-size;
+  }
+}
+
+// Toolbar Animation
+.brz-ed .brz-ed-collapsible__toolbar {
+  // Toolbar Animation right to left
+  &.animation-right-left {
+    overflow: hidden;
+
+    .brz-ed-toolbar {
+      transition: transform 150ms linear;
+    }
+
+    &.preEnter {
+      .brz-ed-toolbar {
+        transform: translate3d(96px, 0, 0);
+      }
+    }
+
+    &.exiting {
+      .brz-ed-toolbar {
+        transform: translate3d(96px, 0, 0);
+      }
+    }
+  }
+
+  // Toolbar Animation left to right
+  &.animation-left-right {
+    overflow: hidden;
+
+    .brz-ed-toolbar {
+      transition: transform 150ms linear;
+    }
+
+    &.preEnter {
+      .brz-ed-toolbar {
+        transform: translate3d(-96px, 0, 0);
+      }
+    }
+
+    &.exiting {
+      .brz-ed-toolbar {
+        transform: translate3d(-96px, 0, 0);
+      }
+    }
+  }
+
+  &.animation-right-left.entered,
+  &.animation-left-right.entered {
+    box-shadow: 0 1px 8px 1px variables.$toolbar-box-shadow;
+    transition: box-shadow 0.1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+}
+
+// Mobile
+.brz-ed.brz-ed--mobile .brz-ed-collapsible--section {
+  right: 20px;
+}
+
+.brz-ed .brz-ed-popover__tooltip--icon-custom {
+  cursor: pointer;
+}

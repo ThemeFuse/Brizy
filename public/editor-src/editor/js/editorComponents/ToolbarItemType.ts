@@ -43,6 +43,7 @@ export type GenericToolbarItemType<K extends OptionName> = WithId<string> &
     disabled?: Disabled;
     devices?: Device;
     states?: State[];
+    statesConfig?: Record<string, { icon?: string; title?: string }>;
     position?: number;
     roles?: UserRole[]; //TODO: Make sure that roles are a concrete type, not string
     isPro?: boolean;

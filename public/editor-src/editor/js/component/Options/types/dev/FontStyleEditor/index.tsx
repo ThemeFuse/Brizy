@@ -231,7 +231,10 @@ export const FontStyleEditor: FCC<Props> = ({ value, label, onChange }) => {
               icons: ["nc-desktop", "nc-tablet", "nc-phone"]
             },
             value: getFontStyleData(el),
-            className: fontClassName,
+            className: classnames(
+              fontClassName,
+              "brz-ed-option__font-style-editor__typography"
+            ),
             onChange: (value: Styles) => {
               onChange(optionValueToModel(value, deviceMode));
             }

@@ -60,14 +60,12 @@ class Brizy_Content_Providers_FreeProvider extends Brizy_Content_Providers_Abstr
                 return $replacer->replacePlaceholders( $contentPlaceholder->getContent(), $context );
             } );
         } );
-
         $this->registerPlaceholderName( 'brizy_dc_image_title', function ( $name ) {
             return new Brizy_Content_Placeholders_ImageTitleAttribute( 'Internal Title Attributes', $name );
         } );
-        $this->registerPlaceholderName( 'brizy_dc_image_title', function ( $name ) {
+        $this->registerPlaceholderName( 'brizy_dc_image_alt', function ( $name ) {
             return new Brizy_Content_Placeholders_ImageAltAttribute( __( 'Internal Alt Attributes', 'brizy' ), $name );
         } );
-
         $this->registerPlaceholderName( 'brizy_dc_current_page_unique_url', function ( $name ) {
             return new Brizy_Content_Placeholders_UniquePageUrl( __( 'Uniquer page url', 'brizy' ), $name );
         } );
@@ -134,7 +132,6 @@ class Brizy_Content_Providers_FreeProvider extends Brizy_Content_Providers_Abstr
                 return $this->filterData( $attrs['property'], $post );
             } );
         } );
-
         $this->registerPlaceholderName( 'editor_post_info', function ( $name ) {
             return new Brizy_Content_Placeholders_Simple( '', $name, function () {
 
@@ -230,7 +227,6 @@ class Brizy_Content_Providers_FreeProvider extends Brizy_Content_Providers_Abstr
                 return do_shortcode( '[woocommerce_checkout]' );
             } );
         } );
-
         $this->registerPlaceholderName( 'editor_product_my_account', function ( $name ) {
             return new Brizy_Content_Placeholders_Simple( '', $name, function () {
                 return do_shortcode( '[woocommerce_my_account]' );
@@ -241,28 +237,20 @@ class Brizy_Content_Providers_FreeProvider extends Brizy_Content_Providers_Abstr
                 return do_shortcode( '[woocommerce_order_tracking]' );
             } );
         } );
-
         static $noticeHtml = null;
         $this->registerPlaceholderName( 'editor_woo_notice', function ( $name ) use ( &$noticeHtml ) {
-            return new Brizy_Content_Placeholders_Simple(
-                    __( 'WooCommerce Notices', 'brizy' ),
-                    $name,
-                    function () use ( &$noticeHtml ) {
-                        if ( class_exists( 'WooCommerce' ) ) {
-                            if ( $noticeHtml ) {
-                                return $noticeHtml;
-                            }
+            return new Brizy_Content_Placeholders_Simple( __( 'WooCommerce Notices', 'brizy' ), $name, function () use ( &$noticeHtml ) {
+                if ( class_exists( 'WooCommerce' ) ) {
+                    if ( $noticeHtml ) {
+                        return $noticeHtml;
+                    }
 
-                            return $noticeHtml = wc_print_notices( true );
-                        }
+                    return $noticeHtml = wc_print_notices( true );
+                }
 
-
-                        return "";
-                    }, self::CONFIG_KEY_TEXT
-            );
+                return "";
+            }, self::CONFIG_KEY_TEXT );
         } );
-
-
         $this->registerPlaceholderName( 'editor_nonce', function ( $name ) {
             return new Brizy_Content_Placeholders_Simple( '', $name, function ( Brizy_Content_Context $context, ContentPlaceholder $contentPlaceholder ) {
 
@@ -281,7 +269,6 @@ class Brizy_Content_Providers_FreeProvider extends Brizy_Content_Providers_Abstr
                 return wp_create_nonce( $action );
             } );
         } );
-
         $this->registerPlaceholderName( 'random_id', function ( $name ) {
             return new Brizy_Content_Placeholders_Simple( '', $name, function ( Brizy_Content_Context $context, ContentPlaceholder $contentPlaceholder ) {
                 $key = $contentPlaceholder->getAttribute( 'key' );
@@ -300,11 +287,9 @@ class Brizy_Content_Providers_FreeProvider extends Brizy_Content_Providers_Abstr
                 return bin2hex( random_bytes( 10 ) );
             } );
         } );
-
         $this->registerPlaceholderName( 'brizy_dc_global_block', function ( $name ) {
             return new Brizy_Content_Placeholders_GlobalBlock( __( 'Brizy Global Block', 'brizy' ), $name );
         } );
-
         $this->registerPlaceholderName( 'globalblock_anchor', function ( $name ) {
             return new Brizy_Content_Placeholders_GlobalBlockAnchor( 'Brizy Global Block Anchor', $name );
         } );

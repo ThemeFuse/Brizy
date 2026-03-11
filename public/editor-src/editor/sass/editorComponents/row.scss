@@ -1,0 +1,47 @@
+// Row
+.brz .brz-row {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  text-align: start;
+  flex-basis: 100%;
+  max-width: 100%;
+  width: 100%;
+
+  &__container {
+    position: relative;
+    text-align: center;
+    justify-content: center;
+
+    .brz-row__scroll-motion {
+      width: 100%;
+    }
+
+    .brz-link-container {
+      position: absolute;
+      height: 100%;
+      width: 100%;
+      top: 0;
+      inset-inline-start: 0;
+    }
+
+    > div[data-scroll-motion],
+    > div[data-scroll-motion] > .brz-hover-animation__container,
+    > .brz-hover-animation__container {
+      min-height: inherit;
+      display: inherit;
+      align-items: inherit;
+    }
+
+    // align by container
+    > .brz-hover-animation__container > .brz-bg,
+    > .brz-bg {
+      inset-inline-start: auto;
+    }
+
+    .brz-wrapper__scrollmotion {
+      width: 100%;
+      max-width: 100%;
+    }
+  }
+}

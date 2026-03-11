@@ -31,6 +31,12 @@ import { containsShorts } from "./utils";
 
 const resizerPoints = ["topLeft", "topRight", "bottomLeft", "bottomRight"];
 
+// SCSS import - automatically tracked during static rendering
+import(
+  // @ts-expect-error: .scss?chunk=video files
+  /* webpackChunkName: "video" */ "sass/editorComponents/video.scss?componentId=Video&chunk=video"
+);
+
 class Video extends EditorComponent {
   static defaultValue = defaultValue;
   static experimentalDynamicContent = true;

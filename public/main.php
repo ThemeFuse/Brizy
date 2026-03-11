@@ -128,7 +128,6 @@ class Brizy_Public_Main
         $editor_js_deps = [
             'brizy-react-vendor',
             'brizy-react-dom-vendor',
-            'brizy-editor-polyfill',
             'brizy-editor-vendor',
         ];
         $editor_js_config = json_encode($config_object);
@@ -142,8 +141,8 @@ class Brizy_Public_Main
         }
 
         $ver = BRIZY_EDITOR_VERSION;
-        wp_enqueue_style('brizy-editor', "$assets_url/editor/css/editor.min.css", array(), $ver);
-        wp_register_script('brizy-editor-polyfill', "$assets_url/editor/js/polyfill.min.js", array(), $ver, true);
+        wp_enqueue_style('brizy-editor-base', "$assets_url/editor/css/main.base.min.css", array(), $ver);
+        wp_enqueue_style('brizy-editor', "$assets_url/editor/css/main.editor.min.css", array(), $ver);
         wp_register_script('brizy-react-vendor', "$assets_url/editor/js/react.js", array(), $ver, true);
         wp_register_script('brizy-react-dom-vendor', "$assets_url/editor/js/react-dom.js", array(), $ver, true);
         wp_register_script('brizy-editor-vendor', "$assets_url/editor/js/editor.vendor.min.js", array(), $ver, true);
@@ -512,8 +511,11 @@ class Brizy_Public_Main
                 $this->post->getWpPostId()
             ),
             'favicon' => $favicon,
-            'styles' => [$config_object->urls->assets . "/editor/css/editor.min.css?ver=" . BRIZY_EDITOR_VERSION],
-            'scripts' => [$config_object->urls->assets . "/editor/js/polyfill.min.js?ver=" . BRIZY_EDITOR_VERSION],
+            'styles' => [
+                $config_object->urls->assets . "/editor/css/main.base.min.css?ver=" . BRIZY_EDITOR_VERSION,
+                $config_object->urls->assets . "/editor/css/main.editor.min.css?ver=" . BRIZY_EDITOR_VERSION,
+            ],
+            'scripts' => [],
         ];
 
 

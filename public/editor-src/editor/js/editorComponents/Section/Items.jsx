@@ -70,6 +70,8 @@ class SectionItems extends EditorArrayComponent {
         }
       );
     }
+
+    this.addAttributesToSlider();
   }
 
   getItemProps(itemData, itemIndex, items) {
@@ -229,6 +231,18 @@ class SectionItems extends EditorArrayComponent {
         slide.setAttribute(disabledAttr, "true");
       }
     });
+  };
+
+  addAttributesToSlider = () => {
+    const { sliderAutoPlay, sliderAutoPlaySpeed, sliderAnimationSpeed } =
+      this.props;
+
+    const sliderList = this.slider?.innerSlider?.list;
+    if (!sliderList) return;
+
+    sliderList.setAttribute("data-auto-play", sliderAutoPlay);
+    sliderList.setAttribute("data-auto-play-speed", sliderAutoPlaySpeed);
+    sliderList.setAttribute("data-animation-speed", sliderAnimationSpeed);
   };
 
   renderItemsContainer(items) {

@@ -101,11 +101,17 @@ class Brizy_Compatibilities_Init {
 		if ( class_exists( 'COMPLIANZ' ) ) {
 			new Brizy_Compatibilities_ComplianzGpdr();
 		}
+		if ( class_exists( '\DevOwl\RealCookieBanner\Core' ) ) {
+			new Brizy_Compatibilities_RealCookieBanner();
+		}
 		if ( class_exists( 'WP_Import' ) ) {
 			new Brizy_Compatibilities_WordpressImporter();
 		}
 		if ( class_exists( 'WP_Optimize' ) ) {
 			new Brizy_Compatibilities_WpOptimize();
+		}
+		if ( function_exists( 'page_optimize_bail' ) ) {
+			new Brizy_Compatibilities_PageOptimize();
 		}
 		if ( defined( 'JETPACK__PLUGIN_FILE' ) ) {
 			new Brizy_Compatibilities_Jetpack();

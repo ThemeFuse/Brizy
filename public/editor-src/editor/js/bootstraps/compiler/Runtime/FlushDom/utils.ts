@@ -15,6 +15,12 @@ import { Queue } from "visual/utils/queue/Queue";
 import { compilePage } from "../../browser/worker";
 
 function compile(blocksData: Array<Block>, store: Store, config: ConfigCommon) {
+  // Capture the current storeGeneration before starting compilation.
+  // This generation value will be passed through to the completion action
+  // so the reducer can update compiledGeneration, allowing publish to know
+  // when all edits have been compiled.
+  const generation = store.getState().blocksHtml.storeGeneration;
+
   // Return a function that will be called on QueueWorker
   return async () => {
     const state = store.getState();
@@ -44,7 +50,7 @@ function compile(blocksData: Array<Block>, store: Store, config: ConfigCommon) {
 
     const { blocks } = await compilePage(compileData);
 
-    dispatch(updateBlocksHtml({ blocks }));
+    dispatch(updateBlocksHtml({ blocks, generation }));
   };
 }
 

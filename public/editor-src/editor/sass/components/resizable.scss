@@ -1,15 +1,15 @@
-.brz-resizable__resize-e,
-.brz-resizable__resize-s,
-.brz-resizable__resize-n,
-.brz-resizable__resize-w,
-.brz-resizable__resize-se,
-.brz-resizable__resize-ne,
-.brz-resizable__resize-sw,
-.brz-resizable__resize-nw {
+.brz-ed .brz-resizable__resize-e,
+.brz-ed .brz-resizable__resize-s,
+.brz-ed .brz-resizable__resize-n,
+.brz-ed .brz-resizable__resize-w,
+.brz-ed .brz-resizable__resize-se,
+.brz-ed .brz-resizable__resize-ne,
+.brz-ed .brz-resizable__resize-sw,
+.brz-ed .brz-resizable__resize-nw {
   position: absolute;
 }
 
-.brz-resizable__resize-n {
+.brz-ed .brz-resizable__resize-n {
   left: 10px;
   right: 20px;
   top: 0;
@@ -17,7 +17,7 @@
   cursor: ns-resize;
 }
 
-.brz-resizable__resize-e {
+.brz-ed .brz-resizable__resize-e {
   top: 10px;
   bottom: 20px;
   right: 0;
@@ -25,7 +25,7 @@
   cursor: ew-resize;
 }
 
-.brz-resizable__resize-s {
+.brz-ed .brz-resizable__resize-s {
   left: 10px;
   right: 20px;
   bottom: 0;
@@ -33,7 +33,7 @@
   cursor: ns-resize;
 }
 
-.brz-resizable__resize-w {
+.brz-ed .brz-resizable__resize-w {
   top: 10px;
   bottom: 20px;
   left: 0;
@@ -41,7 +41,7 @@
   cursor: ew-resize;
 }
 
-.brz-resizable__resize-se {
+.brz-ed .brz-resizable__resize-se {
   right: 0;
   bottom: 0;
   width: 14px;
@@ -49,7 +49,7 @@
   cursor: nwse-resize;
 }
 
-.brz-resizable__resize-ne {
+.brz-ed .brz-resizable__resize-ne {
   right: 0;
   top: 0;
   width: 14px;
@@ -57,7 +57,7 @@
   cursor: nesw-resize;
 }
 
-.brz-resizable__resize-sw {
+.brz-ed .brz-resizable__resize-sw {
   left: 0;
   bottom: 0;
   width: 14px;
@@ -65,7 +65,7 @@
   cursor: nesw-resize;
 }
 
-.brz-resizable__resize-nw {
+.brz-ed .brz-resizable__resize-nw {
   left: 0;
   top: 0;
   width: 14px;

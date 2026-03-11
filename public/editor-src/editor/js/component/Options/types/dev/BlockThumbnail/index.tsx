@@ -1,7 +1,7 @@
 import classnames from "classnames";
 import { debounce } from "es-toolkit";
 import { produce } from "immer";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ThumbnailSelector } from "visual/component/Controls/BlockThumbnail/ThumbnailSelector";
 import { useConfig } from "visual/providers/ConfigProvider";
@@ -42,6 +42,16 @@ export const BlockThumbnail: FCC<Props> = ({
     }))
   );
 
+  const pendingChangesRef = useRef<{ text: string; id: string } | null>(null);
+  const blocksRef = useRef(blocks);
+  const globalBlocksRef = useRef(globalBlocks);
+
+  // Keep refs up to date
+  useEffect(() => {
+    blocksRef.current = blocks;
+    globalBlocksRef.current = globalBlocks;
+  }, [blocks, globalBlocks]);
+
   const _className = classnames(
     "brz-ed-option__block-thumbnail",
     `brz-ed-option__${display}`,
@@ -60,7 +70,10 @@ export const BlockThumbnail: FCC<Props> = ({
     [value, onChange]
   );
 
-  const handleInputChange = debounce((text: string, id: string) => {
+  const applyInputChange = useCallback((text: string, id: string) => {
+    const blocks = blocksRef.current;
+    const globalBlocks = globalBlocksRef.current;
+
     const encodedText = encodeURIComponent(text);
 
     let anchorName = encodedText;
@@ -143,9 +156,36 @@ export const BlockThumbnail: FCC<Props> = ({
         return anchorInput;
       });
     });
-  }, 1000);
+  }, [dispatch, globalConfig]);
 
-  useEffect(() => () => handleInputChange.cancel(), [handleInputChange]);
+  const debouncedApplyInputChangeRef = useRef(
+    debounce((text: string, id: string) => {
+      applyInputChange(text, id);
+      pendingChangesRef.current = null;
+    }, 1000)
+  );
+
+  const handleInputChange = useCallback(
+    (text: string, id: string) => {
+      pendingChangesRef.current = { text, id };
+      debouncedApplyInputChangeRef.current(text, id);
+    },
+    []
+  );
+
+  useEffect(() => {
+    const debouncedFn = debouncedApplyInputChangeRef.current;
+    return () => {
+      // Flush pending changes on unmount to ensure latest value is saved
+      if (pendingChangesRef.current) {
+        const { text, id } = pendingChangesRef.current;
+        debouncedFn.cancel();
+        applyInputChange(text, id);
+      } else {
+        debouncedFn.cancel();
+      }
+    };
+  }, [applyInputChange]);
 
   const blocksAssembled = pageBlocksAssembled.filter(
     (block: PreloadThumbnailProps) =>

@@ -33,8 +33,8 @@ import {
   updatePageStatus
 } from "visual/redux/actions2";
 import {
-  blocksHtmlSelector,
   extraFontStylesSelector,
+  isCompilationPending,
   pageDataNoRefsSelector2,
   pageSelector,
   storeWasChangedSelector
@@ -102,7 +102,7 @@ const mapState = (
     extraFontStyles: extraFontStylesSelector(state),
     storeWasChanged: storeWasChangedSelector(state),
     currentStyle: state.currentStyle,
-    compilationProcess: blocksHtmlSelector(state).inPending
+    compilationProcess: isCompilationPending(state)
   };
 };
 const mapDispatch = {

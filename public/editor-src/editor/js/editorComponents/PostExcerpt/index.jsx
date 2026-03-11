@@ -33,14 +33,19 @@ export default class PostExcerpt extends EditorComponent {
   }
 
   patchValue(patch, meta) {
-    const { fontStyle } = patch;
     const link = handleLinkChange(patch);
+
+    let tagNamePatch = {};
+    if ("fontStyle" in patch) {
+      const result = getTagNameFromFontStyle(patch.fontStyle);
+      tagNamePatch = result.tagName ? result : { tagName: "span" };
+    }
 
     super.patchValue(
       {
         ...patch,
         ...link,
-        ...(fontStyle ? getTagNameFromFontStyle(fontStyle) : {})
+        ...tagNamePatch
       },
       meta
     );

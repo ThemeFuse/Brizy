@@ -1,8 +1,8 @@
 import classnames from "classnames";
 import React, { ReactNode } from "react";
-import { isEditor, isView } from "visual/providers/RenderProvider";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
+import { isEditor, isView } from "visual/providers/RenderProvider";
 import { makeAttr } from "visual/utils/i18n/attribute";
 import { defaultValueValue } from "visual/utils/onChange";
 import * as Str from "visual/utils/reader/string";
@@ -24,6 +24,12 @@ import {
   State as _State
 } from "./types";
 import { getHeight } from "./utils";
+
+// SCSS import - automatically tracked during static rendering
+import(
+  // @ts-expect-error: .scss?componentId=flipbox files
+  /* webpackChunkName: "flipbox" */ "sass/editorComponents/flipbox.scss?componentId=Flipbox&chunk=flipbox"
+);
 
 class Flipbox extends EditorComponent<Value, Props, _State> {
   static experimentalDynamicContent = true;

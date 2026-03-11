@@ -1,3 +1,4 @@
+import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import { t } from "visual/utils/i18n";
 
 export default function () {
@@ -13,7 +14,7 @@ export default function () {
         _styles: ["wrapper", "wrapper-ecwid-products"],
         items: [
           {
-            type: "EcwidProducts",
+            type: ElementTypes.EcwidProducts,
             value: { _styles: ["products"] }
           }
         ]

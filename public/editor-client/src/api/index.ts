@@ -1188,13 +1188,15 @@ export function sendHeartBeat(config: Config) {
     actions: { heartBeat },
     url: _url,
     hash,
-    editorVersion: version
+    editorVersion: version,
+    pageId
   } = config;
 
   const url = makeUrl(_url, {
     action: heartBeat,
     version,
-    hash
+    hash,
+    pageId
   });
   return request(url, { method: "GET" }).then((r) => r.json());
 }

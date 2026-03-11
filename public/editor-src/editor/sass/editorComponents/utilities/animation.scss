@@ -1,0 +1,110 @@
+// Animation for Shortcodes
+.brz .brz-animated {
+  opacity: 0;
+  // uses backwards because have problems with zIndex
+  animation-fill-mode: backwards;
+
+  &:not(.brz-animate) {
+    animation-name: none;
+  }
+
+  // When .animate
+  &.brz-animate-opacity {
+    opacity: 1;
+  }
+}
+
+// Reveal Animation
+// The reveal effect uses clip-path to reveal content by expanding from a collapsed edge
+.brz .brz-reveal {
+  position: relative;
+  overflow: hidden;
+  opacity: 0;
+
+  // Reveal Up - content reveals from bottom to top
+  &.brz-reveal-up {
+    animation: brz-reveal-up 1.2s 0s cubic-bezier(0.645, 0.045, 0.355, 1) forwards;
+    --brz-reveal-clip-start: polygon(0% 100%, 100% 100%, 100% 100%, 0% 100%);
+  }
+
+  // Reveal Down - content reveals from top to bottom
+  &.brz-reveal-down {
+    animation: brz-reveal-down 1.2s 0s cubic-bezier(0.645, 0.045, 0.355, 1) forwards;
+    --brz-reveal-clip-start: polygon(0% 0%, 100% 0%, 100% 0%, 0% 0%);
+  }
+
+  // Reveal Left - content reveals from right to left
+  &.brz-reveal-left {
+    animation: brz-reveal-left 1.2s 0s cubic-bezier(0.645, 0.045, 0.355, 1) forwards;
+    --brz-reveal-clip-start: polygon(100% 0%, 100% 0%, 100% 100%, 100% 100%);
+  }
+
+  // Reveal Right - content reveals from left to right
+  &.brz-reveal-right {
+    animation: brz-reveal-right 1.2s 0s cubic-bezier(0.645, 0.045, 0.355, 1) forwards;
+    --brz-reveal-clip-start: polygon(0% 0%, 0% 0%, 0% 100%, 0% 100%);
+  }
+
+  // Initial state before animation triggers
+  &:not(.brz-animate) {
+    animation: none;
+    clip-path: var(--brz-reveal-clip-start, polygon(100% 0%, 100% 0%, 100% 100%, 100% 100%));
+  }
+}
+
+// Keyframes for Reveal Animation
+@keyframes brz-reveal-up {
+  0% {
+    opacity: 0;
+    animation-timing-function: step-end;
+  }
+  0.0001% {
+    opacity: var(--brz-comp-opacity, 1);
+    clip-path: var(--brz-reveal-clip-start, polygon(0% 100%, 100% 100%, 100% 100%, 0% 100%));
+  }
+  100% {
+    clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
+  }
+}
+
+@keyframes brz-reveal-down {
+  0% {
+    opacity: 0;
+    animation-timing-function: step-end;
+  }
+  0.0001% {
+    opacity: var(--brz-comp-opacity, 1);
+    clip-path: var(--brz-reveal-clip-start, polygon(0% 0%, 100% 0%, 100% 0%, 0% 0%));
+  }
+  100% {
+    clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
+  }
+}
+
+@keyframes brz-reveal-left {
+  0% {
+    opacity: 0;
+    animation-timing-function: step-end;
+  }
+  0.0001% {
+    opacity: var(--brz-comp-opacity, 1);
+    clip-path: var(--brz-reveal-clip-start, polygon(100% 0%, 100% 0%, 100% 100%, 100% 100%));
+  }
+  100% {
+    clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
+  }
+}
+
+@keyframes brz-reveal-right {
+  0% {
+    opacity: 0;
+    animation-timing-function: step-end;
+  }
+  0.0001% {
+    opacity: var(--brz-comp-opacity, 1);
+    clip-path: var(--brz-reveal-clip-start, polygon(0% 0%, 0% 0%, 0% 100%, 0% 100%));
+  }
+  100% {
+    clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
+  }
+}

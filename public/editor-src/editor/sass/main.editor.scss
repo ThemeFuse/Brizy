@@ -1,52 +1,41 @@
+// Variables
+@use "variables.scss" as *;
+
+// Mixins
+@use "mixins";
+
+// Overflow need to add for HTML | body
+@use "utilities/overflow";
+
+// RTL
+@use "utilities/rtl";
+
+// Fonts
+@use "editor/fonts";
+
+// Sortable
+@use "editor/sortable";
+
+// Icons main rules
+@use "editor/icons";
+
+// Nucleo
+@use "editor/icons/outline";
+@use "editor/icons/glyph";
+
+// FontAwesome
+@use "editor/icons/fa";
+
+// Components Editor
+@use "editor";
+
+// Used for mapping CSS variables to brizy/ui elements
+@use "editor/brizy-ui/theme";
+@use "@brizy/ui/dist/core";
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-// --- Import Editor and componenents
-// brz-ed class is for to avoid global styling conflicts
-// Default variables
-@import "default-variables";
-
-// Variable
-@import "variables";
-
-// Mixins
-@import "mixins";
-
-// Functions
-@import "functions/functions";
-
-// Overflow need to add for HTML | body
-@import "utilities/overflow";
-
-// RTL
-@import "utilities/rtl";
-
-// Fonts
-@import "editor/fonts";
-
-// Sortable
-@import "editor/sortable";
-
-// RTL
-@import "utilities/rtl";
-
-// Components Template
-.brz {
-  @import "editorComponents";
-
-  // WordPress
-  @import "wp.editor";
-}
-
-// Components Editor
-.brz-ed {
-  @import "editor";
-}
-
-// Used for mapping CSS variables to brizy/ui elements
-@import "editor/brizy-ui/theme";
-@import "@brizy/ui/dist/core";
 
 .brz-ed ::selection {
   color: $selection-color;

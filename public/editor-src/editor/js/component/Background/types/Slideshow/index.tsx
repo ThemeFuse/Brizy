@@ -8,6 +8,7 @@ import {
 import { SwiperOptions } from "swiper/types/swiper-options";
 import { SizeType } from "visual/global/Config/types/configs/common";
 import { useConfig } from "visual/providers/ConfigProvider";
+import { makeAttr } from "visual/utils/i18n/attribute";
 import { getImageUrl } from "visual/utils/image";
 import { read as readString } from "visual/utils/reader/string";
 import { Effect, KenEffect, Transition } from "../../type";
@@ -112,6 +113,24 @@ const Slideshow = ({
     ]
   );
 
+  const attributes = useMemo(() => {
+    return {
+      [makeAttr("duration")]: slideshowDuration,
+      [makeAttr("transition")]: slideshowTransition,
+      [makeAttr("transition-type")]: slideshowTransitionType,
+      [makeAttr("loop")]: slideshowLoop,
+      [makeAttr("ken-burns")]: kenBurnsEffect,
+      [makeAttr("total-items")]: images.length
+    };
+  }, [
+    slideshowDuration,
+    slideshowTransition,
+    slideshowTransitionType,
+    slideshowLoop,
+    kenBurnsEffect,
+    images.length
+  ]);
+
   if (images.length === 0) {
     return null;
   }
@@ -127,10 +146,17 @@ const Slideshow = ({
   return (
     <SwiperControl
       {...options}
+      {...attributes}
       key={key}
       className={className}
       modules={modules}
       onResize={handleResize}
+      data-brz-duration={slideshowDuration}
+      data-brz-transition={slideshowTransition}
+      data-brz-transition-type={slideshowTransitionType}
+      data-brz-loop={slideshowLoop}
+      data-brz-ken-burns={kenBurnsEffect}
+      data-brz-total-items={images.length}
     >
       {images.map((item, index) => (
         <SwiperSlideControl key={index}>

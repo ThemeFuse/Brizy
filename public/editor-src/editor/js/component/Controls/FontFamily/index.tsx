@@ -4,10 +4,12 @@ import React, {
   useCallback,
   useEffect,
   useMemo,
-  useRef
+  useRef,
+  useState
 } from "react";
 import EditorIcon from "visual/component/EditorIcon";
 import { Scrollbar, ScrollbarRef } from "visual/component/Scrollbar";
+import { useTranslation } from "visual/providers/I18nProvider";
 import { scrollToActiveFont } from "visual/utils/fonts/scrollHelpers";
 import { FCC } from "visual/utils/react/types";
 import { FontFamilyItem } from "./Item";
@@ -22,8 +24,21 @@ export const FontFamily: FCC<Props> = ({
   addFontLabel,
   className
 }) => {
+  const [searchValue, setSearchValue] = useState("");
+  const { t } = useTranslation();
+
   const scrollbarRef = useRef<ScrollbarRef>(null);
   const normalizedFonts = useMemo(() => normalizeFonts(fonts), [fonts]);
+
+  const filteredFonts = useMemo(() => {
+    if (searchValue === "") {
+      return normalizedFonts;
+    }
+
+    return normalizedFonts.filter((font) =>
+      font.title.toLowerCase().includes(searchValue.toLowerCase())
+    );
+  }, [normalizedFonts, searchValue]);
 
   useEffect(() => {
     scrollToActiveFont(scrollbarRef);
@@ -43,8 +58,17 @@ export const FontFamily: FCC<Props> = ({
 
   return (
     <div className={_className}>
+      <div className="brz-ed-font__typography-search">
+        <input
+          className="brz-input"
+          type="text"
+          placeholder={t("Search fonts")}
+          value={searchValue}
+          onChange={(e) => setSearchValue(e.target.value)}
+        />
+      </div>
       <Scrollbar theme="dark" ref={scrollbarRef} absolute>
-        {normalizedFonts.map((font) => (
+        {filteredFonts.map((font) => (
           <FontFamilyItem
             key={font.id}
             font={font}

@@ -108,6 +108,31 @@ import Video from "./Video";
 import VideoPlaylist from "./VideoPlaylist";
 import VideoPlaylistItem from "./VideoPlaylist/VideoPlaylistItem";
 import Wrapper from "./Wrapper";
+import { ImageComparison } from "./ImageComparison";
+
+// SCSS import - All components Image, Button, Wrapper, Row, etc.
+import(
+  // @ts-expect-error: FileTypes scss?chunk=main.base
+  /* webpackChunkName: "main.base" */ "sass/main.base.scss?chunk=main.base"
+);
+
+// SCSS import - packages/components(must be in the same chunk with main.base)
+import(
+  // @ts-expect-error: FileTypes scss?chunk=main.base
+  /* webpackChunkName: "main.base" */ "@brizy/component/src/Flex/index.scss?chunk=main.base"
+);
+
+// SCSS import - Libs Groups
+import(
+  // @ts-expect-error: FileTypes scss?chunk=main.editor&onlyEditor=true
+  /* webpackChunkName: "main.editor" */ "visual/libs/group-all/index.scss?chunk=main.editor&onlyEditor=true"
+);
+
+// SCSS import - All Editor components Toolbar, Sidebar, DnD, etc.
+import(
+  // @ts-expect-error: FileTypes scss?chunk=main.editor&onlyEditor=true
+  /* webpackChunkName: "main.editor" */ "sass/main.editor.scss?chunk=main.editor&onlyEditor=true"
+);
 
 function getShortcodes(_config: ConfigCommon) {
   return {
@@ -242,6 +267,10 @@ function getShortcodes(_config: ConfigCommon) {
     Image: {
       id: ElementTypes.Image,
       component: Image
+    },
+    ImageComparison: {
+      id: ElementTypes.ImageComparison,
+      component: ImageComparison
     },
     Line: {
       id: ElementTypes.Line,

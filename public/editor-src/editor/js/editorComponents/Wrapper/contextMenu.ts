@@ -249,7 +249,9 @@ export const getTranslationsMap = (): Translation => ({
   MinistryBrandsArticleFeatured: t("Article Featured"),
 
   // Leadific
-  Leadific: t("Leadific")
+  Leadific: t("Leadific"),
+
+  ImageComparison: t("Image Compare"),
 });
 
 const getItems: ContextGetItems<ElementModel> = (v, component) => {

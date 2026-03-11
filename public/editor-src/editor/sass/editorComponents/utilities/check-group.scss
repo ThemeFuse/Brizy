@@ -1,0 +1,31 @@
+// Checkbox on Preview
+.brz:not(.brz-ed) .brz-control__check-group {
+  .brz-label {
+    font: inherit;
+    display: inherit;
+    align-items: inherit;
+    justify-content: inherit;
+    width: 100%;
+  }
+
+  &--check {
+    display: none;
+  }
+
+  &--uncheck,
+  &--check {
+    cursor: pointer;
+  }
+
+  .brz-input {
+    &:checked ~ .brz-label {
+      .brz-control__check-group--check {
+        display: inline-block;
+      }
+
+      .brz-control__check-group--uncheck {
+        display: none;
+      }
+    }
+  }
+}

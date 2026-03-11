@@ -1,4 +1,4 @@
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import type { Config } from "visual/global/Config";
 import { AdobeFont, GoogleFont, UploadedFont } from "visual/types/Fonts";
 import { makeScripts } from "./makeScripts";
 import { makeStyles } from "./makeStyles";
@@ -124,7 +124,8 @@ interface Data {
   $root: cheerio.Root;
   fonts: Fonts;
   css: DynamicCSS;
-  config: ConfigCommon;
+  config: Config;
+  usedComponents: Array<string>;
   extra?: { adobeKitId?: string };
 }
 

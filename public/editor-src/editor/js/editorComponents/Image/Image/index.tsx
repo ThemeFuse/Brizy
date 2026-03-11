@@ -1,5 +1,5 @@
 import classnames from "classnames";
-import React, { JSX } from "react";
+import React, { Fragment, JSX } from "react";
 import Placeholder from "visual/component/Placeholder";
 import { withLink } from "visual/component/hooks/withLink";
 import { useConfig } from "visual/providers/ConfigProvider";
@@ -180,17 +180,19 @@ const Content = (props: ImageContent): JSX.Element => {
     const toRender: JSX.Element[] = [];
 
     if (hasNormalDC) {
-      toRender.push(content.normal as JSX.Element);
+      toRender.push(<Fragment key="1">{content.normal}</Fragment>);
     } else {
-      toRender.push(renderImage());
+      toRender.push(<Fragment key="2">{renderImage()}</Fragment>);
     }
 
     if (hasHoverDC) {
       toRender.push(
-        <div className="brz-img__hover-population-wrapper">{content.hover}</div>
+        <div key="3" className="brz-img__hover-population-wrapper">
+          {content.hover}
+        </div>
       );
     } else {
-      toRender.push(renderHoverImage());
+      toRender.push(<Fragment key="4">{renderHoverImage()}</Fragment>);
     }
 
     if (toRender.length) {

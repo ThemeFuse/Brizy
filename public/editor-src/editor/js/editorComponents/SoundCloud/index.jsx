@@ -14,6 +14,12 @@ import * as sidebarConfig from "./sidebar";
 import { style } from "./styles";
 import * as toolbarConfig from "./toolbar";
 
+// SCSS import - automatically tracked during static rendering
+import(
+  // @ts-expect-error: .scss?chunk=soundcloud files
+  /* webpackChunkName: "soundcloud" */ "sass/editorComponents/soundcloud.scss?componentId=SoundCloud&chunk=soundcloud"
+);
+
 const resizerPoints = [
   "topLeft",
   "topCenter",

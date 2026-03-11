@@ -1,0 +1,13 @@
+@use "../variables";
+
+.brz-ed .brz-ed-component__label {
+  font-family: variables.$default-font-family;
+  font-size: variables.$options__item-font-size;
+  color: variables.$options__label-color;
+  font-weight: 600;
+  flex-basis: auto;
+  margin-right: 17px;
+  margin-bottom: 6px;
+  display: flex;
+  line-height: 1.3;
+}

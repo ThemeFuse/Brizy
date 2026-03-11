@@ -19,7 +19,9 @@ export async function bootstrap(data: Props): Promise<Static> {
 
   const globalBlocks =
     _globalBlocks?.reduce<GlobalBlockRecord>((acc, block) => {
-      acc[block.uid] = block;
+      if (!block.data.deleted) {
+        acc[block.uid] = block;
+      }
       return acc;
     }, {}) ?? {};
 

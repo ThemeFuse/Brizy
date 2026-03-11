@@ -1,4 +1,5 @@
 import { EditorComponentContextValue } from "visual/editorComponents/EditorComponent/EditorComponentContext";
+import { ComponentTypes } from "visual/providers/EditorComponentProvider/ComponentTypes";
 import { Sheet } from "visual/providers/StyleProvider/Sheet";
 import { DeviceMode } from "visual/types";
 import {
@@ -190,6 +191,7 @@ describe("Testing 'Patches for image' functions", () => {
       itemId: string
     ): EditorComponentContextValue => ({
       sheet: new Sheet(),
+      componentTypes: new ComponentTypes(),
       dynamicContent: {
         itemId,
         config: {

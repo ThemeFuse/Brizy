@@ -1,1 +1,0 @@
-import "../libs/common/intersectionObserver";
