@@ -24,6 +24,7 @@
         </form>
     </div>
 
+    <?php if ( empty( $isWhiteLabel ) && ! empty( $isPro ) ) : ?>
     <div class="brz-ai-banner">
         <div class="brz-ai-banner-bg-circle"></div>
 
@@ -120,6 +121,7 @@
             </a>
         </div>
     </div>
+    <?php endif; ?>
 
     <div class="theme-browser content-filterable rendered">
         <?php if ( ! empty( $templatesError ) ) : ?><div class="notice notice-error" style="margin: 16px 0;"><p><?php echo esc_html( $templatesError ); ?></p></div><?php endif; ?>
