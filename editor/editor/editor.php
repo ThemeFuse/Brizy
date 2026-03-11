@@ -1806,7 +1806,7 @@ class Brizy_Editor_Editor_Editor
     {
         // the cloud will be always initialized with the exception when the white label is enabled
         // we wil return isSyncAllowed =  false just in case
-        if (class_exists('BrizyPro_Admin_WhiteLabel') && BrizyPro_Admin_WhiteLabel::_init()->getEnabled()) {
+        if (apply_filters('brizy_wl_enabled', false)) {
             return array(
                 'isSyncAllowed' => false,
             );
@@ -2134,6 +2134,8 @@ class Brizy_Editor_Editor_Editor
 					  AND meta_key NOT IN ('')";
         $keys = $wpdb->get_col($query);
 
-        return array_map(function ($key) {return [$key=>ucfirst(str_replace('_',' ',$key))];},$keys);
+        return array_map(function ($key) {
+            return [$key => ucfirst(str_replace('_', ' ', $key))];
+        }, $keys);
     }
 }

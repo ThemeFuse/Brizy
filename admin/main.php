@@ -202,7 +202,7 @@ class Brizy_Admin_Main
     {
 
         $prefix = 'brizy';
-        if (class_exists('BrizyPro_Admin_WhiteLabel') && BrizyPro_Admin_WhiteLabel::_init()->getEnabled()) {
+        if (apply_filters('brizy_wl_enabled', false)) {
             $prefix = method_exists('BrizyPro_Admin_WhiteLabel', 'getPrefix') ? BrizyPro_Admin_WhiteLabel::_init()->getPrefix() : get_option('brizy_prefix', 'brizy');
         }
         $cssId = '#toplevel_page_' . $prefix . '-settings';
@@ -268,8 +268,8 @@ class Brizy_Admin_Main
                 'pluginVersion' => BRIZY_VERSION,
                 'aiNonce' => wp_create_nonce('brizy-api'),
                 'nonce' => wp_create_nonce('brizy-admin-nonce'),
-                'isWhiteLabel'  => class_exists( 'BrizyPro_Admin_WhiteLabel' ) && BrizyPro_Admin_WhiteLabel::_init()->getEnabled(),
-            'l10n' => [
+                'isWhiteLabel' => apply_filters('brizy_wl_enabled', false),
+                'l10n' => [
                         'deactivateFeedbackSubmitBtn' => __('Submit & Deactivate', 'brizy'),
                         'deactivateFeedbackSkipBtn' => __('Skip & Deactivate', 'brizy'),
                         'aiCreatingSessionTitle' => __('Creating AI session', 'brizy'),
