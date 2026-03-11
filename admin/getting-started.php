@@ -18,21 +18,18 @@ class Brizy_Admin_GettingStarted
     }
 
     /**
-	 * Whether the Getting Started page should show the YouTube video embed.
-	 * When false, shows a GDPR-safe thumbnail + link instead.
-	 *
-	 * @return bool
-	 */
-	public static function isVideoEnabled() {
-		try {
-			$enabled = (bool) Brizy_Editor_Storage_Common::instance()->get( 'getting-started-video-enabled', true );
-		} catch ( Exception $e ) {
-			$enabled = true;
-		}
-		return $enabled;
-	}
+     * Whether the Getting Started page should show the YouTube video embed.
+     * When false, shows a GDPR-safe thumbnail + link instead.
+     *
+     * @return bool
+     */
+    public static function isVideoEnabled()
+    {
+        return (bool)Brizy_Editor_Storage_Common::instance()->get('getting-started-video-enabled', false);
+    }
 
-	public function addSubmenuPageGettingStarted() {
+    public function addSubmenuPageGettingStarted()
+    {
 
         add_submenu_page(
             current_action() == 'network_admin_menu' ? Brizy_Admin_NetworkSettings::menu_slug() : Brizy_Admin_Settings::menu_slug(),
@@ -45,10 +42,10 @@ class Brizy_Admin_GettingStarted
         );
     }
 
-    public function renderTemplatesPage()
-    {
 
-        if (apply_filters('brizy_wl_enabled', false)) {
+
+        public function renderTemplatesPage()
+    {if (apply_filters('brizy_wl_enabled', false)) {
             $isWhiteLabel = true;
             $brandedOrLabelImgUrl = BRIZY_PLUGIN_URL . '/admin/static/img/getting-started/white-label/';
         } else {
@@ -57,13 +54,13 @@ class Brizy_Admin_GettingStarted
         }
 
         // GDPR: Allow disabling the Getting Started YouTube embed to prevent data transfer without consent.
-		$showYoutubeEmbed = self::isVideoEnabled();
+        $showYoutubeEmbed = self::isVideoEnabled();
 
-		$args = [
-			'isWhiteLabel'       => $isWhiteLabel,
-			'imgPath'            => $brandedOrLabelImgUrl,
-			'showYoutubeEmbed'   => (bool) $showYoutubeEmbed,
-		];
+        $args = [
+            'isWhiteLabel' => $isWhiteLabel,
+            'imgPath' => $brandedOrLabelImgUrl,
+            'showYoutubeEmbed' => (bool)$showYoutubeEmbed,
+        ];
 
         try {
             Brizy_Editor_View::render(BRIZY_PLUGIN_PATH . '/admin/views/getting-started', $args);
