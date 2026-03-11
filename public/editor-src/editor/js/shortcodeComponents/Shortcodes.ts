@@ -28,6 +28,7 @@ import getLeadific from "./Leadific/Leadific";
 import getLine from "./Line";
 import getMap from "./Map";
 import getMenuSimple from "./MenuSimple";
+import getImageComparison from "./ImageComparison";
 import getMinistryBrandsArticleDetail from "./MinistryBrands/MinistryBrandsArticleDetail";
 import getMinistryBrandsArticleFeatured from "./MinistryBrands/MinistryBrandsArticleFeatured";
 import getMinistryBrandsArticleLayout from "./MinistryBrands/MinistryBrandsArticleLayout";
@@ -181,6 +182,7 @@ export function getProShortCodes(
     VideoPlaylist: true,
     Flipbox: true,
     Chart: true,
+    ImageComparison: true,
 
     IconText: false,
     Lottie: true,
@@ -357,6 +359,7 @@ export const ShortCodesKeywords: Record<string, string> = {
   Table: "table data spreadsheet",
   Timeline: "timeline chronology events",
   Chart: "chart pie graph diagram data visualization analytics statistics",
+  ImageComparison: "image compare slider overlay",
 
   StoryButton: "story button narrative action interactive",
   StoryIcon: "story icon narrative symbol graphic",
@@ -529,6 +532,7 @@ export function getSampleShortCodes(config: ConfigCommon) {
     Timeline: getTimeline(),
     Flipbox: getFlipbox(),
     Chart: getChart(),
+    ImageComparison: getImageComparison(),
 
     StoryButton: getStoryButton(),
     StoryIcon: getStoryIcon(),

@@ -1,10 +1,8 @@
-import { Bool, Num, Obj, Str } from "@brizy/readers";
+import { Bool, Obj, Str } from "@brizy/readers";
 import classnames from "classnames";
 import { noop } from "es-toolkit";
-import { Base64 } from "js-base64";
 import React, { Fragment, createRef } from "react";
 import ResizeAware from "react-resize-aware";
-import { omit } from "timm";
 import CustomCSS from "visual/component/CustomCSS";
 import { HoverAnimation } from "visual/component/HoverAnimation/HoverAnimation";
 import { getHoverAnimationOptions } from "visual/component/HoverAnimation/utils";
@@ -20,9 +18,7 @@ import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import EditorComponent, {
   Props as EditorComponentProps
 } from "visual/editorComponents/EditorComponent";
-import { keyToDCFallback2Key } from "visual/editorComponents/EditorComponent/DynamicContent/utils";
 import { ECKeyDCInfo } from "visual/editorComponents/EditorComponent/types";
-import { createOptionId } from "visual/editorComponents/EditorComponent/utils";
 import { shouldRenderPopup } from "visual/editorComponents/tools/Popup";
 import {
   DBMigration,
@@ -34,53 +30,43 @@ import { isEditor, isView } from "visual/providers/RenderProvider";
 import { blocksDataSelector } from "visual/redux/selectors";
 import { DeviceMode } from "visual/types";
 import { Block } from "visual/types/Block";
-import { makePlaceholder } from "visual/utils/dynamicContent";
 import { makeDataAttr } from "visual/utils/i18n/attribute";
-import { imagePopulationUrl } from "visual/utils/image";
-import {
-  isGIFExtension,
-  isSVGExtension,
-  isUnsplashImage
-} from "visual/utils/image/utils";
+import { isUnsplashImage } from "visual/utils/image/utils";
 import { Positive, is as isPositive } from "visual/utils/math/Positive";
 import { getLinkData } from "visual/utils/models/link";
-import {
-  defaultValueValue,
-  mobileSyncOnChange,
-  tabletSyncOnChange
-} from "visual/utils/onChange";
-import { fromElementModel } from "visual/utils/options/ImageUpload/converters";
 import { makeOptionValueToAnimation } from "visual/utils/options/utils/makeValueToOptions";
-import {
-  fromLinkElementModel,
-  patchOnDCChange as patchOnLinkDCChange
-} from "visual/utils/patch/Link/";
-import { DESKTOP, MOBILE, TABLET } from "visual/utils/responsiveMode";
+import { DESKTOP } from "visual/utils/responsiveMode";
 import { HOVER } from "visual/utils/stateMode";
-import { Literal } from "visual/utils/types/Literal";
-import { SizeType } from "../../global/Config/types/configs/common";
 import { attachRefs } from "../../utils/react";
-import { capByPrefix } from "../../utils/string";
 import * as tooltipSidebarConfig from "../tools/Tooltip/tooltipSidebar";
 import * as tooltipToolbarConfig from "../tools/Tooltip/tooltipToolbar";
 import { Wrapper } from "../tools/Wrapper";
 import ImageContent from "./Image";
 import ImageWrapper from "./Wrapper";
 import defaultValue from "./defaultValue.json";
-import {
-  elementModelToValue,
-  patchOnDCChange,
-  patchOnHoverImageChange,
-  patchOnImageChange,
-  patchOnSizeTypeChange,
-  pathOnUnitChange
-} from "./imageChange";
 import { migrations } from "./migrations";
+import {
+  calculateWrapperSizes,
+  getContainerSize,
+  getDimension,
+  getExtraImageProps,
+  getHoverImageUrlsFor,
+  getImageUrlsFor,
+  getResponsiveUrls,
+  handleImageChangePatch,
+  processDCValueHook,
+  processDBValue,
+  updateContainerDimensions,
+  updateContainerWidth,
+  updateHoverImageHeight,
+  ImageComponentState,
+  ImageUtilsContext,
+  ExtendedWrapperSizes
+} from "./shared";
 import * as sidebarConfig from "./sidebar";
 import { style, styleContent, styleHover, styleTooltip } from "./styles";
 import toolbarConfigFn from "./toolbar";
 import {
-  Dimensions,
   GalleryRenderer,
   GetResponsiveUrls,
   ImageSizes,
@@ -92,27 +78,9 @@ import {
   V as Value,
   WrapperSizes
 } from "./types";
-import * as ImagePatch from "./types/ImagePatch";
-import {
-  isDCImagePatch,
-  isHoverImagePatch,
-  isImagePatch,
-  isLinkDcPatch,
-  isSizeTypePatch
-} from "./types/ImagePatch";
-import {
-  calcImageSizes,
-  calcWrapperOriginalSizes,
-  calcWrapperPredefinedSizes,
-  calcWrapperSizes,
-  getCustomImageUrl,
-  getImageSize,
-  getSizeType,
-  isOriginalSize,
-  isPredefinedSize,
-  multiplier,
-  showOriginalImage
-} from "./utils";
+import { showOriginalImage } from "./utils";
+import { isGIFExtension, isSVGExtension } from "visual/utils/image/utils";
+import { omit } from "timm";
 
 class Image extends EditorComponent<Value, Props, State> {
   static defaultProps = {
@@ -157,6 +125,42 @@ class Image extends EditorComponent<Value, Props, State> {
     return ElementTypes.Image;
   }
 
+  /**
+   * Creates the context object needed by shared utilities
+   */
+  private getUtilsContext(): ImageUtilsContext {
+    return {
+      container: this.container,
+      mounted: this.mounted,
+      prevWrapperSizes: this.prevWrapperSizes,
+      state: this.state,
+      meta: this.props.meta,
+      renderContext: this.props.renderContext,
+      editorContext: this.context,
+      reduxState: this.getReduxState(),
+      config: this.getGlobalConfig(),
+      deviceMode: this.getDeviceMode(),
+      getValue: () => this.getValue(),
+      getValue2: () => this.getValue2(),
+      setState: (updater, callback) => {
+        if (typeof updater === "function") {
+          this.setState(
+            (prevState) => ({ ...prevState, ...updater(prevState) }),
+            callback
+          );
+        } else {
+          this.setState((prevState) => ({ ...prevState, ...updater }), callback);
+        }
+      },
+      updatePrevWrapperSizes: (sizes) => {
+        this.prevWrapperSizes = sizes;
+      },
+      patchValue: (patch) => {
+        super.patchValue(patch as Patch);
+      }
+    };
+  }
+
   componentDidMount() {
     if (isView(this.props.renderContext)) {
       return;
@@ -185,7 +189,7 @@ class Image extends EditorComponent<Value, Props, State> {
     const isChangedSuffix = prevSuffix && prevSuffix !== currentSuffix;
 
     if ((isChangedSizeType || isChangedSuffix) && device === DESKTOP) {
-      this.updateHoverImageHeight();
+      updateHoverImageHeight(this.getUtilsContext());
     }
 
     if (enableTooltip === "on" && prevEnableTooltip !== enableTooltip) {
@@ -211,167 +215,17 @@ class Image extends EditorComponent<Value, Props, State> {
     super.patchValue(newPatch, meta);
   }
 
-  updateHoverImageHeight() {
-    const v = this.getValue();
-
-    const {
-      hoverHeight,
-      hoverImageSrc,
-      hoverImageExtension,
-      hoverImageWidth,
-      hoverImageHeight
-    } = v;
-
-    const value = elementModelToValue(v);
-
-    if (!value) {
-      return;
-    }
-
-    const device = this.getDeviceMode();
-    const containerWidth = this.getContainerSize()[device];
-    const wrapperSize = this.getWrapperSizes(v)["desktop"];
-
-    const patch = patchOnHoverImageChange(containerWidth, value, wrapperSize, {
-      hoverImageSrc,
-      hoverImageExtension,
-      hoverImageWidth,
-      hoverImageHeight
-    });
-
-    if (Math.round(hoverHeight) !== Math.round(patch.hoverHeight)) {
-      super.patchValue(patch);
-    }
-  }
-
-  handleImageChange(patch: Patch) {
-    this.updateContainerWidth();
-
-    const { imageSizes: cfgImageSizes = [] } = this.getGlobalConfig();
-    const device = this.getDeviceMode();
-    const { v } = this.getValue2();
-    const dvv = (key: string) => defaultValueValue({ v, device, key });
-    const value = elementModelToValue(v);
-    const image = isImagePatch(patch)
-      ? ImagePatch.fromImageElementModel(patch)
-      : undefined;
-    const hoverImage = isHoverImagePatch(patch)
-      ? ImagePatch.fromHoverImageElementModel(patch)
-      : undefined;
-
-    const isDCPatch = isDCImagePatch(patch);
-
-    const imageDC = isDCPatch
-      ? ImagePatch.fromImageDCElementModel(patch)
-      : undefined;
-
-    const imageSizeType = isSizeTypePatch(patch)
-      ? ImagePatch.patchImageSizeType(patch)
-      : undefined;
-
-    const imageUnit = ImagePatch.patchImageUnit(patch, device);
-
-    const imageLinkDC = isLinkDcPatch(patch)
-      ? fromLinkElementModel(patch)
-      : undefined;
-
-    if (value === undefined) {
-      return {};
-    }
-
-    if (image !== undefined) {
-      const wrapperSize = this.getWrapperSizes(v)[device];
-      const containerWidth = this.getContainerSize()[device];
-
-      return patchOnImageChange(containerWidth, value, wrapperSize, image);
-    }
-
-    if (hoverImage !== undefined) {
-      const { imageExtension } = v;
-
-      const wrapperSize = this.getWrapperSizes(v)["desktop"];
-      const containerWidth = this.getContainerSize()["desktop"];
-
-      if (isSVGExtension(imageExtension) || isGIFExtension(imageExtension)) {
-        wrapperSize.height = wrapperSize.width;
-      }
-
-      return patchOnHoverImageChange(
-        containerWidth,
-        value,
-        wrapperSize,
-        hoverImage
-      );
-    }
-
-    if (imageDC !== undefined && isDCPatch) {
-      const context = this.context;
-      const wrapperSize = this.getWrapperSizes(v)[device];
-      const containerWidth = this.getContainerSize()[device];
-
-      return patchOnDCChange(
-        containerWidth,
-        patch,
-        wrapperSize,
-        context,
-        cfgImageSizes
-      );
-    }
-
-    if (imageUnit !== undefined) {
-      const containerWidth = this.getDimension("width") ?? 0;
-      const containerHeight = this.getDimension("height") ?? 0;
-
-      return pathOnUnitChange(
-        containerWidth,
-        containerHeight,
-        value,
-        imageUnit,
-        device
-      );
-    }
-
-    const sizeType = dvv("sizeType");
-    if (imageSizeType !== undefined && imageSizeType.sizeType !== sizeType) {
-      const {
-        hoverImageSrc,
-        hoverImageExtension,
-        hoverImageWidth,
-        hoverImageHeight
-      } = v;
-
-      const containerWidth = this.getContainerSize()[device];
-      const wrapperSize = this.getWrapperSizes(v)["desktop"];
-
-      return {
-        ...patchOnSizeTypeChange(
-          containerWidth,
-          imageSizeType,
-          cfgImageSizes ?? []
-        ),
-        ...patchOnHoverImageChange(containerWidth, value, wrapperSize, {
-          hoverImageSrc,
-          hoverImageExtension,
-          hoverImageWidth,
-          hoverImageHeight
-        })
-      };
-    }
-
-    if (imageLinkDC) {
-      return patchOnLinkDCChange(imageLinkDC);
-    }
-
-    return {};
+  handleImageChange(patch: Patch): Record<string, unknown> {
+    return handleImageChangePatch(patch, this.getUtilsContext());
   }
 
   handleResize = () => {
     if (!isStory(this.props.editorMode)) {
-      this.updateContainerWidth();
+      updateContainerWidth(this.getUtilsContext());
 
       const { v } = this.getValue2();
       if (v.hoverImageSrc) {
-        this.updateHoverImageHeight();
+        updateHoverImageHeight(this.getUtilsContext());
       }
     }
 
@@ -410,133 +264,37 @@ class Image extends EditorComponent<Value, Props, State> {
     });
   };
 
-  getDimension = (size: string) => {
-    switch (size) {
-      case "width": {
-        // INFO: the parent element chosen for width can affect the ImageGallery element
-        let parentNode = this.container?.current?.parentElement;
-
-        if (parentNode) {
-          if (parentNode.classList.contains("brz-wrapper__scrollmotion")) {
-            parentNode = parentNode.parentElement;
-          }
-
-          const parentWidth = parentNode?.getBoundingClientRect().width;
-          const parentWidthValue = Num.read(parentWidth);
-
-          if (parentWidthValue && parentNode) {
-            const cs = getComputedStyle(parentNode);
-
-            const paddingX =
-              parseFloat(cs.paddingLeft) + parseFloat(cs.paddingRight);
-            const borderX =
-              parseFloat(cs.borderTopWidth) + parseFloat(cs.borderBottomWidth);
-
-            return parentWidthValue - paddingX - borderX;
-          }
-        }
-
-        return undefined;
-      }
-      case "height": {
-        const parentNode =
-          this.container?.current?.querySelector(".brz-picture");
-
-        if (parentNode) {
-          const parentHeight = parentNode.getBoundingClientRect()?.height;
-
-          if (Num.read(parentHeight)) {
-            const cs = getComputedStyle(parentNode);
-
-            const paddingY =
-              parseFloat(cs.paddingTop) + parseFloat(cs.paddingBottom);
-            const borderY =
-              parseFloat(cs.borderTopWidth) + parseFloat(cs.borderBottomWidth);
-
-            return parentHeight - paddingY - borderY;
-          }
-        }
-
-        return undefined;
-      }
-    }
+  getDimension = (size: "width" | "height"): number | undefined => {
+    return getDimension(this.container, size);
   };
 
-  updateContainerDimensions(width: number, widthStateKey: Dimensions) {
-    if (this.state[widthStateKey] !== width) {
-      this.setState((state) => ({ ...state, [widthStateKey]: width }));
-    }
+  updateContainerDimensions(
+    width: number,
+    widthStateKey: "containerWidth" | "tabletContainerWidth" | "mobileContainerWidth"
+  ) {
+    updateContainerDimensions(
+      this.state,
+      (updater, callback) => {
+        if (typeof updater === "function") {
+          this.setState(
+            (prevState) => ({ ...prevState, ...updater(prevState) }),
+            callback
+          );
+        } else {
+          this.setState((prevState) => ({ ...prevState, ...updater }), callback);
+        }
+      },
+      width,
+      widthStateKey
+    );
   }
 
   updateContainerWidth = () => {
-    if (!this.mounted) {
-      return;
-    }
-
-    const deviceMode = this.getDeviceMode();
-    const width = this.getDimension("width");
-
-    if (width !== undefined) {
-      switch (deviceMode) {
-        case "desktop": {
-          this.updateContainerDimensions(width, "containerWidth");
-          break;
-        }
-        case "tablet": {
-          this.updateContainerDimensions(width, "tabletContainerWidth");
-          break;
-        }
-        case "mobile": {
-          this.updateContainerDimensions(width, "mobileContainerWidth");
-          break;
-        }
-      }
-    }
+    updateContainerWidth(this.getUtilsContext());
   };
 
   getExtraImageProps(v: Value) {
-    const {
-      alt: alt_,
-      imageSrc,
-      imagePopulation,
-      imagePopulationEntityType: entityType,
-      imagePopulationEntityId: entityId,
-      enableLazyLoad
-    } = v;
-
-    const attr = enableLazyLoad === "on" ? { loading: "lazy" } : {};
-
-    if (imagePopulation) {
-      // prettier-ignore
-      const imagePlaceholder = Base64.encode(imagePopulation.replace(/"/g, "\\\""));
-      return {
-        ...attr,
-        alt:
-          alt_ ||
-          makePlaceholder({
-            content: "{{ brizy_dc_image_alt }}",
-            attr: { imagePlaceholder, entityType, entityId }
-          }),
-        title: makePlaceholder({
-          content: "{{ brizy_dc_image_title }}",
-          attr: { imagePlaceholder, entityType, entityId }
-        })
-      };
-    }
-
-    return {
-      ...attr,
-      alt:
-        alt_ ||
-        makePlaceholder({
-          content: "{{ brizy_dc_image_alt }}",
-          attr: { imageSrc }
-        }),
-      title: makePlaceholder({
-        content: "{{ brizy_dc_image_title }}",
-        attr: { imageSrc }
-      })
-    };
+    return getExtraImageProps(v);
   }
 
   getImageUrlsFor(
@@ -545,210 +303,28 @@ class Image extends EditorComponent<Value, Props, State> {
     device: DeviceMode
   ) {
     const v = this.getValue();
-
-    let { width: cW, height: cH } = wrapperSizes[device];
-    cW = Math.round(cW);
-    cH = Math.round(cH);
-
-    if (v.imagePopulation) {
-      const src = v.imageSrc;
-      const options = { cW: Math.round(cW), cH: Math.round(cH) };
-      const options2X = multiplier(options, 2);
-      const url = imagePopulationUrl(src, { ...options });
-
-      return {
-        source: url,
-        url: `${url} 1x, ${imagePopulationUrl(src, {
-          ...options2X
-        })} 2x`
-      };
-    }
-
-    const dvv = (key: string) => defaultValueValue({ v, key, device });
-    const config = this.getGlobalConfig();
-
-    return getCustomImageUrl(
-      fromElementModel(dvv),
-      wrapperSizes[device],
-      imageSizes[device],
-      config
-    );
+    return getImageUrlsFor(v, wrapperSizes, imageSizes, device, this.getGlobalConfig());
   }
 
   getHoverImageUrlsFor(wrapperSizes: WrapperSizes, imageSizes: ImageSizes) {
     const v = this.getValue();
-    const { hoverImagePopulation, hoverImage, sizeType } = v;
-    const desktopSizes = wrapperSizes["desktop"];
-
-    let { width: cW, height: cH } = desktopSizes;
-    cW = Math.round(cW);
-    cH = Math.round(cH);
-
-    const dvv = (key: string) =>
-      defaultValueValue({ v, key, device: "desktop" });
-    const hoverGetter = (key: string) => dvv(capByPrefix("hover", key));
-
-    if (hoverImagePopulation && hoverImage) {
-      const options = { cW, cH };
-      const hoverUrl = imagePopulationUrl(hoverImage, options) || "";
-
-      return {
-        hoverSource: hoverUrl,
-        hoverUrl: `${hoverUrl} 1x, ${imagePopulationUrl(
-          hoverImage,
-          multiplier(options, 2)
-        )} 2x`,
-        isHover: true
-      };
-    } else {
-      const hoverModel = {
-        ...fromElementModel(hoverGetter),
-        sizeType
-      };
-
-      return getCustomImageUrl(
-        fromElementModel(dvv),
-        desktopSizes,
-        imageSizes["desktop"],
-        this.getGlobalConfig(),
-        hoverModel
-      );
-    }
+    return getHoverImageUrlsFor(v, wrapperSizes, imageSizes, this.getGlobalConfig());
   }
 
   getResponsiveUrls(
     wrapperSizes: WrapperSizes,
     imageSizes: ImageSizes
   ): ImagesSources {
-    return {
-      desktopSrc: this.getImageUrlsFor(wrapperSizes, imageSizes, "desktop").url,
-      hoverDesktopSrc:
-        this.getHoverImageUrlsFor(wrapperSizes, imageSizes).hoverUrl ?? "",
-      tabletSrc: this.getImageUrlsFor(wrapperSizes, imageSizes, "tablet").url,
-      mobileSrc: this.getImageUrlsFor(wrapperSizes, imageSizes, "mobile").url,
-      sourceSrc:
-        this.getImageUrlsFor(wrapperSizes, imageSizes, "desktop").source ?? "",
-      hoverSourceSrc:
-        this.getHoverImageUrlsFor(wrapperSizes, imageSizes).hoverSource ?? ""
-    };
+    const v = this.getValue();
+    return getResponsiveUrls(v, wrapperSizes, imageSizes, this.getGlobalConfig());
   }
 
-  getWrapperSizes(v: Value) {
-    const config = this.getGlobalConfig();
-    const { imageSizes: cfgImageSizes = [] } = config;
-
-    const { containerWidth, tabletContainerWidth, mobileContainerWidth } =
-      this.state;
-    const {
-      imageExtension,
-      imagePopulation,
-      imageWidth,
-      imageHeight,
-      width,
-      height,
-      widthSuffix,
-      heightSuffix
-    } = v;
-    const isSvgOfGif =
-      (isSVGExtension(imageExtension) || isGIFExtension(imageExtension)) &&
-      !imagePopulation;
-    const _sizeType = getSizeType(v, DESKTOP);
-    const _tabletSizeType = getSizeType(v, TABLET);
-    const _mobileSizeType = getSizeType(v, MOBILE);
-
-    const sizeType = getImageSize(_sizeType, cfgImageSizes);
-    const tabletSizeType = getImageSize(_tabletSizeType, cfgImageSizes);
-    const mobileSizeType = getImageSize(_mobileSizeType, cfgImageSizes);
-    const { desktop, tablet, mobile } = this.getContainerSize();
-
-    const isPredefined =
-      isPredefinedSize(sizeType) &&
-      isPredefinedSize(tabletSizeType) &&
-      isPredefinedSize(mobileSizeType);
-
-    if (isPredefined && !isSvgOfGif) {
-      return {
-        desktop: calcWrapperPredefinedSizes(sizeType, desktop),
-        tablet: calcWrapperPredefinedSizes(tabletSizeType, tablet),
-        mobile: calcWrapperPredefinedSizes(mobileSizeType, mobile)
-      };
-    }
-
-    const dvv = (key: string, device: DeviceMode) =>
-      defaultValueValue({ v, device, key });
-    const dvvH = (key: string) =>
-      defaultValueValue({ v, device: "desktop", key, state: "hover" });
-    const size = dvv("size", DESKTOP);
-    const tabletSize = dvv("size", TABLET);
-    const mobileSize = dvv("size", MOBILE);
-
-    const desktopValue = {
-      imageWidth,
-      imageHeight,
-      imageExtension,
-      width,
-      height,
-      widthSuffix,
-      heightSuffix,
-      size
-    };
-    const hoverDesktopValue = {
-      imageWidth: dvvH("imageWidth"),
-      imageHeight: dvvH("imageHeight"),
-      imageExtension: dvvH("imageExtension"),
-      height: dvvH("height"),
-      width,
-      widthSuffix,
-      heightSuffix,
-      size
-    };
-    const tabletValue = {
-      imageWidth,
-      imageHeight,
-      imageExtension,
-      size: tabletSize,
-      width: v.tabletWidth || width,
-      height: v.tabletHeight || height,
-      widthSuffix: tabletSyncOnChange(v, "widthSuffix"),
-      heightSuffix: tabletSyncOnChange(v, "heightSuffix")
-    };
-    const mobileValue = {
-      imageWidth,
-      imageHeight,
-      imageExtension,
-      size: mobileSize,
-      width: v.mobileWidth || width,
-      height: v.mobileHeight || height,
-      widthSuffix: mobileSyncOnChange(v, "widthSuffix"),
-      heightSuffix: mobileSyncOnChange(v, "heightSuffix")
-    };
-
-    if (isOriginalSize(sizeType) && !isSvgOfGif) {
-      return {
-        desktop: calcWrapperOriginalSizes(desktopValue, containerWidth),
-        hoverDesktop: calcWrapperOriginalSizes(
-          hoverDesktopValue,
-          containerWidth
-        ),
-        tablet: calcWrapperOriginalSizes(tabletValue, tabletContainerWidth),
-        mobile: calcWrapperOriginalSizes(mobileValue, mobileContainerWidth)
-      };
-    }
-
-    return {
-      desktop: calcWrapperSizes(desktopValue, containerWidth),
-      hoverDesktop: calcWrapperSizes(hoverDesktopValue, containerWidth),
-      tablet: calcWrapperSizes(tabletValue, tabletContainerWidth),
-      mobile: calcWrapperSizes(mobileValue, mobileContainerWidth)
-    };
+  getWrapperSizes(v: Value): ExtendedWrapperSizes {
+    return calculateWrapperSizes(v, this.state, this.getGlobalConfig());
   }
 
   getContainerSize() {
-    return {
-      desktop: this.state.containerWidth,
-      tablet: this.state.tabletContainerWidth,
-      mobile: this.state.mobileContainerWidth
-    };
+    return getContainerSize(this.state);
   }
 
   getLightboxClassName() {
@@ -765,152 +341,20 @@ class Image extends EditorComponent<Value, Props, State> {
   }
 
   getDBValue() {
-    const { resize, tabletResize, mobileResize, ...dbValue } =
-      super.getDBValue();
-
-    let value = {};
-    if (resize) {
-      value = {
-        ...value,
-        width: resize
-      };
-    }
-    if (tabletResize) {
-      value = {
-        ...value,
-        tabletWidth: tabletResize
-      };
-    }
-    if (mobileResize) {
-      value = {
-        ...value,
-        mobileWidth: mobileResize
-      };
-    }
-
-    if (dbValue.width) {
-      value = {
-        ...value,
-        width: dbValue.width
-      };
-    }
-    if (dbValue.tabletWidth) {
-      value = {
-        ...value,
-        tabletWidth: dbValue.tabletWidth
-      };
-    }
-    if (dbValue.mobileWidth) {
-      value = {
-        ...value,
-        mobileWidth: dbValue.mobileWidth
-      };
-    }
-
-    if (dbValue.height && !dbValue.heightSuffix) {
-      value = {
-        ...value,
-        heightSuffix: "%"
-      };
-    }
-    if (dbValue.tabletHeight && !dbValue.tabletHeightSuffix) {
-      value = {
-        ...value,
-        tabletHeightSuffix: "%"
-      };
-    }
-    if (dbValue.mobileHeight && !dbValue.mobileHeightSuffix) {
-      value = {
-        ...value,
-        mobileHeightSuffix: "%"
-      };
-    }
-
-    if (
-      !dbValue.imagePopulation &&
-      dbValue.sizeType !== undefined &&
-      dbValue.sizeType !== SizeType.custom
-    ) {
-      const { imageSizes } = this.getGlobalConfig();
-      const imageData = imageSizes?.find(
-        ({ name }) => name === dbValue.sizeType
-      );
-      if (imageData === undefined) {
-        dbValue.sizeType = SizeType.original;
-      }
-    }
-
-    const sizeValue = this.state.sizePatch ?? {};
-
-    return {
-      ...dbValue,
-      ...value,
-      ...sizeValue
-    };
+    const parentDBValue = super.getDBValue();
+    return processDBValue(
+      parentDBValue as Value & {
+        resize?: number;
+        tabletResize?: number;
+        mobileResize?: number;
+      },
+      this.state as ImageComponentState,
+      this.getGlobalConfig()
+    );
   }
 
-  getDCValueHook(dcKeys: ECKeyDCInfo[], v: Value) {
-    const wrapperSizes = this.getWrapperSizes(v);
-    const deviceMode = this.getDeviceMode();
-    const dvv = (key: string) =>
-      defaultValueValue({ v, key, device: deviceMode });
-
-    return dcKeys.map((dcKey) => {
-      if (dcKey.key === "image") {
-        const { width, height } = wrapperSizes[deviceMode];
-        let { cW, cH } = this.prevWrapperSizes;
-
-        if (width > cW || height > cH) {
-          cW = width;
-          cH = height;
-
-          this.prevWrapperSizes = {
-            cW: width,
-            cH: height
-          };
-        }
-
-        const fallbackImage = fromElementModel(
-          (k) => v[createOptionId(keyToDCFallback2Key(dcKey.key), k)] as Literal
-        );
-        const config = this.getGlobalConfig();
-        const fallbackUrl = getCustomImageUrl(
-          fallbackImage,
-          this.getWrapperSizes(v)[deviceMode],
-          calcImageSizes(
-            {
-              size: dvv("size"),
-              width: dvv("width"),
-              height: dvv("height"),
-              widthSuffix: dvv("widthSuffix"),
-              heightSuffix: dvv("heightSuffix"),
-              imageHeight: fallbackImage.height ?? 0,
-              imageWidth: fallbackImage.width ?? 0,
-              positionX: fallbackImage.x ?? 0,
-              positionY: fallbackImage.y ?? 0,
-              zoom: dvv("zoom")
-            },
-            this.props.meta[`${deviceMode}W`],
-            isView(this.props.renderContext)
-          ),
-          config
-        ).source;
-
-        return {
-          ...dcKey,
-          key: "imageSrc",
-          attr: {
-            ...dcKey.attr,
-            cW: Math.round(cW),
-            cH: Math.round(cH),
-            disableCrop: isEditor(this.props.renderContext)
-          },
-          ...(fallbackUrl ? { fallback: fallbackUrl } : {})
-        };
-      }
-
-      return dcKey;
-    });
+  getDCValueHook(dcKeys: ECKeyDCInfo[], v: Value): ECKeyDCInfo[] {
+    return processDCValueHook(dcKeys, v, this.getUtilsContext()) as ECKeyDCInfo[];
   }
 
   handleToggleTooltip = () => {
@@ -994,7 +438,6 @@ class Image extends EditorComponent<Value, Props, State> {
         let newMeta = omit(meta, ["globalBlockId"]);
 
         if (itemData.type === "GlobalBlock") {
-          // TODO: some kind of error handling
           const globalBlocks = blocksDataSelector(this.getReduxState());
           const globalBlockId = itemData.value._id;
           const blockData = globalBlocks[globalBlockId];
@@ -1156,7 +599,7 @@ class Image extends EditorComponent<Value, Props, State> {
       _dc: this._dc
     };
 
-    const getResponsiveUrls: GetResponsiveUrls | undefined = isUnsplashImage(
+    const getResponsiveUrlsFn: GetResponsiveUrls | undefined = isUnsplashImage(
       imageType
     )
       ? (imageSizes: ImageSizes) =>
@@ -1239,7 +682,7 @@ class Image extends EditorComponent<Value, Props, State> {
                         _id={this.getId()}
                         componentId={this.getComponentId()}
                         wrapperSizes={wrapperSizes}
-                        getResponsiveUrls={getResponsiveUrls}
+                        getResponsiveUrls={getResponsiveUrlsFn}
                         meta={meta}
                         gallery={gallery}
                         linkProps={linkProps}

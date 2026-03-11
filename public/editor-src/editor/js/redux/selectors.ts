@@ -212,6 +212,11 @@ export const drawerContentTypeSelector = createSelector(
   (leftSidebar) => leftSidebar.drawerContentType
 );
 
+export const isCompilationPending = createSelector(
+  blocksHtmlSelector,
+  (blocksHtml) => blocksHtml.storeGeneration !== blocksHtml.compiledGeneration
+);
+
 //#endregion
 
 //#region === 2 DEPENDENCIES ===

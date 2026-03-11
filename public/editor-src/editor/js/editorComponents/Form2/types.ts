@@ -27,6 +27,9 @@ export interface Errors {
   maxNumError?: string;
   fileMaxSizeError?: string;
   fileTypeError?: string;
+  phoneMinLengthError?: string;
+  phoneMaxLengthError?: string;
+  phoneInvalidCharsError?: string;
 }
 
 export interface DoneResponse {
@@ -41,6 +44,7 @@ export interface DataValue {
   value: string;
   maxSize: number;
   extensions: string;
+  dialCode?: string;
 }
 
 export enum MessageStatus {

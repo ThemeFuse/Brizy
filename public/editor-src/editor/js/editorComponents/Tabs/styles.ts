@@ -63,7 +63,11 @@ export function styleTabs(data: DynamicStylesProps<ElementModel>): OutputStyle {
       {
         standart: ["cssStyleCustomIconColor"]
       },
-    ".brz && > .brz-tabs__nav .brz-tabs__nav--item.brz-tabs__nav--active .brz-tabs__nav--button .brz-icon-svg-custom":
+    ".brz && > .brz-tabs__content .brz-tabs__items .brz-tabs__nav--mobile:not(.brz-tabs__nav--mobile--active) .brz-tabs__nav--button .brz-icon-svg-custom":
+      {
+        standart: ["cssStyleCustomIconColor"]
+      },
+    ".brz && > .brz-tabs__nav .brz-tabs__nav--item.brz-tabs__nav--active .brz-tabs__nav--button .brz-icon-svg-custom, .brz && > .brz-tabs__content .brz-tabs__items .brz-tabs__nav--mobile.brz-tabs__nav--mobile--active .brz-tabs__nav--button .brz-icon-svg-custom":
       {
         standart: ["cssStyleElementTabsActiveCustomIconColor"]
       },

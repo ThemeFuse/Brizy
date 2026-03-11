@@ -2,9 +2,9 @@
 Contributors: themefuse
 Tags: page builder, website builder, brizy, editor, visual editor, unyson, wysiwyg, landing page, drag-and-drop, design, landing page builder, front-end builder
 Requires at least: 4.5
-Tested up to: 6.9.1
+Tested up to: 6.9.3
 Requires PHP: 7.2.24
-Stable tag: 2.8.0
+Stable tag: 2.8.1
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -136,6 +136,16 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 11. **Resize columns by dragging the handle that appears in between**
 
 == Changelog ==
+
+= 2.8.1 - 2026-03-11 =
+* New:  Typography search
+* New:  Reveal animation effect
+* Improved:  Builder bundle size and overall performance
+* Fixed:  Rich text transform and decoration properties
+* Fixed:  Button gradient background color
+* Fixed:  Video element play icon display in Safari
+* Fixed:  Custom icon visibility
+* Fixed:  Section custom height
 
 = 2.8.0 - 2026-03-09 =
 * New: AI integration for WordPress

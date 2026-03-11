@@ -1,0 +1,137 @@
+@use "../../variables";
+
+// Block Anchor
+.brz-ed .brz-ed-option__block-thumbnail {
+  width: 100%;
+
+  &-item {
+    margin-bottom: 0px;
+    max-width: 140px;
+    position: relative;
+    cursor: pointer;
+    padding: 4px;
+    margin: 2px 0;
+
+    &.active {
+      .brz-ed-option__block-thumbnail-anchor {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+      }
+    }
+
+    &:after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: 2px solid variables.$thumbnail__block__item__after-border;
+      transition: 0.2s linear border-color;
+    }
+
+    &:hover:after,
+    &.active:after {
+      border-color: variables.$thumbnail__block__item-border--active;
+      transition: 0.2s linear border-color;
+    }
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  &-image {
+    position: relative;
+
+    .brz-img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      max-width: 100%;
+    }
+  }
+
+  // Loader
+  &-loading {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    font-size: 24px;
+    color: variables.$thumbnail__block__loader-bg;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: progress;
+  }
+
+  &-anchor {
+    display: none;
+    align-items: center;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    z-index: 1;
+    width: 140px;
+    height: 22px;
+    background: variables.$thumbnail__block__item__anchor-bg;
+    color: variables.$thumbnail__block__item__anchor-color;
+    font-family:
+      SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New",
+      monospace;
+    font-size: 13px;
+    font-weight: 600;
+
+    .brz-span {
+      font-size: 12px;
+      opacity: 0.9;
+      font-style: italic;
+      margin-left: 5px;
+    }
+
+    .brz-input {
+      width: 108px;
+      padding: 0px 5px;
+      border: none;
+      background: none;
+      color: variables.$thumbnail__block__item__anchor-color;
+      text-align: left;
+      font-family: variables.$default-font-family;
+      font-size: 13px;
+      font-weight: 600;
+
+      &:focus {
+        outline: none;
+      }
+
+      &::placeholder {
+        color: variables.$thumbnail__block__item__anchor-color;
+        opacity: 0.6;
+        font-family: variables.$default-font-family;
+        font-size: 13px;
+        font-weight: 600;
+        font-style: italic;
+      }
+    }
+
+    .brz-label {
+      color: variables.$thumbnail__block__item__anchor-color;
+      cursor: pointer;
+      margin: 3px 0 0 0;
+    }
+
+    .brz-icon-svg {
+      width: 18px;
+      height: 18px;
+      padding: 5px;
+    }
+
+    .brz-icon-svg:hover {
+      color: variables.$thumbnail__block__item__anchor__icon-color--hover;
+      opacity: 0.92;
+    }
+  }
+}

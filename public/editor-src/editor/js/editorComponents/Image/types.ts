@@ -98,6 +98,7 @@ export type V = {
   hoverImageExtension: string;
   hoverImage: string;
   hoverImageFileName: string;
+  hoverImagePopulation: string;
   tabletWidthSuffix: string;
   tabletHeightSuffix: string;
   mobileWidthSuffix: string;
@@ -174,6 +175,7 @@ export interface ImageProps extends ImageContent {
   context: EditorComponentContextValue;
   children: ReactNode;
   onChange: (arg0: Patch) => void;
+  showFilter?: boolean;
 }
 
 export type HoverImageCommonProps = Pick<

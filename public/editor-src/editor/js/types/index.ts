@@ -409,3 +409,12 @@ export type Trigger =
 export type Triggers = Array<Trigger>;
 
 //#endregion
+
+//#region Compilations
+
+export interface ComponentExport {
+  selector: string;
+  export: () => Promise<{ default: ($node: JQuery<HTMLElement>) => void }>;
+}
+
+//#endregion

@@ -10,6 +10,7 @@ export const getPlaceholder = (v: Value, icon: string): string => {
     category,
     group,
     showEventTime,
+    timeFormat,
     numberOfMonths,
     features,
     nonfeatures,
@@ -26,6 +27,7 @@ export const getPlaceholder = (v: Value, icon: string): string => {
     `howmanymonths='${numberOfMonths}'`,
     `detail_page='${getDetail(detailPage)}'`,
     getAttr(showEventTime, "time"),
+    `time_format='${timeFormat}'`,
     getAttr(showSubscribeToCalendarButton, "showSubscribeToCalendarButton")
   ];
   const startPlaceholder = makeStartPlaceholder({

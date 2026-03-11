@@ -1,0 +1,65 @@
+@use "../../variables";
+@use "../../mixins/input";
+
+// --- Input Control
+.brz-ed .brz-ed-control__input {
+  font-family: variables.$default-font-family;
+  font-size: variables.$control-font-size;
+  font-style: normal;
+  font-weight: 400;
+  letter-spacing: 0;
+  background: variables.$control-bg none;
+  color: variables.$control__variant-color;
+  width: auto;
+  flex: 1 1 auto;
+  height: variables.$control-height;
+  text-indent: 5px;
+  padding: 0 5px;
+  border-radius: variables.$control-border-radius;
+  border: 0;
+  outline: 0;
+  box-shadow: none;
+  text-shadow: none;
+  text-align: left;
+  margin-left: auto;
+  -moz-appearance: textfield; // Remove spin button on Firefox
+
+  &:focus,
+  &:active {
+    background-color: variables.$control-bg;
+    color: variables.$control__variant-color;
+    outline: 0;
+  }
+
+  &::-webkit-inner-spin-button,
+  &::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  // Placeholder
+  @include input.placeholder {
+    & {
+      color: variables.$input__placeholder-color;
+      font-style: italic;
+      font-size: 1em;
+    }
+  }
+
+  // Size Styles
+  &--large {
+    max-width: variables.$control__lg-width;
+  }
+
+  &--medium {
+    max-width: variables.$control__md-width;
+  }
+
+  &--small {
+    max-width: variables.$control__sm-width;
+  }
+
+  &--auto {
+    max-width: 100%;
+  }
+}

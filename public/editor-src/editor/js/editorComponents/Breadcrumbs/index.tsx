@@ -20,6 +20,12 @@ import * as toolbarConfig from "./toolbar";
 import { Value } from "./types";
 import { readBreadcrumbs } from "./utils";
 
+// SCSS import - automatically tracked during static rendering
+import(
+  // @ts-expect-error: .scss?chunk=Login files
+  /* webpackChunkName: "breadcrumbs" */ "sass/editorComponents/breadcrumbs.scss?componentId=Breadcrumbs&chunk=breadcrumbs"
+);
+
 const placeholderStyle = {
   height: "40px"
 };

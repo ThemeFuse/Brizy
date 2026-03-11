@@ -4,7 +4,8 @@ export const animationStyle = {
   animationName: "fadeIn",
   animationFillMode: "both",
   animationDelay: "200ms",
-  animationDuration: "200ms"
+  animationDuration: "200ms",
+  animationTiming: "ease-in-out"
 };
 
 export const previewClassName = "brz-ed-popup-two-details-preview";

@@ -6,7 +6,7 @@ import type { Static } from "../bootstrap/types";
 import { WorkerPool } from "./WorkerPool";
 
 // Note: Workers are build in a separated files
-// See webpack.config.worker.js
+// See rspack.config.worker.js
 const getWorkerUrl = (config: ConfigCommon): string => {
   const base = config.urls?.worker ?? assetUrl("editor/js", config);
   const version = config.editorVersion ?? "latest";

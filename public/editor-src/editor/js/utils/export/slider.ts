@@ -9,13 +9,16 @@ export const makePausePlayItem = (node: Element): HTMLElement | null => {
     return null;
   }
 
-  pauseIcon.classList.remove("brz-hidden");
+  const clonedPauseIcon = pauseIcon.cloneNode(true) as HTMLElement;
+  const clonedPlayIcon = playIcon.cloneNode(true) as HTMLElement;
+
+  clonedPauseIcon.classList.remove("brz-hidden");
 
   const listItem = document.createElement("li");
   listItem.className = "brz-slick-slider__pause";
 
-  listItem.appendChild(pauseIcon);
-  listItem.appendChild(playIcon);
+  listItem.appendChild(clonedPauseIcon);
+  listItem.appendChild(clonedPlayIcon);
 
   return listItem;
 };

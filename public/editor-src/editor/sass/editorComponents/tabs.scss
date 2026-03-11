@@ -1,0 +1,235 @@
+@use "../mixins/breakpoints";
+
+// Tabs
+.brz .brz-tabs {
+  min-width: 0;
+
+  &--horizontal {
+    flex: 1 1 auto;
+  }
+  &--vertical {
+    display: flex;
+    width: 100%;
+  }
+  &--vertical.brz-tabs--right {
+    flex-direction: row-reverse;
+  }
+
+  // Navs
+  &__nav {
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+    min-width: fit-content;
+
+    &--horizontal {
+      display: flex;
+    }
+    &--button {
+      padding: 10px 15px;
+      cursor: pointer;
+      border-style: solid;
+      background-clip: padding-box;
+      display: flex;
+      flex-wrap: nowrap;
+      align-items: center;
+      flex-direction: row;
+      text-decoration: inherit;
+    }
+  }
+  &__nav--item {
+    position: relative;
+    list-style: none;
+    margin: 0;
+    line-height: unset;
+    // this is put to solve z-index issues
+    // with ContainerBorder that result in
+    // being unable to click the tab handles
+    z-index: var(--zIndex);
+  }
+  .brz-tabs__nav--style-1 .brz-tabs__nav--active {
+    &:before,
+    &:after {
+      content: "";
+      position: absolute;
+    }
+  }
+  &__nav--vertical.brz-tabs__nav--left .brz-tabs__nav--active {
+    &:before,
+    &:after {
+      height: 100vh;
+      right: 0;
+    }
+    &:before {
+      bottom: 100%;
+    }
+  }
+  &__nav--vertical.brz-tabs__nav--right .brz-tabs__nav--active {
+    &:before,
+    &:after {
+      height: 100vh;
+      left: 0;
+    }
+    &:before {
+      bottom: 100%;
+    }
+  }
+  &__nav--horizontal .brz-tabs__nav--active {
+    &:before,
+    &:after {
+      width: 100vw;
+      height: 2px;
+      bottom: 0;
+    }
+    &:before {
+      left: -100vw;
+    }
+    &:after {
+      right: -100vw;
+    }
+  }
+
+  // Mobile
+  &__nav--mobile {
+    display: none;
+  }
+
+  // Content
+  &__items {
+    display: none;
+    border-style: solid;
+    background-clip: padding-box;
+    width: 100%;
+  }
+  &__items--active {
+    display: block;
+
+    & > .brz-tabs__item--content {
+      animation-name: fadeIn;
+      animation-duration: 0.15s;
+      animation-fill-mode: both;
+    }
+    .brz-bg-content:empty {
+      min-height: 50px;
+    }
+  }
+  &__content--vertical {
+    flex-grow: 1;
+  }
+  &__content--vertical .brz-tabs__items {
+    height: 100%;
+  }
+  &__content--vertical.brz-tabs__content--style-1.brz-tabs__content--left
+    .brz-tabs__items.brz-tabs__items--active,
+  &__content--vertical.brz-tabs__content--style-1.brz-tabs__content--left
+    .brz-tabs__items.brz-tabs__items--active:hover {
+    border-left-style: none;
+  }
+  &__content--vertical.brz-tabs__content--right.brz-tabs__content--style-1
+    .brz-tabs__items.brz-tabs__items--active,
+  &__content--vertical.brz-tabs__content--right.brz-tabs__content--style-1
+    .brz-tabs__items.brz-tabs__items--active:hover {
+    border-right-style: none;
+  }
+  &__content--horizontal.brz-tabs__content--style-1
+    .brz-tabs__items.brz-tabs__items--active,
+  &__content--horizontal.brz-tabs__content--style-1
+    .brz-tabs__items.brz-tabs__items--active:hover {
+    border-top-style: none;
+  }
+}
+
+/// Responsive
+@include breakpoints.media-breakpoint-down(sm) {
+  .brz .brz-tabs {
+    &__nav {
+      margin: 0 !important;
+    }
+
+    &__content {
+      width: 100%;
+    }
+
+    // Mobile
+    &__nav--mobile {
+      display: flex;
+
+      & > .brz-tabs__nav--button {
+        border-width: 0 !important;
+        box-shadow: none !important;
+        width: max-content;
+        align-items: center;
+        word-break: break-all;
+        width: 100%;
+      }
+    }
+    &__nav--desktop {
+      display: none;
+    }
+    &__items {
+      display: block;
+
+      & > .brz-tabs__item--content {
+        display: none;
+      }
+      &:not(:last-child) {
+        margin-bottom: 3px;
+      }
+    }
+    &__items--active {
+      & > .brz-tabs__nav--button {
+        border-bottom: solid;
+      }
+      & > .brz-tabs__item--content {
+        display: block;
+      }
+    }
+    &__content--vertical .brz-tabs__items {
+      height: fit-content;
+    }
+    &__content .brz-tabs__items--active {
+      border-top-style: solid;
+    }
+    &__content.brz-tabs__content--vertical.brz-tabs__content--left
+      .brz-tabs__items.brz-tabs__items--active,
+    &__content.brz-tabs__content--vertical.brz-tabs__content--left
+      .brz-tabs__items.brz-tabs__items--active:hover {
+      border-left-style: solid;
+    }
+    &__content.brz-tabs__content--vertical.brz-tabs__content--right
+      .brz-tabs__items.brz-tabs__items--active,
+    &__content.brz-tabs__content--vertical.brz-tabs__content--right
+      .brz-tabs__items.brz-tabs__items--active:hover {
+      border-right-style: solid;
+    }
+    &__content.brz-tabs__content--horizontal.brz-tabs__content--style-1
+      .brz-tabs__items.brz-tabs__items--active,
+    &__content.brz-tabs__content--horizontal.brz-tabs__content--style-1
+      .brz-tabs__items.brz-tabs__items--active:hover {
+      border-top-style: solid;
+    }
+    &__nav--horizontal.brz-tabs__nav.brz-tabs__nav--style-2 {
+      display: none;
+    }
+  }
+}
+.brz .brz-tabs__nav.brz-tabs__nav--style-3 .brz-tabs__nav--button:before {
+  content: "";
+}
+.brz .brz-tabs__nav.brz-tabs__nav--style-3 .brz-tabs__nav--button {
+  border: none !important;
+  box-shadow: none !important;
+}
+.brz .brz-tabs__content--style-3 {
+  margin-top: 1px;
+}
+.brz .brz-tabs__content--style-3 .brz-tabs__items {
+  border: none !important;
+  box-shadow: none !important;
+}
+.brz .brz-tabs__nav--style-3 .brz-tabs__nav--item:before {
+  content: "";
+}
+.brz .brz-tabs__nav--style-3 .brz-tabs__nav--item:after {
+  content: "";
+}

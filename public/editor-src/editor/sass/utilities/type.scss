@@ -1,0 +1,41 @@
+@use "../default-variables" as *;
+
+//
+// Headings
+//
+.brz .brz-h1,
+.brz .brz-h2,
+.brz .brz-h3,
+.brz .brz-h4,
+.brz .brz-h5,
+.brz .brz-h6 {
+  font-family: $headings-font-family;
+  font-weight: $headings-font-weight;
+  line-height: $headings-line-height;
+  color: $headings-color;
+}
+.brz .brz-h1 {
+  font-size: $h1-font-size;
+  font-weight: 400;
+}
+.brz .brz-h2 {
+  font-size: $h2-font-size;
+}
+.brz .brz-h3 {
+  font-size: $h3-font-size;
+}
+.brz .brz-h4 {
+  font-size: $h4-font-size;
+}
+.brz .brz-h5 {
+  font-size: $h5-font-size;
+}
+.brz .brz-h6 {
+  font-size: $h6-font-size;
+}
+
+// Paragraph
+.brz .brz-p {
+  font-size: $font-size-paragraph;
+  font-weight: $font-weight-base;
+}

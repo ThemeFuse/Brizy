@@ -1,5 +1,6 @@
 import { ExportFunction } from "visual/types";
 import { makeUrl } from "visual/utils/api/utils";
+import { getCurrentDevice } from "visual/utils/export";
 import { makeAttr } from "visual/utils/i18n/attribute";
 import { videoData as getVideoData } from "visual/utils/video";
 import { handlePlaceholderControlsClick, handleVideo } from "./utils";
@@ -45,7 +46,7 @@ const fn: ExportFunction = ($node) => {
       );
       const iframe = video?.querySelector(".brz-iframe");
       const videoNode = customVideo?.querySelector("video");
-      const isMobile = window.innerWidth < 767;
+      const isMobile = getCurrentDevice() === "mobile";
       const activeClass = "brz-video-playlist-video-item--active";
 
       if (playlistItem) {
@@ -151,7 +152,7 @@ const fn: ExportFunction = ($node) => {
   if (!initResize) {
     initResize = true;
     window.addEventListener("resize", () => {
-      if (needRefreshOnDesktop && window.innerWidth >= 767) {
+      if (needRefreshOnDesktop && getCurrentDevice() !== "mobile") {
         const playlists = document.querySelectorAll<HTMLElement>(
           ".brz-video-playlist"
         );

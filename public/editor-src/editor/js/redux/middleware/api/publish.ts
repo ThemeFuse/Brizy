@@ -16,7 +16,8 @@ import {
   apiPublish,
   debouncedApiAutoSave,
   debouncedApiPublish,
-  onUpdate
+  onUpdate,
+  waitForCompilation
 } from "./utils";
 
 export function handlePublish({
@@ -92,58 +93,62 @@ export function handlePublish({
     }
 
     if (data) {
-      const _data = {
-        config,
-        needToCompile: data,
-        is_autosave: 0 as const,
-        state: {
-          project,
-          page,
-          globalBlocks: Object.values(globalBlocks)
-        }
-      };
-      switch (action.payload.type) {
-        case "internal": {
-          allApi.push(
-            apiPublish({
+      // Capture narrowed data so TypeScript knows it's non-undefined in the closure
+      const narrowedData = data;
+
+      // Wait for compilation to complete before publishing.
+      // This ensures JSON and HTML are in sync, both reflecting the same edits.
+      const publishAfterSync = waitForCompilation(store).then(() => {
+        // Re-read state after compilation is complete so we get
+        // the latest project/page/globalBlocks that match the compiled HTML.
+        const syncedState = store.getState();
+        const syncedProject = projectSelector(syncedState);
+        const syncedPage = pageSelector(syncedState);
+        const syncedGlobalBlocks = globalBlocksAssembledSelector(syncedState);
+
+        const _data = {
+          config,
+          needToCompile: narrowedData,
+          is_autosave: 0 as const,
+          state: {
+            project: syncedProject,
+            page: syncedPage,
+            globalBlocks: Object.values(syncedGlobalBlocks)
+          }
+        };
+
+        switch (action.payload.type) {
+          case "internal": {
+            return apiPublish({
               store,
               is_autosave: _data.is_autosave,
               config: _data.config,
               needToCompile: _data.needToCompile
-            })
-          );
-          break;
-        }
-        case "external": {
-          allApi.push(
-            onUpdate({
+            });
+          }
+          case "external": {
+            return onUpdate({
               store,
               onDone: action.payload.res,
               is_autosave: _data.is_autosave,
               config: _data.config,
               needToCompile: _data.needToCompile
-            })
-          );
-          break;
-        }
-        case "externalForce": {
-          // TODO: Needs to be reviewed because current implementation may not be correct
-          allApi.push(
-            onUpdate({
+            });
+          }
+          case "externalForce": {
+            // TODO: Needs to be reviewed because current implementation may not be correct
+            return onUpdate({
               config,
               is_autosave: 0,
-              needToCompile: {
-                project,
-                page,
-                globalBlocks: Object.values(globalBlocks)
-              },
+              needToCompile: _data.state,
               store,
               onDone: action.payload.res
-            })
-          );
-          break;
+            });
+          }
         }
-      }
+      });
+
+      allApi.push(publishAfterSync);
     }
 
     apiHandler(Promise.all(allApi), action, onSuccess, onError);

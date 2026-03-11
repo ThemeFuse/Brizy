@@ -1,5 +1,4 @@
 import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
-import { RenderType } from "visual/providers/RenderProvider";
 import { UploadedFont } from "visual/types/Fonts";
 import { FontFamilyType } from "visual/types/Fonts";
 import { getUploadedFonts } from "visual/utils/api";
@@ -15,16 +14,11 @@ interface FontModel {
 interface Data {
   newFonts: Array<FontModel>;
   config: ConfigCommon;
-  renderContext: RenderType;
 }
 
 type Types = "blocks" | "upload" | "google";
 
-export const normalizeFonts = async ({
-  newFonts,
-  config,
-  renderContext
-}: Data) => {
+export const normalizeFonts = async ({ newFonts, config }: Data) => {
   if (newFonts.length === 0) {
     return [];
   }
@@ -43,7 +37,7 @@ export const normalizeFonts = async ({
     console.log(e);
   }
 
-  const googleFonts = await getGoogleFonts({ config, renderContext });
+  const googleFonts = await getGoogleFonts({ config });
 
   newFonts.forEach(({ type, family }) => {
     if (type === "google") {

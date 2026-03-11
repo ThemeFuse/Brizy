@@ -15,6 +15,12 @@ import * as toolbarExtendParentConfig from "./toolbarExtendParent";
 
 const resizerPoints = ["centerLeft", "centerRight"];
 
+// SCSS import - automatically tracked during static rendering
+import(
+  // @ts-expect-error: .scss?componentId=VideoPlaylist files
+  /* webpackChunkName: "videoPlaylist" */ "sass/editorComponents/video-playlist.scss?componentId=VideoPlaylist&chunk=videoPlaylist"
+);
+
 class VideoPlaylist extends EditorComponent {
   static defaultValue = defaultValue;
   state = { currentIndex: 0 };

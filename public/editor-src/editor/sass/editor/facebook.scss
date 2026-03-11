@@ -1,0 +1,15 @@
+// Facebook Button
+.brz-ed .fb-like,
+.brz-ed .fb-comments,
+.brz-ed .fb-post,
+.brz-ed .fb-page,
+.brz-ed .fb-video,
+.brz-ed .fb-group {
+  pointer-events: none;
+}
+
+.brz-ed .brz-fb-comments,
+.brz-ed .brz-fb-embed,
+.brz-ed .brz-fb-page {
+  width: 100%;
+}

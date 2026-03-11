@@ -1,0 +1,8 @@
+// Buttons
+.brz-ed .brz-btn .brz-span[contenteditable] {
+  user-select: text;
+}
+
+.brz-ed .brz-story div:not(.brz-forms2-story) > .brz-btn {
+  border: none;
+}

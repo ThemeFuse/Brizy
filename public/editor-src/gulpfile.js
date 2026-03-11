@@ -13,13 +13,13 @@ const cleanCSS = require("gulp-clean-css"); // for some reason doesn't work with
 const { Readable } = require("stream");
 const Vinyl = require("vinyl");
 
-// webpack
-const webpack = require("webpack");
-const webpackConfigEditor = require("./webpack.config.editor");
-const webpackConfigWorker = require("./webpack.config.worker");
-const webpackConfigExport = require("./webpack.config.export");
-const webpackConfigPreview = require("./webpack.config.preview");
-const webpackConfigPro = require("./webpack.config.pro");
+// rspack
+const rspack = require("@rspack/core");
+const rspackConfigEditor = require("./rspack.config.editor");
+const rspackConfigPreview = require("./rspack.config.preview");
+const rspackConfigWorker = require("./rspack.config.worker");
+const rspackConfigExport = require("./rspack.config.export");
+const rspackConfigPro = require("./rspack.config.pro");
 
 // postcss
 const sass = require("@csstools/postcss-sass");
@@ -30,7 +30,6 @@ const tailwindcss = require("tailwindcss");
 
 const chalk = require("chalk");
 const del = require("del");
-const merge = require("merge-stream");
 
 const { uniq } = require("es-toolkit");
 
@@ -78,7 +77,7 @@ const postsCssProcessors = [
     silenceDeprecations: ["legacy-js-api", "import"]
   }),
   autoprefixer({
-    browsers: ["last 2 versions"]
+    overrideBrowserslist: ["last 2 versions"]
   }),
   postcssURL({
     filter: "**/Nunito-*",
@@ -155,79 +154,108 @@ function editorJS(done) {
     ANALYZE: ANALYZE_EDITOR,
     BUILD_VERSION: VERSION ?? "dev"
   };
+
+  // Log which configs are being loaded
+  console.log(chalk.cyan("[rspack] Loading editor configurations:"));
+  console.log(chalk.cyan(" - rspack.config.editor.js"));
+  console.log(chalk.cyan(" - rspack.config.worker.js (screenshots)"));
+
   const config = [
-    webpackConfigEditor(options),
-    webpackConfigWorker.screenshots(options)
+    rspackConfigEditor(options),
+    rspackConfigWorker.screenshots(options)
   ];
 
-  let doneCalled = false;
-  webpack(config, (err, stats) => {
-    // TODO: uncomment when we'll have more time to deal with all the warnings
-    // if (stats.hasErrors() || stats.hasWarnings()) {
-    //   gulpPlugins.util.log(
-    //     `[webpack] ${stats.hasErrors() ? "error" : "warning"}`,
-    //     stats.toString("errors-warnings")
-    //   );
-    // }
+  const compiler = rspack(config);
+  const watchMode = !NO_WATCH && !IS_PRODUCTION;
 
-    if (stats.hasErrors()) {
-      gulpPlugins.util.log("[webpack] error", stats.toString("errors-only"));
+  const callback = (err, stats) => {
+    if (err) {
+      gulpPlugins.util.log(chalk.red("[rspack] ✖ Fatal error"));
+      console.error(err);
+      if (!watchMode) {
+        done(err);
+      }
+      return;
+    }
+
+    if (stats && stats.hasErrors()) {
+      gulpPlugins.util.log(
+        chalk.red("[rspack] ✖ Compilation FAILED with errors")
+      );
+      console.log(
+        stats.toString({
+          colors: true,
+          errors: true,
+          warnings: false,
+          errorDetails: true
+        })
+      );
+      if (!watchMode) {
+        done(new Error("Rspack compilation failed"));
+      }
+    } else if (stats && stats.hasWarnings()) {
+      gulpPlugins.util.log(chalk.yellow("[rspack] ⚠ Compiled with warnings"));
+      console.log(
+        stats.toString({
+          colors: true,
+          errors: false,
+          warnings: true
+        })
+      );
+      if (!watchMode) {
+        done();
+      }
     } else {
-      gulpPlugins.util.log("[webpack] success");
+      // Log each config compilation separately
+      const multiStats = stats.stats || [stats];
+      multiStats.forEach((stat) => {
+        // Get the config name from the compilation
+        const configName = stat.compilation?.name || "unknown";
+
+        // In watch mode, show what files changed (if any)
+        if (watchMode && stat.compilation?.modifiedFiles?.size > 0) {
+          const changedFiles = Array.from(stat.compilation.modifiedFiles)
+            .map((file) => path.relative(process.cwd(), file))
+            .slice(0, 3); // Show max 3 files
+          gulpPlugins.util.log(
+            chalk.green(`[rspack] ✔ Compiled ${configName} successfully`) +
+              chalk.gray(
+                ` (${changedFiles.length > 0 ? changedFiles.join(", ") : "no changes detected"})`
+              )
+          );
+        } else {
+          gulpPlugins.util.log(
+            chalk.green(`[rspack] ✔ Compiled ${configName} successfully`)
+          );
+        }
+      });
+
+      if (!watchMode) {
+        done();
+      }
     }
+  };
 
-    if (!doneCalled) {
-      doneCalled = true;
-      done();
-    }
-  });
-}
-function editorCSS() {
-  const icons = WP
-    ? [
-        paths.editor + "/js/libs/group-all/index.scss",
-        paths.editor + "/sass/main.editor.icons.wp.scss"
-      ]
-    : [
-        paths.editor + "/js/libs/group-all/index.scss",
-        paths.editor + "/sass/main.editor.icons.scss"
-      ];
-  const packages = [
-    // Currently only Components included
-    paths.packages + "/component/src/**/*.scss"
-  ];
-
-  const src = [
-    paths.editor + "/lib/common/*/*.css",
-    paths.editor + "/lib/editor/*/*.css",
-    paths.editor + "/sass/main.editor.scss",
-    ...icons,
-    ...packages
-  ];
-  const dest = paths.build + "/editor/css";
-
-  return gulp
-    .src(src, { base: paths.editor })
-    .pipe(gulpPlugins.if(!IS_PRODUCTION, gulpPlugins.sourcemaps.init()))
-    .pipe(
-      gulpPlugins
-        .postcss(postsCssProcessors, {
-          syntax: postcssSCSS
-        })
-        .on("error", (err) => {
-          console.log("Sass Syntax Error", err);
-        })
-    )
-    .pipe(gulpPlugins.concat("editor.min.css"))
-    .pipe(cleanCSS())
-    .pipe(gulpPlugins.if(!IS_PRODUCTION, gulpPlugins.sourcemaps.write()))
-    .pipe(gulp.dest(dest));
-}
-function editorFonts() {
-  const src = paths.editor + "/sass/editor/fonts/*";
-  const dest = paths.build + "/editor/fonts";
-
-  return gulp.src(src).pipe(gulp.dest(dest));
+  if (watchMode) {
+    gulpPlugins.util.log("[rspack] Starting watch mode...");
+    let firstCompilation = true;
+    compiler.watch(
+      {
+        ignored: /node_modules/,
+        aggregateTimeout: 300
+      },
+      (err, stats) => {
+        callback(err, stats);
+        // Only signal task completion after first compilation
+        if (firstCompilation) {
+          firstCompilation = false;
+          done();
+        }
+      }
+    );
+  } else {
+    compiler.run(callback);
+  }
 }
 function editorIcons() {
   const src = paths.editor + "/sass/editor/icons/**/*.{eot,svg,ttf,woff,woff2}";
@@ -278,87 +306,149 @@ function exportJS(done) {
     ANALYZE: ANALYZE_EXPORT || ANALYZE_PREVIEW,
     AUTHORIZATION_URL
   };
-  let config = [];
+
+  // Build Rspack export configs
+  // Build Rspack export configs
+  let rspackConfig = [];
+
+  console.log(chalk.cyan("[rspack] Loading export/preview configurations:"));
 
   if (!ANALYZE_EXPORT && !ANALYZE_PREVIEW) {
-    config.push(
-      webpackConfigExport.node(options),
-      webpackConfigPreview.preview(options),
-      webpackConfigPreview.libs(options),
-      webpackConfigExport.browser(options)
+    console.log(chalk.cyan(" - rspack.config.export.js (node)"));
+    console.log(chalk.cyan(" - rspack.config.export.js (browser)"));
+    console.log(chalk.cyan(" - rspack.config.preview.js (preview)"));
+    console.log(chalk.cyan(" - rspack.config.preview.js (libs)"));
+    rspackConfig.push(
+      rspackConfigExport.node(options),
+      rspackConfigExport.browser(options),
+      rspackConfigPreview.preview(options),
+      rspackConfigPreview.libs(options)
     );
   } else {
-    config.push(
-      webpackConfigExport.node(options),
-      webpackConfigExport.browser(options),
-      webpackConfigPreview.preview(options)
+    console.log(chalk.cyan(" - rspack.config.export.js (node)"));
+    console.log(chalk.cyan(" - rspack.config.export.js (browser)"));
+    console.log(chalk.cyan(" - rspack.config.preview.js (preview)"));
+    console.log(chalk.yellow("⚠ Skipping libs config (analyze mode)"));
+    rspackConfig.push(
+      rspackConfigExport.node(options),
+      rspackConfigExport.browser(options),
+      rspackConfigPreview.preview(options)
     );
   }
 
-  let doneCalled = false;
-  webpack(config, (err, stats) => {
+  const watchMode = !NO_WATCH && !IS_PRODUCTION;
+
+  // Run rspack builds (export + preview)
+  const rspackCompiler = rspack(rspackConfig);
+
+  const rspackCallback = (err, stats) => {
     if (err) {
-      gulpPlugins.util.log("[webpack export]", err);
+      gulpPlugins.util.log(chalk.red("[rspack] ✖ Fatal error"));
+      console.error(err);
+      if (!watchMode) {
+        done(err);
+      }
+      return;
     }
 
-    if (stats && (stats.hasErrors() || stats.hasWarnings())) {
+    if (stats && stats.hasErrors()) {
       gulpPlugins.util.log(
-        `[webpack export] ${stats.hasErrors() ? "error" : "warning"}`,
-        stats.toString("errors-warnings")
+        chalk.red("[rspack] ✖ Compilation FAILED with errors")
       );
+      console.log(
+        stats.toString({
+          colors: true,
+          errors: true,
+          warnings: false,
+          errorDetails: true
+        })
+      );
+      if (!watchMode) {
+        done(new Error("Rspack compilation failed"));
+      }
+    } else if (stats && stats.hasWarnings()) {
+      gulpPlugins.util.log(chalk.yellow("[rspack] ⚠ Compiled with warnings"));
+      console.log(
+        stats.toString({
+          colors: true,
+          errors: false,
+          warnings: true
+        })
+      );
+      if (!watchMode) {
+        done();
+      }
     } else {
-      gulpPlugins.util.log("[webpack export] success");
+      // Log each config compilation separately
+      const multiStats = stats.stats || [stats];
+      multiStats.forEach((stat) => {
+        const configName = stat.compilation?.name || "unknown";
+
+        // In watch mode, show what files changed (if any)
+        if (watchMode && stat.compilation?.modifiedFiles?.size > 0) {
+          const changedFiles = Array.from(stat.compilation.modifiedFiles)
+            .map((file) => path.relative(process.cwd(), file))
+            .slice(0, 3); // Show max 3 files
+          gulpPlugins.util.log(
+            chalk.green(`[rspack] ✔ Compiled ${configName} successfully`) +
+              chalk.gray(
+                ` (${changedFiles.length > 0 ? changedFiles.join(", ") : "no changes detected"})`
+              )
+          );
+        } else {
+          gulpPlugins.util.log(
+            chalk.green(`[rspack] ✔ Compiled ${configName} successfully`)
+          );
+        }
+      });
 
       if (ANALYZE_EXPORT) {
         fs.writeFileSync(
-          path.resolve(paths.build, "editor/js/export.js.webpack-stats.json"),
+          path.resolve(paths.build, "editor/js/export.js.rspack-stats.json"),
           JSON.stringify(stats.toJson().children[0]),
           "utf8"
         );
       }
+
       if (ANALYZE_PREVIEW) {
         fs.writeFileSync(
           path.resolve(
             paths.build,
-            "editor/js/preview.min.js.webpack-stats.json"
+            "editor/js/preview.min.js.rspack-stats.json"
           ),
-          JSON.stringify(stats.toJson().children[0]),
+          JSON.stringify(stats.toJson().children[2]),
           "utf8"
         );
       }
-    }
 
-    if (!doneCalled) {
-      doneCalled = true;
-      done();
+      if (!watchMode) {
+        done();
+      }
     }
-  });
-}
-function exportCSS() {
-  const src = [
-    paths.editor + "/lib/common/*/*.css",
-    paths.editor + "/lib/export/*/*.css",
-    paths.packages + "/component/src/**/*.scss",
-    paths.editor + "/sass/main.export.scss"
-  ];
-  const dest = paths.build + "/editor/css";
+  };
 
-  return gulp
-    .src(src, { base: paths.editor })
-    .pipe(
-      gulpPlugins
-        .postcss(postsCssProcessors, {
-          syntax: postcssSCSS,
-          failOnError: false
-        })
-        .on("error", (err) => {
-          console.log("Sass Syntax Error", err);
-        })
-    )
-    .pipe(gulpPlugins.concat("preview.min.css"))
-    .pipe(cleanCSS())
-    .pipe(gulp.dest(dest));
+  if (watchMode) {
+    gulpPlugins.util.log("[rspack] Starting watch mode...");
+    let firstCompilation = true;
+    rspackCompiler.watch(
+      {
+        ignored: /node_modules/,
+        aggregateTimeout: 300
+      },
+      (err, stats) => {
+        rspackCallback(err, stats);
+        // Only signal task completion after first compilation
+        if (firstCompilation) {
+          firstCompilation = false;
+          done();
+        }
+      }
+    );
+  } else {
+    rspackCompiler.run(rspackCallback);
+  }
 }
+
 function exportLibsCSS() {
   const { free } = LibsConfig;
   const src = free.reduce((acc, { path }) => {
@@ -403,107 +493,121 @@ function proJS(done) {
     BUILD_PATH: paths.build,
     BUILD_PATH_PRO: paths.buildPro,
     NO_WATCH,
-    AUTHORIZATION_URL
+    AUTHORIZATION_URL,
+    BUILD_VERSION: VERSION ?? "dev"
   };
-  const config = [webpackConfigPro.editor(options)];
+
+  console.log(chalk.cyan("\n[rspack pro] Loading pro configurations:"));
+  console.log(chalk.cyan("  - rspack.config.pro.js (editor)"));
+
+  const config = [rspackConfigPro.editor(options)];
 
   if (IS_EXPORT) {
+    console.log(chalk.cyan("  - rspack.config.pro.js (nodeExport)"));
+    console.log(chalk.cyan("  - rspack.config.pro.js (browserExport)"));
+    console.log(chalk.cyan("  - rspack.config.pro.js (preview)"));
+    console.log(chalk.cyan("  - rspack.config.pro.js (libs)"));
     config.push(
-      webpackConfigPro.nodeExport(options),
-      webpackConfigPro.browserExport(options),
-      webpackConfigPro.preview(options),
-      webpackConfigPro.libs(options)
+      rspackConfigPro.nodeExport(options),
+      rspackConfigPro.browserExport(options),
+      rspackConfigPro.preview(options),
+      rspackConfigPro.libs(options)
     );
   }
 
-  let doneCalled = false;
-  webpack(config, (err, stats) => {
-    if (stats.hasErrors()) {
+  const compiler = rspack(config);
+  const watchMode = !NO_WATCH && !IS_PRODUCTION;
+
+  const callback = (err, stats) => {
+    if (err) {
+      gulpPlugins.util.log(chalk.red("[rspack pro] ✖ Fatal error"));
+      console.error(err);
+      if (!watchMode) {
+        done(err);
+      }
+      return;
+    }
+
+    if (stats && stats.hasErrors()) {
       gulpPlugins.util.log(
-        "[webpack pro] error",
-        stats.toString("errors-only")
+        chalk.red("[rspack pro] ✖ Compilation FAILED with errors")
       );
+      console.log(
+        stats.toString({
+          colors: true,
+          errors: true,
+          warnings: false,
+          errorDetails: true
+        })
+      );
+      if (!watchMode) {
+        done(new Error("Rspack compilation failed"));
+      }
+    } else if (stats && stats.hasWarnings()) {
+      gulpPlugins.util.log(
+        chalk.yellow("[rspack pro] ⚠ Compiled with warnings")
+      );
+      console.log(
+        stats.toString({
+          colors: true,
+          errors: false,
+          warnings: true
+        })
+      );
+      if (!watchMode) {
+        done();
+      }
     } else {
-      gulpPlugins.util.log("[webpack pro] success");
+      // Log each config compilation separately
+      const multiStats = stats.stats || [stats];
+      multiStats.forEach((stat) => {
+        const configName = stat.compilation?.name || "unknown";
+
+        // In watch mode, show what files changed (if any)
+        if (watchMode && stat.compilation?.modifiedFiles?.size > 0) {
+          const changedFiles = Array.from(stat.compilation.modifiedFiles)
+            .map((file) => path.relative(process.cwd(), file))
+            .slice(0, 3); // Show max 3 files
+          gulpPlugins.util.log(
+            chalk.green(`[rspack pro] ✔ Compiled ${configName} successfully`) +
+              chalk.gray(
+                ` (${changedFiles.length > 0 ? changedFiles.join(", ") : "no changes detected"})`
+              )
+          );
+        } else {
+          gulpPlugins.util.log(
+            chalk.green(`[rspack pro] ✔ Compiled ${configName} successfully`)
+          );
+        }
+      });
+      if (!watchMode) {
+        done();
+      }
     }
-    if (!doneCalled) {
-      doneCalled = true;
-      done();
-    }
-  });
-}
-function proEditorCSS() {
-  const icons = WP ? [paths.editor + "/sass/main.editor.icons.scss"] : [];
-  const src = [
-    paths.editor + "/js/libs/all-pro/*.scss",
-    paths.editor + "/sass/main.editor.pro.scss",
-    ...icons
-  ];
-  const dest = paths.buildPro + "/css";
+  };
 
-  return gulp
-    .src(src, { base: paths.editor })
-    .pipe(gulpPlugins.if(!IS_PRODUCTION, gulpPlugins.sourcemaps.init()))
-    .pipe(
-      gulpPlugins
-        .postcss(postsCssProcessors, {
-          syntax: postcssSCSS,
-          failOnError: false
-        })
-        .on("error", (err) => {
-          console.log("Sass Syntax Error", err);
-        })
-    )
-    .pipe(gulpPlugins.concat("editor.pro.min.css"))
-    .pipe(cleanCSS())
-    .pipe(gulpPlugins.if(!IS_PRODUCTION, gulpPlugins.sourcemaps.write()))
-    .pipe(gulp.dest(dest));
+  if (watchMode) {
+    gulpPlugins.util.log("[rspack pro] Starting watch mode...");
+    let firstCompilation = true;
+    compiler.watch(
+      {
+        ignored: /node_modules/,
+        aggregateTimeout: 300
+      },
+      (err, stats) => {
+        callback(err, stats);
+        // Only signal task completion after first compilation
+        if (firstCompilation) {
+          firstCompilation = false;
+          done();
+        }
+      }
+    );
+  } else {
+    compiler.run(callback);
+  }
 }
 
-function proExportCSS() {
-  const dest = paths.buildPro + "/css";
-
-  const criticalSrc = [paths.editor + "/sass/main.export.pro.critical.scss"];
-
-  const criticalTask = gulp
-    .src(criticalSrc, { base: paths.editor })
-    .pipe(
-      gulpPlugins
-        .postcss(postsCssProcessors, {
-          syntax: postcssSCSS,
-          failOnError: false
-        })
-        .on("error", (err) => {
-          console.log("Critical CSS Sass Syntax Error", err);
-        })
-    )
-    .pipe(gulpPlugins.concat("preview-priority.pro.min.css"))
-    .pipe(cleanCSS())
-    .pipe(gulp.dest(dest));
-
-  const nonCriticalSrc = [
-    paths.packages + "/component/src/**/*.scss",
-    paths.editor + "/sass/main.export.pro.noncritical.scss"
-  ];
-
-  const nonCriticalTask = gulp
-    .src(nonCriticalSrc, { base: paths.editor })
-    .pipe(
-      gulpPlugins
-        .postcss(postsCssProcessors, {
-          syntax: postcssSCSS,
-          failOnError: false
-        })
-        .on("error", (err) => {
-          console.log("Non-critical CSS Sass Syntax Error", err);
-        })
-    )
-    .pipe(gulpPlugins.concat("preview.pro.min.css"))
-    .pipe(cleanCSS())
-    .pipe(gulp.dest(dest));
-
-  return merge(criticalTask, nonCriticalTask);
-}
 function proExportLibsCSS() {
   const { pro } = LibsConfig;
   const src = pro.reduce((acc, { path }) => {
@@ -634,14 +738,11 @@ function buildStats(done) {
     // editor
     ["editor.min.js", paths.build + "/editor/js/editor.min.js"],
     ["editor.vendor.min.js", paths.build + "/editor/js/editor.vendor.min.js"],
-    ["editor.min.css", paths.build + "/editor/css/editor.min.css"],
+    ["main.editor.min.css", paths.build + "/editor/css/main.editor.min.css"],
 
     // export
     ["preview.min.js", paths.build + "/editor/js/preview.min.js"],
-    ["preview.min.css", paths.build + "/editor/css/preview.min.css"],
-
-    // polyfill
-    ["polyfill.min.js", paths.build + "/editor/js/polyfill.min.js"],
+    ["main.base.min.css", paths.build + "/editor/css/main.base.min.css"],
 
     // static
     ["export.js", paths.build + "/editor/js/export.js"]
@@ -677,22 +778,9 @@ function buildStats(done) {
   }
 }
 
-function watch() {
-  const cssPath = paths.editor + "/**/*.scss";
-
-  gulp.watch(
-    cssPath,
-    gulp.series.apply(undefined, [
-      editorCSS,
-      proEditorCSS,
-      ...(IS_EXPORT ? [exportCSS, proExportCSS] : [])
-    ])
-  );
-}
-
 // Threshold in kilobytes (adjust as needed)
 const BROWSER_COMPILER_MAX_BUNDLE_SIZE_KB = 7000;
-const NODE_COMPILER_MAX_BUNDLE_SIZE_KB = 20000;
+const NODE_COMPILER_MAX_BUNDLE_SIZE_KB = 11000;
 const MAX_BUNDLE_SIZE_DEVIATION_KB = 200;
 
 function calculateSize(assets, size) {
@@ -751,26 +839,17 @@ exports.build = gulp.series.apply(undefined, [
   config,
 
   // editor
-  gulp.parallel(
-    editorJS,
-    editorCSS,
-    editorFonts,
-    editorIcons,
-    editorKitIcons,
-    editorImg,
-    editorTwig
-  ),
+  gulp.parallel(editorJS, editorIcons, editorKitIcons, editorImg, editorTwig),
 
   // export
-  ...(IS_EXPORT ? [gulp.parallel(exportJS, exportCSS, exportLibsCSS)] : []),
+  ...(IS_EXPORT ? [gulp.parallel(exportJS, exportLibsCSS)] : []),
 
   // pro
   ...(IS_PRO
     ? [
         gulp.parallel.apply(undefined, [
           proJS,
-          proEditorCSS,
-          ...(IS_EXPORT ? [proExportCSS, proExportLibsCSS] : [])
+          ...(IS_EXPORT ? [proExportLibsCSS] : [])
         ])
       ]
     : []),
@@ -794,9 +873,6 @@ exports.build = gulp.series.apply(undefined, [
   ...(IS_PRODUCTION && IS_EXPORT
     ? [gulp.parallel(buildVersions, buildStats)]
     : []),
-
-  // watch
-  ...(IS_PRODUCTION || NO_WATCH ? [] : [watch]),
 
   // Check Bundle Size
   ...(CHECK_BUNDLE_SIZE && IS_EXPORT ? [checkBundleSize] : [])
@@ -898,10 +974,10 @@ const createGroupFileJS = (rs, { base, name1, name2 }) => {
   );
 };
 
-// @import "../name-1/index";
-// @import "../name-2/index";
+// @use "../name-1/index" as name-1;
+// @use "../name-2/index" as name-2;
 const createGroupFileCSS = (rs, { base, name1, name2 }) => {
-  const content = `@import "../${name1}/index";\n@import "../${name2}/index";\n`;
+  const content = `@use "../${name1}/index" as ${name1};\n@use "../${name2}/index" as ${name2};\n`;
 
   rs.push(
     new Vinyl({
@@ -934,7 +1010,7 @@ const createGroupAllData = (groups) => {
     const oldCSS = groupAll.get("css") || "";
     const oldJS = groupAll.get("js") || "";
     const groupName = getGroupName(groupPath);
-    const newCSS = `@import "../${groupName}/index";`;
+    const newCSS = `@use "../${groupName}/index" as ${groupName};`;
     const newJS = `export * from "../${groupName}";`;
     const newSelectors = uniq([...oldSelectors, ...selectors]);
 
@@ -1153,20 +1229,10 @@ exports.opensource = gulp.series.apply(undefined, [
   config,
 
   // Editor
-  gulp.parallel(
-    editorJS,
-    editorCSS,
-    editorFonts,
-    editorIcons,
-    editorKitIcons,
-    editorImg
-  ),
+  gulp.parallel(editorJS, editorIcons, editorKitIcons, editorImg),
 
   // pro
-  gulp.parallel(proJS, proEditorCSS),
-
-  // watch
-  ...(IS_PRODUCTION || NO_WATCH ? [] : [watch])
+  proJS
 ]);
 
 //#endregion

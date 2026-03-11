@@ -31,6 +31,7 @@ export interface Props extends OptionProps<SimpleValue<State.State>> {
   location?: string;
   toolbar?: ToolbarItemsInstance;
   states: State.State[];
+  statesConfig?: Record<string, { icon?: string; title?: string }>;
 }
 
 export const StateMode: FCP<Props, ReactElement | null> = ({
@@ -40,7 +41,8 @@ export const StateMode: FCP<Props, ReactElement | null> = ({
   toolbar,
   location,
   onChange,
-  value: { value }
+  value: { value },
+  statesConfig
 }) => {
   const onChangeRef = useRef({ onChange });
   onChangeRef.current = { onChange };
@@ -91,8 +93,12 @@ export const StateMode: FCP<Props, ReactElement | null> = ({
             <Tab
               key={state}
               active={value === state}
-              title={stateTitle(state)}
-              icon={stateIcon(state)}
+              title={
+                statesConfig?.[state]?.title ?? stateTitle(state)
+              }
+              icon={
+                statesConfig?.[state]?.icon ?? stateIcon(state)
+              }
               value={state}
             >
               <Options

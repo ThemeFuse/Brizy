@@ -14,3 +14,6 @@ export const DYNAMIC_CUSTOM_CSS = 52;
 export const SYMBOL_CSS = DYNAMIC_CUSTOM_CSS;
 
 export const CUSTOM_CODE = 60;
+
+// used for SCSS source files
+export const SCSS_COMPONENT_SCORE = 25;

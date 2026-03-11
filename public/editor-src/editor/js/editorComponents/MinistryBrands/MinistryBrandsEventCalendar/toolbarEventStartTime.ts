@@ -55,6 +55,29 @@ export const getItems: GetItems<Value, Props> = ({ v, device }) => {
           states: [NORMAL, HOVER]
         }
       ]
+    },
+    {
+      id: "toolbarSettings",
+      type: "popover",
+      config: {
+        title: t("Settings"),
+        icon: "nc-cog"
+      },
+      position: 30,
+      options: [
+        {
+          id: "timeFormat",
+          type: "select",
+          label: t("Time Format"),
+          helper: {
+            content: t("The time format to display in the event calendar.")
+          },
+          choices: [
+            { title: t("12-hour"), value: "12" },
+            { title: t("24-hour"), value: "24" }
+          ]
+        }
+      ]
     }
   ];
 };

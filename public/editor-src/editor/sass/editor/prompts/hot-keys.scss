@@ -1,0 +1,223 @@
+@use "../../variables";
+
+// Overlay
+.brz-ed .brz-ed-hotkeys-overlay {
+  background-color: rgba(3, 8, 15, 0.8);
+}
+
+// Container
+.brz-ed .brz-ed-hotkeys-wrapper {
+  position: relative;
+  width: 1000px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+// Close Button
+.brz-ed .brz-ed-hotkeys-btn-close {
+  color: #818a91;
+  position: absolute;
+  top: 0;
+  inset-inline-end: 0;
+  width: 35px;
+  height: 35px;
+  padding: 8px;
+  cursor: pointer;
+
+  &:hover {
+    color: #239ddbcc;
+  }
+}
+
+// Label
+.brz-ed .brz-ed-hotkeys-label {
+  height: 30px;
+  color: #ffffff;
+  font-family: variables.$default-font-family;
+  font-size: 25px;
+  font-weight: 400;
+  letter-spacing: -0.5px;
+  line-height: 30px;
+}
+
+//Image
+.brz-ed .brz-ed-hotkeys-image {
+  margin-top: 49px;
+  margin-bottom: 18px;
+}
+
+// Hotkeys Container
+.brz-ed .brz-ed-hotkeys-combination-container {
+  margin: 23px auto 20px auto;
+  display: flex;
+  width: fit-content;
+}
+
+// Hotkeys Column
+.brz-ed .brz-ed-hotkeys-combination-container-column {
+  display: table;
+  height: fit-content;
+  border-spacing: 12px;
+
+  &:first-child {
+    margin-inline-end: 45px;
+  }
+}
+
+.brz-ed .brz-ed-hotkeys-combination-container-column-list {
+  display: table-row;
+}
+
+.brz-ed .brz-ed-hotkeys-combination-container-column-label {
+  height: 30px;
+  display: table-cell;
+  align-items: center;
+  justify-content: flex-end;
+  position: relative;
+  padding-inline-end: 82px;
+  text-align: end;
+  color: #ffffff;
+  font-family: variables.$default-font-family;
+  font-size: 23px;
+  font-weight: 600;
+  white-space: nowrap;
+
+  .divider {
+    margin-inline-start: 6px;
+  }
+
+  &::before {
+    content: "";
+    position: absolute;
+    width: 40px;
+    height: 1px;
+    background-color: #818a91;
+    inset-inline-end: 21px;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    display: block;
+  }
+}
+
+.brz-ed .brz-ed-hotkeys-combination-container-column-label-2 {
+  color: #818a91;
+  font-family: variables.$default-font-family;
+  font-size: 17px;
+  font-weight: 600;
+  display: table-cell;
+  align-items: center;
+  white-space: nowrap;
+  height: 30px;
+
+  .divider {
+    margin-inline-start: 6px;
+  }
+}
+
+//Icons
+.brz-ed .brz-ed-hotkeys-icons {
+  width: 16px;
+  height: 16px;
+  margin-inline-start: 6px;
+}
+
+@media only screen and (max-width: 1400px) and (max-height: 800px) {
+  .brz-ed .brz-ed-hotkeys-wrapper {
+    position: relative;
+    width: 700px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 496px;
+  }
+
+  .brz-ed .brz-ed-hotkeys-btn-close {
+    width: 22px;
+    height: 22px;
+    padding: 5px;
+  }
+
+  .brz-ed .brz-ed-hotkeys-label {
+    height: 20px;
+    color: #ffffff;
+    font-family: variables.$default-font-family;
+    font-size: 18px;
+    font-weight: 400;
+    letter-spacing: -0.5px;
+    margin-top: 15px;
+  }
+
+  .brz-ed .brz-ed-hotkeys-image-container {
+    text-align: center;
+  }
+
+  .brz-ed .brz-ed-hotkeys-image {
+    width: 80%;
+    margin-top: 30px;
+    margin-bottom: 33px;
+  }
+
+  .brz-ed .brz-ed-hotkeys-combination-container {
+    margin-top: 17px;
+    display: flex;
+    width: 556px;
+    height: 170px;
+  }
+
+  .brz-ed .brz-ed-hotkeys-combination-container-column-label {
+    width: 160px;
+    height: 21px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    position: relative;
+    padding-inline-end: 57px;
+    text-align: end;
+    color: #ffffff;
+    font-family: variables.$default-font-family;
+    font-size: 16px;
+    font-weight: 600;
+
+    .divider {
+      margin-inline-start: 6px;
+    }
+
+    &::before {
+      content: "";
+      position: absolute;
+      width: 28px;
+      height: 1px;
+      background-color: #818a91;
+      inset-inline-end: 15px;
+      top: 0;
+      bottom: 0;
+      margin: auto;
+      display: block;
+    }
+  }
+
+  .brz-ed .brz-ed-hotkeys-combination-container-column-label-2 {
+    color: #818a91;
+    font-family: variables.$default-font-family;
+    font-size: 12px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+    height: 21px;
+
+    .divider {
+      margin-inline-start: 6px;
+    }
+  }
+
+  .brz-ed .brz-ed-hotkeys-icons {
+    width: 11px;
+    height: 11px;
+    margin-inline-start: 4px;
+  }
+}

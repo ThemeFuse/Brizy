@@ -1,36 +1,36 @@
 // loading share image
-@import "utilities/loading-share";
+@use "utilities/loading-share";
 
 // image upload
-@import "utilities/upload-image";
+@use "utilities/upload-image";
 
 // Pointer Events
-@import "utilities/events";
+@use "utilities/events";
 
 // Margin
-@import "utilities/margin";
+@use "utilities/margin";
 
 // Align
-@import "utilities/align";
+@use "utilities/align";
 
 // Arrow
-@import "utilities/arrow";
+@use "utilities/arrow";
 
 // Animation
-@import "utilities/animation";
+@use "utilities/animation";
 
 // Buttons
-@import "utilities/buttons";
+@use "utilities/buttons";
 
 // Alert Box
-@import "utilities/alert-box";
+@use "utilities/alert-box";
 
 // Transforms
-@import "utilities/transforms";
+@use "utilities/transforms";
 
 // Badge
-@import "utilities/badge";
+@use "utilities/badge";
 
-.brz--space-right {
+.brz-ed .brz--space-right {
   margin-right: 5px;
 }

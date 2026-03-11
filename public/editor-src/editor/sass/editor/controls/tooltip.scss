@@ -1,0 +1,158 @@
+@use "../../variables";
+@use "../../functions/z-index";
+
+// Tooltip
+.brz-ed .brz-ed-tooltip {
+  &__content {
+    position: relative;
+    z-index: 1;
+
+    &--fix {
+      line-height: 1;
+    }
+  }
+
+  &__overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: z-index.z("tooltip-overlay");
+    font-family: variables.$default-font-family;
+  }
+
+  // Size
+  &--auto {
+    width: auto;
+  }
+
+  &--small {
+    width: variables.$toolbar_tooltip__sm-width;
+  }
+
+  &--medium {
+    width: variables.$toolbar_tooltip__md-width;
+  }
+
+  &--big {
+    width: variables.$toolbar_tooltip__lg-width;
+  }
+
+  &--large {
+    width: variables.$toolbar_tooltip__typo-width-no-population;
+  }
+
+  &--xlarge {
+    width: variables.$toolbar_tooltip__typo-width;
+  }
+
+  // Static
+  &__static {
+    $spaceBetween: 6px+3px; // 6px is Arrow | 3px is space between target and content
+
+    position: relative;
+    display: flex;
+    justify-content: center;
+
+    .brz-ed-tooltip--top-center {
+      top: auto;
+      bottom: calc(100% + #{$spaceBetween});
+      left: auto;
+    }
+
+    .brz-ed-tooltip--bottom-center {
+      top: calc(100% + #{$spaceBetween});
+      left: auto;
+    }
+
+    .brz-ed-tooltip--top-right,
+    .brz-ed-tooltip--bottom-right {
+      left: auto;
+      right: -15px;
+    }
+
+    .brz-ed-tooltip--top-left,
+    .brz-ed-tooltip--bottom-left {
+      left: -15px;
+    }
+
+    .brz-ed-tooltip--top-right,
+    .brz-ed-tooltip--top-left {
+      top: auto;
+      bottom: calc(100% + #{$spaceBetween});
+    }
+
+    .brz-ed-tooltip--bottom-right,
+    .brz-ed-tooltip--bottom-left {
+      top: calc(100% + #{$spaceBetween});
+    }
+  }
+
+  // Delay
+  &--delay-1 {
+    animation-delay: 0.6s;
+  }
+
+  &--delay-2 {
+    animation-delay: 1s;
+  }
+
+  // Items
+  &__item {
+    position: relative;
+    font-size: 13px;
+    color: variables.$bottom_panel__popover__item-color;
+    font-weight: 600;
+    padding: 16px 25px;
+    border-bottom: 1px solid variables.$bottom_panel__popover-border;
+
+    &--disabled {
+      opacity: 0.5;
+      pointer-events: none;
+    }
+  }
+
+  &__item:last-child {
+    border-bottom: transparent;
+  }
+
+  &__item.brz-ed-fixed-bottom-panel-popover__item {
+    .brz-icon-svg {
+      min-width: 1em;
+    }
+
+    .brz-span {
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+}
+
+// Pro Uses for PromptBlocks | Fonts
+.brz-ed .brz-ed-tooltip-content__pro {
+  font-family: variables.$default-font-family;
+  font-weight: 600;
+  color: variables.$tooltip__pro-content__text-color;
+  padding: 18px 18px 18px 22px;
+  font-size: 13px;
+  line-height: 18px;
+  text-align: start;
+
+  &-title {
+    margin-bottom: 17px;
+  }
+
+  &-body .brz-icon-svg {
+    font-size: 10px;
+    margin-inline-end: 8px;
+  }
+
+  .brz-p {
+    font-size: inherit;
+    font-weight: 600;
+  }
+}
+
+// Tooltip overlay Bottom Publish
+.brz-ed .brz-ed-tooltip__overlay-publish-button {
+  width: 162px;
+}

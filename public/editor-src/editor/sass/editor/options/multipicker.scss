@@ -1,0 +1,61 @@
+// --- MultiPicker
+.brz-ed .brz-ed-option__multiPicker {
+  .brz-ed-multiPicker__head,
+  .brz-ed-multiPicker__body {
+    &__option.brz-ed-option-wrapper,
+    .brz-ed-multiPicker__option.brz-ed-option-wrapper {
+      padding: 0;
+      min-height: unset;
+    }
+  }
+}
+
+.brz-ed .brz-ed-option__multiPicker.brz-ed-option__inline {
+  flex-direction: column;
+  align-items: unset;
+  justify-content: unset;
+}
+
+.brz-ed .brz-ed-sidebar__right,
+.brz-ed .brz-ed-control__popover--content,
+.brz-ed .brz-ed-popover__options {
+  .brz-ed-multiPicker {
+    &__head__option,
+    &__option {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      &.brz-ed-option {
+        &,
+        &:first-child,
+        &:last-child {
+          padding: 0;
+          min-height: unset;
+          border: none;
+        }
+      }
+    }
+    &__option {
+      &:first-child {
+        margin-top: 10px;
+      }
+      &:not(:last-child) {
+        margin-bottom: 10px;
+      }
+    }
+  }
+}
+
+// Right sidebar multi picker style
+.brz-ed .brz-ed-sidebar__right .brz-ed-multiPicker__option {
+  &.brz-ed-option__slider:not(:last-child) {
+    margin-bottom: 15px;
+  }
+  &:first-child {
+    margin-top: 20px;
+  }
+  &:not(:last-child) {
+    margin-bottom: 20px;
+  }
+}

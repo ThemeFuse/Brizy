@@ -34,7 +34,8 @@ const Image: FCC<ImageProps> = (props) => {
     store,
     onChange,
     onStart,
-    onEnd
+    onEnd,
+    showFilter = true
   } = props;
   const { maskShape = "none" } = v;
   const { points, restrictions } = useResizerPoints({ ...props, context });
@@ -55,7 +56,8 @@ const Image: FCC<ImageProps> = (props) => {
       vd,
       props: {
         ...wrapperSizes,
-        showOriginalImage: showOriginalImage(v)
+        showOriginalImage: showOriginalImage(v),
+        showFilter
       },
       store,
       contexts: {

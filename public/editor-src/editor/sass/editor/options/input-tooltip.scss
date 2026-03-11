@@ -1,0 +1,35 @@
+@use "../../variables";
+
+// --- Link Tooltip
+.brz-ed .brz-ed-popover__inner {
+  //width: 275px;
+  background-color: variables.$toolbar-bg;
+  box-shadow: 0 1px 8px 1px variables.$toolbar-box-shadow;
+  border-radius: 8px;
+  position: relative;
+
+  &.brz-ed-tooltip--large {
+    @extend .brz-ed-tooltip--large;
+  }
+}
+
+// Anchor Tooltip
+.brz-ed .brz-ed-tooltip__anchor {
+  .brz-ed-tooltip__overlay {
+    width: 215px;
+    margin-top: 25px;
+    margin-bottom: 25px;
+    background-color: variables.$toolbar-bg;
+    box-shadow: 0 1px 8px 1px variables.$toolbar-box-shadow;
+    border-radius: 8px;
+  }
+
+  .brz-ed-tooltip__content {
+    padding-left: 17px;
+  }
+
+  .brz-ed-arrow--bottom-left:after,
+  .brz-ed-arrow--top-left:after {
+    left: 29px;
+  }
+}

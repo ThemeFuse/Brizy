@@ -1,0 +1,49 @@
+.brz .brz-wp-post-content {
+  width: 100%;
+
+  > div > :first-child {
+    margin-top: 0;
+  }
+
+  > div > :last-child {
+    margin-bottom: 0;
+  }
+
+  > div > * {
+    margin: revert;
+  }
+
+  p,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    a {
+      font-family: inherit !important;
+      font-size: inherit !important;
+      font-weight: inherit !important;
+      line-height: inherit !important;
+      letter-spacing: inherit !important;
+      font-variation-settings: inherit !important;
+    }
+  }
+}
+
+.brz .brz-rich-text .brz-tp__dc-block-st1 {
+  width: 100%;
+  white-space: initial;
+
+  > :first-child {
+    margin-top: 0;
+  }
+
+  > :last-child {
+    margin-bottom: 0;
+  }
+
+  > * {
+    margin-bottom: 1em;
+  }
+}

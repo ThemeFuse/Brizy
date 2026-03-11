@@ -2,6 +2,12 @@ import loadable from "@loadable/component";
 import { LoadableLoading } from "visual/component/LoadableLoading";
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 
+// SCSS import - automatically tracked during static rendering
+import(
+  // @ts-expect-error: .scss
+  /* webpackChunkName: "shopify" */ "sass/editorComponents/shopify/index.scss?group=shopify&chunk=shopify"
+);
+
 export const shopifyLazyComponents = {
   AddToCart: {
     id: ElementTypes.AddToCart,

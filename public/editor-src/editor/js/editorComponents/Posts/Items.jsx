@@ -266,7 +266,7 @@ export default class Items extends EditorArrayComponent {
     const items = data?.context.map((context) => (
       <EditorComponentContext.Provider
         key={context.dynamicContent.itemId}
-        value={context}
+        value={{ ...context, componentTypes: this.context.componentTypes }}
       >
         {item}
       </EditorComponentContext.Provider>

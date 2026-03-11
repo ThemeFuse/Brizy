@@ -1,5 +1,6 @@
 import Base64 from "js-base64";
 import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import { ComponentTypes } from "visual/providers/EditorComponentProvider/ComponentTypes";
 import { Sheet } from "visual/providers/StyleProvider/Sheet";
 import { placeholderName } from "visual/utils/dynamicContent/types";
 import { EditorComponentContextValue } from "../../EditorComponentContext";
@@ -403,6 +404,7 @@ describe("Testing 'getDCObjEditor_' function", () => {
     itemId: string
   ): EditorComponentContextValue => ({
     sheet: new Sheet(),
+    componentTypes: new ComponentTypes(),
     dynamicContent: {
       itemId,
       config: {

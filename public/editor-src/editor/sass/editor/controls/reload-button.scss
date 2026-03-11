@@ -1,0 +1,12 @@
+@use "../../variables";
+
+// Buttons
+.brz-ed .brz-ed-control__reload-button {
+  font-size: variables.$options__handle-font-size;
+  color: variables.$options__item-color--hover;
+  align-items: center;
+
+  .brz-icon-svg {
+    font-size: 10px;
+  }
+}

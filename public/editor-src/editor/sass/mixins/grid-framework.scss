@@ -1,0 +1,78 @@
+@use "../default-variables";
+@use "breakpoints";
+@use "grid";
+
+@use "sass:map";
+@use "sass:math";
+
+// Framework grid generation
+//
+// Used only by Bootstrap to generate the correct number of grid classes given
+// any value of `$grid-columns`.
+@mixin make-grid-columns(
+  $columns: default-variables.$grid-columns,
+  $gutter: default-variables.$grid-gutter-width,
+  $breakpoints: default-variables.$grid-breakpoints,
+  $prefix: false
+) {
+  $breakpoint-counter: 0;
+
+  @each $breakpoint in map.keys($breakpoints) {
+    $breakpoint-counter: ($breakpoint-counter + 1);
+
+    @include breakpoints.media-breakpoint-up($breakpoint, $breakpoints) {
+      @if default-variables.$enable-flex {
+        @if $prefix {
+          .#{$prefix}-col-#{$breakpoint} {
+            position: relative;
+            flex-basis: 0%;
+            flex-grow: 1;
+            max-width: 100%;
+            min-height: 1px;
+            padding-right: ($gutter / 2);
+            padding-left: ($gutter / 2);
+          }
+        } @else {
+          .col-#{$breakpoint} {
+            position: relative;
+            flex-basis: 0%;
+            flex-grow: 1;
+            max-width: 100%;
+            min-height: 1px;
+            padding-right: ($gutter / 2);
+            padding-left: ($gutter / 2);
+          }
+        }
+      }
+
+      @for $i from 1 through $columns {
+        @if $prefix {
+          .#{$editor-prefix}-col-#{$breakpoint}-#{$i} {
+            @include grid.make-col($i, $columns, $gutter);
+          }
+        } @else {
+          .col-#{$breakpoint}-#{$i} {
+            @include grid.make-col($i, $columns, $gutter);
+          }
+        }
+      }
+    }
+  }
+}
+
+@mixin make-flex-grid-columns(
+  $grid-columns: $grid-columns-cloneable,
+  $breakpoints: default-variables.$grid-breakpoints
+) {
+  @each $breakpoint in map.keys($breakpoints) {
+    @include breakpoints.media-breakpoint-up($breakpoint, $breakpoints) {
+      @for $i from 1 through $grid-columns {
+        .grid-#{$breakpoint}-#{$i} > [class^="col-"],
+        .grid-#{$breakpoint}-#{$i} > [class*=" col-"] {
+          flex-basis: math.percentage(math.div(1, $i));
+          width: math.percentage(math.div(1, $i));
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,63 @@
+// Text align
+@use "../../mixins/align" as *;
+
+.brz-ed .brz-text-lg-left {
+  @include align-left;
+}
+.brz-ed .brz-text-lg-right {
+  @include align-right;
+}
+.brz-ed .brz-text-lg-center {
+  @include align-center;
+}
+.brz-ed .brz-text-lg-justify {
+  @include align-justify;
+}
+
+// Desktop
+.brz-ed.brz-ed--desktop {
+  .brz-text-lg-left {
+    @include align-left;
+  }
+  .brz-text-lg-right {
+    @include align-right;
+  }
+  .brz-text-lg-center {
+    @include align-center;
+  }
+  .brz-text-lg-justify {
+    @include align-justify;
+  }
+}
+
+// Tablet
+.brz-ed.brz-ed--tablet {
+  .brz-text-sm-left {
+    @include align-left;
+  }
+  .brz-text-sm-right {
+    @include align-right;
+  }
+  .brz-text-sm-center {
+    @include align-center;
+  }
+  .brz-text-sm-justify {
+    @include align-justify;
+  }
+}
+
+// Mobile
+.brz-ed.brz-ed--mobile {
+  .brz-text-xs-left {
+    @include align-left;
+  }
+  .brz-text-xs-right {
+    @include align-right;
+  }
+  .brz-text-xs-center {
+    @include align-center;
+  }
+  .brz-text-xs-justify {
+    @include align-justify;
+  }
+}

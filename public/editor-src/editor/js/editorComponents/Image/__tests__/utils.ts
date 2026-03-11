@@ -165,6 +165,7 @@ describe("Testing 'Getters Image' functions", () => {
       linkUpload: "",
       showOriginalImage: "off",
       hoverImageSrc: "",
+      hoverImagePopulation: "",
       hoverImageWidth: 0,
       hoverImageHeight: 0,
       hoverPositionX: 0,

@@ -3,7 +3,7 @@ import { deleteAccount, pendingRequest } from "visual/utils/api";
 import { t } from "visual/utils/i18n";
 import { Context } from "../../../common/GlobalApps/Context";
 import ViewFields from "./ViewFields";
-import { validation } from "./validation";
+import { createRecaptcha } from "./validation";
 
 const apiKeys = [
   { name: "sitekey", title: "Site Key" },
@@ -85,14 +85,22 @@ class RecaptchaConnect extends Component {
             nextLoading: false,
             error: t("Something went wrong")
           });
+          return;
         }
       }
 
-      const validated = await validation(apiKeyValue, config);
+      try {
+        const validated = await createRecaptcha(apiKeyValue, config);
 
-      if (validated) {
-        onChangeNext();
-      } else {
+        if (validated) {
+          onChangeNext();
+        } else {
+          this.setState({
+            nextLoading: false,
+            validated: false
+          });
+        }
+      } catch {
         this.setState({
           nextLoading: false,
           validated: false

@@ -10,7 +10,7 @@ import { cloneAndInlineStyles } from "./cloneAndInlineStyles.js";
 export { browserSupports, isScreenshotSupported } from "./browserSupports";
 
 // Note: Workers are build in a separated files
-// See webpack.config.worker.js
+// See rspack.config.worker.js
 const getWorkerUrl = (config: ConfigCommon) => {
   const base = config.urls?.worker ?? assetUrl("editor/js", config);
   return `${base}/screenshots.worker.min.js?ver=${BUILD_VERSION}`;

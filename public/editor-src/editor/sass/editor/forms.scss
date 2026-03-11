@@ -1,0 +1,11 @@
+// --- Form Filed cursor on Editor
+.brz-ed .brz-forms {
+  .brz-input,
+  .brz-textarea {
+    cursor: default;
+
+    &.brz-ed-dd-cancel {
+      cursor: text;
+    }
+  }
+}

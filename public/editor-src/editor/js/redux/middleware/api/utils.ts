@@ -100,3 +100,30 @@ export const onUpdate = async (data: OnUpdateData) => {
 
   onDone({ ...html, is_autosave });
 };
+
+/**
+ * Waits until all pending compilations are complete by checking that
+ * storeGeneration === compiledGeneration. If new edits occur during the wait,
+ * the wait extends automatically because storeGeneration will have increased.
+ */
+export const waitForCompilation = (store: Store): Promise<void> => {
+  return new Promise((resolve) => {
+    const checkSync = () => {
+      const state = store.getState();
+      const { storeGeneration, compiledGeneration } = state.blocksHtml;
+      return storeGeneration === compiledGeneration;
+    };
+
+    if (checkSync()) {
+      resolve();
+      return;
+    }
+
+    const unsubscribe = store.subscribe(() => {
+      if (checkSync()) {
+        unsubscribe();
+        resolve();
+      }
+    });
+  });
+};

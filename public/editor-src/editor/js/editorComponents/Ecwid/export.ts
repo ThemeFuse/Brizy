@@ -1,8 +1,50 @@
-export { fn as EcwidCart } from "./EcwidCart/export";
-export { fn as EcwidFavorites } from "./EcwidFavorites/export";
-export { fn as EcwidMyAccount } from "./EcwidMyAccount/export";
-export { fn as EcwidProduct } from "./EcwidProduct/export";
-export { fn as EcwidProducts } from "./EcwidProducts/export";
-export { fn as EcwidShoppingBag } from "./EcwidShoppingBag/export";
-export { fn as EcwidSearch } from "./EcwidSearch/export";
-export { fn as EcwidAddToCart } from "./EcwidAddToCart/export";
+import { ComponentExport } from "visual/types";
+
+export const ecwidComponentsManifest: Record<string, ComponentExport> = {
+  ecwidProducts: {
+    selector: ".brz-ecwid-products",
+    export: () =>
+      import("./EcwidProducts/export").then((m) => ({ default: m.fn }))
+  },
+
+  ecwidCart: {
+    selector: ".brz-ecwid-cart",
+    export: () => import("./EcwidCart/export").then((m) => ({ default: m.fn }))
+  },
+
+  ecwidFavorites: {
+    selector: ".brz-ecwid-favorites",
+    export: () =>
+      import("./EcwidFavorites/export").then((m) => ({ default: m.fn }))
+  },
+
+  ecwidMyAccount: {
+    selector: ".brz-ecwid-my-account",
+    export: () =>
+      import("./EcwidMyAccount/export").then((m) => ({ default: m.fn }))
+  },
+
+  ecwidProduct: {
+    selector: ".brz-ecwid-product",
+    export: () =>
+      import("./EcwidProduct/export").then((m) => ({ default: m.fn }))
+  },
+
+  ecwidShoppingBag: {
+    selector: ".brz-ecwid-shopping-bag",
+    export: () =>
+      import("./EcwidShoppingBag/export").then((m) => ({ default: m.fn }))
+  },
+
+  ecwidSearch: {
+    selector: ".brz-ecwid-search",
+    export: () =>
+      import("./EcwidSearch/export").then((m) => ({ default: m.fn }))
+  },
+
+  ecwidAddToCart: {
+    selector: ".brz-ecwid-add-to-cart",
+    export: () =>
+      import("./EcwidAddToCart/export").then((m) => ({ default: m.fn }))
+  }
+};

@@ -194,9 +194,15 @@ const setOpen =
         const tooltipSettings = tooltip.dataset.settings ?? "";
         const settings = JSON.parse(decodeURIComponent(tooltipSettings));
         const maxWidth = getMegaMenuWidth(target, settings, lastCurrentDevice);
+        const isStaticMenu = target.closest(".brz-section__header-type--static");
+        const widthValue = settings.widths?.[lastCurrentDevice] ?? "100";
+        const isVwUnit = widthValue.includes("vw");
 
         if (lastCurrentDevice === "mobile" && maxWidth === "100vw") {
           tooltip.style.width = "100vw";
+        } else if (isStaticMenu && isVwUnit) {
+          // For static headers with vw units, set width directly to avoid parent container constraints
+          tooltip.style.width = maxWidth;
         } else {
           tooltip.style.width = "100%";
         }

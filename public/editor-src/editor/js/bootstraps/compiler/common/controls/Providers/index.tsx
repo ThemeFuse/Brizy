@@ -12,7 +12,7 @@ import { I18n } from "visual/utils/i18n";
 import { Props } from "./types";
 
 export function Providers(props: Props): JSX.Element {
-  const { sheet, store, config, children, editorMode } = props;
+  const { sheet, store, config, children, editorMode, componentTypes } = props;
   const i18n = I18n.init({
     resources: {}
   });
@@ -27,7 +27,10 @@ export function Providers(props: Props): JSX.Element {
               <RenderProvider renderType="view">
                 <EditorModeProvider mode={editorMode}>
                   <StyleProvider>
-                    <EditorComponentProvider pageId={pageId}>
+                    <EditorComponentProvider
+                      componentTypes={componentTypes}
+                      pageId={pageId}
+                    >
                       {children}
                     </EditorComponentProvider>
                   </StyleProvider>

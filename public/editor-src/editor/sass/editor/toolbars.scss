@@ -1,12 +1,12 @@
 // --- Imports
 // Bar Default
-@import "toolbar/toolbar";
+@use "toolbar/toolbar";
 
 // Tooltip
-@import "toolbar/toolbar-tooltip";
+@use "toolbar/toolbar-tooltip";
 
 // Fonts
-@import "toolbar/toolbar-fonts";
+@use "toolbar/toolbar-fonts";
 
 // Context Menu
-@import "toolbar/toolbar-context-menu";
+@use "toolbar/toolbar-context-menu";

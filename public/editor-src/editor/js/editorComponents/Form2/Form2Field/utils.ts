@@ -1,3 +1,4 @@
+import { omit } from "es-toolkit";
 import { ChoicesAsync } from "visual/component/Options/types/dev/Select/types";
 import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import {
@@ -64,7 +65,7 @@ const matchTypeToName = ({
     case "Select":
       return t("Select");
     case "Tel":
-      return t("Tel");
+      return t("Tel (Deprecated)");
     case "Time":
       return t("Time");
     case "Url":
@@ -73,6 +74,8 @@ const matchTypeToName = ({
       return t("FileUpload");
     case "Calculated":
       return t("Calculated");
+    case "Phone":
+      return t("Phone");
     default:
       return "";
   }
@@ -87,16 +90,20 @@ export function inputTypesChoice(
   inputTypes: MValue<FormInputTypesName[]>,
   t: Translation
 ) {
-  const _types = types as Record<FormInputTypesName, InputType>;
+  const _types = omit(types, ["Tel"]);
 
   const isProvidedInputTypes =
     Array.isArray(inputTypes) && inputTypes.length >= 1;
 
   if (isProvidedInputTypes) {
     return inputTypes
-      .filter((key) => _types[key as FormInputTypesName])
-      .map((key) => getInputType(_types[key as FormInputTypesName], t));
+      .filter((key) => _types[key as keyof typeof _types])
+      .map((key) =>
+        getInputType(_types[key as keyof typeof _types] as InputType, t)
+      );
   }
 
-  return Object.values(_types).map((item) => getInputType(item, t));
+  return Object.values(_types).map((item) =>
+    getInputType(item as InputType, t)
+  );
 }

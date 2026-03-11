@@ -1,6 +1,7 @@
 import { mergeDeep } from "timm";
 import { readConfig } from "visual/bootstraps/common/readConfig";
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import type { Config } from "visual/global/Config";
+import { Page } from "visual/types/Page";
 import { getTempConfig } from "../common/utils/getTempConfig";
 import { preloadComponents } from "../common/utils/preloadComponents";
 import { Static } from "./bootstrap/types";
@@ -10,6 +11,18 @@ import "./utils/globals";
 interface Compiled {
   compiled: Static;
 }
+
+const mockPage: Page = {
+  id: "mock",
+  slug: "mock",
+  title: "mock",
+  status: "publish",
+  data: {
+    items: []
+  },
+  dataVersion: 0,
+  dependencies: []
+};
 
 async function Core(data: unknown): Promise<Compiled> {
   const _config = readConfig(data);
@@ -27,10 +40,11 @@ async function Core(data: unknown): Promise<Compiled> {
   }
 
   // @ts-expect-error Property '__VISUAL_CONFIG__' does not exist on type 'Global & typeof globalThis'. (ts 2339)
-  const config: ConfigCommon = mergeDeep(global.__VISUAL_CONFIG__, _config);
+  const config: Config = mergeDeep(global.__VISUAL_CONFIG__, _config);
 
   // Preload elments
-  preloadComponents(config);
+  const pageData = config.pageData ?? mockPage;
+  preloadComponents({ config, page: pageData });
 
   const { bootstrap } = await import("./bootstrap");
   const compiled = await bootstrap(config);

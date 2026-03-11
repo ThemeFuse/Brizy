@@ -1,0 +1,9 @@
+@use "../../variables";
+
+.brz-ed .brz-ed-control__colorPicker3 {
+  $topMargin: variables.$control-padding;
+
+  .brz-ed-control__color-palette {
+    margin-top: $topMargin;
+  }
+}

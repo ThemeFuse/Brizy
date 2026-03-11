@@ -589,6 +589,10 @@ export default class EditorArrayComponent extends EditorComponent {
     };
 
     if (ItemComponent) {
+      // Register all ComponentTypes, used when we need to
+      // know what componentType used in current Page
+      this.context.componentTypes.set(type);
+
       return (
         <ErrorBoundary
           key={itemKey}

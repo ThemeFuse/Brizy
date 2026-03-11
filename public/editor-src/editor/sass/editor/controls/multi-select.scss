@@ -1,0 +1,198 @@
+@use "../../variables";
+@use "../../functions/z-index";
+@use "../../default-variables";
+
+// Multi Select
+.brz-ed .brz-ed-control__multiSelect {
+  font-family: variables.$default-font-family;
+
+  &--size {
+    &-short {
+      min-width: variables.$control__sm-width;
+      max-width: variables.$control__sm-width;
+    }
+
+    &-medium {
+      min-width: variables.$control__md-width;
+      max-width: variables.$control__md-width;
+    }
+
+    &-large {
+      min-width: variables.$control__lg-width;
+      max-width: variables.$control__lg-width;
+    }
+
+    &-auto {
+      flex: 1 1 auto;
+      max-width: 100%;
+    }
+  }
+
+  // Input
+  &--value-container {
+    border-radius: variables.$control-border-radius;
+    font-size: variables.$control-font-size;
+    letter-spacing: variables.$control-letter-spacing;
+    display: flex;
+    justify-content: start;
+    background-color: variables.$control-bg;
+    flex-wrap: wrap;
+    padding: 2px;
+    min-height: variables.$control-height;
+    position: relative;
+    color: variables.$control__variant-color;
+
+    input,
+    input::placeholder {
+      color: #fff;
+    }
+
+    .brz-control__select--arrow {
+      position: static;
+      flex: none;
+      top: unset;
+      margin: 0;
+      margin-inline-start: 3px;
+    }
+
+    .brz-ed-control__multiSelect--placeholder {
+      color: rgba(255, 255, 255, 0.4);
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+  }
+
+  &--value {
+    font: inherit;
+    letter-spacing: inherit;
+    outline: none;
+    border: none;
+    background: none;
+    padding-left: variables.$control-padding;
+    padding-right: variables.$control-padding;
+    height: variables.$control-height - 4px;
+    flex: 1 1 auto;
+  }
+
+  &--tag {
+    border-radius: variables.$control-border-radius;
+    font-size: variables.$control-font-size;
+    letter-spacing: variables.$control-letter-spacing;
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    height: 20px;
+    padding: 5px;
+    line-height: 1;
+    color: variables.$control__variant-color;
+    margin: 2px;
+    background-color: #49515f;
+    box-shadow: 1px 1px 0 rgba(0, 0, 0, 0.04);
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    &--value {
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      max-width: 100%;
+      flex: 1 1 auto;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+    }
+
+    & > .brz-icon-svg {
+      cursor: pointer;
+      font-size: 10px;
+      margin-left: 4px;
+      transition: 0.2s color linear;
+      flex: none;
+    }
+
+    .brz-icon-svg:hover {
+      color: variables.$brand__primary;
+      transition: 0.2s color linear;
+    }
+  }
+
+  // Dropdown
+  &__menu-container {
+    position: relative;
+  }
+
+  &__menu {
+    font-family: variables.$default-font-family;
+    z-index: z-index.z("select-portal");
+    box-shadow: 0 1px 3px 0 variables.$picker__select__option-box-shadow;
+    margin-top: 3px; // ? placement
+    border-radius: variables.$control-border-radius;
+    background: variables.$control-bg;
+    min-width: 100%;
+    transform: none;
+    max-width: 350px;
+  }
+
+  &__option {
+    cursor: pointer;
+    padding-left: variables.$control-padding;
+    padding-right: variables.$control-padding;
+    font-size: variables.$control-font-size;
+    letter-spacing: variables.$control-letter-spacing;
+    line-height: variables.$control-height;
+    height: variables.$control-height;
+    transition: color 0.15s linear;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    border-bottom: 1px solid variables.$control-border;
+    color: variables.$control-color;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    font-family: variables.$default-font-family;
+
+    &:last-child {
+      border-bottom-color: transparent;
+    }
+
+    &:hover:not(.brz-ed-control__multiSelect__option--disabled),
+    &--active {
+      transition: color 0.15s linear;
+      color: variables.$control-color--active;
+    }
+
+    &--disabled {
+      transition: none;
+      cursor: default;
+      color: default-variables.$gray-light;
+      font-style: italic;
+    }
+  }
+
+  &.brz-slider__select {
+    min-width: 50px;
+
+    .brz-ed-control__multiSelect--value-container {
+      background: transparent;
+      transition: 0.2s color linear;
+
+      &:hover {
+        .brz-ed-control__multiSelect--tag--value,
+        .brz-control__select--arrow {
+          color: variables.$brand__primary;
+        }
+      }
+    }
+
+    .brz-ed-control__multiSelect--tag--value {
+      color: default-variables.$gray-light;
+      transition: 0.2s color linear;
+    }
+
+    .brz-control__select--arrow {
+      color: default-variables.$gray-light;
+      transition: 0.2s color linear;
+    }
+  }
+}

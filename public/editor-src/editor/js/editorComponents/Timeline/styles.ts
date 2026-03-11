@@ -1,7 +1,7 @@
-import { renderStyles } from "visual/utils/cssStyle";
-import { Value } from "./index";
-import { OutputStyle } from "visual/utils/cssStyle/types";
 import { DynamicStylesProps } from "visual/types";
+import { renderStyles } from "visual/utils/cssStyle";
+import { OutputStyle } from "visual/utils/cssStyle/types";
+import { Value } from "./index";
 
 export function style(data: DynamicStylesProps<Value>): OutputStyle {
   const styles = {
@@ -35,7 +35,6 @@ export function style(data: DynamicStylesProps<Value>): OutputStyle {
     ".brz && .brz-timeline__nav--icon": {
       standart: [
         "cssStyleElementTimelineIconSize",
-        "cssStyleBorder",
         "cssStyleElementTimelinePaddingForIcon",
         "cssStyleBorderRadiusType",
         "cssStyleElementTimelineIconWidth",
@@ -47,7 +46,6 @@ export function style(data: DynamicStylesProps<Value>): OutputStyle {
       standart: [
         "cssStylePaddingFourFields",
         "cssStyleMargin",
-        "cssStyleBorder",
         "cssStyleSizeMinWidth",
         "cssStyleSizeWidth",
         "cssStyleElementTimelineTabsVerticalContent"

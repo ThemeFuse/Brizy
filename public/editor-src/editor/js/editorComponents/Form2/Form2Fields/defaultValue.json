@@ -155,6 +155,14 @@
     "selectColorOpacity": 0.7,
     "selectColorPalette": "",
 
+    "phoneSelectColorHex": "#73777f",
+    "phoneSelectColorOpacity": 1,
+    "phoneSelectColorPalette": "",
+
+    "phoneSelectCodeColorHex": "#73777f",
+    "phoneSelectCodeColorOpacity": 0.7,
+    "phoneSelectCodeColorPalette": "",
+
     "tempSelectColorOpacity": 0.7,
     "tempSelectColorPalette": "",
 
@@ -166,6 +174,10 @@
 
     "tempSelectBgColorOpacity": 1,
     "tempSelectBgColorPalette": "",
+
+    "phoneSelectBgColorHex": "#ffffff",
+    "phoneSelectBgColorOpacity": 1,
+    "phoneSelectBgColorPalette": "",
 
     "selectBoxShadow": "",
 
@@ -187,6 +199,16 @@
     "tempSelectBoxShadowSpread": 0,
     "tempSelectBoxShadowVertical": 2,
     "tempSelectBoxShadowHorizontal": 1,
+
+    "phoneSelectBoxShadow": "",
+    "phoneSelectBoxShadowColorHex": "#000000",
+    "phoneSelectBoxShadowColorOpacity": 1,
+    "phoneSelectBoxShadowColorPalette": "",
+
+    "phoneSelectBoxShadowBlur": 0,
+    "phoneSelectBoxShadowSpread": 0,
+    "phoneSelectBoxShadowVertical": 0,
+    "phoneSelectBoxShadowHorizontal": 0,
 
     "selectBorderColorHex": "#dcdee1",
     "selectBorderColorOpacity": 1,
@@ -211,6 +233,19 @@
     "tempSelectBorderRightWidth": 1,
     "tempSelectBorderBottomWidth": 1,
     "tempSelectBorderLeftWidth": 1,
+
+    "phoneSelectBorderColorHex": "#dcdee1",
+    "phoneSelectBorderColorOpacity": 1,
+    "phoneSelectBorderColorPalette": "",
+
+    "phoneSelectBorderStyle": "solid",
+
+    "phoneSelectBorderWidthType": "grouped",
+    "phoneSelectBorderWidth": 1,
+    "phoneSelectBorderTopWidth": 1,
+    "phoneSelectBorderRightWidth": 1,
+    "phoneSelectBorderBottomWidth": 1,
+    "phoneSelectBorderLeftWidth": 1,
 
     "selectBorderRadiusType": "grouped",
     "selectBorderRadius": 0,

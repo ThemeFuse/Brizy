@@ -1,6 +1,6 @@
 import React from "react";
-import { Slide, toast, ToastOptions } from "react-toastify";
-import EditorIcon from "visual/component/EditorIcon";
+import { Slide, ToastOptions, toast } from "react-toastify";
+import { SVGInfo } from "./icons";
 
 function generateOptions(hideAfter = 3): ToastOptions {
   return {
@@ -9,10 +9,11 @@ function generateOptions(hideAfter = 3): ToastOptions {
     closeOnClick: false,
     pauseOnHover: true,
     draggable: false,
-    progress: undefined,
+    progress: 0,
     transition: Slide,
     closeButton: false,
-    icon: <EditorIcon icon="nc-info" />
+    isLoading: false,
+    icon: <SVGInfo />
   };
 }
 

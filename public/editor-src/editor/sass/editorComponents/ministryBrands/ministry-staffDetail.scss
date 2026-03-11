@@ -1,0 +1,38 @@
+.brz .brz-staffDetail {
+  overflow: hidden;
+
+  &__item {
+    &--social {
+      display: flex;
+      padding: 0;
+
+      li:not(:last-child) {
+        margin: 0 0.5rem 0 0;
+      }
+
+      a {
+        width: 32px;
+        height: 32px;
+        border-radius: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+    }
+
+    .brz-ministryBrands__item--meta--links--previous {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+
+  .brz-ministryBrands__item--media {
+    position: relative;
+    width: 100%;
+  }
+
+  ul {
+    list-style-type: none;
+  }
+}

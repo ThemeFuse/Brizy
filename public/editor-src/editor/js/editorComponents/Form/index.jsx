@@ -13,6 +13,11 @@ import { style } from "./styles";
 import * as toolbarExtendButton from "./toolbarExtendButton";
 import * as toolbarExtendParent from "./toolbarExtendParent";
 
+// SCSS import - automatically tracked during static rendering
+import(
+  /* webpackChunkName: "form" */ "sass/editorComponents/forms.scss?componentId=Form&chunk=form"
+);
+
 export default class Form extends EditorComponent {
   static defaultValue = defaultValue;
   static defaultProps = {

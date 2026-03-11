@@ -1,0 +1,26 @@
+// Components Template
+// Overflow need to add for HTML | body
+@use "utilities/overflow";
+
+// RTL
+@use "utilities/rtl";
+
+// EditorComponents elements
+@use "editorComponents";
+
+// Utilities Typography/Margin/Align
+// Used that becoused for editor generate for classes brz-{mobile|desktop}
+// For Preview used @media responsive
+@use "editorComponents/utilities";
+
+// WordPress
+@use "wp.export";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  /* Our section scroll navigation doesn't work correctly with scroll-behavior: smooth */
+  scroll-behavior: initial !important;
+}

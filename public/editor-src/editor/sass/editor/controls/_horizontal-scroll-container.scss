@@ -1,4 +1,4 @@
-@import "../../variables";
+@use "../../variables";
 
 .brz-ed-horizontal-scroll-container {
   position: relative;
@@ -29,7 +29,7 @@
     justify-content: center;
     width: 40px;
     border: none;
-    background-color: $right_sidebar__header__tabs-bg;
+    background-color: variables.$right_sidebar__header__tabs-bg;
     cursor: pointer;
     z-index: 2;
     transition: opacity 0.2s ease;
@@ -37,12 +37,12 @@
 
     .brz-icon-svg {
       font-size: 10px;
-      color: $right_sidebar__icon-color;
+      color: variables.$right_sidebar__icon-color;
     }
 
     &:hover {
       .brz-icon-svg {
-        color: $right_sidebar__icon-color--hover;
+        color: variables.$right_sidebar__icon-color--hover;
       }
     }
 
@@ -50,7 +50,7 @@
       left: 0;
       background: linear-gradient(
         to right,
-        $right_sidebar__header__tabs-bg 60%,
+        variables.$right_sidebar__header__tabs-bg 60%,
         transparent
       );
     }
@@ -59,7 +59,7 @@
       right: 0;
       background: linear-gradient(
         to left,
-        $right_sidebar__header__tabs-bg 60%,
+        variables.$right_sidebar__header__tabs-bg 60%,
         transparent
       );
     }
