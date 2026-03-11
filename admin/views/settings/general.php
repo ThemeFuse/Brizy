@@ -54,6 +54,22 @@
                 </label>
             </td>
         </tr>
+        <tr>
+            <th scope="row">
+                <?php _e( 'Enable Getting Started video', 'brizy' ); ?>
+            </th>
+            <td>
+                <label>
+                    <input type="checkbox"
+                           id="getting-started-video-enabled"
+                           name="getting-started-video-enabled"
+                           value="1"
+                        <?php echo $gettingStartedVideoEnabled ? 'checked' : ''; ?>
+                    >
+                    <span class="description"><?php _e( 'Show the tutorial video on the Getting Started page. Uncheck for GDPR compliance (avoids data transfer to YouTube).', 'brizy' ); ?></span>
+                </label>
+            </td>
+        </tr>
         </tbody>
     </table>
 
