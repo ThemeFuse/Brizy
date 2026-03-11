@@ -16,6 +16,23 @@ class Brizy_Editor_AuthModal
         if (!Brizy_Public_Main::is_editing()) {
             return;
         }
+        echo $this->renderModalHtml(false);
+    }
+
+    /**
+     * HTML for auth modal. In editor wrapper page use getModalHtmlForEditorWrapper() and echo in view — no public hook.
+     *
+     * @param bool $in_parent true = modal in parent (editor page), config from iframe
+     * @return string
+     */
+    public function getModalHtmlForEditorWrapper()
+    {
+        return $this->renderModalHtml(true);
+    }
+
+    private function renderModalHtml($in_parent)
+    {
+        ob_start();
         ?>
 
         <style>
@@ -27,7 +44,7 @@ class Brizy_Editor_AuthModal
                 width: 100%;
                 height: 100%;
                 background-color: rgba(0, 0, 0, 0.75);
-                z-index: 99999;
+                z-index: <?php echo $in_parent ? '2147483647' : '99999'; ?>;
                 justify-content: center;
                 align-items: center;
             }
@@ -65,7 +82,7 @@ class Brizy_Editor_AuthModal
             (function() {
                 var authModal = document.getElementById('brizy-auth-modal');
                 var iframe = document.getElementById('brizy-auth-iframe');
-                var ajaxurl = "<?php echo admin_url('admin-ajax.php'); ?>";
+                var _w = <?php echo $in_parent ? "document.getElementById('brz-ed-iframe')&&document.getElementById('brz-ed-iframe').contentWindow" : "window"; ?>;
 
                 function closeAuthModal() {
                     if (authModal && authModal.classList.contains('is-visible')) {
@@ -111,7 +128,7 @@ class Brizy_Editor_AuthModal
                 }
 
                 function updateHashInConfig(callback) {
-                    var config = window.__BRZ_PLUGIN_ENV__;
+                    var config = _w && _w.__BRZ_PLUGIN_ENV__;
                     if (!config || !config.url || !config.actions || !config.actions.heartBeat) {
                         if (callback) callback();
                         return;
@@ -142,41 +159,27 @@ class Brizy_Editor_AuthModal
                             if (data && typeof data === 'object' && 'hash' in data && typeof data.hash === 'string') {
                                 var newHash = data.hash;
                                 
-                                if (window.__BRZ_PLUGIN_ENV__) {
-                                    window.__BRZ_PLUGIN_ENV__.hash = newHash;
-                                    
-                                    if (window.__BRZ_PLUGIN_ENV__.actions) {
-                                        window.__BRZ_PLUGIN_ENV__.actions.hash = newHash;
-                                    }
+                                if (_w && _w.__BRZ_PLUGIN_ENV__) {
+                                    _w.__BRZ_PLUGIN_ENV__.hash = newHash;
+                                    if (_w.__BRZ_PLUGIN_ENV__.actions) _w.__BRZ_PLUGIN_ENV__.actions.hash = newHash;
                                 }
-                                
-                                if (window.__VISUAL_CONFIG__) {
-                                    if (!window.__VISUAL_CONFIG__.api) {
-                                        window.__VISUAL_CONFIG__.api = {};
-                                    }
-                                    window.__VISUAL_CONFIG__.api.hash = newHash;
-                                    
-                                    if (window.__VISUAL_CONFIG__.wp && window.__VISUAL_CONFIG__.wp.api) {
-                                        window.__VISUAL_CONFIG__.wp.api.hash = newHash;
-                                    }
+                                if (_w && _w.__VISUAL_CONFIG__) {
+                                    if (!_w.__VISUAL_CONFIG__.api) _w.__VISUAL_CONFIG__.api = {};
+                                    _w.__VISUAL_CONFIG__.api.hash = newHash;
+                                    if (_w.__VISUAL_CONFIG__.wp && _w.__VISUAL_CONFIG__.wp.api) _w.__VISUAL_CONFIG__.wp.api.hash = newHash;
                                 }
                             }
                             
                             if (data && typeof data === 'object' && 'pagePreview' in data && typeof data.pagePreview === 'string') {
-                                if (window.__VISUAL_CONFIG__) {
-                                    if (!window.__VISUAL_CONFIG__.urls) {
-                                        window.__VISUAL_CONFIG__.urls = {};
-                                    }
-                                    window.__VISUAL_CONFIG__.urls.pagePreview = data.pagePreview;
+                                if (_w && _w.__VISUAL_CONFIG__) {
+                                    if (!_w.__VISUAL_CONFIG__.urls) _w.__VISUAL_CONFIG__.urls = {};
+                                    _w.__VISUAL_CONFIG__.urls.pagePreview = data.pagePreview;
                                 }
                             }
-                            
                             if (data && typeof data === 'object' && 'changeTemplate' in data && typeof data.changeTemplate === 'string') {
-                                if (window.__VISUAL_CONFIG__) {
-                                    if (!window.__VISUAL_CONFIG__.urls) {
-                                        window.__VISUAL_CONFIG__.urls = {};
-                                    }
-                                    window.__VISUAL_CONFIG__.urls.changeTemplate = data.changeTemplate;
+                                if (_w && _w.__VISUAL_CONFIG__) {
+                                    if (!_w.__VISUAL_CONFIG__.urls) _w.__VISUAL_CONFIG__.urls = {};
+                                    _w.__VISUAL_CONFIG__.urls.changeTemplate = data.changeTemplate;
                                 }
                             }
                             
@@ -197,5 +200,6 @@ class Brizy_Editor_AuthModal
         </script>
 
         <?php
+        return ob_get_clean();
     }
 }

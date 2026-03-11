@@ -516,6 +516,7 @@ class Brizy_Public_Main
                 $config_object->urls->assets . "/editor/css/main.editor.min.css?ver=" . BRIZY_EDITOR_VERSION,
             ],
             'scripts' => [],
+            'auth_modal_html' => (new Brizy_Editor_AuthModal())->getModalHtmlForEditorWrapper(),
         ];
 
 
