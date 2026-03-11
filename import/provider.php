@@ -13,6 +13,8 @@ class Brizy_Import_Provider {
 		} else {
 			$this->mainSite = self::DEMO_URL;
 		}
+		
+		$this->mainSite = rtrim( $this->mainSite, '/' ) . '/';
 	}
 
 	/**
