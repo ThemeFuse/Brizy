@@ -20,7 +20,7 @@ define( 'BRIZY_DEVELOPMENT', false );
 define( 'BRIZY_LOG', false );
 define( 'BRIZY_VERSION', '2.8.1' );
 define( 'BRIZY_MINIMUM_PRO_VERSION', '2.4.15' );
-define( 'BRIZY_MINIMUM_COMPILER_VERSION', '315-wp' );
+define( 'BRIZY_MINIMUM_COMPILER_VERSION', '353-wp' );
 define( 'BRIZY_RECOMPILE_TAG', 1773231474 );
 define( 'BRIZY_EDITOR_VERSION', BRIZY_DEVELOPMENT ? 'dev' : '353-wp'  );
 define( 'BRIZY_SYNC_VERSION', '353' );
