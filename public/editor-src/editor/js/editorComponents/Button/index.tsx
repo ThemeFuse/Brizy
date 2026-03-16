@@ -113,10 +113,7 @@ export default class Button extends EditorComponent<Value, Props> {
       updateWidthPrefixBySizeChange === "px"
     ) {
       const device = this.getDeviceMode();
-      const dvk = (key: string) =>
-        defaultValueKey({ key, device, state: "normal" });
-
-      const sizeKey = dvk("size");
+      const sizeKey = defaultValueKey({ key: "size", device, state: "normal" });
       const size = patch[sizeKey];
 
       if (size && size !== "custom") {
