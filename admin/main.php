@@ -284,7 +284,7 @@ class Brizy_Admin_Main
                         'aiBannerSuccessDesc' => __('Good news, your new content successfully installed.', 'brizy'),
                         'aiBannerErrorDesc' => __('Bad news, your website was not installed. Something went wrong and we couldn\'t do it. Please contact us.', 'brizy'),
                         'aiContinueButton' => __('Continue', 'brizy'),
-                        'aiGenerateButton' => __('Generate With Brizy - AI', 'brizy'),
+                        'aiGenerateButton' => __('Generate With', 'brizy') . ' ' . __('Brizy', 'brizy') . ' - ' . __('AI', 'brizy'),
                 ],
         ));
     }

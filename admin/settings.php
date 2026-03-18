@@ -264,13 +264,13 @@ class Brizy_Admin_Settings
         $svgEnabled = isset($_POST['svg-upload-enabled']) ? (bool)$_POST['svg-upload-enabled'] : false;
         $jsonEnabled = isset($_POST['json-upload-enabled']) ? (bool)$_POST['json-upload-enabled'] : false;
         $gettingStartedVideoEnabled = isset( $_POST['getting-started-video-enabled'] );
-		if ( count( $array_diff ) > 0 ) {
-			//error
-			Brizy_Admin_Flash::instance()->add_error( 'Invalid post type selected' );
-			$error_count ++;
-		}
-		Brizy_Editor_Storage_Common::instance()->set( 'svg-upload', $svgEnabled );
-		Brizy_Editor_Storage_Common::instance()->set( 'json-upload', $jsonEnabled );
+        if (count($array_diff) > 0) {
+            //error
+            Brizy_Admin_Flash::instance()->add_error('Invalid post type selected');
+            $error_count++;
+        }
+        Brizy_Editor_Storage_Common::instance()->set('svg-upload', $svgEnabled);
+        Brizy_Editor_Storage_Common::instance()->set('json-upload', $jsonEnabled);
 		Brizy_Editor_Storage_Common::instance()->set( 'getting-started-video-enabled', $gettingStartedVideoEnabled );
         if ($error_count == 0) {
             $this->selected_post_types = $post_types;

@@ -43,7 +43,6 @@ class Brizy_Admin_GettingStarted
     }
 
 
-
         public function renderTemplatesPage()
     {if (apply_filters('brizy_wl_enabled', false)) {
             $isWhiteLabel = true;
