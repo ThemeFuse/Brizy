@@ -21,7 +21,9 @@ exports.preview = (options) => {
     output: {
       path: path.resolve(BUILD_PATH, "editor/js"),
       filename: "preview.min.js",
-      chunkFilename: "preview.[name].[contenthash:8].js"
+      chunkFilename: "preview.[name].[contenthash:8].js",
+      uniqueName: "brizy_builder_preview_free",
+      chunkLoadingGlobal: "webpackChunk_brizy_builder_free"
     },
     resolve: {
       alias: {

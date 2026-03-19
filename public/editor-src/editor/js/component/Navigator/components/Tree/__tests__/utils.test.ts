@@ -6,6 +6,7 @@ import {
   type FlattenedItem,
   flattenForRender,
   flattenTree,
+  isOnlyImageInImageGallery,
   isValidParentForChild,
   mergeBlocks,
   removeEmptyContainers,
@@ -215,6 +216,136 @@ describe("Navigator Tree utils", () => {
     // The reference for C should be reused; B changed its children, so it can be a new object
     expect(mergedC).toBe(originalC);
     expect((mergedB.value as any).items).toBeUndefined();
+  });
+
+  describe("isOnlyImageInImageGallery", () => {
+    test("returns true when gallery has only one visible image", () => {
+      const tree: TreeItems = [
+        {
+          id: "gallery",
+          type: ElementTypes.ImageGallery,
+          title: "",
+          icon: null,
+          isHidden: false,
+          suffixTitle: null,
+          children: [
+            {
+              id: "img-1",
+              type: ElementTypes.Image,
+              title: "",
+              icon: null,
+              isHidden: false,
+              suffixTitle: null,
+              children: null,
+              visible: true
+            }
+          ]
+        }
+      ];
+
+      expect(isOnlyImageInImageGallery(tree, "img-1")).toBe(true);
+    });
+
+    test("returns false when gallery has two visible images", () => {
+      const tree: TreeItems = [
+        {
+          id: "gallery",
+          type: ElementTypes.ImageGallery,
+          title: "",
+          icon: null,
+          isHidden: false,
+          suffixTitle: null,
+          children: [
+            {
+              id: "img-1",
+              type: ElementTypes.Image,
+              title: "",
+              icon: null,
+              isHidden: false,
+              suffixTitle: null,
+              children: null,
+              visible: true
+            },
+            {
+              id: "img-2",
+              type: ElementTypes.Image,
+              title: "",
+              icon: null,
+              isHidden: false,
+              suffixTitle: null,
+              children: null,
+              visible: true
+            }
+          ]
+        }
+      ];
+
+      expect(isOnlyImageInImageGallery(tree, "img-1")).toBe(false);
+      expect(isOnlyImageInImageGallery(tree, "img-2")).toBe(false);
+    });
+
+    test("ignores invisible image siblings", () => {
+      const tree: TreeItems = [
+        {
+          id: "gallery",
+          type: ElementTypes.ImageGallery,
+          title: "",
+          icon: null,
+          isHidden: false,
+          suffixTitle: null,
+          children: [
+            {
+              id: "img-1",
+              type: ElementTypes.Image,
+              title: "",
+              icon: null,
+              isHidden: false,
+              suffixTitle: null,
+              children: null,
+              visible: true
+            },
+            {
+              id: "img-hidden",
+              type: ElementTypes.Image,
+              title: "",
+              icon: null,
+              isHidden: false,
+              suffixTitle: null,
+              children: null,
+              visible: false
+            }
+          ]
+        }
+      ];
+
+      expect(isOnlyImageInImageGallery(tree, "img-1")).toBe(true);
+    });
+
+    test("returns false if parent is not ImageGallery", () => {
+      const tree: TreeItems = [
+        {
+          id: "row",
+          type: ElementTypes.Row,
+          title: "",
+          icon: null,
+          isHidden: false,
+          suffixTitle: null,
+          children: [
+            {
+              id: "img-1",
+              type: ElementTypes.Image,
+              title: "",
+              icon: null,
+              isHidden: false,
+              suffixTitle: null,
+              children: null
+            }
+          ]
+        }
+      ];
+
+      expect(isOnlyImageInImageGallery(tree, "img-1")).toBe(false);
+    });
   });
 
   describe("removeEmptyContainers", () => {

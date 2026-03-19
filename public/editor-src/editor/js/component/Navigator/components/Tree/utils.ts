@@ -109,6 +109,36 @@ export const findItemDeep = (
 ): TreeItem | undefined =>
   findDeep(items, (item: TreeItem) => item.id === itemId).obj;
 
+const findParentItemDeep = (
+  items: TreeItems,
+  childId: string,
+  parent: TreeItem | null = null
+): TreeItem | null => {
+  for (const item of items) {
+    if (item.id === childId) return parent;
+    if (item.children?.length) {
+      const found = findParentItemDeep(item.children, childId, item);
+      if (found) return found;
+    }
+  }
+  return null;
+};
+
+export function isOnlyImageInImageGallery(items: TreeItems, imageId: string) {
+  const parent = findParentItemDeep(items, imageId);
+  if (!parent || parent.type !== ElementTypes.ImageGallery) return false;
+
+  const visibleChildren = (parent.children ?? []).filter(
+    (child) => child.visible !== false
+  );
+
+  const imageChildrenCount = visibleChildren.filter(
+    (child) => child.type === ElementTypes.Image
+  ).length;
+
+  return imageChildrenCount <= 1;
+}
+
 const countChildren = (items: TreeItem[], count = 0): number =>
   items.reduce((acc, { children, visible }) => {
     const count = visible ? acc + 1 : acc;
