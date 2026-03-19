@@ -18,7 +18,7 @@ import { isStory, useEditorMode } from "visual/providers/EditorModeProvider";
 import { useTreeContext } from "visual/providers/TreeProvider";
 import { attachRefs } from "visual/utils/react";
 import { TreeItemProps } from "./types";
-import { SPACING_SIZE, getDragPad } from "./utils";
+import { SPACING_SIZE, getDragPad, isOnlyImageInImageGallery } from "./utils";
 
 export const TreeItem = forwardRef<HTMLDivElement, TreeItemProps>(
   (
@@ -44,6 +44,7 @@ export const TreeItem = forwardRef<HTMLDivElement, TreeItemProps>(
       toggleExpand,
       toggleShowElement,
       activeId,
+      items,
       onClickItem,
       onRemoveItem,
       updateItemTitle
@@ -127,10 +128,16 @@ export const TreeItem = forwardRef<HTMLDivElement, TreeItemProps>(
       type === ElementTypes.SectionHeaderStickyItem ||
       type === ElementTypes.SectionHeaderItem;
 
+    const isOnlyImageInGallery = useMemo(() => {
+      if (type !== ElementTypes.Image) return false;
+      return isOnlyImageInImageGallery(items, id);
+    }, [type, items, id]);
+
     const hideRemoveButton =
       type === ElementTypes.StoryItem ||
       type === ElementTypes.Story ||
-      isSectionItem;
+      isSectionItem ||
+      isOnlyImageInGallery;
 
     const hideShowButton = isStoryMode || isSectionItem;
 
