@@ -1,12 +1,14 @@
-<?php defined( 'ABSPATH' ) or die();
+<?php defined('ABSPATH') or die();
 
-class Brizy_Import_Main {
+class Brizy_Import_Main
+{
 
-	private $provider;
+    private $provider;
 
-	public function __construct() {
+    public function __construct()
+    {
 
-		$this->provider = new Brizy_Import_Provider();
+        $this->provider = new Brizy_Import_Provider();
 
 		if ( defined( 'WP_CLI' ) && WP_CLI ) {
 			WP_CLI::add_command( 'brizy demo', Brizy_Import_WpCli::class );
@@ -14,142 +16,165 @@ class Brizy_Import_Main {
 			add_action( 'admin_menu',                 [ $this, 'addSubmenuPageTemplates' ], 11 );
 			add_action( 'wp_ajax_brizy-import-demo',  [ $this, 'ajaxImportDemo' ] );
 			add_action( 'admin_enqueue_scripts',      [ $this, 'adminEnqueueScripts' ] );
+			add_filter( 'admin_footer_text',          [ $this, 'hideAdminFooterTextOnStarterTemplates' ], 999 );
+			add_filter( 'update_footer',              [ $this, 'hideAdminFooterTextOnStarterTemplates' ], 999 );
 		}
 
-		add_filter( 'http_request_args', [ $this, 'doNotRejectUnsafeUrl' ], 999 );
-	}
+        add_filter('http_request_args', [$this, 'doNotRejectUnsafeUrl'], 999);
+    }
 
-	public function addSubmenuPageTemplates() {
+    public function addSubmenuPageTemplates()
+    {
 
-		if ( is_network_admin() ) {
-			return;
-		}
+        if (is_network_admin()) {
+            return;
+        }
 
-		add_filter( 'screen_options_show_screen', function ( $display ) {
-			return isset( $_GET['page'] ) && $_GET['page'] == 'starter-templates' ? false : $display;
-		} );
+        add_filter('screen_options_show_screen', function ($display) {
+            return isset($_GET['page']) && $_GET['page'] == 'starter-templates' ? false : $display;
+        });
 
-		add_submenu_page(
-			Brizy_Admin_Settings::menu_slug(),
-			__( 'Starter Templates', 'brizy' ),
-			__( 'Starter Templates', 'brizy' ),
-			'manage_options',
-			'starter-templates',
-			[ $this, 'renderTemplatesPage' ],
-			8
-		);
-	}
+        add_submenu_page(
+            Brizy_Admin_Settings::menu_slug(),
+            __('Starter Templates', 'brizy'),
+            __('Starter Templates', 'brizy'),
+            'manage_options',
+            'starter-templates',
+            [$this, 'renderTemplatesPage'],
+            8
+        );
+    }
 
-	public function renderTemplatesPage() {
+    public function renderTemplatesPage()
+    {
 
-		$args = [
-			'l10n'       => [
-				'all'           => __( 'All', 'brizy' ),
-				'livePreview'   => __( 'Live Preview', 'brizy' ),
-				'install'       => __( 'Install', 'brizy' ),
-				'free'          => __( 'Free', 'brizy' ),
-				'pro'           => __( 'Pro', 'brizy' ),
-				'search'        => __( 'Search', 'brizy' ),
-				'allCategories' => __( 'All Categories', 'brizy' ),
-				'goPro'         => __( 'Go Pro', 'brizy' ),
-				't1'            => __( 'Something went wrong', 'brizy' ),
-				't2'            => __( 'Bad news, your starter template was not installed. Something went wrong and we couldn’t do it. Please contact us.', 'brizy' ),
-				't3'            => __( 'Ok', 'brizy' ),
-				't4'            => __( 'Template Successfully Installed', 'brizy' ),
-				't5'            => __( 'Good news, your starter template was successfully installed. Time to build your amazing website fast & easy!', 'brizy' ),
-				't6'            => __( 'Thank You!', 'brizy' ),
-				't7'            => __( 'Installing Starter Template', 'brizy' ),
-				't8'            => __( 'Please don’t close this window until the installation is finished. This might take up to a couple of minutes (five min, usually less).', 'brizy' ),
-				't9'            => __( 'Keep existing content', 'brizy' ),
-				't10'           => sprintf( __( 'Choose this option if you want to keep your current content. If you are using %s, some of the global options might overlap.', 'brizy' ), __bt( 'brizy', 'Brizy' ) ),
-				't11'           => __( 'Install Template', 'brizy' ),
-				't12'           => __( 'Delete existing content', 'brizy' ),
-				't13'           => __( 'Choose this option if you want to start fresh and delete your current content. A backup is advisable, there is no turning back from this.', 'brizy' ),
-				't14'           => __( 'Deletes your current content', 'brizy' ),
-                't15'           => __( 'Edit Website', 'brizy' ),
-				'generateWithAI'     	 => __( 'Generate with AI', 'brizy' ),
-				'buildWebsite'       	 => __( 'Build Website', 'brizy' ),
-                'requiresProLicense' 	 => __( 'This feature requires a Pro license', 'brizy' ),
-				'requiresProMessage' 	 => __( 'AI generation requires a Pro license.', 'brizy' ),
-				'getProLicense'      	 => __( 'Buy Pro', 'brizy' ),
-				'aiBannerTitle'          => __( 'Generate amazing websites with AI', 'brizy' ),
-				'aiBannerTitleHighlight' => __( 'with AI', 'brizy' ),
-				'aiBannerFeature1'   	 => __( 'Usable websites, no gimmicks', 'brizy' ),
-				'aiBannerFeature2'   	 => __( 'Tailor-made texts & images included', 'brizy' ),
-				'aiBannerFeature3'   	 => __( 'Full editing control after generation', 'brizy' ),
-				'aiBrizy'            	 => __( 'AI Brizy', 'brizy' ),
-				'aiLogoAlt'          	 => __( 'AI', 'brizy' ),
+        $isWhiteLabel = apply_filters('brizy_wl_enabled', false);
+
+        $args = [
+            'isWhiteLabel' => $isWhiteLabel,
+            'l10n' => [
+                'all' => __('All', 'brizy'),
+                'livePreview' => __('Live Preview', 'brizy'),
+                'install' => __('Install', 'brizy'),
+                'free' => __('Free', 'brizy'),
+                'pro' => __('Pro', 'brizy'),
+                'search' => __('Search', 'brizy'),
+                'allCategories' => __('All Categories', 'brizy'),
+                'goPro' => __('Go Pro', 'brizy'),
+                't1' => __('Something went wrong', 'brizy'),
+                't2' => __('Bad news, your starter template was not installed. Something went wrong and we couldn’t do it. Please contact us.', 'brizy'),
+                't3' => __('Ok', 'brizy'),
+                't4' => __('Template Successfully Installed', 'brizy'),
+                't5' => __('Good news, your starter template was successfully installed. Time to build your amazing website fast & easy!', 'brizy'),
+                't6' => __('Thank You!', 'brizy'),
+                't7' => __('Installing Starter Template', 'brizy'),
+                't8' => __('Please don’t close this window until the installation is finished. This might take up to a couple of minutes (five min, usually less).', 'brizy'),
+                't9' => __('Keep existing content', 'brizy'),
+                't10' => sprintf(__('Choose this option if you want to keep your current content. If you are using %s, some of the global options might overlap.', 'brizy'), __bt('brizy', 'Brizy')),
+                't11' => __('Install Template', 'brizy'),
+                't12' => __('Delete existing content', 'brizy'),
+                't13' => __('Choose this option if you want to start fresh and delete your current content. A backup is advisable, there is no turning back from this.', 'brizy'),
+                't14' => __('Deletes your current content', 'brizy'),
+                't15' => __('Edit Website', 'brizy'),
+                'generateWithAI' => __('Generate with AI', 'brizy'),
+                'buildWebsite' => __('Build Website', 'brizy'),
+                'requiresProLicense' => __('This feature requires a Pro license', 'brizy'),
+                'requiresProMessage' => __('AI generation requires a Pro license.', 'brizy'),
+                'getProLicense' => __('Buy Pro', 'brizy'),
+                'aiBannerTitle' => __('Generate amazing websites with AI', 'brizy'),
+                'aiBannerTitleHighlight' => __('with AI', 'brizy'),
+                'aiBannerFeature1' => __('Usable websites, no gimmicks', 'brizy'),
+                'aiBannerFeature2' => __('Tailor-made texts & images included', 'brizy'),
+                'aiBannerFeature3' => __('Full editing control after generation', 'brizy'),
+                'aiBrizy' => __('AI Brizy', 'brizy'),
+                'aiLogoAlt' => __('AI', 'brizy'),
             ],
-			'supportUrl' => Brizy_Config::getSupportUrl(),
-			'goProUrl'   => Brizy_Config::getUpgradeUrl(),
-			'isPro'      => Brizy_Compatibilities_BrizyProCompatibility::isPro(),
-		];
+            'supportUrl' => Brizy_Config::getSupportUrl(),
+            'goProUrl' => Brizy_Config::getUpgradeUrl(),
+            'isPro' => Brizy_Compatibilities_BrizyProCompatibility::isPro(),
+        ];
 
-		try {
-			$args          = array_merge( $args, $this->provider->getAllDemos() );
-			$args['count'] = count( $args['demos'] );
-		} catch ( Exception $e ) {
-			$args['demos']          = [];
-			$args['terms']          = [];
-			$args['count']          = 0;
-			$args['templatesError'] = $e->getMessage();
+        try {
+            $args = array_merge($args, $this->provider->getAllDemos());
+            $args['count'] = count($args['demos']);
+        } catch (Exception $e) {
+            $args['demos'] = [];
+            $args['terms'] = [];
+            $args['count'] = 0;
+            $args['templatesError'] = $e->getMessage();
+        }
+
+        Brizy_Editor_View::render(BRIZY_PLUGIN_PATH . '/import/views/starter-templates', $args);
+    }
+
+    public function ajaxImportDemo()
+    {
+        check_ajax_referer('brizy-admin-nonce', 'nonce');
+
+        if (empty($_POST['demo']) || !is_numeric($_POST['demo'])) {
+            wp_send_json_error(__('Invalid demo id. Please contact our support.', 'brizy'), '500');
+        }
+
+        $import = new Brizy_Import_Import($_POST['demo']);
+
+        try {
+            $import->import((bool)$_POST['rmContent']);
+        } catch (Exception $e) {
+            wp_send_json_error($e->getMessage(), '500');
+        }
+
+        wp_send_json_success([
+            'message' => __('Template imported successfully.', 'brizy'),
+            'editHomepageUrl' => admin_url('post.php?action=in-front-editor&post=' . get_option('page_on_front')),
+        ]);
+    }
+
+    public function adminEnqueueScripts()
+    {
+
+        if (!isset($_GET['page']) || $_GET['page'] != 'starter-templates') {
+            return;
+        }
+
+        $urlBuilder = new Brizy_Editor_UrlBuilder();
+
+        wp_enqueue_style(
+            'demo-import-select2',
+            $urlBuilder->plugin_url('vendor/select2/select2/dist/css/select2.min.css'),
+            [],
+            true
+        );
+
+        wp_enqueue_style(
+            'brizy-ai-banner',
+            $urlBuilder->plugin_url('import/static/css/ai-banner.css'),
+            [],
+            BRIZY_VERSION
+        );
+
+        wp_enqueue_script(
+            'demo-import-select2',
+            $urlBuilder->plugin_url('vendor/select2/select2/dist/js/select2.full.min.js'),
+            ['jquery']
+        );
+    }
+
+    public function doNotRejectUnsafeUrl($args)
+    {
+        $args['reject_unsafe_urls'] = false;
+        return $args;
+    }
+
+	/**
+	 * Hide "Thank you for creating with WordPress" and version footer on Starter Templates page.
+	 *
+	 * @param string $text Footer text.
+	 * @return string
+	 */
+	public function hideAdminFooterTextOnStarterTemplates( $text ) {
+		if ( isset( $_GET['page'] ) && $_GET['page'] === 'starter-templates' ) {
+			return '';
 		}
-
-		Brizy_Editor_View::render( BRIZY_PLUGIN_PATH . '/import/views/starter-templates', $args );
-	}
-
-	public function ajaxImportDemo() {
-		check_ajax_referer( 'brizy-admin-nonce', 'nonce' );
-
-		if ( empty( $_POST['demo'] ) || ! is_numeric( $_POST['demo'] ) ) {
-			wp_send_json_error( __( 'Invalid demo id. Please contact our support.', 'brizy' ), '500' );
-		}
-
-		$import = new Brizy_Import_Import( $_POST['demo'] );
-
-		try {
-            $import->import( (bool) $_POST['rmContent'] );
-		} catch (Exception $e) {
-			wp_send_json_error( $e->getMessage(), '500' );
-		}
-
-		wp_send_json_success( [
-			'message'         => __( 'Template imported successfully.', 'brizy' ),
-			'editHomepageUrl' => admin_url( 'post.php?action=in-front-editor&post=' . get_option( 'page_on_front' ) ),
-		] );
-	}
-
-	public function adminEnqueueScripts() {
-
-		if ( ! isset( $_GET['page'] ) || $_GET['page'] != 'starter-templates' ) {
-			return;
-		}
-
-		$urlBuilder = new Brizy_Editor_UrlBuilder();
-
-		wp_enqueue_style(
-			'demo-import-select2',
-			$urlBuilder->plugin_url('vendor/select2/select2/dist/css/select2.min.css'),
-			[],
-			true
-		);
-
-		wp_enqueue_style(
-			'brizy-ai-banner',
-			$urlBuilder->plugin_url('import/static/css/ai-banner.css'),
-			[],
-			BRIZY_VERSION
-		);
-
-		wp_enqueue_script(
-			'demo-import-select2',
-			$urlBuilder->plugin_url( 'vendor/select2/select2/dist/js/select2.full.min.js' ),
-			[ 'jquery' ]
-		);
-	}
-
-	public function doNotRejectUnsafeUrl( $args ) {
-		$args['reject_unsafe_urls'] = false;
-		return $args;
+		return $text;
 	}
 }

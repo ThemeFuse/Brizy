@@ -691,7 +691,7 @@ class ImageGallery extends EditorComponent<Value, Props> {
     );
 
     const isImageCloned = Boolean(
-      (v.items[0].value as Value)?.clonedFromGallery
+      (v.items[0]?.value as Value)?.clonedFromGallery
     );
 
     const itemProps = this.makeSubcomponentProps({

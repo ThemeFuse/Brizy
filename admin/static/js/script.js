@@ -244,6 +244,7 @@ jQuery(document).ready(function ($) {
             }
 
             if (typeof Brizy_Admin_Data !== 'undefined' &&
+                !Brizy_Admin_Data.isWhiteLabel &&
                 Brizy_Admin_Data.aiActions &&
                 Object.keys(Brizy_Admin_Data.aiActions).length > 0 &&
                 !$('.brz-ai-button.js-open-ai-selection-modal').length) {
@@ -441,7 +442,7 @@ jQuery(document).ready(function ($) {
                 filterLink  = $( '.js-filter-link.current' ).attr( 'data-sort' ),
                 count       = 0;
 
-            $( '.themes .theme' ).each( function() {
+            $( '.brz-wrap-demodata .themes .theme' ).each( function() {
                 var keywords          = $( this ).data( 'keywords' ),
                     name              = $( this ).data( 'name' ),
                     terms             = String( $( this ).data( 'terms' ) ).split(','),
