@@ -48,28 +48,37 @@ class Brizy_Editor_AuthModal
         </style>
 
         <div id="brizy-auth-modal" class="brizy-auth-modal">
-            <div class="brizy-auth-modal-content">
-                <iframe
-                    id="brizy-auth-iframe"
-                    src="<?php echo wp_login_url(); ?>"
-                    style="border:0px none #ffffff;"
-                    name="brizyAuthIframe"
-                    scrolling="no"
-                    marginwidth="0"
-                    marginheight="0"
-                ></iframe>
-            </div>
+            <div class="brizy-auth-modal-content"></div>
         </div>
         
         <script>
             (function() {
                 var authModal = document.getElementById('brizy-auth-modal');
-                var iframe = document.getElementById('brizy-auth-iframe');
+                var iframe = null;
                 var ajaxurl = "<?php echo admin_url('admin-ajax.php'); ?>";
+
+                function createIframe() {
+                    iframe = document.createElement('iframe');
+                    iframe.id = 'brizy-auth-iframe';
+                    iframe.style.border = '0px none #ffffff';
+                    iframe.name = 'brizyAuthIframe';
+                    iframe.scrolling = 'no';
+                    iframe.marginWidth = '0';
+                    iframe.marginHeight = '0';
+                    authModal.querySelector('.brizy-auth-modal-content').appendChild(iframe);
+                }
+
+                function removeIframe() {
+                    if (iframe && iframe.parentNode) {
+                        iframe.parentNode.removeChild(iframe);
+                    }
+                    iframe = null;
+                }
 
                 function closeAuthModal() {
                     if (authModal && authModal.classList.contains('is-visible')) {
                         authModal.classList.remove('is-visible');
+                        removeIframe();
                     }
                 }
 
@@ -77,6 +86,7 @@ class Brizy_Editor_AuthModal
                     if (!authModal || authModal.classList.contains('is-visible')) {
                         return;
                     }
+                    createIframe();
                     authModal.classList.add('is-visible');
                     modalLoginHandler();
                 }
