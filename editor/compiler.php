@@ -85,7 +85,6 @@ class Brizy_Editor_Compiler {
 		$section_manager = $post->getCompiledSectionManager();
 		$section_manager->merge( $pageData, true );
 		$post->setCompiledSections( $section_manager->asJson() );
-
 		$post->setCompiledScripts( [] );
 		$post->setCompiledStyles( [] );
 		$post->set_needs_compile( false );
@@ -121,7 +120,7 @@ class Brizy_Editor_Compiler {
 
 	static public function checkRecompileTag() {
 		$currentTag = (int) get_option( self::BRIZY_RECOMPILE_TAG_OPTION, null );
-		if ( $currentTag < BRIZY_RECOMPILE_TAG ) {
+		if ( $currentTag < BRIZY_RECOMPILE_TAG || isset( $_REQUEST['bd_reset_compiled_data'] )) {
 			self::resetCompiledVersion();
 			update_option( self::BRIZY_RECOMPILE_TAG_OPTION, BRIZY_RECOMPILE_TAG );
 		}
