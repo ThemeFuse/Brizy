@@ -72,22 +72,6 @@ class Brizy_Editor_Compiler {
 			return true;
 		}
 
-		$editorConfig = Brizy_Editor_Editor_Editor::get( Brizy_Editor_Project::get(), $post )->config( Brizy_Editor_Editor_Editor::COMPILE_CONTEXT );
-		if ( isset( $editorConfig['globalBlocks'] ) && ! empty( $editorConfig['globalBlocks'] ) ) {
-			$blockManager = new Brizy_Admin_Blocks_Manager(Brizy_Admin_Blocks_Main::CP_GLOBAL);
-			foreach ( $editorConfig['globalBlocks'] as $block ) {
-				$block = $blockManager->getEntity( $block['uid'] );
-
-				if(!$block) continue;
-
-				$blockVersion = preg_replace( "/((-beta\d+?)?-wp)$/", "", $block->get_compiler_version() );
-
-				if ( version_compare( $blockVersion, $v2, "<" ) ) {
-					return true;
-				}
-			}
-		}
-
 		return false;
 	}
 
