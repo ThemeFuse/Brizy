@@ -12,7 +12,7 @@ class SvgAssetProcessorCest {
 		$attachmentId        = $I->haveAttachmentInDatabase( codecept_data_dir( 'dump.sql' ), null, [] );
 		$this->attachmentUid = md5( $attachmentId );
 		$this->attachmentUrl = wp_get_attachment_url( $attachmentId );
-		$I->havePostmetaInDatabase( $attachmentId, 'brizy_post_uid', $this->attachmentUid );
+		$I->havePostmetaInDatabase( $attachmentId, 'brizy_attachment_uid', $this->attachmentUid );
 	}
 
 	public function testSvgUrlReplacement( FunctionalTester $I ) {
