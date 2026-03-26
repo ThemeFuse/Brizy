@@ -63,32 +63,25 @@ class Brizy_Editor_Asset_MediaProcessor implements Brizy_Editor_Content_Processo
 		return $content;
 	}
 
-	private function get_attachment_file_by_uid( $attachmentUId ) {
-		if ( ! is_numeric( $attachmentUId ) ) {
-			global $wpdb;
+private function get_attachment_file_by_uid( $attachmentUId ) {
+		static $cache = [];
+		if ( isset( $cache[ $attachmentUId ] ) ) {
+			return $cache[ $attachmentUId ];
+		}
+		global $wpdb;
+		$attachment_id = (int) $wpdb->get_var( $wpdb->prepare( "SELECT p.ID
+				 FROM {$wpdb->posts} p
+				 INNER JOIN {$wpdb->postmeta} pm ON p.ID = pm.post_id
+				 WHERE pm.meta_key = 'brizy_attachment_uid'
+				   AND pm.meta_value = %s
+				   AND p.post_type = 'attachment'
+				 ORDER BY p.post_date DESC
+				 LIMIT 1", $attachmentUId ) );
 
-			$posts_table = $wpdb->posts;
-			$meta_table  = $wpdb->postmeta;
-			$attachment  = $wpdb->get_var( $wpdb->prepare(
-				"SELECT 
-						{$posts_table}.ID
-					FROM {$posts_table}
-						INNER JOIN {$meta_table} ON ( {$posts_table}.ID = {$meta_table}.post_id )
-					WHERE 
-						{$meta_table}.meta_key = 'brizy_attachment_uid' 
-						AND {$meta_table}.meta_value = %s 
-						AND {$posts_table}.post_type = 'attachment'
-					GROUP BY {$posts_table}.ID
-					ORDER BY {$posts_table}.post_date DESC",
-				$attachmentUId
-			) );
-
-
-			if ( ! $attachment ) {
-				return;
-			}
+		if ( $attachment_id && $url = wp_get_attachment_url( $attachment_id ) ) {
+			return $cache[ $attachmentUId ] = $url;
 		}
 
-		return wp_get_attachment_url( (int)$attachment );
+		return null;
 	}
 }
