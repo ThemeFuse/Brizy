@@ -63,40 +63,25 @@ class Brizy_Editor_Asset_MediaProcessor implements Brizy_Editor_Content_Processo
 		return $content;
 	}
 
-	private function get_attachment_file_by_uid( $attachmentUId ) {
+private function get_attachment_file_by_uid( $attachmentUId ) {
 		static $cache = [];
-
 		if ( isset( $cache[ $attachmentUId ] ) ) {
 			return $cache[ $attachmentUId ];
 		}
-
-		if ( ctype_digit( (string) $attachmentUId ) ) {
-			$attachment_id = (int) $attachmentUId;
-		} else {
-			global $wpdb;
-
-			$attachment_id = (int) $wpdb->get_var( $wpdb->prepare(
-				"SELECT p.ID
+		global $wpdb;
+		$attachment_id = (int) $wpdb->get_var( $wpdb->prepare( "SELECT p.ID
 				 FROM {$wpdb->posts} p
 				 INNER JOIN {$wpdb->postmeta} pm ON p.ID = pm.post_id
 				 WHERE pm.meta_key = 'brizy_attachment_uid'
 				   AND pm.meta_value = %s
 				   AND p.post_type = 'attachment'
 				 ORDER BY p.post_date DESC
-				 LIMIT 1",
-				$attachmentUId
-			) );
+				 LIMIT 1", $attachmentUId ) );
 
-			if ( ! $attachment_id ) {
-				$cache[ $attachmentUId ] = null;
-				return null;
-			}
+		if ( $attachment_id && $url = wp_get_attachment_url( $attachment_id ) ) {
+			return $cache[ $attachmentUId ] = $url;
 		}
 
-		$url = wp_get_attachment_url( $attachment_id );
-
-		$cache[ $attachmentUId ] = $url ?: null;
-
-		return $cache[ $attachmentUId ];
+		return null;
 	}
 }
