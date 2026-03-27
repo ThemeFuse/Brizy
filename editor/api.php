@@ -948,7 +948,7 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi
             if (!$attachmentId || get_post_status($attachmentId) === false) {
                 $this->error(400, 'Invalid attachment id');
             }
-            $uid = get_post_meta($attachmentId, 'brizy_post_uid', true);
+            $uid = get_post_meta($attachmentId, 'brizy_attachment_uid', true);
             if (!$uid) {
                 $file = get_attached_file($attachmentId);
                 $path_parts = pathinfo($file);
