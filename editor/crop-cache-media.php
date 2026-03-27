@@ -133,10 +133,17 @@ class Brizy_Editor_CropCacheMedia extends Brizy_Editor_Asset_StaticFile {
 		}
 
 		if ( ! file_exists( $imgPath ) ) {
-			throw new Exception( 'The image is not cropped yet' );
+			$this->crop_media( $uid, $size );
 		}
 
-		return str_replace( $this->url_builder->upload_path(), $this->url_builder->upload_url(), $imgPath );
+		if ( ! file_exists( $imgPath ) ) {
+			throw new Exception( 'Unable to crop the image' );
+		}
+
+		$imgUrl = str_replace( $this->url_builder->upload_path(), $this->url_builder->upload_url(), $imgPath );
+
+		return $this->replaceCdnUrl( $imgUrl );
+
 	}
 
 	/**
