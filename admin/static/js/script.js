@@ -1,132 +1,132 @@
 jQuery(document).ready(function ($) {
 
-    $( '.brz-review-deserve, .brz-review-later, .brz-review-done' ).on( 'click', function ( e ) {
+    $('.brz-review-deserve, .brz-review-later, .brz-review-done').on('click', function (e) {
 
-        var btn    = $( this ),
-            notice = btn.closest( '.brz-notice' );
+        var btn = $(this),
+            notice = btn.closest('.brz-notice');
 
-        if ( ! btn.hasClass( 'brz-review-deserve' ) ) {
+        if (!btn.hasClass('brz-review-deserve')) {
             e.preventDefault();
         }
 
-        $.ajax( {
+        $.ajax({
             url: Brizy_Admin_Data.url,
             type: 'POST',
             data: {
                 'action': 'brizy-dismiss-notice',
                 'nonce': Brizy_Admin_Data.nonce,
-                'repeat': !!btn.hasClass( 'brz-review-later' )
+                'repeat': !!btn.hasClass('brz-review-later')
             }
-        } );
+        });
 
         notice.animate({
             opacity: '-=1'
-        }, 1000, function() {
+        }, 1000, function () {
             notice.remove();
         });
-    } );
+    });
 
-    $( '#brz-replace-url-button' ).on( 'click', function ( e ) {
+    $('#brz-replace-url-button').on('click', function (e) {
         e.preventDefault();
 
-        var self = $( this ),
-            tr   = self.parents( 'tr' ),
-            from = tr.find( '[name="from"]' ),
-            to   = tr.find( '[name="to"]' );
+        var self = $(this),
+            tr = self.parents('tr'),
+            from = tr.find('[name="from"]'),
+            to = tr.find('[name="to"]');
 
-        self.removeClass( 'success' ).addClass( 'loading' );
+        self.removeClass('success').addClass('loading');
 
-        if ( ! self.hasClass( 'loading' ) ) {
-           return;
+        if (!self.hasClass('loading')) {
+            return;
         }
 
-        $.post( Brizy_Admin_Data.url, {
+        $.post(Brizy_Admin_Data.url, {
             action: 'brizy_replace_url',
             from: from.val(),
             to: to.val(),
             nonce: Brizy_Admin_Data.nonce
-        } ).done( function ( response ) {
-            self.removeClass( 'loading' );
+        }).done(function (response) {
+            self.removeClass('loading');
 
-            if ( response.success ) {
-                self.addClass( 'success' );
+            if (response.success) {
+                self.addClass('success');
             }
 
-           alert( response.data.message );
-        } ).error( function( response ) {
+            alert(response.data.message);
+        }).error(function (response) {
 
-            self.removeClass( 'success' ).removeClass( 'loading' );
+            self.removeClass('success').removeClass('loading');
 
-            alert( response.responseText );
-        } );
-    } );
+            alert(response.responseText);
+        });
+    });
 
     var BrizyFeedbackDialog = {
 
         init: function () {
 
-            if ( ! $( '#brz-deactivate-feedback-dialog' ).length && typeof dialog !== "function" ) {
+            if (!$('#brz-deactivate-feedback-dialog').length && typeof dialog !== "function") {
                 return;
             }
 
             this.initDialog();
 
-            $( 'tr[data-slug="brizy"] .deactivate' ).click( function ( e ) {
+            $('tr[data-slug="brizy"] .deactivate').click(function (e) {
                 e.preventDefault();
-                $( '#brz-deactivate-feedback-dialog' ).dialog( 'open' );
-            } );
+                $('#brz-deactivate-feedback-dialog').dialog('open');
+            });
 
-            $( '#brz-deactivate-feedback-dialog input:radio' ).change( function () {
+            $('#brz-deactivate-feedback-dialog input:radio').change(function () {
 
-                var radio     = $( this ),
-                    submitBtn = $( '.brz-feedback-submit' ),
-                    skipBtn   = $( '.brz-feedback-skip' );
+                var radio = $(this),
+                    submitBtn = $('.brz-feedback-submit'),
+                    skipBtn = $('.brz-feedback-skip');
 
-                $( '.brz-feedback-text' ).addClass( 'hidden' );
-                submitBtn.prop( 'disabled', false );
-                skipBtn.prop( 'disabled', false );
+                $('.brz-feedback-text').addClass('hidden');
+                submitBtn.prop('disabled', false);
+                skipBtn.prop('disabled', false);
 
-                if ( radio.val() === 'brizy_pro' ) {
-                    submitBtn.prop( 'disabled', true );
-                    skipBtn.prop( 'disabled', true );
+                if (radio.val() === 'brizy_pro') {
+                    submitBtn.prop('disabled', true);
+                    skipBtn.prop('disabled', true);
                 }
 
-                radio.parent().find( '.brz-feedback-text' ).removeClass( 'hidden' );
-            } );
+                radio.parent().find('.brz-feedback-text').removeClass('hidden');
+            });
         },
         submitFeedback: function () {
 
             var redirect = false;
 
-            $( '#brz-deactivate-feedback-dialog input:radio' ).each( function () {
-                if ( $( this ).is( ':checked' ) ) {
+            $('#brz-deactivate-feedback-dialog input:radio').each(function () {
+                if ($(this).is(':checked')) {
                     redirect = true;
                 }
-            } );
+            });
 
-            if ( !redirect ) {
+            if (!redirect) {
                 return;
             }
 
-            $( '.brz-feedback-submit .ui-button-text' ).addClass( 'brz-loading' ).text( '' );
+            $('.brz-feedback-submit .ui-button-text').addClass('brz-loading').text('');
 
-            $.ajax( {
+            $.ajax({
                 url: Brizy_Admin_Data.url,
                 type: 'POST',
                 data: {
                     'action': 'brizy-send-feedback',
                     'nonce': Brizy_Admin_Data.nonce,
-                    'form': $( 'form.brz-deactivate-feedback-dialog-form' ).serialize()
+                    'form': $('form.brz-deactivate-feedback-dialog-form').serialize()
                 }
-            } );
+            });
 
-            setTimeout( function () {
-                location.href = $( 'tr[data-slug="brizy"] .deactivate a' ).attr( 'href' );
-            }, 1000 );
+            setTimeout(function () {
+                location.href = $('tr[data-slug="brizy"] .deactivate a').attr('href');
+            }, 1000);
         },
         initDialog: function () {
 
-            $( '#brz-deactivate-feedback-dialog' ).dialog( {
+            $('#brz-deactivate-feedback-dialog').dialog({
                 dialogClass: 'brz-deactivate-modal',
                 autoOpen: false,
                 draggable: false,
@@ -146,31 +146,31 @@ jQuery(document).ready(function ($) {
                         text: Brizy_Admin_Data.l10n.deactivateFeedbackSkipBtn,
                         class: 'brz-feedback-skip',
                         click: function () {
-                            location.href = $( 'tr[data-slug="brizy"] .deactivate a' ).attr( 'href' );
+                            location.href = $('tr[data-slug="brizy"] .deactivate a').attr('href');
                         }
                     }
                 ],
                 open: function () {
                     var overlay = $('.ui-widget-overlay');
 
-                    overlay.addClass( 'brz-deactivate-overlay' );
+                    overlay.addClass('brz-deactivate-overlay');
 
-                    $( '.brz-feedback-text' ).addClass( 'hidden' );
-                    $( '.brz-deactivate-modal input:radio' ).prop( 'checked', false );
+                    $('.brz-feedback-text').addClass('hidden');
+                    $('.brz-deactivate-modal input:radio').prop('checked', false);
 
                     // close dialog by clicking the overlay behind it
-                    overlay.bind( 'click', function () {
-                        $( '#brz-deactivate-feedback-dialog' ).dialog( 'close' );
-                    } );
+                    overlay.bind('click', function () {
+                        $('#brz-deactivate-feedback-dialog').dialog('close');
+                    });
 
-                    $( '.brz-feedback-submit' ).prop( 'disabled', false );
-                    $( '.brz-feedback-skip' ).prop( 'disabled', false );
+                    $('.brz-feedback-submit').prop('disabled', false);
+                    $('.brz-feedback-skip').prop('disabled', false);
                 },
                 create: function () {
                     // style fix for WordPress admin
-                    $( '.ui-dialog-titlebar-close' ).addClass( 'ui-button' );
+                    $('.ui-dialog-titlebar-close').addClass('ui-button');
                 },
-            } );
+            });
         }
     };
 
@@ -187,7 +187,7 @@ jQuery(document).ready(function ($) {
     });
 
     // Open our submenu link "Get Help" in a new tab.
-     $( '#get-help,#go-pro' ).parent().attr( 'target', '_blank' );
+    $('#get-help,#go-pro').parent().attr('target', '_blank');
 
     var BrizyAiButton = {
 
@@ -254,58 +254,56 @@ jQuery(document).ready(function ($) {
         }
     };
 
-    BrizyAiButton.appendTo($('.brizy-buttons.is-classic-editor'));
-
     var BrizyGutenberg = {
 
         insertBrizyBtn: function () {
 
-        	if ( $( '.edit-post-header-toolbar .brizy-buttons' ).length ) {
-        		return;
-	        }
-
-            var guten = $( '#editor' ),
-                html = $( '#brizy-gutenberg-btn-middle' ).html();
-
-            if ( ! guten ) {
+            if ($('.edit-post-header-toolbar .brizy-buttons').length) {
                 return;
             }
 
-	        guten.find( '.edit-post-header-toolbar' ).append( $( '#brizy-gutenberg-btn-switch-mode' ).html() );
+            var guten = $('#editor'),
+                html = $('#brizy-gutenberg-btn-middle').html();
 
-	        if ( html && ! $( '.brizy-buttons-gutenberg' ).length ) {
+            if (!guten) {
+                return;
+            }
+
+            guten.find('.edit-post-header-toolbar').append($('#brizy-gutenberg-btn-switch-mode').html());
+
+            if (html && !$('.brizy-buttons-gutenberg').length) {
                 if (document.querySelector('.block-editor-writing-flow')) {
                     guten.find('.edit-post-visual-editor .block-editor-writing-flow').append(html);
                     guten.find('.editor-post-text-editor').after(html);
                     guten.find('.is-root-container.is-layout-flow').hide();
                 } else {
 
-                    var gutenbergIframe = $( 'iframe[name="editor-canvas"]' );
+                    var gutenbergIframe = $('iframe[name="editor-canvas"]');
 
-                    if ( gutenbergIframe.length > 0 ) {
+                    if (gutenbergIframe.length > 0) {
 
-                        gutenbergIframe.on( 'load', function () {
-                            var gutenbergContentHide = gutenbergIframe.contents().find( 'body > .is-root-container.is-layout-flow' );
+                        gutenbergIframe.on('load', function () {
+                            var gutenbergContentHide = gutenbergIframe.contents().find('body > .is-root-container.is-layout-flow');
 
-                            if ( gutenbergContentHide.length > 0 ) {
+                            if (gutenbergContentHide.length > 0) {
 
                                 gutenbergContentHide.hide();
 
-                                if ( !gutenbergIframe.contents().find( 'div.brizy-buttons.brizy-buttons-gutenberg' ).length > 0 ) {
-                                    gutenbergIframe.contents().find( '.edit-post-visual-editor__post-title-wrapper' ).after( html );
-                                    gutenbergIframe.contents().find( '.brizy-buttons-gutenberg .button-primary' ).addClass('components-button block-editor-media-placeholder__button block-editor-media-placeholder__upload-button is-primary');
-                                    gutenbergIframe.contents().find( '.brizy-buttons-gutenberg .button-primary' ).parent('a').on('click', function (e) {
+                                if (!gutenbergIframe.contents().find('div.brizy-buttons.brizy-buttons-gutenberg').length > 0) {
+                                    gutenbergIframe.contents().find('.edit-post-visual-editor__post-title-wrapper').after(html);
+                                    gutenbergIframe.contents().find('.brizy-buttons-gutenberg .button-primary').addClass('components-button block-editor-media-placeholder__button block-editor-media-placeholder__upload-button is-primary');
+                                    gutenbergIframe.contents().find('.brizy-buttons-gutenberg .button-primary').parent('a').on('click', function (e) {
                                         e.preventDefault();
                                         window.parent.location.href = $(this).attr('href');
                                     });
                                 }
 
-                                $( '.brizy-buttons-gutenberg' ).css( {
+                                $('.brizy-buttons-gutenberg').css({
                                     'margin-bottom': '0',
                                     'position': 'absolute'
-                                } );
+                                });
                             }
-                        } );
+                        });
                     }
                 }
             }
@@ -314,16 +312,16 @@ jQuery(document).ready(function ($) {
         },
 
         init: function () {
-	        var self = this;
+            var self = this;
 
-	        if (typeof wp.data != 'undefined') {
-		        wp.data.subscribe(function () {
-			        setTimeout( function () {
-				        self.insertBrizyBtn();
-			        }, 1 );
+            if (typeof wp.data != 'undefined') {
+                wp.data.subscribe(function () {
+                    setTimeout(function () {
+                        self.insertBrizyBtn();
+                    }, 1);
 
                     // if we are on wordpress.com
-                    if ( window.location.href.includes("wordpress.com") ) {
+                    if (window.location.href.includes("wordpress.com")) {
                         $("#editor .is-desktop-preview div.brizy-buttons.brizy-buttons-gutenberg a:first").on("click", function (e) {
                             e.preventDefault();
 
@@ -336,36 +334,42 @@ jQuery(document).ready(function ($) {
         }
     };
 
+    var BrizyClassicEditor = {
+        init: function () {
+            BrizyAiButton.appendTo($('.brizy-buttons.is-classic-editor'));
+        }
+    }
+
     var BrizyMaintenance = {
-        getSelectAccessRole: function() {
-            return $( '#brizy-maintenance-access-role' );
+        getSelectAccessRole: function () {
+            return $('#brizy-maintenance-access-role');
         },
-        getSelectMode: function() {
-            return $( 'select[name="brizy-maintenance[mode]"]' );
+        getSelectMode: function () {
+            return $('select[name="brizy-maintenance[mode]"]');
         },
         handleEvents: function () {
-            this.getSelectAccessRole().change( function ( e ) {
-                var display = 'custom' === $( this ).val() ? 'table-cell' : 'none';
-                $( '.brizy-maintenance-roles th, .brizy-maintenance-roles td' ).css( 'display', display );
-            } );
+            this.getSelectAccessRole().change(function (e) {
+                var display = 'custom' === $(this).val() ? 'table-cell' : 'none';
+                $('.brizy-maintenance-roles th, .brizy-maintenance-roles td').css('display', display);
+            });
 
-            this.getSelectMode().change( function ( e ) {
-                var self = $( this ),
-                    trs  = self.closest( 'table' ).find( 'tr:not(#brizy-maintenance-js-mode)' );
+            this.getSelectMode().change(function (e) {
+                var self = $(this),
+                    trs = self.closest('table').find('tr:not(#brizy-maintenance-js-mode)');
 
-                if ( self.val() ) {
-                    trs.removeClass( 'hidden' );
+                if (self.val()) {
+                    trs.removeClass('hidden');
                 } else {
-                    trs.addClass( 'hidden' );
+                    trs.addClass('hidden');
                 }
-            } );
+            });
 
-            this.getSelectMode().trigger( 'change' );
-            this.getSelectAccessRole().trigger( 'change' );
+            this.getSelectMode().trigger('change');
+            this.getSelectAccessRole().trigger('change');
         },
 
         init: function () {
-            if ( ! this.getSelectAccessRole().length ) {
+            if (!this.getSelectAccessRole().length) {
                 return;
             }
 
@@ -376,116 +380,117 @@ jQuery(document).ready(function ($) {
     var DemoImport = {
 
         registerEvents: function () {
-            var searchInput = $( '.js-demo-input-search' ),
-                selectTerm  = $( '.brz-demo-filter-terms select' ),
-                filterLinks = $( '.brz-wrap-demodata .js-filter-link' );
+            var searchInput = $('.js-demo-input-search'),
+                selectTerm = $('.brz-demo-filter-terms select'),
+                filterLinks = $('.brz-wrap-demodata .js-filter-link');
 
-            if ( ! searchInput.length ) {
+            if (!searchInput.length) {
                 return;
             }
 
-            filterLinks.click( function( e ) {
+            filterLinks.click(function (e) {
                 e.preventDefault();
-                filterLinks.removeClass( 'current' );
-                $( this ).addClass( 'current' );
+                filterLinks.removeClass('current');
+                $(this).addClass('current');
 
-                if ( ! $( this ).attr( 'data-sort' ) ) {
-                    searchInput.val( '' );
-                    selectTerm.val( '' ).trigger( 'change' );
+                if (!$(this).attr('data-sort')) {
+                    searchInput.val('');
+                    selectTerm.val('').trigger('change');
                 }
 
                 DemoImport.searchDemo();
-            } );
+            });
 
-            $( '.theme-screenshot, .more-details, .theme-name' ).click( function( e ) {
-                window.open( $( this ).closest( '.theme' ).attr( 'data-preview-link' ), '_blank' );
-            } );
+            $('.theme-screenshot, .more-details, .theme-name').click(function (e) {
+                window.open($(this).closest('.theme').attr('data-preview-link'), '_blank');
+            });
 
-            searchInput.on('keyup change search', function() {
+            searchInput.on('keyup change search', function () {
                 DemoImport.searchDemo();
             });
 
             selectTerm.select2();
 
-            selectTerm.change( function () {
+            selectTerm.change(function () {
                 DemoImport.searchDemo();
-            } );
+            });
 
-            $( '.brz-demo-item-install' ).click( function( e ) {
+            $('.brz-demo-item-install').click(function (e) {
                 e.preventDefault();
-                $( '.brz-demo-modal-content' ).html( $( '#brz-demo-modal-content-install' ).html() );
-                $( '.brz-demo-modal' ).addClass( 'brz-demo-show-modal' );
-                $( '.js-demo-install' ).attr( 'data-demo-id', $( this ).attr( 'data-demo-id' ) );
-            } );
+                $('.brz-demo-modal-content').html($('#brz-demo-modal-content-install').html());
+                $('.brz-demo-modal').addClass('brz-demo-show-modal');
+                $('.js-demo-install').attr('data-demo-id', $(this).attr('data-demo-id'));
+            });
 
-            $( document ).on( 'click', '.js-demo-data-close-modal, .brz-demo-show-modal', function( e ) {
+            $(document).on('click', '.js-demo-data-close-modal, .brz-demo-show-modal', function (e) {
 
-                var it = $( e.target );
+                var it = $(e.target);
 
-                if ( ( it.closest( '.brz-demo-modal-content' ).length !== 0 || ! $( '.brz-demo-modal-content-install-container' ).length ) && ! it.is( '.js-demo-data-close-modal' ) ) {
-                   return;
+                if ((it.closest('.brz-demo-modal-content').length !== 0 || !$('.brz-demo-modal-content-install-container').length) && !it.is('.js-demo-data-close-modal')) {
+                    return;
                 }
 
-                $( '.brz-demo-modal' ).removeClass( 'brz-demo-show-modal' );
-            } );
+                $('.brz-demo-modal').removeClass('brz-demo-show-modal');
+            });
 
-            $( document ).on( 'click', '.js-demo-install', function( e ) {
+            $(document).on('click', '.js-demo-install', function (e) {
                 e.preventDefault();
 
-                $( '.brz-demo-modal-content' ).html( $( '#brz-demo-modal-content-installing' ).html() );
+                $('.brz-demo-modal-content').html($('#brz-demo-modal-content-installing').html());
 
-                $.ajax( {
+                $.ajax({
                     url: Brizy_Admin_Data.url,
                     type: 'POST',
                     data: {
                         'action': 'brizy-import-demo',
                         'nonce': Brizy_Admin_Data.nonce,
-                        'demo': $( this ).attr( 'data-demo-id' ),
-                        'rmContent': $( this ).attr( 'data-rm-content' )
+                        'demo': $(this).attr('data-demo-id'),
+                        'rmContent': $(this).attr('data-rm-content')
                     },
-                    success: function(response) {
-                        $( '.brz-demo-modal-content' ).html( $( '#brz-demo-modal-content-success' ).html() );
-                        if ( response.data.editHomepageUrl ) {
-                            $( '.js-demo-data-edit-homepage' ).attr( 'href', response.data.editHomepageUrl );
+                    success: function (response) {
+                        $('.brz-demo-modal-content').html($('#brz-demo-modal-content-success').html());
+                        if (response.data.editHomepageUrl) {
+                            $('.js-demo-data-edit-homepage').attr('href', response.data.editHomepageUrl);
                         }
                     },
-                    error: function() {
-                        $( '.brz-demo-modal-content' ).html( $( '#brz-demo-modal-content-error' ).html() );
+                    error: function () {
+                        $('.brz-demo-modal-content').html($('#brz-demo-modal-content-error').html());
                     }
-                } );
-            } );
+                });
+            });
         },
         searchDemo: function () {
-            var search      = $( '.js-demo-input-search' ).val(),
-                searchRegex = new RegExp( search.replace(/[.*+?^${}()|[\]\\]/g, ''), 'i' ),
-                term        = $( '.brz-demo-filter-terms select' ).val(),
-                filterLink  = $( '.js-filter-link.current' ).attr( 'data-sort' ),
-                count       = 0;
+            var search = $('.js-demo-input-search').val(),
+                searchRegex = new RegExp(search.replace(/[.*+?^${}()|[\]\\]/g, ''), 'i'),
+                term = $('.brz-demo-filter-terms select').val(),
+                filterLink = $('.js-filter-link.current').attr('data-sort'),
+                count = 0;
 
-            $( '.brz-wrap-demodata .themes .theme' ).each( function() {
-                var keywords          = $( this ).data( 'keywords' ),
-                    name              = $( this ).data( 'name' ),
-                    terms             = String( $( this ).data( 'terms' ) ).split(','),
-                    matchBySearch     = search === '' || searchRegex.test( keywords ) || searchRegex.test( name ),
-                    matchByTerms      = term === '' || terms.includes( term ),
-                    matchByFilterLink = filterLink === '' || ( filterLink === 'pro' && $( this ).hasClass( 'brz-demo-is-pro' ) ) || ( filterLink === 'free' && $( this ).hasClass( 'brz-demo-is-free' ) );
+            $('.brz-wrap-demodata .themes .theme').each(function () {
+                var keywords = $(this).data('keywords'),
+                    name = $(this).data('name'),
+                    terms = String($(this).data('terms')).split(','),
+                    matchBySearch = search === '' || searchRegex.test(keywords) || searchRegex.test(name),
+                    matchByTerms = term === '' || terms.includes(term),
+                    matchByFilterLink = filterLink === '' || (filterLink === 'pro' && $(this).hasClass('brz-demo-is-pro')) || (filterLink === 'free' && $(this).hasClass('brz-demo-is-free'));
 
-                if ( matchBySearch && matchByTerms && matchByFilterLink ) {
-                    $( this ).fadeIn( 'slow' );
+                if (matchBySearch && matchByTerms && matchByFilterLink) {
+                    $(this).fadeIn('slow');
                     count++;
                 } else {
-                    $( this ).fadeOut( 'slow' );
+                    $(this).fadeOut('slow');
                 }
             });
 
-            $( '.brz-wrap-demodata .count' ).text( count );
+            $('.brz-wrap-demodata .count').text(count);
         }
     };
 
-    $( function () {
+    $(function () {
         BrizyGutenberg.init();
+        BrizyClassicEditor.init();
         BrizyFeedbackDialog.init();
         BrizyMaintenance.init();
         DemoImport.registerEvents();
-    } );
+    });
 });
