@@ -59,10 +59,10 @@ class Brizy_Public_AttachmentProxy extends Brizy_Public_AbstractProxy {
 		if ( is_numeric( $hash ) ) {
 			$attachment = get_post( (int) $hash );
 		} else {
-			$attachment = $this->getAttachmentByPostId( $hash );
+			$attachment = $this->getAttachmentByAttachmentUId( $hash );
 
 			if ( ! $attachment ) {
-				$attachment = $this->getAttachmentByAttachmentUId( $hash );
+				$attachment = $this->getAttachmentByPostId( $hash );
 			}
 		}
 
