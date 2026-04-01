@@ -132,3 +132,23 @@
     inset-inline-end: 30px;
   }
 }
+
+.brz:not(.brz-ed) {
+  .brz-slick-slider__pause-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 0;
+    background: transparent;
+    font-size: inherit;
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+  }
+
+  .brz-slick-slider__arrow:focus-visible,
+  .brz-slick-slider__dots li button:focus-visible,
+  .brz-slick-slider__pause-button:focus-visible {
+    outline: 2px solid #2563eb;
+  }
+}

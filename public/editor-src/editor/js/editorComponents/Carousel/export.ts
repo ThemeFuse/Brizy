@@ -4,9 +4,11 @@ import {
   attachSliderControls,
   makePausePlayItem
 } from "../../utils/export/slider";
+import { CarouselAccessibility } from "../accessibility";
 
 const SECTION_SLIDER_CLASS = "brz-slick-slider__section";
 const sliderPausedState = new WeakMap<Element, boolean>();
+let carouselInstance = 0;
 
 const observer = new IntersectionObserver(
   (entries) => {
@@ -36,7 +38,10 @@ export default function ($node: JQuery) {
     $svg.remove();
 
     return (className: string) => {
-      return `<div class="brz-slick-slider__arrow ${className}">${svgHTML}</div>`;
+      const isNext = className.includes("next");
+      const ariaLabel = isNext ? "Next slide" : "Previous slide";
+
+      return `<button type="button" class="brz-slick-slider__arrow ${className}" aria-label="${ariaLabel}">${svgHTML}</button>`;
     };
   };
 
@@ -84,6 +89,7 @@ export default function ($node: JQuery) {
     const swipe = data.swipe;
     const responsive = JSON.parse(decodeURIComponent(data.responsive));
     const playPauseItem = makePausePlayItem(_this);
+    const instanceId = carouselInstance++;
 
     const isInsideSectionSlider = !!$this.closest(`.${SECTION_SLIDER_CLASS}`).length;
 
@@ -127,6 +133,7 @@ export default function ($node: JQuery) {
     const getArrow = makeArrow(_this);
 
     sliderPausedState.set(_this, false);
+    $this.attr("data-slider-paused", "false");
 
     const initCarouselSlick = () => {
       const $slick = $this.slick({
@@ -149,8 +156,16 @@ export default function ($node: JQuery) {
           : undefined,
         autoplay: false,
         autoplaySpeed: autoPlaySpeed,
-        rtl: isRtl
+        rtl: isRtl,
+        accessibility: false,
+        pauseOnFocus: false
       });
+
+      const carouselAccessibility = new CarouselAccessibility({
+        slick: $slick,
+        instanceId
+      });
+      carouselAccessibility.init();
 
       if (autoPlay) {
         observer.observe(_this);

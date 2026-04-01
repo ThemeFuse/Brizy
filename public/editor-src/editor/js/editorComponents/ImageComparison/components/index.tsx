@@ -149,6 +149,8 @@ const Content = (props: ImageContent): JSX.Element => {
               "brz-image-comparison__range--editor": _isEditor,
               [`brz-image-comparison__range--${sliderType}`]: sliderType
             })}
+            aria-label="Image comparison slider"
+            aria-orientation={isVertical ? "vertical" : "horizontal"}
           />}
 
           {/* Background image (after/hover image) - rendered first so it's behind */}

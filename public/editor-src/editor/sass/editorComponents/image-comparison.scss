@@ -98,6 +98,10 @@
     }
   }
 
+  &:has(.brz-image-comparison__range:focus-visible) &__thumb {
+    outline: 2px solid #2563eb;
+  }
+
   &__picture {
     position: absolute;
     top: 0;

@@ -55,6 +55,11 @@
     color: inherit;
   }
 
+  &-option--active {
+    background: #2563eb !important;
+    color: #fff !important;
+  }
+
   // #region Select2
   .brz-select {
     visibility: hidden;
@@ -69,6 +74,7 @@
       background-color: inherit;
       border: inherit;
       border-radius: inherit;
+      outline: none;
 
       .select2-selection__rendered {
         display: flex;
@@ -117,6 +123,10 @@
         color: inherit;
       }
     }
+  }
+
+  &:has(.select2-selection:focus-visible) {
+    outline: 2px solid #2563eb;
   }
 
   // #endregion

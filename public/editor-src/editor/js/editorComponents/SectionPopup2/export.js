@@ -1,6 +1,7 @@
 import $ from "jquery";
 import { makeAttr, makeDataAttrString } from "visual/utils/i18n/attribute";
 import { uuid } from "visual/utils/uuid";
+import { SectionPopup2Accessibility } from "../accessibility";
 import "./popupsPlugin";
 
 // do not close popup is element with some of this className was clicked
@@ -62,6 +63,15 @@ export default function ($node) {
 
   // append the popup to body to avoid problems with z-index
   const rootBody = root.ownerDocument.body;
+
+  // Accessibility: dialog semantics + ESC to close (when allowed)
+  root
+    .querySelectorAll(".brz-popup2")
+    .forEach((popup) => {
+      if (popup instanceof HTMLElement) {
+        new SectionPopup2Accessibility(popup).init();
+      }
+    });
 
   root
     .querySelectorAll(makeDataAttrString({ name: "link-type", value: "popup" }))

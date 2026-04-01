@@ -62,6 +62,7 @@
 
   &-big-image {
     position: relative;
+    outline: none;
 
     &-content {
       height: 100%;
@@ -125,6 +126,12 @@
 }
 .brz .brz-image__gallery-filter__item {
   cursor: pointer;
+  outline: none;
+}
+.brz .brz-image__gallery-filter__item:focus-visible,
+.brz .brz-image__gallery-item:focus-visible,
+.brz .brz-image__gallery-big-image:focus-visible .brz-image {
+  outline: 2px solid #2563eb;
 }
 .brz .brz-image__gallery-filter__item:first-child {
   margin-left: 0 !important;

@@ -14,12 +14,14 @@ import { makeAttr } from "visual/utils/i18n/attribute";
 import * as Str from "visual/utils/reader/string";
 import { parseFromString } from "visual/utils/string";
 import { uuid } from "visual/utils/uuid";
-import { AnimatedHamburgerIcon } from "./HamburgerIcon";
 import {
+  MMenuAccessibilityKeyboard,
   MenuAccessibilityKeyboard,
   MenuItemApi,
   MenuItemType
-} from "./accessibility";
+} from "../accessibility";
+import type { MenuItem } from "../accessibility";
+import { AnimatedHamburgerIcon } from "./HamburgerIcon";
 import { MMenuAnimationTypes, Settings } from "./types";
 import {
   getParentMegaMenuUid,
@@ -238,7 +240,9 @@ const setOpen =
   };
 
 export const initAccesibility = (root: HTMLElement) => {
-  const menus = root.querySelectorAll(".brz-menu:not(.brz-menu__mmenu)");
+  const menus = root.querySelectorAll<HTMLElement>(
+    ".brz-menu:not(.brz-menu__mmenu)"
+  );
 
   menus.forEach((menu) => {
     const isAccessibleMenu =
@@ -250,20 +254,44 @@ export const initAccesibility = (root: HTMLElement) => {
       return;
     }
 
-    const menuItems = menu.querySelectorAll<HTMLElement>(".brz-menu__item");
-    const menuItemsArray = Array.from(menuItems);
+    const belongsToMenu = (item: HTMLElement): boolean =>
+      item.closest<HTMLElement>(".brz-menu") === menu;
 
-    const menuItemsWithType = menuItemsArray.map((item) => {
+    const menuItemsArray = Array.from(
+      menu.querySelectorAll<HTMLElement>(".brz-menu__item")
+    ).filter(belongsToMenu);
+
+    const menuItemsWithType: MenuItem[] = menuItemsArray.map((item) => {
       const type = MenuAccessibilityKeyboard.getMenuItemType(item);
-      const children = Array.from(
-        item.querySelectorAll<HTMLElement>(".brz-menu__item")
-      );
+      if (type === MenuItemType.Link) {
+        return {
+          item,
+          type: MenuItemType.Link
+        } as unknown as MenuItem;
+      }
 
       let api: MenuItemApi = {
         open: () => {},
         close: () => {},
         isOpen: () => false
       };
+
+      const submenu =
+        item.querySelector<HTMLElement>(".brz-menu__sub-menu") ||
+        item.querySelector<HTMLElement>(".brz-mega-menu__portal");
+
+      // One-level (direct) children only, so Arrow navigation stays in the correct menu level.
+      const children: HTMLElement[] =
+        submenu
+          ? Array.from(submenu.querySelectorAll<HTMLElement>(".brz-menu__item"))
+              .filter(
+                (el) =>
+                  belongsToMenu(el) &&
+                  el.closest<HTMLElement>(
+                    ".brz-menu__sub-menu, .brz-mega-menu__portal"
+                  ) === submenu
+              )
+          : [];
 
       if (type === MenuItemType.MegaMenu) {
         const megaMenu = megaMenuItems.get(item);
@@ -282,10 +310,13 @@ export const initAccesibility = (root: HTMLElement) => {
         type,
         api,
         children
-      };
+      } as unknown as MenuItem;
     });
 
-    const menuAccessibility = new MenuAccessibilityKeyboard(menuItemsWithType);
+    const menuAccessibility = new MenuAccessibilityKeyboard(
+      menu,
+      menuItemsWithType
+    );
     menuAccessibility.init();
   });
 };
@@ -648,6 +679,8 @@ export default function ($node: JQuery): void {
 
     const iconAnimation = icon.getAttribute(makeAttr("brz-mmenu-icon"));
     let animatedHamburgerIcon: AnimatedHamburgerIcon | undefined;
+    let menuElement: HTMLElement | null = null;
+    let mMenuAccessibility: MMenuAccessibilityKeyboard | undefined;
 
     if (iconAnimation) {
       animatedHamburgerIcon = new AnimatedHamburgerIcon(icon, {
@@ -674,15 +707,18 @@ export default function ($node: JQuery): void {
         "openPanel:after": (panel: HTMLElement): void => {
           // Emit Menu panel opened
           window.Brz.emit("elements.mmenu.panel.opened", panel);
+          mMenuAccessibility?.onPanelOpened(panel);
         },
         "closePanel:after": (panel: HTMLElement): void => {
           // Emit Menu panel opened
           window.Brz.emit("elements.mmenu.panel.closed", panel);
+          mMenuAccessibility?.onPanelClosed(panel);
         },
         "open:start": function (): void {
           // Emit Menu panel opened
           // @ts-expect-error: mmenu function context
           window.Brz.emit("elements.mmenu.open", this.node.pnls);
+          mMenuAccessibility?.onMenuOpened();
         },
         "close:start": function (): void {
           // Emit Menu panel opened
@@ -693,6 +729,7 @@ export default function ($node: JQuery): void {
         },
         "close:finish": function (): void {
           if (needToOpen) {
+            mMenuAccessibility?.onMenuClosed(false);
             const mMenuNode = root.querySelector(`${needToOpen}.brz-mm-menu`);
 
             // @ts-expect-error mmApi is added by MMenu
@@ -701,6 +738,8 @@ export default function ($node: JQuery): void {
               mMenuNode.mmApi.open();
               needToOpen = undefined;
             }
+          } else {
+            mMenuAccessibility?.onMenuClosed();
           }
         }
       }
@@ -733,6 +772,31 @@ export default function ($node: JQuery): void {
     }
 
     const menuAPI = menu.API;
+    menuElement =
+      root.querySelector<HTMLElement>(`${mmenuId}.brz-mm-menu`) ??
+      node.querySelector<HTMLElement>(mmenuId);
+
+    if (menuElement) {
+      mMenuAccessibility = new MMenuAccessibilityKeyboard(menuElement, {
+        trigger: icon,
+        label: mmenuTitle || "Menu",
+        menuApi: {
+          open: () => {
+            menuAPI?.open();
+          },
+          close: () => {
+            menuAPI?.close();
+          },
+          openPanel: (panel) => {
+            menuAPI?.openPanel(panel);
+          },
+          closePanel: (panel) => {
+            menuAPI?.closePanel(panel);
+          }
+        }
+      });
+      mMenuAccessibility.init();
+    }
 
     icon.addEventListener("click", () => {
       if (currentMenuOpened) {

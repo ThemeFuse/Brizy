@@ -3,9 +3,24 @@
 
 .brz:not(.brz-ed) .brz-login {
   .brz-login-form,
-  .brz-login__authorized,
-  .brz-control__check-group .brz-input {
+  .brz-login__authorized {
     display: none;
+  }
+
+  .brz-control__check-group .brz-input {
+    // Keep the native input accessible (focusable/screen readers),
+    // but visually hidden so the custom UI is used.
+    position: absolute;
+    opacity: 0;
+    width: 1px;
+    height: 1px;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    overflow: hidden;
+    white-space: nowrap;
   }
 }
 
@@ -155,6 +170,20 @@
   .brz-login-form__field-terms-agreement {
     width: 100%;
     cursor: pointer;
+  }
+
+  .brz-login__field .brz-input:focus-visible,
+  .brz-login-form__field:focus-visible span,
+  .brz-control__check-group .brz-input:focus-visible + .brz-label {
+    outline: 2px solid #2563eb;
+  }
+
+  .brz-btn-submit:focus-visible {
+    border: 2px solid #2563eb !important;
+  }
+
+  .brz-login-form__field:focus-visible {
+    outline: none;
   }
 
   .brz-login-form__field-remember-off.brz-login-form__field-Remember,

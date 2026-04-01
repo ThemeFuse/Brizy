@@ -138,17 +138,20 @@ export class Dropdown {
   };
 
   public open(): void {
+    // IMPORTANT: toggle `isOpen()` state synchronously.
+    // `menuAccessibility.ts` wraps `api.open()` and immediately reads `api.isOpen()`
+    // to sync ARIA. Popper's `update()` is async, so we must add the active class
+    // before the update promise resolves.
+    this.item?.classList.add("brz-menu__item-dropdown--active");
+
     const popper = this.itemPopper;
 
     if (popper) {
-      popper.update().then(() => {
-        this.item?.classList.add("brz-menu__item-dropdown--active");
-        this.settings.onOpen?.();
-      });
-    } else {
-      this.item?.classList.add("brz-menu__item-dropdown--active");
-      this.settings.onOpen?.();
+      popper.update().then(() => this.settings.onOpen?.());
+      return;
     }
+
+    this.settings.onOpen?.();
   }
 
   public isOpen(): boolean {

@@ -10,6 +10,33 @@ interface MapData {
 
 const maps: MapData[] = [];
 
+const getMapLabel = (src: string | null): string => {
+  if (!src) return "Embedded map";
+
+  try {
+    const url = new URL(src, window.location.origin);
+    const address = url.searchParams.get("q")?.trim();
+
+    return address ? `Map showing ${address}` : "Embedded map";
+  } catch {
+    return "Embedded map";
+  }
+};
+
+const setMapAccessibilityAttributes = (
+  mapWrapper: HTMLElement,
+  iframe: HTMLIFrameElement
+): void => {
+  const src =
+    iframe.getAttribute("src") ?? iframe.getAttribute("data-lazy-src") ?? "";
+  const label = getMapLabel(src);
+
+  mapWrapper.setAttribute("role", "region");
+  mapWrapper.setAttribute("aria-label", label);
+  iframe.setAttribute("title", label);
+  iframe.setAttribute("aria-label", label);
+};
+
 const setParentListeners = (parent: HTMLElement): void => {
   // Prevent duplicate listener attachment
   if (parent.hasAttribute(LISTENER_MARKER)) return;
@@ -84,6 +111,8 @@ const lazyLoadMap = (mapWrapper: HTMLElement): void => {
     return;
   }
 
+  setMapAccessibilityAttributes(mapWrapper, iframe);
+
   // Remove src to prevent immediate loading (only for off-screen maps)
   iframe.setAttribute("data-lazy-src", originalSrc);
   iframe.removeAttribute("src");
@@ -108,6 +137,12 @@ export default function ($node: JQuery): void {
     );
 
     if (mapWrapper) {
+      const iframe = mapWrapper.querySelector<HTMLIFrameElement>("iframe");
+
+      if (iframe) {
+        setMapAccessibilityAttributes(mapWrapper, iframe);
+      }
+
       lazyLoadMap(mapWrapper);
     }
   });

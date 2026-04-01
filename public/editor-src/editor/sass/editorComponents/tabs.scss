@@ -3,6 +3,7 @@
 // Tabs
 .brz .brz-tabs {
   min-width: 0;
+  --brz-tabs-focus-color: #2563eb;
 
   &--horizontal {
     flex: 1 1 auto;
@@ -35,8 +36,16 @@
       align-items: center;
       flex-direction: row;
       text-decoration: inherit;
+
+      &.brz-tabs__nav--button.brz-tabs__nav--button:focus-visible {
+        position: relative;
+        z-index: 2;
+        border: 2px solid var(--brz-tabs-focus-color) !important;
+        outline: none;
+      }
     }
   }
+
   &__nav--item {
     position: relative;
     list-style: none;

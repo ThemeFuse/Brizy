@@ -3,9 +3,32 @@ import { makeUrl } from "visual/utils/api/utils";
 import { getCurrentDevice } from "visual/utils/export";
 import { makeAttr } from "visual/utils/i18n/attribute";
 import { videoData as getVideoData } from "visual/utils/video";
+import { VideoPlaylistAccessibility } from "../accessibility";
 import { handlePlaceholderControlsClick, handleVideo } from "./utils";
 
 let initResize = false;
+let accessibilityInstance = 0;
+const accessibilityMap = new WeakMap<HTMLElement, VideoPlaylistAccessibility>();
+
+const getAccessibility = (
+  playlist: HTMLElement
+): VideoPlaylistAccessibility => {
+  const existingAccessibility = accessibilityMap.get(playlist);
+
+  if (existingAccessibility) {
+    return existingAccessibility;
+  }
+
+  const accessibility = new VideoPlaylistAccessibility({
+    root: playlist,
+    instanceId: accessibilityInstance++
+  });
+
+  accessibility.init();
+  accessibilityMap.set(playlist, accessibility);
+
+  return accessibility;
+};
 
 const fn: ExportFunction = ($node) => {
   const node = $node.get(0);
@@ -14,6 +37,12 @@ const fn: ExportFunction = ($node) => {
   let needRefreshOnDesktop = false;
 
   node.querySelectorAll(".brz-video-playlist").forEach((playlist) => {
+    if (!(playlist instanceof HTMLElement)) {
+      return;
+    }
+
+    const accessibility = getAccessibility(playlist);
+
     playlist.addEventListener("click", (e) => {
       const { currentTarget, target } = e;
       const hasValidTarget =
@@ -145,6 +174,8 @@ const fn: ExportFunction = ($node) => {
         customVideo?.classList.remove("brz-d-none");
         placeholder?.classList.add("brz-d-none");
       }
+
+      window.requestAnimationFrame(() => accessibility.sync());
     });
   });
 
@@ -159,6 +190,10 @@ const fn: ExportFunction = ($node) => {
 
         needRefreshOnDesktop = false;
         playlists.forEach((playlist) => {
+          const accessibility =
+            playlist instanceof HTMLElement
+              ? getAccessibility(playlist)
+              : null;
           const sidebar = playlist.querySelector(".brz-video-playlist-sidebar");
           const currentPlaylistItem = sidebar?.querySelector(
             ".brz-video-playlist-video-item--active"
@@ -203,6 +238,8 @@ const fn: ExportFunction = ($node) => {
               customVideo?.querySelector("video")?.setAttribute("src", "");
             }
           }
+
+          accessibility?.sync();
         });
       }
     });
@@ -213,6 +250,7 @@ const fn: ExportFunction = ($node) => {
     popup
       .querySelectorAll<HTMLElement>(".brz-video-playlist")
       .forEach((playlist) => {
+        const accessibility = getAccessibility(playlist);
         const externalSrc = playlist
           .querySelector(".brz-iframe")
           ?.getAttribute("src");
@@ -225,6 +263,8 @@ const fn: ExportFunction = ($node) => {
           const video = playlist.querySelector("video");
           video?.pause();
         }
+
+        accessibility.sync();
       });
   });
 };

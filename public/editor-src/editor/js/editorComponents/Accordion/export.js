@@ -1,6 +1,10 @@
 import $ from "jquery";
+import { AccordionAccessibility } from "../accessibility";
 import { makeAttr } from "visual/utils/i18n/attribute";
 import { collapse, expand } from "./utils";
+
+const activeClassName = "brz-accordion__item--active";
+let accordionInstance = 0;
 
 export default function ($node) {
   $node.find(".brz-accordion").each(function () {
@@ -14,9 +18,54 @@ export default function ($node) {
     const contents = $(_this)
       .find("> .brz-accordion__item > .brz-accordion__content")
       .toArray();
+    const instanceId = accordionInstance++;
+    const accordionAccessibility = new AccordionAccessibility({
+      items: $(_this)
+        .find("> .brz-accordion__item")
+        .toArray()
+        .map((item, index) => {
+          const button = item.querySelector(":scope > .brz-accordion__nav");
+          const panel = item.querySelector(":scope > .brz-accordion__content");
+
+          if (
+            !(button instanceof HTMLElement) ||
+            !(panel instanceof HTMLElement)
+          ) {
+            return null;
+          }
+
+          const buttonId = `brz-accordion-button-${instanceId}-${index}`;
+          const panelId = `brz-accordion-panel-${instanceId}-${index}`;
+
+          button.setAttribute("id", buttonId);
+          button.setAttribute("aria-controls", panelId);
+          panel.setAttribute("id", panelId);
+          panel.setAttribute("role", "region");
+          panel.setAttribute("aria-labelledby", buttonId);
+
+          return {
+            item,
+            button,
+            panel,
+            keepOnePanelOpen:
+              button.getAttribute(makeAttr("collapsible")) === "on",
+            api: {
+              open: () => {},
+              close: () => {},
+              toggle: () => button.click(),
+              isOpen: () => item.classList.contains(activeClassName)
+            }
+          };
+        })
+        .filter(Boolean),
+      filterButtons: $(_this)
+        .find(".brz-accordion__filter__button, .brz-accordion__filter__item")
+        .toArray()
+    });
+
+    accordionAccessibility.init();
 
     $accordionNavItems.on("click", function () {
-      const activeClassName = "brz-accordion__item--active";
       const $item = $(this).closest(".brz-accordion__item");
       const $itemContent = $item.find("> .brz-accordion__content");
       const itemIndex = $accordionFilter.length
@@ -106,6 +155,8 @@ export default function ($node) {
           $item.addClass(activeClassName);
         }
       }
+
+      accordionAccessibility.sync();
     });
 
     $accordionFilter.on("click", function ({ target }) {
@@ -134,6 +185,8 @@ export default function ($node) {
             .removeClass(hiddenClassName);
         }
       }
+
+      accordionAccessibility.sync();
     });
   });
 }

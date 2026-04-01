@@ -42,6 +42,9 @@ export const addAlerts = (
   (messages || ["An error has occured."]).forEach((message) => {
     const alert = document.createElement("div");
     alert.className = `brz-login__alert brz-login__alert--${type}`;
+    alert.setAttribute("role", "alert");
+    alert.setAttribute("aria-live", type === "error" ? "assertive" : "polite");
+    alert.setAttribute("aria-atomic", "true");
     alert.innerHTML = message;
 
     form.parentNode?.appendChild(alert);

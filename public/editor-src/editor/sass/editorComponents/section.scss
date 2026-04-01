@@ -21,6 +21,10 @@
     align-items: center;
     width: 100%;
 
+    > .brz-link-container:focus-visible {
+      border: 2px solid #2563eb;
+    }
+
     > .brz-bg {
       flex-wrap: wrap;
       align-items: inherit;

@@ -1,4 +1,5 @@
 import $ from "jquery";
+import { TabsAccessibility } from "../accessibility";
 import { makeAttr } from "visual/utils/i18n/attribute";
 
 function changeTab($tabs, target) {
@@ -39,14 +40,90 @@ export default function ($node) {
     const $this = $(this);
     const action = $this.attr(makeAttr("action"));
     const events = action === "hover" ? "mouseenter" : "click";
+    const orientation = $this.hasClass("brz-tabs--vertical")
+      ? "vertical"
+      : "horizontal";
+    const instanceId = `${Date.now()}-${Math.random().toString(36).slice(2)}`;
+    const $desktopNavItems = $this.children(".brz-tabs__nav").children("li");
+    const $tabsContent = $this
+      .children(".brz-tabs__content")
+      .children(".brz-tabs__items");
+    const tabsAccessibility = new TabsAccessibility({
+      desktopItems: $desktopNavItems
+        .toArray()
+        .map((item, index) => {
+          const button = item.querySelector(".brz-tabs__nav--button");
+          const panel = $tabsContent.get(index);
+
+          if (!(button instanceof HTMLElement) || !(panel instanceof HTMLElement)) {
+            return null;
+          }
+
+          const buttonId = `brz-tabs-tab-${instanceId}-${index}`;
+          const panelId = `brz-tabs-panel-${instanceId}-${index}`;
+
+          button.setAttribute("id", buttonId);
+          button.setAttribute("aria-controls", panelId);
+          panel.setAttribute("id", panelId);
+          panel.setAttribute("role", "tabpanel");
+          panel.setAttribute("aria-labelledby", buttonId);
+
+          return {
+            item,
+            button,
+            panel
+          };
+        })
+        .filter(Boolean),
+      mobileItems: $tabsContent
+        .toArray()
+        .map((panel, index) => {
+          const header = panel.querySelector(".brz-tabs__nav--mobile");
+          const button = header?.querySelector(".brz-tabs__nav--button");
+          const panelContent = panel.querySelector(".brz-tabs__item--content");
+
+          if (
+            !(header instanceof HTMLElement) ||
+            !(button instanceof HTMLElement) ||
+            !(panelContent instanceof HTMLElement)
+          ) {
+            return null;
+          }
+
+          const buttonId = `brz-tabs-mobile-tab-${instanceId}-${index}`;
+          const panelId = `brz-tabs-mobile-panel-${instanceId}-${index}`;
+
+          button.setAttribute("id", buttonId);
+          button.setAttribute("aria-controls", panelId);
+          panelContent.setAttribute("id", panelId);
+          panelContent.setAttribute("role", "region");
+          panelContent.setAttribute("aria-labelledby", buttonId);
+
+          return {
+            header,
+            button,
+            panel: panelContent
+          };
+        })
+        .filter(Boolean),
+      orientation
+    });
+
+    tabsAccessibility.init();
 
     if (events === "click") {
       $this.children(".brz-tabs__nav").on("click", function (e) {
         changeTab($this, e.target);
+        tabsAccessibility.sync();
       });
     } else {
       $this.find(".brz-tabs__nav > li").on("mouseenter", function (e) {
         changeTab($this, e.target);
+        tabsAccessibility.sync();
+      });
+      $this.children(".brz-tabs__nav").on("click", function (e) {
+        changeTab($this, e.target);
+        tabsAccessibility.sync();
       });
     }
 
@@ -91,6 +168,8 @@ export default function ($node) {
         active: $item.get(0),
         tabs: $tabsContent.get()
       });
+
+      tabsAccessibility.sync();
     });
   });
 }

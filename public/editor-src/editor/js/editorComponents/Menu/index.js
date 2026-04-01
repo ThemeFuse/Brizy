@@ -556,7 +556,8 @@ export default class Menu extends EditorComponent {
       mMenuSize,
       tabletMMenuSize,
       mobileMMenuSize,
-      accessibleMenu
+      accessibleMenu,
+      ariaLabelHamburger
     } = v;
 
     const isSlider = this.props.meta?.section?.isSlider;
@@ -611,6 +612,7 @@ export default class Menu extends EditorComponent {
                 size={mMenuSize}
                 mobileSize={mobileMMenuSize}
                 tabletSize={tabletMMenuSize}
+                ariaLabel={ariaLabelHamburger}
               />
               {this.isPro && this.renderMenuForView(v, vs, vd, htmlId)}
             </>
