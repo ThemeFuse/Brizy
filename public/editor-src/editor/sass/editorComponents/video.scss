@@ -117,6 +117,19 @@
   @include custom-video.custom-video;
   @include custom-video.custom-video-fullscreen-window-show;
   @include media-caption.media-caption;
+
+  :is(
+    .brz-video-custom-play-pause-btn,
+    .brz-video-custom-slider,
+    .brz-video-custom-volume-btn,
+    .brz-video-custom-fullscreen-btn,
+    .brz-video-content
+  ):focus-visible,
+  .brz-video__cover:focus-visible .brz-video__cover-icon,
+  .brz-video-custom-fullscreen-btn:focus-visible
+    .brz-video-custom-fullscreen-icon {
+    outline: 2px solid #2563eb;
+  }
 }
 
 // Custom Video Style

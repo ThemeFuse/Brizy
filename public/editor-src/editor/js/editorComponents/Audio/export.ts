@@ -1,3 +1,8 @@
+import {
+  AudioAccessibility,
+  type AudioAccessibilityState
+} from "../accessibility";
+
 export default function ($node: JQuery): void {
   const node = $node.get(0);
   if (!node) return;
@@ -129,11 +134,62 @@ export default function ($node: JQuery): void {
       const muteBtnNode = item.querySelector(".brz-audio-volume-btn");
       const currentTimeNode = item.querySelector(".brz-audio-current-time");
       const totalTimeNode = item.querySelector(".brz-audio-total-time");
-      const playPauseBtnNode = item.querySelector(".brz-audio-play-pause-btn");
+      const playPauseBtnNode = item.querySelector(
+        ".brz-audio-play-pause-btn"
+      ) as HTMLElement | null;
       const captionBtnNode =
         item.querySelector<HTMLElement>(".brz-media-caption");
       const trackNode = item.querySelector("track");
       const captionDiv = item.querySelector<HTMLElement>(".brz-audio-caption");
+
+      const accessibility = new AudioAccessibility({
+        root: item as HTMLElement,
+        playPauseButton: playPauseBtnNode,
+        muteButton: muteBtnNode as HTMLElement | null,
+        progressSlider: sliderProgressNode as HTMLElement | null,
+        volumeSlider: volumeSliderNode as HTMLElement | null,
+        captionButton: captionBtnNode ?? null,
+        seekToPercent: (percent: number) => {
+          if (!audio.duration || Number.isNaN(audio.duration)) {
+            return;
+          }
+
+          audio.currentTime = (percent * audio.duration) / 100;
+        },
+        setVolumePercent: (percent: number) => {
+          const normalized = Math.min(Math.max(percent, 0), 100);
+
+          audio.volume = normalized / 100;
+          audio.muted = normalized === 0;
+
+          if (volumeProgressNode) {
+            volumeProgressNode.style.width = `${normalized.toFixed(2)}%`;
+          }
+        }
+      });
+
+      accessibility.init();
+
+      const syncAccessibilityState = (): void => {
+        const progressPercent =
+          audio.duration && !Number.isNaN(audio.duration)
+            ? (audio.currentTime / audio.duration) * 100
+            : 0;
+        const volumePercent = audio.muted ? 0 : audio.volume * 100;
+        const captionsActive =
+          captionBtnNode?.classList.contains("brz-media-caption-active") ??
+          false;
+
+        const state: AudioAccessibilityState = {
+          isPlaying: !audio.paused,
+          isMuted: audio.muted,
+          progressPercent,
+          volumePercent,
+          captionsActive
+        };
+
+        accessibility.syncState(state);
+      };
 
       const stopPreviousTrack = (item: Element): void => {
         const elementsToStop: Element[] = Array.from(
@@ -164,6 +220,8 @@ export default function ($node: JQuery): void {
         if (totalTimeNode) {
           totalTimeNode.innerHTML = duration;
         }
+
+        syncAccessibilityState();
       });
 
       audio.addEventListener("timeupdate", (event: Event) => {
@@ -181,10 +239,13 @@ export default function ($node: JQuery): void {
           sliderNode.style.width = `${progressPercent.toFixed(2)}%`;
           currentTimeNode.innerHTML = formatTime(currentTime);
         }
+
+        syncAccessibilityState();
       });
 
       audio.addEventListener("ended", () => {
         playPauseBtnNode && changeIconVisibility(playPauseBtnNode, false);
+        syncAccessibilityState();
       });
 
       item.addEventListener("click", (event) => {
@@ -202,12 +263,14 @@ export default function ($node: JQuery): void {
           }
           playPauseBtnNode &&
             changeIconVisibility(playPauseBtnNode, !audio.paused);
+          syncAccessibilityState();
         } else if (isSliderClick && sliderProgressNode) {
           const offsetProgressPercent = getSliderOffset(
             sliderProgressNode,
             (event as MouseEvent).pageX
           );
           audio.currentTime = (offsetProgressPercent * audio.duration) / 100;
+          syncAccessibilityState();
         } else if (isMuteClick && muteBtnNode && volumeProgressNode) {
           changeIconVisibility(muteBtnNode, !audio.muted);
           audio.muted = !audio.muted;
@@ -219,6 +282,7 @@ export default function ($node: JQuery): void {
               2
             )}%`;
           }
+          syncAccessibilityState();
         } else if (
           isSliderVolumeClick &&
           volumeProgressNode &&
@@ -240,6 +304,7 @@ export default function ($node: JQuery): void {
             audio.muted = !audio.muted;
             audio.volume = offsetVolumePercent / 100;
           }
+          syncAccessibilityState();
         }
       });
 
@@ -248,6 +313,7 @@ export default function ($node: JQuery): void {
 
         captionBtnNode.addEventListener("click", () => {
           toggleCaptions(captionBtnNode, trackNode, captionDiv);
+          syncAccessibilityState();
         });
       }
     }

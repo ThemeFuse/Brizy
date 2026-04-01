@@ -2,6 +2,7 @@ import $ from "jquery";
 import { getFreeLibs } from "visual/libs";
 import { makeAttr } from "visual/utils/i18n/attribute";
 import { read } from "visual/utils/reader/string";
+import { TranslationAccessibility } from "../accessibility";
 
 interface ShowData {
   showName: boolean;
@@ -116,6 +117,11 @@ export default function ($node: JQuery): void {
           scrollbars = null;
         }
       });
+
+      new TranslationAccessibility({
+        select: selectDom,
+        selectNode: element
+      }).init();
     }
   });
 }

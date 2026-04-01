@@ -296,6 +296,26 @@ export default class Button extends EditorComponent<Value, Props> {
     const _className = Str.mRead(cssClass || customClassName);
     const hoverName = Str.read(this.dvv("hoverName")) ?? "none";
     const isTooltipEnabled = enableTooltip === "on";
+    const attr: Record<string, string> = isTooltipEnabled
+      ? {
+          ...makeDataAttr({
+            name: "tooltip-wrapper-id",
+            value: this.getId()
+          })
+        }
+      : {};
+
+    if (linkData.type === "popup") {
+      attr["aria-haspopup"] = "dialog";
+    }
+
+    if (linkData.type === "popup" && linkData.href) {
+      attr["aria-controls"] = linkData.href;
+    }
+
+    if (linkData.type === "action") {
+      attr.role = "button";
+    }
 
     const className = classnames(
       "brz-btn",
@@ -339,16 +359,7 @@ export default class Button extends EditorComponent<Value, Props> {
       rel: linkData.rel,
       className: className,
       ...(id && { id }),
-      ...(isTooltipEnabled
-        ? {
-            attr: {
-              ...makeDataAttr({
-                name: "tooltip-wrapper-id",
-                value: this.getId()
-              })
-            }
-          }
-        : {})
+      ...(Object.keys(attr).length > 0 ? { attr } : {})
     };
 
     if (isEditor(this.props.renderContext)) {

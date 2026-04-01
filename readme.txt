@@ -4,7 +4,7 @@ Tags: page builder, website builder, brizy, editor, visual editor, unyson, wysiw
 Requires at least: 4.5
 Tested up to: 6.9.4
 Requires PHP: 7.2.24
-Stable tag: 2.8.8
+Stable tag: 2.8.9
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -136,6 +136,20 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 11. **Resize columns by dragging the handle that appears in between**
 
 == Changelog ==
+
+= 2.8.9 - 2026-04-01 =
+* New: Accessibility improvements for Accordion element
+* New: Accessibility improvements for Tabs element
+* New: Button – added ARIA attributes
+* New: Accessibility improvements for Map element
+* New: Accessibility improvements for Video element
+* New: Accessibility improvements for Audio element
+* New: Accessibility improvements for Counter element
+* New: Countdown – added ARIA attributes
+* New: Accessibility improvements for Progress Bar element
+* New: Accessibility improvements for Translation element
+* New: Accessibility improvements for Section Slider
+* New: Accessibility improvements for Tooltip
 
 = 2.8.8 - 2026-03-27 =
 * Fixed: Auth for multi site instances

@@ -7,6 +7,10 @@ interface Props {
   className: string;
   prefixClassName?: string;
   suffixClassName?: string;
+  ariaLabel?: string;
+  role?: string;
+  ariaLive?: "off" | "polite" | "assertive";
+  ariaAtomic?: boolean;
 }
 
 export const Text: FCC<Props> = ({
@@ -15,9 +19,19 @@ export const Text: FCC<Props> = ({
   suffix,
   children,
   prefixClassName,
-  suffixClassName
+  suffixClassName,
+  ariaLabel,
+  role,
+  ariaLive,
+  ariaAtomic
 }) => (
-  <div className={className}>
+  <div
+    className={className}
+    role={role}
+    aria-live={ariaLive}
+    aria-atomic={ariaAtomic}
+    aria-label={ariaLabel}
+  >
     {prefix && <span className={prefixClassName}>{prefix}</span>}
     <span className="brz-counter-numbers">{children}</span>
     {suffix && <span className={suffixClassName}>{suffix}</span>}

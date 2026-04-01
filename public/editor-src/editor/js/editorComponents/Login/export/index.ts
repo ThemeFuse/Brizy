@@ -7,6 +7,7 @@ import {
   handleSubmit,
   loginDisplay
 } from "./utils.common";
+import { LoginAccessibility } from "../../accessibility";
 
 const cloudHeaders = { "Content-Type": "application/json" };
 const fetchHeaders = new Headers(cloudHeaders);
@@ -19,6 +20,9 @@ export default function ($node: JQuery): void {
 
   node.querySelectorAll(".brz-login").forEach((element) => {
     loginDisplay(element);
+    if (element instanceof HTMLElement) {
+      new LoginAccessibility(element).init();
+    }
 
     const errorMessages = getErrorMessages(element);
 

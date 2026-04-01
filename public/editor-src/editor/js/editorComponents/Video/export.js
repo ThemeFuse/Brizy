@@ -1,4 +1,5 @@
 import $ from "jquery";
+import { VideoAccessibility } from "../accessibility";
 import { makeAttr } from "visual/utils/i18n/attribute";
 import * as Num from "visual/utils/reader/number";
 import {
@@ -285,7 +286,14 @@ export default function ($node) {
     }
   });
 
-  initCustomVideoActions($node.get(0), ".brz-custom-video", ".brz-video");
+  const rootNode = $node.get(0);
+
+  if (rootNode instanceof HTMLElement) {
+    const videoAccessibility = new VideoAccessibility({ root: rootNode });
+    videoAccessibility.init();
+  }
+
+  initCustomVideoActions(rootNode, ".brz-custom-video", ".brz-video");
 
   window.Brz.on("elements.story.slide.changed", (node) => {
     if (node) {
