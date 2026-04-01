@@ -6,6 +6,7 @@ import {
   loginDisplay
 } from "./utils.common";
 import { getCurrentType } from "./utils.wp";
+import { LoginAccessibility } from "../../accessibility";
 
 const wpHeaders = {
   accept: "*/*",
@@ -21,6 +22,9 @@ export default function ($node: JQuery): void {
 
   node.querySelectorAll(".brz-login").forEach((element) => {
     loginDisplay(element);
+    if (element instanceof HTMLElement) {
+      new LoginAccessibility(element).init();
+    }
 
     const errorMessages = getErrorMessages(element);
 

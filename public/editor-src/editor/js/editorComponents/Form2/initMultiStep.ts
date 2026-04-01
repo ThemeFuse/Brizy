@@ -1,4 +1,5 @@
 import { makeAttr } from "visual/utils/i18n/attribute";
+import { FormAccessibility } from "../accessibility";
 import { clearFormMessages, showErrorMessage, validateForm } from "./export";
 
 export const initMultiStep = (item: HTMLElement): void => {
@@ -24,25 +25,43 @@ export const initMultiStep = (item: HTMLElement): void => {
     const prevButtonContainer = form.querySelector<HTMLElement>(
       ".brz-form-ms-prev-button"
     );
-    if (nextButtonContainer) {
-      const link = nextButtonContainer.querySelector("a");
-      if (link) {
-        link.removeAttribute("href");
-      }
-    }
-    if (prevButtonContainer) {
-      const link = prevButtonContainer.querySelector("a");
-      if (link) {
-        link.removeAttribute("href");
-      }
-    }
-
     const progressBars = [
       ...form.querySelectorAll<HTMLElement>(".brz-form-ms-progress-bar")
     ];
     const progressBarText = [
       ...form.querySelectorAll<HTMLElement>(".brz-form-ms-progress-bar-text")
     ];
+
+    const goToStep = (nextStep: number): void => {
+      const totalSteps = multistepItems.length;
+
+      if (
+        nextStep === multistepActive ||
+        nextStep < 1 ||
+        nextStep > totalSteps
+      ) {
+        return;
+      }
+
+      const direction =
+        nextStep > multistepActive ? ("next" as const) : ("prev" as const);
+
+      if (direction === "next") {
+        changeActiveIndicator(multistepIndicators, multistepActive, "next");
+      } else {
+        changeActiveIndicator(multistepIndicators, multistepActive, "prev");
+      }
+
+      multistepActive = nextStep;
+      changeStepContent(multistepItems, multistepActive);
+
+      if (multistepButtons) {
+        const buttons = Array.from(multistepButtons.children) as HTMLElement[];
+        changeStepButtons(buttons, multistepActive, totalSteps);
+      }
+
+      changeProgressState(progressBars, progressBarText, multistepActive);
+    };
 
     if (progressBars.length) {
       changeProgressState(progressBars, progressBarText, multistepActive);
@@ -53,31 +72,53 @@ export const initMultiStep = (item: HTMLElement): void => {
       changeStepButtons(buttons, multistepActive, multistepItems.length);
 
       if (nextButtonContainer) {
-        nextButtonContainer.addEventListener("click", () => {
+        const handleNext = (): void => {
           const isValid = validateForm(multistepItems[multistepActive - 1]);
           if (isValid) {
             clearFormMessages(form);
-            changeActiveIndicator(multistepIndicators, multistepActive, "next");
-            multistepActive += 1;
-            changeStepContent(multistepItems, multistepActive);
-            changeStepButtons(buttons, multistepActive, multistepItems.length);
-            changeProgressState(progressBars, progressBarText, multistepActive);
+            goToStep(multistepActive + 1);
           } else {
             showErrorMessage(form);
           }
+        };
+        nextButtonContainer.addEventListener("click", (event) => {
+          event.preventDefault();
+          handleNext();
         });
       }
 
       if (prevButtonContainer) {
-        prevButtonContainer.addEventListener("click", () => {
-          changeActiveIndicator(multistepIndicators, multistepActive, "prev");
-          multistepActive -= 1;
-          changeStepContent(multistepItems, multistepActive);
-          changeStepButtons(buttons, multistepActive, multistepItems.length);
-          changeProgressState(progressBars, progressBarText, multistepActive);
+        const handlePrev = (): void => {
+          goToStep(multistepActive - 1);
+        };
+
+        prevButtonContainer.addEventListener("click", (event) => {
+          event.preventDefault();
+          handlePrev();
         });
       }
     }
+
+    FormAccessibility.initMultiStepFormAccessibility({
+      form,
+      indicators: multistepIndicators,
+      items: multistepItems,
+      nextButtonContainer,
+      prevButtonContainer,
+      getActiveStep: () => multistepActive,
+      onRequestNext: () => {
+        const isValid = validateForm(multistepItems[multistepActive - 1]);
+        if (isValid) {
+          clearFormMessages(form);
+          goToStep(multistepActive + 1);
+        } else {
+          showErrorMessage(form);
+        }
+      },
+      onRequestPrev: () => {
+        goToStep(multistepActive - 1);
+      }
+    });
   }
 };
 

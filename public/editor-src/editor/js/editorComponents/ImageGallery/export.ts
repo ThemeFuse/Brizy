@@ -3,6 +3,10 @@ import { getProLibs } from "visual/libs";
 import Gallery, { Settings } from "visual/libs/gallery";
 import { handleLightBoxZoom } from "visual/utils/export/lightbox";
 import { decodeFromString } from "visual/utils/string";
+import {
+  initImageGalleryBigImageAccessibility,
+  initImageGalleryFilterAccessibility
+} from "../accessibility";
 import { IsotopeSettings, JustifySettings } from "./utils";
 import {
   arrangeGridByTags,
@@ -160,6 +164,19 @@ export default function ($node: JQuery): void {
             };
           });
         }
+
+        initImageGalleryBigImageAccessibility({
+          bigImageWrapper,
+          bigImage,
+          thumbnails: imageItems,
+          isLightbox: lightBox === "on",
+          onBigImageActivate:
+            lightBox === "on"
+              ? () => {
+                  bigImageWrapper.click();
+                }
+              : undefined
+        });
       }
     }
 
@@ -177,7 +194,7 @@ export default function ($node: JQuery): void {
       }
     }
 
-    const filterWrapper = _this.querySelector(
+    const filterWrapper = _this.querySelector<HTMLElement>(
       ".brz-image__gallery--filter-wrapper"
     );
 
@@ -220,6 +237,8 @@ export default function ($node: JQuery): void {
             }
           });
         });
+
+      initImageGalleryFilterAccessibility({ filterWrapper });
     }
 
     // Need rearrange when changed some of elements [tabs, accordion, ... ]

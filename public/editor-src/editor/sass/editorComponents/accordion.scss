@@ -64,6 +64,11 @@
       min-height: 50px;
     }
   }
+
+  &__nav:focus-visible,
+  &__filter__item:focus-visible {
+    outline: 2px solid #2563eb;
+  }
 }
 .brz .brz-accordion__filter-wrapper {
   width: 100%;

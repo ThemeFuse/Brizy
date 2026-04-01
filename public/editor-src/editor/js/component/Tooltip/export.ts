@@ -22,6 +22,21 @@ export default function ($node: JQuery) {
     const element = parentElement.querySelector<HTMLElement>(selector);
 
     if (tooltip && arrow && element) {
+      // Ensure tooltip has an ID and is referenced from the trigger for screen readers
+      if (!tooltip.id) {
+        tooltip.id = `brz-tooltip-${elementId ?? ""}`.trim();
+      }
+
+      const describedBy = element.getAttribute("aria-describedby") ?? "";
+      const ids = new Set(
+        describedBy
+          .split(" ")
+          .map((v) => v.trim())
+          .filter(Boolean)
+      );
+      ids.add(tooltip.id);
+      element.setAttribute("aria-describedby", Array.from(ids).join(" "));
+
       setupTooltip(element, tooltip, arrow);
     }
   });

@@ -23,6 +23,7 @@ function enablePopperListeners(
 function show(tooltip: HTMLElement, popperInstance: PopperInstance) {
   if (!tooltip.hasAttribute("data-show")) {
     tooltip.setAttribute("data-show", "");
+    tooltip.setAttribute("aria-hidden", "false");
     enablePopperListeners(popperInstance, true);
     popperInstance.update();
   }
@@ -31,6 +32,7 @@ function show(tooltip: HTMLElement, popperInstance: PopperInstance) {
 function hide(tooltip: HTMLElement, popperInstance: PopperInstance) {
   if (tooltip.hasAttribute("data-show")) {
     tooltip.removeAttribute("data-show");
+    tooltip.setAttribute("aria-hidden", "true");
     enablePopperListeners(popperInstance, false);
   }
 }
@@ -57,6 +59,14 @@ export function setupTooltip(
   }
 
   let isVisible = false;
+
+  // Ensure basic ARIA semantics for the tooltip element
+  if (!tooltip.getAttribute("role")) {
+    tooltip.setAttribute("role", "tooltip");
+  }
+  if (!tooltip.getAttribute("aria-hidden")) {
+    tooltip.setAttribute("aria-hidden", "true");
+  }
 
   const { attributes } = extraOptions ?? {};
   const { tooltipTrigger, offset, placement } = attributes ?? {};
@@ -142,6 +152,8 @@ export function setupTooltip(
   if (trigger === "hover") {
     element.addEventListener("mouseenter", handleShow);
     element.addEventListener("mouseleave", handleHide);
+    // Also show on click/tap for better pointer accessibility
+    element.addEventListener("click", handleShow);
   } else if (trigger === "click") {
     element.addEventListener("click", toggle);
     document.addEventListener("click", handleClickOutside);
@@ -149,4 +161,20 @@ export function setupTooltip(
     tooltip.addEventListener("click", stopEventPropagation);
     element.addEventListener("click", stopEventPropagation);
   }
+
+  const isLinkWithHref = element.hasAttribute("href");
+
+  if (!isLinkWithHref) {
+    // Make the element focusable for keyboard accessibility
+    element.setAttribute("tabindex", "0");
+  }
+
+  // Keyboard accessibility: show on focus, hide on blur, hide on Escape
+  element.addEventListener("focus", handleShow);
+  element.addEventListener("blur", handleHide);
+  element.addEventListener("keydown", (event: KeyboardEvent) => {
+    if (event.key === "Escape" || event.key === "Esc") {
+      handleHide();
+    }
+  });
 }

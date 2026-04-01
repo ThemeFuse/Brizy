@@ -17,6 +17,7 @@ interface Props {
   size: number;
   mobileSize?: number;
   tabletSize?: number;
+  ariaLabel?: string;
 }
 
 export const HamburgerIcon: FC<Props> = ({
@@ -24,7 +25,8 @@ export const HamburgerIcon: FC<Props> = ({
   size,
   onOpen,
   mobileSize,
-  tabletSize
+  tabletSize,
+  ariaLabel
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
@@ -84,5 +86,12 @@ export const HamburgerIcon: FC<Props> = ({
     value: animation
   });
 
-  return <div className="brz-mm-menu__icon" ref={ref} {...attr} />;
+  return (
+    <div
+      className="brz-mm-menu__icon"
+      ref={ref}
+      {...attr}
+      {...(ariaLabel ? { "aria-label": ariaLabel } : {})}
+    />
+  );
 };

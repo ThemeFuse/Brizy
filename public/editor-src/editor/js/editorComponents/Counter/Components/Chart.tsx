@@ -20,8 +20,8 @@ export const Chart = ({
   const classNameBg = classnames("brz-counter-pie-chart", _className);
 
   return (
-    <div className={className}>
-      <svg className="" viewBox="0 0 32 32">
+    <div className={className} aria-hidden="true">
+      <svg className="" viewBox="0 0 32 32" focusable="false">
         {type === StyleType.Radial && (
           <circle
             className="brz-counter-radial-chart"

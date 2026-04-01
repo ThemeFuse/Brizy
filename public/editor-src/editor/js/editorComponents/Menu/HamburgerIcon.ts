@@ -57,6 +57,7 @@ export class AnimatedHamburgerIcon {
     this.setupContainer();
     this.createBars(width);
     this.container.addEventListener("click", this.handleClick);
+    this.container.addEventListener("keydown", this.handleKeyDown);
     window.addEventListener("resize", this.handleResponsiveMode);
     this.update();
   }
@@ -71,10 +72,11 @@ export class AnimatedHamburgerIcon {
   }, 300);
 
   private setupContainer() {
-    Object.assign(this.container, {
-      role: "button",
-      ariaLabel: "Toggle menu"
-    });
+    this.container.setAttribute("role", "button");
+    this.container.setAttribute("tabindex", "0");
+    if (!this.container.getAttribute("aria-label")) {
+      this.container.setAttribute("aria-label", "Toggle menu");
+    }
     this.container.setAttribute("aria-expanded", String(this.toggled));
     this.container.style.cssText = `
       position: relative;
@@ -123,6 +125,7 @@ export class AnimatedHamburgerIcon {
 
   destroy() {
     this.container.removeEventListener("click", this.handleClick);
+    this.container.removeEventListener("keydown", this.handleKeyDown);
     this.bars.forEach((bar) => bar.remove());
     this.bars = [];
     this.wrappers = [];
@@ -148,6 +151,16 @@ export class AnimatedHamburgerIcon {
 
   // ----------------- Update -----------------
   private handleClick = () => this.toggle();
+  private handleKeyDown = (event: KeyboardEvent) => {
+    if (
+      event.key === "Enter" ||
+      event.key === " " ||
+      event.key === "Spacebar"
+    ) {
+      event.preventDefault();
+      this.container.click();
+    }
+  };
 
   private update() {
     this.container.setAttribute("aria-expanded", String(this.toggled));

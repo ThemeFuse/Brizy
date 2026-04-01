@@ -12,4 +12,12 @@
       display: none;
     }
   }
+
+  :is(
+    .brz-audio-play-pause-btn,
+    .brz-audio-volume-btn,
+    .brz-audio-slider
+  ):focus-visible {
+    outline: 2px solid #2563eb;
+  }
 }

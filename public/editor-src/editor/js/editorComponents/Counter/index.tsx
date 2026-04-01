@@ -199,6 +199,9 @@ class Counter extends EditorComponent<Value, ElementProps, State> {
                       className={classNameNumber}
                       prefixClassName="brz-counter-figures--prefix"
                       suffixClassName="brz-counter-figures--suffix"
+                      role="status"
+                      ariaLive="polite"
+                      ariaAtomic
                       prefix={prefixLabel}
                       suffix={suffixLabel}
                     >
@@ -210,6 +213,9 @@ class Counter extends EditorComponent<Value, ElementProps, State> {
                     className={classNameNumber}
                     prefixClassName="brz-counter-figures--prefix"
                     suffixClassName="brz-counter-figures--suffix"
+                    role="status"
+                    ariaLive="polite"
+                    ariaAtomic
                     prefix={Str.read(prefixLabel)}
                     suffix={Str.read(suffixLabel)}
                   >

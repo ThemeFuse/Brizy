@@ -64,6 +64,20 @@ export function getItems() {
                         max: 99,
                         units: [{ title: "ms", value: "ms" }]
                       }
+                    },
+                    {
+                      id: "ariaLabelHamburger",
+                      type: "inputText",
+                      label: t("Hamburger Icon Aria Label"),
+                      placeholder: t("e.g. Open menu"),
+                      display: "block",
+                      position: 100,
+                      devices: "desktop",
+                      helper: {
+                        content: t(
+                          "Adds an accessible label for the hamburger menu button so screen readers can announce its purpose (this text is not visible on screen)."
+                        )
+                      }
                     }
                   ]
                 }
