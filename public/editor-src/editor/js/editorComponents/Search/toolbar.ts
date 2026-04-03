@@ -1,10 +1,11 @@
 import { GetItems } from "visual/editorComponents/EditorComponent/types";
 import { getColorToolbar } from "visual/utils/color";
+import { getCollectionTypes } from "visual/utils/api";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
 import { HOVER, NORMAL } from "visual/utils/stateMode";
 
-export const getItems: GetItems = ({ v, device }) => {
+export const getItems: GetItems = ({ v, device, component }) => {
   const dvv = (key: string) =>
     defaultValueValue({ v, key, device, state: "normal" });
 
@@ -13,6 +14,8 @@ export const getItems: GetItems = ({ v, device }) => {
     dvv("colorHex"),
     dvv("colorOpacity")
   );
+
+  const config = component.getGlobalConfig();
 
   return [
     {
@@ -33,6 +36,31 @@ export const getItems: GetItems = ({ v, device }) => {
             { title: t("Classic"), value: "classic" },
             { title: t("Minimal"), value: "minimal" }
           ]
+        },
+        {
+          id: "searchPostTypes",
+          label: t("Content Type"),
+          type: "multiSelect",
+          devices: "desktop",
+          placeholder: t("All"),
+          config: {
+            search: false,
+            fetchOnMount: true
+          },
+          choices: {
+            load: () =>
+              getCollectionTypes(config.api).then((items) =>
+                items.filter((i) => i.value !== "")
+              ),
+            search: (search: string) =>
+              getCollectionTypes(config.api).then((items) =>
+                items.filter(
+                  (i) =>
+                    i.value !== "" &&
+                    i.title.toLowerCase().includes(search.toLowerCase())
+                )
+              )
+          }
         }
       ]
     },
