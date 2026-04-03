@@ -107,11 +107,29 @@ class Brizy_Editor
         add_action('init', array($this, 'wordpressInit'), 1000);
         add_action('wp_loaded', array($this, 'wordpressLoaded'));
         add_action('wp_print_scripts', array($this, 'forceJqueryQueue'), 99999);
+        add_action('pre_get_posts', array($this, 'filterSearchPostTypes'));
         if (current_user_can(Brizy_Admin_Capabilities::CAP_EDIT_WHOLE_PAGE) || Brizy_Editor_User::is_administrator()) {
             Brizy_Admin_Rules_Api::_init();
         }
         if (!defined('WP_POST_REVISIONS') || (defined('WP_POST_REVISIONS') && WP_POST_REVISIONS !== false)) {
             add_filter("wp_revisions_to_keep", array($this, 'revisionsToKeep'), 10, 2);
+        }
+    }
+
+    public function filterSearchPostTypes($query)
+    {
+        if (!$query->is_search() || !$query->is_main_query() || is_admin()) {
+            return;
+        }
+
+        if (!empty($_GET['brz_post_type']) && is_array($_GET['brz_post_type'])) {
+            $allowed = array_values(get_post_types(['public' => true]));
+            $requested = array_map('sanitize_key', $_GET['brz_post_type']);
+            $filtered = array_intersect($requested, $allowed);
+
+            if (!empty($filtered)) {
+                $query->set('post_type', array_values($filtered));
+            }
         }
     }
 
