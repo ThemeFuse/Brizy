@@ -214,7 +214,7 @@ class Brizy_Admin_Blocks_Main
         $referenced = [];
         if ($wpPost) {
             try {
-                $referenced = $this->findReferencedInPage(Brizy_Editor_Post::get($wpPost));
+                $referenced = static::findReferencedInPage(Brizy_Editor_Post::get($wpPost));
             } catch (\Exception $e) {
 
             }
@@ -331,7 +331,7 @@ class Brizy_Admin_Blocks_Main
         return $globalPopups;
     }
 
-    private function findReferencedInPage(Brizy_Editor_Post $wpPost)
+    static public function findReferencedInPage(Brizy_Editor_Post $wpPost)
     {
 
         /**

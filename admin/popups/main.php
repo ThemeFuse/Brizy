@@ -23,6 +23,7 @@ class Brizy_Admin_Popups_Main {
 		if ( Brizy_Editor::is_user_allowed() ) {
 			add_action( 'admin_menu', [ $this, 'removePageAttributes' ] );
 		}
+		add_filter( 'brizy_editor_config', [ $this, 'compilePageGlobalBlocks' ], 10, 2 );
 	}
 
 	public function initializePreviewActions( $post ) {
@@ -31,6 +32,32 @@ class Brizy_Admin_Popups_Main {
 		add_filter( 'body_class', [ $this, 'bodyClassFrontend' ], 11 );
 		$this->enqueuePopupScripts( $post->getWpPostId() );
 	}
+
+	public function compilePageGlobalBlocks( $config, $context ) {
+		if ( Brizy_Editor_Editor_Editor::COMPILE_CONTEXT !== $context ) {
+			return $config;
+		}
+		if ( ! isset( $config['globalBlocks'] ) ) {
+			$config['globalBlocks'] = [];
+		}
+
+		// get page
+		$post         = get_post( $config['wp']['page'] );
+
+		$matching_brizy_popups = $this->getMatchingBrizyPopups($post);
+		$blockManager = new Brizy_Admin_Blocks_Manager(Brizy_Admin_Blocks_Main::CP_GLOBAL);
+
+		foreach ($matching_brizy_popups as $popup) {
+			$gbs = Brizy_Admin_Blocks_Main::findReferencedInPage($popup);
+			if(count($gbs)>0)
+			{
+				$config['globalBlocks'] = array_merge($config['globalBlocks'], $blockManager->createResponseForEntities($gbs, [], $context));
+			}
+		}
+
+		return $config;
+	}
+
 
 	public function enqueuePopupScripts( $postId ) {
 		$wp_post               = null;
