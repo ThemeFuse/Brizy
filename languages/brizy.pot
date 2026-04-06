@@ -2,14 +2,14 @@
 # This file is distributed under the GPLv3.
 msgid ""
 msgstr ""
-"Project-Id-Version: Brizy 2.8.9\n"
+"Project-Id-Version: Brizy 2.8.10\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/workspace\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-04-01T07:35:40+00:00\n"
+"POT-Creation-Date: 2026-04-06T12:01:56+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: brizy\n"
@@ -40,7 +40,7 @@ msgstr ""
 msgid "There are no blocks to be archived"
 msgstr ""
 
-#: admin/blocks/main.php:157
+#: admin/blocks/main.php:149
 msgid "global block."
 msgstr ""
 
@@ -176,7 +176,7 @@ msgid "Lead"
 msgstr ""
 
 #: admin/form-entries.php:340
-#: admin/popups/main.php:97
+#: admin/popups/main.php:124
 #: admin/templates.php:214
 #: public/editor-build/prod/texts.php:163
 msgid "Add New"
@@ -344,65 +344,65 @@ msgstr ""
 msgid "View Page As %s"
 msgstr ""
 
-#: admin/popups/main.php:93
+#: admin/popups/main.php:120
 msgctxt "post type general name"
 msgid "Popups"
 msgstr ""
 
-#: admin/popups/main.php:94
+#: admin/popups/main.php:121
 msgctxt "post type singular name"
 msgid "Popup"
 msgstr ""
 
-#: admin/popups/main.php:95
+#: admin/popups/main.php:122
 msgctxt "admin menu"
 msgid "Popups"
 msgstr ""
 
-#: admin/popups/main.php:96
+#: admin/popups/main.php:123
 msgctxt "add new on admin bar"
 msgid "Popup"
 msgstr ""
 
-#: admin/popups/main.php:98
+#: admin/popups/main.php:125
 msgid "Add New Popup"
 msgstr ""
 
-#: admin/popups/main.php:99
+#: admin/popups/main.php:126
 msgid "New Popup"
 msgstr ""
 
-#: admin/popups/main.php:100
+#: admin/popups/main.php:127
 msgid "Edit Popup"
 msgstr ""
 
-#: admin/popups/main.php:101
+#: admin/popups/main.php:128
 msgid "View Popup"
 msgstr ""
 
-#: admin/popups/main.php:102
-#: admin/popups/main.php:113
+#: admin/popups/main.php:129
+#: admin/popups/main.php:140
 #: public/editor-build/prod/texts.php:1332
 msgid "Popups"
 msgstr ""
 
-#: admin/popups/main.php:103
+#: admin/popups/main.php:130
 msgid "Search Popups"
 msgstr ""
 
-#: admin/popups/main.php:104
+#: admin/popups/main.php:131
 msgid "Parent Popups:"
 msgstr ""
 
-#: admin/popups/main.php:105
+#: admin/popups/main.php:132
 msgid "No Popups found."
 msgstr ""
 
-#: admin/popups/main.php:106
+#: admin/popups/main.php:133
 msgid "No Popups found in Trash."
 msgstr ""
 
-#: admin/popups/main.php:107
+#: admin/popups/main.php:134
 msgid "Popup attributes:"
 msgstr ""
 
