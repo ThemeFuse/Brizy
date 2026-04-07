@@ -23,7 +23,7 @@ class Brizy_Editor_Dependency_Collector {
 				}
 				if ( $dependency->getType() === Brizy_Editor_Dependency::TYPE_GLOBAL_BLOCK ) {
 					$manager = new Brizy_Admin_Blocks_Manager( Brizy_Admin_Blocks_Main::CP_GLOBAL );
-					$block   = $manager->getBlockByUid( $dependency->getUID() );
+					$block   = $manager->getEntity( $dependency->getUID() );
 					if ( $block instanceof Brizy_Editor_Block) {
 						$dependencies[$block->getUid()] = $block;
 
