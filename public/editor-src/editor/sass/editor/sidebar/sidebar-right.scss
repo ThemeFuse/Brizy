@@ -281,6 +281,11 @@
   z-index: z-index.z("helpVideo");
 }
 
+.brz-ai-generated__preview-carousel-modal .brz-ui-v2-modal-root > .brz-ui-v2-modal-mask {
+  position: fixed;
+  z-index: z-index.z("padding-resizer");
+}
+
 .brz-ed .brz-sidebar-item__title {
   white-space: nowrap;
   overflow: hidden;

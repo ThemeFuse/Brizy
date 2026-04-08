@@ -277,8 +277,7 @@ export class FormAccessibility {
       return;
     }
 
-    const isOpen =
-      main.classList.contains("ss-open") || list.classList.contains("ss-open");
+    const isOpen = main.parentElement?.querySelector(".ss-open") !== null;
 
     // Combobox semantics
     main.setAttribute("role", "combobox");
