@@ -26,13 +26,11 @@ export interface MenuItemExtended {
   item: HTMLElement;
   type: MenuItemExtendedType;
   api: MenuItemApi;
-  /**
-   * Direct children of this item (one level deeper).
-   * Important for correct keyboard navigation.
-   */
+  /** Direct children (one level) for keyboard navigation */
   children: Array<HTMLElement>;
 }
 
+/** Runtime graph for one menuitem: trigger, optional submenu root, tree links. */
 interface MenuItemState {
   item: HTMLElement;
   trigger: HTMLAnchorElement;
@@ -41,10 +39,18 @@ interface MenuItemState {
   submenu?: HTMLElement;
   directChildren: MenuItemState[];
   parent: MenuItemState | null;
-  level: number;
 }
 
 export type MenuItem = MenuItemLink | MenuItemExtended;
+
+const SUBMENU_FOCUSABLE_SELECTOR = [
+  "a[href]",
+  "button:not([disabled])",
+  'input:not([disabled]):not([type="hidden"])',
+  "select:not([disabled])",
+  "textarea:not([disabled])",
+  "[tabindex]"
+].join(", ");
 
 export class MenuAccessibilityKeyboard {
   private static instanceCounter = 0;
@@ -62,28 +68,45 @@ export class MenuAccessibilityKeyboard {
   private rootMenuRole: "menubar" | "menu" = "menubar";
 
   private readonly onKeyDown = (event: KeyboardEvent): void => {
+    if ("__brzMenuA11yHandled" in event && event.__brzMenuA11yHandled)
+      return;
+
     const activeElement = document.activeElement;
     if (!(activeElement instanceof HTMLElement)) {
       return;
     }
-
-    // Handle key events based on the actually focused element.
-    // Some environments dispatch keyboard events with document/body as target.
-    if (!this.rootMenu.contains(activeElement)) {
+    // Some environments dispatch key events with body/document as target; we key off activeElement.
+    if (!this.isWithinMenuKeyboardScope(activeElement)) {
       return;
     }
 
-    // Escape should always close any open submenus while focus is within the menu.
-    // This covers cases where focus is inside the submenu on a non-trigger element.
+    // Escape: close one level / return to parent trigger (APG submenu), or close top-level panel.
     if (event.key === "Escape") {
-      event.preventDefault();
       const activeState = this.getActiveState();
+
+      if (!activeState && this.isInsideNestedMenuInPortal(activeElement)) {
+        return;
+      }
+
+      event.preventDefault();
       if (activeState?.parent) {
-        // Return to the parent trigger while keeping the parent level reachable.
         this.focusParentTrigger(activeState);
         return;
       }
-      // Top-level or unknown active state: close everything.
+      if (
+        activeState?.submenu &&
+        activeState.api &&
+        activeState.submenu.contains(activeElement) &&
+        activeElement !== activeState.trigger
+      ) {
+        this.closeSubmenuAndFocusTrigger(activeState);
+        return;
+      }
+      // Focus still on top-level trigger while submenu is open.
+      if (activeState?.api?.isOpen?.()) {
+        this.closeSubmenuAndFocusTrigger(activeState);
+        return;
+      }
       this.closeAllSubmenus();
       return;
     }
@@ -93,15 +116,22 @@ export class MenuAccessibilityKeyboard {
       return;
     }
 
+    // Tab: roving tabindex — only one menuitem tabbable; trap Shift+Tab within submenu siblings / parent.
     if (event.key === "Tab") {
-      // `tabindex` is roving: only one menuitem is focusable at a time.
-      // So when focus is inside a submenu and user presses Shift+Tab,
-      // we must keep focus within the menu (to parent/previous sibling),
-      // otherwise the browser will fall back to the next DOM focusable.
+      // Focus already inside an open submenu/mega panel (not on the opening trigger): walk focusables or exit.
+      if (
+        this.isSubmenuOpen(activeState) &&
+        activeElement !== activeState.trigger &&
+        activeState.submenu?.contains(activeElement) &&
+        this.handleTabInsideOpenSubmenu(activeState, activeElement, !event.shiftKey)
+      ) {
+        event.preventDefault();
+        return;
+      }
+
       if (event.shiftKey && activeState.parent) {
         const siblings = this.getSiblings(activeState);
         const index = siblings.findIndex((s) => s === activeState);
-
         if (index > 0) {
           event.preventDefault();
           const prev = siblings[index - 1];
@@ -110,7 +140,6 @@ export class MenuAccessibilityKeyboard {
           prev.trigger.focus();
           return;
         }
-
         if (index === 0) {
           event.preventDefault();
           this.focusParentTrigger(activeState);
@@ -119,23 +148,31 @@ export class MenuAccessibilityKeyboard {
       }
 
       const direction = event.shiftKey ? -1 : 1;
-
-      // If the current item controls an opened submenu, move focus into it.
-      // Otherwise, let browser `Tab` move focus out of the menu.
+      // From the opening trigger: Tab moves into first/last child (or first/last focusable in mega with no children).
       if (this.isSubmenuOpen(activeState)) {
         const children = activeState.directChildren;
         const target =
           children[direction === 1 ? 0 : children.length - 1] ?? null;
 
         if (!target) {
-          // Nothing to focus inside the opened submenu => don't trap keyboard users.
+          const submenu = activeState.submenu;
+          const fallback =
+            direction === 1
+              ? submenu && this.getFocusableEdge(submenu, true)
+              : submenu && this.getFocusableEdge(submenu, false);
+          // No nested menu items and no focusable — let Tab leave the menu.
+          if (!fallback) {
+            return;
+          }
+          event.preventDefault();
+          this.closeSubmenusExcept(activeState);
+          this.setActiveTrigger(activeState, { focusOnTrigger: false });
+          fallback.focus();
           return;
         }
 
         event.preventDefault();
-        // Keep the current submenu open and close any others.
         this.closeSubmenusExcept(activeState);
-
         this.setActiveTrigger(target);
         target.trigger.focus();
         return;
@@ -145,24 +182,16 @@ export class MenuAccessibilityKeyboard {
     }
 
     switch (event.key) {
-      case "ArrowDown": {
-        event.preventDefault();
-        this.handleArrowDown(activeState);
-        return;
-      }
-      case "ArrowUp": {
-        event.preventDefault();
-        this.handleArrowUp(activeState);
-        return;
-      }
-      case "ArrowLeft": {
-        event.preventDefault();
-        this.handleArrowLeft(activeState);
-        return;
-      }
+      case "ArrowDown":
+      case "ArrowUp":
+      case "ArrowLeft":
       case "ArrowRight": {
         event.preventDefault();
-        this.handleArrowRight(activeState);
+        this.handleArrowKey(event.key, activeState);
+        if (document.activeElement !== activeElement) {
+          (event as unknown as Record<string, unknown>).__brzMenuA11yHandled =
+            true;
+        }
         return;
       }
       case "Home": {
@@ -175,35 +204,25 @@ export class MenuAccessibilityKeyboard {
         this.focusBoundaryInSameLevel(activeState, false);
         return;
       }
-      // Escape is handled early to support focusing non-trigger elements.
       case "Enter": {
+        // Focus on non-menuitem content inside mega panel — let link/button handle activation.
+        if (this.shouldAllowNativeActivate(activeState)) {
+          return;
+        }
         event.preventDefault();
         this.handleEnter(activeState);
         return;
       }
       case " ":
       case "Spacebar": {
+        if (this.shouldAllowNativeActivate(activeState)) {
+          return;
+        }
         event.preventDefault();
         this.handleSpace(activeState);
         return;
       }
     }
-  };
-
-  private readonly onPointerDown = (event: MouseEvent): void => {
-    if (!(event.target instanceof HTMLElement)) {
-      return;
-    }
-
-    const menuContainer = this.rootMenu.closest(".brz-menu__container");
-    if (
-      menuContainer &&
-      event.target.closest(".brz-menu__container") === menuContainer
-    ) {
-      return;
-    }
-
-    this.closeAllSubmenus();
   };
 
   constructor(rootMenu: HTMLElement, menuItems: MenuItem[]) {
@@ -225,6 +244,7 @@ export class MenuAccessibilityKeyboard {
     this.attachListeners();
   }
 
+  /** Build flat state list, parent/child links, and submenu roots. */
   private buildStates(): void {
     this.allStates = this.menuItems
       .map((menuItem) => {
@@ -236,8 +256,12 @@ export class MenuAccessibilityKeyboard {
         const isExtended = this.isExtendedMenuItem(menuItem);
         const submenu =
           (isExtended
-            ? menuItem.item.querySelector<HTMLElement>(".brz-menu__sub-menu") ||
-              menuItem.item.querySelector<HTMLElement>(".brz-mega-menu__portal")
+            ? menuItem.item.querySelector<HTMLElement>(
+                ":scope > .brz-mega-menu__portal"
+              ) ||
+              menuItem.item.querySelector<HTMLElement>(
+                ":scope > .brz-menu__sub-menu"
+              )
             : undefined) ?? undefined;
 
         const state: MenuItemState = {
@@ -247,14 +271,12 @@ export class MenuAccessibilityKeyboard {
           api: isExtended ? menuItem.api : undefined,
           directChildren: [],
           parent: null,
-          level: 0,
           submenu
         };
         return state;
       })
       .filter((v): v is MenuItemState => v !== null);
 
-    // Create lookup maps
     this.stateByTrigger.clear();
     this.stateByItem.clear();
     this.allStates.forEach((s) => {
@@ -262,7 +284,6 @@ export class MenuAccessibilityKeyboard {
       this.stateByItem.set(s.item, s);
     });
 
-    // Set parent pointers + direct children using the original input.
     for (const menuItem of this.menuItems) {
       const parentState = this.stateByItem.get(menuItem.item);
       if (!parentState) continue;
@@ -277,25 +298,15 @@ export class MenuAccessibilityKeyboard {
       });
     }
 
-    // Compute levels (depth from the top-level).
-    const computeLevel = (state: MenuItemState): number =>
-      state.parent ? computeLevel(state.parent) + 1 : 0;
-
-    this.allStates.forEach((s) => {
-      s.level = computeLevel(s);
-    });
     this.topLevelStates = this.allStates.filter((s) => s.parent === null);
     this.extendedStates = this.allStates.filter((s) => s.api !== undefined);
   }
 
   private applyRolesAndAria(): void {
-    // Root role
     this.rootMenu.setAttribute("role", this.rootMenuRole);
-
-    // roving tabindex + active descendant updates will target root menu
+    // Roving tabindex + `aria-activedescendant` are set on the active container in `setActiveTrigger`.
     this.rootMenu.removeAttribute("aria-activedescendant");
 
-    // Set orientation based on current device menu layout.
     const mods =
       parseFromString<Record<string, "vertical" | "horizontal">>(
         this.rootMenu.getAttribute("data-mods") ?? "{}"
@@ -305,7 +316,6 @@ export class MenuAccessibilityKeyboard {
       mods[getCurrentDevice()] === "vertical" ? "vertical" : "horizontal";
     this.rootMenu.setAttribute("aria-orientation", orientation);
 
-    // Roles/ARIA for menu items and their submenus
     this.allStates.forEach((state, index) => {
       const triggerId =
         state.trigger.id || `brz-menuitem-${this.instanceId}-${index}`;
@@ -331,12 +341,12 @@ export class MenuAccessibilityKeyboard {
     });
   }
 
+  /** Keep `aria-expanded` / `aria-hidden` in sync when dropdown/mega APIs open or close. */
   private wrapApisWithAriaSync(): void {
     this.extendedStates.forEach((state) => {
       if (!state.api) return;
       const api = state.api;
 
-      // Guard against double-wrapping
       const marker = `brzMenuA11yWrapped-${this.instanceId}`;
       if ((api as unknown as { [key: string]: unknown })[marker] === true) {
         return;
@@ -367,8 +377,6 @@ export class MenuAccessibilityKeyboard {
   }
 
   private initFocusModel(): void {
-    // Ensure only one menuitem per root is tabbable.
-    // APG: Tab moves focus to the active menuitem; arrow keys then handle in-menu navigation.
     const firstTop = this.topLevelStates[0];
 
     // If focus is already inside this menu on load, respect it.
@@ -382,50 +390,58 @@ export class MenuAccessibilityKeyboard {
 
   private attachListeners(): void {
     document.addEventListener("keydown", this.onKeyDown);
-    document.addEventListener("mousedown", this.onPointerDown);
-    // Close on keyboard focus leaving the menu completely.
-    // This prevents "stuck" mega-menus when focus moves outside triggers/submenu items.
-    this.rootMenu.addEventListener("focusout", this.onFocusOut, true);
+    // Portaled mega menus are not under `.brz-menu`; capture on document to detect focus leaving.
+    document.addEventListener("focusout", this.onFocusOut, true);
 
     this.allStates.forEach((state) => {
       state.trigger.addEventListener("focus", () => {
-        // Menu open/close is keyboard-driven (Enter/ArrowDown/ArrowRight).
-        // Focus just updates the active descendant / roving tabindex.
         this.setActiveTrigger(state);
       });
     });
   }
 
+  /** Close when focus leaves the menu root + all registered submenu portals. */
   private readonly onFocusOut = (event: FocusEvent): void => {
+    const target = event.target;
+    if (!(target instanceof HTMLElement)) {
+      return;
+    }
+    if (!this.isWithinMenuKeyboardScope(target)) {
+      return;
+    }
+
     const relatedTarget = event.relatedTarget;
-    const fallbackState = this.getStateFromElement(event.target);
+    const fallbackState = this.getStateFromElement(target);
     if (!(relatedTarget instanceof HTMLElement)) {
-      // Focus is leaving the menu (to body/outside); close everything.
+      // Focus moved to body / null (e.g. dialog).
       this.closeAllSubmenus();
       this.restoreVisibleTabStop(fallbackState);
       return;
     }
 
-    // If the newly focused element is outside the menu root, close everything.
-    if (!this.rootMenu.contains(relatedTarget)) {
+    if (!this.isWithinMenuKeyboardScope(relatedTarget)) {
       this.closeAllSubmenus();
       this.restoreVisibleTabStop(fallbackState);
     }
   };
 
   private getActiveState(): MenuItemState | null {
-    const active = document.activeElement;
-    return this.getStateFromElement(active);
+    return this.getStateFromElement(document.activeElement);
   }
 
-  private getStateFromElement(element: EventTarget | null): MenuItemState | null {
+  private getStateFromElement(
+    element: EventTarget | null
+  ): MenuItemState | null {
     const activeEl = element instanceof HTMLElement ? element : null;
     if (!activeEl) return null;
 
     // Prefer resolving active state from a trigger <a>.
     const trigger = activeEl.closest<HTMLAnchorElement>("a");
     if (trigger) {
-      return this.stateByTrigger.get(trigger) ?? null;
+      const fromTrigger = this.stateByTrigger.get(trigger);
+      if (fromTrigger) {
+        return fromTrigger;
+      }
     }
 
     // Otherwise, resolve by the closest submenu/mega-menu container.
@@ -437,16 +453,210 @@ export class MenuAccessibilityKeyboard {
     return this.allStates.find((s) => s.submenu === submenuEl) ?? null;
   }
 
+  private getSubmenuRoots(): HTMLElement[] {
+    return this.extendedStates
+      .map((s) => s.submenu)
+      .filter((n): n is HTMLElement => n instanceof HTMLElement);
+  }
+
+  /**
+   * Keyboard + focusout scope: menubar root OR any portaled mega/dropdown submenu for this instance.
+   */
+  private isWithinMenuKeyboardScope(el: HTMLElement): boolean {
+    return (
+      this.rootMenu.contains(el) ||
+      this.getSubmenuRoots().some((root) => root.contains(el))
+    );
+  }
+
+  /** Horizontal vs vertical strip: maps to different physical keys in `handleArrowKey`. */
+  private isMenubarHorizontal(): boolean {
+    const mods =
+      parseFromString<Record<string, "vertical" | "horizontal">>(
+        this.rootMenu.getAttribute("data-mods") ?? "{}"
+      ) ?? {};
+    return mods[getCurrentDevice()] !== "vertical";
+  }
+
+  /**
+   * APG submenu: close current, focus adjacent top-level item, open its submenu, keep focus on that trigger.
+   */
+  private moveToAdjacentMenubar(fromState: MenuItemState, delta: 1 | -1): void {
+    const top = this.getTopLevelState(fromState);
+    const siblings = this.topLevelStates;
+    const idx = siblings.indexOf(top);
+    if (idx === -1) {
+      return;
+    }
+    const nextIdx = (idx + delta + siblings.length) % siblings.length;
+    const next = siblings[nextIdx];
+
+    this.closeAllSubmenus();
+    if (next.api) {
+      next.api.open();
+    }
+    this.setActiveTrigger(next);
+    next.trigger.focus();
+  }
+
+  private shouldAllowNativeActivate(
+    activeState: MenuItemState | null
+  ): boolean {
+    if (!activeState) {
+      return false;
+    }
+    const activeEl = document.activeElement;
+    if (!(activeEl instanceof HTMLElement)) {
+      return false;
+    }
+    if (!activeState.submenu?.contains(activeEl)) {
+      return false;
+    }
+    if (activeEl === activeState.trigger) {
+      return false;
+    }
+    return true;
+  }
+
+  /** Focus inside open submenu/mega panel but not on the owning menuitem trigger. */
+  private isFocusInsideSubmenuPanel(
+    state: MenuItemState,
+    el: HTMLElement
+  ): boolean {
+    return (
+      !!state.submenu && state.submenu.contains(el) && el !== state.trigger
+    );
+  }
+
+  private closeSubmenuAndFocusTrigger(state: MenuItemState): void {
+    if (!state.api) {
+      return;
+    }
+    this.closeSubmenusExcept(state);
+    state.api.close();
+    this.setActiveTrigger(state);
+    state.trigger.focus();
+  }
+
+  /**
+   * Tab / Shift+Tab when focus is already inside an open submenu/mega panel (not on the opening trigger).
+   * Forward: next focusable, or close panel and focus parent menuitem on last.
+   * Backward: previous focusable, or focus opening trigger on first.
+   */
+  private handleTabInsideOpenSubmenu(
+    state: MenuItemState,
+    activeEl: HTMLElement,
+    forward: boolean
+  ): boolean {
+    const sm = state.submenu;
+    if (!sm || !sm.contains(activeEl)) {
+      return false;
+    }
+
+    const focusables = this.getFocusablesInSubmenu(sm);
+    let idx = focusables.indexOf(activeEl);
+    if (idx === -1) {
+      idx = focusables.findIndex((el) => el.contains(activeEl));
+    }
+
+    if (focusables.length === 0 || idx === -1) {
+      this.closeSubmenuAndFocusTrigger(state);
+      return true;
+    }
+
+    if (forward) {
+      if (idx < focusables.length - 1) {
+        this.setActiveTrigger(state, { focusOnTrigger: false });
+        focusables[idx + 1].focus();
+        return true;
+      }
+      this.closeSubmenuAndFocusTrigger(state);
+      return true;
+    }
+
+    if (idx > 0) {
+      this.setActiveTrigger(state, { focusOnTrigger: false });
+      focusables[idx - 1].focus();
+      return true;
+    }
+    this.closeSubmenusExcept(state);
+    this.setActiveTrigger(state);
+    state.trigger.focus();
+    return true;
+  }
+
+  private getFocusablesInSubmenu(submenu: HTMLElement): HTMLElement[] {
+    const isMegaPortal = submenu.classList.contains("brz-mega-menu__portal");
+
+    return Array.from(
+      submenu.querySelectorAll<HTMLElement>(SUBMENU_FOCUSABLE_SELECTOR)
+    ).filter((el) => {
+      if (el.closest("[aria-hidden='true']")) {
+        return false;
+      }
+      if (!el.getClientRects().length) {
+        return false;
+      }
+      if (isMegaPortal) {
+        const closestSub = el.closest(".brz-menu__sub-menu");
+        if (closestSub && submenu.contains(closestSub)) {
+          return false;
+        }
+      }
+      const style = window.getComputedStyle(el);
+      return style.visibility !== "hidden";
+    });
+  }
+
+  /** First or last visible focusable in a panel (mega without nested menu items). */
+  private getFocusableEdge(
+    submenu: HTMLElement,
+    first: boolean
+  ): HTMLElement | null {
+    const list = this.getFocusablesInSubmenu(submenu);
+    if (!list.length) {
+      return null;
+    }
+    return first ? list[0] : list[list.length - 1];
+  }
+
+  /** Wraps at ends; keeps `aria-activedescendant` on owning menuitem while focus is in content. */
+  private cycleFocusableInSubmenu(
+    submenu: HTMLElement,
+    activeEl: HTMLElement,
+    ownerState: MenuItemState,
+    delta: 1 | -1
+  ): void {
+    const focusables = this.getFocusablesInSubmenu(submenu);
+    if (!focusables.length) {
+      return;
+    }
+    let idx = focusables.indexOf(activeEl);
+    if (idx === -1) {
+      idx = focusables.findIndex((el) => el.contains(activeEl));
+    }
+    if (idx === -1) {
+      (delta === 1
+        ? focusables[0]
+        : focusables[focusables.length - 1]
+      )?.focus();
+      return;
+    }
+    const next =
+      focusables[(idx + delta + focusables.length) % focusables.length];
+    this.setActiveTrigger(ownerState, { focusOnTrigger: false });
+    next.focus();
+  }
+
   private getTopLevelState(state: MenuItemState): MenuItemState {
     let current = state;
-
     while (current.parent) {
       current = current.parent;
     }
-
     return current;
   }
 
+  /** After closing menus, restore tabindex 0 on a top-level item. */
   private restoreVisibleTabStop(state: MenuItemState | null): void {
     const fallbackState = state
       ? this.getTopLevelState(state)
@@ -466,14 +676,22 @@ export class MenuAccessibilityKeyboard {
     return state.parent.directChildren;
   }
 
-  private setActiveTrigger(state: MenuItemState): void {
+  /**
+   * Roving tabindex: one `tabindex="0"` on triggers; `aria-activedescendant` on menubar or parent submenu.
+   * When focus is inside a panel, `focusOnTrigger: false` keeps the trigger off the tab order.
+   */
+  private setActiveTrigger(
+    state: MenuItemState,
+    options?: { focusOnTrigger?: boolean }
+  ): void {
+    const focusOnTrigger = options?.focusOnTrigger ?? true;
     const container =
       state.parent == null
         ? this.rootMenu
         : (state.parent.submenu ?? this.rootMenu);
 
     this.allStates.forEach((s) => s.trigger.setAttribute("tabindex", "-1"));
-    state.trigger.setAttribute("tabindex", "0");
+    state.trigger.setAttribute("tabindex", focusOnTrigger ? "0" : "-1");
     container.setAttribute("aria-activedescendant", state.trigger.id);
   }
 
@@ -485,8 +703,8 @@ export class MenuAccessibilityKeyboard {
     });
   }
 
+  /** Close every open submenu except ancestors of `target` (and `target` if it stays open). */
   private closeSubmenusExcept(target: MenuItemState): void {
-    // Keep only ancestor submenus open (plus target's submenu if it is already open).
     const keep = new Set<MenuItemState>();
     let p: MenuItemState | null = target.parent;
     while (p) {
@@ -505,24 +723,27 @@ export class MenuAccessibilityKeyboard {
     });
   }
 
+  /**
+   * Opens parent submenu and focuses first/last child menuitem, or first focusable in mega when no children.
+   */
   private openSubmenuAndFocusChild(
     parent: MenuItemState,
     childIndex: number
   ): void {
     if (!parent.api) return;
 
-    // Always open the submenu if the parent controls one.
-    // Even if children are not present in DOM yet, some mega-menus render lazily.
-    const target =
-      parent.directChildren[childIndex] ??
-      // If there's nothing to focus, keep the parent itself as "target"
-      parent;
-    this.closeSubmenusExcept(target);
+    this.closeSubmenusExcept(parent.directChildren[childIndex] ?? parent);
     parent.api.open();
 
     const child = parent.directChildren[childIndex];
     if (!child) {
-      // Keep focus on the parent trigger if we can't focus a child.
+      if (parent.submenu) {
+        const first = this.getFocusableEdge(parent.submenu, true);
+        if (first) {
+          this.setActiveTrigger(parent, { focusOnTrigger: false });
+          first.focus();
+        }
+      }
       return;
     }
     this.setActiveTrigger(child);
@@ -548,6 +769,21 @@ export class MenuAccessibilityKeyboard {
     state: MenuItemState,
     focusFirst: boolean
   ): void {
+    const activeEl = document.activeElement;
+    if (
+      activeEl instanceof HTMLElement &&
+      this.isFocusInsideSubmenuPanel(state, activeEl) &&
+      state.submenu
+    ) {
+      const boundary = this.getFocusableEdge(state.submenu, focusFirst);
+      if (boundary) {
+        this.closeSubmenusExcept(state);
+        this.setActiveTrigger(state, { focusOnTrigger: false });
+        boundary.focus();
+      }
+      return;
+    }
+
     const siblings = this.getSiblings(state);
     if (!siblings.length) return;
     const target = siblings[focusFirst ? 0 : siblings.length - 1];
@@ -567,61 +803,202 @@ export class MenuAccessibilityKeyboard {
     parent.trigger.focus();
   }
 
-  private handleArrowDown(activeState: MenuItemState): void {
-    if (activeState.level === 0 && activeState.api) {
-      // Open submenu and focus the first child (if available)
-      this.openSubmenuAndFocusChild(activeState, 0);
+  /**
+   * Physical ArrowDown/Up: next/prev sibling menuitem, or cycle focusables in mega (APG submenu list).
+   */
+  private submenuVerticalStep(
+    activeState: MenuItemState,
+    activeEl: HTMLElement,
+    delta: 1 | -1
+  ): void {
+    if (activeEl === activeState.trigger && activeState.parent !== null) {
+      this.focusSiblingAtOffset(activeState, delta);
       return;
     }
 
-    // Move within the same level
-    this.focusSiblingAtOffset(activeState, +1);
-  }
-
-  private handleArrowUp(activeState: MenuItemState): void {
-    if (activeState.level === 0 && activeState.api) {
-      // Open submenu and focus the last child (if available)
-      this.openSubmenuAndFocusChild(
-        activeState,
-        activeState.directChildren.length - 1
-      );
+    const sm = activeState.submenu;
+    if (sm && this.isFocusInsideSubmenuPanel(activeState, activeEl)) {
+      if (activeState.directChildren.length > 0) {
+        const fromTrigger = activeEl.closest<HTMLAnchorElement>("a");
+        const fromState = fromTrigger
+          ? this.stateByTrigger.get(fromTrigger)
+          : undefined;
+        if (
+          fromState &&
+          fromState.parent === activeState &&
+          activeState.directChildren.includes(fromState)
+        ) {
+          this.focusSiblingAtOffset(fromState, delta);
+          return;
+        }
+      }
+      this.cycleFocusableInSubmenu(sm, activeEl, activeState, delta);
       return;
     }
 
-    this.focusSiblingAtOffset(activeState, -1);
+    if (
+      activeState.parent === null &&
+      sm?.contains(activeEl) &&
+      activeEl !== activeState.trigger
+    ) {
+      this.cycleFocusableInSubmenu(sm!, activeEl, activeState, delta);
+      return;
+    }
+
+    if (activeState.parent !== null) {
+      this.focusSiblingAtOffset(activeState, delta);
+    }
   }
 
-  private handleArrowLeft(activeState: MenuItemState): void {
-    if (activeState.parent) {
-      // Return to the parent trigger while keeping the parent level reachable.
+  private submenuArrowLeft(
+    activeState: MenuItemState,
+    activeEl: HTMLElement
+  ): void {
+    if (activeState.parent?.parent != null) {
       this.focusParentTrigger(activeState);
       return;
     }
-
-    // Top level: move to previous top-level item.
-    this.focusSiblingAtOffset(activeState, -1);
+    if (activeState.parent?.parent === null) {
+      this.moveToAdjacentMenubar(activeState.parent, -1);
+      return;
+    }
+    if (
+      activeState.parent === null &&
+      activeState.submenu?.contains(activeEl) &&
+      activeEl !== activeState.trigger
+    ) {
+      this.moveToAdjacentMenubar(activeState, -1);
+      return;
+    }
+    if (
+      activeState.parent === null &&
+      activeEl === activeState.trigger &&
+      activeState.api?.isOpen()
+    ) {
+      this.moveToAdjacentMenubar(activeState, -1);
+    }
   }
 
-  private handleArrowRight(activeState: MenuItemState): void {
-    if (!activeState.parent) {
-      // Menubar top level: move to next item.
-      this.focusSiblingAtOffset(activeState, +1);
+  /**
+   * Physical ArrowRight (APG submenu): open nested submenu, or leaf → next menubar + open.
+   */
+  private submenuArrowRight(
+    activeState: MenuItemState,
+    activeEl: HTMLElement
+  ): void {
+    const anchor = activeEl.closest<HTMLAnchorElement>("a");
+    const childState = anchor ? this.stateByTrigger.get(anchor) : undefined;
+
+    if (
+      childState &&
+      activeState.submenu?.contains(activeEl) &&
+      childState.api
+    ) {
+      this.openSubmenuAndFocusChild(childState, 0);
       return;
     }
 
-    if (activeState.api) {
-      // Open submenu and focus first child (if available).
+    if (activeState.api && activeEl === activeState.trigger) {
       this.openSubmenuAndFocusChild(activeState, 0);
       return;
     }
 
-    // No submenu: move within the same level.
-    this.focusSiblingAtOffset(activeState, +1);
+    if (activeState.parent !== null) {
+      if (activeState.api) {
+        this.openSubmenuAndFocusChild(activeState, 0);
+      } else {
+        this.moveToAdjacentMenubar(activeState, +1);
+      }
+      return;
+    }
+
+    if (
+      activeState.parent === null &&
+      activeState.submenu?.contains(activeEl) &&
+      activeEl !== activeState.trigger
+    ) {
+      if (childState?.api) {
+        this.openSubmenuAndFocusChild(childState, 0);
+      } else {
+        this.moveToAdjacentMenubar(activeState, +1);
+      }
+    }
+  }
+
+  /**
+   * Routes menubar vs submenu keys. Menubar strip uses orientation (`mk`); submenu always uses
+   * physical Down/Up for list navigation and Left/Right for APG close/open-adjacent behavior.
+   */
+  private handleArrowKey(key: string, activeState: MenuItemState): void {
+    const activeEl = document.activeElement;
+    if (!(activeEl instanceof HTMLElement)) {
+      return;
+    }
+
+    const horizontal = this.isMenubarHorizontal();
+    const mk = horizontal
+      ? {
+          next: "ArrowRight",
+          prev: "ArrowLeft",
+          openFirst: "ArrowDown",
+          openLast: "ArrowUp"
+        }
+      : {
+          next: "ArrowDown",
+          prev: "ArrowUp",
+          openFirst: "ArrowRight",
+          openLast: "ArrowLeft"
+        };
+
+    const onTopTrigger =
+      activeState.parent === null && activeEl === activeState.trigger;
+
+    if (onTopTrigger) {
+      if (key === mk.openFirst && activeState.api) {
+        this.openSubmenuAndFocusChild(activeState, 0);
+        return;
+      }
+      if (key === mk.openLast && activeState.api) {
+        this.openSubmenuAndFocusChild(
+          activeState,
+          activeState.directChildren.length - 1
+        );
+        return;
+      }
+      if (key === mk.next) {
+        this.focusSiblingAtOffset(activeState, +1);
+        return;
+      }
+      if (key === mk.prev) {
+        this.focusSiblingAtOffset(activeState, -1);
+      }
+      return;
+    }
+
+    if (this.isDelegatedToNestedMenu(activeState, activeEl)) {
+      return;
+    }
+
+    if (key === "ArrowDown" || key === "ArrowUp") {
+      this.submenuVerticalStep(
+        activeState,
+        activeEl,
+        key === "ArrowDown" ? 1 : -1
+      );
+      return;
+    }
+    if (key === "ArrowLeft") {
+      this.submenuArrowLeft(activeState, activeEl);
+      return;
+    }
+    if (key === "ArrowRight") {
+      this.submenuArrowRight(activeState, activeEl);
+    }
   }
 
   private handleEnter(activeState: MenuItemState): void {
     if (activeState.api) {
-      // Open submenu; do not "activate" navigation for menu triggers with submenus.
+      // Parent item: open submenu; leaf: activate link (click).
       this.openSubmenuAndFocusChild(activeState, 0);
       return;
     }
@@ -653,6 +1030,31 @@ export class MenuAccessibilityKeyboard {
 
   private isExtendedMenuItem(item: MenuItem): item is MenuItemExtended {
     return item.type !== MenuItemType.Link;
+  }
+
+  /**
+   * When focus is inside a nested `.brz-menu` placed within a mega-menu portal,
+   * arrow-key navigation should be handled by that inner menu's own
+   * MenuAccessibilityKeyboard instance rather than the outer one.
+   */
+  private isDelegatedToNestedMenu(
+    state: MenuItemState,
+    el: HTMLElement
+  ): boolean {
+    if (state.type !== MenuItemType.MegaMenu) return false;
+    if (!state.submenu?.contains(el)) return false;
+    if (el === state.trigger) return false;
+    const nestedMenu = el.closest<HTMLElement>(".brz-menu");
+    return nestedMenu !== null && state.submenu.contains(nestedMenu);
+  }
+
+  private isInsideNestedMenuInPortal(el: HTMLElement): boolean {
+    return this.extendedStates.some((s) => {
+      if (s.type !== MenuItemType.MegaMenu) return false;
+      if (!s.submenu?.contains(el)) return false;
+      const nestedMenu = el.closest<HTMLElement>(".brz-menu");
+      return nestedMenu !== null && s.submenu.contains(nestedMenu);
+    });
   }
 
   private isSubmenuOpen(state: MenuItemState): boolean {
