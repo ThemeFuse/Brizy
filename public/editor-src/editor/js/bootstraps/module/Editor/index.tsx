@@ -1,4 +1,5 @@
 import { AlphaConfigProvider } from "@brizy/ui/lib/AlphaConfigProvider";
+import { AlphaStyleProvider } from "@brizy/ui/lib/AlphaStyleProvider";
 import { ConfigProvider as UIConfigProvider } from "@brizy/ui/lib/ConfigProvider";
 import React from "react";
 import Page from "visual/component/Editor";
@@ -23,11 +24,13 @@ export const Editor = (props: Props): JSX.Element => {
             <RegisterParts config={config}>
               <EditorModeProvider mode={editorMode}>
                 <StyleProvider>
-                  <AlphaConfigProvider>
-                    <UIConfigProvider>
-                      <Page addFile={addFile} editorMode={editorMode} />
-                    </UIConfigProvider>
-                  </AlphaConfigProvider>
+                  <AlphaStyleProvider container={window.parent.document.head}>
+                    <AlphaConfigProvider>
+                      <UIConfigProvider>
+                        <Page addFile={addFile} editorMode={editorMode} />
+                      </UIConfigProvider>
+                    </AlphaConfigProvider>
+                  </AlphaStyleProvider>
                 </StyleProvider>
               </EditorModeProvider>
             </RegisterParts>

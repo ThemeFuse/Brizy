@@ -50,8 +50,10 @@ class Brizy_Editor_Zip_Archiver implements Brizy_Editor_Zip_ArchiverInterface {
 
 	public function getScreenshotType( $archiveType ) {
 		switch ( $archiveType ) {
+			case 'Editor_Layout':
 			case Brizy_Editor_Layout::class:
 				return Brizy_Editor_Screenshot_Manager::BLOCK_TYPE_LAYOUT;
+            case 'Editor_Block':
 			case Brizy_Editor_Block::class:
 				return Brizy_Editor_Screenshot_Manager::BLOCK_TYPE_SAVED;
 		}

@@ -402,26 +402,14 @@
 
   .brz-forms2__field-phone {
     display: flex;
+    gap: 12px;
 
     .brz-forms2__phone--country {
       display: flex;
-      min-width: 6%;
       align-items: flex-start;
       justify-content: center;
       flex-direction: column;
       cursor: pointer;
-
-      @media (max-width: 991px) {
-        & {
-          min-width: 9%;
-        }
-      }
-
-      @media (max-width: 767px) {
-        & {
-          min-width: 17%;
-        }
-      }
 
       select {
         height: 0;
