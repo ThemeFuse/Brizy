@@ -297,6 +297,11 @@ class Brizy_Editor_Forms_Api
 
         foreach ($fields as $field) {
             if ($field->type == 'FileUpload') {
+                if ( ! isset( $_FILES[ $field->name ] ) || empty( $_FILES[ $field->name ]['name'] ) ) {
+                    $field->value = '';
+                    continue;
+                }
+
                 $uFile = $_FILES[$field->name];
 
                 foreach ($_FILES[$field->name]['name'] as $index => $value) {
