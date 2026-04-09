@@ -394,8 +394,8 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 				if ( isset( $this->param( 'title' )[ $i ] ) ) {
 					$block->setTitle( stripslashes( $this->param( 'title' )[ $i ] ) );
 				}
-				if ( is_array( $this->param( 'dependencies' )[ $i ] ) && count( $this->param( 'dependencies' )[ $i ] ) > 0 ) {
-					$block->setDependencies( array_map([Brizy_Editor_Dependency::class,'createFromSerializedData'], $this->param( 'dependencies' )[ $i ]) );
+				if ( isset($this->param( 'dependencies' )[ $i ]) && $dependencies = json_decode(stripslashes($this->param('dependencies')[ $i ])) ) {
+					$block->setDependencies( array_map([Brizy_Editor_Dependency::class,'createFromObjectData'], $dependencies) );
 				}
 				if ( isset( $this->param( 'tags' )[ $i ] ) ) {
 					$block->setTags( stripslashes( $this->param( 'tags' )[ $i ] ) );

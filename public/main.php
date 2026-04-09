@@ -71,6 +71,8 @@ class Brizy_Public_Main
         if (!self::is_view_page($this->post) || wp_doing_ajax()) {
             return;
         }
+		// hook the dependency collector
+		Brizy_Editor_Dependency_Collector::_init();
 
         do_action('brizy_preview_mode', $this->post);
 

@@ -194,16 +194,17 @@ class Brizy_Admin_Symbols_Symbol extends Brizy_Admin_Serializable {
 	public function getCompiledAssetGroup() {
 		$page_styles = $this->getCompiledStyles();
 		if ( empty( $page_styles ) ) {
-			return new \BrizyMerge\Assets\AssetGroup(null, [], [], [], [], []);
+			return new \BrizyMerge\Assets\AssetGroup( null, [], [], [], [], [] );
+		}
+		$page_style = json_decode( $page_styles, true );
+		$assets     = [];
+		if ( isset( $page_style['styles'] ) && is_array( $page_style['styles'] ) ) {
+			foreach ( (array) $page_style['styles'] as $style ) {
+				$assets[] = BrizyMerge\Assets\Asset::instanceFromJsonData( $style );
+			}
 		}
 
-		$page_styles = json_decode($page_styles,true);
-		$assets      = [];if ( isset( $page_styles['styles'] ) && is_array( $page_styles['styles'] ) ) {
-		foreach ( (array)$page_styles['styles'] as $style ) {
-			$assets[] = BrizyMerge\Assets\Asset::instanceFromJsonData( $style );
-		}}
-
-        return new \BrizyMerge\Assets\AssetGroup(null, [], [], [], [], $assets);
+		return new \BrizyMerge\Assets\AssetGroup( null, [], [], [], [], $assets );
 	}
 
 
@@ -237,7 +238,7 @@ class Brizy_Admin_Symbols_Symbol extends Brizy_Admin_Serializable {
 			$compiledStyles = json_decode( stripslashes( $json->compiledStyles ), true );
 		}
 
-		return new self( (int)$postId, isset( $json->uid ) ? $json->uid : null, isset( $json->label ) ? $json->label : null, isset( $json->data ) ? $json->data : null, isset( $json->version ) ? $json->version : null, isset( $json->className ) ? $json->className : null, isset( $json->componentTarget ) ? $json->componentTarget : null, isset( $json->compiledStyles ) ? $json->compiledStyles : null, isset( $json->linkedSymbolId ) ? $json->linkedSymbolId : null );
+		return new self( (int) $postId, isset( $json->uid ) ? $json->uid : null, isset( $json->label ) ? $json->label : null, isset( $json->data ) ? $json->data : null, isset( $json->version ) ? $json->version : null, isset( $json->className ) ? $json->className : null, isset( $json->componentTarget ) ? $json->componentTarget : null, isset( $json->compiledStyles ) ? $json->compiledStyles : null, isset( $json->linkedSymbolId ) ? $json->linkedSymbolId : null );
 	}
 
 
@@ -284,13 +285,30 @@ class Brizy_Admin_Symbols_Symbol extends Brizy_Admin_Serializable {
 		return $item;
 	}
 
+	public function convertToSaveValue() {
+		$item = array(
+			'id'              => $this->getId(),
+			'uid'             => $this->getUid(),
+			'label'           => $this->getLabel(),
+			'className'       => $this->getClassName(),
+			'componentTarget' => $this->getComponentTarget(),
+			'version'         => $this->getVersion(),
+			'linkedSymbolId'  => $this->getLinkedSymbolId(),
+			'compiledStyles'  => $this->getCompiledStyles(),
+			'data'            => $this->getModel(),
+		);
+
+		return $item;
+	}
+
 	public function convertToFullOptionValue() {
 		$item                   = $this->convertToOptionValue();
-		$item['compiledStyles'] = json_encode($this->getCompiledStyles());
+		$item['compiledStyles'] = json_encode( $this->getCompiledStyles() );
 		$item['data']           = $this->getModel();
 
 		return $item;
 	}
+
 
 	public function jsonSerialize() {
 		return $this->convertToOptionValue();

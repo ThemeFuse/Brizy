@@ -21,6 +21,30 @@ class Brizy_Admin_Symbols_Main {
 		self::registerCustomPosts();
 		Brizy_Admin_Symbols_Api::_init();
 		add_filter( 'brizy_editor_config', array( $this, 'editorConfig' ), 10, 2 );
+
+		// this is called on every enqueued post.
+		// we hook here to also enque each dependency it has as a symbol.
+		add_action( 'brizy_preview_enqueue_post', array( $this, 'enqueuePostHook' ), 10, 2 );
+	}
+
+	public function enqueuePostHook( $post_id ) {
+		$post = Brizy_Editor_Entity::get( $post_id );
+		$manager = new Brizy_Admin_Symbols_Manager();
+
+		// Collect symbol UIDs first for batch query
+		$symbolUids = [];
+		foreach ( (array) $post->getDependencies() as $dependency ) {
+			if ( $dependency->getType() == Brizy_Editor_Dependency::TYPE_SYMBOL ) {
+				$symbolUids[] = $dependency->getUID();
+			}
+		}
+
+		if ( ! empty( $symbolUids ) ) {
+			$symbols = $manager->getByUIDs( $symbolUids );
+			foreach ( $symbols as $symbol ) {
+				Brizy_Public_AssetEnqueueManager::_init()->enqueueSymbol( $symbol );
+			}
+		}
 	}
 
 	static public function registerCustomPosts() {

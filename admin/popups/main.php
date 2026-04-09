@@ -124,11 +124,11 @@ class Brizy_Admin_Popups_Main {
 			'supports'            => array( 'title', 'post_content', 'revisions' ),
 		) );
 		remove_post_type_support( self::CP_POPUP, 'page-attributes' );
-		add_filter( 'brizy_supported_post_types', function ( $posts ) {
-			$posts[] = self::CP_POPUP;
+			add_filter( 'brizy_supported_post_types', function ( $posts ) {
+				$posts[] = self::CP_POPUP;
 
-			return $posts;
-		} );
+				return $posts;
+			} );
 	}
 
 	/**

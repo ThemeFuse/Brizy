@@ -21,7 +21,6 @@ export const symbols: Symbols = {
   create: async (symbols: CSSSymbol[]) => {
     if (symbols.length > 0) {
       try {
-        console.log("symbols on create: ", symbols);
         const createdSymbols = await createSymbols(symbols);
 
         return createdSymbols;
@@ -37,7 +36,6 @@ export const symbols: Symbols = {
   update: async (symbols: CSSSymbol[]) => {
     if (symbols.length > 0) {
       try {
-        console.log("symbols on update: ", symbols);
         await updateSymbols(symbols);
       } catch (error) {
         if (process.env.NODE_ENV === "development") {
@@ -47,8 +45,6 @@ export const symbols: Symbols = {
     }
   },
   remove: async (symbols: CSSSymbol[]) => {
-    console.log("symbols on delete: ", symbols);
-
     const uids = symbols.map((symbol) => symbol.uid);
 
     if (uids.length > 0) {

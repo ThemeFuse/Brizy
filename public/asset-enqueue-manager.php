@@ -3,7 +3,6 @@
 use BrizyMerge\AssetAggregator;
 use BrizyMerge\Assets\Asset;
 use BrizyMerge\Assets\AssetGroup;
-use MongoDB\BSON\Symbol;
 
 class Brizy_Public_AssetEnqueueManager {
 	private $symbols = [];
@@ -44,7 +43,6 @@ class Brizy_Public_AssetEnqueueManager {
 		add_action( 'wp_enqueue_scripts', [ $this, 'enqueueScripts' ], 10002 );
 		add_filter( 'wp_enqueue_scripts', [ $this, 'addEditorConfigVar' ], 10002 );
 		add_filter( 'wp_enqueue_scripts', [ $this, 'addExtensionAssets' ], 10004 );
-		add_filter( 'wp_enqueue_scripts', [ $this, 'addExtensionAssets' ], 10004 );
 		add_filter( 'script_loader_tag', [ $this, 'addScriptAttributes' ], 10, 2 );
 		add_filter( 'style_loader_tag', [ $this, 'addStyleAttributes' ], 10, 2 );
 		add_action( 'wp_head', [ $this, 'insertHeadCodeAssets' ] );
@@ -66,14 +64,13 @@ class Brizy_Public_AssetEnqueueManager {
 		if ( ! isset( $this->posts[ $id ] ) ) {
 			$this->posts[ $id ] = $post;
 			do_action( 'brizy_preview_enqueue_post', $id );
-
-			$collector = new Brizy_Editor_Dependency_Collector();
-			array_map( function ( $p ) {
-				switch ( true ) {
-					case $p instanceof Brizy_Admin_Symbols_Symbol: $this->enqueueSymbol( $p ); break;
-					default: $this->enqueuePost( $p );
-				}
-			}, $collector->collect( $post ) );
+//			$collector = new Brizy_Editor_Dependency_Collector();
+//			array_map( function ( $p ) {
+//				switch ( true ) {
+//					case $p instanceof Brizy_Admin_Symbols_Symbol: $this->enqueueSymbol( $p ); break;
+//					default: $this->enqueuePost( $p );
+//				}
+//			}, $collector->collect( $post ) );
 		}
 	}
 
@@ -157,23 +154,12 @@ class Brizy_Public_AssetEnqueueManager {
 		$styles = [];
 		if ( is_array( $this->project->getCompiledStyles() ) ) {
 			$styles[] = $this->project->getCompiledAssetGroup();
-        }
-
-        foreach ($this->symbols as $symbol ) {
-			foreach ( $symbol->getCompiledAssetGroup()->getPageStyles() as $asset ) {
-				if ( $asset = apply_filters( 'brizy_add_style', $asset ) ) {
-					$this->styles[ $this->getHandle( $asset ) ] = $asset;
-				}
-			}
 		}
-		$styles = [];
-
 		foreach ( $this->symbols as $symbol ) {
-			if(count($symbol->getCompiledAssetGroup()->getPageStyles())) {
+			if ( count( $symbol->getCompiledAssetGroup()->getPageStyles() ) ) {
 				$styles[] = $symbol->getCompiledAssetGroup();
 			}
 		}
-
 		foreach ( $this->posts as $editorPost ) {
 			$sectionSet = $editorPost->getCompiledSectionManager();
 			$postGroups = $sectionSet->getAssetsGroups();
@@ -191,7 +177,6 @@ class Brizy_Public_AssetEnqueueManager {
 				$styles = array_merge( $styles, $postGroups['proStyles'] );
 			}
 		}
-
 		$assetAggregator = new AssetAggregator( $styles );
 		foreach ( $assetAggregator->getAssetList() as $asset ) {
 			/*
@@ -207,9 +192,8 @@ class Brizy_Public_AssetEnqueueManager {
 			if ( $asset->getType() == Asset::TYPE_FILE ) {
 				wp_register_style( $handle, $this->getAssetUrl( $asset ), [], apply_filters( 'brizy_asset_version', BRIZY_EDITOR_VERSION, $asset ) );
 				wp_enqueue_style( $handle );
-}
 			}
-
+		}
 		$collectInline = array_filter( $this->styles, function ( $asset ) {
 			return $asset->getType() == Asset::TYPE_INLINE;
 		} );
@@ -347,16 +331,16 @@ class Brizy_Public_AssetEnqueueManager {
 		}, '' );
 	}
 
-    /**
-     * @param Asset $asset
-     *
-     * @return string
-     */
-    private function getHandle(Asset $asset)
-    {
-        $prefix = $asset->isPro() ? "pro" : "";
-        return Brizy_Editor::prefix() . "-asset-" . $asset->getName() . "-" . $asset->getScore() . "-" . $prefix;
-    }
+	/**
+	 * @param Asset $asset
+	 *
+	 * @return string
+	 */
+	private function getHandle( Asset $asset ) {
+		$prefix = $asset->isPro() ? "pro" : "";
+
+		return Brizy_Editor::prefix() . "-asset-" . $asset->getName() . "-" . $asset->getScore() . "-" . $prefix;
+	}
 
 	private function replacePlaceholders( AssetGroup $ag, $post, $context ) {
 
