@@ -196,7 +196,7 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 			$position     = stripslashes( $this->param( 'position' ) );
 			$status       = stripslashes( $this->param( 'status' ) );
 			$rulesData    = stripslashes( $this->param( 'rules' ) );
-			$dependencies = stripslashes( $this->param( 'dependencies' ) );
+			$dependencies = json_decode(stripslashes($this->param('dependencies')));
 			if ( ! in_array( $status, [ 'publish', 'draft' ] ) ) {
 				$this->error( 400, "Invalid status" );
 			}
@@ -216,7 +216,7 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 			$block->set_needs_compile( true );
 
 			if ( is_array( $dependencies ) && count( $dependencies ) > 0 ) {
-				$block->setDependencies(array_map([Brizy_Editor_Dependency::class,'createFromSerializedData'], $dependencies));
+				$block->setDependencies(array_map([Brizy_Editor_Dependency::class,'createFromObjectData'], $dependencies));
 			}
 			if ( $status == 'publish' && $compiledData ) {
 
@@ -310,7 +310,7 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi {
 				$block->setTags( stripslashes( $this->param( 'tags' ) ) );
 			}
 			if ( is_array( $dependencies ) ) {
-				$block->setDependencies(array_map([Brizy_Editor_Dependency::class,'createFromSerializedData'], $dependencies));
+				$block->setDependencies(array_map([Brizy_Editor_Dependency::class,'createFromObjectData'], $dependencies));
 
 			}
 			if ( ! current_user_can( 'edit_pages' ) ) {
