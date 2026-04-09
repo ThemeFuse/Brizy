@@ -4,7 +4,7 @@ Tags: page builder, website builder, brizy, editor, visual editor, unyson, wysiw
 Requires at least: 4.5
 Tested up to: 6.9.4
 Requires PHP: 7.2.24
-Stable tag: 2.8.11
+Stable tag: 2.8.12
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -136,6 +136,10 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 11. **Resize columns by dragging the handle that appears in between**
 
 == Changelog ==
+
+= 2.8.12 - 2026-04-09 =
+* Fixed: form leads in admin panel
+
 
 = 2.8.11 - 2026-04-08 =
 * Fixed: Elements Accesibility
