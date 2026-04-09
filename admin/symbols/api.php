@@ -55,7 +55,7 @@ class Brizy_Admin_Symbols_Api extends Brizy_Admin_AbstractApi {
 
 
 	public function actionGetItem() {
-		$this->verifyNonce( self::nonce );
+		$this->verifyAuthorization( self::nonce );
 		try {
 			$symbol = $this->manager->getByUID( $this->param( 'uid' ) );
 			$this->success( $symbol->convertToFullOptionValue() );
@@ -68,7 +68,7 @@ class Brizy_Admin_Symbols_Api extends Brizy_Admin_AbstractApi {
 	}
 
 	public function actionGetListFiltered() {
-		$this->verifyNonce( self::nonce );
+		$this->verifyAuthorization( self::nonce );
 		try {
 			$symbols = $this->manager->getFiltered( (array) $this->param( 'uid' ) );
 			$symbols = array_map( function ( $symbol ) {
