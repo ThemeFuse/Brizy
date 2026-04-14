@@ -101,10 +101,10 @@ class Brizy_Admin_Symbols_Api extends Brizy_Admin_AbstractApi {
 		$this->verifyAuthorization( self::nonce );
 		$data = file_get_contents( "php://input" );
 		try {
-
 			$asymbols = $this->manager->createFromJson( $data );
 			foreach ( $asymbols as $asymbol ) {
-				$this->manager->validateSymbol( $asymbol );
+				$currentSymbol = $this->manager->getByUID( $asymbol->getUid());
+				$this->manager->validateSymbol( $asymbol, $currentSymbol );
 			}
 			$this->manager->saveAllSymbols( $asymbols );
 		} catch ( Exception $e ) {
