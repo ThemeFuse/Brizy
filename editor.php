@@ -118,13 +118,9 @@ class Brizy_Editor
 
     public function filterSearchPostTypes($query)
     {
-        if (!$query->is_search() || !$query->is_main_query() || is_admin()) {
-            return;
-        }
-
-        if (!empty($_GET['brz_post_type']) && is_array($_GET['brz_post_type'])) {
+        if (!empty($_REQUEST['brz_post_type']) && is_array($_REQUEST['brz_post_type']) && $query->is_search() && !is_admin()) {
             $allowed = array_values(get_post_types(['public' => true]));
-            $requested = array_map('sanitize_key', $_GET['brz_post_type']);
+            $requested = array_map('sanitize_key', $_REQUEST['brz_post_type']);
             $filtered = array_intersect($requested, $allowed);
 
             if (!empty($filtered)) {
