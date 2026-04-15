@@ -165,7 +165,6 @@ class Brizy_Editor_Editor_Editor
                 'submitUrl' => '{{brizy_dc_ajax_url}}?action=' . Brizy_Editor::prefix(Brizy_Editor_Forms_Api::AJAX_SUBMIT_FORM),
             ),
             'serverTimestamp' => time(),
-            'menuData' => $this->get_menu_data(),
             'wp' => array(
                 'pluginPrefix' => Brizy_Editor::prefix(),
                 'permalink' => get_permalink($wp_post_id),
@@ -1246,135 +1245,6 @@ class Brizy_Editor_Editor_Editor
     }
 
     /**
-     * @return array
-     */
-    private function get_menu_data()
-    {
-        $menus = wp_get_nav_menus();
-        $menu_data = array();
-        foreach ($menus as $menu) {
-
-            $custom_menu_data = get_term_meta($menu->term_id, 'brizy_data', true);
-            $menu_uid = get_term_meta($menu->term_id, 'brizy_uid', true);
-            if (!$menu_uid) {
-                $menu_uid = md5($menu->term_id . time());
-                update_term_meta($menu->term_id, 'brizy_uid', $menu_uid);
-            }
-            $amenu = array(
-                'id' => $menu_uid,
-                'name' => $menu->name,
-                'items' => array(),
-            );
-            $amenu = (object)array_merge($amenu, get_object_vars(is_object($custom_menu_data) ? $custom_menu_data : (object)array()));
-            $menuItems = [];
-            add_action('wp_get_nav_menu_items', function ($items) use (&$menuItems) {
-                foreach ($items as $item) {
-                    $menuItems[$item->ID] = $item;
-                }
-
-                return $items;
-            }, -1000);
-            $currentItems = wp_get_nav_menu_items($menu->term_id);
-            _wp_menu_item_classes_by_context($menuItems);
-            $currentItemsAssociative = [];
-            foreach ($currentItems as $currentItem) {
-                $currentItemsAssociative[$currentItem->ID] = $currentItem;
-            }
-            $menuItems = $currentItemsAssociative + $menuItems;
-            $menu_items = $this->get_menu_tree($menuItems);
-            if (count($menu_items) > 0) {
-
-                $menu_items = array_map(function ($item) use ($menu) {
-                    $item->value->classes[] = '{{ menu_current_item menu="' . $menu->term_id . '" }}';
-
-                    return $item;
-                }, $menu_items);
-                $amenu->items = $menu_items;
-            }
-            $menu_data[] = $amenu;
-        }
-
-        return apply_filters('brizy_menu_data', $menu_data);
-    }
-
-    /**
-     * @param $items
-     * @param int $parent
-     *
-     * @return array
-     */
-    private function get_menu_tree($items, $parent = 0)
-    {
-        $result_items = array();
-        foreach ($items as $item) {
-            if ((string)$item->menu_item_parent !== (string)$parent) {
-                continue;
-            }
-            $menu_uid = get_post_meta($item->ID, 'brizy_post_uid', true);
-            if (!$menu_uid) {
-                $menu_uid = md5($item->ID . time());
-                $update = update_post_meta($item->ID, 'brizy_post_uid', $menu_uid);
-                if (!$update) {
-                    $menu_uid = $item->ID;
-                }
-            }
-            $megaMenuItems = $this->getMegaMenuItems();
-            $menu_data = get_post_meta($item->ID, 'brizy_data', true);
-            $item_value = array(
-                'id' => $menu_uid,
-                'title' => $item->title,
-                'url' => $item->url,
-                'megaMenuItems' => $megaMenuItems,
-                'description' => $item->post_content,
-                'position' => $item->menu_order,
-                'attrTitle' => $item->post_excerpt,
-                'current' => count(array_intersect([
-                        'current-menu-parent',
-                        'current-menu-item',
-                    ], $item->classes)) > 0,
-                'target' => get_post_meta($item->ID, '_menu_item_target', true),
-                'classes' => array_values(array_filter($item->classes)),
-                'xfn' => get_post_meta($item->ID, '_menu_item_xfn', true),
-            );
-            $object_type = get_post_meta($item->ID, '_menu_item_object', true);
-            $brz_post_types = Brizy_Editor::get()->supported_post_types();
-            if (in_array($object_type, $brz_post_types)) {
-                $object_id = get_post_meta($item->ID, '_menu_item_object_id', true);
-                $post = get_post($object_id);
-                if ($post && Brizy_Editor_Entity::isBrizyEnabled($post->ID)) {
-                    $item_value['editorUrl'] = Brizy_Editor_Entity::getEditUrl($post->ID);
-                }
-            }
-            $an_item = (object)array(
-                'type' => 'MenuItem',
-            );
-            $an_item->value = (object)array_merge($item_value, get_object_vars(is_object($menu_data) ? $menu_data : (object)array()));
-            $child_items = $this->get_menu_tree($items, $item->ID);
-            $an_item->value->items = array();
-            if (count($child_items) > 0) {
-                $an_item->value->items = $child_items;
-            }
-            $result_items[] = $an_item;
-        }
-
-        return $result_items;
-    }
-
-    /**
-     * @return array
-     */
-    private function getMegaMenuItems()
-    {
-
-        return array(
-            (object)(array(
-                'type' => "SectionMegaMenu",
-                'value' => (object)array('items' => array()),
-            )),
-        );
-    }
-
-    /**
      * @param Brizy_Editor_Accounts_ServiceAccountManager $manager
      * @param array $config
      *
@@ -1792,6 +1662,7 @@ class Brizy_Editor_Editor_Editor
             'symbolList' => $pref . Brizy_Admin_Symbols_Api::LIST_ACTION,
             'getDynamicContentPlaceholders' => $pref . Brizy_Editor_API::AJAX_GET_DYNAMIC_CONTENT,
             'adobeFontsUrl' => $pref . Brizy_Editor_API::AJAX_GET_ADOBE_FONTS,
+            'getMenuData' => $pref . Brizy_Editor_API::AJAX_GET_MENU_DATA,
         );
         $actions = apply_filters('brizy_editor_api_actions', $actions);
 

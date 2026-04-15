@@ -40,6 +40,7 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi
     const AJAX_GET_ADOBE_FONTS = '_get_adobe_fonts';
 
     const AJAX_GET_DYNAMIC_CONTENT = '_get_dynamic_content';
+    const AJAX_GET_MENU_DATA = '_get_menu_data';
 
     /**
      * @var Brizy_Editor_Post
@@ -105,6 +106,7 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi
         add_action($p . self::AJAX_GET_POST_TAXONOMIES, array($this, 'addPostTaxonomies'));
         add_action($p . self::AJAX_GET_DYNAMIC_CONTENT, array($this, 'addDynamicContent'));
         add_action($p . self::AJAX_GET_ADOBE_FONTS, array($this, 'getAdobeFonts'));
+        add_action($p . self::AJAX_GET_MENU_DATA, array($this, 'getMenuData' ));
         add_action($p . 'nopriv_' . Brizy_Editor::prefix(self::AJAX_TIMESTAMP), array($this, 'timestamp'));
 
     }
@@ -1036,5 +1038,123 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi
             $this->error(400, 'An error occurred creating the request to adobe.');
         }
         $this->success(json_decode(wp_remote_retrieve_body($response), true));
+    }
+
+    public function getMenuData()
+    {
+        $this->verifyAuthorization(self::nonce);
+
+        $menus = wp_get_nav_menus();
+        $menu_data = array();
+        foreach ($menus as $menu) {
+
+            $custom_menu_data = get_term_meta($menu->term_id, 'brizy_data', true);
+            $menu_uid = get_term_meta($menu->term_id, 'brizy_uid', true);
+            if (!$menu_uid) {
+                $menu_uid = md5($menu->term_id . time());
+                update_term_meta($menu->term_id, 'brizy_uid', $menu_uid);
+            }
+            $amenu = array(
+                'id' => $menu_uid,
+                'name' => $menu->name,
+                'items' => array(),
+            );
+            $amenu = (object)array_merge($amenu, get_object_vars(is_object($custom_menu_data) ? $custom_menu_data : (object)array()));
+            $menuItems = [];
+            add_action('wp_get_nav_menu_items', function ($items) use (&$menuItems) {
+                foreach ($items as $item) {
+                    $menuItems[$item->ID] = $item;
+                }
+
+                return $items;
+            }, -1000);
+            $currentItems = wp_get_nav_menu_items($menu->term_id);
+            _wp_menu_item_classes_by_context($menuItems);
+            $currentItemsAssociative = [];
+            foreach ($currentItems as $currentItem) {
+                $currentItemsAssociative[$currentItem->ID] = $currentItem;
+            }
+            $menuItems = $currentItemsAssociative + $menuItems;
+            $menu_items = $this->getMenuTree($menuItems);
+            if (count($menu_items) > 0) {
+
+                $menu_items = array_map(function ($item) use ($menu) {
+                    $item->value->classes[] = '{{ menu_current_item menu="' . $menu->term_id . '" }}';
+
+                    return $item;
+                }, $menu_items);
+                $amenu->items = $menu_items;
+            }
+            $menu_data[] = $amenu;
+        }
+
+        $this->success(apply_filters('brizy_menu_data', $menu_data));
+    }
+
+    private function getMenuTree($items, $parent = 0)
+    {
+        $result_items = array();
+        foreach ($items as $item) {
+            if ((string)$item->menu_item_parent !== (string)$parent) {
+                continue;
+            }
+            $menu_uid = get_post_meta($item->ID, 'brizy_post_uid', true);
+            if (!$menu_uid) {
+                $menu_uid = md5($item->ID . time());
+                $update = update_post_meta($item->ID, 'brizy_post_uid', $menu_uid);
+                if (!$update) {
+                    $menu_uid = $item->ID;
+                }
+            }
+            $megaMenuItems = $this->getMegaMenuItems();
+            $menu_data = get_post_meta($item->ID, 'brizy_data', true);
+            $item_value = array(
+                'id' => $menu_uid,
+                'title' => $item->title,
+                'url' => $item->url,
+                'megaMenuItems' => $megaMenuItems,
+                'description' => $item->post_content,
+                'position' => $item->menu_order,
+                'attrTitle' => $item->post_excerpt,
+                'current' => count(array_intersect([
+                        'current-menu-parent',
+                        'current-menu-item',
+                    ], $item->classes)) > 0,
+                'target' => get_post_meta($item->ID, '_menu_item_target', true),
+                'classes' => array_values(array_filter($item->classes)),
+                'xfn' => get_post_meta($item->ID, '_menu_item_xfn', true),
+            );
+            $object_type = get_post_meta($item->ID, '_menu_item_object', true);
+            $brz_post_types = Brizy_Editor::get()->supported_post_types();
+            if (in_array($object_type, $brz_post_types)) {
+                $object_id = get_post_meta($item->ID, '_menu_item_object_id', true);
+                $post = get_post($object_id);
+                if ($post && Brizy_Editor_Entity::isBrizyEnabled($post->ID)) {
+                    $item_value['editorUrl'] = Brizy_Editor_Entity::getEditUrl($post->ID);
+                }
+            }
+            $an_item = (object)array(
+                'type' => 'MenuItem',
+            );
+            $an_item->value = (object)array_merge($item_value, get_object_vars(is_object($menu_data) ? $menu_data : (object)array()));
+            $child_items = $this->getMenuTree($items, $item->ID);
+            $an_item->value->items = array();
+            if (count($child_items) > 0) {
+                $an_item->value->items = $child_items;
+            }
+            $result_items[] = $an_item;
+        }
+
+        return $result_items;
+    }
+
+    private function getMegaMenuItems()
+    {
+        return array(
+            (object)(array(
+                'type' => 'SectionMegaMenu',
+                'value' => (object)array('items' => array()),
+            )),
+        );
     }
 }
