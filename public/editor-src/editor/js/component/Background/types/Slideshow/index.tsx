@@ -5,7 +5,7 @@ import {
   Swiper as SwiperControl,
   SwiperSlide as SwiperSlideControl
 } from "swiper/react";
-import { SwiperOptions } from "swiper/types/swiper-options";
+import { SwiperOptions } from "swiper/types";
 import { SizeType } from "visual/global/Config/types/configs/common";
 import { useConfig } from "visual/providers/ConfigProvider";
 import { makeAttr } from "visual/utils/i18n/attribute";

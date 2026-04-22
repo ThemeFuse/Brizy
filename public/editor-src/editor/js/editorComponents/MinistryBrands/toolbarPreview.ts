@@ -47,7 +47,6 @@ export const getItems = <
     {
       id: "toolbarColorContent",
       type: "popover",
-      devices: "desktop",
       config: {
         title: t("Colors"),
         size: "medium",

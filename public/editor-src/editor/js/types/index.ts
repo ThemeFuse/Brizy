@@ -1,4 +1,4 @@
-import { ElementModel } from "editor/js/component/Elements/Types";
+import { ElementModel } from "visual/component/Elements/Types";
 import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { GetConfig } from "visual/providers/ConfigProvider/types";
 import { EditorMode } from "visual/providers/EditorModeProvider";
@@ -162,7 +162,7 @@ export type ProjectLockStatus = ProjectLocked | ProjectUnlocked;
 
 type ProjectLockError = {
   code: typeof ErrorCodes.PROJECT_LOCKED_ERROR;
-  data: ProjectLockStatus;
+  data: ProjectLocked;
 };
 
 type ProjectDataError = {

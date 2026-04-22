@@ -44,7 +44,6 @@ export const getItems = ({ v, device, state }) => {
           }
         }
       },
-      devices: "desktop",
       position: 90,
       options: [
         {
@@ -58,7 +57,6 @@ export const getItems = ({ v, device, state }) => {
                 {
                   id: "",
                   type: "backgroundColor",
-                  devices: "desktop",
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -70,7 +68,6 @@ export const getItems = ({ v, device, state }) => {
                 {
                   id: "buttonColor",
                   type: "colorPicker",
-                  devices: "desktop",
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -82,7 +79,6 @@ export const getItems = ({ v, device, state }) => {
                 {
                   id: "buttonBorder",
                   type: "border",
-                  devices: "desktop",
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -94,7 +90,6 @@ export const getItems = ({ v, device, state }) => {
                 {
                   id: "boxShadow",
                   type: "boxShadow",
-                  devices: "desktop",
                   states: [NORMAL, HOVER]
                 }
               ]

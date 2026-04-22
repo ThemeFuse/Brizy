@@ -261,19 +261,23 @@ export default function useRuleList(
               const existingItems = newRulesList[ruleIndex].items ?? [];
 
               const existingItemsMap = new Map(
-                existingItems.map((item) => [item.value, item])
+                existingItems.map((item) => [
+                  `${item.value}::${item.title}`,
+                  item
+                ])
               );
 
               items.forEach((newItem) => {
-                const existingItem = existingItemsMap.get(newItem.value);
+                const key = `${newItem.value}::${newItem.title}`;
+                const existingItem = existingItemsMap.get(key);
                 if (existingItem) {
                   const mergedItem = mergeCollectionGroups(
                     existingItem as CmsListItem,
                     newItem as CmsListItem
                   );
-                  existingItemsMap.set(newItem.value, mergedItem);
+                  existingItemsMap.set(key, mergedItem);
                 } else {
-                  existingItemsMap.set(newItem.value, newItem);
+                  existingItemsMap.set(key, newItem);
                 }
               });
 

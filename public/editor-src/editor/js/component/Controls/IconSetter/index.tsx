@@ -43,10 +43,7 @@ export class IconSetter extends React.Component<Props> {
 
   renderSelectIcon = (): ReactElement => {
     return (
-      <div
-        className="brz-ed-control__icon-setter__box w-[48px] h-[48px] border-mako border-dashed border-[1px] bg-gunmetal text-[16px] text-shuttle-grey flex justify-center items-center cursor-pointer transition-[all] duration-200 ease-linear delay-[0s] hover:border-shuttle-grey-2 hover:text-shuttle-grey-3"
-        onClick={this.handleClick}
-      >
+      <div className="brz-ed-control__icon-setter__box" onClick={this.handleClick}>
         <EditorIcon icon="nc-add" />
       </div>
     );
@@ -66,12 +63,8 @@ export class IconSetter extends React.Component<Props> {
 
   renderIcon = ({ name, type, filename }: Value): ReactNode => {
     return [
-      <div
-        key="first"
-        className="brz-ed-control__icon-setter__box w-[48px] h-[48px] border-mako border-dashed border-[1px] bg-gunmetal text-[16px] text-shuttle-grey flex justify-center items-center cursor-pointer transition-all-1 duration-200 ease-linear delay-[0s] hover:border-shuttle-grey-2 hover:text-shuttle-grey-3"
-        onClick={this.handleClick}
-      >
-        <div className="brz-ed-control__icon-setter--active text-white inline-block text-[0]">
+      <div key="first" className="brz-ed-control__icon-setter__box" onClick={this.handleClick}>
+        <div className="brz-ed-control__icon-setter--active">
           <ThemeIcon
             className="grid-16 stroke-2"
             name={name}

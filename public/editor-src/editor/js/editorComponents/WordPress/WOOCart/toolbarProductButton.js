@@ -104,7 +104,6 @@ export function getItems({ v, device }) {
         }
       },
       position: 80,
-      devices: "desktop",
       options: [
         {
           id: "tabsToolbarColor",
@@ -117,7 +116,6 @@ export function getItems({ v, device }) {
                 {
                   id: "buttonColor",
                   type: "colorPicker",
-                  devices: "desktop",
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -129,7 +127,6 @@ export function getItems({ v, device }) {
                 {
                   id: "buttonBgColor",
                   type: "colorPicker",
-                  devices: "desktop",
                   states: [NORMAL, HOVER]
                 }
               ]

@@ -120,16 +120,23 @@ export class RightSidebarInner extends React.Component<Props> {
       this.getItems = undefined;
       this.getTitle = undefined;
 
-      const newStore = {
-        type,
-        isOpen: false,
-        lock,
-        alignment,
-        activeTab,
-        expanded
-      };
+      // defer the dispatch to avoid reentrant dispatch conflicts with
+      // activeElement cleanup during component unmount (reduxBatch batches
+      // subscriber notifications for reentrant dispatches)
+      this.clearItemsTimeoutId = window.setTimeout(() => {
+        if (this.unmounted) return;
 
-      dispatch(updateUI("rightSidebar", newStore));
+        const newStore = {
+          type,
+          isOpen: false,
+          lock,
+          alignment,
+          activeTab,
+          expanded
+        };
+
+        dispatch(updateUI("rightSidebar", newStore));
+      }, 0);
     }
   }
 

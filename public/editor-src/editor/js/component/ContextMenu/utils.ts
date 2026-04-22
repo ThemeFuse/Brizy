@@ -2,7 +2,7 @@ import { detectOS } from "visual/utils/dom/detectOS";
 import { Item, Meta } from "./types";
 
 export function mergeItems(a: Item[], b: Item[]): Item[] {
-  const mergedItems: Item[] = [...a];
+  const mergedItems: Item[] = a;
 
   for (let i = 0; i < b.length; i++) {
     let foundMergeTarget = false;
@@ -26,10 +26,6 @@ export function mergeItems(a: Item[], b: Item[]): Item[] {
   }
 
   return mergedItems;
-}
-
-export function concatItems(a: Item[], b: Item[]): Item[] {
-  return [...a, ...b];
 }
 
 export function filterItems(items: Item[], meta: Meta): Item[] {

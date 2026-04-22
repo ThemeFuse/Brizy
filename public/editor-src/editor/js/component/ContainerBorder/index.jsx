@@ -3,7 +3,12 @@ import T from "prop-types";
 import React from "react";
 import { ReactReduxContext } from "react-redux";
 import ClickOutside from "visual/component/ClickOutside";
-import { deviceModeSelector } from "visual/redux/selectors";
+import { setActiveElementMeta } from "visual/redux/actions2";
+import {
+  activeElementMetaSelector,
+  deviceModeSelector
+} from "visual/redux/selectors";
+import { applyFilter } from "visual/utils/filters";
 import { makeAttr, makeDataAttr } from "visual/utils/i18n/attribute";
 import { attachRefs } from "visual/utils/react";
 import ContainerBorderButton from "./ContainerBorderButton";
@@ -20,6 +25,8 @@ export default class ContainerBorder extends React.Component {
     activateOnContentClick: T.bool,
     clickOutsideExceptions: T.arrayOf(T.string),
     hiddenInResponsive: T.bool,
+    elementId: T.string,
+    elementType: T.string,
     children: T.func
   };
 
@@ -96,10 +103,67 @@ export default class ContainerBorder extends React.Component {
 
   componentWillUnmount() {
     clearTimeout(this.isHiddenTime);
+
+    const { elementId } = this.props;
+    if (elementId) {
+      const { store } = this.context;
+      const activeElement = activeElementMetaSelector(store.getState());
+      if (activeElement?.id === elementId) {
+        store.dispatch(setActiveElementMeta(null));
+      }
+    }
   }
 
+  dispatchActiveElement = () => {
+    const { elementId, elementType } = this.props;
+    const { store } = this.context;
+
+    const activeElement = activeElementMetaSelector(store.getState());
+
+    // Extract from EditorComponent
+    // These globalVar attached by EditorComponent beforeOpenToolbar
+    const activeEditorComponent = global.Brizy.activeEditorComponent;
+
+    if (activeEditorComponent) {
+      const elementId = activeEditorComponent.getId();
+
+      // No need to dispatch same active element
+      if (activeElement?.id === elementId) {
+        return;
+      }
+
+      store.dispatch(
+        setActiveElementMeta({
+          id: elementId,
+          type: activeEditorComponent.getComponentId()
+        })
+      );
+      return;
+    }
+
+    if (elementId && elementType && activeElement?.id !== elementId) {
+      store.dispatch(
+        setActiveElementMeta({ id: elementId, type: elementType })
+      );
+    }
+  };
+
+  dispatchClearActiveElement = () => {
+    const { elementId } = this.props;
+    if (elementId) {
+      const { store } = this.context;
+      store.dispatch(setActiveElementMeta(null));
+    }
+  };
+
   handleContentClick = (e) => {
+    const handledByChild = !!e.brzContainerBorderHandled;
     this.handleActivationEvent(e);
+
+    if (!handledByChild) {
+      this.dispatchActiveElement();
+      e.brzContainerBorderHandled = true;
+    }
   };
 
   handleButtonClick = (e) => {
@@ -107,8 +171,13 @@ export default class ContainerBorder extends React.Component {
   };
 
   handleClickOutside = () => {
+    if (!this.isBorderActive) {
+      return;
+    }
+
     this.setActive(false, false);
     this.setHover(false);
+    this.dispatchClearActiveElement();
   };
 
   handleToolbarMouseEnter = () => {
@@ -134,11 +203,19 @@ export default class ContainerBorder extends React.Component {
     if (hiddenInResponsive && this.device !== "desktop") {
       this.setHidden(true);
     } else {
+      const handledByChild = !!e.brzContainerBorderHandled;
       this.handleActivationEvent(e);
+
+      if (!handledByChild) {
+        this.dispatchActiveElement();
+        e.brzContainerBorderHandled = true;
+      }
     }
   };
 
   handleToolbarClose = (e) => {
+    this.dispatchClearActiveElement();
+
     if (e.detail?.hideContainerBorder === false) {
       return;
     }
@@ -278,9 +355,14 @@ export default class ContainerBorder extends React.Component {
       attr[makeAttr(`border--${color}`)] = type;
     }
 
+    const exceptions = applyFilter(
+      "toolbar.clickOutsideExceptions",
+      clickOutsideExceptions
+    );
+
     return (
       <ClickOutside
-        exceptions={clickOutsideExceptions}
+        exceptions={exceptions}
         onClickOutside={this.handleClickOutside}
       >
         {({ ref }) =>

@@ -70,10 +70,11 @@ export interface ContextMenuItemGroup {
 
 export type ContextMenuItem = ContextMenuItemButton | ContextMenuItemGroup;
 
-export interface ContextMenuProps<M extends ElementModel> {
-  id: string;
+export interface ContextMenuProps {
   componentId: string;
-  getItems: (v: M, c: Editor<M>) => ContextMenuItem[];
+  // `ContextMenu` / `ContextMenuExtend` call this with no args; `makeContextMenuProps`
+  // already binds the element value + editor instance.
+  getItems: () => ContextMenuItem[];
 }
 
 export type Getter = (key: string) => OptionValue<OptionName>;

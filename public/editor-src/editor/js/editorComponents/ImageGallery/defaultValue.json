@@ -62,28 +62,6 @@
     "hoverTransition": 50,
     "hoverTransitionSuffix": "",
 
-    "imagesMaskShape": "none",
-    "imagesMaskRepeat": "no-repeat",
-    "imagesMaskSize": "cover",
-    "imagesMaskPosition": "center center",
-    "imagesMaskScale": 50,
-    "imagesMaskScaleSuffix": "%",
-    "imagesMaskPositiony": 3,
-    "imagesMaskPositionySuffix": "%",
-    "imagesMaskPositionx": 3,
-    "imagesMaskPositionxSuffix": "%",
-
-    "maskShape": "none",
-    "maskSize": "cover",
-    "maskPosition": "center center",
-    "maskRepeat": "no-repeat",
-    "maskScale": 50,
-    "maskScaleSuffix": "%",
-    "maskPositiony": 3,
-    "maskPositionySuffix": "%",
-    "maskPositionx": 3,
-    "maskPositionxSuffix": "%",
-
     "hoverName": "none",
     "hoverDuration": 600,
     "hoverDelay": 0,
@@ -372,14 +350,6 @@
     "bigImageOverlayGradientFinishPointer": 69,
     "bigImageOverlayGradientActivePointer": "finishPointer",
     "bigImageOverlayGradientLinearDegree": 0,
-    "bigImageOverlayGradientRadialDegree": 2,
-
-    "imagesMaskCustomUploadImageSrc": "",
-    "imagesMaskCustomUploadImageFileName": "",
-    "imagesMaskCustomUploadImageExtension": "",
-    "imagesMaskCustomUploadImageWidth": 600,
-    "imagesMaskCustomUploadImageHeight": 450,
-    "imagesMaskCustomUploadImageType": "internal",
-    "imagesMaskCustomUploadAlt": ""
+    "bigImageOverlayGradientRadialDegree": 2
   }
 }

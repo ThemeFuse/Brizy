@@ -121,5 +121,11 @@ export const orderByConverter = (
 
 export const fieldConverter = (
   selectedSource: string | null | undefined,
-  sourcesArr: Sources[]
-): Choice[] => sourcesArr.find((item) => item.id === selectedSource)?.fields ?? [];
+  sourcesArr: Sources[],
+  querySource: string | null | undefined,
+  isCurrentQuery: boolean
+): Choice[] => {
+  const source = isCurrentQuery ? querySource : selectedSource;
+
+  return sourcesArr.find((item) => item.id === source)?.fields ?? [];
+};

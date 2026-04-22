@@ -53,7 +53,6 @@ export function getItems({
           }
         }
       },
-      devices: "desktop",
       position: 20,
       options: [
         {

@@ -23,29 +23,16 @@ export interface GradientValue {
 }
 
 export interface GradientBgValues {
-  background: null;
+  background?: null;
   textBgColorPalette?: string;
-  textBackgroundGradient: GradientValue;
+  textBackgroundGradient?: GradientValue;
 }
 
 export interface GradientColorValues {
   color?: string;
   colorPalette?: string;
-  backgroundGradient: GradientValue;
-  opacity: null;
-}
-
-export interface ColorBgValues {
-  textBackgroundGradient: null;
-  textBgColorPalette?: string;
-  background?: string;
-}
-
-export interface ColorValues {
-  backgroundGradient: null;
-  opacity: null;
-  color?: string;
-  colorPalette?: string;
+  backgroundGradient?: GradientValue;
+  opacity?: null;
 }
 
 export interface HexToString {

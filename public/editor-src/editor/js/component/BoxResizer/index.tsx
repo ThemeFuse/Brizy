@@ -16,13 +16,19 @@ import {
   transformRestrictions,
   transformValue
 } from "./transforms";
-import { Meta, Patch, RestrictionMapping, Restrictions, V } from "./types";
+import {
+  Meta,
+  Patch,
+  ResizerPassThroughProps,
+  RestrictionMapping,
+  Restrictions,
+  V
+} from "./types";
 
 type RM = RestrictionMapping;
 
-type Props = {
-  children: React.ReactNode;
-  restrictions: Restrictions;
+type Props = ResizerPassThroughProps & {
+  restrictions?: Partial<Restrictions>;
   value: V;
   meta?: Meta;
   onChange: (data: Patch["patch"]) => void;
@@ -43,9 +49,9 @@ const BoxResizer = forwardRef<HTMLElement, Props>(
     // This is especially problematic because BoxResizer might have child components with complex React trees (e.g., columns).
     const deviceMode = deviceModeSelector(store.getState());
     const restrictions = transformRestrictions(
-      props.restrictions,
       value,
-      deviceMode
+      deviceMode,
+      props.restrictions
     );
     const horizontalAlign = transformAlign(meta, "horizontalAlign", deviceMode);
     const verticalAlign =
@@ -132,9 +138,5 @@ export default rolesHOC({
     ForEdit: BoxResizer,
     ForView: ({ children }) => <>{children}</>
   }),
-  fallbackRender: ({
-    children
-  }: {
-    children: React.ReactNode;
-  }): React.ReactNode => children
+  fallbackRender: ({ children }) => children
 });

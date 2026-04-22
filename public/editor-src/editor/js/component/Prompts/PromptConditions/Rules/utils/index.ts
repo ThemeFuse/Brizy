@@ -245,7 +245,7 @@ export const mergeCollectionGroups = (
     collection1.value !== collection2.value
   ) {
     throw new Error(
-      "Collections must have the same title, value, and mode to be merged"
+      "Collections must have the same title and value to be merged"
     );
   }
   const mergedItems = [...collection1.items, ...collection2.items].reduce<

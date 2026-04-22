@@ -7,7 +7,12 @@ import { getDynamicContentOption } from "visual/utils/options";
 import { HOVER, NORMAL } from "visual/utils/stateMode";
 import { Value } from "./types";
 
-export const getItems: GetItems<Value> = ({ v, device, context, component }) => {
+export const getItems: GetItems<Value> = ({
+  v,
+  device,
+  context,
+  component
+}) => {
   const dvv = (key: string) => defaultValueValue({ v, key, device });
 
   const bgColorOpacity = dvv("bgColorOpacity");
@@ -17,11 +22,7 @@ export const getItems: GetItems<Value> = ({ v, device, context, component }) => 
     dvv("bgColorHex"),
     bgColorOpacity
   );
-  const borderColor = getColorToolbar(
-    dvv("borderColorPalette"),
-    dvv("borderColorHex"),
-    dvv("borderColorOpacity")
-  );
+
   const linkDC = getDynamicContentOption({
     options: context.dynamicContent.config,
     type: DCTypes.link
@@ -156,12 +157,11 @@ export const getItems: GetItems<Value> = ({ v, device, context, component }) => 
         title: t("Colors"),
         icon: {
           style: {
-            backgroundColor: bgColorOpacity > 0 ? borderColor : bgColor
+            backgroundColor: bgColor
           }
         }
       },
       roles: ["admin"],
-      devices: "desktop",
       position: 90,
       options: [
         {

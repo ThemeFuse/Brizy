@@ -10,7 +10,7 @@ interface Props {
 
 export const SVGInfo = (props: Props) => (
   <svg
-    className="brz-icon-svg brz-ed-icon-svg align-[initial]"
+    className="brz-icon-svg brz-ed-icon-svg"
     viewBox="0 0 16 16"
     onClick={props.onClick}
   >

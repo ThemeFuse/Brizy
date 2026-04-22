@@ -25,7 +25,6 @@ export function getItems({ v, device }) {
           }
         }
       },
-      devices: "desktop",
       position: 90,
       options: [
         {

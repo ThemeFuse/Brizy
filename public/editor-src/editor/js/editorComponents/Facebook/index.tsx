@@ -9,7 +9,7 @@ import { makePlaceholder } from "visual/utils/dynamicContent";
 import { defaultValueValue } from "visual/utils/onChange";
 import { attachRefs } from "visual/utils/react";
 import { Wrapper } from "../tools/Wrapper";
-import { Deprecated } from "./Deprecated";
+import { DeprecatedButton, DeprecatedGroups } from "./Deprecated";
 import defaultValue from "./defaultValue.json";
 import * as sidebarConfig from "./sidebar";
 import { style } from "./styles";
@@ -54,14 +54,20 @@ class Facebook extends EditorComponent<Value> {
     }
   };
 
-  renderGroup(): JSX.Element {
+  renderDeprecated(facebookType: string): JSX.Element {
     return (
       <Toolbar
         {...this.makeToolbarPropsFromConfig2(toolbarConfigEmpty, undefined, {
           parentItemsFilter: toolbarExtendFilter
         })}
       >
-        {({ ref }) => <Deprecated ref={ref} />}
+        {({ ref }) =>
+          facebookType === "group" ? (
+            <DeprecatedGroups ref={ref} />
+          ) : (
+            <DeprecatedButton ref={ref} />
+          )
+        }
       </Toolbar>
     );
   }
@@ -70,14 +76,6 @@ class Facebook extends EditorComponent<Value> {
     const {
       className: _className,
       facebookType,
-      targetUrl,
-      href,
-      facebookButtonType,
-      layout,
-      size,
-      share,
-      showFriends,
-      showCounter,
       facebookEmbedType,
       facebookEmbedPostHref,
       facebookEmbedVideoHref,
@@ -93,21 +91,16 @@ class Facebook extends EditorComponent<Value> {
       customCSS
     } = v;
 
-    if (facebookType === "group") {
-      return this.renderGroup();
+    if (facebookType === "group" || facebookType === "button") {
+      return this.renderDeprecated(facebookType);
     }
 
     const pageWidth = this.dvv("pageWidth");
 
     const className = classnames(
       "brz-fb",
-      `brz-fb-${facebookType === "button" ? "like" : facebookType}`,
-      { "brz-fb-styles": facebookType !== "button" },
-      { "brz-fb-styles-button": facebookType === "button" },
-      {
-        [`brz-fb-styles-button--small-${layout}`]:
-          facebookType === "button" && size === "small"
-      },
+      `brz-fb-${facebookType}`,
+      "brz-fb-styles",
       _className,
       this.css(
         this.getComponentId(),
@@ -125,29 +118,12 @@ class Facebook extends EditorComponent<Value> {
     const appData = this.getAppData();
 
     const typeData = {
-      button: "Like",
       embed: facebookEmbedType === "post" ? "EmbeddedPost" : "EmbeddedVideo",
       page: "Page",
       group: "Group"
     };
 
     const data = {
-      button: {
-        href: targetUrl === "custom" && href !== "" ? href : appData.href,
-        action: facebookButtonType,
-        layout:
-          layout === "button"
-            ? showFriends === "on"
-              ? "standard"
-              : showCounter === "on"
-                ? "button_count"
-                : "button"
-            : "box_count",
-        showFaces: showFriends === "on",
-        size,
-        share: share === "on",
-        lang: appData.lang
-      },
       embed:
         facebookEmbedType === "post"
           ? {
@@ -214,14 +190,6 @@ class Facebook extends EditorComponent<Value> {
     const {
       className: _className,
       facebookType,
-      targetUrl,
-      href,
-      facebookButtonType,
-      layout,
-      size,
-      share,
-      showFriends,
-      showCounter,
       facebookEmbedType,
       postAndVideoShowText,
       facebookEmbedPostHref,
@@ -245,13 +213,8 @@ class Facebook extends EditorComponent<Value> {
 
     const className = classnames(
       "brz-fb",
-      `brz-fb-${facebookType === "button" ? "like" : facebookType}`,
-      { "brz-fb-styles": facebookType !== "button" },
-      { "brz-fb-styles-button": facebookType === "button" },
-      {
-        [`brz-fb-styles-button--small-${layout}`]:
-          facebookType === "button" && size === "small"
-      },
+      `brz-fb-${facebookType}`,
+      "brz-fb-styles",
       _className,
       this.css(
         this.getComponentId(),
@@ -269,24 +232,6 @@ class Facebook extends EditorComponent<Value> {
     const appData = this.getAppData();
 
     const data = {
-      button: {
-        "data-href":
-          targetUrl === "custom" && href !== "" ? href : appData.href,
-        "data-action": facebookButtonType,
-        "data-layout":
-          layout === "button"
-            ? showFriends === "on"
-              ? "standard"
-              : showCounter === "on"
-                ? "button_count"
-                : "button"
-            : "box_count",
-        "data-show-faces": showFriends,
-        "data-size": size,
-        "data-share": share,
-        "data-lang": appData.lang,
-        "data-colorscheme": "dark"
-      },
       embed:
         facebookEmbedType === "post"
           ? {
@@ -322,7 +267,6 @@ class Facebook extends EditorComponent<Value> {
     };
 
     const typeData = {
-      button: "Like",
       embed: facebookEmbedType === "post" ? "post" : "video",
       page: "Page",
       group: "Group"

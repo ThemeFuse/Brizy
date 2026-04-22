@@ -1,9 +1,9 @@
 import { createContext } from "react";
-import { Item } from "./types";
+import type { ComponentMenuEntry } from "./types";
 
 interface ContextType {
-  getParentContextMenuItems: () => Item[];
-  getParentContextMenuExtendItems?: () => Item[];
+  getParentContextMenuItems: () => ComponentMenuEntry[];
+  getParentContextMenuExtendItems?: () => ComponentMenuEntry[];
 }
 
 export const ContextMenuContext = createContext<ContextType>({

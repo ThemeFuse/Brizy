@@ -125,6 +125,7 @@ class Items extends EditorArrayComponent {
 
   componentWillUnmount(): void {
     clearTimeout(this.openSlideId);
+    super.componentWillUnmount();
   }
 
   handleRefSlider = (ref: SlickSlider): void => {

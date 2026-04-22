@@ -9,12 +9,36 @@ import { isUserAgreementCheckbox } from "../../utils";
 import { Props, Value } from "../type";
 import { getThirtyOptions, inputTypesChoice } from "../utils";
 
+// Flatpickr locales (picker language). Keep it small: popular locales only.
+const flatpickrLocaleChoices = [
+  { title: t("Arabic"), value: "ar" },
+  { title: t("German"), value: "de" },
+  { title: t("English"), value: "en" },
+  { title: t("Spanish"), value: "es" },
+  { title: t("French"), value: "fr" },
+  { title: t("Italian"), value: "it" },
+  { title: t("Japanese"), value: "ja" },
+  { title: t("Korean"), value: "ko" },
+  { title: t("Dutch"), value: "nl" },
+  { title: t("Polish"), value: "pl" },
+  { title: t("Portuguese"), value: "pt" },
+  { title: t("Romanian"), value: "ro" },
+  { title: t("Russian"), value: "ru" },
+  { title: t("Swedish"), value: "sv" },
+  { title: t("Thai"), value: "th" },
+  { title: t("Turkish"), value: "tr" },
+  { title: t("Ukrainian"), value: "uk" },
+  { title: t("Vietnamese"), value: "vn" },
+  { title: t("Chinese"), value: "zh" }
+];
+
 export const getItems: GetItems<Value, Props> = ({ v, device, component }) => {
   const dvv = (key: string) => defaultValueValue({ v, key, device });
   const config = component.getGlobalConfig();
   const context = component.context;
 
   const type = dvv("type");
+  const dateFormat = dvv("dateFormat");
 
   const isCheckbox = type === "Checkbox";
   const isRadio = type === "Radio";
@@ -49,13 +73,50 @@ export const getItems: GetItems<Value, Props> = ({ v, device, component }) => {
   const choices = config.elements?.form?.inputTypes;
   const inputTypes = inputTypesChoice(choices, t);
 
+  const languageOption: ToolbarItemType = {
+    id: "language",
+    type: "select",
+    position: 25,
+    label: t("Language"),
+    devices: "desktop",
+    choices: flatpickrLocaleChoices,
+    helper: {
+      content: t("Select the language used by the date picker.")
+    }
+  };
+
+  const dateFormatOption: ToolbarItemType = {
+    id: "dateFormat",
+    type: "select",
+    position: 26,
+    label: t("Date Format"),
+    devices: "desktop",
+    choices: [
+      { title: t("YYYY-MM-DD"), value: "Y-m-d" },
+      { title: t("DD-MM-YYYY"), value: "d-m-Y" },
+      { title: t("MM/DD/YYYY"), value: "m/d/Y" }
+    ]
+  };
+
+  const datePlaceholder = (() => {
+    switch (dateFormat) {
+      case "d-m-Y":
+        return t("DD-MM-YYYY");
+      case "m/d/Y":
+        return t("MM/DD/YYYY");
+      case "Y-m-d":
+      default:
+        return t("YYYY-MM-DD");
+    }
+  })();
+
   const dateOrTimeOptions = (): ToolbarItemType[] => [
     {
       id: "min",
       type: "inputText",
       position: 20,
       label: isDate ? t("Min Date") : t("Min Time"),
-      placeholder: isDate ? t("YYYY-MM-DD") : t("HH:MM"),
+      placeholder: isDate ? datePlaceholder : t("HH:MM"),
       devices: "desktop"
     },
     {
@@ -63,7 +124,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device, component }) => {
       type: "inputText",
       position: 30,
       label: isDate ? t("Max Date") : t("Max Time"),
-      placeholder: isDate ? t("YYYY-MM-DD") : t("HH:MM"),
+      placeholder: isDate ? datePlaceholder : t("HH:MM"),
       devices: "desktop"
     },
     {
@@ -351,6 +412,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device, component }) => {
               id: "advanced",
               label: t("Advanced"),
               options: [
+                ...(isDate ? [languageOption, dateFormatOption] : []),
                 ...(isCheckboxOrRadio ? checkboxOrRadioAdvanced() : []),
                 {
                   id: "customFieldName",

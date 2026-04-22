@@ -199,6 +199,8 @@ class Image extends EditorComponent<Value, Props, State> {
 
   componentWillUnmount() {
     this.mounted = false;
+
+    super.componentWillUnmount();
   }
 
   patchValue(patch: Patch, meta = {}) {

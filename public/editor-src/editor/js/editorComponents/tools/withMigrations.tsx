@@ -33,9 +33,21 @@ export function withMigrations<
   deps?: D
 ): EditorInstance {
   class EditorComponentWithMigrations extends EditorComponent<M, P> {
-    dbValueMigrated: DBMigration<Props<M, P>>["dbValue"] | undefined =
-      undefined;
+    _pendingMigrations: Migration<Deps<unknown>>[] | undefined = undefined;
+    _resolvedDeps: Deps<unknown> | undefined = undefined;
+    _isMigrating = false;
     currentVersion: MValue<number> = undefined;
+
+    // Keep dbValueMigrated as public API for subclasses (e.g. Image)
+    // that clear it directly. Setting to undefined clears pending migrations.
+    get dbValueMigrated(): unknown {
+      return this._pendingMigrations;
+    }
+
+    set dbValueMigrated(_val: unknown) {
+      this._pendingMigrations = undefined;
+      this._resolvedDeps = undefined;
+    }
 
     constructor(props: Props<M, P>) {
       super(props);
@@ -45,12 +57,6 @@ export function withMigrations<
 
       this.currentVersion = currentVersion;
 
-      const config = this.getGlobalConfig();
-
-      const vd = this.getDefaultValue();
-      const stylesValue = this.getStylesValue();
-      const vs = { ...vd, ...stylesValue };
-
       if (foundMigrations.length > 0) {
         if (deps?.getValue) {
           this.state = {
@@ -58,24 +64,13 @@ export function withMigrations<
             loading: true
           };
 
+          const config = this.getGlobalConfig();
+
           deps
             .getValue(this.props.renderContext, config)
             .then((r) => {
-              // @ts-expect-error: { _version: number; }' is assignable to the constraint of type 'M'
-              this.dbValueMigrated = {
-                ...migrate(
-                  foundMigrations,
-                  {
-                    vd,
-                    vs,
-                    v: this.props.dbValue,
-                    renderContext: this.props.renderContext
-                  },
-                  r
-                ),
-                _version: foundMigrations[foundMigrations.length - 1].version
-              };
-
+              this._pendingMigrations = foundMigrations;
+              this._resolvedDeps = r;
               this.setState((state) => ({ ...state, loading: false }));
             })
             .catch((e) => {
@@ -86,16 +81,7 @@ export function withMigrations<
               throw e;
             });
         } else {
-          // @ts-expect-error: { _version: number; }' is assignable to the constraint of type 'M'
-          this.dbValueMigrated = {
-            ...migrate(foundMigrations, {
-              vd,
-              vs,
-              v: this.props.dbValue,
-              renderContext: this.props.renderContext
-            }),
-            _version: foundMigrations[foundMigrations.length - 1].version
-          };
+          this._pendingMigrations = foundMigrations;
         }
       }
     }
@@ -108,24 +94,48 @@ export function withMigrations<
         newVersion &&
         this.currentVersion < newVersion
       ) {
-        this.dbValueMigrated = undefined;
+        this._pendingMigrations = undefined;
+        this._resolvedDeps = undefined;
       }
 
-      if (this.dbValueMigrated) {
-        const dbValue = super.getDBValue();
-        return {
-          ...this.props.dbValue,
-          ...dbValue,
-          ...this.dbValueMigrated
-        };
+      if (this._pendingMigrations && !this._isMigrating) {
+        // Added for circular dependecies getDefaultValue -> getDBValue -> getDBValue -> ...
+        this._isMigrating = true;
+
+        try {
+          const dbValue = super.getDBValue();
+          const vd = super.getDefaultValue();
+          const stylesValue = super.getStylesValue();
+          const vs = { ...vd, ...stylesValue };
+          const lastVersion =
+            this._pendingMigrations[this._pendingMigrations.length - 1].version;
+
+          const migrated = {
+            ...migrate(
+              this._pendingMigrations,
+              { vd, vs, v: dbValue, renderContext: this.props.renderContext },
+              this._resolvedDeps
+            ),
+            _version: lastVersion
+          };
+
+          return {
+            ...this.props.dbValue,
+            ...dbValue,
+            ...migrated
+          };
+        } finally {
+          this._isMigrating = false;
+        }
       }
 
       return super.getDBValue();
     }
 
     handleValueChange(newValue: M, meta: OnChangeMeta<M>) {
-      if (this.dbValueMigrated) {
-        this.dbValueMigrated = undefined;
+      if (this._pendingMigrations) {
+        this._pendingMigrations = undefined;
+        this._resolvedDeps = undefined;
       }
       super.handleValueChange(newValue, meta);
     }

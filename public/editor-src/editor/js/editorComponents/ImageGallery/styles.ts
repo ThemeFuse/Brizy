@@ -1,12 +1,9 @@
-import { isView } from "visual/providers/RenderProvider";
 import { DynamicStylesProps } from "visual/types";
 import { renderStyles } from "visual/utils/cssStyle";
 import { OutputStyle, Styles } from "visual/utils/cssStyle/types";
 import type { Value } from "./types";
 
 export function style(data: DynamicStylesProps<Value>): OutputStyle {
-  const { renderContext } = data.contexts;
-
   const styles: Styles = {
     ".brz &&": {
       standart: [
@@ -28,32 +25,10 @@ export function style(data: DynamicStylesProps<Value>): OutputStyle {
       {
         standart: ["cssStyleElementImageGalleryBorderRadiusThumbnail"]
       },
-    ".brz && .brz-image__gallery-item .brz-picture": {
-      standart: [
-        ...(isView(renderContext)
-          ? [
-              "cssStyleElementImageGalleryBigImageImagesMaskShape",
-              "cssStyleElementImageGalleryBigImageImagesMaskSize",
-              "cssStyleElementImageGalleryBigImageImagesMaskPosition",
-              "cssStyleElementImageGalleryBigImageImagesMaskRepeat",
-              "cssStyleElementImageGalleryBigImageImagesCustomMask"
-            ]
-          : [])
-      ]
-    },
     ".brz &&.brz-image__gallery-with-thumb .brz-image__gallery-item .brz-picture:after":
       {
         standart: ["cssStyleElementImageGalleryBorderRadiusThumbnail"]
-      },
-    ".brz && .brz-image__gallery-item .brz-ed-image__wrapper": {
-      standart: [
-        "cssStyleElementImageGalleryBigImageImagesMaskShape",
-        "cssStyleElementImageGalleryBigImageImagesMaskSize",
-        "cssStyleElementImageGalleryBigImageImagesMaskPosition",
-        "cssStyleElementImageGalleryBigImageImagesMaskRepeat",
-        "cssStyleElementImageGalleryBigImageImagesCustomMask"
-      ]
-    }
+      }
   };
 
   return renderStyles({ ...data, styles });

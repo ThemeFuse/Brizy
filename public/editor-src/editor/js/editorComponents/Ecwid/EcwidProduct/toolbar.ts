@@ -268,7 +268,6 @@ export const getItems: GetItems<Value> = ({ v, device, state, component }) => {
           }
         }
       },
-      devices: "desktop",
       options: [
         {
           id: "tabsColor",

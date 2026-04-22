@@ -3,6 +3,7 @@ import { AlphaStyleProvider } from "@brizy/ui/lib/AlphaStyleProvider";
 import { ConfigProvider as UIConfigProvider } from "@brizy/ui/lib/ConfigProvider";
 import React from "react";
 import Page from "visual/component/Editor";
+import { PluginBootstrap } from "visual/plugins/PluginBootstrap";
 import { ConfigProvider } from "visual/providers/ConfigProvider";
 import { EditorModeProvider } from "visual/providers/EditorModeProvider";
 import { I18nextProvider } from "visual/providers/I18nProvider";
@@ -22,17 +23,19 @@ export const Editor = (props: Props): JSX.Element => {
         <InitStore config={config} editorMode={editorMode}>
           <ConfigProvider config={config}>
             <RegisterParts config={config}>
-              <EditorModeProvider mode={editorMode}>
-                <StyleProvider>
-                  <AlphaStyleProvider container={window.parent.document.head}>
-                    <AlphaConfigProvider>
-                      <UIConfigProvider>
-                        <Page addFile={addFile} editorMode={editorMode} />
-                      </UIConfigProvider>
-                    </AlphaConfigProvider>
-                  </AlphaStyleProvider>
-                </StyleProvider>
-              </EditorModeProvider>
+              <PluginBootstrap config={config}>
+                <EditorModeProvider mode={editorMode}>
+                  <StyleProvider>
+                    <AlphaStyleProvider container={window.parent.document.head}>
+                      <AlphaConfigProvider>
+                        <UIConfigProvider>
+                          <Page addFile={addFile} editorMode={editorMode} />
+                        </UIConfigProvider>
+                      </AlphaConfigProvider>
+                    </AlphaStyleProvider>
+                  </StyleProvider>
+                </EditorModeProvider>
+              </PluginBootstrap>
             </RegisterParts>
           </ConfigProvider>
         </InitStore>

@@ -69,7 +69,6 @@ export function getItems({ v, device, state }) {
         }
       },
       position: 90,
-      devices: "desktop",
       options: [
         {
           id: "tabsColor",

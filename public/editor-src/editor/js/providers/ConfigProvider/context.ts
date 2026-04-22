@@ -2,7 +2,7 @@ import { createContext } from "react";
 import { GetConfig } from "visual/providers/ConfigProvider/types";
 import { MValue } from "visual/utils/value";
 
-interface ConfigProvider {
+export interface ConfigProvider {
   getConfig: GetConfig;
 }
 

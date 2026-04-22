@@ -76,7 +76,9 @@ export interface Value extends ElementModel, CssId {
 }
 
 export interface Props extends WithClassName {
-  meta: ComponentsMeta;
+  meta: ComponentsMeta & {
+    showBorderRadius?: boolean;
+  };
   attributes: Record<string, string | number>;
   renderer?: {
     form?: {

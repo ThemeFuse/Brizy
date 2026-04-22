@@ -49,15 +49,9 @@ export const getItems: GetItems<Value> = ({
   const dvv = (key: string) => defaultValueValue({ v, key, device });
 
   const bgColor = getColorToolbar(
-    dvv("bgColorPalette"),
-    dvv("bgColorHex"),
-    dvv("bgColorOpacity")
-  );
-
-  const borderColor = getColorToolbar(
-    dvv("borderColorPalette"),
-    dvv("borderColorHex"),
-    dvv("borderColorOpacity")
+    dvv("paddingBgColorPalette"),
+    dvv("paddingBgColorHex"),
+    dvv("paddingBgColorOpacity")
   );
 
   const videoDynamicContentChoices = getDynamicContentOption({
@@ -393,11 +387,10 @@ export const getItems: GetItems<Value> = ({
         title: t("Colors"),
         icon: {
           style: {
-            backgroundColor: noCover ? borderColor : bgColor
+            backgroundColor: bgColor
           }
         }
       },
-      devices: "desktop",
       position: 90,
       options: [
         {
@@ -515,7 +508,6 @@ export const getItems: GetItems<Value> = ({
                 {
                   id: "maskCustomUpload",
                   type: "imageUpload",
-                  devices: "desktop",
                   label: t("Image"),
                   style: maskImageUrlCSS(config),
                   config: {

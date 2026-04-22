@@ -45,12 +45,12 @@ export const readPopups: Reader<Block[]> = (popup: unknown) => {
   }
 };
 
-interface PopupData {
+export interface PopupData {
   linkPopup: string;
   linkPopupPopups: Block[];
 }
 
-interface OldPopupModel {
+export interface OldPopupModel {
   linkPopup: string;
   popups: Block[];
 }

@@ -6,10 +6,10 @@ import { HOVER, NORMAL } from "visual/utils/stateMode";
 export function getItems({ v, device, state }) {
   const dvv = (key) => defaultValueValue({ v, key, device, state });
 
-  const borderColor = getColorToolbar(
-    dvv("borderColorPalette"),
-    dvv("borderColorHex"),
-    dvv("borderColorOpacity")
+  const bgColor = getColorToolbar(
+    dvv("bgColorPalette"),
+    dvv("bgColorHex"),
+    dvv("bgColorOpacity")
   );
 
   return [
@@ -21,11 +21,10 @@ export function getItems({ v, device, state }) {
         title: t("Colors"),
         icon: {
           style: {
-            backgroundColor: borderColor
+            backgroundColor: bgColor
           }
         }
       },
-      devices: "desktop",
       roles: ["admin"],
       position: 80,
       options: [

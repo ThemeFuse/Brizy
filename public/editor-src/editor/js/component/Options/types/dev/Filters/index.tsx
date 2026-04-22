@@ -10,7 +10,7 @@ import { empty, set } from "visual/utils/options/Filters/utils";
 import { FilterSlider } from "./FilterSlider";
 import { Value } from "./types/Value";
 
-interface Props extends Option.Props<Value>, Option.Meta<Meta> {}
+export interface Props extends Option.Props<Value>, Option.Meta<Meta> {}
 
 export const Filters = ({ value, onChange }: Props): JSX.Element => {
   const handleChange = (

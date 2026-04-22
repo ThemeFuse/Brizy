@@ -1,5 +1,10 @@
+import type {
+  BoxResizerPartialProps,
+  Patch,
+  Point
+} from "visual/component/BoxResizer/types";
 import { ElementModel } from "visual/component/Elements/Types";
-import { Value, Patch, BoxResizerParams } from "./type";
+import type { Value } from "./type";
 
 export const resizerTransformValue = (v: Value): ElementModel => {
   const {
@@ -23,7 +28,9 @@ export const resizerTransformValue = (v: Value): ElementModel => {
   };
 };
 
-export const resizerTransformPatch = (patch: Patch): Patch => {
+export const resizerTransformPatch = (
+  patch: Patch["patch"]
+): Patch["patch"] => {
   if (patch.width) {
     patch.size = patch.width;
     delete patch.width;
@@ -42,7 +49,7 @@ export const resizerTransformPatch = (patch: Patch): Patch => {
   return patch;
 };
 
-export const resizerPoints = [
+const resizerPoints = [
   "topLeft",
   "topCenter",
   "topRight",
@@ -51,34 +58,35 @@ export const resizerPoints = [
   "bottomLeft",
   "bottomCenter",
   "bottomRight"
-];
+] satisfies Point[];
 
-export const getBoxResizerParams: BoxResizerParams = () => ({
-  points: resizerPoints,
-  restrictions: {
-    height: {
-      px: { min: 25, max: Infinity },
-      "%": { min: 5, max: 100 }
-    },
-    width: {
-      px: { min: 5, max: 1000 },
-      "%": { min: 5, max: 100 }
-    },
-    tabletHeight: {
-      px: { min: 25, max: Infinity },
-      "%": { min: 5, max: 100 }
-    },
-    tabletWidth: {
-      px: { min: 5, max: 1000 },
-      "%": { min: 5, max: 100 }
-    },
-    mobileHeight: {
-      px: { min: 25, max: Infinity },
-      "%": { min: 5, max: 100 }
-    },
-    mobileWidth: {
-      px: { min: 5, max: 1000 },
-      "%": { min: 5, max: 100 }
+export const getBoxResizerParams = () =>
+  ({
+    points: resizerPoints,
+    restrictions: {
+      height: {
+        px: { min: 25, max: Infinity },
+        "%": { min: 5, max: 100 }
+      },
+      width: {
+        px: { min: 5, max: 1000 },
+        "%": { min: 5, max: 100 }
+      },
+      tabletHeight: {
+        px: { min: 25, max: Infinity },
+        "%": { min: 5, max: 100 }
+      },
+      tabletWidth: {
+        px: { min: 5, max: 1000 },
+        "%": { min: 5, max: 100 }
+      },
+      mobileHeight: {
+        px: { min: 25, max: Infinity },
+        "%": { min: 5, max: 100 }
+      },
+      mobileWidth: {
+        px: { min: 5, max: 1000 },
+        "%": { min: 5, max: 100 }
+      }
     }
-  }
-});
+  }) satisfies BoxResizerPartialProps;

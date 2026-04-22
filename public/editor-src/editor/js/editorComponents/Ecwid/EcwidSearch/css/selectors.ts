@@ -3,9 +3,6 @@ export const containerSelector =
 export const filtersProductsSelector = `${containerSelector} .ec-store .grid__filters .ec-filters__products`;
 export const popupSelectorMobile =
   "#ecwid_html #ecwid_body &&.brz-ecwid-search-wrapper .ecwid .ecwid-productBrowser .ec-wrapper .ec-store .ec-filters.ec-filters--popup";
-export const popupBlockWrapSelectorMobile = `${popupSelectorMobile} .ec-filters__body .ec-openable-block__wrap`;
-export const popupBlockButtonsWrapSelectorMobile = `${popupSelectorMobile} .filter-section-sticky-bar::before`;
-export const popupBlockButtonsWrapSelectorMobile2 = `${popupSelectorMobile} .filters-sticky-bar::before`;
 export const titleSelector =
   "#ecwid_html #ecwid_body &&.brz-ecwid-search-wrapper .ecwid .ecwid-productBrowser .ec-wrapper .ec-store .ec-page-title .page-title__name.ec-header-h1:hover";
 export const titleSelectorMobile = `${popupSelectorMobile} .ec-filters__top .ec-filters__title.ec-header-h2:hover`;

@@ -1,4 +1,5 @@
 import { GetItems } from "visual/editorComponents/EditorComponent/types";
+import { getColorToolbar } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
 import { widthCSS } from "./css";
@@ -34,6 +35,12 @@ export const getItems: GetItems<Value, Props> = ({ v, device }) => {
   const chartBarItemsLength = chartBarItems.length;
 
   const widthSuffix = dvv("widthSuffix");
+
+  const borderColor = getColorToolbar(
+    dvv("borderColorPalette"),
+    dvv("borderColorHex"),
+    dvv("borderColorOpacity")
+  );
 
   return [
     {
@@ -248,7 +255,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device }) => {
         title: t("Border"),
         icon: {
           style: {
-            backgroundColor: "#000000"
+            backgroundColor: borderColor
           }
         }
       },

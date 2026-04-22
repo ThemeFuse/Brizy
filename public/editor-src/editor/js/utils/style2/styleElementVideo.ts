@@ -38,7 +38,7 @@ export function styleElementVideoIconFontSize({
   const dvv = (key: string) => defaultValueValue({ v, key, device, state });
   const iconSize = dvv("iconSize");
 
-  const iconFontSize = Math.round(iconSize * 0.35);
+  const iconFontSize = Math.round(iconSize * 0.35).toString();
 
   return iconSize === undefined ? iconSize : iconFontSize;
 }

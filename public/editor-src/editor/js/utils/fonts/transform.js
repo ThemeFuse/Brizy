@@ -1,17 +1,33 @@
+import { Str } from "@brizy/readers";
 import { produce } from "immer";
 import { t } from "visual/utils/i18n";
 
 const normalizeWeights = (weights) => {
-  return weights.reduce(
-    (acc, curr) => {
-      const toNumber = parseInt(curr); // "100italic => 100";
+  const normalized = new Set([400]);
 
-      return isNaN(toNumber) || acc.includes(toNumber)
-        ? acc
-        : [...acc, toNumber];
-    },
-    [400]
-  );
+  for (const weight of weights) {
+    const isItalic = Str.is(weight) && weight.includes("italic");
+
+    let value;
+    if (isItalic) {
+      // Handle italic variants: "italic" becomes "400italic", others stay as-is
+      value = weight === "italic" ? "400italic" : weight;
+    } else {
+      // Parse numeric weights
+      value = parseInt(weight, 10);
+      // Skip invalid numeric values
+      if (isNaN(value)) {
+        continue;
+      }
+    }
+
+    // Add value if not already present
+    if (!normalized.has(value)) {
+      normalized.add(value);
+    }
+  }
+
+  return Array.from(normalized);
 };
 
 const ADOBE_WEIGHTS = {

@@ -26,7 +26,6 @@ const sass = require("@csstools/postcss-sass");
 const postcssSCSS = require("postcss-scss");
 const postcssURL = require("postcss-url");
 const autoprefixer = require("autoprefixer");
-const tailwindcss = require("tailwindcss");
 
 const chalk = require("chalk");
 const del = require("del");
@@ -91,7 +90,39 @@ const postsCssProcessors = [
       return `../fonts/${path.basename(asset.url)}`;
     }
   }),
-  tailwindcss()
+  postcssURL({
+    filter: "**/*.svg",
+    assetsPath: path.resolve(paths.build, "editor/fonts"),
+    url: (asset) => {
+      const match = asset.url.match(
+        /^~?flag-icons\/flags\/4x3\/([^/]+\.svg)$/
+      );
+
+      if (!match) {
+        return asset.url;
+      }
+
+      const fileName = match[1];
+      const flagIconsRoot = path.resolve(
+        require.resolve("flag-icons/package.json"),
+        ".."
+      );
+      // `asset.url` is like `~flag-icons/flags/4x3/xx.svg`.
+      // Resolve it relative to the `flag-icons` package root without duplicating `flag-icons/`.
+      let relFromPkg = asset.url.replace(/^~?/, ""); // flag-icons/flags/4x3/xx.svg
+      if (relFromPkg.startsWith("flag-icons/")) {
+        relFromPkg = relFromPkg.slice("flag-icons/".length); // flags/4x3/xx.svg
+      }
+
+      const srcPath = path.resolve(flagIconsRoot, relFromPkg);
+      const destPath = path.resolve(paths.build, "editor/fonts", fileName);
+
+      fs.mkdirSync(path.dirname(destPath), { recursive: true });
+      fs.copyFileSync(srcPath, destPath);
+
+      return `../fonts/${fileName}`;
+    }
+  })
 ];
 
 function verifications(done) {

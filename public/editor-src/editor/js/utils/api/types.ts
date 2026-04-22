@@ -134,7 +134,7 @@ export interface PostsSources {
 
 //#region AdobeFonts
 
-interface AdobeFamily {
+export interface AdobeFamily {
   id: string;
   family: string;
   category: string;

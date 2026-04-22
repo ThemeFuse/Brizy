@@ -126,7 +126,6 @@ export function getItems({ v, device }) {
         }
       },
       position: 80,
-      devices: "desktop",
       options: [
         {
           id: "tabsColor",
@@ -140,7 +139,6 @@ export function getItems({ v, device }) {
                   id: "titleColor",
                   type: "colorPicker",
                   disabled: titleEnabled,
-                  devices: "desktop"
                 }
               ]
             },
@@ -151,7 +149,6 @@ export function getItems({ v, device }) {
                 {
                   id: "attributeColor",
                   type: "colorPicker",
-                  devices: "desktop"
                 }
               ]
             },

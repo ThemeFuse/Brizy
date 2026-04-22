@@ -5,24 +5,27 @@
   z-index: z-index.z("sidebar-addable");
 
   .brz-ed-addable__drag_overlay {
-    z-index: z-index.z("sidebar-addable__drag-overlay") #{!important};
+    z-index: z-index.z("sidebar-addable__drag-overlay") !important;
   }
 
   .brz-ed-sidebar-drawer__body {
-    @apply gap-[30px];
+    gap: 30px;
     .brz-scrollbar__view {
-      @apply px-[30px] pt-[30px];
+      padding: 30px 30px 0;
     }
 
     .brz-ed-addable__items {
-      @apply inline-flex flex-col gap-[10px] w-full;
+      display: inline-flex;
+      flex-direction: column;
+      gap: 10px;
+      width: 100%;
     }
 
     .brz-ui-noitems {
-      @apply text-center;
+      text-align: center;
       color: variables.$sidebar-color;
       .brz-ui-typography {
-        @apply text-center;
+        text-align: center;
       }
     }
   }
@@ -30,49 +33,74 @@
 
 .brz-ed .brz-ed-addable {
   &__icon-wrapper {
-    @apply flex items-center gap-2 cursor-pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
     color: variables.$control-color--active;
   }
 
   &__group {
-    @apply bg-inherit border-2 border-solid rounded transition-[height,colors];
-    border-color: variables.$addable-border-color;
+    background-color: inherit;
+    border: 2px solid variables.$addable-border-color;
+    border-radius: 0.25rem;
+    transition-property: height, color, background-color, border-color;
 
     &__head {
-      @apply flex flex-row pl-[20px] pr-[16px] h-[45px] gap-[10px];
-      @apply items-center bg-inherit select-none;
+      display: flex;
+      flex-direction: row;
+      padding: 0 16px 0 20px;
+      height: 45px;
+      gap: 10px;
+      align-items: center;
+      background-color: inherit;
+      user-select: none;
       color: variables.$control-color;
 
       &__drag-pointer {
-        @apply text-[16px] flex cursor-move;
+        font-size: 16px;
+        display: flex;
+        cursor: move;
         &--disabled {
-          @apply cursor-not-allowed;
+          cursor: not-allowed;
         }
       }
 
       &__title {
-        @apply flex-grow;
+        flex-grow: 1;
         input {
           all: unset;
-          @apply w-full overflow-hidden overflow-ellipsis text-start;
+          width: 100%;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          text-align: start;
         }
       }
 
       &__remove {
-        @apply cursor-pointer shrink-0;
+        cursor: pointer;
+        flex-shrink: 0;
       }
 
       &__expand-btn {
-        @apply cursor-pointer transition-transform shrink-0;
+        cursor: pointer;
+        transition-property: transform;
+        flex-shrink: 0;
         color: variables.$control-color;
       }
     }
 
     &__body {
-      @apply flex flex-col px-3;
+      display: flex;
+      flex-direction: column;
+      padding: 0 0.75rem;
       .brz-ed-option {
-        @apply select-none p-[10px];
-        @apply border-0 border-t-[1px] border-solid border-white border-opacity-10;
+        user-select: none;
+        padding: 10px;
+        border: 0;
+        border-top: 1px solid;
+        border-style: solid;
+        border-color: rgba(255, 255, 255, 0.1);
       }
     }
 
@@ -89,11 +117,21 @@
 
   //Add new group Button
   &__add-new {
-    @apply flex flex-row justify-center items-center gap-3 cursor-pointer flex-shrink-0;
-    @apply bg-transparent border-2 border-solid  rounded;
-    @apply mx-[30px] h-[76px] opacity-100 transition-colors;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 0.75rem;
+    cursor: pointer;
+    flex-shrink: 0;
+    background-color: transparent;
+    border: 2px solid variables.$addable-border-color;
+    border-radius: 0.25rem;
+    margin: 0 30px;
+    height: 76px;
+    opacity: 1;
+    transition-property: color, background-color, border-color;
     color: variables.$addable__sidebar__add_button__text-color;
-    border-color: variables.$addable-border-color;
 
     &:hover {
       border-color: variables.$addable__sidebar__add_button--active;

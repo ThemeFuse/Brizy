@@ -2,13 +2,13 @@ import { Num, Str } from "@brizy/readers";
 import $ from "jquery";
 import PerfectScrollbar from "perfect-scrollbar";
 import { Option } from "slim-select";
-import { FormAccessibility } from "../accessibility";
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import { getFreeLibs } from "visual/libs";
 import { isIOS } from "visual/utils/devices";
 import { makeAttr, makeDataAttrString } from "visual/utils/i18n/attribute";
 import { decodeFromString } from "visual/utils/string";
 import { MValue, isNullish } from "visual/utils/value";
+import { FormAccessibility } from "../accessibility";
 import { PhoneOption } from "./Form2Field/types/type";
 import { initCalculatedField } from "./initCalculatedField";
 import { initMultiStep } from "./initMultiStep";
@@ -21,10 +21,15 @@ import {
   MessageStatus,
   ResponseMessages
 } from "./types";
-import { flagsToSelectPhoneOptions, isPhoneType } from "./utils";
+import {
+  flagsToSelectPhoneOptions,
+  getFlagIconClass,
+  isPhoneType
+} from "./utils";
 import { getTranslatedResponseMessages } from "./utils";
 
 let isSubmitEnabled = true;
+const HIDE_SUBMIT_MESSAGE_DELAY_MS = 5000;
 const recaptchaSelector =
   '.brz-g-recaptcha[data-sitekey]:not([data-sitekey=""])';
 
@@ -48,6 +53,7 @@ function disableIOSInputZoom() {
 }
 
 const responseMessages = new Map<HTMLFormElement, ResponseMessages>();
+const formMessageTimeouts = new Map<HTMLElement, ReturnType<typeof setTimeout>>();
 
 export const showErrorMessage = (form: HTMLFormElement) => {
   const isFormFieldEmpty = !!form.querySelector(
@@ -174,11 +180,9 @@ export default function ($node: JQuery): void {
     const flags: PhoneOption[] = (
       translatedFlagsHTML as HTMLOptionElement[]
     ).map((option) => {
-      const flag = option.getAttribute("data-flag") ?? "";
       const dialCode = option.getAttribute("data-dial-code") ?? "";
 
       return {
-        flag,
         dialCode,
         name: option.textContent ?? "",
         code: option.value
@@ -212,9 +216,6 @@ export default function ($node: JQuery): void {
           const currentValueNode = item.querySelector<HTMLElement>(
             ".brz-forms2__phone--country-selected"
           );
-          const currentValueNodeInner = item.querySelector<HTMLElement>(
-            ".brz-forms2__phone--country-selected span"
-          );
 
           const input = item.querySelector<HTMLInputElement>(
             ".brz-forms2__phone--number input.brz-input"
@@ -229,11 +230,23 @@ export default function ($node: JQuery): void {
             data: flagsToSelectPhoneOptions(flags),
             events: {
               afterChange: (data: Option[]) => {
-                const v = data[0].value;
+                const v = data[0]?.value;
+                if (!v) {
+                  return;
+                }
+
                 const currentFlag = flags.find((flag) => flag.code === v);
 
-                if (currentFlag && currentValueNodeInner) {
-                  currentValueNodeInner.textContent = currentFlag.flag;
+                if (currentFlag) {
+                  const currentValueNodeInner = item.querySelector<HTMLElement>(
+                    ".brz-forms2__phone--country-selected span"
+                  );
+
+                  if (currentValueNodeInner) {
+                    const next = document.createElement("span");
+                    next.className = getFlagIconClass(currentFlag.code);
+                    currentValueNodeInner.replaceWith(next);
+                  }
                   input?.setAttribute("data-dial-code", currentFlag.dialCode);
                 }
               }
@@ -257,13 +270,17 @@ export default function ($node: JQuery): void {
       const minDate = data.brzMin;
       const maxDate = data.brzMax;
       const native = data.brzNative === "true";
+      const language = data.brzLanguage;
+      const dateFormat = data.brzDateFormat;
       const { Flatpickr } = getFreeLibs();
 
       if (!native && Flatpickr) {
         Flatpickr(node, {
           minDate: minDate,
           maxDate: maxDate,
-          disableMobile: true
+          disableMobile: true,
+          locale: (language ?? "en") as keyof typeof Flatpickr.l10ns,
+          dateFormat: dateFormat ?? "Y-m-d"
         });
       } else {
         if (minDate) {
@@ -351,7 +368,7 @@ export default function ($node: JQuery): void {
       const formAccessibility = new FormAccessibility({
         selectNode: node,
         select,
-        rootNode: root,
+        rootNode: root
       });
 
       formAccessibility.init();
@@ -866,12 +883,14 @@ function handleSubmit(form: HTMLElement, allData: AllFormData) {
           form: nodeForm
         })
       );
+      scheduleHideFormMessage(nodeForm);
 
       if (brzRedirect && brzRedirect !== "") {
         window.location.replace(brzRedirect);
       }
 
       if (shouldClosePopup && brzPopupId) {
+        clearFormMessages(nodeForm);
         closePopupForm(brzPopupId);
       }
 
@@ -1029,6 +1048,12 @@ function getFormMessage({
 }
 
 export function clearFormMessages(form: HTMLElement): void {
+  const hideMessageTimeout = formMessageTimeouts.get(form);
+  if (hideMessageTimeout) {
+    clearTimeout(hideMessageTimeout);
+    formMessageTimeouts.delete(form);
+  }
+
   const alert = form.querySelector(".brz-forms2__alert");
 
   if (alert) {
@@ -1053,6 +1078,14 @@ function showFormMessage(form: HTMLElement, message: HTMLElement): void {
     // for users who have not yet recompiled their HTML after the feature update for message styling
     form.appendChild(message);
   }
+}
+
+function scheduleHideFormMessage(form: HTMLElement): void {
+  const timeoutId = setTimeout(() => {
+    clearFormMessages(form);
+  }, HIDE_SUBMIT_MESSAGE_DELAY_MS);
+
+  formMessageTimeouts.set(form, timeoutId);
 }
 
 function closePopupForm(popupId: string): void {

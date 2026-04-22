@@ -50,7 +50,7 @@ const _EditorIcon = forwardRef<HTMLDivElement, Props>((props, ref) => {
   } = props;
 
   const className = classnames(
-    "brz-icon-svg brz-ed-icon-svg align-[initial]",
+    "brz-icon-svg brz-ed-icon-svg",
     _className
   );
 

@@ -219,6 +219,13 @@ export default function ($node) {
     window.onYouTubeIframeAPIReady = () => {
       if (typeof oldOnYouTubeIframeAPIReady === "function") {
         oldOnYouTubeIframeAPIReady();
+      } else {
+        const isYoutubeVideoBg =
+          $node.find(".brz-bg-video[data-type='youtube']").length > 0;
+
+        if (isYoutubeVideoBg) {
+          window.Brz.emit("plugin.video.iframe.ready");
+        }
       }
 
       if (window.Brz) {
@@ -235,11 +242,17 @@ export default function ($node) {
       const player = this.querySelector("iframe");
       const $videoData = $this.find(".brz-video-data");
       const $coverElem = $this.find(".brz-video__cover");
+      const hasLightbox = $this.find(".brz-video__lightbox").length > 0;
       const population = $videoData.attr("data-population");
       const loop = $videoData.attr("data-loop") === "true";
       const start = Number($videoData.attr("data-start"));
       const end = Number($videoData.attr("data-end"));
       const autoplay = $videoData.attr("data-autoplay") === "on";
+
+      // On iOS with lightbox: do not insert iframe or add cover click-to-play; let tap open lightbox.
+      if (isIos && hasLightbox) {
+        return;
+      }
 
       if (isIos) {
         parentElements.push($this);
@@ -310,25 +323,34 @@ export default function ($node) {
     }
   });
 
-  // Lightbox
-  $node.find(".brz-video__lightbox").each(function () {
-    const type = this.getAttribute(makeAttr("popup-type")) ?? "iframe";
-    const loop = this.getAttribute(makeAttr("loop")) === "on";
-    const muted = this.getAttribute(makeAttr("muted")) === "on";
-    const start = Num.read(this.getAttribute(makeAttr("start"))) ?? 0;
-    const end = Num.read(this.getAttribute(makeAttr("end"))) ?? 0;
-    const src = this.getAttribute("href");
+  // Lightbox: prefer data-brz-src (href may be "#"). Use delegation so the first click is handled.
+  $node.on("click.brzVideoLightbox", ".brz-video__lightbox", function (e) {
+    e.preventDefault();
+
+    const el = this;
+    const type = el.getAttribute(makeAttr("popup-type")) ?? "iframe";
+    const loop = el.getAttribute(makeAttr("loop")) === "on";
+    const muted = el.getAttribute(makeAttr("muted")) === "on";
+    const start = Num.read(el.getAttribute(makeAttr("start"))) ?? 0;
+    const end = Num.read(el.getAttribute(makeAttr("end"))) ?? 0;
+    const src = el.getAttribute(makeAttr("src")) || el.getAttribute("href");
+
+    if (!src) return;
 
     const { type: videoType, key: id } = getVideoData(src) ?? {};
-    const isShortLink = videoType === "youtube" && src.includes("youtu.be");
 
     if (type === "inline") {
-      $(this).magnificPopup({
+      $.magnificPopup.open({
+        items: { src },
         type: "inline",
         callbacks: {
           open: function () {
-            const video = this.currItem.inlineElement[0];
-            if (video) {
+            const container = this.currItem.inlineElement[0];
+            const video =
+              container?.tagName === "VIDEO"
+                ? container
+                : container?.querySelector("video");
+            if (video && typeof video.play === "function") {
               video.currentTime = start;
               video.play();
               video.addEventListener("timeupdate", () => {
@@ -339,29 +361,33 @@ export default function ($node) {
             }
           },
           close: function () {
-            const video = this.currItem.inlineElement[0];
-            video.currentTime = 0;
-            video.pause();
-          }
-        }
-      });
-    } else {
-      $(this).magnificPopup({
-        type: "iframe",
-        closeOnContentClick: true,
-        iframe: {
-          patterns: {
-            youtube: {
-              index: isShortLink ? "youtu.be/" : "youtube.com/",
-              src: `//www.youtube.com/embed/${id}?playlist=${id}&autoplay=1&mute=${muted}&loop=${loop}&start=${start}&end=${end}`
-            },
-            vimeo: {
-              index: "vimeo.com/",
-              src: `//player.vimeo.com/video/${id}?autoplay=1&muted=${muted}&loop=${loop}#t=${start}`
+            const container = this.currItem.inlineElement[0];
+            const video =
+              container?.tagName === "VIDEO"
+                ? container
+                : container?.querySelector("video");
+            if (video && typeof video.pause === "function") {
+              video.currentTime = 0;
+              video.pause();
             }
           }
         }
       });
+    } else if (id) {
+      const embedSrc =
+        videoType === "youtube"
+          ? `//www.youtube.com/embed/${id}?playlist=${id}&autoplay=1&mute=${muted ? 1 : 0}&loop=${loop ? 1 : 0}&start=${start}&end=${end}`
+          : videoType === "vimeo"
+            ? `//player.vimeo.com/video/${id}?autoplay=1&muted=${muted ? 1 : 0}&loop=${loop ? 1 : 0}#t=${start}`
+            : null;
+
+      if (embedSrc) {
+        $.magnificPopup.open({
+          items: { src: embedSrc },
+          type: "iframe",
+          closeOnContentClick: true
+        });
+      }
     }
   });
 }

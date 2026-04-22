@@ -57,7 +57,6 @@ export interface UserAgreementCheckboxProps {
 
 export interface PhoneOption {
   code: string;
-  flag: string;
   dialCode: string;
   name: string;
 }

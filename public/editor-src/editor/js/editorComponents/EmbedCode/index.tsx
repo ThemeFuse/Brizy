@@ -2,6 +2,10 @@ import { EmbedCode as EmbedCodeComponent } from "@brizy/component/src/Flex/Embed
 import classNames from "classnames";
 import React, { JSX, createRef } from "react";
 import BoxResizer from "visual/component/BoxResizer";
+import type {
+  Patch as BoxResizerPatch,
+  Point
+} from "visual/component/BoxResizer/types";
 import CustomCSS from "visual/component/CustomCSS";
 import Placeholder from "visual/component/Placeholder";
 import Toolbar from "visual/component/Toolbar";
@@ -16,7 +20,7 @@ import * as toolbarConfig from "./toolbar";
 import type { Meta, ObserverCallback, Value } from "./types";
 import { VisibleElement } from "./types";
 
-const resizerPoints = ["centerLeft", "centerRight"];
+const resizerPoints = ["centerLeft", "centerRight"] satisfies Point[];
 
 export default class EmbedCode extends BaseEmbedCode {
   wrapperRef = createRef<HTMLElement>();
@@ -40,6 +44,8 @@ export default class EmbedCode extends BaseEmbedCode {
     if (contentNode) {
       unobserve(contentNode);
     }
+
+    super.componentWillUnmount();
   }
 
   handleContentVisibility: ObserverCallback = (entry) => {
@@ -104,7 +110,7 @@ export default class EmbedCode extends BaseEmbedCode {
     }
   }
 
-  handleResizerChange = (patch: { [key: string]: number }): void =>
+  handleResizerChange = (patch: BoxResizerPatch["patch"]): void =>
     this.patchValue(patch);
 
   renderForEdit(v: Value, vs: Value, vd: Value): JSX.Element {

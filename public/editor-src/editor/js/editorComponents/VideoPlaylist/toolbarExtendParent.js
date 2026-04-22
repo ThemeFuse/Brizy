@@ -70,7 +70,6 @@ export function getItems({ v, device }) {
         }
       },
       position: 90,
-      devices: "desktop",
       roles: ["admin"],
       options: [
         {

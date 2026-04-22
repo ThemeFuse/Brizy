@@ -33,6 +33,7 @@ import { UrlsCommon } from "visual/global/Config/types/Urls";
 import { EcwidProductId, EcwidStoreId } from "visual/global/Ecwid/types";
 import { CategoriesList } from "visual/libs/EcwidSdk/categories";
 import { ProductsList } from "visual/libs/EcwidSdk/products";
+import type { EditorPlugin } from "visual/plugins/types";
 import { UploadedFont } from "visual/types/Fonts";
 import { GlobalBlock } from "visual/types/GlobalBlock";
 import { Page, PageCommon } from "visual/types/Page";
@@ -906,6 +907,9 @@ interface _ConfigCommon<Mode> {
         linkPopup?: boolean;
         linkAction?: boolean;
       };
+      typography?: {
+        shouldSortFonts: boolean;
+      };
     };
 
     //#endregion Features
@@ -1326,6 +1330,9 @@ interface _ConfigCommon<Mode> {
       disableSelectType?: boolean;
       disableAutoplay?: boolean;
     };
+    carousel?: {
+      disableDynamicContent?: boolean;
+    };
   };
 
   //#endregion
@@ -1419,6 +1426,12 @@ interface _ConfigCommon<Mode> {
   urls?: UrlsCommon;
 
   availableTranslations?: Language[];
+
+  //#region Plugins
+
+  plugins?: EditorPlugin[];
+
+  //#endregion
 }
 
 export type ConfigCommon = _ConfigCommon<Mode>;

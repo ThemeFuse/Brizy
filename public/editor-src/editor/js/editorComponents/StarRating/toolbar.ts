@@ -250,7 +250,6 @@ export const getItems: GetItems<Value> = ({ v, device, context }) => {
         }
       },
       position: 90,
-      devices: "desktop",
       options: [
         {
           id: "tabsColor",
@@ -275,7 +274,6 @@ export const getItems: GetItems<Value> = ({ v, device, context }) => {
                 {
                   id: "ratingColor",
                   type: "colorPicker",
-                  devices: "desktop",
                   disabled: !isStyle1,
                   states: [NORMAL, HOVER]
                 }
@@ -288,7 +286,6 @@ export const getItems: GetItems<Value> = ({ v, device, context }) => {
                 {
                   id: isStyle1 ? "ratingBackgroundColor" : "bgColor",
                   type: "colorPicker",
-                  devices: "desktop",
                   states: [NORMAL, HOVER]
                 }
               ]

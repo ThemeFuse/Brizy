@@ -37,15 +37,31 @@ class Variation extends Component {
       ttf: "",
       eot: "",
       woff: "",
-      woff2: ""
+      woff2: "",
+      italic: false,
+      ttfItalic: "",
+      eotItalic: "",
+      woffItalic: "",
+      woff2Italic: ""
     };
   }
 
   getAddData() {
-    const { weight, ttf, eot, woff, woff2 } = this.state.keyValue;
+    const {
+      weight,
+      ttf,
+      eot,
+      woff,
+      woff2,
+      italic,
+      ttfItalic,
+      eotItalic,
+      woffItalic,
+      woff2Italic
+    } = this.state.keyValue;
     const weightTypes = getWeightTypes();
 
-    return [
+    const baseData = [
       {
         title: t("Font weight"),
         name: "weight",
@@ -54,13 +70,65 @@ class Variation extends Component {
         choices: getWeights(weightTypes)
       },
       {
+        title: t("Italic Version"),
+        name: "italic",
+        type: "switch",
+        value: italic
+      }
+    ];
+
+    if (italic) {
+      return [
+        ...baseData,
+        {
+          title: t("TTF File"),
+          name: "ttfItalic",
+          value: ttfItalic,
+          type: "upload",
+          accept: ".ttf",
+          helper:
+            t("The Web Open Font Format (TTF) is a format used in web pages by modern browsers.")
+        },
+        {
+          title: t("EOT File"),
+          name: "eotItalic",
+          value: eotItalic,
+          type: "upload",
+          accept: ".eot",
+          helper:
+            t("The Web Open Font Format (EOT) is a format used in web pages by modern browsers.")
+        },
+        {
+          title: t("WOFF File"),
+          name: "woffItalic",
+          value: woffItalic,
+          type: "upload",
+          accept: ".woff",
+          helper:
+            t("The Web Open Font Format (WOFF) is a format used in web pages by modern browsers.")
+        },
+        {
+          title: t("WOFF2 File"),
+          name: "woff2Italic",
+          value: woff2Italic,
+          type: "upload",
+          accept: ".woff2",
+          helper:
+            t("The Web Open Font Format (WOFF2) is a format used in web pages by modern browsers.")
+        }
+      ];
+    }
+
+    return [
+      ...baseData,
+      {
         title: t("TTF File"),
         name: "ttf",
         value: ttf,
         type: "upload",
         accept: ".ttf",
         helper:
-          "The Web Open Font Format (TTF) is a format used in web pages by modern browsers."
+          t("The Web Open Font Format (TTF) is a format used in web pages by modern browsers.")
       },
       {
         title: t("EOT File"),
@@ -69,7 +137,7 @@ class Variation extends Component {
         type: "upload",
         accept: ".eot",
         helper:
-          "The Web Open Font Format (EOT) is a format used in web pages by modern browsers."
+          t("The Web Open Font Format (EOT) is a format used in web pages by modern browsers.")
       },
       {
         title: t("WOFF File"),
@@ -78,7 +146,7 @@ class Variation extends Component {
         type: "upload",
         accept: ".woff",
         helper:
-          "The Web Open Font Format (WOFF) is a format used in web pages by modern browsers."
+          t("The Web Open Font Format (WOFF) is a format used in web pages by modern browsers.")
       },
       {
         title: t("WOFF2 File"),
@@ -87,7 +155,7 @@ class Variation extends Component {
         type: "upload",
         accept: ".woff2",
         helper:
-          "The Web Open Font Format (WOFF2) is a format used in web pages by modern browsers."
+          t("The Web Open Font Format (WOFF2) is a format used in web pages by modern browsers.")
       }
     ];
   }
@@ -133,7 +201,9 @@ class Variation extends Component {
       app: { id, data },
       onChange
     } = this.context;
-    const { weight, ...files } = this.state.keyValue;
+
+    const ommitedData = omit(this.state.keyValue, ["italic"]);
+    const { weight, ...files } = ommitedData;
 
     this.setState({
       nextLoading: true,

@@ -66,6 +66,8 @@ import {
   multiUpload
 } from "./utils";
 import { arrangeGridByTags } from "./utils.export";
+import { migrations } from "./migrations";
+import { withMigrations } from "../tools/withMigrations";
 
 // SCSS import - automatically tracked during static rendering
 import(
@@ -836,4 +838,4 @@ class ImageGallery extends EditorComponent<Value, Props> {
   }
 }
 
-export default ImageGallery;
+export default withMigrations(ImageGallery, migrations);

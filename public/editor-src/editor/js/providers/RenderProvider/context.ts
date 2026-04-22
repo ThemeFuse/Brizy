@@ -6,7 +6,7 @@ export interface WithRenderContext {
   renderContext: RenderType;
 }
 
-interface RenderProvider {
+export interface RenderProvider {
   renderType: RenderType;
 }
 

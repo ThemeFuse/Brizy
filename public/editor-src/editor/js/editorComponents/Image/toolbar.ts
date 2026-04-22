@@ -89,11 +89,11 @@ export const getItems =
       options: context.dynamicContent.config,
       type: DCTypes.link
     });
-    const borderColorOpacity = dvv("borderColorOpacity");
-    const borderColor = getColorToolbar(
-      dvv("borderColorPalette"),
-      dvv("borderColorHex"),
-      borderColorOpacity
+    const bgColorOpacity = dvv("bgColorOpacity");
+    const bgColor = getColorToolbar(
+      dvv("bgColorPalette"),
+      dvv("bgColorHex"),
+      bgColorOpacity
     );
 
     const _enableTags = enableTags && !isBigImageFromGallery;
@@ -247,9 +247,7 @@ export const getItems =
                 label: t("Mask"),
                 position: 110,
                 options:
-                  inGallery && !isBigImageFromGallery
-                    ? []
-                    : [
+                     [
                         {
                           id: "maskShape",
                           label: t("Shape"),
@@ -371,13 +369,12 @@ export const getItems =
       {
         id: "toolbarColor",
         type: "popover",
-        devices: "desktop",
         config: {
           size: "medium",
           title: t("Colors"),
           icon: {
             style: {
-              backgroundColor: borderColor
+              backgroundColor: bgColor
             }
           }
         },

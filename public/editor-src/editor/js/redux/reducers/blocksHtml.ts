@@ -14,7 +14,6 @@ type BlocksHtml = ReduxState["blocksHtml"];
 type RBlocksHtml = (s: BlocksHtml, a: ReduxAction, f: ReduxState) => BlocksHtml;
 
 const defaultState = {
-  inProcessing: 0,
   storeGeneration: 0,
   compiledGeneration: 0,
   blocks: {},
@@ -63,6 +62,7 @@ export const blocksHtml: RBlocksHtml = (
         globalBlocks,
         config
       });
+      let storeGeneration = state.storeGeneration;
 
       let blocksHtml = blockOrders.reduce(
         (acc, blockId) => {
@@ -70,6 +70,8 @@ export const blocksHtml: RBlocksHtml = (
 
           if (html) {
             acc[blockId] = html;
+          } else {
+            storeGeneration = 1;
           }
 
           return acc;
@@ -94,11 +96,14 @@ export const blocksHtml: RBlocksHtml = (
 
         if (html) {
           blocksHtml = { ...blocksHtml, [blockId]: html };
+        } else {
+          storeGeneration = 1;
         }
       });
 
       return produce(state, (draft) => {
         draft.blocks = blocksHtml;
+        draft.storeGeneration = storeGeneration;
       });
     }
     case ActionTypes.REMOVE_BLOCKS: {
@@ -109,6 +114,7 @@ export const blocksHtml: RBlocksHtml = (
     case "REDO":
     case ActionTypes.IMPORT_TEMPLATE:
     case "UPDATE_BLOCKS":
+    case "UPDATE_BLOCK_DATA":
     case "ADD_BLOCK":
     case "ADD_GLOBAL_BLOCK":
     case "ADD_GLOBAL_POPUP":
@@ -128,14 +134,15 @@ export const blocksHtml: RBlocksHtml = (
     case ActionTypes.UPDATE_BLOCKS_HTML: {
       const { blocks, generation } = action.payload;
       return produce(state, (draft) => {
+        if (!draft.initialized) {
+          draft.initialized = true;
+        }
+
         blocks.forEach(({ id, block }) => {
           draft.blocks[id] = block;
         });
 
-        if (
-          generation !== undefined &&
-          generation > draft.compiledGeneration
-        ) {
+        if (generation !== undefined && generation > draft.compiledGeneration) {
           draft.compiledGeneration = generation;
         }
       });
@@ -156,17 +163,6 @@ export const blocksHtml: RBlocksHtml = (
       }
 
       return state;
-    }
-
-    case ActionTypes.UPDATE_BLOCK_HTML_STATS: {
-      const { stats } = action.payload;
-      return produce(state, (draft) => {
-        draft.inProcessing = stats;
-
-        if (!draft.initialized) {
-          draft.initialized = true;
-        }
-      });
     }
 
     case ActionTypes.INITIALIZE_BLOCKS_HTML: {

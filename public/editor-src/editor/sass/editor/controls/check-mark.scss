@@ -1,0 +1,30 @@
+@use "../../variables";
+
+.brz-ed .brz-ed--check-mark {
+  width: 16px;
+  height: 16px;
+  font-size: 16px;
+  border-radius: 50%;
+  background-color: #000000;
+  border-style: solid;
+  border-color: rgba(129, 138, 145, 0.6);
+  
+  &.checked {
+    border-width: 0;
+    background-color: variables.$blue-1;
+    
+    .brz-icon-svg {
+      color: variables.$brand__primary !important;
+      opacity: 1;
+    }
+  }
+  
+  &:not(.checked) {
+    border-width: 1px;
+    
+    .brz-icon-svg {
+      color: variables.$brand__primary !important;
+      opacity: 0;
+    }
+  }
+}

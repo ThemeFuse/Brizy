@@ -110,7 +110,6 @@ export const getItems: GetItems<Value> = ({ v, device }) => {
                 {
                   id: "color",
                   type: "colorPicker",
-                  devices: "desktop"
                 }
               ]
             },
@@ -121,7 +120,6 @@ export const getItems: GetItems<Value> = ({ v, device }) => {
                 {
                   id: "iconsColor",
                   type: "colorPicker",
-                  devices: "desktop"
                 }
               ]
             }

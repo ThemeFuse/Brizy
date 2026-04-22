@@ -141,6 +141,17 @@ declare global {
         trigger: VoidFunction;
       };
     };
+    google?: {
+      search?: {
+        cse?: {
+          element?: {
+            getElement: (gname: string) => {
+              execute: (query: string) => void;
+            };
+          };
+        };
+      };
+    };
   }
 
   interface JQuery {

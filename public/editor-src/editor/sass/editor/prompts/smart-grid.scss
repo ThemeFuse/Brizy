@@ -1,0 +1,24 @@
+@use "../../variables";
+
+.brz-ed .brz-smart-grid {
+  overflow-x: hidden;
+
+  &::-webkit-scrollbar,
+  &::-webkit-scrollbar-thumb {
+    border-radius: 8px;
+    width: 6px;
+  }
+
+  &::-webkit-scrollbar {
+    background-color: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: variables.$scrollbar__popup__apps-color;
+  }
+
+  @-moz-document url-prefix() {
+    scrollbar-color: variables.$scrollbar__popup__apps-color transparent;
+    scrollbar-width: thin;
+  }
+}

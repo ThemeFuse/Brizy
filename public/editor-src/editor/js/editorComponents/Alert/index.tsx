@@ -1,7 +1,11 @@
 import classnames from "classnames";
 import React, { type ReactElement, RefObject } from "react";
 import BoxResizer from "visual/component/BoxResizer";
-import type { Patch } from "visual/component/BoxResizer/types";
+import type {
+  Patch,
+  Point,
+  Restrictions
+} from "visual/component/BoxResizer/types";
 import { Text } from "visual/component/ContentOptions/types";
 import CustomCSS from "visual/component/CustomCSS";
 import type { ElementModel } from "visual/component/Elements/Types";
@@ -32,7 +36,7 @@ export interface Props extends WithClassName {
   meta: ComponentsMeta;
 }
 
-const resizerPoints = ["centerLeft", "centerRight"];
+const resizerPoints = ["centerLeft", "centerRight"] satisfies Point[];
 const resizerRestrictions = {
   width: {
     px: { min: 5, max: 1000 },
@@ -46,7 +50,7 @@ const resizerRestrictions = {
     px: { min: 5, max: 1000 },
     "%": { min: 5, max: 100 }
   }
-};
+} satisfies Partial<Restrictions>;
 
 class Alert extends EditorComponent<Value, Props> {
   static defaultValue = defaultValue;
@@ -56,7 +60,7 @@ class Alert extends EditorComponent<Value, Props> {
     return ElementTypes.Alert;
   }
 
-  handleResizerChange = (patch: Patch): void => this.patchValue(patch);
+  handleResizerChange = (patch: Patch["patch"]): void => this.patchValue(patch);
   handleTextChange = (patch: { [k: string]: string }): void => {
     this.patchValue(patch);
   };
@@ -166,7 +170,6 @@ class Alert extends EditorComponent<Value, Props> {
                           restrictions={resizerRestrictions}
                           meta={this.props.meta}
                           value={this.getValue2().v}
-                          context={this}
                           onChange={this.handleResizerChange}
                         >
                           {this.renderAlert(v, {

@@ -1,4 +1,4 @@
-import React, { type JSX, createContext, useMemo, useRef } from "react";
+import React, { createContext, useMemo, useRef } from "react";
 import { rolesHOC } from "visual/component/Roles";
 import type { ContextMenuItem } from "visual/editorComponents/EditorComponent/types";
 import type { FCC } from "visual/utils/react/types";
@@ -37,6 +37,5 @@ export const ContextMenuExtendProvider: FCC<Props> = ({
 export default rolesHOC({
   allow: ["admin"],
   component: ContextMenuExtendProvider,
-  fallbackRender: ({ children }: { children: JSX.Element }): JSX.Element =>
-    children
+  fallbackRender: ({ children }) => children
 });

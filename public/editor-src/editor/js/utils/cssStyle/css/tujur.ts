@@ -1,8 +1,14 @@
 import { Sheet } from "visual/providers/StyleProvider/Sheet";
+import { murmurhash2 } from "visual/utils/crypto";
 import { makeAttr } from "visual/utils/i18n/attribute";
 import { uuid } from "visual/utils/uuid";
 import type { OutputStyleWithSymbol } from "../types";
-import { addUuid, getNodeWithNewReference } from "./utils";
+import {
+  DEFAULT_CLASSNAME_PREFIX,
+  RULES_CLASSNAME_PREFIX,
+  addUuid,
+  getNodeWithNewReference
+} from "./utils";
 
 // ====== tujur ======
 export function css(
@@ -13,13 +19,12 @@ export function css(
 ) {
   let defaultData;
   const isBrowser = typeof window !== "undefined";
-  const cssOrdered = sheet.getCSSOrdered();
   const componentId = _componentId.toLowerCase();
-  const defaultClassName = `brz-css-d-${componentId}`;
-  const rulesClassName = `brz-css-r-${componentId}`;
-
+  const defaultClassName = `${DEFAULT_CLASSNAME_PREFIX}${murmurhash2(componentId + defaultStyle)}`;
+  const rulesClassName = `${RULES_CLASSNAME_PREFIX}${murmurhash2(componentId + rulesStyle)}`;
   if (defaultStyle) {
     defaultData = sheet.get(defaultClassName);
+
     // we don't treat the else clause because we assume that
     // default styles will be the same for a given id no matter
     // how many times this function will be called
@@ -47,7 +52,10 @@ export function css(
         cssText
       };
 
-      cssOrdered.default.push(defaultData);
+      sheet.setCSSOrdered({
+        type: "default",
+        data: defaultData
+      });
       sheet.set(defaultClassName, defaultData);
     } else {
       const { node, className, cssText } = defaultData;
@@ -91,7 +99,10 @@ export function css(
         cssText
       };
 
-      cssOrdered.rules.push(rulesData);
+      sheet.setCSSOrdered({
+        type: "rules",
+        data: rulesData
+      });
       sheet.set(rulesClassName, rulesData);
     }
   }
@@ -127,7 +138,10 @@ export function css(
         cssText
       };
 
-      cssOrdered.custom.push(elementData);
+      sheet.setCSSOrdered({
+        type: "custom",
+        data: elementData
+      });
 
       sheet.set(symbolClassName, elementData);
     } else {
@@ -187,7 +201,10 @@ export function css(
         cssText
       };
 
-      cssOrdered.symbol.push(symbolData);
+      sheet.setCSSOrdered({
+        type: "symbol",
+        data: symbolData
+      });
 
       sheet.set(symbolClassName, symbolData);
     } else {
@@ -232,7 +249,6 @@ export function css1(
   replacePlaceholdersCb = replacePlaceholders
 ) {
   let elementData = sheet.get(elementID);
-  const cssOrdered = sheet.getCSSOrdered();
   const isBrowser = typeof window !== "undefined";
 
   if (!elementData) {
@@ -258,7 +274,10 @@ export function css1(
       className,
       cssText
     };
-    cssOrdered.custom.push(elementData);
+    sheet.setCSSOrdered({
+      type: "custom",
+      data: elementData
+    });
     sheet.set(elementID, elementData);
   } else {
     const { node, className, cssText } = elementData;
@@ -350,6 +369,31 @@ function insertStyleNodeIntoDOM(
 
     refNode.insertAdjacentElement("afterend", styleNode);
   } else {
-    doc.head.appendChild(styleNode);
+    let beforeNode: Element | null = null;
+
+    if (styleType === "default") {
+      beforeNode = rules[0]?.node ?? custom[0]?.node ?? null;
+    }
+
+    if (styleType === "rules") {
+      beforeNode = custom[0]?.node ?? null;
+    }
+
+    if (beforeNode) {
+      if (!doc.head.contains(beforeNode)) {
+        const newRef = getNodeWithNewReference(beforeNode, doc);
+        if (newRef) {
+          beforeNode = newRef;
+        }
+      }
+
+      if (beforeNode && doc.head.contains(beforeNode)) {
+        doc.head.insertBefore(styleNode, beforeNode);
+      } else {
+        doc.head.appendChild(styleNode);
+      }
+    } else {
+      doc.head.appendChild(styleNode);
+    }
   }
 }

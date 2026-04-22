@@ -19,14 +19,10 @@ export function getItems({ v, device, state, component }) {
 
   const choicesType = component.getGlobalConfig().wp
     ? [
-        { title: t("Facebook"), value: "facebook" },
         { title: t("Disqus"), value: "disqus" },
         { title: t("WordPress"), value: "WPComments" }
       ]
-    : [
-        { title: t("Facebook"), value: "facebook" },
-        { title: t("Disqus"), value: "disqus" }
-      ];
+    : [{ title: t("Disqus"), value: "disqus" }];
 
   return [
     {
@@ -63,7 +59,7 @@ export function getItems({ v, device, state, component }) {
           id: "numPosts",
           label: t("Posts"),
           type: "slider",
-          disabled: type !== "facebook" && WPComments,
+          disabled: WPComments,
           devices: "desktop",
           config: {
             min: 5,
@@ -212,7 +208,6 @@ export function getItems({ v, device, state, component }) {
           }
         }
       },
-      devices: "desktop",
       position: 80,
       options: [
         {

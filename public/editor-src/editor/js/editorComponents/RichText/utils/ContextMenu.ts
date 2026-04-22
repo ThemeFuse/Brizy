@@ -27,20 +27,25 @@ import {
 } from "../toolbar/color";
 import { ColorOption } from "../toolbar/types";
 import { Patch, patchTextTransform } from "./dependencies";
+import { Value } from "../types";
+import { Config } from "visual/global/Config";
 
 type CopiedElementRef = {
   path: string[];
   value: ElementModelType;
 };
 
-type Value = {
+type InnerValue = {
   [key: string]: unknown;
 };
 
 type InnerElementType = {
   type: string;
-  value: Value;
+  value: InnerValue;
 };
+
+
+type PatchValue = Partial<Value>;
 
 export const handleRenderText = (key: string[]) => () => {
   const os = detectOS();
@@ -75,7 +80,7 @@ const getStyles = (
   component: InnerElementType["value"],
   prefixes: string[]
 ) => {
-  return Object.entries(component).reduce((styles: Value, [key, value]) => {
+  return Object.entries(component).reduce((styles: InnerValue, [key, value]) => {
     const hasPrefix = prefixes.some((prefix) => key.includes(prefix));
 
     if (hasPrefix) styles[key] = value;
@@ -83,7 +88,7 @@ const getStyles = (
   }, {});
 };
 
-const convertStylesFromDCToCustom = (dcValue: Value, config: ConfigCommon) => {
+const convertStylesFromDCToCustom = (dcValue: PatchValue, config: Config) => {
   const shadowData = getShadowData(dcValue, config);
 
   return {
@@ -94,7 +99,7 @@ const convertStylesFromDCToCustom = (dcValue: Value, config: ConfigCommon) => {
   };
 };
 
-const patchDCValue = (values: Value) => {
+const patchDCValue = (values: PatchValue) => {
   const {
     bgImageExtension,
     bgImageFileName,
@@ -128,7 +133,7 @@ const patchDCValue = (values: Value) => {
   };
 };
 
-const patchCustomValue = (values: Value, v: Value, config: ConfigCommon) => {
+const patchCustomValue = (values: PatchValue, v: Value, config: ConfigCommon) => {
   const {
     imageSrc = v.imageSrc,
     imageFileName = v.imageFileName,
@@ -237,10 +242,10 @@ export const handlePasteStyles = ({
   config
 }: {
   innerElement: InnerElementType;
-  onChange: (v: Value) => void;
+  onChange: (v: PatchValue) => void;
   v: ElementModel;
   device: DeviceMode;
-  config: ConfigCommon;
+  config: Config;
 }) => {
   const { textPopulation } = innerElement.value;
   const prefixes = getPrefixes(device);
@@ -255,7 +260,7 @@ export const handlePasteStyles = ({
       );
     }
 
-    const customValues = patchCustomValue(extraStyles, v, config);
+    const customValues = patchCustomValue(extraStyles, v as Value, config) as PatchValue;
     onChange(customValues);
   }
 };
@@ -265,9 +270,9 @@ export const handleClearFormatting = ({
   editorMode,
   config
 }: {
-  onChange: (v: Value) => void;
+  onChange: (v: PatchValue) => void;
   editorMode: EditorMode;
-  config: ConfigCommon;
+  config: Config;
 }) => {
   const {
     bgColorType,
@@ -330,5 +335,5 @@ export const handleClearFormatting = ({
     shadowColorPalette: textShadowColorPalette,
     backgroundImage,
     typographyFontStyle: "paragraph"
-  });
+  } as PatchValue);
 };

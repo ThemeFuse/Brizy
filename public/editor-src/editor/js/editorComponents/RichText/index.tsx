@@ -1,11 +1,19 @@
 import { Str } from "@brizy/readers";
 import classNames from "classnames";
 import { isNumber } from "es-toolkit/compat";
-import React, { Fragment, MouseEvent, RefObject, createRef } from "react";
+import React, {
+  Fragment,
+  MouseEvent,
+  MutableRefObject,
+  createRef
+} from "react";
 import ReactDOM from "react-dom";
 import { omit } from "timm";
 import BoxResizer from "visual/component/BoxResizer";
-import type { Patch as BoxResizerPatch } from "visual/component/BoxResizer/types";
+import type {
+  Patch as BoxResizerPatch,
+  Point
+} from "visual/component/BoxResizer/types";
 import ClickOutside from "visual/component/ClickOutside";
 import ContextMenu from "visual/component/ContextMenu";
 import ListBox from "visual/component/Controls/ListBox";
@@ -35,7 +43,7 @@ import {
   SidebarConfig
 } from "visual/editorComponents/EditorComponent/types";
 import { createOptionId } from "visual/editorComponents/EditorComponent/utils";
-import { isCloud } from "visual/global/Config/types";
+import { Config, isCloud } from "visual/global/Config/types";
 import {
   BaseDCItem,
   DCTypes,
@@ -94,7 +102,7 @@ import { handleChangeLink } from "./utils/dependencies";
 import { getImagePopulation } from "./utils/requests/ImagePopulation";
 import { classNamesToV } from "./utils/transforms";
 
-const resizerPoints = ["centerLeft", "centerRight"];
+const resizerPoints = ["centerLeft", "centerRight"] satisfies Point[];
 
 interface State {
   prepopulation: Formats["prepopulation"] | null;
@@ -163,7 +171,8 @@ class RichText extends EditorComponent<Value, Record<string, unknown>, State> {
     return ElementTypes.RichText;
   }
 
-  handleResizerChange = (patch: BoxResizerPatch) => this.patchValue(patch);
+  handleResizerChange = (patch: BoxResizerPatch["patch"]) =>
+    this.patchValue(patch);
 
   componentDidMount() {
     const node = this.nodeRef.current;
@@ -564,7 +573,7 @@ class RichText extends EditorComponent<Value, Record<string, unknown>, State> {
   handleKeyDown = (e: MouseEvent, { keyName }: { keyName: string }) => {
     e.preventDefault();
 
-    const config = this.getGlobalConfig();
+    const config = this.getGlobalConfig() as Config;
 
     const handlePaste = () => {
       const state = this.getReduxState();
@@ -1249,7 +1258,7 @@ class RichText extends EditorComponent<Value, Record<string, unknown>, State> {
                       {({
                         ref: contextMenuRef
                       }: {
-                        ref: RefObject<HTMLDivElement>;
+                        ref: MutableRefObject<HTMLElement | null>;
                       }) =>
                         isStoryMode ? (
                           <BoxResizer

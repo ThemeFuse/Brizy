@@ -141,7 +141,6 @@ export const getItems: GetItems<Value> = ({ v, device, state }) => {
         }
       },
       roles: ["admin"],
-      devices: "desktop",
       position: 90,
       options: [
         {

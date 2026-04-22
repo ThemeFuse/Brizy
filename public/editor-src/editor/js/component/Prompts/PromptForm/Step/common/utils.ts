@@ -117,8 +117,7 @@ const read: (r: T) => AllData | undefined = match(
   [isSwitch, readSwitch],
   [isSearch, readSearch],
   [
-    //@ts-expect-error: 'r' is declared but its value is never read.
-    (r: Record<string, unknown>): r is Record<string, never> => true,
+    (_r: Record<string, unknown>): _r is Record<string, never> => true,
     () => undefined
   ]
 );

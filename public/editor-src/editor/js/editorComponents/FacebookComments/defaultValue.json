@@ -1,6 +1,6 @@
 {
   "content": {
-    "type": "facebook",
+    "type": "disqus",
     "review": "false",
 
     "numPosts": 10,

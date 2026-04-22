@@ -217,6 +217,8 @@ export class Posts extends EditorComponent {
 
     this.subject$?.complete();
     this.subject$ = undefined;
+
+    super.componentWillUnmount();
   }
 
   reloadData() {

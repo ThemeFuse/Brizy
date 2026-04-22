@@ -91,6 +91,8 @@ class SectionPopup extends EditorComponent {
       this.popupsContainer = null;
       this.el = null;
     }
+
+    super.componentWillUnmount();
   }
 
   handleValueChange(newValue, meta) {
@@ -265,7 +267,9 @@ class SectionPopup extends EditorComponent {
       <ContainerBorder
         type="popup"
         hiddenInResponsive={true}
-        activateOnContentClick={false}
+        activateOnContentClick={true}
+        elementId={this.getId()}
+        elementType={this.getComponentId()}
       >
         {({ ref: containerBorderRef, attr: containerBorderAttr }) => (
           <CustomCSS selectorName={id} css={v.customCSS}>

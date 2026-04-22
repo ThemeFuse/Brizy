@@ -45,21 +45,3 @@ export interface State {
   animation: string;
   previousLink: string;
 }
-
-export type BoxResizerParams = () => {
-  points: string[];
-  restrictions: {
-    width: {
-      px: { min: number; max: number };
-      "%": { min: number; max: number };
-    };
-    tabletWidth: {
-      px: { min: number; max: number };
-      "%": { min: number; max: number };
-    };
-    mobileWidth: {
-      px: { min: number; max: number };
-      "%": { min: number; max: number };
-    };
-  };
-};

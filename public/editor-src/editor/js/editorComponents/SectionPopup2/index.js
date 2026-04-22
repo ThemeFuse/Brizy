@@ -110,6 +110,8 @@ class SectionPopup2 extends EditorComponent {
 
     document.documentElement.classList.remove("brz-ow-hidden");
     Instances.delete(this.instanceKey);
+
+    super.componentWillUnmount();
   }
 
   handleValueChange(newValue, meta) {
@@ -366,7 +368,9 @@ class SectionPopup2 extends EditorComponent {
       <ContainerBorder
         type="popup2"
         hiddenInResponsive={true}
-        activateOnContentClick={false}
+        activateOnContentClick={true}
+        elementId={this.getId()}
+        elementType={this.getComponentId()}
       >
         {({ ref: containerBorderRef, attr: containerBorderAttr }) => (
           <CustomCSS selectorName={id} css={customCSS}>

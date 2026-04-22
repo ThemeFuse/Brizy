@@ -1,5 +1,61 @@
 @use "../../variables";
 
+.brz-ed .brz-ed--fat-icon {
+  text-align: center;
+  width: 60px;
+  cursor: pointer;
+
+  &__wrapper {
+    position: relative;
+    border: 2px solid variables.$right_sidebar__icon-border;
+    border-radius: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 60px;
+    height: 60px;
+    transition: border-color 200ms linear;
+
+    &:hover {
+      border-color: variables.$right_sidebar__icon-border--hover;
+    }
+  }
+
+  &__active .brz-ed--fat-icon__wrapper {
+    border-color: variables.$brand__primary;
+  }
+
+  .brz-icon-svg {
+    font-size: 16px;
+    color: variables.$right_sidebar__icon-color;
+    transition: color 200ms linear;
+  }
+
+  &__active .brz-icon-svg {
+    color: variables.$brand__primary !important;
+  }
+
+  &__label {
+    font-size: 12px;
+    line-height: 2.4rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: variables.$right_sidebar__icon-label-color;
+    transition: color 200ms linear;
+  }
+
+  &__active .brz-ed--fat-icon__label {
+    color: variables.$brand__primary;
+  }
+}
+
+.brz-ed .brz-ed--fat-check-icon__check {
+  position: absolute;
+  top: -5px;
+  left: -5px;
+}
+
 .brz-ed .brz-ed--fat-icon__wrapper .brz-ed--fat-check-icon__check {
   background-color: variables.$sidebar__edit__unchecked-bg;
 }

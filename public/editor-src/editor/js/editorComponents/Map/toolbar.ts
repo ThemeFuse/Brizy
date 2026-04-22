@@ -22,14 +22,14 @@ export const getItems: GetItems<Value> = ({
   const dvv = <T>(key: string): T =>
     defaultValueValue({ v, key, device, state: "normal" });
 
-  const borderColorHex = dvv<string>("borderColorHex");
-  const borderColorPalette = dvv<string>("borderColorPalette");
-  const borderColorOpacity = dvv<number>("borderColorOpacity");
+  const bgColorHex = dvv<string>("bgColorHex");
+  const bgColorPalette = dvv<string>("bgColorPalette");
+  const bgColorOpacity = dvv<number>("bgColorOpacity");
 
-  const borderColorColor = getColorToolbar(
-    borderColorPalette,
-    borderColorHex,
-    borderColorOpacity
+  const bgColorColor = getColorToolbar(
+    bgColorPalette,
+    bgColorHex,
+    bgColorOpacity
   );
 
   const richTextDC = getDynamicContentOption({
@@ -97,12 +97,11 @@ export const getItems: GetItems<Value> = ({
         title: t("Colors"),
         icon: {
           style: {
-            backgroundColor: borderColorColor
+            backgroundColor: bgColorColor
           }
         }
       },
       position: 90,
-      devices: "desktop",
       disabled: dvv("coverImageSrc") === "",
       options: [
         {
@@ -128,7 +127,6 @@ export const getItems: GetItems<Value> = ({
                 {
                   id: "border",
                   type: "border",
-                  devices: "desktop",
                   selector: `{{WRAPPER}}:hover${hoverSelector}:before`,
                   states: [NORMAL, HOVER]
                 }
@@ -141,7 +139,6 @@ export const getItems: GetItems<Value> = ({
                 {
                   id: "boxShadow",
                   type: "boxShadow",
-                  devices: "desktop",
                   selector: "{{WRAPPER}}:hover .brz-ui-ed-map-content",
                   states: [NORMAL, HOVER]
                 }

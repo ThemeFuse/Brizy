@@ -179,7 +179,6 @@ export const getItems = <
           }
         }
       },
-      devices: "desktop",
       position: 80,
       options: [
         {

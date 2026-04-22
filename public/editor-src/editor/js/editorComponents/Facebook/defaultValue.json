@@ -1,12 +1,6 @@
 {
   "content": {
-    "facebookType": "button",
-    "facebookButtonType": "like",
-    "layout": "button",
-    "showFriends": "off",
-    "showCounter": "off",
-    "size": "small",
-    "share": "on",
+    "facebookType": "embed",
 
     "facebookEmbedType": "post",
     "postAndVideoShowText": "on",
@@ -21,13 +15,6 @@
     "showFacepile": "off"
   },
   "link": {
-    "targetUrl": "current",
-
-    "href": "",
-    "hrefPopulation": "",
-    "hrefPopulationEntityType": "",
-    "hrefPopulationEntityId": "",
-
     "facebookEmbedPostHref": "https://www.facebook.com/facebook/posts/pfbid0VGsYVTy3eFmBKXatqmMy1sSfN543jRKDiBeVfdhtnbUXggZD6Q7budgHmmAvqqeVl",
     "facebookEmbedPostHrefPopulation": "",
     "facebookEmbedPostHrefPopulationEntityType": "",

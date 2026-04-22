@@ -152,7 +152,6 @@ export function getItems({ v, device, state }) {
           }
         }
       },
-      devices: "desktop",
       position: 80,
       options: [
         {

@@ -165,7 +165,6 @@ const getItems =
                   {
                     id: "border",
                     type: "border",
-                    devices: "desktop",
                     states: [NORMAL, HOVER]
                   }
                 ]
@@ -177,7 +176,6 @@ const getItems =
                   {
                     id: "boxShadow",
                     type: "boxShadow",
-                    devices: "desktop",
                     states: [NORMAL, HOVER]
                   }
                 ]

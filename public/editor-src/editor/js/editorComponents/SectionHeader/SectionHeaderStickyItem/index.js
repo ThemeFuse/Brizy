@@ -76,6 +76,8 @@ export default class SectionHeaderStickyItem extends EditorComponent {
 
   componentWillUnmount() {
     this.mounted = false;
+
+    super.componentWillUnmount();
   }
 
   handleToolbarClose = () => {
@@ -260,7 +262,9 @@ export default class SectionHeaderStickyItem extends EditorComponent {
       <ContainerBorder
         type="header__animated"
         hiddenInResponsive={true}
-        activateOnContentClick={false}
+        activateOnContentClick={true}
+        elementId={this.getId()}
+        elementType={this.getComponentId()}
       >
         {({ ref: containerBorderRef, attr: containerBorderAttr }) => (
           <CustomCSS selectorName={this.getId()} css={v.customCSS}>

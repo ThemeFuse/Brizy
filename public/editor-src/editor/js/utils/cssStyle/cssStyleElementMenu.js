@@ -732,17 +732,48 @@ export function cssStyleElementMMenuListViewMargin({ v, device }) {
   const marginBottom = styleItemMarginBottom({ v, device });
   const marginLeft = styleItemMarginLeft({ v, device });
 
-  return `margin: ${marginTop} ${marginRight} ${marginBottom} ${marginLeft};`;
+  // The UL has hardcoded/legacy negative horizontal margins. When spacing
+  // becomes small, those negative margins can push items outside the
+  // clipped area. Adjust UL margins proportionally to the LI spacing
+  // (spacing/2) without changing LI spacing itself.
+  const itemPadding = defaultValueValue({ key: "itemPadding", v, device });
+  const liHalfSpacing = parseFloat(itemPadding) / 2;
+
+  const marginRightNumber = parseFloat(marginRight);
+  const marginLeftNumber = parseFloat(marginLeft);
+  const overflowEpsilonPx = 0.01;
+
+  const finalMarginRight =
+    Number.isFinite(marginRightNumber) &&
+    Number.isFinite(liHalfSpacing) &&
+    marginRightNumber + liHalfSpacing < -overflowEpsilonPx
+      ? -liHalfSpacing
+      : marginRightNumber;
+
+  const finalMarginLeft =
+    Number.isFinite(marginLeftNumber) &&
+    Number.isFinite(liHalfSpacing) &&
+    marginLeftNumber + liHalfSpacing < -overflowEpsilonPx
+      ? -liHalfSpacing
+      : marginLeftNumber;
+
+  const finalMarginRightPx = `${finalMarginRight}px`;
+  const finalMarginLeftPx = `${finalMarginLeft}px`;
+
+  return `margin: ${marginTop} ${finalMarginRightPx} ${marginBottom} ${finalMarginLeftPx};`;
 }
 
 export function cssStyleElementMMenuItemPadding({ v, device, state }) {
   const mode = styleElementMenuMode({ v, device, state });
   const dvv = (key) => defaultValueValue({ key, v, device, state });
-  const itemPadding = `${parseFloat(dvv("itemPadding") / 2)}px`;
+  const itemPaddingHalf = parseFloat(dvv("itemPadding") / 2);
+  const itemPadding = `${itemPaddingHalf}px`;
   const paddingTop = styleItemPaddingTop({ v, device });
   const paddingBottom = styleItemPaddingBottom({ v, device });
 
   if (mode === "horizontal") {
+    // LI horizontal spacing is driven purely by the slider (spacing/2).
+    // UL margin adjustments handle overflow without changing inter-item gaps.
     return `padding-top:${paddingTop}; padding-bottom:${paddingBottom}; margin-right:${itemPadding}; margin-left:${itemPadding};`;
   }
 

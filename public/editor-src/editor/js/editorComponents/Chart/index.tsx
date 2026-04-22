@@ -75,6 +75,8 @@ class Chart extends EditorComponent<Value, Props> {
     if (this.chart) {
       this.chart.destroy();
     }
+
+    super.componentWillUnmount();
   }
 
   getTypographyConfig() {

@@ -28,4 +28,4 @@ export default [
   RedoButton,
   PreviewButton,
   PublishButton
-];
+] as Array<Component | typeof PublishButton>;

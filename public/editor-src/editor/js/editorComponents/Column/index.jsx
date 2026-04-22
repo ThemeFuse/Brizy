@@ -417,9 +417,11 @@ class Column extends EditorComponent {
                   ref={this.containerBorderRef}
                   color={isInnerRow && inGrid ? "red" : "blue"}
                   borderStyle="solid"
-                  activateOnContentClick={false}
+                  activateOnContentClick={true}
                   buttonPosition="topRight"
                   renderButtonWrapper={this.renderToolbar}
+                  elementId={this.getId()}
+                  elementType={this.getComponentId()}
                 >
                   {({
                     ref: containerBorderRef,
@@ -547,17 +549,17 @@ class Column extends EditorComponent {
                 withoutWrapper={true}
               >
                 {this.renderContent(v, vs, vd)}
+                {linkData.href && (
+                  <Link
+                    className="brz-container-link"
+                    type={linkData.type}
+                    href={linkData.href}
+                    target={linkData.target}
+                    rel={linkData.rel}
+                  />
+                )}
               </HoverAnimation>
             </ScrollMotion>
-            {linkData.href && (
-              <Link
-                className="brz-container-link"
-                type={linkData.type}
-                href={linkData.href}
-                target={linkData.target}
-                rel={linkData.rel}
-              />
-            )}
           </Animation>
         </CustomCSS>
         {shouldRenderPopup(v, blocksDataSelector(this.getReduxState())) &&

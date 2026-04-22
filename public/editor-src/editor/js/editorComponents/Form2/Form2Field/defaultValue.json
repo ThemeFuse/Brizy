@@ -63,6 +63,9 @@
     "heightSuffix": "px",
 
     "min": "",
-    "max": ""
+    "max": "",
+
+    "language": "en",
+    "dateFormat": "Y-m-d"
   }
 }

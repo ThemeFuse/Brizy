@@ -44,7 +44,6 @@ export enum ElementTypes {
   Facebook = "Facebook",
   Twitter = "Twitter",
   FacebookComments = "FacebookComments",
-  Columns = "Columns",
   Row = "Row",
   AssetsPosts = "AssetsPosts",
   ProtectedPage = "ProtectedPage",
@@ -148,6 +147,7 @@ export enum ElementTypes {
   InstagramFeed = "InstagramFeed",
   GlobalBlock = "GlobalBlock",
   LinkedinFeed = "LinkedinFeed",
+  Pinterest = "Pinterest",
   Chart = "Chart",
   EmbedCode = "EmbedCode",
   ThirdParty = "ThirdParty",
@@ -183,6 +183,7 @@ export enum ElementTypes {
   WOOProducts = "WOOProducts",
   WPPosts = "WPPosts",
   Wrapper2 = "Wrapper2",
+  GoogleSearch = "GoogleSearch",
 
   // Shopify
   ShoppingBag = "ShoppingBag",
@@ -236,7 +237,7 @@ export enum ElementTypes {
   EcwidMyAccount = "EcwidMyAccount",
   EcwidFavorites = "EcwidFavorites",
 
-  ImageComparison = "ImageComparison",
+  ImageComparison = "ImageComparison"
 }
 
 export const MinistryBrandsGroups = [

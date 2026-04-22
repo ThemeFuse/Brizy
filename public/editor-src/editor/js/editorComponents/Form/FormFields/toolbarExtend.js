@@ -86,7 +86,6 @@ export function getItems({ v, device }) {
                 {
                   id: "bgColor",
                   type: "colorPicker",
-                  devices: "desktop"
                 }
               ]
             },
@@ -97,7 +96,6 @@ export function getItems({ v, device }) {
                 {
                   id: "color",
                   type: "colorPicker",
-                  devices: "desktop"
                 }
               ]
             },
@@ -108,7 +106,6 @@ export function getItems({ v, device }) {
                 {
                   id: "border",
                   type: "border",
-                  devices: "desktop"
                 }
               ]
             }

@@ -2,8 +2,7 @@ import { noop } from "es-toolkit";
 import { isT } from "fp-utilities";
 import React, { JSX, RefObject, createRef, forwardRef } from "react";
 import ReactDOM from "react-dom";
-import { connect } from "react-redux";
-import { Dispatch } from "redux";
+import { ConnectedProps, connect } from "react-redux";
 import ClickOutside from "visual/component/ClickOutside";
 import HotKeys from "visual/component/HotKeys";
 import { targetExceptions } from "visual/component/Options/constants";
@@ -12,9 +11,10 @@ import { currentUserRole } from "visual/component/Roles";
 import { filterOptions } from "visual/editorComponents/EditorComponent/utils";
 import { OptionDefinition } from "visual/editorComponents/ToolbarItemType";
 import { useConfig } from "visual/providers/ConfigProvider";
-import { ActionUpdateUI, setActiveElement } from "visual/redux/actions2";
+import { setActiveElement, setActiveElementMeta } from "visual/redux/actions2";
+import { deviceModeSelector } from "visual/redux/selectors";
 import { ReduxState } from "visual/redux/types";
-import { ActiveElement, DeviceMode } from "visual/types";
+import { applyFilter } from "visual/utils/filters";
 import { attachRef } from "visual/utils/react";
 import {
   ToolbarExtendContext,
@@ -39,10 +39,12 @@ type ToolbarClickEvent = Event & {
   brzToolbarHandled?: boolean;
 };
 
-interface PropsWithState extends PortalToolbarProps {
-  device: DeviceMode;
-  setActiveElement: (element: ActiveElement) => void;
-}
+const mapState = (state: ReduxState) => ({ device: deviceModeSelector(state) });
+const mapDispatch = { setActiveElement, setActiveElementMeta };
+
+const connector = connect(mapState, mapDispatch, null, { forwardRef: true });
+
+type PropsWithState = ConnectedProps<typeof connector> & PortalToolbarProps;
 
 class _PortalToolbar
   extends React.Component<
@@ -106,6 +108,8 @@ class _PortalToolbar
 
   componentWillUnmount(): void {
     monitor.unsetIfActive(this);
+    this.props.setActiveElement(null);
+    this.props.setActiveElementMeta(null);
     this.node = null;
     this.selectorNode = null;
   }
@@ -300,7 +304,7 @@ class _PortalToolbar
   };
 
   getOutSideExceptions = (): (string | ((t: HTMLElement) => boolean))[] => {
-    return [
+    const base = [
       ".brz-ed-sidebar__right",
       ".brz-ed-sidebar__addable",
       ".brz-ed-tooltip__content-portal",
@@ -310,6 +314,7 @@ class _PortalToolbar
       ...targetExceptions,
       this.clickOutsideException // makes the toolbar not rerender when clicking repeatedly on the same node
     ];
+    return applyFilter("toolbar.clickOutsideExceptions", base);
   };
 
   getItems = (): OptionDefinition[] => {
@@ -416,18 +421,4 @@ const PortalToolbar = forwardRef<PortalToolbarType, FCProps>(
   }
 );
 
-const mapDispatchToProps = (
-  dispatch: Dispatch
-): { setActiveElement: (element: ActiveElement) => ActionUpdateUI } => ({
-  setActiveElement: (element: ActiveElement): ActionUpdateUI =>
-    dispatch(setActiveElement(element))
-});
-
-export default connect<
-  { device: DeviceMode },
-  { setActiveElement: (element: ActiveElement) => void },
-  Omit<PortalToolbarProps, "config">,
-  ReduxState
->((s) => ({ device: s.ui.deviceMode }), mapDispatchToProps, null, {
-  forwardRef: true
-})(PortalToolbar);
+export default connector(PortalToolbar);

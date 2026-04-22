@@ -224,6 +224,74 @@ describe("Testing getCSSObjects that should return { selector, css } objects", (
     });
   });
 
+  test("When tabsState is hover, hover styles are added to desktop css", () => {
+    const baseModel = {
+      ...backgroundColorElementModel,
+      ...borderElementModel,
+      hoverBorderColorHex: "#ff0000",
+      hoverBgColorHex: "#00ff00",
+      hoverBgColorOpacity: 0.8
+    };
+    const customModel = {
+      ...baseModel,
+      tabsState: HOVER
+    };
+
+    expect(
+      getCSSObjects({
+        renderContext,
+        store,
+        currentModel: ModelType.Default,
+        model: { vd: baseModel, vs: baseModel, v: customModel },
+        options: [
+          {
+            ...borderOptionWithSelector,
+            selector: "{{WRAPPER}}",
+            states: [NORMAL, HOVER]
+          },
+          { ...backgroundOptionWithSelector, states: [NORMAL, HOVER] }
+        ],
+        getConfig
+      })
+    ).toStrictEqual({
+      ...emptyCSS,
+      desktop: [
+        {
+          "{{WRAPPER}}": [
+            "border:5px solid rgba(115, 119, 127, 1);",
+            "border:5px solid rgba(255, 0, 0, 1);",
+            "background-color:rgba(255, 0, 0, 1); background-image:none;",
+            "background-color:rgba(0, 255, 0, 0.8); background-image:none;"
+          ]
+        }
+      ],
+      tablet: [
+        {
+          "{{WRAPPER}}": [
+            "border:5px solid rgba(115, 119, 127, 1);",
+            "background-color:rgba(255, 0, 0, 1); background-image:none;"
+          ]
+        }
+      ],
+      mobile: [
+        {
+          "{{WRAPPER}}": [
+            "border:5px solid rgba(115, 119, 127, 1);",
+            "background-color:rgba(255, 0, 0, 1); background-image:none;"
+          ]
+        }
+      ],
+      hover: [
+        {
+          "{{WRAPPER}}:hover": [
+            "border:5px solid rgba(255, 0, 0, 1);",
+            "background-color:rgba(0, 255, 0, 0.8); background-image:none;"
+          ]
+        }
+      ]
+    });
+  });
+
   test("2 options, different selector", () => {
     const model = { ...backgroundColorElementModel, ...borderElementModel };
     const output = [

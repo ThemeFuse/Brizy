@@ -1,4 +1,4 @@
-import Base64 from "js-base64";
+import { encode } from "js-base64";
 import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { ComponentTypes } from "visual/providers/EditorComponentProvider/ComponentTypes";
 import { Sheet } from "visual/providers/StyleProvider/Sheet";
@@ -57,15 +57,13 @@ describe("Testing 'getDCObjPreview' function", () => {
       {
         type: "complete",
         value: {
-          a: `{{${placeholderName} content='${Base64.encode(
-            "{{post_excerpt}}"
-          )}'}}`
+          a: `{{${placeholderName} content='${encode("{{post_excerpt}}")}'}}`
         },
         details: {
           a: {
             loaded: true,
             staticValue: "a static",
-            dcValue: `{{${placeholderName} content='${Base64.encode(
+            dcValue: `{{${placeholderName} content='${encode(
               "{{post_excerpt}}"
             )}'}}`
           }
@@ -86,7 +84,7 @@ describe("Testing 'getDCObjPreview' function", () => {
       {
         type: "complete",
         value: {
-          a: `{{${placeholderName} content='${Base64.encode(
+          a: `{{${placeholderName} content='${encode(
             "{{      post_title   some_attr='1234'     }}"
           )}'}}`
         },
@@ -94,7 +92,7 @@ describe("Testing 'getDCObjPreview' function", () => {
           a: {
             loaded: true,
             staticValue: "a static",
-            dcValue: `{{${placeholderName} content='${Base64.encode(
+            dcValue: `{{${placeholderName} content='${encode(
               "{{      post_title   some_attr='1234'     }}"
             )}'}}`
           }
@@ -118,7 +116,7 @@ describe("Testing 'getDCObjPreview' function", () => {
       {
         type: "complete",
         value: {
-          a: `{{${placeholderName} content='${Base64.encode(
+          a: `{{${placeholderName} content='${encode(
             "{{a}}"
           )}' a='abc' b='123'}}`
         },
@@ -126,7 +124,7 @@ describe("Testing 'getDCObjPreview' function", () => {
           a: {
             loaded: true,
             staticValue: "a static",
-            dcValue: `{{${placeholderName} content='${Base64.encode(
+            dcValue: `{{${placeholderName} content='${encode(
               "{{a}}"
             )}' a='abc' b='123'}}`
           }
@@ -147,7 +145,7 @@ describe("Testing 'getDCObjPreview' function", () => {
       {
         type: "complete",
         value: {
-          a: `{{${placeholderName} content='${Base64.encode(
+          a: `{{${placeholderName} content='${encode(
             "{{a att='some attribute'}}"
           )}' x='xyz'}}`
         },
@@ -155,7 +153,7 @@ describe("Testing 'getDCObjPreview' function", () => {
           a: {
             loaded: true,
             staticValue: "a static",
-            dcValue: `{{${placeholderName} content='${Base64.encode(
+            dcValue: `{{${placeholderName} content='${encode(
               "{{a att='some attribute'}}"
             )}' x='xyz'}}`
           }
@@ -176,7 +174,7 @@ describe("Testing 'getDCObjPreview' function", () => {
       {
         type: "complete",
         value: {
-          a: `{{${placeholderName} content='${Base64.encode(
+          a: `{{${placeholderName} content='${encode(
             "{{a att='original}}"
           )}' att='changed' x='xyz'}}`
         },
@@ -184,7 +182,7 @@ describe("Testing 'getDCObjPreview' function", () => {
           a: {
             loaded: true,
             staticValue: "a static",
-            dcValue: `{{${placeholderName} content='${Base64.encode(
+            dcValue: `{{${placeholderName} content='${encode(
               "{{a att='original}}"
             )}' att='changed' x='xyz'}}`
           }
@@ -208,7 +206,7 @@ describe("Testing 'getDCObjPreview' function", () => {
       {
         type: "complete",
         value: {
-          a: `{{${placeholderName} content='${Base64.encode(
+          a: `{{${placeholderName} content='${encode(
             "{{post_author}}"
           )}' _fallback='King Arthur'}}`
         },
@@ -216,7 +214,7 @@ describe("Testing 'getDCObjPreview' function", () => {
           a: {
             loaded: true,
             staticValue: "a static",
-            dcValue: `{{${placeholderName} content='${Base64.encode(
+            dcValue: `{{${placeholderName} content='${encode(
               "{{post_author}}"
             )}' _fallback='King Arthur'}}`
           }
@@ -237,7 +235,7 @@ describe("Testing 'getDCObjPreview' function", () => {
       {
         type: "complete",
         value: {
-          a: `{{${placeholderName} content='${Base64.encode(
+          a: `{{${placeholderName} content='${encode(
             "{{post_author att='history'}}"
           )}' _fallback='King Arthur'}}`
         },
@@ -245,7 +243,7 @@ describe("Testing 'getDCObjPreview' function", () => {
           a: {
             loaded: true,
             staticValue: "a static",
-            dcValue: `{{${placeholderName} content='${Base64.encode(
+            dcValue: `{{${placeholderName} content='${encode(
               "{{post_author att='history'}}"
             )}' _fallback='King Arthur'}}`
           }
@@ -267,7 +265,7 @@ describe("Testing 'getDCObjPreview' function", () => {
       {
         type: "complete",
         value: {
-          a: `{{${placeholderName} content='${Base64.encode(
+          a: `{{${placeholderName} content='${encode(
             "{{  post_author       att=\"history\"        att2='England'      }}"
           )}' _fallback='King Arthur'}}`
         },
@@ -275,7 +273,7 @@ describe("Testing 'getDCObjPreview' function", () => {
           a: {
             loaded: true,
             staticValue: "a static",
-            dcValue: `{{${placeholderName} content='${Base64.encode(
+            dcValue: `{{${placeholderName} content='${encode(
               "{{  post_author       att=\"history\"        att2='England'      }}"
             )}' _fallback='King Arthur'}}`
           }
@@ -299,7 +297,7 @@ describe("Testing 'getDCObjPreview' function", () => {
       {
         type: "complete",
         value: {
-          a: `{{${placeholderName} content='${Base64.encode(
+          a: `{{${placeholderName} content='${encode(
             "{{post_author}}"
           )}' _fallback='King Arthur' a='qwerty'}}`
         },
@@ -307,7 +305,7 @@ describe("Testing 'getDCObjPreview' function", () => {
           a: {
             loaded: true,
             staticValue: "a static",
-            dcValue: `{{${placeholderName} content='${Base64.encode(
+            dcValue: `{{${placeholderName} content='${encode(
               "{{post_author}}"
             )}' _fallback='King Arthur' a='qwerty'}}`
           }
@@ -328,7 +326,7 @@ describe("Testing 'getDCObjPreview' function", () => {
       {
         type: "complete",
         value: {
-          a: `{{${placeholderName} content='${Base64.encode(
+          a: `{{${placeholderName} content='${encode(
             "{{post_author att='history'}}"
           )}' _fallback='King Arthur' a='123' att='changed' b='abc'}}`
         },
@@ -336,7 +334,7 @@ describe("Testing 'getDCObjPreview' function", () => {
           a: {
             loaded: true,
             staticValue: "a static",
-            dcValue: `{{${placeholderName} content='${Base64.encode(
+            dcValue: `{{${placeholderName} content='${encode(
               "{{post_author att='history'}}"
             )}' _fallback='King Arthur' a='123' att='changed' b='abc'}}`
           }
@@ -368,10 +366,8 @@ describe("Testing 'getDCObjPreview' function", () => {
       {
         type: "complete",
         value: {
-          a: `{{${placeholderName} content='${Base64.encode(
-            "{{post_title}}"
-          )}'}}`,
-          b: `{{${placeholderName} content='${Base64.encode(
+          a: `{{${placeholderName} content='${encode("{{post_title}}")}'}}`,
+          b: `{{${placeholderName} content='${encode(
             "{{post_author att='history'}}"
           )}' _fallback='King Arthur' y='tho'}}`
         },
@@ -379,14 +375,14 @@ describe("Testing 'getDCObjPreview' function", () => {
           a: {
             loaded: true,
             staticValue: "a static",
-            dcValue: `{{${placeholderName} content='${Base64.encode(
+            dcValue: `{{${placeholderName} content='${encode(
               "{{post_title}}"
             )}'}}`
           },
           b: {
             loaded: true,
             staticValue: "b static",
-            dcValue: `{{${placeholderName} content='${Base64.encode(
+            dcValue: `{{${placeholderName} content='${encode(
               "{{post_author att='history'}}"
             )}' _fallback='King Arthur' y='tho'}}`
           }
@@ -616,17 +612,13 @@ describe("Testing 'getDCObjEditor_' function", () => {
       "{{ g }}"
     ]) {
       apiProxy.setInCache(
-        `{{placeholder content='${Base64.encode(l)}'}}`,
+        `{{placeholder content='${encode(l)}'}}`,
         `${l}-cached`,
         config
       );
     }
     for (const l of ["{{ x }}", "{{ y }}", "{{ z }}"]) {
-      apiProxy.setInCache(
-        `{{placeholder content='${Base64.encode(l)}'}}`,
-        "",
-        config
-      );
+      apiProxy.setInCache(`{{placeholder content='${encode(l)}'}}`, "", config);
     }
 
     expect(
@@ -1069,17 +1061,13 @@ describe("Testing 'getDCObjEditor_' function", () => {
       "{{ g }}"
     ]) {
       apiProxy.setInCache(
-        `{{placeholder content='${Base64.encode(l)}'}}`,
+        `{{placeholder content='${encode(l)}'}}`,
         `${l}-cached`,
         config
       );
     }
     for (const l of ["x", "y", "z"]) {
-      apiProxy.setInCache(
-        `{{placeholder content='${Base64.encode(l)}'}}`,
-        "",
-        config
-      );
+      apiProxy.setInCache(`{{placeholder content='${encode(l)}'}}`, "", config);
     }
 
     const incomplete = getDCObjEditor_(apiProxy, emptyGlobalConfig)(

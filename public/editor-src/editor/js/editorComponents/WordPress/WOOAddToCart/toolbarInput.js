@@ -104,7 +104,6 @@ export const getItems = ({ v, device, state }) => {
         }
       },
       roles: ["admin"],
-      devices: "desktop",
       position: 90,
       options: [
         {
@@ -118,7 +117,6 @@ export const getItems = ({ v, device, state }) => {
                 {
                   id: "inputColor",
                   type: "colorPicker",
-                  devices: "desktop",
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -130,7 +128,6 @@ export const getItems = ({ v, device, state }) => {
                 {
                   id: "inputBgColor",
                   type: "colorPicker",
-                  devices: "desktop",
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -142,7 +139,6 @@ export const getItems = ({ v, device, state }) => {
                 {
                   id: "inputBorder",
                   type: "border",
-                  devices: "desktop",
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -154,7 +150,6 @@ export const getItems = ({ v, device, state }) => {
                 {
                   id: "inputBoxShadow",
                   type: "boxShadow",
-                  devices: "desktop",
                   states: [NORMAL, HOVER]
                 }
               ]

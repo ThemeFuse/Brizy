@@ -273,7 +273,6 @@ export const getItems: GetItems<ItemValue> = ({ v, device, context }) => {
           }
         }
       },
-      devices: "desktop",
       position: 30,
       options: [
         {

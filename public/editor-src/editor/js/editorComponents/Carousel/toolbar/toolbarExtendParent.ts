@@ -66,6 +66,8 @@ const getItems =
     const isArrowDisabled = currentArrowStyle === ArrowStyle.style3;
     const isArrowStyle2 = currentArrowStyle === ArrowStyle.style2;
 
+    const isDynamicContentDisabled = config.elements?.carousel?.disableDynamicContent;
+
     return [
       {
         id: "toolbarCarousel",
@@ -382,6 +384,7 @@ const getItems =
         },
         devices: "desktop",
         position: 80,
+        disabled: isDynamicContentDisabled,
         options: [
           {
             id: "dynamic",
@@ -404,7 +407,6 @@ const getItems =
           }
         },
         position: 90,
-        devices: "desktop",
         options: [
           {
             id: "colorTabs",

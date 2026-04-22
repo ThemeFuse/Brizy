@@ -133,7 +133,6 @@ export const getItems: GetItems<Value> = ({ v, device, state }) => {
                 {
                   id: "thumbnailBorder",
                   type: "border",
-                  devices: "desktop",
                   states: [NORMAL, HOVER, ACTIVE]
                 }
               ]
@@ -145,7 +144,6 @@ export const getItems: GetItems<Value> = ({ v, device, state }) => {
                 {
                   id: "thumbnailBoxShadow",
                   type: "boxShadow",
-                  devices: "desktop",
                   states: [NORMAL, HOVER, ACTIVE]
                 }
               ]

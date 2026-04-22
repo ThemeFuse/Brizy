@@ -7,7 +7,7 @@ import React, {
 } from "react";
 import { omit } from "timm";
 import BoxResizer from "visual/component/BoxResizer";
-import type { Patch } from "visual/component/BoxResizer/types";
+import type { Patch, Point } from "visual/component/BoxResizer/types";
 import { Text } from "visual/component/ContentOptions/types";
 import CustomCSS from "visual/component/CustomCSS";
 import { HoverAnimation } from "visual/component/HoverAnimation/HoverAnimation";
@@ -69,7 +69,7 @@ const resizerPoints = [
   "bottomLeft",
   "bottomCenter",
   "bottomRight"
-];
+] satisfies Point[];
 
 const restrictions = {
   width: {
@@ -144,7 +144,8 @@ export default class Button extends EditorComponent<Value, Props> {
     super.patchValue({ ...patch, ...button }, meta);
   }
 
-  handleResizerChange = (patch: Patch): void => this.patchValue(patch);
+  handleResizerChange = (patch: Patch["patch"]): void =>
+    this.patchValue(patch as PatchValue);
 
   handleTextChange = (patch: { [k: string]: string }): void =>
     this.patchValue(patch);

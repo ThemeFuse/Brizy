@@ -7,6 +7,7 @@ import React, {
   RefObject,
   createRef
 } from "react";
+import { MutableRefObject } from "react";
 import Animation from "visual/component/Animation";
 import ContainerBorder from "visual/component/ContainerBorder";
 import ContextMenu, { ContextMenuExtend } from "visual/component/ContextMenu";
@@ -252,6 +253,9 @@ export default class Wrapper extends EditorComponent<Value, Props> {
     const { customAttributes } = v;
     const proTitleElement = this.getTitleIfPro();
     const cssId = getCSSId<Value>(v) || this.getId();
+    const innerElement = this.getInnerElement();
+    const elementId = innerElement?.value._id ?? "";
+    const elementType = innerElement?.type ?? "";
 
     if (proTitleElement && proTitleElement.title) {
       const content = (
@@ -276,8 +280,18 @@ export default class Wrapper extends EditorComponent<Value, Props> {
             {...this.makeContextMenuProps(contextMenuConfig)}
             componentId={v?.items[0]?.type}
           >
-            {({ ref: contextMenuRef }: { ref: RefObject<HTMLDivElement> }) => (
-              <ContainerBorder type="wrapper" color="grey" borderStyle="dotted">
+            {({
+              ref: contextMenuRef
+            }: {
+              ref: MutableRefObject<HTMLElement | null>;
+            }) => (
+              <ContainerBorder
+                type="wrapper"
+                color="grey"
+                borderStyle="dotted"
+                elementId={elementId}
+                elementType={elementType}
+              >
                 {({
                   ref: containerBorderRef,
                   attr: containerBorderAttr,
@@ -368,15 +382,21 @@ export default class Wrapper extends EditorComponent<Value, Props> {
       <ContextMenu
         // @ts-expect-error: Need to convert contextMenuConfig to TS
         {...this.makeContextMenuProps(contextMenuConfig)}
-        componentId={v?.items[0]?.type}
+        componentId={elementType}
       >
-        {({ ref: contextMenuRef }: { ref: RefObject<HTMLDivElement> }) => (
+        {({
+          ref: contextMenuRef
+        }: {
+          ref: MutableRefObject<HTMLElement | null>;
+        }) => (
           <ContainerBorder
             type="wrapper"
             color="grey"
             borderStyle="dotted"
             buttonPosition="topRight"
             renderButtonWrapper={this.renderToolbar}
+            elementId={elementId}
+            elementType={elementType}
           >
             {({
               ref: containerBorderRef,

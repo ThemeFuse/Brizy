@@ -2,10 +2,10 @@ import classNames from "classnames";
 import { uniqueId } from "es-toolkit/compat";
 import React, { ReactNode } from "react";
 import BoxResizer from "visual/component/BoxResizer";
+import type { Patch as BoxResizerPatch } from "visual/component/BoxResizer/types";
 import CustomCSS from "visual/component/CustomCSS";
 import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
-import { Patch } from "visual/editorComponents/Icon/types";
 import {
   resizerPoints,
   resizerTransformPatch
@@ -35,7 +35,7 @@ export class EcwidShoppingBag extends EditorComponent<Value> {
     return ElementTypes.EcwidShoppingBag;
   }
 
-  handleResizerChange = (patch: Patch): void => {
+  handleResizerChange = (patch: BoxResizerPatch["patch"]): void => {
     const device = this.getDeviceMode();
     const sizeKey = defaultValueKey({ key: "size", device, state: "normal" });
 

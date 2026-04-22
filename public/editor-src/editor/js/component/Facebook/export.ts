@@ -29,7 +29,7 @@ export default function ($node: JQuery): void {
   const fbRoot = node.querySelector(".fb-root");
 
   if (facebookElement && !fbRoot) {
-    const lang = facebookElement.getAttribute("data-lang") ?? "";
+    const lang = facebookElement.getAttribute("data-lang") ?? "en";
     const appId = facebookElement.getAttribute("appid") ?? "";
     const instagramEmbed = node.querySelector(".brz-instagram-feed");
 

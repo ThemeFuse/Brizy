@@ -40,7 +40,9 @@ export function tabFilter({
 
   const fieldChoices = fieldConverter(
     v.source,
-    context.collectionTypesInfo.sources
+    context.collectionTypesInfo.sources,
+    v.querySource,
+    isCurrentQuery
   );
 
   const isOrderByField = vd.orderBy === ORDER_BY_FIELD;

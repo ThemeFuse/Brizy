@@ -1,6 +1,6 @@
 import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 
-type SelectChoices = {
+export type SelectChoices = {
   title: string;
   value?: string;
   optgroup?: SelectChoices[];

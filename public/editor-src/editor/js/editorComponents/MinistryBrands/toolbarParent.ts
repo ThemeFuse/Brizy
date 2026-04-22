@@ -30,7 +30,6 @@ export const toolbarParentColors = <
     {
       id: "toolbarParentColors",
       type: "popover",
-      devices: "desktop",
       position: 70,
       config: {
         title: t("Colors"),

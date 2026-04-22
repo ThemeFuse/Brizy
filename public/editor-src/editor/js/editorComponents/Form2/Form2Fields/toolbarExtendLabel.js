@@ -67,7 +67,6 @@ export function getItems({ v, device }) {
         }
       },
       position: 80,
-      devices: "desktop",
       options: [
         {
           id: "color",

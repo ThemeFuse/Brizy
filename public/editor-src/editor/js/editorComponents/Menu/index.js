@@ -138,6 +138,8 @@ export default class Menu extends EditorComponent {
       this.destroyMMenu();
     }
     UIEvents.off("deviceMode.change", this.handleChange);
+
+    super.componentWillUnmount();
   }
 
   handleChange = () => {

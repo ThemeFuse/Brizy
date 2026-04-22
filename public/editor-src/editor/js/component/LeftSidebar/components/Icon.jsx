@@ -12,15 +12,16 @@ export default class SidebarIcon extends React.Component {
   };
 
   render() {
-    const { icon, title, className: _className, onClick } = this.props;
+    const { id, icon, title, active, className: _className, onClick } = this.props;
 
     const className = classnames(
       "brz-li brz-ed-sidebar__control__item",
+      { "brz-ed-sidebar__control__item--active": active },
       _className
     );
 
     return (
-      <div className={className} title={title} onClick={onClick}>
+      <div className={className} title={title} onClick={onClick} data-plugin-id={id}>
         <EditorIcon icon={icon} />
       </div>
     );

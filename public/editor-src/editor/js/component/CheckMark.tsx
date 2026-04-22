@@ -13,25 +13,12 @@ export const CheckMark = ({
   onClick,
   className
 }: Props): ReactElement => {
-  const checkMarkClassName = checked
-    ? "border-0 bg-floating-button-blue"
-    : "border-[1px]";
-
-  const isCheckedIcon = checked
-    ? "!text-brand-primary opacity-100"
-    : "!text-brand-primary opacity-0";
-
   return (
     <span
-      className={classNames(
-        "brz-ed--check-mark w-[16px] h-[16px] text-[16px] rounded-[50%] bg-black border-solid border-topaz",
-        className,
-        { checked },
-        checkMarkClassName
-      )}
+      className={classNames("brz-ed--check-mark", className, { checked })}
       onClick={onClick}
     >
-      <EditorIcon icon="nc-check-circle" className={isCheckedIcon} />
+      <EditorIcon icon="nc-check-circle" />
     </span>
   );
 };

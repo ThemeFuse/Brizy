@@ -5,11 +5,6 @@ import {
   cssStyleBorderRadius,
   cssStyleBoxShadow,
   cssStyleColor,
-  cssStyleMaskCustomShape,
-  cssStyleMaskPosition,
-  cssStyleMaskRepeat,
-  cssStyleMaskShape,
-  cssStyleMaskSize,
   cssStylePaddingFourFields,
   cssStyleSizeMinWidth,
   cssStyleSizeWidth,
@@ -620,74 +615,6 @@ export function cssStyleElementImageGalleryBorderRadiusThumbnail({
   });
 }
 
-export function cssStyleElementImageGalleryBigImageImagesMaskShape({
-  v,
-  device,
-  state,
-  store,
-  getConfig
-}: CSSValue): string {
-  return cssStyleMaskShape({
-    v,
-    device,
-    state,
-    store,
-    getConfig,
-    prefix: "images"
-  });
-}
-
-export function cssStyleElementImageGalleryBigImageImagesMaskSize({
-  v,
-  device,
-  state,
-  store,
-  getConfig
-}: CSSValue): string {
-  return cssStyleMaskSize({
-    v,
-    device,
-    state,
-    store,
-    getConfig,
-    prefix: "images"
-  });
-}
-
-export function cssStyleElementImageGalleryBigImageImagesMaskRepeat({
-  v,
-  device,
-  state,
-  store,
-  getConfig
-}: CSSValue): string {
-  return cssStyleMaskRepeat({
-    v,
-    device,
-    state,
-    store,
-    getConfig,
-    prefix: "images"
-  });
-}
-
-export function cssStyleElementImageGalleryBigImageImagesMaskPosition({
-  v,
-  device,
-  state,
-  store,
-  getConfig
-}: CSSValue): string {
-  return cssStyleMaskPosition({
-    v,
-    device,
-    state,
-    store,
-    getConfig,
-    prefix: "images"
-  });
-}
-
 export function cssStyleElementImageGalleryBigImageOverlay({
   v,
   device,
@@ -702,22 +629,5 @@ export function cssStyleElementImageGalleryBigImageOverlay({
     store,
     getConfig,
     prefix: "bigImageOverlayBg"
-  });
-}
-
-export function cssStyleElementImageGalleryBigImageImagesCustomMask({
-  v,
-  device,
-  state,
-  store,
-  getConfig
-}: CSSValue) {
-  return cssStyleMaskCustomShape({
-    v,
-    device,
-    state,
-    store,
-    getConfig,
-    prefix: "images"
   });
 }

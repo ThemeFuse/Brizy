@@ -1,21 +1,31 @@
 {
   "extends": "@brizy/tsconfig/react.json",
   "compilerOptions": {
+    "composite": true,
+    "declaration": true,
+    "declarationDir": "./dist",
     "noEmit": false,
-    "baseUrl": ".",
     "paths": {
-      "visual/*": ["editor/js/*"],
-      "sass/*": ["editor/sass/*"],
+      "visual/*": ["./editor/js/*"],
+      "sass/*": ["./editor/sass/*"],
       "test-utils": ["./jest-utils/test-utils"]
     }
   },
-  "include": ["editor/**/*.ts", "editor/**/*.tsx"],
+  "include": [
+    "editor/**/*.ts",
+    "editor/**/*.tsx",
+    "editor/**/*.js",
+    "editor/**/*.jsx",
+    "editor/**/*.json",
+    "jest-utils/**/*.ts",
+    "jest-utils/**/*.tsx"
+  ],
   "exclude": [
     "node_modules",
     "build",
-    "kits",
-    "popups",
-    "templates",
-    "**/libs/**"
+    "editor/js/libs/mmenu",
+    "editor/js/libs/countdown",
+    "editor/js/libs/countdown2",
+    "editor/js/libs/animation"
   ]
 }

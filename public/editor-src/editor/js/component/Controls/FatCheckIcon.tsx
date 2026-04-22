@@ -30,46 +30,23 @@ export const FatCheckIcon = ({
     [onCheck]
   );
 
-  const activeLabel = active
-    ? "text-right-sidebar-item--active"
-    : "text-right-sidebar-item";
-  const activeIcon = active
-    ? "!text-right-sidebar-item--active"
-    : "!text-right-sidebar-item";
-
-  const activeBorder = active
-    ? "border-right-sidebar-item--active"
-    : "border-right-sidebar-item-border hover:border-right-sidebar-item-border--hover";
-
   return (
     <div
-      className={classNames(
-        className,
-        "brz-ed--fat-icon text-center w-[60px] cursor-pointer"
-      )}
+      className={classNames(className, "brz-ed--fat-icon", {
+        "brz-ed--fat-icon__active": !!active
+      })}
       onClick={onClick}
       title={label}
     >
-      <div
-        className={`brz-ed--fat-icon__wrapper relative border-2 border-solid rounded-[3px] flex items-center justify-center w-[60px] h-[60px] transition-[border-color] duration-200 ease-linear	delay-[0s] ${activeBorder}`}
-      >
+      <div className="brz-ed--fat-icon__wrapper">
         <CheckMark
           checked={!!checked}
           onClick={_onCheck}
-          className={
-            "brz-ed--fat-check-icon__check absolute -top-[5px] -left-[5px]"
-          }
+          className="brz-ed--fat-check-icon__check"
         />
-        <EditorIcon
-          icon={icon}
-          className={`text-[16px] transition-[color] duration-200 ease-linear ${activeIcon}`}
-        />
+        <EditorIcon icon={icon} />
       </div>
-      <div
-        className={`brz-ed--fat-icon__label transition-[color] duration-200 ease-linear text-[12px] leading-[2.4em] overflow-hidden text-ellipsis whitespace-nowrap ${activeLabel}`}
-      >
-        {label}
-      </div>
+      <div className="brz-ed--fat-icon__label">{label}</div>
     </div>
   );
 };

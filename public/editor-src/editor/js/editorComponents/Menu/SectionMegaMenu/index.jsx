@@ -58,6 +58,8 @@ class SectionMegaMenu extends EditorComponent {
 
   componentWillUnmount() {
     this.mounted = false;
+
+    super.componentWillUnmount();
   }
 
   handleToolbarEscape = () => {
@@ -169,7 +171,9 @@ class SectionMegaMenu extends EditorComponent {
             type="mega__menu"
             color="grey"
             activeBorderStyle="dotted"
-            activateOnContentClick={false}
+            elementId={this.getId()}
+            elementType={this.getComponentId()}
+            activateOnContentClick={true}
             buttonPosition="topLeft"
             renderButtonWrapper={this.renderToolbar}
           >

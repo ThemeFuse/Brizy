@@ -61,7 +61,9 @@ export function tabFilter(
 
   const fieldChoices = fieldConverter(
     v.source,
-    context.collectionTypesInfo.sources
+    context.collectionTypesInfo.sources,
+    v.querySource,
+    isCurrentQuery
   );
 
   const collectionChoices = sourceChoices.filter(

@@ -371,7 +371,6 @@ export function getItems({ v, device, context, component }) {
         }
       },
       roles: ["admin"],
-      devices: "desktop",
       position: 90,
       options: [
         {

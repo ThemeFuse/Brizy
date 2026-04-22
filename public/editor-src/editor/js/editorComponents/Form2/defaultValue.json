@@ -44,7 +44,7 @@
     "successMessageTypographyItalic": false,
     "successMessageTypographyUnderline": false,
     "successMessageTypographyStrike": false,
-    "successMessageTypographyUppercase": true,
+    "successMessageTypographyUppercase": false,
     "successMessageTypographyLowercase": false,
 
     "emptyMessageTypographyFontStyle": "",
@@ -61,7 +61,7 @@
     "emptyMessageTypographyItalic": false,
     "emptyMessageTypographyUnderline": false,
     "emptyMessageTypographyStrike": false,
-    "emptyMessageTypographyUppercase": true,
+    "emptyMessageTypographyUppercase": false,
     "emptyMessageTypographyLowercase": false,
 
     "errorMessageTypographyFontStyle": "",
@@ -78,7 +78,7 @@
     "errorMessageTypographyItalic": false,
     "errorMessageTypographyUnderline": false,
     "errorMessageTypographyStrike": false,
-    "errorMessageTypographyUppercase": true,
+    "errorMessageTypographyUppercase": false,
     "errorMessageTypographyLowercase": false,
 
     "errorMessageColorHex": "#FFFFFF",

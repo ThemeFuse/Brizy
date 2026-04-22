@@ -1,7 +1,7 @@
 import { NewType } from "visual/types/NewType";
 import { pass } from "visual/utils/fp";
 
-enum positive {
+export enum positive {
   positive = "positive"
 }
 

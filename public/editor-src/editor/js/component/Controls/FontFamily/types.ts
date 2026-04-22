@@ -17,6 +17,7 @@ export interface Props {
   addFontLabel: string;
   fonts: FontsBlock;
   isAddNewFontDisabled?: boolean;
+  shouldSortFonts?: boolean;
 }
 export interface FontSizes {
   default: string;

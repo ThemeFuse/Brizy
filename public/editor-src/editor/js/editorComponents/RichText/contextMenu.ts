@@ -14,9 +14,10 @@ import {
   handlePasteStyles,
   handleRenderText
 } from "./utils/ContextMenu";
+import { Config } from "visual/global/Config";
 
 const getItems: ContextGetItems<Value> = (_, component): ContextMenuItem[] => {
-  const config = component.getGlobalConfig();
+  const config = component.getGlobalConfig() as Config;
   const state = component.getReduxStore().getState();
   const innerElement = getInnerElement(state, config.menuData);
   const canPaste = component.getComponentId() === innerElement?.type;

@@ -114,7 +114,6 @@ export function getItems({ v, device }) {
         }
       },
       roles: ["admin"],
-      devices: "desktop",
       position: 90,
       options: [
         {

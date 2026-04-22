@@ -45,13 +45,11 @@ export function getItems({ v, device }) {
         }
       },
       roles: ["admin"],
-      devices: "desktop",
       position: 80,
       options: [
         {
           id: "color",
           type: "colorPicker",
-          devices: "desktop"
         }
       ]
     },

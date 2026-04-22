@@ -6,7 +6,10 @@ import { TooltipPlacement } from "visual/component/Tooltip/types";
 import { TypographyTags } from "visual/editorComponents/RichText/toolbar/utils";
 import { Switch } from "visual/types/Options";
 import { TextScripts } from "visual/types/Style";
-import type { Value as LinkValue } from "./utils/dependencies";
+import type {
+  Value as LinkValue,
+  PopulationColor as PopulationColorType
+} from "./utils/dependencies";
 
 export interface Value extends ElementModel, LinkValue {
   text: string;
@@ -21,13 +24,26 @@ export interface Value extends ElementModel, LinkValue {
   tooltipText: string;
 
   tag: string;
+
+  color: {
+    hex: string;
+    opacity: number;
+    colorPalette: string;
+  };
+  colorOpacity: number;
+  populationColor: PopulationColorType | string;
+
+  textShadowColorPalette?: string;
+  textShadowColorOpacity: number;
+  textShadowColorHex: string;
+  textShadowHorizontal: number;
+  textShadowVertical: number;
+  textShadowBlur: number;
 }
 
 export interface Patch extends Partial<Value> {
   typographyFontStyle?: string;
-  backgroundImage?: {
-    imagePopulationEntityType: string;
-  };
+  backgroundImage?: Partial<BackgroundImage>;
 
   [k: string]: unknown;
 }
@@ -45,14 +61,28 @@ export interface BackgroundImage {
   imagePopulation: null | string;
   positionX: number;
   positionY: number;
+  imagePopulationEntityType?: string;
+  imagePopulationEntityId?: string;
 }
 
-interface Gradient {
+export interface Gradient {
   startHex: string;
   startOpacity: string;
+  startPalette?: string;
+  finishHex?: string;
+  finishOpacity?: string;
+  finishPalette?: string;
+  activePointer?: string;
+  type?: "linear-gradient" | "radial-gradient";
+  linearAngle?: string;
+  radialPosition?: string;
+  startPointer?: string;
+  finishPointer?: string;
+  linearDegree?: string;
+  radialDegree?: string;
 }
 
-interface Color {
+export interface Color {
   hex: null | string;
   opacity: number;
   colorPalette: null;
@@ -85,6 +115,8 @@ export interface QuillFormat {
   bold?: boolean;
   color?: string;
   background?: string;
+  tabletBackground?: string;
+  mobileBackground?: string;
   shadow?: string;
   typographyUnderline?: string;
   typographyItalic?: string;
@@ -114,6 +146,12 @@ export interface QuillFormat {
   backgroundGradient?: Gradient;
   header?: unknown;
   pre?: unknown;
+  tabletColor?: string;
+  tabletBackgroundGradient?: Gradient;
+  tabletTextBackgroundGradient?: Gradient;
+  mobileColor?: string;
+  mobileBackgroundGradient?: Gradient;
+  mobileTextBackgroundGradient?: Gradient;
 }
 
 export interface PrepopulationData {

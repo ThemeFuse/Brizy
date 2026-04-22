@@ -99,7 +99,6 @@ export function getItems({ v, device }) {
         }
       },
       position: 80,
-      devices: "desktop",
       options: [
         {
           id: "tabsColor",
@@ -166,7 +165,6 @@ export function getItems({ v, device }) {
         }
       },
       position: 80,
-      devices: "desktop",
       options: [
         {
           id: "checkboxColor",

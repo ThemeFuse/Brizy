@@ -1,6 +1,7 @@
-import React, { ReactElement, RefObject } from "react";
+import React, { MutableRefObject, ReactElement } from "react";
 import { ElementModel } from "visual/component/Elements/Types";
 import Sortable from "visual/component/Sortable";
+import { SortableAttr } from "visual/component/Sortable";
 import SortableEmpty from "visual/component/Sortable/SortableEmpty";
 import { hideToolbar } from "visual/component/Toolbar";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
@@ -105,8 +106,8 @@ class ThirdPartyItems extends EditorArrayComponent {
         acceptElements={this.handleSortableAcceptElements}
       >
         {(
-          sortableRef: RefObject<HTMLDivElement>,
-          sortableAttr: Record<string, string>
+          sortableRef: MutableRefObject<HTMLDivElement | null>,
+          sortableAttr?: SortableAttr | undefined
         ) => (
           <div {...sortableAttr} ref={sortableRef} className={className}>
             {items}

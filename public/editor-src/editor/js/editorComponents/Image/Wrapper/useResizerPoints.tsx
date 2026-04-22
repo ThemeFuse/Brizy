@@ -1,15 +1,21 @@
+import type { Point } from "visual/component/BoxResizer/types";
 import { EditorComponentContextValue } from "visual/editorComponents/EditorComponent/EditorComponentContext";
+import { SizeType } from "visual/global/Config/types/configs/common";
 import { ImageType } from "visual/utils/image/types";
 import { isGIFExtension, isSVGExtension } from "visual/utils/image/utils";
 import { ImageProps } from "../types";
 import { getImageDCSize, showOriginalImage } from "../utils";
 import { SizeRestriction, WidthHeightRestriction } from "./type";
 import { getSizeRestriction, getWidthRestriction } from "./utils";
-import { SizeType } from "visual/global/Config/types/configs/common";
 
-const resize = ["topLeft", "topRight", "bottomLeft", "bottomRight"];
+const resize = [
+  "topLeft",
+  "topRight",
+  "bottomLeft",
+  "bottomRight"
+] satisfies Point[];
 
-const POINTS = {
+const POINTS: Record<string, Point[]> = {
   default: [
     "topLeft",
     "topCenter",

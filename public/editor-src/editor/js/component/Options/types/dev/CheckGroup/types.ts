@@ -10,7 +10,7 @@ export interface Choices {
   icon?: string;
 }
 
-interface Config {
+export interface Config {
   label: JSX.Element;
   icon: string;
   title: string;

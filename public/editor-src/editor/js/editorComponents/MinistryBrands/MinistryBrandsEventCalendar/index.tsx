@@ -138,7 +138,7 @@ export class MinistryBrandsEventCalendar extends EditorComponent<Value, Props> {
       return "";
     }
 
-    return `<svg class='brz-icon-svg align-[initial]' data-name='${iconName}' data-type='${iconType}'></svg>`;
+    return `<svg class='brz-icon-svg' data-name='${iconName}' data-type='${iconType}'></svg>`;
   }
 
   renderForEdit(v: Value, vs: Value, vd: Value): ReactNode {

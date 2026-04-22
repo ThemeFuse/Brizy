@@ -51,7 +51,6 @@ export const IconGrid: FCC<Props> = ({ icons, value, onChange, config }) => {
   const columnsInRow = 8;
   const rowHeight = 68;
   const gutter = 6;
-  const initialScrollTop = prettyRowIndex * (68 + gutter);
 
   return (
     <SmartGrid
@@ -62,7 +61,7 @@ export const IconGrid: FCC<Props> = ({ icons, value, onChange, config }) => {
       rowCount={rowCount}
       rowHeight={rowHeight}
       gutter={gutter}
-      initialScrollTop={initialScrollTop}
+      initialScrollRow={prettyRowIndex}
       renderItem={({ rowIndex, columnIndex, style }) => {
         const index = rowIndex * 8 + columnIndex;
         const icon = icons[index];

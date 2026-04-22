@@ -15,12 +15,21 @@ const getFontType = (key: string): FontFamilyType => {
   }
 };
 
-export const normalizeFonts = (fonts: FontsBlock): FontWithType[] =>
-  Object.entries(fonts)
-    .flatMap(([key, fontList = []]) =>
+export const normalizeFonts = (
+  fonts: FontsBlock,
+  shouldSort: boolean = true
+): FontWithType[] => {
+  const normalizedFonts = Object.entries(fonts).flatMap(
+    ([key, fontList = []]) =>
       fontList.map((font: FontObject) => ({
         ...font,
         type: font.variations?.length ? FontFamilyType.upload : getFontType(key)
       }))
-    )
-    .sort((a, b) => a.title.localeCompare(b.title));
+  );
+
+  if (shouldSort) {
+    return normalizedFonts.sort((a, b) => a.title.localeCompare(b.title));
+  }
+
+  return normalizedFonts;
+};

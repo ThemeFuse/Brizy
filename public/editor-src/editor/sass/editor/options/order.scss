@@ -1,0 +1,28 @@
+@use "../../variables";
+
+.brz-ed .brz-ed-option__order {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 13px 0;
+
+  &__vertical {
+    flex-direction: column;
+    padding: 7px 0;
+  }
+
+  .brz-icon-svg {
+    transition: color 200ms linear;
+    color: variables.$white;
+    font-size: 13px;
+
+    &:not(.brz-ed__disabled):hover {
+      color: variables.$brand__primary;
+    }
+
+    &.brz-ed__disabled {
+      color: variables.$gray-2 !important;
+      cursor: default;
+    }
+  }
+}

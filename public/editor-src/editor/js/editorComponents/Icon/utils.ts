@@ -1,12 +1,13 @@
+import type { Patch, Point } from "visual/component/BoxResizer/types";
 import { ElementModel } from "visual/component/Elements/Types";
-import { Patch, Value } from "visual/editorComponents/Icon/types";
+import { Value } from "visual/editorComponents/Icon/types";
 
 export const resizerPoints = [
   "topLeft",
   "topRight",
   "bottomLeft",
   "bottomRight"
-];
+] satisfies Point[];
 
 export const resizerTransformValue = (v: Value): ElementModel => {
   const {
@@ -30,7 +31,15 @@ export const resizerTransformValue = (v: Value): ElementModel => {
   };
 };
 
-export const resizerTransformPatch = (patch: Patch): Patch => {
+interface DevicesCustomSize {
+  customSize?: number;
+  tabletCustomSize?: number;
+  mobileCustomSize?: number;
+}
+
+export const resizerTransformPatch = (
+  patch: Patch<DevicesCustomSize>["patch"]
+): Patch<DevicesCustomSize>["patch"] => {
   let newPatch = patch;
 
   if ("size" in patch) {

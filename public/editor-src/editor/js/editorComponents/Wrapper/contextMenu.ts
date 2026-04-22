@@ -113,6 +113,7 @@ export const getTranslationsMap = (): Translation => ({
   Paypal: t("Paypal"),
   InstagramFeed: t("Instagram Feed"),
   LinkedinFeed: t("Linkedin Feed"),
+  Pinterest: t("Pinterest"),
   Chart: t("Chart"),
 
   // WP
@@ -252,6 +253,7 @@ export const getTranslationsMap = (): Translation => ({
   Leadific: t("Leadific"),
 
   ImageComparison: t("Image Compare"),
+  GoogleSearch: t("Google Search")
 });
 
 const getItems: ContextGetItems<ElementModel> = (v, component) => {
@@ -273,8 +275,7 @@ const getItems: ContextGetItems<ElementModel> = (v, component) => {
   const flattedShortcodes = Object.values(shortcodes).flat();
   const { icon } = flattedShortcodes
     .map((item) => ({
-      // eslint-disable-next-line no-constant-binary-expression
-      type: getIn(item.component.resolve, ["value", "items", 0, "type"] ?? ""),
+      type: getIn(item.component.resolve, ["value", "items", 0, "type"]) ?? "",
       icon: item.component.icon
     }))
     .find((item) => item.type === type) ?? { icon: "" };

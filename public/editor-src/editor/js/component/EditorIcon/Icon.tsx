@@ -125,7 +125,7 @@ const Icons = {
 
 export type IconNames = keyof typeof Icons;
 
-interface Props {
+export interface Props {
   name: IconNames;
   className?: string;
   style?: CSSProperties;

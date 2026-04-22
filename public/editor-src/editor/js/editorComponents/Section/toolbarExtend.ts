@@ -276,7 +276,6 @@ export const getItems: GetItems<Value, Props> = ({ v, device, component }) => {
         title: t("Color")
       },
       position: 90,
-      devices: "desktop",
       options: [
         {
           id: "tabsColor",

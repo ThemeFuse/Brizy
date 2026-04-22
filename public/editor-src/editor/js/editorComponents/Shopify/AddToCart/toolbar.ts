@@ -242,7 +242,6 @@ export const getItems: GetItems<Value> = ({ v, device, state, component }) => {
           }
         }
       },
-      devices: "desktop",
       position: 90,
       options: [
         {
@@ -256,7 +255,6 @@ export const getItems: GetItems<Value> = ({ v, device, state, component }) => {
                 {
                   id: "",
                   type: "backgroundColor",
-                  devices: "desktop",
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -268,7 +266,6 @@ export const getItems: GetItems<Value> = ({ v, device, state, component }) => {
                 {
                   id: "color",
                   type: "colorPicker",
-                  devices: "desktop",
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -280,7 +277,6 @@ export const getItems: GetItems<Value> = ({ v, device, state, component }) => {
                 {
                   id: "border",
                   type: "border",
-                  devices: "desktop",
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -292,7 +288,6 @@ export const getItems: GetItems<Value> = ({ v, device, state, component }) => {
                 {
                   id: "boxShadow",
                   type: "boxShadow",
-                  devices: "desktop",
                   states: [NORMAL, HOVER]
                 }
               ]

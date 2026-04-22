@@ -4,6 +4,7 @@ import classnames from "classnames";
 import React from "react";
 import { Text } from "visual/component/ContentOptions/types";
 import CustomCSS from "visual/component/CustomCSS";
+import { ThemeIcon } from "visual/component/ThemeIcon";
 import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
@@ -25,6 +26,10 @@ export default class StarRating extends EditorComponent {
   handleTextChange = (patch) => {
     this.patchValue(patch);
   };
+
+  getIconComponent = (iconProps) => (props) => (
+    <ThemeIcon {...iconProps} {...props} />
+  );
 
   renderForEdit(v, vs, vd) {
     const {
@@ -60,6 +65,12 @@ export default class StarRating extends EditorComponent {
       />
     );
 
+    const iconProps = {
+      name: iconName,
+      type: iconType,
+      filename: iconFilename
+    };
+
     return (
       <Toolbar
         {...this.makeToolbarPropsFromConfig2(toolbarConfig, sidebarConfig)}
@@ -75,24 +86,20 @@ export default class StarRating extends EditorComponent {
               >
                 {ratingStyle === "style1" && (
                   <StarRating1
+                    Icon={this.getIconComponent(iconProps)}
                     label={labelElement}
                     showLeftLabel={label === "on"}
                     showRightLabel={label === "on-right"}
                     rating={rating}
                     ratingScale={ratingScale}
-                    iconName={iconName}
-                    iconType={iconType}
-                    iconFilename={iconFilename}
                   />
                 )}
 
                 {ratingStyle === "style2" && (
                   <StarRating2
+                    Icon={this.getIconComponent(iconProps)}
                     showIcon={label !== "off"}
                     rating={rating}
-                    iconName={iconName}
-                    iconType={iconType}
-                    iconFilename={iconFilename}
                   />
                 )}
               </Wrapper>
@@ -135,29 +142,32 @@ export default class StarRating extends EditorComponent {
         onChange={this.handleTextChange}
       />
     );
+
+    const iconProps = {
+      name: iconName,
+      type: iconType,
+      filename: iconFilename
+    };
+
     return (
       <CustomCSS selectorName={this.getId()} css={v.customCSS}>
         <Wrapper {...this.makeWrapperProps({ className })}>
           {ratingStyle === "style1" && (
             <StarRating1
+              Icon={this.getIconComponent(iconProps)}
               label={labelElement}
               showLeftLabel={label === "on"}
               showRightLabel={label === "on-right"}
               rating={rating}
               ratingScale={ratingScale}
-              iconName={iconName}
-              iconType={iconType}
-              iconFilename={iconFilename}
             />
           )}
 
           {ratingStyle === "style2" && (
             <StarRating2
+              Icon={this.getIconComponent(iconProps)}
               showIcon={label !== "off"}
               rating={rating}
-              iconName={iconName}
-              iconType={iconType}
-              iconFilename={iconFilename}
             />
           )}
         </Wrapper>

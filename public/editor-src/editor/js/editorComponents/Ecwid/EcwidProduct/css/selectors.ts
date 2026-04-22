@@ -4,3 +4,5 @@ export const optionColorWrapperSelector = `${optionColorSelector} .product-detai
 export const optionColorItemSelector = `${optionColorWrapperSelector} .product-details-options__swatches--item`;
 export const optionColorSelectedItemSelector = `${optionColorWrapperSelector} .product-details-options__swatches--item .options-swatches-item__color`;
 export const optionColorTooltipSelector = `${optionColorItemSelector} .ui-tooltip .ui-tooltip__container`;
+export const qtyMinMaxSelector =
+  "#ecwid_html #ecwid_body && .ecwid .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details .product-details__sidebar .product-details-module .product-details-module__content .details-product-purchase__qty .details-product-purchase__qty-note";

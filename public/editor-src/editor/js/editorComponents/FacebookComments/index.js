@@ -87,8 +87,6 @@ class FacebookComments extends EditorComponent {
   renderForEdit(v, vs, vd) {
     const {
       type,
-      numPosts,
-      darkScheme,
       targetUrl,
       href,
       disqusShortname,
@@ -98,13 +96,6 @@ class FacebookComments extends EditorComponent {
 
     const appData = this.getAppDataEditor();
     const data = {
-      facebook: {
-        width: "100%",
-        numPosts,
-        colorScheme: darkScheme === "on" ? "dark" : "light",
-        href: targetUrl === "custom" && href !== "" ? href : appData.href,
-        lang: appData.lang
-      },
       disqus: {
         shortname: disqusShortname,
         config: {
@@ -118,7 +109,6 @@ class FacebookComments extends EditorComponent {
 
     const className = classnames(
       "brz-comments",
-      { "brz-fb-comments": type === "facebook" },
       this.css(
         this.getComponentId(),
         this.getId(),
@@ -146,7 +136,6 @@ class FacebookComments extends EditorComponent {
                 }}
               >
                 <Comments
-                  appId={appData.appId}
                   type={type}
                   data={data[type]}
                   config={this.getGlobalConfig()}
@@ -164,7 +153,6 @@ class FacebookComments extends EditorComponent {
     const {
       type,
       numPosts,
-      darkScheme,
       targetUrl,
       href,
       disqusShortname,
@@ -173,14 +161,6 @@ class FacebookComments extends EditorComponent {
 
     const appData = this.getAppDataPreview();
     const data = {
-      facebook: {
-        "data-width": "100%",
-        "data-numposts": numPosts,
-        "data-colorscheme": darkScheme === "on" ? "dark" : "light",
-        "data-href":
-          targetUrl === "custom" && href !== "" ? href : appData.href,
-        "data-lang": appData.lang
-      },
       disqus: {
         "data-shortname": disqusShortname,
         "data-url": targetUrl === "custom" && href !== "" ? href : appData.href,
@@ -213,7 +193,6 @@ class FacebookComments extends EditorComponent {
       <CustomCSS selectorName={this.getId()} css={v.customCSS}>
         <div className={className}>
           <Comments
-            appId={appData.appId}
             type={type}
             data={data[type]}
             config={this.getGlobalConfig()}

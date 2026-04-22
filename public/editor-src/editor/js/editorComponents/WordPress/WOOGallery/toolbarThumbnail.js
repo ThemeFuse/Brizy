@@ -134,7 +134,6 @@ export function getItems({ v, device, state }) {
                 {
                   id: "thumbnailBorder",
                   type: "border",
-                  devices: "desktop",
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -146,7 +145,6 @@ export function getItems({ v, device, state }) {
                 {
                   id: "thumbnailBoxShadow",
                   type: "boxShadow",
-                  devices: "desktop",
                   states: [NORMAL, HOVER]
                 }
               ]

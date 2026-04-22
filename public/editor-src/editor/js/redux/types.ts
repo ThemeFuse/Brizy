@@ -33,6 +33,11 @@ export type DrawerContentTypes = (typeof allowedDrawerComponents)[number];
 
 export type SidebarAlign = "left" | "right";
 
+export interface ActiveElementMeta {
+  id: string;
+  type: string;
+}
+
 // WARNING: this is a work in progress.
 // Types should be added as we go on
 export type ReduxState = {
@@ -57,7 +62,6 @@ export type ReduxState = {
     [key: string]: Block;
   };
   blocksHtml: {
-    inProcessing: number;
     storeGeneration: number;
     compiledGeneration: number;
     blocks: {
@@ -69,6 +73,7 @@ export type ReduxState = {
   ui: {
     deviceMode: DeviceMode;
     activeElement: Element | null;
+    activeElementMeta: ActiveElementMeta | null;
     leftSidebar: {
       drawerContentType: DrawerContentTypes | null;
     };

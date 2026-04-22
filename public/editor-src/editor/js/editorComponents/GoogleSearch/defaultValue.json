@@ -1,0 +1,125 @@
+{
+  "content": {
+    "searchStyle": "classic",
+
+    "label": "Search...",
+    "items": [],
+    "engineId": "",
+    "contentHorizontalAlign": "center"
+  },
+  "style": {
+    "className": "",
+
+    "customCSS": "",
+
+    "height": 55,
+    "heightSuffix": "px",
+    "width": 100,
+    "widthSuffix": "%",
+
+    "families": {
+      "typographyFontFamily": "lato"
+    },
+
+    "typographyFontStyle": "",
+    "typographyFontFamilyType": "google",
+    "typographyFontSize": 21,
+    "typographyFontSizeSuffix": "px",
+    "typographyFontWeight": 700,
+    "typographyLineHeight": 1,
+    "typographyLetterSpacing": 1,
+    "typographyVariableFontWeight": 700,
+    "typographyFontWidth": 100,
+    "typographyFontSoftness": 0,
+    "typographyBold": false,
+    "typographyItalic": false,
+    "typographyUnderline": false,
+    "typographyStrike": false,
+    "typographyUppercase": false,
+    "typographyLowercase": false,
+
+    "colorHex": "#ccc",
+    "colorOpacity": 1,
+    "colorPalette": "color7",
+
+    "bgColorType": "solid",
+
+    "bgColorHex": "#000000",
+    "bgColorOpacity": 0,
+    "bgColorPalette": "",
+
+    "gradientColorHex": "#009900",
+    "gradientColorOpacity": 1,
+    "gradientColorPalette": "",
+
+    "gradientType": "linear",
+
+    "gradientLinearDegree": 90,
+    "gradientRadialDegree": 90,
+
+    "gradientActivePointer": "startPointer",
+    "gradientStartPointer": 0,
+    "gradientFinishPointer": 100,
+
+    "borderStyle": "solid",
+
+    "borderWidthType": "grouped",
+    "borderWidth": 2,
+    "borderTopWidth": 2,
+    "borderRightWidth": 2,
+    "borderBottomWidth": 2,
+    "borderLeftWidth": 2,
+
+    "borderRadiusType": "grouped",
+    "borderRadius": 0,
+    "borderTopLeftRadius": 0,
+    "borderTopRightRadius": 0,
+    "borderBottomRightRadius": 0,
+    "borderBottomLeftRadius": 0,
+
+    "borderRadiusSuffix": "px",
+    "borderTopLeftRadiusSuffix": "px",
+    "borderTopRightRadiusSuffix": "px",
+    "borderBottomRightRadiusSuffix": "px",
+    "borderBottomLeftRadiusSuffix": "px",
+
+    "borderColorHex": "#dcdee1",
+    "borderColorOpacity": 1,
+    "borderColorPalette": "",
+
+    "boxShadow": "none",
+
+    "boxShadowColorHex": "#000000",
+    "boxShadowColorOpacity": 1,
+    "boxShadowColorPalette": "",
+
+    "boxShadowBlur": 0,
+    "boxShadowSpread": 0,
+    "boxShadowVertical": 0,
+    "boxShadowHorizontal": 0,
+
+    "hoverTransition": 50,
+    "hoverTransitionSuffix": "",
+
+    "bgPaddingType": "grouped",
+
+    "bgPadding": 0,
+    "bgPaddingSuffix": "px",
+
+    "bgPaddingTop": 0,
+    "bgPaddingRight": 0,
+    "bgPaddingBottom": 0,
+    "bgPaddingLeft": 0,
+
+    "bgPaddingTopSuffix": "px",
+    "bgPaddingRightSuffix": "px",
+    "bgPaddingBottomSuffix": "px",
+    "bgPaddingLeftSuffix": "px",
+
+    "tabletTypographyFontSize": 13,
+    "tabletTypographyFontWeight": 400,
+
+    "mobileTypographyFontSize": 13,
+    "mobileTypographyFontWeight": 400
+  }
+}

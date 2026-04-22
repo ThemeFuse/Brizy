@@ -1,37 +1,56 @@
-import React from "react";
-import { Item, Submenu } from "react-contexify";
+import {
+  Label,
+  Separator,
+  Sub,
+  SubContent,
+  SubTrigger
+} from "@radix-ui/react-context-menu";
+import { ChevronRight } from "lucide-react";
+import React, { useMemo } from "react";
 import EditorIcon from "visual/component/EditorIcon";
 import Items from "../Items";
 
-export default class Group extends React.Component {
-  static defaultProps = {
-    title: "",
-    icon: "",
-    items: []
-  };
+const Group = ({ title = "", icon = "", items = [], meta }) => {
+  const isTopLevel = meta.depth === 0 && meta.index === 0;
 
-  render() {
-    const { title, icon, items, meta } = this.props;
-    const itemsMeta = {
+  const subMeta = useMemo(() => {
+    return {
       ...meta,
-      depth: meta.depth + 1
+      depth: meta.depth + 1,
+      isInSubMenu: !isTopLevel
     };
+  }, [meta]);
 
-    if (meta.depth === 0 && meta.index === 0) {
-      return (
-        <React.Fragment>
-          <Item key="title" className="contexify-title">
-            {icon && <EditorIcon icon={icon} />} {title}
-          </Item>
-          <Items data={items} meta={{ ...itemsMeta, isInSubMenu: false }} />
-        </React.Fragment>
-      );
-    } else {
-      return (
-        <Submenu className="contexify_item_submenu" label={title} arrow="">
-          <Items data={items} meta={{ ...itemsMeta, isInSubMenu: true }} />
-        </Submenu>
-      );
-    }
+  if (isTopLevel) {
+    return (
+      <React.Fragment>
+        <Label className="brz-ed-context-menu__item brz-ed-context-menu__item--title">
+          {icon && <EditorIcon icon={icon} />}
+          {title}
+        </Label>
+        <Separator className="brz-ed-context-menu__separator" />
+        <Items data={items} meta={subMeta} />
+      </React.Fragment>
+    );
   }
-}
+
+  return (
+    <>
+      <Separator className="brz-ed-context-menu__separator" />
+      <Sub>
+        <SubTrigger className="brz-ed-context-menu__item brz-ed-context-menu__submenu-trigger">
+          <span className="brz-ed-context-menu__item-label">{title}</span>
+          <ChevronRight size={18} />
+        </SubTrigger>
+        <SubContent
+          className="brz-ed-context-menu brz-ed-context-menu--nested"
+          sideOffset={5}
+        >
+          <Items data={items} meta={subMeta} />
+        </SubContent>
+      </Sub>
+    </>
+  );
+};
+
+export default Group;

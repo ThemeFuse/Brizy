@@ -98,7 +98,6 @@ export const ecwidToolbarFooter = <T extends ElementModel = ElementModel>(
             }
           }
         },
-        devices: "desktop",
         position: 30,
         options: [
           {

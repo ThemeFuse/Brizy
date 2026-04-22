@@ -3,6 +3,91 @@
 @use "../mixins/hover";
 @use "../mixins/reset-text";
 
+@mixin text-gradient-mask {
+  caret-color: #000;
+  color: transparent !important;
+  -webkit-background-clip: text;
+  -webkit-box-decoration-break: clone;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+
+  &::selection {
+    -webkit-text-fill-color: initial;
+    background: #3dbfe8;
+    color: #ffffff;
+  }
+}
+
+@mixin text-gradient-mask-reset {
+  caret-color: unset !important;
+  color: unset !important;
+  -webkit-text-fill-color: unset !important;
+  -webkit-background-clip: unset !important;
+  background-clip: unset !important;
+  -webkit-box-decoration-break: unset !important;
+  box-decoration-break: unset !important;
+  background-image: unset !important;
+}
+
+$mobile-width: 767px;
+$tablet-width: 991px;
+
+// When text gradient + solid bg both apply: use stacked backgrounds (gradient on top, clipped to
+// text; solid underneath on the full box). A ::before + negative z-index paints above the element
+// background, so it hid the gradient — avoid that here.
+
+@mixin responsive-text-gradient-and-background-color(
+  $gradient-var,
+  $background-color-var
+) {
+  @include text-gradient-mask;
+  display: inline-block;
+  background-image:
+    var($gradient-var),
+    linear-gradient(
+      0deg,
+      var($background-color-var),
+      var($background-color-var)
+    ) !important;
+  background-clip: text, border-box !important;
+  -webkit-background-clip: text, border-box !important;
+}
+
+// Text fill gradient (clip to glyphs) + text background gradient (full inline box).
+// Both use background-image on the same node — stack layers instead of overwriting.
+@mixin responsive-text-fill-gradient-and-text-background-gradient(
+  $fill-gradient-var,
+  $text-background-gradient-var
+) {
+  @include text-gradient-mask;
+  display: inline-block;
+  background-image:
+    var($fill-gradient-var),
+    var($text-background-gradient-var) !important;
+  background-clip: text, border-box !important;
+  -webkit-background-clip: text, border-box !important;
+}
+
+// Fill gradient + text-bg gradient + solid highlight (three layers).
+@mixin responsive-text-gradient-stack-three(
+  $fill-gradient-var,
+  $text-background-gradient-var,
+  $solid-color-var
+) {
+  @include text-gradient-mask;
+  display: inline-block;
+  background-image:
+    var($fill-gradient-var),
+    var($text-background-gradient-var),
+    linear-gradient(
+      0deg,
+      var($solid-color-var),
+      var($solid-color-var)
+    ) !important;
+  background-clip: text, border-box, border-box !important;
+  -webkit-background-clip: text, border-box, border-box !important;
+}
+
 // Shortcode Text
 .brz .brz-rich-text {
   -webkit-font-smoothing: antialiased;
@@ -47,6 +132,7 @@
 
   > * {
     white-space: pre-wrap;
+    font-feature-settings: normal;
   }
 
   i,
@@ -182,18 +268,7 @@
 
   .brz-text-mask,
   .brz-image-gradient {
-    caret-color: #000;
-    color: transparent !important;
-    -webkit-background-clip: text;
-    -webkit-box-decoration-break: clone;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-
-    &::selection {
-      -webkit-text-fill-color: initial;
-      background: #3dbfe8;
-      color: #ffffff;
-    }
+    @include text-gradient-mask;
   }
 
   // Text Reset
@@ -311,6 +386,179 @@
     text-decoration: underline !important;
     text-decoration-style: dashed !important;
     text-underline-offset: 5px;
+  }
+
+  // Responsive rich-text color via CSS variables set by Quill formats.
+  // Mobile Color
+  [data-color-mobile-var] {
+    @media only screen and (max-width: $mobile-width) {
+      color: var(--brz-text-xs-color) !important;
+    }
+  }
+
+  // Tablet Color
+  [data-color-tablet-var] {
+    @media only screen and (max-width: $tablet-width) and (min-width: #{$mobile-width + 1px}) {
+      color: var(--brz-text-sm-color) !important;
+    }
+  }
+
+  // Mobile Background Color (solid only — no text-gradient mask on this span)
+  [data-background-color-mobile-var]:not([data-gradient-color-mobile-var]) {
+    @media only screen and (max-width: $mobile-width) {
+      background-color: var(--brz-text-xs-background-color) !important;
+    }
+  }
+
+  // Tablet Background Color (solid only)
+  [data-background-color-tablet-var]:not([data-gradient-color-tablet-var]) {
+    @media only screen and (max-width: $tablet-width) and (min-width: #{$mobile-width + 1px}) {
+      background-color: var(--brz-text-sm-background-color) !important;
+    }
+  }
+
+  // Mobile: gradient + solid — stacked backgrounds (matches desktop-style layering)
+  [data-background-color-mobile-var][data-gradient-color-mobile-var]:not(
+      [data-gradient-background-mobile-var]
+    ) {
+    @media only screen and (max-width: $mobile-width) {
+      @include responsive-text-gradient-and-background-color(
+        --brz-text-xs-background-image,
+        --brz-text-xs-background-color
+      );
+    }
+  }
+
+  // Tablet: gradient + solid
+  [data-background-color-tablet-var][data-gradient-color-tablet-var]:not(
+      [data-gradient-background-tablet-var]
+    ) {
+    @media only screen and (max-width: $tablet-width) and (min-width: #{$mobile-width + 1px}) {
+      @include responsive-text-gradient-and-background-color(
+        --brz-text-sm-background-image,
+        --brz-text-sm-background-color
+      );
+    }
+  }
+
+  // Mobile: fill gradient + text background gradient (no solid bg attr)
+  [data-gradient-color-mobile-var][data-gradient-background-mobile-var]:not(
+      [data-background-color-mobile-var]
+    ) {
+    @media only screen and (max-width: $mobile-width) {
+      @include responsive-text-fill-gradient-and-text-background-gradient(
+        --brz-text-xs-background-image,
+        --brz-text-xs-text-background-image
+      );
+    }
+  }
+
+  // Tablet: fill gradient + text background gradient
+  [data-gradient-color-tablet-var][data-gradient-background-tablet-var]:not(
+      [data-background-color-tablet-var]
+    ) {
+    @media only screen and (max-width: $tablet-width) and (min-width: #{$mobile-width + 1px}) {
+      @include responsive-text-fill-gradient-and-text-background-gradient(
+        --brz-text-sm-background-image,
+        --brz-text-sm-text-background-image
+      );
+    }
+  }
+
+  // Mobile: solid + fill gradient + text background gradient (three layers)
+  [data-background-color-mobile-var][data-gradient-color-mobile-var][data-gradient-background-mobile-var] {
+    @media only screen and (max-width: $mobile-width) {
+      @include responsive-text-gradient-stack-three(
+        --brz-text-xs-background-image,
+        --brz-text-xs-text-background-image,
+        --brz-text-xs-background-color
+      );
+    }
+  }
+
+  // Tablet: solid + fill gradient + text background gradient
+  [data-background-color-tablet-var][data-gradient-color-tablet-var][data-gradient-background-tablet-var] {
+    @media only screen and (max-width: $tablet-width) and (min-width: #{$mobile-width + 1px}) {
+      @include responsive-text-gradient-stack-three(
+        --brz-text-sm-background-image,
+        --brz-text-sm-text-background-image,
+        --brz-text-sm-background-color
+      );
+    }
+  }
+
+  // Mobile Gradient Color (only when neither solid nor text-bg gradient stack applies)
+  [data-gradient-color-mobile-var]:not([data-background-color-mobile-var]):not(
+      [data-gradient-background-mobile-var]
+    ) {
+    @media only screen and (max-width: $mobile-width) {
+      @include text-gradient-mask;
+      background-image: var(--brz-text-xs-background-image) !important;
+    }
+  }
+
+  // Tablet Gradient Color
+  [data-gradient-color-tablet-var]:not([data-background-color-tablet-var]):not(
+      [data-gradient-background-tablet-var]
+    ) {
+    @media only screen and (max-width: $tablet-width) and (min-width: #{$mobile-width + 1px}) {
+      @include text-gradient-mask;
+      background-image: var(--brz-text-sm-background-image) !important;
+    }
+  }
+
+  // Mobile Background Gradient Color (no text fill gradient on same node)
+  [data-gradient-background-mobile-var]:not([data-gradient-color-mobile-var]) {
+    @media only screen and (max-width: $mobile-width) {
+      background-image: var(--brz-text-xs-text-background-image) !important;
+    }
+  }
+
+  // Tablet Background Gradient Color
+  [data-gradient-background-tablet-var]:not([data-gradient-color-tablet-var]) {
+    @media only screen and (max-width: $tablet-width) and (min-width: #{$mobile-width + 1px}) {
+      background-image: var(--brz-text-sm-text-background-image) !important;
+    }
+  }
+
+  // Tablet Gradient Color Reset the desktop gradient color
+  [data-gradient-color-tablet-var],
+  [data-color-tablet-var] {
+    @media only screen and (max-width: $tablet-width) and (min-width: #{$mobile-width + 1px}) {
+      .brz-image-gradient {
+        @include text-gradient-mask-reset;
+      }
+    }
+  }
+
+  // Mobile Gradient Color Reset the desktop gradient color
+  [data-gradient-color-mobile-var],
+  [data-color-mobile-var] {
+    @media only screen and (max-width: $mobile-width) {
+      .brz-image-gradient {
+        @include text-gradient-mask-reset;
+      }
+    }
+  }
+
+  // Tablet Gradient Background Color Reset the desktop gradient color
+  [data-gradient-background-tablet-var],
+  [data-background-color-tablet-var] {
+    @media only screen and (max-width: $tablet-width) and (min-width: #{$mobile-width + 1px}) {
+      .text-gradient-bg {
+        @include text-gradient-mask-reset;
+      }
+    }
+  }
+
+  // Mobile Gradient Background Color Reset the desktop gradient color
+  [data-gradient-background-mobile-var],
+  [data-background-color-mobile-var] {
+    @media only screen and (max-width: $mobile-width) {
+      .text-gradient-bg {
+        @include text-gradient-mask-reset;
+      }
+    }
   }
 }
 

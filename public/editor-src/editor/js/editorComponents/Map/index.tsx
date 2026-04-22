@@ -1,5 +1,6 @@
 import React from "react";
 import BoxResizer from "visual/component/BoxResizer";
+import type { Patch as BoxResizerPatch } from "visual/component/BoxResizer/types";
 import {
   AlphaMapEditor,
   AlphaMapPreview
@@ -25,7 +26,7 @@ import { Wrapper } from "../tools/Wrapper";
 import defaultValue from "./defaultValue.json";
 import * as sidebarConfig from "./sidebar";
 import * as toolbarConfig from "./toolbar";
-import { Patch, Value } from "./type";
+import { Value } from "./type";
 import {
   getBoxResizerParams,
   resizerTransformPatch,
@@ -41,7 +42,7 @@ class Map extends EditorComponent<Value> {
     return ElementTypes.Map;
   }
 
-  handleResizerChange = (patch: Patch): void =>
+  handleResizerChange = (patch: BoxResizerPatch["patch"]): void =>
     this.patchValue(resizerTransformPatch(patch));
 
   dvv = (key: string): MValue<Literal> => {

@@ -3,14 +3,8 @@ import { getColorToolbar } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
 import { getSpacingCSS } from "./css";
-import {
-  containerSelector,
-  popupBlockButtonsWrapSelectorMobile,
-  popupBlockButtonsWrapSelectorMobile2,
-  popupBlockWrapSelectorMobile,
-  popupSelectorMobile
-} from "./css/selectors";
-import { Value } from "./types";
+import { containerSelector } from "./css/selectors";
+import type { Value } from "./types";
 
 export const getItems: GetItems<Value> = ({ v, device, state }) => {
   const dvv = (key: string) => defaultValueValue({ v, key, device, state });
@@ -59,13 +53,12 @@ export const getItems: GetItems<Value> = ({ v, device, state }) => {
           }
         }
       },
-      devices: "desktop",
       position: 20,
       options: [
         {
           id: "parent",
           type: "backgroundColor",
-          selector: `${containerSelector}, ${popupSelectorMobile}, ${popupBlockWrapSelectorMobile}, ${popupBlockButtonsWrapSelectorMobile}, ${popupBlockButtonsWrapSelectorMobile2}`
+          selector: `${containerSelector}`
         }
       ]
     },

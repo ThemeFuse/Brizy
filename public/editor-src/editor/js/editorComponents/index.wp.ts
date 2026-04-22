@@ -35,9 +35,11 @@ import Form2Steps from "./Form2/Form2Steps";
 import FormField from "./Form/FormField";
 import FormFields from "./Form/FormFields";
 import GlobalBlock from "./GlobalBlock";
+import GoogleSearch from "./GoogleSearch";
 import Icon from "./Icon";
 import IconText from "./IconText";
 import Image from "./Image";
+import { ImageComparison } from "./ImageComparison";
 import ImageGallery from "./ImageGallery";
 import InstagramFeed from "./InstagramFeed";
 import Leadific from "./Leadific";
@@ -57,6 +59,7 @@ import Page from "./Page";
 import PagePopup from "./PagePopup";
 import PageStory from "./PageStory";
 import Paypal from "./Paypal";
+import Pinterest from "./Pinterest";
 import PostContent from "./PostContent";
 import PostExcerpt from "./PostExcerpt";
 import PostInfo from "./PostInfo";
@@ -127,7 +130,6 @@ import WPPostNavigation from "./WordPress/WPPostNavigation";
 // import WPPosts from "./WordPress/WPPosts";
 import WPSidebar from "./WordPress/WPSidebar";
 import Wrapper from "./Wrapper";
-import { ImageComparison } from "./ImageComparison";
 
 // SCSS import - All components Image, Button, Wrapper, Row, etc.
 import(
@@ -543,6 +545,10 @@ function getShortcodes(config: ConfigCommon) {
       id: ElementTypes.LinkedinFeed,
       component: LinkedinFeed
     },
+    Pinterest: {
+      id: ElementTypes.Pinterest,
+      component: Pinterest
+    },
     Chart: {
       id: ElementTypes.Chart,
       component: Chart
@@ -606,6 +612,10 @@ function getShortcodes(config: ConfigCommon) {
     Search: {
       id: ElementTypes.Search,
       component: Search
+    },
+    GoogleSearch: {
+      id: ElementTypes.GoogleSearch,
+      component: GoogleSearch
     },
     ...(pluginActivated(config, "woocommerce")
       ? {

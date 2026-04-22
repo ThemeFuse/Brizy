@@ -292,7 +292,6 @@ export function getItems({ v, device, state, context, editorMode }) {
           }
         }
       },
-      devices: "desktop",
       position: 90,
       options: [
         {

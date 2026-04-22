@@ -2,6 +2,7 @@ import classNames from "classnames";
 import React, {
   Attributes,
   ComponentType,
+  MutableRefObject,
   ReactElement,
   ReactNode,
   RefObject,
@@ -86,22 +87,31 @@ export class StoryWrapper extends EditorComponent<Value, Props> {
     const dvv = (key: string): MValue<Literal> =>
       defaultValueValue({ v, key, device, state });
     const isRelative = Position.getPosition(dvv) === "relative";
+    const innerElement = v?.items?.[0];
+    const elementId = (innerElement?.value as ElementModel)?._id ?? "";
+    const elementType = innerElement?.type ?? "";
 
     return (
       <ContextMenu
         {...{
           // @ts-expect-error: Need to transform to TS
           ...this.makeContextMenuProps(contextMenuConfig),
-          componentId: v?.items[0]?.type ?? ""
+          componentId: elementType
         }}
       >
-        {({ ref: contextMenuRef }: { ref: RefObject<HTMLDivElement> }) => (
+        {({
+          ref: contextMenuRef
+        }: {
+          ref: MutableRefObject<HTMLElement | null>;
+        }) => (
           <ContainerBorder
             type="wrapper"
             color="grey"
             borderStyle="dotted"
             buttonPosition="topRight"
             renderButtonWrapper={this.renderToolbar}
+            elementId={elementId}
+            elementType={elementType}
           >
             {({
               ref,
@@ -129,7 +139,7 @@ export class StoryWrapper extends EditorComponent<Value, Props> {
                   extendParentToolbar: this.handleExtendParentToolbar,
                   meta: { ...this.props.meta, wrapperId: this.getId() },
                   wrapperExtend: {
-                    ref: (el: HTMLDivElement) =>
+                    ref: (el: HTMLElement) =>
                       attachRefs(el, [ref, contextMenuRef]),
                     attributes: attr,
                     className: this.getWrapperClassName(v, vs, vd),

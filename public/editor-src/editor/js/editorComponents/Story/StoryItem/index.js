@@ -103,7 +103,12 @@ class StoryItem extends EditorComponent {
     );
 
     return (
-      <ContainerBorder type="story__item" activateOnContentClick={false}>
+      <ContainerBorder
+        type="story__item"
+        activateOnContentClick={true}
+        elementId={this.getId()}
+        elementType={this.getComponentId()}
+      >
         {({ ref: containerBorderRef, attr: containerBorderAttr }) => (
           <CustomCSS selectorName={this.getId()} css={v.customCSS}>
             {({ ref: cssRef }) => (

@@ -127,6 +127,26 @@ const getCSSVarValue = (cssVar: string) => {
   return getComputedStyle(document.documentElement).getPropertyValue(cssVar);
 };
 
+const rgbaTohexWithCssVar = (color: string) => {
+  const fromRgb = rgbaTohex(color);
+  if (fromRgb) {
+    return fromRgb;
+  }
+
+  const regExp = /rgba\(var\((.*?)\),\s*(\d+(?:\.\d+)?)\)/s;
+  const match = regExp.exec(color);
+  if (!match) {
+    return null;
+  }
+
+  const [, , opacity] = match;
+
+  return {
+    hex: null,
+    opacity: opacity ?? "1"
+  };
+};
+
 const getColorValues = (str: string, regex: RegExp) => {
   const [, cssVar, opacity, horizontal, vertical, blur] = regex.exec(str) ?? [];
 
@@ -140,7 +160,8 @@ const getColorValues = (str: string, regex: RegExp) => {
       opacity: result.opacity ?? 1,
       vertical: parseInt(vertical ?? 5),
       horizontal: parseInt(horizontal ?? 5),
-      blur: parseInt(blur ?? 5)
+      blur: parseInt(blur ?? 5),
+      palette: cssVar
     };
   }
 
@@ -190,6 +211,23 @@ export const parseShadow = (str = "") => {
     textShadowHorizontal: 0,
     textShadowBlur: 0
   };
+};
+
+const extractColorPalette = (color?: string | null) => {
+  if (isNullish(color)) {
+    return null;
+  }
+
+  if (color.includes("var")) {
+    const regExp = /rgba\(var\((.*?)\),(\d+(?:\.\d+)?)\)/s;
+    const values = getColorValues(color, regExp);
+
+    if (values) {
+      return (values.palette ?? "").replace("--brz-global-", "");
+    }
+  }
+
+  return "";
 };
 
 export const parseColor = (color = "", opacity: string | number) => {
@@ -383,6 +421,72 @@ const getPopulation = (
   return null;
 };
 
+const getResponsiveGradientData = (
+  devicePrefix: "tablet" | "mobile",
+  gradientPrefix: "" | "text",
+  gradient:
+    | QuillFormat["tabletBackgroundGradient"]
+    | QuillFormat["mobileBackgroundGradient"]
+    | QuillFormat["tabletTextBackgroundGradient"]
+    | QuillFormat["mobileTextBackgroundGradient"],
+  fallbackHex: string | null,
+  fallbackOpacity: string | null,
+  fallbackColor: string | null | undefined
+): Record<string, string | null> => ({
+  [capByPrefix(
+    devicePrefix,
+    capByPrefix(gradientPrefix, "gradientActivePointer")
+  )]: gradient?.activePointer ?? null,
+  [capByPrefix(devicePrefix, capByPrefix(gradientPrefix, "gradientType"))]:
+    gradient?.type
+      ? gradient.type === "radial-gradient"
+        ? "radial"
+        : "linear"
+      : null,
+  [capByPrefix(
+    devicePrefix,
+    capByPrefix(gradientPrefix, "gradientLinearDegree")
+  )]: gradient?.linearDegree ?? null,
+  [capByPrefix(
+    devicePrefix,
+    capByPrefix(gradientPrefix, "gradientRadialDegree")
+  )]: gradient?.radialDegree ?? null,
+  [capByPrefix(
+    devicePrefix,
+    capByPrefix(gradientPrefix, "gradientStartPointer")
+  )]: gradient?.startPointer ?? null,
+  [capByPrefix(
+    devicePrefix,
+    capByPrefix(gradientPrefix, "gradientFinishPointer")
+  )]: gradient?.finishPointer ?? null,
+  [capByPrefix(devicePrefix, capByPrefix(gradientPrefix, "gradientStartHex"))]:
+    gradient?.startHex ?? null,
+  [capByPrefix(devicePrefix, capByPrefix(gradientPrefix, "gradientFinishHex"))]:
+    gradient?.finishHex ?? null,
+  [capByPrefix(
+    devicePrefix,
+    capByPrefix(gradientPrefix, "gradientStartOpacity")
+  )]: gradient?.startOpacity ?? null,
+  [capByPrefix(
+    devicePrefix,
+    capByPrefix(gradientPrefix, "gradientFinishOpacity")
+  )]: gradient?.finishOpacity ?? null,
+  [capByPrefix(
+    devicePrefix,
+    capByPrefix(gradientPrefix, "gradientStartPalette")
+  )]: gradient?.startPalette ?? null,
+  [capByPrefix(
+    devicePrefix,
+    capByPrefix(gradientPrefix, "gradientFinishPalette")
+  )]: gradient?.finishPalette ?? null,
+  [capByPrefix(devicePrefix, capByPrefix(gradientPrefix, "bgColorHex"))]:
+    gradient ? gradient.startHex : fallbackHex,
+  [capByPrefix(devicePrefix, capByPrefix(gradientPrefix, "bgColorOpacity"))]:
+    gradient ? gradient.startOpacity : fallbackOpacity,
+  [capByPrefix(devicePrefix, capByPrefix(gradientPrefix, "bgColorPalette"))]:
+    gradient?.startPalette || extractColorPalette(fallbackColor)
+});
+
 const getTooltipFormat = (value = "{}"): TooltipFormat => {
   const formats = parseFromString<MValue<TooltipFormat>>(value) ?? {};
 
@@ -458,6 +562,7 @@ export const getFormats = (
       };
 
   const _hex = format.color ?? cssColor;
+
   const _opacity = format.opacity ?? cssOpacity;
 
   const { hex, opacity } = parseColor(_hex, _opacity);
@@ -485,6 +590,25 @@ export const getFormats = (
     typographyScript
     //@ts-expect-error: Need to know the righ format
   } = fromFormatsToTextTransform(format);
+
+  const tabletColor = format.tabletColor;
+
+  const { hex: tabletHex = null, opacity: tabletOpacity = null } =
+    rgbaTohexWithCssVar(tabletColor ?? "") ?? {};
+
+  const mobileColor = format.mobileColor;
+  const { hex: mobileHex = null, opacity: mobileOpacity = null } =
+    rgbaTohexWithCssVar(mobileColor ?? "") ?? {};
+  const tabletBackground = format.tabletBackground;
+  const {
+    hex: tabletBackgroundHex = null,
+    opacity: tabletBackgroundOpacity = null
+  } = rgbaTohexWithCssVar(tabletBackground ?? "") ?? {};
+  const mobileBackground = format.mobileBackground;
+  const {
+    hex: mobileBackgroundHex = null,
+    opacity: mobileBackgroundOpacity = null
+  } = rgbaTohexWithCssVar(mobileBackground ?? "") ?? {};
 
   return {
     ...v,
@@ -515,14 +639,12 @@ export const getFormats = (
     ...parseShadow(format.shadow),
     textBgColorPalette,
     textShadowColorPalette: format.shadowColorPalette || null,
-
     ...getTextBackground(format.background, format.textBackgroundGradient),
     ...getBackground(format.backgroundImage),
     backgroundGradient: format.backgroundGradient || null,
     textBackgroundGradient: format.textBackgroundGradient || null,
     ...getLink(format.link),
     ...populationColor,
-
     ...getPopulationColorFormat({ ...populationColor }),
     ...getTooltipFormat(format.tooltip),
 
@@ -531,7 +653,43 @@ export const getFormats = (
     prepopulation: format.prepopulation
       ? $elem.closest(".brz-pre-population-visible").text()
       : null,
-    tagName: getTagName($elem)
+    tagName: getTagName($elem),
+    tabletBackgroundGradient: format.tabletBackgroundGradient ?? null,
+    mobileBackgroundGradient: format.mobileBackgroundGradient ?? null,
+    tabletTextBackgroundGradient: format.tabletTextBackgroundGradient ?? null,
+    mobileTextBackgroundGradient: format.mobileTextBackgroundGradient ?? null,
+    ...getResponsiveGradientData(
+      "tablet",
+      "",
+      format.tabletBackgroundGradient,
+      tabletHex,
+      tabletOpacity,
+      tabletColor
+    ),
+    ...getResponsiveGradientData(
+      "mobile",
+      "",
+      format.mobileBackgroundGradient,
+      mobileHex,
+      mobileOpacity,
+      mobileColor
+    ),
+    ...getResponsiveGradientData(
+      "tablet",
+      "text",
+      format.tabletTextBackgroundGradient,
+      tabletBackgroundHex,
+      tabletBackgroundOpacity,
+      tabletBackground
+    ),
+    ...getResponsiveGradientData(
+      "mobile",
+      "text",
+      format.mobileTextBackgroundGradient,
+      mobileBackgroundHex,
+      mobileBackgroundOpacity,
+      mobileBackground
+    )
   };
 };
 

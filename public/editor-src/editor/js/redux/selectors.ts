@@ -207,6 +207,11 @@ export const leftSidebarSelector = createSelector(
   (ui) => ui.leftSidebar
 );
 
+export const activeElementMetaSelector = createSelector(
+  uiSelector,
+  (ui) => ui.activeElementMeta
+);
+
 export const drawerContentTypeSelector = createSelector(
   leftSidebarSelector,
   (leftSidebar) => leftSidebar.drawerContentType
