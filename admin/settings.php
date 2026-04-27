@@ -554,27 +554,35 @@ class Brizy_Admin_Settings
         $offset = 0;
         while (true) {
 
-            $rows = $wpdb->get_results("SELECT meta_value, post_id from {$wpdb->postmeta} WHERE meta_key = 'brizy' ORDER BY meta_id ASC LIMIT {$offset}, 100", ARRAY_A);
+            $rows = $wpdb->get_results("SELECT pm.meta_value, pm.post_id FROM {$wpdb->postmeta} pm INNER JOIN {$wpdb->posts} p ON p.ID = pm.post_id WHERE pm.meta_key = 'brizy' AND p.post_status != 'inherit' ORDER BY pm.meta_id ASC LIMIT {$offset}, 100", ARRAY_A);
             if (empty($rows)) {
                 break;
             }
             foreach ($rows as $row) {
 
-                if (($data = maybe_unserialize($row['meta_value'])) === false || empty($data['brizy-post']['editor_data'])) {
+                if (($data = maybe_unserialize($row['meta_value'])) === false) {
                     continue;
                 }
-                $json = base64_decode($data['brizy-post']['editor_data']);
-                if (!$json || (strpos($json, $from) === false && strpos($json, $fromEncoded) === false)) {
-                    continue;
-                }
-                $json = str_replace($from, $to, $json);
-                $json = str_replace($fromEncoded, $toEncoded, $json);
-                $data['brizy-post']['editor_data'] = base64_encode($json);
-                $data['brizy-post']['compiled_html'] = '';
-                update_post_meta($row['post_id'], 'brizy', $data);
 
                 $fromJsonEscaped = str_replace('/', '\/', $from);
                 $toJsonEscaped   = str_replace('/', '\/', $to);
+
+                if (!empty($data['brizy-post']['editor_data'])) {
+                    $json = base64_decode($data['brizy-post']['editor_data']);
+                    if ($json) {
+                        $inEditorPlain   = strpos($json, $from) !== false;
+                        $inEditorEncoded = strpos($json, $fromEncoded) !== false;
+                        $inEditorEscaped = strpos($json, $fromJsonEscaped) !== false;
+                        if ($inEditorPlain || $inEditorEncoded || $inEditorEscaped) {
+                            $json = str_replace($from, $to, $json);
+                            $json = str_replace($fromEncoded, $toEncoded, $json);
+                            $json = str_replace($fromJsonEscaped, $toJsonEscaped, $json);
+                            $data['brizy-post']['editor_data'] = base64_encode($json);
+                            $data['brizy-post']['compiled_html'] = '';
+                            update_post_meta($row['post_id'], 'brizy', $data);
+                        }
+                    }
+                }
 
                 $compiledRaw = get_post_meta($row['post_id'], Brizy_Editor_Post::BRIZY_POST_COMPILED_SECTIONS, true);
                 if ($compiledRaw) {
