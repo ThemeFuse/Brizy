@@ -113,6 +113,16 @@ export const blocksHtml: RBlocksHtml = (
     case "ADD_GLOBAL_BLOCK":
     case "ADD_GLOBAL_POPUP":
     case "UPDATE_GLOBAL_BLOCK": {
+      const shouldSkip =
+        (action.type === "UPDATE_BLOCKS" &&
+          action.meta.arrayOperation === "remove") ||
+        (action.type === "UPDATE_GLOBAL_BLOCK" &&
+          action.meta.intent === "remove_all");
+
+      if (shouldSkip) {
+        return state;
+      }
+
       return produce(state, (draft) => {
         draft.storeGeneration += 1;
       });
@@ -132,10 +142,7 @@ export const blocksHtml: RBlocksHtml = (
           draft.blocks[id] = block;
         });
 
-        if (
-          generation !== undefined &&
-          generation > draft.compiledGeneration
-        ) {
+        if (generation !== undefined && generation > draft.compiledGeneration) {
           draft.compiledGeneration = generation;
         }
       });
