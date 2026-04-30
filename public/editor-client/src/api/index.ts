@@ -1663,7 +1663,9 @@ export const deleteIcon = async (uid: string): Promise<Response> => {
 
 //#region AI Global Styles
 
-export const getStyles = async (config: Config) => {
+export const getStyles = async (
+  config: Config
+) => {
   const { aiGlobalStyleUrl } = config;
 
   return await fetch(`${aiGlobalStyleUrl}/api/template/style`).then((r) =>
@@ -2573,17 +2575,11 @@ export const sync = async (maxTries = 5): Promise<SuccessResponse> => {
     method: "GET"
   });
 
-  const { status, data } = await getResponseData(r);
+  const { success } = await getResponseData(r);
 
-  if (!status || status >= 400) {
-    throw new Error(t("Failed to sync"));
-  }
-
-  const { synchronized } = data;
-
-  if (synchronized === 0) {
+  if (success === true) {
     return {
-      success: true
+      success
     };
   } else {
     if (maxTries > 0) {

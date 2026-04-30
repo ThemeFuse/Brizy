@@ -383,16 +383,6 @@
     }
   }
 
-  &__item input:focus-visible,
-  &__item textarea:focus-visible,
-  &__item .select2-selection:focus-visible,
-  .brz-control__radio-option:has(input:focus-visible) .brz-label,
-  .brz-control__check-group-option:has(input:focus-visible) .brz-label,
-  .brz-input__upload:has(input:focus-visible) {
-    transition: none !important;
-    outline: 2px solid blue !important;
-  }
-
   &__messages {
     display: flex;
     flex-direction: column;
@@ -412,26 +402,14 @@
 
   .brz-forms2__field-phone {
     display: flex;
+    gap: 12px;
 
     .brz-forms2__phone--country {
       display: flex;
-      min-width: 6%;
       align-items: flex-start;
       justify-content: center;
       flex-direction: column;
       cursor: pointer;
-
-      @media (max-width: 991px) {
-        & {
-          min-width: 9%;
-        }
-      }
-
-      @media (max-width: 767px) {
-        & {
-          min-width: 17%;
-        }
-      }
 
       select {
         height: 0;
@@ -537,6 +515,21 @@
 .brz:not(.brz-ed) {
   .brz-control__check-group .brz-a.brz-forms2__checkbox-option-name {
     color: inherit;
+  }
+
+  .brz-forms2 {
+    &__item input:focus-visible,
+    &__item textarea:focus-visible,
+    &__item .select2-selection:focus-visible,
+    .brz-control__radio-option:has(input:focus-visible) .brz-label,
+    .brz-control__check-group-option:has(input:focus-visible) .brz-label,
+    .brz-input__upload:has(input:focus-visible),
+    .ss-main:focus-visible,
+    .brz-form-ms-next-button:focus-visible,
+    .brz-form-ms-prev-button:focus-visible {
+      transition: none !important;
+      outline: 2px solid #2563eb !important;
+    }
   }
 
   // User Agreement Checkbox on Preview
@@ -758,6 +751,11 @@
       .select2-selection--single .select2-selection__placeholder:empty:before {
         content: "Fake content";
         visibility: hidden;
+      }
+
+      .brz-forms2__select-option--active {
+        background: #2563eb !important;
+        color: #fff !important;
       }
     }
 

@@ -554,7 +554,7 @@ class Brizy_Admin_Settings
         $offset = 0;
         while (true) {
 
-            $rows = $wpdb->get_results("SELECT meta_value, post_id from {$wpdb->postmeta} WHERE meta_key = 'brizy' LIMIT {$offset}, 100", ARRAY_A);
+            $rows = $wpdb->get_results("SELECT meta_value, post_id from {$wpdb->postmeta} WHERE meta_key = 'brizy' ORDER BY meta_id ASC LIMIT {$offset}, 100", ARRAY_A);
             if (empty($rows)) {
                 break;
             }
@@ -564,7 +564,7 @@ class Brizy_Admin_Settings
                     continue;
                 }
                 $json = base64_decode($data['brizy-post']['editor_data']);
-                if (!$json || (!strpos($json, $from) && !strpos($json, $fromEncoded))) {
+                if (!$json || (strpos($json, $from) === false && strpos($json, $fromEncoded) === false)) {
                     continue;
                 }
                 $json = str_replace($from, $to, $json);
@@ -572,6 +572,33 @@ class Brizy_Admin_Settings
                 $data['brizy-post']['editor_data'] = base64_encode($json);
                 $data['brizy-post']['compiled_html'] = '';
                 update_post_meta($row['post_id'], 'brizy', $data);
+
+                $fromJsonEscaped = str_replace('/', '\/', $from);
+                $toJsonEscaped   = str_replace('/', '\/', $to);
+
+                $compiledRaw = get_post_meta($row['post_id'], Brizy_Editor_Post::BRIZY_POST_COMPILED_SECTIONS, true);
+                if ($compiledRaw) {
+                    $compiledJson = base64_decode($compiledRaw);
+                    if ($compiledJson) {
+                        $newCompiledJson = str_replace($from, $to, $compiledJson);
+                        $newCompiledJson = str_replace($fromJsonEscaped, $toJsonEscaped, $newCompiledJson);
+                        $newCompiledJson = str_replace($fromEncoded, $toEncoded, $newCompiledJson);
+                        if ($newCompiledJson !== $compiledJson) {
+                            update_post_meta($row['post_id'], Brizy_Editor_Post::BRIZY_POST_COMPILED_SECTIONS, base64_encode($newCompiledJson));
+                        }
+                    }
+                }
+
+                $wpPost = get_post($row['post_id']);
+                if ($wpPost && $wpPost->post_content) {
+                    $newContent = str_replace($from, $to, $wpPost->post_content);
+                    $newContent = str_replace($fromJsonEscaped, $toJsonEscaped, $newContent);
+                    $newContent = str_replace($fromEncoded, $toEncoded, $newContent);
+                    if ($newContent !== $wpPost->post_content) {
+                        $wpdb->update($wpdb->posts, ['post_content' => $newContent], ['ID' => $row['post_id']]);
+                        clean_post_cache($row['post_id']);
+                    }
+                }
             }
             $offset += 100;
         }

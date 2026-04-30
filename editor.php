@@ -101,7 +101,7 @@ class Brizy_Editor {
 		add_action( 'init', array( $this, 'wordpressInit' ), 1000 );
 		add_action( 'wp_loaded', array( $this, 'wordpressLoaded' ) );
 		add_action( 'wp_print_scripts', array( $this, 'forceJqueryQueue' ), 99999 );
-		if ( current_user_can( Brizy_Admin_Capabilities::CAP_EDIT_WHOLE_PAGE ) || Brizy_Editor_User::is_administrator() ) {
+		add_action('pre_get_posts', array($this, 'filterSearchPostTypes'));if ( current_user_can( Brizy_Admin_Capabilities::CAP_EDIT_WHOLE_PAGE ) || Brizy_Editor_User::is_administrator() ) {
 			Brizy_Admin_Rules_Api::_init();
 		}
 		if ( ! defined( 'WP_POST_REVISIONS' ) || ( defined( 'WP_POST_REVISIONS' ) && WP_POST_REVISIONS !== false ) ) {
@@ -109,7 +109,18 @@ class Brizy_Editor {
 		}
 	}
 
-	public function initializeThirdParty() {
+	public function filterSearchPostTypes($query)
+    {
+        if (!empty($_REQUEST['brz_post_type']) && is_array($_REQUEST['brz_post_type']) && $query->is_search() && !is_admin()) {
+            $allowed = array_values(get_post_types(['public' => true]));
+            $requested = array_map('sanitize_key', $_REQUEST['brz_post_type']);
+            $filtered = array_intersect($requested, $allowed);
+
+            if (!empty($filtered)) {
+                $query->set('post_type', array_values($filtered));
+            }
+        }
+    }public function initializeThirdParty() {
 		Brizy_Editor_ThirdParty_Main::_init();
 	}
 

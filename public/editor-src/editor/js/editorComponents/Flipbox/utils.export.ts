@@ -6,9 +6,10 @@ import {
   ResetFlipboxState,
   ToggleActive
 } from "./types/types.export";
+import { FlipboxType } from "./types";
 import { getHeight } from "./utils";
 
-const animationClassName = "brz-flipbox-back-active";
+export const animationClassName = "brz-flipbox-back-active";
 export const activeClassName = "brz-flipbox-item--active";
 const flipboxFrontSideClassName = "brz-flipbox-item-front";
 const flipboxBackSideClassName = "brz-flipbox-item-back";
@@ -19,7 +20,7 @@ export const getFrontItem = (node: HTMLElement): HTMLElement | null =>
     `:scope > .brz-flipbox-content > .${flipboxFrontSideClassName}`
   );
 
-const getBackItem = (node: HTMLElement): HTMLElement | null =>
+export const getBackItem = (node: HTMLElement): HTMLElement | null =>
   node.querySelector<HTMLDivElement>(
     `:scope > .brz-flipbox-content > .${flipboxBackSideClassName}`
   );
@@ -42,6 +43,19 @@ const toggleActive: ToggleActive = (node, currentState) => {
   }
 };
 
+export const setFlipboxState = (
+  node: HTMLDivElement,
+  currentState: FlipboxType
+): void => {
+  if (currentState === "back") {
+    node.classList.add(animationClassName);
+  } else {
+    node.classList.remove(animationClassName);
+  }
+
+  toggleActive(node, currentState);
+};
+
 export const changeFlipboxState: ChangeFlipboxState = (
   node,
   currentState,
@@ -51,23 +65,15 @@ export const changeFlipboxState: ChangeFlipboxState = (
   const _trigger = device === "desktop" ? trigger : "click";
 
   if (_trigger === "click") {
-    if (currentState === "front") {
-      node.classList.add(animationClassName);
-      currentState = "back";
-    } else {
-      node.classList.remove(animationClassName);
-      currentState = "front";
-    }
-
-    toggleActive(node, currentState);
+    currentState = currentState === "front" ? "back" : "front";
+    setFlipboxState(node, currentState);
   }
 
   return currentState;
 };
 
 export const resetFlipboxState: ResetFlipboxState = (node) => {
-  node.classList.remove(animationClassName);
-  toggleActive(node, "front");
+  setFlipboxState(node, "front");
 };
 
 export const increaseFlipboxHeight: IncreaseFlipboxHeight = (item) => {

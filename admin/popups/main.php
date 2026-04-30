@@ -23,6 +23,7 @@ class Brizy_Admin_Popups_Main {
 		if ( Brizy_Editor::is_user_allowed() ) {
 			add_action( 'admin_menu', [ $this, 'removePageAttributes' ] );
 		}
+		add_filter( 'brizy_editor_config', [ $this, 'compilePageGlobalBlocks' ], 10, 2 );
 	}
 
 	public function initializePreviewActions( $post ) {
@@ -30,15 +31,41 @@ class Brizy_Admin_Popups_Main {
 		add_action( 'wp_footer', [ $this, 'wpFooterAppendPopupHtml' ] );
 		add_filter( 'body_class', [ $this, 'bodyClassFrontend' ], 11 );
 		$this->enqueuePopupScripts( $post->getWpPostId() );
-		$this->enqueuePopupScripts( null );
 	}
 
-	public function enqueuePopupScripts( $postId ) {
-		$wp_post = null;
-		if ( $postId ) {
-			$wp_post = get_post( $postId );
+	public function compilePageGlobalBlocks( $config, $context ) {
+		if ( Brizy_Editor_Editor_Editor::COMPILE_CONTEXT !== $context ) {
+			return $config;
 		}
-		$matching_brizy_popups = $this->getMatchingBrizyPopups( $wp_post );
+		if ( ! isset( $config['globalBlocks'] ) ) {
+			$config['globalBlocks'] = [];
+		}
+
+		// get page
+		$post         = get_post( $config['wp']['page'] );
+
+		$matching_brizy_popups = $this->getMatchingBrizyPopups($post);
+		$blockManager = new Brizy_Admin_Blocks_Manager(Brizy_Admin_Blocks_Main::CP_GLOBAL);
+
+		foreach ($matching_brizy_popups as $popup) {
+			$gbs = Brizy_Admin_Blocks_Main::findReferencedInPage($popup);
+			if(count($gbs)>0)
+			{
+				$config['globalBlocks'] = array_merge($config['globalBlocks'], $blockManager->createResponseForEntities($gbs, [], $context));
+			}
+		}
+
+		return $config;
+	}
+
+
+	public function enqueuePopupScripts( $postId ) {
+		$wp_post               = null;
+		$matching_brizy_popups = $this->getMatchingBrizyPopups();
+		if ( $postId ) {
+			$wp_post               = get_post( $postId );
+			$matching_brizy_popups = array_merge( $matching_brizy_popups, $this->getMatchingBrizyPopups( $wp_post ) );
+		}
 		foreach ( $matching_brizy_popups as $popup ) {
 
 			try {
@@ -164,12 +191,11 @@ class Brizy_Admin_Popups_Main {
 			/**
 			 * @var Brizy_Editor_Post $brizyPopup ;
 			 */
-			if ( empty($brizyPopup->getCompiledSections()) ) {
+			if ( empty( $brizyPopup->getCompiledSections() ) ) {
 				continue;
 			}
-
 			$popupContent = apply_filters( 'brizy_content', $brizyPopup->getCompiledHtml(), Brizy_Editor_Project::get(), null, $context );
-			$content .= "\n\n<!-- POPUP BODY -->\n{$popupContent}\n<!-- POPUP BODY END-->\n\n";
+			$content      .= "\n\n<!-- POPUP BODY -->\n{$popupContent}\n<!-- POPUP BODY END-->\n\n";
 		}
 
 		return $content;

@@ -18,7 +18,8 @@
       "bgImageSrc": ""
     },
 
-    "accessibleMenu": true
+    "accessibleMenu": true,
+    "ariaLabelHamburger": "Open navigation menu"
   },
 
   "toolbar": {

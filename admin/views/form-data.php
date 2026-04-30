@@ -4,17 +4,17 @@
         <?php $type  = isset( $field->type ) ? $field->type : 'Text'; ?>
         <li>
             <label for="<?php echo esc_attr($field->name); ?>">
-                <?php echo strip_tags( $label ); ?>
+                <?php echo esc_html( strip_tags( $label ) ); ?>
             </label>:
             <?php if ( $type == 'FileUpload' ): ?>
                 <span id="<?php echo esc_attr($field->name); ?>">
-                    <a href="<?php echo $field->value; ?>" target="_blank">
-                        <?php echo $field->value; ?>
+                    <a href="<?php echo esc_url( $field->value ); ?>" target="_blank">
+                        <?php echo esc_html( $field->value ); ?>
                     </a>
                 </span>
             <?php else: ?>
                 <span id="<?php echo esc_attr($field->name); ?>" class="formData-<?php echo strtolower( esc_attr( $type ) ); ?>">
-                    <?php echo strip_tags( $field->value, '<br>' ); ?>
+                    <?php echo wp_kses( $field->value, array( 'br' => array() ) ); ?>
                 </span>
             <?php endif; ?>
         </li>

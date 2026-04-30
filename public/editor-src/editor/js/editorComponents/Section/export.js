@@ -3,9 +3,11 @@ import {
   attachSliderControls,
   makePausePlayItem
 } from "../../utils/export/slider";
+import { SectionSliderAccessibility } from "../accessibility";
 
 export default function ($node) {
   const isRtl = $node.closest("[dir='rtl']").length > 0;
+  let sectionSliderInstance = 0;
   const makeArrow = (node) => {
     const $svg = $(node).children(".brz-icon-svg");
 
@@ -17,16 +19,21 @@ export default function ($node) {
     $svg.remove();
 
     return (className) => {
-      return `<div class="brz-slick-slider__arrow ${className}">${svgHTML}</div>`;
+      const isNext = className.includes("next");
+      const ariaLabel = isNext ? "Next slide" : "Previous slide";
+
+      return `<button type="button" class="brz-slick-slider__arrow ${className}" aria-label="${ariaLabel}">${svgHTML}</button>`;
     };
   };
 
   const handleClickPlay = ($this) => {
     $this.slick("slickPlay");
+    $this.attr("data-slider-paused", "false");
   };
 
   const handleClickPause = ($this) => {
     $this.slick("slickPause");
+    $this.attr("data-slider-paused", "true");
   };
 
   $node.find(".brz-slick-slider__section").each(function () {
@@ -48,6 +55,7 @@ export default function ($node) {
     const responsive = JSON.parse(decodeURIComponent(data.responsive));
 
     const playPauseItem = makePausePlayItem(_this);
+    const instanceId = sectionSliderInstance++;
 
     const getArrow = makeArrow(_this);
 
@@ -94,7 +102,9 @@ export default function ($node) {
       }
     });
 
-    $this.slick({
+    $this.attr("data-slider-paused", "false");
+
+    const $slick = $this.slick({
       slidesToShow,
       slidesToScroll,
       swipe,
@@ -112,7 +122,15 @@ export default function ($node) {
       autoplay: autoPlay,
       autoplaySpeed: autoPlaySpeed,
       rtl: isRtl,
-      rows: 0
+      accessibility: false,
+      rows: 0,
+      pauseOnFocus: false
     });
+
+    const sectionSliderAccessibility = new SectionSliderAccessibility({
+      slick: $slick,
+      instanceId
+    });
+    sectionSliderAccessibility.init();
   });
 }

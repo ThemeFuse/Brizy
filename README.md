@@ -4,7 +4,7 @@ Contributors: themefuse<br>
 Requires at least: 4.5<br>
 Tested up to: 6.9.4<br>
 Requires PHP: 7.2.24<br>
-Stable tag: 2.8.8<br>
+Stable tag: 2.8.13<br>
 License: GPLv3<br>
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -135,6 +135,34 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 [Privacy policy](https://brizy.io/privacy/)
 
 ## Changelog
+
+### 2.8.13 - 2026-04-28
+* Fixed: Deleting Pro elements on free sites causes infinite loading and prevents update
+
+### 2.8.12 - 2026-04-09
+* Fixed: form leads in admin panel
+
+
+### 2.8.11 - 2026-04-08
+* Fixed: Elements Accesibility
+* Fixed: Thumbnail Not Loading in WP When Importing ZIP Archives
+
+### 2.8.10 - 2026-04-06
+* Fixed: Global block compilation bug
+
+### 2.8.9 - 2026-04-01
+* New: Accessibility improvements for Accordion element
+* New: Accessibility improvements for Tabs element
+* New: Button – added ARIA attributes
+* New: Accessibility improvements for Map element
+* New: Accessibility improvements for Video element
+* New: Accessibility improvements for Audio element
+* New: Accessibility improvements for Counter element
+* New: Countdown – added ARIA attributes
+* New: Accessibility improvements for Progress Bar element
+* New: Accessibility improvements for Translation element
+* New: Accessibility improvements for Section Slider
+* New: Accessibility improvements for Tooltip
 
 ### 2.8.8 - 2026-03-27
 * Fixed: Auth for multi site instances

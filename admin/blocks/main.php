@@ -47,7 +47,7 @@ class Brizy_Admin_Blocks_Main {
 		$is_view_page = Brizy_Public_Main::is_view_page( $post );
 		if ( $is_view_page ) {
 			$this->enqueueMatchedGlobalBlockAssets( $post );
-			$this->enqueueMatchedGlobalBlockAssets();
+
 		}
 	}
 
@@ -93,7 +93,7 @@ class Brizy_Admin_Blocks_Main {
 		$blockManager = new Brizy_Admin_Blocks_Manager( Brizy_Admin_Blocks_Main::CP_GLOBAL );
 		// get all blocks matching  by rules
 		$blocks = $this->getMatchingBrizyBlocks( $post );
-		// get all global block from dependencies
+		$blocks = array_merge($blocks,$this->getMatchingBrizyBlocks());// get all global block from dependencies
 		if ( ! isset( $config['globalBlocks'] ) ) {
 			$config['globalBlocks'] = [];
 		}
@@ -107,22 +107,23 @@ class Brizy_Admin_Blocks_Main {
 		return $config;
 	}
 
-	/**
-	 * This will enqueue assets for blocks that matches the current page rule set.
-	 * This will not include the block that are include by uid with {{ brizy_dc_global_block }} placeholder
-	 * @return void
-	 */
-	public function enqueueMatchedGlobalBlockAssets( $post = null ) {
-		$wpPost = null;
-		if ( $post instanceof Brizy_Editor_Post ) {
-			$wpPost = $post->getWpPost();
-		}
-		$matching_brizy_blocks = $this->getMatchingBrizyBlocks( $wpPost );
-		foreach ( $matching_brizy_blocks as $block ) {
-			Brizy_Public_AssetEnqueueManager::_init()->enqueuePost( $block );
-		}
-
-	}
+    /**
+     * This will enqueue assets for blocks that matches the current page rule set.
+     * This will not include the block that are include by uid with {{ brizy_dc_global_block }} placeholder
+     * @return void
+     */
+    public function enqueueMatchedGlobalBlockAssets($post = null)
+    {
+        $wpPost = null;
+        if ($post instanceof Brizy_Editor_Post) {
+            $wpPost = $post->getWpPost();
+        }
+        $matching_brizy_blocks = $this->getMatchingBrizyBlocks($wpPost);
+        $matching_brizy_blocks = array_merge($matching_brizy_blocks,$this->getMatchingBrizyBlocks());
+        foreach ($matching_brizy_blocks as $block) {
+            Brizy_Public_AssetEnqueueManager::_init()->enqueuePost($block);
+        }
+    }
 
 	static public function registerCustomPosts() {
 
@@ -201,7 +202,7 @@ class Brizy_Admin_Blocks_Main {
 		$referenced = [];
 		if ( $wpPost ) {
 			try {
-				$referenced = $this->findReferencedInPage( Brizy_Editor_Post::get( $wpPost ) );
+				$referenced = static::findReferencedInPage( Brizy_Editor_Post::get( $wpPost ) );
 			} catch ( \Exception $e ) {
 
 			}
@@ -237,7 +238,7 @@ class Brizy_Admin_Blocks_Main {
 
 		$resultBlocks = array();
 		$allBlocks    = get_posts( array(
-			'post_type'   => [ self::CP_GLOBAL, Brizy_Admin_Popups_Main::CP_POPUP ],
+			'post_type'   => [ self::CP_GLOBAL ],
 			'numberposts' => - 1,
 			'post_status' => 'publish',
 		) );
@@ -318,7 +319,7 @@ class Brizy_Admin_Blocks_Main {
 		return $globalPopups;
 	}
 
-	private function findReferencedInPage( Brizy_Editor_Post $wpPost ) {
+	static public function findReferencedInPage( Brizy_Editor_Post $wpPost ) {
 
 		/**
 		 * @todo: Rewrite this to use dependencies.

@@ -2,6 +2,7 @@ import { Num, Str } from "@brizy/readers";
 import $ from "jquery";
 import PerfectScrollbar from "perfect-scrollbar";
 import { Option } from "slim-select";
+import { FormAccessibility } from "../accessibility";
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import { getFreeLibs } from "visual/libs";
 import { isIOS } from "visual/utils/devices";
@@ -308,7 +309,13 @@ export default function ($node: JQuery): void {
     .forEach((node) => {
       const $this = $(node);
       const $select = $this.find(".brz-select");
-      const isMultiple = ($select.get(0) as HTMLSelectElement).multiple;
+      const select = $select.get(0) as HTMLSelectElement | undefined;
+
+      if (!select) {
+        return;
+      }
+
+      const isMultiple = select.multiple;
       const placeholder = $select.data("brz-placeholder");
       const maxItemDropdown = $select.attr("data-brz-max-item-dropdown") ?? "5";
       let initialized = false;
@@ -340,6 +347,14 @@ export default function ($node: JQuery): void {
           oldArrowMultiple.appendChild(newArrow);
         }
       }
+
+      const formAccessibility = new FormAccessibility({
+        selectNode: node,
+        select,
+        rootNode: root,
+      });
+
+      formAccessibility.init();
 
       // Custom Scrollbars
       const { Scrollbars } = getFreeLibs();

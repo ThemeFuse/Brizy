@@ -141,12 +141,22 @@ class Countdown2 extends EditorComponent {
     );
 
     const propertyName = `${name}Label`;
+    const labelId = `${this.getId()}-${name}-label`;
     return (
-      <div key={name} className={className}>
-        <div ref={this[name]} className="brz-countdown2__number">
+      <div
+        key={name}
+        className={className}
+        role="group"
+        aria-label={v[propertyName]}
+      >
+        <div
+          ref={this[name]}
+          className="brz-countdown2__number"
+          aria-labelledby={labelId}
+        >
           00
         </div>
-        <div className="brz-countdown2__label">
+        <div className="brz-countdown2__label" id={labelId}>
           <TextEditor
             value={v[propertyName]}
             onChange={this.handleTextChange.bind(null, propertyName)}
@@ -293,6 +303,8 @@ class Countdown2 extends EditorComponent {
           {...this.makeWrapperProps({
             className: className,
             attributes: {
+              role: "timer",
+              "aria-label": "Countdown timer",
               ...makeDataAttr({ name: "end", value: date }),
               ...makeDataAttr({ name: "hours", value: hours }),
               ...makeDataAttr({ name: "minutes", value: minutes }),
@@ -310,7 +322,13 @@ class Countdown2 extends EditorComponent {
         >
           {this.renderParts(v)}
           {actions === "showMessage" && (
-            <div className={classNameMessage}>{messageText}</div>
+            <div
+              className={classNameMessage}
+              role="status"
+              aria-live="polite"
+            >
+              {messageText}
+            </div>
           )}
         </Wrapper>
       </CustomCSS>

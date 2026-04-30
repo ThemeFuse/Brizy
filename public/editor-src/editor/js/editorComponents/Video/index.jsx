@@ -309,7 +309,12 @@ class Video extends EditorComponent {
         <div className="brz-video-elem">
           {updatedControls && (
             <div className="brz-video-custom-video-controls">
-              <div className="brz-video-custom-play-pause-btn">
+              <div
+                className="brz-video-custom-play-pause-btn"
+                role="button"
+                tabIndex={0}
+                aria-label="Play or pause video"
+              >
                 <ThemeIcon
                   className="brz-icon-svg brz-video-custom-play"
                   name="button-play"
@@ -326,26 +331,49 @@ class Video extends EditorComponent {
               <div className="brz-video-custom-controls">
                 <span className="brz-video-custom-current-time">0:00</span>
 
-                <div className="brz-video-custom-slider">
+                <div
+                  className="brz-video-custom-slider"
+                  role="slider"
+                  tabIndex={0}
+                  aria-label="Video progress"
+                  aria-valuemin={0}
+                  aria-valuemax={100}
+                  aria-valuenow={0}
+                >
                   <div className="brz-video-custom-progress" />
                 </div>
 
                 <span className="brz-video-custom-total-time">0:00</span>
               </div>
               {captionUrl && (
-                <span className="brz-media-caption">
+                <span
+                  className="brz-media-caption"
+                  role="button"
+                  tabIndex={0}
+                  aria-label="Toggle captions"
+                >
                   <Caption className="brz-icon-svg" />
                 </span>
               )}
               <div className="brz-video-custom-volume">
-                <div className="brz-video-custom-fullscreen-btn">
+                <div
+                  className="brz-video-custom-fullscreen-btn"
+                  role="button"
+                  tabIndex={0}
+                  aria-label="Toggle fullscreen"
+                >
                   <ThemeIcon
                     className="brz-icon-svg brz-video-custom-fullscreen-icon"
                     name="zoom-e"
                     type="glyph"
                   />
                 </div>
-                <div className="brz-video-custom-volume-btn">
+                <div
+                  className="brz-video-custom-volume-btn"
+                  role="button"
+                  tabIndex={0}
+                  aria-label="Toggle mute"
+                >
                   <ThemeIcon
                     className="brz-icon-svg brz-video-custom-mute"
                     name="volume-97"
@@ -359,7 +387,15 @@ class Video extends EditorComponent {
                     />
                   )}
                 </div>
-                <div className="brz-video-custom-volume-controls brz-video-custom-slider">
+                <div
+                  className="brz-video-custom-volume-controls brz-video-custom-slider"
+                  role="slider"
+                  tabIndex={0}
+                  aria-label="Volume"
+                  aria-valuemin={0}
+                  aria-valuemax={100}
+                  aria-valuenow={0}
+                >
                   <div className="brz-video-custom-progress" />
                 </div>
               </div>
