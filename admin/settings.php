@@ -541,8 +541,10 @@ class Brizy_Admin_Settings
         }
         $from = trim($_POST['from']);
         $to = trim($_POST['to']);
-        $fromEncoded = urlencode($from);
-        $toEncoded = urlencode($to);
+        $fromEncoded     = urlencode($from);
+        $toEncoded       = urlencode($to);
+        $fromJsonEscaped = strtr($from, ['/' => '\/']);
+        $toJsonEscaped   = strtr($to,   ['/' => '\/']);
         if ($from === $to) {
             wp_send_json_error(['message' => __("The old and new URLs must be different", 'brizy')]);
         }
@@ -554,35 +556,44 @@ class Brizy_Admin_Settings
         $offset = 0;
         while (true) {
 
-            $rows = $wpdb->get_results("SELECT meta_value, post_id from {$wpdb->postmeta} WHERE meta_key = 'brizy' ORDER BY meta_id ASC LIMIT {$offset}, 100", ARRAY_A);
+            $rows = $wpdb->get_results("SELECT pm.meta_value, pm.post_id FROM {$wpdb->postmeta} pm INNER JOIN {$wpdb->posts} p ON p.ID = pm.post_id WHERE pm.meta_key = 'brizy' AND p.post_status != 'inherit' ORDER BY pm.meta_id ASC LIMIT {$offset}, 100", ARRAY_A);
             if (empty($rows)) {
                 break;
             }
             foreach ($rows as $row) {
 
-                if (($data = maybe_unserialize($row['meta_value'])) === false || empty($data['brizy-post']['editor_data'])) {
+                if (($data = maybe_unserialize($row['meta_value'])) === false) {
                     continue;
                 }
-                $json = base64_decode($data['brizy-post']['editor_data']);
-                if (!$json || (strpos($json, $from) === false && strpos($json, $fromEncoded) === false)) {
-                    continue;
-                }
-                $json = str_replace($from, $to, $json);
-                $json = str_replace($fromEncoded, $toEncoded, $json);
-                $data['brizy-post']['editor_data'] = base64_encode($json);
-                $data['brizy-post']['compiled_html'] = '';
-                update_post_meta($row['post_id'], 'brizy', $data);
 
-                $fromJsonEscaped = str_replace('/', '\/', $from);
-                $toJsonEscaped   = str_replace('/', '\/', $to);
+                if (!empty($data['brizy-post']['editor_data'])) {
+                    $json = base64_decode($data['brizy-post']['editor_data']);
+                    if ($json) {
+                        $inEditorPlain   = strpos($json, $from) !== false;
+                        $inEditorEncoded = strpos($json, $fromEncoded) !== false;
+                        $inEditorEscaped = strpos($json, $fromJsonEscaped) !== false;
+                        if ($inEditorPlain || $inEditorEncoded || $inEditorEscaped) {
+                            $json = strtr($json, [
+                                $from            => $to,
+                                $fromEncoded     => $toEncoded,
+                                $fromJsonEscaped => $toJsonEscaped,
+                            ]);
+                            $data['brizy-post']['editor_data'] = base64_encode($json);
+                            $data['brizy-post']['compiled_html'] = '';
+                            update_post_meta($row['post_id'], 'brizy', $data);
+                        }
+                    }
+                }
 
                 $compiledRaw = get_post_meta($row['post_id'], Brizy_Editor_Post::BRIZY_POST_COMPILED_SECTIONS, true);
                 if ($compiledRaw) {
                     $compiledJson = base64_decode($compiledRaw);
                     if ($compiledJson) {
-                        $newCompiledJson = str_replace($from, $to, $compiledJson);
-                        $newCompiledJson = str_replace($fromJsonEscaped, $toJsonEscaped, $newCompiledJson);
-                        $newCompiledJson = str_replace($fromEncoded, $toEncoded, $newCompiledJson);
+                        $newCompiledJson = strtr($compiledJson, [
+                            $from            => $to,
+                            $fromJsonEscaped => $toJsonEscaped,
+                            $fromEncoded     => $toEncoded,
+                        ]);
                         if ($newCompiledJson !== $compiledJson) {
                             update_post_meta($row['post_id'], Brizy_Editor_Post::BRIZY_POST_COMPILED_SECTIONS, base64_encode($newCompiledJson));
                         }
@@ -591,9 +602,11 @@ class Brizy_Admin_Settings
 
                 $wpPost = get_post($row['post_id']);
                 if ($wpPost && $wpPost->post_content) {
-                    $newContent = str_replace($from, $to, $wpPost->post_content);
-                    $newContent = str_replace($fromJsonEscaped, $toJsonEscaped, $newContent);
-                    $newContent = str_replace($fromEncoded, $toEncoded, $newContent);
+                    $newContent = strtr($wpPost->post_content, [
+                        $from            => $to,
+                        $fromJsonEscaped => $toJsonEscaped,
+                        $fromEncoded     => $toEncoded,
+                    ]);
                     if ($newContent !== $wpPost->post_content) {
                         $wpdb->update($wpdb->posts, ['post_content' => $newContent], ['ID' => $row['post_id']]);
                         clean_post_cache($row['post_id']);
