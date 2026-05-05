@@ -432,6 +432,7 @@ class MenuItem extends EditorComponent {
       <div
         className={className}
         data-settings={encodeURIComponent(JSON.stringify(settings))}
+        style={{ display: "none" }}
       >
         <MenuItemItems {...itemProps} />
       </div>
