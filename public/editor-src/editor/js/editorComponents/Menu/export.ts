@@ -196,7 +196,9 @@ const setOpen =
         const tooltipSettings = tooltip.dataset.settings ?? "";
         const settings = JSON.parse(decodeURIComponent(tooltipSettings));
         const maxWidth = getMegaMenuWidth(target, settings, lastCurrentDevice);
-        const isStaticMenu = target.closest(".brz-section__header-type--static");
+        const isStaticMenu = target.closest(
+          ".brz-section__header-type--static"
+        );
         const widthValue = settings.widths?.[lastCurrentDevice] ?? "100";
         const isVwUnit = widthValue.includes("vw");
 
@@ -521,6 +523,10 @@ export default function ($node: JQuery): void {
     return;
   }
 
+  root.querySelectorAll<HTMLElement>(".brz-menu__ul").forEach((node) => {
+    node.style.removeProperty("list-style-type");
+  });
+
   // normalize current menu item
   root
     .querySelectorAll<HTMLElement>("[data-menu-items-active]")
@@ -608,6 +614,8 @@ export default function ($node: JQuery): void {
           menu?.dataset?.mods ?? ""
         );
         const isSubMenu = node.parentElement?.closest(".brz-menu__sub-menu");
+
+        node.style.removeProperty("display");
 
         if (item instanceof HTMLElement) {
           const settings = {
@@ -744,6 +752,16 @@ export default function ($node: JQuery): void {
         }
       }
     };
+
+    const mmenuNavElement = document.querySelector<HTMLElement>(mmenuId ?? "");
+    if (mmenuNavElement) {
+      mmenuNavElement.style.removeProperty("display");
+      mmenuNavElement
+        .querySelectorAll<HTMLElement>(".brz-menu__sub-menu")
+        .forEach((subMenu) => {
+          subMenu.style.removeProperty("display");
+        });
+    }
 
     let menu;
 

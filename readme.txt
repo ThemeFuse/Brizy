@@ -4,7 +4,7 @@ Tags: page builder, website builder, brizy, editor, visual editor, unyson, wysiw
 Requires at least: 4.5
 Tested up to: 6.9.4
 Requires PHP: 7.2.24
-Stable tag: 2.8.13
+Stable tag: 2.8.14
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -136,6 +136,9 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 11. **Resize columns by dragging the handle that appears in between**
 
 == Changelog ==
+
+= 2.8.14 - 2026-05-05 =
+* Fixed: The delay that caused the menu/header to load after about 1 second
 
 = 2.8.13 - 2026-04-28 =
 * Fixed: Deleting Pro elements on free sites causes infinite loading and prevents update
