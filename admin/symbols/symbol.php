@@ -6,6 +6,8 @@ class Brizy_Admin_Symbols_Symbol extends Brizy_Admin_Serializable
 
     private $uid;
 
+    private $status;
+
     private $label;
 
     private $className;
@@ -20,9 +22,15 @@ class Brizy_Admin_Symbols_Symbol extends Brizy_Admin_Serializable
 
     private $linkedSymbolId;
 
-    public function __construct($postId = null, $uid = null, $label = null, $model = null, $version = null, $className = null, $componentTarget = null, $compiledStyles = null, $linkedSymbolId = null)
+    /**
+     * @var Brizy_Editor_CompiledSectionManager
+     */
+    private $manager;
+
+    public function __construct($postId = null, $status = null, $uid = null, $label = null, $model = null, $version = null, $className = null, $componentTarget = null, $compiledStyles = null, $linkedSymbolId = null)
     {
         $this->setId($postId);
+        $this->setStatus($status);
         $this->setUid($uid);
         $this->setLabel($label);
         $this->setModel($model);
@@ -31,19 +39,6 @@ class Brizy_Admin_Symbols_Symbol extends Brizy_Admin_Serializable
         $this->setComponentTarget($componentTarget);
         $this->setCompiledStyles($compiledStyles);
         $this->setLinkedSymbolId($linkedSymbolId);
-    }
-
-    /**
-     * @return Brizy_Editor_CompiledSectionManager
-     */
-    public function getCompiledSectionManager()
-    {
-        if (!$this->manager) {
-            $this->manager = new Brizy_Editor_CompiledSectionManager('{"blocks":[ { "assets": } ]}');
-            $this->manager->setStyles($this->getCompiledStyles());
-        }
-
-        return $this->manager;
     }
 
     public function getWpPost()
@@ -71,6 +66,26 @@ class Brizy_Admin_Symbols_Symbol extends Brizy_Admin_Serializable
     public function setId($id)
     {
         $this->id = $id;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getStatus()
+    {
+        return $this->status;
+    }
+
+    /**
+     * @param mixed $status
+     *
+     * @return Brizy_Admin_Symbols_Symbol
+     */
+    public function setStatus($status)
+    {
+        $this->status = $status;
 
         return $this;
     }
@@ -211,7 +226,8 @@ class Brizy_Admin_Symbols_Symbol extends Brizy_Admin_Serializable
     }
 
     /**
-     * @return bool
+     * @return \BrizyMerge\Assets\AssetGroup
+     * @throws Exception
      */
     public function getCompiledAssetGroup()
     {
@@ -243,7 +259,18 @@ class Brizy_Admin_Symbols_Symbol extends Brizy_Admin_Serializable
             throw new Exception('Invalid parameter provided');
         }
 
-        return new self(isset($data['uid']) ? $data['uid'] : null, isset($data['label']) && !empty($data['label']) ? $data['label'] : null, isset($data['data']) && !empty($data['data']) ? $data['data'] : null, isset($data['version']) ? $data['version'] : null, isset($data['className']) ? $data['className'] : null, isset($data['componentTarget']) ? $data['componentTarget'] : null, isset($data['compiledStyles']) ? $data['compiledStyles'] : null);
+        return new self(
+            isset($data['id']) ? $data['id'] : null,
+            isset($data['status']) && !empty($data['status']) ? $data['status'] : null,
+            isset($data['uid']) ? $data['uid'] : null,
+            isset($data['label']) && !empty($data['label']) ? $data['label'] : null,
+            isset($data['data']) && !empty($data['data']) ? $data['data'] : null,
+            isset($data['version']) ? $data['version'] : null,
+            isset($data['className']) ? $data['className'] : null,
+            isset($data['componentTarget']) ? $data['componentTarget'] : null,
+            isset($data['compiledStyles']) ? $data['compiledStyles'] : null,
+            isset($data['linkedSymbolId']) ? $data['linkedSymbolId'] : null
+        );
     }
 
 
@@ -263,7 +290,16 @@ class Brizy_Admin_Symbols_Symbol extends Brizy_Admin_Serializable
             $compiledStyles = json_decode(stripslashes($json->compiledStyles), true);
         }
 
-        return new self((int)$postId, isset($json->uid) ? $json->uid : null, isset($json->label) ? $json->label : null, isset($json->data) ? $json->data : null, isset($json->version) ? $json->version : null, isset($json->className) ? $json->className : null, isset($json->componentTarget) ? $json->componentTarget : null, isset($json->compiledStyles) ? $json->compiledStyles : null, isset($json->linkedSymbolId) ? $json->linkedSymbolId : null);
+        return new self((int)$postId,
+            isset($json->status) && !empty($json->status) ? $json->status : 'publish',
+            isset($json->uid) ? $json->uid : null,
+            isset($json->label) ? $json->label : null,
+            isset($json->data) ? $json->data : null,
+            isset($json->version) ? $json->version : null,
+            isset($json->className) ? $json->className : null,
+            isset($json->componentTarget) ? $json->componentTarget : null,
+            isset($json->compiledStyles) ? $json->compiledStyles : null,
+            isset($json->linkedSymbolId) ? $json->linkedSymbolId : null);
     }
 
 
@@ -295,6 +331,9 @@ class Brizy_Admin_Symbols_Symbol extends Brizy_Admin_Serializable
         if (!is_null($patch->getLinkedSymbolId()) && !empty($patch->getLinkedSymbolId())) {
             $this->setLinkedSymbolId($patch->getLinkedSymbolId());
         }
+        if (!is_null($patch->getStatus()) && !empty($patch->getStatus())) {
+            $this->setStatus($patch->getStatus());
+        }
     }
 
     public function convertToOptionValue()
@@ -302,6 +341,7 @@ class Brizy_Admin_Symbols_Symbol extends Brizy_Admin_Serializable
         $item = array(
             'id' => $this->getId(),
             'uid' => $this->getUid(),
+            'status' => $this->getStatus(),
             'label' => $this->getLabel(),
             'className' => $this->getClassName(),
             'componentTarget' => $this->getComponentTarget(),
@@ -317,6 +357,7 @@ class Brizy_Admin_Symbols_Symbol extends Brizy_Admin_Serializable
         $item = array(
             'id' => $this->getId(),
             'uid' => $this->getUid(),
+            'status' => $this->getStatus(),
             'label' => $this->getLabel(),
             'className' => $this->getClassName(),
             'componentTarget' => $this->getComponentTarget(),
