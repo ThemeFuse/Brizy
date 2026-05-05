@@ -9,6 +9,25 @@ class Brizy_Admin_Symbols_Manager
      */
     private $cache = [];
 
+    /**
+     * @var Brizy_Admin_Symbols_Autosave|null
+     */
+    private $autosaver;
+
+    /**
+     * Returns the autosave collaborator (instance, not data).
+     *
+     * @return Brizy_Admin_Symbols_Autosave
+     */
+    public function getAutosaver()
+    {
+        if (!$this->autosaver) {
+            $this->autosaver = new Brizy_Admin_Symbols_Autosave();
+        }
+
+        return $this->autosaver;
+    }
+
     public function getByUID($uid)
     {
         if (isset($this->cache[$uid])) {
@@ -198,6 +217,7 @@ class Brizy_Admin_Symbols_Manager
                     }
                     $symbol->setId($t);
                     $this->cache[$symbol->getUid()] = $symbol;
+                    $this->getAutosaver()->deleteOldFor($symbol->getId(), null);
                 }
             }
             $wpdb->query('COMMIT');

@@ -1790,6 +1790,7 @@ class Brizy_Editor_Editor_Editor
             'symbolCreate' => $pref . Brizy_Admin_Symbols_Api::CREATE_ACTION,
             'symbolUpdate' => $pref . Brizy_Admin_Symbols_Api::UPDATE_ACTION,
             'symbolDelete' => $pref . Brizy_Admin_Symbols_Api::DELETE_ACTION,
+            'symbolAutosave' => $pref . Brizy_Admin_Symbols_Api::AUTOSAVE_ACTION,
             'symbolList' => $pref . Brizy_Admin_Symbols_Api::LIST_ACTION,
             'symbolFilteredList' => $pref . Brizy_Admin_Symbols_Api::FILTERED_LIST_ACTION,
             'getDynamicContentPlaceholders' => $pref . Brizy_Editor_API::AJAX_GET_DYNAMIC_CONTENT,

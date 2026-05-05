@@ -5,6 +5,7 @@ class Brizy_Admin_Symbols_Api extends Brizy_Admin_AbstractApi
     const nonce = Brizy_Editor_API::nonce;
     const CREATE_ACTION = '_add_symbol';
     const UPDATE_ACTION = '_update_symbol';
+    const AUTOSAVE_ACTION = '_autosave_symbol';
     const DELETE_ACTION = '_delete_symbol';
     const LIST_ACTION = '_list_symbols';
     const FILTERED_LIST_ACTION = '_filtered_list_symbols';
@@ -51,6 +52,7 @@ class Brizy_Admin_Symbols_Api extends Brizy_Admin_AbstractApi
         $pref = 'wp_ajax_' . Brizy_Editor::prefix();
         add_action($pref . self::CREATE_ACTION, array($this, 'actionCreateOrUpdate'));
         add_action($pref . self::UPDATE_ACTION, array($this, 'actionCreateOrUpdate'));
+        add_action($pref . self::AUTOSAVE_ACTION, array($this, 'actionAutosave'));
         add_action($pref . self::DELETE_ACTION, array($this, 'actionDelete'));
         add_action($pref . self::LIST_ACTION, array($this, 'actionGetList'));
         add_action($pref . self::FILTERED_LIST_ACTION, array($this, 'actionGetListFiltered'));
@@ -63,6 +65,12 @@ class Brizy_Admin_Symbols_Api extends Brizy_Admin_AbstractApi
         $this->verifyAuthorization(self::nonce);
         try {
             $symbol = $this->manager->getByUID($this->param('uid'));
+            if ($symbol && $this->param('autosave')) {
+                $autosave = $this->manager->getAutosaver()->getFor($symbol->getId(), get_current_user_id());
+                if ($autosave) {
+                    $symbol = $autosave;
+                }
+            }
             $this->success($symbol->convertToFullOptionValue());
         } catch (Exception $e) {
             Brizy_Logger::instance()->error($e->getMessage(), [$e]);
@@ -77,6 +85,14 @@ class Brizy_Admin_Symbols_Api extends Brizy_Admin_AbstractApi
         $this->verifyAuthorization(self::nonce);
         try {
             $symbols = $this->manager->getFiltered((array)$this->param('uid'));
+            if ($this->param('autosave')) {
+                $autosaver = $this->manager->getAutosaver();
+                $userId = get_current_user_id();
+                $symbols = array_map(function ($symbol) use ($autosaver, $userId) {
+                    $autosave = $autosaver->getFor($symbol->getId(), $userId);
+                    return $autosave ? $autosave : $symbol;
+                }, $symbols);
+            }
             $symbols = array_map(function ($symbol) {
                 return $symbol->convertToFullOptionValue();
             }, $symbols);
@@ -114,6 +130,35 @@ class Brizy_Admin_Symbols_Api extends Brizy_Admin_AbstractApi
                 $this->manager->validateSymbol($asymbol);
             }
             $this->manager->saveAllSymbols($asymbols);
+        } catch (Exception $e) {
+            $this->error(400, "Error: " . $e->getMessage());
+        }
+        wp_send_json_success($asymbols, 200);
+    }
+
+    public function actionAutosave()
+    {
+        global $wpdb;
+
+        $this->verifyAuthorization(self::nonce);
+        $data = file_get_contents("php://input");
+        try {
+            $asymbols = $this->manager->createFromJson($data);
+            foreach ($asymbols as $asymbol) {
+                $this->manager->validateSymbol($asymbol);
+            }
+            $userId = get_current_user_id();
+            $autosaver = $this->manager->getAutosaver();
+            $wpdb->query('START TRANSACTION');
+            try {
+                foreach ($asymbols as $asymbol) {
+                    $autosaver->save($asymbol, $userId);
+                }
+                $wpdb->query('COMMIT');
+            } catch (Exception $e) {
+                $wpdb->query('ROLLBACK');
+                throw $e;
+            }
         } catch (Exception $e) {
             $this->error(400, "Error: " . $e->getMessage());
         }
