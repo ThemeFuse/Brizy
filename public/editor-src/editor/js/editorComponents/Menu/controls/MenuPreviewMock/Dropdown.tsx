@@ -23,7 +23,12 @@ export const Dropdown = (): ReactElement => {
   return (
     <>
       {startSubMenuLoop}
-      <ul className="brz-menu__sub-menu">
+      <ul
+        className="brz-menu__sub-menu"
+        style={{
+          display: "none"
+        }}
+      >
         {startLoop}
         {endLoop}
       </ul>

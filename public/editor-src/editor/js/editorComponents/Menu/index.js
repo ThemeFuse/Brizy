@@ -320,7 +320,7 @@ export default class Menu extends EditorComponent {
 
     return (
       <NavContainer {...props} ref={ref}>
-        <ul className="brz-menu__ul">
+        <ul className="brz-menu__ul" style={{ listStyleType: "none" }}>
           {hasMMenu && this.renderMMenuTitle(v)}
           <EditorArrayComponent {...itemsProps} />
         </ul>
@@ -385,7 +385,8 @@ export default class Menu extends EditorComponent {
       hasMMenu && this.getMMenuClassNames()
     );
     const attr = {
-      "data-mods": encodeToString(mods)
+      "data-mods": encodeToString(mods),
+      ...(hasMMenu && { style: { display: "none" } })
     };
 
     const props = {

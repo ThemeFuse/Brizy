@@ -88,6 +88,7 @@ export type ActionUpdateBlocks = {
   };
   meta: {
     is_autosave: 1 | 0;
+    arrayOperation?: "remove" | "itemChange";
   };
 };
 
@@ -115,6 +116,7 @@ export type ActionUpdateGlobalBlock = {
   };
   meta: {
     is_autosave: 0 | 1;
+    intent?: "remove_all" | "replace_all";
   };
 };
 

@@ -9,18 +9,21 @@ export interface Props {
   menuId: string;
 }
 
+const menuUlFoucStyle = { listStyleType: "none" as const };
+
 export const MenuPreviewMock: FC<Props> = (props) => {
   const { menuId } = props;
   const attr =
     TARGET === "WP"
       ? {
           className: "brz-menu__ul",
+          style: menuUlFoucStyle,
           "data-menu-items-active": makePlaceholder({
             content: "{{ editor_menu_active_item }}",
             attr: { menu: menuId }
           })
         }
-      : { className: "brz-menu__ul" };
+      : { className: "brz-menu__ul", style: menuUlFoucStyle };
 
   return (
     <ul {...attr}>
