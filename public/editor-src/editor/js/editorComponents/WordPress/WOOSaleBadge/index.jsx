@@ -1,0 +1,108 @@
+import classnames from "classnames";
+import React from "react";
+import CustomCSS from "visual/component/CustomCSS";
+import Toolbar from "visual/component/Toolbar";
+import EditorComponent from "visual/editorComponents/EditorComponent";
+import { DynamicContentHelper } from "visual/editorComponents/WordPress/common/DynamicContentHelper";
+import { makePlaceholder } from "visual/utils/dynamicContent";
+import { attachRefs } from "visual/utils/react";
+import { Wrapper } from "../../tools/Wrapper";
+import defaultValue from "./defaultValue.json";
+import * as sidebarConfig from "./sidebar";
+import { style } from "./styles";
+import * as toolbarConfig from "./toolbar";
+
+export default class WOOSaleBadge extends EditorComponent {
+  static defaultValue = defaultValue;
+
+  static get componentId() {
+    return "WOOSaleBadge";
+  }
+
+  renderForEdit(v, vs, vd) {
+    const className = classnames(
+      "brz-woo-sale-badge",
+      v.className,
+      this.css(
+        this.getComponentId(),
+        this.getId(),
+        style({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          contexts: this.getContexts()
+        })
+      )
+    );
+
+    const placeholder = makePlaceholder({
+      content: "{{editor_product_archive_sale_badge}}"
+    });
+
+    return (
+      <Toolbar
+        {...this.makeToolbarPropsFromConfig2(toolbarConfig, sidebarConfig)}
+      >
+        {({ ref: toolbarRef }) => (
+          <CustomCSS selectorName={this.getId()} css={v.customCSS}>
+            {({ ref: cssRef }) => (
+              <Wrapper
+                {...this.makeWrapperProps({
+                  className,
+                  ref: (el) => attachRefs(el, [toolbarRef, cssRef])
+                })}
+              >
+                <div className="brz-woo-sale-badge__container">
+                  <DynamicContentHelper
+                    placeholder={placeholder}
+                    placeholderIcon="woo-sale-badge"
+                    tagName="span"
+                    props={{ className: "brz-woo-sale-badge__sale" }}
+                  />
+                </div>
+              </Wrapper>
+            )}
+          </CustomCSS>
+        )}
+      </Toolbar>
+    );
+  }
+
+  renderForView(v, vs, vd) {
+    const className = classnames(
+      "brz-woo-sale-badge",
+      v.className,
+      this.css(
+        this.getComponentId(),
+        this.getId(),
+        style({
+          v,
+          vs,
+          vd,
+          store: this.getReduxStore(),
+          contexts: this.getContexts()
+        })
+      )
+    );
+
+    const placeholder = makePlaceholder({
+      content: "{{editor_product_archive_sale_badge}}"
+    });
+
+    return (
+      <CustomCSS selectorName={this.getId()} css={v.customCSS}>
+        <Wrapper {...this.makeWrapperProps({ className })}>
+          <div className="brz-woo-sale-badge__container">
+            <DynamicContentHelper
+              placeholder={placeholder}
+              placeholderIcon="woo-sale-badge"
+              tagName="span"
+              props={{ className: "brz-woo-sale-badge__sale" }}
+            />
+          </div>
+        </Wrapper>
+      </CustomCSS>
+    );
+  }
+}

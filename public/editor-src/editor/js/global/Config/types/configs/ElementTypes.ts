@@ -88,6 +88,8 @@ export enum ElementTypes {
   WOOCategories = "WOOCategories",
   WOOPages = "WOOPages",
   WOOCart = "WOOCart",
+  WOOSaleBadge = "WOOSaleBadge",
+  WOOOutOfStockBadge = "WOOOutOfStockBadge",
   WPPostContent = "WPPostContent",
   WPPostInfo = "WPPostInfo",
   WPBreadcrumbs = "WPBreadcrumbs",
