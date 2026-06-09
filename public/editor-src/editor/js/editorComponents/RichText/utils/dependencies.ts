@@ -73,7 +73,7 @@ export const handleChangeLink = (v: Value, value: Patch) => {
   };
 };
 
-interface PopulationColor {
+export interface PopulationColor {
   [k: string]: {
     hex: string;
     opacity: number;

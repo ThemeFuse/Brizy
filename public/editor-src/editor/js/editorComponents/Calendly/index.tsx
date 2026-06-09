@@ -1,7 +1,7 @@
 import { Calendly as CalendlyComponent } from "@brizy/component/src/Flex/Calendly";
 import React, { ReactNode } from "react";
 import BoxResizer from "visual/component/BoxResizer";
-import { Patch } from "visual/component/BoxResizer/types";
+import { Patch, Point, Restrictions } from "visual/component/BoxResizer/types";
 import Placeholder from "visual/component/Placeholder";
 import Toolbar from "visual/component/Toolbar";
 import { Wrapper } from "../tools/Wrapper";
@@ -15,7 +15,7 @@ const resizerPoints = [
   "centerRight",
   "topCenter",
   "bottomCenter"
-];
+] satisfies Point[];
 const resizerRestrictions = {
   width: {
     px: { min: 320, max: 1000 },
@@ -29,10 +29,10 @@ const resizerRestrictions = {
     px: { min: 5, max: 1000 },
     "%": { min: 5, max: 100 }
   }
-};
+} satisfies Partial<Restrictions>;
 
 class Calendly extends BaseCalendly {
-  handleResizerChange = (patch: Patch): void => this.patchValue(patch);
+  handleResizerChange = (patch: Patch["patch"]): void => this.patchValue(patch);
 
   renderForEdit(v: Value): ReactNode {
     const { link } = v;

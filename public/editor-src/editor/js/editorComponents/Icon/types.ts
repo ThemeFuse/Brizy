@@ -1,3 +1,4 @@
+import type { Patch as BoxResizerPatch } from "visual/component/BoxResizer/types";
 import { ElementModel } from "visual/component/Elements/Types";
 import { Target } from "visual/component/Link/types/Target";
 import { Type } from "visual/component/Link/types/Type";
@@ -56,4 +57,4 @@ export interface Patch {
   [k: string]: string;
 }
 
-export type PatchValue = Value | Patch;
+export type PatchValue = Value | Patch | BoxResizerPatch["patch"];

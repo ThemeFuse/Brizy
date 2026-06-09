@@ -15,7 +15,8 @@ class Brizy_Editor_Editor_ModuleGroups_SocialProvider implements Brizy_Editor_Ed
                 "Twitter",
                 "FacebookComments",
 				'InstagramFeed',
-				'LinkedinFeed'
+				'LinkedinFeed',
+				'Pinterest'
             ], 450 ),
 		];
 	}

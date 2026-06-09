@@ -12,8 +12,13 @@
 		</div>
 
 		<?php if ( ! $isWhiteLabel ) : ?>
-			<iframe class="brz-video-page" src="https://www.youtube.com/embed/xiym9N3B_Hk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-		<?php endif; ?>
+			<?php if ( $showYoutubeEmbed ) : ?>
+				<iframe class="brz-video-page" src="https://www.youtube.com/embed/xiym9N3B_Hk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+			<?php else : ?>
+				<a class="brz-video-placeholder" href="https://www.youtube.com/watch?v=xiym9N3B_Hk" target="_blank" rel="noopener noreferrer">
+					<img src="<?php echo esc_url( $imgPath . 'Video_Cover.jpg' ); ?>" alt="<?php esc_attr_e( 'Getting Started with Brizy WordPress', 'brizy' ); ?>" class="brz-video-page brz-video-placeholder-img">
+				</a>
+			<?php endif; ?>		<?php endif; ?>
 
 		<nav class="brz-nav-menu">
 			<span class="brz-menu-tab brz-menu-tab-active">

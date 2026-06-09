@@ -90,7 +90,6 @@ export function getItems({ v, device, state }) {
         }
       },
       roles: ["admin"],
-      devices: "desktop",
       position: 90,
       options: [
         {
@@ -104,7 +103,6 @@ export function getItems({ v, device, state }) {
                 {
                   id: "labelColor",
                   type: "colorPicker",
-                  devices: "desktop",
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -116,7 +114,6 @@ export function getItems({ v, device, state }) {
                 {
                   id: "labelBgColor",
                   type: "colorPicker",
-                  devices: "desktop",
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -128,7 +125,6 @@ export function getItems({ v, device, state }) {
                 {
                   id: "valueColor",
                   type: "colorPicker",
-                  devices: "desktop",
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -153,7 +149,6 @@ export function getItems({ v, device, state }) {
                 {
                   id: "tableBoxShadow",
                   type: "boxShadow",
-                  devices: "desktop",
                   states: [NORMAL, HOVER]
                 }
               ]

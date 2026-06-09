@@ -2,9 +2,9 @@
 
 Contributors: themefuse<br>
 Requires at least: 4.5<br>
-Tested up to: 6.9.4<br>
-Requires PHP: 7.2.24<br>
-Stable tag: 2.8.14<br>
+Tested up to: 7.0<br>
+Requires PHP: 7.4<br>
+Stable tag: 2.8.15<br>
 License: GPLv3<br>
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -135,6 +135,52 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 [Privacy policy](https://brizy.io/privacy/)
 
 ## Changelog
+
+### 2.8.15 - 2026-06-09
+* New: Builder tools support for Audio, SoundCloud, Video Playlist, Lottie, Animated Headline, Switcher, Timeline, Table, Calendly, Table of Contents, Image Comparison, PayPal, Breadcrumbs, Login and Chart
+* New: Builder project tools
+* New: Form date field language and format options
+* New: Responsive color editing for all widgets
+* New: Italic font support
+* New: Option to disable font sorting in Typography via config
+* New: Form confirmation message auto-hides after 5 seconds
+* New: Forms now use SVG flag icons instead of emojis
+* New: Increased maximum value for PayPal price inputs
+* New: Added Pinterest to social modules
+* Improved: Builder performance and compatibility with new plugin system
+* Improved: Replaced Webpack with Rspack for faster builds
+* Improved: Removed unused CSS style tags
+* Improved: Context menu performance
+* Improved: Updated React Facebook library
+* Improved: Migrated editor styling from Tailwind to native CSS
+* Improved: Replaced react-contexify with Radix UI Context Menu
+* Improved: Updated react-window library
+* Improved: Updated TypeScript and TypeScript project references
+* Improved: HubSpot API key naming updates
+* Improved: Builder addBlock updated to addBlocks with array support
+* Fixed: Animations not working when carousel is present on the page
+* Fixed: New phone field in forms
+* Fixed: Form select field preview issues
+* Fixed: Initial editor compilation issues
+* Fixed: Incorrect preview positioning for buttons/icons with scroll effects
+* Fixed: Extra spacing between words for some fonts
+* Fixed: Form capitalize option not working correctly for messages
+* Fixed: Color picker opacity automatically changing colors
+* Fixed: Image sizes now respect thumbnail/medium/large settings instead of always using full size
+* Fixed: Image toolbar colors now match overlay colors
+* Fixed: Form phone select positioning
+* Fixed: Video looping behavior with start option
+* Fixed: Column hover animations with links
+* Fixed: Right sidebar content width for Effects panel
+* Fixed: Form button gap in Story mode
+* Fixed: Gallery infinite loading option
+* Fixed: Line element hover toolbar styles
+* Fixed: Animated Headline displaying on separate lines
+* Fixed: Phone field preview issues in forms
+* Fixed: CSS style tag order in <head>
+* Fixed: Custom style class collisions across editor instances
+* Fixed: Duplicate search labels in preview
+* Fixed: Form reset now restores default phone country selector
 
 ### 2.8.14 - 2026-05-05
 * Fixed: The delay that caused the menu/header to load after about 1 second

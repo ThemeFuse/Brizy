@@ -135,7 +135,6 @@ export function getItems({ v, device, state }) {
         }
       },
       roles: ["admin"],
-      devices: "desktop",
       position: 90,
       options: [
         {
@@ -149,7 +148,6 @@ export function getItems({ v, device, state }) {
                 {
                   id: "paragraphColor",
                   type: "colorPicker",
-                  devices: "desktop",
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -161,7 +159,6 @@ export function getItems({ v, device, state }) {
                 {
                   id: "h1Color",
                   type: "colorPicker",
-                  devices: "desktop",
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -173,7 +170,6 @@ export function getItems({ v, device, state }) {
                 {
                   id: "h2Color",
                   type: "colorPicker",
-                  devices: "desktop",
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -185,7 +181,6 @@ export function getItems({ v, device, state }) {
                 {
                   id: "h3Color",
                   type: "colorPicker",
-                  devices: "desktop",
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -197,7 +192,6 @@ export function getItems({ v, device, state }) {
                 {
                   id: "h4Color",
                   type: "colorPicker",
-                  devices: "desktop",
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -209,7 +203,6 @@ export function getItems({ v, device, state }) {
                 {
                   id: "h5Color",
                   type: "colorPicker",
-                  devices: "desktop",
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -221,7 +214,6 @@ export function getItems({ v, device, state }) {
                 {
                   id: "h6Color",
                   type: "colorPicker",
-                  devices: "desktop",
                   states: [NORMAL, HOVER]
                 }
               ]

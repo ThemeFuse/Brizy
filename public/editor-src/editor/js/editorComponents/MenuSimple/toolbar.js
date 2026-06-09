@@ -93,7 +93,6 @@ const getItems =
         },
         roles: ["admin"],
         position: 80,
-        devices: "desktop",
         options: [
           {
             id: "color",

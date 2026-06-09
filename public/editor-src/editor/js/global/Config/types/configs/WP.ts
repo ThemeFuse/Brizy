@@ -78,5 +78,4 @@ export interface WP extends ConfigCommon {
   wp: Prop;
 }
 
-// @ts-expect-error: unused variable
-export const isWp = (config: ConfigCommon): config is WP => TARGET === "WP";
+export const isWp = (_config: ConfigCommon): _config is WP => TARGET === "WP";

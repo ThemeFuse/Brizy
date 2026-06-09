@@ -155,7 +155,6 @@ export const getItems: GetItems<Value, Props> = ({ v, device, state }) => {
           }
         }
       },
-      devices: "desktop",
       options: [
         {
           id: "tabsColor",

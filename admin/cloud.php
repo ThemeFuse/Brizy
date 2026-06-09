@@ -171,7 +171,13 @@ class Brizy_Admin_Cloud
         }
 
         try {
-            $cloudBlocks = $this->cloudClient->getBlocks(array('fields' => $fields));
+	        $filters     = array(
+		        'fields' => $fields,
+		        'page'   => (int) ( $_REQUEST['page'] ?: 1 ),
+		        'count'  => (int) ( $_REQUEST['count'] ?: 200 ),
+		        'container' => $this->project->getCloudContainer()
+	        );
+	        $cloudBlocks = $this->cloudClient->getBlocks( $filters );
 
             // remove all local block that came from cloud and are deleted from cloud
             foreach ($blocks as $i => $block) {
@@ -287,7 +293,13 @@ class Brizy_Admin_Cloud
         }
 
         try {
-            $cloudLayouts = $this->cloudClient->getLayouts(array('fields' => $fields));
+	        $filters      = array(
+		        'fields' => $fields,
+		        'page'   => (int) ( $_REQUEST['page'] ?: 1 ),
+		        'count'  => (int) ( $_REQUEST['count'] ?: 200 ),
+		        'container' => $this->project->getCloudContainer()
+	        );
+	        $cloudLayouts = $this->cloudClient->getLayouts( $filters );
 
             // remove all local block that came from cloud and are deleted from cloud
             foreach ($layouts as $i => $block) {

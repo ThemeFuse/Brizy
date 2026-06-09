@@ -1,6 +1,8 @@
 @use "../../variables";
 
 .brz-ed .brz-ed-control__icon-setter {
+  position: relative;
+
   .brz-icon-svg-custom {
     background-color: variables.$textarea-placeholder-color;
   }
@@ -10,13 +12,27 @@
     color: variables.$textarea-placeholder-color;
   }
 
-  .brz-ed-control__focal-point__delete .brz-icon-svg {
-    color: variables.$focal_point__delete-color;
+  .brz-ed-control__focal-point__delete {
+    cursor: pointer;
+
+    .brz-icon-svg {
+      color: variables.$focal_point__delete-color;
+    }
   }
 
   &__box {
+    width: 48px;
+    height: 48px;
+    border: 1px dashed variables.$gray-17; // mako
     background-color: variables.$icon_setter__box-bg;
     border-color: variables.$icon_setter__box-border;
+    font-size: 16px;
+    color: rgba(94, 100, 111, 0.6); // shuttle-grey
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: all 200ms linear;
   }
 
   &__box.brz-ed-control__icon-setter__box:not(
@@ -27,5 +43,12 @@
 
   &__box.brz-ed-control__icon-setter__box:hover {
     border-color: variables.$brand__primary;
+    color: rgba(94, 100, 111, 1); // shuttle-grey-3
+  }
+
+  &--active {
+    color: variables.$white;
+    display: inline-block;
+    font-size: 0;
   }
 }

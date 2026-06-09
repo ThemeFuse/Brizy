@@ -27,7 +27,6 @@ export const getItems: GetItems<Value, Props> = ({ v, device }) => {
           }
         }
       },
-      devices: "desktop",
       position: 10,
       options: [
         { id: "empty", type: "backgroundColor", states: [NORMAL, HOVER] }

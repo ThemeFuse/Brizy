@@ -73,12 +73,3 @@ export interface AllFormData {
   data: Partial<DataValue>[];
   formData: FormData;
 }
-
-export type BoxResizerParams = () => {
-  points: ["centerLeft", "centerRight"];
-  restrictions: {
-    width: {
-      "%": { min: 5; max: 100 };
-    };
-  };
-};

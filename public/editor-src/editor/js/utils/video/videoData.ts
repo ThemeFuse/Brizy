@@ -1,6 +1,6 @@
 export default function getVideoData(
   input: string
-): { type: string; key: string } | null {
+): { type: string; key: string } | undefined {
   let type: string | null = null;
   let keyMatch: RegExpMatchArray | null = null;
 
@@ -15,7 +15,7 @@ export default function getVideoData(
   }
 
   if (!type || !(keyMatch && keyMatch[1])) {
-    return null;
+    return undefined;
   }
 
   return {

@@ -131,7 +131,6 @@ export const getItems: GetItems<ElementModel, Props> = ({
       id: "toolbarColor",
       type: "popover",
       position: 30,
-      devices: "desktop",
       config: {
         size: "auto",
         title: t("Colors"),

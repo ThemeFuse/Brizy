@@ -25,6 +25,8 @@ export const getItems: GetItems<Value, Props> = ({
 
   const context = component.context;
 
+  const showBorderRadius = component.props.meta?.showBorderRadius;
+
   const dvv = (key: string) => defaultValueValue({ v, key, device });
 
   // Used getReduxStore() to retrieve the latest state
@@ -164,7 +166,8 @@ export const getItems: GetItems<Value, Props> = ({
                   id: "borderRadiusTypeGroup",
                   type: "group",
                   devices: "desktop",
-                  disabled: searchType || fillTypeDefault,
+                  disabled:
+                    fillTypeDefault || (searchType && !showBorderRadius),
                   position: 30,
                   options: [
                     {
@@ -315,7 +318,6 @@ export const getItems: GetItems<Value, Props> = ({
     {
       id: "toolbarColor",
       type: "popover",
-      devices: "desktop",
       config: {
         size: "medium",
         title: t("Colors"),

@@ -11,6 +11,7 @@ import Portal from "visual/component/Portal";
 import Prompts from "visual/component/Prompts";
 import { RightSidebar } from "visual/component/RightSidebar";
 import UIEvents from "visual/global/UIEvents";
+import { PluginPortals } from "visual/plugins/PluginPortals";
 import { getCommonEditorMode } from "visual/providers/EditorModeProvider";
 import Page from "./Editor/Page";
 import Popup from "./Editor/Popup";
@@ -105,6 +106,9 @@ class Editor extends React.Component<Props> {
         </Portal>
         <Portal node={element}>
           <NavigatorRoot />
+        </Portal>
+        <Portal node={element}>
+          <PluginPortals />
         </Portal>
       </>
     );

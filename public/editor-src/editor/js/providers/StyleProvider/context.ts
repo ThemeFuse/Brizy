@@ -2,7 +2,7 @@ import { createContext } from "react";
 import { MValue } from "visual/utils/value";
 import { Sheet } from "./Sheet";
 
-interface SheetProvider {
+export interface SheetProvider {
   sheet: Readonly<Sheet>;
   setDoc: (doc: Document) => void;
 }

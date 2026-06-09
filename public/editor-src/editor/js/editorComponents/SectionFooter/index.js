@@ -83,6 +83,8 @@ class SectionFooter extends EditorComponent {
 
   componentWillUnmount() {
     this.mounted = false;
+
+    super.componentWillUnmount();
   }
 
   handleToolbarClose = () => {
@@ -315,7 +317,9 @@ class SectionFooter extends EditorComponent {
           <ContainerBorder
             type="footer"
             hiddenInResponsive={true}
-            activateOnContentClick={false}
+            activateOnContentClick={true}
+            elementId={this.getId()}
+            elementType={this.getComponentId()}
           >
             {({ ref: containerBorderRef, attr: containerBorderAttr }) => (
               <CustomCSS selectorName={this.getId()} css={v.customCSS}>

@@ -22,13 +22,17 @@ export const FontFamily: FCC<Props> = ({
   onChange,
   addFont,
   addFontLabel,
-  className
+  className,
+  shouldSortFonts
 }) => {
   const [searchValue, setSearchValue] = useState("");
   const { t } = useTranslation();
 
   const scrollbarRef = useRef<ScrollbarRef>(null);
-  const normalizedFonts = useMemo(() => normalizeFonts(fonts), [fonts]);
+  const normalizedFonts = useMemo(
+    () => normalizeFonts(fonts, shouldSortFonts),
+    [fonts, shouldSortFonts]
+  );
 
   const filteredFonts = useMemo(() => {
     if (searchValue === "") {

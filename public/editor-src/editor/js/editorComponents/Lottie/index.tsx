@@ -86,7 +86,7 @@ class Lottie extends BaseLottie {
     }
   };
 
-  patchValue(patch: Patch, meta = {}): void {
+  patchValue(patch: Patch["patch"], meta = {}): void {
     const link = handleLinkChange(patch);
     super.patchValue({ ...patch, ...link }, meta);
   }
@@ -115,7 +115,7 @@ class Lottie extends BaseLottie {
     }
   }
 
-  handleResizerChange = (patch: Patch): void => this.patchValue(patch);
+  handleResizerChange = (patch: Patch["patch"]): void => this.patchValue(patch);
 
   renderForEdit(v: Value, vs: Value, vd: Value): React.JSX.Element {
     const { speed, loop, autoplay, direction, renderer, trigger, lazyload } = v;

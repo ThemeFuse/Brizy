@@ -59,4 +59,10 @@
       min-width: 1em;
     }
   }
+
+  > div.brz-motion--effects {
+    flex-wrap: inherit;
+    gap: inherit;
+    justify-content: inherit;
+  }
 }

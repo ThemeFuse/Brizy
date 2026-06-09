@@ -34,6 +34,7 @@
             </div>
         </div>
         <iframe id="brz-ed-iframe" class="brz-iframe brz-ed-iframe--desktop" style="border: 0; width: 100%; min-height: 100vh; margin: 0 auto;" src="<?php echo $iframe_url; ?>"></iframe>
+        <?php if (!empty($auth_modal_html)) { echo $auth_modal_html; } ?>
         <?php foreach ( $scripts as $scriptUrl ): ?>
             <script src="<?php echo $scriptUrl; ?>"></script>
         <?php endforeach; ?>

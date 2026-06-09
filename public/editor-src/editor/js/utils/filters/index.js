@@ -21,6 +21,17 @@ export function addFilter(name, cb, priority = 10) {
   }
 }
 
+export function removeFilter(name, cb) {
+  if (filterMap[name] === undefined) {
+    return;
+  }
+
+  const idx = filterMap[name].findIndex(({ cb: existing }) => existing === cb);
+  if (idx !== -1) {
+    filterMap[name].splice(idx, 1);
+  }
+}
+
 export function applyFilter(name, value, ...extraArgs) {
   if (filterMap[name] === undefined) {
     return value;

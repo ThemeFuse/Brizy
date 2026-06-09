@@ -16,10 +16,6 @@
 // WordPress
 @use "wp.export";
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
 html {
   /* Our section scroll navigation doesn't work correctly with scroll-behavior: smooth */
   scroll-behavior: initial !important;

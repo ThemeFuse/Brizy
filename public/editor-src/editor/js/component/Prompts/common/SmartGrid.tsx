@@ -1,25 +1,6 @@
-import React, {
-  ReactElement,
-  RefCallback,
-  forwardRef,
-  useCallback
-} from "react";
-import {
-  FixedSizeGrid,
-  GridChildComponentProps,
-  ReactElementType
-} from "react-window";
-import { Scrollbar, ScrollbarRef } from "visual/component/Scrollbar";
+import React, { ReactElement, useEffect } from "react";
+import { CellComponentProps, Grid, useGridRef } from "react-window";
 import { useIsRTL } from "visual/global/hooks";
-
-type RefType = (r: HTMLDivElement | null) => void;
-
-type CustomScrollbars = {
-  onScroll: () => void;
-  forwardedRef: RefType;
-  style: StyleSheet;
-  children?: ReactElement;
-};
 
 type SmartGridProps = {
   height: number;
@@ -28,69 +9,10 @@ type SmartGridProps = {
   columnWidth: number;
   rowCount: number;
   rowHeight: number;
-  initialScrollTop: number;
-  renderItem: (r: GridChildComponentProps) => ReactElement;
-  style?: StyleSheet;
+  initialScrollRow?: number;
+  renderItem: (r: CellComponentProps) => ReactElement | null;
+  style?: React.CSSProperties;
   gutter?: number;
-};
-
-const CustomScrollbars = ({
-  onScroll,
-  forwardedRef,
-  style,
-  children
-}: CustomScrollbars): ReactElement => {
-  const refSetter = useCallback<RefCallback<ScrollbarRef>>(
-    (scrollbarsRef) => {
-      if (scrollbarsRef && scrollbarsRef.view) {
-        forwardedRef(scrollbarsRef.view);
-      } else {
-        forwardedRef(null);
-      }
-    },
-    [forwardedRef]
-  );
-
-  return (
-    <Scrollbar
-      ref={refSetter}
-      style={{ ...style, overflow: "hidden" }}
-      theme="light"
-      absolute
-      onScroll={onScroll}
-    >
-      {children}
-    </Scrollbar>
-  );
-};
-
-const CustomScrollbarsVirtualList = forwardRef(
-  (props: CustomScrollbars, ref: unknown): ReactElement => (
-    <CustomScrollbars {...props} forwardedRef={ref as RefType} />
-  )
-);
-CustomScrollbarsVirtualList.displayName = "CustomScrollbarsVirtualList";
-
-const CustomInnerElementType = (gutter: number): ReactElementType => {
-  const InnerElement: ReactElementType = forwardRef<
-    HTMLDivElement,
-    { style: CSSStyleRule }
-  >(({ style, ...rest }, ref) => (
-    <div
-      ref={ref}
-      style={{
-        ...style,
-        paddingLeft: gutter,
-        paddingTop: gutter,
-        marginBottom: gutter
-      }}
-      {...rest}
-    />
-  ));
-
-  InnerElement.displayName = "InnerElement";
-
-  return InnerElement;
 };
 
 const SmartGrid = (props: SmartGridProps): ReactElement => {
@@ -102,28 +24,39 @@ const SmartGrid = (props: SmartGridProps): ReactElement => {
     columnWidth,
     rowCount,
     rowHeight,
-    initialScrollTop,
+    initialScrollRow = 0,
     renderItem,
     style = {},
     gutter = 0
   } = props;
 
+  const gridRef = useGridRef(null);
+
+  useEffect(() => {
+    if (initialScrollRow <= 0) return;
+    const rafId = requestAnimationFrame(() => {
+      gridRef.current?.scrollToRow({
+        index: initialScrollRow,
+        align: "start",
+        behavior: "instant"
+      });
+    });
+    return () => cancelAnimationFrame(rafId);
+  }, [initialScrollRow, gridRef]);
+
   return (
-    <FixedSizeGrid
-      height={height}
-      width={width}
+    <Grid
+      gridRef={gridRef}
+      cellComponent={renderItem}
+      cellProps={{}}
       columnCount={columnCount}
       columnWidth={columnWidth + gutter}
       rowCount={rowCount}
       rowHeight={rowHeight + gutter}
-      style={style}
-      initialScrollTop={initialScrollTop}
-      outerElementType={CustomScrollbarsVirtualList}
-      innerElementType={CustomInnerElementType(gutter)}
-      direction={isRTL ? "rtl" : "ltr"}
-    >
-      {renderItem}
-    </FixedSizeGrid>
+      style={{ height, width, ...style }}
+      dir={isRTL ? "rtl" : "ltr"}
+      className="brz-smart-grid"
+    />
   );
 };
 

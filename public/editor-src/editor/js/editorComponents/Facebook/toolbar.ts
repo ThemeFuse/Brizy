@@ -15,24 +15,15 @@ export const getItems: GetItems<Value> = ({ v, device, state, context }) => {
   const facebookEmbedType = dvv("facebookEmbedType");
 
   const embedType = facebookType === "embed";
-  const buttonType = facebookType === "button";
   const pageType = facebookType === "page";
 
   const postEmbedType = facebookEmbedType !== "post";
   const videoEmbedType = facebookEmbedType !== "video";
 
-  const boxedLayout = dvv("layout") === "boxed";
-
-  const borderColor = getColorToolbar(
-    dvv("borderColorPalette"),
-    dvv("borderColorHex"),
-    dvv("borderColorOpacity")
-  );
-
-  const boxShadowColor = getColorToolbar(
-    dvv("boxShadowColorPalette"),
-    dvv("boxShadowColorHex"),
-    dvv("boxShadowColorOpacity")
+  const bgColor = getColorToolbar(
+    dvv("bgColorPalette"),
+    dvv("bgColorHex"),
+    dvv("bgColorOpacity")
   );
 
   const linkDC = getDynamicContentOption({
@@ -42,8 +33,6 @@ export const getItems: GetItems<Value> = ({ v, device, state, context }) => {
 
   const labelTab = (facebookType: string) => {
     switch (facebookType) {
-      case "button":
-        return t("Button");
       case "embed":
         return t("Embed");
       case "page":
@@ -75,7 +64,7 @@ export const getItems: GetItems<Value> = ({ v, device, state, context }) => {
           id: "pageWidth",
           label: t("Width"),
           type: "slider",
-          disabled: embedType || buttonType,
+          disabled: embedType,
           devices: "desktop",
           config: {
             min: 180,
@@ -202,31 +191,8 @@ export const getItems: GetItems<Value> = ({ v, device, state, context }) => {
                   type: "select",
                   devices: "desktop",
                   choices: [
-                    { title: t("Button"), value: "button" },
                     { title: t("Embed"), value: "embed" },
                     { title: t("Page"), value: "page" }
-                  ]
-                },
-                {
-                  id: "facebookButtonType",
-                  type: "select",
-                  label: t("Type"),
-                  disabled: !buttonType,
-                  devices: "desktop",
-                  choices: [
-                    { title: t("Like"), value: "like" },
-                    { title: t("Recommend"), value: "recommend" }
-                  ]
-                },
-                {
-                  id: "layout",
-                  label: t("Layout"),
-                  type: "select",
-                  devices: "desktop",
-                  disabled: !buttonType,
-                  choices: [
-                    { title: t("Button"), value: "button" },
-                    { title: t("Boxed"), value: "boxed" }
                   ]
                 },
                 {
@@ -283,38 +249,6 @@ export const getItems: GetItems<Value> = ({ v, device, state, context }) => {
               id: "tabAdvanced",
               label: t("Advanced"),
               options: [
-                {
-                  id: "size",
-                  label: t("Size"),
-                  disabled: !buttonType,
-                  devices: "desktop",
-                  type: "radioGroup",
-                  choices: [
-                    { icon: "nc-small", value: "small" },
-                    { icon: "nc-large", value: "large" }
-                  ]
-                },
-                {
-                  id: "share",
-                  disabled: !buttonType,
-                  label: t("Include Share Button"),
-                  type: "switch",
-                  devices: "desktop"
-                },
-                {
-                  id: "showCounter",
-                  label: t("Show Button Counter"),
-                  type: "switch",
-                  disabled: !buttonType || boxedLayout,
-                  devices: "desktop"
-                },
-                {
-                  id: "showFriends",
-                  label: t("Show Friend's Faces"),
-                  type: "switch",
-                  disabled: !buttonType || boxedLayout,
-                  devices: "desktop"
-                },
                 {
                   id: "facebookEmbedVideoAllowFullScreen",
                   label: t("Full Screen"),
@@ -378,12 +312,11 @@ export const getItems: GetItems<Value> = ({ v, device, state, context }) => {
         title: t("Colors"),
         icon: {
           style: {
-            backgroundColor: buttonType ? boxShadowColor : borderColor
+            backgroundColor: bgColor
           }
         }
       },
       position: 80,
-      devices: "desktop",
       options: [
         {
           id: "tabsColor",
@@ -406,7 +339,6 @@ export const getItems: GetItems<Value> = ({ v, device, state, context }) => {
               options: [
                 {
                   id: "border",
-                  disabled: buttonType,
                   type: "border",
                   states: [NORMAL, HOVER]
                 }
@@ -424,38 +356,6 @@ export const getItems: GetItems<Value> = ({ v, device, state, context }) => {
               ]
             }
           ]
-        }
-      ]
-    },
-    {
-      id: "toolbarLink",
-      type: "popover",
-      config: {
-        icon: "nc-link",
-        title: t("Link"),
-        size: "medium"
-      },
-      position: 90,
-      options: [
-        {
-          id: "targetUrl",
-          label: t("Target URL"),
-          type: "select",
-          devices: "desktop",
-          disabled: !buttonType,
-          choices: [
-            { title: t("Current Page"), value: "current" },
-            { title: t("Custom Page"), value: "custom" }
-          ]
-        },
-        {
-          id: "href",
-          type: "inputText",
-          label: t("Link"),
-          disabled: !buttonType || dvv("targetUrl") === "current",
-          devices: "desktop",
-          placeholder: "http://",
-          population: linkDC
         }
       ]
     },

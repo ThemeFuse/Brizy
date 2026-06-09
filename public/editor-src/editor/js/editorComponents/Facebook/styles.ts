@@ -10,6 +10,10 @@ export function style(data: DynamicStylesProps<Value>): OutputStyle {
         "cssStylePaddingBG",
         "cssStyleElementFacebookWidth",
         "cssStyleElementFacebookAlign"
+      ],
+      interval: [
+        "cssStyleHoverTransition",
+        "cssStylePropertyHoverTransitionColor"
       ]
     },
     ".brz &&:hover.brz-fb-styles": {
@@ -18,18 +22,6 @@ export function style(data: DynamicStylesProps<Value>): OutputStyle {
         "cssStyleBgGradient",
         "cssStyleBoxShadow",
         "cssStyleBorder"
-      ]
-    },
-    ".brz &&.brz-fb-styles-button": {
-      standart: ["cssStylePaddingBG", "cssStyleElementFacebookAlign"]
-    },
-    ".brz &&:hover.brz-fb-styles-button": {
-      standart: ["cssStyleBgColor", "cssStyleBgGradient", "cssStyleBoxShadow"]
-    },
-    ".brz &&.brz-fb-styles, .brz &&.brz-fb-styles-button": {
-      standart: [
-        "cssStyleHoverTransition",
-        "cssStylePropertyHoverTransitionColor"
       ]
     }
   };

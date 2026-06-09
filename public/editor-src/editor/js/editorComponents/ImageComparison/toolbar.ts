@@ -54,11 +54,11 @@ export const getItems =
 
     const dvv = (key: string) => defaultValueValue({ v, key, device });
 
-    const borderColorOpacity = dvv("borderColorOpacity");
-    const borderColor = getColorToolbar(
-      dvv("borderColorPalette"),
-      dvv("borderColorHex"),
-      borderColorOpacity
+    const bgColorOpacity = dvv("bgColorOpacity");
+    const bgColor = getColorToolbar(
+      dvv("bgColorPalette"),
+      dvv("bgColorHex"),
+      bgColorOpacity
     );
 
     const maskShape = readString(dvv("maskShape")) ?? "none";
@@ -203,13 +203,12 @@ export const getItems =
       {
         id: "toolbarColor",
         type: "popover",
-        devices: "desktop",
         config: {
           size: "medium",
           title: t("Colors"),
           icon: {
             style: {
-              backgroundColor: borderColor
+              backgroundColor: bgColor
             }
           }
         },
@@ -273,7 +272,6 @@ export const getItems =
                   {
                     id: "thumbArrowColor",
                     type: "colorPicker",
-                    devices: "desktop",
                     states: [NORMAL]
                   }
                 ]
@@ -285,7 +283,6 @@ export const getItems =
                   {
                     id: "thumbArrowBgColor",
                     type: "colorPicker",
-                    devices: "desktop",
                     states: [NORMAL]
                   }
                 ]

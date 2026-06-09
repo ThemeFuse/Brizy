@@ -57,12 +57,6 @@ describe("Testing 'setOpacity' function", function () {
   test("If opacity == 0, tempOpacity takes current opacity value", () => {
     expect(setOpacity(Opacity.empty, model).tempOpacity).toBe(model.opacity);
   });
-
-  test("If opacity > 0 and palette == '', palette takes temptPalette value", () => {
-    expect(
-      setOpacity(Opacity.unsafe(0.6), { ...model, palette: "" }).palette
-    ).toBe(model.tempPalette);
-  });
 });
 
 describe("Testing 'getHex' function", function () {

@@ -139,14 +139,9 @@ const Notification = () => {
             />
           </NotificationHeader>
           <NotificationContent>
-            {data.lockedBy ? (
-              `${t("You can’t make changes")}.
-          ${getUserEmail(data)} ${t(
-            "is currently working on this page. Do you want to take over"
-          )} ?`
-            ) : (
-              <>{data}</>
-            )}
+            {`${t("You can't make changes")}. ${getUserEmail(data)} ${t(
+              "is currently working on this page. Do you want to take over"
+            )} ?`}
           </NotificationContent>
           <NotificationFooter>
             <button

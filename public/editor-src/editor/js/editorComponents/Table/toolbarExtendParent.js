@@ -1,39 +1,9 @@
 import { addLast, getIn, setIn } from "timm";
 import { getColorToolbar } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
-import { setIds } from "visual/utils/models";
 import { defaultValueValue } from "visual/utils/onChange";
 import { ACTIVE, NORMAL } from "visual/utils/stateMode";
-
-const TableRow = {
-  type: "TableRow",
-  value: {
-    items: []
-  }
-};
-
-const TableCol = {
-  type: "TableCol",
-  value: {
-    items: []
-  }
-};
-
-const TableColHead = {
-  type: "TableAside",
-  value: {
-    labelText: "H 1",
-    items: []
-  }
-};
-
-const TableAside = {
-  type: "TableAside",
-  value: {
-    labelText: "A 1",
-    items: []
-  }
-};
+import { appendColumns, createBodyRows } from "./utils";
 
 export function getItems({ v, device }) {
   const dvv = (key) => defaultValueValue({ key, v, device });
@@ -88,19 +58,8 @@ export function getItems({ v, device }) {
             const rowBody = getIn(tableBody, ["value", "items"]);
 
             if (rowBody && rowBody.length < rows) {
-              const _colBody = Array(v.columns).fill(TableCol);
-              const newRow = setIn(
-                TableRow,
-                ["value", "items"],
-                [TableAside, ..._colBody]
-              );
-              const _rowBody = setIds(
-                Array(rows - rowBody.length).fill(newRow)
-              );
-              const newTableRows = addLast(
-                getIn(tableBody, ["value", "items"]),
-                _rowBody
-              );
+              const newRows = createBodyRows(rows - rowBody.length, v.columns);
+              const newTableRows = addLast(rowBody, newRows);
               const newTable = setIn(
                 tableBody,
                 ["value", "items"],
@@ -129,36 +88,21 @@ export function getItems({ v, device }) {
             const [tableHead, tableBody] = v.items;
             const rowBody = getIn(tableBody, ["value", "items"]);
             const rowHead = getIn(tableHead, ["value", "items"]);
-            const needAddNewCol = getIn(rowBody, [0, "value", "items"]);
-            const needAddNewColHead = getIn(rowHead, [0, "value", "items"]);
+            const currentColItems = getIn(rowBody, [0, "value", "items"]);
 
-            if (needAddNewCol && needAddNewCol.length - 1 < columns) {
-              const nRowBody = rowBody.reduce((acc, curr) => {
-                const colBody = setIds(
-                  Array(columns - (needAddNewCol.length - 1)).fill(TableCol)
-                );
-                const tableRow = setIn(
-                  curr,
-                  ["value", "items"],
-                  addLast(curr.value.items, colBody)
-                );
-
-                acc.push(tableRow);
-
-                return acc;
-              }, []);
-              const nHeadCols = setIds(
-                Array(columns - (needAddNewColHead.length - 1)).fill(
-                  TableColHead
-                )
+            if (currentColItems && currentColItems.length - 1 < columns) {
+              const colsToAdd = columns - (currentColItems.length - 1);
+              const { headRow, bodyRows } = appendColumns(
+                rowHead[0],
+                rowBody,
+                colsToAdd
               );
-              const nRowHead = setIn(
-                rowHead,
-                [0, "value", "items"],
-                addLast(rowHead[0].value.items, nHeadCols)
+              const nTableHead = setIn(
+                tableHead,
+                ["value", "items"],
+                [headRow]
               );
-              const nTableBody = setIn(tableBody, ["value", "items"], nRowBody);
-              const nTableHead = setIn(tableHead, ["value", "items"], nRowHead);
+              const nTableBody = setIn(tableBody, ["value", "items"], bodyRows);
 
               return {
                 items: [nTableHead, nTableBody],
@@ -196,7 +140,6 @@ export function getItems({ v, device }) {
       },
       title: t("Colors"),
       roles: ["admin"],
-      devices: "desktop",
       position: 90,
       options: [
         {

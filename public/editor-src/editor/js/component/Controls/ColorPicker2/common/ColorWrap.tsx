@@ -1,4 +1,4 @@
-import { debounce, type DebouncedFunction } from "es-toolkit";
+import { type DebouncedFunction, debounce } from "es-toolkit";
 import React, { Component, ComponentType, MouseEvent, TouchEvent } from "react";
 import {
   ChangeFunction,
@@ -25,7 +25,7 @@ export interface Props {
   onSwatchHover?: OnSwatchHover;
 }
 
-interface State {
+export interface State {
   hsl: HSLA;
   hex: string;
   rgb: RGBA;
@@ -35,13 +35,15 @@ interface State {
   prevColor: Props["color"];
 }
 
-export const ColorWrap = (Picker: ComponentType<PickerProps>) => {
+export const ColorWrap = (Picker: ComponentType<PickerProps>): ComponentType<Props> => {
   class ColorPicker extends Component<Props, State> {
-    private debounce: DebouncedFunction<(
-      fn: Props["onChange"],
-      data: HSLAChange | HSVAChange,
-      meta?: GlobalMeta
-    ) => void>;
+    private debounce: DebouncedFunction<
+      (
+        fn: Props["onChange"],
+        data: HSLAChange | HSVAChange,
+        meta?: GlobalMeta
+      ) => void
+    >;
     constructor(props: Props) {
       super(props);
 

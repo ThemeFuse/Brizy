@@ -217,7 +217,6 @@ export const getItems: GetItems<Value, Props> = ({
                 {
                   id: "",
                   type: "backgroundColor",
-                  devices: "desktop",
                   states: [NORMAL, HOVER],
                   disabled: dvv("fillType") !== "filled"
                 }
@@ -229,7 +228,6 @@ export const getItems: GetItems<Value, Props> = ({
               options: [
                 {
                   id: "border",
-                  devices: "desktop",
                   type: "border",
                   states: [NORMAL, HOVER],
                   disabled: dvv("fillType") === "default"
@@ -242,7 +240,6 @@ export const getItems: GetItems<Value, Props> = ({
               options: [
                 {
                   id: "boxShadow",
-                  devices: "desktop",
                   type: "boxShadow",
                   states: [NORMAL, HOVER],
                   disabled: dvv("fillType") === "default"

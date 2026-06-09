@@ -86,6 +86,8 @@ export default class Items extends EditorArrayComponent {
       });
       this.node.current = null;
     }
+
+    super.componentWillUnmount();
   }
 
   getItemProps() {

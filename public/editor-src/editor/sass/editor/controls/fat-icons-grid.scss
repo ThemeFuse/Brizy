@@ -1,0 +1,8 @@
+@use "../../variables";
+
+.brz-ed .brz-ed--fat-icons-grid {
+  display: grid;
+  grid-template-columns: repeat(3, auto);
+  gap: 12px 20px;
+  width: 100%;
+}

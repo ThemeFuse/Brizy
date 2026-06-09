@@ -24,11 +24,11 @@ import getForm2 from "./Form2";
 import getIcon from "./Icon";
 import getIconText from "./IconText";
 import getImage from "./Image";
+import getImageComparison from "./ImageComparison";
 import getLeadific from "./Leadific/Leadific";
 import getLine from "./Line";
 import getMap from "./Map";
 import getMenuSimple from "./MenuSimple";
-import getImageComparison from "./ImageComparison";
 import getMinistryBrandsArticleDetail from "./MinistryBrands/MinistryBrandsArticleDetail";
 import getMinistryBrandsArticleFeatured from "./MinistryBrands/MinistryBrandsArticleFeatured";
 import getMinistryBrandsArticleLayout from "./MinistryBrands/MinistryBrandsArticleLayout";
@@ -109,6 +109,7 @@ import getLinkedinFeed from "./pro/LinkedinFeed";
 import getLogin from "./pro/Login";
 import getLottie from "./pro/Lottie";
 import getMenu from "./pro/Menu";
+import getPinterest from "./pro/Pinterest";
 import getPostInfo from "./pro/PostInfo";
 import getPostNavigation from "./pro/PostNavigation";
 import getProducts from "./pro/Products";
@@ -157,6 +158,7 @@ import getStoryProgressBar from "./story/StoryProgressBar";
 import getStoryShape from "./story/StoryShape";
 import getStoryText from "./story/StoryText";
 import getStoryVideo from "./story/StoryVideo";
+import getGoogleSearch from "./pro/GoogleSearch";
 
 export function getProShortCodes(
   config: ConfigCommon
@@ -226,6 +228,7 @@ export function getProShortCodes(
     FacebookComments: true,
     InstagramFeed: true,
     LinkedinFeed: true,
+    Pinterest: false,
 
     Columns: false,
     Row: false,
@@ -286,6 +289,7 @@ export function getProShortCodes(
     ShopCategories: false,
 
     Search: true,
+    GoogleSearch: true,
 
     WPSidebar: false,
     WPCustomShortcode: false,
@@ -384,6 +388,7 @@ export const ShortCodesKeywords: Record<string, string> = {
   Twitter: "Twitter social media microblogging",
   FacebookComments: "Facebook comments social interaction feedback",
   InstagramFeed: "Instagram feed social media integration display posts",
+  Pinterest: "Pinterest widget social media pins board",
 
   Columns: "columns layout grid",
   Row: "row horizontal alignment series",
@@ -452,6 +457,8 @@ export const ShortCodesKeywords: Record<string, string> = {
   ShopCategories: "shop categories store classifications retail groups",
 
   Search: "search find lookup locate",
+
+  GoogleSearch: "Google Search Google search engine",
 
   WPSidebar: "WP Sidebar WordPress sidebar website sidebar side menu",
   WPCustomShortcode:
@@ -558,6 +565,7 @@ export function getSampleShortCodes(config: ConfigCommon) {
     FacebookComments: getFacebookComments(),
     InstagramFeed: getInstagramFeed(),
     LinkedinFeed: getLinkedinFeed(),
+    Pinterest: getPinterest(),
 
     Columns: getColumns(config),
     Row: getRow(config),
@@ -660,6 +668,8 @@ export function getSampleShortCodes(config: ConfigCommon) {
     CollectionList: getCollectionList(config),
     BlogPostList: getBlogPostList(config),
     BlogPostMeta: getBlogPostMeta(config),
-    BlogPostExcerpt: getBlogPostExcerpt(config)
+    BlogPostExcerpt: getBlogPostExcerpt(config),
+
+    GoogleSearch: getGoogleSearch(),
   };
 }

@@ -10,7 +10,7 @@ export interface Rect {
   bottom: number;
 }
 
-type AcceptElements =
+export type AcceptElements =
   | "*"
   | string[]
   | ((

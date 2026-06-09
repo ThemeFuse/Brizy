@@ -1,0 +1,11 @@
+{
+  "content": {
+    "addonType": "followButton",
+    "url": "https://www.pinterest.com/pinterest/",
+    "customCSS": ""
+  },
+  "style": {
+    "contentHorizontalAlign": "center",
+    "buttonSize": "small"
+  }
+}

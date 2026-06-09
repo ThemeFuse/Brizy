@@ -1,4 +1,4 @@
-import React, { JSX } from "react";
+import React from "react";
 import { rolesHOC } from "visual/component/Roles";
 import { FCC } from "visual/utils/react/types";
 import { ContextMenuContext } from "./context";
@@ -17,6 +17,5 @@ const ContextMenuDisabled: FCC = ({ children }) => (
 export default rolesHOC({
   allow: ["admin"],
   component: ContextMenuDisabled,
-  fallbackRender: ({ children }: { children: JSX.Element }): JSX.Element =>
-    children
+  fallbackRender: ({ children }) => children
 });

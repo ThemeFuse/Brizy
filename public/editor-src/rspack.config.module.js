@@ -242,7 +242,7 @@ const rspackConfig = (options) => {
               loader: "postcss-loader",
               options: {
                 postcssOptions: {
-                  plugins: ["autoprefixer", "tailwindcss"]
+                  plugins: ["autoprefixer"]
                 }
               }
             },

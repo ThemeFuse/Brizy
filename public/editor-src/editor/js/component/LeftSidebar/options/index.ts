@@ -24,7 +24,9 @@ export interface Option {
   id: string;
   type: string;
   icon?: string;
+  iconComponent?: ComponentType;
   title?: string;
+  active?: boolean;
   onClick?: (e: MouseEvent) => void;
   roles?: Array<string>;
   drawerTitle?: string;

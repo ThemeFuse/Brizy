@@ -90,7 +90,7 @@ module.exports = (options = {}) => {
     module: {
       rules: [
         {
-          test: /\.s[ac]ss$/i,
+          test: /\.(s[ac]ss|css)$/i,
           include: [
             path.resolve(__dirname, "../packages"),
             path.resolve(__dirname, "editor/sass"),
@@ -106,7 +106,6 @@ module.exports = (options = {}) => {
                 sourceMap: true, // <-- !!IMPORTANT used by "resolve-url-loader" to create url for every assets correctly
                 postcssOptions: {
                   plugins: {
-                    tailwindcss: {},
                     autoprefixer: {
                       overrideBrowserslist: ["last 2 versions"]
                     }
@@ -220,7 +219,9 @@ module.exports = (options = {}) => {
               const request = module.request || "";
               return (
                 request.includes(".scss?componentId=") ||
-                request.includes(".scss?chunk=")
+                request.includes(".scss?chunk=") ||
+                request.includes(".css?componentId=") ||
+                request.includes(".css?chunk=")
               );
             },
             name: "css-registrations",
@@ -244,7 +245,7 @@ module.exports = (options = {}) => {
 
               return undefined;
             },
-            test: /\.s[ac]ss$/i,
+            test: /\.(s[ac]ss|css)$/i,
             chunks: "all",
             enforce: true
           },

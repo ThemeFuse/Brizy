@@ -197,7 +197,6 @@ export const getItems: GetItems<Value, Props, State> = ({ v, device }) => {
     {
       id: "toolbarTOCColors",
       type: "popover",
-      devices: "desktop",
       position: 20,
       config: {
         size: "auto",

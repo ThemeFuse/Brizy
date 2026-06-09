@@ -1,6 +1,6 @@
 import React, { ReactNode } from "react";
 import BoxResizer from "visual/component/BoxResizer";
-import { Patch } from "visual/component/BoxResizer/types";
+import { Patch, Point } from "visual/component/BoxResizer/types";
 import { Text } from "visual/component/ContentOptions/types";
 import CustomCSS from "visual/component/CustomCSS";
 import { ThemeIcon } from "visual/component/ThemeIcon";
@@ -15,7 +15,7 @@ import * as toolbarConfig from "./toolbar";
 import type { Props, Value } from "./types";
 import { isDefaultLineType } from "./utils";
 
-const resizerPoints = ["centerLeft", "centerRight"];
+const resizerPoints = ["centerLeft", "centerRight"] satisfies Point[];
 const resizerRestrictions = {
   width: {
     px: { min: 5, max: 1000 },
@@ -37,7 +37,7 @@ class Line extends EditorComponent<Value, Props> {
   static defaultValue = defaultValue;
   static experimentalDynamicContent = true;
 
-  handleResizerChange = (patch: Patch): void => this.patchValue(patch);
+  handleResizerChange = (patch: Patch["patch"]): void => this.patchValue(patch);
   handleTextChange = (patch: { [k: string]: string }): void => {
     this.patchValue(patch);
   };

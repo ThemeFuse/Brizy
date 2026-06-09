@@ -22,7 +22,7 @@ import type { Value } from "./types";
 import { getResizerRestrictions, resizerPoints } from "./utils";
 
 class Audio extends BaseAudio {
-  handleResizerChange = (patch: Patch) => this.patchValue(patch);
+  handleResizerChange = (patch: Patch["patch"]) => this.patchValue(patch);
 
   renderAudio(v: Value, vs: Value, vd: Value) {
     const {

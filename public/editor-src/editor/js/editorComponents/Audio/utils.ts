@@ -1,3 +1,4 @@
+import type { Point, Restrictions } from "visual/component/BoxResizer/types";
 import type { Value } from "visual/editorComponents/Audio/types";
 
 export const resizerPoints = [
@@ -9,7 +10,7 @@ export const resizerPoints = [
   "bottomLeft",
   "bottomCenter",
   "bottomRight"
-];
+] satisfies Point[];
 
 export function getResizerRestrictions(v: Value) {
   return {
@@ -73,5 +74,5 @@ export function getResizerRestrictions(v: Value) {
         max: 100
       }
     }
-  };
+  } satisfies Partial<Restrictions>;
 }

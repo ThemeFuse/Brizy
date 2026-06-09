@@ -103,7 +103,6 @@ export const getItems =
           }
         },
         position: 80,
-        devices: "desktop",
         options: [
           {
             id: "tabsToolbarColor",
@@ -116,7 +115,6 @@ export const getItems =
                   {
                     id: "saleColor",
                     type: "colorPicker",
-                    devices: "desktop",
                     disabled: !hasDiscount
                   }
                 ]
@@ -128,7 +126,6 @@ export const getItems =
                   {
                     id: "color",
                     type: "colorPicker",
-                    devices: "desktop"
                   }
                 ]
               }

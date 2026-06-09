@@ -6,6 +6,7 @@ import {
   ElementModelType
 } from "visual/component/Elements/Types";
 import { normalizeRowColumns } from "visual/editorComponents/Row/utils";
+import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import { setIds } from "visual/utils/models";
 import { MValue } from "visual/utils/value";
 import { addIn, removeIn } from "./addRemove";
@@ -119,7 +120,7 @@ const moveColumns = (
 
 //#region Create IDS for ElementModel
 
-const createNewItem = (
+export const createNewItem = (
   type: string,
   value: ElementModel = {}
 ): ElementModelType => {
@@ -179,12 +180,14 @@ export const moveAddableToRow = (
   to: { itemPath: string[]; containerPath: string[] }
 ): MValue<ElementModelType> => {
   const { itemData } = from;
-  const items = itemData.type !== "Row" ? [itemData] : [];
+  const newColumn =
+    itemData.type === ElementTypes.Column
+      ? itemData
+      : createNewItem(ElementTypes.Column, {
+          _styles: ["column"],
+          items: itemData.type !== ElementTypes.Row ? [itemData] : []
+        });
 
-  const newColumn = createNewItem("Column", {
-    _styles: ["column"],
-    items
-  });
   const value = addIn(oldValue, to.itemPath, newColumn);
 
   if (value) {

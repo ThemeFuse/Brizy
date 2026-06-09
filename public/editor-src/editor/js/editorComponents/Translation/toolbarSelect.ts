@@ -19,7 +19,6 @@ export const getItems: GetItems<Value> = ({ v, device }) => {
     {
       id: "toolbarColorSelect",
       type: "popover",
-      devices: "desktop",
       config: {
         size: "medium",
         title: t("Colors"),

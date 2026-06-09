@@ -2,6 +2,7 @@ import classnames from "classnames";
 import React, { Fragment, ReactNode, createRef } from "react";
 import { omit } from "timm";
 import BoxResizer from "visual/component/BoxResizer";
+import type { Patch as BoxResizerPatch } from "visual/component/BoxResizer/types";
 import CustomCSS from "visual/component/CustomCSS";
 import { HoverAnimation } from "visual/component/HoverAnimation/HoverAnimation";
 import { getHoverAnimationOptions } from "visual/component/HoverAnimation/utils";
@@ -43,7 +44,7 @@ import defaultValue from "./defaultValue.json";
 import * as sidebarConfig from "./sidebar";
 import { style, styleTooltip, styleWrapper } from "./styles";
 import * as toolbarConfig from "./toolbar";
-import { Patch, PatchValue, Props, Value } from "./types";
+import { PatchValue, Props, Value } from "./types";
 import {
   resizerPoints,
   resizerTransformPatch,
@@ -85,7 +86,7 @@ class Icon extends EditorComponent<Value, Props> {
     super.patchValue({ ...patch, ...link }, meta);
   }
 
-  handleResizerChange = (patch: Patch): void => {
+  handleResizerChange = (patch: BoxResizerPatch["patch"]): void => {
     const device = this.getDeviceMode();
     const sizeKey = defaultValueKey({ key: "size", device, state: "normal" });
 

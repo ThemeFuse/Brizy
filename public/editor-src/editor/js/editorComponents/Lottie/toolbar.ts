@@ -163,7 +163,6 @@ export const getItems: GetItems<Value> = ({
           }
         }
       },
-      devices: "desktop",
       options: [
         {
           id: "tabsColor",

@@ -43,8 +43,7 @@ export const isShopify = (c: Cloud): c is Shopify => c.platform === "shopify";
 
 export type Cloud = CMS | Shopify;
 
-// @ts-expect-error: unused variable
-export const isCloud = (config: ConfigCommon): config is Cloud =>
+export const isCloud = (_config: ConfigCommon): _config is Cloud =>
   TARGET === "Cloud" || TARGET === "Cloud-localhost";
 
 //#region Page
