@@ -162,7 +162,6 @@ export function getItems({ v, device }) {
         }
       },
       position: 80,
-      devices: "desktop",
       options: [
         {
           id: "tabsToolbarColor",
@@ -175,7 +174,6 @@ export function getItems({ v, device }) {
                 {
                   id: "bgColor",
                   type: "colorPicker",
-                  devices: "desktop",
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -187,7 +185,6 @@ export function getItems({ v, device }) {
                 {
                   id: "color",
                   type: "colorPicker",
-                  devices: "desktop",
                   disabled: subtotal !== "on",
                   states: [NORMAL, HOVER]
                 }
@@ -200,7 +197,6 @@ export function getItems({ v, device }) {
                 {
                   id: "iconColor",
                   type: "colorPicker",
-                  devices: "desktop",
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -212,7 +208,6 @@ export function getItems({ v, device }) {
                 {
                   id: "purchasesColor",
                   type: "colorPicker",
-                  devices: "desktop",
                   disabled: purchasesOff || plainType,
                   states: [NORMAL, HOVER]
                 }
@@ -225,7 +220,6 @@ export function getItems({ v, device }) {
                 {
                   id: "border",
                   type: "border",
-                  devices: "desktop",
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -238,7 +232,6 @@ export function getItems({ v, device }) {
                   id: "bubbleColor",
                   type: "colorPicker",
                   disabled: purchasesOff || bubbleType,
-                  devices: "desktop",
                   states: [NORMAL, HOVER]
                 }
               ]
@@ -251,7 +244,6 @@ export function getItems({ v, device }) {
                   id: "bubbleBgColor",
                   type: "colorPicker",
                   disabled: purchasesOff || bubbleType,
-                  devices: "desktop",
                   states: [NORMAL, HOVER]
                 }
               ]

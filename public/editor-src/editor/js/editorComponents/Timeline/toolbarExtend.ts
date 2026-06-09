@@ -204,7 +204,6 @@ export const getItems: GetItems<Value, Props> = ({ v, device, state }) => {
         size: "medium",
         title: t("Colors")
       },
-      devices: "desktop",
       position: 90,
       options: [
         {

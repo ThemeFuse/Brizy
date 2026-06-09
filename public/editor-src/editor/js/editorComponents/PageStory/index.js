@@ -35,6 +35,8 @@ class PageStory extends EditorComponent {
 
   componentWillUnmount() {
     UIEvents.off("dnd.sort", this.handleDNDSort);
+
+    super.componentWillUnmount();
   }
 
   blocksFilter(blocks) {

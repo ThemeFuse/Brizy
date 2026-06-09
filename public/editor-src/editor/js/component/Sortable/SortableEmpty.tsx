@@ -26,7 +26,8 @@ type SortType =
   | "carousel"
   | "posts"
   | "cloneable"
-  | "addable";
+  | "addable"
+  | "thirdPartyContainer";
 
 const fallbackRender = () => {
   return (
@@ -43,7 +44,7 @@ const fallbackRender = () => {
 
 type Props = {
   type: SortType;
-  path: Array<string>;
+  path: string;
   disabled?: boolean;
   children?: ((props: unknown) => ReactElement) | ElementType;
 } & Pick<SortablePluginOptions, "acceptElements">;
@@ -172,12 +173,11 @@ const Sortable = (props: Props) => {
   );
 };
 
-export default rolesHOC({
+export default rolesHOC<Props>({
   allow: ["admin"],
   component: renderHOC({
     ForEdit: Sortable,
     ForView: () => <></>
   }),
-  fallbackRender: ({ children }: { children: ElementType }) =>
-    children ?? fallbackRender()
+  fallbackRender: () => fallbackRender()
 });

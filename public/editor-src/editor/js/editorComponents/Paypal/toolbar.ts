@@ -197,7 +197,10 @@ export const getItems: GetItems<Value, ElementProps> = ({
                   label: t("Price"),
                   type: "number",
                   disabled: isDonation,
-                  config: rangeConfig,
+                  config: {
+                    ...rangeConfig,
+                    max: Infinity
+                  },
                   population: richTextDC
                 },
                 {
@@ -206,7 +209,8 @@ export const getItems: GetItems<Value, ElementProps> = ({
                   type: "number",
                   config: {
                     ...rangeConfig,
-                    min: 0
+                    min: 0,
+                    max: Infinity
                   },
                   disabled: !isCheckout,
                   population: richTextDC
@@ -374,7 +378,6 @@ export const getItems: GetItems<Value, ElementProps> = ({
     {
       id: "toolbarColor",
       type: "popover",
-      devices: "desktop",
       config: {
         size: "medium",
         title: t("Colors"),

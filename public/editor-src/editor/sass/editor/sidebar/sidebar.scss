@@ -849,51 +849,68 @@
 $sidebar: "brz-ed-sidebar-drawer";
 
 .brz-ed .#{$sidebar} {
-  @apply z-[1];
-  @apply left-[47px] #{!important};
+  z-index: 1;
+  left: 47px !important;
   box-shadow: 0 0 10px 0 variables.$sidebar__content-box-shadow;
 
   .brz-ui-card {
-    @apply overflow-visible;
+    overflow: visible;
     box-shadow: rgba(0, 0, 0, 0.3) 0 0 10px 0;
   }
 
   &--align-left {
-    @apply text-start #{!important};
+    text-align: start !important;
     .brz-ed-sidebar-drawer__body {
-      @apply mb-0 pb-[30px];
+      margin-bottom: 0;
+      padding-bottom: 30px;
     }
   }
 
   &__head {
-    @apply flex justify-between items-center px-[30px];
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 30px;
     height: variables.$sidebar-size;
     background-color: variables.$sidebar__header-bg;
     color: variables.$sidebar-color;
 
     &__title {
-      @apply text-inherit m-0;
+      color: inherit;
+      margin: 0;
       font-size: variables.$sidebar__header-font-size !important;
       font-family: variables.$default-font-family !important;
       font-weight: 600 !important;
     }
 
     &__icon__tooltip {
-      @apply text-[12px] leading-none text-center text-white whitespace-nowrap;
-      @apply h-[27px] w-auto min-w-[60px] rounded-[14px] z-[1];
-      @apply py-[7px] px-[10px];
-      @apply transition-opacity ease-linear duration-150;
+      font-size: 12px;
+      line-height: 1;
+      text-align: center;
+      color: white;
+      white-space: nowrap;
+      height: 27px;
+      width: auto;
+      min-width: 60px;
+      border-radius: 14px;
+      z-index: 1;
+      padding: 7px 10px;
+      transition: opacity 150ms linear;
       font-family: variables.$default-font-family;
       background-color: variables.$black-10;
     }
 
     &__controls {
-      @apply flex items-end justify-between;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
 
       .brz-ed-icon-svg {
-        @apply text-[12px] font-semibold;
-        @apply cursor-pointer ml-[12px];
-        @apply transition-[color] ease-out duration-200;
+        font-size: 12px;
+        font-weight: 600;
+        cursor: pointer;
+        margin-left: 12px;
+        transition: color 200ms ease-out;
         color: variables.$left_sidebar__elements-color;
 
         &:hover {
@@ -902,7 +919,9 @@ $sidebar: "brz-ed-sidebar-drawer";
       }
 
       .brz-ed-tooltip__overlay {
-        @apply bg-transparent ml-[5px] mt-[-5px];
+        background-color: transparent;
+        margin-left: 5px;
+        margin-top: -5px;
         box-shadow: none;
 
         .brz-ed-arrow::after {
@@ -913,14 +932,20 @@ $sidebar: "brz-ed-sidebar-drawer";
   }
 
   &__body {
-    @apply flex-grow flex flex-col mb-[90px];
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 90px;
   }
 
   // Styling  (type of specialized drawer for styling)
   .brz-ed-sidebar__styling {
-    @apply flex flex-col pt-[30px] gap-[30px];
+    display: flex;
+    flex-direction: column;
+    padding-top: 30px;
+    gap: 30px;
     .brz-ed-option-wrapper:not(.brz-ed--scrollable) {
-      @apply px-[30px];
+      padding: 0 30px;
     }
   }
 }

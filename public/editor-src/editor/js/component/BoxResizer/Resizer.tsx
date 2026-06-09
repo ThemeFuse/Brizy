@@ -1,4 +1,4 @@
-import React, { Component, ForwardedRef, ReactNode, RefObject } from "react";
+import React, { Component, ForwardedRef, RefObject } from "react";
 import {
   calcMaxHeightBasedOnWidth,
   calcRectangleSide,
@@ -8,20 +8,23 @@ import ClickOutside from "visual/component/ClickOutside";
 import { DraggableDiv } from "visual/component/DraggableDiv";
 import { clamp } from "visual/utils/math";
 import { attachRefs } from "visual/utils/react";
-import { Patch, Point, RestrictionMapping, SimpleRestriction } from "./types";
+import {
+  Patch,
+  Point,
+  ResizerPassThroughProps,
+  RestrictionMapping,
+  SimpleRestriction
+} from "./types";
 
 interface State {
   showPoints: boolean;
 }
 
-interface Props {
-  keepAspectRatio: boolean;
-  points: Point[];
+interface Props extends ResizerPassThroughProps {
   restrictions?: SimpleRestriction;
   isHorizontalCenterAligned: boolean;
   isVerticalCenterAligned: boolean;
   getValue: () => RestrictionMapping;
-  children: ReactNode;
   onStart?: () => void;
   onEnd?: () => void;
   onChange: (data: Patch) => void;
@@ -37,19 +40,21 @@ interface DragHandler {
   (dragInfo: DragInfo): void;
 }
 
+const DEFAULT_POINTS: Point[] = [
+  "topCenter",
+  "topRight",
+  "centerRight",
+  "bottomLeft",
+  "bottomCenter",
+  "bottomRight",
+  "centerLeft",
+  "topLeft"
+];
+
 export class Resizer extends Component<Props, State> {
   static defaultProps: Partial<Props> = {
     keepAspectRatio: false,
-    points: [
-      "topCenter",
-      "topRight",
-      "centerRight",
-      "bottomLeft",
-      "bottomCenter",
-      "bottomRight",
-      "centerLeft",
-      "topLeft"
-    ],
+    points: DEFAULT_POINTS satisfies Point[],
     isHorizontalCenterAligned: false,
     isVerticalCenterAligned: false
   };
@@ -267,7 +272,7 @@ export class Resizer extends Component<Props, State> {
 
   render(): React.ReactNode {
     const { showPoints } = this.state;
-    const { points, children, containerRef } = this.props;
+    const { points = DEFAULT_POINTS, children, containerRef } = this.props;
     const {
       topCenter,
       topRight,

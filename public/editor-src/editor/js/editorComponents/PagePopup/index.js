@@ -40,6 +40,8 @@ class PagePopup extends EditorComponent {
 
   componentWillUnmount() {
     UIEvents.off("dnd.sort", this.handleDNDSort);
+
+    super.componentWillUnmount();
   }
 
   handleClose = () => {

@@ -118,7 +118,8 @@
       "gridBuyNowTypographyFontFamily": "lato",
       "taxesTypographyFontFamily": "lato",
       "productImageLightboxTitleTypographyFontFamily": "lato",
-      "optionColorTypographyFontFamily": "lato"
+      "optionColorTypographyFontFamily": "lato",
+      "qtyMinMaxTypographyFontFamily": "lato"
     },
 
     "positionName": 100,
@@ -201,6 +202,23 @@
     "titleTypographyStrike": false,
     "titleTypographyUppercase": false,
     "titleTypographyLowercase": false,
+
+    "qtyMinMaxTypographyFontStyle": "",
+    "qtyMinMaxTypographyFontFamilyType": "google",
+    "qtyMinMaxTypographyFontSize": 14,
+    "qtyMinMaxTypographyFontSizeSuffix": "px",
+    "qtyMinMaxTypographyFontWeight": 400,
+    "qtyMinMaxTypographyLetterSpacing": 1,
+    "qtyMinMaxTypographyLineHeight": 1,
+    "qtyMinMaxTypographyVariableFontWeight": 400,
+    "qtyMinMaxTypographyFontWidth": 100,
+    "qtyMinMaxTypographyFontSoftness": 0,
+    "qtyMinMaxTypographyBold": false,
+    "qtyMinMaxTypographyItalic": false,
+    "qtyMinMaxTypographyUnderline": false,
+    "qtyMinMaxTypographyStrike": false,
+    "qtyMinMaxTypographyUppercase": false,
+    "qtyMinMaxTypographyLowercase": false,
 
     "titleColorHex": "#000000",
     "titleColorOpacity": 1,
@@ -2704,6 +2722,17 @@
     "optionColorTooltipBorderTopLeftRadiusSuffix": "px",
     "optionColorTooltipBorderTopRightRadiusSuffix": "px",
     "optionColorTooltipBorderBottomRightRadiusSuffix": "px",
-    "optionColorTooltipBorderBottomLeftRadiusSuffix": "px"
+    "optionColorTooltipBorderBottomLeftRadiusSuffix": "px",
+
+    "qtyMinMaxColorHex": "#333333",
+    "qtyMinMaxColorOpacity": 1,
+    "qtyMinMaxColorPalette": "",
+
+    "qtyMinMaxTextShadowColorHex": "#000000",
+    "qtyMinMaxTextShadowColorOpacity": 0,
+    "qtyMinMaxTextShadowColorPalette": "",
+    "qtyMinMaxTextShadowBlur": 0,
+    "qtyMinMaxTextShadowHorizontal": 0,
+    "qtyMinMaxTextShadowVertical": 0
   }
 }

@@ -168,7 +168,6 @@ export const getItems: GetItems<Value, Props> = ({ v, device }) => {
           }
         }
       },
-      devices: "desktop",
       position: 80,
       options: [
         {

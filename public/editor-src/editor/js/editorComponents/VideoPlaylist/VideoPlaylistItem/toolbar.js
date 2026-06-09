@@ -38,7 +38,6 @@ export function getItems({ v, device, component }) {
           title: t("Colors"),
           icon: {}
         },
-        devices: "desktop",
         roles: ["admin"],
         position: 90,
         options: [

@@ -120,7 +120,8 @@ export class Typography extends PureComponent<Props> {
       showFontStyles,
       isFontStyleSettingsDisabled,
       label,
-      disabledFields
+      disabledFields,
+      shouldSortFonts
     } = this.props;
 
     const typographyStyleClassName = classnames(
@@ -188,6 +189,7 @@ export class Typography extends PureComponent<Props> {
               fonts={fonts}
               addFont={fontAdd}
               addFontLabel={fontAddLabel}
+              shouldSortFonts={shouldSortFonts}
             />
           )}
 

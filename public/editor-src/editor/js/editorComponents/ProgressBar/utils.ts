@@ -1,4 +1,4 @@
-import type { Point, Restrictions } from "visual/component/BoxResizer/types";
+import type { BoxResizerPartialProps } from "visual/component/BoxResizer/types";
 import { MValue } from "visual/utils/value";
 import { Animate, ProgressStyle } from "./types";
 
@@ -10,46 +10,44 @@ export const readType = (v: unknown): MValue<ProgressStyle> => {
   }
 };
 
-export const getBoxResizerParams = (): {
-  points: Point[];
-  restrictions: Partial<Restrictions>;
-} => ({
-  points: ["centerLeft", "centerRight"],
-  restrictions: {
-    width: {
-      px: {
-        min: 5,
-        max: 1000
+export const getBoxResizerParams = () =>
+  ({
+    points: ["centerLeft", "centerRight"],
+    restrictions: {
+      width: {
+        px: {
+          min: 5,
+          max: 1000
+        },
+        "%": {
+          min: 5,
+          max: 100
+        }
       },
-      "%": {
-        min: 5,
-        max: 100
-      }
-    },
-    // Tablet
-    tabletWidth: {
-      px: {
-        min: 5,
-        max: 1000
+      // Tablet
+      tabletWidth: {
+        px: {
+          min: 5,
+          max: 1000
+        },
+        "%": {
+          min: 5,
+          max: 100
+        }
       },
-      "%": {
-        min: 5,
-        max: 100
-      }
-    },
-    // Mobile
-    mobileWidth: {
-      px: {
-        min: 5,
-        max: 1000
-      },
-      "%": {
-        min: 5,
-        max: 100
+      // Mobile
+      mobileWidth: {
+        px: {
+          min: 5,
+          max: 1000
+        },
+        "%": {
+          min: 5,
+          max: 100
+        }
       }
     }
-  }
-});
+  }) satisfies BoxResizerPartialProps;
 
 export const animate: Animate = ({ text, wrapper, value, type }) => {
   let width = 0;

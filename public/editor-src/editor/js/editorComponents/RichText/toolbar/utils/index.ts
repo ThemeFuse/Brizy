@@ -1,13 +1,12 @@
+import { Obj, Str } from "@brizy/readers";
 import { produce } from "immer";
 import { Config } from "visual/global/Config";
+import { DeviceMode } from "visual/types";
 import { hexToRgba, makeStylePaletteCSSVar } from "visual/utils/color";
-import * as Obj from "visual/utils/reader/object";
-import * as Str from "visual/utils/reader/string";
+import { defaultValueKey } from "visual/utils/onChange";
 import { capByPrefix } from "visual/utils/string";
 import {
-  ColorBgValues,
   ColorOption,
-  ColorValues,
   GradientBgValues,
   GradientColorValues,
   GradientValue,
@@ -62,7 +61,8 @@ export const hexToString = (
 export const gradientValues = (
   type: ColorOption,
   value: Value,
-  prefix: string
+  prefix: string,
+  device: DeviceMode
 ): GradientBgValues | GradientColorValues => {
   const DEFAULT_GRADIENT = {
     type: "linear-gradient",
@@ -79,63 +79,98 @@ export const gradientValues = (
     finishPalette: ""
   };
 
-  const bgColorHex = capByPrefix(prefix, "bgColorHex");
-  const bgColorPalette = capByPrefix(prefix, "bgColorPalette");
+  const dvk = (key: string) =>
+    defaultValueKey({ key, device, state: "normal" });
+
+  const bgColorHexKey = dvk(capByPrefix(prefix, "bgColorHex"));
+  const bgColorPaletteKey = dvk(capByPrefix(prefix, "bgColorPalette"));
+  const bgColorOpacityKey = dvk(capByPrefix(prefix, "bgColorOpacity"));
+  const gradientColorOpacityKey = dvk(
+    capByPrefix(prefix, "gradientColorOpacity")
+  );
+  const gradientColorPaletteKey = dvk(
+    capByPrefix(prefix, "gradientColorPalette")
+  );
+  const gradientColorHexKey = dvk(capByPrefix(prefix, "gradientColorHex"));
+  const gradientStartPointerKey = dvk(
+    capByPrefix(prefix, "gradientStartPointer")
+  );
+  const gradientFinishPointerKey = dvk(
+    capByPrefix(prefix, "gradientFinishPointer")
+  );
+  const gradientActivePointerKey = dvk(
+    capByPrefix(prefix, "gradientActivePointer")
+  );
+  const gradientTypeKey = dvk(capByPrefix(prefix, "gradientType"));
+  const gradientLinearDegreeKey = dvk(
+    capByPrefix(prefix, "gradientLinearDegree")
+  );
+  const gradientRadialDegreeKey = dvk(
+    capByPrefix(prefix, "gradientRadialDegree")
+  );
 
   const gradient: GradientValue = {
     ...DEFAULT_GRADIENT,
-    startHex: Str.read(value[bgColorHex]),
-    startOpacity: Str.read(value[capByPrefix(prefix, "bgColorOpacity")]),
-    finishOpacity: Str.read(value[capByPrefix(prefix, "gradientColorOpacity")]),
-    startPalette: Str.read(value[bgColorPalette]),
-    finishPalette: Str.read(value[capByPrefix(prefix, "gradientColorPalette")]),
-    finishHex: Str.read(value[capByPrefix(prefix, "gradientColorHex")]),
-    startPointer: Str.read(value[capByPrefix(prefix, "gradientStartPointer")]),
-    finishPointer: Str.read(
-      value[capByPrefix(prefix, "gradientFinishPointer")]
-    ),
-    activePointer: Str.read(
-      value[capByPrefix(prefix, "gradientActivePointer")]
-    ),
+    startHex: Str.read(value[bgColorHexKey]),
+    startOpacity: Str.read(value[bgColorOpacityKey]),
+    finishOpacity: Str.read(value[gradientColorOpacityKey]),
+    startPalette: Str.read(value[bgColorPaletteKey]),
+    finishPalette: Str.read(value[gradientColorPaletteKey]),
+    finishHex: Str.read(value[gradientColorHexKey]),
+    startPointer: Str.read(value[gradientStartPointerKey]),
+    finishPointer: Str.read(value[gradientFinishPointerKey]),
+    activePointer: Str.read(value[gradientActivePointerKey]),
     type:
-      value[capByPrefix(prefix, "gradientType")] === "linear"
+      value[gradientTypeKey] === "linear"
         ? "linear-gradient"
         : "radial-gradient",
-    linearAngle: Str.read(value[capByPrefix(prefix, "gradientLinearDegree")]),
-    radialPosition: Str.read(value[capByPrefix(prefix, "gradientRadialDegree")])
+    linearAngle: Str.read(value[gradientLinearDegreeKey]),
+    radialPosition: Str.read(value[gradientRadialDegreeKey])
   };
 
   switch (type) {
     case ColorOption.Background:
       return {
-        background: null,
-        textBgColorPalette: Str.read(value[bgColorPalette]),
-        textBackgroundGradient: gradient
+        [dvk("background")]: null,
+        [dvk("textBgColorPalette")]: Str.read(value[bgColorPaletteKey]),
+        [dvk("textBackgroundGradient")]: gradient
       };
     case ColorOption.Color:
       return {
-        color: Str.read(value[bgColorHex]),
-        colorPalette: Str.read(value[bgColorPalette]),
-        opacity: null,
-        backgroundGradient: gradient
+        [dvk("color")]: Str.read(value[bgColorHexKey]),
+        [dvk("colorPalette")]: Str.read(value[bgColorPaletteKey]),
+        [dvk("opacity")]: null,
+        [dvk("backgroundGradient")]: gradient
       };
   }
 };
 
-export const colorValues = (
-  type: ColorOption,
-  value: Value,
-  config: Config,
-  prefix: string
-): ColorBgValues | ColorValues => {
-  const bgColorHex = Str.read(value[capByPrefix(prefix, "bgColorHex")]);
-  const bgColorPalette = Str.read(value[capByPrefix(prefix, "bgColorPalette")]);
+export const colorValues = ({
+  value,
+  config,
+  prefix,
+  device,
+  type
+}: {
+  value: Value;
+  config: Config;
+  prefix: string;
+  device: DeviceMode;
+  type: ColorOption;
+}): Record<string, unknown> => {
+  const dvk = (key: string) =>
+    defaultValueKey({ key, device, state: "normal" });
+  const bgColorHexKey = dvk(capByPrefix(prefix, "bgColorHex"));
+  const bgColorPaletteKey = dvk(capByPrefix(prefix, "bgColorPalette"));
+  const bgColorOpacityKey = dvk(capByPrefix(prefix, "bgColorOpacity"));
+  const bgColorHex = Str.read(value[bgColorHexKey]);
+  const bgColorPalette = Str.read(value[bgColorPaletteKey]);
 
   const rgbColor = hexToString(
     {
       palette: bgColorPalette ?? "",
       hex: bgColorHex ?? "#000000",
-      opacity: String(value[capByPrefix(prefix, "bgColorOpacity")])
+      opacity: Str.read(value[bgColorOpacityKey]) ?? "1"
     },
     config
   );
@@ -143,16 +178,16 @@ export const colorValues = (
   switch (type) {
     case ColorOption.Background:
       return {
-        textBackgroundGradient: null,
-        textBgColorPalette: bgColorPalette,
-        background: rgbColor
+        [dvk("textBackgroundGradient")]: null,
+        [dvk("textBgColorPalette")]: bgColorPalette,
+        [dvk("background")]: rgbColor
       };
     case ColorOption.Color:
       return {
-        backgroundGradient: null,
-        opacity: null,
-        color: rgbColor,
-        colorPalette: bgColorPalette
+        [dvk("backgroundGradient")]: null,
+        [dvk("opacity")]: null,
+        [dvk("color")]: rgbColor,
+        [dvk("colorPalette")]: bgColorPalette
       };
   }
 };

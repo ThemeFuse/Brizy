@@ -302,7 +302,6 @@ export function getItems({ v, component, device, context }) {
         }
       },
       position: 90,
-      devices: "desktop",
       options: [
         {
           id: "tabsColor",

@@ -2,6 +2,7 @@ import { noop } from "es-toolkit";
 import React, { Component, Fragment } from "react";
 import Select from "visual/component/Controls/Select";
 import SelectItem from "visual/component/Controls/Select/SelectItem";
+import { Switch } from "visual/component/Controls/Switch";
 import Tooltip from "visual/component/Controls/Tooltip";
 import EditorIcon from "visual/component/EditorIcon";
 import { Button } from "visual/component/Prompts/common/Button";
@@ -93,6 +94,17 @@ class ViewAdd extends Component {
     );
   }
 
+  renderSwitch({ name, value }) {
+    return (
+      <Switch
+        value={value}
+        onChange={(v) => {
+          this.props.onActive(name, v);
+        }}
+      />
+    );
+  }
+
   renderOptions() {
     const options = this.props.data.map((option, index) => {
       const { title, type, helper } = option;
@@ -121,6 +133,7 @@ class ViewAdd extends Component {
             )}
           </div>
           {type === "select" && this.renderSelect(option)}
+          {type === "switch" && this.renderSwitch(option)}
           {type === "upload" && this.renderUpload(option)}
         </div>
       );

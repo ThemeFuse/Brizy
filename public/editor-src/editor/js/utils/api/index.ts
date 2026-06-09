@@ -97,8 +97,8 @@ import {
   EkklesiaExtra,
   EkklesiaFields
 } from "visual/global/Config/types/configs/modules/ekklesia/Ekklesia";
-import { CategoriesList } from "visual/libs/EcwidSdk/categories";
-import { ProductsList } from "visual/libs/EcwidSdk/products";
+import { type CategoriesList } from "visual/libs/EcwidSdk/categories";
+import { type ProductsList } from "visual/libs/EcwidSdk/products";
 import { Store } from "visual/redux/store";
 import { SavedBlock, SavedLayout } from "visual/types";
 import { UploadedFont } from "visual/types/Fonts";

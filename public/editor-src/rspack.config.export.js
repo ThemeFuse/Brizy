@@ -97,7 +97,7 @@ exports.node = (options) => {
           use: { loader: "swc-loader", options: swcrc.export(options) }
         },
         {
-          test: /\.s[ac]ss$/i,
+          test: /\.(s[ac]ss|css)$/i,
           include: [
             path.resolve(__dirname, "editor/sass"),
             path.resolve(__dirname, "../packages")
@@ -229,7 +229,7 @@ exports.browser = (options) => {
           options: swcrc.webworker(options)
         },
         {
-          test: /\.s[ac]ss$/i,
+          test: /\.(s[ac]ss|css)$/i,
           include: [
             path.resolve(__dirname, "editor/sass"),
             path.resolve(__dirname, "../packages")
@@ -317,7 +317,9 @@ exports.browser = (options) => {
               const request = module.request || "";
               return (
                 request.includes(".scss?componentId=") ||
-                request.includes(".scss?chunk=")
+                request.includes(".scss?chunk=") ||
+                request.includes(".css?componentId=") ||
+                request.includes(".css?chunk=")
               );
             },
             name: "compiler-css-registrations",

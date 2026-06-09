@@ -99,7 +99,6 @@ export function getItems({ v, device }) {
           }
         }
       },
-      devices: "desktop",
       position: 80,
 
       options: [

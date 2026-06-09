@@ -2,6 +2,7 @@ import { Num } from "@brizy/readers";
 import classnames from "classnames";
 import React, { useCallback } from "react";
 import BoxResizer from "visual/component/BoxResizer";
+import { type Patch as BoxResizerPatch } from "visual/component/BoxResizer/types";
 import {
   calcWrapperSizes,
   getSizeType
@@ -75,7 +76,7 @@ const Image: FCC<ImageProps> = (props) => {
   );
 
   const handleOnResize = useCallback(
-    (patch: Patch, meta: Meta) => {
+    (patch: BoxResizerPatch["patch"], meta: Meta) => {
       onChange(resizerTransformPatch(patch, v, meta));
     },
     [onChange, v]
@@ -108,7 +109,9 @@ const Image: FCC<ImageProps> = (props) => {
       points={points}
       meta={meta}
       value={resizerTransformValue(v, meta)}
-      onChange={(patch: Patch) => handleOnResize(patch, meta)}
+      onChange={(patch: BoxResizerPatch["patch"]) =>
+        handleOnResize(patch, meta)
+      }
       onStart={onStart}
       onEnd={onEnd}
     >
@@ -160,7 +163,11 @@ const Image: FCC<ImageProps> = (props) => {
     };
   }
 
-  function resizerTransformPatch(patch: Patch, v: V, meta: Meta): Patch {
+  function resizerTransformPatch(
+    patch: BoxResizerPatch["patch"],
+    v: V,
+    meta: Meta
+  ): Patch {
     const { desktopW: containerWidth } = meta;
     const {
       imageWidth,
@@ -218,7 +225,7 @@ const Image: FCC<ImageProps> = (props) => {
 
       newPatch = {
         offsetY: patch.offsetY || offsetY,
-        height: patch.height * ratio
+        ...(patch.height !== undefined ? { height: patch.height * ratio } : {})
       };
     }
 

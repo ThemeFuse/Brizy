@@ -120,9 +120,9 @@ type GBDependency = ArrayType<GlobalBlock["dependencies"]>;
 type GBBlocks = GlobalBlock["blocks"];
 
 const parseMeta = parseStrict<Record<string, unknown>, GBMeta>({
-  // @ts-expect-error: Type "normal" | "popup" is not assignable to type "normal
   type: pipe(
     Obj.readKey("type"),
+    // @ts-expect-error: Type "normal" | "popup" is not assignable to type "normal
     Union.readWithChoices(["popup", "normal"]),
     onNullish("normal")
   ),
@@ -141,9 +141,9 @@ const parseBlocks = (v: unknown): MValue<BlockHtmlWithId> => {
   const b = Obj.read(v);
 
   if (b && Str.is(b.id) && Str.is(b.html)) {
+    // @ts-expect-error: Type 'string' is not assignable to type '""'.
     return {
       id: b.id,
-      // @ts-expect-error: Type 'string' is not assignable to type '""'.
       html: b.html
     };
   }

@@ -10,7 +10,8 @@ export default [
       "**/__tests__/**",
       "build/",
       "editor/js/libs/",
-      "backend/"
+      "backend/",
+      "dist/"
     ]
   },
   {

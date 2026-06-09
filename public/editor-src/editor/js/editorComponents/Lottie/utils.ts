@@ -6,37 +6,41 @@ import { Num, pipe } from "@brizy/readers";
 import { DotLottie } from "@lottiefiles/dotlottie-web";
 import { throttle } from "es-toolkit";
 import { AnimationDirection, AnimationItem } from "lottie-web";
+import type {
+  BoxResizerPartialProps,
+  Point
+} from "visual/component/BoxResizer/types";
 import { checkValue, checkValue2 } from "visual/utils/checkValue";
 import { getCurrentDevice } from "visual/utils/export";
 import { DESKTOP } from "visual/utils/responsiveMode";
-import { BoxResizerParams } from "./type";
 
-export const resizerPoints = [
+const resizerPoints = [
   "topLeft",
   "topRight",
   "bottomLeft",
   "bottomRight"
-];
+] satisfies Point[];
 
-export const getBoxResizerParams: BoxResizerParams = () => ({
-  points: resizerPoints,
-  restrictions: {
-    width: {
-      px: { min: 5, max: 1000 },
-      "%": { min: 5, max: 100 }
-    },
-    // Tablet
-    tabletWidth: {
-      px: { min: 5, max: 1000 },
-      "%": { min: 5, max: 100 }
-    },
-    // Mobile
-    mobileWidth: {
-      px: { min: 5, max: 1000 },
-      "%": { min: 5, max: 100 }
+export const getBoxResizerParams = () =>
+  ({
+    points: resizerPoints,
+    restrictions: {
+      width: {
+        px: { min: 5, max: 1000 },
+        "%": { min: 5, max: 100 }
+      },
+      // Tablet
+      tabletWidth: {
+        px: { min: 5, max: 1000 },
+        "%": { min: 5, max: 100 }
+      },
+      // Mobile
+      mobileWidth: {
+        px: { min: 5, max: 1000 },
+        "%": { min: 5, max: 100 }
+      }
     }
-  }
-});
+  }) satisfies BoxResizerPartialProps;
 
 export const getTriggerType = checkValue2<TriggerType>(TriggerType);
 export const getRendererType = checkValue2<RendererType>(RendererType);

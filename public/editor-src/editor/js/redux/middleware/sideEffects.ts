@@ -29,6 +29,7 @@ import {
 } from "visual/utils/fonts/makeFontsUrl";
 import { makeGlobalStylesTypography } from "visual/utils/fonts/makeGlobalStylesTypography";
 import { projectFontsData } from "visual/utils/fonts/transform";
+import UIEvents from "visual/global/UIEvents";
 import {
   getClosestSections,
   isElementInViewport,
@@ -156,6 +157,10 @@ export default (
 
     if (action.type === UPDATE_UI && action.key === "currentLanguage") {
       handleCurrentLanguageChange(callbacks);
+    }
+
+    if (action.type === UPDATE_UI && action.key === "activeElementMeta") {
+      handleActiveElementMetaChange(callbacks);
     }
 
     const oldState = store.getState();
@@ -544,6 +549,12 @@ function handleCurrentLanguageChange(callbacks: Callbacks): void {
     if (newLanguageValue !== "default") {
       document.body.style.setProperty(`--lang-${newLanguageValue}`, "none");
     }
+  });
+}
+
+function handleActiveElementMetaChange(callbacks: Callbacks): void {
+  callbacks.onAfterNext.push(({ state }) => {
+    UIEvents.emit("activeElement:change", state.ui.activeElementMeta);
   });
 }
 

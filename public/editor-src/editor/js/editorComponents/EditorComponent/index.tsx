@@ -175,6 +175,8 @@ export class EditorComponent<
   _defaultValueProcessedCache?: DefaultValueProcessed<M>;
   _dc: ECDC = {};
   childToolbarExtend?: ToolbarExtend;
+  cssClassNames = new Set<string>();
+  _memoryId = uuid(4);
 
   /**
    * @return {string}
@@ -567,6 +569,44 @@ export class EditorComponent<
     return replaceCSSDuplicatesWithEmptyString(output);
   }
 
+  setCssClassNames = (classNames: string[]): void => {
+    const sheet = this.context.sheet;
+
+    classNames.forEach((className) => {
+      if (
+        sheet.isIncrementalClassName(className) &&
+        !this.cssClassNames.has(className)
+      ) {
+        sheet.incrementClassNameCounter(className);
+      }
+      this.cssClassNames.add(className);
+    });
+  };
+
+  deleteCssClassNames(classNames: string[]): void {
+    classNames.forEach((className) => {
+      this.cssClassNames.delete(className);
+    });
+  }
+
+  cleanCSS() {
+    const sheet = this.context.sheet;
+    const classNames = Array.from(this.cssClassNames);
+
+    classNames.forEach((className) => {
+      sheet.cleanupClassName(
+        className,
+        sheet.isIncrementalClassName(className)
+      );
+    });
+
+    this.cssClassNames.clear();
+  }
+
+  componentWillUnmount() {
+    this.cleanCSS();
+  }
+
   css = (componentId: string, id: string, css: OutputStyle) => {
     const customStylesClassName = this.getCustomStylesClassName(id);
     const cache = createCache({ id, componentId, sheet: this.context.sheet });
@@ -575,6 +615,10 @@ export class EditorComponent<
       css,
       customStylesClassName
     });
+
+    const classNames = sheet.className.split(" ").filter(Boolean);
+    this.setCssClassNames(classNames);
+
     return sheet.className;
   };
 
@@ -594,6 +638,9 @@ export class EditorComponent<
     );
 
     const sheet = createSheet({ cache, css, customStylesClassName });
+
+    const classNames = sheet.className.split(" ").filter(Boolean);
+    this.setCssClassNames(classNames);
 
     return sheet.className;
   };
@@ -653,6 +700,9 @@ export class EditorComponent<
       customStylesClassName,
       className: extraClassNames
     });
+
+    const classNames = sheet.className.split(" ").filter(Boolean);
+    this.setCssClassNames(classNames);
 
     return sheet.className;
   }
@@ -793,7 +843,7 @@ export class EditorComponent<
   }
 
   getCustomStylesClassName(elementId: string): string {
-    return `brz-css-${murmurhash2(elementId)}`;
+    return `brz-css-${murmurhash2(elementId + this._memoryId)}`;
   }
 
   getGlobalClassNameWithDefault(v: M, css: string, elementId: string): string {
@@ -1065,12 +1115,11 @@ export class EditorComponent<
       getItems: ContextGetItems<M>;
     },
     extraProps = {}
-  ): ContextMenuProps<M> {
+  ): ContextMenuProps {
     const componentId = this.getComponentId();
     const v = this.getValue();
 
     return {
-      id: uuid(3),
       componentId,
       getItems: config.getItems.bind(null, v, this as Editor<M>),
       ...extraProps
@@ -1152,7 +1201,7 @@ export class EditorComponent<
 
   makeToolbarPropsFromConfig2(
     config: NewToolbarConfig<M, P, S, C>,
-    sidebarConfig?: SidebarConfig<M, P, S, C>,
+    sidebarConfig: SidebarConfig<M, P, S, C> | null = null,
     options = {}
   ): ToolbarExtend {
     const { onToolbarOpen, onToolbarClose, onToolbarEnter, onToolbarLeave } =

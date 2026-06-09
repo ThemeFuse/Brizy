@@ -8,10 +8,10 @@ export const getItems: GetItems<Value> = ({ v, device }) => {
   const dvv = (key: string) =>
     defaultValueValue({ v, key, device, state: "normal" });
 
-  const iconsColor = getColorToolbar(
-    dvv("iconsColorPalette"),
-    dvv("iconsColorHex"),
-    dvv("iconsColorOpacity")
+  const color = getColorToolbar(
+    dvv("colorPalette"),
+    dvv("colorHex"),
+    dvv("colorOpacity")
   );
 
   return [
@@ -86,7 +86,7 @@ export const getItems: GetItems<Value> = ({ v, device }) => {
         title: t("Colors"),
         icon: {
           style: {
-            backgroundColor: iconsColor
+            backgroundColor: color
           }
         }
       },
@@ -103,7 +103,6 @@ export const getItems: GetItems<Value> = ({ v, device }) => {
                 {
                   id: "color",
                   type: "colorPicker",
-                  devices: "desktop"
                 }
               ]
             },
@@ -114,7 +113,6 @@ export const getItems: GetItems<Value> = ({ v, device }) => {
                 {
                   id: "iconsColor",
                   type: "colorPicker",
-                  devices: "desktop"
                 }
               ]
             }

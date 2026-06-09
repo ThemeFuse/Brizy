@@ -273,6 +273,8 @@ export default class Cloneable extends EditorComponent {
                           color="grey"
                           borderStyle="dotted"
                           renderButtonWrapper={this.renderToolbar}
+                          elementId={this.getId()}
+                          elementType={this.getComponentId()}
                         >
                           {({
                             ref: containerBorderRef,
@@ -362,6 +364,8 @@ export default class Cloneable extends EditorComponent {
                       ref={this.containerBorder}
                       color="grey"
                       borderStyle="dotted"
+                      elementId={this.getId()}
+                      elementType={this.getComponentId()}
                     >
                       {this.renderContent(v, vs, vd)}
                     </ContainerBorder>

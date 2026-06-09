@@ -1,6 +1,9 @@
 // Variables
 @use "variables.scss" as *;
 
+// CSS Variables (extracted from Tailwind config)
+@use "default-variables";
+
 // Mixins
 @use "mixins";
 
@@ -33,10 +36,6 @@
 // Used for mapping CSS variables to brizy/ui elements
 @use "editor/brizy-ui/theme";
 @use "@brizy/ui/dist/core";
-
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
 
 .brz-ed ::selection {
   color: $selection-color;

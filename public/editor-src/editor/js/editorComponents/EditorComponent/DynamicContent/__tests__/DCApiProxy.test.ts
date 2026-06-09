@@ -1,4 +1,4 @@
-import Base64 from "js-base64";
+import { encode } from "js-base64";
 import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { BatchFetcher } from "../BatchFetcher";
 import { DCApiProxy as DCApiProxy_ } from "../DCApiProxy";
@@ -28,8 +28,8 @@ describe("Testing 'DCApiProxy'", function () {
   test("Should work with fake fetcher", async () => {
     const p1 = DCApiProxy.getDC(
       [
-        `{{ placeholder content='${Base64.encode("aa")}' }}`,
-        `{{ placeholder content='${Base64.encode("cc")}' }}`
+        `{{ placeholder content='${encode("aa")}' }}`,
+        `{{ placeholder content='${encode("cc")}' }}`
       ],
       config("p1")
     );
@@ -44,15 +44,15 @@ describe("Testing 'DCApiProxy'", function () {
   test("Should work with multiple post ids", async () => {
     const p1 = DCApiProxy.getDC(
       [
-        `{{ placeholder content='${Base64.encode("a")}' }}`,
-        `{{ placeholder content='${Base64.encode("b")}' }}`
+        `{{ placeholder content='${encode("a")}' }}`,
+        `{{ placeholder content='${encode("b")}' }}`
       ],
       config("p1")
     );
     const p2 = DCApiProxy.getDC(
       [
-        `{{ placeholder content='${Base64.encode("a")}' }}`,
-        `{{ placeholder content='${Base64.encode("c")}' }}`
+        `{{ placeholder content='${encode("a")}' }}`,
+        `{{ placeholder content='${encode("c")}' }}`
       ],
       config("p2")
     );
@@ -69,8 +69,8 @@ describe("Testing 'DCApiProxy'", function () {
     const config_ = config("p5");
     const p1 = DCApiProxy.getDC(
       [
-        `{{ placeholder content='${Base64.encode("a")}' }}`,
-        `{{ placeholder content='${Base64.encode("g")}' }}`
+        `{{ placeholder content='${encode("a")}' }}`,
+        `{{ placeholder content='${encode("g")}' }}`
       ],
       config_
     );
@@ -82,13 +82,13 @@ describe("Testing 'DCApiProxy'", function () {
     expect(dc).toEqual(["p5_a", "p5_g"]);
     expect(
       DCApiProxy.getFromCache(
-        `{{ placeholder content='${Base64.encode("a")}' }}`,
+        `{{ placeholder content='${encode("a")}' }}`,
         config_
       )
     ).toEqual("p5_a");
     expect(
       DCApiProxy.getFromCache(
-        `{{ placeholder content='${Base64.encode("g")}' }}`,
+        `{{ placeholder content='${encode("g")}' }}`,
         config_
       )
     ).toEqual("p5_g");
@@ -96,7 +96,7 @@ describe("Testing 'DCApiProxy'", function () {
 
   test("Should cache responses with attributes and fallback", async () => {
     const config_ = config("p5");
-    const a = Base64.encode("a");
+    const a = encode("a");
     const p1 = DCApiProxy.getDC(
       [`{{ placeholder content='${a}' x='1' _fallback='fb' }}`],
       config_
@@ -139,8 +139,8 @@ describe("Testing 'DCApiProxy'", function () {
     };
     const p1 = DCApiProxy.getDC(
       [
-        `{{ placeholder content='${Base64.encode("a")}' }}`,
-        `{{ placeholder content='${Base64.encode("g")}' }}`
+        `{{ placeholder content='${encode("a")}' }}`,
+        `{{ placeholder content='${encode("g")}' }}`
       ],
       config
     );
@@ -152,13 +152,13 @@ describe("Testing 'DCApiProxy'", function () {
     expect(dc).toEqual(["p5_a", "p5_g"]);
     expect(
       DCApiProxy.getFromCache(
-        `{{ placeholder content='${Base64.encode("a")}' }}`,
+        `{{ placeholder content='${encode("a")}' }}`,
         config
       )
     ).toBe(undefined);
     expect(
       DCApiProxy.getFromCache(
-        `{{ placeholder content='${Base64.encode("g")}' }}`,
+        `{{ placeholder content='${encode("g")}' }}`,
         config
       )
     ).toBe(undefined);
@@ -167,8 +167,8 @@ describe("Testing 'DCApiProxy'", function () {
   test("Should fetch only when needed", async () => {
     const p1 = DCApiProxy.getDC(
       [
-        `{{ placeholder content='${Base64.encode("a")}' }}`,
-        `{{ placeholder content='${Base64.encode("c")}' }}`
+        `{{ placeholder content='${encode("a")}' }}`,
+        `{{ placeholder content='${encode("c")}' }}`
       ],
       config("p1")
     );
@@ -177,8 +177,8 @@ describe("Testing 'DCApiProxy'", function () {
 
     const p2 = DCApiProxy.getDC(
       [
-        `{{ placeholder content='${Base64.encode("c")}' }}`,
-        `{{ placeholder content='${Base64.encode("a")}' }}`
+        `{{ placeholder content='${encode("c")}' }}`,
+        `{{ placeholder content='${encode("a")}' }}`
       ],
       config("p1")
     );
@@ -186,14 +186,14 @@ describe("Testing 'DCApiProxy'", function () {
     await p2; // should get from cache
 
     const p3 = DCApiProxy.getDC(
-      [`{{ placeholder content='${Base64.encode("a")}' }}`],
+      [`{{ placeholder content='${encode("a")}' }}`],
       config("p1")
     );
     jest.runAllTimers();
     await p3; // should get from cache
 
     const p4 = DCApiProxy.getDC(
-      [`{{ placeholder content='${Base64.encode("c")}' }}`],
+      [`{{ placeholder content='${encode("c")}' }}`],
       config("p1")
     );
     jest.runAllTimers();
@@ -201,8 +201,8 @@ describe("Testing 'DCApiProxy'", function () {
 
     const p5 = DCApiProxy.getDC(
       [
-        `{{ placeholder content='${Base64.encode("c")}' }}`,
-        `{{ placeholder content='${Base64.encode("d")}' }}`
+        `{{ placeholder content='${encode("c")}' }}`,
+        `{{ placeholder content='${encode("d")}' }}`
       ],
       config("p1")
     );
@@ -210,7 +210,7 @@ describe("Testing 'DCApiProxy'", function () {
     await p5; // fetcherCalls++ (because of {{ d }})
 
     const p6 = DCApiProxy.getDC(
-      [`{{ placeholder content='${Base64.encode("d")}' }}`],
+      [`{{ placeholder content='${encode("d")}' }}`],
       config("p1")
     );
     jest.runAllTimers();
@@ -237,23 +237,23 @@ describe("Testing 'BatchFetcher'", () => {
     [
       {
         getDCArgs: [
-          [[`{{ placeholder content='${Base64.encode("a")}' }}`], config("p1")],
+          [[`{{ placeholder content='${encode("a")}' }}`], config("p1")],
           [
             [
-              `{{ placeholder content='${Base64.encode("b")}' }}`,
-              `{{ placeholder content='${Base64.encode("c")}' }}`
+              `{{ placeholder content='${encode("b")}' }}`,
+              `{{ placeholder content='${encode("c")}' }}`
             ],
             config("p1")
           ],
-          [[`{{ placeholder content='${Base64.encode("d")}' }}`], config("p1")]
+          [[`{{ placeholder content='${encode("d")}' }}`], config("p1")]
         ],
         expectedResults: [["p1_a"], ["p1_b", "p1_c"], ["p1_d"]],
         expectedPlaceholders: {
           p1: [
-            `{{ placeholder content='${Base64.encode("a")}' }}`,
-            `{{ placeholder content='${Base64.encode("b")}' }}`,
-            `{{ placeholder content='${Base64.encode("c")}' }}`,
-            `{{ placeholder content='${Base64.encode("d")}' }}`
+            `{{ placeholder content='${encode("a")}' }}`,
+            `{{ placeholder content='${encode("b")}' }}`,
+            `{{ placeholder content='${encode("c")}' }}`,
+            `{{ placeholder content='${encode("d")}' }}`
           ]
         }
       }
@@ -263,16 +263,16 @@ describe("Testing 'BatchFetcher'", () => {
         getDCArgs: [
           [
             [
-              `{{ placeholder content='${Base64.encode("c")}' }}`,
-              `{{ placeholder content='${Base64.encode("f")}' }}`
+              `{{ placeholder content='${encode("c")}' }}`,
+              `{{ placeholder content='${encode("f")}' }}`
             ],
             config("p1")
           ],
           [
             [
-              `{{ placeholder content='${Base64.encode("a")}' }}`,
-              `{{ placeholder content='${Base64.encode("g")}' }}`,
-              `{{ placeholder content='${Base64.encode("d")}' }}`
+              `{{ placeholder content='${encode("a")}' }}`,
+              `{{ placeholder content='${encode("g")}' }}`,
+              `{{ placeholder content='${encode("d")}' }}`
             ],
             config("p1")
           ]
@@ -283,11 +283,11 @@ describe("Testing 'BatchFetcher'", () => {
         ],
         expectedPlaceholders: {
           p1: [
-            `{{ placeholder content='${Base64.encode("c")}' }}`,
-            `{{ placeholder content='${Base64.encode("f")}' }}`,
-            `{{ placeholder content='${Base64.encode("a")}' }}`,
-            `{{ placeholder content='${Base64.encode("g")}' }}`,
-            `{{ placeholder content='${Base64.encode("d")}' }}`
+            `{{ placeholder content='${encode("c")}' }}`,
+            `{{ placeholder content='${encode("f")}' }}`,
+            `{{ placeholder content='${encode("a")}' }}`,
+            `{{ placeholder content='${encode("g")}' }}`,
+            `{{ placeholder content='${encode("d")}' }}`
           ]
         }
       }
@@ -298,25 +298,25 @@ describe("Testing 'BatchFetcher'", () => {
     [
       {
         getDCArgs: [
-          [[`{{ placeholder content='${Base64.encode("a")}' }}`], config("p1")],
+          [[`{{ placeholder content='${encode("a")}' }}`], config("p1")],
           [
             [
-              `{{ placeholder content='${Base64.encode("b")}' }}`,
-              `{{ placeholder content='${Base64.encode("c")}' }}`
+              `{{ placeholder content='${encode("b")}' }}`,
+              `{{ placeholder content='${encode("c")}' }}`
             ],
             config("p2")
           ],
-          [[`{{ placeholder content='${Base64.encode("d")}' }}`], config("p1")]
+          [[`{{ placeholder content='${encode("d")}' }}`], config("p1")]
         ],
         expectedResults: [["p1_a"], ["p2_b", "p2_c"], ["p1_d"]],
         expectedPlaceholders: {
           p1: [
-            `{{ placeholder content='${Base64.encode("a")}' }}`,
-            `{{ placeholder content='${Base64.encode("d")}' }}`
+            `{{ placeholder content='${encode("a")}' }}`,
+            `{{ placeholder content='${encode("d")}' }}`
           ],
           p2: [
-            `{{ placeholder content='${Base64.encode("b")}' }}`,
-            `{{ placeholder content='${Base64.encode("c")}' }}`
+            `{{ placeholder content='${encode("b")}' }}`,
+            `{{ placeholder content='${encode("c")}' }}`
           ]
         }
       }
@@ -326,17 +326,17 @@ describe("Testing 'BatchFetcher'", () => {
         getDCArgs: [
           [
             [
-              `{{ placeholder content='${Base64.encode("c")}' }}`,
-              `{{ placeholder content='${Base64.encode("f")}' }}`
+              `{{ placeholder content='${encode("c")}' }}`,
+              `{{ placeholder content='${encode("f")}' }}`
             ],
             config("p3")
           ],
-          [[`{{ placeholder content='${Base64.encode("a")}' }}`], config("p4")],
+          [[`{{ placeholder content='${encode("a")}' }}`], config("p4")],
           [
             [
-              `{{ placeholder content='${Base64.encode("g")}' }}`,
-              `{{ placeholder content='${Base64.encode("e")}' }}`,
-              `{{ placeholder content='${Base64.encode("h")}' }}`
+              `{{ placeholder content='${encode("g")}' }}`,
+              `{{ placeholder content='${encode("e")}' }}`,
+              `{{ placeholder content='${encode("h")}' }}`
             ],
             config("p5")
           ]
@@ -344,14 +344,14 @@ describe("Testing 'BatchFetcher'", () => {
         expectedResults: [["p3_c", "p3_f"], ["p4_a"], ["p5_g", "p5_e", "p5_h"]],
         expectedPlaceholders: {
           p3: [
-            `{{ placeholder content='${Base64.encode("c")}' }}`,
-            `{{ placeholder content='${Base64.encode("f")}' }}`
+            `{{ placeholder content='${encode("c")}' }}`,
+            `{{ placeholder content='${encode("f")}' }}`
           ],
-          p4: [`{{ placeholder content='${Base64.encode("a")}' }}`],
+          p4: [`{{ placeholder content='${encode("a")}' }}`],
           p5: [
-            `{{ placeholder content='${Base64.encode("g")}' }}`,
-            `{{ placeholder content='${Base64.encode("e")}' }}`,
-            `{{ placeholder content='${Base64.encode("h")}' }}`
+            `{{ placeholder content='${encode("g")}' }}`,
+            `{{ placeholder content='${encode("e")}' }}`,
+            `{{ placeholder content='${encode("h")}' }}`
           ]
         }
       }
@@ -364,16 +364,16 @@ describe("Testing 'BatchFetcher'", () => {
         getDCArgs: [
           [
             [
-              `{{ placeholder content='${Base64.encode("a")}' }}`,
-              `{{ placeholder content='${Base64.encode("a")}' }}`
+              `{{ placeholder content='${encode("a")}' }}`,
+              `{{ placeholder content='${encode("a")}' }}`
             ],
             config("p1")
           ],
           [
             [
-              `{{ placeholder content='${Base64.encode("a")}' }}`,
-              `{{ placeholder content='${Base64.encode("a")}' }}`,
-              `{{ placeholder content='${Base64.encode("a")}' }}`
+              `{{ placeholder content='${encode("a")}' }}`,
+              `{{ placeholder content='${encode("a")}' }}`,
+              `{{ placeholder content='${encode("a")}' }}`
             ],
             config("p1")
           ]
@@ -383,7 +383,7 @@ describe("Testing 'BatchFetcher'", () => {
           ["p1_a", "p1_a", "p1_a"]
         ],
         expectedPlaceholders: {
-          p1: [`{{ placeholder content='${Base64.encode("a")}' }}`]
+          p1: [`{{ placeholder content='${encode("a")}' }}`]
         }
       }
     ],
@@ -392,15 +392,15 @@ describe("Testing 'BatchFetcher'", () => {
         getDCArgs: [
           [
             [
-              `{{ placeholder content='${Base64.encode("a")}' }}`,
-              `{{ placeholder content='${Base64.encode("b")}' }}`
+              `{{ placeholder content='${encode("a")}' }}`,
+              `{{ placeholder content='${encode("b")}' }}`
             ],
             config("p1")
           ],
           [
             [
-              `{{ placeholder content='${Base64.encode("b")}' }}`,
-              `{{ placeholder content='${Base64.encode("a")}' }}`
+              `{{ placeholder content='${encode("b")}' }}`,
+              `{{ placeholder content='${encode("a")}' }}`
             ],
             config("p1")
           ]
@@ -411,8 +411,8 @@ describe("Testing 'BatchFetcher'", () => {
         ],
         expectedPlaceholders: {
           p1: [
-            `{{ placeholder content='${Base64.encode("a")}' }}`,
-            `{{ placeholder content='${Base64.encode("b")}' }}`
+            `{{ placeholder content='${encode("a")}' }}`,
+            `{{ placeholder content='${encode("b")}' }}`
           ]
         }
       }
@@ -422,15 +422,15 @@ describe("Testing 'BatchFetcher'", () => {
         getDCArgs: [
           [
             [
-              `{{ placeholder content='${Base64.encode("a")}' }}`,
-              `{{ placeholder content='${Base64.encode("b")}' }}`
+              `{{ placeholder content='${encode("a")}' }}`,
+              `{{ placeholder content='${encode("b")}' }}`
             ],
             config("p1")
           ],
           [
             [
-              `{{ placeholder content='${Base64.encode("a")}' }}`,
-              `{{ placeholder content='${Base64.encode("a")}' }}`
+              `{{ placeholder content='${encode("a")}' }}`,
+              `{{ placeholder content='${encode("a")}' }}`
             ],
             config("p1")
           ]
@@ -441,8 +441,8 @@ describe("Testing 'BatchFetcher'", () => {
         ],
         expectedPlaceholders: {
           p1: [
-            `{{ placeholder content='${Base64.encode("a")}' }}`,
-            `{{ placeholder content='${Base64.encode("b")}' }}`
+            `{{ placeholder content='${encode("a")}' }}`,
+            `{{ placeholder content='${encode("b")}' }}`
           ]
         }
       }
@@ -452,15 +452,15 @@ describe("Testing 'BatchFetcher'", () => {
         getDCArgs: [
           [
             [
-              `{{ placeholder content='${Base64.encode("b")}' }}`,
-              `{{ placeholder content='${Base64.encode("b")}' }}`
+              `{{ placeholder content='${encode("b")}' }}`,
+              `{{ placeholder content='${encode("b")}' }}`
             ],
             config("p1")
           ],
           [
             [
-              `{{ placeholder content='${Base64.encode("b")}' }}`,
-              `{{ placeholder content='${Base64.encode("a")}' }}`
+              `{{ placeholder content='${encode("b")}' }}`,
+              `{{ placeholder content='${encode("a")}' }}`
             ],
             config("p1")
           ]
@@ -471,8 +471,8 @@ describe("Testing 'BatchFetcher'", () => {
         ],
         expectedPlaceholders: {
           p1: [
-            `{{ placeholder content='${Base64.encode("b")}' }}`,
-            `{{ placeholder content='${Base64.encode("a")}' }}`
+            `{{ placeholder content='${encode("b")}' }}`,
+            `{{ placeholder content='${encode("a")}' }}`
           ]
         }
       }
@@ -482,17 +482,17 @@ describe("Testing 'BatchFetcher'", () => {
         getDCArgs: [
           [
             [
-              `{{ placeholder content='${Base64.encode("a")}' }}`,
-              `{{ placeholder content='${Base64.encode("b")}' }}`,
-              `{{ placeholder content='${Base64.encode("c")}' }}`
+              `{{ placeholder content='${encode("a")}' }}`,
+              `{{ placeholder content='${encode("b")}' }}`,
+              `{{ placeholder content='${encode("c")}' }}`
             ],
             config("p1")
           ],
-          [[`{{ placeholder content='${Base64.encode("c")}' }}`], config("p1")],
+          [[`{{ placeholder content='${encode("c")}' }}`], config("p1")],
           [
             [
-              `{{ placeholder content='${Base64.encode("b")}' }}`,
-              `{{ placeholder content='${Base64.encode("d")}' }}`
+              `{{ placeholder content='${encode("b")}' }}`,
+              `{{ placeholder content='${encode("d")}' }}`
             ],
             config("p1")
           ]
@@ -500,10 +500,10 @@ describe("Testing 'BatchFetcher'", () => {
         expectedResults: [["p1_a", "p1_b", "p1_c"], ["p1_c"], ["p1_b", "p1_d"]],
         expectedPlaceholders: {
           p1: [
-            `{{ placeholder content='${Base64.encode("a")}' }}`,
-            `{{ placeholder content='${Base64.encode("b")}' }}`,
-            `{{ placeholder content='${Base64.encode("c")}' }}`,
-            `{{ placeholder content='${Base64.encode("d")}' }}`
+            `{{ placeholder content='${encode("a")}' }}`,
+            `{{ placeholder content='${encode("b")}' }}`,
+            `{{ placeholder content='${encode("c")}' }}`,
+            `{{ placeholder content='${encode("d")}' }}`
           ]
         }
       }

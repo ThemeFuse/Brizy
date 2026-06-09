@@ -1,6 +1,7 @@
 import classnames from "classnames";
 import React, { ReactElement, ReactNode } from "react";
 import BoxResizer from "visual/component/BoxResizer";
+import type { Point } from "visual/component/BoxResizer/types";
 import { TextEditor } from "visual/component/Controls/TextEditor";
 import CustomCSS from "visual/component/CustomCSS";
 import { ElementModel } from "visual/component/Elements/Types";
@@ -21,7 +22,7 @@ import { styles } from "./styles";
 import * as toolbar from "./toolbar";
 import * as toolbarExtendParent from "./toolbarExtendParent";
 
-const resizerPoints = ["centerLeft", "centerRight"];
+const resizerPoints = ["centerLeft", "centerRight"] satisfies Point[];
 
 type Item = {
   type: string;

@@ -17,6 +17,16 @@ import Population from "./formats/Population";
 import Pre from "./formats/Pre";
 import { getTextBackgroundGradient } from "./formats/TextBackgroundGradient";
 import Tooltip from "./formats/Tooltip";
+import {
+  BackgroundMobileVar,
+  BackgroundTabletVar,
+  ColorMobileVar,
+  ColorTabletVar,
+  getBackgroundGradientMobileVar,
+  getBackgroundGradientTabletVar,
+  getTextBackgroundGradientMobileVar,
+  getTextBackgroundGradientTabletVar
+} from "./formats/responsive";
 import { blockValues, inlineValues, legacyValues } from "./transforms";
 import { Values } from "./transforms/defaultValues";
 
@@ -78,12 +88,20 @@ function getQuill(renderContext: RenderType, getConfig: GetConfig) {
     Quill.register(Link);
     Quill.register(BlockColor);
     Quill.register(BlockOpacity);
+    Quill.register(ColorTabletVar);
+    Quill.register(ColorMobileVar);
     Quill.register(CustomListItem);
     Quill.register(Pre, true);
     Quill.register(DCBlock, true);
     Quill.register(getBackgroundGradient(getConfig), true);
     Quill.register(getTextBackgroundGradient(getConfig), true);
     Quill.register(Tooltip, true);
+    Quill.register(BackgroundTabletVar);
+    Quill.register(BackgroundMobileVar);
+    Quill.register(getBackgroundGradientTabletVar(getConfig));
+    Quill.register(getBackgroundGradientMobileVar(getConfig));
+    Quill.register(getTextBackgroundGradientTabletVar(getConfig));
+    Quill.register(getTextBackgroundGradientMobileVar(getConfig));
 
     Quill.register("modules/clipboard", PlainClipboard, true);
   }

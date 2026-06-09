@@ -6,7 +6,11 @@ import { ThemeIcon } from "visual/component/ThemeIcon";
 import Toolbar from "visual/component/Toolbar";
 import { attachRefs } from "visual/utils/react";
 import { MValue } from "visual/utils/value";
-import { flagsToSelectPhoneOptions, getFlags } from "../../utils";
+import {
+  flagsToSelectPhoneOptions,
+  getFlagIconClass,
+  getFlags
+} from "../../utils";
 import TextField from "./common/TextField";
 import type { PhoneOption } from "./type";
 
@@ -98,7 +102,11 @@ class Phone extends TextField {
                 className="brz-forms2__phone--country-selected"
                 onClick={this.handleSelectedClick}
               >
-                <span>{selectedFlag?.flag}</span>
+                <span
+                  className={getFlagIconClass(
+                    selectedFlag?.code ?? this.state.countryCode
+                  )}
+                />
                 <ThemeIcon
                   name="arrow-down"
                   type="editor"
@@ -146,11 +154,10 @@ class Phone extends TextField {
         {isPreview && this.allFlags && (
           <div className="brz-forms2__field-phone--translated-data">
             <select>
-              {this.allFlags.map(({ code, name, flag, dialCode }) => (
+              {this.allFlags.map(({ code, name, dialCode }) => (
                 <option
                   key={code}
                   value={code}
-                  data-flag={flag}
                   data-dial-code={dialCode}
                 >
                   {name}

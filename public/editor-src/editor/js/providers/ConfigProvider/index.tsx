@@ -10,9 +10,12 @@ import React, {
 import { useStore } from "react-redux";
 import { Unsubscribe } from "redux";
 import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import { UIEventType } from "visual/global/UIEventType";
+import UIEvents from "visual/global/UIEvents";
 import { ConfigContext } from "visual/providers/ConfigProvider/context";
 import { GetConfig } from "visual/providers/ConfigProvider/types";
 import { ReduxAction } from "visual/redux/actions2";
+import { isInitializedSelector } from "visual/redux/selectors";
 import { ReduxState } from "visual/redux/types";
 
 export const ConfigProvider: FC<
@@ -31,15 +34,20 @@ export const ConfigProvider: FC<
       return;
     }
 
-    if (store.getState().blocksHtml.initialized) {
+    const handleReady = (): void => {
       onLoad();
+      UIEvents.emit(UIEventType.EditorReady);
+    };
+
+    if (isInitializedSelector(store.getState())) {
+      handleReady();
       return;
     }
 
     const unsubscribe = store.subscribe(() => {
-      if (store.getState().blocksHtml.initialized) {
+      if (isInitializedSelector(store.getState())) {
         storeSubscription.current?.();
-        onLoad();
+        handleReady();
       }
     });
 

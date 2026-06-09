@@ -61,7 +61,6 @@ export const getItems: GetItems<Value> = ({ v, device }) => {
     {
       id: "toolbarColor",
       type: "popover",
-      devices: "desktop",
       config: {
         size: "auto",
         title: t("Colors"),
@@ -80,25 +79,21 @@ export const getItems: GetItems<Value> = ({ v, device }) => {
             {
               id: "tabLinks",
               label: t("Links"),
-              devices: "desktop",
               options: [
                 {
                   id: "color",
                   type: "colorPicker",
                   states: [NORMAL, HOVER, ACTIVE],
-                  devices: "desktop"
                 }
               ]
             },
             {
               id: "colorArrows",
               label: t("Arrows"),
-              devices: "desktop",
               options: [
                 {
                   id: "arrowsColor",
                   type: "colorPicker",
-                  devices: "desktop"
                 }
               ]
             }

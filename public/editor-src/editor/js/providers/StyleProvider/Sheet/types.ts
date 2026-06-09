@@ -4,7 +4,7 @@ export interface CSSSheet {
   cssText: string;
 }
 
-interface Data {
+export interface Data {
   node?: Element;
   className: string;
   cssText: string;
@@ -15,4 +15,8 @@ export interface CSSOrdered {
   rules: Array<Data>;
   custom: Array<Data>;
   symbol: Array<Data>;
+}
+
+export interface ClassNamesCounter {
+  [key: string]: number;
 }

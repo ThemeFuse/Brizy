@@ -2,7 +2,7 @@ import * as Option from "visual/component/Options/Type";
 import { Attributes } from "react";
 import { WithClassName } from "visual/types/attributes";
 
-interface Attr extends Attributes {
+export interface Attr extends Attributes {
   className: string;
 }
 

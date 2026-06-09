@@ -113,11 +113,12 @@ export const generateUrl = (options: DataUrl): string => {
     });
   }
 
-  // Case when size is predefined (original, thumbnail, 200x200 etc.)
+  // Case when size is predefined (original, thumbnail, medium, large etc.)
+  // Pass the actual sizeType so WordPress fetches the requested size, not always full.
   if (parsedCropData === undefined) {
     return replacePlaceholders({
       pattern: patterns.original,
-      sizeType: SizeType.original,
+      sizeType: sizeType ?? SizeType.original,
       ...baseOptions
     });
   }

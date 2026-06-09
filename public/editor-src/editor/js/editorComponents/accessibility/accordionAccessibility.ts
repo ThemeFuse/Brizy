@@ -18,6 +18,10 @@ interface Options {
   filterButtons?: HTMLElement[];
 }
 
+const FOCUSABLE_SELECTOR =
+  "a[href], button, input, select, textarea, [tabindex]";
+const MISSING_TABINDEX = "__brz_missing_tabindex__";
+
 export class AccordionAccessibility {
   private items: AccordionAccessibilityItem[];
   private filterButtons: HTMLElement[];
@@ -78,6 +82,42 @@ export class AccordionAccessibility {
     item.button.setAttribute("aria-expanded", isExpanded.toString());
     item.button.setAttribute("aria-disabled", isDisabled.toString());
     item.panel.setAttribute("aria-hidden", (!isExpanded).toString());
+
+    const focusableElements =
+      item.panel.querySelectorAll<HTMLElement>(FOCUSABLE_SELECTOR);
+
+    focusableElements.forEach((el) => {
+      if (isExpanded) {
+        this.restoreTabIndex(el);
+      } else {
+        this.disableTabIndex(el);
+      }
+    });
+  }
+
+  private restoreTabIndex(element: HTMLElement): void {
+    const originalTabIndex = element.dataset.brzTabindex;
+
+    if (originalTabIndex === undefined) {
+      return;
+    }
+
+    if (originalTabIndex === MISSING_TABINDEX) {
+      element.removeAttribute("tabindex");
+    } else {
+      element.setAttribute("tabindex", originalTabIndex);
+    }
+
+    delete element.dataset.brzTabindex;
+  }
+
+  private disableTabIndex(element: HTMLElement): void {
+    if (element.dataset.brzTabindex === undefined) {
+      element.dataset.brzTabindex =
+        element.getAttribute("tabindex") ?? MISSING_TABINDEX;
+    }
+
+    element.setAttribute("tabindex", "-1");
   }
 
   private handleHeaderKeyDown(

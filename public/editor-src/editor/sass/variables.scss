@@ -322,6 +322,9 @@ $sidebar__btn-bg: var(--sidebar__btn-bg, $green-1);
 // Right Sidebar
 $right_sidebar__icon-color: var(--icons-color, $white);
 $right_sidebar__icon-color--hover: var(--active-color, $blue-21);
+$right_sidebar__icon-border: var(--borders, $gray-1);
+$right_sidebar__icon-border--hover: var(--active-color, $gray-19);
+$right_sidebar__icon-label-color: var(--text-labels, $white);
 $right_sidebar__tooltip-color: var(--right_sidebar__tooltip-color, $white);
 $right_sidebar__tooltip-bg: var(--right_sidebar__tooltip-bg, $black-10);
 $right_sidebar__tooltip-box-shadow: var(

@@ -132,7 +132,9 @@ export function Gallery<I extends Image.Image>({
         // from a stream of Observable<Item[]>, convert to Observable<Item>
         mergeMap((is) => from(is)),
         // Make sure that only new items pass
-        distinct((i) => i.id),
+        // NOTE: `id` can be reused when the gallery is cleared and re-populated
+        // (it is derived from array position). Use the unique promise instance instead.
+        distinct((i) => i.payload),
         mergeMap(({ id, payload }) => {
           return from(payload).pipe(
             map((data) => Actions.fetchSuccess({ id, data })),

@@ -115,7 +115,6 @@ export function getItems({ v, device, component, context, editorMode }) {
         }
       },
       roles: ["admin"],
-      devices: "desktop",
       position: 90,
       options: [
         {

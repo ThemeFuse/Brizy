@@ -163,6 +163,8 @@ class Carousel extends EditorComponent<Value, Props, State> {
 
     this.subject$?.complete();
     this.subject$ = undefined;
+
+    super.componentWillUnmount();
   }
 
   subscribeToData(): void {
