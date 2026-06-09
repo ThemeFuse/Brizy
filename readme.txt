@@ -14,7 +14,6 @@ More details on: https://brizy.io
 
 
 == Description ==
-
 https://vimeo.com/263343966
 
 A page builder that is fast & easy, [Brizy](https://brizy.io/) is a next-gen website builder that anyone can use. No designer or developer skills required. Once you go Brizy, nothing else feels easy!
