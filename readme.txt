@@ -4,7 +4,7 @@ Tags: page builder, website builder, brizy, editor, visual editor, unyson, wysiw
 Requires at least: 4.5
 Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 2.8.15
+Stable tag: 2.8.16
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -135,6 +135,10 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 11. **Resize columns by dragging the handle that appears in between**
 
 == Changelog ==
+
+= 2.8.16 - 2026-06-09 =
+* Fixed: PHP compatibility version
+
 
 = 2.8.15 - 2026-06-09 =
 * New: Builder tools support for Audio, SoundCloud, Video Playlist, Lottie, Animated Headline, Switcher, Timeline, Table, Calendly, Table of Contents, Image Comparison, PayPal, Breadcrumbs, Login and Chart
