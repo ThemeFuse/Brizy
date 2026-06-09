@@ -1,5 +1,5 @@
+import { Item } from "@radix-ui/react-context-menu";
 import React from "react";
-import { Item } from "react-contexify";
 import EditorIcon from "visual/component/EditorIcon";
 
 export default class Button extends React.Component {
@@ -14,10 +14,16 @@ export default class Button extends React.Component {
     const { helperText, title, onChange, inactive, meta, icon } = this.props;
 
     return (
-      <Item onClick={onChange} disabled={inactive}>
+      <Item
+        className="brz-ed-context-menu__item"
+        onSelect={onChange}
+        disabled={inactive}
+      >
         {icon && <EditorIcon icon={icon} />}
-        <span className="contexify_item-title">{title}</span>
-        <span className="contexify_item-placeholder">{helperText(meta)}</span>
+        <span className="brz-ed-context-menu__item-label">{title}</span>
+        <span className="brz-ed-context-menu__item-hint">
+          {helperText(meta)}
+        </span>
       </Item>
     );
   }

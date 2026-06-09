@@ -83,6 +83,7 @@ class SectionItem extends EditorComponent {
 
   componentWillUnmount() {
     this.mounted = false;
+    super.componentWillUnmount();
   }
 
   handleToolbarEscape = () => {
@@ -331,7 +332,9 @@ class SectionItem extends EditorComponent {
       <ContainerBorder
         type="section__item"
         hiddenInResponsive={true}
-        activateOnContentClick={false}
+        activateOnContentClick={true}
+        elementId={this.getId()}
+        elementType={this.getComponentId()}
       >
         {({ ref: containerBorderRef, attr: containerBorderAttr }) => (
           <CustomCSS selectorName={this.getId()} css={customCSS}>

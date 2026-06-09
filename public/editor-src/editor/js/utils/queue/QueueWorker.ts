@@ -1,4 +1,3 @@
-import { updateBlockHtmlStats } from "visual/redux/actions2";
 import { Store } from "visual/redux/store";
 import { Queue } from "./Queue";
 
@@ -86,22 +85,14 @@ export class QueueWorker<T> {
 
     if (!taskFn || !dispatch) return;
 
-    dispatch(updateBlockHtmlStats(this.queue.getProcessingTasks().size + 1));
     this.queue.addProcessingTask(taskId);
 
     const processPromise = taskFn(taskId)
       .then((result: T) => {
-        dispatch(
-          updateBlockHtmlStats(this.queue.getProcessingTasks().size - 1)
-        );
         this.queue.removeProcessingTask(taskId);
         return result;
       })
       .catch((error: Error) => {
-        dispatch(
-          updateBlockHtmlStats(this.queue.getProcessingTasks().size - 1)
-        );
-
         if (process.env["NODE_NEV"] === "development") {
           console.error(`Error processing task ${taskId}:`, error);
         }

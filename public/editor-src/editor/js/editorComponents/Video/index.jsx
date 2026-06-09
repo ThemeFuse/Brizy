@@ -177,13 +177,14 @@ class Video extends EditorComponent {
         {coverImageSrc && isLightboxOn && IS_VIEW && (
           <a
             className="brz-video__lightbox"
-            href={href}
+            href="#"
             {...{
               [makeAttr("popup-type")]: popupType,
               [makeAttr("muted")]: muted,
               [makeAttr("loop")]: loop,
               [makeAttr("start")]: start,
-              [makeAttr("end")]: end
+              [makeAttr("end")]: end,
+              [makeAttr("src")]: href
             }}
           />
         )}

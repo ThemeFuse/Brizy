@@ -58,7 +58,6 @@ export const ecwidToolbarTitle = <T extends ElementModel = ElementModel>(
             }
           }
         },
-        devices: "desktop",
         position: 20,
         options: [
           {

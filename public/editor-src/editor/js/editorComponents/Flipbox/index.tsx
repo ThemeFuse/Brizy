@@ -77,6 +77,8 @@ class Flipbox extends EditorComponent<Value, Props, _State> {
     if (node) {
       this.detachTransitionEvents(node);
     }
+
+    super.componentWillUnmount();
   }
 
   patchValue(patch: Patch, meta: Meta): void {

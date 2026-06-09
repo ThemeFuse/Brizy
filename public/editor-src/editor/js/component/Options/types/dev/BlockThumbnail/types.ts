@@ -13,7 +13,7 @@ export interface GlobalBlocks {
   };
 }
 
-interface Config {
+export interface Config {
   className: string;
   attr?: {
     className?: string;

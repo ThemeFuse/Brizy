@@ -15,6 +15,7 @@ import { Asset } from "../transforms/assets";
 import { projectClassName } from "../utils/projectClassName";
 import { baseToStatic } from "./baseToStatic";
 import { Output } from "./types";
+import { uuid } from "visual/utils/uuid";
 
 interface Props {
   block: Block;
@@ -66,7 +67,8 @@ export const popupToStatic = (props: Props): Output => {
   const isExternal = isExternalPopup(config);
   // if we add external popup to brizy page - his global styles rewrite page global styles
   const className = isExternal ? projectClassName(config) : undefined;
-  const sheet = new ServerStyleSheet();
+  const instanceId = isExternal ? uuid() : undefined;
+  const sheet = new ServerStyleSheet({ instanceId });
   const componentTypes = new ComponentTypes();
 
   const Page = (

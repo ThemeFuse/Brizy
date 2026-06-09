@@ -1,4 +1,4 @@
-import { Ref, RefObject, SyntheticEvent } from "react";
+import { MutableRefObject, Ref, RefObject, SyntheticEvent } from "react";
 
 type WithValue = HTMLElement & { value: string };
 
@@ -16,7 +16,7 @@ export function attachRef<T>(t: T | null, ref: Ref<T>): void {
 
 export function attachRefs<T>(
   t: T | null,
-  refs: (RefObject<T> | null)[]
+  refs: (RefObject<T> | MutableRefObject<T> | null)[]
 ): void {
   refs.forEach((ref) => attachRef(t, ref));
 }

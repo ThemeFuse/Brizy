@@ -4,7 +4,7 @@ import { WithConfig } from "visual/types/attributes";
 import { Literal } from "visual/utils/types/Literal";
 import type { Value } from "../../common/Population/types/Value";
 
-interface Config {
+export interface Config {
   activeChoice: string;
   choices: Array<Choices<Literal>>;
 }

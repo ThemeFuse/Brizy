@@ -13,21 +13,14 @@ export function RadioGroup2<T>({
   onChange,
   className
 }: Props<T>): ReactElement<Props<T>> {
-  const _className = classNames(
-    "brz-ed-control__radio-group2 flex m-0",
-    className
-  );
+  const _className = classNames("brz-ed-control__radio-group2", className);
 
   return (
     <div className={_className}>
       {children.map((item, i) => {
-        const _className = classNames(
-          "brz-ed-control__radio-group2__item flex m-0 flex w-[37px] h-[30px] border-t-0 border-r border-b-0 border-l-0 border-solid border-r-control-color bg-option-content-bg text-option-content-color overflow-hidden items-center justify-center text-[16px] cursor-pointer transition-[background-color] duration-200 ease-linear delay-[0s] first:rounded-s-[4px]  last:border-e-0 last:rounded-e-[4px] last:rounded-e-[4px] ",
-          {
-            ["brz-ed-control__radio-group2__item--active flex m-0 !bg-brand-primary"]:
-              item.props.active
-          }
-        );
+        const _className = classNames("brz-ed-control__radio-group2__item", {
+          "brz-ed-control__radio-group2__item--active": item.props.active
+        });
 
         const { title, value } = item.props;
 

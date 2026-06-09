@@ -28,7 +28,6 @@ class RegisterParts extends Component<Props> {
       Editor.registerComponent(component);
     }
 
-    // @ts-expect-error: Argument of type 'typeof EditorComponent'
     Editor.registerNotFoundComponent(NotFoundComponent);
 
     const thirdPartyComponents = config.thirdPartyComponents;

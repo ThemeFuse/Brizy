@@ -204,7 +204,6 @@ export function getItemsSimple({ v, device, state }) {
           }
         }
       },
-      devices: "desktop",
       position: 80,
       roles: ["admin"],
       options: [
@@ -262,7 +261,6 @@ export function getItemsSimple({ v, device, state }) {
           }
         }
       },
-      devices: "desktop",
       position: 80,
       roles: ["admin"],
       options: [

@@ -7,6 +7,5 @@ export const isModel = (obj: unknown): obj is ElementModelType => {
     return false;
   }
 
-  // @ts-expect-error: Need transform to ts /utils/object
   return hasProps(["type", "value"], obj);
 };

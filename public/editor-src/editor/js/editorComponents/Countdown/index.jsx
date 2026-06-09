@@ -83,6 +83,7 @@ class Countdown extends EditorComponent {
 
   componentWillUnmount() {
     jQuery(this.countdown).countdown("destroy");
+    super.componentWillUnmount();
   }
 
   getEndDate() {

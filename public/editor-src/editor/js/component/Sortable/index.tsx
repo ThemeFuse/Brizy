@@ -1,8 +1,8 @@
 import { isEqual } from "es-toolkit";
 import React, {
+  MutableRefObject,
   ReactElement,
   ReactNode,
-  RefObject,
   useCallback,
   useEffect,
   useRef
@@ -18,8 +18,9 @@ import { updateUI } from "visual/redux/actions2";
 import { uiSelector } from "visual/redux/selectors";
 import { makeAttr, makeDataAttr } from "visual/utils/i18n/attribute";
 import SortablePlugin from "./plugin";
+import { AcceptElements } from "./plugin/types";
 
-interface SortableAttr {
+export interface SortableAttr {
   "data-brz-sortable-type": string;
   "data-brz-sortable-path": string;
   "data-brz-sortable-disabled": boolean;
@@ -31,7 +32,7 @@ export interface Props {
   type: string;
   path?: string;
   showLines?: boolean;
-  acceptElements?: string[];
+  acceptElements?: AcceptElements;
   isGrid?: boolean;
   blindZone?: {
     left: number;
@@ -43,13 +44,13 @@ export interface Props {
     top: number;
     left: number;
   };
-  disabled: boolean;
+  disabled?: boolean;
   onSort?: onSortData;
   onStart?: VoidFunction;
   onEnd?: VoidFunction;
   children:
     | ((
-        ref: RefObject<HTMLElement | undefined>,
+        ref: MutableRefObject<HTMLDivElement | null>,
         attr?: SortableAttr
       ) => ReactElement)
     | ReactElement;
@@ -104,7 +105,7 @@ const Sortable = (props: Props): ReactElement => {
     children,
     type,
     path,
-    disabled,
+    disabled = false,
     onSort: _onSort,
     onEnd,
     onStart

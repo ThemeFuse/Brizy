@@ -2,7 +2,7 @@ import { Gap } from "@brizy/component/src/Flex/Gap";
 import classnames from "classnames";
 import React from "react";
 import BoxResizer from "visual/component/BoxResizer";
-import { Patch } from "visual/component/BoxResizer/types";
+import { Patch, Point } from "visual/component/BoxResizer/types";
 import Toolbar from "visual/component/Toolbar";
 import { BaseSpacer } from "visual/editorComponents/Spacer/Base";
 import * as sidebarConfig from "./sidebar";
@@ -10,7 +10,7 @@ import { style } from "./styles";
 import * as toolbarConfig from "./toolbar";
 import type { Value } from "./types";
 
-const resizerPoints = ["bottomCenter"];
+const resizerPoints = ["bottomCenter"] satisfies Point[];
 const resizerRestrictions = {
   height: {
     px: { min: 10, max: Infinity },
@@ -30,7 +30,7 @@ const resizerRestrictions = {
 };
 
 class Spacer extends BaseSpacer {
-  handleResizerChange = (patch: Patch): void => this.patchValue(patch);
+  handleResizerChange = (patch: Patch["patch"]): void => this.patchValue(patch);
 
   renderForEdit(v: Value, vs: Value, vd: Value) {
     const className = classnames(

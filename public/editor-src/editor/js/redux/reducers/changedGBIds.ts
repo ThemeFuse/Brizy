@@ -61,6 +61,18 @@ export const changedGBIds: RChangedGBIds = (state = [], action, allState) => {
 
       return newState;
     }
+
+    case "UPDATE_BLOCK_DATA": {
+      const { uid } = action.payload;
+      const globalBlocks = globalBlocksSelector(allState);
+
+      if (globalBlocks[uid]) {
+        return !state.includes(uid) ? [...state, uid] : state;
+      }
+
+      return state;
+    }
+
     case "UPDATE_GLOBAL_BLOCK":
     case ActionTypes.UPDATE_GLOBAL_BLOCK_METADATA: {
       const { uid } = action.payload;

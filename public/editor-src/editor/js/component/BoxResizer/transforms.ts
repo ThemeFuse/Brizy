@@ -49,9 +49,9 @@ export const transformAlign = (
 };
 
 export const transformRestrictions: TransformRestrictions = (
-  restrictions = {},
   value,
-  device
+  device,
+  restrictions = {}
 ) => {
   const keys = Object.keys(RESTRICTIONS.desktop) as (keyof Restriction)[];
   return keys.reduce((acc, key) => {

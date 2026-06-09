@@ -4,7 +4,7 @@ import { ConfigTab as PromptTab } from "visual/component/Prompts/PromptForm/type
 import { FormField } from "visual/component/Prompts/common/GlobalApps/type";
 import { WithClassName, WithConfig } from "visual/types/attributes";
 
-interface Config {
+export interface Config {
   id: string;
   fields: FormField[];
   icon: string;

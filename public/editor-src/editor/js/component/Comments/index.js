@@ -1,26 +1,20 @@
 import Disqus from "disqus-react";
 import React from "react";
 import { isEditor } from "visual/providers/RenderProvider";
-import Facebook from "../Facebook";
+import { DeprecatedComments } from "./Deprecated";
 import WPComments from "./WPComments";
 
 class Comments extends React.Component {
   static defaultProps = {
     type: "",
-    appId: "",
     data: {}
   };
 
   renderForEdit() {
-    const { appId, type, data, config, renderContext } = this.props;
+    const { type, data, config, renderContext } = this.props;
 
     return type === "facebook" ? (
-      <Facebook
-        appId={appId}
-        type="Comments"
-        data={data}
-        renderContext={renderContext}
-      />
+      <DeprecatedComments />
     ) : type === "disqus" && data.shortname === "" ? (
       <p className="brz-disqus-no-data">Add the required data</p>
     ) : type === "disqus" ? (
@@ -31,16 +25,13 @@ class Comments extends React.Component {
   }
 
   renderForView() {
-    const { appId, type, data, config, renderContext } = this.props;
+    const { type, data, config, renderContext } = this.props;
 
-    return type === "facebook" ? (
-      <Facebook
-        appId={appId}
-        type="Comments"
-        data={data}
-        renderContext={renderContext}
-      />
-    ) : type === "disqus" ? (
+    if (type === "facebook") {
+      return null;
+    }
+
+    return type === "disqus" ? (
       <div id="disqus_thread" {...data}></div>
     ) : (
       <WPComments {...data} config={config} renderContext={renderContext} />

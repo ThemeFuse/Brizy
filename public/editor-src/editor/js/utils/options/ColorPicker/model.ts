@@ -1,6 +1,5 @@
 import { _apply, set, setter2 } from "visual/utils/model";
 import { Value } from "visual/utils/options/ColorPicker/entities/Value";
-import * as Palette from "visual/utils/options/ColorPicker/entities/palette";
 
 /**
  * @typedef {{
@@ -25,17 +24,16 @@ export const getOpacity = <V extends Value>(m: V): V["opacity"] => m.opacity;
  *  - If opacity == 0, palette value is set to empty
  *  - If opacity == 0, tempPalette takes current palette value
  *  - If opacity == 0, tempOpacity takes current opacity value
- *  - If opacity > 0 and palette == '', palette takes temptPalette value
  */
 export const setOpacity = setter2(getOpacity, (v, m) => {
-  const p = Palette.append(m.palette, m.tempPalette);
+  const p = m.palette;
 
   return _apply(
     [
       [set, "tempOpacity", v === 0 ? getOpacity(m) : undefined],
       [set, "opacity", v],
       [set, "palette", v ? p : ""],
-      [set, "tempPalette", !v ? p : undefined]
+      [set, "tempPalette", !v ? (p || m.tempPalette) : undefined]
     ],
     m
   );

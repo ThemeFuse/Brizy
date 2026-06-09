@@ -3,24 +3,39 @@
 
 // FontStyles
 .brz-ed .brz-ed-option-type__fontStyleEditor {
-  @apply flex flex-col grow justify-normal p-0;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  justify-content: normal;
+  padding: 0;
 
   .brz-ed-option__font-styles {
-    @apply flex flex-col grow justify-between w-full gap-[16px];
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    justify-content: space-between;
+    width: 100%;
+    gap: 16px;
     &--add {
-      @apply mx-[30px];
+      margin: 0 30px;
     }
     .brz-ui-scrollbar__wrapper {
-      @apply flex grow h-auto;
+      display: flex;
+      flex-grow: 1;
+      height: auto;
     }
     .brz-scrollbar__view {
-      @apply flex flex-col gap-[16px] px-[30px];
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      padding: 0 30px;
     }
   }
 }
 
 .brz-ed .brz-ed-option__font-style-editor {
-  @apply relative cursor-pointer;
+  position: relative;
+  cursor: pointer;
 
   &__container {
     border: 2px solid variables.$left_sidebar__styling__font-border;
@@ -130,7 +145,6 @@
   }
 
   &--add {
-    @apply py-[30px];
     padding: 30px;
     color: variables.$left_sidebar__styling__add-color;
     text-align: center;

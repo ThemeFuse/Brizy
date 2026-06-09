@@ -19,7 +19,11 @@ import { DESKTOP } from "visual/utils/devices";
 import * as SizeSuffix from "visual/utils/fonts/SizeSuffix";
 import * as FontWeight from "visual/utils/fonts/Weight";
 import { getFontStyles } from "visual/utils/fonts/getFontStyles";
-import { getWeightChoices } from "visual/utils/fonts/getFontWeight";
+import {
+  getWeightChoices,
+  decodeWeight,
+  encodeWeight
+} from "visual/utils/fonts/getFontWeight";
 import { fontTransform } from "visual/utils/fonts/transform";
 import { mPipe } from "visual/utils/fp";
 import { t } from "visual/utils/i18n";
@@ -140,7 +144,6 @@ export const Typography = ({
           return onChange(Patch.fontStyle(v as string));
         }
         case "fontSize":
-        case "fontWeight":
         case "letterSpacing":
         case "lineHeight":
         case "fontSizeSuffix":
@@ -157,6 +160,22 @@ export const Typography = ({
                 ..._value,
                 [meta.isChanged]:
                   v as Patch.FontSettings[keyof Patch.FontSettings]
+              });
+          return onChange(value);
+        }
+        case "fontWeight": {
+          // Decode italic weight if encoded
+          const { weight, isItalic } = decodeWeight(v as number);
+          const value = withFontFamily
+            ? Patch.fullFont({
+                ..._value,
+                fontWeight: weight,
+                italic: isItalic
+              })
+            : Patch.fontSettings({
+                ..._value,
+                fontWeight: weight,
+                italic: isItalic
               });
           return onChange(value);
         }
@@ -212,6 +231,18 @@ export const Typography = ({
     });
   }, [_value.fontFamily, _value.fontFamilyType, store]);
 
+  // Encode weight value if italic is enabled (for uploaded fonts with italic variants)
+  const encodedWeight = useMemo(() => {
+    if (
+      _value.fontFamilyType === "upload" &&
+      _value.italic &&
+      _value.fontWeight !== undefined
+    ) {
+      return encodeWeight(_value.fontWeight, true);
+    }
+    return _value.fontWeight;
+  }, [_value.fontFamilyType, _value.italic, _value.fontWeight]);
+
   const showTextTransform = device === "desktop";
 
   const variations = useMemo(() => _value.variations, [_value.variations]);
@@ -251,6 +282,8 @@ export const Typography = ({
       ? openFontsUploader
       : undefined;
 
+  const shouldSortFonts = globalConfig.ui?.features?.typography?.shouldSortFonts ?? true;
+
   return (
     <Control
       onChange={_onChange}
@@ -266,7 +299,7 @@ export const Typography = ({
       sizeSuffix={_value.fontSizeSuffix}
       sizeSuffixes={SizeSuffix.getSuffixChoices}
       weights={weights}
-      weight={_value.fontWeight}
+      weight={encodedWeight}
       lineHeight={_value.lineHeight}
       letterSpacing={_value.letterSpacing}
       variableFontWeight={_value.variableFontWeight}
@@ -305,6 +338,7 @@ export const Typography = ({
       isFontStyleSettingsDisabled={isFontStyleSettingsDisabled}
       label={label}
       disabledFields={disabledFields}
+      shouldSortFonts={shouldSortFonts}
     />
   );
 };

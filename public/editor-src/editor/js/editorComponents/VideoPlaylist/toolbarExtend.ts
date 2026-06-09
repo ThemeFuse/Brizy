@@ -145,7 +145,6 @@ export const getItems: GetItems = ({ v, device }) => {
           }
         }
       },
-      devices: "desktop",
       roles: ["admin"],
       position: 90,
 

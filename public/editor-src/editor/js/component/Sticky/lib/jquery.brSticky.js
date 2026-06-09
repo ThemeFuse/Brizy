@@ -23,6 +23,7 @@ import { observer } from "../utils";
   $.extend(Plugin.prototype, {
     init: function () {
       this.isSticky = false;
+      this._hasEmittedInitial = false;
       observer.addListener(this.checkSticky.bind(this));
     },
     checkSticky: function () {
@@ -35,9 +36,24 @@ import { observer } from "../utils";
           ? -refNodeRect.top >= refNodeRect.height
           : refNodeRect.top <= 0;
 
-      if (isSticky !== this.isSticky && scrollY >= 0) {
-        this.isSticky = isSticky;
-        this.settings.onStickyChange.call(this.element, this.isSticky);
+      if (scrollY >= 0) {
+        const shouldEmit =
+          isSticky !== this.isSticky || !this._hasEmittedInitial;
+
+        if (shouldEmit) {
+          this._hasEmittedInitial = true;
+          this.isSticky = isSticky;
+          if (type === "animated") {
+            if (this.isSticky) {
+              this.element.removeAttribute("aria-hidden");
+              this.element.removeAttribute("inert");
+            } else {
+              this.element.setAttribute("aria-hidden", "true");
+              this.element.setAttribute("inert", "");
+            }
+          }
+          this.settings.onStickyChange.call(this.element, this.isSticky);
+        }
       }
     }
   });

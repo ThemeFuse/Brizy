@@ -37,7 +37,7 @@ import { ArrayType } from "visual/utils/array/types";
 import { uuid } from "visual/utils/uuid";
 import { DELETE_GLOBAL_BLOCK } from "./actions";
 import { RedoAction, UndoAction } from "./history/types";
-import { ReduxState, StoreChanged } from "./types";
+import { ActiveElementMeta, ReduxState, StoreChanged } from "./types";
 
 type UIState = ReduxState["ui"];
 
@@ -340,13 +340,6 @@ export type ActionUpdateBlocksHTML = {
   };
 };
 
-export type ActionUpdateBlockHTMLStats = {
-  type: ActionTypes.UPDATE_BLOCK_HTML_STATS;
-  payload: {
-    stats: number;
-  };
-};
-
 export interface SymbolsPayload {
   element:
     | undefined
@@ -423,9 +416,9 @@ export type ReduxAction =
   | ActionRemoveBlocks
   | ActionReorderBlocks
   | ActionUpdateBlockHTML
-  | ActionUpdateBlockHTMLStats
   | ActionUpdateBlocksHTML
   | ActionUpdateBlocks
+  | ActionUpdateBlockData
   | ActionMakeBlockToGlobalBlock
   | ActionMakeGlobalBlockToBlock
   | ActionMakePopupToGlobalPopup
@@ -850,6 +843,30 @@ export function updateBlocks({
   };
 }
 
+export type ActionUpdateBlockData = {
+  type: ActionTypes.UPDATE_BLOCK_DATA;
+  payload: {
+    uid: string;
+    data: Block;
+  };
+};
+
+export function updateBlockData({
+  blockId,
+  data
+}: {
+  blockId: string;
+  data: Block;
+}): ActionUpdateBlockData {
+  return {
+    type: ActionTypes.UPDATE_BLOCK_DATA,
+    payload: {
+      uid: blockId,
+      data
+    }
+  };
+}
+
 export const fetchPageSuccess = (): ActionFetchPageSuccess => ({
   type: FETCH_PAGE_SUCCESS
 });
@@ -898,12 +915,12 @@ export const updatePageLayout = ({
 };
 
 export function addBlock(
-  block: { block: Block; fonts: FontsPayload },
+  payload: { block: Block; fonts: FontsPayload },
   meta = { insertIndex: 0 }
 ): ActionAddBlock {
   return {
     type: "ADD_BLOCK",
-    payload: block,
+    payload,
     meta
   };
 }
@@ -1026,17 +1043,6 @@ export function updateBlocksHtml(payload: {
   };
 }
 
-export function updateBlockHtmlStats(
-  payload: number
-): ActionUpdateBlockHTMLStats {
-  return {
-    type: ActionTypes.UPDATE_BLOCK_HTML_STATS,
-    payload: {
-      stats: payload
-    }
-  };
-}
-
 // UI
 
 export function setDeviceMode(mode: DeviceMode): ActionUpdateUI {
@@ -1045,6 +1051,12 @@ export function setDeviceMode(mode: DeviceMode): ActionUpdateUI {
 
 export function setActiveElement(element: ActiveElement): ActionUpdateUI {
   return updateUI("activeElement", element);
+}
+
+export function setActiveElementMeta(
+  meta: ActiveElementMeta | null
+): ActionUpdateUI {
+  return updateUI("activeElementMeta", meta);
 }
 
 // authorized
@@ -1125,13 +1137,13 @@ export enum ActionTypes {
   "REGENERATE_TYPOGRAPHY" = "REGENERATE_TYPOGRAPHY",
   "UPDATE_BLOCK_HTML" = "UPDATE_BLOCK_HTML",
   "UPDATE_BLOCKS_HTML" = "UPDATE_BLOCKS_HTML",
-  "UPDATE_BLOCK_HTML_STATS" = "UPDATE_BLOCK_HTML_STATS",
   "UPDATE_GLOBAL_BLOCK_METADATA" = "UPDATE_GLOBAL_BLOCK_METADATA",
   "CREATE_SYMBOL" = "CREATE_SYMBOL",
   "UPDATE_SYMBOL" = "UPDATE_SYMBOL",
   "DELETE_SYMBOL" = "DELETE_SYMBOL",
   "UPDDATE_SYMBOLS_CSS" = "UPDDATE_SYMBOLS_CSS",
-  "INITIALIZE_BLOCKS_HTML" = "INITIALIZE_BLOCKS_HTML"
+  "INITIALIZE_BLOCKS_HTML" = "INITIALIZE_BLOCKS_HTML",
+  "UPDATE_BLOCK_DATA" = "UPDATE_BLOCK_DATA"
 }
 
 // templates
@@ -1163,7 +1175,9 @@ export const importTemplate = (
   payload: template
 });
 
-export const updateCurrentStyle = (currentStyle: Style) => ({
+export const updateCurrentStyle = (
+  currentStyle: Style
+): ActionUpdateCurrentStyle => ({
   type: ActionTypes.UPDATE_CURRENT_STYLE,
   payload: currentStyle
 });

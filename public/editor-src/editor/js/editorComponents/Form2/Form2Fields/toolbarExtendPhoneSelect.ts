@@ -31,7 +31,6 @@ export const getItems: GetItems<Value, Props> = ({ v, device, component }) => {
         }
       },
       position: 80,
-      devices: "desktop",
       options: [
         {
           id: "tabsPhoneSelectColor",

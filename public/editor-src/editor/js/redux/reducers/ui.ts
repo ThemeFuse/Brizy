@@ -6,6 +6,7 @@ type UIState = ReduxState["ui"];
 const defaultState: UIState = {
   deviceMode: "desktop",
   activeElement: null,
+  activeElementMeta: null,
   leftSidebar: {
     drawerContentType: null
   },

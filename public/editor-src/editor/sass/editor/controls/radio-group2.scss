@@ -1,3 +1,44 @@
+@use "../../variables";
+
+.brz-ed .brz-ed-control__radio-group2 {
+  display: flex;
+  margin: 0;
+
+  &__item {
+    display: flex;
+    margin: 0;
+    width: 37px;
+    height: 30px;
+    border-top: 0;
+    border-right: 1px solid rgba(255, 255, 255, 0.07);
+    border-bottom: 0;
+    border-left: 0;
+    background-color: variables.$control-bg;
+    color: variables.$control__variant-color;
+    overflow: hidden;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 200ms linear;
+
+    &:first-child {
+      border-start-start-radius: 4px;
+      border-end-start-radius: 4px;
+    }
+
+    &:last-child {
+      border-right: 0;
+      border-start-end-radius: 4px;
+      border-end-end-radius: 4px;
+    }
+
+    &--active {
+      background-color: variables.$brand__primary !important;
+    }
+  }
+}
+
 .brz-ed .brz-ed-sidebar .brz-ed-control__radio-group2__item--active {
   --icons-color: var(--sidebar-background, #fff);
 }

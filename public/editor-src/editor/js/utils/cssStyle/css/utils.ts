@@ -2,6 +2,9 @@ import { makeAttr } from "visual/utils/i18n/attribute";
 import { uuid } from "visual/utils/uuid";
 import { MValue } from "visual/utils/value";
 
+export const DEFAULT_CLASSNAME_PREFIX = "brz-css-d-";
+export const RULES_CLASSNAME_PREFIX = "brz-css-r-";
+
 export const addUuid = (node: Element): void =>
   node.setAttribute(makeAttr("css-uid"), uuid(6));
 

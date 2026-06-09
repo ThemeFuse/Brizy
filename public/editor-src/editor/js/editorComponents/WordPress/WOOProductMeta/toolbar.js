@@ -123,7 +123,6 @@ export function getItems({ v, device }) {
         }
       },
       position: 80,
-      devices: "desktop",
       options: [
         {
           id: "tabsColor",
@@ -147,7 +146,6 @@ export function getItems({ v, device }) {
                 {
                   id: "valueColor",
                   type: "colorPicker",
-                  devices: "desktop"
                 }
               ]
             },
@@ -159,7 +157,6 @@ export function getItems({ v, device }) {
                   id: "dividersColor",
                   disabled: elementType === "inline",
                   type: "colorPicker",
-                  devices: "desktop"
                 }
               ]
             }

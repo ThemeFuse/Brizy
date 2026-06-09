@@ -26,6 +26,7 @@ module.exports = {
     "\\.(tsx|ts|js|jsx)?$": ["@swc/jest", swcConfig]
   },
   transformIgnorePatterns: ["/node_modules/(?!(nanoid|normalize-url)/)"],
+  modulePathIgnorePatterns: ["<rootDir>/dist"],
   globals: {
     TARGET: "Jest",
     __VISUAL_CONFIG__: {

@@ -231,6 +231,20 @@
       padding: 0;
     }
   }
+
+  &-large {
+    .brz-ed-option-type__animation,
+    .brz-ed-option-type__motion,
+    .brz-ed-option-type__transform {
+      & > div {
+        width: 100%;
+
+        .brz-ed--fat-icons-grid {
+          grid-template-columns: repeat(6, minmax(60px, auto));
+        }
+      }
+    }
+  }
 }
 
 .brz-ed .brz-ui-v2-modal-root .brz-ed-sidebar__video-help .brz-ui-v2-modal {

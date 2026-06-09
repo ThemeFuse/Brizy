@@ -69,6 +69,8 @@ class Row extends EditorComponent {
 
   componentWillUnmount() {
     this.mounted = false;
+
+    super.componentWillUnmount();
   }
 
   patchValue(patch, meta) {
@@ -391,9 +393,11 @@ class Row extends EditorComponent {
                   type="row"
                   color="grey"
                   activeBorderStyle="dotted"
-                  activateOnContentClick={false}
+                  activateOnContentClick={true}
                   buttonPosition="topLeft"
                   renderButtonWrapper={this.renderToolbar}
+                  elementId={this.getId()}
+                  elementType={this.getComponentId()}
                 >
                   {({
                     ref: containerBorderRef,
@@ -506,17 +510,17 @@ class Row extends EditorComponent {
                 withoutWrapper={true}
               >
                 {this.renderContent(v, vs, vd)}
+                {linkData.href && (
+                  <Link
+                    className="brz-link-container"
+                    type={linkData.type}
+                    href={linkData.href}
+                    target={linkData.target}
+                    rel={linkData.rel}
+                  />
+                )}
               </HoverAnimation>
             </ScrollMotion>
-            {linkData.href && (
-              <Link
-                className="brz-link-container"
-                type={linkData.type}
-                href={linkData.href}
-                target={linkData.target}
-                rel={linkData.rel}
-              />
-            )}
           </Animation>
         </CustomCSS>
         {shouldRenderPopup(v, blocksDataSelector(this.getReduxState())) &&

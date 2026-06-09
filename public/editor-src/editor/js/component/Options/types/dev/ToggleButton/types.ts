@@ -7,7 +7,7 @@ import { Literal } from "visual/utils/types/Literal";
 
 type Type = "square" | "default";
 
-interface Config {
+export interface Config {
   icon?: string;
   title?: string;
   type?: Type;

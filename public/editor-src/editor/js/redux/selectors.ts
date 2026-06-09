@@ -207,6 +207,11 @@ export const leftSidebarSelector = createSelector(
   (ui) => ui.leftSidebar
 );
 
+export const activeElementMetaSelector = createSelector(
+  uiSelector,
+  (ui) => ui.activeElementMeta
+);
+
 export const drawerContentTypeSelector = createSelector(
   leftSidebarSelector,
   (leftSidebar) => leftSidebar.drawerContentType
@@ -215,6 +220,11 @@ export const drawerContentTypeSelector = createSelector(
 export const isCompilationPending = createSelector(
   blocksHtmlSelector,
   (blocksHtml) => blocksHtml.storeGeneration !== blocksHtml.compiledGeneration
+);
+
+export const isInitializedSelector = createSelector(
+  blocksHtmlSelector,
+  (blocksHtml) => blocksHtml.initialized
 );
 
 //#endregion

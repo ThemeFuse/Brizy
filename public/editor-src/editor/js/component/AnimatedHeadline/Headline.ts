@@ -428,12 +428,14 @@ export class Headline {
       `brz-animatedHeadline-animation-type-${effectType}`
     );
 
+    let beforeText: Element | null = null;
+
     if (this.isLetterAnimation()) {
       headline.classList.add(this.classes.letters);
     }
 
     if (textBefore) {
-      const beforeText = this.createSpan(
+      beforeText = this.createSpan(
         "brz-animatedHeadline-plain-text brz-animatedHeadline-text-wrapper",
         textBefore
       );
@@ -457,7 +459,11 @@ export class Headline {
         dynamicWrapper.appendChild(span);
       }
 
-      headline.appendChild(dynamicWrapper);
+      if (beforeText) {
+        beforeText.appendChild(dynamicWrapper);
+      } else {
+        headline.appendChild(dynamicWrapper);
+      }
     }
 
     if (textAfter) {

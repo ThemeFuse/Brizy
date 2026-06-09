@@ -36,6 +36,7 @@ export interface Value extends ElementModel {
   type: PostsTypes;
   dynamic: Switch;
   source: string;
+  querySource: string;
   field: string;
 
   sliderArrowsCustomName: string;

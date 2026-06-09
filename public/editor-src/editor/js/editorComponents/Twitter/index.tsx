@@ -20,6 +20,8 @@ import { TwitterOptions, Value } from "./types";
 class Twitter extends BaseTwitter {
   componentWillUnmount(): void {
     this.isUnMounted = true;
+
+    super.componentWillUnmount();
   }
 
   handleChange = (): void => {

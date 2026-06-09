@@ -57,7 +57,6 @@ export const ecwidToolbarTitle2 = (
             }
           }
         },
-        devices: "desktop",
         position: 20,
         options: [
           {

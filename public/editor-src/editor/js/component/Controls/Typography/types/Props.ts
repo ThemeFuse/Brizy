@@ -39,6 +39,7 @@ export interface TypographyProps
   isFontStyleSettingsDisabled?: boolean;
   label?: JSX.Element;
   disabledFields?: string[];
+  shouldSortFonts?: boolean;
 }
 
 export interface FontStyleProps {

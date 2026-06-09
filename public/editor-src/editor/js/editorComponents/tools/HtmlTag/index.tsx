@@ -3,10 +3,13 @@ import { FontStyleTypes, is } from "visual/utils/fonts/stylesType";
 export const blockTagFromStyle = (fontStyle: FontStyleTypes): string => {
   switch (fontStyle) {
     case "paragraph":
+    case "button":
       return "p";
     case "heading1":
       return "h1";
     case "heading2":
+    case "subtitle":
+    case "abovetitle":
       return "h2";
     case "heading3":
       return "h3";

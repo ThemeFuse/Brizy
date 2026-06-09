@@ -45,12 +45,10 @@ export function getItems({ v, device }) {
         }
       },
       position: 80,
-      devices: "desktop",
       options: [
         {
           id: "costColor",
           type: "colorPicker",
-          devices: "desktop",
           states: [NORMAL, HOVER]
         }
       ]

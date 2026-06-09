@@ -270,6 +270,14 @@ export const blocksData: RBlocksData = (state = {}, action, allState) => {
       };
     }
 
+    case ActionTypes.UPDATE_BLOCK_DATA: {
+      const { uid, data } = action.payload;
+
+      return produce(state, (draft) => {
+        draft[uid] = data;
+      });
+    }
+
     default:
       return state;
   }

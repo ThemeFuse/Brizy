@@ -56,7 +56,7 @@ const ThemeIconPreview = (props: Props): JSX.Element => {
   const { type, name, className: _className, filename, ariaLabel } = props;
 
   const config = useConfig();
-  const className = cn("brz-icon-svg align-[initial]", _className);
+  const className = cn("brz-icon-svg", _className);
 
   if (type === IconTypes.Custom) {
     return (
@@ -97,7 +97,7 @@ const ThemeIconPreview = (props: Props): JSX.Element => {
 
 const ThemeIconEditor = (props: Props): JSX.Element => {
   const { className: _className, type, name, filename } = props;
-  const className = cn("brz-icon-svg align-[initial]", _className);
+  const className = cn("brz-icon-svg", _className);
   const config = useConfig();
 
   const pathToIcon = useMemo(() => {

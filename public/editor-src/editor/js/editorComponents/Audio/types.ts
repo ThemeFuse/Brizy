@@ -17,8 +17,7 @@ interface SoundCloudButtonOptions {
 }
 
 interface SoundCloudOptions
-  extends SoundCloudAppeareanceOptions,
-    SoundCloudButtonOptions {}
+  extends SoundCloudAppeareanceOptions, SoundCloudButtonOptions {}
 
 //TODO: review if Value contain all the Element keys
 export interface Value extends ElementModel, SoundCloudOptions {
@@ -34,4 +33,6 @@ export interface Value extends ElementModel, SoundCloudOptions {
   style: "basic" | "artwork";
   autoplay: BaseSwitchType;
   caption: string;
+  mediumHeight: number;
+  largeHeight: number;
 }

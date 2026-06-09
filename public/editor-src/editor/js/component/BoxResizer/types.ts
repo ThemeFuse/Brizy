@@ -1,14 +1,18 @@
-import { DeviceMode } from "visual/types";
+import type { ReactNode } from "react";
 import { ElementModel } from "visual/component/Elements/Types";
+import { DeviceMode } from "visual/types";
 
 export type RestrictionsClamp = {
   min: number;
   max: number;
 };
-type RestrictionsTypes = {
+type RestrictionsTypes = Partial<{
   px: RestrictionsClamp;
   "%": RestrictionsClamp;
-};
+  vh: RestrictionsClamp;
+  vw: RestrictionsClamp;
+  em: RestrictionsClamp;
+}>;
 export type Restriction = {
   height: RestrictionsTypes;
   size: RestrictionsTypes;
@@ -63,12 +67,12 @@ export type V = ElementModel;
 export type ValueMapping = Partial<Record<keyof Restrictions, number>>;
 
 export type TransformRestrictions = (
-  restrictions: Partial<Restrictions>,
   value: V,
-  device: DeviceMode
+  device: DeviceMode,
+  restrictions?: Partial<Restrictions>
 ) => SimpleRestriction;
 
-export type RestrictionMapping = Partial<Record<keyof Restriction, number>>;
+export type RestrictionMapping = Partial<Record<keyof Restrictions, number>>;
 export type TransformValue = (
   value: V,
   device: DeviceMode
@@ -105,10 +109,21 @@ export type Point =
   | "bottomCenter"
   | "bottomRight";
 
-export type Patch = {
-  patch: Partial<RestrictionMapping>;
+export type Patch<T = Record<string, unknown>> = {
+  patch: RestrictionMapping & T;
   deltaX: number;
   deltaY: number;
   point: Point;
   startRect: DOMRect;
+};
+
+export type BoxResizerPartialProps = {
+  points: Point[];
+  restrictions: Partial<Restrictions>;
+};
+
+export type ResizerPassThroughProps = {
+  children: ReactNode;
+  points?: Point[];
+  keepAspectRatio?: boolean;
 };
