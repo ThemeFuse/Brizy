@@ -55,6 +55,25 @@ export function withFontFamilyNormalize<T extends Record<string, unknown>>(
   return result;
 }
 
+/** Normalize every fontFamily value present in props (any prefix). */
+export function withAllFontFamilyNormalize<T extends Record<string, unknown>>(
+  props: T
+): T {
+  let result = props;
+
+  for (const key of Object.keys(props)) {
+    if (!fontFamilyKeyRe.test(key)) {
+      continue;
+    }
+
+    const prefix =
+      key === "fontFamily" ? "" : key.replace(/FontFamily$/i, "");
+    result = withFontFamilyNormalize(result, prefix);
+  }
+
+  return result;
+}
+
 /**
  * Color hex to palette mapping.
  * When LLM provides hex without palette, we auto-clear the palette.
@@ -67,7 +86,9 @@ const COLOR_DEFAULTS: Array<{ hex: string; palette: string }> = [
   { hex: "hoverColorHex", palette: "hoverColorPalette" },
   { hex: "hoverBorderColorHex", palette: "hoverBorderColorPalette" },
   { hex: "gradientColorHex", palette: "gradientColorPalette" },
+  { hex: "hoverGradientColorHex", palette: "hoverGradientColorPalette" },
   { hex: "boxShadowColorHex", palette: "boxShadowColorPalette" },
+  { hex: "hoverBoxShadowColorHex", palette: "hoverBoxShadowColorPalette" },
   { hex: "activeColorHex", palette: "activeColorPalette" },
   { hex: "activeBgColorHex", palette: "activeBgColorPalette" },
   { hex: "backBgColorHex", palette: "backBgColorPalette" },
@@ -148,3 +169,176 @@ export function withColorDefaults<T extends Record<string, unknown>>(
 
   return result;
 }
+
+const GRADIENT_KEYS = [
+  "gradientColorHex",
+  "gradientColorOpacity",
+  "gradientColorPalette",
+  "gradientType",
+  "gradientLinearDegree",
+  "gradientRadialDegree",
+  "gradientStartPointer",
+  "gradientFinishPointer"
+];
+
+const HOVER_GRADIENT_KEYS = [
+  "hoverGradientColorHex",
+  "hoverGradientColorOpacity",
+  "hoverGradientColorPalette",
+  "hoverGradientType",
+  "hoverGradientLinearDegree",
+  "hoverGradientRadialDegree",
+  "hoverGradientStartPointer",
+  "hoverGradientFinishPointer"
+];
+
+export function inferBgColorType<T extends Record<string, unknown>>(
+  props: T
+): T {
+  const result = { ...props } as Record<string, unknown>;
+
+  if (!("bgColorType" in result)) {
+    if ("gradientSpeed" in result && result.gradientSpeed !== undefined) {
+      result.bgColorType = "animated-gradient";
+    } else if (
+      GRADIENT_KEYS.some((k) => k in result && result[k] !== undefined)
+    ) {
+      result.bgColorType = "gradient";
+    }
+  }
+
+  if (!("hoverBgColorType" in result)) {
+    if (
+      "hoverGradientSpeed" in result &&
+      result.hoverGradientSpeed !== undefined
+    ) {
+      result.hoverBgColorType = "animated-gradient";
+    } else if (
+      HOVER_GRADIENT_KEYS.some((k) => k in result && result[k] !== undefined)
+    ) {
+      result.hoverBgColorType = "gradient";
+    }
+  }
+
+  return result as T;
+}
+
+type GradientStop = {
+  position: number;
+  hex: string;
+  opacity: number;
+  palette: string;
+};
+
+export function withAnimatedGradientDefaults<T extends Record<string, unknown>>(
+  props: T
+): T {
+  const result = { ...props } as Record<string, unknown>;
+
+  if (result.bgColorType === "animated-gradient" && !result.gradientStops) {
+    const stops: GradientStop[] = [
+      {
+        position: (result.gradientStartPointer as number) ?? 0,
+        hex: (result.bgColorHex as string) ?? "#000000",
+        opacity: (result.bgColorOpacity as number) ?? 1,
+        palette: (result.bgColorPalette as string) ?? ""
+      },
+      {
+        position: (result.gradientFinishPointer as number) ?? 100,
+        hex: (result.gradientColorHex as string) ?? "#FFFFFF",
+        opacity: (result.gradientColorOpacity as number) ?? 1,
+        palette: (result.gradientColorPalette as string) ?? ""
+      }
+    ];
+    result.gradientStops = stops;
+    result.activeStopIndex = 0;
+    if (!("gradientSpeed" in result)) {
+      result.gradientSpeed = 5;
+    }
+  }
+
+  if (
+    result.hoverBgColorType === "animated-gradient" &&
+    !result.hoverGradientStops
+  ) {
+    const stops: GradientStop[] = [
+      {
+        position: (result.hoverGradientStartPointer as number) ?? 0,
+        hex: (result.hoverBgColorHex as string) ?? "#000000",
+        opacity: (result.hoverBgColorOpacity as number) ?? 1,
+        palette: (result.hoverBgColorPalette as string) ?? ""
+      },
+      {
+        position: (result.hoverGradientFinishPointer as number) ?? 100,
+        hex: (result.hoverGradientColorHex as string) ?? "#FFFFFF",
+        opacity: (result.hoverGradientColorOpacity as number) ?? 1,
+        palette: (result.hoverGradientColorPalette as string) ?? ""
+      }
+    ];
+    result.hoverGradientStops = stops;
+    result.hoverActiveStopIndex = 0;
+    if (!("hoverGradientSpeed" in result)) {
+      result.hoverGradientSpeed = 5;
+    }
+  }
+
+  return result as T;
+}
+
+type Props = Record<string, unknown>;
+
+const PADDING_SIDES = [
+  "paddingTop",
+  "paddingRight",
+  "paddingBottom",
+  "paddingLeft"
+] as const;
+
+const BORDER_RADIUS_SIDES = [
+  "borderTopLeftRadius",
+  "borderTopRightRadius",
+  "borderBottomRightRadius",
+  "borderBottomLeftRadius"
+] as const;
+
+export const inferPaddingType = <T extends Props>(props: T): T => {
+  if ("paddingType" in props) {
+    return props;
+  }
+
+  const hasPaddingSide = PADDING_SIDES.some(
+    (side) => side in props && props[side] !== undefined
+  );
+
+  if (!hasPaddingSide) {
+    return props;
+  }
+
+  const allSidesMatchTop =
+    "paddingTop" in props &&
+    PADDING_SIDES.every(
+      (side) => side in props && props[side] === props.paddingTop
+    );
+
+  return { ...props, paddingType: allSidesMatchTop ? "grouped" : "ungrouped" };
+};
+
+export const inferBorderRadiusType = <T extends Props>(props: T): T => {
+  if ("borderRadiusType" in props) {
+    return props;
+  }
+
+  const hasPerCornerRadius = BORDER_RADIUS_SIDES.some(
+    (side) => side in props && props[side] !== undefined
+  );
+
+  if (hasPerCornerRadius) {
+    return { ...props, borderRadiusType: "ungrouped" };
+  }
+
+  if ("borderRadius" in props && props.borderRadius !== undefined) {
+    return { ...props, borderRadiusType: "grouped" };
+  }
+
+  return props;
+};

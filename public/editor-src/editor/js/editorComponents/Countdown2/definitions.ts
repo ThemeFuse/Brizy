@@ -1,5 +1,10 @@
 import { z } from "zod";
-import { onOff } from "visual/ai/adapters/schema-primitives";
+import { withAllFontFamilyNormalize } from "visual/ai/adapters/prop-defaults";
+import {
+  fontFamilyPropertyPair,
+  fontFamilySchemaPair,
+  onOff
+} from "visual/ai/adapters/schema-primitives";
 import type { AddToolConfig, UpdateToolConfig } from "visual/ai/adapters/types";
 import type { ToolDefinition } from "visual/ai/entities/models";
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
@@ -13,8 +18,13 @@ export const countdown2PropsSchema = z.object({
   showDays: onOff.optional(),
   showHours: onOff.optional(),
   showMinutes: onOff.optional(),
-  showSeconds: onOff.optional()
+  showSeconds: onOff.optional(),
+  ...fontFamilySchemaPair("title"),
+  ...fontFamilySchemaPair("message"),
+  ...fontFamilySchemaPair("number")
 });
+
+export const withCountdownDefaults = withAllFontFamilyNormalize;
 
 export type Countdown2Props = z.infer<typeof countdown2PropsSchema>;
 
@@ -62,7 +72,19 @@ const countdownPropertyDefinitions = {
     type: "string",
     enum: ["on", "off"],
     description: "Show seconds counter"
-  }
+  },
+  ...fontFamilyPropertyPair(
+    "title",
+    "Font family for countdown unit labels (days, hours, minutes, seconds)."
+  ),
+  ...fontFamilyPropertyPair(
+    "message",
+    "Font family for the message shown when the countdown ends."
+  ),
+  ...fontFamilyPropertyPair(
+    "number",
+    "Font family for the countdown numeric values."
+  )
 } as const;
 
 export const addCountdownDefinition: ToolDefinition = {
@@ -114,12 +136,14 @@ export const addCountdownConfig: AddToolConfig = {
   kind: "add",
   definition: addCountdownDefinition,
   elementType: ElementTypes.Countdown2,
-  schema: countdown2PropsSchema
+  schema: countdown2PropsSchema,
+  defaults: withCountdownDefaults
 };
 
 export const updateCountdownConfig: UpdateToolConfig = {
   kind: "update",
   definition: updateCountdownDefinition,
   elementType: ElementTypes.Countdown2,
-  schema: countdown2PropsSchema
+  schema: countdown2PropsSchema,
+  defaults: withCountdownDefaults
 };

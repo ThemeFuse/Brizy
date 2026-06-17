@@ -675,6 +675,26 @@ export const changeDefaultFontDefinition: ToolDefinition = {
   }
 };
 
+export const setPageStatusDefinition: ToolDefinition = {
+  name: "setPageStatus",
+  strict: true,
+  description:
+    "Set the current page status to draft or publish. Use this when the user asks to save as draft or publish the page. This triggers the same internal publish/save flow used by the editor publish button.",
+  category: "project",
+  parameters: {
+    type: "object",
+    properties: {
+      status: {
+        type: "string",
+        enum: ["publish", "draft"],
+        description: "Target page status: publish or draft"
+      }
+    },
+    required: ["status"],
+    additionalProperties: false
+  }
+};
+
 // ===========================================
 // ELEMENT TOOLS - Generic
 // ===========================================
@@ -777,6 +797,7 @@ export const infrastructureDefinitions: ToolDefinition[] = [
   addFontDefinition,
   deleteFontDefinition,
   changeDefaultFontDefinition,
+  setPageStatusDefinition,
   // Generic element tools
   removeElementDefinition,
   duplicateElementDefinition,

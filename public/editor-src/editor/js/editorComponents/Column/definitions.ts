@@ -1,7 +1,21 @@
 import { z } from "zod";
-import { withColorDefaults } from "visual/ai/adapters/prop-defaults";
 import {
+  inferBgColorType,
+  inferBorderRadiusType,
+  withAnimatedGradientDefaults,
+  withColorDefaults
+} from "visual/ai/adapters/prop-defaults";
+import {
+  activeStopIndexSchema,
+  bgColorTypeContainer,
   colorPalette,
+  containerOverlayAndBorderPropertyDefinitions,
+  gradientLinearDegree,
+  gradientPointer,
+  gradientRadialDegree,
+  gradientSpeed,
+  gradientStopsSchema,
+  gradientType,
   hexColor,
   opacity
 } from "visual/ai/adapters/schema-primitives";
@@ -14,8 +28,14 @@ import type {
 import type { ToolDefinition } from "visual/ai/entities/models";
 import { log } from "visual/ai/utils/logger";
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
+import { pipe } from "visual/utils/fp/pipe";
 
-export const withColumnDefaults = withColorDefaults;
+export const withColumnDefaults = pipe(
+  withColorDefaults,
+  inferBgColorType,
+  withAnimatedGradientDefaults,
+  inferBorderRadiusType
+);
 
 export const columnPropsSchema = z.object({
   // layout
@@ -24,12 +44,62 @@ export const columnPropsSchema = z.object({
   bgColorPalette: colorPalette,
   bgColorHex: hexColor,
   bgColorOpacity: opacity,
+  bgColorType: bgColorTypeContainer,
+  // gradient
+  gradientType: gradientType,
+  gradientColorPalette: colorPalette,
+  gradientColorHex: hexColor,
+  gradientColorOpacity: opacity,
+  gradientLinearDegree: gradientLinearDegree,
+  gradientRadialDegree: gradientRadialDegree,
+  gradientStartPointer: gradientPointer,
+  gradientFinishPointer: gradientPointer,
+  gradientSpeed: gradientSpeed,
+  gradientStops: gradientStopsSchema,
+  activeStopIndex: activeStopIndexSchema,
   // style - border
   borderColorPalette: colorPalette,
   borderColorHex: hexColor,
   borderColorOpacity: opacity,
   borderStyle: z.enum(["solid", "dashed", "dotted", "none"]).optional(),
   borderWidth: z.number().min(0).optional(),
+  borderRadiusType: z.enum(["grouped", "ungrouped"]).optional(),
+  borderRadius: z.number().min(0).optional(),
+  borderTopLeftRadius: z.number().min(0).optional(),
+  borderTopRightRadius: z.number().min(0).optional(),
+  borderBottomRightRadius: z.number().min(0).optional(),
+  borderBottomLeftRadius: z.number().min(0).optional(),
+  // hover - overlay
+  hoverBgColorPalette: colorPalette,
+  hoverBgColorHex: hexColor,
+  hoverBgColorOpacity: opacity,
+  hoverBgColorType: bgColorTypeContainer,
+  hoverGradientType: gradientType,
+  hoverGradientColorPalette: colorPalette,
+  hoverGradientColorHex: hexColor,
+  hoverGradientColorOpacity: opacity,
+  hoverGradientLinearDegree: gradientLinearDegree,
+  hoverGradientRadialDegree: gradientRadialDegree,
+  hoverGradientStartPointer: gradientPointer,
+  hoverGradientFinishPointer: gradientPointer,
+  hoverGradientSpeed: gradientSpeed,
+  hoverGradientStops: gradientStopsSchema,
+  hoverActiveStopIndex: activeStopIndexSchema,
+  // hover - border
+  hoverBorderColorPalette: colorPalette,
+  hoverBorderColorHex: hexColor,
+  hoverBorderColorOpacity: opacity,
+  hoverBorderStyle: z.enum(["solid", "dashed", "dotted", "none"]).optional(),
+  hoverBorderWidth: z.number().min(0).optional(),
+  // hover - box shadow
+  hoverBoxShadow: z.enum(["none", "inset", "outset"]).optional(),
+  hoverBoxShadowColorHex: hexColor,
+  hoverBoxShadowColorOpacity: opacity,
+  hoverBoxShadowColorPalette: colorPalette,
+  hoverBoxShadowBlur: z.number().min(0).optional(),
+  hoverBoxShadowSpread: z.number().optional(),
+  hoverBoxShadowVertical: z.number().optional(),
+  hoverBoxShadowHorizontal: z.number().optional(),
   // style - padding
   paddingTop: z.number().min(0).optional(),
   paddingBottom: z.number().min(0).optional(),
@@ -89,6 +159,42 @@ const columnPropertyDefinitions = {
     description: "Border width in pixels",
     minimum: 0
   },
+  borderRadiusType: {
+    type: "string",
+    enum: ["grouped", "ungrouped"],
+    description:
+      "Corner radius mode. 'grouped' = same radius on all corners via borderRadius, 'ungrouped' = per-corner values."
+  },
+  borderRadius: {
+    type: "number",
+    description:
+      "Border radius in pixels for all corners. Auto-sets borderRadiusType to 'grouped' if not specified.",
+    minimum: 0
+  },
+  borderTopLeftRadius: {
+    type: "number",
+    description:
+      "Top-left corner radius in pixels. Auto-sets borderRadiusType to 'ungrouped'.",
+    minimum: 0
+  },
+  borderTopRightRadius: {
+    type: "number",
+    description:
+      "Top-right corner radius in pixels. Auto-sets borderRadiusType to 'ungrouped'.",
+    minimum: 0
+  },
+  borderBottomRightRadius: {
+    type: "number",
+    description:
+      "Bottom-right corner radius in pixels. Auto-sets borderRadiusType to 'ungrouped'.",
+    minimum: 0
+  },
+  borderBottomLeftRadius: {
+    type: "number",
+    description:
+      "Bottom-left corner radius in pixels. Auto-sets borderRadiusType to 'ungrouped'.",
+    minimum: 0
+  },
   paddingTop: {
     type: "number",
     description: "Top padding in pixels",
@@ -108,6 +214,44 @@ const columnPropertyDefinitions = {
     type: "number",
     description: "Right padding in pixels",
     minimum: 0
+  },
+  ...containerOverlayAndBorderPropertyDefinitions,
+  // hover - box shadow
+  hoverBoxShadow: {
+    type: "string",
+    enum: ["none", "inset", "outset"],
+    description: "Box shadow type on hover. 'outset' = outer shadow, 'inset' = inner shadow, 'none' = disabled."
+  },
+  hoverBoxShadowColorHex: {
+    type: "string",
+    description: "Hover box shadow color hex. Palette is auto-cleared."
+  },
+  hoverBoxShadowColorOpacity: {
+    type: "number",
+    description: "Hover box shadow color opacity (0-1)",
+    minimum: 0,
+    maximum: 1
+  },
+  hoverBoxShadowColorPalette: {
+    type: "string",
+    description: "Set to '' when using hoverBoxShadowColorHex. For palette colors use 'color1'-'color8'."
+  },
+  hoverBoxShadowBlur: {
+    type: "number",
+    description: "Hover box shadow blur radius in pixels",
+    minimum: 0
+  },
+  hoverBoxShadowSpread: {
+    type: "number",
+    description: "Hover box shadow spread in pixels (positive = expand, negative = shrink)"
+  },
+  hoverBoxShadowVertical: {
+    type: "number",
+    description: "Hover box shadow vertical offset in pixels"
+  },
+  hoverBoxShadowHorizontal: {
+    type: "number",
+    description: "Hover box shadow horizontal offset in pixels"
   }
 } as const;
 
@@ -115,7 +259,7 @@ export const addColumnDefinition: ToolDefinition = {
   name: "addColumn",
   strict: true,
   description:
-    "Add a Column to an existing Row. Only for multi-column layouts in existing sections. For new sections use generateBlock.",
+    "Add a Column to an existing Row. Supports gradient, animated-gradient, hover background/border, hover box shadow, and border radius. Only for multi-column layouts in existing sections. For new sections use generateBlock.",
   category: "element",
   parameters: {
     type: "object",
@@ -140,7 +284,7 @@ export const updateColumnDefinition: ToolDefinition = {
   name: "updateColumn",
   strict: true,
   description:
-    "Update a Column element's properties. Width must be in percentage (%), not pixels. When width is changed, sibling columns in the same Row are automatically recalculated so all columns total 100%. Minimum width per column is 5%.",
+    "Update a Column element's properties. Supports gradient, animated-gradient, hover background, hover border, hover box shadow, and border radius. Width must be in percentage (%), not pixels. When width is changed, sibling columns in the same Row are automatically recalculated so all columns total 100%. Minimum width per column is 5%.",
   category: "update",
   parameters: {
     type: "object",

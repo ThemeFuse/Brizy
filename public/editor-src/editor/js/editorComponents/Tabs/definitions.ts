@@ -1,5 +1,10 @@
 import { z } from "zod";
-import { onOff } from "visual/ai/adapters/schema-primitives";
+import { withAllFontFamilyNormalize } from "visual/ai/adapters/prop-defaults";
+import {
+  fontFamilyPropertyPair,
+  fontFamilySchemaPair,
+  onOff
+} from "visual/ai/adapters/schema-primitives";
 import type { AddToolConfig, UpdateToolConfig } from "visual/ai/adapters/types";
 import type { ToolDefinition } from "visual/ai/entities/models";
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
@@ -7,8 +12,11 @@ import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 export const tabsPropsSchema = z.object({
   navStyle: z.enum(["style-1", "style-2", "style-3"]).optional(),
   action: z.enum(["click", "hover"]).optional(),
-  verticalMode: onOff.optional()
+  verticalMode: onOff.optional(),
+  ...fontFamilySchemaPair()
 });
+
+export const withTabsDefaults = withAllFontFamilyNormalize;
 
 export type TabsProps = z.infer<typeof tabsPropsSchema>;
 
@@ -29,7 +37,8 @@ const tabsPropertyDefinitions = {
     enum: ["on", "off"],
     description:
       "Layout direction. 'off' = horizontal tabs, 'on' = vertical (side) tabs. Changing this affects how navStyle renders."
-  }
+  },
+  ...fontFamilyPropertyPair()
 } as const;
 
 export const addTabsDefinition: ToolDefinition = {
@@ -81,12 +90,14 @@ export const addTabsConfig: AddToolConfig = {
   kind: "add",
   definition: addTabsDefinition,
   elementType: ElementTypes.Tabs,
-  schema: tabsPropsSchema
+  schema: tabsPropsSchema,
+  defaults: withTabsDefaults
 };
 
 export const updateTabsConfig: UpdateToolConfig = {
   kind: "update",
   definition: updateTabsDefinition,
   elementType: ElementTypes.Tabs,
-  schema: tabsPropsSchema
+  schema: tabsPropsSchema,
+  defaults: withTabsDefaults
 };

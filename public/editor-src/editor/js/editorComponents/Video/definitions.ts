@@ -1,5 +1,10 @@
 import { z } from "zod";
-import { onOff } from "visual/ai/adapters/schema-primitives";
+import { withAllFontFamilyNormalize } from "visual/ai/adapters/prop-defaults";
+import {
+  fontFamilyPropertyPair,
+  fontFamilySchemaPair,
+  onOff
+} from "visual/ai/adapters/schema-primitives";
 import type { AddToolConfig, UpdateToolConfig } from "visual/ai/adapters/types";
 import type { ToolDefinition } from "visual/ai/entities/models";
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
@@ -11,8 +16,11 @@ export const videoPropsSchema = z.object({
   // playback
   autoplay: onOff.optional(),
   loop: onOff.optional(),
-  controls: onOff.optional()
+  controls: onOff.optional(),
+  ...fontFamilySchemaPair("typography")
 });
+
+export const withVideoDefaults = withAllFontFamilyNormalize;
 
 export type VideoProps = z.infer<typeof videoPropsSchema>;
 
@@ -35,7 +43,8 @@ const videoPropertyDefinitions = {
     type: "string",
     enum: ["on", "off"],
     description: "Show video controls"
-  }
+  },
+  ...fontFamilyPropertyPair("typography")
 } as const;
 
 export const addVideoDefinition: ToolDefinition = {
@@ -88,6 +97,7 @@ export const addVideoConfig: AddToolConfig = {
   definition: addVideoDefinition,
   elementType: ElementTypes.Video,
   schema: videoPropsSchema,
+  defaults: withVideoDefaults,
   transformProps: (parsed) => {
     const initialProperties = { ...parsed };
     if (parsed.video) {
@@ -102,6 +112,7 @@ export const updateVideoConfig: UpdateToolConfig = {
   definition: updateVideoDefinition,
   elementType: ElementTypes.Video,
   schema: videoPropsSchema,
+  defaults: withVideoDefaults,
   transformProps: (parsed) => {
     const changes = { ...parsed };
     if (parsed.video) {

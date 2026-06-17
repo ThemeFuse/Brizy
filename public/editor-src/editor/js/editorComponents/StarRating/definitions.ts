@@ -1,5 +1,10 @@
 import { z } from "zod";
-import { onOff } from "visual/ai/adapters/schema-primitives";
+import { withAllFontFamilyNormalize } from "visual/ai/adapters/prop-defaults";
+import {
+  fontFamilyPropertyPair,
+  fontFamilySchemaPair,
+  onOff
+} from "visual/ai/adapters/schema-primitives";
 import type { AddToolConfig, UpdateToolConfig } from "visual/ai/adapters/types";
 import type { ToolDefinition } from "visual/ai/entities/models";
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
@@ -8,8 +13,11 @@ export const starRatingPropsSchema = z.object({
   rating: z.number().min(0).max(10).optional(),
   ratingScale: z.number().min(1).max(10).optional(),
   text: z.string().optional(),
-  label: onOff.optional()
+  label: onOff.optional(),
+  ...fontFamilySchemaPair()
 });
+
+export const withStarRatingDefaults = withAllFontFamilyNormalize;
 
 export type StarRatingProps = z.infer<typeof starRatingPropsSchema>;
 
@@ -34,7 +42,8 @@ const starRatingPropertyDefinitions = {
     type: "string",
     enum: ["on", "off"],
     description: "Show/hide the label"
-  }
+  },
+  ...fontFamilyPropertyPair()
 } as const;
 
 export const addStarRatingDefinition: ToolDefinition = {
@@ -86,12 +95,14 @@ export const addStarRatingConfig: AddToolConfig = {
   kind: "add",
   definition: addStarRatingDefinition,
   elementType: ElementTypes.StarRating,
-  schema: starRatingPropsSchema
+  schema: starRatingPropsSchema,
+  defaults: withStarRatingDefaults
 };
 
 export const updateStarRatingConfig: UpdateToolConfig = {
   kind: "update",
   definition: updateStarRatingDefinition,
   elementType: ElementTypes.StarRating,
-  schema: starRatingPropsSchema
+  schema: starRatingPropsSchema,
+  defaults: withStarRatingDefaults
 };

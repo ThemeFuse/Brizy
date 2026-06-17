@@ -1,5 +1,10 @@
 import { z } from "zod";
-import { onOff } from "visual/ai/adapters/schema-primitives";
+import { withAllFontFamilyNormalize } from "visual/ai/adapters/prop-defaults";
+import {
+  fontFamilyPropertyPair,
+  fontFamilySchemaPair,
+  onOff
+} from "visual/ai/adapters/schema-primitives";
 import type { AddToolConfig, UpdateToolConfig } from "visual/ai/adapters/types";
 import type { ToolDefinition } from "visual/ai/entities/models";
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
@@ -7,8 +12,12 @@ import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 export const accordionPropsSchema = z.object({
   collapsible: onOff.optional(),
   animDuration: z.number().min(0).max(5).optional(),
-  navIcon: z.string().optional()
+  navIcon: z.string().optional(),
+  ...fontFamilySchemaPair(),
+  ...fontFamilySchemaPair("filter")
 });
+
+export const withAccordionDefaults = withAllFontFamilyNormalize;
 
 export type AccordionProps = z.infer<typeof accordionPropsSchema>;
 
@@ -28,7 +37,15 @@ const accordionPropertyDefinitions = {
     type: "string",
     enum: ["none", "thin", "heavy", "tail", "filled", "outline"],
     description: "Collapse arrow style ('none' to hide)"
-  }
+  },
+  ...fontFamilyPropertyPair(
+    "",
+    "Font family for accordion item header/title text."
+  ),
+  ...fontFamilyPropertyPair(
+    "filter",
+    "Font family for accordion filter tab labels."
+  )
 } as const;
 
 export const addAccordionDefinition: ToolDefinition = {
@@ -80,12 +97,14 @@ export const addAccordionConfig: AddToolConfig = {
   kind: "add",
   definition: addAccordionDefinition,
   elementType: ElementTypes.Accordion,
-  schema: accordionPropsSchema
+  schema: accordionPropsSchema,
+  defaults: withAccordionDefaults
 };
 
 export const updateAccordionConfig: UpdateToolConfig = {
   kind: "update",
   definition: updateAccordionDefinition,
   elementType: ElementTypes.Accordion,
-  schema: accordionPropsSchema
+  schema: accordionPropsSchema,
+  defaults: withAccordionDefaults
 };
