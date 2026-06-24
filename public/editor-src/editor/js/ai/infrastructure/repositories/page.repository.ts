@@ -4,13 +4,18 @@ import { ElementModelType2 } from "visual/component/Elements/Types";
 import { TypeId } from "visual/config/icons/Type";
 import { getTypeIcons } from "visual/config/icons/icons";
 import changeValueAfterDND from "visual/editorComponents/Page/utils/changeValueAfterDND";
-import type { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import {
+  type ConfigCommon,
+  Mode
+} from "visual/global/Config/types/configs/ConfigCommon";
 import {
   addBlock as addBlockAction,
+  fetchPageSuccess,
   removeBlock as removeBlockAction,
   removeBlocks as removeBlocksAction,
   reorderBlocks,
-  updateBlockData
+  updateBlockData,
+  updatePageStatus
 } from "visual/redux/actions2";
 import type { Store, TypedDispatch } from "visual/redux/store";
 import type { ReduxState } from "visual/redux/types";
@@ -1246,6 +1251,33 @@ export class PageRepository implements IPageRepository {
           icons: limitedIcons,
           totalCount
         }
+      };
+    } catch (error) {
+      return {
+        success: false,
+        error: error instanceof Error ? error.message : String(error)
+      };
+    }
+  }
+
+  async setPageStatus(
+    status: "publish" | "draft"
+  ): Promise<BrizyToolResult<{ status: "publish" | "draft" }>> {
+    try {
+      const editorMode = this.config.mode ?? Mode.page;
+
+      await this.dispatch(
+        updatePageStatus({
+          status,
+          editorMode,
+          config: this.config
+        })
+      );
+      this.dispatch(fetchPageSuccess());
+
+      return {
+        success: true,
+        data: { status }
       };
     } catch (error) {
       return {

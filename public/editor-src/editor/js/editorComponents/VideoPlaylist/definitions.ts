@@ -1,4 +1,9 @@
 import { z } from "zod";
+import { withAllFontFamilyNormalize } from "visual/ai/adapters/prop-defaults";
+import {
+  fontFamilyPropertyPair,
+  fontFamilySchemaPair
+} from "visual/ai/adapters/schema-primitives";
 import type { AddToolConfig, UpdateToolConfig } from "visual/ai/adapters/types";
 import type { ToolDefinition } from "visual/ai/entities/models";
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
@@ -17,8 +22,13 @@ export const videoPlaylistPropsSchema = z.object({
   positionItem: z.enum(["horizontal", "vertical"]).optional(),
   positionThumbs: z.enum(["above", "under"]).optional(),
   gridColumn: z.number().min(1).max(6).optional(),
-  links: z.array(videoPlaylistLinkSchema).min(1).optional()
+  links: z.array(videoPlaylistLinkSchema).min(1).optional(),
+  ...fontFamilySchemaPair(),
+  ...fontFamilySchemaPair("subTitle"),
+  ...fontFamilySchemaPair("controls")
 });
+
+export const withVideoPlaylistDefaults = withAllFontFamilyNormalize;
 
 export type VideoPlaylistProps = z.infer<typeof videoPlaylistPropsSchema>;
 
@@ -65,7 +75,19 @@ const videoPlaylistPropertyDefinitions = {
       required: ["url"],
       additionalProperties: false
     }
-  }
+  },
+  ...fontFamilyPropertyPair(
+    "",
+    "Font family for the playlist item title text."
+  ),
+  ...fontFamilyPropertyPair(
+    "subTitle",
+    "Font family for the playlist item subtitle text."
+  ),
+  ...fontFamilyPropertyPair(
+    "controls",
+    "Font family for video player control overlay text."
+  )
 } as const;
 
 export const addVideoPlaylistDefinition: ToolDefinition = {
@@ -118,6 +140,7 @@ export const addVideoPlaylistConfig: AddToolConfig = {
   definition: addVideoPlaylistDefinition,
   elementType: ElementTypes.VideoPlaylist,
   schema: videoPlaylistPropsSchema,
+  defaults: withVideoPlaylistDefaults,
   transformProps: (parsed) => {
     const { links, ...layoutProps } = parsed as {
       links?: { url: string; title?: string; subTitle?: string }[];
@@ -138,6 +161,7 @@ export const updateVideoPlaylistConfig: UpdateToolConfig = {
   definition: updateVideoPlaylistDefinition,
   elementType: ElementTypes.VideoPlaylist,
   schema: videoPlaylistPropsSchema,
+  defaults: withVideoPlaylistDefaults,
   transformProps: (parsed) => {
     const { links, ...layoutProps } = parsed as {
       links?: { url: string; title?: string; subTitle?: string }[];

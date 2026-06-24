@@ -1,18 +1,28 @@
 import { z } from "zod";
-import { withColorDefaults } from "visual/ai/adapters/prop-defaults";
+import {
+  withAllFontFamilyNormalize,
+  withColorDefaults
+} from "visual/ai/adapters/prop-defaults";
 import {
   colorPalette,
+  fontFamilyPropertyPair,
+  fontFamilySchemaPair,
   hexColor,
   opacity
 } from "visual/ai/adapters/schema-primitives";
+import { pipe } from "visual/utils/fp/pipe";
 import type { AddToolConfig, UpdateToolConfig } from "visual/ai/adapters/types";
 import type { ToolDefinition } from "visual/ai/entities/models";
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 
-export const withLineDefaults = withColorDefaults;
+export const withLineDefaults = pipe(
+  withColorDefaults,
+  withAllFontFamilyNormalize
+);
 
 export const linePropsSchema = z.object({
   // style
+  ...fontFamilySchemaPair(),
   borderColorPalette: colorPalette,
   borderColorHex: hexColor,
   borderColorOpacity: opacity,
@@ -23,6 +33,7 @@ export const linePropsSchema = z.object({
 export type LineProps = z.infer<typeof linePropsSchema>;
 
 const linePropertyDefinitions = {
+  ...fontFamilyPropertyPair(),
   borderColorPalette: {
     type: "string",
     description:

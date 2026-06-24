@@ -287,4 +287,11 @@ export interface IPageRepository {
    * Check if the current user has Brizy Pro
    */
   isPro(): boolean;
+
+  /**
+   * Save current page status through the publish pipeline
+   */
+  setPageStatus(
+    status: "publish" | "draft"
+  ): Promise<BrizyToolResult<{ status: "publish" | "draft" }>>;
 }

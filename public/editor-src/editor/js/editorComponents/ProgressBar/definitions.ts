@@ -1,5 +1,10 @@
 import { z } from "zod";
-import { onOff } from "visual/ai/adapters/schema-primitives";
+import { withAllFontFamilyNormalize } from "visual/ai/adapters/prop-defaults";
+import {
+  fontFamilyPropertyPair,
+  fontFamilySchemaPair,
+  onOff
+} from "visual/ai/adapters/schema-primitives";
 import type { AddToolConfig, UpdateToolConfig } from "visual/ai/adapters/types";
 import type { ToolDefinition } from "visual/ai/entities/models";
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
@@ -9,8 +14,12 @@ export const progressBarPropsSchema = z.object({
   percentage: z.number().min(0).max(100).optional(),
   showText: onOff.optional(),
   showPercentage: onOff.optional(),
-  progressBarStyle: z.enum(["style1", "style2"]).optional()
+  progressBarStyle: z.enum(["style1", "style2"]).optional(),
+  ...fontFamilySchemaPair(),
+  ...fontFamilySchemaPair("typography")
 });
+
+export const withProgressBarDefaults = withAllFontFamilyNormalize;
 
 export type ProgressBarProps = z.infer<typeof progressBarPropsSchema>;
 
@@ -39,7 +48,15 @@ const progressBarPropertyDefinitions = {
     type: "string",
     enum: ["style1", "style2"],
     description: "Bar style: style1 (thick) or style2 (thin)"
-  }
+  },
+  ...fontFamilyPropertyPair(
+    "",
+    "Font family for the progress bar label text (e.g. skill name)."
+  ),
+  ...fontFamilyPropertyPair(
+    "typography",
+    "Font family for the percentage value display."
+  )
 } as const;
 
 export const addProgressBarDefinition: ToolDefinition = {
@@ -91,12 +108,14 @@ export const addProgressBarConfig: AddToolConfig = {
   kind: "add",
   definition: addProgressBarDefinition,
   elementType: ElementTypes.ProgressBar,
-  schema: progressBarPropsSchema
+  schema: progressBarPropsSchema,
+  defaults: withProgressBarDefaults
 };
 
 export const updateProgressBarConfig: UpdateToolConfig = {
   kind: "update",
   definition: updateProgressBarDefinition,
   elementType: ElementTypes.ProgressBar,
-  schema: progressBarPropsSchema
+  schema: progressBarPropsSchema,
+  defaults: withProgressBarDefaults
 };

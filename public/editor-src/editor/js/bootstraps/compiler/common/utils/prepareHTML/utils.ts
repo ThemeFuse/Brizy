@@ -5,7 +5,7 @@ import { triggersSelector } from "visual/redux/selectors";
 import { Store } from "visual/redux/store";
 import { TriggerType, Triggers } from "visual/types";
 import { makeAttr } from "visual/utils/i18n/attribute";
-import { isInternalPopup, isPopup } from "visual/utils/models";
+import { isInternalPopup, isPopup, isStory } from "visual/utils/models";
 
 const encodeData = (data: unknown): string =>
   encodeURIComponent(JSON.stringify(data));
@@ -90,6 +90,15 @@ export function getRootClassNames(config: ConfigCommon): Array<string> {
     }
 
     return cls;
+  }
+
+  if (isStory(config)) {
+    return [
+      "brz",
+      "brz-root__container",
+      "brz-reset-all",
+      "brz-root__container-story"
+    ];
   }
 
   return [

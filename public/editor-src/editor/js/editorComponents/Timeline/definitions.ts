@@ -1,11 +1,17 @@
 import { z } from "zod";
-import { withColorDefaults } from "visual/ai/adapters/prop-defaults";
+import {
+  withAllFontFamilyNormalize,
+  withColorDefaults
+} from "visual/ai/adapters/prop-defaults";
 import {
   colorPalette,
+  fontFamilyPropertyPair,
+  fontFamilySchemaPair,
   hexColor,
   onOff,
   opacity
 } from "visual/ai/adapters/schema-primitives";
+import { pipe } from "visual/utils/fp/pipe";
 import type { AddToolConfig, UpdateToolConfig } from "visual/ai/adapters/types";
 import type { ToolDefinition } from "visual/ai/entities/models";
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
@@ -18,6 +24,7 @@ export const timelinePropsSchema = z.object({
   tabsCount: z.number().min(1).max(6).optional(),
 
   // typography
+  ...fontFamilySchemaPair("typography"),
   typographyFontStyle: z.string().optional(),
   typographyFontSize: z.number().min(1).max(100).optional(),
   typographyFontWeight: z.number().min(100).max(900).optional(),
@@ -61,7 +68,10 @@ export const timelinePropsSchema = z.object({
 
 export type TimelineProps = z.infer<typeof timelinePropsSchema>;
 
-export const withTimelineDefaults = withColorDefaults;
+export const withTimelineDefaults = pipe(
+  withColorDefaults,
+  withAllFontFamilyNormalize
+);
 
 const timelinePropertyDefinitions = {
   enableText: {
@@ -88,6 +98,7 @@ const timelinePropertyDefinitions = {
     minimum: 1,
     maximum: 6
   },
+  ...fontFamilyPropertyPair("typography"),
   typographyFontStyle: {
     type: "string",
     description:
