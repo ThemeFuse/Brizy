@@ -92,6 +92,7 @@ class MockPageRepository implements IPageRepository {
   updateRichText = jest.fn();
   getAvailableIcons = jest.fn();
   isPro = jest.fn();
+  setPageStatus = jest.fn();
 }
 
 class MockProjectRepository implements IProjectRepository {

@@ -1,8 +1,13 @@
 import { z } from "zod";
-import { withColorDefaults } from "visual/ai/adapters/prop-defaults";
+import {
+  withAllFontFamilyNormalize,
+  withColorDefaults
+} from "visual/ai/adapters/prop-defaults";
 import {
   colorPalette,
   containerIdSchema,
+  fontFamilyPropertyPair,
+  fontFamilySchemaPair,
   hexColor,
   onOff,
   opacity
@@ -58,7 +63,15 @@ const styleSchema = z.object({
   size: z.enum(["small", "medium", "large"]).optional(),
   fontSize: z.number().min(8).max(200).optional(),
   fontSizeSuffix: z.enum(["px", "em"]).optional(),
-  fontFamily: z.string().optional(),
+  ...fontFamilySchemaPair(),
+  ...fontFamilySchemaPair("text"),
+  ...fontFamilySchemaPair("label"),
+  ...fontFamilySchemaPair("checkbox"),
+  ...fontFamilySchemaPair("agreement"),
+  ...fontFamilySchemaPair("loginLink"),
+  ...fontFamilySchemaPair("lost"),
+  ...fontFamilySchemaPair("registerInfo"),
+  ...fontFamilySchemaPair("registerLink"),
   fontWeight: z.number().min(100).max(900).optional(),
   lineHeight: z.number().min(0.5).max(5).optional(),
   letterSpacing: z.number().optional(),
@@ -147,7 +160,9 @@ function withLoginBoxShadowDefaults<T extends Record<string, unknown>>(
 
 export const withLoginDefaults = (props: Record<string, unknown>) =>
   withLoginBgOpacityDefaults(
-    withLoginBoxShadowDefaults(withColorDefaults(props))
+    withLoginBoxShadowDefaults(
+      withAllFontFamilyNormalize(withColorDefaults(props))
+    )
   );
 
 const LOGIN_CONTENT_KEYS = new Set([
@@ -347,7 +362,42 @@ const loginPropertyDefinitions = {
     minimum: 8,
     maximum: 200
   },
-  fontFamily: { type: "string", description: "Font family" },
+  ...fontFamilyPropertyPair(
+    "",
+    "Font family for form input field text."
+  ),
+  ...fontFamilyPropertyPair(
+    "text",
+    "Font family for general form body text."
+  ),
+  ...fontFamilyPropertyPair(
+    "label",
+    "Font family for form field labels."
+  ),
+  ...fontFamilyPropertyPair(
+    "checkbox",
+    "Font family for checkbox option labels."
+  ),
+  ...fontFamilyPropertyPair(
+    "agreement",
+    "Font family for terms and agreement text."
+  ),
+  ...fontFamilyPropertyPair(
+    "loginLink",
+    "Font family for the login link text."
+  ),
+  ...fontFamilyPropertyPair(
+    "lost",
+    "Font family for the lost password link text."
+  ),
+  ...fontFamilyPropertyPair(
+    "registerInfo",
+    "Font family for register info/helper text."
+  ),
+  ...fontFamilyPropertyPair(
+    "registerLink",
+    "Font family for the register link text."
+  ),
   fontWeight: {
     type: "number",
     description: "Font weight",

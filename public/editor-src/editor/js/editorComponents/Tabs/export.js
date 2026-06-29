@@ -1,6 +1,13 @@
+import { Num, Str } from "@brizy/readers";
 import $ from "jquery";
-import { TabsAccessibility } from "../accessibility";
 import { makeAttr } from "visual/utils/i18n/attribute";
+import {
+  getFromStorage,
+  setToStorage
+} from "visual/utils/storage/localStorage";
+import { TabsAccessibility } from "../accessibility";
+
+const storageKey = (tabsId) => `brz-tabs-active:${tabsId}`;
 
 function changeTab($tabs, target) {
   const $tabsContent = $tabs
@@ -12,6 +19,11 @@ function changeTab($tabs, target) {
 
   if (navIndex === -1) {
     return;
+  }
+
+  const tabsId = $tabs.attr(makeAttr("tabs-id"));
+  if (Str.read(tabsId)) {
+    setToStorage(storageKey(tabsId), String(navIndex));
   }
 
   // removeClass
@@ -55,7 +67,10 @@ export default function ($node) {
           const button = item.querySelector(".brz-tabs__nav--button");
           const panel = $tabsContent.get(index);
 
-          if (!(button instanceof HTMLElement) || !(panel instanceof HTMLElement)) {
+          if (
+            !(button instanceof HTMLElement) ||
+            !(panel instanceof HTMLElement)
+          ) {
             return null;
           }
 
@@ -139,6 +154,14 @@ export default function ($node) {
         .children(".brz-tabs__content")
         .children(".brz-tabs__items");
 
+      const navIndex = $item.index();
+      if (navIndex !== -1) {
+        const tabsId = $this.attr(makeAttr("tabs-id"));
+        if (Str.read(tabsId)) {
+          setToStorage(storageKey(tabsId), String(navIndex));
+        }
+      }
+
       $item.siblings().removeClass(activeClassName);
       $item
         .siblings()
@@ -171,5 +194,30 @@ export default function ($node) {
 
       tabsAccessibility.sync();
     });
+
+    // Restore the last active tab from storage
+    const tabsId = $this.attr(makeAttr("tabs-id"));
+    if (Str.read(tabsId)) {
+      const raw = getFromStorage(storageKey(tabsId));
+
+      if (raw !== null) {
+        const storedIndex = Num.read(raw);
+
+        if (
+          Number.isInteger(storedIndex) &&
+          storedIndex >= 0 &&
+          storedIndex < $tabsContent.length
+        ) {
+          const currentIndex = $tabsContent.index(
+            $tabsContent.filter(".brz-tabs__items--active")
+          );
+
+          if (storedIndex !== currentIndex) {
+            changeTab($this, $desktopNavItems.eq(storedIndex));
+            tabsAccessibility.sync();
+          }
+        }
+      }
+    }
   });
 }

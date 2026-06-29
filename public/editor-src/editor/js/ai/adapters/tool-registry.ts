@@ -112,7 +112,10 @@ import {
 } from "visual/editorComponents/Row/definitions";
 import { updateSectionItemConfig } from "visual/editorComponents/Section/SectionItem/definitions";
 import { updateSectionFooterConfig } from "visual/editorComponents/SectionFooter/definitions";
-import { updateSectionHeaderConfig } from "visual/editorComponents/SectionHeader/definitions";
+import {
+  updateSectionHeaderItemConfig,
+  updateSectionHeaderStickyItemConfig
+} from "visual/editorComponents/SectionHeader/sectionHeaderItemDefinitions";
 import { addShareButtonConfig } from "visual/editorComponents/ShareButton/definitions";
 import {
   addSoundCloudConfig,
@@ -225,7 +228,8 @@ const componentConfigs: ToolConfig[] = [
   updateImageConfig,
   updateIconConfig,
   updateSectionItemConfig,
-  updateSectionHeaderConfig,
+  updateSectionHeaderItemConfig,
+  updateSectionHeaderStickyItemConfig,
   updateSectionFooterConfig,
   updateRowConfig,
   updateColumnConfig,

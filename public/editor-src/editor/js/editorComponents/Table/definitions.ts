@@ -1,12 +1,18 @@
 import { addLast, setIn } from "timm";
 import { z } from "zod";
-import { withColorDefaults } from "visual/ai/adapters/prop-defaults";
+import {
+  withAllFontFamilyNormalize,
+  withColorDefaults
+} from "visual/ai/adapters/prop-defaults";
 import {
   colorPalette,
+  fontFamilyPropertyPair,
+  fontFamilySchemaPair,
   hexColor,
   onOff,
   opacity
 } from "visual/ai/adapters/schema-primitives";
+import { pipe } from "visual/utils/fp/pipe";
 import type { AddToolConfig, UpdateToolConfig } from "visual/ai/adapters/types";
 import type { ToolDefinition } from "visual/ai/entities/models";
 import { ElementModelType2 } from "visual/component/Elements/Types";
@@ -125,6 +131,7 @@ export const tablePropsSchema = z.object({
   widthSuffix: z.enum(["%"]).optional(),
 
   // typography
+  ...fontFamilySchemaPair("typography"),
   typographyFontStyle: z.string().optional(),
   typographyFontSize: z.number().min(1).max(100).optional(),
   typographyFontWeight: z.number().min(100).max(900).optional(),
@@ -152,7 +159,10 @@ export const tablePropsSchema = z.object({
 
 export type TableProps = z.infer<typeof tablePropsSchema>;
 
-export const withTableDefaults = withColorDefaults;
+export const withTableDefaults = pipe(
+  withColorDefaults,
+  withAllFontFamilyNormalize
+);
 
 const tablePropertyDefinitions = {
   rows: {
@@ -190,6 +200,7 @@ const tablePropertyDefinitions = {
     enum: ["%"],
     description: "Width unit (always '%')"
   },
+  ...fontFamilyPropertyPair("typography"),
   typographyFontStyle: {
     type: "string",
     description:
@@ -410,6 +421,7 @@ export const tableHeadBodyPropsSchema = z.object({
   horizontalAlign: z.enum(["left", "center", "right"]).optional(),
 
   // typography
+  ...fontFamilySchemaPair("typography"),
   typographyFontStyle: z.string().optional(),
   typographyFontSize: z.number().min(1).max(100).optional(),
   typographyFontWeight: z.number().min(100).max(900).optional(),
@@ -448,7 +460,10 @@ export const tableHeadBodyPropsSchema = z.object({
 
 export type TableHeadBodyProps = z.infer<typeof tableHeadBodyPropsSchema>;
 
-export const withTableHeadBodyDefaults = withColorDefaults;
+export const withTableHeadBodyDefaults = pipe(
+  withColorDefaults,
+  withAllFontFamilyNormalize
+);
 
 const tableHeadBodyPropertyDefinitions = {
   horizontalAlign: {
@@ -456,6 +471,7 @@ const tableHeadBodyPropertyDefinitions = {
     enum: ["left", "center", "right"],
     description: "Text alignment within cells"
   },
+  ...fontFamilyPropertyPair("typography"),
   typographyFontStyle: {
     type: "string",
     description:

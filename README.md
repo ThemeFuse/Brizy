@@ -4,7 +4,7 @@ Contributors: themefuse<br>
 Requires at least: 4.5<br>
 Tested up to: 7.0<br>
 Requires PHP: 7.4<br>
-Stable tag: 2.8.16<br>
+Stable tag: 2.8.17<br>
 License: GPLv3<br>
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -135,6 +135,10 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 [Privacy policy](https://brizy.io/privacy/)
 
 ## Changelog
+
+### 2.8.17 - 2026-06-29
+* New: Tabs now remember the last selected tab in preview
+* Fixed: Website width changing because of invalid html
 
 ### 2.8.16 - 2026-06-09
 * Fixed: PHP compatibility version

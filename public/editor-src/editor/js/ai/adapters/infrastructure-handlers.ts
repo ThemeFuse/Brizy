@@ -422,6 +422,22 @@ export function createInfrastructureHandlers(
       const result = projectRepository.changeDefaultFont(font);
       log.tools("changeDefaultFont output %o", result);
       return result;
+    },
+
+    setPageStatus: async (args: ToolArgs) => {
+      log.tools("setPageStatus input %o", args);
+
+      const status = args.status;
+      if (status !== "publish" && status !== "draft") {
+        return {
+          success: false,
+          error: `Invalid status "${String(status)}". Use "publish" or "draft".`
+        };
+      }
+
+      const result = await pageRepository.setPageStatus(status);
+      log.tools("setPageStatus output %o", result);
+      return result;
     }
   };
 }
