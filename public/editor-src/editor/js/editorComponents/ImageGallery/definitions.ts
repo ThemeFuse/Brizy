@@ -1,5 +1,10 @@
 import { z } from "zod";
-import { onOff } from "visual/ai/adapters/schema-primitives";
+import { withAllFontFamilyNormalize } from "visual/ai/adapters/prop-defaults";
+import {
+  fontFamilyPropertyPair,
+  fontFamilySchemaPair,
+  onOff
+} from "visual/ai/adapters/schema-primitives";
 import type { AddToolConfig, UpdateToolConfig } from "visual/ai/adapters/types";
 import type { ToolDefinition } from "visual/ai/entities/models";
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
@@ -8,8 +13,11 @@ export const imageGalleryPropsSchema = z.object({
   layout: z.enum(["masonry", "grid", "justified", "bigImage"]).optional(),
   gridColumn: z.number().min(1).max(6).optional(),
   lightBox: onOff.optional(),
-  spacing: z.number().min(0).optional()
+  spacing: z.number().min(0).optional(),
+  ...fontFamilySchemaPair("filter")
 });
+
+export const withImageGalleryDefaults = withAllFontFamilyNormalize;
 
 export type ImageGalleryProps = z.infer<typeof imageGalleryPropsSchema>;
 
@@ -34,7 +42,8 @@ const imageGalleryPropertyDefinitions = {
     type: "number",
     description: "Gap between images in pixels",
     minimum: 0
-  }
+  },
+  ...fontFamilyPropertyPair("filter")
 } as const;
 
 export const addImageGalleryDefinition: ToolDefinition = {
@@ -86,12 +95,14 @@ export const addImageGalleryConfig: AddToolConfig = {
   kind: "add",
   definition: addImageGalleryDefinition,
   elementType: ElementTypes.ImageGallery,
-  schema: imageGalleryPropsSchema
+  schema: imageGalleryPropsSchema,
+  defaults: withImageGalleryDefaults
 };
 
 export const updateImageGalleryConfig: UpdateToolConfig = {
   kind: "update",
   definition: updateImageGalleryDefinition,
   elementType: ElementTypes.ImageGallery,
-  schema: imageGalleryPropsSchema
+  schema: imageGalleryPropsSchema,
+  defaults: withImageGalleryDefaults
 };

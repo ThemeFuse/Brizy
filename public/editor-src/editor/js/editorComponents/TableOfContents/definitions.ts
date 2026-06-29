@@ -1,11 +1,17 @@
 import { z } from "zod";
-import { withColorDefaults } from "visual/ai/adapters/prop-defaults";
+import {
+  withAllFontFamilyNormalize,
+  withColorDefaults
+} from "visual/ai/adapters/prop-defaults";
 import {
   colorPalette,
+  fontFamilyPropertyPair,
+  fontFamilySchemaPair,
   hexColor,
   onOff,
   opacity
 } from "visual/ai/adapters/schema-primitives";
+import { pipe } from "visual/utils/fp/pipe";
 import type { AddToolConfig, UpdateToolConfig } from "visual/ai/adapters/types";
 import type { ToolDefinition } from "visual/ai/entities/models";
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
@@ -16,6 +22,7 @@ export const tableOfContentsPropsSchema = z.object({
   selectedElements: z.string().optional(),
 
   // title typography
+  ...fontFamilySchemaPair(),
   fontStyle: z.string().optional(),
   fontSize: z.number().min(1).max(100).optional(),
   fontWeight: z.number().min(100).max(900).optional(),
@@ -23,6 +30,7 @@ export const tableOfContentsPropsSchema = z.object({
   letterSpacing: z.number().min(-5).max(15).optional(),
 
   // body typography
+  ...fontFamilySchemaPair("body"),
   bodyFontStyle: z.string().optional(),
   bodyFontSize: z.number().min(1).max(100).optional(),
   bodyFontWeight: z.number().min(100).max(900).optional(),
@@ -65,7 +73,10 @@ export const tableOfContentsPropsSchema = z.object({
 
 export type TableOfContentsProps = z.infer<typeof tableOfContentsPropsSchema>;
 
-export const withTableOfContentsDefaults = withColorDefaults;
+export const withTableOfContentsDefaults = pipe(
+  withColorDefaults,
+  withAllFontFamilyNormalize
+);
 
 const tableOfContentsPropertyDefinitions = {
   title: {
@@ -77,6 +88,10 @@ const tableOfContentsPropertyDefinitions = {
     description:
       'JSON array of heading selectors to include, e.g. \'["h1","h2","h3"]\'. Valid values: h1, h2, h3, h4, h5, h6.'
   },
+  ...fontFamilyPropertyPair(
+    "",
+    "Font family for the table of contents header title."
+  ),
   fontStyle: {
     type: "string",
     description:
@@ -106,6 +121,10 @@ const tableOfContentsPropertyDefinitions = {
     minimum: -5,
     maximum: 15
   },
+  ...fontFamilyPropertyPair(
+    "body",
+    "Font family for the table of contents list item links."
+  ),
   bodyFontStyle: {
     type: "string",
     description:

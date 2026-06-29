@@ -166,9 +166,7 @@ export async function bootstrap(config: Config): Promise<Static> {
     return {
       page: {
         blocks: blockStatic,
-        rootClassNames: [
-          "brz brz-root__container brz-reset-all brz-root__container-story"
-        ]
+        rootClassNames: getRootClassNames(config)
       },
       project: compiledProject,
       globalBlocks: globalPopupsStatic,

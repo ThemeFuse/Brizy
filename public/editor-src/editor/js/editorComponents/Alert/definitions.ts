@@ -1,11 +1,26 @@
 import { z } from "zod";
-import { withColorDefaults } from "visual/ai/adapters/prop-defaults";
-import { hexColor, onOff, opacity } from "visual/ai/adapters/schema-primitives";
+import {
+  withAllFontFamilyNormalize,
+  withColorDefaults
+} from "visual/ai/adapters/prop-defaults";
+import {
+  fontFamilyProperty,
+  fontFamilyPropertyPair,
+  fontFamilySchema,
+  fontFamilySchemaPair,
+  hexColor,
+  onOff,
+  opacity
+} from "visual/ai/adapters/schema-primitives";
+import { pipe } from "visual/utils/fp/pipe";
 import type { AddToolConfig, UpdateToolConfig } from "visual/ai/adapters/types";
 import type { ToolDefinition } from "visual/ai/entities/models";
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 
-export const withAlertDefaults = withColorDefaults;
+export const withAlertDefaults = pipe(
+  withColorDefaults,
+  withAllFontFamilyNormalize
+);
 
 export const alertPropsSchema = z.object({
   title: z.string().optional(),
@@ -13,7 +28,11 @@ export const alertPropsSchema = z.object({
   closeButtonState: onOff.optional(),
   descriptionState: onOff.optional(),
   bgColorHex: hexColor,
-  bgColorOpacity: opacity
+  bgColorOpacity: opacity,
+  ...fontFamilySchemaPair("title"),
+  ...fontFamilySchemaPair("description"),
+  messageFontFamily: fontFamilySchema,
+  numberFontFamily: fontFamilySchema
 });
 
 export type AlertProps = z.infer<typeof alertPropsSchema>;
@@ -46,7 +65,21 @@ const alertPropertyDefinitions = {
     description: "Background color opacity (0-1)",
     minimum: 0,
     maximum: 1
-  }
+  },
+  ...fontFamilyPropertyPair(
+    "title",
+    "Font family for the alert heading/title text."
+  ),
+  ...fontFamilyPropertyPair(
+    "description",
+    "Font family for the alert body/description text."
+  ),
+  messageFontFamily: fontFamilyProperty(
+    "Font family for the alert icon message text."
+  ),
+  numberFontFamily: fontFamilyProperty(
+    "Font family for the alert icon number badge."
+  )
 } as const;
 
 export const addAlertDefinition: ToolDefinition = {
