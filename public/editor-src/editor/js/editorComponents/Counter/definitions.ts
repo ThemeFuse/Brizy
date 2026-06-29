@@ -1,4 +1,6 @@
 import { z } from "zod";
+import { withAllFontFamilyNormalize } from "visual/ai/adapters/prop-defaults";
+import { fontFamilyPropertyPair, fontFamilySchemaPair } from "visual/ai/adapters/schema-primitives";
 import type { AddToolConfig, UpdateToolConfig } from "visual/ai/adapters/types";
 import type { ToolDefinition } from "visual/ai/entities/models";
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
@@ -9,8 +11,11 @@ export const counterPropsSchema = z.object({
   duration: z.number().min(0).optional(),
   prefixLabel: z.string().optional(),
   suffixLabel: z.string().optional(),
-  separator: z.string().optional()
+  separator: z.string().optional(),
+  ...fontFamilySchemaPair()
 });
+
+export const withCounterDefaults = withAllFontFamilyNormalize;
 
 export type CounterProps = z.infer<typeof counterPropsSchema>;
 
@@ -39,7 +44,8 @@ const counterPropertyDefinitions = {
   separator: {
     type: "string",
     description: "Thousands separator (e.g., ',')"
-  }
+  },
+  ...fontFamilyPropertyPair()
 } as const;
 
 export const addCounterDefinition: ToolDefinition = {
@@ -91,12 +97,14 @@ export const addCounterConfig: AddToolConfig = {
   kind: "add",
   definition: addCounterDefinition,
   elementType: ElementTypes.Counter,
-  schema: counterPropsSchema
+  schema: counterPropsSchema,
+  defaults: withCounterDefaults
 };
 
 export const updateCounterConfig: UpdateToolConfig = {
   kind: "update",
   definition: updateCounterDefinition,
   elementType: ElementTypes.Counter,
-  schema: counterPropsSchema
+  schema: counterPropsSchema,
+  defaults: withCounterDefaults
 };

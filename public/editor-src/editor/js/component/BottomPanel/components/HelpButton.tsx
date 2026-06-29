@@ -5,6 +5,7 @@ import EditorIcon from "visual/component/EditorIcon";
 import { CLEAR_ITEMS_TIMEOUT } from "visual/component/RightSidebar/utils";
 import { updateUI } from "visual/redux/actions2";
 import { uiSelector } from "visual/redux/selectors";
+import { applyFilter } from "visual/utils/filters";
 import { t } from "visual/utils/i18n";
 import { BottomPanelItem } from "./Item";
 import { clickOutsideExceptions } from "./utils";
@@ -20,6 +21,12 @@ const HelpButton = (): ReactElement => {
   }, []);
 
   const handleLabelClick = useCallback(() => {
+    // A plugin (e.g. the AI support chat) may claim the Help action by
+    // returning `true`. If none does, fall back to the Help (videos) sidebar.
+    if (applyFilter("editor.helpButton.click", false)) {
+      return;
+    }
+
     dispatch(
       updateUI("rightSidebar", {
         ...rightSidebar,
@@ -53,7 +60,10 @@ const HelpButton = (): ReactElement => {
     >
       <ClickOutside
         onClickOutside={onClickOutside}
-        exceptions={clickOutsideExceptions}
+        exceptions={applyFilter(
+          "toolbar.clickOutsideExceptions",
+          clickOutsideExceptions
+        )}
       >
         {({ ref }) => <EditorIcon icon={"nc-help"} ref={ref} />}
       </ClickOutside>

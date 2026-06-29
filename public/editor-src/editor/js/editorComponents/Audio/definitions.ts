@@ -1,7 +1,12 @@
 import { z } from "zod";
-import { withColorDefaults } from "visual/ai/adapters/prop-defaults";
+import {
+  withAllFontFamilyNormalize,
+  withColorDefaults
+} from "visual/ai/adapters/prop-defaults";
 import {
   colorPalette,
+  fontFamilyPropertyPair,
+  fontFamilySchemaPair,
   hexColor,
   onOff,
   opacity
@@ -86,7 +91,12 @@ export const audioPropsSchema = z.object({
   // sizing
   width: z.number().min(1).optional(),
   widthSuffix: z.enum(["%", "px"]).optional(),
-  height: z.number().min(40).max(300).optional()
+  height: z.number().min(40).max(300).optional(),
+
+  // typography
+  ...fontFamilySchemaPair(),
+  ...fontFamilySchemaPair("titleTypography"),
+  ...fontFamilySchemaPair("captionTypography")
 });
 
 export type AudioProps = z.infer<typeof audioPropsSchema>;
@@ -100,7 +110,7 @@ const AUDIO_COLOR_PAIRS: Array<{ hex: string; palette: string }> = [
 
 export function withAudioDefaults<T extends Props>(props: T): T {
   // Apply standard color defaults (bg, color, border, boxShadow)
-  let result = withColorDefaults(props);
+  let result = withAllFontFamilyNormalize(withColorDefaults(props));
 
   // Apply audio-specific color defaults (bg2, controls)
   for (const { hex, palette } of AUDIO_COLOR_PAIRS) {
@@ -405,7 +415,19 @@ const audioPropertyDefinitions = {
     description: "Height in pixels (40-300)",
     minimum: 40,
     maximum: 300
-  }
+  },
+  ...fontFamilyPropertyPair(
+    "",
+    "Font family for general audio player UI text."
+  ),
+  ...fontFamilyPropertyPair(
+    "titleTypography",
+    "Font family for the track title displayed in the player."
+  ),
+  ...fontFamilyPropertyPair(
+    "captionTypography",
+    "Font family for the track caption or artist name."
+  )
 } as const;
 
 export const addAudioDefinition: ToolDefinition = {

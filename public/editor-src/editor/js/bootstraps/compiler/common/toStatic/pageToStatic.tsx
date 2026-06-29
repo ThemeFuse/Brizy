@@ -11,6 +11,7 @@ import type { Store } from "visual/redux/store";
 import type { Block } from "visual/types/Block";
 import { Providers } from "../controls/Providers";
 import type { SymbolAsset } from "../transforms/assets/makeSymbols";
+import { getRootClassNames } from "../utils/prepareHTML/utils";
 import { baseToStatic } from "./baseToStatic";
 import type { OutputWithoutSymbols } from "./types";
 
@@ -64,9 +65,7 @@ export const pageToStatic = (
   const { store, config, editorMode } = props;
   const reduxState = store.getState();
   const pageBlocks = pageBlocksRawSelector(reduxState);
-  const rootClassNames = [
-    "brz brz-root__container brz-reset-all brz-root__container-page"
-  ];
+  const rootClassNames = getRootClassNames(config);
 
   const symbols: SymbolAsset[] = [];
 

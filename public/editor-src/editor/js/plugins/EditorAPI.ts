@@ -3,10 +3,12 @@
  * FilterRegistry, EventBus) and the EditorAPI object passed to plugins.
  */
 import type { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import { updateUI } from "visual/redux/actions2";
 import {
   blocksHtmlSelector,
   pageBlocksDataSelector,
-  projectAssembled
+  projectAssembled,
+  uiSelector
 } from "visual/redux/selectors";
 import type { TypedDispatch } from "visual/redux/store";
 import type { ReduxState } from "visual/redux/types";
@@ -67,7 +69,18 @@ export function createEditorAPI(props: Props): EditorAPIParts {
       });
     },
     getPageData: () => pageBlocksDataSelector(getState(), config),
-    getProjectData: () => projectAssembled(getState()).data
+    getProjectData: () => projectAssembled(getState()).data,
+    openHelpSidebar: () => {
+      const { rightSidebar } = uiSelector(getState());
+
+      dispatch(
+        updateUI("rightSidebar", {
+          ...rightSidebar,
+          isOpen: true,
+          type: "help"
+        })
+      );
+    }
   };
 
   return { toolServer, slotRegistry, filterRegistry, eventBus, api };

@@ -217,7 +217,10 @@ export default class Tabs extends EditorComponent {
                 <Wrapper
                   {...this.makeWrapperProps({
                     className,
-                    attributes: makeDataAttr({ name: "action", value: action })
+                    attributes: {
+                      ...makeDataAttr({ name: "action", value: action }),
+                      ...makeDataAttr({ name: "tabs-id", value: this.getId() })
+                    }
                   })}
                 >
                   <ul className={classNameNav} ref={ref}>

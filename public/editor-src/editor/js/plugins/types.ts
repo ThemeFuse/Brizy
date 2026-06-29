@@ -27,6 +27,7 @@ export interface EditorAPI {
   getBlocksHtml: () => Array<BlocksHTML & { id: string }>;
   getPageData: () => unknown;
   getProjectData: () => unknown;
+  openHelpSidebar: () => void;
 }
 
 // --- Slots ---
