@@ -98,6 +98,12 @@ class Brizy_Compatibilities_Init {
 		if ( defined( 'PERFMATTERS_VERSION' ) ) {
 			new Brizy_Compatibilities_Perfmatters();
 		}
+		if ( defined( 'WP_ROCKET_VERSION' ) ) {
+			new Brizy_Compatibilities_WpRocket();
+		}
+		if ( class_exists( 'WpFastestCache' ) ) {
+			new Brizy_Compatibilities_WpFastestCache();
+		}
 		if ( class_exists( 'COMPLIANZ' ) ) {
 			new Brizy_Compatibilities_ComplianzGpdr();
 		}
