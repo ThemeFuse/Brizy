@@ -404,7 +404,7 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi
     {
         try {
             $this->verifyAuthorization(self::nonce);
-            $postId = (int)$this->param('post_id');
+            $postId = (int)$this->param('post_id'); // todo:  change this to 'post'
             $defaultFields = ['ID', 'post_title', 'post_content'];
             $post_fields = array_intersect((array)$this->param('fields'), $defaultFields);
             if (count($post_fields) == 0) {
@@ -413,9 +413,13 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi
             if (!$postId) {
                 $this->error(400, 'Invalid post id');
             }
+
+            if (!Brizy_Editor_User::is_user_allowed($postId)) {
+                $this->error(403, 'You are not allowed to access this post');
+            }
             $post = get_post($postId, ARRAY_A);
             if (!$post) {
-                $this->error(404, 'Invalid post id');
+                $this->error(403, 'You are not allowed to access this post');
             }
             $data = array_intersect_key($post, array_flip($defaultFields));
             $this->success($data);
