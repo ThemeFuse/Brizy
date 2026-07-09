@@ -12,7 +12,7 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/bagrinsergiu/brizy-merge-page-assets.git",
-                "reference": "65470f7b4111e9deb84047617d9915606139821c"
+                "reference": "5b8b26ccaf566b11eee48dd781f2c836be2e14c8"
             },
             "require": {
                 "ext-json": "*",
@@ -34,7 +34,7 @@
                 "brizy",
                 "brizy merge assets"
             ],
-            "time": "2025-12-23T13:17:39+00:00"
+            "time": "2026-02-26T09:29:17+00:00"
         },
         {
             "name": "bagrinsergiu/brizy-migration-utils",
@@ -245,12 +245,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/nikic/PHP-Parser.git",
-                "reference": "2707021f7aecb6f51281904fbda4c4acb9117a30"
+                "reference": "51bd93cc741b7fc3d63d20b6bdcd99fdaa359837"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/2707021f7aecb6f51281904fbda4c4acb9117a30",
-                "reference": "2707021f7aecb6f51281904fbda4c4acb9117a30",
+                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/51bd93cc741b7fc3d63d20b6bdcd99fdaa359837",
+                "reference": "51bd93cc741b7fc3d63d20b6bdcd99fdaa359837",
                 "shasum": ""
             },
             "require": {
@@ -288,7 +288,7 @@
                 "issues": "https://github.com/nikic/PHP-Parser/issues",
                 "source": "https://github.com/nikic/PHP-Parser/tree/4.x"
             },
-            "time": "2025-12-01T11:20:26+00:00"
+            "time": "2025-12-06T11:45:25+00:00"
         },
         {
             "name": "phplrt/ast-contracts",
@@ -1453,5 +1453,5 @@
         "php": ">=5.6"
     },
     "platform-dev": {},
-    "plugin-api-version": "2.9.0"
+    "plugin-api-version": "2.6.0"
 }

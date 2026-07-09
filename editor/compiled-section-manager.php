@@ -125,7 +125,10 @@ class Brizy_Editor_CompiledSectionManager {
 			return $value;
 		}
 
-		return sanitize_text_field( (string) $value );
+		// Root attribute values (e.g. popup trigger conditions) are URL-encoded JSON.
+		// sanitize_text_field() strips %XX octets and corrupts the encoded value, so only
+		// strip tags here; esc_attr() in buildAttributeString() handles HTML-escaping on output.
+		return wp_strip_all_tags( (string) $value );
 	}
 
 	private function sanitizeRootAttributes( $attributes ) {

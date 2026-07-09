@@ -1,4 +1,8 @@
-import { createGlobalBlock, deleteGlobalBlock } from "@/api";
+import {
+  createGlobalBlock,
+  deleteGlobalBlock,
+  updateGlobalBlockRules
+} from "@/api";
 import { GlobalBlockConfig } from "@/types/GlobalBlocks";
 import { t } from "@/utils/i18n";
 
@@ -17,6 +21,14 @@ export const globalBlocks: GlobalBlockConfig = {
       res(status);
     } catch (e) {
       rej(t("Failed to delete Global Block"));
+    }
+  },
+  async updateRules(res, rej, extra) {
+    try {
+      const rules = await updateGlobalBlockRules(extra.uid, extra.rules);
+      res(rules);
+    } catch (e) {
+      rej(t("Failed to update Global Block rules"));
     }
   }
 };

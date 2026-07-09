@@ -878,6 +878,41 @@ export const updatePopupRules = async (
   }
 };
 
+// Global blocks reuse the popup/template rules-save endpoint (updateRules).
+// Unlike popups, the editor knows the block uid (not a WP post id), so we send
+// `uid` and `ignoreDataVersion=1` and let WP resolve the target post by uid.
+export const updateGlobalBlockRules = async (
+  uid: string,
+  rules: Array<Rule>
+): Promise<Array<Rule>> => {
+  const config = getConfig();
+
+  if (!config) {
+    throw new Error(t("Invalid __BRZ_PLUGIN_ENV__"));
+  }
+  const { url, hash, editorVersion, actions } = config;
+
+  const _url = makeUrl(url, {
+    action: actions.updateRules,
+    hash,
+    uid,
+    version: editorVersion,
+    ignoreDataVersion: "1"
+  });
+
+  try {
+    const r = await request(_url, {
+      method: "POST",
+      body: JSON.stringify(rules)
+    });
+    const data = await r.json();
+
+    return data.data;
+  } catch (e) {
+    throw new Error(t("Fail to update global block rules"));
+  }
+};
+
 export const getRules = async () => {
   const config = getConfig();
 

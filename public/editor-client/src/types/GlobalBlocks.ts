@@ -1,3 +1,4 @@
+import { Rule } from "@/types/PopupConditions";
 import { Output } from "@/types/utils";
 import { Response, ResponseWithSuccessStatus } from "./Response";
 
@@ -14,6 +15,12 @@ export interface GlobalBlock {
   dependencies?: Record<string, unknown>;
 }
 
+export interface UpdateGlobalBlockRules {
+  uid: string;
+  rules: Array<Rule>;
+  dataVersion: number;
+}
+
 export interface GlobalBlockConfig {
   create?: (
     res: Response<GlobalBlock>,
@@ -24,6 +31,11 @@ export interface GlobalBlockConfig {
     res: Response<ResponseWithSuccessStatus>,
     rej: Response<string>,
     uid: string
+  ) => void;
+  updateRules?: (
+    res: Response<Array<Rule>>,
+    rej: Response<string>,
+    extra: UpdateGlobalBlockRules
   ) => void;
 }
 

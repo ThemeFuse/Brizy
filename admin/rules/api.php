@@ -202,13 +202,25 @@ class Brizy_Admin_Rules_Api extends Brizy_Admin_AbstractApi {
 	public function actionUpdateRules() {
 
 		$this->verifyAuthorization( self::nonce );
-		$postId            = (int) $this->param( 'post' );
+
+		// Global blocks reuse this rules-save endpoint. The editor only knows the
+		// block uid (not the WP post id), so resolve the target post by uid when
+		// a uid param is provided. The existing 'post' param path is kept unchanged
+		// for popups/templates.
+		$uid = $this->param( 'uid' );
+		if ( $uid ) {
+			$postId = $this->getGlobalBlockIdByUid( $uid );
+		} else {
+			$postId = (int) $this->param( 'post' );
+		}
+
 		$ignoreDataVersion = (int) $this->param( 'ignoreDataVersion' );
 		$dataVersion       = (int) $this->param( 'dataVersion' );
 		$postType          = get_post_type( $postId );
 		if ( ! $postId || ! in_array( $postType, [
 				Brizy_Admin_Templates::CP_TEMPLATE,
 				Brizy_Admin_Popups_Main::CP_POPUP,
+				Brizy_Admin_Blocks_Main::CP_GLOBAL,
 			] ) ) {
 			wp_send_json_error( (object) array( 'message' => 'Invalid template' ), 400 );
 		}
@@ -648,6 +660,33 @@ class Brizy_Admin_Rules_Api extends Brizy_Admin_AbstractApi {
 		return array_values( array_filter( $list, function ( $o ) {
 			return ! is_null( $o );
 		} ) );
+	}
+
+	/**
+	 * Resolve a global block WP post id by its editor uid.
+	 *
+	 * Global blocks reuse the rules-save endpoint (actionUpdateRules), but the
+	 * editor only knows the block uid, not the WP post id. This resolves it the
+	 * same way Brizy_Admin_Blocks_Api does (getBlock() -> brizy_post_uid meta,
+	 * restricted to the global block post type).
+	 *
+	 * @param string $uid
+	 *
+	 * @return int
+	 */
+	private function getGlobalBlockIdByUid( $uid ) {
+		$posts = get_posts( array(
+			'post_type'   => Brizy_Admin_Blocks_Main::CP_GLOBAL,
+			'post_status' => 'any',
+			'meta_key'    => 'brizy_post_uid',
+			'meta_value'  => $uid,
+			'numberposts' => 1,
+			'orderby'     => 'ID',
+			'order'       => 'DESC',
+			'fields'      => 'ids',
+		) );
+
+		return $posts ? (int) $posts[0] : 0;
 	}
 
 
