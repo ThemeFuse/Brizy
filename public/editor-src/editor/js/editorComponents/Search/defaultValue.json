@@ -3,6 +3,7 @@
     "searchStyle": "classic",
 
     "label": "Search...",
+    "searchPostTypes": "[]",
     "items": []
   },
   "style": {

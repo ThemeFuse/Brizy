@@ -1,5 +1,4 @@
 import $ from "jquery";
-import { VideoAccessibility } from "../accessibility";
 import { makeAttr } from "visual/utils/i18n/attribute";
 import * as Num from "visual/utils/reader/number";
 import {
@@ -7,6 +6,7 @@ import {
   videoUrl as getVideoUrl
 } from "visual/utils/video";
 import { initCustomVideoActions } from "visual/utils/video/exportUtils";
+import { VideoAccessibility } from "../accessibility";
 
 let isYoutubeReady = false;
 
@@ -291,11 +291,53 @@ export default function ($node) {
     const $videoData = $this.find(".brz-video-data");
     const $coverElem = $this.find(".brz-video__cover");
     const population = $videoData.attr("data-population");
+    const loop = $videoData.attr("data-loop") === "true";
+    const start = Num.read($videoData.attr("data-start")) ?? 0;
 
     if ($coverElem.length) {
       $coverElem.on("click", insertVideoIframe.bind(null, $this, false));
     } else if (population) {
       insertVideoIframe($this);
+    }
+
+    // When loop is enabled with a non-zero start time, native Vimeo loop
+    // restarts from 0 and ignores #t=. Handle it manually via postMessage.
+    if (loop && start > 0) {
+      const iframe = $this.find("iframe").get(0);
+      if (!iframe) return;
+
+      const sendMessage = (method, value) => {
+        iframe.contentWindow.postMessage(
+          JSON.stringify({ method, value }),
+          "*"
+        );
+      };
+
+      window.addEventListener("message", function (event) {
+        if (!event.origin.includes("vimeo")) return;
+
+        let data;
+        try {
+          data = JSON.parse(event.data);
+        } catch {
+          return;
+        }
+
+        if (data.method === "ping") {
+          sendMessage("addEventListener", "finish");
+        }
+
+        if (data.event === "ready") {
+          sendMessage("addEventListener", "finish");
+        }
+
+        if (data.event === "finish") {
+          sendMessage("setCurrentTime", start);
+          setTimeout(() => sendMessage("play"), 260);
+        }
+      });
+
+      sendMessage("ping");
     }
   });
 

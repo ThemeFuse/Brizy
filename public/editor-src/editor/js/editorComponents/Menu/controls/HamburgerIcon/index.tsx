@@ -6,7 +6,7 @@ import React, {
   useRef,
   useState
 } from "react";
-import UIEvents from "visual/global/UIEvents";
+import UIEvents, { UIEventType } from "visual/global/UIEvents";
 import { makeDataAttr } from "visual/utils/i18n/attribute";
 import { AnimatedHamburgerIcon } from "../../HamburgerIcon";
 import { MMenuAnimationTypes } from "../../types";
@@ -51,7 +51,7 @@ export const HamburgerIcon: FC<Props> = ({
   }, [onOpen]);
 
   useEffect(() => {
-    UIEvents.on("mMenu:close", handleCloseMenu);
+    UIEvents.on(UIEventType.MMenuClose, handleCloseMenu);
 
     if (ref.current && !burgerRef.current) {
       burgerRef.current = new AnimatedHamburgerIcon(ref.current, {
@@ -61,7 +61,7 @@ export const HamburgerIcon: FC<Props> = ({
     }
 
     return () => {
-      UIEvents.off("mMenu:close", handleCloseMenu);
+      UIEvents.off(UIEventType.MMenuClose, handleCloseMenu);
       burgerRef.current?.destroy();
       burgerRef.current = null;
     };
@@ -92,6 +92,9 @@ export const HamburgerIcon: FC<Props> = ({
       ref={ref}
       {...attr}
       {...(ariaLabel ? { "aria-label": ariaLabel } : {})}
+      role="button"
+      tabIndex={0}
+      onClick={handleOpenMenu}
     />
   );
 };

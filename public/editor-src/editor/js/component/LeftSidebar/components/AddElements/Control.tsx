@@ -12,7 +12,7 @@ import EditorIcon from "visual/component/EditorIcon";
 import { ProInfo } from "visual/component/ProInfo";
 import { SortableElement } from "visual/component/Sortable/SortableElement";
 import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
-import UIEvents from "visual/global/UIEvents";
+import UIEvents, { UIEventType } from "visual/global/UIEvents";
 import {
   EditorMode,
   EditorModeContext,
@@ -147,7 +147,7 @@ class ControlInner extends Component<Props, State> {
     const toItemPath = [...(toContainerPath ?? []), String(to.elementIndex)];
 
     // notify React to actually change state accordingly
-    UIEvents.emit("dnd.sort", {
+    UIEvents.emit(UIEventType.DndSort, {
       from: {
         itemData,
         itemType: "addable"
@@ -181,7 +181,7 @@ class ControlInner extends Component<Props, State> {
       const toItemPath = [...(containerPath ?? []), String(itemIndex)];
 
       // notify React to actually change state accordingly
-      UIEvents.emit("dnd.sort", {
+      UIEvents.emit(UIEventType.DndSort, {
         from: {
           itemData,
           itemType: "addable"

@@ -6,6 +6,7 @@ import { ThirdPartyComponentsHosts } from "visual/global/Config/types/configs/Th
 interface TempConfig {
   project?: {
     publicData?: string;
+    privateData?: string;
   };
   thirdPartyComponentHosts?: ThirdPartyComponentsHosts;
   urls?: {
@@ -71,17 +72,27 @@ const parseProjectData = mPipe(
   Str.read
 );
 
+const parsePrivateData = mPipe(
+  Obj.read,
+  Obj.readKey("project"),
+  Obj.read,
+  Obj.readKey("privateData"),
+  Str.read
+);
+
 export function getTempConfig(config: unknown): TempConfig {
   const thirdPartyComponentHosts = parse(config);
   const templateIcons = parseIcons(config);
   const compileTemplateIcons = parseCompileIcons(config);
   const mediaResizeUrl = parseMediaResizeUrl(config);
   const projectPublicData = parseProjectData(config);
+  const projectPrivateData = parsePrivateData(config);
 
   return thirdPartyComponentHosts
     ? {
         project: {
-          publicData: projectPublicData
+          publicData: projectPublicData,
+          privateData: projectPrivateData
         },
         thirdPartyComponentHosts,
         urls: {

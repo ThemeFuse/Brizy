@@ -566,17 +566,16 @@ class Items extends EditorArrayComponent {
     const { className, isDynamicContent, dynamicData } = this.getProps();
     const context = dynamicData?.context ? dynamicData.context : [];
 
-    const content =
-      isDynamicContent && context.length > 0
-        ? context.map((context) => (
-            <EditorComponentContext.Provider
-              key={context.dynamicContent.itemId}
-              value={context}
-            >
-              {super.renderForEdit(v.slice(0, 1))}
-            </EditorComponentContext.Provider>
-          ))
-        : super.renderForEdit(v);
+    const content = isDynamicContent
+      ? context.map((context) => (
+          <EditorComponentContext.Provider
+            key={context.dynamicContent.itemId}
+            value={context}
+          >
+            {super.renderForEdit(v.slice(0, 1))}
+          </EditorComponentContext.Provider>
+        ))
+      : super.renderForEdit(v);
 
     return (
       <Sortable
@@ -593,7 +592,8 @@ class Items extends EditorArrayComponent {
     const { className, style, isDynamicContent } = this.props;
     const v = Array.isArray(_v) ? _v : [_v];
     const items = isDynamicContent ? v.slice(0, 1) : v;
-    let content: ReactElement[] | ReactElement = items.map(this.renderItem);
+    let content: Array<React.JSX.Element | null> | React.JSX.Element =
+      items.map(this.renderItem);
 
     if (isDynamicContent) {
       content = this.renderForViewDynamic(content);
@@ -608,7 +608,9 @@ class Items extends EditorArrayComponent {
     );
   }
 
-  renderForViewDynamic(content: ReactElement[]): ReactElement {
+  renderForViewDynamic(
+    content: Array<React.JSX.Element | null>
+  ): React.JSX.Element {
     const { loopAttributes } = this.props;
     const stringifiedAttributes = stringifyAttributes(
       loopAttributes as Attributes

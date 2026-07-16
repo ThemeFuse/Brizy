@@ -228,6 +228,15 @@ export const getItems =
                     }
                   },
                   {
+                    id: "enableFetchPriority",
+                    label: t("Fetch Priority"),
+                    type: "switch",
+                    devices: "desktop",
+                    helper: {
+                      content: t("Load this image with priority")
+                    }
+                  },
+                  {
                     id: "linkLightBox",
                     label: t("Open in Lightbox"),
                     type: "switch",
@@ -246,100 +255,99 @@ export const getItems =
                 id: "tabMask",
                 label: t("Mask"),
                 position: 110,
-                options:
-                     [
-                        {
-                          id: "maskShape",
-                          label: t("Shape"),
-                          devices: "desktop",
-                          type: "select",
-                          choices: getMaskShapes()
-                        },
-                        {
-                          id: "maskCustomUpload",
-                          type: "imageUpload",
-                          devices: "desktop",
-                          label: t("Image"),
-                          config: {
-                            pointer: false,
-                            disableSizes: true,
-                            acceptedExtensions: ["png", "svg"]
-                          },
-                          helper: {
-                            enabled: true,
-                            content: t("Upload only [ .png or .svg ]")
-                          },
-                          disabled: maskShape !== SizeType.custom
-                        },
-                        {
-                          id: "groupSize",
-                          type: "group",
-                          disabled: maskShapeIsDisabled,
-                          options: [
-                            {
-                              id: "maskSize",
-                              label: t("Size"),
-                              type: "select",
-                              choices: getMaskSizes()
-                            },
-                            {
-                              id: "maskScale",
-                              type: "slider",
-                              disabled: maskSize !== SizeType.custom,
-                              config: {
-                                min: 1,
-                                max: maskScaleSuffix === "px" ? 500 : 100,
-                                units: [
-                                  { value: "%", title: "%" },
-                                  { value: "px", title: "px" }
-                                ]
-                              }
-                            }
+                options: [
+                  {
+                    id: "maskShape",
+                    label: t("Shape"),
+                    devices: "desktop",
+                    type: "select",
+                    choices: getMaskShapes()
+                  },
+                  {
+                    id: "maskCustomUpload",
+                    type: "imageUpload",
+                    devices: "desktop",
+                    label: t("Image"),
+                    config: {
+                      pointer: false,
+                      disableSizes: true,
+                      acceptedExtensions: ["png", "svg"]
+                    },
+                    helper: {
+                      enabled: true,
+                      content: t("Upload only [ .png or .svg ]")
+                    },
+                    disabled: maskShape !== SizeType.custom
+                  },
+                  {
+                    id: "groupSize",
+                    type: "group",
+                    disabled: maskShapeIsDisabled,
+                    options: [
+                      {
+                        id: "maskSize",
+                        label: t("Size"),
+                        type: "select",
+                        choices: getMaskSizes()
+                      },
+                      {
+                        id: "maskScale",
+                        type: "slider",
+                        disabled: maskSize !== SizeType.custom,
+                        config: {
+                          min: 1,
+                          max: maskScaleSuffix === "px" ? 500 : 100,
+                          units: [
+                            { value: "%", title: "%" },
+                            { value: "px", title: "px" }
                           ]
-                        },
-                        {
-                          id: "groupPosition",
-                          type: "group",
-                          disabled: maskShapeIsDisabled,
-                          options: [
-                            {
-                              id: "maskPosition",
-                              type: "select",
-                              label: t("Position"),
-                              choices: getMaskPositions()
-                            },
-                            {
-                              id: "maskPositionx",
-                              label: t("X"),
-                              type: "slider",
-                              disabled: maskPosition !== SizeType.custom,
-                              config: {
-                                min: 1,
-                                max: 100,
-                                units: [{ value: "%", title: "%" }]
-                              }
-                            },
-                            {
-                              id: "maskPositiony",
-                              label: t("Y"),
-                              type: "slider",
-                              disabled: maskPosition !== SizeType.custom,
-                              config: {
-                                min: 1,
-                                max: 100,
-                                units: [{ value: "%", title: "%" }]
-                              }
-                            }
-                          ]
-                        },
-                        {
-                          id: "maskRepeat",
-                          label: t("Repeat"),
-                          type: "select",
-                          disabled: maskShapeIsDisabled || maskSize === "cover",
-                          choices: getMaskRepeat()
                         }
-                      ]
+                      }
+                    ]
+                  },
+                  {
+                    id: "groupPosition",
+                    type: "group",
+                    disabled: maskShapeIsDisabled,
+                    options: [
+                      {
+                        id: "maskPosition",
+                        type: "select",
+                        label: t("Position"),
+                        choices: getMaskPositions()
+                      },
+                      {
+                        id: "maskPositionx",
+                        label: t("X"),
+                        type: "slider",
+                        disabled: maskPosition !== SizeType.custom,
+                        config: {
+                          min: 1,
+                          max: 100,
+                          units: [{ value: "%", title: "%" }]
+                        }
+                      },
+                      {
+                        id: "maskPositiony",
+                        label: t("Y"),
+                        type: "slider",
+                        disabled: maskPosition !== SizeType.custom,
+                        config: {
+                          min: 1,
+                          max: 100,
+                          units: [{ value: "%", title: "%" }]
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    id: "maskRepeat",
+                    label: t("Repeat"),
+                    type: "select",
+                    disabled: maskShapeIsDisabled || maskSize === "cover",
+                    choices: getMaskRepeat()
+                  }
+                ]
               },
               {
                 id: "tabTags",

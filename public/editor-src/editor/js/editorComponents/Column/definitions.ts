@@ -45,6 +45,7 @@ export const columnPropsSchema = z.object({
   bgColorHex: hexColor,
   bgColorOpacity: opacity,
   bgColorType: bgColorTypeContainer,
+  bgImageSrc: z.string().optional(),
   // gradient
   gradientType: gradientType,
   gradientColorPalette: colorPalette,
@@ -132,6 +133,10 @@ const columnPropertyDefinitions = {
     description: "Background color opacity (0-1)",
     minimum: 0,
     maximum: 1
+  },
+  bgImageSrc: {
+    type: "string",
+    description: "Background image URL"
   },
   borderColorPalette: {
     type: "string",
@@ -259,7 +264,7 @@ export const addColumnDefinition: ToolDefinition = {
   name: "addColumn",
   strict: true,
   description:
-    "Add a Column to an existing Row. Supports gradient, animated-gradient, hover background/border, hover box shadow, and border radius. Only for multi-column layouts in existing sections. For new sections use generateBlock.",
+    "Add a Column to an existing Row. Supports background image, gradient, animated-gradient, hover background/border, hover box shadow, and border radius. Only for multi-column layouts in existing sections. For new sections use generateBlock.",
   category: "element",
   parameters: {
     type: "object",
@@ -284,7 +289,7 @@ export const updateColumnDefinition: ToolDefinition = {
   name: "updateColumn",
   strict: true,
   description:
-    "Update a Column element's properties. Supports gradient, animated-gradient, hover background, hover border, hover box shadow, and border radius. Width must be in percentage (%), not pixels. When width is changed, sibling columns in the same Row are automatically recalculated so all columns total 100%. Minimum width per column is 5%.",
+    "Update a Column element's properties. Supports background image, gradient, animated-gradient, hover background, hover border, hover box shadow, and border radius. Width must be in percentage (%), not pixels. When width is changed, sibling columns in the same Row are automatically recalculated so all columns total 100%. Minimum width per column is 5%.",
   category: "update",
   parameters: {
     type: "object",

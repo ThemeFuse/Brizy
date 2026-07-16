@@ -1,16 +1,15 @@
+import { UIEventType } from "visual/global/UIEventType";
 import { getFreeLibs } from "visual/libs";
-import { AnimationEvents } from "visual/utils/animation";
 
 function initAnimation(node, Animation) {
   node.find(".brz-animated").each(function () {
     const animationId = this.getAttribute("data-animationid");
     const onStart = () => {
-      if (animationId) window.Brz.emit(AnimationEvents.entranceOn, animationId);
+      if (animationId) window.Brz.emit(UIEventType.EntranceOn, animationId);
     };
 
     const onFinish = () => {
-      if (animationId)
-        window.Brz.emit(AnimationEvents.entranceOff, animationId);
+      if (animationId) window.Brz.emit(UIEventType.EntranceOff, animationId);
     };
 
     // Cloned carousel slides don't trigger at default threshold 0,
@@ -32,8 +31,8 @@ export default function ($node) {
     return;
   }
 
-  const isAnimatedCarouselInPage = $node.find(".brz-carousel .brz-animated").length > 0;
-
+  const isAnimatedCarouselInPage =
+    $node.find(".brz-carousel .brz-animated").length > 0;
 
   initAnimation($node, Animation);
 

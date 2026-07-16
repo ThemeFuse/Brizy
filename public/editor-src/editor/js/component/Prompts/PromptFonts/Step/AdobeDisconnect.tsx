@@ -1,7 +1,10 @@
 import React, { JSX, useCallback, useContext, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteFont } from "visual/redux/actions2";
-import { fontsSelector, projectSelector } from "visual/redux/selectors";
+import {
+  adobeFontsSelector,
+  defaultFontSelector
+} from "visual/redux/selectors";
 import { TypedDispatch } from "visual/redux/store";
 import { pendingRequest } from "visual/utils/api";
 import { t } from "visual/utils/i18n";
@@ -17,13 +20,11 @@ const AdobeDisconnect = (): JSX.Element => {
     ? adobeDisconnectReader(app)
     : {};
 
-  const fonts = useSelector(fontsSelector);
+  const adobeFonts = useSelector(adobeFontsSelector);
+  const defaultFont = useSelector(defaultFontSelector);
   const dispatch = useDispatch<TypedDispatch>();
 
-  const projectData = useSelector(projectSelector).data;
-  const defaultFont = projectData?.font;
-  const adobeFonts = fonts.adobe?.data;
-  const isAdobeSetDefaultFont = adobeFonts?.some(
+  const isAdobeSetDefaultFont = adobeFonts.some(
     (el) => snakeCase(el.family) === defaultFont
   );
 
@@ -49,13 +50,11 @@ const AdobeDisconnect = (): JSX.Element => {
     setNextLoading(true);
     setError(null);
 
-    const font = fonts?.adobe?.data;
-
-    if (font) {
+    if (adobeFonts.length > 0) {
       dispatch(
         deleteFont({
           type: "adobe",
-          fonts: font
+          fonts: adobeFonts
         })
       );
     }
@@ -67,7 +66,7 @@ const AdobeDisconnect = (): JSX.Element => {
   }, [
     id,
     isAdobeSetDefaultFont,
-    fonts?.adobe?.data,
+    adobeFonts,
     onDisconnectApp,
     onChange,
     dispatch

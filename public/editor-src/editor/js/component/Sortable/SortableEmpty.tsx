@@ -10,7 +10,7 @@ import { useDispatch, useStore } from "react-redux";
 import { rolesHOC } from "visual/component/Roles";
 import { hideToolbar } from "visual/component/Toolbar";
 import { LeftSidebarOptionsIds } from "visual/global/Config/types/configs/ConfigCommon";
-import UIEvents from "visual/global/UIEvents";
+import UIEvents, { UIEventType } from "visual/global/UIEvents";
 import { renderHOC } from "visual/providers/RenderProvider/renderHOC";
 import { ReduxAction, updateUI } from "visual/redux/actions2";
 import { deviceModeSelector } from "visual/redux/selectors";
@@ -100,7 +100,7 @@ const Sortable = (props: Props) => {
 
       // notify React to actually change state accordingly
       if (!isEqual(fromItemPath, toItemPath)) {
-        UIEvents.emit("dnd.sort", {
+        UIEvents.emit(UIEventType.DndSort, {
           from: {
             containerPath: fromContainerPath,
             containerType: fromContainerType,

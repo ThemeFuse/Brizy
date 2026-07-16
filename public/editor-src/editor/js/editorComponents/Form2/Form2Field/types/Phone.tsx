@@ -4,6 +4,7 @@ import SlimSelectLib, { Option } from "slim-select";
 import { SlimSelect } from "visual/component/SlimSelect";
 import { ThemeIcon } from "visual/component/ThemeIcon";
 import Toolbar from "visual/component/Toolbar";
+import { makeDataAttr } from "visual/utils/i18n/attribute";
 import { attachRefs } from "visual/utils/react";
 import { MValue } from "visual/utils/value";
 import {
@@ -36,7 +37,7 @@ class Phone extends TextField {
   }
 
   state: State = {
-    countryCode: "US",
+    countryCode: this.props.phoneDefaultCountry ?? "US",
     flags: []
   };
 
@@ -46,10 +47,18 @@ class Phone extends TextField {
   allFlags: MValue<PhoneOption[]>;
 
   componentDidMount(): void {
-    (async () => {
-      const { getFlagsForEditor } = await import("../../utils");
-      this.setState({ flags: getFlagsForEditor() });
-    })();
+    this.setState({ flags: getFlags() });
+  }
+
+  componentDidUpdate(prevProps: Record<string, unknown>): void {
+    const { phoneDefaultCountry: newPhoneDefaultCountry } = this.props;
+
+    if (
+      newPhoneDefaultCountry &&
+      prevProps.phoneDefaultCountry !== newPhoneDefaultCountry
+    ) {
+      this.setState({ countryCode: newPhoneDefaultCountry });
+    }
   }
 
   handleChangeSingleValue = (value: string) => {
@@ -72,7 +81,8 @@ class Phone extends TextField {
 
   getSelectData(isPreview?: boolean): Array<Option["data"]> {
     return flagsToSelectPhoneOptions(
-      isPreview && this.allFlags ? this.allFlags : this.state.flags
+      isPreview && this.allFlags ? this.allFlags : this.state.flags,
+      this.props.phoneDefaultCountry ?? "US"
     );
   }
 
@@ -90,8 +100,15 @@ class Phone extends TextField {
       phoneSelectClassName
     );
 
+    const wrappedAttributes = isPreview
+      ? makeDataAttr({
+          name: "default-country",
+          value: this.props.phoneDefaultCountry ?? "US"
+        })
+      : {};
+
     return (
-      <div className={className}>
+      <div className={className} {...wrappedAttributes}>
         <Toolbar {...toolbarExtendPhoneSelect} selector=".ss-list .ss-option">
           {({ ref }) => (
             <div
@@ -155,11 +172,7 @@ class Phone extends TextField {
           <div className="brz-forms2__field-phone--translated-data">
             <select>
               {this.allFlags.map(({ code, name, dialCode }) => (
-                <option
-                  key={code}
-                  value={code}
-                  data-dial-code={dialCode}
-                >
+                <option key={code} value={code} data-dial-code={dialCode}>
                   {name}
                 </option>
               ))}

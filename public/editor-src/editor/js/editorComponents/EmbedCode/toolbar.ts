@@ -1,8 +1,10 @@
 import { Params } from "visual/editorComponents/EditorComponent/types";
+import { DCTypes } from "visual/global/Config/types/DynamicContent";
 import { isStory } from "visual/providers/EditorModeProvider";
 import { getColorToolbar } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
+import { getDynamicContentOption } from "visual/utils/options";
 import { HOVER, NORMAL } from "visual/utils/stateMode";
 import { ToolbarItemType } from "../ToolbarItemType";
 import { Value } from "./types";
@@ -10,7 +12,8 @@ import { Value } from "./types";
 export function getItems({
   v,
   device,
-  editorMode
+  editorMode,
+  context
 }: Params<Value>): ToolbarItemType[] {
   const dvv = (key: string) => defaultValueValue({ v, key, device });
 
@@ -19,6 +22,11 @@ export function getItems({
     dvv("borderColorHex"),
     dvv("borderColorOpacity")
   );
+
+  const embedDC = getDynamicContentOption({
+    options: context.dynamicContent.config,
+    type: DCTypes.embed
+  });
 
   const _isStory = isStory(editorMode);
 
@@ -40,7 +48,10 @@ export function getItems({
           placeholder: t("Paste your HTML code here..."),
           config: {
             language: "html"
-          }
+          },
+          display: "block",
+          className: "brz-embed-code-dc",
+          population: embedDC
         }
       ]
     },

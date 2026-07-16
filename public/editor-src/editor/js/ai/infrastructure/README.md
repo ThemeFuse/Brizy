@@ -10,7 +10,7 @@ Implements `IPageRepository`. Handles page structure, blocks, and elements.
 
 - **Constructor:** `(getState: () => ReduxState, dispatch: TypedDispatch, config: ConfigCommon)`
 - **Factory:** `createPageRepository(getState, dispatch, config)`
-- **Redux actions used:** `addBlock`, `removeBlock`, `removeBlocks`, `reorderBlocks`, `updateBlockData`
+- **Redux actions used:** `addBlock`, `removeBlock`, `removeBlocks`, `reorderBlocks`, `updateBlockData`, `undo`
 - **DND integration:** Uses `changeValueAfterDND` for element add/move operations
 - **Search:** Collects elements across all blocks, supports type match, text match, regex, and fuzzy search
 

@@ -43,7 +43,8 @@
     "tooltipOffset": 10,
     "tooltipOffsetSuffix": "px",
 
-    "enableLazyLoad": "on"
+    "enableLazyLoad": "on",
+    "enableFetchPriority": "off"
   },
 
   "link": {

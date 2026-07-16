@@ -2,9 +2,9 @@
 
 Contributors: themefuse<br>
 Requires at least: 4.5<br>
-Tested up to: 7.0<br>
+Tested up to: 7.0.1<br>
 Requires PHP: 7.4<br>
-Stable tag: 2.8.17<br>
+Stable tag: 2.8.18<br>
 License: GPLv3<br>
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -135,6 +135,18 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 [Privacy policy](https://brizy.io/privacy/)
 
 ## Changelog
+
+### 2.8.18 - 2026-07-16
+* New: Image Fetch priority
+* Improved: Memory usage in browser
+* Fixed: Pages with more blocks cannot be saved as layouts
+* Fixed: Infinite loading on create menu button for Menus
+* Fixed: When user role is Editor the page is empty
+* Fixed: Start time option doesn't work correctly for video 
+* Fixed: Switching from custom video to Youtube caused an error for Section 
+* Fixed: Background video didn't properly fill the full width when resizing the window
+* Fixed: Images are squeezed in preview mode
+* Fixed: Security fixes
 
 ### 2.8.17 - 2026-06-29
 * New: Tabs now remember the last selected tab in preview

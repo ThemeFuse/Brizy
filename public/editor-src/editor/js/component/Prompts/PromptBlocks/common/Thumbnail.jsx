@@ -462,9 +462,10 @@ class Thumbnail extends Component {
     }
 
     const attr = makeBzelmAttr(isLayout ? "add-layout" : "add-block");
+    const { uid } = this.props.data;
 
     return (
-      <div className={className} {...attr}>
+      <div className={className} {...attr} data-global-block-id={uid}>
         {content}
         {showRemoveIcon && this.renderRemoveIcon()}
         {loading && this.renderLoading()}

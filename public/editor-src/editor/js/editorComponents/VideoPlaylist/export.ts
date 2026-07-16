@@ -1,10 +1,16 @@
+import { Num } from "@brizy/readers";
 import { ExportFunction } from "visual/types";
 import { makeUrl } from "visual/utils/api/utils";
 import { getCurrentDevice } from "visual/utils/export";
 import { makeAttr } from "visual/utils/i18n/attribute";
 import { videoData as getVideoData } from "visual/utils/video";
 import { VideoPlaylistAccessibility } from "../accessibility";
-import { handlePlaceholderControlsClick, handleVideo } from "./utils";
+import {
+  handlePlaceholderControlsClick,
+  handleVideo,
+  setupVimeoLoopOnFinish,
+  setupYouTubeLoopOnFinish
+} from "./utils";
 
 let initResize = false;
 let accessibilityInstance = 0;
@@ -42,6 +48,32 @@ const fn: ExportFunction = ($node) => {
     }
 
     const accessibility = getAccessibility(playlist);
+
+    // For the initially active item whose iframe is pre-rendered in the HTML
+    // (no cover image), handleVideo is never called on page load, so we must
+    // set up the loop handler here.
+    const activeItem = playlist.querySelector(
+      ".brz-video-playlist-video-item--active"
+    );
+    if (activeItem) {
+      const loop = activeItem.getAttribute(makeAttr("loop"));
+      const start = Num.read(activeItem.getAttribute(makeAttr("start"))) ?? 0;
+      const src = activeItem.getAttribute(makeAttr("link"));
+      const videoInfo = src ? getVideoData(src) : null;
+
+      if (videoInfo && loop === "on" && start > 0) {
+        const iframe = playlist.querySelector<HTMLIFrameElement>(
+          ".brz-video-playlist-main__video .brz-iframe"
+        );
+        if (iframe) {
+          if (videoInfo.type === "vimeo") {
+            setupVimeoLoopOnFinish(iframe, start, playlist);
+          } else {
+            setupYouTubeLoopOnFinish(iframe, start, playlist);
+          }
+        }
+      }
+    }
 
     playlist.addEventListener("click", (e) => {
       const { currentTarget, target } = e;
@@ -191,9 +223,7 @@ const fn: ExportFunction = ($node) => {
         needRefreshOnDesktop = false;
         playlists.forEach((playlist) => {
           const accessibility =
-            playlist instanceof HTMLElement
-              ? getAccessibility(playlist)
-              : null;
+            playlist instanceof HTMLElement ? getAccessibility(playlist) : null;
           const sidebar = playlist.querySelector(".brz-video-playlist-sidebar");
           const currentPlaylistItem = sidebar?.querySelector(
             ".brz-video-playlist-video-item--active"

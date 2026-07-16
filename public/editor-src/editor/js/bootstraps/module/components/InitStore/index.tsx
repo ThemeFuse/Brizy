@@ -13,6 +13,20 @@ import { getMiddleware } from "./getMiddleware";
 import { Props } from "./types";
 import { waitForPendingAndDispatch } from "./utils";
 
+const BRZ_STORE_DEBUG_KEY = "brz_debug_store";
+
+function isBrzStoreDebugEnabled(): boolean {
+  if (process.env.NODE_ENV === "development") {
+    return true;
+  }
+
+  try {
+    return localStorage.getItem(BRZ_STORE_DEBUG_KEY) === "1";
+  } catch {
+    return false;
+  }
+}
+
 class InitStore extends Component<Props> {
   private readonly store: Store;
   private unsubscribeFunctions: VoidFunction[] = [];
@@ -72,8 +86,7 @@ class InitStore extends Component<Props> {
       })
     );
 
-    if (typeof window !== "undefined") {
-      // think about putting it only in development mode later
+    if (typeof window !== "undefined" && isBrzStoreDebugEnabled()) {
       window.brzStore = store;
       window.parent.brzStore = store;
     }
@@ -153,9 +166,15 @@ class InitStore extends Component<Props> {
   }
 
   componentWillUnmount() {
-    // Clean up all subscriptions to prevent memory leaks
     this.unsubscribeFunctions.forEach((unsubscribe) => unsubscribe());
     this.unsubscribeFunctions = [];
+
+    if (typeof window !== "undefined") {
+      delete window.brzStore;
+      if (window.parent) {
+        delete window.parent.brzStore;
+      }
+    }
   }
 
   render() {

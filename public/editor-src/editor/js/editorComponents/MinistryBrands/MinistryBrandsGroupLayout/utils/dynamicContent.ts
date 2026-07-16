@@ -6,6 +6,7 @@ export const getPlaceholder = (v: Value): string => {
   const {
     showImages,
     showMeetingDay,
+    showMeetingTime,
     showCategory,
     showGroup,
     showStatus,
@@ -41,6 +42,7 @@ export const getPlaceholder = (v: Value): string => {
   const attr = [
     getAttr(showImages, "show_images"),
     getAttr(showMeetingDay, "show_day"),
+    getAttr(showMeetingTime, "show_times"),
     getAttr(showCategory, "show_category"),
     getAttr(showGroup, "show_group"),
     getAttr(showStatus, "show_status"),

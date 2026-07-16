@@ -1,3 +1,4 @@
+import type { CheerioAPI } from "cheerio";
 import LibsConfig from "visual/bootstraps/libs.json";
 import { Config, isWp } from "visual/global/Config";
 import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
@@ -158,7 +159,7 @@ const normalizeCustomCSS = (styles: string): string =>
     return "";
   });
 
-const makeCustomCSS = ($doc: cheerio.Root): Asset[] => {
+const makeCustomCSS = ($doc: CheerioAPI): Asset[] => {
   return getCustomCSS($doc).map((style, index) => ({
     name: toHashCode(style),
     score: CUSTOM_CODE,
@@ -174,7 +175,7 @@ const makeCustomCSS = ($doc: cheerio.Root): Asset[] => {
   }));
 };
 
-const makeDCColor = ($doc: cheerio.Root, config: ConfigCommon): Asset[] => {
+const makeDCColor = ($doc: CheerioAPI, config: ConfigCommon): Asset[] => {
   return getDCColor($doc, config).map((style, index) => ({
     name: toHashCode(style),
     score: OTHERS_SCORE,
@@ -249,7 +250,7 @@ const makeDynamicStyle = (css: DynamicCSS): Asset[] => {
 // pageFonts => link for google and upload fonts
 // pageStyles => styles generated for richText
 interface Data {
-  $root: cheerio.Root;
+  $root: CheerioAPI;
   fonts: Fonts;
   css: DynamicCSS;
   config: Config;

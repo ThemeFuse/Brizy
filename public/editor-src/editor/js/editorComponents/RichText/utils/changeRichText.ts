@@ -1,4 +1,5 @@
-import * as cheerio from "cheerio";
+import { type Cheerio, type CheerioAPI, load as cheerioLoad } from "cheerio";
+import type { AnyNode } from "domhandler";
 import { Type as LinkType } from "visual/component/Link/types/Type";
 import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { SizeType } from "visual/global/Config/types/configs/common";
@@ -21,9 +22,12 @@ const linkClassNames = [
   "is-empty"
 ];
 
-const addDataColorAttribute = ($: cheerio.Root, $richText: cheerio.Cheerio) => {
-  $richText.find(".brz-tp__dc-block").each(function (this: cheerio.Cheerio) {
-    const $this = $(this);
+const addDataColorAttribute = (
+  $: CheerioAPI,
+  $richText: Cheerio<AnyNode>
+) => {
+  $richText.find(".brz-tp__dc-block").each((_, el) => {
+    const $this = $(el);
     const dataColor = $this.find("[data-color]").attr("data-color");
     if (dataColor) {
       $this.attr("data-color", dataColor);
@@ -36,8 +40,8 @@ export const changeRichText = (
   store: Store,
   config: ConfigCommon
 ): string => {
-  //@ts-expect-error: cheerio Load() can take 3 args https://cheerio.js.org/docs/api/functions/load
-  const $ = cheerio.load(html, null, false);
+  // 3rd arg `false` parses fragment without wrapping in <html><body>.
+  const $ = cheerioLoad(html, undefined, false);
   const $richText = $.root();
   const pageDataNoRefs = pageDataNoRefsSelector(store.getState());
   const pageBlocks: Array<Block> = pageDataNoRefs.items || [];
@@ -45,12 +49,12 @@ export const changeRichText = (
   // Change Links
   $richText
     .find("a[data-href]")
-    .filter(function (this: cheerio.Cheerio) {
-      const attr = $(this).attr("data-href") ?? "";
+    .filter((_, el) => {
+      const attr = $(el).attr("data-href") ?? "";
       return attr.trim().length > 0;
     })
-    .each(function (this: cheerio.Cheerio) {
-      const $this = $(this);
+    .each((_, el) => {
+      const $this = $(el);
       const html = $this.html();
       const className = $this.attr("class") || "";
       const style = $this.attr("style") || "";
@@ -152,11 +156,11 @@ export const changeRichText = (
   addDataColorAttribute($, $richText);
 
   // replace DynamicContent
-  $richText.find("[data-population]").each(function (this: cheerio.Cheerio) {
-    const $this = $(this);
+  $richText.find("[data-population]").each((_, el) => {
+    const $this = $(el);
     const population = Str.read($this.attr("data-population"));
     const $blockDynamicContentElem = $this.closest(".brz-tp__dc-block");
-    let $elem: cheerio.Cheerio | undefined = undefined;
+    let $elem: Cheerio<AnyNode> | undefined = undefined;
 
     if ($blockDynamicContentElem.length) {
       $elem = $blockDynamicContentElem;
@@ -172,10 +176,8 @@ export const changeRichText = (
   });
 
   // replace Image
-  $richText.find(".brz-text-mask, .brz-population-mask").each(function (
-    this: cheerio.Cheerio
-  ) {
-    const $this = $(this);
+  $richText.find(".brz-text-mask, .brz-population-mask").each((_, el) => {
+    const $this = $(el);
     const src = $this.attr("data-image_src") ?? "";
     const population = $this.attr("data-image_population");
     const fileName = $this.attr("data-image_file_name") ?? "image";
@@ -190,7 +192,7 @@ export const changeRichText = (
     );
 
     // required some property
-    const css = $this.css();
+    const css = $this.css() ?? {};
     const newCSS = Object.entries(css).reduce(
       (acc, [property, value]) => {
         // cheeriojs have bug for background-image: url("someurl")

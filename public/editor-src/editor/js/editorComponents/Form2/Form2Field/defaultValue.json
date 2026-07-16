@@ -52,7 +52,9 @@
     "userAgreementLabel": "I agree to the terms and conditions",
 
     "enableCustomHtml": "off",
-    "customHtml": ""
+    "customHtml": "",
+
+    "phoneDefaultCountry": "US"
   },
 
   "style": {

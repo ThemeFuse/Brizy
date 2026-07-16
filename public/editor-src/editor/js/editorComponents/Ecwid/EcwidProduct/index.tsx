@@ -297,7 +297,7 @@ export class EcwidProduct extends EditorComponent<Value> {
   };
 
   getWrapperClassName() {
-    const { goToCheckoutDisplay } = this.getValue();
+    const { goToCheckoutDisplay, buyDisplay, addMoreDisplay } = this.getValue();
 
     return this.getCSSClassnames({
       toolbars: [toolbarOptionColor, toolbarQtyMinMax],
@@ -308,7 +308,9 @@ export class EcwidProduct extends EditorComponent<Value> {
         "brz-ecwid-product-wrapper",
         {
           "brz-ecwid-product-wrapper--hide-go-to-checkout":
-            goToCheckoutDisplay === "off"
+            goToCheckoutDisplay === "off",
+          "brz-ecwid-product-wrapper--hide-buy": buyDisplay === "off",
+          "brz-ecwid-product-wrapper--hide-add-more": addMoreDisplay === "off"
         }
       ]
     });

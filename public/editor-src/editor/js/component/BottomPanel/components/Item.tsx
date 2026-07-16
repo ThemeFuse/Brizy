@@ -9,11 +9,20 @@ export interface Props {
   onClick?: MouseEventHandler<HTMLLIElement>;
   pointer?: boolean;
   active?: boolean;
+  dataAttrs?: Record<string, string>;
 }
 
 export const BottomPanelItem: FCC<Props> = (props) => {
-  const { className, title, onClick, paddingSize, pointer, active, children } =
-    props;
+  const {
+    className,
+    title,
+    onClick,
+    paddingSize,
+    pointer,
+    active,
+    dataAttrs,
+    children
+  } = props;
   const _className = classnames(
     "brz-li",
     "brz-ed-fixed-bottom-panel__item",
@@ -24,7 +33,7 @@ export const BottomPanelItem: FCC<Props> = (props) => {
   );
 
   return (
-    <li title={title} className={_className} onClick={onClick}>
+    <li title={title} className={_className} onClick={onClick} {...dataAttrs}>
       {children}
     </li>
   );

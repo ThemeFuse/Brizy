@@ -59,6 +59,7 @@ ToolExecutionResponse { success, data, error, duration }
 | `block`     | addBlock, removeBlock, moveBlock            | PageRepository  |
 | `element`   | removeElement, duplicateElement, moveElement| PageRepository  |
 | `project`   | changeStyle, addStyle, addFont, deleteFont  | ProjectRepository|
+| `history`   | undoLastChange                              | PageRepository  |
 | (component) | addButton, updateImage, updateRichText      | PageRepository  |
 
 ## Entry Points

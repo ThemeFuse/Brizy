@@ -13,6 +13,7 @@ import {
 import type { TypedDispatch } from "visual/redux/store";
 import type { ReduxState } from "visual/redux/types";
 import type { Translation } from "visual/utils/i18n/t";
+import { getVisibleSectionIds } from "visual/utils/viewport";
 import { EventBusImpl } from "./EventBus";
 import { FilterRegistryImpl } from "./FilterRegistry";
 import { SharedStore } from "./SharedStore";
@@ -43,6 +44,10 @@ export function createEditorAPI(props: Props): EditorAPIParts {
   const filterRegistry = new FilterRegistryImpl();
   const eventBus = new EventBusImpl();
 
+  // State size cache — JSON.stringify is expensive on large state
+  let cachedSize = 0;
+  let lastSizeMeasure = 0;
+
   const api: EditorAPI = {
     toolServer,
     slots: slotRegistry,
@@ -68,8 +73,52 @@ export function createEditorAPI(props: Props): EditorAPIParts {
         };
       });
     },
+    getVisibleSectionsIds: () => {
+      try {
+        return getVisibleSectionIds(document, window.innerHeight);
+      } catch {
+        return [];
+      }
+    },
     getPageData: () => pageBlocksDataSelector(getState(), config),
     getProjectData: () => projectAssembled(getState()).data,
+    getPageId: () => getState().page?.id ?? "",
+    getProjectId: () => getState().project?.id ?? "",
+    getBlockCount: () => getState().blocksOrder?.length ?? 0,
+    getStateSize: () => {
+      const now = Date.now();
+      if (now - lastSizeMeasure > 5000) {
+        lastSizeMeasure = now;
+        const measure = (): void => {
+          try {
+            cachedSize = new Blob([JSON.stringify(getState())]).size;
+          } catch {
+            // state may not be serializable
+          }
+        };
+        if (typeof requestIdleCallback !== "undefined") {
+          requestIdleCallback(measure);
+        } else {
+          measure();
+        }
+      }
+      return cachedSize;
+    },
+    getHistoryInfo: () => {
+      const state = getState() as ReduxState & {
+        history?: { canUndo: boolean; canRedo: boolean };
+      };
+      const history = state.history;
+      return {
+        current: history ? (history.canUndo ? 1 : 0) : 0,
+        max: 20,
+        snapshotCount: history
+          ? history.canUndo || history.canRedo
+            ? 2
+            : 1
+          : 0
+      };
+    },
     openHelpSidebar: () => {
       const { rightSidebar } = uiSelector(getState());
 

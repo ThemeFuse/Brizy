@@ -166,6 +166,15 @@ export const getItems =
                     }
                   },
                   {
+                    id: "enableFetchPriority",
+                    label: t("Fetch Priority"),
+                    type: "switch",
+                    devices: "desktop",
+                    helper: {
+                      content: t("Load this image with priority")
+                    }
+                  },
+                  {
                     id: "sliderType",
                     label: t("Slider Type"),
                     type: "radioGroup",

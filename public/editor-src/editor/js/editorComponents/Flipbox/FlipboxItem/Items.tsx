@@ -1,4 +1,4 @@
-import React, { ReactNode } from "react";
+import React from "react";
 import { ContextMenuExtend } from "visual/component/ContextMenu";
 import { ElementModel } from "visual/component/Elements/Types";
 import HotKeys from "visual/component/HotKeys";
@@ -99,7 +99,7 @@ class FlipboxItemItems extends EditorArrayComponent {
     item: ElementModel,
     itemKey: string,
     itemIndex: number
-  ): ReactNode {
+  ): React.JSX.Element {
     const contextMenuExtendConfig = contextMenuExtendConfigFn(itemIndex);
 
     const shortcutsTypes = [

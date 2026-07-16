@@ -12,7 +12,7 @@ import { rolesHOC } from "visual/component/Roles";
 import { SortablePluginOptions } from "visual/component/Sortable/plugin/types";
 import { hideToolbar } from "visual/component/Toolbar";
 import { LeftSidebarOptionsIds } from "visual/global/Config/types/configs/ConfigCommon";
-import UIEvents from "visual/global/UIEvents";
+import UIEvents, { UIEventType } from "visual/global/UIEvents";
 import { isEditor, isView, useRender } from "visual/providers/RenderProvider";
 import { updateUI } from "visual/redux/actions2";
 import { uiSelector } from "visual/redux/selectors";
@@ -77,7 +77,7 @@ const handleSort: onSortData = (data): void => {
 
   // notify React to actually change state accordingly
   if (!isEqual(fromItemPath, toItemPath)) {
-    UIEvents.emit("dnd.sort", {
+    UIEvents.emit(UIEventType.DndSort, {
       from: {
         containerPath: fromContainerPath,
         containerType: fromContainerType,

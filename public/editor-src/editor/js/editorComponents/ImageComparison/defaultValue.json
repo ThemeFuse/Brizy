@@ -31,6 +31,7 @@
     "offsetY": 0,
 
     "enableLazyLoad": "on",
+    "enableFetchPriority": "off",
     "sliderType": "horizontal"
   },
 

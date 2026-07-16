@@ -480,6 +480,7 @@ class MenuItem extends EditorComponent {
       this.insideMegaMenu,
       ".brz-ed-context-menu",
       ".brz-context-menu__root",
+      ".brz-media-gallery",
       ...(TARGET === "WP"
         ? [
             ".media-modal", // class of the WP media modal

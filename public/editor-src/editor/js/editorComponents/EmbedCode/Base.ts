@@ -11,6 +11,8 @@ export class BaseEmbedCode extends EditorComponent<
 > {
   static defaultValue = defaultValue;
 
+  static experimentalDynamicContent = true;
+
   static get componentId(): ElementTypes.EmbedCode {
     return ElementTypes.EmbedCode;
   }

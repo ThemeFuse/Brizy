@@ -1,6 +1,7 @@
 import { produce } from "immer";
+import { ToastNotification } from "visual/component/Notifications";
 import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
-import { updateBlocksHtml } from "visual/redux/actions2";
+import { initializeBlocksHtml, updateBlocksHtml } from "visual/redux/actions2";
 import {
   fontsSelector,
   globalPopupsInPageSelector,
@@ -48,9 +49,17 @@ function compile(blocksData: Array<Block>, store: Store, config: ConfigCommon) {
       project
     };
 
-    const { blocks } = await compilePage(compileData);
-
-    dispatch(updateBlocksHtml({ blocks, generation }));
+    try {
+      const { blocks } = await compilePage(compileData);
+      dispatch(updateBlocksHtml({ blocks, generation }));
+    } catch (e) {
+      console.error("[Compiler] compilePage failed:", e);
+      const message = e instanceof Error ? e.message : String(e);
+      ToastNotification.error(`Compile error: ${message}`, 8);
+      // Unblock loading curtain so editor doesn't hang on first compile failure.
+      dispatch(initializeBlocksHtml());
+      throw e;
+    }
   };
 }
 

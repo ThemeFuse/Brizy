@@ -57,7 +57,7 @@ export function styleFormFields(data: DynamicStylesProps<Value>): OutputStyle {
       {
         standart: ["cssStyleElementForm2FieldsBorderRequired"]
       },
-    ".brz && .brz-forms2__field:not(.brz-forms2__radio):not(.brz-forms2__checkbox):not(.brz-forms2__field-select)":
+    ".brz && .brz-forms2__field:not(.brz-forms2__radio):not(.brz-forms2__checkbox):not(.brz-forms2__field-select):not(.brz-forms2__field-phone)":
       {
         standart: ["cssStyleElementFieldsInputSize"]
       },
@@ -87,6 +87,12 @@ export function styleFormFields(data: DynamicStylesProps<Value>): OutputStyle {
     },
     ".brz && .form-alert": {
       standart: ["cssStyleTypography2FontFamily"]
+    },
+    ".brz && .brz-forms2__field-phone .brz-forms2__phone--country": {
+      standart: ["cssStyleElementFieldsInputSizePhoneFieldFlag"]
+    },
+    ".brz && .brz-forms2__field-phone .brz-forms2__phone--number": {
+      standart: ["cssStyleElementFieldsInputSizePhoneFieldInput"]
     },
     ".brz && .brz-forms2__field:not(.brz-forms2__radio):not(.brz-forms2__checkbox), .brz && .brz-forms2__radio, .brz && .brz-forms2__checkbox, .brz && .brz-forms2__select-item__input":
       {

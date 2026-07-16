@@ -7,7 +7,7 @@ import EditorComponent from "visual/editorComponents/EditorComponent";
 // should we move this util folder to another place?
 import { changeValueAfterDND } from "visual/editorComponents/Page/utils";
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
-import UIEvents from "visual/global/UIEvents";
+import UIEvents, { UIEventType } from "visual/global/UIEvents";
 import { addBlock, addGlobalPopup } from "visual/redux/actions2";
 import { setIds, stripSystemKeys } from "visual/utils/models";
 import { uuid } from "visual/utils/uuid";
@@ -35,11 +35,11 @@ class PagePopup extends EditorComponent {
   }
 
   componentDidMount() {
-    UIEvents.on("dnd.sort", this.handleDNDSort);
+    UIEvents.on(UIEventType.DndSort, this.handleDNDSort);
   }
 
   componentWillUnmount() {
-    UIEvents.off("dnd.sort", this.handleDNDSort);
+    UIEvents.off(UIEventType.DndSort, this.handleDNDSort);
 
     super.componentWillUnmount();
   }

@@ -1,9 +1,10 @@
 import { Obj } from "@brizy/readers";
+import type { CheerioAPI } from "cheerio";
 import { RenderType, isEditor } from "visual/providers/RenderProvider";
 import { MigrationRichText } from "./types";
 
 type JQueryType = typeof $;
-type CheerioType = cheerio.CheerioAPI;
+type CheerioType = CheerioAPI;
 
 const changeRichText = (html: string, renderContext: RenderType): string => {
   if (isEditor(renderContext)) {
@@ -25,14 +26,14 @@ const changeRichText = (html: string, renderContext: RenderType): string => {
   } else {
     // View mode: use Cheerio
     // eslint-disable-next-line @typescript-eslint/no-require-imports
-    const cheerio = require("cheerio") as CheerioType;
-    //@ts-expect-error: cheerio Load() can take 3 args https://cheerio.js.org/docs/api/functions/load
-    const $ = cheerio.load(html, null, false);
+    const cheerioMod = require("cheerio") as { load: CheerioType["load"] };
+    // 3rd arg `false` parses fragment without wrapping in <html><body>.
+    const $ = cheerioMod.load(html, undefined, false);
     const $root = $.root();
 
     // Find .ql-editor elements, unwrap children (move to parent, remove wrapper)
-    $root.find(".ql-editor").each(function (this: cheerio.Element) {
-      const $qlEditor = $(this);
+    $root.find(".ql-editor").each((_, el) => {
+      const $qlEditor = $(el);
       $qlEditor.replaceWith($qlEditor.contents());
     });
 

@@ -25,8 +25,11 @@ export interface Value extends ElementModel {
   positionTitle2: number;
   positionShareTitle: number;
 
+  addMoreDisplay: Switch;
   attributesDisplay: Switch;
+  buyDisplay: Switch;
   carouselImage: Switch;
+  goToCheckoutDisplay: Switch;
   cutProductDescription: Switch;
   descriptionDisplay: Switch;
   favoritesButtonsDisplay: Switch;

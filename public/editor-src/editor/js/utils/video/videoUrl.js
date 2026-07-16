@@ -37,9 +37,10 @@ const getYouTubeOptions = (
     ...(autoplay && !hasCover ? { mute: 1 } : {})
   };
 
-  // For background videos we handle loop in JS (onStateChange ENDED) so that
-  // ENDED actually fires; native loop=1+playlist prevents ENDED from firing.
-  if (loop && !background) {
+  // Native loop=1+playlist prevents ENDED from firing and ignores `start` on
+  // subsequent loops. Disable it when we need to seek to a custom start time
+  // or for background videos (both handle looping via JS instead).
+  if (loop && !background && !start) {
     options.loop = 1;
     options.playlist = key;
   }
@@ -76,9 +77,9 @@ const getVimeoOptions = (
       autopause: false,
       portrait: intro,
       controls: Number(controls),
-      // For background videos we handle loop after the `finish` event, so the
-      // player must not use native loop or Vimeo will skip `finish`.
-      loop: Number(loop && !background),
+      // Native loop ignores #t= and restarts from 0. Disable it whenever we
+      // need to seek to a custom start time, and handle looping via JS instead.
+      loop: Number(loop && !background && !start),
       muted: Number(videoMuted),
       ...(autoplay === true && !hasCover ? { muted: 1 } : {})
     },

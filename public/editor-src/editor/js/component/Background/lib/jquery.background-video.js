@@ -122,7 +122,9 @@ $.extend(Youtube.prototype, {
   },
   seekTo: function (seconds = 0) {
     this._start = seconds;
-    this.player.seekTo(seconds);
+    if (this.player && typeof this.player.seekTo === "function") {
+      this.player.seekTo(seconds);
+    }
   },
   destroy: function () {
     // this.player.destroy();

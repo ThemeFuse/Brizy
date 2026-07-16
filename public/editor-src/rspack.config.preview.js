@@ -7,7 +7,7 @@ const {
 const editorConfigFn = require("./rspack.config.editor");
 const swcrc = require("./swc.config.all");
 const LibsConfig = require("./editor/js/bootstraps/libs.json");
-// const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
+const { RsdoctorRspackPlugin } = require("@rsdoctor/rspack-plugin");
 
 exports.preview = (options) => {
   const editorConfig = editorConfigFn(options);
@@ -89,7 +89,15 @@ exports.preview = (options) => {
       maxAssetSize: 100000
     },
     plugins: [
-      // new BundleAnalyzerPlugin(),
+      ...(options.ANALYZE
+        ? [
+            new RsdoctorRspackPlugin({
+              name: "preview",
+              port: 9989,
+              disableClientServer: false
+            })
+          ]
+        : []),
       ...(IS_PRODUCTION
         ? [
             // Custom plugin that only lints files actually imported in the bundle
@@ -167,6 +175,15 @@ exports.libs = (options) => {
     performance: {
       hints: false
     },
+    plugins: options.ANALYZE
+      ? [
+          new RsdoctorRspackPlugin({
+            name: "libs",
+            port: 9990,
+            disableClientServer: false
+          })
+        ]
+      : [],
     devtool: editorConfig.devtool
   };
 };

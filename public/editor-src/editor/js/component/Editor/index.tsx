@@ -10,7 +10,7 @@ import Notifications from "visual/component/Notifications";
 import Portal from "visual/component/Portal";
 import Prompts from "visual/component/Prompts";
 import { RightSidebar } from "visual/component/RightSidebar";
-import UIEvents from "visual/global/UIEvents";
+import UIEvents, { UIEventType } from "visual/global/UIEvents";
 import { PluginPortals } from "visual/plugins/PluginPortals";
 import { getCommonEditorMode } from "visual/providers/EditorModeProvider";
 import Page from "./Editor/Page";
@@ -47,7 +47,7 @@ class Editor extends React.Component<Props> {
         break;
       case "ctrl+E":
       case "cmd+E": {
-        UIEvents.emit("navigator.open", { elementId: null });
+        UIEvents.emit(UIEventType.NavigatorOpen, { elementId: null });
       }
     }
   };

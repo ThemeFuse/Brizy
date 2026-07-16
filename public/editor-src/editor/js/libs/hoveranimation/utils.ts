@@ -4,7 +4,7 @@ import {
   AnimationBase,
   MultiAnimation
 } from "visual/component/HoverAnimation/types";
-import { AnimationEvents } from "visual/utils/animation";
+import { UIEventType } from "visual/global/UIEventType";
 import { HoverAnimation, SideEffectCallback } from ".";
 
 export const getKeyframe = (keyframeEncoded: string): Keyframe[] => {
@@ -113,7 +113,7 @@ export const getMultiAnimationKeyframes = (
 };
 
 const effectOnEntranceOn: SideEffectCallback = (animationId, setCanHover) => {
-  window.Brz.on(AnimationEvents.entranceOn, (_animationId: string) => {
+  window.Brz.on(UIEventType.EntranceOn, (_animationId: string) => {
     if (animationId === _animationId) {
       setCanHover(false);
     }
@@ -121,7 +121,7 @@ const effectOnEntranceOn: SideEffectCallback = (animationId, setCanHover) => {
 };
 
 const effectOnEntranceOff: SideEffectCallback = (animationId, setCanHover) => {
-  window.Brz.on(AnimationEvents.entranceOff, (_animationId: string) => {
+  window.Brz.on(UIEventType.EntranceOff, (_animationId: string) => {
     if (animationId === _animationId) {
       setCanHover(true);
     }

@@ -235,6 +235,10 @@ const setOpen =
           // show tooltip
           requestAnimationFrame(() => {
             tooltip.classList.add("brz-mega-menu__portal--opened");
+            if (tooltip.dataset.galleryOpenedEmitted !== "true") {
+              tooltip.dataset.galleryOpenedEmitted = "true";
+              window.Brz.emit("elements.megamenu.opened", tooltip);
+            }
           });
         });
       });
@@ -283,17 +287,17 @@ export const initAccesibility = (root: HTMLElement) => {
         item.querySelector<HTMLElement>(".brz-mega-menu__portal");
 
       // One-level (direct) children only, so Arrow navigation stays in the correct menu level.
-      const children: HTMLElement[] =
-        submenu
-          ? Array.from(submenu.querySelectorAll<HTMLElement>(".brz-menu__item"))
-              .filter(
-                (el) =>
-                  belongsToMenu(el) &&
-                  el.closest<HTMLElement>(
-                    ".brz-menu__sub-menu, .brz-mega-menu__portal"
-                  ) === submenu
-              )
-          : [];
+      const children: HTMLElement[] = submenu
+        ? Array.from(
+            submenu.querySelectorAll<HTMLElement>(".brz-menu__item")
+          ).filter(
+            (el) =>
+              belongsToMenu(el) &&
+              el.closest<HTMLElement>(
+                ".brz-menu__sub-menu, .brz-mega-menu__portal"
+              ) === submenu
+          )
+        : [];
 
       if (type === MenuItemType.MegaMenu) {
         const megaMenu = megaMenuItems.get(item);

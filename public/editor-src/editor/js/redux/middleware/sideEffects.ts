@@ -2,10 +2,11 @@ import { Obj } from "@brizy/readers";
 import { difference } from "es-toolkit";
 import { type Dispatch, Middleware, type MiddlewareAPI, isAction } from "redux";
 import { wInMobilePage, wInTabletPage } from "visual/config/columns";
+import UIEvents, { UIEventType } from "visual/global/UIEvents";
 import { GetConfig } from "visual/providers/ConfigProvider/types";
 import type { ReduxAction } from "visual/redux/actions2";
 import type { Store } from "visual/redux/store";
-import type { ReduxState, ReduxStateWithHistory } from "visual/redux/types";
+import type { ReduxState } from "visual/redux/types";
 import { StoreChanged } from "visual/redux/types";
 import type {
   AdobeFont,
@@ -29,7 +30,6 @@ import {
 } from "visual/utils/fonts/makeFontsUrl";
 import { makeGlobalStylesTypography } from "visual/utils/fonts/makeGlobalStylesTypography";
 import { projectFontsData } from "visual/utils/fonts/transform";
-import UIEvents from "visual/global/UIEvents";
 import {
   getClosestSections,
   isElementInViewport,
@@ -554,7 +554,7 @@ function handleCurrentLanguageChange(callbacks: Callbacks): void {
 
 function handleActiveElementMetaChange(callbacks: Callbacks): void {
   callbacks.onAfterNext.push(({ state }) => {
-    UIEvents.emit("activeElement:change", state.ui.activeElementMeta);
+    UIEvents.emit(UIEventType.ActiveElementChange, state.ui.activeElementMeta);
   });
 }
 
@@ -571,9 +571,7 @@ function handleCopiedElementChange(callbacks: Callbacks): void {
 
 function handleHistoryChange(callbacks: Callbacks): void {
   callbacks.onAfterNext.push(({ state, store, config: _config }) => {
-    const { currSnapshot, prevSnapshot } = historySelector(
-      state as ReduxStateWithHistory
-    );
+    const { currSnapshot, prevSnapshot } = historySelector(state);
     const currStyleId = currSnapshot?.currentStyleId;
     const prevStyleId = prevSnapshot?.currentStyleId;
     const currStyle = currSnapshot?.currentStyle;

@@ -1,4 +1,6 @@
 import { Num } from "@brizy/readers";
+import type { Cheerio, CheerioAPI } from "cheerio";
+import type { AnyNode } from "domhandler";
 import { once } from "es-toolkit";
 import { mPipe, optional, parseStrict, pass } from "fp-utilities";
 import { JSX } from "react";
@@ -36,54 +38,51 @@ import { fromFormatsToTextTransform } from "./dependencies";
 import { classNamesToV } from "./transforms";
 
 type JQueryType = typeof $;
-type JQueryStatic = ReturnType<JQueryType>;
-type DOMLib = JQueryType | cheerio.CheerioAPI;
+type CheerioModule = { load: CheerioAPI["load"] };
+type DOMLib = JQueryType | CheerioModule;
 
 function isJQueryLib(lib: DOMLib): lib is JQueryType {
   return (lib as JQueryType).fn !== undefined;
 }
 
-function isJQueryHTMLElement(instance: unknown): instance is JQueryStatic {
-  return (
-    !!instance &&
-    typeof instance === "object" &&
-    "find" in instance &&
-    typeof instance.find === "function"
-  );
-}
+type JQueryMapCallback = (arg: JQuery<HTMLElement>) => void;
+type CheerioMapCallback = (arg: Cheerio<AnyNode>) => void;
 
 function quillUtils(renderContext: RenderType) {
   const $doc = isEditor(renderContext)
     ? // eslint-disable-next-line @typescript-eslint/no-require-imports
       (require("jquery") as JQueryType)
     : // eslint-disable-next-line @typescript-eslint/no-require-imports
-      (require("cheerio") as cheerio.CheerioAPI);
+      (require("cheerio") as CheerioModule);
 
-  function mapElements(html: string, fn: JQueryCallback | cheerio.Selector) {
-    const $ = getWrapper(html);
-    const nodes = getParagraphsArray($);
+  function mapElements(
+    html: string,
+    fn: JQueryMapCallback | CheerioMapCallback
+  ): string {
+    const selector = `:header, p, pre, li, div:not(.brz-temp-div), span[data-tooltip], span[${makeAttr("tooltip")}]`;
 
-    nodes.each((_: number, elem) => {
-      const $elem = isJQueryLib($doc)
-        ? $doc(elem)
-        : ($ as cheerio.CheerioAPI)(elem);
-      //@ts-expect-error: wrong jQueryStatic Callable overload
-      return fn($elem);
+    if (isJQueryLib($doc)) {
+      const $dom = $doc;
+      const $wrapper = $dom(`<div class="brz-temp-div">${html}</div>`);
+      const nodes = $wrapper.find(selector);
+      const jqFn = fn as JQueryMapCallback;
+
+      nodes.each((_, elem) => {
+        jqFn($dom(elem));
+      });
+
+      return $wrapper.html() ?? "";
+    }
+
+    const $dom = $doc.load(html);
+    const nodes = $dom(selector);
+    const cheerioFn = fn as CheerioMapCallback;
+
+    nodes.each((_, elem) => {
+      cheerioFn($dom(elem));
     });
 
-    return $.html();
-
-    function getWrapper(html: string) {
-      return isJQueryLib($doc)
-        ? $doc(`<div class="brz-temp-div">${html}</div>`)
-        : $doc.load(html, { decodeEntities: false });
-    }
-
-    function getParagraphsArray($: cheerio.Root | JQuery<HTMLElement>) {
-      const selector = `:header, p, pre, li, div:not(.brz-temp-div), span[data-tooltip], span[${makeAttr("tooltip")}]`;
-
-      return isJQueryHTMLElement($) ? $.find(selector) : $(selector);
-    }
+    return $dom.html();
   }
 
   return { mapElements };

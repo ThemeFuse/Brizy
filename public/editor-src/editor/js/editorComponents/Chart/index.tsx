@@ -7,7 +7,7 @@ import { Wrapper } from "visual/editorComponents/tools/Wrapper";
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import { ChartType as ChartInstanceType } from "visual/types/global";
 import { hexToRgba } from "visual/utils/color";
-import { addFilter, applyFilter } from "visual/utils/filters";
+import { addFilter, applyFilter, removeFilter } from "visual/utils/filters";
 import { isVariableFont } from "visual/utils/options/Typography/utils";
 import { attachRefs } from "visual/utils/react";
 import { capByPrefix } from "visual/utils/string";
@@ -36,7 +36,7 @@ class Chart extends EditorComponent<Value, Props> {
     return applyFilter("getLibs", {}).Chart;
   }
 
-  initChart() {
+  initChart = () => {
     if (this.chartRef.current) {
       const ChartInstance = this.getChartLib();
       const chartData = this.getChartData();
@@ -47,7 +47,7 @@ class Chart extends EditorComponent<Value, Props> {
 
       this.chart = getChart(chartData, this.chartRef.current, ChartInstance);
     }
-  }
+  };
 
   componentDidMount(): void {
     this.initChart();
@@ -56,7 +56,7 @@ class Chart extends EditorComponent<Value, Props> {
         this.chart.update();
       }
     });
-    addFilter("initBrizyPro", () => this.initChart());
+    addFilter("initBrizyPro", this.initChart);
   }
 
   componentDidUpdate(): void {
@@ -68,6 +68,8 @@ class Chart extends EditorComponent<Value, Props> {
   }
 
   componentWillUnmount(): void {
+    removeFilter("initBrizyPro", this.initChart);
+
     if (this.chartRef.current) {
       this.chartRef.current.remove();
     }

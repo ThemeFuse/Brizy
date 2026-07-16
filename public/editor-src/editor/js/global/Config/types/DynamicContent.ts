@@ -8,7 +8,8 @@ export enum DCTypes {
   link = "link",
   richText = "richText",
   reference = "reference",
-  multiReference = "multiReference"
+  multiReference = "multiReference",
+  embed = "embed"
 }
 
 export type Display = "block" | "inline";
@@ -37,6 +38,7 @@ export interface DCGroups {
   [DCTypes.image]: Array<ConfigDCItem> | DCItemHandler;
   [DCTypes.link]: Array<ConfigDCItem> | DCItemHandler;
   [DCTypes.richText]: Array<ConfigDCItem> | DCItemHandler;
+  [DCTypes.embed]?: Array<ConfigDCItem> | DCItemHandler;
 }
 
 export function isDCItemHandler(arg: unknown): arg is DCItemHandler {

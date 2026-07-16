@@ -183,7 +183,8 @@ describe("Testing 'Getters Image' functions", () => {
       tooltipTriggerClick: "",
       tooltipPlacement: "top",
       customCSS: "",
-      enableLazyLoad: "off"
+      enableLazyLoad: "off",
+      enableFetchPriority: "off"
     };
 
     // without population

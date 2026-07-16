@@ -3,7 +3,7 @@ import classNames from "classnames";
 import { isEqual, noop } from "es-toolkit";
 import { get } from "es-toolkit/compat";
 import React, { type ReactElement, type RefObject } from "react";
-import { Subject, from } from "rxjs";
+import { Subject, Subscription, from } from "rxjs";
 import {
   debounceTime,
   distinctUntilChanged,
@@ -51,6 +51,7 @@ import { getLoopAttributes } from "./utils";
 
 class Carousel extends EditorComponent<Value, Props, State> {
   subject$: Subject<$Subject | string> | undefined;
+  subscription?: Subscription;
   unmounted = false;
 
   state = {
@@ -161,6 +162,9 @@ class Carousel extends EditorComponent<Value, Props, State> {
   componentWillUnmount(): void {
     this.unmounted = true;
 
+    this.subscription?.unsubscribe();
+    this.subscription = undefined;
+
     this.subject$?.complete();
     this.subject$ = undefined;
 
@@ -168,6 +172,9 @@ class Carousel extends EditorComponent<Value, Props, State> {
   }
 
   subscribeToData(): void {
+    this.subscription?.unsubscribe();
+    this.subject$?.complete();
+
     // @ts-expect-error: Type 'Observable$Subject>' is missing the following properties from type 'Subject'
     this.subject$ = new Subject().pipe(
       debounceTime(1000),
@@ -204,7 +211,7 @@ class Carousel extends EditorComponent<Value, Props, State> {
       })
     );
 
-    this.subject$?.subscribe((data) => {
+    this.subscription = this.subject$?.subscribe((data) => {
       const { loop = { collection: [], config: undefined }, pagination = {} } =
         typeof data === "string" ? {} : data;
 

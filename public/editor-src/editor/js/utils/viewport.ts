@@ -8,6 +8,28 @@ export const isElementInViewport = (
   return top >= -elementHeight && bottom <= innerHeight + elementHeight;
 };
 
+export const getVisibleSectionIds = (
+  document: Document,
+  innerHeight: number
+): string[] => {
+  const sections = document.querySelectorAll<HTMLElement>(
+    ".brz-section, .brz-footer"
+  );
+  const ids: string[] = [];
+
+  for (const el of sections) {
+    const rect = el.getBoundingClientRect();
+    if (rect.height <= 0) continue;
+
+    const visible = Math.min(rect.bottom, innerHeight) - Math.max(rect.top, 0);
+    if (visible / rect.height >= 0.5 && el.id) {
+      ids.push(el.id);
+    }
+  }
+
+  return ids;
+};
+
 export const getClosestSections = (
   document: Document,
   innerHeight: number

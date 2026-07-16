@@ -1,4 +1,3 @@
-import { TwitterEmbedEditor } from "@brizy/component/src/Flex/TwitterEmbed";
 import { TwitterFollowEditor } from "@brizy/component/src/Flex/TwitterFollowButton";
 import { TwitterMentionEditor } from "@brizy/component/src/Flex/TwitterMentionButton";
 import classnames from "classnames";
@@ -12,6 +11,7 @@ import { attachRefs } from "visual/utils/react";
 import { Model } from "../EditorComponent/types";
 import { Meta } from "../ToolbarItemType";
 import { Wrapper } from "../tools/Wrapper";
+import { DeprecatedTwitter } from "./Deprecated";
 import * as sidebarConfig from "./sidebar";
 import { style } from "./styles";
 import * as toolbarConfig from "./toolbar";
@@ -54,23 +54,14 @@ class Twitter extends BaseTwitter {
   }
 
   renderEditorByType(props: TwitterOptions) {
-    const {
-      type,
-      name,
-      height,
-      theme,
-      buttonSize,
-      buttonShowCount,
-      buttonShowScreenName
-    } = props;
+    const { type, name, buttonSize, buttonShowCount, buttonShowScreenName } =
+      props;
 
     const _name = name.replace(/^@/, "");
 
     switch (type) {
       case "embed":
-        return (
-          <TwitterEmbedEditor name={_name} height={height} theme={theme} />
-        );
+        return <DeprecatedTwitter />;
       case "followButton":
         return (
           <TwitterFollowEditor
@@ -93,7 +84,7 @@ class Twitter extends BaseTwitter {
 
     let type: typeof twitterType;
 
-    if (twitter === twitterEmbedType) {
+    if (twitter === twitterEmbedType && twitterType === twitterEmbedType) {
       type = twitterEmbedType;
     } else {
       type =
@@ -121,8 +112,6 @@ class Twitter extends BaseTwitter {
     const props: TwitterOptions = {
       name: v.twitterUsername.trim(),
       type,
-      height: Number(this.dvv("height")),
-      theme: v.twitterTheme === "dark" ? "dark" : "light",
       buttonSize: v.buttonLarge === "large" ? "large" : "small",
       buttonShowCount: v.buttonShowCount === "on",
       buttonShowScreenName: v.buttonShowScreenName === "on"

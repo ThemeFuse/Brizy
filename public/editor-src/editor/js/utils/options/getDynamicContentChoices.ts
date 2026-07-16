@@ -54,10 +54,10 @@ const configDCItemToChoices = (option: ConfigDCItem): Choice | OptGroup => {
   };
 };
 
-export const optionsToChoices = <T extends keyof Options>(
-  options: Options[T]
+export const optionsToChoices = (
+  options: ConfigDCItem[]
 ): (Choice | OptGroup)[] => {
-  return flatten(Object.values(options), 1).map(configDCItemToChoices);
+  return flatten(options, 1).map(configDCItemToChoices);
 };
 
 export const getDynamicContentChoices = (
@@ -66,7 +66,7 @@ export const getDynamicContentChoices = (
 ): MValue<(Choice | OptGroup)[]> => {
   const item = options?.[type];
 
-  if (!options || !item || typeof item === "function") {
+  if (!options || !item || typeof item === "function" || !Array.isArray(item)) {
     return undefined;
   }
 
@@ -80,8 +80,9 @@ export const getDynamicContentChoices = (
     const refs = [...(reference ?? []), ...(multiReference ?? [])];
 
     refs.forEach(({ title, dynamicContent }) => {
-      if (Array.isArray(dynamicContent[type])) {
-        const optgroup = optionsToChoices(dynamicContent[type]);
+      const dcItems = dynamicContent[type];
+      if (Array.isArray(dcItems)) {
+        const optgroup = optionsToChoices(dcItems);
 
         if (optgroup.length) {
           choicesReference.push({ optgroup, title });

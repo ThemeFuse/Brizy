@@ -1,10 +1,8 @@
-import { TwitterEmbedPreview } from "@brizy/component/src/Flex/TwitterEmbed";
 import { TwitterFollowPreview } from "@brizy/component/src/Flex/TwitterFollowButton";
 import { TwitterMentionPreview } from "@brizy/component/src/Flex/TwitterMentionButton";
 import classnames from "classnames";
 import React, { ReactNode } from "react";
 import CustomCSS from "visual/component/CustomCSS";
-import { encodeToString } from "visual/utils/string";
 import { Wrapper } from "../tools/Wrapper";
 import { BaseTwitter } from "./Base";
 import { style } from "./styles";
@@ -15,8 +13,6 @@ class Twitter extends BaseTwitter {
     const {
       type,
       name,
-      height,
-      theme,
       buttonSize,
       buttonShowCount,
       buttonShowScreenName,
@@ -27,9 +23,7 @@ class Twitter extends BaseTwitter {
 
     switch (type) {
       case "embed":
-        return (
-          <TwitterEmbedPreview name={_name} height={height} theme={theme} />
-        );
+        return null;
       case "followButton":
         return (
           <TwitterFollowPreview
@@ -47,21 +41,14 @@ class Twitter extends BaseTwitter {
   }
 
   renderForView(v: Value, vd: Value, vs: Value): ReactNode {
-    const {
-      twitterType,
-      customCSS,
-      height,
-      tabletHeight,
-      mobileHeight,
-      twitter
-    } = v;
+    const { twitterType, customCSS, twitter } = v;
 
     const twitterEmbedType = "embed";
     const twitterFollowButtonType = "followButton";
 
     let type: typeof twitterType;
 
-    if (twitter === twitterEmbedType) {
+    if (twitter === twitterEmbedType && twitterType === twitterEmbedType) {
       type = twitterEmbedType;
     } else {
       type =
@@ -89,29 +76,15 @@ class Twitter extends BaseTwitter {
     const props: PreviewTwitterOptions = {
       name: v.twitterUsername.trim(),
       type,
-      height: Number(this.dvv("height")),
-      theme: v.twitterTheme === "dark" ? "dark" : "light",
       buttonSize: v.buttonLarge === "large" ? "large" : "small",
       buttonShowCount: v.buttonShowCount === "on",
       buttonShowScreenName: v.buttonShowScreenName === "on",
       tweet: v.tweet
     };
 
-    const attributes = {
-      "data-type": twitterType,
-      "data-heights": encodeToString({
-        desktop: height,
-        tablet: tabletHeight ?? height,
-        mobile: mobileHeight ?? height
-      })
-    };
-
     return (
       <CustomCSS selectorName={this.getId()} css={customCSS}>
-        <Wrapper
-          {...this.makeWrapperProps({ className })}
-          attributes={attributes}
-        >
+        <Wrapper {...this.makeWrapperProps({ className })}>
           {this.renderPreviewByType(props)}
         </Wrapper>
       </CustomCSS>

@@ -13,7 +13,7 @@ import { FontKeyTypes } from "visual/redux/actions2";
 import { ReduxState, StoreChanged } from "visual/redux/types";
 import { Authorized, SyncAllowed } from "visual/types";
 import { Block, BlocksHTML } from "visual/types/Block";
-import { Font } from "visual/types/Fonts";
+import { AdobeFont, Font } from "visual/types/Fonts";
 import { GlobalBlock, GlobalBlockPopup } from "visual/types/GlobalBlock";
 import { NonEmptyArray } from "visual/utils/array/types";
 import { canUseCondition, createGlobalBlockSymbol } from "visual/utils/blocks";
@@ -155,6 +155,11 @@ export const showHiddenElementsSelector = createSelector(
   (ui) => ui.showHiddenElements
 );
 
+export const adobeFontsSelector = createSelector(
+  fontsSelector,
+  (fonts): AdobeFont[] => fonts.adobe?.data ?? []
+);
+
 export const unDeletedFontsSelector = createSelector(
   fontsSelector,
   (fonts): ReduxState["fonts"] => {
@@ -168,6 +173,26 @@ export const unDeletedFontsSelector = createSelector(
         }
       };
     }, {});
+  }
+);
+
+// Stable signature of the un-deleted font IDs across all groups. Consumers
+// (e.g. Quill) only need to know whether a font was added or removed in order
+// to re-init their plugin; subscribing to this primitive avoids re-renders
+// when an unrelated font field changes.
+export const fontsSignatureSelector = createSelector(
+  unDeletedFontsSelector,
+  (fonts): string => {
+    const parts: string[] = [];
+
+    for (const type in fonts) {
+      const data = fonts[type as keyof typeof fonts]?.data ?? [];
+      const keys = data.map((f) => `${type}_${f.family.replace(/\s/g, "_")}`);
+
+      parts.push(keys.join(","));
+    }
+
+    return parts.join("|");
   }
 );
 
@@ -225,6 +250,35 @@ export const isCompilationPending = createSelector(
 export const isInitializedSelector = createSelector(
   blocksHtmlSelector,
   (blocksHtml) => blocksHtml.initialized
+);
+
+// Narrow projection for consumers that only need the popup IDs registered as
+// global blocks (e.g. Quill rich-text popup-link cleanup). Returns a stable
+// array reference while the popup-id set is unchanged, so connected
+// components don't re-render on unrelated globalBlocks edits.
+let prevPopupIds: string[] = [];
+export const globalBlocksPopupIdsSelector = createSelector(
+  globalBlocksSelector,
+  (globalBlocks): string[] => {
+    const ids: string[] = [];
+
+    for (const key in globalBlocks) {
+      const popupId = getIn(globalBlocks, [key, "data", "value", "popupId"]);
+
+      if (typeof popupId === "string" && popupId.length > 0) {
+        ids.push(popupId);
+      }
+    }
+
+    if (
+      ids.length === prevPopupIds.length &&
+      ids.every((id, i) => id === prevPopupIds[i])
+    ) {
+      return prevPopupIds;
+    }
+    prevPopupIds = ids;
+    return ids;
+  }
 );
 
 //#endregion

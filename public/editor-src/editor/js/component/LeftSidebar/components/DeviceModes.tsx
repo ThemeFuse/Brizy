@@ -3,7 +3,7 @@ import React, { useCallback } from "react";
 import { useDispatch, useStore } from "react-redux";
 import HotKeys from "visual/component/HotKeys";
 import { LeftSidebarOptionsIds } from "visual/global/Config/types/configs/ConfigCommon";
-import UIEvents from "visual/global/UIEvents";
+import UIEvents, { UIEventType } from "visual/global/UIEvents";
 import { ReduxAction, setDeviceMode } from "visual/redux/actions2";
 import { deviceModeSelector } from "visual/redux/selectors";
 import { ReduxState } from "visual/redux/types";
@@ -34,7 +34,7 @@ const DeviceModeMobile = () => ({
 
         setDeviceMode("mobile");
         setTimeout(() => {
-          UIEvents.emit("deviceMode.change", "mobile");
+          UIEvents.emit(UIEventType.DeviceModeChange, "mobile");
         }, 300);
       }
     };
@@ -64,7 +64,7 @@ const DeviceModeTablet = () => ({
 
         setDeviceMode("tablet");
         setTimeout(() => {
-          UIEvents.emit("deviceMode.change", "tablet");
+          UIEvents.emit(UIEventType.DeviceModeChange, "tablet");
         }, 300);
       }
     };
@@ -94,7 +94,7 @@ const DeviceModeDesktop = () => ({
 
         setDeviceMode("desktop");
         setTimeout(() => {
-          UIEvents.emit("deviceMode.change", "desktop");
+          UIEvents.emit(UIEventType.DeviceModeChange, "desktop");
         }, 300);
       }
     };
@@ -149,7 +149,7 @@ const WithHotKeys: FCC = ({ children }) => {
 
       dispatch(setDeviceMode(deviceModeOptions[index].id as DeviceMode));
       setTimeout(() => {
-        UIEvents.emit("deviceMode.change", deviceModeOptions[index].id);
+        UIEvents.emit(UIEventType.DeviceModeChange, deviceModeOptions[index].id);
       }, 300);
     },
     [store, dispatch]

@@ -10,6 +10,7 @@ export interface Props extends WithClassName {
 export interface Value extends ElementModel {
   showImages: Switch;
   showMeetingDay: Switch;
+  showMeetingTime: Switch;
   showCategory: Switch;
   showGroup: Switch;
   showStatus: Switch;

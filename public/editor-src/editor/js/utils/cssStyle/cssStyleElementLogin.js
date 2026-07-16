@@ -52,6 +52,48 @@ export function cssStyleElementFieldsInputSize({ v, device, state }) {
   return `padding: ${sizeToPadding[size]}px ${sizeToPadding[size] + 10}px;`;
 }
 
+export function cssStyleElementFieldsInputSizePhoneFieldFlag({
+  v,
+  device,
+  state
+}) {
+  const dvv = (key) => defaultValueValue({ v, key, device, state });
+
+  const size = dvv("size");
+
+  const sizeToPadding = {
+    small: dvv("sizeSmallPadding"),
+    medium: dvv("sizeMediumPadding"),
+    large: dvv("sizeLargePadding")
+  };
+
+  const paddingVertical = sizeToPadding[size];
+  const paddingHorizontal = paddingVertical + 10;
+
+  return `padding: ${paddingVertical}px 0px ${paddingVertical}px ${paddingHorizontal}px`;
+}
+
+export function cssStyleElementFieldsInputSizePhoneFieldInput({
+  v,
+  device,
+  state
+}) {
+  const dvv = (key) => defaultValueValue({ v, key, device, state });
+
+  const size = dvv("size");
+
+  const sizeToPadding = {
+    small: dvv("sizeSmallPadding"),
+    medium: dvv("sizeMediumPadding"),
+    large: dvv("sizeLargePadding")
+  };
+
+  const paddingVertical = sizeToPadding[size];
+  const paddingHorizontal = paddingVertical + 10;
+
+  return `padding: ${paddingVertical}px ${paddingHorizontal}px ${paddingVertical}px 0px`;
+}
+
 // Style Typography Lost Password
 export function cssStyleElementLoginLostPasswordTypography2FontFamily({
   v,

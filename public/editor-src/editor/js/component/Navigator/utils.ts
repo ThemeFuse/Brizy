@@ -2,7 +2,7 @@ import { Modifier } from "@dnd-kit/core";
 import { clamp } from "es-toolkit/compat";
 import { Component, RefObject } from "react";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
-import UIEvents from "visual/global/UIEvents";
+import UIEvents, { UIEventType } from "visual/global/UIEvents";
 import { getComponentId } from "visual/utils/models/path";
 
 export const openNavigatorFromContextMenu = (
@@ -14,7 +14,7 @@ export const openNavigatorFromContextMenu = (
       ? getComponentId(component, itemIndex)
       : null;
 
-  UIEvents.emit("navigator.open", { elementId });
+  UIEvents.emit(UIEventType.NavigatorOpen, { elementId });
 };
 
 export const createRestrictToTopWindowEdges = (

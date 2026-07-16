@@ -40,6 +40,7 @@ export interface Value extends Omit<ElementModel, "items"> {
   fileTypeErrorMessage: string;
   numberMinMessage: string;
   numberMaxMessage: string;
+  phoneDefaultCountry: string;
   placeholder?: string;
   label?: string;
   customID: string;

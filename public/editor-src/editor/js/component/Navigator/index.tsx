@@ -1,7 +1,7 @@
 import { DndContext, DragEndEvent, Modifier } from "@dnd-kit/core";
 import React, { FC, useCallback, useEffect, useRef, useState } from "react";
 import { createRestrictToTopWindowEdges } from "visual/component/Navigator/utils";
-import UIEvents from "visual/global/UIEvents";
+import UIEvents, { UIEventType } from "visual/global/UIEvents";
 import { TreeContextProvider } from "visual/providers/TreeProvider";
 import { NavigatorPanel, type Props as PanelProps } from "./components/Panel";
 
@@ -30,11 +30,11 @@ export const NavigatorRoot: FC = () => {
     };
     const closeHandler = () => setOpen(false);
 
-    UIEvents.on("navigator.open", openHandler);
-    UIEvents.on("navigator.close", closeHandler);
+    UIEvents.on(UIEventType.NavigatorOpen, openHandler);
+    UIEvents.on(UIEventType.NavigatorClose, closeHandler);
     return () => {
-      UIEvents.off("navigator.open", openHandler);
-      UIEvents.off("navigator.close", closeHandler);
+      UIEvents.off(UIEventType.NavigatorOpen, openHandler);
+      UIEvents.off(UIEventType.NavigatorClose, closeHandler);
     };
   }, []);
 

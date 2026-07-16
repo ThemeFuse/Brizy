@@ -5,7 +5,11 @@ import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
 import { getDynamicContentOption } from "visual/utils/options";
-import { isUserAgreementCheckbox } from "../../utils";
+import {
+  getPhoneCountryChoices,
+  isPhoneType,
+  isUserAgreementCheckbox
+} from "../../utils";
 import { Props, Value } from "../type";
 import { getThirtyOptions, inputTypesChoice } from "../utils";
 
@@ -50,6 +54,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device, component }) => {
   const isHidden = type === "Hidden" || isCalculated;
   const isNumber = type === "Number";
   const isParagraph = type === "Paragraph";
+  const isPhone = isPhoneType(type);
 
   const thirtyOption = config.integrations?.form?.fields;
   const thirtyOptionHandler = thirtyOption?.handler;
@@ -238,6 +243,16 @@ export const getItems: GetItems<Value, Props> = ({ v, device, component }) => {
       }
     }
   ];
+  const phoneOptions = (): ToolbarItemType[] => [
+    {
+      id: "phoneDefaultCountry",
+      type: "select",
+      position: 20,
+      label: t("Default Country"),
+      devices: "desktop",
+      choices: getPhoneCountryChoices()
+    }
+  ];
   const hiddenOptions = (): ToolbarItemType[] => [
     {
       id: "required",
@@ -373,8 +388,9 @@ export const getItems: GetItems<Value, Props> = ({ v, device, component }) => {
                     }
                   ]
                 },
-                ...(!isUserAgreementCheckbox(type)
-                  ? ([
+                ...(isUserAgreementCheckbox(type) || isPhoneType(type)
+                  ? []
+                  : ([
                       {
                         id: "defaultValue",
                         label: t("Default Value"),
@@ -395,8 +411,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device, component }) => {
                         },
                         population: richTextDC
                       }
-                    ] as unknown as ToolbarItemType[])
-                  : []),
+                    ] as unknown as ToolbarItemType[])),
                 ...(isDateOrTime ? dateOrTimeOptions() : []),
                 ...(isCheckboxOrRadioWithColumns
                   ? checkboxOrRadioOptions()
@@ -404,6 +419,7 @@ export const getItems: GetItems<Value, Props> = ({ v, device, component }) => {
                 ...(isFileUpload ? fileUploadOptions() : []),
                 ...(isSelect ? selectOptions() : []),
                 ...(isNumber ? numberOptions() : []),
+                ...(isPhone ? phoneOptions() : []),
                 ...(!isHidden ? hiddenOptions() : []),
                 ...(isCalculated ? calculatedOptions() : [])
               ]

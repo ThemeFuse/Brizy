@@ -25,8 +25,14 @@ export interface EditorAPI {
   t: (key: string) => string;
   store: ISharedStore;
   getBlocksHtml: () => Array<BlocksHTML & { id: string }>;
+  getVisibleSectionsIds: () => string[];
   getPageData: () => unknown;
   getProjectData: () => unknown;
+  getPageId: () => string;
+  getProjectId: () => string;
+  getBlockCount: () => number;
+  getStateSize: () => number;
+  getHistoryInfo: () => { current: number; max: number; snapshotCount: number };
   openHelpSidebar: () => void;
 }
 
@@ -35,7 +41,8 @@ export interface EditorAPI {
 export type SlotName =
   | "leftSidebar.drawer"
   | "leftSidebar.tab"
-  | "floatingPanel";
+  | "floatingPanel"
+  | "bottomPanel";
 
 export interface SlotContribution {
   id: string;

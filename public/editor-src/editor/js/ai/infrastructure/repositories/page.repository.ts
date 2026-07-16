@@ -14,6 +14,7 @@ import {
   removeBlock as removeBlockAction,
   removeBlocks as removeBlocksAction,
   reorderBlocks,
+  undo as undoAction,
   updateBlockData,
   updatePageStatus
 } from "visual/redux/actions2";
@@ -49,6 +50,7 @@ import type {
   RemoveBlockResult,
   RemoveElementResult,
   SearchElementsResult,
+  UndoResult,
   UpdateElementResult
 } from "../../entities/models";
 import { log } from "../../utils/logger";
@@ -1285,6 +1287,32 @@ export class PageRepository implements IPageRepository {
         error: error instanceof Error ? error.message : String(error)
       };
     }
+  }
+
+  undo(): BrizyToolResult<UndoResult> {
+    const { history } = this.getState();
+
+    if (!history.canUndo) {
+      log.repository("undo skipped — nothing to undo");
+      return {
+        success: true,
+        data: { reverted: false, canUndo: false }
+      };
+    }
+
+    // Dispatch the same UNDO action the editor's undo button uses.
+    this.dispatch(undoAction());
+
+    const { history: next } = this.getState();
+    log.repository("undo applied canUndo=%o", next.canUndo);
+
+    return {
+      success: true,
+      data: {
+        reverted: true,
+        canUndo: next.canUndo
+      }
+    };
   }
 }
 

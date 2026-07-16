@@ -1,12 +1,11 @@
+import type { CheerioAPI } from "cheerio";
 import { makeAttr, makeDataAttrString } from "visual/utils/i18n/attribute";
 
-export const getCustomCSS = ($: cheerio.Root): string[] => {
+export const getCustomCSS = ($: CheerioAPI): string[] => {
   let styles = "";
 
-  $(makeDataAttrString({ name: "custom-css" })).each(function (
-    this: cheerio.Element
-  ) {
-    const $this = $(this);
+  $(makeDataAttrString({ name: "custom-css" })).each((_, el) => {
+    const $this = $(el);
     const id = $this.attr(makeAttr("custom-id")) || "";
 
     styles += $this.attr(makeAttr("custom-css"));

@@ -155,3 +155,10 @@ export const deleteFontSchema = z.object({
 export const changeDefaultFontSchema = z.object({
   font: z.string().min(1, "font is required")
 });
+
+// ===========================================
+// HISTORY TOOLS
+// ===========================================
+
+// Takes no arguments — undoes the single most recent change.
+export const undoLastChangeSchema = z.object({});

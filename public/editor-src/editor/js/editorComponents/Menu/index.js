@@ -14,7 +14,7 @@ import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { HamburgerIcon } from "visual/editorComponents/Menu/controls/HamburgerIcon";
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
-import UIEvents from "visual/global/UIEvents";
+import UIEvents, { UIEventType } from "visual/global/UIEvents";
 import { isView } from "visual/providers/RenderProvider";
 import { makePlaceholder } from "visual/utils/dynamicContent";
 import { isPro } from "visual/utils/env";
@@ -97,7 +97,7 @@ export default class Menu extends EditorComponent {
   }
 
   componentDidMount() {
-    UIEvents.on("deviceMode.change", this.handleChange);
+    UIEvents.on(UIEventType.DeviceModeChange, this.handleChange);
 
     const parentToolbarExtend = this.makeToolbarPropsFromConfig2(
       toolbarExtendParent,
@@ -137,7 +137,7 @@ export default class Menu extends EditorComponent {
     if (this.hasMMenu()) {
       this.destroyMMenu();
     }
-    UIEvents.off("deviceMode.change", this.handleChange);
+    UIEvents.off(UIEventType.DeviceModeChange, this.handleChange);
 
     super.componentWillUnmount();
   }
@@ -696,7 +696,7 @@ export default class Menu extends EditorComponent {
 
     if (menuAPI) {
       menuAPI.close();
-      UIEvents.emit("mMenu:close");
+      UIEvents.emit(UIEventType.MMenuClose);
     }
   };
 

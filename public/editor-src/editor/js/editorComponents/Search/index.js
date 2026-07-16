@@ -139,7 +139,14 @@ export default class Search extends EditorComponent {
   }
 
   renderForView(v, vs, vd) {
-    const { searchStyle, customCSS, label, className: _className } = v;
+    const {
+      searchStyle,
+      customCSS,
+      label,
+      searchPostTypes,
+      className: _className
+    } = v;
+    const parsedPostTypes = JSON.parse(searchPostTypes || "[]");
     const className = classnames(
       "brz-search-container",
       `brz-search-container--${
@@ -178,6 +185,14 @@ export default class Search extends EditorComponent {
               className="brz-input brz-search"
               placeholder={label}
             />
+            {parsedPostTypes.map((postType) => (
+              <input
+                key={postType}
+                type="hidden"
+                name="brz_post_type[]"
+                value={postType}
+              />
+            ))}
             {searchStyle === "classic" && this.renderButton()}
           </form>
         </Wrapper>

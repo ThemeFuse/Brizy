@@ -1,7 +1,6 @@
 import { Sheet } from "visual/providers/StyleProvider/Sheet";
 import { murmurhash2 } from "visual/utils/crypto";
 import { makeAttr } from "visual/utils/i18n/attribute";
-import { uuid } from "visual/utils/uuid";
 import type { OutputStyleWithSymbol } from "../types";
 import {
   DEFAULT_CLASSNAME_PREFIX,
@@ -242,18 +241,43 @@ export function css(
   ].join(" ");
 }
 
-// Used only for RichText(Quill)
+// Used only for RichText (Quill lines + RichText container element segment).
+//
+// Why a separate function from css():
+//   The general css() keys element/symbol entries by per-instance id, which
+//   means cloned RichTexts produce one <style> node per clone even when their
+//   element CSS is identical. RichText needs dedup across clones, so css1
+//   keys by content hash and tracks live owners with a refcount.
+//
+// Lifecycle:
+//   1. Caller invokes css1(id, elementStyle, sheet) on each render.
+//   2. styleHash = murmurhash2(elementStyle). Identical content → identical
+//      hash → identical className → identical sheet key. First caller creates
+//      the <style> node + sheet entry; subsequent callers reuse them.
+//   3. Counter is incremented every call. Caller must invoke clean() once per
+//      call (typically via a tracking Map fired on re-render and unmount —
+//      see RichText.trackContainerCss / Quill.trackCss).
+//   4. clean() decrements the counter. Node + sheet entry + cssOrdered entry
+//      are removed only when counter hits 0 (last owner gone).
 export function css1(
-  elementID: string,
+  _elementID: string,
   elementStyle: string,
   sheet: Readonly<Sheet>,
   replacePlaceholdersCb = replacePlaceholders
 ) {
-  let elementData = sheet.get(elementID);
+  // Hash the element style: identical content across instances → identical
+  // className. _elementID is intentionally NOT in the hash — that's the whole
+  // point of dedup.
+  const styleHash = murmurhash2(elementStyle);
+  const className = `brz-css-${styleHash}`;
+  const key = `css1-${styleHash}`;
   const isBrowser = typeof window !== "undefined";
 
+  let elementData = sheet.get(key);
+
+  // First owner for this content: build node + register in sheet.
+  // Later owners with same content fall through and only bump the counter.
   if (!elementData) {
-    const className = `brz-css-${uuid(5)}`;
     const cssText = replacePlaceholdersCb(elementStyle, className);
     let node;
 
@@ -262,7 +286,10 @@ export function css1(
 
       node = doc.createElement("style");
       if (process.env.NODE_ENV === "development") {
-        node.setAttribute(makeAttr("css"), "");
+        // Tag the node with its className so DevTools can identify the
+        // RichText origin (general css() uses default-/rules-/custom-/symbol-
+        // prefixes; we use richText- for css1 to distinguish them).
+        node.setAttribute(makeAttr("css"), `richText-${className}`);
       }
       node.appendChild(doc.createTextNode(""));
       node.childNodes[0].nodeValue = cssText;
@@ -279,36 +306,31 @@ export function css1(
       type: "custom",
       data: elementData
     });
-    sheet.set(elementID, elementData);
-  } else {
-    const { node, className, cssText } = elementData;
-    const cssTextNext = replacePlaceholdersCb(elementStyle, className);
-
-    if (cssTextNext !== cssText) {
-      if (node) {
-        node.childNodes[0].nodeValue = cssTextNext;
-      }
-
-      elementData = {
-        node,
-        className,
-        cssText: cssTextNext
-      };
-      sheet.set(elementID, elementData);
-    }
+    sheet.set(key, elementData);
   }
+
+  // Always increment — every call gets its own clean() and is one live owner.
+  sheet.incrementClassNameCounter(className);
 
   return {
     className: elementData.className,
     cssText: elementData.cssText,
+    // Decrement and only tear down on the LAST owner. Safe to call even if
+    // the entry was already cleaned (defensive get() check) and safe to call
+    // across iframe doc swaps because node.remove() walks node's actual parent
+    // (no throw if detached).
     clean() {
-      const elementData = sheet.get(elementID);
-      const doc = sheet.getDoc() ?? document;
+      const data = sheet.get(key);
+      if (!data) return;
 
-      if (elementData?.node) {
-        doc.head.removeChild(elementData.node);
+      const count = sheet.decrementClassNameCounter(className);
+      if (count > 0) return;
+
+      if (data.node) {
+        data.node.remove();
       }
-      sheet.delete(elementID);
+      sheet.deleteFromCSSOrdered(data.className);
+      sheet.delete(key);
     }
   };
 }

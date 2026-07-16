@@ -7,7 +7,7 @@ import React, {
   RefObject
 } from "react";
 import ResizeAware from "react-resize-aware";
-import UIEvents from "visual/global/UIEvents";
+import UIEvents, { UIEventType } from "visual/global/UIEvents";
 import { RenderType, isEditor } from "visual/providers/RenderProvider";
 import { fromRecord as readImageItem } from "visual/utils/options/Gallery/utils";
 import { read as readJson } from "visual/utils/reader/json";
@@ -79,12 +79,12 @@ class Background extends Component<Props> {
   isUnMounted = false;
 
   componentDidMount(): void {
-    UIEvents.on("deviceMode.change", this.handleChange);
+    UIEvents.on(UIEventType.DeviceModeChange, this.handleChange);
   }
 
   componentWillUnmount(): void {
     this.isUnMounted = true;
-    UIEvents.off("deviceMode.change", this.handleChange);
+    UIEvents.off(UIEventType.DeviceModeChange, this.handleChange);
   }
 
   handleChange = (): void => {

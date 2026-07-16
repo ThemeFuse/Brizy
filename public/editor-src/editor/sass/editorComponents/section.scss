@@ -96,19 +96,23 @@
     width: 100%;
     transform: translate3d(0, -100%, 0);
     opacity: 0;
+    visibility: hidden;
     transition: none;
 
     &-opened {
       transform: translate3d(0, 0, 0);
       opacity: 1;
+      visibility: visible;
       transition:
         transform 0.2s linear,
         opacity 0.2s linear;
     }
     &-closed {
+      visibility: hidden;
       transition:
         transform 0.2s linear,
-        opacity 0.2s linear;
+        opacity 0.2s linear,
+        visibility 0s linear 0.2s;
       pointer-events: none;
     }
   }

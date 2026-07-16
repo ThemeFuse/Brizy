@@ -1,7 +1,7 @@
 const path = require("path");
 const fs = require("fs");
 const rspack = require("@rspack/core");
-const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
+const { RsdoctorRspackPlugin } = require("@rsdoctor/rspack-plugin");
 const { omit } = require("timm");
 const {
   createJoinFunction,
@@ -301,8 +301,7 @@ const rspackConfig = (options) => {
       new rspack.optimize.LimitChunkCountPlugin({ maxChunks: 1 }),
       new rspack.CssExtractRspackPlugin({
         filename: "css/[name].css"
-      }),
-      ...(options.ANALYZE ? [new BundleAnalyzerPlugin()] : [])
+      })
     ],
     devtool: options.IS_PRODUCTION ? false : "eval-cheap-module-source-map",
     performance: {
@@ -335,7 +334,16 @@ const rspackPreviewConfig = (options) => {
       new rspack.DefinePlugin({
         "process.env.NODE_ENV": JSON.stringify(baseConfig.mode),
         TARGET: JSON.stringify(options.TARGET)
-      })
+      }),
+      ...(options.ANALYZE
+        ? [
+            new RsdoctorRspackPlugin({
+              name: "module.preview",
+              port: 9993,
+              disableClientServer: false
+            })
+          ]
+        : [])
     ]
   };
 };
@@ -379,7 +387,16 @@ const rspackEditorConfig = (options) => {
           outDir: outputDir,
           declaration: true
         }
-      })
+      }),
+      ...(options.ANALYZE
+        ? [
+            new RsdoctorRspackPlugin({
+              name: "module.editor",
+              port: 9994,
+              disableClientServer: false
+            })
+          ]
+        : [])
     ]
   };
 };
@@ -393,12 +410,12 @@ module.exports = (env, argv) => {
   };
   const previewConfig = rspackPreviewConfig({
     ...options,
-    ANALYZE: env["analyze_preview"] ?? false
+    ANALYZE: env["analyze_module_preview"] ?? false
   });
   const editorConfig = rspackEditorConfig({
     ...options,
     BUILD_VERSION: env["version"] ?? "dev",
-    ANALYZE: env["analyze_editor"] ?? false
+    ANALYZE: env["analyze_module_editor"] ?? false
   });
 
   return [previewConfig, editorConfig];

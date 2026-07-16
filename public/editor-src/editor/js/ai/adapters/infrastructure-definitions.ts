@@ -769,6 +769,23 @@ export const moveElementDefinition: ToolDefinition = {
   }
 };
 
+// ===========================================
+// HISTORY TOOLS
+// ===========================================
+
+export const undoLastChangeDefinition: ToolDefinition = {
+  name: "undoLastChange",
+  strict: true,
+  description:
+    "The editor's undo (Ctrl+Z). The page keeps a history of every change made to it, by you or by the user directly in the editor; this tool steps that history back one entry, restoring the page exactly as it was before the most recent change. Use this when the user wants to reverse a recent change — 'undo', 'rollback', 'rollback the latest change', 'revert', 'go back', 'cancel that', 'put it back'. Since history is a single ordered stack, the tool takes no arguments and always targets the most recent change, so a request as short as 'undo' is unambiguous on its own. This is the only way to undo: rebuilding the previous state with other tools adds a new change on top of the history instead of reversing it. Undoes one step per call, so reversing several changes takes several calls. Returns `reverted: false` when the history is empty and there is nothing left to undo.",
+  category: "history",
+  parameters: {
+    type: "object",
+    properties: {},
+    additionalProperties: false
+  }
+};
+
 /**
  * All infrastructure tool definitions in order.
  */
@@ -801,5 +818,7 @@ export const infrastructureDefinitions: ToolDefinition[] = [
   // Generic element tools
   removeElementDefinition,
   duplicateElementDefinition,
-  moveElementDefinition
+  moveElementDefinition,
+  // History tools
+  undoLastChangeDefinition
 ];

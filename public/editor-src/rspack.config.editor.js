@@ -1,7 +1,7 @@
 const path = require("path");
 const rspack = require("@rspack/core");
 const fs = require("fs");
-const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
+const { RsdoctorRspackPlugin } = require("@rsdoctor/rspack-plugin");
 const swcrc = require("./swc.config.all");
 
 const getExtensions = (target) => {
@@ -40,9 +40,16 @@ function getVendors(BUILD_MODE) {
   const reactFilename = fs
     .readdirSync(pathToReact)
     .find((file) => file.startsWith(`react.${BUILD_MODE}`));
+
+  // Use the profiling build of react-dom in production.
+  // It emits performance.measure() entries (React Performance Tracks)
+  // with near-zero overhead, enabling perf-monitor to capture render
+  // timing, commit phases, and cascading updates in SigNoz.
+  const reactDOMBuildMode =
+    BUILD_MODE === "production" ? "profiling" : BUILD_MODE;
   const reactDOMFilename = fs
     .readdirSync(pathToReactDOM)
-    .find((file) => file.startsWith(`react-dom.${BUILD_MODE}`));
+    .find((file) => file.startsWith(`react-dom.${reactDOMBuildMode}`));
 
   const VENDORS = {
     react: path.resolve(pathToReact, reactFilename),
@@ -154,7 +161,28 @@ module.exports = (options = {}) => {
       new rspack.CopyRspackPlugin({
         patterns: getVendors(BUILD_MODE)
       }),
-      ...(options.ANALYZE ? [new BundleAnalyzerPlugin()] : []),
+      ...(options.ANALYZE
+        ? [
+            new RsdoctorRspackPlugin({
+              name: "editor",
+              port: 9988,
+              // Need when we check bunde size on CI CD
+              ...(options.CHECK_BUNDLE_SIZE && {
+                disableClientServer: true,
+                output: {
+                  mode: "brief",
+                  options: {
+                    type: ["json"],
+                    optimizationBailout: true,
+                    jsonOptions: {
+                      fileName: "js/editor-bundle-stats.json"
+                    }
+                  }
+                }
+              })
+            })
+          ]
+        : []),
       new rspack.CssExtractRspackPlugin({
         filename: "css/[name].min.css",
         chunkFilename: "css/[name].min.css",

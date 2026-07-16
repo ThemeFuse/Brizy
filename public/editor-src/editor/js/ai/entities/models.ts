@@ -87,6 +87,17 @@ export interface BrizyToolResult<T = unknown> {
 }
 
 /**
+ * Undo result — reports whether a change was reverted and the history
+ * availability after the operation so the LLM can decide what to do next.
+ */
+export interface UndoResult {
+  /** Whether a change was actually reverted (false when there was nothing to undo). */
+  readonly reverted: boolean;
+  /** Whether a further undo is still possible. */
+  readonly canUndo: boolean;
+}
+
+/**
  * Add block result
  */
 export interface AddBlockResult {

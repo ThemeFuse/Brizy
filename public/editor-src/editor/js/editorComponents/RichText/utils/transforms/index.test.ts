@@ -1,4 +1,4 @@
-import cheerio from "cheerio";
+import { load as cheerioLoad } from "cheerio";
 import { classNamesToV2 } from "./index";
 
 // +---------+----------------+---------------------+----------------+------------+--------------+----------------------+-----------------+
@@ -18,7 +18,7 @@ function generateElem(classNames: string[]) {
   const classNamesAsString = classNames.join(" ");
   const html = `<html><head></head><body class="brz"><div class="brz-rich-text"><p class="${classNamesAsString}"><span class="brz-cp-color7">Text</span></p></div></body></html>`;
 
-  const $ = cheerio.load(html);
+  const $ = cheerioLoad(html);
   return $("p");
 }
 
@@ -584,7 +584,7 @@ describe("Empty classNames", function () {
 describe("Tags p, h1, list", function () {
   test("h1 tag", () => {
     const html = `<html><head></head><body class="brz"><div class="brz-rich-text"><h1 class="brz-tp-header1"><span class="brz-cp-color7">Text</span></h1></div></body></html>`;
-    const $ = cheerio.load(html);
+    const $ = cheerioLoad(html);
 
     const { v } = classNamesToV2($("h1").attr("class")?.split(" ") ?? []);
 
@@ -633,7 +633,7 @@ describe("Tags p, h1, list", function () {
 
   test("list tag", () => {
     const html = `<ol><li class="brz-tp-lg-paragraph brz-bcp-color7"><span class="brz-cp-color7">The point of using dummy text for yo</span></li></ol>`;
-    const $ = cheerio.load(html);
+    const $ = cheerioLoad(html);
 
     const { v } = classNamesToV2($("li").attr("class")?.split(" ") ?? []);
 

@@ -33,10 +33,12 @@ export function style(data: DynamicStylesProps<ElementModel>): OutputStyle {
     ".brz && .brz-login__authorized p:hover": {
       standart: ["cssStyleElementLoginTextColor"]
     },
-    ".brz && .brz-login__authorized a:hover, .brz && .brz-login__authorized span:hover":
-      {
-        standart: ["cssStyleElementLoginLinkColor"]
-      },
+    ".brz && .brz-login__authorized a:hover": {
+      standart: ["cssStyleElementLoginLinkColor"]
+    },
+    ".brz && .brz-login__authorized span:hover": {
+      standart: ["cssStyleElementLoginLinkColor"]
+    },
     ".brz && .brz-login-form .brz-input": {
       standart: [
         "cssStyleElementFieldsInputSize",

@@ -1,3 +1,4 @@
+import type { CheerioAPI } from "cheerio";
 import LibsConfig from "visual/bootstraps/libs.json";
 import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { compileAssetProUrl, compileAssetUrl } from "visual/utils/asset";
@@ -15,7 +16,7 @@ type MakeScripts = {
 // libsMap => contain all groups[libs] js
 // libsSelectors = contain all libs selector found in page
 export const makeScripts = (
-  $doc: cheerio.Root,
+  $doc: CheerioAPI,
   config: ConfigCommon
 ): MakeScripts => {
   const { free = [], pro = [] } = LibsConfig;

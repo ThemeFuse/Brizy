@@ -1,6 +1,11 @@
 import { z } from "zod";
-import { withColorDefaults } from "visual/ai/adapters/prop-defaults";
 import {
+  inferBorderRadiusType,
+  withColorDefaults
+} from "visual/ai/adapters/prop-defaults";
+import {
+  borderRadiusPropertyDefinitions,
+  borderRadiusSchemaFields,
   colorPalette,
   hexColor,
   onOff,
@@ -43,8 +48,7 @@ export const imagePropsSchema = z.object({
   borderColorHex: hexColor,
   borderColorOpacity: opacity,
   borderColorPalette: colorPalette,
-  borderRadiusType: z.enum(["square", "rounded", "custom"]).optional(),
-  borderRadius: z.number().min(0).optional(),
+  ...borderRadiusSchemaFields,
 
   // background overlay
   bgColorType: z.enum(["solid", "gradient", "none"]).optional(),
@@ -147,14 +151,6 @@ export const imagePropsSchema = z.object({
 export type ImageProps = z.infer<typeof imagePropsSchema>;
 
 type Props = Record<string, unknown>;
-
-// borderRadius requires borderRadiusType:"custom" to render
-const inferBorderRadiusType = <T extends Props>(props: T): T =>
-  "borderRadius" in props &&
-  props.borderRadius !== undefined &&
-  !("borderRadiusType" in props)
-    ? { ...props, borderRadiusType: "custom" }
-    : props;
 
 // custom width/height requires sizeType:"custom" to take effect
 const inferCustomSizeType = <T extends Props>(props: T): T =>
@@ -336,18 +332,7 @@ const imagePropertyDefinitions = {
     description:
       "Set to '' when using borderColorHex. For palette colors use 'color1'-'color8'."
   },
-  borderRadiusType: {
-    type: "string",
-    enum: ["square", "rounded", "custom"],
-    description:
-      "Corner style. 'square' = no rounding, 'rounded' = fully rounded, 'custom' = use borderRadius value."
-  },
-  borderRadius: {
-    type: "number",
-    description:
-      "Border radius in pixels. Auto-sets borderRadiusType to 'custom' if not specified.",
-    minimum: 0
-  },
+  ...borderRadiusPropertyDefinitions,
 
   // Background overlay
   bgColorType: {

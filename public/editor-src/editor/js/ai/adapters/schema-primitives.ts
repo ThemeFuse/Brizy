@@ -386,6 +386,57 @@ export const borderSchemaFields = {
   hoverBorderWidth: z.number().min(0).optional()
 };
 
+// Per-corner border radius. Requires borderRadiusType:"ungrouped" for the
+// individual corners to render, "grouped" to use the single borderRadius value.
+// Pair with `inferBorderRadiusType` from prop-defaults so the type is auto-set.
+export const borderRadiusSchemaFields = {
+  borderRadiusType: z.enum(["grouped", "ungrouped"]).optional(),
+  borderRadius: z.number().min(0).optional(),
+  borderTopLeftRadius: z.number().min(0).optional(),
+  borderTopRightRadius: z.number().min(0).optional(),
+  borderBottomRightRadius: z.number().min(0).optional(),
+  borderBottomLeftRadius: z.number().min(0).optional()
+};
+
+export const borderRadiusPropertyDefinitions = {
+  borderRadiusType: {
+    type: "string",
+    enum: ["grouped", "ungrouped"],
+    description:
+      "Corner radius mode. 'grouped' = same radius on all corners via borderRadius, 'ungrouped' = per-corner values."
+  },
+  borderRadius: {
+    type: "number",
+    description:
+      "Border radius in pixels for all corners. Auto-sets borderRadiusType to 'grouped' if not specified.",
+    minimum: 0
+  },
+  borderTopLeftRadius: {
+    type: "number",
+    description:
+      "Top-left corner radius in pixels. Auto-sets borderRadiusType to 'ungrouped'.",
+    minimum: 0
+  },
+  borderTopRightRadius: {
+    type: "number",
+    description:
+      "Top-right corner radius in pixels. Auto-sets borderRadiusType to 'ungrouped'.",
+    minimum: 0
+  },
+  borderBottomRightRadius: {
+    type: "number",
+    description:
+      "Bottom-right corner radius in pixels. Auto-sets borderRadiusType to 'ungrouped'.",
+    minimum: 0
+  },
+  borderBottomLeftRadius: {
+    type: "number",
+    description:
+      "Bottom-left corner radius in pixels. Auto-sets borderRadiusType to 'ungrouped'.",
+    minimum: 0
+  }
+} as const;
+
 export const borderPropertyDefinitions = {
   borderColorPalette: {
     type: "string",

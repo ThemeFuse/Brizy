@@ -12,9 +12,21 @@ export function Badge(props: BadgeProps) {
 
   return (
     <div className="brz-ed-collapsible__badge">
-      {global && <EditorIcon icon="nc-global" />}
-      {membership && <EditorIcon icon="nc-user" />}
-      {language && <EditorIcon icon="nc-multi-languages" />}
+      {global && (
+        <span data-section-global="true">
+          <EditorIcon icon="nc-global" />
+        </span>
+      )}
+      {membership && (
+        <span data-section-membership="true">
+          <EditorIcon icon="nc-user" />
+        </span>
+      )}
+      {language && (
+        <span data-section-multi-language="true">
+          <EditorIcon icon="nc-multi-languages" />
+        </span>
+      )}
     </div>
   );
 }

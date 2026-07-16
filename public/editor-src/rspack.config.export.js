@@ -1,6 +1,6 @@
 const path = require("path");
 const rspack = require("@rspack/core");
-const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
+const { RsdoctorRspackPlugin } = require("@rsdoctor/rspack-plugin");
 const editorConfigFn = require("./rspack.config.editor");
 const swcrc = require("./swc.config.all");
 
@@ -75,7 +75,15 @@ exports.node = (options) => {
     output: {
       path: path.resolve(BUILD_PATH, "editor/js"),
       filename: "export.js",
-      libraryTarget: "commonjs2"
+      library: {
+        type: "module"
+      },
+      module: true,
+      chunkFormat: "module",
+      chunkLoading: "import"
+    },
+    experiments: {
+      outputModule: true
     },
     resolve: {
       ...editorConfig.resolve,
@@ -144,11 +152,37 @@ exports.node = (options) => {
         TARGET: JSON.stringify(options.TARGET),
         COMPILER_TYPE: JSON.stringify("node"),
         window: "undefined"
-      })
+      }),
+      new rspack.optimize.LimitChunkCountPlugin({ maxChunks: 1 }),
+      ...(options.ANALYZE
+        ? [
+            new RsdoctorRspackPlugin({
+              name: "export.node",
+              port: 9991,
+              // Need when we check bunde size on CI CD
+              ...(options.CHECK_BUNDLE_SIZE && {
+                disableClientServer: true,
+                output: {
+                  mode: "brief",
+                  options: {
+                    type: ["json"],
+                    optimizationBailout: true,
+                    jsonOptions: {
+                      fileName: "nodeCompiler-bundle-stats.json"
+                    }
+                  }
+                }
+              })
+            })
+          ]
+        : [])
     ],
     optimization: {
       minimize: options.IS_PRODUCTION,
       usedExports: true,
+      concatenateModules: true,
+      runtimeChunk: false,
+      splitChunks: false,
       minimizer: [
         new rspack.SwcJsMinimizerRspackPlugin({
           minimizerOptions: {
@@ -170,18 +204,7 @@ exports.node = (options) => {
     }
   };
 
-  const configAnalyze = {
-    plugins: [
-      ...config.plugins,
-      new BundleAnalyzerPlugin({
-        analyzerMode: "json",
-        generateStatsFile: true,
-        statsFilename: "nodeCompiler-bundle-stats.json"
-      })
-    ]
-  };
-
-  return options.ANALYZE ? { ...config, ...configAnalyze } : config;
+  return config;
 };
 
 exports.browser = (options) => {
@@ -279,7 +302,29 @@ exports.browser = (options) => {
       }),
       new rspack.ProvidePlugin({
         process: "process/browser"
-      })
+      }),
+      ...(options.ANALYZE
+        ? [
+            new RsdoctorRspackPlugin({
+              name: "export.browser",
+              port: 9992,
+              // Need when we check bunde size on CI CD
+              ...(options.CHECK_BUNDLE_SIZE && {
+                disableClientServer: true,
+                output: {
+                  mode: "brief",
+                  options: {
+                    type: ["json"],
+                    optimizationBailout: true,
+                    jsonOptions: {
+                      fileName: "browserCompiler-bundle-stats.json"
+                    }
+                  }
+                }
+              })
+            })
+          ]
+        : [])
     ],
     optimization: {
       minimize: options.IS_PRODUCTION,
@@ -364,18 +409,7 @@ exports.browser = (options) => {
     }
   };
 
-  const configAnalyze = {
-    plugins: [
-      ...config.plugins,
-      new BundleAnalyzerPlugin({
-        analyzerMode: "json",
-        generateStatsFile: true,
-        statsFilename: "browserCompiler-bundle-stats.json"
-      })
-    ]
-  };
-
-  return options.ANALYZE ? { ...config, ...configAnalyze } : config;
+  return config;
 };
 
 exports.nullLoaderArr = nullLoaderArr;

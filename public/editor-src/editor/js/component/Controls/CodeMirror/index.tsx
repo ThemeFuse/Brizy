@@ -1,43 +1,13 @@
-import { langs } from "@uiw/codemirror-extensions-langs";
-import Code from "@uiw/react-codemirror";
-import classNames from "classnames";
-import React, { ReactElement, useMemo } from "react";
-import { useTheme } from "./themes/useTheme";
+import loadable from "@loadable/component";
+import React, { ReactElement } from "react";
+import { LoadableLoading } from "visual/component/LoadableLoading";
 import { Props } from "./types";
 
-export const CodeMirror = ({
-  className,
-  value,
-  placeholder,
-  theme = "default",
-  size,
-  language,
-  onChange
-}: Props): ReactElement => {
-  const langExtension = useMemo(() => langs[language], [language]);
+const LazyCodeMirror = loadable(
+  () => import(/* webpackChunkName: "codemirror" */ "./CodeMirrorImpl"),
+  { fallback: LoadableLoading }
+);
 
-  const { themePreset } = useTheme(theme);
-
-  const _className = classNames(
-    "cm-wrapper",
-    `brz-ed-control__codeMirror--${size}`,
-    className
-  );
-
-  return (
-    <Code
-      className={_className}
-      value={value}
-      onChange={onChange}
-      placeholder={placeholder}
-      theme={themePreset()}
-      basicSetup={{
-        lineNumbers: false,
-        autocompletion: false,
-        tabSize: 2,
-        foldGutter: false
-      }}
-      extensions={[langExtension()]}
-    />
-  );
-};
+export const CodeMirror = (props: Props): ReactElement => (
+  <LazyCodeMirror {...props} />
+);

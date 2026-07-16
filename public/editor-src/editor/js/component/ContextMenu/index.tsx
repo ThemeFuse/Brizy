@@ -1,6 +1,7 @@
 import React, {
   type FC,
   type MutableRefObject,
+  Profiler,
   type ReactNode,
   useCallback,
   useContext,
@@ -10,12 +11,15 @@ import React, {
   useState
 } from "react";
 import { rolesHOC } from "visual/component/Roles";
+import { createProfilerMeasure } from "visual/utils/profilerMeasure";
 import { ContextMenuExtendContext } from "./ContextMenuExtend";
 import { Dropdown } from "./Dropdown";
 import { ContextMenuContext } from "./context";
 import type { ComponentMenuEntry, Item, MenuPosition, Meta } from "./types";
 import type { ContextMenuProviderProps } from "./types";
 import { filterItems, mergeItems } from "./utils";
+
+const onRenderContextMenu = createProfilerMeasure();
 
 const meta: Meta = {
   depth: 0,
@@ -184,18 +188,23 @@ export const ContextMenuProvider: FC<ContextMenuProviderProps> = ({
   );
 
   return (
-    <ContextMenuContext.Provider value={value}>
-      {childrenTree}
-      {root && menuPosition && (
-        <Dropdown
-          menuPosition={menuPosition}
-          getItems={getSquashedItems}
-          itemsMeta={meta}
-          root={root}
-          onClose={handleClose}
-        />
-      )}
-    </ContextMenuContext.Provider>
+    <Profiler
+      id={`Editor.ContextMenu.${componentId}`}
+      onRender={onRenderContextMenu}
+    >
+      <ContextMenuContext.Provider value={value}>
+        {childrenTree}
+        {root && menuPosition && (
+          <Dropdown
+            menuPosition={menuPosition}
+            getItems={getSquashedItems}
+            itemsMeta={meta}
+            root={root}
+            onClose={handleClose}
+          />
+        )}
+      </ContextMenuContext.Provider>
+    </Profiler>
   );
 };
 

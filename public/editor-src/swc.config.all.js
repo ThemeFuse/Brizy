@@ -46,7 +46,7 @@ exports.editor = (options) => {
 exports.export = (options) => {
   return {
     module: {
-      type: "commonjs"
+      type: "es6"
     },
     sourceMap: !options.IS_PRODUCTION,
     minify: options.IS_PRODUCTION,

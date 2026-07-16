@@ -93,6 +93,7 @@ class MockPageRepository implements IPageRepository {
   getAvailableIcons = jest.fn();
   isPro = jest.fn();
   setPageStatus = jest.fn();
+  undo = jest.fn();
 }
 
 class MockProjectRepository implements IProjectRepository {

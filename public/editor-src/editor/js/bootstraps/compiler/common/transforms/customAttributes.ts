@@ -1,3 +1,4 @@
+import type { CheerioAPI } from "cheerio";
 import {
   SupportSSREvents,
   isSSREvent
@@ -10,13 +11,13 @@ const events: Array<SupportSSREvents> = [
   "data-brz-onsubmit-event"
 ];
 
-export const customAttributes = ($: cheerio.Root): void => {
+export const customAttributes = ($: CheerioAPI): void => {
   const eventsToSelector = events.map((d) => `[${d}]`).join(",");
   const $nodes = $(eventsToSelector);
 
-  $nodes.each(function (this: cheerio.Element) {
-    const $node = $(this);
-    const attributes = Object.entries($node.attr()).filter((attr) => {
+  $nodes.each((_, el) => {
+    const $node = $(el);
+    const attributes = Object.entries($node.attr() ?? {}).filter((attr) => {
       const [name] = attr;
       return isSSREvent(name);
     });

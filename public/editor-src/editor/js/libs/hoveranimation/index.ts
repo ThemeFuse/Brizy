@@ -118,8 +118,17 @@ export class HoverAnimation {
     controller: Hover;
   }): void => {
     node.addEventListener("mouseleave", () => {
-      if (this.canHover && this.elementWasHovered) {
-        controller.setEffectsOnMouseLeave(this.settings);
+      if (!this.elementWasHovered) {
+        return;
+      }
+
+      controller.setEffectsOnMouseLeave(this.settings);
+
+      // Only start an animated settle while hovering is actually enabled. When
+      // canHover is false (e.g. an entrance animation is running) we must still
+      // reset state and settle below — otherwise the element gets stuck at its
+      // hovered value and never reacts to future hovers.
+      if (this.canHover) {
         if (this.multiAnimationSettings) {
           const { endAnimation } = this.multiAnimationSettings;
           controller.endSequenceAnimation({
@@ -127,14 +136,13 @@ export class HoverAnimation {
             extraOptions: endAnimation.extraOptions,
             options: this.settings
           });
-        } else {
-          if (this.reversibleAnimation) {
-            controller.play("reverse");
-          }
+        } else if (this.reversibleAnimation) {
+          controller.play("reverse");
         }
-        this.elementWasHovered = false;
-        controller.cancelAllAnimations();
       }
+
+      this.elementWasHovered = false;
+      controller.cancelAllAnimations();
     });
   };
 

@@ -9,6 +9,7 @@ export default [
       "**/*.test.{ts,js}",
       "**/__tests__/**",
       "build/",
+      "dist/",
       "editor/js/libs/",
       "backend/",
       "dist/"

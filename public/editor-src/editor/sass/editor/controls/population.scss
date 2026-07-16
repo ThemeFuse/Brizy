@@ -176,3 +176,9 @@
   color: variables.$toolbar__item-color;
   cursor: pointer;
 }
+
+.brz-ed .brz-embed-code-dc {
+  .brz-ed-control__population__input {
+    max-width: none;
+  }
+}

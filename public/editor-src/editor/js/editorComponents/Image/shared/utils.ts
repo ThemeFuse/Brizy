@@ -1,5 +1,11 @@
 import { Num } from "@brizy/readers";
 import { Base64 } from "js-base64";
+import { keyToDCFallback2Key } from "visual/editorComponents/EditorComponent/DynamicContent/utils";
+import { ECKeyDCInfo } from "visual/editorComponents/EditorComponent/types";
+import { createOptionId } from "visual/editorComponents/EditorComponent/utils";
+import { SizeType } from "visual/global/Config/types/configs/common";
+import { isEditor, isView } from "visual/providers/RenderProvider";
+import { DeviceMode } from "visual/types";
 import { makePlaceholder } from "visual/utils/dynamicContent";
 import { imagePopulationUrl } from "visual/utils/image";
 import { isGIFExtension, isSVGExtension } from "visual/utils/image/utils";
@@ -9,19 +15,13 @@ import {
   tabletSyncOnChange
 } from "visual/utils/onChange";
 import { fromElementModel } from "visual/utils/options/ImageUpload/converters";
-import { DESKTOP, MOBILE, TABLET } from "visual/utils/responsiveMode";
-import { Literal } from "visual/utils/types/Literal";
-import { SizeType } from "visual/global/Config/types/configs/common";
-import { DeviceMode } from "visual/types";
-import { isEditor, isView } from "visual/providers/RenderProvider";
-import { keyToDCFallback2Key } from "visual/editorComponents/EditorComponent/DynamicContent/utils";
-import { createOptionId } from "visual/editorComponents/EditorComponent/utils";
-import { ECKeyDCInfo } from "visual/editorComponents/EditorComponent/types";
 import {
   fromLinkElementModel,
   patchOnDCChange as patchOnLinkDCChange
 } from "visual/utils/patch/Link/";
+import { DESKTOP, MOBILE, TABLET } from "visual/utils/responsiveMode";
 import { capByPrefix } from "visual/utils/string";
+import { Literal } from "visual/utils/types/Literal";
 import {
   elementModelToValue,
   patchOnDCChange,
@@ -54,15 +54,15 @@ import {
   ContainerSizes,
   DCValueHookResult,
   Dimensions,
-  ExtraImageAttributes,
   ExtendedWrapperSizes,
+  ExtraImageAttributes,
   HoverImageUrlResult,
   ImageComponentState,
   ImagePatchResult,
   ImageSizes,
-  ImagesSources,
   ImageUrlResult,
   ImageUtilsContext,
+  ImagesSources,
   Patch,
   Value,
   WrapperSizes
@@ -194,10 +194,14 @@ export function getExtraImageProps(v: Value): ExtraImageAttributes {
     imagePopulation,
     imagePopulationEntityType: entityType,
     imagePopulationEntityId: entityId,
-    enableLazyLoad
+    enableLazyLoad,
+    enableFetchPriority
   } = v;
 
-  const attr = enableLazyLoad === "on" ? { loading: "lazy" as const } : {};
+  const attr = {
+    ...(enableLazyLoad === "on" ? { loading: "lazy" as const } : {}),
+    ...(enableFetchPriority === "on" ? { fetchpriority: "high" as const } : {})
+  };
 
   if (imagePopulation) {
     const imagePlaceholder = Base64.encode(
@@ -289,8 +293,7 @@ export function getHoverImageUrlsFor(
 
   const dvv = (key: string): Literal =>
     defaultValueValue({ v, key, device: "desktop" });
-  const hoverGetter = (key: string): Literal =>
-    dvv(capByPrefix("hover", key));
+  const hoverGetter = (key: string): Literal => dvv(capByPrefix("hover", key));
 
   if (hoverImagePopulation && hoverImage) {
     const options = { cW, cH };
@@ -464,10 +467,7 @@ export function calculateWrapperSizes(
   if (isOriginalSize(sizeType) && !isSvgOrGif) {
     return {
       desktop: calcWrapperOriginalSizes(desktopValue, containerWidth),
-      hoverDesktop: calcWrapperOriginalSizes(
-        hoverDesktopValue,
-        containerWidth
-      ),
+      hoverDesktop: calcWrapperOriginalSizes(hoverDesktopValue, containerWidth),
       tablet: calcWrapperOriginalSizes(tabletValue, tabletContainerWidth),
       mobile: calcWrapperOriginalSizes(mobileValue, mobileContainerWidth)
     };
@@ -576,8 +576,7 @@ export function processDCValueHook(
       }
 
       const fallbackImage = fromElementModel(
-        (k) =>
-          v[createOptionId(keyToDCFallback2Key(dcKey.key), k)] as Literal
+        (k) => v[createOptionId(keyToDCFallback2Key(dcKey.key), k)] as Literal
       );
 
       const fallbackUrl = getCustomImageUrl(
@@ -684,12 +683,7 @@ export function handleImageChangePatch(
     }
 
     return {
-      ...patchOnHoverImageChange(
-        containerWidth,
-        value,
-        wrapperSize,
-        hoverImage
-      )
+      ...patchOnHoverImageChange(containerWidth, value, wrapperSize, hoverImage)
     };
   }
 

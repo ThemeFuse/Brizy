@@ -2,7 +2,13 @@ import { Middleware } from "redux";
 import { thunk } from "redux-thunk";
 import { GetConfig } from "visual/providers/ConfigProvider/types";
 import { EditorMode } from "visual/providers/EditorModeProvider";
-import { api, error, screenshots, sideEffects } from "visual/redux/middleware";
+import {
+  api,
+  error,
+  perf,
+  screenshots,
+  sideEffects
+} from "visual/redux/middleware";
 
 export function getMiddleware({
   editorMode,
@@ -16,6 +22,7 @@ export function getMiddleware({
   }
 
   return [
+    perf,
     thunk,
     sideEffects({
       document,

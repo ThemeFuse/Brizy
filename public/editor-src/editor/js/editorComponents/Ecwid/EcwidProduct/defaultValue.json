@@ -22,6 +22,10 @@
 
     "quantityDisplay": "off",
 
+    "buyDisplay": "on",
+
+    "addMoreDisplay": "on",
+
     "goToCheckoutDisplay": "on",
 
     "wholesalePricesDisplay": "off",

@@ -40,7 +40,7 @@ export interface ActiveElementMeta {
 
 // WARNING: this is a work in progress.
 // Types should be added as we go on
-export type ReduxState = {
+type ReduxStateBase = {
   project: Project;
   page: Page;
   symbols: {
@@ -108,22 +108,27 @@ export type ReduxState = {
     _published: Record<string, Screenshot>;
     [k: string]: Screenshot | Record<string, Screenshot>;
   };
-
-  // below any are temporary and needed for ReduxStateWithHistory
-  // they will be removed once we finish with ReduxState types
-  /* eslint-disable  @typescript-eslint/no-explicit-any */
-  pageBlocks: any;
-  globalBlocksUpdates: any;
-  /* eslint-enable  @typescript-eslint/no-explicit-any */
 };
 
-// this is temporary and will be automatically infered after
-// we move all the reducers to ts and finish with all ReduxState types
-export type ReduxStateWithHistory = HistoryEnhancerState<
-  ReduxState,
-  | "pageBlocks"
+// The root reducer is wrapped in historyReducerEnhancer (redux/reducers/index.js),
+// so `history` is always present on store state. The tracked keys must mirror
+// `keysToTrack` in redux/reducers/index.js (it's untyped JS, so keep them in sync
+// by hand until it's migrated to TS).
+type StateWithHistory = HistoryEnhancerState<
+  ReduxStateBase,
+  | "blocksOrder"
+  | "blocksData"
   | "currentStyleId"
   | "currentStyle"
   | "extraFontStyles"
-  | "globalBlocksUpdates"
+  | "storeWasChanged"
+  | "extraStyles"
+  | "symbols"
 >;
+
+// Flattened via a mapped type: leaving ReduxState as an intersection breaks
+// assignability from deferred generic prop reads (e.g. EditorComponent's
+// Readonly<Props<M, P>>["reduxState"]).
+export type ReduxState = {
+  [K in keyof StateWithHistory]: StateWithHistory[K];
+};

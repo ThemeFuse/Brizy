@@ -115,6 +115,7 @@ export type V = {
   customCSS: string;
 
   enableLazyLoad: "on" | "off";
+  enableFetchPriority: "on" | "off";
 
   [others: string]: unknown;
 };

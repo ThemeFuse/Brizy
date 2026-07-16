@@ -1,3 +1,4 @@
+import type { CheerioAPI } from "cheerio";
 import type { Config } from "visual/global/Config";
 import { AdobeFont, GoogleFont, UploadedFont } from "visual/types/Fonts";
 import { makeScripts } from "./makeScripts";
@@ -121,7 +122,7 @@ export type DynamicCSS = {
 };
 
 interface Data {
-  $root: cheerio.Root;
+  $root: CheerioAPI;
   fonts: Fonts;
   css: DynamicCSS;
   config: Config;

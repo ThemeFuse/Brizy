@@ -245,7 +245,9 @@ export default function ($node: JQuery): void {
     const elements = [
       "elements.tabs.changed",
       "elements.accordion.changed",
-      "elements.switcher.changed"
+      "elements.switcher.changed",
+      "elements.megamenu.opened",
+      "elements.mmenu.panel.opened"
     ];
 
     elements.forEach((id: string) => {

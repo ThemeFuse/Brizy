@@ -3,7 +3,6 @@ import { memoize } from "es-toolkit";
 import { Option } from "slim-select";
 import type { BoxResizerPartialProps } from "visual/component/BoxResizer/types";
 import { checkValue } from "visual/utils/checkValue";
-import { t } from "visual/utils/i18n";
 import { makeAttr } from "visual/utils/i18n/attribute";
 import { PhoneOption } from "./Form2Field/types/type";
 import { ViewType } from "./Form2Steps/types";
@@ -59,69 +58,6 @@ export const isUserAgreementCheckbox = (type: string | undefined): boolean =>
 
 export const isPhoneType = (type: string | undefined): boolean =>
   type === "Phone";
-
-export const getFlagsForEditor = (): PhoneOption[] => [
-  {
-    code: "AF",
-    dialCode: "+93",
-    name: t("Afghanistan")
-  },
-  {
-    code: "AL",
-    dialCode: "+355",
-    name: t("Albania")
-  },
-  {
-    code: "DZ",
-    dialCode: "+213",
-    name: t("Algeria")
-  },
-  {
-    code: "AS",
-    dialCode: "+1684",
-    name: t("American Samoa")
-  },
-  {
-    code: "AD",
-    dialCode: "+376",
-    name: t("Andorra")
-  },
-  {
-    code: "AO",
-    dialCode: "+244",
-    name: t("Angola")
-  },
-  {
-    code: "AI",
-    dialCode: "+1264",
-    name: t("Anguilla")
-  },
-  {
-    code: "AQ",
-    dialCode: "+672",
-    name: t("Antarctica")
-  },
-  {
-    code: "AG",
-    dialCode: "+1268",
-    name: t("Antigua and Barbuda")
-  },
-  {
-    code: "AR",
-    dialCode: "+54",
-    name: t("Argentina")
-  },
-  {
-    code: "AM",
-    dialCode: "+374",
-    name: t("Armenia")
-  },
-  {
-    code: "US",
-    dialCode: "+1",
-    name: t("United States")
-  }
-];
 
 export const getFlags = (): PhoneOption[] => [
   {
@@ -1386,12 +1322,22 @@ export const getFlagIconClass = (code: string): string => {
 };
 
 export const flagsToSelectPhoneOptions = (
-  flags: PhoneOption[]
+  flags: PhoneOption[],
+  defaultCountry: string = "US"
 ): Array<Option["data"]> =>
   // @ts-expect-error slim-select expects `selected` to be a string, but if we send it as a string it doesn't work
   flags.map(({ name, code, dialCode }) => ({
     text: name,
     value: code,
-    selected: code === "US",
+    selected: code === defaultCountry,
     html: `<span class="${getFlagIconClass(code)}"></span><span>${name}</span><span class="brz-forms2__field-phone--option-code">${dialCode}</span>`
+  }));
+
+export const getPhoneCountryChoices = (): Array<{
+  title: string;
+  value: string;
+}> =>
+  getFlags().map(({ code, name }) => ({
+    title: name,
+    value: code
   }));

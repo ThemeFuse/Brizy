@@ -1,4 +1,6 @@
 import { Str } from "@brizy/readers";
+import type { Cheerio } from "cheerio";
+import type { AnyNode } from "domhandler";
 import { debounce, isEqual, isFunction } from "es-toolkit";
 import jQuery from "jquery";
 import type QuillType from "quill";
@@ -18,8 +20,8 @@ import { RenderType, isEditor, isView } from "visual/providers/RenderProvider";
 import { Sheet } from "visual/providers/StyleProvider/Sheet";
 import {
   defaultFontSelector,
-  globalBlocksSelector,
-  unDeletedFontsSelector
+  fontsSignatureSelector,
+  globalBlocksPopupIdsSelector
 } from "visual/redux/selectors";
 import { Store } from "visual/redux/store";
 import { ReduxState } from "visual/redux/types";
@@ -53,7 +55,7 @@ interface _Quill extends QuillType {
 }
 
 type JQueryCallback = (arg: JQuery) => void;
-type CheerioCallback = (arg: cheerio.Cheerio) => void;
+type CheerioCallback = (arg: Cheerio<AnyNode>) => void;
 
 interface QuillUtils {
   mapElements: (html: string, fn: JQueryCallback | CheerioCallback) => string;
@@ -75,7 +77,7 @@ export type Coords = BoundsStatic & { top: number; left: number };
 type Props = {
   value: string;
   defaultFont: DefaultFont;
-  fonts: ReduxState["fonts"];
+  fontsSignature: string;
   store: Store;
   sheet: Readonly<Sheet>;
   renderContext: RenderType;
@@ -102,8 +104,19 @@ type Props = {
   setPrepopulationData?: (data: PrepopulationData) => void;
   onTextChangeStart?: VoidFunction;
   v?: Value;
-  globalBlocks: ReduxState["globalBlocks"];
+  globalBlocksPopupIds: string[];
 };
+
+type Timer = ReturnType<typeof setTimeout>;
+
+type SelectionChangeHandler = (
+  range: RangeStatic | null,
+  oldRange: RangeStatic | null
+) => void;
+
+type TextChangeHandler = (delta: {
+  ops: ReadonlyArray<{ insert?: unknown; delete?: number }>;
+}) => void;
 
 export class QuillComponent extends React.Component<Props> {
   isUnmounted = false;
@@ -115,6 +128,41 @@ export class QuillComponent extends React.Component<Props> {
   quillClass?: ReturnType<typeof GetQuill>;
 
   private lastUpdatedValue = "";
+
+  // Pending timer ids. Tracked so unmount can clear them — otherwise the
+  // browser keeps the callback alive, which closes over `this` and roots the
+  // whole prop graph (store/sheet/v/dcGroups) until the timer fires.
+  private initDelayTimerId: Timer | null = null;
+  private pasteTimerIds = new Set<Timer>();
+
+  // Quill event listener refs + rAF ids. Stored so destroyPlugin can detach
+  // them by reference. Without explicit off()/cancelAnimationFrame, the
+  // listener and rAF callbacks close over `this` and keep the orphaned
+  // QuillComponent alive even after the Quill instance is nulled.
+  private selectionChangeHandler: SelectionChangeHandler | null = null;
+  private textChangeHandler: TextChangeHandler | null = null;
+  private pendingRafIds = new Set<number>();
+
+  // Refcounted owners returned by css1() for each rich-text line / tooltip /
+  // heading that this Quill instance produced. Keyed by uniqId (the per-line
+  // data-uniq-id). Each css1() call is one live owner of a shared <style>
+  // node — without this Map the owners' clean() callbacks would be lost and
+  // the shared refcount would leak indefinitely.
+  private cssCleanups = new Map<string, VoidFunction>();
+
+  // Pair every css1() increment with a matching decrement.
+  // Same uniqId calls happen on every render (changeRichTextFonts, getClassName,
+  // setGeneratedCss). If we did not fire the prior clean here, render N+1
+  // would leak render N's increment and the shared <style> node would never
+  // drop to refcount 0 even after the component unmounts.
+  // Also handles content edits on the same line: prior clean targets the OLD
+  // hash (decrementing it, freeing old node if last owner), then new css1
+  // call increments the NEW hash.
+  private trackCss = (uniqId: string, clean: VoidFunction): void => {
+    this.cssCleanups.get(uniqId)?.();
+    this.cssCleanups.set(uniqId, clean);
+  };
+
   save = debounce(() => {
     if (typeof this.props.onTextChange === "function") {
       this.props.onTextChange(this.lastUpdatedValue);
@@ -138,7 +186,8 @@ export class QuillComponent extends React.Component<Props> {
 
     if (isEditor(this.props.renderContext) && typeof initDelay === "number") {
       if (initDelay > 0) {
-        setTimeout(() => {
+        this.initDelayTimerId = setTimeout(() => {
+          this.initDelayTimerId = null;
           if (!this.isUnmounted) {
             this.initPlugin();
           }
@@ -150,17 +199,18 @@ export class QuillComponent extends React.Component<Props> {
   }
 
   componentDidUpdate(props: Props): void {
-    const { fonts, globalBlocks: prevGlobalBlocks } = props;
+    const { fontsSignature, globalBlocksPopupIds: prevPopupIds } = props;
     const {
       value,
       forceUpdate,
       onSelectionChange,
       isToolbarOpen,
-      globalBlocks: nextGlobalBlocks
+      globalBlocksPopupIds: nextPopupIds
     } = this.props;
-    const reinitForFonts = !isEqual(fonts, this.props.fonts);
+    const reinitForFonts = fontsSignature !== this.props.fontsSignature;
     const reinitForValue = value !== this.lastUpdatedValue || forceUpdate;
     const quill = this.quill as _Quill;
+
     if (
       isEditor(this.props.renderContext) &&
       (reinitForValue || reinitForFonts) &&
@@ -191,12 +241,9 @@ export class QuillComponent extends React.Component<Props> {
       }
     }
 
-    const prevGlobalBlocksLength = Object.keys(prevGlobalBlocks).length;
-    const nextGlobalBlocksLength = Object.keys(nextGlobalBlocks).length;
-
     if (
-      prevGlobalBlocksLength !== nextGlobalBlocksLength &&
-      prevGlobalBlocksLength > nextGlobalBlocksLength
+      prevPopupIds !== nextPopupIds &&
+      prevPopupIds.length > nextPopupIds.length
     ) {
       this.reinitPluginWithValue(this.props.value);
 
@@ -205,8 +252,8 @@ export class QuillComponent extends React.Component<Props> {
       if (containerNode) {
         const allPopupLinksNodes =
           containerNode.querySelectorAll<HTMLAnchorElement>("a.link--popup");
-        const prevGlobalBlocksValues = Object.values(prevGlobalBlocks);
-        const nextGlobalBlocksValues = Object.values(nextGlobalBlocks);
+        const prevSet = new Set(prevPopupIds);
+        const nextSet = new Set(nextPopupIds);
 
         allPopupLinksNodes.forEach((linkNode) => {
           const { href } = linkNode.dataset;
@@ -220,12 +267,8 @@ export class QuillComponent extends React.Component<Props> {
               if (_popupId) {
                 const popupId = _popupId.replace("#", "");
 
-                const existsInPrev = prevGlobalBlocksValues.find(
-                  (gb) => gb.data.value.popupId === popupId
-                );
-                const existsInNext = nextGlobalBlocksValues.find(
-                  (gb) => gb.data.value.popupId === popupId
-                );
+                const existsInPrev = prevSet.has(popupId);
+                const existsInNext = nextSet.has(popupId);
 
                 if (!existsInPrev && !existsInNext) {
                   return;
@@ -243,10 +286,12 @@ export class QuillComponent extends React.Component<Props> {
   }
 
   shouldComponentUpdate(nextProps: Props): boolean {
-    const { fonts, value } = nextProps;
-
-    const prevGlobalBlocksLength = Object.keys(this.props.globalBlocks).length;
-    const nextGlobalBlocksLength = Object.keys(nextProps.globalBlocks).length;
+    const {
+      fontsSignature,
+      value,
+      globalBlocksPopupIds: nextPopupIds
+    } = nextProps;
+    const { globalBlocksPopupIds: prevPopupIds } = this.props;
 
     const hasFocus = this.quill && this.quill.hasFocus();
     const isListOpen = this.props.isListOpen === true;
@@ -254,13 +299,13 @@ export class QuillComponent extends React.Component<Props> {
     const reinitForValue = value !== this.lastUpdatedValue;
 
     const shouldReinitValue = reinitForValue && !hasFocus && !isListOpen;
-    if (!isEqual(fonts, this.props.fonts) || shouldReinitValue) {
+    if (fontsSignature !== this.props.fontsSignature || shouldReinitValue) {
       return true;
     }
 
     if (
-      prevGlobalBlocksLength !== nextGlobalBlocksLength &&
-      prevGlobalBlocksLength > nextGlobalBlocksLength
+      prevPopupIds !== nextPopupIds &&
+      prevPopupIds.length > nextPopupIds.length
     ) {
       return true;
     }
@@ -270,6 +315,20 @@ export class QuillComponent extends React.Component<Props> {
 
   componentWillUnmount(): void {
     this.isUnmounted = true;
+
+    // Cancel pending debounced save: the lodash/es-toolkit debounce wrapper
+    // schedules a timer that closes over `this` and would retain the whole
+    // prop graph until the 500ms expires.
+    this.save.cancel();
+
+    if (this.initDelayTimerId !== null) {
+      clearTimeout(this.initDelayTimerId);
+      this.initDelayTimerId = null;
+    }
+
+    this.pasteTimerIds.forEach((id) => clearTimeout(id));
+    this.pasteTimerIds.clear();
+
     this.destroyPlugin();
   }
 
@@ -344,7 +403,10 @@ export class QuillComponent extends React.Component<Props> {
       }
     ) as _Quill;
 
-    quill.on("selection-change", (range: RangeStatic | null, oldRange) => {
+    const onSelectionChangeListener: SelectionChangeHandler = (
+      range,
+      oldRange
+    ) => {
       const domNode = this.getDomNodeBySelection(quill);
 
       this.currentSelection = range;
@@ -360,8 +422,9 @@ export class QuillComponent extends React.Component<Props> {
           });
         }
       }
-    });
-    quill.on("text-change", (delta) => {
+    };
+
+    const onTextChangeListener: TextChangeHandler = (delta) => {
       const { onTextChangeStart, onSelectionChange } = this.props;
       const wasTextChanged = delta.ops.some(
         (op) => typeof op.insert === "string" || typeof op.delete === "number"
@@ -409,13 +472,26 @@ export class QuillComponent extends React.Component<Props> {
       this.lastUpdatedValue = quill.root.innerHTML;
       this.save();
 
-      requestAnimationFrame(() => {
+      const rafId = requestAnimationFrame(() => {
+        this.pendingRafIds.delete(rafId);
+
+        if (this.isUnmounted || this.quill !== quill) {
+          return;
+        }
+
         if (!quill.getSelection() && quill.hasFocus()) {
           const { index, length } = range ?? { index: 0, length: 0 };
           quill.setSelection(index, length);
         }
       });
-    });
+      this.pendingRafIds.add(rafId);
+    };
+
+    quill.on("selection-change", onSelectionChangeListener);
+    quill.on("text-change", onTextChangeListener);
+
+    this.selectionChangeHandler = onSelectionChangeListener;
+    this.textChangeHandler = onTextChangeListener;
 
     this.quill = quill;
     // we add just one listener for all instances
@@ -455,11 +531,50 @@ export class QuillComponent extends React.Component<Props> {
   }
 
   destroyPlugin(): void {
+    // Detach Quill listeners by reference before dropping the instance.
+    // quill.off() removes the specific handler; without it the listener
+    // closures keep the orphan Quill (and `this` via closure) alive even
+    // after `this.quill = null` clears our own reference.
+    const quill = this.quill;
+
+    if (quill) {
+      if (this.selectionChangeHandler) {
+        quill.off("selection-change", this.selectionChangeHandler);
+      }
+      if (this.textChangeHandler) {
+        quill.off("text-change", this.textChangeHandler);
+      }
+    }
+
+    this.selectionChangeHandler = null;
+    this.textChangeHandler = null;
+
+    // Cancel any rAF callbacks scheduled by the text-change handler. Each
+    // rAF closure captures the old quill + range; leaving them queued
+    // retains the prior instance until the next frame fires.
+    this.pendingRafIds.forEach((id) => cancelAnimationFrame(id));
+    this.pendingRafIds.clear();
+
     this.quill = null;
 
-    instances.splice(instances.indexOf(this), 1);
-    if (instances.length === 0) {
-      document.removeEventListener("mousedown", this.onBlurAll, false);
+    // Drain every css1 owner this instance registered. Called on both
+    // unmount and reinit (e.g. after paste handler swaps quill content),
+    // so refcount drops correctly each lifecycle boundary instead of
+    // accumulating across reinits.
+    this.cssCleanups.forEach((clean) => clean());
+    this.cssCleanups.clear();
+
+    // Only splice when this instance was actually registered. initPlugin
+    // pushes; view mode + missing initDelay skip init entirely, so a blind
+    // `splice(indexOf(this), 1)` would pass -1 and pop the LAST (live)
+    // entry instead, orphaning a real instance from the array and
+    // potentially detaching the shared mousedown listener prematurely.
+    const idx = instances.indexOf(this);
+    if (idx !== -1) {
+      instances.splice(idx, 1);
+      if (instances.length === 0) {
+        document.removeEventListener("mousedown", this.onBlurAll, false);
+      }
     }
   }
 
@@ -550,13 +665,21 @@ export class QuillComponent extends React.Component<Props> {
     const pastedData = e.clipboardData.getData("Text");
     const startIndex = this.currentSelection?.index ?? 0;
 
-    setTimeout(() => {
+    const id = setTimeout(() => {
+      this.pasteTimerIds.delete(id);
+
+      if (this.isUnmounted) {
+        return;
+      }
+
       if (this.quill?.root.innerHTML) {
         this.reinitPluginWithValue(this.quill?.root.innerHTML, {
           restoreSelectionIndex: startIndex + pastedData.length + 1
         });
       }
     }, 1);
+
+    this.pasteTimerIds.add(id);
   };
 
   onBlurAll = (event: MouseEvent): void => {
@@ -581,18 +704,29 @@ export class QuillComponent extends React.Component<Props> {
           return;
         }
 
-        const uniqId = uuid(5);
+        // Reuse existing data-uniq-id when present so the same line keeps a
+        // stable trackCss key across re-renders. Without reuse, every render
+        // would mint a fresh uuid and trackCss would never match the prior
+        // owner — refcount on the shared <style> node would leak +1 per render.
+        const existingId = $elem.attr("data-uniq-id");
+        const uniqId =
+          existingId && existingId.length > 0 ? existingId : uuid(5);
 
+        // getClassName() runs css1() and registers a clean callback via
+        // trackCss(uniqId, ...) — see Quill.getClassName below.
         const className = this.getClassName(
           $elem.attr("class")?.split(" ") ?? [],
           uniqId
         );
 
         $elem.attr("data-generated-css", className);
-        $elem.attr("data-uniq-id", uniqId);
+
+        if (!existingId) {
+          $elem.attr("data-uniq-id", uniqId);
+        }
       });
     } else {
-      return this.quillUtils.mapElements(html, ($elem: cheerio.Cheerio) => {
+      return this.quillUtils.mapElements(html, ($elem: Cheerio<AnyNode>) => {
         const uniqId = uuid(5);
         const tooltipAttr =
           $elem.attr(makeAttr("tooltip")) || $elem.attr("data-tooltip");
@@ -619,7 +753,12 @@ export class QuillComponent extends React.Component<Props> {
             contexts
           });
 
-          const { className } = css1(uniqId, styles[2], sheet);
+          // Tooltip variant: register one css1 owner per tooltip. Identical
+          // tooltip styling across instances → same content hash → shared
+          // <style> node. trackCss pairs the increment from css1 with a
+          // matching decrement on re-render / unmount.
+          const { className, clean } = css1(uniqId, styles[2], sheet);
+          this.trackCss(uniqId, clean);
 
           const {
             tooltipText,
@@ -659,12 +798,19 @@ export class QuillComponent extends React.Component<Props> {
           contexts
         });
 
-        const { className } = css1(
+        // View-branch heading line: register one css1 owner per heading.
+        // styles[2] is the element-level style (default + rules at indexes
+        // 0/1 are baked elsewhere). Caveat: cheerio path mints a fresh uuid
+        // per render — refcount stays correct because trackCss won't match
+        // any prior key, so each render is a brand-new owner whose clean()
+        // fires on next destroyPlugin / unmount.
+        const { className, clean } = css1(
           uniqId,
           // data under the index 2 - contain element's style
           styles[2],
           sheet
         );
+        this.trackCss(uniqId, clean);
 
         const extraClassNames = this.getExtraClassNames($elem);
         $elem.addClass([className, ...extraClassNames].join(" "));
@@ -716,13 +862,17 @@ export class QuillComponent extends React.Component<Props> {
     );
   }
 
-  getExtraClassNames($elem: cheerio.Cheerio | JQuery): string[] {
+  getExtraClassNames($elem: Cheerio<AnyNode> | JQuery): string[] {
     const extraClassNames = [];
 
+    // @ts-expect-error: The this context of type Cheerio<AnyNode> | JQuery<HTMLElement>
+    // is not assignable to method’s this of type Cheerio<AnyNode>
     if ($elem.is("*[class*='brz-tp__dc-block']")) {
       extraClassNames.push("brz-tp__dc-block");
     }
 
+    // @ts-expect-error: The this context of type Cheerio<AnyNode> | JQuery<HTMLElement>
+    // is not assignable to method’s this of type Cheerio<AnyNode>
     if ($elem.is("*[class*='brz-tp__dc-block-st1']")) {
       extraClassNames.push("brz-tp__dc-block-st1");
     }
@@ -730,6 +880,11 @@ export class QuillComponent extends React.Component<Props> {
     return extraClassNames;
   }
 
+  // Editor-branch entry point. Called per heading line by changeRichTextFonts
+  // and again by setGeneratedCss for the live Quill DOM. Returns the
+  // content-hashed className that gets written to data-generated-css.
+  // Each invocation registers a css1 owner via trackCss — re-renders for the
+  // same uniqId retire the prior owner and increment the (possibly new) hash.
   getClassName(classList: string[], uniqId: string): string {
     const { v, vs, vd } = classNamesToV2(classList);
     const { store, sheet, renderContext, editorMode, getConfig } = this.props;
@@ -746,17 +901,23 @@ export class QuillComponent extends React.Component<Props> {
       }
     });
 
-    const { className } = css1(
+    const { className, clean } = css1(
       // uniqId - there can be multiple paragraphs into one richTextShortcode
       // so we need different classnames for them
       uniqId,
       // data under the index 2 - contain element's style
       styles[2],
       sheet,
+      // Custom placeholder replacer: target lines via data-generated-css
+      // attribute selector instead of class. The selector value embeds the
+      // content-hashed className so two cloned RichTexts with identical
+      // styling write the same data-generated-css and match the same single
+      // <style> rule.
       (styles, className) => {
         return styles.replace(/&&/gm, `[data-generated-css=${className}]`);
       }
     );
+    this.trackCss(uniqId, clean);
 
     return className;
   }
@@ -973,12 +1134,12 @@ const mapStateToProps = (
   state: ReduxState
 ): {
   defaultFont: DefaultFont;
-  fonts: ReduxState["fonts"];
-  globalBlocks: ReduxState["globalBlocks"];
+  fontsSignature: string;
+  globalBlocksPopupIds: string[];
 } => ({
   defaultFont: defaultFontSelector(state),
-  fonts: unDeletedFontsSelector(state),
-  globalBlocks: globalBlocksSelector(state)
+  fontsSignature: fontsSignatureSelector(state),
+  globalBlocksPopupIds: globalBlocksPopupIdsSelector(state)
 });
 
 export default connect(mapStateToProps, null, null, { forwardRef: true })(

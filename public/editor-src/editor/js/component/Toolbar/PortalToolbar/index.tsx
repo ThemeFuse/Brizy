@@ -108,6 +108,7 @@ class _PortalToolbar
 
   componentWillUnmount(): void {
     monitor.unsetIfActive(this);
+    this.makeComponentUnControlled();
     this.props.setActiveElement(null);
     this.props.setActiveElementMeta(null);
     this.node = null;

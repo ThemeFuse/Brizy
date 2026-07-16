@@ -21,6 +21,7 @@ echo -e "Clean vendor folder"
   find ./vendor -type d -iname "docs" &&
   find ./vendor -type d -name "doc" &&
   find ./vendor -type d -name ".git" &&
+  find ./vendor -type d -name ".claude" &&
   find ./vendor -type d -path "*select2/select2/src" &&
   find ./vendor -type f -path "*select2/select2/.*" &&
   find ./vendor -name ".gitattributes" &&

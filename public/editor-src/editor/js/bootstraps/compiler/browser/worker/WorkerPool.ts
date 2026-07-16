@@ -129,9 +129,7 @@ class WorkerPool {
             task.onDone(data);
           })
           .catch((error: Error) => {
-            if (process.env["NODE_NEV"] === "development") {
-              console.error("Error processing task:", error);
-            }
+            console.error("[Compiler] worker task failed:", error);
             task.onError(error);
           })
           .finally(() => {

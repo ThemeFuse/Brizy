@@ -7,6 +7,7 @@ import { updateUI } from "visual/redux/actions2";
 import { uiSelector } from "visual/redux/selectors";
 import { applyFilter } from "visual/utils/filters";
 import { t } from "visual/utils/i18n";
+import { makeBzelmAttr } from "visual/utils/i18n/attribute";
 import { BottomPanelItem } from "./Item";
 import { clickOutsideExceptions } from "./utils";
 
@@ -57,6 +58,7 @@ const HelpButton = (): ReactElement => {
       pointer
       title={t("Help")}
       onClick={handleLabelClick}
+      dataAttrs={makeBzelmAttr("help")}
     >
       <ClickOutside
         onClickOutside={onClickOutside}

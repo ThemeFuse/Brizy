@@ -1,7 +1,6 @@
 import classNames from "classnames";
 import React, { MouseEvent, useEffect, useMemo, useRef, useState } from "react";
-import UIEvents from "visual/global/UIEvents";
-import { AnimationEvents } from "visual/utils/animation";
+import UIEvents, { UIEventType } from "visual/global/UIEvents";
 import { FCC } from "visual/utils/react/types";
 import { ResponsiveMode } from "visual/utils/responsiveMode";
 import { Hover } from "./Hover";
@@ -72,14 +71,14 @@ export const HoverAnimation: FCC<Props> = ({
       deviceMode.current = device;
     };
 
-    UIEvents.on(AnimationEvents.entranceOn, _setAnimationIsRunning);
-    UIEvents.on(AnimationEvents.entranceOff, _setAnimationIsRunning);
-    UIEvents.on("deviceMode.change", setDevice);
+    UIEvents.on(UIEventType.EntranceOn, _setAnimationIsRunning);
+    UIEvents.on(UIEventType.EntranceOff, _setAnimationIsRunning);
+    UIEvents.on(UIEventType.DeviceModeChange, setDevice);
 
     return () => {
-      UIEvents.off(AnimationEvents.entranceOn, _setAnimationIsRunning);
-      UIEvents.off(AnimationEvents.entranceOff, _setAnimationIsRunning);
-      UIEvents.off("deviceMode.change", setDevice);
+      UIEvents.off(UIEventType.EntranceOn, _setAnimationIsRunning);
+      UIEvents.off(UIEventType.EntranceOff, _setAnimationIsRunning);
+      UIEvents.off(UIEventType.DeviceModeChange, setDevice);
     };
   }, [animationId]);
 

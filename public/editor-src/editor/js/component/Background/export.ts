@@ -1,3 +1,4 @@
+import { debounce } from "es-toolkit";
 import $ from "jquery";
 import { getFreeLibs } from "visual/libs";
 import { ExportFunction } from "visual/types";
@@ -85,6 +86,13 @@ const fn: ExportFunction = ($node) => {
     const { type, loop, start } = $this.data();
 
     $this.backgroundVideo({ type, loop, start });
+
+    $(window).on(
+      "resize",
+      debounce(() => {
+        $this.backgroundVideo("resize");
+      }, 100)
+    );
 
     window.Brz.on("elements.lottie.loaded", (node: HTMLElement) => {
       const parent = $this.get(0)?.parentElement?.parentElement?.parentElement;

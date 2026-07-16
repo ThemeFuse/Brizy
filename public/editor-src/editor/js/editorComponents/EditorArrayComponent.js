@@ -1,6 +1,6 @@
 import deepMerge from "deepmerge";
 import { produce } from "immer";
-import React from "react";
+import React, { Profiler } from "react";
 import { getIn, insert, removeAt, replaceAt, setIn } from "timm";
 import ErrorBoundary from "visual/component/ErrorBoundary";
 import {
@@ -30,10 +30,13 @@ import {
   stripSystemKeys
 } from "visual/utils/models";
 import { mergeOptions } from "visual/utils/options/utils";
+import { createProfilerMeasure } from "visual/utils/profilerMeasure";
 import { read as readNumber } from "visual/utils/reader/number";
 import * as State from "visual/utils/stateMode";
 import { getComponentDefaultValue } from "visual/utils/traverse/common";
 import EditorComponent from "./EditorComponent";
+
+const onRenderArray = createProfilerMeasure();
 
 const emptyTarget = (value) => (Array.isArray(value) ? [] : {});
 const clone = (value, options) => deepMerge(emptyTarget(value), value, options);
@@ -638,7 +641,15 @@ export default class EditorArrayComponent extends EditorComponent {
 
   /* eslint-disable no-unused-vars */
   renderItemWrapper(item, itemKey, itemIndex, itemData, items) {
-    return item;
+    return (
+      <Profiler
+        key={itemKey}
+        id={`Editor.Array.${itemData.type}`}
+        onRender={onRenderArray}
+      >
+        {item}
+      </Profiler>
+    );
   }
 
   /* eslint-enabled no-unused-vars */
@@ -856,10 +867,13 @@ export default class EditorArrayComponent extends EditorComponent {
   }
 
   pasteStyles(index) {
+    performance.mark("pasteStyles:start");
+
     const { path, value: copiedValue } = copiedElementNoRefsSelector(
       this.getReduxStore().getState()
     );
     if (!copiedValue) {
+      performance.measure("pasteStyles", "pasteStyles:start");
       return;
     }
 
@@ -871,7 +885,10 @@ export default class EditorArrayComponent extends EditorComponent {
         (copiedElement.type === "Wrapper" && v.type === "Wrapper") ||
         (copiedElement.type === "StoryWrapper" && v.type === "StoryWrapper")
       ) {
-        if (copiedElement.value.items[0].type !== v.value.items[0].type) return;
+        if (copiedElement.value.items[0].type !== v.value.items[0].type) {
+          performance.measure("pasteStyles", "pasteStyles:start");
+          return;
+        }
 
         depth = 1;
         if (
@@ -892,6 +909,7 @@ export default class EditorArrayComponent extends EditorComponent {
       ({ type }) => type === v.type
     );
 
+    performance.mark("pasteStyles:setStyles");
     const rules = rulesSelector(this.getReduxStore().getState());
 
     if (value) {
@@ -902,12 +920,18 @@ export default class EditorArrayComponent extends EditorComponent {
         rules
       });
 
+      performance.measure("pasteStyles:compute", "pasteStyles:setStyles");
+
       const mergedValue = deepMerge(v, newValue, {
         arrayMerge: combineMerge
       });
 
+      performance.mark("pasteStyles:updateItem");
       this.updateItem(index, mergedValue.value);
+      performance.measure("pasteStyles:redux", "pasteStyles:updateItem");
     }
+
+    performance.measure("pasteStyles", "pasteStyles:start");
   }
 }
 

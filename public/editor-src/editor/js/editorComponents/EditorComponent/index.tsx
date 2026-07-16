@@ -958,7 +958,20 @@ export class EditorComponent<
   }
 
   patchValue(patch: Partial<Model<M>>, meta: Meta = {}): void {
+    const componentId = this.getComponentId();
+    const markName = `patchValue:${componentId}`;
+    performance.mark(markName);
+
     this.handlePatchValue(patch, meta);
+
+    try {
+      performance.measure(`onChange ${componentId}`, {
+        start: markName,
+        detail: { componentId }
+      });
+    } catch {
+      // mark may have been cleared
+    }
   }
 
   validatePatch(

@@ -113,6 +113,11 @@ export class _TextEditor extends Component<Props, State> {
 
   componentWillUnmount(): void {
     this.unmounted = true;
+
+    const element = this.contentRef.current;
+    if (element !== null) {
+      element.removeEventListener("input", this.handleInput);
+    }
   }
 
   handleClick = (e: React.MouseEvent): void => {

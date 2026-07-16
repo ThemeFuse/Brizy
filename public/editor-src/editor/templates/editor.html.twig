@@ -73,12 +73,22 @@
           <body class="brz brz-ed brz-ed--desktop">
             <div id="brz-ed-root"></div>
             <div id="brz-popups"></div>
+            {% if DEV is defined and DEV %}
+              <script>
+                // Bridge React DevTools hook from parent BEFORE react.js loads,
+                // otherwise React initializes without registering its renderer.
+                if (window.parent && window.parent.__REACT_DEVTOOLS_GLOBAL_HOOK__) {
+                  window.__REACT_DEVTOOLS_GLOBAL_HOOK__ = window.parent.__REACT_DEVTOOLS_GLOBAL_HOOK__;
+                }
+              </script>
+            {% endif %}
             <script src="{{ assetsUrl }}/editor/js/react.js"></script>
             <script src="{{ assetsUrl }}/editor/js/react-dom.js"></script>
             <script src="{{ assetsUrl }}/editor/js/editor.vendor.min.js"></script>
             <script>
               window.__VISUAL_CONFIG__ = {{ editorData | json_encode }};
               window.__CLOUD_ENV__ = {{ cloudData | json_encode }};
+              window.perfMonitorConfig = {{ perfMonitorData | json_encode }};
 
               {% if aiChatConfig is defined %}
                 window.aiChatConfig = {{ aiChatConfig | json_encode }};
@@ -87,15 +97,12 @@
               {% if aiSupportChatConfig is defined %}
                 window.aiSupportChatConfig = {{ aiSupportChatConfig | json_encode }};
               {% endif %}
-
-              {% if DEV is defined and DEV %}
-                window.__REACT_DEVTOOLS_GLOBAL_HOOK__ = window.parent.__REACT_DEVTOOLS_GLOBAL_HOOK__;
-              {% endif %}
             </script>
 
             <script src="{{ apiAssetsUrl }}/index.js"></script>
             <script src="{{ aiChatAssetsUrl }}/init.js"></script>
             <script src="{{ aiSupportChatAssetsUrl }}/init.js"></script>
+            <!-- <script src="{{ perfMonitorAssetsUrl }}/init.js"></script> -->
             <script src="{{ assetsUrl }}/editor/js/editor.min.js"></script>
 
             {% if PRO is defined and PRO %}

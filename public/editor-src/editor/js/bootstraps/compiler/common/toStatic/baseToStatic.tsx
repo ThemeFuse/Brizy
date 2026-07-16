@@ -1,4 +1,4 @@
-import cheerio from "cheerio";
+import { load as cheerioLoad } from "cheerio";
 import { ReactElement } from "react";
 import ReactDOMServer from "react-dom/server";
 import type { Config } from "visual/global/Config";
@@ -51,14 +51,15 @@ export const baseToStatic = (props: Props): Output => {
 
   // ===========
 
-  const $pageHTML = cheerio.load(
+  // cheerio 1.x decodes entities differently than rc.12 — the prior
+  // `decodeEntities: false` option was removed. parse5 (default in 1.x)
+  // preserves entities in attribute values, addressing the original issue:
+  // https://github.com/bagrinsergiu/blox-editor/issues/13929
+  const $pageHTML = cheerioLoad(
     `<html>
       <head></head>
       <body>${html}</body>
-    </html>`,
-    // was added because of this issue
-    // https://github.com/bagrinsergiu/blox-editor/issues/13929
-    { decodeEntities: false }
+    </html>`
   );
 
   changeMenuUid($pageHTML);

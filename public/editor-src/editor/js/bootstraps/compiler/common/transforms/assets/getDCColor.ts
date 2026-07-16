@@ -1,3 +1,4 @@
+import type { CheerioAPI } from "cheerio";
 import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { makeRichTextDCColorCSS } from "visual/utils/color";
 import { Opacity } from "visual/utils/cssProps/opacity";
@@ -12,14 +13,12 @@ interface DecodedColor {
   };
 }
 
-export const getDCColor = ($: cheerio.Root, config: ConfigCommon): string[] => {
+export const getDCColor = ($: CheerioAPI, config: ConfigCommon): string[] => {
   const rules: string[] = [];
   const $richText = $(".brz-rich-text");
 
-  $richText.find(".brz-tp__dc-block[data-color]").each(function (
-    this: cheerio.Element
-  ) {
-    const $this = $(this);
+  $richText.find(".brz-tp__dc-block[data-color]").each((_, el) => {
+    const $this = $(el);
     const color = $this.attr("data-color") || "";
     const decodedColor = decodeFromString<DecodedColor>(color);
     const className = `dc-color-${uuid(5)}`;
@@ -43,8 +42,8 @@ export const getDCColor = ($: cheerio.Root, config: ConfigCommon): string[] => {
   });
 
   // HACK.Sometimes usual paragraph has data-color attribute
-  $richText.find("[data-color]").each(function (this: cheerio.Cheerio) {
-    $(this).removeAttr("data-color");
+  $richText.find("[data-color]").each((_, el) => {
+    $(el).removeAttr("data-color");
   });
 
   if (rules.length === 0) {

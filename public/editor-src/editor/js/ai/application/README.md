@@ -24,6 +24,7 @@ Abstracts Redux state access for page-level data: blocks, elements, search, icon
 | Read           | `getPageStructure`, `getElementById`, `searchElements`, `isPro`, `getAvailableIcons` |
 | Block          | `addBlock`, `removeBlock`, `moveBlock`, `duplicateBlock`, `clearPage`, `insertTemplate` |
 | Element        | `addElement`, `removeElement`, `updateElement`, `updateColumn`, `duplicateElement`, `moveElement`, `updateRichText` |
+| History        | `undo` |
 
 Also defines param types: `AddBlockParams`, `InsertTemplateParams`, `AddElementParams`, `SearchElementsParams`, `RemoveElementParams`, `UpdateElementParams`, `MoveElementParams`, `DuplicateElementParams`, `UpdateRichTextParams`, `GetAvailableIconsParams`.
 

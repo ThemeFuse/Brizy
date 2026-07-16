@@ -192,9 +192,6 @@ export default function ($node: JQuery): void {
       };
     });
 
-    const defaultDialCode =
-      flags.find((flag) => flag.code === "US")?.dialCode ?? "";
-
     // Remove all divs that contain the translated strings because we already have the data
     root
       .querySelectorAll<HTMLElement>(
@@ -212,6 +209,11 @@ export default function ($node: JQuery): void {
         );
 
         if (select) {
+          const defaultCountry =
+            item.getAttribute("data-brz-default-country") ?? "US";
+          const defaultDialCode =
+            flags.find((flag) => flag.code === defaultCountry)?.dialCode ?? "";
+
           const contentLocation = item.querySelector<HTMLElement>(
             ".brz-forms2__phone--country"
           );
@@ -230,7 +232,7 @@ export default function ($node: JQuery): void {
             settings: {
               contentLocation
             },
-            data: flagsToSelectPhoneOptions(flags),
+            data: flagsToSelectPhoneOptions(flags, defaultCountry),
             events: {
               afterChange: (data: Option[]) => {
                 const v = data[0]?.value;
@@ -1136,7 +1138,10 @@ function resetFormValues(form: HTMLElement): void {
               el.closest(".brz-forms2__field-phone") &&
               el.tagName === "SELECT"
             ) {
-              el.value = "US";
+              const phoneContainer = el.closest(".brz-forms2__field-phone");
+              el.value =
+                phoneContainer?.getAttribute("data-brz-default-country") ??
+                "US";
               break;
             }
 

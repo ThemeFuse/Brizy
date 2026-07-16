@@ -20,6 +20,7 @@
   }
 
   &__item {
+    position: relative;
     color: variables.$bottom_toolbar__disable-color;
     font-size: 12px;
     letter-spacing: variables.$control-letter-spacing;

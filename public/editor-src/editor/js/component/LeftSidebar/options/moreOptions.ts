@@ -3,7 +3,7 @@ import {
   ConfigCommon,
   LeftSidebarMoreOptionsIds
 } from "visual/global/Config/types/configs/ConfigCommon";
-import UIEvents from "visual/global/UIEvents";
+import UIEvents, { UIEventType } from "visual/global/UIEvents";
 import { Option } from "./index";
 
 export const getMoreOptions = (ui: ConfigCommon["ui"]): Array<Option> => {
@@ -33,7 +33,7 @@ export const getMoreOptions = (ui: ConfigCommon["ui"]): Array<Option> => {
           id: option.type,
           onClick: (e: MouseEvent): void => {
             e.preventDefault();
-            UIEvents.emit("navigator.open");
+            UIEvents.emit(UIEventType.NavigatorOpen);
           }
         });
       } else {

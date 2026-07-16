@@ -27,8 +27,7 @@ import { useConfig } from "visual/providers/ConfigProvider";
 import { removeBlock, reorderBlocks } from "visual/redux/actions2";
 import {
   globalBlocksSelector,
-  pageBlocksDataAssembledSelector,
-  pageSelector
+  pageBlocksDataAssembledSelector
 } from "visual/redux/selectors";
 import { t } from "visual/utils/i18n";
 import BlockThumbnail from "./BlockThumbnail";
@@ -203,9 +202,7 @@ class _DrawerComponent extends React.Component {
         };
       },
       () => {
-        this.props.dispatch(
-          reorderBlocks({ oldIndex, newIndex, config: this.props.config })
-        );
+        this.props.reorderBlocks(oldIndex, newIndex);
       }
     );
   };
@@ -215,9 +212,7 @@ class _DrawerComponent extends React.Component {
       value: { _id }
     } = this.state.blocks[index];
 
-    this.props.dispatch(
-      removeBlock({ index, id: _id, config: this.props.config })
-    );
+    this.props.removeBlock(_id, index);
   };
 
   render() {
@@ -241,20 +236,21 @@ class _DrawerComponent extends React.Component {
   }
 }
 
-const DrawerComponent = (props) => {
-  const config = useConfig();
-
-  return (
-    <Scrollbar theme="dark" absolute>
-      <_DrawerComponent {...props} config={config} />
-    </Scrollbar>
-  );
-};
+const DrawerComponent = (props) => (
+  <Scrollbar theme="dark" absolute>
+    <_DrawerComponent {...props} />
+  </Scrollbar>
+);
 
 const getMapStateToProps = (config) => (state) => ({
   pageBlocks: pageBlocksDataAssembledSelector(state, config),
-  globalBlocks: globalBlocksSelector(state),
-  page: pageSelector(state)
+  globalBlocks: globalBlocksSelector(state)
+});
+
+const getMapDispatchToProps = (config) => ({
+  removeBlock: (id, index) => removeBlock({ id, index, config }),
+  reorderBlocks: (oldIndex, newIndex) =>
+    reorderBlocks({ oldIndex, newIndex, config })
 });
 
 export const getBlocksSortable = ({ helpIcon, disabled, config }) => ({
@@ -264,5 +260,8 @@ export const getBlocksSortable = ({ helpIcon, disabled, config }) => ({
   withHelpIcon: helpIcon,
   disabled,
   drawerTitle: t("Reorder Blocks"),
-  drawerComponent: connect(getMapStateToProps(config))(DrawerComponent)
+  drawerComponent: connect(
+    getMapStateToProps(config),
+    getMapDispatchToProps(config)
+  )(DrawerComponent)
 });

@@ -8,7 +8,7 @@ Plugin system that allows external packages (e.g. `@brizy/ai-chat`) to extend th
 PluginBootstrap (React)
     │
     ▼
-createEditorAPI() ──► EditorAPI { toolServer, slots, filters, events, t, store }
+createEditorAPI() ──► EditorAPI { toolServer, slots, filters, events, t, store, state queries }
     │
     ▼
 PluginRegistry.registerAll(plugins)
@@ -48,18 +48,49 @@ PluginProvider (React Context)
 
 ## EditorAPI
 
-The `EditorAPI` object is passed to every plugin's `register()` method:
+The `EditorAPI` object is passed to every plugin's `register()` method. One flat interface serves all plugins — no plugin-specific sub-APIs:
 
 ```typescript
 interface EditorAPI {
+  // Infrastructure
   toolServer: IToolServer;   // AI tool discovery + execution
   slots: SlotRegistry;       // Register UI into named slots
   filters: FilterRegistry;   // Hook into editor filter pipeline
   events: EventBus;          // Subscribe to / emit editor events
   t: (key: string) => string; // i18n translation function
   store: ISharedStore;       // Cross-bundle shared state
+
+  // Data access
+  getBlocksHtml: () => Array<BlocksHTML & { id: string }>;
+  getPageData: () => unknown;
+  getProjectData: () => unknown;
+
+  // State queries
+  getPageId: () => string;
+  getProjectId: () => string;
+  getBlockCount: () => number;
+  getStateSize: () => number;       // Cached, max 1x/5s, uses requestIdleCallback
+  getHistoryInfo: () => { current: number; max: number; snapshotCount: number };
 }
 ```
+
+### Events
+
+All editor events are centralized in the `UIEventType` enum (`visual/global/UIEvents.ts`). Plugins subscribe via `api.events.on(eventName, cb)` and receive an unsubscribe function.
+
+| UIEventType | Value | Payload | Source |
+|---|---|---|---|
+| `ReduxActionPerf` | `redux:action:perf` | `{ type: string; duration: number; timestamp: number }` | Redux perf middleware |
+| `DndSort` | `dnd.sort` | `{ from, to }` sort data | Sortable, AddElements |
+| `DeviceModeChange` | `deviceMode.change` | `"mobile" \| "tablet" \| "desktop"` | DeviceModes |
+| `ActiveElementChange` | `activeElement:change` | `ActiveElementMeta` | Redux sideEffects middleware |
+| `NavigatorOpen` | `navigator.open` | `{ elementId: string \| null }?` | Editor, Navigator |
+| `NavigatorClose` | `navigator.close` | none | Navigator |
+| `MMenuClose` | `mMenu:close` | none | Menu |
+| `EntranceOn` | `entrance.on` | `{ animationIsRunning, animationId }` | Animation |
+| `EntranceOff` | `entrance.off` | `{ animationIsRunning, animationId }` | Animation |
+
+**Note:** `perf-monitor` runs as a separate package and cannot import `UIEventType`. It defines `PERF_ACTION_EVENT` locally — must stay in sync with `UIEventType.ReduxActionPerf`.
 
 ## Plugin Contract
 
@@ -82,6 +113,24 @@ interface EditorPlugin {
 | `leftSidebar.drawer`   | LeftSidebar drawer options  | `LeftSidebarDrawerMeta` |
 | `leftSidebar.tab`      | LeftSidebar tab icons       | `LeftSidebarTabMeta`    |
 | `floatingPanel`         | PluginPortals component    | `FloatingPanelMeta`     |
+| `bottomPanel`           | BottomPanel container      | none                    |
+
+### `bottomPanel` semantics
+
+- The editor has no targeting concept. All `bottomPanel` contributions render, unwrapped from
+  meta, inside the `.brz-ed-fixed-bottom-panel` container, after the existing `<ul>`, wrapped
+  together in `SlotErrorBoundary` so a crashing contribution can't take down the panel.
+- Native panel items (Help, Preview, etc.) carry an identity attribute — `data-bzelm="<name>"`,
+  the same convention used elsewhere in the editor (e.g. `PreviewButton`'s
+  `data-bzelm="preview"`) — and the panel's `&__item` provides `position: relative`. A
+  contribution that wants to decorate a specific item (e.g. a notification dot on Help) finds
+  it itself: scope a DOM query from its own rendered node
+  (`el.closest(".brz-ed-fixed-bottom-panel")` → `querySelector('[data-bzelm="help"]')`) and
+  portal into it with `ReactDOM.createPortal`. If the target item isn't present in the DOM
+  (e.g. `config.ui.help.showIcon` is falsy), the contribution simply finds nothing and renders
+  nothing — no editor-side wiring required.
+- Future extension (not built): meta-driven native bottom-panel items (icon/title/onClick),
+  in the spirit of `leftSidebar.tab`.
 
 ## React Hooks
 

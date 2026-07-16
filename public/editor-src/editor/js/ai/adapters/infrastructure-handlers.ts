@@ -22,7 +22,8 @@ import {
   moveElementSchema,
   removeBlockSchema,
   removeElementSchema,
-  searchElementsSchema
+  searchElementsSchema,
+  undoLastChangeSchema
 } from "./infrastructure-schemas";
 import type { HandlerDeps, ToolArgs } from "./types";
 
@@ -437,6 +438,22 @@ export function createInfrastructureHandlers(
 
       const result = await pageRepository.setPageStatus(status);
       log.tools("setPageStatus output %o", result);
+      return result;
+    },
+
+    // ===========================================
+    // HISTORY TOOLS
+    // ===========================================
+    undoLastChange: (args: ToolArgs) => {
+      log.tools("undoLastChange input %o", args);
+
+      const parsed = undoLastChangeSchema.safeParse(args);
+      if (!parsed.success) {
+        return { success: false, error: parsed.error.message };
+      }
+
+      const result = pageRepository.undo();
+      log.tools("undoLastChange output %o", result);
       return result;
     }
   };

@@ -10,10 +10,9 @@ import React, {
   createElement,
   forwardRef
 } from "react";
-import UIEvents from "visual/global/UIEvents";
+import UIEvents, { UIEventType } from "visual/global/UIEvents";
 import { RenderFor } from "visual/providers/RenderProvider/RenderFor";
 import { WithClassName } from "visual/types/attributes";
-import { AnimationEvents } from "visual/utils/animation";
 import { makeDataAttr } from "visual/utils/i18n/attribute";
 import { mApply } from "visual/utils/value";
 import * as Observer from "./Observer";
@@ -52,19 +51,46 @@ class _Animation<
   private updateId?: number;
   private animationStartedId?: number;
   private mounted = false;
+  private animationEndAttachedNode?: Element;
 
   handleAnimationStarted() {
-    UIEvents.emit(AnimationEvents.entranceOn, {
+    UIEvents.emit(UIEventType.EntranceOn, {
       animationIsRunning: true,
       animationId: this.props.animationId
     });
   }
 
   handleAnimationFinished() {
-    UIEvents.emit(AnimationEvents.entranceOff, {
+    UIEvents.emit(UIEventType.EntranceOff, {
       animationIsRunning: false,
       animationId: this.props.animationId
     });
+  }
+
+  handleAnimationEnd = (e: Event): void => {
+    const target = e.target as HTMLElement | null;
+    const node = this.animationEndAttachedNode;
+
+    if (this.mounted && target && node && node.isEqualNode(target)) {
+      this.handleAnimationFinished();
+      this.setState({ animationClass: "none" });
+    }
+  };
+
+  attachAnimationEnd(node: Element): void {
+    this.detachAnimationEnd();
+    node.addEventListener("animationend", this.handleAnimationEnd);
+    this.animationEndAttachedNode = node;
+  }
+
+  detachAnimationEnd(): void {
+    if (this.animationEndAttachedNode) {
+      this.animationEndAttachedNode.removeEventListener(
+        "animationend",
+        this.handleAnimationEnd
+      );
+      this.animationEndAttachedNode = undefined;
+    }
   }
 
   componentDidMount(): void {
@@ -80,16 +106,9 @@ class _Animation<
 
       mApply((n) => Observer.connect(n, this.handleIntersection), node);
 
-      node?.addEventListener("animationend", (e) => {
-        const target = e.target as HTMLElement | null;
-
-        if (this.mounted && target && node.isEqualNode(target)) {
-          this.handleAnimationFinished();
-          this.setState({
-            animationClass: "none"
-          });
-        }
-      });
+      if (node) {
+        this.attachAnimationEnd(node);
+      }
     }
   }
 
@@ -107,19 +126,13 @@ class _Animation<
         this.updateId = requestAnimationFrame(() => {
           this.setState({ animationClass: this.props.animationClass });
 
-          node?.addEventListener("animationend", (e) => {
-            const target = e.target as HTMLElement | null;
-
-            if (this.mounted && target && node.isEqualNode(target)) {
-              this.setState({
-                animationClass: "none"
-              });
-              this.handleAnimationFinished();
-            }
-          });
+          if (node) {
+            this.attachAnimationEnd(node);
+          }
         });
       } else {
         mApply(Observer.disconnect, node);
+        this.detachAnimationEnd();
         this.handleAnimationFinished();
       }
     }
@@ -129,8 +142,9 @@ class _Animation<
     mApply(Observer.disconnect, this.ref.current);
     mApply(cancelAnimationFrame, this.updateId);
     mApply(cancelAnimationFrame, this.animationStartedId);
-    UIEvents.off(AnimationEvents.entranceOn, this.handleAnimationStarted);
-    UIEvents.off(AnimationEvents.entranceOff, this.handleAnimationFinished);
+    this.detachAnimationEnd();
+    UIEvents.off(UIEventType.EntranceOn, this.handleAnimationStarted);
+    UIEvents.off(UIEventType.EntranceOff, this.handleAnimationFinished);
     this.mounted = false;
   }
 

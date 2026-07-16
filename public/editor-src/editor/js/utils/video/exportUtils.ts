@@ -25,6 +25,32 @@ interface HTMLElementFullscreen extends HTMLElement {
 let fullscreenVideoNode: null | Element = null;
 const doc = document as DocumentWithFullscreen;
 
+const BLOB_SOURCE_PREFIX = "blob:";
+const SEEKABLE_SOURCE_FLAG = "brzSeekableSourceRequested";
+
+// Seeking to a custom start/end time only works when the media server honors
+// HTTP Range requests. Many storage backends reply with the full file and no
+// Accept-Ranges, so the browser marks the video as non-seekable and playback
+// starts from 0. Downloading the file into a Blob URL gives the browser all
+// the bytes locally, which makes it seekable regardless of server support.
+const loadSeekableSource = (
+  video: HTMLVideoElement,
+  onReady: VoidFunction
+): void => {
+  video.dataset[SEEKABLE_SOURCE_FLAG] = "true";
+
+  fetch(video.src)
+    .then((response) => response.blob())
+    .then((blob) => {
+      video.src = URL.createObjectURL(blob);
+      onReady();
+    })
+    .catch((error) => {
+      console.error("Brizy: failed to load seekable video source", error);
+      onReady();
+    });
+};
+
 export const initCustomVideoActions = (
   root: Element,
   className: string,
@@ -204,6 +230,19 @@ export const changePlayerState = (shortcodeVideo: Element): void => {
   const timeStart = Num.read(video.getAttribute("data-time-start")) || 0;
   let timeEnd = Num.read(video.getAttribute("data-time-end")) || Infinity;
 
+  const hasCustomStartOrEnd = timeStart > 0 || timeEnd !== Infinity;
+  const isNetworkSource = !video.src.startsWith(BLOB_SOURCE_PREFIX);
+  const shouldLoadSeekableSource =
+    video.paused &&
+    hasCustomStartOrEnd &&
+    isNetworkSource &&
+    !video.dataset[SEEKABLE_SOURCE_FLAG];
+
+  if (shouldLoadSeekableSource) {
+    loadSeekableSource(video, () => changePlayerState(shortcodeVideo));
+    return;
+  }
+
   if (playPauseBtn) {
     changeIconVisibility(playPauseBtn, video.paused);
   }
@@ -225,6 +264,8 @@ export const changePlayerState = (shortcodeVideo: Element): void => {
   video.removeAttribute("class");
 
   if (!video.duration) {
+    const shouldLoopSegment = video.hasAttribute("loop");
+
     video.addEventListener("loadedmetadata", (evt) => {
       const videoTarget = evt.target as HTMLVideoElement;
       const duration = formatTime(videoTarget.duration);
@@ -260,7 +301,7 @@ export const changePlayerState = (shortcodeVideo: Element): void => {
 
       if (currentTime < timeEnd) return;
 
-      if (video.hasAttribute("loop")) {
+      if (shouldLoopSegment) {
         video.currentTime = timeStart;
       } else {
         video.pause();
@@ -268,6 +309,18 @@ export const changePlayerState = (shortcodeVideo: Element): void => {
       }
     });
 
+    // Native loop restarts from 0, ignoring data-time-start. When a start
+    // time is set, remove the native loop attribute and restart at the start
+    // time once the video reaches its natural end (used when no end time is
+    // set); a finite end time is looped from the timeupdate handler above.
+    if (shouldLoopSegment && timeStart > 0) {
+      video.removeAttribute("loop");
+      video.addEventListener("ended", () => {
+        video.currentTime = timeStart;
+        video.play();
+      });
+    }
+    
     if (playPauseBtn) {
       video.addEventListener("ended", () => {
         changeIconVisibility(playPauseBtn, false);

@@ -93,9 +93,7 @@ export class QueueWorker<T> {
         return result;
       })
       .catch((error: Error) => {
-        if (process.env["NODE_NEV"] === "development") {
-          console.error(`Error processing task ${taskId}:`, error);
-        }
+        console.error(`[QueueWorker] task ${taskId} failed:`, error);
         this.queue.removeProcessingTask(taskId);
         return error;
       })

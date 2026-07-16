@@ -35,6 +35,7 @@ export const rowPropsSchema = z.object({
   bgColorHex: hexColor,
   bgColorOpacity: opacity,
   bgColorType: bgColorTypeContainer,
+  bgImageSrc: z.string().optional(),
   // gradient
   gradientType: gradientType,
   gradientColorPalette: colorPalette,
@@ -104,6 +105,10 @@ const rowPropertyDefinitions = {
     description: "Background color opacity (0-1)",
     minimum: 0,
     maximum: 1
+  },
+  bgImageSrc: {
+    type: "string",
+    description: "Background image URL"
   },
   borderColorPalette: {
     type: "string",
@@ -175,7 +180,7 @@ export const addRowDefinition: ToolDefinition = {
   name: "addRow",
   strict: true,
   description:
-    "Add a Row to an EXISTING Section for multi-column layout. Supports gradient, animated-gradient, hover background/border, and hover box shadow. Only needed for side-by-side content. For new sections use generateBlock.",
+    "Add a Row to an EXISTING Section for multi-column layout. Supports background image, gradient, animated-gradient, hover background/border, and hover box shadow. Only needed for side-by-side content. For new sections use generateBlock.",
   category: "element",
   parameters: {
     type: "object",
@@ -201,7 +206,7 @@ export const updateRowDefinition: ToolDefinition = {
   name: "updateRow",
   strict: true,
   description:
-    "Update a Row element's properties. Supports gradient, animated-gradient, hover background, hover border, and hover box shadow.",
+    "Update a Row element's properties. Supports background image, gradient, animated-gradient, hover background, hover border, and hover box shadow.",
   category: "update",
   parameters: {
     type: "object",

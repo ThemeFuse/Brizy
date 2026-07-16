@@ -8,7 +8,6 @@ import { useConfig } from "visual/providers/ConfigProvider";
 import { setDeviceMode } from "visual/redux/actions2";
 import { deviceModeSelector, pageSelector } from "visual/redux/selectors";
 import { ReduxState } from "visual/redux/types";
-import { isWPPage } from "visual/types/utils";
 import { Option as OptionData } from "../../options";
 import Option from "./Option";
 
@@ -29,10 +28,13 @@ const fillerOption = (option: OptionData, currentUserRole: string) => {
 
   return true;
 };
-const mapStateToProps = (store: ReduxState) => ({
-  deviceMode: deviceModeSelector(store),
-  page: pageSelector(store)
-});
+const mapStateToProps = (store: ReduxState) => {
+  const page = pageSelector(store);
+  return {
+    deviceMode: deviceModeSelector(store),
+    pageTemplate: "template" in page ? page.template : ""
+  };
+};
 
 const mapDispatchToProps = { setDeviceMode };
 
@@ -65,7 +67,7 @@ class _Options extends React.Component<Props> {
       deviceMode,
       config,
       setDeviceMode,
-      page: storePage
+      pageTemplate
     } = this.props;
 
     if (!data) {
@@ -83,9 +85,6 @@ class _Options extends React.Component<Props> {
     const changeTemplateUrl = config.urls?.changeTemplate;
     const featuredImage = isWP ? config.wp.featuredImage : {};
     const page = isWP ? config.wp.page : {};
-    const currentTemplate = isWPPage(storePage, config)
-      ? storePage.template
-      : "";
 
     const options = data
       .filter((data) => fillerOption(data, currentUserRole(config)))
@@ -101,7 +100,7 @@ class _Options extends React.Component<Props> {
           templates={templates}
           isWP={isWP}
           changeTemplateUrl={changeTemplateUrl}
-          currentTemplate={currentTemplate}
+          currentTemplate={pageTemplate}
           featuredImage={featuredImage}
           page={page}
         />

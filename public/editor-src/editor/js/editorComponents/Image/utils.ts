@@ -17,6 +17,7 @@ import { ResponsiveMode } from "visual/utils/responsiveMode";
 import { capByPrefix } from "visual/utils/string";
 import { is as isNoEmptyString } from "visual/utils/string/NoEmptyString";
 import { MValue, isNullish } from "visual/utils/value";
+import { placeholderObjFromStr } from "./migrations/version2";
 import { ImageSize, Unit, V } from "./types";
 
 export interface ImageValue {
@@ -267,15 +268,33 @@ export const getImageSize = (
 };
 
 export const getSizeType = (v: V, device: ResponsiveMode): string => {
-  return defaultValueValue({ v, device, key: "sizeType" });
+  const sizeType = defaultValueValue({ v, device, key: "sizeType" });
+
+  // A DC image with size="original" is served UNCROPPED, at its natural aspect
+  // ratio. It must never be locked into a fixed "custom" box — that squeezes it
+  // (object-fit: fill) and sizes it differently in the editor (absolute px height)
+  // vs preview (relative padding-top). If such an image got stored as "custom"
+  // (e.g. the DC config had no size and patchOnDCChange baked a height, or a manual
+  // resize), treat it as "original" so it follows its natural aspect consistently.
+  // Scoped to size="original" to stay aligned with migration m2 (a DC image with no
+  // declared size legitimately stays "custom"); we reuse m2's placeholder parser.
+  const populationSize = Str.read(
+    placeholderObjFromStr(Str.read(v.imagePopulation) ?? "")?.attr?.size
+  );
+
+  if (sizeType === SizeType.custom && populationSize === SizeType.original) {
+    return SizeType.original;
+  }
+
+  return sizeType;
 };
 
 export const showOriginalImage = (v: V): boolean =>
   Boolean(
     !isSVGExtension(v.imageExtension) &&
-      !isGIFExtension(v.imageExtension) &&
-      v.imageSrc &&
-      v.showOriginalImage === "on"
+    !isGIFExtension(v.imageExtension) &&
+    v.imageSrc &&
+    v.showOriginalImage === "on"
   );
 
 export function getCustomImageUrl(

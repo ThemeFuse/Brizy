@@ -10,6 +10,7 @@ import type {
   RemoveBlockResult,
   RemoveElementResult,
   SearchElementsResult,
+  UndoResult,
   UpdateElementResult
 } from "../../entities/models";
 
@@ -294,4 +295,10 @@ export interface IPageRepository {
   setPageStatus(
     status: "publish" | "draft"
   ): Promise<BrizyToolResult<{ status: "publish" | "draft" }>>;
+
+  /**
+   * Undo the last page change via the editor history.
+   * No-op (returns success with reason) when there is nothing to undo.
+   */
+  undo(): BrizyToolResult<UndoResult>;
 }

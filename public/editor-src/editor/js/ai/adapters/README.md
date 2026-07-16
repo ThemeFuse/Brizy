@@ -27,10 +27,10 @@ Central registry that assembles all tool definitions and handlers.
 - `name` — tool identifier
 - `description` — LLM-facing documentation
 - `parameters` — JSON Schema for arguments
-- `category` — read | block | project | element
+- `category` — read | block | project | element | history
 - `strict` — enables strict JSON mode
 
-Definitions: `getPageStructure` (optional `depth` param, no upper limit — defaults to full tree), `getElementById`, `searchElements`, `getAvailableIcons`, `isPro`, `getGoogleFonts`, `addBlock`, `addBlankBlock`, `removeBlock`, `clearPage`, `moveBlock`, `duplicateBlock`, `getProjectStyles`, `changeStyle`, `addStyle`, `duplicateStyle`, `getProjectFonts`, `addFont`, `deleteFont`, `changeDefaultFont`, `removeElement`, `duplicateElement`, `moveElement`.
+Definitions: `getPageStructure` (optional `depth` param, no upper limit — defaults to full tree), `getElementById`, `searchElements`, `getAvailableIcons`, `isPro`, `getGoogleFonts`, `addBlock`, `addBlankBlock`, `removeBlock`, `clearPage`, `moveBlock`, `duplicateBlock`, `getProjectStyles`, `changeStyle`, `addStyle`, `duplicateStyle`, `getProjectFonts`, `addFont`, `deleteFont`, `changeDefaultFont`, `removeElement`, `duplicateElement`, `moveElement`, `undoLastChange` (no params).
 
 ### `infrastructure-handlers.ts`
 
@@ -40,6 +40,7 @@ Handler functions for infrastructure tools. Connects tool calls to repository me
 - **Block tools** → `pageRepository` (addBlock, addBlankBlock, removeBlock, moveBlock, duplicateBlock, clearPage)
 - **Project tools** → `projectRepository` (getProjectStyles, changeStyle, addStyle, duplicateStyle, getProjectFonts, getGoogleFonts, addFont, deleteFont, changeDefaultFont)
 - **Element tools** → `pageRepository` (removeElement, duplicateElement, moveElement)
+- **History tools** → `pageRepository` (undoLastChange — reverts the last change via the editor history; no-op when there is nothing to undo)
 - `addStyle` handler validates input with `addStyleSchema` (Zod) before calling repository
 
 ### `handler-factory.ts`

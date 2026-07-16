@@ -18,6 +18,9 @@ export class Sheet {
 
   private classNamesCounter: ClassNamesCounter = {};
 
+  // Mirrors the classNames present in cssOrdered, for O(1) lookups on render.
+  private orderedClassNames = new Set<string>();
+
   constructor({ doc, instanceId }: { doc?: Document; instanceId?: string } = {}) {
     this.doc = doc ?? (typeof window === "undefined" ? undefined : document);
 
@@ -38,6 +41,7 @@ export class Sheet {
     const { type, data } = params;
 
     this.cssOrdered[type].push(data);
+    this.orderedClassNames.add(data.className);
   }
 
   incrementClassNameCounter(className: string): number {
@@ -48,16 +52,12 @@ export class Sheet {
     return count;
   }
 
+  // Any className served from the cache can be owned by more than one live
+  // component — a moved element renders (and reuses the cached <style>) before
+  // the old instance unmounts. Without a counter, that unmount would remove a
+  // node the new owner is already relying on.
   isIncrementalClassName(className: string): boolean {
-    const isDefault = this.cssOrdered.default.find(
-      (f) => f.className === className
-    );
-
-    const isRules = this.cssOrdered.rules.find(
-      (f) => f.className === className
-    );
-
-    return !!isDefault || !!isRules;
+    return this.orderedClassNames.has(className);
   }
 
   decrementClassNameCounter(className: string): number {
@@ -96,14 +96,12 @@ export class Sheet {
         (item) => item.className !== key
       );
     }
+
+    this.orderedClassNames.delete(key);
   }
 
   cleanupClassName(className: string, countClassNames?: boolean): void {
     const data = this.css.get(className);
-
-    if (!data) {
-      return;
-    }
 
     if (countClassNames) {
       const count = this.decrementClassNameCounter(className);
@@ -113,6 +111,10 @@ export class Sheet {
       }
 
       delete this.classNamesCounter[className];
+    }
+
+    if (!data) {
+      return;
     }
 
     if (data.node) {

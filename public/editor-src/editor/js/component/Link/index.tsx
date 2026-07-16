@@ -72,14 +72,22 @@ const LinkComponent = (
   useEffect(() => {
     const node = innerRef.current;
 
-    if (node) {
-      // added native preventDefault
-      // because some library like Google Tag Manager
-      // attach onclick event before react events
-      node.addEventListener("click", (e) => {
-        e.preventDefault();
-      });
+    if (!node) {
+      return;
     }
+
+    // added native preventDefault
+    // because some library like Google Tag Manager
+    // attach onclick event before react events
+    const handleClick = (e: Event): void => {
+      e.preventDefault();
+    };
+
+    node.addEventListener("click", handleClick);
+
+    return () => {
+      node.removeEventListener("click", handleClick);
+    };
   }, []);
 
   const attributes = useMemo(

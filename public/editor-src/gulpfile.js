@@ -53,9 +53,11 @@ const {
   VERSION_PRO,
   NO_WATCH,
   NO_VERIFICATION,
-  ANALYZE_EXPORT,
-  ANALYZE_PREVIEW,
   ANALYZE_EDITOR,
+  ANALYZE_PREVIEW,
+  ANALYZE_LIBS,
+  ANALYZE_EXPORT_NODE,
+  ANALYZE_EXPORT_BROWSER,
   AUTHORIZATION_URL,
   CHECK_BUNDLE_SIZE,
   WITH_TRANSLATIONS,
@@ -94,9 +96,7 @@ const postsCssProcessors = [
     filter: "**/*.svg",
     assetsPath: path.resolve(paths.build, "editor/fonts"),
     url: (asset) => {
-      const match = asset.url.match(
-        /^~?flag-icons\/flags\/4x3\/([^/]+\.svg)$/
-      );
+      const match = asset.url.match(/^~?flag-icons\/flags\/4x3\/([^/]+\.svg)$/);
 
       if (!match) {
         return asset.url;
@@ -183,6 +183,7 @@ function editorJS(done) {
     NO_WATCH,
     AUTHORIZATION_URL,
     ANALYZE: ANALYZE_EDITOR,
+    CHECK_BUNDLE_SIZE,
     BUILD_VERSION: VERSION ?? "dev"
   };
 
@@ -334,38 +335,24 @@ function exportJS(done) {
     BUILD_PATH: paths.build,
     BUILD_DIR_PRO: paths.buildPro,
     NO_WATCH,
-    ANALYZE: ANALYZE_EXPORT || ANALYZE_PREVIEW,
-    AUTHORIZATION_URL
+    AUTHORIZATION_URL,
+    CHECK_BUNDLE_SIZE
   };
 
-  // Build Rspack export configs
-  // Build Rspack export configs
   let rspackConfig = [];
 
   console.log(chalk.cyan("[rspack] Loading export/preview configurations:"));
+  console.log(chalk.cyan(" - rspack.config.export.js (node)"));
+  console.log(chalk.cyan(" - rspack.config.export.js (browser)"));
+  console.log(chalk.cyan(" - rspack.config.preview.js (preview)"));
+  console.log(chalk.cyan(" - rspack.config.preview.js (libs)"));
 
-  if (!ANALYZE_EXPORT && !ANALYZE_PREVIEW) {
-    console.log(chalk.cyan(" - rspack.config.export.js (node)"));
-    console.log(chalk.cyan(" - rspack.config.export.js (browser)"));
-    console.log(chalk.cyan(" - rspack.config.preview.js (preview)"));
-    console.log(chalk.cyan(" - rspack.config.preview.js (libs)"));
-    rspackConfig.push(
-      rspackConfigExport.node(options),
-      rspackConfigExport.browser(options),
-      rspackConfigPreview.preview(options),
-      rspackConfigPreview.libs(options)
-    );
-  } else {
-    console.log(chalk.cyan(" - rspack.config.export.js (node)"));
-    console.log(chalk.cyan(" - rspack.config.export.js (browser)"));
-    console.log(chalk.cyan(" - rspack.config.preview.js (preview)"));
-    console.log(chalk.yellow("⚠ Skipping libs config (analyze mode)"));
-    rspackConfig.push(
-      rspackConfigExport.node(options),
-      rspackConfigExport.browser(options),
-      rspackConfigPreview.preview(options)
-    );
-  }
+  rspackConfig.push(
+    rspackConfigExport.node({ ...options, ANALYZE: ANALYZE_EXPORT_NODE }),
+    rspackConfigExport.browser({ ...options, ANALYZE: ANALYZE_EXPORT_BROWSER }),
+    rspackConfigPreview.preview({ ...options, ANALYZE: ANALYZE_PREVIEW }),
+    rspackConfigPreview.libs({ ...options, ANALYZE: ANALYZE_LIBS })
+  );
 
   const watchMode = !NO_WATCH && !IS_PRODUCTION;
 
@@ -432,25 +419,6 @@ function exportJS(done) {
           );
         }
       });
-
-      if (ANALYZE_EXPORT) {
-        fs.writeFileSync(
-          path.resolve(paths.build, "editor/js/export.js.rspack-stats.json"),
-          JSON.stringify(stats.toJson().children[0]),
-          "utf8"
-        );
-      }
-
-      if (ANALYZE_PREVIEW) {
-        fs.writeFileSync(
-          path.resolve(
-            paths.build,
-            "editor/js/preview.min.js.rspack-stats.json"
-          ),
-          JSON.stringify(stats.toJson().children[2]),
-          "utf8"
-        );
-      }
 
       if (!watchMode) {
         done();
@@ -810,16 +778,14 @@ function buildStats(done) {
 }
 
 // Threshold in kilobytes (adjust as needed)
+const EDITOR_MAX_BUNDLE_SIZE_KB = 10000;
 const BROWSER_COMPILER_MAX_BUNDLE_SIZE_KB = 7000;
-const NODE_COMPILER_MAX_BUNDLE_SIZE_KB = 11000;
+const NODE_COMPILER_MAX_BUNDLE_SIZE_KB = 10000;
 const MAX_BUNDLE_SIZE_DEVIATION_KB = 200;
 
 function calculateSize(assets, size) {
   // Calculate total size
-  const totalSizeBytes = Object.values(assets).reduce(
-    (acc, asset) => acc + asset.size,
-    0
-  );
+  const totalSizeBytes = assets.reduce((acc, asset) => acc + asset.size, 0);
 
   const totalSizeKB = totalSizeBytes / 1024;
 
@@ -841,23 +807,34 @@ function checkBundleSize(done) {
     BUILD_DIR_PRO: paths.buildPro
   };
   const outputPath = path.resolve(options.BUILD_PATH, "editor/js");
-  const pathToBrowserStats = path.resolve(
-    outputPath,
-    "browserCompiler-bundle-stats.json"
+
+  const editorStats = require(
+    path.resolve(outputPath, "editor-bundle-stats.json")
   );
-  const pathToNodeStats = path.resolve(
-    outputPath,
-    "nodeCompiler-bundle-stats.json"
+  const browserStats = require(
+    path.resolve(outputPath, "browserCompiler-bundle-stats.json")
+  );
+  const nodeStats = require(
+    path.resolve(outputPath, "nodeCompiler-bundle-stats.json")
   );
 
-  const browserStats = require(pathToBrowserStats);
-  const nodeStats = require(pathToNodeStats);
+  console.log("Calculate Bundle Size for Editor");
+  calculateSize(
+    editorStats.data.chunkGraph.entrypoints,
+    EDITOR_MAX_BUNDLE_SIZE_KB
+  );
 
   console.log("Calculate Bundle Size for Browser Compiler");
-  calculateSize(browserStats.assets, BROWSER_COMPILER_MAX_BUNDLE_SIZE_KB);
+  calculateSize(
+    browserStats.data.chunkGraph.entrypoints,
+    BROWSER_COMPILER_MAX_BUNDLE_SIZE_KB
+  );
 
   console.log("Calculate Bundle Size for Node Compiler");
-  calculateSize(nodeStats.assets, NODE_COMPILER_MAX_BUNDLE_SIZE_KB);
+  calculateSize(
+    nodeStats.data.chunkGraph.entrypoints,
+    NODE_COMPILER_MAX_BUNDLE_SIZE_KB
+  );
 
   done();
 }
@@ -1265,5 +1242,7 @@ exports.opensource = gulp.series.apply(undefined, [
   // pro
   proJS
 ]);
+
+exports.checkBundleSize = gulp.series(checkBundleSize);
 
 //#endregion
