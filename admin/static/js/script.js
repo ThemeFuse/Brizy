@@ -193,7 +193,7 @@ jQuery(document).ready(function ($) {
 
         isAvailable: function () {
             return typeof Brizy_Admin_Data !== 'undefined' &&
-                !Brizy_Admin_Data.isWhiteLabel &&
+                Brizy_Admin_Data.isAiEnabled &&
                 Brizy_Admin_Data.aiActions &&
                 Object.keys(Brizy_Admin_Data.aiActions).length > 0;
         },

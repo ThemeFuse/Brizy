@@ -52,6 +52,7 @@ class Brizy_Import_Main
 
         $args = [
             'isWhiteLabel' => $isWhiteLabel,
+            'isAiEnabled' => Brizy_Config::isAiEnabled(),
             'l10n' => [
                 'all' => __('All', 'brizy'),
                 'livePreview' => __('Live Preview', 'brizy'),
@@ -86,9 +87,10 @@ class Brizy_Import_Main
                 'aiBannerFeature1' => __('Usable websites, no gimmicks', 'brizy'),
                 'aiBannerFeature2' => __('Tailor-made texts & images included', 'brizy'),
                 'aiBannerFeature3' => __('Full editing control after generation', 'brizy'),
-                'aiBrizy' => __('AI Brizy', 'brizy'),
+                'aiBrizy' => sprintf(__('AI %s', 'brizy'), __bt('brizy', 'Brizy')),
                 'aiLogoAlt' => __('AI', 'brizy'),
             ],
+            'aiLogo' => apply_filters('brizy_wl_enabled', false) ? __bt('brizy-logo', '') : '',
             'supportUrl' => Brizy_Config::getSupportUrl(),
             'goProUrl' => Brizy_Config::getUpgradeUrl(),
             'isPro' => Brizy_Compatibilities_BrizyProCompatibility::isPro(),

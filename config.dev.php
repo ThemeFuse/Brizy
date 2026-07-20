@@ -123,6 +123,16 @@ class Brizy_Config
         return __bt('support-url', apply_filters('brizy_support_url', self::SUPPORT_URL));
     }
 
+    static public function getAiUrl()
+    {
+        return rtrim(__bt('ai-url', self::GENERATE_GLOBAL_STYLES_ENDPOINT), '/');
+    }
+
+    static public function isAiEnabled()
+    {
+        return (bool)apply_filters('brizy_ai_enabled', !apply_filters('brizy_wl_enabled', false));
+    }
+
     static private function getEnvValue($name)
     {
         $value = isset($_ENV[$name]) ? $_ENV[$name] : null;
