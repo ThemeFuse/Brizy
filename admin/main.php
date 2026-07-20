@@ -260,6 +260,7 @@ class Brizy_Admin_Main {
                 'aiNonce'       => wp_create_nonce( 'brizy-api' ),
                 'nonce'         => wp_create_nonce( 'brizy-admin-nonce' ),
                 'isWhiteLabel'  => apply_filters( 'brizy_wl_enabled', false ),
+                'isAiEnabled'   => Brizy_Config::isAiEnabled(),
                 'l10n'          => [
                         'deactivateFeedbackSubmitBtn' => __( 'Submit & Deactivate', 'brizy' ),
                         'deactivateFeedbackSkipBtn'   => __( 'Skip & Deactivate', 'brizy' ),
