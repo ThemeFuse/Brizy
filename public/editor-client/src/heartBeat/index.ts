@@ -1,13 +1,12 @@
 import { sendHeartBeat, sendHeartBeatTakeOver } from "../api";
 import { SendHeartBeat } from "../api/types";
-import { getConfig } from "../config";
 import { resetNonce } from "./utils";
 
-export function heartBeat(): SendHeartBeat {  return {
+export function heartBeat(): SendHeartBeat {
+  return {
     async sendHandler(res, rej) {
       try {
-        const config = getConfig();
-        const data = await sendHeartBeat(config);
+        const data = await sendHeartBeat();
 
         resetNonce(data);
         res(data);
@@ -17,7 +16,7 @@ export function heartBeat(): SendHeartBeat {  return {
     },
     async takeOverHandler(res, rej) {
       try {
-        res(await sendHeartBeatTakeOver(config));
+        res(await sendHeartBeatTakeOver());
       } catch (e) {
         rej(`API Client: Failed to takeOver, error: \n\t ${e}`);
       }

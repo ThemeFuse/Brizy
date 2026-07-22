@@ -1183,7 +1183,13 @@ export async function getPlaceholdersData(extra: {
 //#endregion
 
 //#region HeartBeat
-export function sendHeartBeat(config: Config) {
+export function sendHeartBeat() {
+  const config = getConfig();
+
+  if (!config) {
+    throw new Error("Invalid __BRZ_PLUGIN_ENV__");
+  }
+
   const {
     actions: { heartBeat },
     url: _url,
@@ -1201,7 +1207,13 @@ export function sendHeartBeat(config: Config) {
   return request(url, { method: "GET" }).then((r) => r.json());
 }
 
-export function sendHeartBeatTakeOver(config: Config) {
+export function sendHeartBeatTakeOver() {
+  const config = getConfig();
+
+  if (!config) {
+    throw new Error("Invalid __BRZ_PLUGIN_ENV__");
+  }
+
   const {
     actions: { takeOver },
     url: _url,
