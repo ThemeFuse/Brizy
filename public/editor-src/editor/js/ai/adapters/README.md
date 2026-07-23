@@ -59,6 +59,13 @@ Supports escape hatches: `handler` override, `afterAdd` hook, `beforeUpdate` hoo
 
 Components that need custom validation (e.g., font family checks) use the `handler` escape hatch to run their own flow in `definitions.ts` rather than adding generic validation to the factory. These custom handlers run the same `containerIdSchema` check inline (Button, RichText, Chart, Switcher, AnimatedHeadline, Paypal, Login).
 
+**`beforeUpdate` conventions** (stateful normalization — the patch alone is not enough):
+
+- The LLM sends only the props it wants to change; `defaults`/`transformProps` see just that patch. When correctness depends on the element's **stored** value, do it in `beforeUpdate`, which gets `deps` + `elementId` and can call `deps.pageRepository.getElementById(elementId)`. Precedents: `Table` (resize items when rows/columns change), `Menu` (restore color opacity, route alignment).
+- A `beforeUpdate` may **write to another element**: `Menu.horizontalAlign` is routed to the parent Wrapper (the Menu has no page-align prop of its own) via a `pageRepository.updateElement` on `parentId`, and stripped from the returned menu changes.
+- Restoring color opacity (`restoreColorOpacity` in `prop-defaults.ts`) mirrors the toolbar's `setHex` rule so a hex applied to a stored-transparent color (default `*ColorOpacity: 0`) is visible. Currently wired per-tool (Menu); candidate to lift into the update handler if it recurs — see the `ponytail:` note in `Menu/definitions.ts`.
+- Wrong-tool errors should name the right tool (`page.repository.ts` uses `update${type}`) so the agent recovers instead of falsely reporting the capability as unsupported.
+
 ### `schema-primitives.ts`
 
 Reusable Zod primitives shared across all tool schemas.

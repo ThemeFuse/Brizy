@@ -68,10 +68,7 @@ class Brizy_Admin_Main {
         $urlBuilder       = new Brizy_Editor_UrlBuilder();
         $post             = get_post( $postId );
         $post_type_object = get_post_type_object( $post->post_type );
-        $focalPoint       = get_post_meta( $postId, 'brizy_attachment_focal_point', true );
-        if ( ! ( is_array( $focalPoint ) && isset( $focalPoint['x'] ) && isset( $focalPoint['y'] ) ) ) {
-            $focalPoint = array( 'x' => 50, 'y' => 50 );
-        }
+        $focalPoint       = Brizy_Editor_FocalPoint::sanitize( get_post_meta( $postId, 'brizy_attachment_focal_point', true ) );
 
         return Brizy_Admin_View::render( 'featured-image', [
                 'focalPoint'        => $focalPoint,
@@ -160,10 +157,10 @@ class Brizy_Admin_Main {
             return;
         }
         if ( isset( $_REQUEST['_thumbnail_focal_point_x'], $_REQUEST['_thumbnail_focal_point_y'] ) && $post_id ) {
-            update_post_meta( $post_id, 'brizy_attachment_focal_point', [
-                    'x' => (int) $_REQUEST['_thumbnail_focal_point_x'],
-                    'y' => (int) $_REQUEST['_thumbnail_focal_point_y']
-            ] );
+            update_post_meta( $post_id, 'brizy_attachment_focal_point', Brizy_Editor_FocalPoint::sanitize( [
+                    'x' => $_REQUEST['_thumbnail_focal_point_x'],
+                    'y' => $_REQUEST['_thumbnail_focal_point_y']
+            ] ) );
         }
     }
 
@@ -241,7 +238,7 @@ class Brizy_Admin_Main {
                 'jquery',
                 'underscore'
         ), BRIZY_VERSION, true );
-        $get_post_focal = get_post_meta( get_the_ID(), 'brizy_attachment_focal_point', true );
+        $get_post_focal = Brizy_Editor_FocalPoint::sanitize( get_post_meta( get_the_ID(), 'brizy_attachment_focal_point', true ) );
         wp_localize_script( Brizy_Editor::get_slug() . '-admin-js', 'Brizy_Admin_Data', array(
                 'url'           => admin_url( 'admin-ajax.php' ),
                 'prefix'        => Brizy_Editor::prefix(),

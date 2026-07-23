@@ -44,6 +44,7 @@ import type {
   DuplicateElementResult,
   ElementDetails,
   GetAvailableIconsResult,
+  GetAvailableMenusResult,
   IconInfo,
   MoveElementResult,
   PageStructure,
@@ -1260,6 +1261,19 @@ export class PageRepository implements IPageRepository {
         error: error instanceof Error ? error.message : String(error)
       };
     }
+  }
+
+  getAvailableMenus(): BrizyToolResult<GetAvailableMenusResult> {
+    const menus = (this.config.menuData ?? []).map((menu) => ({
+      id: menu.id,
+      name: menu.name,
+      itemCount: menu.items.length
+    }));
+
+    return {
+      success: true,
+      data: { menus, totalCount: menus.length }
+    };
   }
 
   async setPageStatus(

@@ -91,6 +91,7 @@ class MockPageRepository implements IPageRepository {
   moveElement = jest.fn();
   updateRichText = jest.fn();
   getAvailableIcons = jest.fn();
+  getAvailableMenus = jest.fn();
   isPro = jest.fn();
   setPageStatus = jest.fn();
   undo = jest.fn();

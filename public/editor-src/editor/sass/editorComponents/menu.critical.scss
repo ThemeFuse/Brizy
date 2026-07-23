@@ -1,0 +1,28 @@
+// Critical Menu styles — FOUC guard
+//
+// Render-blocking copy of the hiding rules from editorComponents/menu.scss.
+// menu.scss ships in main.base.pro.min.css, which is injected with
+// media="print" (deferred), while Menu/export.ts strips the inline
+// display:none guards as soon as its chunk runs. When the chunk wins the race
+// against the deferred stylesheet, the mmenu copy and its dropdowns paint as
+// bare vertical <ul> lists. These rules live in the render-blocking
+// main.base.min.css so the hidden state holds at first paint — the same
+// technique as the .brz-slick-slider:not(.slick-initialized) guard in
+// editorComponents/section.scss.
+//
+// Keep only the hiding guard here — layout/theming stays deferred in menu.scss.
+// Duplicated on purpose; keep in sync with menu.scss.
+
+.brz:not(.brz-ed) {
+  // mmenu copy — hidden until MMenu initializes (.brz-mm-menu) and opens
+  .brz-menu__mmenu:not(.brz-mm-menu),
+  .brz-menu__mmenu:not(.brz-mm-menu_opened) {
+    display: none;
+  }
+
+  // dropdowns — hidden until hover/active
+  .brz-menu:not(.brz-mm-menu) .brz-menu__sub-menu {
+    visibility: hidden;
+    opacity: 0;
+  }
+}

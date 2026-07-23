@@ -68,7 +68,7 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi
 
     protected function initializeApiActions()
     {
-        $n = 'wp_ajax_nopriv_'.Brizy_Editor::prefix();
+        $n = 'wp_ajax_nopriv_' . Brizy_Editor::prefix();
         add_action($n . self::AJAX_HEARTBEAT, array($this, 'heartbeat'));
 
         if (!Brizy_Editor_User::is_user_allowed()) {
@@ -244,14 +244,13 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi
             $this->error(400, 'Bad request');
         }
         if ($this->post && $this->post->uses_editor()) {
-
-            update_post_meta($this->post->getWpPostId(), 'brizy_attachment_focal_point', array(
+            update_post_meta($this->post->getWpPostId(), 'brizy_attachment_focal_point', Brizy_Editor_FocalPoint::sanitize(array(
                 'x' => $_REQUEST['pointX'],
                 'y' => $_REQUEST['pointY'],
-            ));
+            )));
             $this->success(array());
         }
-        $this->error(400, 'Invalid post');
+        $this->error(400, 'Bad request');
     }
 
     public function remove_featured_image()
@@ -340,8 +339,8 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi
     {
         try {
             $this->verifyAuthorization(self::nonce);
-            // update project globas
-            $meta = stripslashes($this->param('data'));
+            // update project globals
+            $meta = $this->sanitizeJson(stripslashes($this->param('data')));
             $compiledStyles = json_decode(stripslashes($this->param('compiled')), true);
             $dataVersion = (int)stripslashes($this->param('dataVersion'));
             if (!$meta) {
@@ -362,7 +361,7 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi
             if ((int)$this->param('is_autosave') === 1) {
                 $project->save(1);
             } else {
-                $project->setCompiledStyles($compiledStyles);
+                $project->setCompiledStyles($this->sanitizeCodeAssets($compiledStyles));
                 $project->set_compiler(Brizy_Editor_Entity::COMPILER_BROWSER);
                 $project->save();
                 $project->savePost();
@@ -375,6 +374,53 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi
             $this->error(400, $exception->getMessage());
             exit;
         }
+    }
+
+    /**
+     * Assets of type "code" are printed raw into wp_head/wp_footer by
+     * Brizy_Public_AssetEnqueueManager, so storing one is equivalent to posting
+     * unfiltered html on every front end page. Run their content through
+     * wp_kses for users that WordPress does not trust with unfiltered html.
+     * Only "code" assets are touched -- wp_kses would corrupt the css carried
+     * by the "inline" and "file" ones.
+     *
+     * @param array $compiledStyles
+     *
+     * @return array
+     */
+    private function sanitizeCodeAssets($compiledStyles)
+    {
+        $sanitized = 0;
+        foreach (['styles', 'fonts'] as $group) {
+            if (!isset($compiledStyles[$group]) || !is_array($compiledStyles[$group])) {
+                continue;
+            }
+
+            foreach ($compiledStyles[$group] as &$asset) {
+                if (!isset($asset['content']['type']) || $asset['content']['type'] !== BrizyMerge\Assets\Asset::TYPE_CODE) {
+                    continue;
+                }
+                if (!isset($asset['content']['content'])) {
+                    continue;
+                }
+
+                $clean = $this->sanitizeHtml($asset['content']['content']);
+                if ($clean !== $asset['content']['content']) {
+                    $sanitized++;
+                }
+                $asset['content']['content'] = $clean;
+            }
+            unset($asset);
+        }
+
+        if ($sanitized > 0) {
+            Brizy_Logger::instance()->notice('Sanitized project code assets of a user without unfiltered_html', [
+                'user' => get_current_user_id(),
+                'sanitized' => $sanitized,
+            ]);
+        }
+
+        return $compiledStyles;
     }
 
     /**
@@ -971,12 +1017,15 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi
     public function setTemplateType()
     {
         try {
-
             $this->verifyAuthorization(self::nonce);
-            $templateId = $this->param('template_id');
+            $templateId = (int)$this->param('template_id');
             $templateType = $this->param('template_type');
             if (get_post_type($templateId) != Brizy_Admin_Templates::CP_TEMPLATE) {
                 $this->error(400, 'Invalid template');
+            }
+            $templatePostType = get_post_type_object(Brizy_Admin_Templates::CP_TEMPLATE);
+            if (!current_user_can($templatePostType->cap->edit_posts)) {
+                $this->error(403, 'Unauthorized template save.');
             }
             $allowedTypes = [
                 Brizy_Admin_Templates::TYPE_SINGLE,

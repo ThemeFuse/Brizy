@@ -82,6 +82,64 @@ function hasSimpleSpanStructure(block: Element): boolean {
 }
 
 /**
+ * Inline wrapper tags that can carry color/formatting in RichText HTML.
+ * Both spans and links (<a href>) may hold the text color.
+ */
+const INLINE_WRAPPER_TAGS = new Set(["SPAN", "A"]);
+
+/**
+ * Return the first inline wrapper (span/a) whose color/formatting should be
+ * preserved when the block's content is composed entirely of inline wrappers
+ * (optionally separated by whitespace-only text nodes), e.g. multiple colored
+ * spans or a colored link:
+ *   <h1><span class="brz-cp-color8">A </span><span class="brz-cp-color3">B</span></h1>
+ *   <p><a href="#" class="brz-cp-color3">Link</a></p>
+ *
+ * In that case there is no raw text mixed with the wrappers, so when replacing
+ * the whole text we can keep the first wrapper (with its color) instead of
+ * dropping all formatting. Returns null when the block has raw (non-whitespace)
+ * text mixed in, or when it contains no inline wrappers at all.
+ */
+function getPreservableWrapper(block: Element): Element | null {
+  let firstWrapper: Element | null = null;
+
+  for (const child of Array.from(block.childNodes)) {
+    if (child.nodeType === Node.ELEMENT_NODE) {
+      if (!INLINE_WRAPPER_TAGS.has(child.nodeName)) return null;
+      if (!firstWrapper) firstWrapper = child as Element;
+    } else if (child.nodeType === Node.TEXT_NODE) {
+      // Raw text mixed with wrappers -> not a pure-wrapper block
+      if ((child.textContent || "").trim() !== "") return null;
+    }
+  }
+
+  return firstWrapper;
+}
+
+/**
+ * Replace the text inside an inline wrapper while preserving nested inline
+ * wrappers (e.g. <a href="#"><span class="brz-cp-color3">text</span></a>).
+ * Descends the first inline-wrapper chain and sets the text on the innermost
+ * wrapper, removing any sibling nodes at each level so a single formatted
+ * chain remains.
+ */
+function setWrapperText(wrapper: Element, newText: string): void {
+  const innerWrapper = getPreservableWrapper(wrapper);
+
+  if (innerWrapper) {
+    setWrapperText(innerWrapper, newText);
+    // Drop siblings of the preserved inner wrapper
+    for (const child of Array.from(wrapper.childNodes)) {
+      if (child !== innerWrapper) {
+        wrapper.removeChild(child);
+      }
+    }
+  } else {
+    wrapper.textContent = newText;
+  }
+}
+
+/**
  * Check if element already has a class with the given prefix
  */
 function hasClassWithPrefix(element: Element, prefix: string): boolean {
@@ -230,11 +288,16 @@ export function replaceAllTextInHtml(html: string, newText: string): string {
     // Put all text in first block, clear others
     textBlocks.forEach((block, index) => {
       if (index === 0) {
-        if (hasSimpleSpanStructure(block)) {
-          // Simple structure: preserve span, replace text inside
-          const span = block.querySelector("span");
-          if (span) {
-            span.textContent = newText;
+        const preservableWrapper = getPreservableWrapper(block);
+        if (preservableWrapper) {
+          // Content is entirely inline wrappers (colored spans and/or links):
+          // keep the first wrapper (with its color) and drop the rest so the
+          // color is preserved instead of lost.
+          setWrapperText(preservableWrapper, newText);
+          for (const child of Array.from(block.childNodes)) {
+            if (child !== preservableWrapper) {
+              block.removeChild(child);
+            }
           }
         } else {
           // Mixed content: put plain text in block (span added by updateRichTextColor if needed)

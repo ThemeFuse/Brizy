@@ -24,6 +24,13 @@ class Brizy_Editor_CompiledSectionManager {
 			}
 			$block['html'] = Brizy_SiteUrlReplacer::hideSiteUrl( $this->sanitizeHtml( $block['html'], $capabilityIgnore ) );
 
+			// the asset content is printed unescaped on the frontend, so it must be
+			// filtered for authors that are not allowed to post unfiltered html
+			if ( isset( $block['assets'] ) && ! $capabilityIgnore && ! current_user_can( 'unfiltered_html' ) ) {
+				$sanitizer         = new Brizy_Editor_AssetSanitizer();
+				$block['assets'] = $sanitizer->sanitizeAssets( $block['assets'] );
+			}
+
 			// hide the site url in the assets
 			if ( isset( $block['assets']['freeStyles']['generic'] )  ) {
 				foreach ( $block['assets']['freeStyles']['generic'] as &$asset ) {

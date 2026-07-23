@@ -186,7 +186,7 @@ export const updateTextDefinition: ToolDefinition = {
   name: "updateText",
   strict: true,
   description:
-    "Update a Text/RichText element. IMPORTANT: Send plain text only, NO HTML. Use fontStyle for predefined typography presets (heading1, paragraph, etc.) or individual properties (fontSize, fontWeight) for custom values. Use searchElements to find element IDs first.",
+    "Update a standalone Text/RichText element. For text, color, or typography inside a widget (Menu, Button, Icon, Breadcrumbs, etc.), use that widget's own update tool (updateMenu, updateButton, …) — NOT this tool. IMPORTANT: Send plain text only, NO HTML. Use fontStyle for predefined typography presets (heading1, paragraph, etc.) or individual properties (fontSize, fontWeight) for custom values. Use searchElements to find element IDs first.",
   category: "update",
   parameters: {
     type: "object",

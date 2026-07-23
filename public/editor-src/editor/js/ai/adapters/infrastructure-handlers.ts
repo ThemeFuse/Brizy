@@ -109,6 +109,13 @@ export function createInfrastructureHandlers(
       return { isPro: pageRepository.isPro() };
     },
 
+    getAvailableMenus: () => {
+      log.tools("getAvailableMenus input {}");
+      const data = pageRepository.getAvailableMenus();
+      log.tools("getAvailableMenus output %o", data);
+      return data;
+    },
+
     getAvailableIcons: async (args: ToolArgs) => {
       log.tools("getAvailableIcons input %o", args);
 

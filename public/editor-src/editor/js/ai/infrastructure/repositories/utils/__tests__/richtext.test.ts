@@ -359,6 +359,34 @@ describe("RichText Utilities", () => {
         newText: "All replaced",
         // Only first block is kept, others are removed
         expected: "<h1>All replaced</h1>"
+      },
+      {
+        name: "preserve color when content is multiple colored spans",
+        html: '<h1 data-generated-css="brz-css-idwA9" data-uniq-id="gMZzX" class="brz-text-lg-center brz-tp-lg-heading1"><span style="color: rgba(var(--brz-global-color8),1);" class="brz-cp-color8">We Help You To Grow Your </span><span style="color: rgba(var(--brz-global-color3),1);" class="brz-cp-color3">Business</span></h1>',
+        newText: "Ti aiutiamo a far crescere la tua attività",
+        // First span (with its color) is preserved, extra spans removed
+        expected:
+          '<h1 data-generated-css="brz-css-idwA9" data-uniq-id="gMZzX" class="brz-text-lg-center brz-tp-lg-heading1"><span style="color: rgba(var(--brz-global-color8),1);" class="brz-cp-color8">Ti aiutiamo a far crescere la tua attività</span></h1>'
+      },
+      {
+        name: "preserve color when content is spans separated by whitespace",
+        html: '<p><span class="brz-cp-color2">Hello</span> <span class="brz-cp-color3">World</span></p>',
+        newText: "New text",
+        expected: '<p><span class="brz-cp-color2">New text</span></p>'
+      },
+      {
+        name: "preserve color on a link (a href)",
+        html: '<p><a href="https://example.com" class="brz-cp-color3" style="color: red;">Old link</a></p>',
+        newText: "New link text",
+        expected:
+          '<p><a href="https://example.com" class="brz-cp-color3" style="color: red;">New link text</a></p>'
+      },
+      {
+        name: "preserve color on a span nested inside a link",
+        html: '<p><a href="https://example.com"><span class="brz-cp-color3" style="color: red;">Old</span></a></p>',
+        newText: "New",
+        expected:
+          '<p><a href="https://example.com"><span class="brz-cp-color3" style="color: red;">New</span></a></p>'
       }
     ];
 

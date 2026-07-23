@@ -95,6 +95,9 @@ const COLOR_DEFAULTS: Array<{ hex: string; palette: string }> = [
   { hex: "thumbArrowColorHex", palette: "thumbArrowColorPalette" },
   { hex: "thumbArrowBgColorHex", palette: "thumbArrowBgColorPalette" },
   { hex: "iconColorHex", palette: "iconColorPalette" },
+  { hex: "menuBgColorHex", palette: "menuBgColorPalette" },
+  { hex: "hoverMenuBgColorHex", palette: "hoverMenuBgColorPalette" },
+  { hex: "menuBorderColorHex", palette: "menuBorderColorPalette" },
   { hex: "arrowsColorHex", palette: "arrowsColorPalette" },
   { hex: "textColorHex", palette: "textColorPalette" },
   { hex: "linkColorHex", palette: "linkColorPalette" },
@@ -165,6 +168,42 @@ export function withColorDefaults<T extends Record<string, unknown>>(
     if (hex in result && result[hex] !== undefined && !(palette in result)) {
       (result as Record<string, unknown>)[palette] = "";
     }
+  }
+
+  return result;
+}
+
+/**
+ * Restore a color's opacity when a *ColorHex is applied to a stored
+ * fully-transparent color, mirroring the toolbar's setHex rule
+ * (utils/options/ColorPicker/model: opacity = current || tempOpacity || 1).
+ * AI update tools send a hex without an opacity, so a stored *ColorOpacity of 0
+ * — the default for most background colors — would keep the change invisible.
+ *
+ * Stateful: needs the element's stored value, so callers pass it in (via a
+ * beforeUpdate hook). Only fills the gap — an explicit opacity in `changes`, or
+ * a non-zero stored opacity, is left untouched, so a legitimately semi-
+ * transparent color is never clobbered by a hex-only edit.
+ */
+export function restoreColorOpacity(
+  stored: Record<string, unknown>,
+  changes: Record<string, unknown>
+): Record<string, unknown> {
+  const result: Record<string, unknown> = { ...changes };
+
+  for (const key of Object.keys(changes)) {
+    const match = key.match(/^(.*[Cc]olor)Hex$/);
+    if (!match || !changes[key]) continue;
+
+    const opacityKey = `${match[1]}Opacity`;
+    if (opacityKey in changes) continue; // caller set opacity explicitly
+
+    const current = stored[opacityKey];
+    if (typeof current === "number" && current !== 0) continue; // already visible
+
+    const tempKey = `temp${opacityKey[0].toUpperCase()}${opacityKey.slice(1)}`;
+    const temp = stored[tempKey];
+    result[opacityKey] = typeof temp === "number" && temp !== 0 ? temp : 1;
   }
 
   return result;

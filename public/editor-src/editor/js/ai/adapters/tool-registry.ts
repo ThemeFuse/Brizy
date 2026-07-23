@@ -93,7 +93,10 @@ import {
   addMapConfig,
   updateMapConfig
 } from "visual/editorComponents/Map/definitions";
-import { addMenuConfig } from "visual/editorComponents/Menu/definitions";
+import {
+  addMenuConfig,
+  updateMenuConfig
+} from "visual/editorComponents/Menu/definitions";
 import {
   addPaypalConfig,
   updatePaypalConfig
@@ -268,7 +271,8 @@ const componentConfigs: ToolConfig[] = [
   updateTableOfContentsConfig,
   updateBreadcrumbsConfig,
   updateSoundCloudConfig,
-  updateChartConfig
+  updateChartConfig,
+  updateMenuConfig
 ];
 
 // ===========================================

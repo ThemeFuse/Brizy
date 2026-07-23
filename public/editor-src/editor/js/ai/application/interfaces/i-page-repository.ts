@@ -5,6 +5,7 @@ import type {
   DuplicateElementResult,
   ElementDetails,
   GetAvailableIconsResult,
+  GetAvailableMenusResult,
   MoveElementResult,
   PageStructure,
   RemoveBlockResult,
@@ -283,6 +284,11 @@ export interface IPageRepository {
   getAvailableIcons(
     params: GetAvailableIconsParams
   ): Promise<BrizyToolResult<GetAvailableIconsResult>>;
+
+  /**
+   * Get available CMS menus (from config.menuData) for use with menuSelected
+   */
+  getAvailableMenus(): BrizyToolResult<GetAvailableMenusResult>;
 
   /**
    * Check if the current user has Brizy Pro

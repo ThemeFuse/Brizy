@@ -80,7 +80,7 @@ class Brizy_Editor_RestExtend {
                     return get_post_meta( $post['id'], $field_name, true );
                 },
                 'update_callback' => function ( $meta_value, $post ) {
-                    update_post_meta( $post->ID, 'brizy_attachment_focal_point', $meta_value );
+                    update_post_meta( $post->ID, 'brizy_attachment_focal_point', Brizy_Editor_FocalPoint::sanitize( $meta_value ) );
                 }
             )
         );

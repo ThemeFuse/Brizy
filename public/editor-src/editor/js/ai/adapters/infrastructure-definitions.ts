@@ -120,6 +120,19 @@ export const getAvailableIconsDefinition: ToolDefinition = {
   }
 };
 
+export const getAvailableMenusDefinition: ToolDefinition = {
+  name: "getAvailableMenus",
+  strict: true,
+  description:
+    "List the site's CMS menus as { id, name, itemCount }. THE REQUIRED ENTRY POINT for every menu, navigation, nav bar, navbar, header links, or hamburger menu request: when the user asks to add, create, insert, or change a menu or navigation, call this FIRST — never generateBlock and never hand-built Text/Button links. Then branch on the count: 0 -> do NOT add a Menu element (it renders empty); ONLY in this zero-menus case build navigation from Text/Button links instead and tell the user to create a menu in the CMS (you cannot create it). 1 -> addMenu, then updateMenu with that id. 2+ -> ask the user which menu to use (name them), then proceed. Always use an exact `id` from the results — never invent one.",
+  category: "read",
+  parameters: {
+    type: "object",
+    properties: {},
+    additionalProperties: false
+  }
+};
+
 export const isProDefinition: ToolDefinition = {
   name: "isPro",
   strict: true,
@@ -795,6 +808,7 @@ export const infrastructureDefinitions: ToolDefinition[] = [
   getElementByIdDefinition,
   searchElementsDefinition,
   getAvailableIconsDefinition,
+  getAvailableMenusDefinition,
   isProDefinition,
   getGoogleFontsDefinition,
   // Block tools

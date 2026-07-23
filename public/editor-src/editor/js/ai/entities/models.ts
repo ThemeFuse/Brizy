@@ -209,3 +209,20 @@ export interface GetAvailableIconsResult {
   readonly icons: readonly IconInfo[];
   readonly totalCount: number;
 }
+
+/**
+ * Menu info for getAvailableMenus (CMS menu — see config.menuData)
+ */
+export interface MenuInfo {
+  readonly id: string;
+  readonly name: string;
+  readonly itemCount: number;
+}
+
+/**
+ * Get available menus result
+ */
+export interface GetAvailableMenusResult {
+  readonly menus: readonly MenuInfo[];
+  readonly totalCount: number;
+}

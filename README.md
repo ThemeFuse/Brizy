@@ -2,9 +2,9 @@
 
 Contributors: themefuse<br>
 Requires at least: 4.5<br>
-Tested up to: 7.0.1<br>
+Tested up to: 7.0.2<br>
 Requires PHP: 7.4<br>
-Stable tag: 2.8.18<br>
+Stable tag: 2.8.19<br>
 License: GPLv3<br>
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -135,6 +135,10 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 [Privacy policy](https://brizy.io/privacy/)
 
 ## Changelog
+
+### 2.8.19 - 2026-07-23
+* Fixed: Header glitch in Safari
+* Fixed: Security patches
 
 ### 2.8.18 - 2026-07-16
 * New: Image Fetch priority

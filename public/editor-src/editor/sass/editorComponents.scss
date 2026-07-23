@@ -13,6 +13,10 @@
 // Section
 @use "editorComponents/section";
 
+// Critical Menu FOUC guard — render-blocking hiding rules for the mmenu copy.
+// Full menu styling stays deferred in editorComponents.pro (see file header).
+@use "editorComponents/menu.critical";
+
 // containers
 @use "editorComponents/container";
 
