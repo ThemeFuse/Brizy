@@ -333,34 +333,9 @@ class Brizy_Public_AssetEnqueueManager
             return '';
         }
 
-        $attrString = '';
-        foreach ($attrs as $key => $value) {
-            if (!is_string($key) || !preg_match('/^[a-zA-Z][a-zA-Z0-9_:-]*$/', $key)) {
-                continue;
-            }
-
-            $lowerKey = strtolower($key);
-            if (strpos($lowerKey, 'on') === 0 || $lowerKey === 'src' || $lowerKey === 'href') {
-                continue;
-            }
-
-            // a false/null attribute is an absent attribute, and emitting it
-            // would switch on the boolean attributes it is meant to disable
-            if ($value === false || is_null($value)) {
-                continue;
-            }
-            if ($value === true) {
-                $attrString .= ' ' . $key . '=""';
-                continue;
-            }
-            if (!is_scalar($value)) {
-                continue;
-            }
-
-            $attrString .= ' ' . $key . '="' . esc_attr((string)$value) . '"';
-        }
-
-        return $attrString;
+        return array_reduce(array_keys($attrs), function ($attrString, $key) use ($attrs) {
+            return $attrString . ' ' . esc_attr($key) . '="' . esc_attr($attrs[$key]) . '"';
+        }, '');
     }
 
 

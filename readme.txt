@@ -4,7 +4,7 @@ Tags: page builder, website builder, brizy, editor, visual editor, unyson, wysiw
 Requires at least: 4.5
 Tested up to: 7.0.2
 Requires PHP: 7.4
-Stable tag: 2.8.19
+Stable tag: 2.8.20
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -135,6 +135,10 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 11. **Resize columns by dragging the handle that appears in between**
 
 == Changelog ==
+
+= 2.8.20 - 2026-07-24 =
+* Fixed: onLoad attribute cleanup
+
 
 = 2.8.19 - 2026-07-23 =
 * Fixed: Header glitch in Safari
