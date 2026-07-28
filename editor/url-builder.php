@@ -424,6 +424,12 @@ class Brizy_Editor_UrlBuilder {
 		if ( $path ) {
 			$path = "/" . ltrim( $path, "/" );
 		}
+
+		if(strpos($path,"/wp-content")!==false)
+		{
+			$path = substr($path, strpos($path,"/wp-content"));
+		}
+
 		$urlInfo = parse_url( home_url( $path ) );
 		$portPart = "";
 		if(isset($urlInfo['port']))
