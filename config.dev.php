@@ -30,7 +30,7 @@ class Brizy_Config
     const ABOUT_URL = "https://brizy.io";
     const TERMS_OF_SERVICE_URL = "https://www.brizy.io/terms-and-conditions";
 
-    const EDITOR_BUILD_PATH = BRIZY_PLUGIN_PATH.DIRECTORY_SEPARATOR.'public'.DIRECTORY_SEPARATOR.'editor-build'.DIRECTORY_SEPARATOR.'dev';
+    const EDITOR_BUILD_PATH = BRIZY_PLUGIN_PATH . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR . 'editor-build' . DIRECTORY_SEPARATOR . 'dev';
     const EDITOR_BUILD_RELATIVE_PATH = 'public' . DIRECTORY_SEPARATOR . 'editor-build' . DIRECTORY_SEPARATOR . 'dev';
     const CLOUD_APP_KEY = 'YTVhMDEwMGUyNGE4OTQ5OWM2NTY3OGM3N2MxNzMzMTBjOWVlNTg0OGM0NWU1NGYzY2QxMGEzOWQ3NWNjMDk3Zg';
     const CLOUD_ENDPOINT = 'https://beta1.brizydemo.com';
@@ -70,7 +70,7 @@ class Brizy_Config
     const TEMPLATES_IMAGE_URL = 'https://cloud-1de12d.b-cdn.net/media/iW=1024&iH=1024/';
 
     // this file will be stored in uploads/brizy/
-    const PROJECT_STLYES_FILE_PATH = DIRECTORY_SEPARATOR.'project'.DIRECTORY_SEPARATOR.'styles.css';
+    const PROJECT_STLYES_FILE_PATH = DIRECTORY_SEPARATOR . 'project' . DIRECTORY_SEPARATOR . 'styles.css';
 
     static public function getCompilerUrls()
     {
@@ -115,7 +115,7 @@ class Brizy_Config
 
         $host = self::getEnvValue('COMPILER_DOWNLOAD_HOST');
 
-        return 'http://'.$host.'/wp-content/plugins/brizy/public/editor-build/dev';
+        return 'http://' . $host . '/wp-content/plugins/brizy/public/editor-build/dev';
     }
 
     static public function getSupportUrl()
@@ -130,7 +130,7 @@ class Brizy_Config
 
     static public function isAiEnabled()
     {
-        return (bool)apply_filters('brizy_ai_enabled', !apply_filters('brizy_wl_enabled', false));
+        return !apply_filters('brizy_wl_enabled', false);
     }
 
     static private function getEnvValue($name)
@@ -148,7 +148,7 @@ class Brizy_Config
 
     static public function getEditorNewTemplatesUrl($directories)
     {
-        return apply_filters('brizy_editor_config_templates_url', self::EDITOR_NEW_TEMPLEATES_URL.$directories);
+        return apply_filters('brizy_editor_config_templates_url', self::EDITOR_NEW_TEMPLEATES_URL . $directories);
     }
 
     static public function getTermsOfServiceUrl()

@@ -52,7 +52,7 @@ class Brizy_Import_Main
 
         $args = [
             'isWhiteLabel' => $isWhiteLabel,
-            'isAiEnabled' => Brizy_Config::isAiEnabled(),
+            'isAiEnabled' => (bool) apply_filters('brizy_ai_enabled', true),
             'l10n' => [
                 'all' => __('All', 'brizy'),
                 'livePreview' => __('Live Preview', 'brizy'),

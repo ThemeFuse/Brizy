@@ -29,7 +29,7 @@ class Brizy_Config
     const SUPPORT_URL = "https://support.brizy.io";
     const ABOUT_URL = "https://www.brizy.io";
     const TERMS_OF_SERVICE_URL = "https://www.brizy.io/terms-and-conditions";
-    const EDITOR_BUILD_PATH = BRIZY_PLUGIN_PATH.DIRECTORY_SEPARATOR.'public'.DIRECTORY_SEPARATOR.'editor-build'.DIRECTORY_SEPARATOR.'prod';
+    const EDITOR_BUILD_PATH = BRIZY_PLUGIN_PATH . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR . 'editor-build' . DIRECTORY_SEPARATOR . 'prod';
     const EDITOR_BUILD_RELATIVE_PATH = 'public/editor-build/prod';
 
     const CLOUD_APP_KEY = 'YTVhMDEwMGUyNGE4OTQ5OWM2NTY3OGM3N2MxNzMzMTBjOWVlNTg0OGM0NWU1NGYzY2QxMGEzOWQ3NWNjMDk3Zg';
@@ -112,7 +112,7 @@ class Brizy_Config
 
     static public function getCompilerDownloadUrl()
     {
-        return 'https://static.brizy.io/builds/free/'.BRIZY_EDITOR_VERSION;
+        return 'https://static.brizy.io/builds/free/' . BRIZY_EDITOR_VERSION;
     }
 
     static public function getSupportUrl()
@@ -127,7 +127,7 @@ class Brizy_Config
 
     static public function isAiEnabled()
     {
-        return (bool)apply_filters('brizy_ai_enabled', !apply_filters('brizy_wl_enabled', false));
+        return !apply_filters('brizy_wl_enabled', false);
     }
 
     static public function getUpgradeUrl()
