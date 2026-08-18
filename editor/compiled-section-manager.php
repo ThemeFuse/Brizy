@@ -132,7 +132,20 @@ class Brizy_Editor_CompiledSectionManager {
 			return $value;
 		}
 
-		return sanitize_text_field( (string) $value );
+		$value = wp_check_invalid_utf8( (string) $value );
+
+		if ( strpos( $value, '<' ) !== false ) {
+			$value = wp_strip_all_tags( $value, false );
+		}
+
+		// Unlike sanitize_text_field(), this intentionally keeps percent-encoded
+		// sequences intact: root attribute values (e.g. data-brz-scrolling) carry
+		// encodeURIComponent(JSON.stringify(...)) payloads that the frontend decodes,
+		// and sanitize_text_field() strips every %XX octet, corrupting that JSON.
+		// The value is still esc_attr()'d in buildAttributeString() on output.
+		$value = preg_replace( '/[\r\n\t ]+/', ' ', $value );
+
+		return trim( $value );
 	}
 
 	private function sanitizeRootAttributes( $attributes ) {
