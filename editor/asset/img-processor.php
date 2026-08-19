@@ -27,7 +27,7 @@ class Brizy_Editor_Asset_ImgProcessor implements Brizy_Editor_Content_ProcessorI
 	 * @return string
 	 */
 	public function process( $content, Brizy_Content_Context $context ) {
-		$site_url = str_replace( array( 'http://', 'https://' ), '', home_url() );
+		$site_url = str_replace( array( 'http://', 'https://' ), '', Brizy_Editor_UrlBuilder::homeUrl() );
 		$site_url = str_replace( array( '/', '.' ), array( '\/', '\.' ), $site_url );
 
 		preg_match_all( '/(http|https):\/\/' . $site_url . '\/?(\?' . $this->uidKey . '=(.[^"\',\s)]*))/im', $content, $matches );

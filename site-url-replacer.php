@@ -5,7 +5,7 @@ class Brizy_SiteUrlReplacer {
 	static public function hideSiteUrl( $content, $url = null ) {
 
 		if ( ! $url ) {
-			$url = home_url();
+			$url = Brizy_Editor_UrlBuilder::homeUrl();
 		}
 
 		$pattern = str_replace( [ 'https://', 'http://', 'www.', '/', '.' ], [ '', '', '', '\/', '\.' ], $url );
@@ -24,7 +24,7 @@ class Brizy_SiteUrlReplacer {
 		}
 
 		if ( ! $url ) {
-			$url = home_url();
+			$url = Brizy_Editor_UrlBuilder::homeUrl();
 		}
 
 		$content = preg_replace( Brizy_Config::SITE_URL_PLACEHOLDER_REGEX, $url, $content );

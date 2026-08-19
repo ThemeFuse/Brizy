@@ -26,7 +26,7 @@ class Brizy_Editor_Asset_MediaProcessor implements Brizy_Editor_Content_Processo
 	 */
 	public function process_external_asset_urls( $content, Brizy_Content_Context $context ) {
 
-		$site_url = str_replace( array( 'http://', 'https://' ), '', home_url() );
+		$site_url = str_replace( array( 'http://', 'https://' ), '', Brizy_Editor_UrlBuilder::homeUrl() );
 		$site_url = str_replace( array( '/', '.' ), array( '\/', '\.' ), $site_url );
 
 		//preg_match_all( '/' . $site_url . '\/?(\?' . Brizy_Public_CropProxy::ENDPOINT . '=(.[^"\',\s)]*))/im', $content, $matches );

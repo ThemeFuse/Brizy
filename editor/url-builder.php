@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * @internal
+ */
 class Brizy_Editor_UrlBuilder {
 
 	/**
@@ -101,7 +104,7 @@ class Brizy_Editor_UrlBuilder {
 		// do not move this line
 		$params[ Brizy_Editor::prefix() ] = $end_point;
 
-		return add_query_arg( $params, home_url( '/' ) );
+		return add_query_arg( $params, self::homeUrl( '/' ) );
 	}
 
 	/**
@@ -296,7 +299,7 @@ class Brizy_Editor_UrlBuilder {
 			$path = '/' . ltrim( $path, '/' );
 		}
 		$pluginUrl = $this->plugin_url( $path, $__FILE__ );
-		$urlInfo = parse_url( $pluginUrl );
+		$urlInfo   = parse_url( $pluginUrl );
 
 		return $urlInfo['path'];
 	}
@@ -351,7 +354,7 @@ class Brizy_Editor_UrlBuilder {
 		if ( $path ) {
 			$path = "/" . ltrim( $path, "/" );
 		}
-		$url = Brizy_Config::MEDIA_IMAGE_URL . $path;
+		$url  = Brizy_Config::MEDIA_IMAGE_URL . $path;
 		$urls = array();
 		foreach ( Brizy_Config::getEditorBaseUrls() as $baseUrl ) {
 			$urls[] = $baseUrl . $url;
@@ -425,27 +428,30 @@ class Brizy_Editor_UrlBuilder {
 			$path = "/" . ltrim( $path, "/" );
 		}
 
-		if(strpos($path,"/wp-content")!==false)
-		{
-			$path = substr($path, strpos($path,"/wp-content"));
+		if ( ( $pos = strpos( $path, '/wp-content' ) ) !== false ) {
+			$path = substr( $path, $pos );
+			$url = content_url( substr( $path, strlen( '/wp-content' ) ) );
+		} else {
+			$url = self::homeUrl( $path );
 		}
 
-		$urlInfo = parse_url( home_url( $path ) );
-		$portPart = "";
-		if(isset($urlInfo['port']))
-		{
-			$portPart=":".$urlInfo['port'];
-		}
+		$urlInfo  = parse_url( $url );
+		$portPart = isset( $urlInfo['port'] ) ? ":" . $urlInfo['port'] : "";
 
 		return "{$urlInfo['scheme']}://{$urlInfo['host']}{$portPart}{$urlInfo['path']}";
 	}
 
-	public function homeUrl( $path = '' ) {
+	/**
+	 * @param string $path
+	 *
+	 * @return string
+	 */
+	static public function homeUrl( $path = '' ) {
 		if ( $path ) {
 			$path = "/" . ltrim( $path, "/" );
 		}
 
-		return home_url($path);
+		return apply_filters( 'brizy_unlocalized_home_url', home_url( $path ), $path );
 	}
 
 	static public function cleanPath( $path ) {

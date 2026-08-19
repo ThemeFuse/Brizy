@@ -133,8 +133,8 @@ class Brizy_Editor_Editor_Editor
 //                'type' => ($context=='compile' ? Brizy_Editor_Entity::COMPILER_EXTERNAL : Brizy_Editor_Entity::COMPILER_BROWSER)
 //            ),
             'urls' => array(
-                'site' => home_url(),
-                'api' => home_url('/wp-json/v1'),
+                'site' => Brizy_Editor_UrlBuilder::homeUrl(),
+                'api' => Brizy_Editor_UrlBuilder::homeUrl('/wp-json/v1'),
                 'assets' => $this->urlBuilder->plugin_url(Brizy_Config::EDITOR_BUILD_RELATIVE_PATH),
                 'compileAssets' => $this->urlBuilder->plugin_relative_url(Brizy_Config::EDITOR_BUILD_RELATIVE_PATH),
                 'image' => $this->urlBuilder->external_media_url() . "",
@@ -143,7 +143,7 @@ class Brizy_Editor_Editor_Editor
                 'templateIcons' => $this->urlBuilder->editor_build_url("/editor/icons"),
                 'compileTemplateIcons' => $this->urlBuilder->plugin_relative_url(Brizy_Config::EDITOR_BUILD_RELATIVE_PATH . "/editor/icons"),
                 'templateFonts' => $this->urlBuilder->external_fonts_url(),
-                'editorFonts' => add_query_arg(Brizy_Editor::prefix() . '-font=', '', home_url('/')),
+                'editorFonts' => add_query_arg(Brizy_Editor::prefix() . '-font=', '', Brizy_Editor_UrlBuilder::homeUrl('/')),
                 'pagePreview' => $preview_post_link,
                 'about' => __bt('about-url', apply_filters('brizy_about_url', Brizy_Config::ABOUT_URL)),
                 'backToDashboard' => get_edit_post_link($wp_post_id, null),
@@ -155,11 +155,11 @@ class Brizy_Editor_Editor_Editor
                 'support' => Brizy_Config::getSupportUrl(),
                 'pluginSettings' => admin_url('admin.php?page=' . Brizy_Admin_Settings::menu_slug()),
                 'dashboardNavMenu' => admin_url('nav-menus.php'),
-                'customFile' => home_url('?' . Brizy_Editor::prefix('_attachment') . '='),
+                'customFile' => $this->attachmentEndpointUrl(),
                 'screenshot' => add_query_arg([
                     Brizy_Editor::prefix('_post') => $this->post->getWpPostId(),
                     Brizy_Editor::prefix('_block_screenshot') => '='
-                ], home_url()),
+                ], Brizy_Editor_UrlBuilder::homeUrl()),
             ),
             'form' => array(
                 'submitUrl' => '{{brizy_dc_ajax_url}}?action=' . Brizy_Editor::prefix(Brizy_Editor_Forms_Api::AJAX_SUBMIT_FORM),
@@ -411,9 +411,32 @@ class Brizy_Editor_Editor_Editor
     }
 
 
+    /**
+     * Url of the attachment proxy endpoint, ready for the editor to append an uid to.
+     *
+     * The trailing '=' is load bearing: the editor concatenates the uid onto this
+     * string, so dropping it turns the query var into part of the parameter name
+     * and the request silently returns the page html instead of the file.
+     *
+     * The query is appended after home_url() has run because core's add_query_arg()
+     * ends with preg_replace( '#=(&|$)#', '$1', $ret ), which strips the '=' of an
+     * empty value. Any plugin that filters home_url through add_query_arg() or
+     * remove_query_arg() destroys it, so this is not specific to one translation
+     * plugin. Do not "simplify" this back into home_url( '?key=' ).
+     *
+     * @return string
+     */
+    private function attachmentEndpointUrl()
+    {
+        $base = Brizy_Editor_UrlBuilder::homeUrl('/');
+        $separator = parse_url($base, PHP_URL_QUERY) !== null ? '&' : '?';
+
+        return $base . $separator . Brizy_Editor::prefix('_attachment') . '=';
+    }
+
     private function getApiConfigFields($config, $context)
     {
-        $homeUrl = home_url();
+        $homeUrl = Brizy_Editor_UrlBuilder::homeUrl();
         $separatorParam = parse_url($homeUrl, PHP_URL_QUERY) !== null ? '&' : '/?';
         $aConfig = [
             'api' => [
@@ -426,7 +449,7 @@ class Brizy_Editor_Editor_Editor
 					}'),
                 ],
                 'customFile' => [
-                    'fileUrl' => home_url('?' . Brizy_Editor::prefix('_attachment') . '='),
+                    'fileUrl' => $this->attachmentEndpointUrl(),
                 ],
                 'templates' => [
                     'layoutsChunkUrl' => Brizy_Config::LAYOUTS_CHUNK_URL,

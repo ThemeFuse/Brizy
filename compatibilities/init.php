@@ -68,6 +68,9 @@ class Brizy_Compatibilities_Init {
 		if ( defined( 'POLYLANG_VERSION' ) ) {
 			new Brizy_Compatibilities_Polylang();
 		}
+		if ( defined( 'BOGO_VERSION' ) ) {
+			new Brizy_Compatibilities_Bogo();
+		}
 		if ( class_exists( 'TRP_Translate_Press' ) ) {
 			new Brizy_Compatibilities_TranslatePress();
 		}
