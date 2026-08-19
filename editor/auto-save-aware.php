@@ -39,7 +39,7 @@ trait Brizy_Editor_AutoSaveAware {
 				if ( ! $autosave_is_different ) {
 					wp_delete_post_revision( $old_autosave );
 
-					return new WP_Error( 'rest_autosave_no_changes', __( 'There is nothing to save. The autosave and the post content are the same.' ), array( 'status' => 400 ) );
+					return new WP_Error( 'rest_autosave_no_changes', __( 'There is nothing to save. The autosave and the post content are the same.', 'brizy' ), array( 'status' => 400 ) );
 				}
 
 				/**

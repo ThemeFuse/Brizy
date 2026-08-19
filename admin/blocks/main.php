@@ -164,7 +164,7 @@ class Brizy_Admin_Blocks_Main
             'labels' => $labels,
             'public' => false,
             'has_archive' => false,
-            'description' => __bt('brizy', 'Brizy') . ' ' . __('global block.'),
+            'description' => __bt('brizy', 'Brizy') . ' ' . __('global block.', 'brizy'),
             'publicly_queryable' => false,
             'show_ui' => false,
             'show_in_menu' => false,

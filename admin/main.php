@@ -75,7 +75,7 @@ class Brizy_Admin_Main {
                 'thumbnailId'       => $thumbId,
                 'thumbnailSrc'      => wp_get_attachment_image_src( $thumbId, 'original' ),
                 'postId'            => $postId,
-                'edit_update_label' => __( 'Edit or Update Image' ),
+                'edit_update_label' => __( 'Edit or Update Image', 'brizy' ),
                 'remove_label'      => $post_type_object->labels->remove_featured_image,
                 'pluginUrl'         => $urlBuilder->editor_build_url()
         ] );
@@ -118,7 +118,7 @@ class Brizy_Admin_Main {
         }
         try {
             if ( Brizy_Editor_Entity::isBrizyEnabled( $post->ID ) ) {
-                $post_states['brizy'] = __( Brizy_Editor::get()->get_name() );
+                $post_states['brizy'] = __( Brizy_Editor::get()->get_name(), 'brizy' );
             }
         } catch ( Exception $e ) {
             // ignore this.
@@ -452,7 +452,7 @@ class Brizy_Admin_Main {
                 $p->post_status = 'draft';
                 $update_post    = true;
             }
-            if ( $p->post_title == __( 'Auto Draft' ) ) {
+            if ( $p->post_title == __( 'Auto Draft', 'brizy' ) ) {
                 $p->post_title = __bt( 'brizy', 'Brizy' ) . ' #' . $p->ID;
                 $update_post   = true;
             }

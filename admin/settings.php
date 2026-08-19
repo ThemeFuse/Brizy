@@ -307,7 +307,7 @@ class Brizy_Admin_Settings
     public function get_capability_options()
     {
         return apply_filters('brizy_settings_capability_options', array(
-                array('capability' => '', 'label' => __('No Access')),
+                array('capability' => '', 'label' => __('No Access', 'brizy')),
                 array(
                         'capability' => Brizy_Admin_Capabilities::CAP_EDIT_WHOLE_PAGE,
                         'label' => __('Full Access', 'brizy')
@@ -377,7 +377,7 @@ class Brizy_Admin_Settings
             $is_active_class = $tab['is_selected'] ? 'nav-tab-active' : '';
             ?>
             <a href="<?php echo $tab['href'] ?>"
-               class="nav-tab <?php echo $is_active_class ?>"><?php echo __($tab['label']) ?></a>
+               class="nav-tab <?php echo $is_active_class ?>"><?php echo __($tab['label'], 'brizy') ?></a>
             <?php
         }
     }

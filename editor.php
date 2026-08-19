@@ -596,10 +596,10 @@ class Brizy_Editor
             return !empty($size['width']) && !empty($size['height']);
         });
         $translations = [
-            'thumbnail' => __('Thumbnail'),
-            'medium' => __('Medium'),
-            'large' => __('Large'),
-            'full' => __('Full Size'),
+            'thumbnail' => __('Thumbnail', 'brizy'),
+            'medium' => __('Medium', 'brizy'),
+            'large' => __('Large', 'brizy'),
+            'full' => __('Full Size', 'brizy'),
         ];
         foreach ($image_sizes as $sizeName => $sizeAttrs) {
             $label = isset($translations[$sizeName]) ? $translations[$sizeName] : ucwords(str_replace('_', ' ', $sizeName));

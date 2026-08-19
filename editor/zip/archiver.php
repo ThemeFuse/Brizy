@@ -44,7 +44,7 @@ class Brizy_Editor_Zip_Archiver implements Brizy_Editor_Zip_ArchiverInterface {
 		];
 
 		if ( ! class_exists( 'ZipArchive' ) ) {
-			throw new InvalidArgumentException( __( 'Please install/enable php zip extension. Contact your hosting company for more info and help.' ) );
+			throw new InvalidArgumentException( __( 'Please install/enable php zip extension. Contact your hosting company for more info and help.', 'brizy' ) );
 		}
 	}
 
@@ -77,7 +77,7 @@ class Brizy_Editor_Zip_Archiver implements Brizy_Editor_Zip_ArchiverInterface {
 			$this->addEntityToZip( $z, $item );
 		}
 		if ( ! $z->close() ) {
-			throw new Exception( __( 'Failed to create archive.' ) );
+			throw new Exception( __( 'Failed to create archive.', 'brizy' ) );
 		}
 		unset( $z );
 
@@ -129,7 +129,7 @@ class Brizy_Editor_Zip_Archiver implements Brizy_Editor_Zip_ArchiverInterface {
 		global $wpdb;
 		if ( ! file_exists( $zipPath ) ) {
 			Brizy_Logger::instance()->error( 'Unable to find the archive path.', [ 'path' => $zipPath ] );
-			throw new Exception( __( 'Unable to find the archive.' ) );
+			throw new Exception( __( 'Unable to find the archive.', 'brizy' ) );
 		}
 		$z = new ZipArchive();
 		$z->open( $zipPath );
@@ -178,11 +178,11 @@ class Brizy_Editor_Zip_Archiver implements Brizy_Editor_Zip_ArchiverInterface {
 		$entityClass = $this->getImportClass($data->class);
 		if ( ! class_exists( $entityClass ) ) {
 			Brizy_Logger::instance()->error( "Unsupported object found in zip file", [ 'class' => $entityClass ] );
-			throw new Exception( __( "Unsupported object found in zip file" ) );
+			throw new Exception( __( "Unsupported object found in zip file", 'brizy' ) );
 		}
 		if ( ! $this->isVersionSupported( $data->editorVersion ) ) {
 			Brizy_Logger::instance()->error( "Unsupported zip file version", [ 'version' => $data->editorVersion ] );
-			throw new Exception( __( "Unsupported zip file version" ) );
+			throw new Exception( __( "Unsupported zip file version", 'brizy' ) );
 		}
 		/**
 		 * @var Brizy_Editor_Layout $block ;

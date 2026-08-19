@@ -148,7 +148,7 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi
         try {
             $this->verifyAuthorization(self::nonce);
             if (!isset($_FILES['files'])) {
-                $this->error(400, __('Invalid block file'));
+                $this->error(400, __('Invalid block file', 'brizy'));
             }
             $fields = $this->param('fields') ? $this->param('fields') : [];
             if (!function_exists('wp_handle_upload')) {
@@ -175,7 +175,7 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi
                 if (isset($uploadedFile['error'])) {
                     $this->error(400, $uploadedFile['error']);
                 } else {
-                    $this->error(400, __("Invalid zip file provided"));
+                    $this->error(400, __("Invalid zip file provided", 'brizy'));
                 }
             }
 
