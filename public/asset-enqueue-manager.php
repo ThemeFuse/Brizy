@@ -192,14 +192,125 @@ class Brizy_Public_AssetEnqueueManager
         });
         if (count($collectInline) > 0) {
             $handleStr = 'inline-handle-' . md5(count($collectInline));
-            wp_register_style($handleStr, false);
-            $assetStr = array_reduce($collectInline, function ($assetStr, $asset) {
-                return $assetStr . "\n\n" . $asset->getContent();
-            }, '');
-            wp_enqueue_style($handleStr);
-            wp_add_inline_style($handleStr, $assetStr);
+            $cachePath = $this->getInlineStylesCachePath();
+            $cacheHit = false;
+
+            if ($cachePath) {
+                if (file_exists($cachePath)) {
+                    // Keep mtime fresh so a still-current file isn't swept as if orphaned:
+                    // writeInlineStylesCache() only sets mtime on a miss, never on reuse.
+                    @touch($cachePath);
+                    $cacheHit = true;
+                } else {
+                    $cacheHit = $this->writeInlineStylesCache($cachePath, $collectInline);
+                }
+            }
+
+            if ($cacheHit) {
+                wp_register_style($handleStr, $this->getInlineStylesCacheUrl($cachePath), [], null);
+                wp_enqueue_style($handleStr);
+            } else {
+                wp_register_style($handleStr, false);
+                $assetStr = array_reduce($collectInline, function ($assetStr, $asset) {
+                    return $assetStr . "\n\n" . $asset->getContent();
+                }, '');
+                wp_enqueue_style($handleStr);
+                wp_add_inline_style($handleStr, $assetStr);
+            }
         }
 
+    }
+
+    /**
+     * Absolute filesystem path for the cached, deduplicated-by-content copy of the current
+     * request's concatenated inline styles, or null if the uploads dir isn't usable.
+     * The filename is a hash of the actual compiled content driving the CSS (project styles +
+     * each enqueued post's stored compiled sections), not a proxy like post_modified_gmt, which
+     * WordPress does not update on every path that changes compiled section content (e.g. autosave).
+     *
+     * Returns null (forcing the wp_add_inline_style fallback) whenever any enqueued post is
+     * password-protected: WordPress deliberately sends no-store headers for those responses so
+     * the page itself is never cached, and this content must stay inside that same response
+     * rather than becoming an independently-cacheable, unauthenticated static file.
+     *
+     * @return string|null
+     */
+    private function getInlineStylesCachePath()
+    {
+        foreach ($this->posts as $editorPost) {
+            if (post_password_required($editorPost->getWpPost())) {
+                return null;
+            }
+        }
+
+        $uploadDir = Brizy_Admin_UploadDir::getUploadDir();
+        if (!empty($uploadDir['error'])) {
+            return null;
+        }
+
+        $cacheDir = trailingslashit($uploadDir['basedir']) . 'brizy/head-styles';
+        if (!file_exists($cacheDir) && !wp_mkdir_p($cacheDir)) {
+            return null;
+        }
+        if (!is_dir($cacheDir) || !is_writable($cacheDir)) {
+            return null;
+        }
+
+        $contentSignatures = [wp_json_encode($this->project->getCompiledStyles())];
+        foreach ($this->posts as $id => $editorPost) {
+            $contentSignatures[$id] = $editorPost->getCompiledSections();
+        }
+        ksort($contentSignatures);
+
+        return $cacheDir . '/' . md5(implode("\x00", $contentSignatures)) . '.css';
+    }
+
+    private function getInlineStylesCacheUrl($cachePath)
+    {
+        $uploadDir = Brizy_Admin_UploadDir::getUploadDir();
+
+        return trailingslashit($uploadDir['baseurl']) . 'brizy/head-styles/' . basename($cachePath);
+    }
+
+    /**
+     * Writes the cache file atomically (write to a temp file, then rename) so a webserver
+     * serving the file directly can never read a partially-written copy.
+     *
+     * Occasionally sweeps cache files older than a day rather than deleting the previous
+     * variant synchronously on every write: an in-flight request that already served an older
+     * variant's URL to a visitor may still be fetching it, deleting it immediately could 404
+     * that visitor's stylesheet.
+     *
+     * @param string $cachePath
+     * @param Asset[] $collectInline
+     *
+     * @return bool
+     */
+    private function writeInlineStylesCache($cachePath, $collectInline)
+    {
+        $assetStr = array_reduce($collectInline, function ($assetStr, $asset) {
+            return $assetStr . "\n\n" . $asset->getContent();
+        }, '');
+
+        $tmpPath = $cachePath . '.' . uniqid('', true) . '.tmp';
+        if (@file_put_contents($tmpPath, $assetStr, LOCK_EX) === false) {
+            @unlink($tmpPath);
+            return false;
+        }
+        if (!@rename($tmpPath, $cachePath)) {
+            @unlink($tmpPath);
+            return false;
+        }
+
+        if (mt_rand(1, 100) === 1) {
+            foreach (glob(dirname($cachePath) . '/*.css') ?: [] as $file) {
+                if ($file !== $cachePath && filemtime($file) < time() - DAY_IN_SECONDS) {
+                    @unlink($file);
+                }
+            }
+        }
+
+        return true;
     }
 
     public function enqueueScripts()
