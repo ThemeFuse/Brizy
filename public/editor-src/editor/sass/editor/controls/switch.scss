@@ -67,7 +67,7 @@ $background-light-checked: #c7c9cd;
   &--handle {
     width: 20px;
     height: 20px;
-    position: absolute;
+    position: absolute !important;
     top: 50%;
     left: 4px;
     transform: translateY(-50%);

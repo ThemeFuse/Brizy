@@ -1,3 +1,4 @@
+import AllowEmbedCode from "./AllowEmbedCode";
 import Button from "./Button";
 import Custom from "./Custom";
 import DrawerIcon from "./DrawerIcon";
@@ -19,7 +20,8 @@ const OptionTypes = {
   template: Template,
   language: Languages,
   shortcuts: Link,
-  explorer: Link
+  explorer: Link,
+  allowEmbedCode: AllowEmbedCode
 };
 
 export default OptionTypes;

@@ -9,6 +9,8 @@ import type {
 import CustomCSS from "visual/component/CustomCSS";
 import Placeholder from "visual/component/Placeholder";
 import Toolbar from "visual/component/Toolbar";
+import { subscribeToEmbedCodeConsent } from "visual/utils/elements/embedCode/consentStore";
+import { shouldRunEmbedCodeInEditor } from "visual/utils/elements/embedCode";
 import { attachRefs } from "visual/utils/react";
 import type { MValue } from "visual/utils/value";
 import { Wrapper } from "../tools/Wrapper";
@@ -22,28 +24,72 @@ import { VisibleElement } from "./types";
 
 const resizerPoints = ["centerLeft", "centerRight"] satisfies Point[];
 
+const resizerRestrictions = {
+  width: {
+    px: {
+      min: 5,
+      max: 1000
+    },
+    "%": {
+      min: 5,
+      max: 100
+    }
+  },
+  tabletWidth: {
+    px: {
+      min: 5,
+      max: 1000
+    },
+    "%": {
+      min: 5,
+      max: 100
+    }
+  },
+  mobileWidth: {
+    px: {
+      min: 5,
+      max: 1000
+    },
+    "%": {
+      min: 5,
+      max: 100
+    }
+  }
+};
+
 export default class EmbedCode extends BaseEmbedCode {
   wrapperRef = createRef<HTMLElement>();
-  contentRef: MValue<HTMLElement>;
+  observedNode: MValue<HTMLElement>;
+  unsubscribeConsent: MValue<VoidFunction>;
 
   state = {
     visibleElement: VisibleElement.Placeholder
   };
 
   componentDidMount() {
-    const contentNode = this.getContentNode();
+    // Consent lives outside Redux, so subscribe directly — one toggle has to
+    // reach every EmbedCode instance on the page at once, including instances
+    // inside global blocks and popups.
+    this.unsubscribeConsent = subscribeToEmbedCodeConsent(() =>
+      this.forceUpdate()
+    );
 
-    if (contentNode) {
-      observe(contentNode, this.handleContentVisibility);
-    }
+    this.syncContentObserver();
+  }
+
+  componentDidUpdate() {
+    // The content node exists only while the code is running, so the observer
+    // has to be re-attached whenever consent brings it back.
+    this.syncContentObserver();
   }
 
   componentWillUnmount() {
-    const contentNode = this.getContentNode();
-
-    if (contentNode) {
-      unobserve(contentNode);
+    if (this.observedNode) {
+      unobserve(this.observedNode);
+      this.observedNode = undefined;
     }
+
+    this.unsubscribeConsent?.();
 
     super.componentWillUnmount();
   }
@@ -63,41 +109,60 @@ export default class EmbedCode extends BaseEmbedCode {
   };
 
   getContentNode(): HTMLElement | null {
-    if (this.contentRef) {
-      return this.contentRef;
+    return (
+      this.wrapperRef.current?.querySelector<HTMLElement>(
+        ".brz-embed-content"
+      ) ?? null
+    );
+  }
+
+  syncContentObserver(): void {
+    const node = this.getContentNode();
+
+    if (node === (this.observedNode ?? null)) {
+      return;
     }
 
-    const node =
-      this.wrapperRef.current?.querySelector<HTMLElement>(".brz-embed-content");
+    if (this.observedNode) {
+      unobserve(this.observedNode);
+    }
+
+    this.observedNode = node ?? undefined;
 
     if (node) {
-      this.contentRef = node;
-      return node;
+      observe(node, this.handleContentVisibility);
+    } else if (this.state.visibleElement !== VisibleElement.Placeholder) {
+      // Code stopped running — fall back to the placeholder rather than leaving
+      // a hidden empty region behind.
+      this.setState({ visibleElement: VisibleElement.Placeholder });
     }
-
-    return null;
   }
 
   renderContent(): JSX.Element {
     const { visibleElement } = this.state;
     const { code } = this.getValue();
+    const runCode = shouldRunEmbedCodeInEditor(this.getGlobalConfig());
 
+    // Keep this derived from runCode as well as state: on revoke the content
+    // unmounts in this same render while visibleElement is still Content, and
+    // hiding the placeholder here too would blank the element for a frame.
     const placeholderClassname = classNames({
-      "brz-d-none": visibleElement !== VisibleElement.Placeholder
-    });
-
-    const contentClassname = classNames({
-      "brz-embed-content--hidden": visibleElement !== VisibleElement.Content
+      "brz-d-none": runCode && visibleElement !== VisibleElement.Placeholder
     });
 
     return (
       <>
         <Placeholder icon="iframe" className={placeholderClassname} />
-        <EmbedCodeComponent
-          code={code}
-          className="brz-blocked"
-          parentClassName={contentClassname}
-        />
+        {runCode && (
+          <EmbedCodeComponent
+            code={code}
+            className="brz-blocked"
+            parentClassName={classNames({
+              "brz-embed-content--hidden":
+                visibleElement !== VisibleElement.Content
+            })}
+          />
+        )}
       </>
     );
   }
@@ -129,38 +194,6 @@ export default class EmbedCode extends BaseEmbedCode {
       )
     );
 
-    const resizerRestrictions = {
-      width: {
-        px: {
-          min: 5,
-          max: 1000
-        },
-        "%": {
-          min: 5,
-          max: 100
-        }
-      },
-      tabletWidth: {
-        px: {
-          min: 5,
-          max: 1000
-        },
-        "%": {
-          min: 5,
-          max: 100
-        }
-      },
-      mobileWidth: {
-        px: {
-          min: 5,
-          max: 1000
-        },
-        "%": {
-          min: 5,
-          max: 100
-        }
-      }
-    };
     return (
       <Toolbar
         {...this.makeToolbarPropsFromConfig2(toolbarConfig, sidebarConfig)}

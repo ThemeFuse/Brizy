@@ -1,4 +1,5 @@
 import type { ISharedStore } from "visual/plugins/SharedStore";
+import type { Translation } from "visual/utils/i18n/t";
 import type { IPageRepository } from "../application/interfaces/i-page-repository";
 import type { IProjectRepository } from "../application/interfaces/i-project-repository";
 import type {
@@ -29,9 +30,10 @@ export class BrizyToolServer implements IToolServer {
   constructor(
     pageRepository: IPageRepository,
     projectRepository: IProjectRepository,
-    store: ISharedStore
+    store: ISharedStore,
+    t: Translation
   ) {
-    this.definitions = getBrizyToolDefinitions();
+    this.definitions = getBrizyToolDefinitions(t);
     this.handlers = createBrizyToolHandlers(
       pageRepository,
       projectRepository,
@@ -58,13 +60,16 @@ export class BrizyToolServer implements IToolServer {
     const startTime = performance.now();
 
     try {
-      const result = await handler(request.arguments);
+      // Handlers already return a BrizyToolResult — flatten it into the
+      // response instead of nesting a second identical envelope under `data`.
+      const { success, data, error } = await handler(request.arguments);
       const duration = performance.now() - startTime;
 
       return {
         requestId: "",
-        success: true,
-        data: result,
+        success,
+        data,
+        error,
         duration
       };
     } catch (error) {
@@ -86,7 +91,8 @@ export class BrizyToolServer implements IToolServer {
 export function createBrizyToolServer(
   pageRepository: IPageRepository,
   projectRepository: IProjectRepository,
-  store: ISharedStore
+  store: ISharedStore,
+  t: Translation
 ): BrizyToolServer {
-  return new BrizyToolServer(pageRepository, projectRepository, store);
+  return new BrizyToolServer(pageRepository, projectRepository, store, t);
 }

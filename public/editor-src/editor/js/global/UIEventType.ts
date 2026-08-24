@@ -8,5 +8,6 @@ export enum UIEventType {
   EntranceOn = "entrance.on",
   EntranceOff = "entrance.off",
   ReduxActionPerf = "redux:action:perf",
-  EditorReady = "editor:ready"
+  EditorReady = "editor:ready",
+  EmbedCodeConsentChange = "embedCode:consent:change"
 }

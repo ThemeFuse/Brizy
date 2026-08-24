@@ -23,10 +23,6 @@ import {
   updateButtonConfig
 } from "visual/editorComponents/Button/definitions";
 import {
-  addChartConfig,
-  updateChartConfig
-} from "visual/editorComponents/Chart/definitions";
-import {
   addCalendlyConfig,
   updateCalendlyConfig
 } from "visual/editorComponents/Calendly/definitions";
@@ -34,6 +30,10 @@ import {
   addCarouselConfig,
   updateCarouselConfig
 } from "visual/editorComponents/Carousel/definitions";
+import {
+  addChartConfig,
+  updateChartConfig
+} from "visual/editorComponents/Chart/definitions";
 import { updateCloneableConfig } from "visual/editorComponents/Cloneable/definitions";
 import {
   addColumnConfig,
@@ -55,7 +55,12 @@ import {
   addFlipboxConfig,
   updateFlipboxConfig
 } from "visual/editorComponents/Flipbox/definitions";
-import { addFormConfig } from "visual/editorComponents/Form2/definitions";
+import {
+  addFormConfig,
+  addFormFieldConfig,
+  updateFormConfig,
+  updateFormFieldConfig
+} from "visual/editorComponents/Form2/definitions";
 import {
   addIconConfig,
   updateIconConfig
@@ -81,14 +86,14 @@ import {
   updateLineConfig
 } from "visual/editorComponents/Line/definitions";
 import {
-  addLottieConfig,
-  updateLottieConfig
-} from "visual/editorComponents/Lottie/definitions";
-import {
   addLoginConfig,
   updateLoginConfig,
   updateLoginFieldConfig
 } from "visual/editorComponents/Login/definitions";
+import {
+  addLottieConfig,
+  updateLottieConfig
+} from "visual/editorComponents/Lottie/definitions";
 import {
   addMapConfig,
   updateMapConfig
@@ -105,6 +110,7 @@ import {
   addProgressBarConfig,
   updateProgressBarConfig
 } from "visual/editorComponents/ProgressBar/definitions";
+import { updateProtectedFormConfig } from "visual/editorComponents/ProtectedPage/definitions";
 import {
   addTextConfig,
   updateTextConfig
@@ -119,6 +125,10 @@ import {
   updateSectionHeaderItemConfig,
   updateSectionHeaderStickyItemConfig
 } from "visual/editorComponents/SectionHeader/sectionHeaderItemDefinitions";
+import {
+  addShapeConfig,
+  updateShapeConfig
+} from "visual/editorComponents/Shape/definitions";
 import { addShareButtonConfig } from "visual/editorComponents/ShareButton/definitions";
 import {
   addSoundCloudConfig,
@@ -167,11 +177,12 @@ import {
 } from "visual/editorComponents/VideoPlaylist/definitions";
 import { updateWrapperConfig } from "visual/editorComponents/Wrapper/definitions";
 import type { ISharedStore } from "visual/plugins/SharedStore";
+import type { Translation } from "visual/utils/i18n/t";
 import type { IPageRepository } from "../application/interfaces/i-page-repository";
 import type { IProjectRepository } from "../application/interfaces/i-project-repository";
 import type { ToolDefinition, ToolHandler } from "../entities/models";
 import { buildHandler } from "./handler-factory";
-import { infrastructureDefinitions } from "./infrastructure-definitions";
+import { getInfrastructureDefinitions } from "./infrastructure-definitions";
 import { createInfrastructureHandlers } from "./infrastructure-handlers";
 import type { HandlerDeps, ToolConfig } from "./types";
 
@@ -191,6 +202,7 @@ const componentConfigs: ToolConfig[] = [
   addAudioConfig,
   addMapConfig,
   addFormConfig,
+  addFormFieldConfig,
   addLoginConfig,
   addRowConfig,
   addColumnConfig,
@@ -222,10 +234,13 @@ const componentConfigs: ToolConfig[] = [
   addBreadcrumbsConfig,
   addSoundCloudConfig,
   addChartConfig,
+  addShapeConfig,
 
   // Update tools
   updateTextConfig,
   updateButtonConfig,
+  updateFormConfig,
+  updateFormFieldConfig,
   updateLoginConfig,
   updateLoginFieldConfig,
   updateImageConfig,
@@ -272,7 +287,9 @@ const componentConfigs: ToolConfig[] = [
   updateBreadcrumbsConfig,
   updateSoundCloudConfig,
   updateChartConfig,
-  updateMenuConfig
+  updateMenuConfig,
+  updateProtectedFormConfig,
+  updateShapeConfig
 ];
 
 // ===========================================
@@ -280,19 +297,14 @@ const componentConfigs: ToolConfig[] = [
 // ===========================================
 
 /**
- * All tool definitions (infrastructure + component).
- * Preserves the exact same order as the original brizyToolDefinitions array.
+ * Get tool definitions for LLM (infrastructure + component), in the same order
+ * as before. `t` translates the copy the confirmation prompt shows the user.
  */
-export const brizyToolDefinitions: ToolDefinition[] = [
-  ...infrastructureDefinitions,
-  ...componentConfigs.map((c) => c.definition)
-];
-
-/**
- * Get tool definitions for LLM
- */
-export function getBrizyToolDefinitions(): ToolDefinition[] {
-  return brizyToolDefinitions;
+export function getBrizyToolDefinitions(t: Translation): ToolDefinition[] {
+  return [
+    ...getInfrastructureDefinitions(t),
+    ...componentConfigs.map((c) => c.definition)
+  ];
 }
 
 /**

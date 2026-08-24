@@ -3,6 +3,7 @@ import { DCTypes } from "visual/global/Config/types/DynamicContent";
 import { isStory } from "visual/providers/EditorModeProvider";
 import { getColorToolbar } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
+import { shouldRunEmbedCodeInEditor } from "visual/utils/elements/embedCode";
 import { defaultValueValue } from "visual/utils/onChange";
 import { getDynamicContentOption } from "visual/utils/options";
 import { HOVER, NORMAL } from "visual/utils/stateMode";
@@ -13,9 +14,12 @@ export function getItems({
   v,
   device,
   editorMode,
-  context
+  context,
+  component
 }: Params<Value>): ToolbarItemType[] {
   const dvv = (key: string) => defaultValueValue({ v, key, device });
+
+  const codeNotRunning = !shouldRunEmbedCodeInEditor(component.getGlobalConfig());
 
   const borderColor = getColorToolbar(
     dvv("borderColorPalette"),
@@ -51,7 +55,15 @@ export function getItems({
           },
           display: "block",
           className: "brz-embed-code-dc",
-          population: embedDC
+          population: embedDC,
+          ...(codeNotRunning && {
+            label: t("Custom code"),
+            helper: {
+              content: t(
+                "The embed code is not running in the editor. It works normally in preview."
+              )
+            }
+          })
         }
       ]
     },

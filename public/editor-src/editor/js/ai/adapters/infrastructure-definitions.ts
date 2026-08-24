@@ -1,3 +1,4 @@
+import type { Translation } from "visual/utils/i18n/t";
 import type { ToolDefinition } from "../entities/models";
 
 /**
@@ -688,11 +689,21 @@ export const changeDefaultFontDefinition: ToolDefinition = {
   }
 };
 
-export const setPageStatusDefinition: ToolDefinition = {
+export const createSetPageStatusDefinition = (
+  t: Translation
+): ToolDefinition => ({
   name: "setPageStatus",
   strict: true,
+  // The only editor tool that reaches the live site: publishing puts the page
+  // in front of real visitors, and switching back to draft takes it away from
+  // them. Both directions are gated on an explicit decision.
+  requiresConfirmation: true,
+  confirmationMessage: t(
+    "This changes what visitors see on the live website: publishing makes the page public, switching it to draft removes it from the live site."
+  ),
+  confirmLabel: t("Change page status"),
   description:
-    "Set the current page status to draft or publish. Use this when the user asks to save as draft or publish the page. This triggers the same internal publish/save flow used by the editor publish button.",
+    "Set the current page status to draft or publish. Use this when the user asks to save as draft or publish the page. This triggers the same internal publish/save flow used by the editor publish button. The user is asked to approve the change before it runs, so never ask for confirmation in the chat first — just call the tool.",
   category: "project",
   parameters: {
     type: "object",
@@ -706,7 +717,7 @@ export const setPageStatusDefinition: ToolDefinition = {
     required: ["status"],
     additionalProperties: false
   }
-};
+});
 
 // ===========================================
 // ELEMENT TOOLS - Generic
@@ -802,7 +813,9 @@ export const undoLastChangeDefinition: ToolDefinition = {
 /**
  * All infrastructure tool definitions in order.
  */
-export const infrastructureDefinitions: ToolDefinition[] = [
+export const getInfrastructureDefinitions = (
+  t: Translation
+): ToolDefinition[] => [
   // Read tools
   getPageStructureDefinition,
   getElementByIdDefinition,
@@ -828,7 +841,7 @@ export const infrastructureDefinitions: ToolDefinition[] = [
   addFontDefinition,
   deleteFontDefinition,
   changeDefaultFontDefinition,
-  setPageStatusDefinition,
+  createSetPageStatusDefinition(t),
   // Generic element tools
   removeElementDefinition,
   duplicateElementDefinition,

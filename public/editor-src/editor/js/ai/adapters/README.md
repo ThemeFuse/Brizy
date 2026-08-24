@@ -17,7 +17,7 @@ Outermost layer — wires tool definitions, Zod validation, and handlers togethe
 
 Central registry that assembles all tool definitions and handlers.
 
-- `getBrizyToolDefinitions()` — returns all `ToolDefinition[]` (infrastructure + component)
+- `getBrizyToolDefinitions(t)` — returns all `ToolDefinition[]` (infrastructure + component), building the confirmation copy with the editor's `t`
 - `createBrizyToolHandlers(pageRepository, projectRepository, store)` — returns `Record<string, ToolHandler>`
 - Component tools imported from each `editorComponents/*/definitions.ts` file
 
@@ -59,12 +59,30 @@ Supports escape hatches: `handler` override, `afterAdd` hook, `beforeUpdate` hoo
 
 Components that need custom validation (e.g., font family checks) use the `handler` escape hatch to run their own flow in `definitions.ts` rather than adding generic validation to the factory. These custom handlers run the same `containerIdSchema` check inline (Button, RichText, Chart, Switcher, AnimatedHeadline, Paypal, Login).
 
+`addFormField` uses the `handler` escape hatch for a different reason: it is a
+**composite** — `duplicateElement` on the group's last field, then
+`updateElement` on the clone. The editor has no create-field primitive
+(`addElement` cannot build a `Form2Field`; there is no shortcode for one) and
+its own add-field affordance is the per-field Duplicate button. The handler
+also resolves `formId` from a `Form2`, `Form2Step`, `Form2Fields` or
+`Form2Field` id, so the agent never picks the container itself.
+
 **`beforeUpdate` conventions** (stateful normalization — the patch alone is not enough):
 
 - The LLM sends only the props it wants to change; `defaults`/`transformProps` see just that patch. When correctness depends on the element's **stored** value, do it in `beforeUpdate`, which gets `deps` + `elementId` and can call `deps.pageRepository.getElementById(elementId)`. Precedents: `Table` (resize items when rows/columns change), `Menu` (restore color opacity, route alignment).
 - A `beforeUpdate` may **write to another element**: `Menu.horizontalAlign` is routed to the parent Wrapper (the Menu has no page-align prop of its own) via a `pageRepository.updateElement` on `parentId`, and stripped from the returned menu changes.
 - Restoring color opacity (`restoreColorOpacity` in `prop-defaults.ts`) mirrors the toolbar's `setHex` rule so a hex applied to a stored-transparent color (default `*ColorOpacity: 0`) is visible. Currently wired per-tool (Menu); candidate to lift into the update handler if it recurs — see the `ponytail:` note in `Menu/definitions.ts`.
 - Wrong-tool errors should name the right tool (`page.repository.ts` uses `update${type}`) so the agent recovers instead of falsely reporting the capability as unsupported.
+
+**Form2 container rules** (`infrastructure/repositories/utils/element.ts`):
+
+- `Form2` and `Form2Step` redirect to their `items[0]` (`Form2Fields`), so the
+  agent can pass a form id or a step id wherever a container is expected.
+- `Form2Field` has `REQUIRED_PARENT = Form2Fields`; anywhere else the add/move
+  fails with a message naming the `searchElements` call to make next.
+- `Form2` has `minChildren: 5` and `Form2Fields` `minChildren: 1`. `Form2.items`
+  is positional — removing a direct child silently reassigns the roles of the
+  rest — and the editor itself forbids deleting a group's last field.
 
 ### `schema-primitives.ts`
 

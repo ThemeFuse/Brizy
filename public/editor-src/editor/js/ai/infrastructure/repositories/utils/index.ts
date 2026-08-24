@@ -65,3 +65,6 @@ export {
   toSearchResults
 } from "./search";
 export type { InternalSearchResult } from "./search";
+
+// Site (website generation) utilities
+export { removeMenuData, topInsertIndex } from "./site";

@@ -2,6 +2,7 @@
  * Factory that assembles all plugin infrastructure parts (ToolServer, SlotRegistry,
  * FilterRegistry, EventBus) and the EditorAPI object passed to plugins.
  */
+import { createGlobalBlockRepository } from "visual/ai/infrastructure/repositories/global-block.repository";
 import type { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { updateUI } from "visual/redux/actions2";
 import {
@@ -14,6 +15,7 @@ import type { TypedDispatch } from "visual/redux/store";
 import type { ReduxState } from "visual/redux/types";
 import type { Translation } from "visual/utils/i18n/t";
 import { getVisibleSectionIds } from "visual/utils/viewport";
+import { createEditorSite } from "./EditorSite";
 import { EventBusImpl } from "./EventBus";
 import { FilterRegistryImpl } from "./FilterRegistry";
 import { SharedStore } from "./SharedStore";
@@ -39,7 +41,14 @@ interface Props {
 export function createEditorAPI(props: Props): EditorAPIParts {
   const { getState, dispatch, config, t } = props;
   const store = new SharedStore();
-  const toolServer = new ToolServerImpl(getState, dispatch, config, store);
+  const toolServer = new ToolServerImpl(
+    getState,
+    dispatch,
+    config,
+    store,
+    t
+  );
+  const globalBlocks = createGlobalBlockRepository(getState, dispatch, config);
   const slotRegistry = new SlotRegistryImpl();
   const filterRegistry = new FilterRegistryImpl();
   const eventBus = new EventBusImpl();
@@ -50,6 +59,7 @@ export function createEditorAPI(props: Props): EditorAPIParts {
 
   const api: EditorAPI = {
     toolServer,
+    ...createEditorSite(config, globalBlocks),
     slots: slotRegistry,
     filters: filterRegistry,
     events: eventBus,

@@ -1,5 +1,4 @@
 export {
-  brizyToolDefinitions,
   getBrizyToolDefinitions,
   createBrizyToolHandlers
 } from "./tool-registry";

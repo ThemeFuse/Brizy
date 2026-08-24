@@ -2,7 +2,7 @@ import type { z } from "zod";
 import type { ISharedStore } from "visual/plugins/SharedStore";
 import type { IPageRepository } from "../application/interfaces/i-page-repository";
 import type { IProjectRepository } from "../application/interfaces/i-project-repository";
-import type { ToolDefinition } from "../entities/models";
+import type { BrizyToolResult, ToolDefinition } from "../entities/models";
 
 /** Type alias for tool handler arguments */
 export type ToolArgs = Record<string, unknown>;
@@ -53,7 +53,10 @@ export interface AddToolConfig {
    * provide a full custom handler. When set, all other fields
    * except `definition` are ignored.
    */
-  readonly handler?: (deps: HandlerDeps, args: ToolArgs) => unknown;
+  readonly handler?: (
+    deps: HandlerDeps,
+    args: ToolArgs
+  ) => BrizyToolResult | Promise<BrizyToolResult>;
 }
 
 /**
@@ -105,7 +108,10 @@ export interface UpdateToolConfig {
    * Escape hatch: if the standard flow does not fit,
    * provide a full custom handler.
    */
-  readonly handler?: (deps: HandlerDeps, args: ToolArgs) => unknown;
+  readonly handler?: (
+    deps: HandlerDeps,
+    args: ToolArgs
+  ) => BrizyToolResult | Promise<BrizyToolResult>;
 }
 
 /**

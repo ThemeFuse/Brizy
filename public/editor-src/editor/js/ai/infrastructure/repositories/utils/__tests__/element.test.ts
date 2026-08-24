@@ -1652,3 +1652,157 @@ describe("duplicateElementInBlock", () => {
     expect(block.value.items[0].value.items[0].value._id).toBe("rt-1");
   });
 });
+
+describe("Form2 structural rules", () => {
+  function createBlock(items: ElementModelType2[]): Block {
+    return {
+      type: ElementTypes.Section,
+      value: { _id: "block-1", items }
+    } as Block;
+  }
+
+  // Form2's items are positional: [Form2Fields, submit Button, Form2Steps, prev, next]
+  function createForm(fields: ElementModelType2): ElementModelType2 {
+    return {
+      type: ElementTypes.Form2,
+      value: {
+        _id: "form-1",
+        items: [
+          fields,
+          createMockElement(ElementTypes.Button),
+          createMockElement(ElementTypes.Form2Steps),
+          createMockElement(ElementTypes.Button),
+          createMockElement(ElementTypes.Button)
+        ]
+      }
+    } as ElementModelType2;
+  }
+
+  it("should redirect a Form2 container to its Form2Fields", () => {
+    const fields = createMockElement(ElementTypes.Form2Fields, [
+      createMockElement(ElementTypes.Form2Field)
+    ]);
+    const result = correctContainerForElement(
+      createForm(fields),
+      ["blocks", "0"],
+      ElementTypes.Form2Field
+    );
+
+    expect(result.success).toBe(true);
+    if (result.success) {
+      expect(result.container.type).toBe(ElementTypes.Form2Fields);
+      expect(result.path).toEqual(["blocks", "0", "value", "items", "0"]);
+    }
+  });
+
+  it("should redirect a Form2Step container to its Form2Fields", () => {
+    const fields = createMockElement(ElementTypes.Form2Fields, [
+      createMockElement(ElementTypes.Form2Field)
+    ]);
+    const step = {
+      type: ElementTypes.Form2Step,
+      value: { _id: "step-1", items: [fields] }
+    } as ElementModelType2;
+
+    const result = correctContainerForElement(
+      step,
+      ["blocks", "0"],
+      ElementTypes.Form2Field
+    );
+
+    expect(result.success).toBe(true);
+    if (result.success) {
+      expect(result.container.type).toBe(ElementTypes.Form2Fields);
+    }
+  });
+
+  it("should reject a Form2Field outside a Form2Fields", () => {
+    const column = createMockElement(ElementTypes.Column);
+
+    const result = correctContainerForElement(
+      column,
+      ["blocks", "0"],
+      ElementTypes.Form2Field
+    );
+
+    expect(result.success).toBe(false);
+    if (!result.success) {
+      expect(result.error).toContain(ElementTypes.Form2Fields);
+    }
+  });
+
+  it("should reject a non-field element inside a Form2Fields", () => {
+    const fields = createMockElement(ElementTypes.Form2Fields, [
+      createMockElement(ElementTypes.Form2Field)
+    ]);
+
+    const result = correctContainerForElement(
+      fields,
+      ["blocks", "0"],
+      ElementTypes.Image
+    );
+
+    expect(result.success).toBe(false);
+    if (!result.success) {
+      expect(result.error).toContain(ElementTypes.Form2Field);
+    }
+  });
+
+  it("should refuse to remove a direct child of a Form2", () => {
+    const fields = createMockElement(ElementTypes.Form2Fields, [
+      createMockElement(ElementTypes.Form2Field)
+    ]);
+    const block = createBlock([createForm(fields)]);
+
+    const result = removeElementFromBlock(
+      block,
+      ["value", "items", "0", "value", "items", "0"],
+      fields.value._id as string
+    );
+
+    expect(result?.success).toBe(false);
+    if (result && !result.success) {
+      expect(result.error).toContain(ElementTypes.Form2);
+    }
+  });
+
+  it("should refuse to remove the last field of a Form2Fields", () => {
+    const field = createMockElement(ElementTypes.Form2Field);
+    const fields = createMockElement(ElementTypes.Form2Fields, [field]);
+    const block = createBlock([fields]);
+
+    const result = removeElementFromBlock(
+      block,
+      ["value", "items", "0", "value", "items", "0"],
+      field.value._id as string
+    );
+
+    expect(result?.success).toBe(false);
+    if (result && !result.success) {
+      expect(result.error).toContain(ElementTypes.Form2Fields);
+    }
+  });
+
+  it("should remove a field when siblings remain", () => {
+    const field1 = createMockElement(ElementTypes.Form2Field);
+    const field2 = createMockElement(ElementTypes.Form2Field);
+    const fields = createMockElement(ElementTypes.Form2Fields, [
+      field1,
+      field2
+    ]);
+    const block = createBlock([fields]);
+
+    const result = removeElementFromBlock(
+      block,
+      ["value", "items", "0", "value", "items", "0"],
+      field1.value._id as string
+    );
+
+    expect(result?.success).toBe(true);
+    if (result?.success) {
+      const remaining = result.updatedBlock.value.items[0].value.items;
+      expect(remaining).toHaveLength(1);
+      expect(remaining[0]).toBe(field2);
+    }
+  });
+});

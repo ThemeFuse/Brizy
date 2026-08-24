@@ -1,6 +1,6 @@
 const fs = require("fs");
 const path = require("path");
-const { extractFromEditor, processTranslations } = require("./utils");
+const { extractTranslations, processTranslations } = require("./utils");
 
 exports.cloudTranslations = async function cloudTranslations({
   paths,
@@ -8,7 +8,14 @@ exports.cloudTranslations = async function cloudTranslations({
 }) {
   let translationsArr = [];
 
-  const translationSets = [await extractFromEditor(paths)];
+  // Cloud also ships the AI packages, so their strings must be translated too.
+  const rootDirs = [
+    path.resolve(paths.editor, "./js"),
+    path.resolve(paths.packages, "ai-chat/src"),
+    path.resolve(paths.packages, "ai-support-chat/src")
+  ];
+
+  const translationSets = [await extractTranslations(rootDirs)];
   translationsArr = processTranslations(translationSets);
 
   await handleTranslationComparison({

@@ -41,17 +41,35 @@ export type LeftSidebarOption =
 
 export enum LeftSidebarMoreOptionsIds {
   link = "link",
-  shortcuts = "shortcuts"
+  shortcuts = "shortcuts",
+  allowEmbedCode = "allowEmbedCode"
 }
 
-export interface LeftSidebarMoreOptions {
-  type: LeftSidebarMoreOptionsIds;
+interface LeftSidebarMoreOptionBase {
   label: string;
-  link: string;
   icon?: string;
-  linkTarget?: "_blank" | "_self" | "_parent" | "_top";
   roles?: Array<string>;
 }
+
+// Navigates to a destination — the only variant that needs one.
+export interface LeftSidebarMoreLinkOption extends LeftSidebarMoreOptionBase {
+  type: LeftSidebarMoreOptionsIds.link;
+  link: string;
+  linkTarget?: "_blank" | "_self" | "_parent" | "_top";
+}
+
+// Act on the editor itself, so they carry no link: `shortcuts` opens the
+// keyboard-shortcuts prompt and `allowEmbedCode` toggles whether embed code
+// runs in the editor.
+export interface LeftSidebarMoreActionOption extends LeftSidebarMoreOptionBase {
+  type:
+    | LeftSidebarMoreOptionsIds.shortcuts
+    | LeftSidebarMoreOptionsIds.allowEmbedCode;
+}
+
+export type LeftSidebarMoreOptions =
+  | LeftSidebarMoreLinkOption
+  | LeftSidebarMoreActionOption;
 
 export interface LeftSidebar {
   topTabsOrder?: Array<LeftSidebarOption>;

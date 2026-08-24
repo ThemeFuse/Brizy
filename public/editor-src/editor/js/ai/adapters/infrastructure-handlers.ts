@@ -69,12 +69,14 @@ export function createInfrastructureHandlers(
         return { success: false, error: parsed.error.message };
       }
 
+      // getPageStructure returns a raw PageStructure, not a BrizyToolResult —
+      // wrap it so the envelope is uniform across every handler.
       const data = pageRepository.getPageStructure(
         parsed.data.depth ?? Infinity
       );
       log.tools("getPageStructure output %o", data);
 
-      return data;
+      return { success: true, data };
     },
 
     getElementById: (args: ToolArgs) => {
@@ -106,7 +108,7 @@ export function createInfrastructureHandlers(
     },
 
     isPro: () => {
-      return { isPro: pageRepository.isPro() };
+      return { success: true, data: { isPro: pageRepository.isPro() } };
     },
 
     getAvailableMenus: () => {

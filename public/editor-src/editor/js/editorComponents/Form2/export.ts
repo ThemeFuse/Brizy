@@ -869,6 +869,7 @@ function handleSubmit(form: HTMLElement, allData: AllFormData) {
   if (brzFormId) {
     formData.append("form_id", brzFormId);
   }
+  formData.append("page_url", window.location.href);
 
   const handleDone = (data: DoneResponse) => {
     // check status in the data

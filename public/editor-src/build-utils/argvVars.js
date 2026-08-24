@@ -27,6 +27,10 @@ module.exports = function (argv) {
   const AUTHORIZATION_URL = argv_["authUrl"]; // https://auth.brizylocal.com/authorize
   const CHECK_BUNDLE_SIZE = Boolean(argv_["check-bundle-size"]);
   const WITH_TRANSLATIONS = Boolean(argv_["with-translations"]);
+  // Limits how many rspack configs compile at once (MultiCompiler parallelism).
+  // Undefined = unlimited. Memory-limited CI runners pass a low value to avoid
+  // being OOM-killed when the 4 export/preview production builds run together.
+  const RSPACK_PARALLELISM = Number(argv_["rspack-parallelism"]) || undefined;
 
   const paths = {
     editor: path.resolve(__dirname, "../editor"),
@@ -58,6 +62,7 @@ module.exports = function (argv) {
     AUTHORIZATION_URL,
     CHECK_BUNDLE_SIZE,
     WITH_TRANSLATIONS,
+    RSPACK_PARALLELISM,
     paths
   };
 

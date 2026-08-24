@@ -5,6 +5,7 @@
 import type { ComponentType } from "react";
 import type { IToolServer } from "visual/ai/application/interfaces/i-tool-server";
 import { BlocksHTML } from "visual/types/Block";
+import type { EditorSiteAPI } from "./EditorSite";
 import type { ISharedStore } from "./SharedStore";
 
 // --- Plugin Definition ---
@@ -17,7 +18,7 @@ export interface EditorPlugin {
 
 // --- Editor API ---
 
-export interface EditorAPI {
+export interface EditorAPI extends EditorSiteAPI {
   toolServer: IToolServer;
   slots: SlotRegistry;
   filters: FilterRegistry;

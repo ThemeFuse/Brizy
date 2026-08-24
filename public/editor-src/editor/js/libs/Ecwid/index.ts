@@ -262,26 +262,32 @@ export class EcwidService {
       )
       .subscribe((widget) => {
         requestAnimationFrame(() => {
-          Ecwid.openPage(widget.type, widget.args);
+          try {
+            Ecwid.openPage(widget.type, widget.args);
 
-          const fn = widget?.onPageLoad;
-          if (isFunction(fn)) {
-            fn();
+            const fn = widget?.onPageLoad;
+            if (isFunction(fn)) {
+              fn();
+            }
+          } catch (e) {
+            if (process.env.NODE_ENV === "development") {
+              console.error(e);
+            }
           }
         });
       });
 
     this.$widgets.subscribe((widget) => {
-      try {
-        if (typeof Ecwid !== "undefined") {
-          requestAnimationFrame(() => {
+      if (typeof Ecwid !== "undefined") {
+        requestAnimationFrame(() => {
+          try {
             Ecwid.openPage(widget.type, widget.args);
-          });
-        }
-      } catch (e) {
-        if (process.env.NODE_ENV === "development") {
-          console.error(e);
-        }
+          } catch (e) {
+            if (process.env.NODE_ENV === "development") {
+              console.error(e);
+            }
+          }
+        });
       }
     });
   }
@@ -377,7 +383,19 @@ export class EcwidService {
     return instance;
   }
 
-  private openPage(widget: EcwidWidget.EcwidWidget, node: HTMLElement) {
+  private openPage(
+    widget: EcwidWidget.EcwidWidget,
+    node: HTMLElement,
+    config?: { clearPrevious?: boolean }
+  ) {
+    // INFO: Ecwid.destroy() must run while the previous widget's DOM is still intact;
+    // wiping the container first makes their teardown throw (nextSibling of null)
+    this.destroy();
+
+    if (config?.clearPrevious) {
+      this.clearWidget(node);
+    }
+
     this.addWidget(widget);
     this.loadScripts({ node });
     this.$widgets.next(widget);
@@ -394,11 +412,17 @@ export class EcwidService {
   }
 
   private addWidget(widget: EcwidWidget.EcwidWidget): void {
-    const widgets = [convertEcwidWidget(widget)];
+    window._xnext_initialization_scripts = [convertEcwidWidget(widget)];
+  }
 
-    typeof Ecwid !== "undefined" && Ecwid.destroy && Ecwid.destroy();
-
-    window._xnext_initialization_scripts = widgets;
+  private destroy(): void {
+    try {
+      typeof Ecwid !== "undefined" && Ecwid.destroy && Ecwid.destroy();
+    } catch (e) {
+      if (process.env.NODE_ENV === "development") {
+        console.error(e);
+      }
+    }
   }
 
   public products(node: HTMLElement) {
@@ -435,11 +459,9 @@ export class EcwidService {
 
     const el = this.setId(node);
 
-    if (config && config.clearPrevious) {
-      this.clearWidget(node);
-    }
-
-    this.openPage(EcwidWidget.cart(el.id, step, onPageLoad), node);
+    this.openPage(EcwidWidget.cart(el.id, step, onPageLoad), node, {
+      clearPrevious: config?.clearPrevious
+    });
   }
 
   public favorites(node: HTMLElement): void {

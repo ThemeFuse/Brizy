@@ -21,6 +21,17 @@ export interface ToolDefinition {
   readonly parameters: ToolParameterSchema;
   readonly category?: string;
   readonly strict?: boolean;
+
+  /**
+   * When true, the chat client must ask the user for an explicit go-ahead
+   * before the tool runs. Independent of any `confirm` argument the LLM
+   * itself has to pass — this one is the human in the loop.
+   */
+  readonly requiresConfirmation?: boolean;
+  /** What the confirmation prompt tells the user is about to happen. */
+  readonly confirmationMessage?: string;
+  /** Label of the approve button (defaults to a generic "Confirm"). */
+  readonly confirmLabel?: string;
 }
 
 /**
@@ -40,7 +51,7 @@ export interface ToolExecutionResponse {
  */
 export type ToolHandler = (
   args: Record<string, unknown>
-) => Promise<unknown> | unknown;
+) => Promise<BrizyToolResult> | BrizyToolResult;
 
 // ===========================================
 // Page / element types

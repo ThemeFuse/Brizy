@@ -13,6 +13,7 @@ import { RightSidebar } from "visual/component/RightSidebar";
 import UIEvents, { UIEventType } from "visual/global/UIEvents";
 import { PluginPortals } from "visual/plugins/PluginPortals";
 import { getCommonEditorMode } from "visual/providers/EditorModeProvider";
+import { EmbedCodeConsentInit } from "visual/component/EmbedCodeConsent";
 import Page from "./Editor/Page";
 import Popup from "./Editor/Popup";
 import Story from "./Editor/Story";
@@ -135,6 +136,7 @@ class Editor extends React.Component<Props> {
           id="key-helper-editor"
           onKeyDown={this.handleKeyDown}
         />
+        <EmbedCodeConsentInit />
       </>
     );
   }

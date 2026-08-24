@@ -354,6 +354,16 @@
     }
   }
 
+  // Allow Embed Code
+  // The only More-menu entry rendered as a switch row, so everything here is
+  // scoped to its own class instead of the shared popover item.
+  &__allow-embed-code__switch {
+    display: flex;
+    align-items: center;
+    margin-inline-start: auto;
+    padding-inline-start: 12px;
+  }
+
   // Ordering
   &-sortable {
     padding-top: 27px;

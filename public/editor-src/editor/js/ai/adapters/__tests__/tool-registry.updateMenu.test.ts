@@ -1,10 +1,12 @@
+import type { ISharedStore } from "visual/plugins/SharedStore";
 import type { IPageRepository } from "../../application/interfaces/i-page-repository";
 import type { IProjectRepository } from "../../application/interfaces/i-project-repository";
-import type { ISharedStore } from "visual/plugins/SharedStore";
 import {
   createBrizyToolHandlers,
   getBrizyToolDefinitions
 } from "../tool-registry";
+
+const t = (key: string): string => key;
 
 jest.mock("../../utils/logger", () => ({
   log: { tools: jest.fn(), repository: jest.fn() }
@@ -21,7 +23,7 @@ const mockUpdateElement = () =>
 
 describe("updateMenu registration", () => {
   it("is exposed as a tool definition", () => {
-    const names = getBrizyToolDefinitions().map((d) => d.name);
+    const names = getBrizyToolDefinitions(t).map((d) => d.name);
     expect(names).toContain("updateMenu");
   });
 

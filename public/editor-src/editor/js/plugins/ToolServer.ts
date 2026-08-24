@@ -16,6 +16,7 @@ import { createProjectRepository } from "visual/ai/infrastructure/repositories/p
 import type { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import type { TypedDispatch } from "visual/redux/store";
 import type { ReduxState } from "visual/redux/types";
+import type { Translation } from "visual/utils/i18n/t";
 import type { ISharedStore } from "./SharedStore";
 
 export class ToolServerImpl implements IToolServer {
@@ -25,7 +26,8 @@ export class ToolServerImpl implements IToolServer {
     getState: () => ReduxState,
     dispatch: TypedDispatch,
     config: ConfigCommon,
-    store: ISharedStore
+    store: ISharedStore,
+    t: Translation
   ) {
     const pageRepository = createPageRepository(getState, dispatch, config);
     const projectRepository = createProjectRepository(
@@ -36,7 +38,8 @@ export class ToolServerImpl implements IToolServer {
     this.server = createBrizyToolServer(
       pageRepository,
       projectRepository,
-      store
+      store,
+      t
     );
   }
 

@@ -111,9 +111,14 @@ export function collectElements(
   // Extract all searchable text from element
   const searchText = extractSearchableText(element);
 
-  // Get primary text for display (prefer text/content fields)
+  // Get primary text for display (prefer text/content/label fields).
+  // `searchText` is a last resort: it merges the component's default content,
+  // so for elements that store little (form fields) it is a long shared blob.
   const displayText =
-    element.value?.text || element.value?.content || searchText;
+    element.value?.text ||
+    element.value?.content ||
+    element.value?.label ||
+    searchText;
   const displayTextStr = typeof displayText === "string" ? displayText : "";
 
   // Check type filter (exact or regex)

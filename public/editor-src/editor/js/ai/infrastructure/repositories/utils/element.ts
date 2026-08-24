@@ -51,7 +51,11 @@ const CONTAINER_REDIRECTS: Record<string, true> = {
   [ElementTypes.Switcher]: true,
   [ElementTypes.Flipbox]: true,
   [ElementTypes.Wrapper]: true,
-  [ElementTypes.Wrapper2]: true
+  [ElementTypes.Wrapper2]: true,
+  // A Form2's and a Form2Step's items[0] is the Form2Fields holding the
+  // inputs, so a form id or a step id resolves to the right field group.
+  [ElementTypes.Form2]: true,
+  [ElementTypes.Form2Step]: true
 };
 
 /**
@@ -107,6 +111,18 @@ const CONTAINER_RESTRICTIONS: Record<
     allowOnly: [ElementTypes.TimelineTab],
     minChildren: 1
   },
+  [ElementTypes.Form2]: {
+    // Form2's items are positional — [Form2Fields, submit Button, Form2Steps,
+    // prev Button, next Button] (see Form2/index.tsx render* slices). Removing
+    // any of them silently reassigns the roles of the rest, so allow none.
+    minChildren: 5
+  },
+  [ElementTypes.Form2Fields]: {
+    allowOnly: [ElementTypes.Form2Field],
+    // Mirrors the editor, which hides Delete on the last remaining field
+    // (Form2/Form2Fields/Items.jsx).
+    minChildren: 1
+  },
   [ElementTypes.Table]: {
     allowOnly: [ElementTypes.TableHead, ElementTypes.TableBody]
   },
@@ -129,7 +145,12 @@ const CONTAINER_RESTRICTIONS: Record<
 const REQUIRED_PARENT: Record<string, string> = {
   [ElementTypes.TimelineTab]: ElementTypes.Timeline,
   [ElementTypes.SwitcherTab]: ElementTypes.Switcher,
-  [ElementTypes.Column]: ElementTypes.Row
+  [ElementTypes.Column]: ElementTypes.Row,
+  [ElementTypes.Form2Field]: ElementTypes.Form2Fields,
+  // Story-mode gating for addShape: getSampleShortCodes exposes StoryShape on
+  // every page, so without this a Shape lands in a Column as a position:fixed
+  // box. Slides are the only StoryItems, so this is also the story-mode check.
+  [ElementTypes.StoryShape]: ElementTypes.StoryItem
 };
 
 /**

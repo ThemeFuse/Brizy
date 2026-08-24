@@ -1,4 +1,5 @@
-const { extractFromEditor, processTranslations } = require("./utils");
+const path = require("path");
+const { extractTranslations, processTranslations } = require("./utils");
 
 exports.wpTranslations = async function wpTranslations({
   paths,
@@ -8,7 +9,9 @@ exports.wpTranslations = async function wpTranslations({
   let translationsArr = [];
 
   if (IS_PRODUCTION) {
-    const translationSets = [await extractFromEditor(paths)];
+    const translationSets = [
+      await extractTranslations([path.resolve(paths.editor, "./js")])
+    ];
     translationsArr = processTranslations(translationSets);
   }
 

@@ -61,6 +61,7 @@ const {
   AUTHORIZATION_URL,
   CHECK_BUNDLE_SIZE,
   WITH_TRANSLATIONS,
+  RSPACK_PARALLELISM,
   paths
 } = argvVars(process.argv);
 const WP = TARGET === "WP";
@@ -196,6 +197,10 @@ function editorJS(done) {
     rspackConfigEditor(options),
     rspackConfigWorker.screenshots(options)
   ];
+
+  if (RSPACK_PARALLELISM) {
+    config.parallelism = RSPACK_PARALLELISM;
+  }
 
   const compiler = rspack(config);
   const watchMode = !NO_WATCH && !IS_PRODUCTION;
@@ -356,6 +361,13 @@ function exportJS(done) {
 
   const watchMode = !NO_WATCH && !IS_PRODUCTION;
 
+  // MultiCompiler reads `parallelism` from the config array (webpack-style);
+  // memory-limited CI runners pass --rspack-parallelism to compile the 4
+  // export/preview configs sequentially instead of all at once
+  if (RSPACK_PARALLELISM) {
+    rspackConfig.parallelism = RSPACK_PARALLELISM;
+  }
+
   // Run rspack builds (export + preview)
   const rspackCompiler = rspack(rspackConfig);
 
@@ -512,6 +524,10 @@ function proJS(done) {
       rspackConfigPro.preview(options),
       rspackConfigPro.libs(options)
     );
+  }
+
+  if (RSPACK_PARALLELISM) {
+    config.parallelism = RSPACK_PARALLELISM;
   }
 
   const compiler = rspack(config);

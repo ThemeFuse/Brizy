@@ -168,7 +168,8 @@ export enum LeftSidebarPageSettingsOptionsIds {
 export enum LeftSidebarMoreOptionsIds {
   link = "link",
   shortcuts = "shortcuts",
-  explorer = "explorer"
+  explorer = "explorer",
+  allowEmbedCode = "allowEmbedCode"
 }
 
 export interface LeftSidebarOptionBase {
@@ -208,14 +209,32 @@ export type LeftSidebarOption =
   | LeftSidebarAddElementsType
   | LeftSidebarCustomType;
 
-export interface LeftSidebarMoreOptions {
-  type: LeftSidebarMoreOptionsIds;
+interface LeftSidebarMoreOptionBase {
   label: string;
-  link: string;
   icon?: string;
-  linkTarget?: "_blank" | "_self" | "_parent" | "_top";
   roles?: Array<string>;
 }
+
+// Navigates to a destination — the only variant that needs one.
+export interface LeftSidebarMoreLinkOption extends LeftSidebarMoreOptionBase {
+  type: LeftSidebarMoreOptionsIds.link;
+  link: string;
+  linkTarget?: "_blank" | "_self" | "_parent" | "_top";
+}
+
+// Act on the editor itself, so they carry no link: `shortcuts` opens the
+// keyboard-shortcuts prompt, `explorer` opens the Navigator, and
+// `allowEmbedCode` toggles whether embed code runs in the editor.
+export interface LeftSidebarMoreActionOption extends LeftSidebarMoreOptionBase {
+  type:
+    | LeftSidebarMoreOptionsIds.shortcuts
+    | LeftSidebarMoreOptionsIds.explorer
+    | LeftSidebarMoreOptionsIds.allowEmbedCode;
+}
+
+export type LeftSidebarMoreOptions =
+  | LeftSidebarMoreLinkOption
+  | LeftSidebarMoreActionOption;
 
 export interface PopupSettings {
   displayCondition?: boolean;
@@ -1333,6 +1352,16 @@ interface _ConfigCommon<Mode> {
     };
     carousel?: {
       disableDynamicContent?: boolean;
+    };
+    embedCode?: {
+      // When enabled, the embed code is NOT executed in the editor;
+      // a Placeholder is rendered instead. View/preview always runs the code.
+      //
+      // IMPORTANT: this flag has NO EFFECT on pages where the left sidebar's
+      // More menu declares the `allowEmbedCode` option — there the user's
+      // runtime consent decides instead. To suppress embed code in the editor
+      // unconditionally, set this flag and do NOT declare that option.
+      disableCodeInEditor?: boolean;
     };
   };
 
