@@ -64,6 +64,14 @@ export const form: Form = {
       rej(t("Failed to create integration account"));
     }
   },
+  deleteIntegrationAccount: async (res, rej, data) => {
+    try {
+      const r = await deleteAccount(data.integrationId);
+      return res(r);
+    } catch (e) {
+      rej(t("Failed to delete integration account"));
+    }
+  },
   createIntegrationList: async (res, rej, data) => {
     try {
       const r = await createIntegrationList(data);
