@@ -113,6 +113,8 @@ import WOOAddToCart from "./WordPress/WOOAddToCart";
 import WOOAttributes from "./WordPress/WOOAttributes";
 import WOOCart from "./WordPress/WOOCart";
 import WOOCategories from "./WordPress/WOOCategories";
+import WOOOutOfStockBadge from "./WordPress/WOOOutOfStockBadge";
+import WOOSaleBadge from "./WordPress/WOOSaleBadge";
 import WOOExcerpt from "./WordPress/WOOExcerpt";
 import WOOGallery from "./WordPress/WOOGallery";
 import WOOPages from "./WordPress/WOOPages";
@@ -674,6 +676,14 @@ function getShortcodes(config: ConfigCommon) {
           WOORating: {
             id: ElementTypes.WOORating,
             component: WOORating
+          },
+          WOOSaleBadge: {
+            id: ElementTypes.WOOSaleBadge,
+            component: WOOSaleBadge
+          },
+          WOOOutOfStockBadge: {
+            id: ElementTypes.WOOOutOfStockBadge,
+            component: WOOOutOfStockBadge
           }
         }
       : {})

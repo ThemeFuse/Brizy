@@ -1,0 +1,71 @@
+{
+  "style": {
+    "families": {
+      "fontFamily": "lato",
+      "tabletFontFamily": null,
+      "mobileFontFamily": null
+    },
+
+    "customCSS": "",
+
+    "fontStyle": "paragraph",
+    "fontFamilyType": "google",
+    "fontSize": 12,
+    "fontSizeSuffix": "px",
+    "fontWeight": 700,
+    "lineHeight": 1.8,
+    "letterSpacing": 2,
+    "variableFontWeight": 700,
+    "fontWidth": 100,
+    "fontSoftness": 0,
+    "bold": false,
+    "italic": false,
+    "underline": false,
+    "strike": false,
+    "uppercase": true,
+    "lowercase": false,
+
+    "colorHex": "#ffffff",
+    "colorOpacity": 1,
+    "colorPalette": "",
+
+    "tempColorOpacity": 1,
+    "tempColorPalette": "",
+
+    "tabletFontStyle": "",
+    "tabletFontFamilyType": null,
+    "tabletFontSize": 11,
+    "tabletFontSizeSuffix": "px",
+    "tabletFontWeight": 700,
+    "tabletLineHeight": 1.8,
+    "tabletLetterSpacing": 1,
+
+    "mobileFontStyle": "",
+    "mobileFontFamilyType": null,
+    "mobileFontSize": 11,
+    "mobileFontSizeSuffix": "px",
+    "mobileFontWeight": 700,
+    "mobileLineHeight": 1.8,
+    "mobileLetterSpacing": 1,
+
+    "bgColorType": "solid",
+    "bgColorHex": "#95a5a6",
+    "bgColorOpacity": 1,
+    "bgColorPalette": "",
+
+    "tempBgColorOpacity": 1,
+    "tempBgColorPalette": "",
+
+    "borderRadiusType": "grouped",
+    "borderRadius": 3,
+    "borderTopLeftRadius": 3,
+    "borderTopRightRadius": 3,
+    "borderBottomRightRadius": 3,
+    "borderBottomLeftRadius": 3,
+    "borderRadiusSuffix": "px",
+    "borderTopLeftRadiusSuffix": "px",
+    "borderTopRightRadiusSuffix": "px",
+    "borderBottomRightRadiusSuffix": "px",
+    "borderBottomLeftRadiusSuffix": "px"
+  }
+}
