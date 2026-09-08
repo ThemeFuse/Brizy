@@ -152,16 +152,72 @@ class Brizy_Editor_Project extends Brizy_Editor_Entity
         $row = $wpdb->get_results($wpdb->prepare("SELECT * FROM {$wpdb->posts} p
 									WHERE p.post_type = %s and p.post_status='publish' 
 									ORDER BY ID DESC LIMIT 1 ", self::BRIZY_PROJECT), OBJECT);
-        if (is_null($row)) {
-            Brizy_Logger::instance()->critical('Failed to check if the project exist.', []);
+        // A query that failed must never be read as "this site has no project".
+        // wpdb::query() clears last_error before every statement, so this only
+        // ever reflects the statement above. Seeding a second project on top of
+        // a transient database error is how a site silently loses its settings.
+        if (is_null($row) || $wpdb->last_error) {
+            Brizy_Logger::instance()->critical('Failed to check if the project exist.', ['error' => $wpdb->last_error]);
             throw new Exception('Failed to check if the project exist.');
         }
         if (isset($row[0])) {
             return WP_Post::get_instance($row[0]->ID);
         }
-        $post_id = self::createPost();
+        // No published project post. Before seeding an empty one, take back a
+        // project that was trashed or unpublished: it still carries the license
+        // key, the cloud tokens and the global styles.
+        $post_id = self::adoptUnpublishedProjectPost();
+        if (!$post_id) {
+            $post_id = self::createPost();
+        }
 
         return WP_Post::get_instance($post_id);
+    }
+
+    /**
+     * Publish back the newest non published project post that still holds usable
+     * settings, and return its id.
+     *
+     * The post row is written directly, exactly like self::createPost() does:
+     * this runs on `plugins_loaded`, before the `brizy-project` post type is
+     * registered, so wp_update_post() is not usable here.
+     *
+     * @return int|null null when there is nothing worth adopting
+     */
+    private static function adoptUnpublishedProjectPost()
+    {
+        global $wpdb;
+        $rows = $wpdb->get_results($wpdb->prepare("SELECT p.ID, p.post_status FROM {$wpdb->posts} p
+									INNER JOIN {$wpdb->postmeta} pm ON pm.post_id = p.ID AND pm.meta_key = %s
+									WHERE p.post_type = %s AND p.post_status <> 'publish' AND p.post_parent = 0
+									AND LENGTH(pm.meta_value) > 0
+									ORDER BY p.ID DESC LIMIT 5 ", Brizy_Editor_Storage_Project::META_KEY, self::BRIZY_PROJECT), OBJECT);
+        if ($wpdb->last_error || empty($rows)) {
+            return null;
+        }
+        foreach ($rows as $row) {
+            $post_id = (int)$row->ID;
+            // Only adopt a project that can actually be saved afterwards.
+            // get_storage() never throws and repairs a recoverable serialization
+            // on its own, so this is a read the healer would also accept.
+            if (!Brizy_Editor_ProjectHealer::isHealthy(Brizy_Editor_Storage_Project::instance($post_id)->get_storage())) {
+                continue;
+            }
+            if ($wpdb->update($wpdb->posts, ['post_status' => 'publish'], ['ID' => $post_id], ['%s'], ['%d']) === false) {
+                continue;
+            }
+            delete_post_meta($post_id, '_wp_trash_meta_status');
+            delete_post_meta($post_id, '_wp_trash_meta_time');
+            clean_post_cache($post_id);
+            Brizy_Logger::instance()->notice('An existing project post was published back instead of creating a new project.', [
+                'id' => $post_id,
+                'previous_status' => $row->post_status,
+            ]);
+
+            return $post_id;
+        }
+
+        return null;
     }
 
     /**
@@ -226,39 +282,65 @@ class Brizy_Editor_Project extends Brizy_Editor_Entity
     {
         global $wpdb;
         $project_data = self::defaultProjectData();
+        // No START TRANSACTION here on purpose. It was a no-op on MyISAM, it did
+        // not cover the failure that actually produces broken projects
+        // (update_metadata() returning false without throwing), and an Error
+        // escaping the try block left the request inside an open transaction.
+        // The post is verified after the fact instead, and removed again when it
+        // could not be completed.
+        $inserted = $wpdb->insert($wpdb->posts, [
+            'post_type' => self::BRIZY_PROJECT,
+            'post_title' => 'Brizy Project',
+            'post_status' => 'publish',
+            'comment_status' => 'closed',
+            'ping_status' => 'closed',
+            'post_author' => 0,
+            'post_content' => '',
+            'post_excerpt' => '',
+            'post_password' => '',
+            'to_ping' => '',
+            'pinged' => '',
+            'post_parent' => 0,
+            'menu_order' => 0,
+            'guid' => '',
+            'post_date' => current_time('mysql'),
+            'post_date_gmt' => current_time('mysql', 1),
+        ]);
+        $post_id = (int)$wpdb->insert_id;
+        if ($inserted === false || !$post_id) {
+            $message = 'Failed to create the project post.';
+            Brizy_Logger::instance()->critical($message, ['error' => $wpdb->last_error]);
+            throw new Exception($message);
+        }
         try {
-            $wpdb->query('START TRANSACTION');
-            $wpdb->insert($wpdb->posts, [
-                'post_type' => self::BRIZY_PROJECT,
-                'post_title' => 'Brizy Project',
-                'post_status' => 'publish',
-                'comment_status' => 'closed',
-                'ping_status' => 'closed',
-                'post_author' => 0,
-                'post_content' => '',
-                'post_excerpt' => '',
-                'post_password' => '',
-                'to_ping' => '',
-                'pinged' => '',
-                'post_parent' => 0,
-                'menu_order' => 0,
-                'guid' => '',
-                'post_date' => current_time('mysql'),
-                'post_date_gmt' => current_time('mysql', 1),
-            ]);
-            $post_id = $wpdb->insert_id;
-            $storage = Brizy_Editor_Storage_Project::instance($post_id);
-            $storage->loadStorage($project_data);
-            $wpdb->query('COMMIT');
-            Brizy_Logger::instance()->notice('Create new project', array('id' => $post_id));
-            // as we create the project we must update the dataVersion to 1
-            update_post_meta($post_id, Brizy_Editor_Entity::BRIZY_DATA_VERSION_KEY, 1);
-
-            return $post_id;
+            Brizy_Editor_Storage_Project::instance($post_id)->loadStorage($project_data);
+            // Read the row back from the database rather than from the object
+            // cache. update_metadata() returns false and throws nothing when the
+            // write does not land (a filter short circuits it, the value exceeds
+            // max_allowed_packet, the table is read only), and a published project
+            // post without its meta is precisely the state that makes every later
+            // save fail.
+            wp_cache_delete($post_id, 'post_meta');
+            if (!Brizy_Editor_ProjectHealer::isHealthy(Brizy_Editor_Storage_Project::instance($post_id)->get_storage())) {
+                throw new Exception('The project data was not stored.');
+            }
         } catch (Exception $e) {
-            $wpdb->query('ROLLBACK');
+            // Leave nothing half built behind: an empty published project post
+            // would win the ORDER BY ID DESC of self::getPost() forever.
+            $wpdb->delete($wpdb->posts, ['ID' => $post_id], ['%d']);
+            $wpdb->delete($wpdb->postmeta, ['post_id' => $post_id], ['%d']);
+            clean_post_cache($post_id);
+            Brizy_Logger::instance()->critical('Failed to create the project. The incomplete project post was removed.', [
+                'id' => $post_id,
+                'error' => $e->getMessage(),
+            ]);
             throw $e;
         }
+        Brizy_Logger::instance()->notice('Create new project', array('id' => $post_id));
+        // as we create the project we must update the dataVersion to 1
+        update_post_meta($post_id, Brizy_Editor_Entity::BRIZY_DATA_VERSION_KEY, 1);
+
+        return $post_id;
     }
 
     /**
