@@ -85,6 +85,10 @@ class Brizy_Editor
 
         if (is_admin()) {
             Brizy_SystemChecks::run();
+            // BRZ-693. Reports a project record that was repaired automatically.
+            // Registered before the project is loaded below, because that load is
+            // what triggers the repair.
+            Brizy_Admin_ProjectHealedNotice::_init();
         }
         // make sure the project is created
         // do not remove this! we force the project creation here.

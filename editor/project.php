@@ -70,7 +70,18 @@ class Brizy_Editor_Project extends Brizy_Editor_Entity
 
     protected function loadInstanceData()
     {
-        $this->loadProjectData($this->getStorage()->get_storage());
+        $data = $this->getStorage()->get_storage();
+
+        // BRZ-693. This is the only place where the project record is turned into
+        // a live object, and the only place that knows the value came from the
+        // database rather than from another in memory object. If the record lost
+        // its data, repair it here, before anything downstream gets a chance to
+        // read a null project or to refuse a save.
+        if (!Brizy_Editor_ProjectHealer::isHealthy($data)) {
+            $data = Brizy_Editor_ProjectHealer::heal($this->getWpPostId(), $data);
+        }
+
+        $this->loadProjectData($data);
     }
 
     protected function populateAutoSavedData($autosave)
@@ -154,19 +165,36 @@ class Brizy_Editor_Project extends Brizy_Editor_Entity
     }
 
     /**
-     * @return int|WP_Error
+     * The pristine project record, exactly as a fresh install would receive it.
+     *
+     * Extracted from createPost() so that the seeder and Brizy_Editor_ProjectHealer
+     * share a single definition of what a complete project looks like and cannot
+     * drift apart.
+     *
+     * @return array
      * @throws Exception
      */
-    private static function createPost()
+    public static function defaultProjectData()
     {
-        global $wpdb;
         $defaultJsonPath = Brizy_Editor_UrlBuilder::editor_build_path('defaults.json');
         if (!file_exists($defaultJsonPath)) {
             $message = 'Failed to create the default project data. ' . $defaultJsonPath . ' was not found. ';
             Brizy_Logger::instance()->critical($message, [$message]);
             throw new Exception($message);
         }
-        $project_data = array(
+
+        $defaultJson = file_get_contents($defaultJsonPath);
+
+        // A truncated or unreadable build artifact would produce a project whose
+        // data is an empty string, which is precisely the broken state we exist to
+        // repair. Refuse loudly instead of seeding it.
+        if ($defaultJson === false || trim($defaultJson) === '' || is_null(json_decode($defaultJson, true))) {
+            $message = 'Failed to create the default project data. ' . $defaultJsonPath . ' is empty or is not a valid json file. ';
+            Brizy_Logger::instance()->critical($message, [$message]);
+            throw new Exception($message);
+        }
+
+        return array(
             'id' => md5(uniqid('Local project', true)),
             'title' => 'Brizy Project',
             'name' => uniqid('Local project', true),
@@ -180,7 +208,7 @@ class Brizy_Editor_Project extends Brizy_Editor_Entity
             'signature' => Brizy_Editor_Signature::get(),
             'accounts' => array(),
             'forms' => array(),
-            'data' => base64_encode(file_get_contents($defaultJsonPath)),
+            'data' => base64_encode($defaultJson),
             'cloudContainer' => null,
             'brizy-license-key' => null,
             'brizy-cloud-token' => null,
@@ -188,6 +216,16 @@ class Brizy_Editor_Project extends Brizy_Editor_Entity
             'brizy-cloud-project' => null,
             'image-optimizer-settings' => array(),
         );
+    }
+
+    /**
+     * @return int|WP_Error
+     * @throws Exception
+     */
+    private static function createPost()
+    {
+        global $wpdb;
+        $project_data = self::defaultProjectData();
         try {
             $wpdb->query('START TRANSACTION');
             $wpdb->insert($wpdb->posts, [
