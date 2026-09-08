@@ -798,6 +798,24 @@ a.brizy-button--primary:hover {
     opacity: 0.6;
 }
 
+/* Core's theme browser fades .theme-actions in on hover only, and hides it
+   outright below 782px, which leaves Install unreachable on touch devices.
+   The :hover selector is needed to outrank that media query rule. */
+.brz-wrap-demodata .theme-browser .theme .theme-actions,
+.brz-wrap-demodata .theme-browser .theme:hover .theme-actions,
+.brz-wrap-demodata .theme-browser .theme.focus .theme-actions {
+    display: block;
+    opacity: 1;
+    background: transparent;
+    border-left: none;
+    box-shadow: none;
+}
+
+/* Reserve room so long template names don't run under the button. */
+.brz-wrap-demodata .theme-browser .theme .theme-name {
+    padding-right: 110px;
+}
+
 .brz-wrap-demodata .theme-actions .brz-demo-item-gopro {
     background: #d62c64;
     border-color: #d62c64;
