@@ -90,6 +90,10 @@ class Brizy_Editor
             // what triggers the repair.
             Brizy_Admin_ProjectHealedNotice::_init();
         }
+        if (defined('WP_CLI') && WP_CLI) {
+            // BRZ-693. The way to rescue a site whose dashboard is unreachable.
+            WP_CLI::add_command('brizy repair-project', ['Brizy_Editor_ProjectHealer', 'cli']);
+        }
         // make sure the project is created
         // do not remove this! we force the project creation here.
         $project = Brizy_Editor_Project::get();

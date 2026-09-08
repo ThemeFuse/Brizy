@@ -217,6 +217,67 @@ class Brizy_Editor_ProjectHealer {
 	}
 
 	/**
+	 * Manual repair: the Tools page and WP-CLI enter here.
+	 *
+	 * Same repair as the automatic one, with the rate limiting lifted. The
+	 * cooldown and the attempt cap exist to keep unattended page loads from
+	 * hammering a database that will not accept the write; when a human asks for
+	 * the repair explicitly there is nothing to protect against.
+	 *
+	 * @param int $postId
+	 *
+	 * @return array {repaired: bool, state: string}
+	 */
+	public static function forceHeal( $postId ) {
+
+		$postId = (int) $postId;
+
+		self::clearState( $postId );
+		wp_cache_delete( $postId, 'post_meta' );
+
+		$value = Brizy_Editor_Storage_Project::instance( $postId )->get_storage();
+
+		if ( self::isHealthy( $value ) ) {
+			return array( 'repaired' => false, 'state' => self::STATE_HEALTHY );
+		}
+
+		$state  = self::detectState( $value );
+		$healed = self::heal( $postId, $value );
+
+		// The project singleton was built from the broken value; drop it so the
+		// rest of the request sees what is now in the database.
+		Brizy_Editor_Project::cleanClassCache();
+
+		return array( 'repaired' => self::isHealthy( $healed ), 'state' => $state );
+	}
+
+	/**
+	 * `wp brizy repair-project`
+	 *
+	 * The way to rescue a site whose dashboard is not reachable.
+	 *
+	 * @internal
+	 */
+	public static function cli() {
+
+		try {
+			$result = self::forceHeal( Brizy_Editor_Project::get()->getWpPostId() );
+		} catch ( Exception $e ) {
+			WP_CLI::error( $e->getMessage() );
+
+			return;
+		}
+
+		if ( $result['state'] === self::STATE_HEALTHY ) {
+			WP_CLI::success( 'The project data is valid. Nothing had to be repaired.' );
+		} elseif ( $result['repaired'] ) {
+			WP_CLI::success( 'The project data was repaired. The previous value was kept in the ' . self::BACKUP_META_KEY . ' post meta.' );
+		} else {
+			WP_CLI::error( 'The project data could not be repaired. The reason was written to the Brizy log.' );
+		}
+	}
+
+	/**
 	 * The repair itself. Runs under the lock.
 	 *
 	 * @param int $postId

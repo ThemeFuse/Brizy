@@ -46,6 +46,7 @@ class Brizy_Admin_Settings
             add_action('admin_menu', array($this, 'actionRegisterSubMenuGetHelpLink'), 20);
             add_action('admin_menu', array($this, 'actionRegisterSubMenuGoProPage'), 20);
             add_action('wp_ajax_brizy_replace_url', [$this, 'replaceUrl']);
+            add_action('wp_ajax_brizy_repair_project', [$this, 'repairProject']);
         }
         add_action('submenu_file', array($this, 'submenu_file'), 10, 2);
         add_action('current_screen', array($this, 'action_validate_form_submit'));
@@ -617,6 +618,34 @@ class Brizy_Admin_Settings
         }
         Brizy_Editor_Post::markAllForCompilation();
         wp_send_json_success(['message' => __('The replacement was successful', 'brizy')]);
+    }
+
+    /**
+     * BRZ-693. Manual entry point for a project record that the automatic repair
+     * gave up on, or declined to touch.
+     *
+     * @internal
+     */
+    public function repairProject()
+    {
+        check_ajax_referer('brizy-admin-nonce', 'nonce');
+        if (!current_user_can('manage_options')) {
+            wp_send_json_error(['message' => __('You must be an administrator to repair the project data', 'brizy')]);
+        }
+        try {
+            $result = Brizy_Editor_ProjectHealer::forceHeal(Brizy_Editor_Project::get()->getWpPostId());
+        } catch (Exception $e) {
+            wp_send_json_error(['message' => $e->getMessage()]);
+
+            return;
+        }
+        if ($result['state'] === Brizy_Editor_ProjectHealer::STATE_HEALTHY) {
+            wp_send_json_success(['message' => __('The project settings are valid. Nothing had to be repaired.', 'brizy')]);
+        }
+        if (!$result['repaired']) {
+            wp_send_json_error(['message' => __('The project settings could not be repaired. The reason was written to the log.', 'brizy')]);
+        }
+        wp_send_json_success(['message' => __('The project settings were repaired. The previous value was kept as a backup.', 'brizy')]);
     }
 }
 
