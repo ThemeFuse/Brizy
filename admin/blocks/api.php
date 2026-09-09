@@ -68,7 +68,7 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi
      */
     private function verifyGlobalBlockWriteAccess()
     {
-        if (!current_user_can(Brizy_Admin_Capabilities::CAP_EDIT_WHOLE_PAGE)) {
+        if (!current_user_can(Brizy_Admin_Capabilities::CAP_EDIT_WHOLE_PAGE) && !Brizy_Editor_User::is_administrator()) {
             $this->error(403, 'Unauthorized.');
         }
     }

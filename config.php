@@ -76,9 +76,9 @@ class Brizy_Config
     {
         return new Brizy_Admin_UrlIterator(
             array(
-                'http://compiler.brizy.io/compile/v4',
-                'http://compiler1.brizycompiler.run/compile/v4',
-                'http://compiler2.brizycompiler.run/compile/v4',
+                'https://compiler.brizy.io/compile/v4',
+                'https://compiler1.brizycompiler.run/compile/v4',
+                'https://compiler2.brizycompiler.run/compile/v4',
             )
         );
     }
