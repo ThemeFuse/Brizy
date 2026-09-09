@@ -36,8 +36,6 @@ class Brizy_Import_Importer extends WP_Importer {
 			require_once ABSPATH . 'wp-admin/includes/post.php';
 		}
 
-		parent::__construct();
-
 		$this->extractor = $extractor;
 
 		$this->version    = $data['version'];
