@@ -4,7 +4,7 @@ Tags: page builder, website builder, brizy, editor, visual editor, unyson, wysiw
 Requires at least: 4.5
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 2.8.22
+Stable tag: 2.8.23
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -135,6 +135,11 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 11. **Resize columns by dragging the handle that appears in between**
 
 == Changelog ==
+
+= 2.8.23 - 2026-09-09 =
+* Fixed: Wordpress 7.1 compatibility fixes
+* Fixed: Updated compiler configs
+* Fixed: Global block access verification  
 
 = 2.8.22 - 2026-08-24 =
 *Fixed: preserve percent-encoded values in popup attributes
