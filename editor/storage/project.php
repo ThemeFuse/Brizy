@@ -19,11 +19,30 @@ class Brizy_Editor_Storage_Project extends Brizy_Editor_Storage_Post {
 		return new self( $id );
 	}
 
+	/**
+	 * Last resort guard. See BRZ-693.
+	 *
+	 * This deliberately still throws. The project is repaired when it is loaded,
+	 * by Brizy_Editor_ProjectHealer, so in practice nothing should ever reach this
+	 * branch any more. If something does, it means an in memory project object
+	 * lost its data after it was loaded, and quietly substituting the editor
+	 * defaults here would overwrite a database row that may still hold the real
+	 * pages. Refusing the write is the only behaviour that cannot lose data.
+	 *
+	 * @param array $value
+	 *
+	 * @throws Exception
+	 */
 	public function loadStorage( $value ) {
 
-		if(!isset($value['data']) || is_null($value['data']) || empty($value['data'])) {
-			Brizy_Logger::instance()->critical( 'Execution stopped. Attempt to save invalid project data.', array( $value ) );
-			throw new Exception('Execution stopped. Attempt to save invalid project data.');
+		if ( ! Brizy_Editor_ProjectHealer::isHealthy( $value ) ) {
+			// The project record carries the license key and the cloud token, so
+			// the value itself must never be dumped into the log table.
+			Brizy_Logger::instance()->critical(
+				'Execution stopped. Attempt to save invalid project data.',
+				Brizy_Editor_ProjectHealer::describe( $this->get_id(), $value )
+			);
+			throw new Exception( 'Execution stopped. Attempt to save invalid project data.' );
 		}
 		parent::loadStorage( $value );
 	}
@@ -90,14 +109,20 @@ class Brizy_Editor_Storage_Project extends Brizy_Editor_Storage_Post {
 
 		$unserializedData = maybe_unserialize( $strSerialized );
 
-		if ( $unserializedData ) {
-			$storage = self::instance( $this->get_id() );
-
-			$storage->loadStorage( $unserializedData );
-
-			return $unserializedData;
+		if ( ! is_array( $unserializedData ) || ! $unserializedData ) {
+			return [];
 		}
 
-		return [];
+		// BRZ-693. Persist the repaired serialization only when the value that came
+		// back out of it can actually be saved. A recovered but empty project used
+		// to make this read path call loadStorage() and blow up with
+		// "Attempt to save invalid project data" even though nobody asked to save
+		// anything. It now reaches the caller instead, where the healer can deal
+		// with it.
+		if ( Brizy_Editor_ProjectHealer::isHealthy( $unserializedData ) ) {
+			self::instance( $this->get_id() )->loadStorage( $unserializedData );
+		}
+
+		return $unserializedData;
 	}
 }
