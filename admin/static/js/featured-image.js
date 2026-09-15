@@ -1,5 +1,6 @@
 jQuery(document).ready(function ($) {
-    if (wp.hooks && wp.hooks.addFilter)
+    // Also loaded inside the block editor canvas iframe (enqueue_block_assets), where wp is absent.
+    if (typeof wp !== 'undefined' && wp.hooks && wp.hooks.addFilter)
         wp.hooks.addFilter(
             'editor.PostFeaturedImage',
             'brizy/featuredImage',
