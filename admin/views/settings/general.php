@@ -70,6 +70,22 @@
                 </label>
             </td>
         </tr>
+        <tr>
+            <th scope="row">
+                <?php _e( 'Enable Cookie Banner', 'brizy' ); ?>
+            </th>
+            <td>
+                <label>
+                    <input type="checkbox"
+                           id="cookie-banner-enabled"
+                           name="cookie-banner-enabled"
+                           value="1"
+                        <?php echo $cookieBannerEnabled ? 'checked' : ''; ?>
+                    >
+
+                </label>
+            </td>
+        </tr>
         </tbody>
     </table>
 
