@@ -816,13 +816,20 @@ a.brizy-button--primary:hover {
     padding-right: 110px;
 }
 
-.brz-wrap-demodata .theme-actions .brz-demo-item-gopro {
+/* WordPress 7.1 paints every .theme-actions .button:not(.button-primary) white
+   with a (0,5,0) selector, which outranked the previous (0,3,0) rule here and
+   left Go Pro as a white box with white, unreadable text. Match core's selector
+   shape and add .button so we win on specificity alone, independent of the
+   order the stylesheets are enqueued in. Core also repaints :focus, so that
+   state has to be claimed explicitly. */
+.brz-wrap-demodata .theme-browser .theme .theme-actions .button.brz-demo-item-gopro,
+.brz-wrap-demodata .theme-browser .theme .theme-actions .button.brz-demo-item-gopro:focus {
     background: #d62c64;
     border-color: #d62c64;
     color: #fff;
 }
 
-.brz-wrap-demodata .theme-actions .brz-demo-item-gopro:hover {
+.brz-wrap-demodata .theme-browser .theme .theme-actions .button.brz-demo-item-gopro:hover {
     background: #bc2456;
     border-color: #bc2456;
 }
