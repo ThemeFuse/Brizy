@@ -10518,5 +10518,5 @@ msgstr ""
 
 #: system-checks.php:37
 #, php-format
-msgid "%1$s requires PHP version 5.6+, you currently running PHP %2$s. <b>%3$s IS NOT RUNNING.</b>"
+msgid "%1$s requires PHP version %2$s+, you currently running PHP %3$s. <b>%4$s IS NOT RUNNING.</b>"
 msgstr ""

@@ -6,7 +6,7 @@ class Brizy_SystemChecks {
 	 * @var
 	 */
 	private $required = [
-		'php'       => '5.6',
+		'php'       => '7.4',
 		'extension' => [
 			'xml'      => 'https://www.php.net/manual/en/book.xml.php',
 			'gd'       => 'https://www.php.net/manual/en/book.image.php',
@@ -32,10 +32,11 @@ class Brizy_SystemChecks {
 
 
 	private function checkPhpVersion() {
-		if ( version_compare( PHP_VERSION, '5.6.0' ) < 0 ) {
+		if ( version_compare( PHP_VERSION, $this->required['php'] ) < 0 ) {
 			$this->notification( sprintf(
-				__( '%1$s requires PHP version 5.6+, you currently running PHP %2$s. <b>%3$s IS NOT RUNNING.</b>', 'brizy' ),
+				__( '%1$s requires PHP version %2$s+, you currently running PHP %3$s. <b>%4$s IS NOT RUNNING.</b>', 'brizy' ),
 				__bt( 'brizy', 'Brizy' ),
+				$this->required['php'],
 				PHP_VERSION,
 				strtoupper( __bt( 'brizy', 'Brizy' ) )
 			) );
