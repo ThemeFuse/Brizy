@@ -3,21 +3,11 @@
 /**
  * The Cookie Banner global block.
  *
- * Owns the banner block identity (one block per site), the trash-aware lookup,
- * the two standard display rule sets, applying a rule set to the block and the
- * enable and disable operations.
+ * Owns the banner block identity (one block per site), the trash-aware lookup, the include-all display rule set and the enable and disable operations.
  */
 class Brizy_Admin_Blocks_CookieBanner {
 
 	const UID_PREFIX = 'brz-cookie-banner-';
-
-	/**
-	 * Every status a banner block can have. WordPress 'any' excludes trash, so the
-	 * statuses are listed explicitly: a trashed banner still counts as existing.
-	 *
-	 * @var string[]
-	 */
-	private static $lookupStatuses = [ 'publish', 'future', 'draft', 'pending', 'private', 'trash' ];
 
 	/**
 	 * @var Brizy_Admin_Blocks_Manager
@@ -35,7 +25,6 @@ class Brizy_Admin_Blocks_CookieBanner {
 	 * @return bool
 	 */
 	public static function isCookieBannerEnabled(): bool {
-		// the second argument is throw-if-not-set, not a default
 		return (bool) Brizy_Editor_Storage_Common::instance()->get( 'cookie-banner-enabled', false );
 	}
 
@@ -51,11 +40,9 @@ class Brizy_Admin_Blocks_CookieBanner {
 	}
 
 	/**
-	 * The banner block uid for the current site.
-	 *
 	 * @return string
 	 */
-	public function getUid() {
+	private function getUid() {
 		return self::UID_PREFIX . get_current_blog_id();
 	}
 
@@ -65,9 +52,9 @@ class Brizy_Admin_Blocks_CookieBanner {
 	 * @return Brizy_Editor_Block|null
 	 * @throws Exception
 	 */
-	public function findBlock() {
+	private function findBlock() {
 		$blocks = $this->blockManager->getEntities( [
-			'post_status' => self::$lookupStatuses,
+			'post_status' => [ 'publish', 'future', 'draft', 'pending', 'private', 'trash' ],
 			'meta_key'    => 'brizy_post_uid',
 			'meta_value'  => $this->getUid(),
 			'orderby'     => 'ID',
@@ -78,16 +65,9 @@ class Brizy_Admin_Blocks_CookieBanner {
 	}
 
 	/**
-	 * Shows the banner on every Brizy-rendered page.
+	 * Shows the banner on every Brizy-rendered page: the block is created when missing, published, given the include-all rule set and the option is turned on. Never throws.
 	 *
-	 * With no banner block, the block is created from the Default Payload and all content is
-	 * flagged for recompilation. An existing block (trashed included) is restored to publish
-	 * and keeps its content. Either way the block ends with the include-all rule set, so a
-	 * repeated enable repairs an earlier one that only partly succeeded.
-	 *
-	 * Never throws: every failure is reported as false.
-	 *
-	 * @return bool true when the block exists, is published and has the include-all rule set
+	 * @return bool false when a step threw, true otherwise
 	 */
 	public function enable(): bool {
 		try {
@@ -95,35 +75,40 @@ class Brizy_Admin_Blocks_CookieBanner {
 			$block = $this->findBlock();
 
 			if ( ! $block ) {
-				return $this->createBlock();
+				$block = $this->createBlock();
 			}
 
 			$postId = $block->getWpPostId();
 
-			return $this->publishBlock( $postId ) && $this->applyRules( $postId, $this->includeAllRules() );
+			$this->setBlockStatus( $postId, 'publish' );
+
+			$this->applyRules( $postId, $this->includeAllRules() );
+
+			Brizy_Editor_Storage_Common::instance()->set( 'cookie-banner-enabled', true );
+
+			return true;
+
 		} catch ( Throwable $e ) {
 			return false;
 		}
 	}
 
 	/**
-	 * Hides the banner by applying the exclude-all rule set. The block keeps its status and
-	 * content, and it is never deleted. With no banner block there is nothing to hide, so
-	 * nothing is created and the call succeeds.
+	 * Hides the banner by moving the block to draft, which drops it from the published global blocks; the block keeps its content and is never deleted. With no banner block there is nothing to hide. Never throws.
 	 *
-	 * Never throws: every failure is reported as false.
-	 *
-	 * @return bool
+	 * @return bool false when a step threw, true otherwise
 	 */
 	public function disable(): bool {
 		try {
 			$block = $this->findBlock();
 
-			if ( ! $block ) {
-				return true;
+			if ( $block ) {
+				$this->setBlockStatus( $block->getWpPostId(), 'draft' );
 			}
 
-			return $this->applyRules( $block->getWpPostId(), $this->excludeAllRules() );
+			Brizy_Editor_Storage_Common::instance()->set( 'cookie-banner-enabled', false );
+
+			return true;
 		} catch ( Throwable $e ) {
 			return false;
 		}
@@ -134,48 +119,32 @@ class Brizy_Admin_Blocks_CookieBanner {
 	 *
 	 * @return Brizy_Admin_Rule[]
 	 */
-	public function includeAllRules() {
+	private function includeAllRules() {
 		return [ $this->createMatchAllRule( Brizy_Admin_Rule::TYPE_INCLUDE, 'include-all' ) ];
 	}
 
 	/**
-	 * The exclude-all rule set: the banner matches no page.
-	 *
-	 * @return Brizy_Admin_Rule[]
-	 */
-	public function excludeAllRules() {
-		return [ $this->createMatchAllRule( Brizy_Admin_Rule::TYPE_EXCLUDE, 'exclude-all' ) ];
-	}
-
-	/**
-	 * Replaces all rules of the post with the given rule set.
-	 *
-	 * The write result is not used: saveRules() returns nothing and the meta update
-	 * reports false for an unchanged value. Success is decided by reading the rules
-	 * back and comparing them with the applied set.
+	 * Replaces all rules of the post with the given rule set. saveRules() returns nothing, so only a thrown error counts as a failure.
 	 *
 	 * @param int $postId
 	 * @param Brizy_Admin_Rule[] $rules
 	 *
-	 * @return bool true when the rules read back equal the applied rule set
+	 * @return bool false when the rule write threw
 	 */
-	public function applyRules( $postId, array $rules ) {
+	private function applyRules( $postId, array $rules ) {
 		try {
 			$this->rulesManager->setRules( $postId, $rules );
 
-			return $this->rulesAreEqual( $rules, $this->rulesManager->getRules( $postId ) );
+			return true;
 		} catch ( Exception $e ) {
 			return false;
 		}
 	}
 
 	/**
-	 * Creates the banner block from the Default Payload, flags all content for
-	 * recompilation and applies the include-all rule set.
+	 * Creates the banner block from the Default Payload
 	 *
-	 * Call it only after findBlock() found nothing.
-	 *
-	 * @return bool
+	 * @return Brizy_Editor_Block
 	 * @throws Exception
 	 */
 	private function createBlock() {
@@ -193,53 +162,28 @@ class Brizy_Admin_Blocks_CookieBanner {
 		$block->setEditorData( wp_json_encode( $payload['data'] ) );
 		$block->save();
 
-		// flag before the rule write, so the flag is set even when that write fails
-		Brizy_Editor_Post::markAllForCompilation();
-
-		return $this->applyRules( $block->getWpPostId(), $this->includeAllRules() );
+		return $block;
 	}
 
 	/**
-	 * Sets the banner block status to publish. Only the status changes (and the date of a
-	 * block scheduled for later); title, editor data, meta and position are kept.
+	 * Sets the banner block status to the given one; title, editor data, meta and position are kept. Trashing is not supported: WordPress trashes a post through wp_trash_post().
 	 *
 	 * @param int $postId
+	 * @param string $status a post status other than 'trash'
 	 *
-	 * @return bool true when the block is published
+	 * @return bool false when the status write failed
 	 */
-	private function publishBlock( $postId ) {
-		$status = get_post_status( $postId );
+	private function setBlockStatus( $postId, $status ) {
+		$currentStatus = get_post_status( $postId );
 
-		if ( $status === 'publish' ) {
-			return true;
-		}
-
-		// since WordPress 5.6 an untrashed post goes back to draft, so it is published below
-		if ( $status === 'trash' && ! wp_untrash_post( $postId ) ) {
-			return false;
-		}
-
-		$post = get_post( $postId );
-
-		if ( ! $post ) {
-			return false;
-		}
-
-		if ( $post->post_status === 'publish' ) {
+		if ( $currentStatus === $status ) {
 			return true;
 		}
 
 		$postarr = [
 			'ID'          => $postId,
-			'post_status' => 'publish',
+			'post_status' => $status,
 		];
-
-		// WordPress stores a publish request for a post dated in the future as future
-		if ( get_post_time( 'U', true, $post ) > time() ) {
-			$postarr['post_date']     = current_time( 'mysql' );
-			$postarr['post_date_gmt'] = current_time( 'mysql', 1 );
-			wp_clear_scheduled_hook( 'publish_future_post', [ $postId ] );
-		}
 
 		$result = wp_update_post( $postarr, true );
 
@@ -247,14 +191,11 @@ class Brizy_Admin_Blocks_CookieBanner {
 			return false;
 		}
 
-		return get_post_status( $postId ) === 'publish';
+		return true;
 	}
 
 	/**
-	 * The Default Payload of a new banner block, with the current site id in place of <siteId>.
-	 *
-	 * The payload's rules entry is not listed here: it is the include-all rule set, and the
-	 * only rule write during creation is applyRules() with includeAllRules().
+	 * The default payload of a new banner block: the fields createBlock() writes, with the uid of the current site. Display rules are not part of it, enable() applies them.
 	 *
 	 * @return array
 	 */
@@ -310,52 +251,5 @@ class Brizy_Admin_Blocks_CookieBanner {
 	 */
 	private function createMatchAllRule( $type, $name ) {
 		return new Brizy_Admin_Rule( md5( self::UID_PREFIX . $name ), $type, null, '', [] );
-	}
-
-	/**
-	 * Two rule sets are equal when they have the same number of rules and each rule
-	 * matches on type, appliedFor, entityType and entityValues. Order and rule ids are ignored.
-	 *
-	 * @param Brizy_Admin_Rule[] $expected
-	 * @param Brizy_Admin_Rule[] $actual
-	 *
-	 * @return bool
-	 */
-	private function rulesAreEqual( array $expected, array $actual ) {
-		if ( count( $expected ) !== count( $actual ) ) {
-			return false;
-		}
-
-		$expectedKeys = $this->ruleKeys( $expected );
-		$actualKeys   = $this->ruleKeys( $actual );
-
-		return $expectedKeys !== null && $expectedKeys === $actualKeys;
-	}
-
-	/**
-	 * @param Brizy_Admin_Rule[] $rules
-	 *
-	 * @return string[]|null sorted comparison keys, or null when an item is not a rule
-	 */
-	private function ruleKeys( array $rules ) {
-		$keys = [];
-
-		foreach ( $rules as $rule ) {
-			if ( ! $rule instanceof Brizy_Admin_Rule ) {
-				return null;
-			}
-
-			$appliedFor = $rule->getAppliedFor();
-			$keys[]     = wp_json_encode( [
-				(int) $rule->getType(),
-				$appliedFor === null ? null : (int) $appliedFor,
-				$rule->getEntityType(),
-				array_values( (array) $rule->getEntityValues() ),
-			] );
-		}
-
-		sort( $keys );
-
-		return $keys;
 	}
 }

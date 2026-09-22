@@ -764,11 +764,6 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi
      */
     private function deleteBlock($block, $postType)
     {
-
-        if ($postType === Brizy_Admin_Blocks_Main::CP_SAVED) {
-
-        }
-
         return wp_delete_post($block->getWpPostId());
     }
 }

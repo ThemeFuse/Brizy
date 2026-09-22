@@ -281,18 +281,18 @@ class Brizy_Admin_Settings
         Brizy_Editor_Storage_Common::instance()->set('json-upload', $jsonEnabled);
 		Brizy_Editor_Storage_Common::instance()->set( 'getting-started-video-enabled', $gettingStartedVideoEnabled );
         $cookieBannerWasEnabled = Brizy_Admin_Blocks_CookieBanner::isCookieBannerEnabled();
-        $cookieBannerUpdated = true;
+        $cookieBannerUpdated = false;
         if ($cookieBannerEnabled && !$cookieBannerWasEnabled) {
             $cookieBannerUpdated = $this->getCookieBanner()->enable();
         } elseif (!$cookieBannerEnabled && $cookieBannerWasEnabled) {
             $cookieBannerUpdated = $this->getCookieBanner()->disable();
         }
-        if ($cookieBannerUpdated) {
-            Brizy_Editor_Storage_Common::instance()->set('cookie-banner-enabled', $cookieBannerEnabled);
-        } else {
+
+        if (!$cookieBannerUpdated) {
             // keep the previous value, so saving the same checkbox state again retries
             Brizy_Admin_Flash::instance()->add_error(__('Unable to update the cookie banner. Please try again.', 'brizy'));
         }
+
         if ($error_count == 0) {
             $this->selected_post_types = $post_types;
             Brizy_Editor_Storage_Common::instance()->set('post-types', $post_types);
