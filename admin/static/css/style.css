@@ -151,6 +151,63 @@
     background-color: #fff
 }
 
+/*
+ * Block editor canvas call-to-action.
+ */
+.brizy-buttons-gutenberg.brizy-cta {
+    margin-top: 20px;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+.brizy-cta .brizy-cta__link {
+    color: inherit;
+    outline-offset: -4px;
+}
+
+.brizy-cta .brizy-cta__button {
+    display: -webkit-inline-box;
+    display: -ms-inline-flexbox;
+    display: inline-flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    box-sizing: border-box;
+    min-height: 46px;
+    padding: 0 35px;
+    border: 1px solid #2271b1;
+    border-radius: 3px;
+    background-color: #2271b1;
+    color: #ffffff;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 1;
+    text-decoration: none;
+    white-space: nowrap;
+    cursor: pointer;
+}
+
+.brizy-cta .brizy-cta__link:hover .brizy-cta__button,
+.brizy-cta .brizy-cta__link:focus .brizy-cta__button {
+    border-color: #135e96;
+    background-color: #135e96;
+    color: #ffffff;
+}
+
+.brizy-cta .brizy-cta__button--logo::before {
+    content: "";
+    flex: none;
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+    background-color: currentColor;
+    -webkit-mask: var(--brizy-cta-logo) no-repeat center;
+    mask: var(--brizy-cta-logo) no-repeat center;
+    -webkit-mask-size: contain;
+    mask-size: contain;
+}
+
 .brizy-button {
     padding: 0px 12px 0px;
     border-style: solid;
@@ -1289,4 +1346,8 @@ a.brizy-button--primary:hover {
     .brz-tab-block div .brz-title-tab {
         font-size: 23px;
     }
+}
+/* Block editor canvas: native block content hidden in place while the Brizy call-to-action is shown. */
+.brizy-canvas-hidden {
+    display: none !important;
 }

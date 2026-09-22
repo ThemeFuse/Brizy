@@ -258,6 +258,7 @@ class Brizy_Admin_Main {
                 'nonce'         => wp_create_nonce( 'brizy-admin-nonce' ),
                 'isWhiteLabel'  => apply_filters( 'brizy_wl_enabled', false ),
                 'isAiEnabled'   => Brizy_Config::isAiEnabled(),
+                'blockEditor'   => $this->getBlockEditorData(),
                 'l10n'          => [
                         'deactivateFeedbackSubmitBtn' => __( 'Submit & Deactivate', 'brizy' ),
                         'deactivateFeedbackSkipBtn'   => __( 'Skip & Deactivate', 'brizy' ),
@@ -276,6 +277,67 @@ class Brizy_Admin_Main {
                         'aiGenerateButton'            => __( 'Generate With', 'brizy' ) . ' ' . __( 'Brizy', 'brizy' ) . ' - ' . __( 'AI', 'brizy' ),
                 ],
         ) );
+    }
+
+    /**
+     * Data consumed by admin/static/js/script.js on the block editor screen.
+     *
+     * The same script is loaded in the admin document and, through the
+     * enqueue_block_assets hook, inside the editor canvas iframe. The canvas
+     * copy builds the "Edit with Brizy" call-to-action from this payload
+     * instead of reading templates out of the parent document.
+     *
+     * The payload is computed once per request so both localizations are
+     * byte-identical.
+     *
+     * @return array
+     */
+    private function getBlockEditorData() {
+        static $data = null;
+
+        if ( $data !== null ) {
+            return $data;
+        }
+
+        $ctaLabel   = sprintf( __( 'Edit with %s', 'brizy' ), __bt( 'brizy', 'Brizy' ) );
+        $urlBuilder = new Brizy_Editor_UrlBuilder();
+
+        $data = array(
+                'supported'   => false,
+                'enabled'     => false,
+                'isNew'       => true,
+                'editUrl'     => '',
+                'switchUrl'   => '',
+                'switchLabel' => '',
+                'ctaLabel'    => $ctaLabel,
+                'logoUrl'     => esc_url_raw( __bt( 'brizy-logo', $urlBuilder->plugin_url( 'admin/static/img/brizy-logo.svg' ) ) ),
+        );
+
+        $postId = get_the_ID();
+        if ( ! $postId && isset( $_GET['post'] ) ) {
+            $postId = (int) $_GET['post'];
+        }
+
+        $post = $postId ? get_post( $postId ) : null;
+
+        if ( ! $post || ! in_array( $post->post_type, Brizy_Editor::get()->supported_post_types() ) ) {
+            return $data;
+        }
+
+        try {
+            $enabled = Brizy_Editor_Entity::isBrizyEnabled( $post->ID );
+        } catch ( Exception $e ) {
+            $enabled = false;
+        }
+
+        $data['supported']   = true;
+        $data['enabled']     = $enabled;
+        $data['isNew']       = $post->post_status === 'auto-draft';
+        $data['editUrl']     = esc_url_raw( Brizy_Editor_Entity::getEditUrl( $post->ID ) );
+        $data['switchUrl']   = esc_url_raw( admin_url( 'admin-post.php?action=_brizy_admin_editor_' . ( $enabled ? 'disable' : 'enable' ) . '&post=' . $post->ID . '&hash=' . wp_create_nonce( 'brizy-admin-nonce' ) ) );
+        $data['switchLabel'] = $enabled ? __( 'Back to WordPress Editor', 'brizy' ) : $ctaLabel;
+
+        return $data;
     }
 
     /**

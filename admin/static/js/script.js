@@ -254,83 +254,297 @@ jQuery(document).ready(function ($) {
         }
     };
 
-    var BrizyGutenberg = {
+    var BrizyBlockEditorDiag = {
+        observers: 0,
+        listeners: 0,
+        reconciles: 0,
 
-        insertBrizyBtn: function () {
+        report: function () {
+            return {
+                scope: window.frameElement ? 'canvas' : 'admin',
+                observers: this.observers,
+                listeners: this.listeners,
+                ctas: document.querySelectorAll('[data-brizy-cta]').length,
+                reconciles: this.reconciles
+            };
+        }
+    };
 
-            if ($('.edit-post-header-toolbar .brizy-buttons').length) {
+    window.__brizyBlockEditorDiag = function () {
+        return BrizyBlockEditorDiag.report();
+    };
+
+    var BrizyCanvasCta = {
+
+        ROOT: '.is-root-container',
+        ANCHOR: '.editor-visual-editor__post-title-wrapper, .edit-post-visual-editor__post-title-wrapper',
+        HIDDEN_CLASS: 'brizy-canvas-hidden',
+
+        data: null,
+        hidden: null,
+        pending: false,
+        observer: null,
+        failed: false,
+
+        isActive: function () {
+            var d = typeof Brizy_Admin_Data !== 'undefined' ? Brizy_Admin_Data.blockEditor : null;
+
+            if (!d || d.supported !== true || d.enabled !== true || d.isNew === true || !d.editUrl) {
+                return false;
+            }
+
+            this.data = d;
+
+            return true;
+        },
+
+        build: function () {
+            var d = this.data,
+                $cta = $('<div class="brizy-buttons brizy-buttons-gutenberg brizy-cta" data-brizy-cta="1"></div>'),
+                $link = $('<a class="brizy-cta__link"></a>').attr('href', d.editUrl),
+                $button = $('<span class="brizy-cta__button"></span>');
+
+            if (d.logoUrl) {
+                $button.addClass('brizy-cta__button--logo');
+                $button[0].style.setProperty('--brizy-cta-logo', 'url(' + JSON.stringify(d.logoUrl) + ')');
+            }
+
+            $button.append(document.createTextNode(d.ctaLabel));
+            $link.append($button);
+            $cta.append($link);
+
+            return $cta[0];
+        },
+
+        reconcile: function () {
+            var root = document.querySelector(this.ROOT),
+                ctas = document.querySelectorAll('[data-brizy-cta]'),
+                anchor, cta, i;
+
+            BrizyBlockEditorDiag.reconciles++;
+
+            // No canvas content (yet), or the code editor view: leave the document alone.
+            if (!root) {
+                this.restore();
+                for (i = 0; i < ctas.length; i++) {
+                    ctas[i].parentNode.removeChild(ctas[i]);
+                }
                 return;
             }
 
-            var guten = $('#editor'),
-                html = $('#brizy-gutenberg-btn-middle').html();
+            for (i = 1; i < ctas.length; i++) {
+                ctas[i].parentNode.removeChild(ctas[i]);
+            }
 
-            if (!guten) {
+            cta = ctas[0] || this.build();
+            anchor = document.querySelector(this.ANCHOR);
+
+            if (anchor) {
+                if (cta.previousElementSibling !== anchor) {
+                    anchor.parentNode.insertBefore(cta, anchor.nextSibling);
+                }
+            } else if (cta.nextElementSibling !== root) {
+                root.parentNode.insertBefore(cta, root);
+            }
+
+            if (this.hidden && this.hidden !== root) {
+                this.restore();
+            }
+
+            if (this.hidden !== root) {
+                this.hidden = root;
+                this.hiddenAriaWas = root.getAttribute('aria-hidden');
+            }
+
+            if (!root.classList.contains(this.HIDDEN_CLASS)) {
+                root.classList.add(this.HIDDEN_CLASS);
+            }
+
+            // Inline as well: a freshly created canvas document may run this before its
+            // stylesheet has loaded, and the native content must never flash through.
+            if (root.style.getPropertyValue('display') !== 'none') {
+                root.style.setProperty('display', 'none', 'important');
+            }
+
+            if (root.getAttribute('aria-hidden') !== 'true') {
+                root.setAttribute('aria-hidden', 'true');
+            }
+        },
+
+        restore: function () {
+            var root = this.hidden;
+
+            if (!root) {
                 return;
             }
 
-            guten.find('.edit-post-header-toolbar').append($('#brizy-gutenberg-btn-switch-mode').html());
+            root.classList.remove(this.HIDDEN_CLASS);
+            root.style.removeProperty('display');
 
-            if (html && !$('.brizy-buttons-gutenberg').length) {
-                if (document.querySelector('.block-editor-writing-flow')) {
-                    guten.find('.edit-post-visual-editor .block-editor-writing-flow').append(html);
-                    guten.find('.editor-post-text-editor').after(html);
-                    guten.find('.is-root-container.is-layout-flow').hide();
-                } else {
+            if (this.hiddenAriaWas === null) {
+                root.removeAttribute('aria-hidden');
+            } else {
+                root.setAttribute('aria-hidden', this.hiddenAriaWas);
+            }
 
-                    var gutenbergIframe = $('iframe[name="editor-canvas"]');
+            this.hidden = null;
+        },
 
-                    if (gutenbergIframe.length > 0) {
+        schedule: function () {
+            var self = this;
 
-                        gutenbergIframe.on('load', function () {
-                            var gutenbergContentHide = gutenbergIframe.contents().find('body > .is-root-container.is-layout-flow');
+            if (this.pending) {
+                return;
+            }
 
-                            if (gutenbergContentHide.length > 0) {
+            this.pending = true;
 
-                                gutenbergContentHide.hide();
+            setTimeout(function () {
+                self.pending = false;
 
-                                if (!gutenbergIframe.contents().find('div.brizy-buttons.brizy-buttons-gutenberg').length > 0) {
-                                    gutenbergIframe.contents().find('.edit-post-visual-editor__post-title-wrapper').after(html);
-                                    gutenbergIframe.contents().find('.brizy-buttons-gutenberg .button-primary').addClass('components-button block-editor-media-placeholder__button block-editor-media-placeholder__upload-button is-primary');
-                                    gutenbergIframe.contents().find('.brizy-buttons-gutenberg .button-primary').parent('a').on('click', function (e) {
-                                        e.preventDefault();
-                                        window.parent.location.href = $(this).attr('href');
-                                    });
-                                }
-
-                                $('.brizy-buttons-gutenberg').css({
-                                    'margin-bottom': '0',
-                                    'position': 'absolute'
-                                });
-                            }
-                        });
+                try {
+                    self.reconcile();
+                } catch (e) {
+                    if (!self.failed) {
+                        self.failed = true;
+                        console.error('Brizy: block editor call-to-action failed', e);
                     }
                 }
-            }
+            }, 0);
+        },
 
-            BrizyAiButton.appendTo($('#editor').find('.edit-post-header-toolbar'));
+        navigate: function (e) {
+            var href = this.getAttribute('href');
+
+            e.preventDefault();
+
+            try {
+                window.top.location.href = href;
+            } catch (err) {
+                window.location.href = href;
+            }
         },
 
         init: function () {
             var self = this;
 
-            if (typeof wp.data != 'undefined') {
-                wp.data.subscribe(function () {
-                    setTimeout(function () {
-                        self.insertBrizyBtn();
-                    }, 1);
-
-                    // if we are on wordpress.com
-                    if (window.location.href.includes("wordpress.com")) {
-                        $("#editor .is-desktop-preview div.brizy-buttons.brizy-buttons-gutenberg a:first").on("click", function (e) {
-                            e.preventDefault();
-
-                            window.top.location.href = $(this).attr("href");
-                        });
-                    }
-
-                });
+            if (!this.isActive()) {
+                return;
             }
+
+            // One delegated listener per document: never bound per call-to-action node.
+            $(document).on('click', '[data-brizy-cta] a', this.navigate);
+            BrizyBlockEditorDiag.listeners++;
+
+            this.schedule();
+
+            // One observer per document. document.body can still be null when the
+            // canvas assets run from <head>, so observe the root element.
+            this.observer = new MutationObserver(this.schedule.bind(this));
+            this.observer.observe(document.documentElement, { childList: true, subtree: true });
+            BrizyBlockEditorDiag.observers++;
+
+            // A destroyed canvas must retain nothing.
+            $(window).on('pagehide', function () {
+                self.destroy();
+            });
+        },
+
+        destroy: function () {
+            if (this.observer) {
+                this.observer.disconnect();
+                this.observer = null;
+                BrizyBlockEditorDiag.observers--;
+            }
+
+            $(document).off('click', '[data-brizy-cta] a', this.navigate);
+            BrizyBlockEditorDiag.listeners--;
+        }
+    };
+
+    /**
+     * Block editor header controls, admin document only.
+     *
+     * Keeps exactly one Brizy switch control ("Edit with Brizy" / "Back to
+     * WordPress Editor", printed by compatibilities/gutenberg.php) and the AI
+     * button in the editor header toolbar. Runs only where wp.data exists,
+     * which excludes the canvas iframe. Core keeps the legacy
+     * `edit-post-header-toolbar` class next to `editor-document-tools` for
+     * plugins that inject into the toolbar.
+     */
+    var BrizyGutenberg = {
+
+        TOOLBAR: '.editor-document-tools, .edit-post-header-toolbar',
+
+        pending: false,
+        observer: null,
+        unsubscribe: null,
+
+        toolbar: function () {
+            var editor = document.getElementById('editor');
+
+            return editor ? editor.querySelector(this.TOOLBAR) : null;
+        },
+
+        reconcile: function () {
+            var toolbar = this.toolbar(),
+                $toolbar, html;
+
+            if (!toolbar) {
+                return;
+            }
+
+            $toolbar = $(toolbar);
+
+            if (!$toolbar.children('.brizy-buttons').length) {
+                html = $('#brizy-gutenberg-btn-switch-mode').html();
+
+                if (html) {
+                    $toolbar.append($($.parseHTML($.trim(html))).filter('.brizy-buttons').attr('data-brizy-header', '1'));
+                }
+            }
+
+            BrizyAiButton.appendTo($toolbar);
+        },
+
+        schedule: function () {
+            var self = this;
+
+            if (this.pending) {
+                return;
+            }
+
+            this.pending = true;
+
+            setTimeout(function () {
+                self.pending = false;
+                self.reconcile();
+            }, 0);
+        },
+
+        init: function () {
+            var self = this,
+                editor = document.getElementById('editor');
+
+            if (typeof wp === 'undefined' || !wp.data || !editor) {
+                return;
+            }
+
+            this.schedule();
+
+            // One store subscription and one observer: header re-renders are repaired
+            // without store activity, store updates are coalesced into one reconcile.
+            this.unsubscribe = wp.data.subscribe(function () {
+                self.schedule();
+            });
+
+            this.observer = new MutationObserver(function () {
+                self.schedule();
+            });
+            this.observer.observe(editor, { childList: true, subtree: true });
+
+            BrizyBlockEditorDiag.observers++;
+            BrizyBlockEditorDiag.listeners++;
         }
     };
 
@@ -487,6 +701,7 @@ jQuery(document).ready(function ($) {
     };
 
     $(function () {
+        BrizyCanvasCta.init();
         BrizyGutenberg.init();
         BrizyClassicEditor.init();
         BrizyFeedbackDialog.init();
