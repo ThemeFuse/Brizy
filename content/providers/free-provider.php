@@ -66,6 +66,9 @@ class Brizy_Content_Providers_FreeProvider extends Brizy_Content_Providers_Abstr
         $this->registerPlaceholderName( 'brizy_dc_image_alt', function ( $name ) {
             return new Brizy_Content_Placeholders_ImageAltAttribute( __( 'Internal Alt Attributes', 'brizy' ), $name );
         } );
+        $this->registerPlaceholderName( 'brizy_dc_image_desc', function ( $name ) {
+            return new Brizy_Content_Placeholders_ImageDescAttribute( __( 'Internal Desc Attributes', 'brizy' ), $name );
+        } );
         $this->registerPlaceholderName( 'brizy_dc_current_page_unique_url', function ( $name ) {
             return new Brizy_Content_Placeholders_UniquePageUrl( __( 'Uniquer page url', 'brizy' ), $name );
         } );
