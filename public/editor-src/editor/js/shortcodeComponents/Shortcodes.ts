@@ -135,6 +135,8 @@ import getWOOProductContent from "./pro/WOOProductContent";
 import getWOOProductMeta from "./pro/WOOProductMeta";
 import getWOOProductTitle from "./pro/WOOProductTitle";
 import getWOORating from "./pro/WOORating";
+import getWOOSaleBadge from "./pro/WOOSaleBadge";
+import getWOOOutOfStockBadge from "./pro/WOOOutOfStockBadge";
 import getWOOSku from "./pro/WOOSku";
 import getWOOStock from "./pro/WOOStock";
 import getWOOUpsell from "./pro/WOOUpsell";
@@ -317,6 +319,8 @@ export function getProShortCodes(
     WOOSku: true,
     WOOProductMeta: true,
     WOORating: true,
+    WOOSaleBadge: true,
+    WOOOutOfStockBadge: true,
     WOOAttributes: true,
     WOOUpsell: true,
     WOOBreadcrumbs: true,
@@ -488,6 +492,8 @@ export const ShortCodesKeywords: Record<string, string> = {
   WOOSku: "product SKU, stock keeping unit, identifier",
   WOOProductMeta: "product meta data, additional information, details",
   WOORating: "product rating, reviews, feedback",
+  WOOSaleBadge: "sale badge, discount, on sale",
+  WOOOutOfStockBadge: "out of stock badge, unavailable, sold out",
   WOOAttributes: "product attributes, variations, options",
   WOOUpsell: "upsell, related products, recommendations",
   WOOBreadcrumbs: "product breadcrumbs, navigation, path",
@@ -647,6 +653,8 @@ export function getSampleShortCodes(config: ConfigCommon) {
     WOOProductMeta: getWOOProductMeta(),
     WOOProductTitle: getWOOProductTitle(),
     WOORating: getWOORating(),
+    WOOSaleBadge: getWOOSaleBadge(),
+    WOOOutOfStockBadge: getWOOOutOfStockBadge(),
     WOOSku: getWOOSku(),
     WOOStock: getWOOStock(),
     WOOUpsell: getWOOUpsell(),
