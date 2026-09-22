@@ -17,6 +17,11 @@ class Brizy_Admin_Settings
      */
     private $screenName;
 
+    /**
+     * @var Brizy_Admin_Blocks_CookieBanner
+     */
+    private $cookieBanner;
+
 
     public static function menu_slug()
     {
@@ -206,12 +211,14 @@ class Brizy_Admin_Settings
         $svgEnabled = Brizy_Admin_Svg_Main::isSvgEnabled();
         $jsonEnabled = Brizy_Admin_Json_Main::isJsonEnabled();
 		$gettingStartedVideoEnabled = Brizy_Admin_GettingStarted::isVideoEnabled();
+        $cookieBannerEnabled = Brizy_Admin_Blocks_CookieBanner::isCookieBannerEnabled();
 
         return Brizy_Admin_View::render('settings/general', [
                 'types' => $prepared_types,
                 'svgUploadEnabled' => $svgEnabled,
                 'jsonUploadEnabled' => $jsonEnabled,
-				'gettingStartedVideoEnabled' => $gettingStartedVideoEnabled
+				'gettingStartedVideoEnabled' => $gettingStartedVideoEnabled,
+                'cookieBannerEnabled' => $cookieBannerEnabled
 			] );
 	}
 
@@ -264,6 +271,7 @@ class Brizy_Admin_Settings
         $svgEnabled = isset($_POST['svg-upload-enabled']) ? (bool)$_POST['svg-upload-enabled'] : false;
         $jsonEnabled = isset($_POST['json-upload-enabled']) ? (bool)$_POST['json-upload-enabled'] : false;
         $gettingStartedVideoEnabled = isset( $_POST['getting-started-video-enabled'] );
+        $cookieBannerEnabled = isset($_POST['cookie-banner-enabled']);
         if (count($array_diff) > 0) {
             //error
             Brizy_Admin_Flash::instance()->add_error('Invalid post type selected');
@@ -272,11 +280,46 @@ class Brizy_Admin_Settings
         Brizy_Editor_Storage_Common::instance()->set('svg-upload', $svgEnabled);
         Brizy_Editor_Storage_Common::instance()->set('json-upload', $jsonEnabled);
 		Brizy_Editor_Storage_Common::instance()->set( 'getting-started-video-enabled', $gettingStartedVideoEnabled );
+        $cookieBannerWasEnabled = Brizy_Admin_Blocks_CookieBanner::isCookieBannerEnabled();
+        $cookieBannerUpdated = false;
+        if ($cookieBannerEnabled && !$cookieBannerWasEnabled) {
+            $cookieBannerUpdated = $this->getCookieBanner()->enable();
+        } elseif (!$cookieBannerEnabled && $cookieBannerWasEnabled) {
+            $cookieBannerUpdated = $this->getCookieBanner()->disable();
+        }
+
+        if (!$cookieBannerUpdated) {
+            // keep the previous value, so saving the same checkbox state again retries
+            Brizy_Admin_Flash::instance()->add_error(__('Unable to update the cookie banner. Please try again.', 'brizy'));
+        }
+
         if ($error_count == 0) {
             $this->selected_post_types = $post_types;
             Brizy_Editor_Storage_Common::instance()->set('post-types', $post_types);
         }
 
+    }
+
+    /**
+     * @return Brizy_Admin_Blocks_CookieBanner
+     */
+    private function getCookieBanner()
+    {
+        if (!$this->cookieBanner) {
+            $this->cookieBanner = new Brizy_Admin_Blocks_CookieBanner();
+        }
+
+        return $this->cookieBanner;
+    }
+
+    /**
+     * @internal Lets tests replace the cookie banner with a test double.
+     *
+     * @param Brizy_Admin_Blocks_CookieBanner $cookieBanner
+     */
+    public function setCookieBanner(Brizy_Admin_Blocks_CookieBanner $cookieBanner)
+    {
+        $this->cookieBanner = $cookieBanner;
     }
 
     public function maintenance_settings_submit()
