@@ -305,10 +305,8 @@ jQuery(document).ready(function ($) {
                 $button = $('<span class="brizy-cta__button"></span>');
 
             if (d.logoUrl) {
-                // A white-label logo URL may be unreachable; drop the image rather than show a broken icon.
-                $button.append($('<img class="brizy-cta__logo" alt="">').on('error', function () {
-                    $(this).remove();
-                }).attr('src', d.logoUrl));
+                $button.addClass('brizy-cta__button--logo');
+                $button[0].style.setProperty('--brizy-cta-logo', 'url(' + JSON.stringify(d.logoUrl) + ')');
             }
 
             $button.append(document.createTextNode(d.ctaLabel));

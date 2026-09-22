@@ -195,11 +195,17 @@
     color: #ffffff;
 }
 
-.brizy-cta .brizy-cta__logo {
+.brizy-cta .brizy-cta__button--logo::before {
+    content: "";
+    flex: none;
     width: 20px;
     height: 20px;
     margin-right: 10px;
-    vertical-align: middle;
+    background-color: currentColor;
+    -webkit-mask: var(--brizy-cta-logo) no-repeat center;
+    mask: var(--brizy-cta-logo) no-repeat center;
+    -webkit-mask-size: contain;
+    mask-size: contain;
 }
 
 .brizy-button {
