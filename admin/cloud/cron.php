@@ -5,6 +5,7 @@ class Brizy_Admin_Cloud_Cron {
 	use Brizy_Admin_Cloud_SyncAware;
 
 	const BRIZY_CLOUD_CRON_KEY = 'brizy-cloud-synchronize';
+	const BRIZY_CLOUD_CRON_SCHEDULE = '5minute';
 
 
 	public static function _init() {
@@ -27,15 +28,10 @@ class Brizy_Admin_Cloud_Cron {
 		add_action( self::BRIZY_CLOUD_CRON_KEY, array( $this, 'syncBlocksAction' ) );
 		add_action( self::BRIZY_CLOUD_CRON_KEY, array( $this, 'syncLayoutsAction' ) );
 
-		add_filter( 'cron_schedules', array( $this, 'addBrizyCloudCronSchedules' ) );
-
-
-		if ( ! wp_next_scheduled( self::BRIZY_CLOUD_CRON_KEY ) ) {
-			$interval = is_user_logged_in() ? '5minute' : 'hourly';
-
-			if ( is_user_logged_in() ) {
-				wp_schedule_event( time(), $interval, self::BRIZY_CLOUD_CRON_KEY );
-			}
+		// The event is only scheduled while a user is active on the site. WP-Cron itself runs
+		// without a user, so the schedule and the handlers above must not depend on this branch.
+		if ( is_user_logged_in() && ! wp_next_scheduled( self::BRIZY_CLOUD_CRON_KEY ) ) {
+			wp_schedule_event( time(), self::BRIZY_CLOUD_CRON_SCHEDULE, self::BRIZY_CLOUD_CRON_KEY );
 		}
 	}
 
@@ -49,9 +45,13 @@ class Brizy_Admin_Cloud_Cron {
 		return $this->syncBlocks(1);
 	}
 
-	public function addBrizyCloudCronSchedules( $schedules ) {
-		// Adds once weekly to the existing schedules.
-		$schedules['5minute'] = array(
+	/**
+	 * @param array $schedules
+	 *
+	 * @return array
+	 */
+	public static function addBrizyCloudCronSchedules( $schedules ) {
+		$schedules[ self::BRIZY_CLOUD_CRON_SCHEDULE ] = array(
 			'interval' => 300,
 			'display'  => __( 'Once in 5 minutes', 'brizy' )
 		);
