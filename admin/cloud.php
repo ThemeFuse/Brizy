@@ -46,11 +46,6 @@ class Brizy_Admin_Cloud
             $cloudClient = Brizy_Admin_Cloud_Client::instance($project, new WP_Http());
         }
 
-        if (!wp_doing_ajax() && Brizy_Editor_Project::get()->getCloudToken()) {
-            // do not run cron actions on ajax request
-            Brizy_Admin_Cloud_Cron::_init();
-        }
-
         return self::$instance ? self::$instance : (self::$instance = new self($project, $cloudClient));
     }
 

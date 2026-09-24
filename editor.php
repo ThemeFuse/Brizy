@@ -91,6 +91,8 @@ class Brizy_Editor
         $project = Brizy_Editor_Project::get();
         Brizy_Editor_Compiler::checkRecompileTag();
         Brizy_Admin_Flash::instance()->initialize(); // initialize flash
+        // "invalid_schedule" when it reschedules an already stored event
+        add_filter('cron_schedules', array('Brizy_Admin_Cloud_Cron', 'addBrizyCloudCronSchedules'));
         add_action('init', array($this, 'registerCustomPostTemplates'), -4000);
         add_action('init', array($this, 'runMigrations'), -3000);
         add_action('init', array('Brizy_MaintenanceMode', 'init'), -4000);
@@ -180,12 +182,35 @@ class Brizy_Editor
                 Brizy_Admin_Cloud::_init();
             }
         }
+        $this->initializeCloudCron();
         $this->initializeAssetLoaders();
         $supported_post_types = $this->supported_post_types();
         $supported_post_types[] = Brizy_Admin_Templates::CP_TEMPLATE;
         foreach ($supported_post_types as $type) {
             add_filter("theme_{$type}_templates", array($this, 'registerPageTemplates'));
         }
+    }
+
+    /**
+     * Attaches the cloud sync cron handlers.
+     */
+    private function initializeCloudCron()
+    {
+        if (apply_filters('brizy_wl_enabled', false) || wp_doing_ajax()) {
+            return;
+        }
+
+        $isCronRunner = wp_doing_cron() || (defined('WP_CLI') && WP_CLI);
+
+        if (!($isCronRunner || Brizy_Editor_User::is_user_allowed())) {
+            return;
+        }
+
+        if (!Brizy_Editor_Project::get()->getCloudToken()) {
+            return;
+        }
+
+        Brizy_Admin_Cloud_Cron::_init();
     }
 
     public function wordpressLoaded()
