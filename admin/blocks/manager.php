@@ -72,65 +72,6 @@ class Brizy_Admin_Blocks_Manager extends Brizy_Admin_Entity_AbstractManager {
 //=====================================================================
 
 
-	/**
-	 * @param $type
-	 * @param $arags
-	 * @param array $fields
-	 *
-	 * @return array
-	 * @throws Brizy_Editor_Exceptions_NotFound
-	 */
-	public function getAllBlocks( $type, $arags, $fields = array() ) {
-
-		$blocks = $this->getLocalBlocks( $type, $arags, $fields );
-
-		try {
-			$versions = $this->cloud->getCloudEditorVersions();
-
-			if ( $this->cloud && $type == Brizy_Admin_Blocks_Main::CP_SAVED && $versions['sync'] == BRIZY_SYNC_VERSION ) {
-
-				$cloudBlocks = $this->cloud->getBlocks( array( 'fields' => $fields ) );
-
-				foreach ( (array) $cloudBlocks as $cblock ) {
-					$existingBlock = false;
-					foreach ( $blocks as $block ) {
-						if ( $cblock->uid == $block['uid'] ) {
-							$existingBlock = true;
-						}
-					}
-
-					if ( ! $existingBlock ) {
-
-						$localBlock = $this->getLocalBlock( Brizy_Admin_Blocks_Main::CP_SAVED, $cblock->uid );
-
-						if ( in_array( 'synchronized', $fields ) ) {
-							if ( $localBlock ) {
-								$cblock->synchronized = $localBlock->isSynchronized( $this->cloud->getBrizyProject()->getCloudAccountId() );
-							} else {
-								$cblock->synchronized = false;
-							}
-						}
-
-						if ( in_array( 'isCloudEntity', $fields ) ) {
-							$cblock->isCloudEntity = true;
-						}
-
-						if ( in_array( 'synchronizable', $fields ) ) {
-							$cblock->synchronizable = true;
-						}
-
-						$blocks[] = (array) $cblock;
-					}
-				}
-
-			}
-		} catch ( Exception $e ) {
-			// do nothing...
-		}
-
-		return $blocks;
-	}
-
 	public function getBlockByUid( $type, $uid ) {
 		$block    = $this->getLocalBlock( $type, $uid );
 		$versions = $this->cloud->getCloudEditorVersions();

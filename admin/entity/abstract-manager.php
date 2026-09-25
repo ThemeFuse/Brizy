@@ -36,8 +36,8 @@ abstract class Brizy_Admin_Entity_AbstractManager implements Brizy_Admin_Entity_
 		];
 
 		if ( is_array( $uids ) ) {
-			$args['numberposts'] = -1;
-			$args['meta_query'] = [
+			$args['numberposts'] = - 1;
+			$args['meta_query']  = [
 				[
 					'key'     => 'brizy_post_uid',
 					'value'   => $uids,
@@ -83,6 +83,15 @@ abstract class Brizy_Admin_Entity_AbstractManager implements Brizy_Admin_Entity_
 			'orderby'        => 'ID',
 			'order'          => 'ASC',
 		);
+
+		if ( !Brizy_Admin_Blocks_CookieBanner::isCookieBannerEnabled() ) {
+			$filterArgs['meta_query'][] = array(
+				'key'     => 'brizy_post_uid',
+				'value'   => Brizy_Admin_Blocks_CookieBanner::UID_PREFIX,
+				'compare' => 'NOT LIKE',
+			);
+		}
+
 		$filterArgs = array_merge( $filterArgs, $args );
 
 		$posts = get_posts( $filterArgs );
@@ -97,9 +106,9 @@ abstract class Brizy_Admin_Entity_AbstractManager implements Brizy_Admin_Entity_
 
 	protected function createEntityByType( $uid, $type, $status = 'publish' ) {
 
-	    if($this->getEntityUidAndType($uid,$type)) {
-	        throw new Exception('Duplicate entity uid. Please refresh the page and try again');
-        }
+		if ( $this->getEntityUidAndType( $uid, $type ) ) {
+			throw new Exception( 'Duplicate entity uid. Please refresh the page and try again' );
+		}
 
 		$name  = md5( time() );
 		$apost = wp_insert_post( array(
@@ -143,23 +152,25 @@ abstract class Brizy_Admin_Entity_AbstractManager implements Brizy_Admin_Entity_
 	 *
 	 * @return array
 	 */
-	public function createResponseForEntities( $entities, $fields = [] , $context=Brizy_Editor_Editor_Editor::EDITOR_CONTEXT) {
+	public function createResponseForEntities( $entities, $fields = [], $context = Brizy_Editor_Editor_Editor::EDITOR_CONTEXT ) {
 		$response = [];
 		foreach ( $entities as $entity ) {
 			$response[] = $entity->createResponse( $fields, $context );
 		}
+
 		return $response;
 	}
 
-	public function createEntityResponseForCompile( $entities, $fields = []) {
+	public function createEntityResponseForCompile( $entities, $fields = [] ) {
 		$response = [];
 		foreach ( $entities as $entity ) {
 			/**
-			 * @var Brizy_Editor_Entity $entity;
+			 * @var Brizy_Editor_Entity $entity ;
 			 */
-			$data  = $entity->createResponse( $fields, Brizy_Editor_Editor_Editor::COMPILE_CONTEXT );
+			$data       = $entity->createResponse( $fields, Brizy_Editor_Editor_Editor::COMPILE_CONTEXT );
 			$response[] = $data;
 		}
+
 		return $response;
 	}
 
