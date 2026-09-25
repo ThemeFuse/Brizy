@@ -26,6 +26,32 @@ jQuery(document).ready(function ($) {
         });
     });
 
+    $('#brz-repair-project-button').on('click', function (e) {
+        e.preventDefault();
+
+        var self = $(this);
+
+        self.removeClass('success').addClass('loading');
+
+        $.post(Brizy_Admin_Data.url, {
+            action: 'brizy_repair_project',
+            nonce: Brizy_Admin_Data.nonce
+        }).done(function (response) {
+            self.removeClass('loading');
+
+            if (response.success) {
+                self.addClass('success');
+            }
+
+            alert(response.data.message);
+        }).error(function (response) {
+
+            self.removeClass('success').removeClass('loading');
+
+            alert(response.responseText);
+        });
+    });
+
     $('#brz-replace-url-button').on('click', function (e) {
         e.preventDefault();
 

@@ -85,6 +85,14 @@ class Brizy_Editor
 
         if (is_admin()) {
             Brizy_SystemChecks::run();
+            // BRZ-693. Reports a project record that was repaired automatically.
+            // Registered before the project is loaded below, because that load is
+            // what triggers the repair.
+            Brizy_Admin_ProjectHealedNotice::_init();
+        }
+        if (defined('WP_CLI') && WP_CLI) {
+            // BRZ-693. The way to rescue a site whose dashboard is unreachable.
+            WP_CLI::add_command('brizy repair-project', ['Brizy_Editor_ProjectHealer', 'cli']);
         }
         // make sure the project is created
         // do not remove this! we force the project creation here.
