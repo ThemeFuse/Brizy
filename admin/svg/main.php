@@ -1,4 +1,7 @@
 <?php
+
+use enshrined\svgSanitize\Sanitizer;
+
 /**
  * Created by PhpStorm.
  * User: alex
@@ -63,19 +66,45 @@ class Brizy_Admin_Svg_Main {
 	}
 
 	public function wp_handle_upload_prefilter( $file ) {
-		if ( self::SVG_MIME !== $file['type'] ) {
+		if ( ! $this->isSvgUpload(  $file ) ) {
 			return $file;
 		}
-		$dirtySVG  = file_get_contents( $file['tmp_name'] );
-		$sanitizer = new \enshrined\svgSanitize\Sanitizer();
-		$cleanSVG  = $sanitizer->sanitize( $dirtySVG );
+		$dirtySVG = file_get_contents( $file['tmp_name'] );
+		if ( false === $dirtySVG ) {
+			$file['error'] = __( "Sorry, this file can't be sanitized.", 'brizy' );
+
+			return $file;
+		}
+		$sanitizer = new Sanitizer();
+		$sanitizer->removeRemoteReferences( true );
+		$cleanSVG = $sanitizer->sanitize( $dirtySVG );
 		if ( $cleanSVG ) {
 			file_put_contents( $file['tmp_name'], $cleanSVG );
 		} else {
-			$file['error'] = __( "Sorry, this SVG file can't be sanitized.", 'brizy' );
+			$file['error'] = __( "Sorry, this file can't be sanitized.", 'brizy' );
 		}
 
 		return $file;
+	}
+
+	/**
+	 * The declared type ($file['type']) is client-supplied and does not decide how WordPress stores the file;
+	 * the stored type is derived from the file name extension. Check both so the sanitizer can't be skipped.
+	 *
+	 * @param array $file
+	 *
+	 * @return bool
+	 */
+	private function isSvgUpload(  $file ) {
+		if ( isset( $file['type'] ) && self::SVG_MIME === strtolower( trim( $file['type'] ) ) ) {
+			return true;
+		}
+
+		$name     = isset( $file['name'] ) ? $file['name'] : '';
+		$path     = isset( $file['tmp_name'] ) ? $file['tmp_name'] : '';
+		$filetype = wp_check_filetype_and_ext( $path, $name, $this->addSvgMimeType( [] ) );
+
+		return self::SVG_MIME === $filetype['type'];
 	}
 
 	/**
