@@ -1,4 +1,4 @@
-import { UndoAction, RedoAction } from "./types";
+import type { RedoAction, UndoAction } from "./types";
 
 export function undo(): UndoAction {
   return {

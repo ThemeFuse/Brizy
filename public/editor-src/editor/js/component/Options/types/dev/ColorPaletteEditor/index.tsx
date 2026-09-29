@@ -3,7 +3,7 @@ import React, { useCallback, useMemo, useState } from "react";
 import EditorIcon from "visual/component/EditorIcon";
 import Toolbar from "visual/component/Toolbar";
 import { getToolbarItems } from "./toolbar";
-import { Color, Props } from "./types";
+import type { Color, Props } from "./types";
 
 export const ColorPaletteEditor = (props: Props): JSX.Element => {
   const {
@@ -38,7 +38,7 @@ export const ColorPaletteEditor = (props: Props): JSX.Element => {
 
   const labelHtml = useMemo(
     () =>
-      label && label.props.label ? (
+      label?.props.label ? (
         <div className="brz-ed-option__label brz-ed-option__color-palette-editor__label">
           {label}
           {helper ? (
@@ -69,6 +69,7 @@ export const ColorPaletteEditor = (props: Props): JSX.Element => {
 
     return (
       <Toolbar
+        // biome-ignore lint/suspicious/noArrayIndexKey: Color is { hex } only, the palette is fixed-length and edited by index
         key={index}
         getItems={() =>
           getToolbarItems(color, (value) => handleColorChange(value, index))

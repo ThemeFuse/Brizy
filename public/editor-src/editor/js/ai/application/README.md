@@ -45,5 +45,5 @@ Also defines lightweight summary types for LLM consumption:
 | `FontStyleSummary` | Desktop-only typography props (no responsive)|
 | `StyleDetail`      | id + title + colorPalette + fontStyles       |
 | `FontSummary`      | brizyId + family + type + category           |
-| `GoogleFontSummary`| family + category + variants + weights       |
+| `GoogleFontSummary` | id + title + family + category + variants + weights |
 | `AddFontParams`    | Discriminated union: google \| adobe         |

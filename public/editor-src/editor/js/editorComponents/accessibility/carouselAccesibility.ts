@@ -96,7 +96,10 @@ export class CarouselAccessibility {
     this.getDotButtons().forEach((button, index) => {
       button.setAttribute("type", "button");
       button.setAttribute("aria-label", `Go to slide ${index + 1}`);
-      button.setAttribute("aria-controls", `brz-carousel-slide-${this.instanceId}-${index}`);
+      button.setAttribute(
+        "aria-controls",
+        `brz-carousel-slide-${this.instanceId}-${index}`
+      );
     });
   }
 
@@ -109,7 +112,10 @@ export class CarouselAccessibility {
 
     const pauseButton = this.ensurePauseButton(pauseItem);
     pauseButton.setAttribute("type", "button");
-    pauseButton.setAttribute("aria-controls", `brz-carousel-${this.instanceId}`);
+    pauseButton.setAttribute(
+      "aria-controls",
+      `brz-carousel-${this.instanceId}`
+    );
   }
 
   private syncSlides(): void {
@@ -118,10 +124,16 @@ export class CarouselAccessibility {
     slides.forEach((slide, index) => {
       const isActive = slide.classList.contains("slick-active");
 
-      slide.setAttribute("id", `brz-carousel-slide-${this.instanceId}-${index}`);
+      slide.setAttribute(
+        "id",
+        `brz-carousel-slide-${this.instanceId}-${index}`
+      );
       slide.setAttribute("role", "group");
       slide.setAttribute("aria-roledescription", "slide");
-      slide.setAttribute("aria-label", `Slide ${index + 1} of ${slides.length}`);
+      slide.setAttribute(
+        "aria-label",
+        `Slide ${index + 1} of ${slides.length}`
+      );
       slide.setAttribute("aria-hidden", (!isActive).toString());
 
       this.syncSlideFocusableElements(slide, isActive);
@@ -256,10 +268,9 @@ export class CarouselAccessibility {
   }
 
   private getDotsList(): HTMLElement | undefined {
-    return this.slick
-      .parent()
-      .find(".brz-slick-slider__dots")
-      .get(0) as HTMLElement | undefined;
+    return this.slick.parent().find(".brz-slick-slider__dots").get(0) as
+      | HTMLElement
+      | undefined;
   }
 
   private getDotsListItems(): HTMLElement[] {
@@ -277,17 +288,15 @@ export class CarouselAccessibility {
   }
 
   private getPauseButton(): HTMLButtonElement | undefined {
-    return this.slick
-      .parent()
-      .find(".brz-slick-slider__pause-button")
-      .get(0) as HTMLButtonElement | undefined;
+    return this.slick.parent().find(".brz-slick-slider__pause-button").get(0) as
+      | HTMLButtonElement
+      | undefined;
   }
 
   private getPauseItem(): HTMLElement | undefined {
-    return this.slick
-      .parent()
-      .find(".brz-slick-slider__pause")
-      .get(0) as HTMLElement | undefined;
+    return this.slick.parent().find(".brz-slick-slider__pause").get(0) as
+      | HTMLElement
+      | undefined;
   }
 
   private getSlides(): HTMLElement[] {

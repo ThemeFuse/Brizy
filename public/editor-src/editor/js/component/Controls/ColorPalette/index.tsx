@@ -1,9 +1,9 @@
 import classNames from "classnames";
 import React from "react";
 import EditorIcon from "visual/component/EditorIcon";
-import { WithClassName, WithOnChange } from "visual/types/attributes";
+import type { WithClassName, WithOnChange } from "visual/types/attributes";
 import { ColorPaletteItem } from "./entities/Item";
-import { PaletteObject } from "./entities/PaletteObject";
+import type { PaletteObject } from "./entities/PaletteObject";
 
 type Props = WithClassName &
   WithOnChange<string> & {

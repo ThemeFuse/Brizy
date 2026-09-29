@@ -5,7 +5,8 @@ import {
 } from "../../utils/export/slider";
 import { SectionSliderAccessibility } from "../accessibility";
 
-export default function ($node) {
+export default function (node) {
+  const $node = $(node);
   const isRtl = $node.closest("[dir='rtl']").length > 0;
   let sectionSliderInstance = 0;
   const makeArrow = (node) => {
@@ -37,7 +38,6 @@ export default function ($node) {
   };
 
   $node.find(".brz-slick-slider__section").each(function () {
-    const _this = this;
     const $this = $(this);
     const data = $this.data();
     const slidesToShow = data.slidesToShow;
@@ -54,12 +54,12 @@ export default function ($node) {
     const section = $this.closest(".brz-section").get(0);
     const responsive = JSON.parse(decodeURIComponent(data.responsive));
 
-    const playPauseItem = makePausePlayItem(_this);
+    const playPauseItem = makePausePlayItem(this);
     const instanceId = sectionSliderInstance++;
 
-    const getArrow = makeArrow(_this);
+    const getArrow = makeArrow(this);
 
-    $this.on("init", function (event, slick) {
+    $this.on("init", (_event, slick) => {
       if (window.Brz) {
         const node = slick.$slides[0];
 
@@ -87,7 +87,7 @@ export default function ($node) {
       }
     });
 
-    $this.on("afterChange", function (event, slick, currentSlide) {
+    $this.on("afterChange", (_event, slick, currentSlide) => {
       if (window.Brz) {
         const _slick = slick.$slides[currentSlide];
 

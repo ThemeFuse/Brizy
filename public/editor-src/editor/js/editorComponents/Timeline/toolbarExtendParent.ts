@@ -1,5 +1,5 @@
 import type { GetItems } from "visual/editorComponents/EditorComponent/types";
-import { Props, Value } from "./index";
+import type { Props, Value } from "./index";
 
 export const getItems: GetItems<Value, Props> = () => {
   return [

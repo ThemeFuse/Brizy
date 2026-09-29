@@ -1,4 +1,4 @@
-import { ElementModelType } from "visual/component/Elements/Types";
+import type { ElementModelType } from "visual/component/Elements/Types";
 import { hasProps } from "visual/utils/object";
 import { isNullish } from "visual/utils/value";
 

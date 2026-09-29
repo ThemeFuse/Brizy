@@ -4,27 +4,31 @@ import type { AnyNode } from "domhandler";
 import { debounce, isEqual, isFunction } from "es-toolkit";
 import jQuery from "jquery";
 import type QuillType from "quill";
-import { BoundsStatic, RangeStatic } from "quill";
-import React, { ReactNode } from "react";
+import type { BoundsStatic, RangeStatic } from "quill";
+import React, { type ReactNode } from "react";
 import { connect } from "react-redux";
-import { ElementModel } from "visual/component/Elements/Types";
+import type { ElementModel } from "visual/component/Elements/Types";
 import { Translate } from "visual/component/Translate";
-import {
+import type {
   ConfigDCItem,
   DCGroupCloud,
   DCGroups
 } from "visual/global/Config/types/DynamicContent";
-import { GetConfig } from "visual/providers/ConfigProvider/types";
-import { EditorMode, isStory } from "visual/providers/EditorModeProvider";
-import { RenderType, isEditor, isView } from "visual/providers/RenderProvider";
-import { Sheet } from "visual/providers/StyleProvider/Sheet";
+import type { GetConfig } from "visual/providers/ConfigProvider/types";
+import { type EditorMode, isStory } from "visual/providers/EditorModeProvider";
+import {
+  isEditor,
+  isView,
+  type RenderType
+} from "visual/providers/RenderProvider";
+import type { Sheet } from "visual/providers/StyleProvider/Sheet";
 import {
   defaultFontSelector,
   fontsSignatureSelector,
   globalBlocksPopupIdsSelector
 } from "visual/redux/selectors";
-import { Store } from "visual/redux/store";
-import { ReduxState } from "visual/redux/types";
+import type { Store } from "visual/redux/store";
+import type { ReduxState } from "visual/redux/types";
 import { css1 } from "visual/utils/cssStyle";
 import { makePlaceholder } from "visual/utils/dynamicContent";
 import { makeAttr } from "visual/utils/i18n/attribute";
@@ -32,10 +36,10 @@ import * as Arr from "visual/utils/reader/array";
 import { diff } from "visual/utils/reader/object";
 import { encodeToString, parseFromString } from "visual/utils/string";
 import { uuid } from "visual/utils/uuid";
-import { MValue } from "visual/utils/value";
+import type { MValue } from "visual/utils/value";
 import { styleHeading, styleTooltip } from "./styles";
-import { PrepopulationData, QuillFormat, Value } from "./types";
-import QuillUtils, { createLabel, getFormats } from "./utils";
+import type { PrepopulationData, QuillFormat, Value } from "./types";
+import getQuillUtils, { createLabel, getFormats } from "./utils";
 import bindings from "./utils/bindings";
 import { changeRichText } from "./utils/changeRichText";
 import GetQuill, { Parchment } from "./utils/quill";
@@ -45,6 +49,7 @@ import {
   formatVToQuilValue,
   getDefaultValues
 } from "./utils/transforms";
+import { isExternalValueChange } from "./utils/valueSync";
 
 interface _Quill extends QuillType {
   selection: {
@@ -69,7 +74,7 @@ const classToDisableDnd = ["brz-ed-content-editable-focus", "brz-ed-dd-cancel"];
 
 type DefaultFont = ReduxState["project"]["data"]["font"];
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+// biome-ignore lint/suspicious/noExplicitAny: migrated from eslint
 type QuillValue = any;
 export type Formats = Record<string, QuillValue>;
 
@@ -118,6 +123,8 @@ type TextChangeHandler = (delta: {
   ops: ReadonlyArray<{ insert?: unknown; delete?: number }>;
 }) => void;
 
+type SelectionSnapshot = { selectionIndex: number };
+
 export class QuillComponent extends React.Component<Props> {
   isUnmounted = false;
   content = React.createRef<HTMLDivElement>();
@@ -128,6 +135,7 @@ export class QuillComponent extends React.Component<Props> {
   quillClass?: ReturnType<typeof GetQuill>;
 
   private lastUpdatedValue = "";
+  private lastCommittedValue = "";
 
   // Pending timer ids. Tracked so unmount can clear them — otherwise the
   // browser keeps the callback alive, which closes over `this` and roots the
@@ -165,13 +173,14 @@ export class QuillComponent extends React.Component<Props> {
 
   save = debounce(() => {
     if (typeof this.props.onTextChange === "function") {
-      this.props.onTextChange(this.lastUpdatedValue);
+      this.lastCommittedValue = this.lastUpdatedValue;
+      this.props.onTextChange(this.lastCommittedValue);
     }
   }, 500);
 
   constructor(props: Props) {
     super(props);
-    this.quillUtils = QuillUtils(this.props.renderContext) as QuillUtils;
+    this.quillUtils = getQuillUtils(this.props.renderContext) as QuillUtils;
 
     const { renderContext, getConfig } = this.props;
 
@@ -183,6 +192,7 @@ export class QuillComponent extends React.Component<Props> {
   componentDidMount(): void {
     const { initDelay } = this.props;
     this.lastUpdatedValue = this.props.value;
+    this.lastCommittedValue = this.props.value;
 
     if (isEditor(this.props.renderContext) && typeof initDelay === "number") {
       if (initDelay > 0) {
@@ -198,7 +208,26 @@ export class QuillComponent extends React.Component<Props> {
     }
   }
 
-  componentDidUpdate(props: Props): void {
+  getSnapshotBeforeUpdate(): SelectionSnapshot | null {
+    const quill = this.quill;
+
+    if (quill?.hasFocus()) {
+      const range = quill.getSelection();
+
+      if (range) {
+        return { selectionIndex: range.index };
+      }
+    }
+
+    // React requires null here; returning undefined logs a runtime warning.
+    return null;
+  }
+
+  componentDidUpdate(
+    props: Props,
+    _prevState: unknown,
+    snapshot: SelectionSnapshot | null
+  ): void {
     const { fontsSignature, globalBlocksPopupIds: prevPopupIds } = props;
     const {
       value,
@@ -216,7 +245,16 @@ export class QuillComponent extends React.Component<Props> {
       (reinitForValue || reinitForFonts) &&
       quill
     ) {
-      this.reinitPluginWithValue(value);
+      if (this.isExternalValue(value)) {
+        this.save.cancel();
+      }
+      this.lastCommittedValue = value;
+      this.reinitPluginWithValue(
+        value,
+        snapshot === null
+          ? undefined
+          : { restoreSelectionIndex: snapshot.selectionIndex }
+      );
 
       // If toolbar is opened need synchronize the state
       if (
@@ -293,12 +331,15 @@ export class QuillComponent extends React.Component<Props> {
     } = nextProps;
     const { globalBlocksPopupIds: prevPopupIds } = this.props;
 
-    const hasFocus = this.quill && this.quill.hasFocus();
+    const hasFocus = this.quill?.hasFocus();
     const isListOpen = this.props.isListOpen === true;
 
     const reinitForValue = value !== this.lastUpdatedValue;
 
-    const shouldReinitValue = reinitForValue && !hasFocus && !isListOpen;
+    const shouldReinitValue =
+      reinitForValue &&
+      !isListOpen &&
+      (!hasFocus || this.isExternalValue(value));
     if (fontsSignature !== this.props.fontsSignature || shouldReinitValue) {
       return true;
     }
@@ -326,7 +367,9 @@ export class QuillComponent extends React.Component<Props> {
       this.initDelayTimerId = null;
     }
 
-    this.pasteTimerIds.forEach((id) => clearTimeout(id));
+    this.pasteTimerIds.forEach((id) => {
+      clearTimeout(id);
+    });
     this.pasteTimerIds.clear();
 
     this.destroyPlugin();
@@ -365,14 +408,26 @@ export class QuillComponent extends React.Component<Props> {
     }
     this.initPlugin();
 
-    if (options?.restoreSelectionIndex) {
-      (this.quill as _Quill).setSelection(options.restoreSelectionIndex, 0);
+    if (options !== undefined && this.quill) {
+      const maxIndex = Math.max(0, this.quill.getLength() - 1);
+      this.quill.setSelection(
+        Math.min(options.restoreSelectionIndex, maxIndex),
+        0
+      );
     }
   }
 
   getIsListOpen = () => {
     return this.props.isListOpen;
   };
+
+  private isExternalValue(value: string): boolean {
+    return isExternalValueChange({
+      incoming: value,
+      domValue: this.lastUpdatedValue,
+      committedValue: this.lastCommittedValue
+    });
+  }
 
   initPlugin = (): void => {
     const { renderContext, onSelectionChange } = this.props;
@@ -552,7 +607,9 @@ export class QuillComponent extends React.Component<Props> {
     // Cancel any rAF callbacks scheduled by the text-change handler. Each
     // rAF closure captures the old quill + range; leaving them queued
     // retains the prior instance until the next frame fires.
-    this.pendingRafIds.forEach((id) => cancelAnimationFrame(id));
+    this.pendingRafIds.forEach((id) => {
+      cancelAnimationFrame(id);
+    });
     this.pendingRafIds.clear();
 
     this.quill = null;
@@ -561,7 +618,9 @@ export class QuillComponent extends React.Component<Props> {
     // unmount and reinit (e.g. after paste handler swaps quill content),
     // so refcount drops correctly each lifecycle boundary instead of
     // accumulating across reinits.
-    this.cssCleanups.forEach((clean) => clean());
+    this.cssCleanups.forEach((clean) => {
+      clean();
+    });
     this.cssCleanups.clear();
 
     // Only splice when this instance was actually registered. initPlugin
@@ -583,7 +642,7 @@ export class QuillComponent extends React.Component<Props> {
 
     const lines = quill.getLines(index, length);
     const line = quill.getLine(index);
-    const lineLength = line && line[0].domNode.textContent.length;
+    const lineLength = line?.[0].domNode.textContent.length;
     if (lines.length === 1 && lineLength < length - index) {
       quill.setSelection(index, lineLength);
     }
@@ -631,7 +690,7 @@ export class QuillComponent extends React.Component<Props> {
       this.props.onClick(event, format);
     }
 
-    node && node.classList.add(...classToDisableDnd);
+    if (node) node.classList.add(...classToDisableDnd);
   };
 
   handleKeyPress = (event: React.KeyboardEvent<HTMLDivElement>): void => {
@@ -830,7 +889,7 @@ export class QuillComponent extends React.Component<Props> {
         if (process.env.NODE_ENV === "development") {
           msg += `: ${e}`;
         }
-        // eslint-disable-next-line no-console
+        // biome-ignore lint/suspicious/noConsole: migrated from eslint
         console.log(msg);
       }
 
@@ -1063,9 +1122,9 @@ export class QuillComponent extends React.Component<Props> {
 
   formatMultiple(values: Formats): void {
     // ! take a look later
-    const blockKeys = Object.values(currentBlockValues)
-      .map((value) => Object.keys(value))
-      .flat();
+    const blockKeys = Object.values(currentBlockValues).flatMap((value) =>
+      Object.keys(value)
+    );
 
     // this is needed for extract only the one value that was changed for the textTransform,
     // because quill  can't format this patch : {bold: true, italic: true}, it will format only the last one
@@ -1083,7 +1142,6 @@ export class QuillComponent extends React.Component<Props> {
       "popups"
     ];
 
-    // eslint-disable-next-line prefer-const
     for (let [key, value] of Object.entries(values)) {
       if (!exceptionKeys.includes(key)) {
         if (blockKeys.includes(key)) {

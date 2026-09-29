@@ -26,6 +26,10 @@ import { DynamicContentHelper } from "../WordPress/common/DynamicContentHelper";
 import contextMenuExtendConfigFn from "./contextMenuExtend";
 import { disconnect, observe } from "./resizeObserver";
 
+// the "All" filter row is not one of the tags: its label is inline-editable,
+// so it gets a fixed key instead of being keyed by its own text
+const ALL_TAG_KEY = "__brz_all_tag__";
+
 export default class Items extends EditorArrayComponent {
   node = createRef();
   isotope = null;
@@ -128,7 +132,7 @@ export default class Items extends EditorArrayComponent {
       value: "true"
     });
 
-    if (meta.row && meta.row.isInner) {
+    if (meta.row?.isInner) {
       if (from.elementType === "column" || from.elementType === "row") {
         return false;
       }
@@ -210,7 +214,12 @@ export default class Items extends EditorArrayComponent {
               );
 
               return (
-                <Toolbar key={index} {...toolbarExtendFilter}>
+                // the All row's label is inline-editable, so keying it by its
+                // own text would remount the TextEditor the moment it is renamed
+                <Toolbar
+                  key={tag.name === allTag ? ALL_TAG_KEY : tag.name}
+                  {...toolbarExtendFilter}
+                >
                   {({ ref }) => (
                     <li className={itemClassName} ref={ref}>
                       {tag.name === allTag ? (
@@ -299,7 +308,8 @@ export default class Items extends EditorArrayComponent {
   }
 
   renderForViewWP(v) {
-    const { type, className, style, showPagination, showFilter } = this.props;
+    const { type, id, className, style, showPagination, showFilter } =
+      this.props;
     const item = v.map(this.renderItem);
 
     const postLoopName = getLoopName(type);
@@ -325,7 +335,11 @@ export default class Items extends EditorArrayComponent {
       : undefined;
 
     return (
-      <div className={className} style={style}>
+      <div
+        {...makeDataAttr({ name: "posts-id", value: id })}
+        className={className}
+        style={style}
+      >
         {filterPlaceholder}
         <div className="brz-posts__wrapper">
           {startPlaceholder}
@@ -338,7 +352,7 @@ export default class Items extends EditorArrayComponent {
   }
 
   renderForViewCloud(v) {
-    const { className, style, showPagination } = this.props;
+    const { id, className, style, showPagination } = this.props;
     const item = v.map(this.renderItem);
     const loopAttributes = this.getLoopAttributesString();
     const startPlaceholder = makeStartPlaceholder({
@@ -356,7 +370,11 @@ export default class Items extends EditorArrayComponent {
       : undefined;
 
     return (
-      <div className={className} style={style}>
+      <div
+        {...makeDataAttr({ name: "posts-id", value: id })}
+        className={className}
+        style={style}
+      >
         <div className="brz-posts__wrapper">
           {startPlaceholder}
           {super.renderItemsContainer(item)}

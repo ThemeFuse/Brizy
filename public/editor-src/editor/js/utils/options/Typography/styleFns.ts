@@ -1,18 +1,17 @@
 import { Num, Str } from "@brizy/readers";
-import { OptionValue } from "visual/component/Options/types";
-import { WithRenderContext } from "visual/providers/RenderProvider";
-import { ReduxState } from "visual/redux/types";
-import { Fonts } from "visual/types/Fonts";
-import { FontFamilyType } from "visual/types/Fonts";
-import { SizeSuffix } from "visual/utils/fonts/SizeSuffix";
-import {
-  Weight,
-  empty as defaultWeight,
-  fromNumber as readWeight
-} from "visual/utils/fonts/Weight";
+import type { OptionValue } from "visual/component/Options/types";
+import type { WithRenderContext } from "visual/providers/RenderProvider";
+import type { ReduxState } from "visual/redux/types";
+import type { FontFamilyType, Fonts } from "visual/types/Fonts";
 import { getFontCssStyle } from "visual/utils/fonts/getFontCssStyle";
+import type { SizeSuffix } from "visual/utils/fonts/SizeSuffix";
 import {
-  Positive,
+  empty as defaultWeight,
+  fromNumber as readWeight,
+  type Weight
+} from "visual/utils/fonts/Weight";
+import {
+  type Positive,
   fromNumber as readPositive
 } from "visual/utils/math/Positive";
 import { defaultValueKey, defaultValueValue } from "visual/utils/onChange";
@@ -20,8 +19,8 @@ import { getOptionFontByGlobal } from "visual/utils/options";
 import { getDetailsModelFontFamily } from "visual/utils/options/getDetailsModelFontFamily";
 import { DESKTOP } from "visual/utils/responsiveMode";
 import { capByPrefix } from "visual/utils/string";
-import { CSSValue as CSSValue_ } from "visual/utils/style2/types";
-import { MValue, isNullish } from "visual/utils/value";
+import type { CSSValue as CSSValue_ } from "visual/utils/style2/types";
+import { isNullish, type MValue } from "visual/utils/value";
 
 type CSSValue = Omit<CSSValue_, "v"> & {
   v: OptionValue<"typography">;

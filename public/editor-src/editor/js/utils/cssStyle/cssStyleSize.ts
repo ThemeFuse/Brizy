@@ -13,9 +13,9 @@ import {
   styleSizeTextSpacing,
   styleSizeWidth
 } from "visual/utils/style2";
-import { CSSValue } from "visual/utils/style2/types";
+import type { CSSValue } from "visual/utils/style2/types";
 import { readIconSize } from "visual/utils/types/Type";
-import { MValue, mApply } from "visual/utils/value";
+import { type MValue, mApply } from "visual/utils/value";
 import { checkValue } from "../checkValue";
 
 type Get = (k: string) => MValue<unknown>;

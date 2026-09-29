@@ -1,10 +1,10 @@
-import { ElementModel } from "visual/component/Elements/Types";
-import { Meta } from "visual/editorComponents/SectionHeader/type";
-import { DynamicContent } from "visual/global/Config/types/DynamicContent";
-import { Switch } from "visual/types/Options";
-import { WithClassName } from "visual/types/attributes";
-import { Dictionary } from "visual/types/utils";
-import { PostsTypes } from "visual/utils/elements/posts/types";
+import type { ElementModel } from "visual/component/Elements/Types";
+import type { Meta } from "visual/editorComponents/SectionHeader/type";
+import type { DynamicContent } from "visual/global/Config/types/DynamicContent";
+import type { WithClassName } from "visual/types/attributes";
+import type { Switch } from "visual/types/Options";
+import type { Dictionary } from "visual/types/utils";
+import type { PostsTypes } from "visual/utils/elements/posts/types";
 
 export interface Value extends ElementModel {
   columns: number;

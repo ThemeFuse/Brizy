@@ -6,7 +6,7 @@ import {
   styleTextTransformTextDecoration,
   styleTextTransformUpperLowerCase
 } from "visual/utils/style2";
-import { CSSValue } from "visual/utils/style2/types";
+import type { CSSValue } from "visual/utils/style2/types";
 
 export function cssStyleTextBold({
   v,

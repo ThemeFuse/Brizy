@@ -1,5 +1,5 @@
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
-import { GoogleFont } from "visual/types/Fonts";
+import type { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import type { GoogleFont } from "visual/types/Fonts";
 import { assetUrl } from "visual/utils/asset";
 import { t } from "visual/utils/i18n";
 
@@ -28,7 +28,7 @@ export const getGoogleFonts = async ({
     }
 
     if (COMPILER_TYPE === "node") {
-      // eslint-disable-next-line @typescript-eslint/no-require-imports
+      // biome-ignore lint/style/noCommonJs: COMPILER_TYPE branch — a static import would bundle the 337KB font JSON into every target
       const fonts = require("visual/config/googleFonts.json");
       return res(fonts.items);
     }

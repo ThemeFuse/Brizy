@@ -1,8 +1,8 @@
 import { isEqual } from "es-toolkit";
 import { produce } from "immer";
 import { projectAssembled } from "visual/redux/selectors";
-import { ActionTypes, ReduxAction } from "../actions2";
-import { ReduxState } from "../types";
+import { ActionTypes, type ReduxAction } from "../actions2";
+import type { ReduxState } from "../types";
 
 type Project = ReduxState["project"];
 type RProject = (s: Project, a: ReduxAction, f: ReduxState) => Project;

@@ -1,6 +1,9 @@
-import { WithEditorMode, isStory } from "visual/providers/EditorModeProvider";
+import {
+  isStory,
+  type WithEditorMode
+} from "visual/providers/EditorModeProvider";
 import { t } from "visual/utils/i18n";
-import { ToolbarItemType } from "../ToolbarItemType";
+import type { ToolbarItemType } from "../ToolbarItemType";
 
 export function getItems({ editorMode }: WithEditorMode): ToolbarItemType[] {
   const _isStory = isStory(editorMode);

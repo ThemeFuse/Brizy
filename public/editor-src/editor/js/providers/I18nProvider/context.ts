@@ -1,6 +1,6 @@
 import { createContext } from "react";
-import { Dictionary } from "visual/utils/i18n/I18n";
-import { MValue } from "visual/utils/value";
+import type { Dictionary } from "visual/utils/i18n/I18n";
+import type { MValue } from "visual/utils/value";
 
 export interface I18nProvider {
   I18n: Dictionary;

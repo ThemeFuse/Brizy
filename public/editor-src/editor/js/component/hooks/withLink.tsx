@@ -1,7 +1,7 @@
-import React, { ComponentType, ReactElement } from "react";
-import { ElementModel } from "visual/component/Elements/Types";
+import React, { type ComponentType, type ReactElement } from "react";
+import type { ElementModel } from "visual/component/Elements/Types";
 import Link from "visual/component/Link";
-import { StoryAnchorAttribute } from "visual/component/Link/types/Slide";
+import type { StoryAnchorAttribute } from "visual/component/Link/types/Slide";
 import { useConfig } from "visual/providers/ConfigProvider";
 import { getLinkData } from "visual/utils/models/link";
 import { read } from "visual/utils/reader/object";

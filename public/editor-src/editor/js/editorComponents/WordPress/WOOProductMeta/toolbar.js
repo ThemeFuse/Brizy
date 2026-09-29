@@ -145,7 +145,7 @@ export function getItems({ v, device }) {
               options: [
                 {
                   id: "valueColor",
-                  type: "colorPicker",
+                  type: "colorPicker"
                 }
               ]
             },
@@ -156,7 +156,7 @@ export function getItems({ v, device }) {
                 {
                   id: "dividersColor",
                   disabled: elementType === "inline",
-                  type: "colorPicker",
+                  type: "colorPicker"
                 }
               ]
             }

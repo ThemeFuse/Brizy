@@ -1,5 +1,5 @@
 import { styleBgColor } from "../style2";
-import { CSSValue } from "../style2/types";
+import type { CSSValue } from "../style2/types";
 import { cssStyleColor } from "./cssStyleColor";
 
 export function cssStyleElementImageComparisonThumbArrowColor({

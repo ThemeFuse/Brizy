@@ -1,3 +1,5 @@
+import $ from "jquery";
+
 function closest(el, fn) {
   while (el) {
     if (fn(el)) return el;
@@ -5,8 +7,9 @@ function closest(el, fn) {
   }
 }
 
-export default function($node) {
-  $node.find(".brz-woo-add-to-cart").each(function() {
+export default function (node) {
+  const $node = $(node);
+  $node.find(".brz-woo-add-to-cart").each(() => {
     const variationsForm = $node.find(".variations_form").get(0);
 
     if (variationsForm) {
@@ -17,7 +20,7 @@ export default function($node) {
       if (productGalleryExists) {
         const closestProductGalleryContainer = closest(
           variationsForm,
-          el => el.querySelector(".woocommerce-product-gallery") != null
+          (el) => el.querySelector(".woocommerce-product-gallery") != null
         );
 
         if (closestProductGalleryContainer) {

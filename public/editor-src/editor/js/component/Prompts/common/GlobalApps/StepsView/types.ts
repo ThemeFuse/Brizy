@@ -1,4 +1,4 @@
-import { KeyboardEvent } from "react";
+import type { KeyboardEvent } from "react";
 
 export interface Choice {
   id: string;

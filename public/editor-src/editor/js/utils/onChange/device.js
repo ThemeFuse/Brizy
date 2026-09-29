@@ -113,6 +113,6 @@ export function validateKeyByProperty(v, key, property) {
   });
 }
 
-export function makeKeyByStateDevice(v, key) {
+export function makeKeyByStateDevice(_v, key) {
   return states().map((state) => defaultValueKey({ key, ...state }));
 }

@@ -1,4 +1,4 @@
-import React, { FC, ReactNode } from "react";
+import React, { type FC, type ReactNode } from "react";
 import Radio from "visual/component/Controls/Radio";
 import EditorIcon from "visual/component/EditorIcon";
 import { Button } from "visual/component/Prompts/common/Button";

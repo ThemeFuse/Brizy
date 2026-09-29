@@ -1,5 +1,5 @@
-import { RecaptchaConnect, RecaptchaDisconnect, Done } from "../Step";
 import { BaseApp } from "../../common/GlobalApps/BaseApp";
+import { Done, RecaptchaConnect, RecaptchaDisconnect } from "../Step";
 
 class Recaptcha extends BaseApp {
   static connect = RecaptchaConnect;

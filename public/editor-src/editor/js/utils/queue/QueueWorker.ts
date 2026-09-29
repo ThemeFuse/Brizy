@@ -1,5 +1,5 @@
-import { Store } from "visual/redux/store";
-import { Queue } from "./Queue";
+import type { Store } from "visual/redux/store";
+import type { Queue } from "./Queue";
 
 export class QueueWorker<T> {
   private queue: Queue<T>;
@@ -46,7 +46,7 @@ export class QueueWorker<T> {
 
     if (waitForCurrent && this.processingPromises.size > 0) {
       return Promise.all(this.processingPromises.values()).then(() => {
-        // eslint-disable-next-line no-console
+        // biome-ignore lint/suspicious/noConsole: migrated from eslint
         console.log("All tasks completed");
       });
     }
@@ -64,6 +64,7 @@ export class QueueWorker<T> {
     }
 
     const pendingTasks: string[] = [];
+    // biome-ignore lint/complexity/useLiteralKeys: bracket access is deliberate - `tasks` is private on Queue and the dot form is a TS2341, so converting it does not compile
     for (const taskId of this.queue["tasks"].keys()) {
       if (!this.queue.getProcessingTasks().has(taskId)) {
         pendingTasks.push(taskId);
@@ -121,6 +122,7 @@ export class QueueWorker<T> {
       isRunning: this.isRunning,
       activeTaskCount: this.processingPromises.size,
       concurrencyLimit: this.concurrencyLimit,
+      // biome-ignore lint/complexity/useLiteralKeys: bracket access is deliberate - `tasks` is private on Queue and the dot form is a TS2341, so converting it does not compile
       pendingTaskCount: this.queue["tasks"].size - this.processingPromises.size,
       checkInterval: this.checkInterval
     };

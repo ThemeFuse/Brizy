@@ -2,16 +2,16 @@ import classNames from "classnames";
 import React, { useCallback, useMemo } from "react";
 import AutoCorrectingInput from "visual/component/Controls/AutoCorrectingInput";
 import {
-  Props as CSProps,
-  ColorPickerSelect
+  ColorPickerSelect,
+  type Props as CSProps
 } from "visual/component/Controls/ColorPickerSelect";
 import { ColorPickerInputs } from "visual/component/Controls/ColorPicketInputs";
 import EditorIcon from "visual/component/EditorIcon";
 import { t } from "visual/utils/i18n";
 import { paletteHex } from "visual/utils/options/ColorPicker/utils";
 import { AnimatedGradientRange } from "./AnimatedGradientRange";
-import { GradientStop, Type } from "./entities";
-import { Props } from "./types";
+import type { GradientStop, Type } from "./entities";
+import type { Props } from "./types";
 import { renderColorPickerItems } from "./utils";
 
 export const AnimatedGradient = ({

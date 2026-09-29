@@ -2,9 +2,9 @@ import classNames from "classnames";
 import React, { useMemo } from "react";
 import { FatCheckIcon } from "visual/component/Controls/FatCheckIcon";
 import { FatIconsGrid } from "visual/component/FatIconsGrid";
-import { Props as OptionProps } from "visual/component/Options/Type";
-import { WithClassName } from "visual/types/attributes";
-import { Choice, Value } from "./types";
+import type { Props as OptionProps } from "visual/component/Options/Type";
+import type { WithClassName } from "visual/types/attributes";
+import type { Choice, Value } from "./types";
 
 export interface Props extends OptionProps<Value>, WithClassName {
   choices?: Choice[];

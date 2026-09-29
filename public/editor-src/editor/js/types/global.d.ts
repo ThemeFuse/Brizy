@@ -17,6 +17,7 @@ import { Swiper } from "swiper";
 import { Autoplay, EffectFade } from "swiper/modules";
 import { Dropdown } from "visual/libs/dropdown";
 import { initEkklesiaPopups } from "visual/libs/group-7";
+import { sticky } from "visual/libs/sticky";
 import { Store } from "visual/redux/store";
 import Chart from "../libs/Chart";
 import Gallery from "../libs/gallery";
@@ -53,6 +54,7 @@ interface BrizyLibs {
   EffectFade: EffectFade;
   Formula?: typeof Formula;
   SlimSelect?: typeof SlimSelect;
+  sticky?: typeof sticky;
 }
 
 interface BrizyProLibs {
@@ -101,7 +103,7 @@ declare global {
   namespace NodeJS {
     interface Global {
       BRZ_IS_DRAGGING?: boolean;
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      // biome-ignore lint/suspicious/noExplicitAny: migrated from eslint
       Brizy: any;
       parent: Global;
       wp: {
@@ -111,7 +113,13 @@ declare global {
       grecaptcha: {
         render: (
           node: HTMLElement,
-          { sitekey: string, size: string, callback: VoidFunction }
+          // `callback` may be a function or the name of a global one; Form2's
+          // export reads it straight out of `data-callback`, so it is a string
+          options: {
+            sitekey: string;
+            size: string;
+            callback?: string | VoidFunction;
+          }
         ) => string;
         execute: (id: string) => void;
         reset: (recaptchaId: string) => void;
@@ -120,12 +128,54 @@ declare global {
     }
   }
 
+  namespace GoogleTag {
+    type ConsentState = "granted" | "denied";
+
+    type ConsentArg = "default" | "update";
+
+    interface ConsentParams {
+      ad_storage?: ConsentState;
+      ad_user_data?: ConsentState;
+      ad_personalization?: ConsentState;
+      analytics_storage?: ConsentState;
+      functionality_storage?: ConsentState;
+      personalization_storage?: ConsentState;
+      security_storage?: ConsentState;
+      wait_for_update?: number;
+      region?: string[];
+    }
+
+    type CustomParams = Record<string, unknown>;
+
+    interface Commands {
+      js: [config: Date];
+      config: [targetId: string, config?: CustomParams];
+      set:
+        | [targetId: string, config: CustomParams | boolean | string]
+        | [config: CustomParams];
+      event: [eventName: string, eventParams?: CustomParams];
+      get: [
+        targetId: string,
+        fieldName: string,
+        callback?: (field: string | CustomParams | undefined) => void
+      ];
+      consent: [consentArg: ConsentArg, consentParams: ConsentParams];
+    }
+
+    type Gtag = <Command extends keyof Commands>(
+      command: Command,
+      ...args: Commands[Command]
+    ) => void;
+
+    type DataLayerItem = IArguments | Record<string, unknown> | VoidFunction;
+  }
+
   interface Window {
     BrizyLibs: BrizyLibs;
     BrizyProLibs?: BrizyProLibs;
     jQuery: JQuery;
     jquery: JQuery;
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // biome-ignore lint/suspicious/noExplicitAny: migrated from eslint
     Brz: Record<string, any>;
     brizyProducts?: BrizyProducts;
     brzStore?: Store;
@@ -152,6 +202,9 @@ declare global {
         };
       };
     };
+
+    gtag?: GoogleTag.Gtag;
+    dataLayer?: GoogleTag.DataLayerItem[];
   }
 
   interface JQuery {

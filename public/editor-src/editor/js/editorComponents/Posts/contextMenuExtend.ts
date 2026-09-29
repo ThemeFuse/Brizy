@@ -2,10 +2,10 @@ import {
   getKeyModifierSubMenu,
   navigatorKeyModifier
 } from "visual/component/ContextMenu/utils";
-import { ElementModel } from "visual/component/Elements/Types";
+import type { ElementModel } from "visual/component/Elements/Types";
 import { openNavigatorFromContextMenu } from "visual/component/Navigator/utils";
 import type { Editor } from "visual/editorComponents/EditorComponent";
-import {
+import type {
   ContextGetItems,
   ContextMenuItem
 } from "visual/editorComponents/EditorComponent/types";
@@ -36,7 +36,7 @@ const getItems =
             type: "button",
             title: t("Copy"),
             helperText: ({ isInSubMenu }) =>
-              getKeyModifierSubMenu(isInSubMenu) + " + C",
+              `${getKeyModifierSubMenu(isInSubMenu)} + C`,
             // @ts-expect-error need transform EditorArrayComponent to ts
             onChange: () => component.copy(itemIndex)
           },
@@ -45,7 +45,7 @@ const getItems =
             type: "button",
             title: t("Paste Styles"),
             helperText: ({ isInSubMenu }) =>
-              getKeyModifierSubMenu(isInSubMenu) + " + ⇧ + V",
+              `${getKeyModifierSubMenu(isInSubMenu)} + ⇧ + V`,
             inactive: !canPaste,
             // @ts-expect-error need transform EditorArrayComponent to ts
             onChange: () => component.pasteStyles(itemIndex)

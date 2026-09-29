@@ -74,7 +74,7 @@ class SectionItems extends EditorArrayComponent {
     this.addAttributesToSlider();
   }
 
-  getItemProps(itemData, itemIndex, items) {
+  getItemProps(_itemData, itemIndex, items) {
     const { showSlider } = this.state;
     const { meta, itemProps } = this.props;
     const toolbarExtendSettings = {
@@ -311,9 +311,7 @@ class SectionItems extends EditorArrayComponent {
         ];
 
         // wrapped in div have problems with different padding per slide
-        const _items = items.map((item, index) => (
-          <div key={index}>{item}</div>
-        ));
+        const _items = items.map((item) => <div key={item.key}>{item}</div>);
 
         ret = (
           <div

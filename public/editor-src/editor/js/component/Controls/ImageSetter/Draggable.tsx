@@ -1,6 +1,6 @@
 import { noop } from "es-toolkit";
-import React, { ReactElement, createRef } from "react";
-import {
+import React, { createRef, type ReactElement } from "react";
+import type {
   DraggableProps,
   MouseCoordinates
 } from "visual/component/Controls/ImageSetter/types";
@@ -80,17 +80,17 @@ export default class Draggable extends React.Component<
   }
 
   disableTextSelect = () => {
-    document
-      .querySelectorAll("*[contenteditable]")
-      .forEach((item) => item.setAttribute("contenteditable", "false"));
+    document.querySelectorAll("*[contenteditable]").forEach((item) => {
+      item.setAttribute("contenteditable", "false");
+    });
     document.body.classList.add("unselectable");
   };
 
   enableTextSelect = () => {
     document.body.classList.remove("unselectable");
-    document
-      .querySelectorAll("*[contenteditable]")
-      .forEach((item) => item.setAttribute("contenteditable", "true"));
+    document.querySelectorAll("*[contenteditable]").forEach((item) => {
+      item.setAttribute("contenteditable", "true");
+    });
   };
 
   getBoundPosition = () => {
@@ -100,7 +100,7 @@ export default class Draggable extends React.Component<
     if (typeof propsBound === "string" && node) {
       const { ownerDocument } = node;
 
-      let boundNode;
+      let boundNode: HTMLElement | null;
       if (propsBound === "parent") {
         boundNode = node.parentNode as HTMLElement | null;
       } else {

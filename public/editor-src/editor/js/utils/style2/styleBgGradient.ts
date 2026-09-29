@@ -1,15 +1,15 @@
 import { Arr, Num, Str } from "@brizy/readers";
-import { GradientStop } from "visual/component/Controls/BackgroundColor/entities";
-import { ElementModel } from "visual/component/Elements/Types";
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import type { GradientStop } from "visual/component/Controls/BackgroundColor/entities";
+import type { ElementModel } from "visual/component/Elements/Types";
+import type { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { getColor } from "visual/utils/color";
 import { hexToBlendedRgba } from "visual/utils/color/RGB";
 import { defaultValueValue } from "visual/utils/onChange";
 import { capByPrefix } from "visual/utils/string";
 import { styleState } from "visual/utils/style";
 import { readGradientStop } from "../options/BackgroundColor/converters";
-import { State } from "../stateMode";
-import { CSSValue, GradientStop as NormalGradientStop } from "./types";
+import type { State } from "../stateMode";
+import type { CSSValue, GradientStop as NormalGradientStop } from "./types";
 import { gradientCssDeclaration } from "./utils";
 
 const getState = (v: ElementModel, state: State): string =>

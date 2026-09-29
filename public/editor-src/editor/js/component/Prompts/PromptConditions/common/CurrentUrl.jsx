@@ -1,10 +1,11 @@
+import { noop } from "es-toolkit";
 import React from "react";
 import Select from "visual/component/Controls/Select";
 import SelectItem from "visual/component/Controls/Select/SelectItem";
 import { t } from "visual/utils/i18n";
 
 export default function CurrentUrl(props) {
-  const { value: triggerValue = "", onChange = () => {} } = props;
+  const { value: triggerValue = "", onChange = noop } = props;
 
   return (
     <React.Fragment>

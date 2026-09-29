@@ -2,6 +2,8 @@
  * Public API for the plugin system.
  * Re-exports types and React bindings consumed by host apps and plugins.
  */
+
+export type { ActiveElementMeta } from "visual/redux/types";
 export {
   PluginProvider,
   usePluginDrawerOptions,
@@ -10,7 +12,6 @@ export {
   usePluginTabOptions
 } from "./PluginProvider";
 export type { ISharedStore } from "./SharedStore";
-export type { ActiveElementMeta } from "visual/redux/types";
 export type {
   EditorAPI,
   EditorPlugin,

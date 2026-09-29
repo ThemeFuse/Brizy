@@ -1,7 +1,7 @@
-import { HelpVideo, foundUrl } from "@brizy/builder-ui-components";
+import { foundUrl, HelpVideo } from "@brizy/builder-ui-components";
 import React, { useCallback, useMemo, useState } from "react";
 import { TooltipIcon } from "visual/component/Controls/LeftSidebar/AddElements";
-import { HelpVideos } from "visual/global/Config/types/configs/ConfigCommon";
+import type { HelpVideos } from "visual/global/Config/types/configs/ConfigCommon";
 import { useConfig } from "visual/providers/ConfigProvider";
 import { useTranslation } from "visual/providers/I18nProvider";
 

@@ -1,32 +1,32 @@
 import { noop } from "es-toolkit";
 import React, {
-  CSSProperties,
   Component,
-  ComponentType,
-  PropsWithChildren,
-  ReactElement,
-  ReactNode
+  type ComponentType,
+  type CSSProperties,
+  type PropsWithChildren,
+  type ReactElement,
+  type ReactNode
 } from "react";
 import EditorIcon from "visual/component/EditorIcon";
 import { ToastNotification } from "visual/component/Notifications";
 import { Scrollbar } from "visual/component/Scrollbar";
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
-import {
+import type {
   CustomTemplatePage,
   LayoutsWithThumbs,
   StoriesWithThumbs,
   TemplateWithThumbs,
   TemplateWithThumbsAndPages
 } from "visual/global/Config/types/configs/blocks/PredefinedBlocks";
-import { EditorMode, isStory } from "visual/providers/EditorModeProvider";
+import type { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import { type EditorMode, isStory } from "visual/providers/EditorModeProvider";
 import {
   defaultLayoutPages,
   defaultLayoutsMeta,
   defaultStoriesData,
   defaultStoriesMeta,
-  defaultStoriesPages
+  defaultStoriesPages,
+  isBlock
 } from "visual/utils/api";
-import { isBlock } from "visual/utils/api";
 import { isPro } from "visual/utils/env";
 import { t } from "visual/utils/i18n";
 import { makeBzelmAttr } from "visual/utils/i18n/attribute";
@@ -35,12 +35,12 @@ import SearchInput from "../common/SearchInput";
 import Sidebar, { SidebarList, SidebarOption } from "../common/Sidebar";
 import Thumbnail, { LayoutThumbnail } from "../common/Thumbnail";
 import ThumbnailGrid, {
-  Data as ThumbnailData,
-  ThumbnailProps
+  type Data as ThumbnailData,
+  type ThumbnailProps
 } from "../common/ThumbnailGrid";
-import { PromptBlockTemplate } from "../types";
+import type { PromptBlockTemplate } from "../types";
 import Details from "./Details";
-import { Category, Filter, isStoryData } from "./types";
+import { type Category, type Filter, isStoryData } from "./types";
 
 interface Data extends ThumbnailData, TemplateWithThumbs {}
 

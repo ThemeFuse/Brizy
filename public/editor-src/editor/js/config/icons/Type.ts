@@ -1,5 +1,5 @@
 import { Num } from "@brizy/readers";
-import { Reader } from "visual/utils/types/Type";
+import type { Reader } from "visual/utils/types/Type";
 import { mCompose } from "visual/utils/value";
 
 export const readId: Reader<TypeId> = mCompose(

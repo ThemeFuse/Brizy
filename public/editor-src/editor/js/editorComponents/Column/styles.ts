@@ -1,9 +1,9 @@
-import { ElementModel } from "visual/component/Elements/Types";
+import type { ElementModel } from "visual/component/Elements/Types";
 import { createOptionId } from "visual/editorComponents/EditorComponent/utils";
 import { isEditor } from "visual/providers/RenderProvider";
-import { DynamicStylesProps } from "visual/types";
+import type { DynamicStylesProps } from "visual/types";
 import { renderStyles } from "visual/utils/cssStyle";
-import { OutputStyle, Styles } from "visual/utils/cssStyle/types";
+import type { OutputStyle, Styles } from "visual/utils/cssStyle/types";
 import { defaultValueValue } from "visual/utils/onChange";
 import { fromElementModel } from "visual/utils/options/Motion/types/Value";
 import { types as Devices } from "visual/utils/responsiveMode";

@@ -1,6 +1,6 @@
 import classnames from "classnames";
 import React, {
-  ReactElement,
+  type ReactElement,
   useCallback,
   useEffect,
   useMemo,
@@ -8,10 +8,10 @@ import React, {
   useState
 } from "react";
 import { MIN_COL_WIDTH } from "visual/config/columns";
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import type { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import {
-  SizeType,
-  defaultCrop
+  defaultCrop,
+  SizeType
 } from "visual/global/Config/types/configs/common";
 import { useConfig } from "visual/providers/ConfigProvider";
 import { isEditor } from "visual/providers/RenderProvider";
@@ -24,7 +24,7 @@ import {
 } from "visual/utils/onChange";
 import { DESKTOP, MOBILE, TABLET } from "visual/utils/responsiveMode";
 import { styleImage } from "../styles";
-import { Device, ImageContent, ImageSizes } from "../types";
+import type { Device, ImageContent, ImageSizes } from "../types";
 import { calcImageSizes } from "../utils";
 
 export interface RetinaData {
@@ -201,8 +201,8 @@ const SimpleImage = (props: ImageContent): ReactElement => {
       const widthStepInPercent = 20;
       const imgSizes = getImageSizes(cW);
 
-      let shortcodeWidthInPercent;
-      let maxDesktopContainerWidth;
+      let shortcodeWidthInPercent: number;
+      let maxDesktopContainerWidth: number;
       if (row?.itemsLength) {
         const { itemsLength } = row;
 
@@ -234,9 +234,9 @@ const SimpleImage = (props: ImageContent): ReactElement => {
     const newMobileCw = getMaxCW(mobileW, "mobile");
 
     if (!isFirstRun.current) {
-      newDesktopCw > maxDesktopCW && setMaxDesktopCw(newDesktopCw);
-      newTabletCw > maxTabletCW && setMaxTabletCw(newTabletCw);
-      newMobileCw > maxMobileCW && setMaxMobileCw(newMobileCw);
+      if (newDesktopCw > maxDesktopCW) setMaxDesktopCw(newDesktopCw);
+      if (newTabletCw > maxTabletCW) setMaxTabletCw(newTabletCw);
+      if (newMobileCw > maxMobileCW) setMaxMobileCw(newMobileCw);
     }
 
     isFirstRun.current = false;
@@ -247,10 +247,7 @@ const SimpleImage = (props: ImageContent): ReactElement => {
     maxDesktopCW,
     maxMobileCW,
     maxTabletCW,
-    getMaxCW,
-    setMaxDesktopCw,
-    setMaxTabletCw,
-    setMaxMobileCw
+    getMaxCW
   ]);
 
   const imageSizes = getImageSizes();
@@ -259,7 +256,7 @@ const SimpleImage = (props: ImageContent): ReactElement => {
   const mobileSizeType = dvv<SizeType>("sizeType", MOBILE);
 
   // ! find less hacky way
-  const responsiveUrls = getResponsiveUrls && getResponsiveUrls(imageSizes);
+  const responsiveUrls = getResponsiveUrls?.(imageSizes);
 
   const { desktopSrc, tabletSrc, mobileSrc, sourceSrc } = responsiveUrls || {
     desktopSrc: formatRetinaSrc(

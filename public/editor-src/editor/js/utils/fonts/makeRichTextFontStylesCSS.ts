@@ -1,5 +1,5 @@
-import { Store } from "visual/redux/store";
-import { FontStyle } from "visual/types/Style";
+import type { Store } from "visual/redux/store";
+import type { FontStyle } from "visual/types/Style";
 import { getFontById } from "./getFontById";
 
 const generateStyles = (style: Omit<FontStyle, "id">, store: Store) => {

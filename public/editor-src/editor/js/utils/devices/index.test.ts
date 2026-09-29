@@ -1,11 +1,10 @@
 import * as Device from "visual/utils/devices/index";
 import { desktopModes, mobileModes, types } from "visual/utils/responsiveMode";
-
-import { testReader } from "visual/utils/types/Type.test";
-import { testMonoid } from "visual/utils/types/Monoid.test";
 import { testEq } from "visual/utils/types/Eq.test";
+import { testMonoid } from "visual/utils/types/Monoid.test";
+import { testReader } from "visual/utils/types/Type.test";
 
-describe("Testing 'read' function", function() {
+describe("Testing 'read' function", function () {
   testReader(
     Device.read,
     ["all", "desktop", "responsive"],
@@ -13,15 +12,15 @@ describe("Testing 'read' function", function() {
   );
 });
 
-describe("Testing monoid behaviour function", function() {
+describe("Testing monoid behaviour function", function () {
   testMonoid<Device.Device>(Device, ["all", "desktop", "responsive"]);
 });
 
-describe("Testing Device Eq implementation", function() {
+describe("Testing Device Eq implementation", function () {
   testEq(Device.eq, "all", "all", "responsive");
 });
 
-describe("Testing 'devices' function", function() {
+describe("Testing 'devices' function", function () {
   test("Should return ['all', 'desktop', 'responsive']", () => {
     expect(Device.devices).toEqual(["all", "desktop", "responsive"]);
   });
@@ -31,9 +30,9 @@ describe("Testing 'devices' function", function() {
   });
 });
 
-describe("Testing 'getDevice' function", function() {
+describe("Testing 'getDevice' function", function () {
   test("Always return the 'devices' key value if it is a valid device", () => {
-    Device.devices.map(device =>
+    Device.devices.map((device) =>
       expect(Device.getDevice({ devices: device })).toBe(device)
     );
   });
@@ -47,34 +46,34 @@ describe("Testing 'getDevice' function", function() {
   });
 });
 
-describe("Testing 'getDevice' function", function() {
+describe("Testing 'getDevice' function", function () {
   test("Return true if the option has the device", () => {
-    Device.devices.map(d =>
+    Device.devices.map((d) =>
       expect(Device.hasDevice(d, { devices: d })).toBe(true)
     );
   });
 
   test("Return false if the option does not support the device", () => {
-    (["all", "desktop"] as Device.Device[]).map(d =>
+    (["all", "desktop"] as Device.Device[]).map((d) =>
       expect(Device.hasDevice(d, { devices: "responsive" })).toBe(false)
     );
   });
 });
 
-describe("Testing 'supportsMode' function", function() {
+describe("Testing 'supportsMode' function", function () {
   test("The 'all' devices should support all responsive modes", () => {
-    types.map(mode => expect(Device.supportsMode(mode, "all")).toBe(true));
+    types.map((mode) => expect(Device.supportsMode(mode, "all")).toBe(true));
   });
 
   test("The 'responsive' devices should support only modes part for mobileModes()", () => {
-    mobileModes().map(mode =>
+    mobileModes().map((mode) =>
       expect(Device.supportsMode(mode, "responsive")).toBe(true)
     );
     expect(Device.supportsMode("desktop", "responsive")).toBe(false);
   });
 
   test("The 'desktop' devices should support only modes part for desktopModes()", () => {
-    desktopModes().map(mode =>
+    desktopModes().map((mode) =>
       expect(Device.supportsMode(mode, "desktop")).toBe(true)
     );
     expect(Device.supportsMode("tablet", "desktop")).toBe(false);

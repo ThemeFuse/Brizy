@@ -17,10 +17,9 @@ import type {
 } from "visual/editorComponents/ToolbarItemType";
 import type { Props as WrapperProps } from "visual/editorComponents/tools/Wrapper";
 import type { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
-import Editor from "visual/global/Editor";
 import * as GlobalState from "visual/global/StateMode";
 import type { EditorMode } from "visual/providers/EditorModeProvider";
-import { type RenderType, isView } from "visual/providers/RenderProvider";
+import { isView, type RenderType } from "visual/providers/RenderProvider";
 import { createCache, createSheet } from "visual/providers/StyleProvider/Sheet";
 import { updateSymbol } from "visual/redux/actions2";
 import {
@@ -35,8 +34,8 @@ import {
   getShortcode
 } from "visual/shortcodeComponents/utils";
 import type { DynamicStylesProps } from "visual/types";
-import type { CSSSymbol } from "visual/types/Symbols";
 import type { WithClassName } from "visual/types/attributes";
+import type { CSSSymbol } from "visual/types/Symbols";
 import { murmurhash2 } from "visual/utils/crypto";
 import {
   filterMergedStylesByDevice,
@@ -61,11 +60,12 @@ import { createFullModelPath } from "visual/utils/models";
 import { defaultValueKey } from "visual/utils/onChange/device";
 import {
   type Choices,
-  type Handler,
-  getDynamicContentOption
+  getDynamicContentOption,
+  type Handler
 } from "visual/utils/options/getDynamicContentOption";
 import type { TypeChoices } from "visual/utils/options/types";
 import { mergeOptions, optionMap } from "visual/utils/options/utils";
+import { expand } from "visual/utils/options/utils/expand";
 import { getOptionModel } from "visual/utils/options/utils/fromElementModel";
 import { toElementModel } from "visual/utils/options/utils/toElementModel";
 import { getOptionMeta } from "visual/utils/options/utils/toMeta/utils";
@@ -79,7 +79,7 @@ import { CSS_MODEL_KEY, validateSymbolModel } from "visual/utils/symbols";
 import { getComponentRulesValue } from "visual/utils/traverse/common";
 import type { Literal } from "visual/utils/types/Literal";
 import { uuid } from "visual/utils/uuid";
-import { type MValue, isT } from "visual/utils/value";
+import { isT, type MValue } from "visual/utils/value";
 import {
   type DCObjResult,
   getDCObjEditor,
@@ -110,14 +110,14 @@ import {
   flattenDefaultValue,
   getElementModelKeyFn,
   getOptionValueByDevice,
-  getToolbarData,
+  getToolbarDefaults,
   inDevelopment,
   makeToolbarPropsFromConfigDefaults
 } from "./utils";
 
 export type Props<
   M extends ElementModel,
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  // biome-ignore lint/suspicious/noExplicitAny: migrated from eslint
   P extends Record<any, any>
 > = WithClassName & {
   _id: string;
@@ -128,9 +128,7 @@ export type Props<
   reduxState: ReduxState;
   reduxDispatch: TypedDispatch;
   meta: ComponentsMeta;
-  onChange: {
-    (v: M | null, meta: OnChangeMeta<M>): void;
-  };
+  onChange: (v: M | null, meta: OnChangeMeta<M>) => void;
   onToolbarOpen: () => void;
   onToolbarClose: () => void;
   onToolbarEnter: () => void;
@@ -140,15 +138,16 @@ export type Props<
   extendParentToolbar: (childToolbarExtend: ToolbarExtend) => void;
   renderContext: RenderType;
   editorMode: EditorMode;
+  getGlobalConfig: () => ConfigCommon;
 } & P;
 
 const tempPatch = new Map<string, Partial<Model<ElementModel>>>();
 
 export class EditorComponent<
   M extends ElementModel = ElementModel,
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  // biome-ignore lint/suspicious/noExplicitAny: migrated from eslint
   P extends Record<string, any> = Record<string, unknown>,
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  // biome-ignore lint/suspicious/noExplicitAny: migrated from eslint
   S extends Record<string, any> = Record<string, unknown>,
   C extends Record<string, unknown> = Record<string, unknown>
 > extends React.Component<Props<M, P>, S> {
@@ -171,6 +170,8 @@ export class EditorComponent<
   componentConfig: ConfigGetter | undefined;
   _initialToolbarsConfig: ToolbarConfig[] | undefined;
   _defaultToolbarValues: Record<string, unknown> | undefined;
+  _defaultToolbarValuesForDbValue: Model<M> | undefined;
+  _defaultToolbarValuesForDevice: Responsive.ResponsiveMode | undefined;
   _DCKeys: Array<string> | undefined;
   _defaultValueProcessedCache?: DefaultValueProcessed<M>;
   _dc: ECDC = {};
@@ -182,6 +183,7 @@ export class EditorComponent<
    * @return {string}
    */
   static get componentId(): string {
+    // biome-ignore lint/complexity/noThisInStatic: `this` is the subclass that failed to override this getter, and that name is the entire diagnostic — `EditorComponent.name` reports the base class for every one of them
     throw new Error(`${this.name} must implement \`static get componentId()\``);
   }
 
@@ -207,7 +209,6 @@ export class EditorComponent<
     return getOptionValueByDevice({
       v,
       id,
-      store: this.getReduxStore(),
       currentDevice: this.getDeviceMode(),
       toolbarConfig: this._initialToolbarsConfig
     });
@@ -269,6 +270,12 @@ export class EditorComponent<
       return true;
     }
 
+    // Menu and MenuSimple read menuData off the store, so a menu change moves
+    // no dbValue and Wrapper/Row/Column would block the render.
+    if (props.reduxState.menuData !== nextProps.reduxState.menuData) {
+      return true;
+    }
+
     // check global symbols & element
     if (props.reduxState.symbols !== nextProps.reduxState.symbols) {
       const { element, classes } = nextProps.reduxState.symbols;
@@ -309,6 +316,11 @@ export class EditorComponent<
     return this.props._id || Str.read(this.getDBValue()._id) || raiseError();
   }
 
+  // The element a keyboard shortcut acts on; overridden when the id is runtime only
+  getHotKeysTargetId(): string {
+    return this.getId();
+  }
+
   getReduxState(): Props<M, P>["reduxState"] {
     return this.props.reduxState;
   }
@@ -330,45 +342,56 @@ export class EditorComponent<
       return;
     }
 
-    if (!this._defaultToolbarValues && !this._DCKeys) {
-      const toolbars = this.componentConfig.getConfig({
-        // When we start to create the defaultValue the Getter always return undefined
-        // because at the first time we don't have the value
-        getValue: () => undefined,
-        getDCOption: () => undefined,
-        t: (k) => k,
-        device: this.getDeviceMode(),
-        onChange: noop
-      });
+    // Keyed by the stored model and the device: a group added at runtime is in
+    // neither the declaration nor the previous defaults. `dbValue` is compared
+    // by identity, which holds while nothing writes `tempPatch` (@see
+    // `getDBValue`) — a write there makes this recompute on every `getValue()`.
+    const dbValue = this.getDBValue();
+    const device = this.getDeviceMode();
 
-      this._initialToolbarsConfig = toolbars;
-      const store = this.getReduxStore();
-
-      toolbars.forEach(({ toolbar, sidebar }) => {
-        const toolbarData = getToolbarData(store, toolbar);
-        const sidebarData = getToolbarData(store, sidebar);
-
-        this._defaultToolbarValues = {
-          ...this._defaultToolbarValues,
-          ...toolbarData.dv,
-          ...sidebarData.dv
-        };
-
-        this._DCKeys = [
-          ...(this._DCKeys ?? []),
-          ...(toolbarData.DCKeys ?? []),
-          ...(sidebarData.DCKeys ?? [])
-        ];
-      });
+    if (
+      this._defaultToolbarValuesForDbValue === dbValue &&
+      this._defaultToolbarValuesForDevice === device
+    ) {
+      return;
     }
+
+    const toolbars = this.componentConfig.getConfig({
+      // When we start to create the defaultValue the Getter always return undefined
+      // because at the first time we don't have the value
+      getValue: () => undefined,
+      getDCOption: () => undefined,
+      t: (k) => k,
+      device,
+      onChange: noop
+    });
+
+    this._initialToolbarsConfig = toolbars;
+
+    const v = dbValue as ElementModel;
+    let dv: Record<string, unknown> = {};
+    let dcKeys: Array<string> = [];
+
+    toolbars.forEach(({ toolbar, sidebar }) => {
+      const toolbarData = getToolbarDefaults(toolbar, v, device);
+      const sidebarData = getToolbarDefaults(sidebar, v, device);
+
+      dv = { ...dv, ...toolbarData.dv, ...sidebarData.dv };
+      dcKeys = [...dcKeys, ...toolbarData.DCKeys, ...sidebarData.DCKeys];
+    });
+
+    this._defaultToolbarValues = dv;
+    this._DCKeys = dcKeys;
+    this._defaultToolbarValuesForDbValue = dbValue;
+    this._defaultToolbarValuesForDevice = device;
   }
 
   getDefaultValue(): M {
     let defaultValueFlat = this.getDefaultValueProcessed().defaultValueFlat;
 
-    if (!this._defaultToolbarValues) {
-      this.processToolbarValues();
-    }
+    // Unconditional: the cache is keyed by the stored model, and only
+    // `processToolbarValues` can tell whether that key still matches.
+    this.processToolbarValues();
 
     defaultValueFlat = { ...defaultValueFlat, ...this._defaultToolbarValues };
 
@@ -470,10 +493,9 @@ export class EditorComponent<
     );
     const toolbarOptions = [...toolbarFreeOptions, ...toolbarProOptions];
 
-    const sidebarFreeOptions =
-      sidebars && sidebars.length
-        ? this.getToolbarOptions(currentModel, sidebars)
-        : [];
+    const sidebarFreeOptions = sidebars?.length
+      ? this.getToolbarOptions(currentModel, sidebars)
+      : [];
     const sidebarPro = applyFilter(
       `sidebarItemsExtend_${thirdPartyExtendId}`,
       null
@@ -1092,14 +1114,12 @@ export class EditorComponent<
 
     if (process.env.NODE_ENV === "development") {
       if (!(bindWithKey in this.getDefaultValue())) {
-        /* eslint-disable no-console */
         console.error(
           "Invalid value: %s for bindWithKey. Check that %s.getDefaultValue() contains the key %s",
           bindWithKey,
           this.constructor.name,
           bindWithKey
         );
-        /* eslint-enabled no-console */
       }
     }
 
@@ -1111,8 +1131,8 @@ export class EditorComponent<
     return {
       ...otherProps,
       _id: `${this.getId()}-${String(bindWithKey)}`,
-      defaultValue: defaultValue && defaultValue[bindWithKey],
-      dbValue: dbValue && dbValue[bindWithKey],
+      defaultValue: defaultValue?.[bindWithKey],
+      dbValue: dbValue?.[bindWithKey],
       reduxState: this.getReduxState(),
       reduxStore: this.getReduxStore(),
       reduxDispatch: this.getReduxDispatch(),
@@ -1182,7 +1202,7 @@ export class EditorComponent<
           option.value = optionModel;
         }
 
-        option = bindStateToOption(states, option, device);
+        option = bindStateToOption(states, expand(option), device);
 
         const elementModel = toElementModel<typeof type>(type, getKey);
 
@@ -1191,7 +1211,7 @@ export class EditorComponent<
             ? noop
             : (value, meta): void => {
                 const id = getKey("");
-                const patch: Partial<Model<M>> | null | void = isDev
+                const patch = isDev
                   ? deps(elementModel(value))
                   : oldOnchange
                     ? oldOnchange(value, meta)
@@ -1239,6 +1259,7 @@ export class EditorComponent<
     ): OptionDefinition[] => {
       if (process.env.NODE_ENV === "development") {
         if (!config.getItems) {
+          // biome-ignore lint/suspicious/noConsole: was covered by the file-wide `eslint-disable no-console` above (its `eslint-enabled` terminator was a typo, so it ran to EOF)
           console.warn(
             `${this.getComponentId()}. getItems not found in toolbarConfig`
           );
@@ -1447,7 +1468,7 @@ export class EditorComponent<
   }
 
   renderForEdit(v: M, vs: M, vd: M): ReactNode {
-    throw new Error("renderForEdit: Not Implemented" + v + vs + vd);
+    throw new Error(`renderForEdit: Not Implemented${v}${vs}${vd}`);
   }
 
   renderForView(v: M, vs: M, vd: M): ReactNode {
@@ -1461,9 +1482,9 @@ export type EditorInstance = typeof EditorComponent;
 
 export type Editor<
   M extends ElementModel,
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  // biome-ignore lint/suspicious/noExplicitAny: migrated from eslint
   P extends Record<string, any> = Record<string, unknown>,
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  // biome-ignore lint/suspicious/noExplicitAny: migrated from eslint
   S extends Record<string, any> = Record<string, unknown>,
   C extends Record<string, unknown> = Record<string, unknown>
 > = EditorComponent<M, P, S, C>;

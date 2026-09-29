@@ -6,7 +6,7 @@ import {
   styleReverseColumnsRow,
   styleReverseColumnsWrap
 } from "visual/utils/style2";
-import { CSSValue } from "visual/utils/style2/types";
+import type { CSSValue } from "visual/utils/style2/types";
 
 export function cssStyleRowMinHeight({ v, device }: CSSValue): string {
   const minHeightType = styleElementColumnMinHeightType({ v, device });

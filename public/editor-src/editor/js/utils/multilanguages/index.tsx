@@ -1,17 +1,17 @@
 import { match } from "fp-utilities";
-import { Config } from "visual/global/Config/types";
+import type { Config } from "visual/global/Config/types";
 import {
-  ShopModules,
-  isEcwidShop
+  isEcwidShop,
+  type ShopModules
 } from "visual/global/Config/types/configs/Base";
 import {
-  CMS,
-  Cloud,
-  isCMS,
+  type Cloud,
+  type CMS,
   isCloud,
+  isCMS,
   isShopify
 } from "visual/global/Config/types/configs/Cloud";
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import type { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { isWp } from "visual/global/Config/types/configs/WP";
 
 export type M = "on" | "off";

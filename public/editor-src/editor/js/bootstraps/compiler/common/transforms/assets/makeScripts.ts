@@ -1,10 +1,11 @@
 import type { CheerioAPI } from "cheerio";
 import LibsConfig from "visual/bootstraps/libs.json";
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import { getConsentBlockerScript } from "visual/editorComponents/CookieBanner/consent/blockerAsset";
+import type { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { compileAssetProUrl, compileAssetUrl } from "visual/utils/asset";
 import { makeDataAttr } from "visual/utils/i18n/attribute";
-import { Asset, AssetLibsMap, ScriptsFree, ScriptsPro } from "./index";
-import { LIBS_SCORE, MAIN_SCORE } from "./scores";
+import type { Asset, AssetLibsMap, ScriptsFree, ScriptsPro } from "./index";
+import { CONSENT_BLOCKER_SCORE, LIBS_SCORE, MAIN_SCORE } from "./scores";
 
 type MakeScripts = {
   free: ScriptsFree;
@@ -40,6 +41,23 @@ export const makeScripts = (
     },
     pro: false
   };
+
+  // consent blocker: must load first (lowest score) and only when
+  // the page actually has a banner to gate against
+  if ($doc(".brz-cookie-banner").length > 0) {
+    generic.push({
+      name: "consentBlocker",
+      score: CONSENT_BLOCKER_SCORE,
+      pro: false,
+      content: {
+        type: "inline",
+        content: getConsentBlockerScript(),
+        attr: {
+          class: "brz-script brz-script-consent"
+        }
+      }
+    });
+  }
 
   // find lib selector in the page
   const searchedLibs = new Set<string>();

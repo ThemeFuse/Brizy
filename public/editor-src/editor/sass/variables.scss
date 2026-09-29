@@ -274,6 +274,9 @@ $z-indexes: (
   "eye-dropper": 1070,
   "forms-select": 1068,
   "toolbar-column": 1040,
+  // Below "section-popup" (1060) — popups (incl. their opened/mega-menu
+  // states) must always stack above the Cookie Banner overlay.
+  "cookie-banner": 1050,
   "tooltip-overlay": 1100,
   "cloneable-bar": 1030,
   "column-resize": 1055,

@@ -19,7 +19,7 @@ const handleWheel = (e: Event) => {
   let hasScroll = true;
   const setHasScroll = (v: boolean) => (hasScroll = v);
 
-  element && throttledHasScroll(element, setHasScroll);
+  if (element) throttledHasScroll(element, setHasScroll);
 
   if (hasScroll) {
     return;

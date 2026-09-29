@@ -1,10 +1,10 @@
 import classNames from "classnames";
-import React, { ReactElement, useCallback } from "react";
-import Number from "visual/component/Controls/AutoCorrectingInput";
-import { Literal } from "visual/utils/types/Literal";
+import React, { type ReactElement, useCallback } from "react";
+import AutoCorrectingInput from "visual/component/Controls/AutoCorrectingInput";
+import type { Literal } from "visual/utils/types/Literal";
 import { Select2 } from "../Select2";
 import { Item } from "../Select2/Item";
-import { Props } from "./types";
+import type { Props } from "./types";
 
 const inputWidth = (v: number): number =>
   Math.min(1, Math.max(1, String(v).length - 4)) * 32;
@@ -35,7 +35,7 @@ export function NumberUnit<U extends Literal>({
 
   const onSelectChange = useCallback(
     (v: U): void => {
-      return onChange({ number, unit: v });
+      onChange({ number, unit: v });
     },
     [onChange, number]
   );
@@ -49,7 +49,7 @@ export function NumberUnit<U extends Literal>({
         <div className="brz-invisible" style={{ width: inputWidth(number) }}>
           {number}
         </div>
-        <Number
+        <AutoCorrectingInput
           className="brz-input"
           value={number}
           onChange={onNumberChange}
@@ -65,8 +65,8 @@ export function NumberUnit<U extends Literal>({
           value={unit}
           onChange={onSelectChange}
         >
-          {units.map((unit, index) => (
-            <Item key={index} value={unit.value}>
+          {units.map((unit) => (
+            <Item key={unit.value} value={unit.value}>
               {unit.title}
             </Item>
           ))}

@@ -1,8 +1,8 @@
-import { isValidElement, ReactNode } from "react";
-import { Size } from "visual/types/attributes";
+import { isValidElement, type ReactNode } from "react";
+import type { Size } from "visual/types/attributes";
 import { sliderSizeClassName } from "visual/utils/options/utils/sliderSizeClassName";
-import { Element } from "./types/Element";
-import { Value } from "./types/Value";
+import type { Element } from "./types/Element";
+import type { Value } from "./types/Value";
 
 export const fromValue = (v: Value): Element => {
   return { value: v.value, suffix: v.unit };

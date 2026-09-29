@@ -1,4 +1,4 @@
-import { mApply, MValue } from "visual/utils/value";
+import { type MValue, mApply } from "visual/utils/value";
 
 type Callback = (
   el: IntersectionObserverEntry,
@@ -13,8 +13,10 @@ const handleIntersection: IntersectionObserverCallback = (items, observer) => {
     mApply((f) => f(entry, observer), elements.get(entry.target))
   );
 };
-const getObserver = (): IntersectionObserver =>
-  observer ?? (observer = new IntersectionObserver(handleIntersection));
+const getObserver = (): IntersectionObserver => {
+  observer ??= new IntersectionObserver(handleIntersection);
+  return observer;
+};
 
 export const connect = (
   node: Element,

@@ -27,12 +27,9 @@ $.fn.popup = function () {
       }
 
       if (showAfter) {
-        setTimeout(
-          () => {
-            $this.find(".brz-popup2__close").removeClass("brz-hidden");
-          },
-          Number(showAfter) * 1000
-        );
+        setTimeout(() => {
+          $this.find(".brz-popup2__close").removeClass("brz-hidden");
+        }, Number(showAfter) * 1000);
       }
 
       $this.addClass("brz-popup2--opened");
@@ -58,20 +55,19 @@ $.fn.popup = function () {
   };
 };
 
-export default function ($node) {
+export default function (node) {
+  const $node = $(node);
   const root = $node.get(0);
 
   // append the popup to body to avoid problems with z-index
   const rootBody = root.ownerDocument.body;
 
   // Accessibility: dialog semantics + ESC to close (when allowed)
-  root
-    .querySelectorAll(".brz-popup2")
-    .forEach((popup) => {
-      if (popup instanceof HTMLElement) {
-        new SectionPopup2Accessibility(popup).init();
-      }
-    });
+  root.querySelectorAll(".brz-popup2").forEach((popup) => {
+    if (popup instanceof HTMLElement) {
+      new SectionPopup2Accessibility(popup).init();
+    }
+  });
 
   root
     .querySelectorAll(makeDataAttrString({ name: "link-type", value: "popup" }))
@@ -155,7 +151,7 @@ export default function ($node) {
 
   $node.find(".brz-popup2, .brz-popup").each(function () {
     const $this = $(this);
-    $this.on("click", function (e) {
+    $this.on("click", (e) => {
       const canClosePopup = !clickInsideExceptions.some((className) =>
         e.target.classList.contains(className)
       );

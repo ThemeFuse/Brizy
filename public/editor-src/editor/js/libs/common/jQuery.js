@@ -6,7 +6,7 @@ import jQuery from "jquery";
 if (!window.jQuery) {
   window.jQuery = jQuery;
 } else {
-  const plugins = ["scrollPane", "backgroundVideo", "brzParallax", "brzSticky"];
+  const plugins = ["scrollPane", "backgroundVideo", "brzParallax"];
 
   plugins.forEach((plugin) => {
     if (!window.jQuery.fn[plugin]) {

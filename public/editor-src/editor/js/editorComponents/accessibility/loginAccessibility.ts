@@ -7,7 +7,11 @@ const setButtonLike = (el: HTMLElement): void => {
   el.setAttribute("role", "button");
   el.setAttribute("tabindex", "0");
   el.addEventListener("keydown", (event) => {
-    if (event.key === "Enter" || event.key === " " || event.key === "Spacebar") {
+    if (
+      event.key === "Enter" ||
+      event.key === " " ||
+      event.key === "Spacebar"
+    ) {
       event.preventDefault();
       el.click();
     }
@@ -29,7 +33,9 @@ const ensureInputLabels = (root: HTMLElement): void => {
     }
 
     const fallback =
-      input.getAttribute("placeholder") || input.getAttribute("name") || "Field";
+      input.getAttribute("placeholder") ||
+      input.getAttribute("name") ||
+      "Field";
     input.setAttribute("aria-label", fallback);
   });
 };
@@ -61,11 +67,15 @@ export class LoginAccessibility {
       authorizedAction.setAttribute("aria-label", "Logout");
     }
 
-    const loginForm = this.root.querySelector<HTMLElement>(".brz-login-form__login");
+    const loginForm = this.root.querySelector<HTMLElement>(
+      ".brz-login-form__login"
+    );
     const registerForm = this.root.querySelector<HTMLElement>(
       ".brz-login-form__register"
     );
-    const forgotForm = this.root.querySelector<HTMLElement>(".brz-login-form__forgot");
+    const forgotForm = this.root.querySelector<HTMLElement>(
+      ".brz-login-form__forgot"
+    );
 
     if (loginForm) loginForm.id ||= `${this.instanceId}-form-login`;
     if (registerForm) registerForm.id ||= `${this.instanceId}-form-register`;
@@ -77,7 +87,10 @@ export class LoginAccessibility {
       .forEach((el) => {
         setButtonLike(el);
         if (loginForm?.id) el.setAttribute("aria-controls", loginForm.id);
-        el.setAttribute("aria-label", el.textContent?.trim() || "Back to login");
+        el.setAttribute(
+          "aria-label",
+          el.textContent?.trim() || "Back to login"
+        );
       });
 
     this.root
@@ -93,7 +106,10 @@ export class LoginAccessibility {
       .forEach((el) => {
         setButtonLike(el);
         if (forgotForm?.id) el.setAttribute("aria-controls", forgotForm.id);
-        el.setAttribute("aria-label", el.textContent?.trim() || "Lost password");
+        el.setAttribute(
+          "aria-label",
+          el.textContent?.trim() || "Lost password"
+        );
       });
 
     // Keep aria-hidden in sync with display switching (click handlers live elsewhere).
@@ -125,18 +141,27 @@ export class LoginAccessibility {
     this.root.setAttribute("data-brz-login-variant", current);
 
     if (authorized instanceof HTMLElement) {
-      authorized.setAttribute("aria-hidden", (!isVisible(authorized)).toString());
+      authorized.setAttribute(
+        "aria-hidden",
+        (!isVisible(authorized)).toString()
+      );
     }
     if (loginForm instanceof HTMLElement) {
       loginForm.setAttribute("aria-hidden", (!isVisible(loginForm)).toString());
       loginForm.setAttribute("aria-label", "Login");
     }
     if (registerForm instanceof HTMLElement) {
-      registerForm.setAttribute("aria-hidden", (!isVisible(registerForm)).toString());
+      registerForm.setAttribute(
+        "aria-hidden",
+        (!isVisible(registerForm)).toString()
+      );
       registerForm.setAttribute("aria-label", "Register");
     }
     if (forgotForm instanceof HTMLElement) {
-      forgotForm.setAttribute("aria-hidden", (!isVisible(forgotForm)).toString());
+      forgotForm.setAttribute(
+        "aria-hidden",
+        (!isVisible(forgotForm)).toString()
+      );
       forgotForm.setAttribute("aria-label", "Lost password");
     }
   }
@@ -160,4 +185,3 @@ export class LoginAccessibility {
     return "login";
   }
 }
-

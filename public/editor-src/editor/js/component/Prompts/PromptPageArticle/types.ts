@@ -1,14 +1,14 @@
-import {
+import type {
   Tabs,
   ThemeLayout
 } from "visual/component/Prompts/common/PromptPage/types";
-import { Actions as _Actions } from "visual/component/Prompts/common/states/Classic/types/Actions";
-import { State } from "visual/component/Prompts/common/states/Classic/types/State";
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
-import { Layout } from "visual/types/Layout";
-import { ShopifyPage } from "visual/types/Page";
-import { BlogSourceItem } from "visual/utils/api/types";
-import { Setters } from "./types/Setters";
+import type { Actions as _Actions } from "visual/component/Prompts/common/states/Classic/types/Actions";
+import type { State } from "visual/component/Prompts/common/states/Classic/types/State";
+import type { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import type { Layout } from "visual/types/Layout";
+import type { ShopifyPage } from "visual/types/Page";
+import type { BlogSourceItem } from "visual/utils/api/types";
+import type { Setters } from "./types/Setters";
 
 export interface Props {
   headTitle: string;

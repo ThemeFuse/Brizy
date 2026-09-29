@@ -12,7 +12,7 @@ import SearchInput from "../common/SearchInput";
 import Sidebar, { SidebarList, SidebarOption } from "../common/Sidebar";
 import ThumbnailGrid from "../common/ThumbnailGrid";
 
-let defaultFilter = {
+const defaultFilter = {
   type: "light",
   category: "*",
   search: ""
@@ -102,7 +102,9 @@ class Blocks extends Component {
     }, {});
 
     blocks.forEach(({ type }) => {
-      type.forEach((item) => counters[item]++);
+      type.forEach((item) => {
+        counters[item]++;
+      });
     });
 
     return counters;
@@ -220,8 +222,8 @@ class Blocks extends Component {
                         itemHeight="30"
                         onChange={onChangeKit}
                       >
-                        {kits.map(({ id, title }, index) => (
-                          <SelectItem key={index} value={id}>
+                        {kits.map(({ id, title }) => (
+                          <SelectItem key={id} value={id}>
                             {title}
                           </SelectItem>
                         ))}

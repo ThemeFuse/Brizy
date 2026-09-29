@@ -1,15 +1,15 @@
 import React from "react";
 import ContextMenu, { ContextMenuExtend } from "visual/component/ContextMenu";
-import { ElementModel } from "visual/component/Elements/Types";
+import type { ElementModel } from "visual/component/Elements/Types";
 import HotKeys from "visual/component/HotKeys";
 import { hideToolbar } from "visual/component/Toolbar";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import { t } from "visual/utils/i18n";
-import { NewToolbarConfig } from "../EditorComponent/types";
-import contextMenuExtendConfigFn from "./ShareButtonItem/contextMenuExtend";
+import type { NewToolbarConfig } from "../EditorComponent/types";
 import contextMenuConfig from "./contextMenu";
-import { Value } from "./types";
+import contextMenuExtendConfigFn from "./ShareButtonItem/contextMenuExtend";
+import type { Value } from "./types";
 
 class ShareButtonItems extends EditorArrayComponent {
   static get componentId(): ElementTypes.ShareButtonItemItems {
@@ -17,8 +17,7 @@ class ShareButtonItems extends EditorArrayComponent {
   }
 
   getItemProps(
-    //@ts-expect-error: Required item
-    item: Value,
+    _item: Value,
     itemIndex: number,
     items: Value[]
   ): Record<string, unknown> {

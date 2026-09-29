@@ -1,13 +1,13 @@
+import type { Spacing } from "@brizy/ui/es/Space/utils";
+import { IconsName } from "@brizy/ui/lib/EditorIcon/types";
 import { Extend } from "@brizy/ui-icons/lib/icons/Extend";
 import { Shorten } from "@brizy/ui-icons/lib/icons/Shorten";
-import { Spacing } from "@brizy/ui/es/Space/utils";
-import { IconsName } from "@brizy/ui/lib/EditorIcon/types";
 import React from "react";
 import { EditorIcon } from "visual/component/Brizy-ui/EditorIcon";
 import { Icon } from "visual/component/Brizy-ui/Icon";
 import { Space } from "visual/component/Brizy-ui/Space";
 import { t } from "visual/utils/i18n";
-import { Action, action } from "../types";
+import { type Action, action } from "../types";
 
 export const getActions = (isRtl: boolean): Action[] => {
   const iconSpacing: Spacing = isRtl ? [4, 0, 0, 4] : [4, 4, 0, 0];

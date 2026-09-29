@@ -1,17 +1,21 @@
 import { Num } from "@brizy/readers";
 import classNames from "classnames";
-import { HandleProps as ControlHandleProps, Handle, Range } from "rc-slider";
+import {
+  type HandleProps as ControlHandleProps,
+  Handle,
+  Range
+} from "rc-slider";
 import React, {
-  MouseEvent,
-  ReactElement,
-  ReactNode,
+  type MouseEvent,
+  type ReactElement,
+  type ReactNode,
   useCallback,
   useMemo,
   useRef
 } from "react";
 import { hexToRgb } from "visual/utils/color";
 import { roundTo } from "visual/utils/math";
-import { GradientStop } from "./entities";
+import type { GradientStop } from "./entities";
 
 type HandleProps = ControlHandleProps & {
   index: number;
@@ -168,7 +172,6 @@ export const AnimatedGradientRange = ({
       className,
       index,
       // we need to ignore this prop
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       dragging,
       ...other
     } = props as HandleProps;

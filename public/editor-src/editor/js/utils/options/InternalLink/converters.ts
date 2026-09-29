@@ -1,8 +1,8 @@
 import { or } from "fp-utilities";
-import * as Option from "visual/component/Options/Type";
-import { FromElementModel } from "visual/component/Options/Type";
-import { ChoiceWithPermalink } from "visual/component/Options/types/dev/InternalLink/types";
-import { MValue } from "visual/utils/value";
+import type * as Option from "visual/component/Options/Type";
+import type { FromElementModel } from "visual/component/Options/Type";
+import type { ChoiceWithPermalink } from "visual/component/Options/types/dev/InternalLink/types";
+import type { MValue } from "visual/utils/value";
 import { read } from "./utils";
 
 export const defaultValue: MValue<ChoiceWithPermalink> = {

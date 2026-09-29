@@ -1,10 +1,10 @@
 import classnames from "classnames";
 import React from "react";
-import { ElementModel } from "visual/component/Elements/Types";
+import type { ElementModel } from "visual/component/Elements/Types";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
-import Items from "./Items";
 import defaultValue from "./defaultValue.json";
+import Items from "./Items";
 import { style } from "./styles";
 import * as toolbarExtend from "./toolbarExtend";
 

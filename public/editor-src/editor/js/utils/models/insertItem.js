@@ -1,6 +1,6 @@
-import { stripSystemKeys } from "visual/utils/models/stripSystemKeys";
-import { setIds } from "visual/utils/models/index";
 import { insert } from "timm";
+import { setIds } from "visual/utils/models/index";
+import { stripSystemKeys } from "visual/utils/models/stripSystemKeys";
 
 export const insertItem = (items, itemIndex, itemData) => {
   const itemDataStripped = stripSystemKeys(itemData);

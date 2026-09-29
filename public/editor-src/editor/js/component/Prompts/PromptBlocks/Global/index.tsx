@@ -1,8 +1,8 @@
-import React, { Component, ReactElement } from "react";
-import { ConnectedProps, connect } from "react-redux";
+import React, { Component, type ReactElement } from "react";
+import { type ConnectedProps, connect } from "react-redux";
 import Tooltip from "visual/component/Controls/Tooltip";
 import { ToastNotification } from "visual/component/Notifications";
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import type { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { isPopup, isStory } from "visual/providers/EditorModeProvider";
 import {
   deleteGlobalBlock,
@@ -14,8 +14,7 @@ import {
   globalBlocksAssembledSelector,
   globalBlocksInPageSelector
 } from "visual/redux/selectors";
-import { ReduxState } from "visual/redux/types";
-import { BlockMetaType } from "visual/types/GlobalBlock";
+import type { ReduxState } from "visual/redux/types";
 import { deleteGlobalBlock as apiDeleteGlobalBlock } from "visual/utils/api";
 import {
   blockThumbnailData,
@@ -29,9 +28,10 @@ import {
   getBlocksStylesFonts,
   getUsedModelsFonts
 } from "visual/utils/traverse";
+import type { PromptBlockMetaType } from "../types";
 import { Blocks } from "./Blocks";
 import { Info } from "./controls/Info";
-import { Props, State, StateToProps, Thumbnail } from "./types";
+import type { Props, State, StateToProps, Thumbnail } from "./types";
 import { getRemoveConfirmationMessage } from "./utils";
 
 const mapState = (state: ReduxState): StateToProps => ({
@@ -49,11 +49,11 @@ const mapDispatch = {
 
 const connector = connect(mapState, mapDispatch);
 
-interface _Props<T extends BlockMetaType>
+interface _Props<T extends PromptBlockMetaType>
   extends ConnectedProps<typeof connector>,
     Props<T> {}
 
-class Global<T extends BlockMetaType> extends Component<_Props<T>> {
+class Global<T extends PromptBlockMetaType> extends Component<_Props<T>> {
   state: State = {
     search: ""
   };

@@ -1,4 +1,4 @@
-import { ToMeta } from "visual/component/Options/Type";
+import type { ToMeta } from "visual/component/Options/Type";
 import type { Value } from "visual/component/Options/types/dev/Filters/types/Value";
 import { MAX as sliderMaxValue } from "./utils";
 

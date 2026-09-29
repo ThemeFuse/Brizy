@@ -1,7 +1,7 @@
 import { defaultValueValue } from "visual/utils/onChange";
 import { checkValue } from "../checkValue";
 import { capByPrefix } from "../string";
-import { CSSValue } from "../style2/types";
+import type { CSSValue } from "../style2/types";
 
 type Direction =
   | "top"

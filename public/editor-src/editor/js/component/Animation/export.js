@@ -1,3 +1,4 @@
+import $ from "jquery";
 import { UIEventType } from "visual/global/UIEventType";
 import { getFreeLibs } from "visual/libs";
 
@@ -25,7 +26,8 @@ function initAnimation(node, Animation) {
   });
 }
 
-export default function ($node) {
+export default function (node) {
+  const $node = $(node);
   const { Animation } = getFreeLibs();
   if (!Animation) {
     return;

@@ -6,10 +6,7 @@ import {
   validateInputs
 } from "./utils.export";
 
-export default function ($node: JQuery): void {
-  const node = $node.get(0);
-  if (!node) return;
-
+export default function (node: HTMLElement): void {
   const cloudHeaders = { "Content-Type": "application/json" };
   const fetchHeaders = new Headers(cloudHeaders);
 
@@ -20,7 +17,7 @@ export default function ($node: JQuery): void {
 
     const form = element.querySelector<HTMLFormElement>(".brz-reset-psw-form");
 
-    form &&
+    if (form) {
       form.addEventListener("submit", (e) => {
         e.preventDefault();
 
@@ -45,5 +42,6 @@ export default function ($node: JQuery): void {
           }
         }
       });
+    }
   });
 }

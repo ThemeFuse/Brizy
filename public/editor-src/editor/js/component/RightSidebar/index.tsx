@@ -1,17 +1,17 @@
 import { Sidebar } from "@brizy/builder-ui-components";
 import classnames from "classnames";
 import React from "react";
-import { ConnectedProps, connect } from "react-redux";
+import { type ConnectedProps, connect } from "react-redux";
 import {
   CLEAR_ITEMS_TIMEOUT,
   SIDEBAR_WIDTH,
   SIDEBAR_WIDTH_EXPANDED
 } from "visual/component/RightSidebar/utils";
 import { Scrollbar } from "visual/component/Scrollbar";
-import { OptionDefinition } from "visual/editorComponents/ToolbarItemType";
+import type { OptionDefinition } from "visual/editorComponents/ToolbarItemType";
 import { updateUI } from "visual/redux/actions2";
 import { deviceModeSelector, uiSelector } from "visual/redux/selectors";
-import { ReduxState } from "visual/redux/types";
+import type { ReduxState } from "visual/redux/types";
 import { t } from "visual/utils/i18n";
 import { RenderEmpty } from "./Components/RenderEmpty";
 import { RenderItems } from "./Components/RenderItems";
@@ -58,7 +58,6 @@ export class RightSidebarInner extends React.Component<Props> {
   unmounted = false;
 
   componentDidMount(): void {
-    // eslint-disable-next-line @typescript-eslint/no-this-alias
     instance = this;
   }
 

@@ -1,13 +1,7 @@
 import $ from "jquery";
 import { handleLightBoxZoom } from "visual/utils/export/lightbox";
 
-export default function ($node: JQuery) {
-  const node = $node.get(0);
-
-  if (!node) {
-    return;
-  }
-
+export default function (node: HTMLElement) {
   node.querySelectorAll(".brz-image__lightbox").forEach((item) => {
     item.addEventListener("click", (e) => {
       e.preventDefault();

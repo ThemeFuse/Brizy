@@ -1,7 +1,8 @@
 import $ from "jquery";
 import { SwitcherAccessibility } from "../accessibility";
 
-export default function ($node) {
+export default function (node) {
+  const $node = $(node);
   $node.find(".brz-switcher").each(function () {
     const $this = $(this);
     const $switcherNav = $this.find("> .brz-switcher__nav");
@@ -30,7 +31,9 @@ export default function ($node) {
       : $switcherNavItems.get();
 
     const switcherAccessibility =
-      accessibilityRoot && accessibilityButtons.length && $switcherContent.length
+      accessibilityRoot &&
+      accessibilityButtons.length &&
+      $switcherContent.length
         ? new SwitcherAccessibility({
             root: accessibilityRoot,
             buttons: accessibilityButtons,
@@ -49,7 +52,7 @@ export default function ($node) {
       switcherAccessibility.init();
     }
 
-    $switcherNavItems.on("click", function () {
+    $switcherNavItems.on("click", () => {
       $switcherNav.toggleClass("brz-switcher__nav--active");
       $switcherNavItems.toggleClass("brz-switcher__nav--item--active");
       $switcherContent.toggleClass("brz-switcher__content--tab--active");

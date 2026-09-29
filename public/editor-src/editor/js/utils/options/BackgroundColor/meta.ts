@@ -1,4 +1,4 @@
-import { ToMeta } from "visual/component/Options/Type";
+import type { ToMeta } from "visual/component/Options/Type";
 import type { Value } from "./entities/Value";
 
 export interface Meta {

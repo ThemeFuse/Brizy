@@ -1,5 +1,9 @@
 import React, { forwardRef, useEffect, useRef } from "react";
-import SlimSelectLib, { Events, Option, Settings } from "slim-select";
+import SlimSelectLib, {
+  type Events,
+  type Option,
+  type Settings
+} from "slim-select";
 
 interface Props {
   events?: Events;
@@ -14,6 +18,7 @@ export const SlimSelect = forwardRef<SlimSelectLib, Props>((props, ref) => {
   const selectRef = useRef<HTMLSelectElement>(null);
   const selectInstance = useRef<SlimSelectLib | null>(null);
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: migrated from eslint
   useEffect(() => {
     if (selectRef.current) {
       const { contentLocation: _contentLocation } = settings || {};
@@ -48,7 +53,6 @@ export const SlimSelect = forwardRef<SlimSelectLib, Props>((props, ref) => {
         selectInstance.current = null;
       }
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [settings?.contentLocation]);
 
   return <select ref={selectRef}>{children}</select>;

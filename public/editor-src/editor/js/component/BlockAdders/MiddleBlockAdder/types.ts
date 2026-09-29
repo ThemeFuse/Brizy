@@ -1,5 +1,5 @@
-import { PromptGlobalBlock } from "visual/component/Prompts/PromptBlocks/Global/types";
-import {
+import type { PromptGlobalBlock } from "visual/component/Prompts/PromptBlocks/Global/types";
+import type {
   PromptBlock,
   PromptBlockTemplate
 } from "visual/component/Prompts/PromptBlocks/types";

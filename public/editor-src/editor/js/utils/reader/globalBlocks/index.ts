@@ -1,17 +1,18 @@
 import { Arr, Json, Num, Obj, Str } from "@brizy/readers";
-import { mPipe, match, optional, parseStrict } from "fp-utilities";
-import { BlockHtmlWithId } from "visual/types/Block";
-import { GlobalBlock } from "visual/types/GlobalBlock";
-import {
+import { match, mPipe, optional, parseStrict } from "fp-utilities";
+import type { BlockHtmlWithId } from "visual/types/Block";
+import type { GlobalBlock, GlobalBlockBase } from "visual/types/GlobalBlock";
+import type {
   AllRule,
   CollectionItemRule,
   CollectionTypeRule,
   Rule as GlobalBlockRule
 } from "visual/types/Rule";
-import { ArrayType } from "visual/utils/array/types";
+import type { ArrayType } from "visual/utils/array/types";
 import { pipe } from "visual/utils/fp";
-import { MValue, onNullish, throwOnNullish } from "visual/utils/value";
+import { type MValue, onNullish, throwOnNullish } from "visual/utils/value";
 import * as Union from "../union";
+import { type GlobalBlockMetaInput, globalBlockMetaSchema } from "./schemas";
 
 //#region Global Blocks Rules
 
@@ -119,23 +120,30 @@ type GBRules = GlobalBlock["rules"];
 type GBDependency = ArrayType<GlobalBlock["dependencies"]>;
 type GBBlocks = GlobalBlock["blocks"];
 
-const parseMeta = parseStrict<Record<string, unknown>, GBMeta>({
-  type: pipe(
-    Obj.readKey("type"),
-    // @ts-expect-error: Type "normal" | "popup" is not assignable to type "normal
-    Union.readWithChoices(["popup", "normal"]),
-    onNullish("normal")
-  ),
-  extraFontStyles: pipe(
-    Obj.readKey("extraFontStyles"),
-    Arr.read as () => GBMeta["extraFontStyles"],
-    onNullish([] as GBMeta["extraFontStyles"])
-  ),
-  _thumbnailSrc: optional(pipe(Obj.readKey("_thumbnailSrc"), Str.read)),
-  _thumbnailWidth: optional(pipe(Obj.readKey("_thumbnailWidth"), Num.read)),
-  _thumbnailHeight: optional(pipe(Obj.readKey("_thumbnailHeight"), Num.read)),
-  _thumbnailTime: optional(pipe(Obj.readKey("_thumbnailTime"), Num.read))
-});
+// `rest` is spread whole: a key the target variant does not declare (e.g. a
+// `subtype` on a normal block) is kept, as the previous reader kept it, because
+// this meta is written back to the API on save.
+const toMeta = ({ type, ...rest }: GlobalBlockMetaInput): GBMeta => {
+  switch (type) {
+    case "normal":
+      return { type, ...rest };
+    case "popup":
+      return { type, ...rest };
+    case "overlay":
+      return { type, ...rest, subtype: rest.subtype };
+  }
+};
+
+const readMeta = (v: Record<string, unknown>): GBMeta => {
+  const meta = pipe(
+    mPipe(Obj.readKey("meta"), Json.read, Obj.read),
+    throwOnNullish("meta")
+  )(v);
+
+  // Obj.read lets arrays through: an empty meta stored as "[]" (PHP's
+  // json_encode of an empty array) reads as a meta with every default.
+  return toMeta(globalBlockMetaSchema.parse(Array.isArray(meta) ? {} : meta));
+};
 
 const parseBlocks = (v: unknown): MValue<BlockHtmlWithId> => {
   const b = Obj.read(v);
@@ -154,7 +162,12 @@ const parseBlocks = (v: unknown): MValue<BlockHtmlWithId> => {
 export const parseGlobalBlock = (
   globalBlock: Record<string, unknown>
 ): MValue<GlobalBlock> => {
-  const reader = parseStrict<Record<string, unknown>, GlobalBlock>({
+  // Parsed against one flat shape: the GlobalBlock union makes parseStrict
+  // expect a reader per variant, which no single `meta` reader can satisfy.
+  const reader = parseStrict<
+    Record<string, unknown>,
+    GlobalBlockBase & { meta: GBMeta }
+  >({
     uid: pipe(mPipe(Obj.readKey("uid"), Str.read), throwOnNullish("uid")),
     title: optional(pipe(Obj.readKey("title"), Str.read)),
     data: pipe(
@@ -162,11 +175,7 @@ export const parseGlobalBlock = (
       throwOnNullish("data")
     ),
     dataVersion: pipe(Obj.readKey("dataVersion"), Num.read, onNullish(0)),
-    // @ts-expect-error: Type '"popup"' is not assignable to type '"normal"'
-    meta: pipe(
-      mPipe(Obj.readKey("meta"), Json.read, Obj.read, parseMeta),
-      throwOnNullish("meta")
-    ),
+    meta: readMeta,
     // @ts-expect-error: Type null is not assignable to type undefined
     position: optional(
       pipe(
@@ -201,7 +210,18 @@ export const parseGlobalBlock = (
   });
 
   try {
-    return reader(globalBlock);
+    const { meta, ...base } = reader(globalBlock);
+
+    // Rebuilds the union member: a `meta` union does not make the whole
+    // object a GlobalBlock until it is narrowed on its discriminant.
+    switch (meta.type) {
+      case "normal":
+        return { ...base, meta };
+      case "popup":
+        return { ...base, meta };
+      case "overlay":
+        return { ...base, meta };
+    }
   } catch (e) {
     console.error(e);
     return undefined;
@@ -234,53 +254,7 @@ export const parseGlobalBlocksToRecord = (block: unknown): BlockRecord => {
     const globalBlock = parseGlobalBlock(data);
 
     if (globalBlock) {
-      const {
-        status,
-        meta,
-        uid,
-        title,
-        data,
-        dataVersion,
-        rules,
-        position,
-        tags,
-        blocks,
-        dependencies
-      } = globalBlock;
-      switch (meta.type) {
-        case "popup": {
-          output[uid] = {
-            uid,
-            title,
-            data,
-            dataVersion,
-            status,
-            meta,
-            rules,
-            position,
-            tags,
-            blocks,
-            dependencies
-          };
-          break;
-        }
-        case "normal": {
-          output[uid] = {
-            uid,
-            title,
-            data,
-            dataVersion,
-            status,
-            meta,
-            rules,
-            position,
-            tags,
-            blocks,
-            dependencies
-          };
-          break;
-        }
-      }
+      output[globalBlock.uid] = globalBlock;
     }
   });
 

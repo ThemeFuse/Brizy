@@ -2,22 +2,25 @@ import { StoreChanged } from "visual/redux/types";
 import { hasProps } from "visual/utils/object";
 import {
   History,
-  HistoryEnhancerConfig,
-  HistoryEnhancerState,
+  type HistoryEnhancerConfig,
+  type HistoryEnhancerState,
   REDO,
-  Reducer,
+  type Reducer,
   UNDO,
-  UnknownDict
+  type UnknownDict
 } from "./types";
 
 export function createHistorySnapshot<
   T extends UnknownDict,
   StateKey extends keyof T
 >(state: T, keys: StateKey[]): { [k in StateKey]: T[k] } {
-  return keys.reduce((acc, key) => {
-    acc[key] = state[key];
-    return acc;
-  }, {} as { [k in StateKey]: T[k] });
+  return keys.reduce(
+    (acc, key) => {
+      acc[key] = state[key];
+      return acc;
+    },
+    {} as { [k in StateKey]: T[k] }
+  );
 }
 
 export function addHistoryDataToState<T extends UnknownDict, K extends keyof T>(
@@ -63,10 +66,10 @@ export function historyReducerEnhancer<
 ): Reducer<HistoryEnhancerState<State, TrackedKeys>, Action> {
   const history = new History<{ [k in TrackedKeys]: State[k] }>();
 
-  return function (
+  return (
     state: State | HistoryEnhancerState<State, TrackedKeys>,
     action: Action
-  ): HistoryEnhancerState<State, TrackedKeys> {
+  ): HistoryEnhancerState<State, TrackedKeys> => {
     switch (action.type) {
       case UNDO:
       case REDO: {

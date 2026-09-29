@@ -1,12 +1,12 @@
 import React from "react";
 import InputPlaceholder from "visual/component/Controls/InputPlaceholder";
-import { Props } from "./types";
+import type { Props } from "./types";
 
 export const Items = ({ data, onChange }: Props) => (
   <>
-    {data.map(({ title, name, value }, index: number) => (
+    {data.map(({ title, name, value }) => (
       <InputPlaceholder
-        key={index}
+        key={name}
         title={title}
         value={value}
         required={true}

@@ -1,8 +1,8 @@
 import classnames from "classnames";
 import { noop, sortBy, without } from "es-toolkit";
 import FuzzySearch from "fuzzy-search";
-import React, { Component, Fragment, JSX, ReactElement } from "react";
-import { ConnectedProps, connect } from "react-redux";
+import React, { Component, Fragment, type JSX, type ReactElement } from "react";
+import { type ConnectedProps, connect } from "react-redux";
 import {
   CategoryTitle,
   ShortcodeElement
@@ -11,10 +11,10 @@ import Tooltip from "visual/component/Controls/Tooltip";
 import EditorIcon from "visual/component/EditorIcon";
 import { ProInfo } from "visual/component/ProInfo";
 import { SortableElement } from "visual/component/Sortable/SortableElement";
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import type { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import UIEvents, { UIEventType } from "visual/global/UIEvents";
 import {
-  EditorMode,
+  type EditorMode,
   EditorModeContext,
   isStory
 } from "visual/providers/EditorModeProvider";
@@ -26,8 +26,8 @@ import {
   disabledElementsSelector,
   pinnedElementsSelector
 } from "visual/redux/selectors";
-import { ReduxState } from "visual/redux/types";
-import { Shortcode } from "visual/types";
+import type { ReduxState } from "visual/redux/types";
+import type { Shortcode } from "visual/types";
 import { isPro } from "visual/utils/env";
 import { t } from "visual/utils/i18n";
 import {
@@ -36,9 +36,9 @@ import {
   makeDataAttrString
 } from "visual/utils/i18n/attribute";
 import { setIds } from "visual/utils/models";
-import { MValue } from "visual/utils/value";
+import type { MValue } from "visual/utils/value";
 import { Category } from "./Category";
-import { SortData } from "./types";
+import type { SortData } from "./types";
 import { getCollapsedCategories, setCollapsedCategories } from "./utils";
 
 export interface BaseProps {
@@ -85,13 +85,12 @@ class ControlInner extends Component<Props, State> {
     super(props);
     // convert arr to object like {text: true, icon: true}
     this.inputRef = React.createRef<HTMLInputElement>();
-    const disabledElements = props.disabledElements.reduce(
-      (acc, item) => ({
-        ...acc,
-        [item]: true
-      }),
-      {}
-    );
+    const disabledElements = props.disabledElements.reduce<
+      Record<string, boolean>
+    >((acc, item) => {
+      acc[item] = true;
+      return acc;
+    }, {});
 
     const pinnedElements = props.pinnedElements;
 
@@ -555,7 +554,7 @@ class ControlInner extends Component<Props, State> {
                   ([, categoryShortcodes]) =>
                     this.getFilteredShortcodes(categoryShortcodes).length > 0
                 )
-                .map(([category, categoryShortcodes], index) => {
+                .map(([category, categoryShortcodes]) => {
                   const shortcodes =
                     this.getFilteredShortcodes(categoryShortcodes);
                   // we use _.sortBy instead of native sort
@@ -569,7 +568,7 @@ class ControlInner extends Component<Props, State> {
                   const open = !collapsedCategories.includes(category);
 
                   return (
-                    <Fragment key={index}>
+                    <Fragment key={category}>
                       <CategoryTitle
                         title={category}
                         onClick={() =>

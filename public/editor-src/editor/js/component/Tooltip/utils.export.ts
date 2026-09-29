@@ -1,5 +1,5 @@
 import { Num } from "@brizy/readers";
-import { Placement, Instance as PopperInstance } from "@popperjs/core";
+import type { Placement, Instance as PopperInstance } from "@popperjs/core";
 import { getProLibs } from "visual/libs";
 import { makeAttr } from "visual/utils/i18n/attribute";
 
@@ -135,7 +135,11 @@ export function setupTooltip(
   }
 
   function toggle() {
-    isVisible ? handleHide() : handleShow();
+    if (isVisible) {
+      handleHide();
+    } else {
+      handleShow();
+    }
   }
 
   function handleClickOutside(e: MouseEvent) {

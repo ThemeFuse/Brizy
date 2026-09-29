@@ -1,11 +1,11 @@
 import { Num } from "@brizy/readers";
 import { Base64 } from "js-base64";
 import { keyToDCFallback2Key } from "visual/editorComponents/EditorComponent/DynamicContent/utils";
-import { ECKeyDCInfo } from "visual/editorComponents/EditorComponent/types";
+import type { ECKeyDCInfo } from "visual/editorComponents/EditorComponent/types";
 import { createOptionId } from "visual/editorComponents/EditorComponent/utils";
 import { SizeType } from "visual/global/Config/types/configs/common";
 import { isEditor, isView } from "visual/providers/RenderProvider";
-import { DeviceMode } from "visual/types";
+import type { DeviceMode } from "visual/types";
 import { makePlaceholder } from "visual/utils/dynamicContent";
 import { imagePopulationUrl } from "visual/utils/image";
 import { isGIFExtension, isSVGExtension } from "visual/utils/image/utils";
@@ -21,7 +21,7 @@ import {
 } from "visual/utils/patch/Link/";
 import { DESKTOP, MOBILE, TABLET } from "visual/utils/responsiveMode";
 import { capByPrefix } from "visual/utils/string";
-import { Literal } from "visual/utils/types/Literal";
+import type { Literal } from "visual/utils/types/Literal";
 import {
   elementModelToValue,
   patchOnDCChange,
@@ -50,7 +50,7 @@ import {
   isPredefinedSize,
   multiplier
 } from "../utils";
-import {
+import type {
   ContainerSizes,
   DCValueHookResult,
   Dimensions,
@@ -60,9 +60,9 @@ import {
   ImageComponentState,
   ImagePatchResult,
   ImageSizes,
+  ImagesSources,
   ImageUrlResult,
   ImageUtilsContext,
-  ImagesSources,
   Patch,
   Value,
   WrapperSizes
@@ -285,7 +285,7 @@ export function getHoverImageUrlsFor(
   config: ImageUtilsContext["config"]
 ): HoverImageUrlResult {
   const { hoverImagePopulation, hoverImage, sizeType } = v;
-  const desktopSizes = wrapperSizes["desktop"];
+  const desktopSizes = wrapperSizes.desktop;
 
   let { width: cW, height: cH } = desktopSizes;
   cW = Math.round(cW);
@@ -317,7 +317,7 @@ export function getHoverImageUrlsFor(
   return getCustomImageUrl(
     fromElementModel(dvv),
     desktopSizes,
-    imageSizes["desktop"],
+    imageSizes.desktop,
     config,
     hoverModel
   );
@@ -675,8 +675,8 @@ export function handleImageChangePatch(
     const { imageExtension } = v;
 
     const wrapperSizes = calculateWrapperSizes(v, ctx.state, ctx.config);
-    const wrapperSize = { ...wrapperSizes["desktop"] };
-    const containerWidth = getContainerSize(ctx.state)["desktop"];
+    const wrapperSize = { ...wrapperSizes.desktop };
+    const containerWidth = getContainerSize(ctx.state).desktop;
 
     if (isSVGExtension(imageExtension) || isGIFExtension(imageExtension)) {
       wrapperSize.height = wrapperSize.width;
@@ -730,7 +730,7 @@ export function handleImageChangePatch(
 
     const containerWidth = getContainerSize(ctx.state)[device];
     const wrapperSizes = calculateWrapperSizes(v, ctx.state, ctx.config);
-    const wrapperSize = wrapperSizes["desktop"];
+    const wrapperSize = wrapperSizes.desktop;
 
     return {
       ...patchOnSizeTypeChange(

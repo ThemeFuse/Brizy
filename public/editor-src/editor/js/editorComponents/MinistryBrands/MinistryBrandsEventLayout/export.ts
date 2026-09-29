@@ -1,10 +1,7 @@
-import { ExportFunction } from "visual/types";
+import type { ExportFunction } from "visual/types";
 import { addContentEventListener } from "./utils";
 
-export const fn: ExportFunction = ($node) => {
-  const root = $node.get(0);
-  if (!root) return;
-
+export const fn: ExportFunction = (root) => {
   root.querySelectorAll<HTMLElement>(".brz-eventLayout").forEach((item) => {
     const selects = item.querySelectorAll(
       ".brz-eventLayout--filters-form select"

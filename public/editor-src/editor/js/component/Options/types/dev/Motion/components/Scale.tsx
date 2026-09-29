@@ -1,13 +1,13 @@
 import { mPipe } from "fp-utilities";
-import React, { JSXElementConstructor, useCallback, useMemo } from "react";
+import React, { type JSXElementConstructor, useCallback, useMemo } from "react";
 import { NumberSlider } from "visual/component/Controls/NumberSlider";
-import { OptionLabel } from "visual/component/OptionLabel";
-import { OptionWrapper } from "visual/component/OptionWrapper";
-import { OnChange } from "visual/component/Options/Type";
 import { useDebouncedOnChange } from "visual/component/hooks";
+import { OptionLabel } from "visual/component/OptionLabel";
+import type { OnChange } from "visual/component/Options/Type";
+import { OptionWrapper } from "visual/component/OptionWrapper";
 import { t } from "visual/utils/i18n";
-import { EffectProps } from "visual/utils/options/Motion/types/EffectProps";
-import {
+import type { EffectProps } from "visual/utils/options/Motion/types/EffectProps";
+import type {
   Direction as ScaleDirection,
   Scale as V,
   XPosition,
@@ -15,7 +15,7 @@ import {
 } from "visual/utils/options/Motion/types/Scale";
 import * as Speed from "visual/utils/options/Motion/types/utils/Speed";
 import { sliderSizeClassName } from "visual/utils/options/utils/sliderSizeClassName";
-import { Direction, Props } from "./Direction";
+import { Direction, type Props } from "./Direction";
 import { Viewport } from "./Viewport";
 
 const getDirectionTitle = (): { [k in ScaleDirection]: string } => ({

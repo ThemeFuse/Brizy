@@ -1,4 +1,4 @@
-import { ElementModelType2 } from "visual/component/Elements/Types";
+import type { ElementModelType2 } from "visual/component/Elements/Types";
 
 export type Active = Record<string, boolean> | boolean | number;
 

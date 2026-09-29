@@ -5,9 +5,9 @@ const Link = Quill.import("formats/link");
 
 export default class linkType extends Link {
   static create(link) {
-    let node = super.create(link);
-    link = this.sanitize(link);
-    this.setAttributes(node, link);
+    const node = Link.create(link);
+    link = linkType.sanitize(link);
+    linkType.setAttributes(node, link);
 
     return node;
   }

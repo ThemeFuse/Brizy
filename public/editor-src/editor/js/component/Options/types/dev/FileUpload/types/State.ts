@@ -1,4 +1,4 @@
-import { WithValue } from "visual/component/Options/types/dev/FileUpload/types/Value";
+import type { WithValue } from "visual/component/Options/types/dev/FileUpload/types/Value";
 
 export interface Empty {
   type: "Empty";

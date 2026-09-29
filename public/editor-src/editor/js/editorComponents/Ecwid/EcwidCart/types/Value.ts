@@ -1,5 +1,5 @@
-import { ElementModel } from "visual/component/Elements/Types";
-import { Switch } from "../../utils/Value";
+import type { ElementModel } from "visual/component/Elements/Types";
+import type { Switch } from "../../utils/Value";
 
 export enum EcwidCartCheckoutStep {
   Cart = "cart",

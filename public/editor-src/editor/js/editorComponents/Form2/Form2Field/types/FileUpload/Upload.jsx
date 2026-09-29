@@ -62,7 +62,6 @@ class Upload extends Component {
   }
 
   renderForView() {
-    // eslint-disable-next-line no-unused-vars
     const { fileText, renderContext: _, ...props } = this.props;
     const { id, className: _className, placeholder } = props;
 

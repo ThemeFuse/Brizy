@@ -12,6 +12,7 @@ import Editor from "visual/global/Editor";
 import { updateCopiedElement, updateUI } from "visual/redux/actions2";
 import {
   copiedElementNoRefsSelector,
+  menuDataSelector,
   pageDataNoRefsSelector,
   rulesSelector,
   uiSelector
@@ -49,7 +50,7 @@ function combineMerge(target, source, options) {
     source.splice(target.length);
   }
 
-  source.forEach(function (e, i) {
+  source.forEach((e, i) => {
     if (typeof destination[i] === "undefined") {
       const cloneRequested = options.clone !== false;
       const shouldClone = cloneRequested && options.isMergeableObject(e);
@@ -385,7 +386,7 @@ export default class EditorArrayComponent extends EditorComponent {
     const getItems = (deviceMode = this.getDeviceMode()) => {
       if (process.env.NODE_ENV === "development") {
         if (!config.getItems) {
-          // eslint-disable-next-line no-console
+          // biome-ignore lint/suspicious/noConsole: migrated from eslint
           console.warn(
             `${this.getComponentId()}. getItems not found in toolbarConfig`
           );
@@ -570,8 +571,7 @@ export default class EditorArrayComponent extends EditorComponent {
     const defaultValue = this.getDefaultValue();
 
     const itemProps = this.getItemProps(itemData, itemIndex, items);
-    const itemDefaultValue =
-      defaultValue[itemIndex] && defaultValue[itemIndex].value;
+    const itemDefaultValue = defaultValue[itemIndex]?.value;
     const itemDBValue = value;
     const itemOnChange = (itemValue, meta = {}) => {
       const { intent } = meta;
@@ -639,7 +639,7 @@ export default class EditorArrayComponent extends EditorComponent {
     }
   }
 
-  /* eslint-disable no-unused-vars */
+  // biome-ignore lint/correctness/noUnusedFunctionParameters: migrated from eslint
   renderItemWrapper(item, itemKey, itemIndex, itemData, items) {
     return (
       <Profiler
@@ -651,8 +651,6 @@ export default class EditorArrayComponent extends EditorComponent {
       </Profiler>
     );
   }
-
-  /* eslint-enabled no-unused-vars */
 
   renderItem = (itemData, itemIndex, items) => {
     const {
@@ -699,13 +697,17 @@ export default class EditorArrayComponent extends EditorComponent {
     };
   }
 
+  getMenuData() {
+    return menuDataSelector(this.getReduxStore().getState());
+  }
+
   getCurrentCopiedElement = () => {
     const { path, value } = copiedElementNoRefsSelector(
       this.getReduxStore().getState()
     );
 
     if (value && path.length > 0) {
-      return getIn(attachMenu(value, this.getGlobalConfig().menuData), path);
+      return getIn(attachMenu(value, this.getMenuData()), path);
     }
 
     return null;
@@ -714,7 +716,8 @@ export default class EditorArrayComponent extends EditorComponent {
   changeVerticalAlign(index, alignDirection) {
     const v = this.getValue();
     const data = pageDataNoRefsSelector(this.getReduxStore().getState());
-    const activeElementId = global.Brizy.activeEditorComponent.getId();
+    const activeElementId =
+      global.Brizy.activeEditorComponent.getHotKeysTargetId();
     const activeElementPath = createFullModelPath(data, [activeElementId]);
 
     const { path, value: parentValue } = getParentWhichContainsStyleProperty(
@@ -741,7 +744,7 @@ export default class EditorArrayComponent extends EditorComponent {
       const { id, bindKey } = this.getIdBindKey();
       const pathUid = bindKey ? [id, bindKey, `${index}`] : [id, `${index}`];
       const currentPath = createFullModelPath(data, pathUid);
-      const newPath = path.reduce((acc, item, index) => {
+      const newPath = path.reduce((acc, _item, index) => {
         if (currentPath[index] === undefined) {
           acc.push(path[index]);
         }
@@ -769,7 +772,8 @@ export default class EditorArrayComponent extends EditorComponent {
 
   changeHorizontalAlign(index, alignDirection) {
     const v = this.getValue();
-    const activeElementId = global.Brizy.activeEditorComponent.getId();
+    const activeElementId =
+      global.Brizy.activeEditorComponent.getHotKeysTargetId();
     const state = this.getReduxStore().getState();
     const data = pageDataNoRefsSelector(state);
     const activeElementPath = createFullModelPath(data, [activeElementId]);
@@ -802,7 +806,7 @@ export default class EditorArrayComponent extends EditorComponent {
       const { id, bindKey } = this.getIdBindKey();
       const pathUid = bindKey ? [id, bindKey, `${index}`] : [id, `${index}`];
       const currentPath = createFullModelPath(data, pathUid);
-      const newPath = path.reduce((acc, item, index) => {
+      const newPath = path.reduce((acc, _item, index) => {
         if (currentPath[index] === undefined) {
           acc.push(path[index]);
         }
@@ -834,7 +838,7 @@ export default class EditorArrayComponent extends EditorComponent {
     const { id, bindKey } = this.getIdBindKey();
     const pathUid = bindKey ? [id, bindKey, `${index}`] : [id, `${index}`];
     const shortcodePath = createFullModelPath(data, pathUid);
-    const pageData = attachMenu(data, this.getGlobalConfig().menuData);
+    const pageData = attachMenu(data, this.getMenuData());
 
     dispatch(
       updateCopiedElement({
@@ -856,7 +860,7 @@ export default class EditorArrayComponent extends EditorComponent {
 
     const { value } = getClosestParent(
       path,
-      attachMenu(copiedValue, this.getGlobalConfig().menuData),
+      attachMenu(copiedValue, this.getMenuData()),
       v.type === "Cloneable" || v.type === "Wrapper"
         ? ({ type }) => type === "Cloneable" || type === "Wrapper"
         : ({ type }) => type === v.type
@@ -905,7 +909,7 @@ export default class EditorArrayComponent extends EditorComponent {
 
     const { value } = getClosestParent(
       path,
-      attachMenu(copiedValue, this.getGlobalConfig().menuData),
+      attachMenu(copiedValue, this.getMenuData()),
       ({ type }) => type === v.type
     );
 

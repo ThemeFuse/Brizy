@@ -7,10 +7,10 @@ import {
   _setOpacity,
   fieldsEnabled,
   fromLegacyType,
-  toLegacyType,
   toggleColor,
   toggleFields,
-  toggleType
+  toggleType,
+  toLegacyType
 } from "../utils";
 
 const model: Value = {

@@ -1,16 +1,20 @@
 import classnames from "classnames";
-import React, { ReactElement, ReactNode, RefObject } from "react";
+import React, {
+  type ReactElement,
+  type ReactNode,
+  type RefObject
+} from "react";
 import { Popper } from "react-popper";
 import ClickOutside from "visual/component/ClickOutside";
 import CustomCSS from "visual/component/CustomCSS";
-import { ElementModel } from "visual/component/Elements/Types";
+import type { ElementModel } from "visual/component/Elements/Types";
 import Portal from "visual/component/Portal";
 import { Scrollbar } from "visual/component/Scrollbar";
 import { ThemeIcon } from "visual/component/ThemeIcon";
 import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { Wrapper } from "visual/editorComponents/tools/Wrapper";
-import { CMS } from "visual/global/Config/types/configs/Cloud";
+import type { CMS } from "visual/global/Config/types/configs/Cloud";
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import { makePlaceholder } from "visual/utils/dynamicContent";
 import { makeDataAttr } from "visual/utils/i18n/attribute";
@@ -152,9 +156,9 @@ export default class Translation extends EditorComponent<Value, Props, State> {
                     style={style}
                   >
                     <Scrollbar autoHeight={true} theme="light">
-                      {langOptions.map((item, index) => (
+                      {langOptions.map((item) => (
                         <div
-                          key={index}
+                          key={item.code}
                           className="brz-translation__select-item"
                         >
                           {renderOption(

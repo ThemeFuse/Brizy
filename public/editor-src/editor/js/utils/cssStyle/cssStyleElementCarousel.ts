@@ -2,7 +2,7 @@ import { Str } from "@brizy/readers";
 import * as Num from "visual/utils/math/number";
 import { defaultValueValue } from "visual/utils/onChange";
 import { styleBgColor, styleBgGradient } from "../style2";
-import { CSSValue } from "../style2/types";
+import type { CSSValue } from "../style2/types";
 import { cssStyleColor, cssStyleCustomIconColor } from "./cssStyleColor";
 import { cssStylePaddingFourFields } from "./cssStylePadding";
 

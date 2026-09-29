@@ -1,7 +1,7 @@
-import { BlockThumbnailImage } from "./BlockThumbnailImage";
+import React, { type JSX } from "react";
 import { AnchorInput } from "./AnchorInput";
-import React, { JSX } from "react";
-import { ThumbnailBlockWithInput as Props } from "./types";
+import { BlockThumbnailImage } from "./BlockThumbnailImage";
+import type { ThumbnailBlockWithInput as Props } from "./types";
 
 export const ThumbnailBlockWithInput = ({
   id,

@@ -2,7 +2,7 @@ import { Monoid } from "visual/utils/types/Monoid";
 
 test("Prevent jest complaining that files has not tests", () => {});
 
-// eslint-disable-next-line jest/no-export
+// biome-ignore lint/suspicious/noExportsInTest: migrated from eslint
 export function testMonoid<T>(m: Monoid<T>, values: Array<T>) {
   const f = m.append;
   const e = m.empty;

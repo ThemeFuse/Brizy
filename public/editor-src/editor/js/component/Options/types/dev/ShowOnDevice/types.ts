@@ -1,9 +1,9 @@
-import {
+import type {
   Props as OptionProps,
   SimpleValue
 } from "visual/component/Options/Type";
-import { Literal } from "visual/utils/types/Literal";
-import { WithClassName } from "visual/types/attributes";
+import type { WithClassName } from "visual/types/attributes";
+import type { Literal } from "visual/utils/types/Literal";
 
 export interface Choice {
   icon: string;

@@ -1,6 +1,6 @@
 import type { BoxResizerPartialProps } from "visual/component/BoxResizer/types";
-import { MValue } from "visual/utils/value";
-import { Animate, ProgressStyle } from "./types";
+import type { MValue } from "visual/utils/value";
+import { type Animate, ProgressStyle } from "./types";
 
 export const readType = (v: unknown): MValue<ProgressStyle> => {
   switch (v) {
@@ -60,14 +60,12 @@ export const animate: Animate = ({ text, wrapper, value, type }) => {
     } else {
       width++;
       if (wrapper) {
-        wrapper.style.maxWidth = width + 0.5 + "%";
+        wrapper.style.maxWidth = `${width + 0.5}%`;
       }
       if (text) {
-        text.innerHTML = width + "%";
+        text.innerHTML = `${width}%`;
         if (type === "style2") {
-          text.style.marginInlineStart = `clamp(0%, ${
-            Math.round(width + 0.5) + "%"
-          }, 100%)`;
+          text.style.marginInlineStart = `clamp(0%, ${`${Math.round(width + 0.5)}%`}, 100%)`;
           text.style.transform = `translateX(${translateValue}%)`;
         }
       }

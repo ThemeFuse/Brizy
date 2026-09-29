@@ -2,20 +2,20 @@ import { last } from "es-toolkit";
 import { isT } from "fp-utilities";
 import { produce } from "immer";
 import { insert, mergeIn } from "timm";
-import {
+import type {
   ElementModel,
   ElementModelType
 } from "visual/component/Elements/Types";
 import { SizeType } from "visual/global/Config/types/configs/common";
-import { Settings } from "visual/libs/gallery";
-import { Breakpoint, DeviceMode2 } from "visual/types";
+import type { Settings } from "visual/libs/gallery";
+import { type Breakpoint, DeviceMode2 } from "visual/types";
 import { setIds } from "visual/utils/models";
 import { defaultValueValue } from "visual/utils/onChange";
 import * as Num from "visual/utils/reader/number";
 import * as Str from "visual/utils/reader/string";
-import { Unit } from "../Image/types";
+import type { Unit } from "../Image/types";
 import { calcWrapperSizes } from "../Image/utils";
-import { SizeChangedType, Value } from "./types";
+import type { SizeChangedType, Value } from "./types";
 
 interface IsotopeParams {
   itemSelector: string;
@@ -118,16 +118,14 @@ export const changeImagesData = (
 
 export const removeHorizontalThumbStyleData = (items: ElementModelType[]) => {
   return items.map(({ type, value }) => {
+    // this is a small hack to remove some keys from object without mutation
     const {
-      // this is a small hack to remove some keys from object without mutation
-      /* eslint-disable */
       width,
       tabletWidth,
       mobileWidth,
       widthSuffix,
       tabletWidthSuffix,
       mobileWidthSuffix,
-      /* eslint-enable*/
       ...others
     } = value as Value;
 
@@ -282,7 +280,7 @@ export const multiUpload = (
           const newPlaceholders = produce<ElementModel[]>(
             placeholders,
             (draft) => {
-              if (draft && draft[placeholderIndex]) {
+              if (draft?.[placeholderIndex]) {
                 draft[placeholderIndex].wasUsed = true;
               }
             }
@@ -350,7 +348,7 @@ export const notUsedPlaceholders = (
 ): ElementModelType[] => (items ? items.filter((item) => !item?.wasUsed) : []);
 
 const cleanUsedPlaceholders = (_id: number, items?: ElementModel[]): void => {
-  if (items && items.every((item) => item.wasUsed)) {
+  if (items?.every((item) => item.wasUsed)) {
     initialPlaceholders.delete(_id);
   }
 };

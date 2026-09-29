@@ -63,6 +63,7 @@ const youtubeLoadScript = () => {
   if (!candidate) {
     const script = document.createElement("script");
     script.src = "https://www.youtube.com/iframe_api";
+    script.setAttribute(makeAttr("consent"), "marketing");
     document.body.append(script);
   }
 };
@@ -93,7 +94,7 @@ const loadYoutubeVideo = (
 ) => {
   return new YT.Player(player, {
     events: {
-      onReady: function (event) {
+      onReady: (event) => {
         const isMuted = event.target.isMuted();
 
         if (isIos) {
@@ -110,9 +111,9 @@ const loadYoutubeVideo = (
           event.target.playVideo();
         }
       },
-      onStateChange: function (event) {
+      onStateChange: (event) => {
         if (loop) {
-          if (event.data == YT.PlayerState.PLAYING) {
+          if (event.data === YT.PlayerState.PLAYING) {
             if (end > start) {
               const duration = end - start;
               setTimeout(() => event.target.seekTo(start), duration * 1000);
@@ -162,7 +163,8 @@ function showVideos($node) {
   });
 }
 
-export default function ($node) {
+export default function (node) {
+  const $node = $(node);
   // we don't use IntersectionObserver because without trackVisibility attribute
   // it doesn't tell you whether the element is covered by any other page content
   // or was modified by opacity, transform, filter...
@@ -174,7 +176,7 @@ export default function ($node) {
     "elements.accordion.changed",
     "elements.switcher.changed"
   ].forEach((id) => {
-    window.Brz.on(id, (node, options) => {
+    window.Brz.on(id, (_node, options) => {
       var hiddenTabs = options.tabs.filter((tab) => tab !== options.active);
 
       hideVideos($(hiddenTabs));
@@ -194,12 +196,12 @@ export default function ($node) {
     });
   });
 
-  $(document).on("brz.popup.show", function (e, popup) {
+  $(document).on("brz.popup.show", (_e, popup) => {
     showVideos($(popup));
   });
 
   // stopping all videos inside a popup that is closed(video can be set through embed code)
-  $(document).on("brz.popup.close", function (e, popup) {
+  $(document).on("brz.popup.close", (_e, popup) => {
     hideVideos($(popup));
   });
 
@@ -313,7 +315,7 @@ export default function ($node) {
         );
       };
 
-      window.addEventListener("message", function (event) {
+      window.addEventListener("message", (event) => {
         if (!event.origin.includes("vimeo")) return;
 
         let data;
@@ -368,14 +370,12 @@ export default function ($node) {
   // Lightbox: prefer data-brz-src (href may be "#"). Use delegation so the first click is handled.
   $node.on("click.brzVideoLightbox", ".brz-video__lightbox", function (e) {
     e.preventDefault();
-
-    const el = this;
-    const type = el.getAttribute(makeAttr("popup-type")) ?? "iframe";
-    const loop = el.getAttribute(makeAttr("loop")) === "on";
-    const muted = el.getAttribute(makeAttr("muted")) === "on";
-    const start = Num.read(el.getAttribute(makeAttr("start"))) ?? 0;
-    const end = Num.read(el.getAttribute(makeAttr("end"))) ?? 0;
-    const src = el.getAttribute(makeAttr("src")) || el.getAttribute("href");
+    const type = this.getAttribute(makeAttr("popup-type")) ?? "iframe";
+    const loop = this.getAttribute(makeAttr("loop")) === "on";
+    const muted = this.getAttribute(makeAttr("muted")) === "on";
+    const start = Num.read(this.getAttribute(makeAttr("start"))) ?? 0;
+    const end = Num.read(this.getAttribute(makeAttr("end"))) ?? 0;
+    const src = this.getAttribute(makeAttr("src")) || this.getAttribute("href");
 
     if (!src) return;
 
@@ -447,7 +447,7 @@ function getVideoSrc($elem) {
   var loop = $videoData.attr("data-loop");
 
   if (population) {
-    var options = {
+    const options = {
       autoplay: $coverElem.length ? 1 : 0,
       controls: Number(controls === "true"),
       branding: Number(branding === "true"),

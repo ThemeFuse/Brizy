@@ -1,6 +1,6 @@
 import { Content, Root, Trigger } from "@radix-ui/react-context-menu";
 import React, {
-  MouseEventHandler,
+  type MouseEventHandler,
   useCallback,
   useEffect,
   useMemo,

@@ -1,7 +1,7 @@
 import { Obj } from "@brizy/readers";
-import { Dictionary } from "visual/types/utils";
-import { Literal } from "visual/utils/types/Literal";
-import { Response } from "./configs/common";
+import type { Dictionary } from "visual/types/utils";
+import type { Literal } from "visual/utils/types/Literal";
+import type { Response } from "./configs/common";
 
 export enum DCTypes {
   image = "image",

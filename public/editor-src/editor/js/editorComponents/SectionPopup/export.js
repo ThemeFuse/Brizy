@@ -1,7 +1,8 @@
 import $ from "jquery";
 import { makeDataAttrString } from "visual/utils/i18n/attribute";
 
-export default function ($node) {
+export default function (node) {
+  const $node = $(node);
   $node
     .find(makeDataAttrString({ name: "link-type", value: "popup" }))
     .on("click", function (e) {

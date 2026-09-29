@@ -1,8 +1,8 @@
-import { DCTypes } from "visual/global/Config/types/DynamicContent";
 import {
   getEnabledLinkOptions,
   isBackgroundPointerEnabled
 } from "visual/global/Config/types/configs/featuresValue";
+import { DCTypes } from "visual/global/Config/types/DynamicContent";
 import {
   isPopup as isPopupMode,
   isStory as isStoryMode

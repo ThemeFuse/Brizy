@@ -1,9 +1,9 @@
 import React, {
   Children,
-  ReactElement,
-  RefObject,
   cloneElement,
   isValidElement,
+  type ReactElement,
+  type RefObject,
   useCallback,
   useEffect,
   useRef
@@ -105,7 +105,7 @@ const CustomCSS = ({
     return cloneElement(Children.only(children), props);
   }
 
-  return <></>;
+  return null;
 };
 
 export default CustomCSS;

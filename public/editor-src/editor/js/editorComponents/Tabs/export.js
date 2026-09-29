@@ -47,7 +47,8 @@ function changeTab($tabs, target) {
   });
 }
 
-export default function ($node) {
+export default function (node) {
+  const $node = $(node);
   $node.find(".brz-tabs").each(function () {
     const $this = $(this);
     const action = $this.attr(makeAttr("action"));
@@ -127,16 +128,16 @@ export default function ($node) {
     tabsAccessibility.init();
 
     if (events === "click") {
-      $this.children(".brz-tabs__nav").on("click", function (e) {
+      $this.children(".brz-tabs__nav").on("click", (e) => {
         changeTab($this, e.target);
         tabsAccessibility.sync();
       });
     } else {
-      $this.find(".brz-tabs__nav > li").on("mouseenter", function (e) {
+      $this.find(".brz-tabs__nav > li").on("mouseenter", (e) => {
         changeTab($this, e.target);
         tabsAccessibility.sync();
       });
-      $this.children(".brz-tabs__nav").on("click", function (e) {
+      $this.children(".brz-tabs__nav").on("click", (e) => {
         changeTab($this, e.target);
         tabsAccessibility.sync();
       });
@@ -171,7 +172,7 @@ export default function ($node) {
       $item.addClass(activeClassName);
       $item.children(".brz-tabs__nav--mobile").addClass(mobileActiveClassName);
 
-      setTimeout(function () {
+      setTimeout(() => {
         // normalize content if is outside of Viewport
         const offsetTop = $navMobile.offset().top;
         const stickyHeaderHeight = $(

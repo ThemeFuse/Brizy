@@ -1,18 +1,18 @@
 import classNames from "classnames";
 import React, {
-  ComponentProps,
-  ComponentType,
-  PropsWithChildren,
-  PropsWithRef,
-  ReactElement,
-  Ref,
-  RefObject,
+  type ComponentProps,
+  type ComponentType,
   createElement,
-  forwardRef
+  forwardRef,
+  type PropsWithChildren,
+  type PropsWithRef,
+  type ReactElement,
+  type Ref,
+  type RefObject
 } from "react";
 import UIEvents, { UIEventType } from "visual/global/UIEvents";
 import { RenderFor } from "visual/providers/RenderProvider/RenderFor";
-import { WithClassName } from "visual/types/attributes";
+import type { WithClassName } from "visual/types/attributes";
 import { makeDataAttr } from "visual/utils/i18n/attribute";
 import { mApply } from "visual/utils/value";
 import * as Observer from "./Observer";
@@ -71,7 +71,7 @@ class _Animation<
     const target = e.target as HTMLElement | null;
     const node = this.animationEndAttachedNode;
 
-    if (this.mounted && target && node && node.isEqualNode(target)) {
+    if (this.mounted && target && node?.isEqualNode(target)) {
       this.handleAnimationFinished();
       this.setState({ animationClass: "none" });
     }
@@ -165,7 +165,6 @@ class _Animation<
       className: _className,
       componentProps: { className: __className, ...otherProps }
     } = this.props;
-    /* eslint-enabled no-unused-vars */
     const { isVisible } = this.state;
     const hasAnimation = this.hasAnimation();
     const isActive = isVisible && hasAnimation;
@@ -233,7 +232,7 @@ class _Animation<
       if (typeof this.props.forwardedRef === "function") {
         this.props.forwardedRef(this.ref.current);
       } else {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        // biome-ignore lint/suspicious/noExplicitAny: migrated from eslint
         (this.props.forwardedRef as any).current = this.ref.current;
       }
     }
@@ -258,7 +257,7 @@ function _withRef<
   return <_Animation {...props} forwardedRef={ref} />;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+// biome-ignore lint/suspicious/noExplicitAny: migrated from eslint
 export const Animation = forwardRef<Element, Props<any>>(
   _withRef
 ) as typeof _withRef;

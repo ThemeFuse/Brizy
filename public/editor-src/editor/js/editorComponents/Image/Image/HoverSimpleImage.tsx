@@ -11,22 +11,22 @@ import {
   formatHoverRetinaSrc,
   formatHoverSrc
 } from "visual/editorComponents/Image/Image/utils";
-import { SizeType } from "visual/global/Config/types/configs/common";
+import type { SizeType } from "visual/global/Config/types/configs/common";
 import { useConfig } from "visual/providers/ConfigProvider";
 import { isView } from "visual/providers/RenderProvider";
 import { useCSS } from "visual/providers/StyleProvider/useCSS";
 import { isGIFExtension } from "visual/utils/image/utils";
 import { defaultValueValue } from "visual/utils/onChange";
-import { FCC } from "visual/utils/react/types";
+import type { FCC } from "visual/utils/react/types";
 import { read as readNumber } from "visual/utils/reader/number";
 import { DESKTOP } from "visual/utils/responsiveMode";
 import { styleHoverImage } from "../styles";
-import {
+import type {
   Device,
   HoverImageCommonProps as HoverImageProps,
   ImageSizes
 } from "../types";
-import { Value, calcImageSizes } from "../utils";
+import { calcImageSizes, type Value } from "../utils";
 
 const HoverSimpleImage: FCC<HoverImageProps> = (props) => {
   const {

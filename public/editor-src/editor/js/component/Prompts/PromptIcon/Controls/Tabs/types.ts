@@ -1,5 +1,5 @@
-import { TypeId } from "visual/config/icons/Type";
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import type { TypeId } from "visual/config/icons/Type";
+import type { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 
 export interface Props {
   currentTypeId: TypeId;

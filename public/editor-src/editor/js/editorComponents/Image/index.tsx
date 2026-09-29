@@ -1,14 +1,15 @@
 import { Bool, Obj, Str } from "@brizy/readers";
 import classnames from "classnames";
 import { noop } from "es-toolkit";
-import React, { Fragment, createRef } from "react";
+import React, { createRef, Fragment } from "react";
 import ResizeAware from "react-resize-aware";
+import { omit } from "timm";
 import CustomCSS from "visual/component/CustomCSS";
 import { HoverAnimation } from "visual/component/HoverAnimation/HoverAnimation";
 import { getHoverAnimationOptions } from "visual/component/HoverAnimation/utils";
 import Toolbar from "visual/component/Toolbar";
 import { Tooltip } from "visual/component/Tooltip";
-import { TooltipImperativeProps } from "visual/component/Tooltip/types";
+import type { TooltipImperativeProps } from "visual/component/Tooltip/types";
 import {
   getToolbarPlacement,
   getTooltipPlacement,
@@ -16,23 +17,27 @@ import {
 } from "visual/component/Tooltip/utils";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import EditorComponent, {
-  Props as EditorComponentProps
+  type Props as EditorComponentProps
 } from "visual/editorComponents/EditorComponent";
-import { ECKeyDCInfo } from "visual/editorComponents/EditorComponent/types";
+import type { ECKeyDCInfo } from "visual/editorComponents/EditorComponent/types";
 import { shouldRenderPopup } from "visual/editorComponents/tools/Popup";
 import {
-  DBMigration,
+  type DBMigration,
   withMigrations
 } from "visual/editorComponents/tools/withMigrations";
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import { isStory } from "visual/providers/EditorModeProvider";
 import { isEditor, isView } from "visual/providers/RenderProvider";
 import { blocksDataSelector } from "visual/redux/selectors";
-import { DeviceMode } from "visual/types";
-import { Block } from "visual/types/Block";
+import type { DeviceMode } from "visual/types";
+import type { Block } from "visual/types/Block";
 import { makeDataAttr } from "visual/utils/i18n/attribute";
-import { isUnsplashImage } from "visual/utils/image/utils";
-import { Positive, is as isPositive } from "visual/utils/math/Positive";
+import {
+  isGIFExtension,
+  isSVGExtension,
+  isUnsplashImage
+} from "visual/utils/image/utils";
+import { is as isPositive, type Positive } from "visual/utils/math/Positive";
 import { getLinkData } from "visual/utils/models/link";
 import { makeOptionValueToAnimation } from "visual/utils/options/utils/makeValueToOptions";
 import { DESKTOP } from "visual/utils/responsiveMode";
@@ -41,12 +46,12 @@ import { attachRefs } from "../../utils/react";
 import * as tooltipSidebarConfig from "../tools/Tooltip/tooltipSidebar";
 import * as tooltipToolbarConfig from "../tools/Tooltip/tooltipToolbar";
 import { Wrapper } from "../tools/Wrapper";
-import ImageContent from "./Image";
-import ImageWrapper from "./Wrapper";
 import defaultValue from "./defaultValue.json";
+import ImageContent from "./Image";
 import { migrations } from "./migrations";
 import {
   calculateWrapperSizes,
+  type ExtendedWrapperSizes,
   getContainerSize,
   getDimension,
   getExtraImageProps,
@@ -54,19 +59,18 @@ import {
   getImageUrlsFor,
   getResponsiveUrls,
   handleImageChangePatch,
-  processDCValueHook,
+  type ImageComponentState,
+  type ImageUtilsContext,
   processDBValue,
+  processDCValueHook,
   updateContainerDimensions,
   updateContainerWidth,
-  updateHoverImageHeight,
-  ImageComponentState,
-  ImageUtilsContext,
-  ExtendedWrapperSizes
+  updateHoverImageHeight
 } from "./shared";
 import * as sidebarConfig from "./sidebar";
 import { style, styleContent, styleHover, styleTooltip } from "./styles";
 import toolbarConfigFn from "./toolbar";
-import {
+import type {
   GalleryRenderer,
   GetResponsiveUrls,
   ImageSizes,
@@ -79,8 +83,7 @@ import {
   WrapperSizes
 } from "./types";
 import { showOriginalImage } from "./utils";
-import { isGIFExtension, isSVGExtension } from "visual/utils/image/utils";
-import { omit } from "timm";
+import ImageWrapper from "./Wrapper";
 
 class Image extends EditorComponent<Value, Props, State> {
   static defaultProps = {
@@ -149,7 +152,10 @@ class Image extends EditorComponent<Value, Props, State> {
             callback
           );
         } else {
-          this.setState((prevState) => ({ ...prevState, ...updater }), callback);
+          this.setState(
+            (prevState) => ({ ...prevState, ...updater }),
+            callback
+          );
         }
       },
       updatePrevWrapperSizes: (sizes) => {
@@ -272,7 +278,10 @@ class Image extends EditorComponent<Value, Props, State> {
 
   updateContainerDimensions(
     width: number,
-    widthStateKey: "containerWidth" | "tabletContainerWidth" | "mobileContainerWidth"
+    widthStateKey:
+      | "containerWidth"
+      | "tabletContainerWidth"
+      | "mobileContainerWidth"
   ) {
     updateContainerDimensions(
       this.state,
@@ -283,7 +292,10 @@ class Image extends EditorComponent<Value, Props, State> {
             callback
           );
         } else {
-          this.setState((prevState) => ({ ...prevState, ...updater }), callback);
+          this.setState(
+            (prevState) => ({ ...prevState, ...updater }),
+            callback
+          );
         }
       },
       width,
@@ -305,12 +317,23 @@ class Image extends EditorComponent<Value, Props, State> {
     device: DeviceMode
   ) {
     const v = this.getValue();
-    return getImageUrlsFor(v, wrapperSizes, imageSizes, device, this.getGlobalConfig());
+    return getImageUrlsFor(
+      v,
+      wrapperSizes,
+      imageSizes,
+      device,
+      this.getGlobalConfig()
+    );
   }
 
   getHoverImageUrlsFor(wrapperSizes: WrapperSizes, imageSizes: ImageSizes) {
     const v = this.getValue();
-    return getHoverImageUrlsFor(v, wrapperSizes, imageSizes, this.getGlobalConfig());
+    return getHoverImageUrlsFor(
+      v,
+      wrapperSizes,
+      imageSizes,
+      this.getGlobalConfig()
+    );
   }
 
   getResponsiveUrls(
@@ -318,7 +341,12 @@ class Image extends EditorComponent<Value, Props, State> {
     imageSizes: ImageSizes
   ): ImagesSources {
     const v = this.getValue();
-    return getResponsiveUrls(v, wrapperSizes, imageSizes, this.getGlobalConfig());
+    return getResponsiveUrls(
+      v,
+      wrapperSizes,
+      imageSizes,
+      this.getGlobalConfig()
+    );
   }
 
   getWrapperSizes(v: Value): ExtendedWrapperSizes {
@@ -356,7 +384,11 @@ class Image extends EditorComponent<Value, Props, State> {
   }
 
   getDCValueHook(dcKeys: ECKeyDCInfo[], v: Value): ECKeyDCInfo[] {
-    return processDCValueHook(dcKeys, v, this.getUtilsContext()) as ECKeyDCInfo[];
+    return processDCValueHook(
+      dcKeys,
+      v,
+      this.getUtilsContext()
+    ) as ECKeyDCInfo[];
   }
 
   handleToggleTooltip = () => {

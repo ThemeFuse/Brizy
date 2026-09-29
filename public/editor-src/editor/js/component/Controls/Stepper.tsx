@@ -2,8 +2,8 @@ import classnames from "classnames";
 import { noop } from "es-toolkit";
 import React from "react";
 import EditorIcon from "visual/component/EditorIcon";
-import { Props } from "visual/component/Options/Type";
-import { WithClassName } from "visual/types/attributes";
+import type { Props } from "visual/component/Options/Type";
+import type { WithClassName } from "visual/types/attributes";
 import AutoCorrectingInput from "./AutoCorrectingInput";
 
 interface StepperProps extends Props<number>, WithClassName {

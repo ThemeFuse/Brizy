@@ -1,9 +1,9 @@
-import React, { ReactElement } from "react";
-import { OnChange } from "visual/component/Options/Type";
-import { OptionLabel } from "visual/component/OptionLabel";
-import { OptionWrapper } from "visual/component/OptionWrapper";
+import React, { type ReactElement } from "react";
 import { Select2 } from "visual/component/Controls/Select2";
 import { Item } from "visual/component/Controls/Select2/Item";
+import { OptionLabel } from "visual/component/OptionLabel";
+import type { OnChange } from "visual/component/Options/Type";
+import { OptionWrapper } from "visual/component/OptionWrapper";
 
 export type Props<T extends string> = {
   value: T;

@@ -1,6 +1,6 @@
 import { t } from "visual/utils/i18n";
-import { GetItems } from "../EditorComponent/types";
-import { Props, Value } from "./types";
+import type { GetItems } from "../EditorComponent/types";
+import type { Props, Value } from "./types";
 
 export const title = () => t("Carousel");
 

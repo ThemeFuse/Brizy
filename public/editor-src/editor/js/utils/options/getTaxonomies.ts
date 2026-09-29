@@ -1,4 +1,4 @@
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import type { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 
 export type SelectChoices = {
   title: string;
@@ -23,7 +23,7 @@ export const getTaxonomies = (
       };
     }
 
-    if (terms && terms.length) {
+    if (terms?.length) {
       return {
         title: label,
         optgroup: terms.map((term) => ({
@@ -62,10 +62,7 @@ export const getTaxonomiesMultiOptionsSub = (
   }
 
   return postTypesTaxs
-    .filter(
-      (item) =>
-        item.taxonomies && item.taxonomies.length && item.name === taxonomies
-    )
+    .filter((item) => item.taxonomies?.length && item.name === taxonomies)
     .reduce((acc, curr) => {
       if (curr.taxonomies) {
         const taxonomies = curr.taxonomies.map((item) => ({

@@ -1,12 +1,12 @@
-import { Bool, Obj, Str, pipe } from "@brizy/readers";
+import { Bool, Obj, pipe, Str } from "@brizy/readers";
 import { mPipe } from "fp-utilities";
 import { produce } from "immer";
-import { CSSProperties } from "react";
-import { ElementModel, ModelType } from "visual/component/Elements/Types";
-import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
-import { GetConfig } from "visual/providers/ConfigProvider/types";
-import { RenderType } from "visual/providers/RenderProvider";
-import { Store } from "visual/redux/store";
+import type { CSSProperties } from "react";
+import { type ElementModel, ModelType } from "visual/component/Elements/Types";
+import type { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
+import type { GetConfig } from "visual/providers/ConfigProvider/types";
+import type { RenderType } from "visual/providers/RenderProvider";
+import type { Store } from "visual/redux/store";
 import { getOptionModelWithDesktopDefaults } from "visual/utils/options/utils/fromElementModel";
 import {
   getCSSByOptionType,
@@ -16,11 +16,16 @@ import {
 import { getOptionMeta } from "visual/utils/options/utils/toMeta/utils";
 import { filterNullish } from "visual/utils/reader/object";
 import { breakpoints, isBreakpointWithMediaQuery } from "../breakpoints";
-import { BreakpointsNames } from "../breakpoints/types";
-import { DESKTOP, MOBILE, ResponsiveMode, TABLET } from "../responsiveMode";
-import { ACTIVE, HOVER, NORMAL, State } from "../stateMode";
-import { MValue, isAllT, onNullish } from "../value";
+import type { BreakpointsNames } from "../breakpoints/types";
 import {
+  DESKTOP,
+  MOBILE,
+  type ResponsiveMode,
+  TABLET
+} from "../responsiveMode";
+import { ACTIVE, HOVER, NORMAL, type State } from "../stateMode";
+import { isAllT, type MValue, onNullish } from "../value";
+import type {
   AllCSSKeys,
   CSS,
   Devices,
@@ -262,7 +267,7 @@ export const concatCSSWithBreakpoints = (
   let styles = "";
 
   Object.entries(style).forEach(([key, value]) => {
-    if (value && value.length) {
+    if (value?.length) {
       const breakpoint = key as BreakpointsNames;
       styles += addBreakpointsToCSS(breakpoint, value.join(""));
     }
@@ -370,6 +375,7 @@ export const mergeStylesArray = (
       const breakpointKey = _breakpointKey as keyof GeneratedCSS<string>;
 
       const styles = draft[breakpointKey]
+        // biome-ignore lint/suspicious/useIterableCallbackReturn: TEMPORARY - empty rules fall through to an implicit undefined and are removed by the .filter(isAllT) below, so the behaviour is already correct; the tidy fix is to make this a flatMap, deferred to keep the diff small
         .map<MValue<string>>((styleObj) => {
           const css = Object.values(styleObj).flat().join("");
 

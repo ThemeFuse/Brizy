@@ -25,7 +25,8 @@ const observer = new IntersectionObserver(
   { threshold: 0.5 }
 );
 
-export default function ($node: JQuery) {
+export default function (node: HTMLElement) {
+  const $node = $(node);
   const isRtl = $node.closest("[dir='rtl']").length > 0;
   const makeArrow = (node: HTMLElement) => {
     const $svg = $(node).children(".brz-icon-svg");
@@ -72,8 +73,6 @@ export default function ($node: JQuery) {
   };
 
   $node.find(".brz-carousel__slider").each(function () {
-    // eslint-disable-next-line @typescript-eslint/no-this-alias
-    const _this = this;
     const $this = $(this);
     const data = $this.data();
     const slidesToShow = data.slidesToShow;
@@ -88,13 +87,14 @@ export default function ($node: JQuery) {
     const transitionSpeed = data.transitionSpeed;
     const swipe = data.swipe;
     const responsive = JSON.parse(decodeURIComponent(data.responsive));
-    const playPauseItem = makePausePlayItem(_this);
+    const playPauseItem = makePausePlayItem(this);
     const instanceId = carouselInstance++;
 
-    const isInsideSectionSlider = !!$this.closest(`.${SECTION_SLIDER_CLASS}`).length;
+    const isInsideSectionSlider = !!$this.closest(`.${SECTION_SLIDER_CLASS}`)
+      .length;
 
-    $this.on("init", function () {
-      initHoverAnimation(_this);
+    $this.on("init", () => {
+      initHoverAnimation(this);
       $this.find(".brz-image__lightbox").each(function () {
         this.addEventListener("click", (e) => {
           e.preventDefault();
@@ -129,10 +129,10 @@ export default function ($node: JQuery) {
       window.Brz.emit("elements.carousel.ready", $this);
     });
 
-    const customDotIcon = makeCustomDots(_this);
-    const getArrow = makeArrow(_this);
+    const customDotIcon = makeCustomDots(this);
+    const getArrow = makeArrow(this);
 
-    sliderPausedState.set(_this, false);
+    sliderPausedState.set(this, false);
     $this.attr("data-slider-paused", "false");
 
     const initCarouselSlick = () => {
@@ -168,7 +168,7 @@ export default function ($node: JQuery) {
       carouselAccessibility.init();
 
       if (autoPlay) {
-        observer.observe(_this);
+        observer.observe(this);
       }
 
       window.Brz.emit("elements.slick.ready", {
@@ -184,7 +184,7 @@ export default function ($node: JQuery) {
 
       elements.forEach((id) => {
         window.Brz.on(id, (element: Element) => {
-          if (element && element.contains(_this)) {
+          if (element?.contains(this)) {
             $slick.slick("setPosition");
           }
         });
@@ -199,9 +199,8 @@ export default function ($node: JQuery) {
         (payload: { wrapper?: Element }) => {
           const wrapper = payload?.wrapper;
           if (
-            !wrapper ||
-            !wrapper.querySelector(`.${SECTION_SLIDER_CLASS}`) ||
-            !wrapper.contains(_this) ||
+            !wrapper?.querySelector(`.${SECTION_SLIDER_CLASS}`) ||
+            !wrapper.contains(this) ||
             inited
           ) {
             return;

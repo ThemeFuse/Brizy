@@ -1,17 +1,20 @@
 import classnames from "classnames";
 import { debounce } from "es-toolkit";
 import jQuery from "jquery";
-import React, { ReactNode } from "react";
+import React, { type ReactNode } from "react";
 import BoxResizer from "visual/component/BoxResizer";
 import CustomCSS from "visual/component/CustomCSS";
-import { ElementPatch, ElementProps } from "visual/component/Elements/Types";
+import type {
+  ElementPatch,
+  ElementProps
+} from "visual/component/Elements/Types";
 import Toolbar from "visual/component/Toolbar";
 import {
   formatNumber,
   getBoxResizerParams
 } from "visual/editorComponents/Counter/utils";
 import EditorComponent, {
-  Props as PrevProps
+  type Props as PrevProps
 } from "visual/editorComponents/EditorComponent";
 import { withMigrations } from "visual/editorComponents/tools/withMigrations";
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
@@ -19,7 +22,7 @@ import { makeDataAttr } from "visual/utils/i18n/attribute";
 import { roundTo } from "visual/utils/math";
 import { attachRefs } from "visual/utils/react";
 import * as Str from "visual/utils/reader/string";
-import { MValue } from "visual/utils/value";
+import type { MValue } from "visual/utils/value";
 import { Wrapper } from "../tools/Wrapper";
 import { Chart } from "./Components/Chart";
 import { Text } from "./Components/Text";
@@ -30,7 +33,7 @@ import * as sidebarConfig from "./sidebar";
 import { style, styleChart, styleNumber } from "./styles";
 import * as toolbarConfig from "./toolbar";
 import type { Value } from "./types";
-import { State, StyleType } from "./types";
+import { type State, StyleType } from "./types";
 
 class Counter extends EditorComponent<Value, ElementProps, State> {
   static defaultValue = defaultValue;
@@ -65,7 +68,7 @@ class Counter extends EditorComponent<Value, ElementProps, State> {
         step: function () {
           step(roundTo(this.countNum, 2));
         },
-        complete: function () {
+        complete: () => {
           step(_end);
         }
       }

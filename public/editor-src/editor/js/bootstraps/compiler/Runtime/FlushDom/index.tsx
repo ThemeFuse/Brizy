@@ -1,15 +1,15 @@
-import React, { type JSX, memo, useEffect, useRef } from "react";
+import { memo, type ReactNode, useEffect, useRef } from "react";
 import { useDispatch, useSelector, useStore } from "react-redux";
 import { useConfig } from "visual/providers/ConfigProvider";
 import { useStyleProvider } from "visual/providers/StyleProvider";
 import {
-  ReduxAction,
   initializeBlocksHtml,
+  type ReduxAction,
   updateSymbolsCSS
 } from "visual/redux/actions2";
 import { symbolsSelector } from "visual/redux/selectors";
-import { TypedDispatch } from "visual/redux/store";
-import { ReduxState } from "visual/redux/types";
+import type { TypedDispatch } from "visual/redux/store";
+import type { ReduxState } from "visual/redux/types";
 import type { SymbolCSS } from "visual/types/Symbols";
 import { Queue } from "visual/utils/queue/Queue";
 import { QueueWorker } from "visual/utils/queue/QueueWorker";
@@ -19,7 +19,7 @@ import { addQueue, addQueueDebounced } from "./utils";
 // process 5 blocks in parallel
 const CONCURRENCY_LIMIT = 5;
 
-const FlushDomComponent = (props: Props): JSX.Element => {
+const FlushDomComponent = (props: Props): ReactNode => {
   const { blocks } = props;
   const store = useStore<ReduxState, ReduxAction>();
   const config = useConfig();
@@ -49,6 +49,7 @@ const FlushDomComponent = (props: Props): JSX.Element => {
     dispatch(updateSymbolsCSS(symbolsCSS));
   }, [cssOrdered.symbol, symbols, dispatch]);
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: We need only to run this effect once
   useEffect(() => {
     if (blocks.length === 0) {
       dispatch(initializeBlocksHtml());
@@ -56,7 +57,6 @@ const FlushDomComponent = (props: Props): JSX.Element => {
     }
 
     addQueue(queue.current, blocks, store, config);
-    // eslint-disable-next-line react-hooks/exhaustive-deps -- We need only to run this effect once
   }, []);
 
   useEffect(() => {
@@ -80,7 +80,7 @@ const FlushDomComponent = (props: Props): JSX.Element => {
     addQueueDebounced.set(id, queueTask, blocks, store, config);
   }, [blocks, store, config]);
 
-  return <></>;
+  return null;
 };
 
 export const FlushDom = memo(FlushDomComponent);

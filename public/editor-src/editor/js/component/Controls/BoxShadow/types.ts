@@ -1,5 +1,5 @@
-import { Type } from "visual/utils/options/BoxShadow/entities/Type";
-import * as Palette from "visual/utils/options/ColorPicker/entities/palette";
+import type { Type } from "visual/utils/options/BoxShadow/entities/Type";
+import type * as Palette from "visual/utils/options/ColorPicker/entities/palette";
 
 export type Value = {
   type: Type;

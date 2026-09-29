@@ -1,6 +1,9 @@
 import { Num, Str } from "@brizy/readers";
-import { ElementModel } from "visual/component/Elements/Types";
-import { WithRenderContext, isEditor } from "visual/providers/RenderProvider";
+import type { ElementModel } from "visual/component/Elements/Types";
+import {
+  isEditor,
+  type WithRenderContext
+} from "visual/providers/RenderProvider";
 import { getColor } from "visual/utils/color";
 import {
   cssStyleTextScript,
@@ -15,7 +18,7 @@ import {
 import { defaultValueValue } from "visual/utils/onChange";
 import { readToggle } from "visual/utils/options/ToggleButton/utils";
 import { read as readNum } from "visual/utils/reader/number";
-import { State } from "visual/utils/stateMode";
+import type { State } from "visual/utils/stateMode";
 import { capByPrefix } from "visual/utils/string";
 import {
   styleAlignHorizontal,
@@ -32,7 +35,7 @@ import {
 } from "visual/utils/style2/styleElementRichText";
 import { isNullish } from "visual/utils/value";
 import { styleState, styleTypography2FontSize } from "../style2";
-import { CSSValue } from "../style2/types";
+import type { CSSValue } from "../style2/types";
 import { cssStyleColor } from "./cssStyleColor";
 
 export function cssStyleElementRichTextMarginTop({
@@ -87,7 +90,7 @@ export function cssStyleElementRichTextGradient({
     "color: transparent !important"
   ];
 
-  return styles.join(";") + ";";
+  return `${styles.join(";")};`;
 }
 
 export function cssStyleElementRichTextFontSizeForStory(d: CSSValue): string {
@@ -147,9 +150,9 @@ export function cssStyleElementRichTextBgImage({
 
   return bgImage === "none"
     ? ""
-    : Object.entries(styles)
+    : `${Object.entries(styles)
         .map(([k, v]) => `${k}: ${v}`)
-        .join(";") + ";";
+        .join(";")};`;
 }
 
 export function cssStyleElementRichTextFontFamily({
@@ -267,7 +270,7 @@ export function cssStyleElementRichTextDCGradient({
     "color: transparent !important"
   ];
 
-  return styles.join(";") + ";";
+  return `${styles.join(";")};`;
 }
 
 export function cssStyleElementRichTextDCGradientBackground({

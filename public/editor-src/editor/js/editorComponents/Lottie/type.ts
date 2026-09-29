@@ -1,10 +1,10 @@
-import {
+import type {
   RendererType,
   TriggerType
 } from "@brizy/component/src/Flex/Lottie/types";
-import { AnimationDirection } from "lottie-web";
-import { ElementModel } from "visual/component/Elements/Types";
-import { Type } from "visual/component/Link/types/Type";
+import type { AnimationDirection } from "lottie-web";
+import type { ElementModel } from "visual/component/Elements/Types";
+import type { Type } from "visual/component/Link/types/Type";
 
 type Switch = "on" | "off";
 

@@ -1,7 +1,7 @@
 import Quill from "quill";
 import { getColor } from "visual/utils/color";
 
-let Inline = Quill.import("blots/inline");
+const Inline = Quill.import("blots/inline");
 
 export function getStyle(backgroundGradient, config) {
   const {
@@ -32,7 +32,9 @@ export const getBackgroundGradient = (getConfig) => {
   class BackgroundGradient extends Inline {
     static className = "text-gradient";
     static create(value) {
+      // biome-ignore lint/complexity/noThisInStatic: parchment's ShadowBlot.create stamps the blot's marker class via `this.className`; calling Inline.create rebinds `this` to Quill's Inline, which has none, so neither `text-gradient` nor the subclass's `text-gradient-bg` is applied and the span is unwrapped on reparse
       const node = super.create(value);
+      // biome-ignore lint/complexity/noThisInStatic: dispatch must follow the calling class — TextBackgroundGradient inherits this create and overrides setValue to strip `brz-image-gradient`; naming the parent freezes dispatch here and that override never runs
       this.setValue(value, node);
       return node;
     }
@@ -40,7 +42,8 @@ export const getBackgroundGradient = (getConfig) => {
     static formats(node) {
       const getAttr = (name) => {
         const value = node.getAttribute(name);
-        const isNumber = (v) => !isNaN(parseFloat(v)) && isFinite(v);
+        const isNumber = (v) =>
+          !Number.isNaN(parseFloat(v)) && Number.isFinite(Number(v));
 
         return isNumber(value) ? Number(value) : value;
       };
@@ -134,9 +137,11 @@ export const getBackgroundGradient = (getConfig) => {
       if (name !== this.statics.blotName) {
         super.format(name, value);
       } else {
-        value
-          ? this.constructor.setValue(value, this.domNode)
-          : this.constructor.removeValue(this.domNode);
+        if (value) {
+          this.constructor.setValue(value, this.domNode);
+        } else {
+          this.constructor.removeValue(this.domNode);
+        }
       }
     }
   }

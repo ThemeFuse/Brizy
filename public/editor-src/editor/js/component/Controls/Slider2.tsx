@@ -1,10 +1,10 @@
 import classNames from "classnames";
 import React, {
-  ChangeEventHandler,
-  MouseEventHandler,
+  type ChangeEventHandler,
+  type MouseEventHandler,
   useCallback
 } from "react";
-import { WithClassName } from "visual/types/attributes";
+import type { WithClassName } from "visual/types/attributes";
 import { read } from "visual/utils/math/number";
 import { inputValue } from "visual/utils/react";
 import { mCompose } from "visual/utils/value";

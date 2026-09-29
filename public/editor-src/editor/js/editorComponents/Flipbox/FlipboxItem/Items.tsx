@@ -1,12 +1,12 @@
 import React from "react";
 import { ContextMenuExtend } from "visual/component/ContextMenu";
-import { ElementModel } from "visual/component/Elements/Types";
+import type { ElementModel } from "visual/component/Elements/Types";
 import HotKeys from "visual/component/HotKeys";
 import Sortable from "visual/component/Sortable";
 import SortableEmpty from "visual/component/Sortable/SortableEmpty";
 import { hideToolbar } from "visual/component/Toolbar";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
-import { NewToolbarConfig } from "visual/editorComponents/EditorComponent/types";
+import type { NewToolbarConfig } from "visual/editorComponents/EditorComponent/types";
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import { isView } from "visual/providers/RenderProvider";
 import { t } from "visual/utils/i18n";

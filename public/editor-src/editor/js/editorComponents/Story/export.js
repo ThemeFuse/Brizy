@@ -2,7 +2,8 @@ import $ from "jquery";
 import { makeAttr, makeDataAttrString } from "visual/utils/i18n/attribute";
 import * as Num from "visual/utils/reader/number";
 
-export default function ($node) {
+export default function (root) {
+  const $node = $(root);
   const node = $node.get(0);
 
   const isRtl = $node.closest("[dir='rtl']").length > 0;
@@ -39,7 +40,6 @@ export default function ($node) {
   };
 
   $node.find(".brz-slick-slider__story").each(function () {
-    const _this = this;
     const $this = $(this);
     const {
       centerMode,
@@ -63,14 +63,14 @@ export default function ($node) {
       responsive: _responsive
     } = $this.data();
     const responsive = JSON.parse(decodeURIComponent(_responsive));
-    const getArrow = makeArrow(_this);
+    const getArrow = makeArrow(this);
 
-    $this.on("init", function () {
+    $this.on("init", () => {
       handleResize($this);
       window.Brz.emit("elements.story.init", $this.get(0));
     });
 
-    $this.on("breakpoint", function () {
+    $this.on("breakpoint", () => {
       handleResize($this);
     });
 
@@ -114,17 +114,17 @@ export default function ($node) {
         });
       });
 
-    $(".brz-slick-slider__arrow-replay").on("click", function () {
+    $(".brz-slick-slider__arrow-replay").on("click", () => {
       $slideshow.slick("slickGoTo", 0);
     });
 
-    $(".brz-slick-slider__inner-arrow-next").on("click", function (e) {
+    $(".brz-slick-slider__inner-arrow-next").on("click", (e) => {
       e.stopPropagation();
       e.preventDefault();
       $slideshow.slick("slickNext");
     });
 
-    $(".brz-slick-slider__inner-arrow-prev").on("click", function (e) {
+    $(".brz-slick-slider__inner-arrow-prev").on("click", (e) => {
       e.stopPropagation();
       e.preventDefault();
       $slideshow.slick("slickPrev");
@@ -140,7 +140,7 @@ export default function ($node) {
     });
 
     if (!sliderLoop) {
-      $this.on("afterChange", function (...stopOnLast) {
+      $this.on("afterChange", (...stopOnLast) => {
         if (stopOnLast[2] === $(".brz-slick-slider__dots > li").length - 1) {
           $slideshow.slick("slickPause");
         }

@@ -2,12 +2,12 @@ import React from "react";
 import { Group } from "visual/component/Controls/Group";
 import { FatIconsGrid } from "visual/component/FatIconsGrid";
 import { OptionWrapper } from "visual/component/OptionWrapper";
-import { FCC } from "visual/utils/react/types";
+import type { FCC } from "visual/utils/react/types";
 import { DisabledIcon } from "../common/DisabledIcon";
 import { Icon } from "../common/Icon";
 import { AnchorPoint } from "./components/AnchorPoint";
 import type { Props } from "./types";
-import { Effect } from "./types/Value";
+import type { Effect } from "./types/Value";
 import {
   effects,
   getEffectComponent,
@@ -27,7 +27,7 @@ export const Transform: FCC<Props> = ({
 }) => {
   const { active } = value;
 
-  const anchorValue = hasAnchorPoint(active) ? value["anchorPoint"] : undefined;
+  const anchorValue = hasAnchorPoint(active) ? value.anchorPoint : undefined;
   const effectValue = active ? value[active] : undefined;
   const EffectComponent = active ? getEffectComponent(active) : undefined;
 

@@ -1,4 +1,4 @@
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import type { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import Accordion from "./Accordion";
 import AccordionItem from "./Accordion/AccordionItem";
@@ -12,6 +12,7 @@ import Carousel from "./Carousel";
 import Chart from "./Chart";
 import Cloneable from "./Cloneable";
 import Column from "./Column";
+import CookieBanner from "./CookieBanner";
 import Countdown from "./Countdown";
 import Countdown2 from "./Countdown2";
 import Counter from "./Counter";
@@ -26,14 +27,14 @@ import FacebookPage from "./FacebookPage";
 import Flipbox from "./Flipbox";
 import FlipboxItem from "./Flipbox/FlipboxItem";
 import Form from "./Form";
+import FormField from "./Form/FormField";
+import FormFields from "./Form/FormFields";
 import Form2 from "./Form2";
 import Form2Field from "./Form2/Form2Field";
 import Form2FieldOption from "./Form2/Form2Field/types/FieldOption";
 import Form2Fields from "./Form2/Form2Fields";
 import Form2Step from "./Form2/Form2Step";
 import Form2Steps from "./Form2/Form2Steps";
-import FormField from "./Form/FormField";
-import FormFields from "./Form/FormFields";
 import GlobalBlock from "./GlobalBlock";
 import GoogleSearch from "./GoogleSearch";
 import Icon from "./Icon";
@@ -50,7 +51,7 @@ import ForgotPasswordField from "./Login/ForgotPasswordField";
 import LoginField from "./Login/LoginField";
 import RegisterField from "./Login/RegisterField";
 import Lottie from "./Lottie";
-import Map from "./Map";
+import MapComponent from "./Map";
 import Menu from "./Menu";
 import MenuItem from "./Menu/MenuItem";
 import SectionMegaMenu from "./Menu/SectionMegaMenu";
@@ -65,8 +66,8 @@ import WPPostContent from "./PostContent";
 import PostExcerpt from "./PostExcerpt";
 import PostInfo from "./PostInfo";
 import PostNavigation from "./PostNavigation";
-import PostTitle from "./PostTitle";
 import Posts from "./Posts";
+import PostTitle from "./PostTitle";
 import ProgressBar from "./ProgressBar";
 import ProtectedPage from "./ProtectedPage";
 import ResetPassword from "./ResetPassword";
@@ -288,7 +289,7 @@ function getShortcodes(_config: ConfigCommon) {
     },
     Map: {
       id: ElementTypes.Map,
-      component: Map
+      component: MapComponent
     },
     Button: {
       id: ElementTypes.Button,
@@ -582,6 +583,12 @@ function getShortcodes(_config: ConfigCommon) {
     GoogleSearch: {
       id: ElementTypes.GoogleSearch,
       component: GoogleSearch
+    },
+
+    // Arrives only via a CMS-created overlay global block - no Add Elements entry, no shortcode.
+    CookieBanner: {
+      id: ElementTypes.CookieBanner,
+      component: CookieBanner
     }
   };
 }
@@ -589,9 +596,8 @@ function getShortcodes(_config: ConfigCommon) {
 export default getShortcodes;
 
 export { NotFound as NotFoundComponent } from "./NotFound";
-
 export {
-  shopifyLazyComponents,
   ecwidLazyComponents,
-  ministryBrandsLazyComponents
+  ministryBrandsLazyComponents,
+  shopifyLazyComponents
 };

@@ -1,9 +1,8 @@
-import React, { useMemo } from "react";
-import { useRef } from "react";
+import React, { useMemo, useRef } from "react";
 import { EditorComponentContext } from "visual/editorComponents/EditorComponent/EditorComponentContext";
 import { useStyleProvider } from "visual/providers/StyleProvider";
 import { ComponentTypes } from "./ComponentTypes";
-import { Props } from "./types";
+import type { Props } from "./types";
 
 export const EditorComponentProvider = (props: Props) => {
   const { children, pageId, groups, componentTypes } = props;

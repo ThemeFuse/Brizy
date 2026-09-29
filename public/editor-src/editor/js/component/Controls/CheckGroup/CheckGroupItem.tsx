@@ -2,7 +2,7 @@ import classnames from "classnames";
 import React from "react";
 import { CheckGroupItemEditor } from "./CheckGroupItemEditor";
 import { CheckGroupItemView } from "./CheckGroupItemView";
-import { CheckGroupItem as _CheckGroupItem } from "./types";
+import type { CheckGroupItem as _CheckGroupItem } from "./types";
 
 export const CheckGroupItem = ({
   className: _className,

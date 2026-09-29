@@ -1,10 +1,3 @@
-import { produce } from "immer";
-import { z } from "zod";
-import type { Fonts } from "visual/types/Fonts";
-import type { FontStyle, Palette, Style } from "visual/types/Style";
-import { type FontKeyTypes } from "visual/utils/fonts/getFontById";
-import { fontTransform, tripId } from "visual/utils/fonts/transform";
-import { uuid } from "visual/utils/uuid";
 import {
   fontFamilyTypeEnum,
   fontSize,
@@ -12,7 +5,14 @@ import {
   letterSpacing,
   lineHeight,
   paletteColorSchema
-} from "../../../adapters/schema-primitives";
+} from "@brizy/ai-tools";
+import { produce } from "immer";
+import { z } from "zod";
+import type { Fonts } from "visual/types/Fonts";
+import type { FontStyle, Palette, Style } from "visual/types/Style";
+import type { FontKeyTypes } from "visual/utils/fonts/getFontById";
+import { fontTransform, tripId } from "visual/utils/fonts/transform";
+import { uuid } from "visual/utils/uuid";
 import type {
   FontStyleSummary,
   FontSummary,
@@ -75,6 +75,26 @@ export const updateStyleSchema = z
   });
 
 export type UpdateStyleInput = z.infer<typeof updateStyleSchema>;
+
+/**
+ * Which requested font-style ids do not exist on the target style?
+ *
+ * mergeStyleUpdate and buildNewStyle both `continue` past an unmatched id, so
+ * callers reject the whole request up front rather than applying it partially.
+ */
+export function unknownFontStyleIds(
+  style: Style,
+  fontStyles: { id?: unknown }[] | undefined
+): string[] {
+  if (!fontStyles) return [];
+
+  const known = new Set(style.fontStyles.map((fs) => fs.id));
+
+  return fontStyles.map((fs) => String(fs.id)).filter((id) => !known.has(id));
+}
+
+export const knownFontStyleIds = (style: Style): string[] =>
+  style.fontStyles.map((fs) => fs.id);
 
 export function mergeStyleUpdate(
   currentStyle: Style,

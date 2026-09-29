@@ -1,7 +1,12 @@
 import classnames from "classnames";
-import React, { Component, ComponentType, MouseEvent, TouchEvent } from "react";
-import { HSLAChange } from "visual/component/Controls/ColorPicker2/types";
-import { GlobalMeta } from "visual/component/Options/Type";
+import React, {
+  Component,
+  type ComponentType,
+  type MouseEvent,
+  type TouchEvent
+} from "react";
+import type { HSLAChange } from "visual/component/Controls/ColorPicker2/types";
+import type { GlobalMeta } from "visual/component/Options/Type";
 import * as hue from "../helpers/hue";
 import { disableIframeEvents, enableIframeEvents, isInIframe } from "../utils";
 

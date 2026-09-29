@@ -1,16 +1,16 @@
-import {
+import type {
   Choices,
   OptGroup
 } from "visual/component/Options/types/common/Population/types/Choices";
-import {
+import type {
   PopulationMethod,
   PopulationOptgroupMethod
 } from "visual/component/Options/types/common/Population/types/PopulationMethod";
-import { Value } from "visual/component/Options/types/common/Population/types/Value";
+import type { Value } from "visual/component/Options/types/common/Population/types/Value";
 import { t } from "visual/utils/i18n";
 import { findDeep } from "visual/utils/object";
-import { Literal } from "visual/utils/types/Literal";
-import { MValue } from "visual/utils/value";
+import type { Literal } from "visual/utils/types/Literal";
+import type { MValue } from "visual/utils/value";
 
 export const isOptgroup = <T extends Literal>(
   choice: Choices<T> | OptGroup<T>

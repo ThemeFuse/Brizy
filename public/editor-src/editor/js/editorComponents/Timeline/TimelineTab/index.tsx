@@ -1,11 +1,11 @@
 import classnames from "classnames";
-import React, { ReactNode } from "react";
+import React, { type ReactNode } from "react";
 import { TextEditor } from "visual/component/Controls/TextEditor";
-import { ElementModel } from "visual/component/Elements/Types";
+import type { ElementModel } from "visual/component/Elements/Types";
 import { ThemeIcon } from "visual/component/ThemeIcon";
 import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
-import { ToolbarExtend } from "visual/editorComponents/EditorComponent/types";
+import type { ToolbarExtend } from "visual/editorComponents/EditorComponent/types";
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import defaultValue from "./defaultValue.json";
 import Items from "./items";

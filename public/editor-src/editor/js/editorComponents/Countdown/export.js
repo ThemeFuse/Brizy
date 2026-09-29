@@ -1,60 +1,71 @@
-import $ from "jquery";
+import { getFreeLibs } from "visual/libs";
 import { makeAttr } from "visual/utils/i18n/attribute";
-import * as languages from "./languages";
+import { languages } from "./languages";
 
-export default function ($node) {
-  $node.find(".brz-countdown").each(function () {
-    var $this = $(this);
+const setText = (nodes, text) => {
+  nodes.forEach((node) => {
+    node.textContent = text;
+  });
+};
 
+export default function (node) {
+  const { countdown } = getFreeLibs();
+
+  node.querySelectorAll(".brz-countdown").forEach((element) => {
     // timer
-    var $daysNumber = $this.find(
-      ".brz-countdown__days > .brz-countdown__number"
+    const daysNumber = element.querySelectorAll(
+      ":scope .brz-countdown__days > .brz-countdown__number"
     );
-    var $hoursNumber = $this.find(
-      ".brz-countdown__hours > .brz-countdown__number"
+    const hoursNumber = element.querySelectorAll(
+      ":scope .brz-countdown__hours > .brz-countdown__number"
     );
-    var $minutesNumber = $this.find(
-      ".brz-countdown__minutes > .brz-countdown__number"
+    const minutesNumber = element.querySelectorAll(
+      ":scope .brz-countdown__minutes > .brz-countdown__number"
     );
-    var $secondsNumber = $this.find(
-      ".brz-countdown__seconds > .brz-countdown__number"
-    );
-
-    var $daysLabel = $this.find(".brz-countdown__days > .brz-countdown__label");
-    var $hoursLabel = $this.find(
-      ".brz-countdown__hours > .brz-countdown__label"
-    );
-    var $minutesLabel = $this.find(
-      ".brz-countdown__minutes > .brz-countdown__label"
-    );
-    var $secondsLabel = $this.find(
-      ".brz-countdown__seconds > .brz-countdown__label"
+    const secondsNumber = element.querySelectorAll(
+      ":scope .brz-countdown__seconds > .brz-countdown__number"
     );
 
-    var endTime = $this.attr(makeAttr("end"));
-    var timezone = $this.attr(makeAttr("timezone"));
-    var language = $this.attr(makeAttr("language"));
+    const daysLabel = element.querySelectorAll(
+      ":scope .brz-countdown__days > .brz-countdown__label"
+    );
+    const hoursLabel = element.querySelectorAll(
+      ":scope .brz-countdown__hours > .brz-countdown__label"
+    );
+    const minutesLabel = element.querySelectorAll(
+      ":scope .brz-countdown__minutes > .brz-countdown__label"
+    );
+    const secondsLabel = element.querySelectorAll(
+      ":scope .brz-countdown__seconds > .brz-countdown__label"
+    );
 
-    var leftPadWith0 = function (number) {
-      return ("0" + number).slice(-2);
-    };
+    const endTime = element.getAttribute(makeAttr("end")) ?? undefined;
+    const timezone = element.getAttribute(makeAttr("timezone")) ?? undefined;
+    const language = element.getAttribute(makeAttr("language")) ?? undefined;
+    const currentLanguage = languages[language] || languages.en;
 
-    $this.countdown({
+    const leftPadWith0 = (number) => `0${number}`.slice(-2);
+
+    countdown(element, {
       now: Date.now(),
-      endDate: endTime,
+      endDate: Number(endTime),
       timeZoneOffset: timezone * 60 * 1000,
       tickInterval: 1000,
-      language: languages[language] || languages["en"],
-      onTick: function (remaining) {
-        $daysNumber.text(remaining.days.amount);
-        $hoursNumber.text(leftPadWith0(remaining.hours.amount));
-        $minutesNumber.text(leftPadWith0(remaining.minutes.amount));
-        $secondsNumber.text(leftPadWith0(remaining.seconds.amount));
+      onTick: ({ days, hours, minutes, seconds }) => {
+        const daysTitle = currentLanguage.whichLabels(days)[3];
+        const hoursTitle = currentLanguage.whichLabels(hours)[4];
+        const minutesTitle = currentLanguage.whichLabels(minutes)[5];
+        const secondsTitle = currentLanguage.whichLabels(seconds)[6];
 
-        $daysLabel.text(remaining.days.title);
-        $hoursLabel.text(remaining.hours.title);
-        $minutesLabel.text(remaining.minutes.title);
-        $secondsLabel.text(remaining.seconds.title);
+        setText(daysNumber, days);
+        setText(hoursNumber, leftPadWith0(hours));
+        setText(minutesNumber, leftPadWith0(minutes));
+        setText(secondsNumber, leftPadWith0(seconds));
+
+        setText(daysLabel, daysTitle);
+        setText(hoursLabel, hoursTitle);
+        setText(minutesLabel, minutesTitle);
+        setText(secondsLabel, secondsTitle);
       }
     });
   });

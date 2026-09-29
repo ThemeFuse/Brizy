@@ -1,5 +1,5 @@
-import { GetItemPropsOptions } from "downshift";
-import {
+import type { GetItemPropsOptions } from "downshift";
+import type {
   DetailedHTMLProps,
   HTMLProps,
   LegacyRef,

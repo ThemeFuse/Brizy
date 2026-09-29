@@ -6,8 +6,8 @@ export default function objectToQueryString(
   }
 
   return Object.entries<string | number | boolean>(obj)
-    .map(item => {
-      return item[0] + "=" + encodeURIComponent(item[1]);
+    .map((item) => {
+      return `${item[0]}=${encodeURIComponent(item[1])}`;
     })
     .join("&");
 }

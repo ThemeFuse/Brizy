@@ -1,5 +1,5 @@
 import $ from "jquery";
-import { makeDataAttrString } from "visual/utils/i18n/attribute";
+import { makeAttr, makeDataAttrString } from "visual/utils/i18n/attribute";
 import { getTranslatedResponseMessages } from "../Form2/utils";
 
 const recaptchaSelector =
@@ -13,8 +13,7 @@ const defaultMessages = {
 
 const resMessages = new Map();
 
-export default function ($node) {
-  const root = $node.get(0);
+export default function (root) {
   const versionAttr = makeDataAttrString({
     name: "form-version",
     value: "'1'"
@@ -56,7 +55,7 @@ export default function ($node) {
     };
 
     // render Recaptcha
-    global.brzOnloadRecaptchaCallback = function () {
+    global.brzOnloadRecaptchaCallback = () => {
       recaptcha.forEach((node) => {
         const { sitekey, size, callback } = node.dataset;
         const recaptchaId = global.grecaptcha.render(node, {
@@ -158,7 +157,7 @@ function initForm(form) {
   // (2) need added the pending form selector .brz-forms--pending
   // (2.1) this class is used in brzFormV1Captcha for find and generate formData
   if (recaptcha) {
-    $form.on("submit", "form", function (event) {
+    $form.on("submit", "form", (event) => {
       event.preventDefault();
 
       // validate form
@@ -175,7 +174,7 @@ function initForm(form) {
       global.grecaptcha.execute(recaptchaId);
     });
   } else {
-    $form.on("submit", "form", function (event) {
+    $form.on("submit", "form", (event) => {
       event.preventDefault();
 
       // validate form
@@ -369,6 +368,7 @@ function loadReCAPTCHA() {
   scriptElement.setAttribute("async", "async");
   scriptElement.setAttribute("defer", "defer");
   scriptElement.setAttribute("id", scriptId);
+  scriptElement.setAttribute(makeAttr("consent"), "necessary");
 
   document.body.append(scriptElement);
 

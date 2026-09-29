@@ -1,6 +1,6 @@
+import type { ElementModel } from "visual/component/Elements/Types";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
-import { ElementModel } from "visual/component/Elements/Types";
-import { NewToolbarConfig } from "visual/editorComponents/EditorComponent/types";
+import type { NewToolbarConfig } from "visual/editorComponents/EditorComponent/types";
 
 class TableBodyItems extends EditorArrayComponent {
   static get componentId() {

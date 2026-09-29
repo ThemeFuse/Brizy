@@ -1,5 +1,5 @@
 import jQuery from "jquery";
-import React, { ReactElement, RefObject, createRef } from "react";
+import React, { createRef, type ReactElement, type RefObject } from "react";
 
 type FunctionalException = (el: HTMLElement) => boolean;
 

@@ -115,9 +115,7 @@ export class TranslationAccessibility {
   };
 
   private handleSelectionBlur = (): void => {
-    this.selectNode.classList.remove(
-      "brz-translation--keyboard-focus"
-    );
+    this.selectNode.classList.remove("brz-translation--keyboard-focus");
   };
 
   private syncRenderedValue(): void {

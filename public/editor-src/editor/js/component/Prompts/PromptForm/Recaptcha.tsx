@@ -1,7 +1,7 @@
 import { produce } from "immer";
 import { getAccounts, pendingRequest } from "visual/utils/api";
 import BaseIntegration from "../common/GlobalApps/BaseIntegration";
-import { AppData } from "../common/GlobalApps/type";
+import type { AppData } from "../common/GlobalApps/type";
 import * as AppsComponent from "./Apps";
 
 class Recaptcha extends BaseIntegration {
@@ -42,9 +42,10 @@ class Recaptcha extends BaseIntegration {
   getConnectedApps(accounts: Array<{ group: string }>): Array<string> {
     return accounts.reduce(
       (acc, cur) => {
-        return this.appsData.find(({ id }) => id === cur.group)
-          ? [...acc, cur.group]
-          : acc;
+        if (this.appsData.find(({ id }) => id === cur.group)) {
+          acc.push(cur.group);
+        }
+        return acc;
       },
       [...this.state.connectedApps]
     );

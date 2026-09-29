@@ -1,4 +1,4 @@
-const path = require("path");
+const path = require("node:path");
 const rspack = require("@rspack/core");
 const { RsdoctorRspackPlugin } = require("@rsdoctor/rspack-plugin");
 const editorConfigFn = require("./rspack.config.editor");

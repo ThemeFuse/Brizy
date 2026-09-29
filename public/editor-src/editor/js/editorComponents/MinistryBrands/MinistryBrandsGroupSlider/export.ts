@@ -2,7 +2,8 @@ import $ from "jquery";
 import { makeAttr } from "visual/utils/i18n/attribute";
 import * as Num from "visual/utils/reader/number";
 
-export default function ($node: JQuery): void {
+export default function (node: HTMLElement): void {
+  const $node = $(node);
   $node.find(".brz-groupSlider-swiper-wrapper").each(function () {
     const $this = $(this);
 

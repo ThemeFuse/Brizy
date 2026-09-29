@@ -1,17 +1,17 @@
 import classNames from "classnames";
 import React, {
-  ReactElement,
+  type ReactElement,
   useCallback,
   useEffect,
   useRef,
   useState
 } from "react";
 import { NumberSlider } from "visual/component/Controls/NumberSlider";
-import * as Option from "visual/component/Options/Type";
 import { useThrottleEffect } from "visual/component/hooks";
-import { WithClassName, WithConfig } from "visual/types/attributes";
-import { Config } from "./types/Config";
-import { Value, eq } from "./types/Value";
+import type * as Option from "visual/component/Options/Type";
+import type { WithClassName, WithConfig } from "visual/types/attributes";
+import type { Config } from "./types/Config";
+import { eq, type Value } from "./types/Value";
 import { sliderClassName } from "./utils";
 
 export type Props = Option.Props<Value> & WithConfig<Config> & WithClassName;
@@ -49,7 +49,7 @@ export const Slider = ({
       setValue({ value: v.number, unit: v.unit });
       setEdit(m.editing);
     },
-    [setValue, setEdit]
+    []
   );
 
   useThrottleEffect(
@@ -62,7 +62,7 @@ export const Slider = ({
       }
     },
     Math.max(0, updateRate),
-    [_value, onEdit, editing, updateRate]
+    [_value, onEdit, editing, updateRate, value, onChange]
   );
 
   useEffect(() => {

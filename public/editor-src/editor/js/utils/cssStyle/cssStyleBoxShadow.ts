@@ -6,7 +6,7 @@ import {
   styleBoxShadowType,
   styleBoxShadowVertical
 } from "visual/utils/style2";
-import { CSSValue } from "visual/utils/style2/types";
+import type { CSSValue } from "visual/utils/style2/types";
 
 // Functia asta nu e nevoie de ea. Codul din ea trebuei sa fie in cssStyleBoxShadow
 // Ea a fost facuta doar ca sa rezolvam problema cu safari in elementul image care folosea glamour

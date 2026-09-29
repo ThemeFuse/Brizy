@@ -1,12 +1,14 @@
+import { noop } from "es-toolkit";
 import $ from "jquery";
-import { AccordionAccessibility } from "../accessibility";
 import { makeAttr } from "visual/utils/i18n/attribute";
+import { AccordionAccessibility } from "../accessibility";
 import { collapse, expand } from "./utils";
 
 const activeClassName = "brz-accordion__item--active";
 let accordionInstance = 0;
 
-export default function ($node) {
+export default function (node) {
+  const $node = $(node);
   $node.find(".brz-accordion").each(function () {
     const _this = this;
     const $accordionNavItems = $(_this).find(
@@ -50,8 +52,8 @@ export default function ($node) {
             keepOnePanelOpen:
               button.getAttribute(makeAttr("collapsible")) === "on",
             api: {
-              open: () => {},
-              close: () => {},
+              open: noop,
+              close: noop,
               toggle: () => button.click(),
               isOpen: () => item.classList.contains(activeClassName)
             }

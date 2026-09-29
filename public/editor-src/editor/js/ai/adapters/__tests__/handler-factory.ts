@@ -4,7 +4,6 @@ import type { IProjectRepository } from "../../application/interfaces/i-project-
 import type {
   AddElementResult,
   ElementDetails,
-  ToolDefinition,
   UpdateElementResult
 } from "../../entities/models";
 import { buildHandler } from "../handler-factory";
@@ -18,14 +17,6 @@ const schema = z.object({
   height: z.number().optional(),
   width: z.number().optional()
 });
-
-function makeDef(name: string): ToolDefinition {
-  return {
-    name,
-    description: `test ${name}`,
-    parameters: { type: "object", properties: {} }
-  };
-}
 
 function makeAddResult(overrides?: Partial<AddElementResult>): {
   success: true;
@@ -143,7 +134,7 @@ describe("buildHandler", () => {
       label: "add — core flow",
       config: {
         kind: "add",
-        definition: makeDef("addSpacer"),
+        alias: "addSpacer",
         elementType: "Spacer",
         schema
       },
@@ -163,7 +154,7 @@ describe("buildHandler", () => {
       label: "add — applies defaults",
       config: {
         kind: "add",
-        definition: makeDef("addWidget"),
+        alias: "addWidget",
         elementType: "Widget",
         schema,
         defaults: (props) => ({ height: 100, ...props })
@@ -180,7 +171,7 @@ describe("buildHandler", () => {
       label: "add — applies transformProps",
       config: {
         kind: "add",
-        definition: makeDef("addVideo"),
+        alias: "addVideo",
         elementType: "Video",
         schema: z.object({ video: z.string().optional() }),
         transformProps: (parsed) => ({ ...parsed, type: "youtube" })
@@ -199,7 +190,7 @@ describe("buildHandler", () => {
       label: "addNoProps — only containerId and elementType",
       config: {
         kind: "addNoProps",
-        definition: makeDef("addForm"),
+        alias: "addForm",
         elementType: "Form2"
       },
       args: { containerId: "c1", insertIndex: 2 },
@@ -216,7 +207,7 @@ describe("buildHandler", () => {
       label: "update — core flow",
       config: {
         kind: "update",
-        definition: makeDef("updateButton"),
+        alias: "updateButton",
         elementType: "Button",
         schema
       },
@@ -235,7 +226,7 @@ describe("buildHandler", () => {
       label: "update — applies defaults",
       config: {
         kind: "update",
-        definition: makeDef("updateAlert"),
+        alias: "updateAlert",
         elementType: "Alert",
         schema,
         defaults: (props) => ({ height: 100, ...props })
@@ -254,7 +245,7 @@ describe("buildHandler", () => {
       label: "update — applies transformProps",
       config: {
         kind: "update",
-        definition: makeDef("updateVideo"),
+        alias: "updateVideo",
         elementType: "Video",
         schema: z.object({ video: z.string().optional() }),
         transformProps: (parsed) => ({ ...parsed, type: "vimeo" })
@@ -273,7 +264,7 @@ describe("buildHandler", () => {
       label: "update — beforeUpdate modifies changes",
       config: {
         kind: "update",
-        definition: makeDef("updateTable"),
+        alias: "updateTable",
         elementType: "Table",
         schema,
         beforeUpdate: (_deps, _id, parsed) => ({
@@ -295,7 +286,7 @@ describe("buildHandler", () => {
       label: "update — validateType rejects wrong type",
       config: {
         kind: "update",
-        definition: makeDef("updateSectionItem"),
+        alias: "updateSectionItem",
         elementType: "SectionItem",
         schema,
         validateType: {
@@ -320,7 +311,7 @@ describe("buildHandler", () => {
       label: "update — updateMethod routes to updateColumn",
       config: {
         kind: "update",
-        definition: makeDef("updateColumn"),
+        alias: "updateColumn",
         elementType: "Column",
         schema,
         updateMethod: "updateColumn"
@@ -355,7 +346,7 @@ describe("buildHandler", () => {
     ({ containerId }) => {
       const config: AddToolConfig = {
         kind: "add",
-        definition: makeDef("addSpacer"),
+        alias: "addSpacer",
         elementType: "Spacer",
         schema
       };
@@ -376,7 +367,7 @@ describe("buildHandler", () => {
     ({ containerId }) => {
       const config: ToolConfig = {
         kind: "addNoProps",
-        definition: makeDef("addForm"),
+        alias: "addForm",
         elementType: "Form2"
       };
       const { deps, repo } = makeDeps();
@@ -392,7 +383,7 @@ describe("buildHandler", () => {
     const afterAdd = jest.fn();
     const config: AddToolConfig = {
       kind: "add",
-      definition: makeDef("addSwitcher"),
+      alias: "addSwitcher",
       elementType: "Switcher",
       schema,
       afterAdd
@@ -417,7 +408,7 @@ describe("buildHandler", () => {
         const handler = jest.fn().mockReturnValue({ success: true });
         return {
           kind: "add",
-          definition: makeDef("addText"),
+          alias: "addText",
           elementType: "RichText",
           schema,
           handler
@@ -431,7 +422,7 @@ describe("buildHandler", () => {
         const handler = jest.fn().mockReturnValue({ success: true });
         return {
           kind: "update",
-          definition: makeDef("updateText"),
+          alias: "updateText",
           elementType: "RichText",
           schema,
           handler

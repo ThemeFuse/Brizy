@@ -1,4 +1,4 @@
-import { Literal } from "visual/utils/types/Literal";
+import type { Literal } from "visual/utils/types/Literal";
 
 interface Item {
   id: Literal;

@@ -1,6 +1,6 @@
 import { noop } from "es-toolkit";
-import React, { Component, ReactElement } from "react";
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import React, { Component, type ReactElement } from "react";
+import type { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { t } from "visual/utils/i18n";
 import Tabs from "../common/GlobalApps/Tabs";
 import Integration from "./Integration";

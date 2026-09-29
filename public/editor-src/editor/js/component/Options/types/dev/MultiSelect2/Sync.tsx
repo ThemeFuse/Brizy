@@ -1,11 +1,11 @@
-import React, { ReactElement, useCallback, useState } from "react";
+import React, { type ReactElement, useCallback, useState } from "react";
 import {
   MultiSelect as Control,
   MultiSelectItem as ControlItem
 } from "visual/component/Controls/MultiSelect2";
-import { MultiSelectItemProps as ControlItemProps } from "visual/component/Controls/MultiSelect2/types";
-import { OnChange } from "visual/component/Options/Type";
-import { ChoicesSync, Props, Value, ValueItem } from "./types";
+import type { MultiSelectItemProps as ControlItemProps } from "visual/component/Controls/MultiSelect2/types";
+import type { OnChange } from "visual/component/Options/Type";
+import type { ChoicesSync, Props, Value, ValueItem } from "./types";
 import { searchChoices } from "./utils";
 
 function choiceToItem({

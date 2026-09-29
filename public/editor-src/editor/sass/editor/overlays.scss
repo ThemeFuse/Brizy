@@ -1,0 +1,28 @@
+@use "../functions/z-index";
+
+// Editor-only clearance so overlay widgets don't sit under the floating
+// bottom-panel pill (.brz-ed-fixed-bottom-panel: fixed, bottom 25px + 44px
+// content height; measured 69px total from viewport bottom to pill top).
+// Value = measured pill top edge distance from viewport bottom + ~10px gap.
+$bottom-panel-clearance: 80px;
+
+// #brz-overlays hosts overlay-type global-block widgets (e.g. Cookie Banner)
+// in the editor (portal target created by the widgets themselves). The
+// `transform` makes this container the containing block for
+// `position: fixed` descendants, i.e. the widgets' simulated viewport, which
+// ends above the bottom-panel pill — so widgets keep their published-page CSS
+// (bottom: 0 etc.) untouched. Published pages have no #brz-overlays; widgets
+// are fixed to the real viewport there. z-index matches the widget layer
+// ("cookie-banner", 1050): below the bottom panel (1065) and section popups
+// (1060).
+#brz-overlays {
+  position: fixed;
+  inset: 0 0 $bottom-panel-clearance 0;
+  z-index: z-index.z("cookie-banner");
+  transform: translateZ(0);
+  pointer-events: none;
+
+  > * {
+    pointer-events: auto;
+  }
+}

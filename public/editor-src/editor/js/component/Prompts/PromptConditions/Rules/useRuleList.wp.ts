@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { setIn } from "timm";
 import { useConfig } from "visual/providers/ConfigProvider";
-import { Rule } from "visual/types/Rule";
+import type { Rule } from "visual/types/Rule";
 import {
   getGroupList,
   getRulePostsGroupList,
@@ -16,7 +16,7 @@ import {
   isCollectionItemRule,
   isCollectionTypeRule
 } from "visual/utils/blocks/guards";
-import { RuleList } from "./types";
+import type { RuleList } from "./types";
 import {
   disableAlreadyUsedRules,
   getRulesListIndexByRule,
@@ -37,7 +37,7 @@ export default function useRuleList(
 
       const groupList = (await getGroupList(type, config)) || [];
       // @ts-expect-error need transformer to ts getGroupList
-      const rulesList = groupList.map(({ items }) => items).flat();
+      const rulesList = groupList.flatMap(({ items }) => items);
 
       setListLoading(false);
       setRulesList(rulesList);
@@ -125,7 +125,7 @@ export default function useRuleList(
       return;
     }
 
-    rulesList.length && updateRuleList();
+    if (rulesList.length) updateRuleList();
   }, [rules, rulesList, config]);
 
   return [listLoading, rulesList];

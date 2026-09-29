@@ -1,10 +1,10 @@
-import { Bool, Obj } from "@brizy/readers";
+import { Arr, Bool, Obj } from "@brizy/readers";
 import deepMerge from "deepmerge";
 import { flatten, intersection, lowerFirst } from "es-toolkit";
 import { isEmpty } from "es-toolkit/compat";
 import { mPipe, or } from "fp-utilities";
 import { getIn } from "timm";
-import { ElementModel } from "visual/component/Elements/Types";
+import type { ElementModel } from "visual/component/Elements/Types";
 import type { FromElementModelGetter } from "visual/component/Options/Type";
 import type { OptionName, OptionValue } from "visual/component/Options/types";
 import type {
@@ -14,23 +14,22 @@ import type {
   ToolbarConfig
 } from "visual/editorComponents/EditorComponent/types";
 import {
-  type OptionDefinition,
-  type ToolbarItemType,
   hasId,
-  is as isToolbarItemType
+  is as isToolbarItemType,
+  type OptionDefinition,
+  type ToolbarItemType
 } from "visual/editorComponents/ToolbarItemType";
 import type { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
-import type { Store } from "visual/redux/store";
 import { getFlatShortcodes } from "visual/shortcodeComponents/utils";
 import type { DeviceMode, UserRole } from "visual/types";
 import type { CSSSymbol } from "visual/types/Symbols";
 import { isActiveKey, isHoverKey } from "visual/utils/cssStyle";
-import * as Device from "visual/utils/devices";
+import type * as Device from "visual/utils/devices";
 import {
   ALL,
   DESKTOP as DesktopDevice,
-  RESPONSIVE,
   getDevice,
+  RESPONSIVE,
   supportsMode
 } from "visual/utils/devices";
 import { isPro } from "visual/utils/env";
@@ -45,7 +44,12 @@ import {
   isPopulationWithOption
 } from "visual/utils/options/match/utils";
 import { reduce } from "visual/utils/options/reduce";
-import { isOption } from "visual/utils/options/utils";
+import { isOption, optionMap } from "visual/utils/options/utils";
+import {
+  type ExpandedOption,
+  expand,
+  expands
+} from "visual/utils/options/utils/expand";
 import { fromElementModel } from "visual/utils/options/utils/fromElementModel";
 import { toElementModel } from "visual/utils/options/utils/toElementModel";
 import { hasSomeKey } from "visual/utils/reader/object";
@@ -53,11 +57,11 @@ import * as Responsive from "visual/utils/responsiveMode";
 import {
   DESKTOP,
   MOBILE,
-  ResponsiveMode,
+  type ResponsiveMode,
   TABLET
 } from "visual/utils/responsiveMode";
 import { camelCase } from "visual/utils/string";
-import { NoEmptyString } from "visual/utils/string/NoEmptyString";
+import type { NoEmptyString } from "visual/utils/string/NoEmptyString";
 import * as Literal from "visual/utils/types/Literal";
 import { isNullish, isT } from "visual/utils/value";
 
@@ -258,6 +262,9 @@ export const filterCSSOptions = (
           return filterCSSOptions([o.option]);
         }
       }
+
+      // non-CSS options are dropped by the .filter(isT) below
+      return undefined;
     })
   ).filter(isT) as ToolbarItemType[];
 };
@@ -323,44 +330,51 @@ function generateKeyValue<T extends OptionName>({
   // all || desktop || undefined => ["desktop"]
   const modes = devices === "responsive" ? [MOBILE, TABLET] : [DESKTOP];
 
-  return Object.keys(value).reduce(
-    (acc, key) => ({
-      ...acc,
-      ...modes.reduce((acc, device) => {
-        return {
-          ...acc,
+  return Object.keys(value).reduce<Record<string, Partial<OptionValue<T>>>>(
+    (acc, key) => {
+      for (const device of modes) {
+        Object.assign(acc, {
           // at the moment we need to generate only keys per device, without state
           [defaultValueKey2({ key, device, state: "normal" })]:
             value[key as keyof typeof value]
-        };
-      }, {})
-    }),
+        });
+      }
+      return acc;
+    },
     {}
   );
 }
 
-function parseOption(
-  acc: ParsedToolbarData,
-  option: ToolbarItemType,
-  _: Store
-): ParsedToolbarData {
-  const elementModel = toElementModel(option.type, (key) =>
-    getKey(option.id, key)
-  );
-  const getModel = fromElementModel(option.type);
-
-  const getter: FromElementModelGetter = (k) => {
+/**
+ * Reads a key of what the option declares as its `default`.
+ */
+const declaredGetter =
+  (option: { default?: unknown }): FromElementModelGetter =>
+  (k) => {
     const v = Obj.read(option.default);
 
     if (v) {
-      const getValue = mPipe(Obj.readKey(k), or(Literal.read, Bool.read));
+      // Arr.read for the options whose model value is a list (addable)
+      const getValue = mPipe(
+        Obj.readKey(k),
+        or(Literal.read, Bool.read, Arr.read)
+      );
       return getValue(v);
     }
 
     return Literal.read(option.default);
   };
 
-  const optionModel = elementModel(getModel(getter));
+function parseOption(
+  acc: ParsedToolbarData,
+  option: ToolbarItemType
+): ParsedToolbarData {
+  const elementModel = toElementModel(option.type, (key) =>
+    getKey(option.id, key)
+  );
+  const getModel = fromElementModel(option.type);
+
+  const optionModel = elementModel(getModel(declaredGetter(option)));
   if (isNullish(optionModel)) {
     return acc;
   }
@@ -375,25 +389,90 @@ function parseOption(
     devices: option.devices
   });
 
-  return {
+  const parsed = {
     dv: { ...acc.dv, ...defaultValues },
     DCKeys: [
       ...acc.DCKeys,
       ...(option.hasOwnProperty("population") ? [option.id] : [])
     ]
   };
+
+  return expandedOptions(option).reduce(
+    (acc, option) => parseOption(acc, option),
+    parsed
+  );
 }
 
-export function getToolbarData(
-  store: Store,
-  toolbar?: ToolbarItemType[]
+function expandedOptions(option: ToolbarItemType): ToolbarItemType[] {
+  const groups = (option as Partial<ExpandedOption>).optionGroups;
+
+  return groups?.flatMap((group) => group.options ?? []) ?? [];
+}
+
+function bindOptionValues(
+  items: ToolbarItemType[] | undefined,
+  v: ElementModel,
+  device: ResponsiveMode
+): ToolbarItemType[] | undefined {
+  if (!items) {
+    return items;
+  }
+
+  return optionMap((option: OptionDefinition) => {
+    // Only an option that expands reads the value bound below.
+    //
+    // ponytail: `optionMap` recurses into what this returns, so the sub-options
+    // `expand` just added are not bound in turn. Nothing reads them today —
+    // their defaults come from `parseOption` — but an addable nested in an
+    // addable's `shape` would need them.
+    if (!expands(option.type)) {
+      return option;
+    }
+
+    const declared = declaredGetter(option);
+
+    // Per key: what the user saved wins, the rest falls back to what the option
+    // declares — which is all an untouched page has.
+    const get: FromElementModelGetter = (k, withoutId = false) =>
+      defaultValueValue({
+        v,
+        device,
+        state: "normal",
+        key: withoutId ? k : createOptionId(option.id, k)
+      }) ?? declared(k);
+
+    // A copy, not a mutation: `_initialToolbarsConfig` aliases these objects.
+    return expand({
+      ...option,
+      value: fromElementModel(option.type)(get) as OptionValue<OptionName>
+    });
+  }, items) as ToolbarItemType[];
+}
+
+/**
+ * The defaults an element takes from its toolbar.
+ *
+ * The toolbar is bound to its value first: an addable's groups — one per stored
+ * item, with ids minted at runtime — live nowhere but the model, so they have to
+ * be expanded before their defaults can be read. Every other option answers from
+ * its own declaration, bound or not.
+ */
+export function getToolbarDefaults(
+  toolbar: ToolbarItemType[] | undefined,
+  v: ElementModel,
+  device: ResponsiveMode
 ): ParsedToolbarData {
+  return getToolbarData(bindOptionValues(toolbar, v, device));
+}
+
+export function getToolbarData(toolbar?: ToolbarItemType[]): ParsedToolbarData {
   const data: ParsedToolbarData = {
     dv: {},
     DCKeys: []
   };
 
-  if (!toolbar) {
+  // `?.length`: `deepMerge.all([])` is `{}`, which has no `DCKeys`
+  if (!toolbar?.length) {
     return data;
   }
 
@@ -401,7 +480,7 @@ export function getToolbarData(
     toolbar.map((option) =>
       reduce(
         (acc, item) => {
-          return parseOption(acc, item, store);
+          return parseOption(acc, item);
         },
         data,
         option
@@ -449,7 +528,6 @@ export function getOptionValueByDevice({
 }: {
   v: ElementModel;
   id: string;
-  store: Store;
   currentDevice: DeviceMode;
   toolbarConfig: ToolbarConfig[];
 }): Record<string, unknown> | undefined {

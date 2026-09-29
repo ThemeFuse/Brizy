@@ -1,51 +1,51 @@
 import {
-  defaultMode,
+  append,
+  concat,
   DESKTOP,
+  defaultMode,
   desktopModes,
+  empty,
+  eq,
   isDesktop,
   isMobile,
   isMode,
   MOBILE,
   mobileModes,
   modes,
+  read,
   TABLET,
   toMode,
-  empty,
-  read,
-  types,
-  append,
-  concat,
-  eq
+  types
 } from "visual/utils/responsiveMode/index";
-import { testReader } from "visual/utils/types/Type.test";
-import { testMonoid } from "visual/utils/types/Monoid.test";
 import { testEq } from "visual/utils/types/Eq.test";
+import { testMonoid } from "visual/utils/types/Monoid.test";
+import { testReader } from "visual/utils/types/Type.test";
 
-describe("Testing 'read' function", function() {
+describe("Testing 'read' function", function () {
   testReader(read, types, [undefined, null, [], {}, 1, "test"]);
 });
 
-describe("Testing 'empty' cosnt", function() {
+describe("Testing 'empty' cosnt", function () {
   test("Should be 'desktop'", () => {
     expect(empty).toBe(DESKTOP);
   });
 });
 
-describe("Test Responsive mode monoidal behavior", function() {
+describe("Test Responsive mode monoidal behavior", function () {
   testMonoid({ empty, append, concat }, types);
 });
 
-describe("Testing 'eq' function", function() {
+describe("Testing 'eq' function", function () {
   testEq(eq, TABLET, TABLET, MOBILE);
 });
 
-describe("Testing 'defaultMode' function", function() {
+describe("Testing 'defaultMode' function", function () {
   test("Should return 'desktop'", () => {
     expect(defaultMode()).toBe(DESKTOP);
   });
 });
 
-describe("Testing 'modes' function", function() {
+describe("Testing 'modes' function", function () {
   test("Should return ['desktop', 'tablet', 'mobile']", () => {
     expect(modes()).toEqual([DESKTOP, TABLET, MOBILE]);
   });
@@ -55,39 +55,39 @@ describe("Testing 'modes' function", function() {
   });
 });
 
-describe("Testing 'isMode' function", function() {
+describe("Testing 'isMode' function", function () {
   test("Return true for valid mode values", () => {
-    modes().map(mode => expect(isMode(mode)).toBe(true));
+    modes().map((mode) => expect(isMode(mode)).toBe(true));
   });
 
   test("Return false for invalid mode values", () => {
-    ["test", 1, {}, undefined, null].map(mode =>
+    ["test", 1, {}, undefined, null].map((mode) =>
       expect(isMode(mode)).toBe(false)
     );
   });
 });
 
-describe("Testing 'toMode' function", function() {
+describe("Testing 'toMode' function", function () {
   test("Always return the value if is a valid mode", () => {
-    modes().map(device => expect(toMode(device)).toBe(device));
+    modes().map((device) => expect(toMode(device)).toBe(device));
   });
 
   test("Always return default mode if the value is not a valid mode", () => {
-    ["test", 1, {}, undefined, null].map(v =>
+    ["test", 1, {}, undefined, null].map((v) =>
       expect(toMode(v)).toBe(defaultMode())
     );
   });
 });
 
-describe("Testing 'mobileModes' function", function() {
+describe("Testing 'mobileModes' function", function () {
   test("Should return ['tablet', 'mobile']", () => {
     expect(mobileModes()).toEqual([TABLET, MOBILE]);
   });
 });
 
-describe("Testing 'isMobile' function", function() {
+describe("Testing 'isMobile' function", function () {
   test("Return true if the mode is part of mobileModes()", () => {
-    mobileModes().map(mode => expect(isMobile(mode)).toBe(true));
+    mobileModes().map((mode) => expect(isMobile(mode)).toBe(true));
   });
 
   test("Return false if the mode is not a part of mobileModes()", () => {
@@ -95,15 +95,15 @@ describe("Testing 'isMobile' function", function() {
   });
 });
 
-describe("Testing 'desktopModes' function", function() {
+describe("Testing 'desktopModes' function", function () {
   test("Should return ['desktop']", () => {
     expect(desktopModes()).toEqual([DESKTOP]);
   });
 });
 
-describe("Testing 'isDesktop' function", function() {
+describe("Testing 'isDesktop' function", function () {
   test("Return true if the mode is part of desktopModes()", () => {
-    desktopModes().map(mode => expect(isDesktop(mode)).toBe(true));
+    desktopModes().map((mode) => expect(isDesktop(mode)).toBe(true));
   });
 
   test("Return false if the mode is not a part of desktopModes()", () => {

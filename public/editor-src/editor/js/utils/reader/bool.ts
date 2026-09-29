@@ -1,4 +1,4 @@
-import { Reader } from "./types";
+import type { Reader } from "./types";
 
 export const read: Reader<boolean> = (v) => {
   if (typeof v === "boolean") {

@@ -6,9 +6,8 @@ export function useCloseOnIframeInteraction(onClose: () => void): void {
       return;
     }
 
-    const iframe = window.parent.document.querySelector<HTMLIFrameElement>(
-      "#brz-ed-iframe"
-    );
+    const iframe =
+      window.parent.document.querySelector<HTMLIFrameElement>("#brz-ed-iframe");
     const iframeDoc = iframe?.contentDocument;
 
     if (!iframeDoc) {
@@ -25,7 +24,11 @@ export function useCloseOnIframeInteraction(onClose: () => void): void {
     });
 
     return () => {
-      iframeDoc.removeEventListener("pointerdown", handleIframeInteraction, true);
+      iframeDoc.removeEventListener(
+        "pointerdown",
+        handleIframeInteraction,
+        true
+      );
       iframeDoc.removeEventListener("wheel", handleIframeInteraction, true);
     };
   }, [onClose]);

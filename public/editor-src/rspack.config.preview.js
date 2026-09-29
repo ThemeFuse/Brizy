@@ -1,4 +1,4 @@
-const path = require("path");
+const path = require("node:path");
 const rspack = require("@rspack/core");
 const ESLintImportedFilesPlugin = require("./build-utils/eslint-imported-files-plugin");
 const {
@@ -125,11 +125,17 @@ exports.libs = (options) => {
   const { free } = LibsConfig;
   const entry = free.reduce((acc, curr) => {
     const { name, path } = curr;
-    return { ...acc, [name]: path };
+    acc[name] = path;
+    return acc;
   }, {});
 
   return {
     name: "libs",
+    // Rspack disables webpack's AMD emulation by default. Without it, UMD
+    // wrappers fall through to their CommonJS branch - select2's exports an
+    // uninvoked factory instead of attaching itself, leaving $.fn.select2
+    // undefined. Enabling AMD restores the pre-rspack behaviour.
+    amd: {},
     mode: editorConfig.mode,
     entry: entry,
     output: {

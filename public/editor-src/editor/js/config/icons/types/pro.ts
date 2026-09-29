@@ -1,4 +1,4 @@
-import { Type, TypeId } from "visual/config/icons/Type";
+import { type Type, TypeId } from "visual/config/icons/Type";
 import { t } from "visual/utils/i18n";
 
 export const types = (isPro: boolean): Type[] => [

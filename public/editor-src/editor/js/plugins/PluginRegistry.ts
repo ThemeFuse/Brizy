@@ -30,7 +30,7 @@ export class PluginRegistry {
   registerAll(plugins: EditorPlugin[]): void {
     for (const plugin of plugins) {
       if (this.cleanups.has(plugin.id)) {
-        // eslint-disable-next-line no-console
+        // biome-ignore lint/suspicious/noConsole: migrated from eslint
         console.warn(
           `Plugin "${plugin.id}" is already registered, skipping duplicate`
         );

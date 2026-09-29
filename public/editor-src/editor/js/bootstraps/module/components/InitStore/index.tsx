@@ -1,16 +1,16 @@
 import React, { Component } from "react";
 import { Provider } from "react-redux";
 import { readPageData } from "visual/bootstraps/common/adapter";
-import { GetConfig } from "visual/providers/ConfigProvider/types";
+import type { GetConfig } from "visual/providers/ConfigProvider/types";
 import { editorRendered, hydrate } from "visual/redux/actions";
-import { Store, createStore } from "visual/redux/store";
+import { createStore, type Store } from "visual/redux/store";
 import { makeVariablesColor } from "visual/utils/cssVariables";
 import { addFilter } from "visual/utils/filters";
 import { parseGlobalBlocksToRecord } from "visual/utils/reader/globalBlocks";
 import { getAuthorized } from "visual/utils/user/getAuthorized";
 import { filterGlobalBlocksByRules } from "./filterGlobalBlocks";
 import { getMiddleware } from "./getMiddleware";
-import { Props } from "./types";
+import type { Props } from "./types";
 import { waitForPendingAndDispatch } from "./utils";
 
 const BRZ_STORE_DEBUG_KEY = "brz_debug_store";
@@ -44,7 +44,7 @@ class InitStore extends Component<Props> {
       throw new Error("Missing page in config");
     }
 
-    if (!project || !project.data) {
+    if (!project?.data) {
       throw new Error("Missing project data in config");
     }
 
@@ -137,11 +137,7 @@ class InitStore extends Component<Props> {
 
         document.head.appendChild(configVariables);
 
-        if (
-          window.parent &&
-          window.parent.document &&
-          window.parent !== window
-        ) {
+        if (window.parent?.document && window.parent !== window) {
           const parentExistingStyle =
             window.parent.document.getElementById("themeVariables");
           if (parentExistingStyle) {
@@ -166,7 +162,9 @@ class InitStore extends Component<Props> {
   }
 
   componentWillUnmount() {
-    this.unsubscribeFunctions.forEach((unsubscribe) => unsubscribe());
+    this.unsubscribeFunctions.forEach((unsubscribe) => {
+      unsubscribe();
+    });
     this.unsubscribeFunctions = [];
 
     if (typeof window !== "undefined") {

@@ -1,4 +1,4 @@
-import { ElementModel } from "visual/component/Elements/Types";
+import type { ElementModel } from "visual/component/Elements/Types";
 import { hasInfiniteAnimation } from "visual/component/HoverAnimation/utils";
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
 import { isStory } from "visual/providers/EditorModeProvider";
@@ -7,7 +7,7 @@ import { defaultValueValue } from "visual/utils/onChange";
 import { getDynamicContentOption } from "visual/utils/options";
 import { hoverEffects } from "visual/utils/options/Animation/utils";
 import { read as readString } from "visual/utils/string/specs";
-import { GetItems } from "../EditorComponent/types";
+import type { GetItems } from "../EditorComponent/types";
 
 export const title = () => t("Column");
 

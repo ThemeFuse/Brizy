@@ -1,6 +1,6 @@
-import React, { JSX } from "react";
-import { Circle as Props } from "./types";
-import { FCC } from "visual/utils/react/types";
+import React, { type JSX } from "react";
+import type { FCC } from "visual/utils/react/types";
+import type { Circle as Props } from "./types";
 
 export const Circle: FCC<Props> = ({
   hint,

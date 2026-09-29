@@ -1,6 +1,6 @@
-import { EcwidConfig } from "visual/libs/Ecwid/types/EcwidConfig";
-import { Value } from "./types/Value";
+import type { EcwidConfig } from "visual/libs/Ecwid/types/EcwidConfig";
 import { onOffToBool } from "visual/utils/boolean";
+import type { Value } from "./types/Value";
 
 export function valueToEciwdConfigProducts(v: Value): EcwidConfig {
   return {

@@ -1,6 +1,6 @@
 import type { CheerioAPI } from "cheerio";
 import type { Config } from "visual/global/Config";
-import { AdobeFont, GoogleFont, UploadedFont } from "visual/types/Fonts";
+import type { AdobeFont, GoogleFont, UploadedFont } from "visual/types/Fonts";
 import { makeScripts } from "./makeScripts";
 import { makeStyles } from "./makeStyles";
 

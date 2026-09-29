@@ -1,28 +1,29 @@
-import {
+import type {
   Instance as PopperInstance,
   Options as PopperOptions,
   Placement as PopperPlacement
 } from "@popperjs/core";
-import { debounce } from "es-toolkit";
+import { debounce, noop } from "es-toolkit";
 import $ from "jquery";
 import { getProLibs } from "visual/libs";
-import { DeviceMode } from "visual/types";
-import { BrizyProLibs } from "visual/types/global";
+import type { DeviceMode } from "visual/types";
+import type { BrizyProLibs } from "visual/types/global";
 import { checkValue2 } from "visual/utils/checkValue";
 import { getCurrentDevice } from "visual/utils/export";
 import { makeAttr } from "visual/utils/i18n/attribute";
 import * as Str from "visual/utils/reader/string";
 import { parseFromString } from "visual/utils/string";
 import { uuid } from "visual/utils/uuid";
-import {
-  MMenuAccessibilityKeyboard,
-  MenuAccessibilityKeyboard,
-  MenuItemApi,
-  MenuItemType
-} from "../accessibility";
 import type { MenuItem } from "../accessibility";
+import {
+  MenuAccessibilityKeyboard,
+  type MenuItemApi,
+  MenuItemType,
+  type MMenuAccessibilityApi,
+  MMenuAccessibilityKeyboard
+} from "../accessibility";
 import { AnimatedHamburgerIcon } from "./HamburgerIcon";
-import { MMenuAnimationTypes, Settings } from "./types";
+import { MMenuAnimationTypes, type Settings } from "./types";
 import {
   getParentMegaMenuUid,
   getPlacement,
@@ -70,7 +71,7 @@ const getPopperModifiers = (
   const mode = settings.mods?.[device];
   const fallbackPlacements =
     mode === "horizontal"
-      ? [initialPlacement, "top", "auto"]
+      ? [initialPlacement, "top"]
       : [initialPlacement, "right-start", "auto"];
 
   return [
@@ -100,7 +101,7 @@ const getMegaMenuWidth = (
 ): string => {
   const { widths, mods } = settings;
   const width = widths?.[device] ?? "100";
-  const widthInt = parseInt(width);
+  const widthInt = parseInt(width, 10);
   const mode = mods?.[device];
   const menu = item.closest(".brz-menu");
 
@@ -113,7 +114,7 @@ const getMegaMenuWidth = (
   const nodeRect = item.getBoundingClientRect();
   const leftSpaces = nodeRect.left;
   const rightSpaces = clientWidth - nodeRect.right;
-  let calcWidth;
+  let calcWidth: number;
 
   if (width.includes("vw")) {
     calcWidth = widthInt >= 100 ? clientWidth : clientWidth * (widthInt / 100);
@@ -277,8 +278,8 @@ export const initAccesibility = (root: HTMLElement) => {
       }
 
       let api: MenuItemApi = {
-        open: () => {},
-        close: () => {},
+        open: noop,
+        close: noop,
         isOpen: () => false
       };
 
@@ -519,11 +520,10 @@ const resize =
     }
   };
 
-export default function ($node: JQuery): void {
+export default function (root: HTMLElement): void {
   const { MMenu, Dropdown } = getProLibs();
-  const root = $node.get(0);
 
-  if (!MMenu || !root) {
+  if (!MMenu) {
     return;
   }
 
@@ -553,8 +553,8 @@ export default function ($node: JQuery): void {
       });
     });
 
-  let currentMenuOpened: string | undefined = undefined;
-  let needToOpen: string | undefined = undefined;
+  let currentMenuOpened: string | undefined;
+  let needToOpen: string | undefined;
   let hasClosingIcon = false;
 
   // Added listener when close Header
@@ -739,7 +739,7 @@ export default function ($node: JQuery): void {
           animatedHamburgerIcon?.close();
           currentMenuOpened = undefined;
         },
-        "close:finish": function (): void {
+        "close:finish": (): void => {
           if (needToOpen) {
             mMenuAccessibility?.onMenuClosed(false);
             const mMenuNode = root.querySelector(`${needToOpen}.brz-mm-menu`);
@@ -767,7 +767,7 @@ export default function ($node: JQuery): void {
         });
     }
 
-    let menu;
+    let menu: { API?: MMenuAccessibilityApi };
 
     switch ($rootContainer.length) {
       case 1: {
@@ -827,7 +827,7 @@ export default function ($node: JQuery): void {
         );
 
         // @ts-expect-error mmApi is added by MMenu
-        if (mMenuNode && mMenuNode.mmApi) {
+        if (mMenuNode?.mmApi) {
           needToOpen = mmenuId;
           // @ts-expect-error mmApi is added by MMenu
           mMenuNode.mmApi.close(mmenuId);

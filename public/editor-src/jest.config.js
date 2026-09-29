@@ -18,9 +18,9 @@ const swcConfig = {
 module.exports = {
   testEnvironment: "jsdom",
   moduleDirectories: ["node_modules", "jest-utils", "__dirname"],
-  setupFilesAfterEnv: ["@testing-library/jest-dom"],
   moduleNameMapper: {
-    "^visual/(.*)$": "<rootDir>/editor/js/$1"
+    "^visual/(.*)$": "<rootDir>/editor/js/$1",
+    "^@brizy/ai-tools$": "<rootDir>/../packages/ai-tools/src/index.ts"
   },
   transform: {
     "\\.(tsx|ts|js|jsx)?$": ["@swc/jest", swcConfig]

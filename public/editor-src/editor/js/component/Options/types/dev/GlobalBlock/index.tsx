@@ -1,10 +1,10 @@
-import React, { ReactElement, useCallback, useRef, useState } from "react";
+import React, { type ReactElement, useCallback, useRef, useState } from "react";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import { getOptions } from "visual/component/ConditionsComponent";
 import { Switch as Control } from "visual/component/Controls/Switch";
 import { ToastNotification } from "visual/component/Notifications";
 import Prompts from "visual/component/Prompts";
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import type { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { useConfig } from "visual/providers/ConfigProvider";
 import {
   makeGlobalBlockToPopup,
@@ -19,11 +19,15 @@ import {
   pageBlocksDataSelector,
   pageSelector
 } from "visual/redux/selectors";
-import { ReduxState } from "visual/redux/types";
-import { Block } from "visual/types/Block";
-import { GlobalBlock } from "visual/types/GlobalBlock";
-import { Screenshot } from "visual/types/Screenshot";
-import { isGlobalPopup } from "visual/types/utils";
+import type { ReduxState } from "visual/redux/types";
+import type { Block } from "visual/types/Block";
+import type {
+  GlobalBlock,
+  GlobalBlockNormal,
+  GlobalBlockPopup
+} from "visual/types/GlobalBlock";
+import type { Screenshot } from "visual/types/Screenshot";
+import { isGlobalBlock, isGlobalPopup } from "visual/types/utils";
 import {
   createGlobalBlock,
   createGlobalPopup,
@@ -35,7 +39,7 @@ import { getBlockData, setIds } from "visual/utils/models";
 import { uuid } from "visual/utils/uuid";
 import { PortalLoading } from "./PortalLoading";
 import { getOpenedPopupId, openPopupById } from "./popupHandlers";
-import { Component, OpenPromptCondition, Selector } from "./types";
+import type { Component, OpenPromptCondition, Selector } from "./types";
 import { createScreenshot, getBlockType } from "./utils";
 
 const selector =
@@ -66,7 +70,7 @@ export const GlobalBlockOption: Component = ({
 
   const { _id, parentId, blockType = "normal" } = config || {};
 
-  const isGlobalBlock = useCallback((): boolean => {
+  const isSavedAsGlobalBlock = useCallback((): boolean => {
     if (!_id) {
       return false;
     }
@@ -78,7 +82,8 @@ export const GlobalBlockOption: Component = ({
   const openPromptCondition = useCallback(
     ({ type, blockId, rules }: OpenPromptCondition): void => {
       if (!blockId) {
-        return ToastNotification.error(t("Something went wrong"));
+        ToastNotification.error(t("Something went wrong"));
+        return;
       }
 
       const data = { value: blockId, type, rules, dispatch };
@@ -117,13 +122,24 @@ export const GlobalBlockOption: Component = ({
       }
 
       if (node) {
+        const type = getBlockType(blockType);
+
+        // Overlay global blocks are CMS-created and need a subtype this UI
+        // cannot supply, so refuse before spending a screenshot on them.
+        if (type === "overlay") {
+          setLoading(false);
+          switchKey.current = uuid(4);
+          ToastNotification.error(t("Could not Create Global Block"));
+          return;
+        }
+
         const screenshot: Screenshot | undefined = await createScreenshot(
           node,
           globalConfig
         );
-        const meta: GlobalBlock["meta"] = {
+        const meta: GlobalBlockNormal["meta"] | GlobalBlockPopup["meta"] = {
           extraFontStyles,
-          type: getBlockType(blockType)
+          type
         };
 
         if (screenshot) {
@@ -193,7 +209,7 @@ export const GlobalBlockOption: Component = ({
             switchKey.current = uuid(4);
             ToastNotification.error(t("Could not Create Global Popup"));
           }
-        } else {
+        } else if (isGlobalBlock(globalBlock)) {
           try {
             const block = await createGlobalBlock(globalBlock, globalConfig);
 
@@ -237,10 +253,11 @@ export const GlobalBlockOption: Component = ({
           case "popup": {
             const popupId = getOpenedPopupId();
 
-            parentId &&
+            if (parentId) {
               dispatch(
                 makeGlobalBlockToPopup({ ...data, type: "normal", parentId })
               );
+            }
             if (popupId) {
               // Using setTimeout to reopen the popup because when switching between global and normal blocks,
               // the section is unmounted
@@ -269,7 +286,7 @@ export const GlobalBlockOption: Component = ({
       <Control
         key={switchKey.current}
         className={className}
-        value={isGlobalBlock()}
+        value={isSavedAsGlobalBlock()}
         onChange={handleChange}
       />
       {loading && <PortalLoading node={portalRef.current} />}

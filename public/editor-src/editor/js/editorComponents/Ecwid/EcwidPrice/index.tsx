@@ -1,5 +1,5 @@
 import { Content } from "@brizy/widget/src/Shopify/Price/Content";
-import React, { JSX } from "react";
+import React, { type JSX } from "react";
 import CustomCSS from "visual/component/CustomCSS";
 import { HoverAnimation } from "visual/component/HoverAnimation/HoverAnimation";
 import { getHoverAnimationOptions } from "visual/component/HoverAnimation/utils";
@@ -18,7 +18,7 @@ import * as sidebarExtendDiscountPrice from "./sidebarDiscountPrice";
 import * as sidebarExtendPrice from "./sidebarPrice";
 import * as toolbarExtendDiscountPrice from "./toolbarDiscountPrice";
 import * as toolbarExtendPrice from "./toolbarPrice";
-import { Value } from "./types";
+import type { Value } from "./types";
 
 export class EcwidPrice extends EditorComponent<Value> {
   static defaultValue = defaultValue;

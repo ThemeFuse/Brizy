@@ -3,16 +3,16 @@ import type { Cheerio, CheerioAPI } from "cheerio";
 import type { AnyNode } from "domhandler";
 import { once } from "es-toolkit";
 import { mPipe, optional, parseStrict, pass } from "fp-utilities";
-import { JSX } from "react";
-import { ElementModelType2 } from "visual/component/Elements/Types";
+import type { JSX } from "react";
+import type { ElementModelType2 } from "visual/component/Elements/Types";
 import {
-  DCGroupCloud,
-  DCGroups,
+  type DCGroupCloud,
+  type DCGroups,
   DCTypes,
-  Display
+  type Display
 } from "visual/global/Config/types/DynamicContent";
-import { RenderType, isEditor } from "visual/providers/RenderProvider";
-import { ReduxState } from "visual/redux/types";
+import { isEditor, type RenderType } from "visual/providers/RenderProvider";
+import type { ReduxState } from "visual/redux/types";
 import { explodePlaceholder } from "visual/utils/dynamicContent";
 import type { DCPlaceholderStartObj } from "visual/utils/dynamicContent/types";
 import { pipe } from "visual/utils/fp";
@@ -28,8 +28,8 @@ import {
   parseFromString
 } from "visual/utils/string";
 import {
-  MValue,
   isNullish,
+  type MValue,
   onNullish,
   throwOnNullish
 } from "visual/utils/value";
@@ -50,9 +50,9 @@ type CheerioMapCallback = (arg: Cheerio<AnyNode>) => void;
 
 function quillUtils(renderContext: RenderType) {
   const $doc = isEditor(renderContext)
-    ? // eslint-disable-next-line @typescript-eslint/no-require-imports
+    ? // biome-ignore lint/style/noCommonJs: environment branch — jQuery only exists in the editor; a static import would bundle it into the view build too
       (require("jquery") as JQueryType)
-    : // eslint-disable-next-line @typescript-eslint/no-require-imports
+    : // biome-ignore lint/style/noCommonJs: environment branch — cheerio only exists in the view; a static import would bundle it into the editor build too
       (require("cheerio") as CheerioModule);
 
   function mapElements(
@@ -108,7 +108,7 @@ const rgbaTohex = (rgba = "rgba(0, 0, 0, 1)") => {
     : parsedRgba;
 
   function toHexadecimal(number: string) {
-    return ("0" + parseInt(number, 10).toString(16)).slice(-2);
+    return `0${parseInt(number, 10).toString(16)}`.slice(-2);
   }
 };
 
@@ -157,9 +157,9 @@ const getColorValues = (str: string, regex: RegExp) => {
     return {
       hex: result.hex ?? "#000000",
       opacity: result.opacity ?? 1,
-      vertical: parseInt(vertical ?? 5),
-      horizontal: parseInt(horizontal ?? 5),
-      blur: parseInt(blur ?? 5),
+      vertical: parseInt(vertical ?? 5, 10),
+      horizontal: parseInt(horizontal ?? 5, 10),
+      blur: parseInt(blur ?? 5, 10),
       palette: cssVar
     };
   }
@@ -190,16 +190,16 @@ export const parseShadow = (str = "") => {
   const [, rgba, shadow] = str.split(", rgb")[0].match(/^(rgb.*\)) (.*)/) || [];
 
   const hexColor = rgba && rgbaTohex(rgba);
-  if (rgba && shadow && !!hexColor) {
+  if (rgba && shadow && hexColor) {
     const { hex, opacity } = hexColor;
     const [horizontal, vertical, blur] = shadow.split(" ");
 
     return {
       textShadowColorHex: hex,
-      textShadowColorOpacity: !isNaN(parseFloat(opacity)) ? opacity : 1,
-      textShadowVertical: parseInt(vertical),
-      textShadowHorizontal: parseInt(horizontal),
-      textShadowBlur: parseInt(blur)
+      textShadowColorOpacity: !Number.isNaN(parseFloat(opacity)) ? opacity : 1,
+      textShadowVertical: parseInt(vertical, 10),
+      textShadowHorizontal: parseInt(horizontal, 10),
+      textShadowBlur: parseInt(blur, 10)
     };
   }
 
@@ -331,12 +331,11 @@ const getPopulationColorFormat = ({
     const populationColorPalette = value.colorPalette;
     const prefix = capByPrefix("paragraphColor", key);
 
-    return {
-      ...acc,
+    return Object.assign(acc, {
       [`${prefix}Hex`]: populationColorHex,
       [`${prefix}Opacity`]: populationColorOpacity,
       [`${prefix}Palette`]: populationColorPalette
-    };
+    });
   }, {});
 };
 

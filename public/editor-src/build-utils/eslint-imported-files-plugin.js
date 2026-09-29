@@ -81,7 +81,6 @@ class ESLintImportedFilesPlugin {
         const eslint = new ESLint(eslintOptions);
         const filePaths = Array.from(filesToLint);
 
-        // eslint-disable-next-line no-console
         console.log(
           `[ESLint] Checking ${filePaths.length} imported files for browser compatibility...`
         );
@@ -100,7 +99,6 @@ class ESLintImportedFilesPlugin {
           const formatter = await eslint.loadFormatter("stylish");
           const resultText = formatter.format(results);
 
-          // eslint-disable-next-line no-console
           console.log(resultText);
 
           // Add errors/warnings to compilation
@@ -136,7 +134,6 @@ class ESLintImportedFilesPlugin {
             }
           }
         } else {
-          // eslint-disable-next-line no-console
           console.log(
             `[ESLint] ✓ All ${filePaths.length} imported files passed compatibility checks`
           );

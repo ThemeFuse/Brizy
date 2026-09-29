@@ -1,7 +1,7 @@
 import React from "react";
 import { useStore } from "react-redux";
-import { ReduxAction } from "visual/redux/actions2";
-import { ReduxState } from "visual/redux/types";
+import type { ReduxAction } from "visual/redux/actions2";
+import type { ReduxState } from "visual/redux/types";
 import { hasTransform } from "./utils";
 
 interface Props<T extends Record<string, unknown> = Record<string, unknown>> {

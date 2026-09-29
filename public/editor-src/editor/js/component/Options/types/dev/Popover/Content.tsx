@@ -1,6 +1,6 @@
-import React, { ReactElement } from "react";
+import React, { type ReactElement } from "react";
 import Options from "visual/component/Options";
-import { ContentProps } from "./types";
+import type { ContentProps } from "./types";
 
 export const Content = ({ options }: ContentProps): ReactElement => (
   <div className="brz-d-xs-flex brz-flex-xs-wrap">

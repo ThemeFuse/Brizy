@@ -1,8 +1,8 @@
-import React, { ForwardedRef, forwardRef } from "react";
+import React, { type ForwardedRef, forwardRef } from "react";
 import { RadioItem as RadioControlsItem } from "visual/component/Controls/Radio";
 import { TextEditor } from "visual/component/Controls/TextEditor";
 import EditorIcon from "visual/component/EditorIcon";
-import { RadioItemProps } from "./type";
+import type { RadioItemProps } from "./type";
 
 function Item(props: RadioItemProps, ref: ForwardedRef<HTMLDivElement>) {
   const {

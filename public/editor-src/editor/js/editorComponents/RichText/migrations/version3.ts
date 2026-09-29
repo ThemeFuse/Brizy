@@ -1,7 +1,7 @@
 import { Obj } from "@brizy/readers";
 import type { CheerioAPI } from "cheerio";
-import { RenderType, isEditor } from "visual/providers/RenderProvider";
-import { MigrationRichText } from "./types";
+import { isEditor, type RenderType } from "visual/providers/RenderProvider";
+import type { MigrationRichText } from "./types";
 
 type JQueryType = typeof $;
 type CheerioType = CheerioAPI;
@@ -9,7 +9,7 @@ type CheerioType = CheerioAPI;
 const changeRichText = (html: string, renderContext: RenderType): string => {
   if (isEditor(renderContext)) {
     // Editor mode: use jQuery
-    // eslint-disable-next-line @typescript-eslint/no-require-imports
+    // biome-ignore lint/style/noCommonJs: environment branch — jQuery only exists in the editor; a static import would bundle it into the view build too
     const $ = require("jquery") as JQueryType;
     const $wrapper = $("<div>").html(html);
 
@@ -25,7 +25,7 @@ const changeRichText = (html: string, renderContext: RenderType): string => {
     return $wrapper.html() || "";
   } else {
     // View mode: use Cheerio
-    // eslint-disable-next-line @typescript-eslint/no-require-imports
+    // biome-ignore lint/style/noCommonJs: environment branch — cheerio only exists in the view; a static import would bundle it into the editor build too
     const cheerioMod = require("cheerio") as { load: CheerioType["load"] };
     // 3rd arg `false` parses fragment without wrapping in <html><body>.
     const $ = cheerioMod.load(html, undefined, false);

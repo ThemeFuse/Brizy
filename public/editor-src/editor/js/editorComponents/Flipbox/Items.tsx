@@ -1,5 +1,5 @@
-import { ReactNode } from "react";
-import { ElementModel } from "visual/component/Elements/Types";
+import type { ReactNode } from "react";
+import type { ElementModel } from "visual/component/Elements/Types";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import { DESKTOP, MOBILE, TABLET } from "visual/utils/responsiveMode";

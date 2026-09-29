@@ -1,12 +1,12 @@
 import { Num, Obj } from "@brizy/readers";
 import classnames from "classnames";
 import React, {
+  createRef,
   type FC,
   type MutableRefObject,
   type ReactElement,
   type ReactNode,
-  type RefObject,
-  createRef
+  type RefObject
 } from "react";
 import SlickSlider, { type ResponsiveObject } from "react-slick";
 import { ContextMenuExtend } from "visual/component/ContextMenu";
@@ -523,7 +523,7 @@ class Items extends EditorArrayComponent {
           const isCustomDots = sliderDots === "custom";
           if (isCustomDots && sliderDotsCustomName) {
             return (
-              <button>
+              <button type="button">
                 <ThemeIcon
                   name={sliderDotsCustomName}
                   type={sliderDotsCustomType}
@@ -533,7 +533,7 @@ class Items extends EditorArrayComponent {
               </button>
             );
           }
-          return <button />;
+          return <button type="button" />;
         }}
         appendDots={(dots) => renderSliderDots(dots, !!stopSlider)}
         nextArrow={

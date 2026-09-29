@@ -3,11 +3,11 @@ import { getTypes } from "visual/config/icons";
 import { TypeId } from "visual/config/icons/Type";
 import { isWp } from "visual/global/Config";
 import { isPro } from "visual/utils/env";
-import { FCC } from "visual/utils/react/types";
+import type { FCC } from "visual/utils/react/types";
 import { ProContent } from "./ProContent";
 import { RenderCustom } from "./RenderCustom";
 import { RenderSimple } from "./RenderSimple";
-import { Props } from "./types";
+import type { Props } from "./types";
 
 export const RenderIcons: FCC<Props> = ({
   name,

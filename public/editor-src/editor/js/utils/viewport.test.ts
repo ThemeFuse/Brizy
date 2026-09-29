@@ -73,7 +73,12 @@ describe("getVisibleSectionIds", () => {
 
   test("returns only the majority-visible ids in DOM order", () => {
     mount([
-      makeSection({ id: "header", className: "brz-section", top: 0, height: 80 }),
+      makeSection({
+        id: "header",
+        className: "brz-section",
+        top: 0,
+        height: 80
+      }),
       makeSection({ id: "s1", top: 90, height: 400 }),
       // partly above viewport: 500 tall from -400 -> 100px visible (20%)
       makeSection({ id: "s2", top: -400, height: 500 }),

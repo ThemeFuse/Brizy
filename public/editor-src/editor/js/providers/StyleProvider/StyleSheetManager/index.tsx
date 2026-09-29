@@ -1,6 +1,6 @@
 import React, { useContext, useMemo } from "react";
 import { StyleSheetManagerContext } from "./context";
-import { Props } from "./types";
+import type { Props } from "./types";
 
 // These components are wrapper
 // React Component used from third-party

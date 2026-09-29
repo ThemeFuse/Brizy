@@ -1,7 +1,7 @@
 import classnames from "classnames";
 import { noop } from "es-toolkit";
 import React from "react";
-import { Subject, from } from "rxjs";
+import { from, Subject } from "rxjs";
 import {
   debounceTime,
   distinctUntilChanged,
@@ -31,9 +31,9 @@ import { getCurrentPageId } from "visual/utils/env";
 import { tabletSyncOnChange } from "visual/utils/onChange";
 import { attachRefs } from "visual/utils/react";
 import * as json from "visual/utils/reader/json";
-import Items from "./Items";
 import contextMenuConfig from "./contextMenu";
 import defaultValue from "./defaultValue.json";
+import Items from "./Items";
 import { migrations } from "./migrations";
 import * as sidebarExtendFilter from "./sidebarExtendFilter";
 import * as sidebarExtendPagination from "./sidebarExtendPagination";
@@ -249,7 +249,7 @@ export class Posts extends EditorComponent {
 
       if (metaSource !== this.getValue().source) {
         // INFO: reset field when source changes because each source has its own fields
-        value["field"] = "";
+        value.field = "";
       }
 
       super.handleValueChange(value, meta);
@@ -388,6 +388,7 @@ export class Posts extends EditorComponent {
     const tagsAttribute = getLoopTagsAttributes(v);
     const itemsProps = this.makeSubcomponentProps({
       type,
+      id: this.getId(),
       className,
       handleAllTagChange: this.handleAllTagChange,
       bindWithKey: "items",

@@ -1,8 +1,8 @@
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import type { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { assetUrl } from "visual/utils/asset";
 import { t } from "visual/utils/i18n";
 import { ALL_CAT, UNCATEGORISED_CAT } from "../types";
-import { Filter, Thumbnail } from "./types";
+import type { Filter, Thumbnail } from "./types";
 
 type GlobalType = "popup" | "conditionPopup" | "block";
 
@@ -58,9 +58,12 @@ export const getTags = (data: Thumbnail[]): Array<Tag> => {
   const tags = new Set([ALL_CAT, UNCATEGORISED_CAT]);
 
   data
-    .map((item) => item.tags?.split(","))
-    .flat()
-    .forEach((tag) => tag && tags.add(tag));
+    .flatMap((item) => item.tags?.split(","))
+    .forEach((tag) => {
+      if (tag) {
+        tags.add(tag);
+      }
+    });
 
   return [...tags].map((t) => ({
     item: t,

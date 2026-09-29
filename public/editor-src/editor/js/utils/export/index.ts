@@ -1,4 +1,4 @@
-import { DeviceMode } from "visual/types";
+import type { DeviceMode } from "visual/types";
 import { DESKTOP, MOBILE, TABLET } from "../responsiveMode";
 
 const isBrowser =

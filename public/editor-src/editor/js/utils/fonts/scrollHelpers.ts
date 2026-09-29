@@ -1,8 +1,8 @@
-import { RefObject } from "react";
-import { ScrollbarRef } from "visual/component/Scrollbar";
+import type { RefObject } from "react";
+import type { ScrollbarRef } from "visual/component/Scrollbar";
 
 export const scrollToActiveFont = (scrollbarRef: RefObject<ScrollbarRef>) => {
-  if (!scrollbarRef || !scrollbarRef.current) return;
+  if (!scrollbarRef?.current) return;
 
   const activeFontElement: HTMLElement | null =
     scrollbarRef.current?.view?.querySelector(".brz-ed-font__name.active") ??

@@ -1,5 +1,10 @@
 import classnames from "classnames";
-import React, { ReactElement, RefObject, useCallback, useMemo } from "react";
+import React, {
+  type ReactElement,
+  type RefObject,
+  useCallback,
+  useMemo
+} from "react";
 import { useDispatch, useSelector } from "react-redux";
 import ClickOutside from "visual/component/ClickOutside";
 import { SidebarWrapper } from "visual/component/LeftSidebar/components/Drawer";
@@ -14,8 +19,10 @@ import { isStory, useEditorMode } from "visual/providers/EditorModeProvider";
 import { updateUI } from "visual/redux/actions2";
 import {
   deviceModeSelector,
-  drawerContentTypeSelector
+  drawerContentTypeSelector,
+  overlayGlobalBlocksSelector
 } from "visual/redux/selectors";
+import type { ReduxState } from "visual/redux/types";
 import { attachRefs } from "visual/utils/react";
 import DrawerOptions from "./components/Options";
 import { getOptions } from "./options";
@@ -36,6 +43,10 @@ export const LeftSidebar = (): ReactElement => {
   const { mode: editorMode } = useEditorMode();
   const deviceMode = useSelector(deviceModeSelector);
   const drawerContentType = useSelector(drawerContentTypeSelector);
+  // A boolean, so the options below rebuild only when overlays appear/vanish.
+  const hasOverlays = useSelector(
+    (state: ReduxState) => overlayGlobalBlocksSelector(state, config).length > 0
+  );
 
   const handleClickOutside = useCallback(
     () =>
@@ -49,8 +60,8 @@ export const LeftSidebar = (): ReactElement => {
   );
 
   const { top, bottom } = useMemo(() => {
-    return getOptions(config, deviceMode, editorMode);
-  }, [config, deviceMode, editorMode]);
+    return getOptions(config, deviceMode, editorMode, hasOverlays);
+  }, [config, deviceMode, editorMode, hasOverlays]);
 
   const pluginDrawerOptions = usePluginDrawerOptions();
   const pluginTabOptions = usePluginTabOptions();

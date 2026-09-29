@@ -1,4 +1,4 @@
-import { FlipboxType, Trigger } from "./index";
+import type { FlipboxType, Trigger } from "./index";
 
 export interface ClickEvent extends MouseEvent {
   fromFlipbox?: boolean;

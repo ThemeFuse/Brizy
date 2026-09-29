@@ -77,8 +77,8 @@ describe("Test Button", () => {
     );
     const input = button.container.firstElementChild;
 
-    input && fireEvent.click(input);
+    if (input) fireEvent.click(input);
 
-    expect(onClick).toBeCalledTimes(1);
+    expect(onClick).toHaveBeenCalledTimes(1);
   });
 });

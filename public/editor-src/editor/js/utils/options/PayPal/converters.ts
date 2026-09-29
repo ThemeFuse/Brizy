@@ -1,6 +1,6 @@
 import { pass } from "fp-utilities";
-import * as Option from "visual/component/Options/Type";
-import { Model } from "visual/component/Options/types/dev/PayPal/Type";
+import type * as Option from "visual/component/Options/Type";
+import type { Model } from "visual/component/Options/types/dev/PayPal/Type";
 import * as NoEmptyStr from "visual/utils/string/NoEmptyString";
 import * as Str from "visual/utils/string/specs";
 

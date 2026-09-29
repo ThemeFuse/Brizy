@@ -2,8 +2,8 @@ import { insert, removeAt, replaceAt } from "timm";
 import { generateBlocksList } from "visual/utils/blocks";
 import { isStory } from "visual/utils/models";
 import { DELETE_GLOBAL_BLOCK } from "../actions";
-import { ActionTypes, ReduxAction } from "../actions2";
-import { ReduxState } from "../types";
+import { ActionTypes, type ReduxAction } from "../actions2";
+import type { ReduxState } from "../types";
 
 type BlocksOrder = ReduxState["blocksOrder"];
 type RBlocksOrder = (
@@ -25,7 +25,7 @@ export const blocksOrder: RBlocksOrder = (state = [], action) => {
       // it needs only for legacy models, when _id & globalBlock differed
       // only legacyBlocks have globalBlockId
       const pageBlocksIds: string[] = items.map(
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        // biome-ignore lint/suspicious/noExplicitAny: migrated from eslint
         (item: any) => item.value.globalBlockId || item.value._id
       );
 
@@ -67,12 +67,8 @@ export const blocksOrder: RBlocksOrder = (state = [], action) => {
     case "MAKE_GLOBAL_POPUP_TO_POPUP": {
       const { block, fromBlockId, type } = action.payload;
 
-      if (type == "external") {
-        return replaceAt(
-          state,
-          state.findIndex((_id) => _id === fromBlockId),
-          block.value._id
-        );
+      if (type === "external") {
+        return replaceAt(state, state.indexOf(fromBlockId), block.value._id);
       }
 
       return state;
@@ -84,7 +80,7 @@ export const blocksOrder: RBlocksOrder = (state = [], action) => {
       if (type === "external") {
         return replaceAt(
           state,
-          state.findIndex((_id) => _id === fromBlockId),
+          state.indexOf(fromBlockId),
           block.data.value._id
         );
       }
@@ -95,21 +91,13 @@ export const blocksOrder: RBlocksOrder = (state = [], action) => {
     case "MAKE_BLOCK_TO_GLOBAL_BLOCK": {
       const { block, fromBlockId } = action.payload;
 
-      return replaceAt(
-        state,
-        state.findIndex((_id) => _id === fromBlockId),
-        block.data.value._id
-      );
+      return replaceAt(state, state.indexOf(fromBlockId), block.data.value._id);
     }
 
     case "MAKE_GLOBAL_BLOCK_TO_BLOCK": {
       const { block, fromBlockId } = action.payload;
 
-      return replaceAt(
-        state,
-        state.findIndex((_id) => _id === fromBlockId),
-        block.value._id
-      );
+      return replaceAt(state, state.indexOf(fromBlockId), block.value._id);
     }
 
     case "REORDER_BLOCKS": {

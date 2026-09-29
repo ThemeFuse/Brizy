@@ -1,13 +1,13 @@
 import classNames from "classnames";
-import { TimerType } from "visual/types/TimerType";
+import type { TimerType } from "visual/types/TimerType";
 import { isHTMLElement } from "visual/utils/dom/isHTMLElement";
-import { MValue } from "visual/utils/value";
+import type { MValue } from "visual/utils/value";
 import {
   AnimationStyle,
-  Elements,
-  HeadlineSettings,
-  Options,
-  Settings,
+  type Elements,
+  type HeadlineSettings,
+  type Options,
+  type Settings,
   TextEffectTypes
 } from "./types";
 import { classes, getNextWord, getSvgPaths, selectors } from "./utils";
@@ -179,7 +179,7 @@ export class Headline {
 
     if (effectType === TextEffectTypes.clip && elements?.dynamicWrapper) {
       elements.dynamicWrapper.animate(
-        [{ width: "2px" }, { width: word.offsetWidth + 10 + "px" }],
+        [{ width: "2px" }, { width: `${word.offsetWidth + 10}px` }],
         {
           duration: revealDuration,
           easing: "ease",
@@ -224,7 +224,7 @@ export class Headline {
         elements?.dynamicWrapper?.classList.remove(classes.typeSelected);
         word.classList.add(classes.textInactive);
         word.classList.remove(classes.textActive);
-        word.querySelectorAll("." + classes.dynamicLetter).forEach((letter) => {
+        word.querySelectorAll(`.${classes.dynamicLetter}`).forEach((letter) => {
           letter.classList.remove(classes.animationIn);
         });
       }, selectionDuration);
@@ -236,7 +236,7 @@ export class Headline {
     } else if (elements?.headline?.classList.contains(classes.letters)) {
       const isLastWord =
         word.querySelectorAll(`.${classes.dynamicLetter}`).length >=
-        (nextWord?.querySelectorAll("." + classes.dynamicLetter).length || 0);
+        (nextWord?.querySelectorAll(`.${classes.dynamicLetter}`).length || 0);
       const firstLetter = word.querySelector<HTMLElement>(
         `.${classes.dynamicLetter}`
       );
@@ -255,7 +255,7 @@ export class Headline {
       elements?.dynamicWrapper
     ) {
       elements.dynamicWrapper.animate(
-        [{ width: word.offsetWidth + "px" }, { width: "2px" }],
+        [{ width: `${word.offsetWidth}px` }, { width: "2px" }],
         {
           duration: revealDuration,
           easing: "ease",
@@ -450,7 +450,9 @@ export class Headline {
 
       if (animationStyle === AnimationStyle.text) {
         const dynamicTextSpans = this.createDynamicTextSpans(text);
-        dynamicTextSpans.forEach((span) => dynamicWrapper.appendChild(span));
+        dynamicTextSpans.forEach((span) => {
+          dynamicWrapper.appendChild(span);
+        });
       } else if (animationStyle === AnimationStyle.svg) {
         const span = this.createSpan(
           "brz-animatedHeadline-dynamic-text brz-animatedHeadline-text-active",
@@ -471,7 +473,7 @@ export class Headline {
         "brz-animatedHeadline-plain-text brz-animatedHeadline-text-wrapper",
         textAfter
       );
-      afterText.innerHTML = "&nbsp;" + afterText.innerHTML;
+      afterText.innerHTML = `&nbsp;${afterText.innerHTML}`;
       headline.appendChild(afterText);
     }
 

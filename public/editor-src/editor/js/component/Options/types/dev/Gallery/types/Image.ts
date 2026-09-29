@@ -1,4 +1,4 @@
-import { IsEqual } from "visual/utils/types/Eq";
+import type { IsEqual } from "visual/utils/types/Eq";
 
 export interface Image {
   uid: string;
@@ -10,4 +10,4 @@ export interface Image {
 export type AddImageData = Pick<Image, "uid" | "fileName">;
 
 export const eq: IsEqual<Image> = (a, b) =>
-  a.uid === b.uid && a.width === a.width && a.height === a.height;
+  a.uid === b.uid && a.width === b.width && a.height === b.height;

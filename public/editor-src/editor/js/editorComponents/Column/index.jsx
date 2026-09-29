@@ -39,10 +39,10 @@ import { parseCustomAttributes } from "visual/utils/string/parseCustomAttributes
 import * as Str from "visual/utils/string/specs";
 import { styleSizeWidth } from "visual/utils/style2";
 import { currentUserRole } from "../../component/Roles";
-import Items from "./Items";
 import ColumnResizer from "./components/ColumnResizer";
 import contextMenuConfig from "./contextMenu";
 import defaultValue from "./defaultValue.json";
+import Items from "./Items";
 import * as sidebarConfig from "./sidebar";
 import { styleAnimation, styleColumn, styleItems } from "./styles";
 import * as toolbarConfig from "./toolbar";
@@ -162,7 +162,7 @@ class Column extends EditorComponent {
   isInnerRow() {
     const { meta } = this.props;
 
-    return meta.row && meta.row.isInner;
+    return meta.row?.isInner;
   }
 
   dvv = (key) => {

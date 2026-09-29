@@ -1,10 +1,10 @@
 import React from "react";
-import { Icon } from "./Icon";
 import {
   makeEndPlaceholder,
   makeStartPlaceholder
 } from "visual/utils/dynamicContent";
-import { ContainerProps } from "./types";
+import { Icon } from "./Icon";
+import type { ContainerProps } from "./types";
 
 export const IconContainer = (props: ContainerProps): JSX.Element => {
   const { itemId, wrapInPlaceholder, ...iconProps } = props;

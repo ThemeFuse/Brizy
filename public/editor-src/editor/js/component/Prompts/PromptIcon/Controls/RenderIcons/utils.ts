@@ -1,5 +1,5 @@
 import { Arr, Obj, pipe } from "@brizy/readers";
-import { Icon } from "visual/config/icons/Icon";
+import type { Icon } from "visual/config/icons/Icon";
 import { TypeId } from "visual/config/icons/Type";
 import { pass } from "visual/utils/fp";
 

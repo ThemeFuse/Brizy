@@ -56,10 +56,7 @@ const handleTemplateSelection = (showData: ShowData) => (item: Select2Item) => {
   return div;
 };
 
-export default function ($node: JQuery): void {
-  const root = $node.get(0);
-  if (!root) return;
-
+export default function (root: HTMLElement): void {
   root.querySelectorAll<HTMLElement>(".brz-translation").forEach((element) => {
     const $this = $(element).find(".brz-translation__dc") ?? $(element);
     const showFlags = element.getAttribute(makeAttr("showflags")) === "on";
@@ -83,11 +80,11 @@ export default function ($node: JQuery): void {
       });
 
       // Custom Scrollbars
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      // biome-ignore lint/suspicious/noExplicitAny: migrated from eslint
       let scrollbars: any;
       $(selectDom).on("select2:opening", () => {
         // waiting appear the dropdown in the dom
-        setTimeout(function () {
+        setTimeout(() => {
           const dropdown =
             element.querySelector<HTMLElement>(".select2-dropdown");
 

@@ -11,10 +11,10 @@ import {
   pageBlocksDataAssembledSelector,
   pageBlocksSelector
 } from "visual/redux/selectors";
-import { ReduxState } from "visual/redux/types";
-import { GlobalBlockBase } from "visual/types/GlobalBlock";
-import { FCC } from "visual/utils/react/types";
-import { PreloadThumbnailProps, Props } from "./types";
+import type { ReduxState } from "visual/redux/types";
+import type { GlobalBlockBase } from "visual/types/GlobalBlock";
+import type { FCC } from "visual/utils/react/types";
+import type { PreloadThumbnailProps, Props } from "./types";
 
 export const BlockThumbnail: FCC<Props> = ({
   label,
@@ -70,93 +70,96 @@ export const BlockThumbnail: FCC<Props> = ({
     [value, onChange]
   );
 
-  const applyInputChange = useCallback((text: string, id: string) => {
-    const blocks = blocksRef.current;
-    const globalBlocks = globalBlocksRef.current;
+  const applyInputChange = useCallback(
+    (text: string, id: string) => {
+      const blocks = blocksRef.current;
+      const globalBlocks = globalBlocksRef.current;
 
-    const encodedText = encodeURIComponent(text);
+      const encodedText = encodeURIComponent(text);
 
-    let anchorName = encodedText;
-    if (anchorName !== "") {
-      // suppose we have the following blockAnchorNames ["contact", "about-us"]
-      // if we add "contact" once again we must detect that it's already used
-      // and transform it to "contact-2"
-      const blockAnchorNames = blocks
-        .filter((block) => block.value._id !== id)
-        .map((block) => {
-          if (block.type === "GlobalBlock") {
-            block = globalBlocks[block.value._id].data;
+      let anchorName = encodedText;
+      if (anchorName !== "") {
+        // suppose we have the following blockAnchorNames ["contact", "about-us"]
+        // if we add "contact" once again we must detect that it's already used
+        // and transform it to "contact-2"
+        const blockAnchorNames = blocks
+          .filter((block) => block.value._id !== id)
+          .map((block) => {
+            if (block.type === "GlobalBlock") {
+              block = globalBlocks[block.value._id].data;
+            }
+
+            return block.value.anchorName;
+          });
+        let foundDuplicateAnchorName = false;
+        let retriesCount = 0;
+        do {
+          foundDuplicateAnchorName = false;
+
+          for (const blockAnchorName of blockAnchorNames) {
+            if (anchorName === blockAnchorName) {
+              foundDuplicateAnchorName = true;
+              anchorName = `${encodedText}-${++retriesCount + 1}`; // start at 2
+              break;
+            }
           }
-
-          return block.value.anchorName;
-        });
-      let foundDuplicateAnchorName = false;
-      let retriesCount = 0;
-      do {
-        foundDuplicateAnchorName = false;
-
-        for (const blockAnchorName of blockAnchorNames) {
-          if (anchorName === blockAnchorName) {
-            foundDuplicateAnchorName = true;
-            anchorName = encodedText + "-" + (++retriesCount + 1); // start at 2
-            break;
-          }
-        }
-      } while (foundDuplicateAnchorName);
-    }
-
-    const blockToUpdate = blocks.find(({ type, value }) => {
-      if (type === "GlobalBlock") {
-        return globalBlocks[value._id].data.value._id === id;
+        } while (foundDuplicateAnchorName);
       }
 
-      return value._id === id;
-    });
+      const blockToUpdate = blocks.find(({ type, value }) => {
+        if (type === "GlobalBlock") {
+          return globalBlocks[value._id].data.value._id === id;
+        }
 
-    if (!blockToUpdate) {
-      return;
-    }
+        return value._id === id;
+      });
 
-    if (blockToUpdate.type !== "GlobalBlock") {
-      const updatedBlocks = blocks.map((block) => {
-        return block.value._id === id
-          ? {
-              ...block,
-              value: {
-                ...block.value,
-                anchorName
+      if (!blockToUpdate) {
+        return;
+      }
+
+      if (blockToUpdate.type !== "GlobalBlock") {
+        const updatedBlocks = blocks.map((block) => {
+          return block.value._id === id
+            ? {
+                ...block,
+                value: {
+                  ...block.value,
+                  anchorName
+                }
               }
-            }
-          : block;
+            : block;
+        });
+
+        dispatch(updateBlocks({ blocks: updatedBlocks, config: globalConfig }));
+      } else {
+        const _id = blockToUpdate.value._id;
+        const globalBlock = produce<GlobalBlockBase>(
+          globalBlocks[_id],
+          (draft) => {
+            draft.data.value.anchorName = anchorName;
+            return draft;
+          }
+        );
+
+        dispatch(updateGlobalBlock({ ...globalBlock, config: globalConfig }));
+      }
+
+      setAnchorInputs((prevAnchorInputs) => {
+        return prevAnchorInputs.map((anchorInput) => {
+          if (anchorInput.id === id) {
+            return {
+              ...anchorInput,
+              value: anchorName
+            };
+          }
+
+          return anchorInput;
+        });
       });
-
-      dispatch(updateBlocks({ blocks: updatedBlocks, config: globalConfig }));
-    } else {
-      const _id = blockToUpdate.value._id;
-      const globalBlock = produce<GlobalBlockBase>(
-        globalBlocks[_id],
-        (draft) => {
-          draft.data.value.anchorName = anchorName;
-          return draft;
-        }
-      );
-
-      dispatch(updateGlobalBlock({ ...globalBlock, config: globalConfig }));
-    }
-
-    setAnchorInputs((prevAnchorInputs) => {
-      return prevAnchorInputs.map((anchorInput) => {
-        if (anchorInput.id === id) {
-          return {
-            ...anchorInput,
-            value: anchorName
-          };
-        }
-
-        return anchorInput;
-      });
-    });
-  }, [dispatch, globalConfig]);
+    },
+    [dispatch, globalConfig]
+  );
 
   const debouncedApplyInputChangeRef = useRef(
     debounce((text: string, id: string) => {
@@ -165,13 +168,10 @@ export const BlockThumbnail: FCC<Props> = ({
     }, 1000)
   );
 
-  const handleInputChange = useCallback(
-    (text: string, id: string) => {
-      pendingChangesRef.current = { text, id };
-      debouncedApplyInputChangeRef.current(text, id);
-    },
-    []
-  );
+  const handleInputChange = useCallback((text: string, id: string) => {
+    pendingChangesRef.current = { text, id };
+    debouncedApplyInputChangeRef.current(text, id);
+  }, []);
 
   useEffect(() => {
     const debouncedFn = debouncedApplyInputChangeRef.current;

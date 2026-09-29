@@ -27,16 +27,19 @@ window.Brz = {
         f(...args);
       }
     }
-    
+
     // Also subscribe for any future emissions
     return this.emitter.on(id, f);
-  },
+  }
 };
 
 // Enhanced init with lazy component loading
 window.Brz.on("init.dom", async ($node: JQuery<HTMLElement>) => {
   try {
-    await initExports($node);
+    // An external popup can arrive as a set of several nodes
+    for (const node of $node.get()) {
+      await initExports(node);
+    }
     window.Brz.emit("init.complete");
   } catch (err) {
     console.error("[Brz] Initialization failed", err);

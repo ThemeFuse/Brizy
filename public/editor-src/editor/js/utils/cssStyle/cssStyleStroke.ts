@@ -6,7 +6,7 @@ import {
 import { defaultValueValue } from "../onChange";
 import * as Num from "../reader/number";
 import { capByPrefix } from "../string";
-import { CSSValue } from "../style2/types";
+import type { CSSValue } from "../style2/types";
 import { getSize } from "./cssStyleSize";
 
 type Size = "small" | "medium" | "large" | "custom";

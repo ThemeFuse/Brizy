@@ -74,7 +74,11 @@ function SidebarContent(props: SidebarContentProps) {
       <Scrollbar theme="dark" absolute>
         <div className="brz-ed-addable__items">{children}</div>
       </Scrollbar>
-      <button className="brz-ed-addable__add-new" onClick={onAddGroup}>
+      <button
+        type="button"
+        className="brz-ed-addable__add-new"
+        onClick={onAddGroup}
+      >
         <EditorIcon icon="nc-plus2" />
         {addNewGroupTitle}
       </button>

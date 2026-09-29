@@ -1,6 +1,6 @@
-import { ReactElement } from "react";
-import { DCApiProxy } from "./DCApiProxy";
-import { State as UseDynamicContentState, useDC } from "./useDC";
+import type { ReactElement } from "react";
+import type { DCApiProxy } from "./DCApiProxy";
+import { type State as UseDynamicContentState, useDC } from "./useDC";
 
 type Props = {
   placeholder: string;

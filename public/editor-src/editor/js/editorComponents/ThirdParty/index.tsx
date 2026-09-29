@@ -1,11 +1,15 @@
 import { Str } from "@brizy/readers";
 import classNames from "classnames";
-import React, { ComponentType, ReactNode, RefObject } from "react";
+import React, {
+  type ComponentType,
+  type ReactNode,
+  type RefObject
+} from "react";
 import CustomCSS from "visual/component/CustomCSS";
-import { ElementModel } from "visual/component/Elements/Types";
+import type { ElementModel } from "visual/component/Elements/Types";
 import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
-import {
+import type {
   ComponentsMeta,
   Model,
   NewToolbarConfig,
@@ -14,14 +18,14 @@ import {
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import Editor from "visual/global/Editor";
 import { isEditor, isView } from "visual/providers/RenderProvider";
-import { WithClassName } from "visual/types/attributes";
+import type { WithClassName } from "visual/types/attributes";
 import { I18n } from "visual/utils/i18n";
 import { filterPatchValues } from "visual/utils/patch";
 import { attachRefs } from "visual/utils/react";
 import { ThirdPartyContextProvider } from "../tools/ThirdPartyContext";
 import { Wrapper } from "../tools/Wrapper";
 import { DynamicContent } from "./DynamicContent";
-import { DynamicContentProps, ThirdPartyProps } from "./types";
+import type { DynamicContentProps, ThirdPartyProps } from "./types";
 
 export interface Value extends ElementModel {
   thirdPartyId: string;
@@ -38,9 +42,9 @@ interface ThirdpartyComponent {
 
 interface Options<
   M extends ElementModel,
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  // biome-ignore lint/suspicious/noExplicitAny: migrated from eslint
   P extends Record<string, any>,
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  // biome-ignore lint/suspicious/noExplicitAny: migrated from eslint
   S extends Record<string, any> = Record<string, unknown>
 > {
   toolbars: NewToolbarConfig<M, P, S>[];
@@ -171,7 +175,7 @@ class ThirdParty extends EditorComponent<Value, Props> {
             {...toolbarProps}
           >
             {({ ref }) => {
-              ref && toolbarsRefs.push(ref);
+              if (ref) toolbarsRefs.push(ref);
               return <>{child}</>;
             }}
           </Toolbar>
@@ -224,7 +228,7 @@ class ThirdParty extends EditorComponent<Value, Props> {
     if (values) {
       this.patchValue(values);
     } else {
-      // eslint-disable-next-line no-console
+      // biome-ignore lint/suspicious/noConsole: migrated from eslint
       console.warn(
         "Invalid patch values provided to ThirdParty component:",
         patch

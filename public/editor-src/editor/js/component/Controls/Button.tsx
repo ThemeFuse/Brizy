@@ -1,7 +1,11 @@
 import classNames from "classnames";
-import React, { MouseEvent, ReactElement, ReactNode } from "react";
+import React, {
+  type MouseEvent,
+  type ReactElement,
+  type ReactNode
+} from "react";
 import EditorIcon from "visual/component/EditorIcon";
-import { WithClassName } from "visual/types/attributes";
+import type { WithClassName } from "visual/types/attributes";
 
 export interface Props extends WithClassName {
   onClick: (event: MouseEvent<HTMLDivElement>) => void;

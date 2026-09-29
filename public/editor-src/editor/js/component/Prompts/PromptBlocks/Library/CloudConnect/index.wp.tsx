@@ -1,15 +1,15 @@
 import React, { useEffect } from "react";
-import { ConnectedProps, connect } from "react-redux";
+import { type ConnectedProps, connect } from "react-redux";
 import EditorIcon from "visual/component/EditorIcon";
-import Prompts, { PromptsProps } from "visual/component/Prompts";
+import Prompts, { type PromptsProps } from "visual/component/Prompts";
 import { Button } from "visual/component/Prompts/common/Button";
 import { updateAuthorization } from "visual/redux/actions2";
 import {
   authorizedSelector,
   syncAllowedSelector
 } from "visual/redux/selectors";
-import { ReduxState } from "visual/redux/types";
-import { SyncAllowed } from "visual/types";
+import type { ReduxState } from "visual/redux/types";
+import type { SyncAllowed } from "visual/types";
 import { t } from "visual/utils/i18n";
 import { setAuthorized } from "visual/utils/user/getAuthorized";
 import { useDisconnect, useSync } from "./common";
@@ -36,7 +36,9 @@ type CloudConnectProps = ConnectedProps<typeof cloudConnector> & {
   onSuccessSync?: () => void;
 };
 
-export const CloudConnectWP = (props: CloudConnectProps): React.ReactElement => {
+export const CloudConnectWP = (
+  props: CloudConnectProps
+): React.ReactElement => {
   const { isAuthorized, syncAllowed, onSuccessSync, updateAuthorization } =
     props;
   const { isSync, setSync, loading: syncLoading } = useSync();
@@ -44,7 +46,7 @@ export const CloudConnectWP = (props: CloudConnectProps): React.ReactElement => 
 
   useEffect(() => {
     if (isSync) {
-      onSuccessSync && onSuccessSync();
+      if (onSuccessSync) onSuccessSync();
     }
   }, [isSync, onSuccessSync]);
 
@@ -80,7 +82,11 @@ export const CloudConnectWP = (props: CloudConnectProps): React.ReactElement => 
         color={isAuthorized ? "gray" : "teal"}
         loading={loading}
         onClick={(): void => {
-          isAuthorized ? setDisconnect() : handleConnect();
+          if (isAuthorized) {
+            setDisconnect();
+          } else {
+            handleConnect();
+          }
         }}
       >
         {isAuthorized ? t("Disconnect") : t("Connect")}

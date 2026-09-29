@@ -1,14 +1,14 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { ReactNode } from "react";
-import { TooltipPlacement } from "visual/component/Tooltip/types";
-import { EditorComponentContextValue } from "visual/editorComponents/EditorComponent/EditorComponentContext";
-import { ECDC } from "visual/editorComponents/EditorComponent/types";
-import { EditorMode } from "visual/providers/EditorModeProvider";
-import { RenderType } from "visual/providers/RenderProvider";
-import { Store } from "visual/redux/store";
-import { WithClassName } from "visual/types/attributes";
-import { ImageType } from "visual/utils/image/types";
-import { Positive } from "visual/utils/math/Positive";
+// biome-ignore-all lint/suspicious/noExplicitAny: migrated from eslint
+import React, { type ReactNode } from "react";
+import type { TooltipPlacement } from "visual/component/Tooltip/types";
+import type { EditorComponentContextValue } from "visual/editorComponents/EditorComponent/EditorComponentContext";
+import type { ECDC } from "visual/editorComponents/EditorComponent/types";
+import type { EditorMode } from "visual/providers/EditorModeProvider";
+import type { RenderType } from "visual/providers/RenderProvider";
+import type { Store } from "visual/redux/store";
+import type { WithClassName } from "visual/types/attributes";
+import type { ImageType } from "visual/utils/image/types";
+import type { Positive } from "visual/utils/math/Positive";
 
 type sizes = {
   width: number;

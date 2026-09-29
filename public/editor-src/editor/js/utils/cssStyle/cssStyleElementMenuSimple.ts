@@ -1,6 +1,6 @@
 import { defaultValueValue } from "visual/utils/onChange";
 import { styleColor } from "visual/utils/style2";
-import { CSSValue } from "visual/utils/style2/types";
+import type { CSSValue } from "visual/utils/style2/types";
 
 export function cssStyleElementMenuSimpleItemPadding({
   v,

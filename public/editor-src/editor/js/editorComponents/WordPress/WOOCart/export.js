@@ -14,8 +14,9 @@ function closeSidebar() {
   $(document.body).removeClass("brz-ow-hidden brz-woocart--opened");
 }
 
-export default function($node) {
-  $node.find(".brz-woocart__wrapper").each(function() {
+export default function (node) {
+  const $node = $(node);
+  $node.find(".brz-woocart__wrapper").each(function () {
     const $this = $(this);
     const $cart = $this.find(".brz-woocart");
     const $close = $this.find(".brz-woocart__sidebar-close");

@@ -1,6 +1,6 @@
-const path = require("path");
+const path = require("node:path");
 const rspack = require("@rspack/core");
-const fs = require("fs");
+const fs = require("node:fs");
 const { RsdoctorRspackPlugin } = require("@rsdoctor/rspack-plugin");
 const swcrc = require("./swc.config.all");
 
@@ -188,7 +188,7 @@ module.exports = (options = {}) => {
         chunkFilename: "css/[name].min.css",
         // Disable dynamic injection for CSS files that are manually included in HTML
         // main.editor.min.css and main.base.min.css are already in editor.html.twig
-        insert: function (linkTag) {
+        insert: (linkTag) => {
           const href = linkTag.getAttribute("href") ?? "";
 
           // Skip injection if this is one of the manually included CSS files
@@ -295,7 +295,7 @@ module.exports = (options = {}) => {
     externals: getExternal(options.TARGET),
     devtool: options.IS_PRODUCTION ? false : "eval-cheap-module-source-map",
     watchOptions: {
-      ignored: new RegExp("config/icons")
+      ignored: /config\/icons/
     },
     performance: {
       hints: false // Disable performance warnings for large bundles

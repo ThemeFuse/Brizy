@@ -1,7 +1,7 @@
-import { Middleware } from "redux";
+import type { Middleware } from "redux";
 import { thunk } from "redux-thunk";
-import { GetConfig } from "visual/providers/ConfigProvider/types";
-import { EditorMode } from "visual/providers/EditorModeProvider";
+import type { GetConfig } from "visual/providers/ConfigProvider/types";
+import type { EditorMode } from "visual/providers/EditorModeProvider";
 import {
   api,
   error,

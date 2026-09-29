@@ -52,11 +52,11 @@ const _systemFont = {
     const page = config.pageData;
     const editorMode = config.mode;
 
-    if (!project || !project.data) {
+    if (!project?.data) {
       throw new ProjectError(t("Missing project data in config"));
     }
 
-    if (!page || !page.data) {
+    if (!page?.data) {
       throw new PageError(t("Missing page data in config"));
     }
 
@@ -86,8 +86,11 @@ const _systemFont = {
         ...adobeFonts
       })
     });
-    const newFonts = fontsDiff.reduce(
-      (acc, { type, fonts }) => ({ ...acc, [type]: { data: fonts } }),
+    const newFonts = fontsDiff.reduce<Record<string, { data: unknown }>>(
+      (acc, { type, fonts }) => {
+        acc[type] = { data: fonts };
+        return acc;
+      },
       {}
     );
 

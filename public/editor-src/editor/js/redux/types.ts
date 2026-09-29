@@ -1,8 +1,11 @@
-import { LeftSidebarOptionsIds } from "visual/global/Config/types/configs/ConfigCommon";
+import {
+  LeftSidebarOptionsIds,
+  type MenuData
+} from "visual/global/Config/types/configs/ConfigCommon";
 import type {
   Authorized,
   DeviceMode,
-  Error,
+  EditorError,
   SyncAllowed,
   UserRole
 } from "visual/types";
@@ -43,6 +46,7 @@ export interface ActiveElementMeta {
 type ReduxStateBase = {
   project: Project;
   page: Page;
+  menuData: MenuData[];
   symbols: {
     element:
       | undefined
@@ -88,6 +92,8 @@ type ReduxStateBase = {
     showHiddenElements: boolean;
     currentRole: UserRole;
     currentLanguage: string;
+    // uid of the overlay global block previewed in editor, or "none"
+    currentOverlay: string;
   };
   styles: Style[];
   extraStyles: Style[];
@@ -101,7 +107,7 @@ type ReduxStateBase = {
     };
   };
   storeWasChanged: StoreChanged;
-  error: null | Error;
+  error: null | EditorError;
   currentStyleId: string;
   currentStyle: Style;
   screenshots: {

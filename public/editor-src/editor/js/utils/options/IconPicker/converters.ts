@@ -1,5 +1,5 @@
-import * as Option from "visual/component/Options/Type";
-import { Value } from "visual/component/Options/types/dev/IconPicker/types";
+import type * as Option from "visual/component/Options/Type";
+import type { Value } from "visual/component/Options/types/dev/IconPicker/types";
 import * as Str from "visual/utils/string/specs";
 
 export const fromElementModel: Option.FromElementModel<"iconPicker"> = (get) =>

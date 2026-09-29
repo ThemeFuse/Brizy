@@ -1,29 +1,24 @@
 import $ from "jquery";
 import { getProLibs } from "visual/libs";
-import Gallery, { Settings } from "visual/libs/gallery";
+import type Gallery from "visual/libs/gallery";
+import type { Settings } from "visual/libs/gallery";
 import { handleLightBoxZoom } from "visual/utils/export/lightbox";
 import { decodeFromString } from "visual/utils/string";
 import {
   initImageGalleryBigImageAccessibility,
   initImageGalleryFilterAccessibility
 } from "../accessibility";
-import { IsotopeSettings, JustifySettings } from "./utils";
+import type { IsotopeSettings, JustifySettings } from "./utils";
 import {
   arrangeGridByTags,
   isJustified,
   removeUselessInfo
 } from "./utils.export";
 
-export default function ($node: JQuery): void {
+export default function (root: HTMLElement): void {
   const { Isotope, ImagesLoaded, Gallery } = getProLibs();
 
   if (!Isotope || !ImagesLoaded || !Gallery) {
-    return;
-  }
-
-  const root = $node.get(0);
-
-  if (!root) {
     return;
   }
 
@@ -124,7 +119,7 @@ export default function ($node: JQuery): void {
         ".brz-image__gallery-big-image-lightbox"
       );
 
-      if (imageItems && imageItems.length && imagesSrc.length && bigImage) {
+      if (imageItems?.length && imagesSrc.length && bigImage) {
         removeUselessInfo(bigImageWrapper);
 
         if (lightBox === "on") {
@@ -252,10 +247,10 @@ export default function ($node: JQuery): void {
 
     elements.forEach((id: string) => {
       window.Brz.on(id, (element: HTMLElement) => {
-        if (iso && element && element.contains(_this)) {
+        if (iso && element?.contains(_this)) {
           iso.arrange({});
         }
-        if (galleryInstance && element && element.contains(_this)) {
+        if (galleryInstance && element?.contains(_this)) {
           galleryInstance.arrange();
         }
       });

@@ -1,13 +1,6 @@
-import React, { ReactElement, useCallback, useMemo } from "react";
+import React, { type ReactElement, useCallback, useMemo } from "react";
 import { useDispatch } from "react-redux";
 import Radio, { RadioItem } from "visual/component/Controls/Radio";
-import Fixed from "visual/component/Prompts/Fixed";
-import { reducer } from "visual/component/Prompts/PromptPageArticle/reducer";
-import {
-  setBlog,
-  setLayout,
-  setTitle
-} from "visual/component/Prompts/PromptPageArticle/types/Setters";
 import { EmptyContentWithDefaults } from "visual/component/Prompts/common/PromptPage/EmptyContent";
 import { HeaderFooterField } from "visual/component/Prompts/common/PromptPage/HeaderFooterField";
 import {
@@ -16,6 +9,13 @@ import {
   switchTab
 } from "visual/component/Prompts/common/states/Classic/types/Actions";
 import { useStateReducer } from "visual/component/Prompts/common/states/Classic/useStateReducer";
+import Fixed from "visual/component/Prompts/Fixed";
+import { reducer } from "visual/component/Prompts/PromptPageArticle/reducer";
+import {
+  setBlog,
+  setLayout,
+  setTitle
+} from "visual/component/Prompts/PromptPageArticle/types/Setters";
 import {
   canSyncPage,
   getChoices,
@@ -24,14 +24,14 @@ import {
   isShopifyLayout
 } from "visual/component/Prompts/utils";
 import {
-  Shopify,
   isCloud,
-  isShopify
+  isShopify,
+  type Shopify
 } from "visual/global/Config/types/configs/Cloud";
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import type { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import {
-  ShopifyTemplate,
-  getShopifyTemplate
+  getShopifyTemplate,
+  ShopifyTemplate
 } from "visual/global/Config/types/shopify/ShopifyTemplate";
 import {
   updateError,
@@ -52,7 +52,7 @@ import { Content } from "../common/Content";
 import { Header } from "../common/Header";
 import { Input } from "../common/PromptPage/Input";
 import { Tabs } from "../common/PromptPage/types";
-import { Props, Valid } from "./types";
+import type { Props, Valid } from "./types";
 
 export const PromptPageArticle = (props: Props): ReactElement => {
   const templateType = useMemo(() => {

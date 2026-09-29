@@ -1,15 +1,16 @@
-import {
+import type {
   ScriptsFree,
   ScriptsPro,
   StylesFree,
   StylesPro
 } from "visual/bootstraps/compiler/common/transforms/assets";
-import { AdobeFont, GoogleFont, SystemFont, UploadedFont } from "./Fonts";
-import { Screenshot } from "./Screenshot";
+import type { AdobeFont, GoogleFont, SystemFont, UploadedFont } from "./Fonts";
+import type { Screenshot } from "./Screenshot";
 
 export type Block = {
   type: string;
-  value: any; // eslint-disable-line @typescript-eslint/no-explicit-any
+  // biome-ignore lint/suspicious/noExplicitAny: migrated from eslint
+  value: any;
   blockId: string;
   deleted?: boolean;
   meta?: Screenshot;

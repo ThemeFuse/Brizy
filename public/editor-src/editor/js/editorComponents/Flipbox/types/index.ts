@@ -1,9 +1,9 @@
-import { ReactNode } from "react";
+import type { ReactNode } from "react";
 import type { ElementModel } from "visual/component/Elements/Types";
 import type { ComponentsMeta } from "visual/editorComponents/EditorComponent/types";
-import { DeviceMode } from "visual/types";
+import type { DeviceMode } from "visual/types";
 import type { WithClassName } from "visual/types/attributes";
-import { MValue } from "visual/utils/value";
+import type { MValue } from "visual/utils/value";
 
 export type Patch = Partial<Value>;
 

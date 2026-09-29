@@ -1,13 +1,13 @@
 import { mPipe, optional, or, parseStrict, pass } from "fp-utilities";
 import { Type } from "visual/component/Controls/Transform/types/Patch";
-import { Value } from "visual/component/Controls/Transform/types/Value";
+import type { Value } from "visual/component/Controls/Transform/types/Value";
 import { isActive } from "visual/component/Controls/Transform/utils";
-import {
+import type {
   FromElementModel,
   FromElementModelGetter,
   ToElementModel
 } from "visual/component/Options/Type";
-import { OptionPatch } from "visual/component/Options/types";
+import type { OptionPatch } from "visual/component/Options/types";
 import { hasValue } from "visual/types/attributes";
 import { always } from "visual/utils/fp";
 import { callGetter } from "visual/utils/options/utils/wrap";

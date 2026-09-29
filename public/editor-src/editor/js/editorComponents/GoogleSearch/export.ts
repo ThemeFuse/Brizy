@@ -6,6 +6,7 @@ const createScript = (cx: string) => {
   gcse.async = true;
   gcse.src = `https://cse.google.com/cse.js?cx=${cx}`;
   gcse.id = `brz-google-search-script-${cx}`;
+  gcse.setAttribute(makeAttr("consent"), "preferences");
 
   if (document.getElementById(`brz-google-search-script-${cx}`)) {
     return;
@@ -14,14 +15,8 @@ const createScript = (cx: string) => {
   document.head.appendChild(gcse);
 };
 
-export default function ($node: JQuery): void {
-  const root = $node.get(0);
-
+export default function (root: HTMLElement): void {
   clearGoogleSearchParams();
-
-  if (!root) {
-    return;
-  }
 
   function searchGoogle(node: HTMLElement) {
     const query = node

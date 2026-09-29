@@ -9,7 +9,7 @@ test("Prevent jest complaining that files has not tests", () => {});
  * @param {*[]} valid, a list of valid values that should be returned
  * @param {*[]} invalid, a list of invalid values that should be not returned
  */
-// eslint-disable-next-line jest/no-export
+// biome-ignore lint/suspicious/noExportsInTest: migrated from eslint
 export const testToValue = (f, valid, invalid) => {
   describe("Testing reader function behaviors", function () {
     test("Return value if it is valid", () => {
@@ -30,7 +30,7 @@ export const testToValue = (f, valid, invalid) => {
  * @param {*} empty
  * @param {*[]} values, a list of valid values
  */
-// eslint-disable-next-line jest/no-export
+// biome-ignore lint/suspicious/noExportsInTest: migrated from eslint
 export const testMonoidBehavior = (f, empty, values) => {
   describe("Testing function monoidal behaviors", function () {
     test("Identity. f(empty, a) === f(a, empty) === a", () => {

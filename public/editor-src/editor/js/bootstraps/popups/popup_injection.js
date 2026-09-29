@@ -1,4 +1,4 @@
-(function(window, document, script) {
+((window, document, script) => {
   script = document.getElementById("brz-external-popup");
   if (!script) {
     script = document.createElement("script");
@@ -22,7 +22,7 @@
     }
 
     currentLoadFn = script.onload;
-    script.onload = function() {
+    script.onload = () => {
       currentLoadFn();
 
       window.brzExternalPopup(pagePopupSrc);

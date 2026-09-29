@@ -7,7 +7,7 @@ import {
   createPatch,
   flattenDefaultValue
 } from "visual/editorComponents/EditorComponent/utils";
-import { type SymbolsCreatePayload, createSymbol } from "visual/redux/actions2";
+import { createSymbol, type SymbolsCreatePayload } from "visual/redux/actions2";
 import { symbolsSelector } from "visual/redux/selectors";
 import type {
   HandleComponentSymbolCreate,
@@ -19,7 +19,7 @@ import {
   getComponentRulesValue
 } from "visual/utils/traverse/common";
 import { uuid } from "visual/utils/uuid";
-import { MValue } from "../value";
+import type { MValue } from "../value";
 
 export const CSS_MODEL_KEY = "classes";
 

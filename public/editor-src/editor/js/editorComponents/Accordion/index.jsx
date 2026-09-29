@@ -12,9 +12,9 @@ import {
 } from "visual/utils/onChange";
 import { attachRefs } from "visual/utils/react";
 import * as State from "visual/utils/stateMode";
-import Items from "./Items";
 import contextMenuConfig from "./contextMenu";
 import defaultValue from "./defaultValue.json";
+import Items from "./Items";
 import * as sidebarExtendConfig from "./sidebarExtend";
 import * as sidebarExtendParentConfig from "./sidebarExtendParent";
 import * as sidebarFilterConfig from "./sidebarFilter";

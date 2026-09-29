@@ -15,7 +15,7 @@
  * - isPro: boolean - Whether this is a pro build (default: false)
  */
 
-const path = require("path");
+const path = require("node:path");
 
 module.exports = function scssTrackerLoader(source) {
   // Return original SCSS source unchanged

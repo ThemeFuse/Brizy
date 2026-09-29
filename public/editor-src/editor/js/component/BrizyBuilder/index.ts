@@ -6,11 +6,11 @@ import { AlphaPostNavigationHtml } from "@brizy/builder-ui/lib/elements/AlphaPos
 import { AlphaPostNavigationReact } from "@brizy/builder-ui/lib/elements/AlphaPostNavigation/index.react";
 
 export {
+  AlphaBreadcrumbsReact as BreadcrumbsEditor,
   AlphaMetafield as Metafield,
-  AlphaVendor as Vendor,
-  AlphaPostInfoReact as PostInfoEditor,
   AlphaPostInfoHtml as PostInfoPreview,
+  AlphaPostInfoReact as PostInfoEditor,
   AlphaPostNavigationHtml as PostNavigationPreview,
   AlphaPostNavigationReact as PostNavigationEditor,
-  AlphaBreadcrumbsReact as BreadcrumbsEditor
+  AlphaVendor as Vendor
 };

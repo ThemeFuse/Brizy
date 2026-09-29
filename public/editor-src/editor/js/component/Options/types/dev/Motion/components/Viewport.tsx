@@ -1,14 +1,14 @@
 import { mPipe, pass } from "fp-utilities";
-import React, { ReactElement, useCallback } from "react";
+import React, { type ReactElement, useCallback } from "react";
 import { RangeSlider } from "visual/component/Controls/RangeSlider";
-import { OptionWrapper } from "visual/component/OptionWrapper";
-import { OnChange } from "visual/component/Options/Type";
 import { useDebouncedOnChange } from "visual/component/hooks";
+import type { OnChange } from "visual/component/Options/Type";
+import { OptionWrapper } from "visual/component/OptionWrapper";
 import { t } from "visual/utils/i18n";
 import * as Unit from "visual/utils/math/Unit";
 import {
-  Viewport as ViewportType,
-  construct
+  construct,
+  type Viewport as ViewportType
 } from "visual/utils/options/Motion/types/Viewport";
 
 const divide = (v: number): number => v / 100;

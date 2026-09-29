@@ -1,20 +1,12 @@
-import { ElementType } from "react";
+import type { ElementType } from "react";
 
-class _BaseAppElement {
-  static onBeforeLoad(c: unknown, p: unknown): void | Promise<void> {
-    // eslint-disable-next-line no-console
-    console.log("onBeforeLoad", c, p);
-  }
+export interface BaseAppElementTypes {
+  onBeforeLoad(c: unknown, p: unknown): void | Promise<void>;
 }
-
-type TBaseAppElementTypes = typeof _BaseAppElement;
-export type BaseAppElementTypes = Omit<
-  TBaseAppElementTypes,
-  "_BaseAppElement" | "prototype"
->;
 
 type BaseAppSteps = undefined | ElementType | BaseAppElementTypes;
 
+// biome-ignore lint/complexity/noStaticOnlyClass: 28 app classes extend this (`class Google extends BaseApp`), so it is an inheritance root supplying the 10 step defaults - rewriting it as a module would force every subclass to redeclare all 10
 class BaseApp {
   static disconnect: BaseAppSteps = undefined;
   static client: BaseAppSteps = undefined;

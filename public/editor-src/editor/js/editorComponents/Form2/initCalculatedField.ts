@@ -1,5 +1,5 @@
 import { Num, Str } from "@brizy/readers";
-import _Formula from "fparser";
+import type _Formula from "fparser";
 import $ from "jquery";
 import { makeAttr } from "visual/utils/i18n/attribute";
 import { decodeFromString } from "visual/utils/string";
@@ -28,7 +28,8 @@ export const initCalculatedField = (
       // This preserves field names with spaces like "Number one"
       const originalFields: string[] = [];
       const fieldNameRegex = /\{\{([^}]+)\}\}/g;
-      let match;
+      let match: RegExpExecArray | null;
+      // biome-ignore lint/suspicious/noAssignInExpressions: regex exec iteration idiom - matchAll would work here but the rewrite is kept out of this lint PR
       while ((match = fieldNameRegex.exec(decodedExpression)) !== null) {
         originalFields.push(match[1].trim());
       }

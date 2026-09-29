@@ -3,18 +3,18 @@ import {
   defaultValueKey2,
   defaultValueValue
 } from "visual/utils/onChange/device";
-import {
-  DESKTOP,
-  MOBILE,
-  TABLET,
-  defaultMode
-} from "visual/utils/responsiveMode";
 import * as Responsive from "visual/utils/responsiveMode";
 import {
+  DESKTOP,
+  defaultMode,
+  MOBILE,
+  TABLET
+} from "visual/utils/responsiveMode";
+import {
   ACTIVE,
+  empty as emptyState,
   HOVER,
-  NORMAL,
-  empty as emptyState
+  NORMAL
 } from "visual/utils/stateMode";
 
 describe("Testing 'defaultValueKey' function", function () {

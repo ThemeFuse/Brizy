@@ -1,12 +1,13 @@
 import classNames from "classnames";
-import React, { RefObject, createRef } from "react";
-import SlimSelectLib, { Option } from "slim-select";
+import React, { createRef, type RefObject } from "react";
+import type SlimSelectLib from "slim-select";
+import type { Option } from "slim-select";
 import { SlimSelect } from "visual/component/SlimSelect";
 import { ThemeIcon } from "visual/component/ThemeIcon";
 import Toolbar from "visual/component/Toolbar";
 import { makeDataAttr } from "visual/utils/i18n/attribute";
 import { attachRefs } from "visual/utils/react";
-import { MValue } from "visual/utils/value";
+import type { MValue } from "visual/utils/value";
 import {
   flagsToSelectPhoneOptions,
   getFlagIconClass,
@@ -152,7 +153,7 @@ class Phone extends TextField {
               {...attr}
               ref={this.input}
               className={inputClassName}
-              value={attr?.placeholder}
+              {...(isPreview ? {} : { value: attr?.placeholder })}
               onChange={(e) => {
                 this.hanleInputChange(v, e);
               }}

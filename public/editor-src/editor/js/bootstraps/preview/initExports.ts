@@ -1,20 +1,16 @@
+import type { ExportFunction } from "visual/types";
 import { componentManifest } from "./componentManifest";
 
 interface LoadedComponent {
   name: string;
-  exportFn: ($node: JQuery<HTMLElement>) => void;
+  exportFn: ExportFunction;
 }
 
 /**
  * Detect which components are present in the DOM
  */
-function detectComponents($elem: JQuery<HTMLElement>): string[] {
+function detectComponents(root: HTMLElement): string[] {
   const detected: string[] = [];
-  const root = $elem.get(0);
-
-  if (!root) {
-    return detected;
-  }
 
   for (const [name, config] of Object.entries(componentManifest)) {
     try {
@@ -23,7 +19,7 @@ function detectComponents($elem: JQuery<HTMLElement>): string[] {
         detected.push(name);
       }
     } catch (e) {
-      // eslint-disable-next-line no-console
+      // biome-ignore lint/suspicious/noConsole: migrated from eslint
       console.warn(`[Brz] Invalid selector for ${name}:`, config.selector, e);
     }
   }
@@ -41,7 +37,7 @@ async function loadComponentExports(
     try {
       const config = componentManifest[name];
       if (!config) {
-        // eslint-disable-next-line no-console
+        // biome-ignore lint/suspicious/noConsole: migrated from eslint
         console.warn(`[Brz] Component not found in manifest: ${name}`);
         return null;
       }
@@ -62,14 +58,12 @@ async function loadComponentExports(
 /**
  * Main export function (now async with dynamic component loading)
  */
-export default async function initExports(
-  $elem: JQuery<HTMLElement>
-): Promise<void> {
+export default async function initExports(root: HTMLElement): Promise<void> {
   // 1. Detect which components are on the page
-  const detectedComponents = detectComponents($elem);
+  const detectedComponents = detectComponents(root);
 
   if (process.env.NODE_ENV !== "production") {
-    // eslint-disable-next-line no-console
+    // biome-ignore lint/suspicious/noConsole: migrated from eslint
     console.log("[Brz] Detected components:", detectedComponents);
   }
 
@@ -77,14 +71,14 @@ export default async function initExports(
   const components = await loadComponentExports(detectedComponents);
 
   if (process.env.NODE_ENV !== "production") {
-    // eslint-disable-next-line no-console
+    // biome-ignore lint/suspicious/noConsole: migrated from eslint
     console.log("[Brz] Loaded", components.length, "component exports");
   }
 
   // 3. Execute component export functions
   for (const { name, exportFn } of components) {
     try {
-      exportFn($elem);
+      exportFn(root);
     } catch (err) {
       console.error(`[Brz] Component initialization failed: ${name}`, err);
     }

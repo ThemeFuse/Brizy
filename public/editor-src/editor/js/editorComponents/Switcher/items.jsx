@@ -15,7 +15,7 @@ class SwitcherItems extends EditorArrayComponent {
     onChangeNav: noop
   };
 
-  getItemProps(itemData, itemIndex) {
+  getItemProps(_itemData, itemIndex) {
     const {
       renderType,
       meta,
@@ -32,7 +32,7 @@ class SwitcherItems extends EditorArrayComponent {
       toolbarExtend,
       active: itemIndex === activeTab,
       onChangeNav: () => {
-        itemIndex !== activeTab && onChangeNav(itemIndex);
+        if (itemIndex !== activeTab) onChangeNav(itemIndex);
       }
     };
   }

@@ -33,9 +33,9 @@ export default class Radio extends React.Component {
   };
 
   renderOptions(renderContext) {
-    return React.Children.map(this.props.children, (child, index) => {
+    return React.Children.map(this.props.children, (child) => {
       return React.cloneElement(child, {
-        key: index,
+        key: child.props.value,
         active: this.state.currentValue === child.props.value,
         name: this.props.name,
         renderContext,

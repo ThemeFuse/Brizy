@@ -1,7 +1,7 @@
-import { ElementModel } from "visual/component/Elements/Types";
-import { WithClassName } from "visual/types/attributes";
-import { Literal } from "visual/utils/types/Literal";
-import { ComponentsMeta } from "../EditorComponent/types";
+import type { ElementModel } from "visual/component/Elements/Types";
+import type { WithClassName } from "visual/types/attributes";
+import type { Literal } from "visual/utils/types/Literal";
+import type { ComponentsMeta } from "../EditorComponent/types";
 
 export enum RenderType {
   Static = "static",
@@ -42,3 +42,13 @@ export interface Props extends WithClassName {
 export interface States {
   height: Literal;
 }
+
+export type CssName =
+  | "height"
+  | "display"
+  | "boxSizing"
+  | "marginTop"
+  | "paddingTop"
+  | "paddingBottom"
+  | "borderTopWidth"
+  | "borderBottomWidth";

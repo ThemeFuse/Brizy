@@ -90,7 +90,7 @@ export function cssStyleElementImageHoverWidthWrapper({ v, props = {} }) {
   const sizeType = getSizeType(v, "desktop");
 
   if (sizeType === "custom" || isSvgOrGif(v, "desktop")) {
-    const { width } = props["desktop"];
+    const { width } = props.desktop;
     return isNullish(width) ? "" : `width: ${width}px;`;
   }
 
@@ -125,13 +125,13 @@ export function cssStyleElementImageHoverHeightWrapper({ v, props = {} }) {
   const sizeType = getSizeType(v, "desktop");
 
   if (sizeType === "custom" || isSvgOrGif(v, "desktop")) {
-    const { height } = props["desktop"];
+    const { height } = props.desktop;
     return isNullish(height) ? "" : `height: ${height}px;`;
   }
 
   const dvv = (key) => defaultValueValue({ v, device: "desktop", key });
   const src = dvv("hoverImageSrc");
-  const { width, height } = props["desktop"];
+  const { width, height } = props.desktop;
 
   if (src || isNullish(width) || isNullish(height)) {
     return "height: 100%;";
@@ -169,7 +169,7 @@ export function cssStyleElementImageMarginLeft({ v, device, props = {} }) {
 }
 
 export function cssStyleElementImageHoverMarginLeft({ v, props = {} }) {
-  const { marginLeft } = props["desktop"];
+  const { marginLeft } = props.desktop;
 
   if (isNullish(marginLeft)) {
     return "";
@@ -201,7 +201,7 @@ export function cssStyleElementImageMarginTop({ v, device, props = {} }) {
 }
 
 export function cssStyleElementImageHoverMarginTop({ v, props = {} }) {
-  const { marginTop } = props["desktop"];
+  const { marginTop } = props.desktop;
 
   if (isNullish(marginTop)) {
     return "";
@@ -252,7 +252,13 @@ export function cssStyleElementImageFilter({
   return cssStyleFilter({ v, device, state, prefix });
 }
 
-export function cssStyleElementImageBoxShadow({ v, device, state, getConfig, store }) {
+export function cssStyleElementImageBoxShadow({
+  v,
+  device,
+  state,
+  getConfig,
+  store
+}) {
   const dvv = (key) => defaultValueValue({ v, key, device, state });
 
   const maskShape = dvv("maskShape");

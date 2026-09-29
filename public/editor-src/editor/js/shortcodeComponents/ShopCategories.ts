@@ -1,4 +1,4 @@
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import type { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import { ECWID_CATEGORY_TYPE } from "visual/utils/ecwid";
 import { t } from "visual/utils/i18n";

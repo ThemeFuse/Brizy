@@ -1,7 +1,7 @@
 import { Str } from "@brizy/readers";
-import { WithRenderContext } from "visual/providers/RenderProvider";
-import { FontFamilyType } from "visual/types/Fonts";
-import { DESKTOP, Device } from "visual/utils/devices";
+import type { WithRenderContext } from "visual/providers/RenderProvider";
+import type { FontFamilyType } from "visual/types/Fonts";
+import { DESKTOP, type Device } from "visual/utils/devices";
 import { getFontCssStyle } from "visual/utils/fonts/getFontCssStyle";
 import { defaultValueKey, defaultValueValue } from "visual/utils/onChange";
 import { getOptionFontByGlobal } from "visual/utils/options";
@@ -9,8 +9,8 @@ import { getDetailsModelFontFamily } from "visual/utils/options/getDetailsModelF
 import { read as readStr } from "visual/utils/reader/string";
 import { NORMAL } from "visual/utils/stateMode";
 import { capByPrefix } from "visual/utils/string";
-import { MValue, isNullish } from "visual/utils/value";
-import { CSSValue } from "./types";
+import { isNullish, type MValue } from "visual/utils/value";
+import type { CSSValue } from "./types";
 import { isCustomFontStyle } from "./utils";
 
 export function styleTypography2FontFamily({

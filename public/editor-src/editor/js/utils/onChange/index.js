@@ -1,14 +1,11 @@
 // Main onChange Functions
+// ToDo.. must be deleted in future
 export {
   defaultValueKey,
   defaultValueValue,
   deviceStateValueByKey,
-  makeKeyByStateDevice
-} from "./device";
-
-// ToDo.. must be deleted in future
-export {
-  tabletSyncOnChange,
+  makeKeyByStateDevice,
   mobileSyncOnChange,
+  tabletSyncOnChange,
   validateKeyByProperty
 } from "./device";

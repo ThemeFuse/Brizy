@@ -1,5 +1,5 @@
-import { MouseEvent, TouchEvent } from "react";
-import { HSVAwithSource } from "visual/component/Controls/ColorPicker2/types";
+import type { MouseEvent, TouchEvent } from "react";
+import type { HSVAwithSource } from "visual/component/Controls/ColorPicker2/types";
 
 import HSLA = tinycolor.ColorFormats.HSLA;
 

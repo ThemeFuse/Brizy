@@ -35,7 +35,7 @@ class Items extends EditorArrayComponent {
       value: "true"
     });
 
-    if (row && row.isInner) {
+    if (row?.isInner) {
       if (from.elementType === "column" || from.elementType === "row") {
         return false;
       }
@@ -60,7 +60,7 @@ class Items extends EditorArrayComponent {
     return true;
   };
 
-  getItemProps(itemData, itemIndex, items) {
+  getItemProps(_itemData, itemIndex, items) {
     const meta = deepMerge(this.props.meta, {
       column: {
         item: {

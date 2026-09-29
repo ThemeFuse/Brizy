@@ -1,13 +1,13 @@
 import React, { Component } from "react";
 import { Provider } from "react-redux";
 import { readPageData } from "visual/bootstraps/common/adapter";
-import { GetConfig } from "visual/providers/ConfigProvider/types";
+import type { GetConfig } from "visual/providers/ConfigProvider/types";
 import { editorRendered, hydrate } from "visual/redux/actions";
-import { Store, createStore } from "visual/redux/store";
+import { createStore, type Store } from "visual/redux/store";
 import { parseGlobalBlocksToRecord } from "visual/utils/reader/globalBlocks";
 import { getAuthorized } from "visual/utils/user/getAuthorized";
 import { getMiddleware } from "./getMiddleware";
-import { Props } from "./types";
+import type { Props } from "./types";
 
 class InitStore extends Component<Props> {
   private readonly store: Store;
@@ -25,7 +25,7 @@ class InitStore extends Component<Props> {
       throw new Error("Missing page in config");
     }
 
-    if (!project || !project.data) {
+    if (!project?.data) {
       throw new Error("Missing project data in config");
     }
 

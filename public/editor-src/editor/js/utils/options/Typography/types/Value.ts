@@ -1,9 +1,8 @@
-import { VariationFont } from "visual/types/Fonts";
-import { FontFamilyType } from "visual/types/Fonts";
-import { TextScripts } from "visual/types/Style";
-import { SizeSuffix } from "visual/utils/fonts/SizeSuffix";
-import { Weight } from "visual/utils/fonts/Weight";
-import { Positive } from "visual/utils/math/Positive";
+import type { FontFamilyType, VariationFont } from "visual/types/Fonts";
+import type { TextScripts } from "visual/types/Style";
+import type { SizeSuffix } from "visual/utils/fonts/SizeSuffix";
+import type { Weight } from "visual/utils/fonts/Weight";
+import type { Positive } from "visual/utils/math/Positive";
 
 export interface Value {
   fontStyle: string;

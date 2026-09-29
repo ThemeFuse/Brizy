@@ -34,7 +34,7 @@ export const animate = (value: CounterData): void => {
           step(this.countNum);
         },
 
-        complete: function () {
+        complete: () => {
           step(value.end);
         }
       }

@@ -1,9 +1,9 @@
-import { GetItems } from "visual/editorComponents/EditorComponent/types";
+import type { GetItems } from "visual/editorComponents/EditorComponent/types";
 import { getColorToolbar } from "visual/utils/color";
-import { ToolbarContext } from "visual/utils/elements/posts/types";
+import type { ToolbarContext } from "visual/utils/elements/posts/types";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
-import { ArrowPosition, ArrowStyle, Props, Value } from "../types";
+import { ArrowPosition, ArrowStyle, type Props, type Value } from "../types";
 import { tabFilter } from "./tabFilter";
 
 export default (context?: ToolbarContext) => ({
@@ -66,7 +66,8 @@ const getItems =
     const isArrowDisabled = currentArrowStyle === ArrowStyle.style3;
     const isArrowStyle2 = currentArrowStyle === ArrowStyle.style2;
 
-    const isDynamicContentDisabled = config.elements?.carousel?.disableDynamicContent;
+    const isDynamicContentDisabled =
+      config.elements?.carousel?.disableDynamicContent;
 
     return [
       {

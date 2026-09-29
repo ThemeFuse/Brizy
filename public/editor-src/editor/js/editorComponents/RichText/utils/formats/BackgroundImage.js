@@ -3,28 +3,31 @@ import { SizeType } from "visual/global/Config/types/configs/common";
 import { getImageUrl } from "visual/utils/image";
 import { getImagePopulation } from "../requests/ImagePopulation";
 
-let Inline = Quill.import("blots/inline");
+const Inline = Quill.import("blots/inline");
 
 export const getBackgroundImage = (getConfig) => {
   class BackgroundImage extends Inline {
     static className = "text-mask";
     static create(value) {
+      // biome-ignore lint/complexity/noThisInStatic: parchment's ShadowBlot.create stamps the blot's marker class via `this.className`; calling Inline.create rebinds `this` to Quill's Inline, which has none, so `text-mask` is never applied and the span is unwrapped on reparse
       const node = super.create(value);
-      this.setValue(value, node);
+      BackgroundImage.setValue(value, node);
       return node;
     }
 
     static formats(node) {
-      let imageSrc = node.getAttribute("data-image_src");
+      const imageSrc = node.getAttribute("data-image_src");
       let imagePopulation = node.getAttribute("data-image_population");
 
       if (imageSrc || imagePopulation) {
-        const imagePositionX = parseInt(node.style.backgroundPositionX) || null;
-        const imagePositionY = parseInt(node.style.backgroundPositionY) || null;
+        const imagePositionX =
+          parseInt(node.style.backgroundPositionX, 10) || null;
+        const imagePositionY =
+          parseInt(node.style.backgroundPositionY, 10) || null;
         const imageWidth =
-          parseInt(node.getAttribute("data-image_width")) || null;
+          parseInt(node.getAttribute("data-image_width"), 10) || null;
         const imageHeight =
-          parseInt(node.getAttribute("data-image_height")) || null;
+          parseInt(node.getAttribute("data-image_height"), 10) || null;
         const imageExtension = node.getAttribute("data-image_extension");
         const imageFileName = node.getAttribute("data-image_file_name") ?? "";
 
@@ -112,7 +115,7 @@ export const getBackgroundImage = (getConfig) => {
         node.setAttribute("data-image_height", imageHeight);
         node.setAttribute("data-image_extension", imageExtension);
       } else {
-        this.removeValue(node);
+        BackgroundImage.removeValue(node);
       }
     }
 
@@ -134,9 +137,11 @@ export const getBackgroundImage = (getConfig) => {
       if (name !== this.statics.blotName) {
         super.format(name, value);
       } else {
-        value
-          ? this.constructor.setValue(value, this.domNode)
-          : this.constructor.removeValue(this.domNode);
+        if (value) {
+          this.constructor.setValue(value, this.domNode);
+        } else {
+          this.constructor.removeValue(this.domNode);
+        }
       }
     }
   }

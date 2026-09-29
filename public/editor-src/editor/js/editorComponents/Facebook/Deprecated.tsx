@@ -1,4 +1,4 @@
-import React, { forwardRef, JSX } from "react";
+import React, { forwardRef, type JSX } from "react";
 import { useTranslation } from "visual/providers/I18nProvider";
 
 export const DeprecatedGroups = forwardRef<HTMLDivElement>(

@@ -1,4 +1,4 @@
-import { BaseKey } from "visual/component/Prompts/common/GlobalApps/BaseApp";
+import type { BaseKey } from "visual/component/Prompts/common/GlobalApps/BaseApp";
 
 export interface Error {
   error: string | null;

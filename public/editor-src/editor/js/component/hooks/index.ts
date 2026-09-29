@@ -13,6 +13,7 @@ import type { TimerType } from "visual/types/TimerType";
 
 const eq = <T>(a: T, b: T): boolean => a === b;
 
+// FIXME BRZ-1454: re-runs every render; deps is near-decorative. The fix changes timing.
 export function useDebouncedEffect(
   fn: () => void,
   ms?: number,
@@ -33,6 +34,7 @@ const useLatest = <T>(value: T): RefObject<T> => {
   return ref;
 };
 
+// FIXME BRZ-1454: same deps defect, plus no cleanup on unmount.
 export function useThrottleEffect(
   fn: () => void,
   ms?: number,
@@ -53,10 +55,10 @@ export function useThrottleEffect(
 
 const createTimedCallback =
   (
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // biome-ignore lint/suspicious/noExplicitAny: migrated from eslint
     timer: (t: number) => MonoTypeOperatorFunction<any>
   ) =>
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  // biome-ignore lint/suspicious/noExplicitAny: migrated from eslint
   <T extends any[]>(
     callback: (...args: T) => void,
     timeout: number,
@@ -79,7 +81,7 @@ const createTimedCallback =
   };
 
 export const createTimedOnchange = (
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  // biome-ignore lint/suspicious/noExplicitAny: migrated from eslint
   timer: (t: number) => MonoTypeOperatorFunction<any>
 ): (<T>(
   value: T,
@@ -104,15 +106,15 @@ export const createTimedOnchange = (
         _onChange(v);
         ref.current = v;
       }
-    }, [v, ref, _onChange, compare]);
+    }, [v, _onChange, compare]);
 
     useEffect(() => {
       if (!compare(value, ref.current)) {
         setV(value);
         ref.current = value;
       }
-    }, [value, ref, compare]);
-    const setValue = useCallback(setV, [setV]);
+    }, [value, compare]);
+    const setValue = useCallback(setV, []);
 
     return [v, setValue];
   };

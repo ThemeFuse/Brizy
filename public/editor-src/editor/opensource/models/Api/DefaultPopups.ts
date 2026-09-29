@@ -1,6 +1,6 @@
-import { Literal, Response } from "../common";
-import { DefaultBlockWithID } from "../common/Block";
-import { KitItem } from "./DefaultKits";
+import type { Literal, Response } from "../common";
+import type { DefaultBlockWithID } from "../common/Block";
+import type { KitItem } from "./DefaultKits";
 
 export interface PopupBlock {
   id: string;

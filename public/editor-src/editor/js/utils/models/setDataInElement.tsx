@@ -1,6 +1,6 @@
 import { Obj } from "@brizy/readers";
 import { produce } from "immer";
-import { ElementModel } from "visual/component/Elements/Types";
+import type { ElementModel } from "visual/component/Elements/Types";
 import { NumberSpec } from "visual/utils/math/number";
 
 export function setOffsetsToElementFromWrapper(

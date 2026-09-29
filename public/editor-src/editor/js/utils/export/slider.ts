@@ -40,13 +40,13 @@ export const attachSliderControls = (
     return;
   }
 
-  pauseBtn.addEventListener("click", function () {
+  pauseBtn.addEventListener("click", () => {
     pauseBtn.classList.add("brz-hidden");
     playBtn.classList.remove("brz-hidden");
     onClickPause($this);
   });
 
-  playBtn.addEventListener("click", function () {
+  playBtn.addEventListener("click", () => {
     playBtn.classList.add("brz-hidden");
     pauseBtn.classList.remove("brz-hidden");
     onClickPlay($this);

@@ -1,4 +1,4 @@
-type PositionState = "above" | "below";
+export type PositionState = "above" | "below";
 
 let positionState: PositionState = "above";
 

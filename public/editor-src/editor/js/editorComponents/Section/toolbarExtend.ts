@@ -1,5 +1,5 @@
-import { GetItems } from "visual/editorComponents/EditorComponent/types";
-import { Cloud } from "visual/global/Config";
+import type { GetItems } from "visual/editorComponents/EditorComponent/types";
+import type { Cloud } from "visual/global/Config";
 import { t } from "visual/utils/i18n";
 import { getAllMembershipChoices } from "visual/utils/membership";
 import { getLanguagesChoices } from "visual/utils/multilanguages";

@@ -1,6 +1,6 @@
-import { LeftSidebar } from "./LeftSidebar";
-import { Publish } from "./Publish";
-import { Theme } from "./Theme";
+import type { LeftSidebar } from "./LeftSidebar";
+import type { Publish } from "./Publish";
+import type { Theme } from "./Theme";
 
 export interface UI {
   // Available only when mode is Popup

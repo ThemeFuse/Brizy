@@ -45,15 +45,15 @@ export class SectionSliderAccessibility {
   private setupArrowAccessibility(): void {
     const arrows = [
       {
-        element: this.slick
-          .find(".brz-slick-slider__arrow-prev")
-          .get(0) as HTMLElement | undefined,
+        element: this.slick.find(".brz-slick-slider__arrow-prev").get(0) as
+          | HTMLElement
+          | undefined,
         label: "Previous slide"
       },
       {
-        element: this.slick
-          .find(".brz-slick-slider__arrow-next")
-          .get(0) as HTMLElement | undefined,
+        element: this.slick.find(".brz-slick-slider__arrow-next").get(0) as
+          | HTMLElement
+          | undefined,
         label: "Next slide"
       }
     ];
@@ -143,7 +143,10 @@ export class SectionSliderAccessibility {
       slide.setAttribute("id", `brz-section-slide-${this.instanceId}-${index}`);
       slide.setAttribute("role", "group");
       slide.setAttribute("aria-roledescription", "slide");
-      slide.setAttribute("aria-label", `Slide ${index + 1} of ${slides.length}`);
+      slide.setAttribute(
+        "aria-label",
+        `Slide ${index + 1} of ${slides.length}`
+      );
       slide.setAttribute("aria-hidden", (!isActive).toString());
 
       this.syncSlideFocusableElements(slide, isActive);
@@ -276,9 +279,9 @@ export class SectionSliderAccessibility {
   }
 
   private getDotsList(): HTMLElement | undefined {
-    return this.slick
-      .find(".brz-slick-slider__dots")
-      .get(0) as HTMLElement | undefined;
+    return this.slick.find(".brz-slick-slider__dots").get(0) as
+      | HTMLElement
+      | undefined;
   }
 
   private getDotsListItems(): HTMLElement[] {
@@ -294,15 +297,15 @@ export class SectionSliderAccessibility {
   }
 
   private getPauseButton(): HTMLButtonElement | undefined {
-    return this.slick
-      .find(".brz-slick-slider__pause-button")
-      .get(0) as HTMLButtonElement | undefined;
+    return this.slick.find(".brz-slick-slider__pause-button").get(0) as
+      | HTMLButtonElement
+      | undefined;
   }
 
   private getPauseItem(): HTMLElement | undefined {
-    return this.slick
-      .find(".brz-slick-slider__pause")
-      .get(0) as HTMLElement | undefined;
+    return this.slick.find(".brz-slick-slider__pause").get(0) as
+      | HTMLElement
+      | undefined;
   }
 
   private getSlides(): HTMLElement[] {
@@ -314,9 +317,7 @@ export class SectionSliderAccessibility {
 
   private getArrowButtons(): HTMLButtonElement[] {
     return this.slick
-      .find(
-        ".brz-slick-slider__arrow-prev, .brz-slick-slider__arrow-next"
-      )
+      .find(".brz-slick-slider__arrow-prev, .brz-slick-slider__arrow-next")
       .toArray() as HTMLButtonElement[];
   }
 
@@ -326,4 +327,3 @@ export class SectionSliderAccessibility {
       .toArray() as HTMLElement[];
   }
 }
-

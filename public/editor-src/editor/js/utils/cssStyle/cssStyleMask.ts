@@ -8,7 +8,7 @@ import {
   styleMaskPosition,
   styleMaskSize
 } from "../style2/styleMask";
-import { CSSValue } from "../style2/types";
+import type { CSSValue } from "../style2/types";
 import { cssStyleDropShadow } from "./cssStyleDropShadow";
 
 export function cssStyleMaskShape({
