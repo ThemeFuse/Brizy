@@ -36,6 +36,9 @@ class Brizy_Admin_Blocks_Main
         if (Brizy_Editor_User::is_user_allowed()) {
             add_action('wp_loaded', array($this, 'initializeActions'));
         }
+        // Not user-gated: a page is usually recompiled by an anonymous visitor,
+        // and without this its global blocks are never compiled.
+        add_filter('brizy_editor_config', [$this, 'compilePageGlobalBlocks'], 10, 2);
         add_action('brizy_preview_mode', array($this, 'initializePreviewActions'));
     }
 
@@ -62,7 +65,6 @@ class Brizy_Admin_Blocks_Main
     {
 
         add_filter('brizy_editor_config', [$this, 'addPageGlobalBlocks'], 10, 2);
-        add_filter('brizy_editor_config', [$this, 'compilePageGlobalBlocks'], 10, 2);
         Brizy_Admin_Blocks_Api::_init();
     }
 
