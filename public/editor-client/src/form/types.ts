@@ -119,6 +119,13 @@ export interface Form {
     rej: Response<string>,
     data: CreateIntegrationAccountData
   ) => void;
+  deleteIntegrationAccount: (
+    res: Response<SuccessResponse>,
+    rej: Response<string>,
+    data: {
+      integrationId: string;
+    }
+  ) => void;
   createIntegrationList: CreateIntegrationList;
   getSmtpIntegration: (
     res: Response<IntegrationResponse>,
