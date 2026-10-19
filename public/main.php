@@ -68,7 +68,7 @@ class Brizy_Public_Main
 
     public function previewMode()
     {
-        if (!self::is_view_page($this->post) || wp_doing_ajax()) {
+        if (!self::is_view_page($this->post) || wp_doing_ajax() || post_password_required($this->post->getWpPost())) {
             return;
         }
 
@@ -380,6 +380,12 @@ class Brizy_Public_Main
         }
 
         if (false === strpos($content, 'brz-root__container')) {
+            return $content;
+        }
+
+        // in the_content filter replace the content only for the post this instance was created for
+        $currentPost = get_post();
+        if (doing_filter('the_content') && $currentPost && $currentPost->ID !== $this->post->getWpPost()->ID) {
             return $content;
         }
 
