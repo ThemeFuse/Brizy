@@ -5,6 +5,7 @@
     "declaration": true,
     "declarationDir": "./dist",
     "noEmit": false,
+    "types": ["jest"],
     "paths": {
       "visual/*": ["./editor/js/*"],
       "sass/*": ["./editor/sass/*"],

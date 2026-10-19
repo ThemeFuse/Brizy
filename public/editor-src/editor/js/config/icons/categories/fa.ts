@@ -1,7 +1,7 @@
-import { Category } from "visual/config/icons/Categories";
+import type { Category } from "visual/config/icons/Categories";
 import { t } from "visual/utils/i18n";
 
-// If you want to update Font Awesome could you can consult a small doc here:  docs/fontAwesome.md
+// If you want to update Font Awesome could you can consult a small doc here:  docs/knowledge/guides/workflows/update-font-awesome.md
 export const getCategories = (): Category[] => [
   { title: t("Accessibility"), id: 1 },
   { title: t("Alert"), id: 2 },

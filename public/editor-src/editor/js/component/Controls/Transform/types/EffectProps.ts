@@ -1,5 +1,5 @@
-import { OnChange } from "./index";
-import {
+import type { OnChange } from "./index";
+import type {
   Effect,
   EffectsWithAnchor,
   EffectValue,

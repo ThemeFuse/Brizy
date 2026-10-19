@@ -1,5 +1,5 @@
 import { isWp } from "visual/global/Config";
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import type { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 
 export const hasSidebars = (config: ConfigCommon): boolean => {
   if (isWp(config)) {

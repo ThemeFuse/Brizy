@@ -1,5 +1,5 @@
-import { DCTypes } from "visual/global/Config/types/DynamicContent";
 import { getEnabledLinkOptions } from "visual/global/Config/types/configs/featuresValue";
+import { DCTypes } from "visual/global/Config/types/DynamicContent";
 import { isPopup, isStory } from "visual/providers/EditorModeProvider";
 import { t } from "visual/utils/i18n";
 import { getDynamicContentOption } from "visual/utils/options";
@@ -25,9 +25,11 @@ const dependenciesOption = (v, onChange) => {
     ? {}
     : {
         dependencies: (data) => {
-          "tag" in data
-            ? onChange(getBlockTag(data.tag))
-            : onChange(mergeTypographyFontFamily(data));
+          if ("tag" in data) {
+            onChange(getBlockTag(data.tag));
+          } else {
+            onChange(mergeTypographyFontFamily(data));
+          }
         }
       };
 };

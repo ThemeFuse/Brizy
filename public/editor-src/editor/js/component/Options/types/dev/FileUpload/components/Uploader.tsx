@@ -1,5 +1,5 @@
 import React, {
-  ReactElement,
+  type ReactElement,
   useCallback,
   useEffect,
   useMemo,
@@ -7,16 +7,16 @@ import React, {
 } from "react";
 import EditorIcon from "visual/component/EditorIcon";
 import { ToastNotification } from "visual/component/Notifications";
-import { WithValue } from "visual/component/Options/types/dev/FileUpload/types/Value";
-import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
-import {
+import type { WithValue } from "visual/component/Options/types/dev/FileUpload/types/Value";
+import type {
   FileUploadData,
   Response
 } from "visual/global/Config/types/configs/common";
+import type { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import { useConfig } from "visual/providers/ConfigProvider";
 import { t } from "visual/utils/i18n";
 import {
-  Actions,
+  type Actions,
   errPayload,
   remove,
   reset,
@@ -24,15 +24,15 @@ import {
   upload
 } from "../types/Actions";
 import {
-  Err,
-  State,
-  WithFile,
+  type Err,
   empty,
   errMessage,
   loading,
+  type State,
+  type WithFile,
   withFile
 } from "../types/State";
-import { Value, eq } from "../types/Value";
+import { eq, type Value } from "../types/Value";
 
 export interface Props {
   value: Value;
@@ -139,21 +139,21 @@ export function Uploader({
     }
   }, [isErr, message]);
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: migrated from eslint
   useEffect(() => {
     switch (type) {
       case "WithFile":
-        !eq(value, file) && dispatch(reset(value));
+        if (!eq(value, file)) dispatch(reset(value));
         break;
       case "Empty":
       case "Err":
-        value && dispatch(reset(value));
+        if (value) dispatch(reset(value));
         break;
       case "Loading":
         dispatch(reset(value));
         break;
     }
     // type, file dependency are not nedded
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [value]);
 
   switch (type) {

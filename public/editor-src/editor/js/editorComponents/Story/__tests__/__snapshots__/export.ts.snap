@@ -1,0 +1,484 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`autoplay runs through a looping story 1`] = `
+[
+  "1",
+  "2",
+  "3",
+  "0",
+  "1",
+]
+`;
+
+exports[`autoplay stops on the last slide of a non-looping story and shows the replay arrow 1`] = `
+[
+  "1",
+  "2",
+  "3",
+  "3",
+  "3",
+  "3",
+]
+`;
+
+exports[`autoplay stops on the last slide of a non-looping story and shows the replay arrow 2`] = `
+[
+  [
+    "brz-slick-slider__arrow brz-slick-slider__arrow-prev slick-arrow",
+    "false",
+  ],
+  [
+    "brz-slick-slider__arrow brz-slick-slider__arrow-next slick-arrow slick-disabled",
+    "true",
+  ],
+  [
+    "brz-slick-slider__arrow brz-slick-slider__arrow-replay slick-arrow slick-disabled",
+    "true",
+  ],
+]
+`;
+
+exports[`building the story renders the looping story as before 1`] = `
+"<div class="brz-slick-slider brz-slick-slider__story slick-initialized slick-slider slick-dotted" data-arrows="true" data-auto-play="false" data-auto-play-speed="5000" data-center-mode="true" data-center-padding="60px" data-dots="true" data-dots-class="brz-slick-slider__dots" data-fade="false" data-focus-on-select="true" data-responsive="%5B%7B%22breakpoint%22%3A767%2C%22settings%22%3A%7B%22centerPadding%22%3A%2240px%22%2C%22slidesToShow%22%3A1%2C%22speed%22%3A300%7D%7D%5D" data-slider-loop="true" data-slides-to-scroll="1" data-speed="300" data-swipe="true" data-touch-threshold="15" data-variable-width="true" data-vertical="false">
+<div class="brz-slick-slider__arrow brz-slick-slider__arrow-prev slick-arrow">
+<svg class="brz-icon-svg">
+<use href="/static/editor/icons/editor/right-arrow-thin.svg#brz_icon">
+</use>
+</svg>
+</div>
+<div class="slick-list draggable" style="padding: 0px 60px;">
+<div class="slick-track" style="opacity: 1; width: 20000px; left: 0px;">
+<div aria-hidden="true" class="brz-section__content slick-slide slick-cloned" data-slick-index="-2" id="" tabindex="-1">
+<div class="brz-container">
+<div class="brz-wrapper">
+<p class="brz-tp-paragraph">Slide 3</p>
+</div>
+</div>
+<div class="brz-slick-slider__inner-arrow brz-slick-slider__inner-arrow-next">
+</div>
+<div class="brz-slick-slider__inner-arrow brz-slick-slider__inner-arrow-prev">
+</div>
+</div>
+<div aria-hidden="true" class="brz-section__content slick-slide slick-cloned" data-slick-index="-1" id="" tabindex="-1">
+<div class="brz-container">
+<div class="brz-wrapper">
+<p class="brz-tp-paragraph">Slide 4</p>
+</div>
+</div>
+<div class="brz-slick-slider__inner-arrow brz-slick-slider__inner-arrow-next">
+</div>
+<div class="brz-slick-slider__inner-arrow brz-slick-slider__inner-arrow-prev">
+</div>
+</div>
+<div aria-hidden="false" class="brz-section__content slick-slide slick-current slick-active slick-center" data-slick-index="0" id="slick-slide#" role="tabpanel">
+<div class="brz-container">
+<div class="brz-wrapper">
+<p class="brz-tp-paragraph">Slide 1</p>
+</div>
+<div class="brz-wrapper">
+<a class="brz-a brz-btn" data-brz-link-story="3" href="#" tabindex="0">
+<span class="brz-span brz-text__editor">To 3</span>
+</a>
+</div>
+</div>
+<div class="brz-slick-slider__inner-arrow brz-slick-slider__inner-arrow-next">
+</div>
+<div class="brz-slick-slider__inner-arrow brz-slick-slider__inner-arrow-prev">
+</div>
+</div>
+<div aria-hidden="true" class="brz-section__content slick-slide" data-slick-index="1" id="slick-slide#" role="tabpanel" tabindex="-1">
+<div class="brz-container">
+<div class="brz-wrapper">
+<p class="brz-tp-paragraph">Slide 2</p>
+</div>
+</div>
+<div class="brz-slick-slider__inner-arrow brz-slick-slider__inner-arrow-next">
+</div>
+<div class="brz-slick-slider__inner-arrow brz-slick-slider__inner-arrow-prev">
+</div>
+</div>
+<div aria-hidden="true" class="brz-section__content slick-slide" data-slick-index="2" id="slick-slide#" role="tabpanel" tabindex="-1">
+<div class="brz-container">
+<div class="brz-wrapper">
+<p class="brz-tp-paragraph">Slide 3</p>
+</div>
+</div>
+<div class="brz-slick-slider__inner-arrow brz-slick-slider__inner-arrow-next">
+</div>
+<div class="brz-slick-slider__inner-arrow brz-slick-slider__inner-arrow-prev">
+</div>
+</div>
+<div aria-hidden="true" class="brz-section__content slick-slide" data-slick-index="3" id="slick-slide#" role="tabpanel" tabindex="-1">
+<div class="brz-container">
+<div class="brz-wrapper">
+<p class="brz-tp-paragraph">Slide 4</p>
+</div>
+</div>
+<div class="brz-slick-slider__inner-arrow brz-slick-slider__inner-arrow-next">
+</div>
+<div class="brz-slick-slider__inner-arrow brz-slick-slider__inner-arrow-prev">
+</div>
+</div>
+<div aria-hidden="true" class="brz-section__content slick-slide slick-cloned slick-center" data-slick-index="4" id="" tabindex="-1">
+<div class="brz-container">
+<div class="brz-wrapper">
+<p class="brz-tp-paragraph">Slide 1</p>
+</div>
+<div class="brz-wrapper">
+<a class="brz-a brz-btn" data-brz-link-story="3" href="#" tabindex="-1">
+<span class="brz-span brz-text__editor">To 3</span>
+</a>
+</div>
+</div>
+<div class="brz-slick-slider__inner-arrow brz-slick-slider__inner-arrow-next">
+</div>
+<div class="brz-slick-slider__inner-arrow brz-slick-slider__inner-arrow-prev">
+</div>
+</div>
+<div aria-hidden="true" class="brz-section__content slick-slide slick-cloned" data-slick-index="5" id="" tabindex="-1">
+<div class="brz-container">
+<div class="brz-wrapper">
+<p class="brz-tp-paragraph">Slide 2</p>
+</div>
+</div>
+<div class="brz-slick-slider__inner-arrow brz-slick-slider__inner-arrow-next">
+</div>
+<div class="brz-slick-slider__inner-arrow brz-slick-slider__inner-arrow-prev">
+</div>
+</div>
+<div aria-hidden="true" class="brz-section__content slick-slide slick-cloned" data-slick-index="6" id="" tabindex="-1">
+<div class="brz-container">
+<div class="brz-wrapper">
+<p class="brz-tp-paragraph">Slide 3</p>
+</div>
+</div>
+<div class="brz-slick-slider__inner-arrow brz-slick-slider__inner-arrow-next">
+</div>
+<div class="brz-slick-slider__inner-arrow brz-slick-slider__inner-arrow-prev">
+</div>
+</div>
+<div aria-hidden="true" class="brz-section__content slick-slide slick-cloned" data-slick-index="7" id="" tabindex="-1">
+<div class="brz-container">
+<div class="brz-wrapper">
+<p class="brz-tp-paragraph">Slide 4</p>
+</div>
+</div>
+<div class="brz-slick-slider__inner-arrow brz-slick-slider__inner-arrow-next">
+</div>
+<div class="brz-slick-slider__inner-arrow brz-slick-slider__inner-arrow-prev">
+</div>
+</div>
+</div>
+</div>
+<div class="brz-slick-slider__arrow brz-slick-slider__arrow-next slick-arrow">
+<svg class="brz-icon-svg">
+<use href="/static/editor/icons/editor/right-arrow-thin.svg#brz_icon">
+</use>
+</svg>
+</div>
+           <div class="brz-slick-slider__arrow brz-slick-slider__arrow-replay slick-arrow">
+<svg class="brz-icon-svg">
+<use href="/static/editor/icons/glyph/undo-29.svg#nc_icon">
+</use>
+</svg>
+</div>
+<ul class="brz-slick-slider__dots" role="tablist">
+<li class="slick-active" role="presentation">
+<button aria-controls="slick-slide#" aria-label="1 of 4" aria-selected="true" id="slick-slide-control#" role="tab" tabindex="0" type="button">1</button>
+</li>
+<li role="presentation">
+<button aria-controls="slick-slide#" aria-label="2 of 4" id="slick-slide-control#" role="tab" tabindex="-1" type="button">2</button>
+</li>
+<li role="presentation">
+<button aria-controls="slick-slide#" aria-label="3 of 4" id="slick-slide-control#" role="tab" tabindex="-1" type="button">3</button>
+</li>
+<li role="presentation">
+<button aria-controls="slick-slide#" aria-label="4 of 4" id="slick-slide-control#" role="tab" tabindex="-1" type="button">4</button>
+</li>
+</ul>
+</div>"
+`;
+
+exports[`building the story renders the non-looping story as before 1`] = `
+"<div class="brz-slick-slider brz-slick-slider__story slick-initialized slick-slider slick-dotted" data-arrows="true" data-auto-play="false" data-auto-play-speed="5000" data-center-mode="true" data-center-padding="60px" data-dots="true" data-dots-class="brz-slick-slider__dots" data-fade="false" data-focus-on-select="true" data-responsive="%5B%7B%22breakpoint%22%3A767%2C%22settings%22%3A%7B%22centerPadding%22%3A%2240px%22%2C%22slidesToShow%22%3A1%2C%22speed%22%3A300%7D%7D%5D" data-slider-loop="false" data-slides-to-scroll="1" data-speed="300" data-swipe="true" data-touch-threshold="15" data-variable-width="true" data-vertical="false">
+<div aria-disabled="true" class="brz-slick-slider__arrow brz-slick-slider__arrow-prev slick-arrow slick-disabled">
+<svg class="brz-icon-svg">
+<use href="/static/editor/icons/editor/right-arrow-thin.svg#brz_icon">
+</use>
+</svg>
+</div>
+<div class="slick-list draggable" style="padding: 0px 60px;">
+<div class="slick-track" style="opacity: 1; width: 20000px; left: 0px;">
+<div aria-hidden="true" class="brz-section__content slick-slide slick-current slick-center" data-slick-index="0" id="slick-slide#" role="tabpanel">
+<div class="brz-container">
+<div class="brz-wrapper">
+<p class="brz-tp-paragraph">Slide 1</p>
+</div>
+<div class="brz-wrapper">
+<a class="brz-a brz-btn" data-brz-link-story="3" href="#" tabindex="-1">
+<span class="brz-span brz-text__editor">To 3</span>
+</a>
+</div>
+</div>
+<div class="brz-slick-slider__inner-arrow brz-slick-slider__inner-arrow-next">
+</div>
+<div class="brz-slick-slider__inner-arrow brz-slick-slider__inner-arrow-prev">
+</div>
+</div>
+<div aria-hidden="true" class="brz-section__content slick-slide" data-slick-index="1" id="slick-slide#" role="tabpanel" tabindex="-1">
+<div class="brz-container">
+<div class="brz-wrapper">
+<p class="brz-tp-paragraph">Slide 2</p>
+</div>
+</div>
+<div class="brz-slick-slider__inner-arrow brz-slick-slider__inner-arrow-next">
+</div>
+<div class="brz-slick-slider__inner-arrow brz-slick-slider__inner-arrow-prev">
+</div>
+</div>
+<div aria-hidden="true" class="brz-section__content slick-slide" data-slick-index="2" id="slick-slide#" role="tabpanel" tabindex="-1">
+<div class="brz-container">
+<div class="brz-wrapper">
+<p class="brz-tp-paragraph">Slide 3</p>
+</div>
+</div>
+<div class="brz-slick-slider__inner-arrow brz-slick-slider__inner-arrow-next">
+</div>
+<div class="brz-slick-slider__inner-arrow brz-slick-slider__inner-arrow-prev">
+</div>
+</div>
+<div aria-hidden="true" class="brz-section__content slick-slide" data-slick-index="3" id="slick-slide#" role="tabpanel" tabindex="-1">
+<div class="brz-container">
+<div class="brz-wrapper">
+<p class="brz-tp-paragraph">Slide 4</p>
+</div>
+</div>
+<div class="brz-slick-slider__inner-arrow brz-slick-slider__inner-arrow-next">
+</div>
+<div class="brz-slick-slider__inner-arrow brz-slick-slider__inner-arrow-prev">
+</div>
+</div>
+</div>
+</div>
+<div aria-disabled="false" class="brz-slick-slider__arrow brz-slick-slider__arrow-next slick-arrow">
+<svg class="brz-icon-svg">
+<use href="/static/editor/icons/editor/right-arrow-thin.svg#brz_icon">
+</use>
+</svg>
+</div>
+           <div aria-disabled="false" class="brz-slick-slider__arrow brz-slick-slider__arrow-replay slick-arrow">
+<svg class="brz-icon-svg">
+<use href="/static/editor/icons/glyph/undo-29.svg#nc_icon">
+</use>
+</svg>
+</div>
+<ul class="brz-slick-slider__dots" role="tablist">
+<li class="slick-active" role="presentation">
+<button aria-controls="slick-slide#" aria-label="1 of 4" aria-selected="true" id="slick-slide-control#" role="tab" tabindex="0" type="button">1</button>
+</li>
+<li role="presentation">
+<button aria-controls="slick-slide#" aria-label="2 of 4" id="slick-slide-control#" role="tab" tabindex="-1" type="button">2</button>
+</li>
+<li role="presentation">
+<button aria-controls="slick-slide#" aria-label="3 of 4" id="slick-slide-control#" role="tab" tabindex="-1" type="button">3</button>
+</li>
+<li role="presentation">
+<button aria-controls="slick-slide#" aria-label="4 of 4" id="slick-slide-control#" role="tab" tabindex="-1" type="button">4</button>
+</li>
+</ul>
+</div>"
+`;
+
+exports[`moving between slides follows ArrowLeft inside the slider 1`] = `"opacity: 1; width: 20000px; left: 0px;"`;
+
+exports[`moving between slides follows ArrowRight inside the slider 1`] = `"opacity: 1; width: 20000px; left: 0px;"`;
+
+exports[`moving between slides follows a button linking to slide 3 1`] = `"opacity: 1; width: 20000px; left: 0px;"`;
+
+exports[`moving between slides follows a click on the next slide (focus on select) 1`] = `"opacity: 1; width: 20000px; left: 0px;"`;
+
+exports[`moving between slides follows the left half of the current slide 1`] = `"opacity: 1; width: 20000px; left: 0px;"`;
+
+exports[`moving between slides follows the next arrow 1`] = `"opacity: 1; width: 20000px; left: 0px;"`;
+
+exports[`moving between slides follows the previous arrow 1`] = `"opacity: 1; width: 20000px; left: 0px;"`;
+
+exports[`moving between slides follows the right half of the current slide 1`] = `"opacity: 1; width: 20000px; left: 0px;"`;
+
+exports[`moving between slides follows the third dot 1`] = `"opacity: 1; width: 20000px; left: 0px;"`;
+
+exports[`small screens stretches the slides to the viewport height when built on a phone 1`] = `
+[
+  "height: 844px;",
+  "height: 844px;",
+  "height: 844px;",
+  "height: 844px;",
+  "height: 844px;",
+  "height: 844px;",
+  "height: 844px;",
+  "height: 844px;",
+  "height: 844px;",
+  "height: 844px;",
+]
+`;
+
+exports[`small screens stretches the slides when the viewport crosses the mobile breakpoint 1`] = `
+"<div class="brz-slick-slider brz-slick-slider__story slick-initialized slick-slider slick-dotted" data-arrows="true" data-auto-play="false" data-auto-play-speed="5000" data-center-mode="true" data-center-padding="60px" data-dots="true" data-dots-class="brz-slick-slider__dots" data-fade="false" data-focus-on-select="true" data-responsive="%5B%7B%22breakpoint%22%3A767%2C%22settings%22%3A%7B%22centerPadding%22%3A%2240px%22%2C%22slidesToShow%22%3A1%2C%22speed%22%3A300%7D%7D%5D" data-slider-loop="true" data-slides-to-scroll="1" data-speed="300" data-swipe="true" data-touch-threshold="15" data-variable-width="true" data-vertical="false">
+<div class="brz-slick-slider__arrow brz-slick-slider__arrow-prev slick-arrow">
+<svg class="brz-icon-svg">
+<use href="/static/editor/icons/editor/right-arrow-thin.svg#brz_icon">
+</use>
+</svg>
+</div>
+<div class="slick-list draggable" style="padding: 0px 40px;">
+<div class="slick-track" style="opacity: 1; width: 20000px; left: 0px;">
+<div aria-hidden="true" class="brz-section__content slick-slide slick-cloned" data-slick-index="-2" id="" role="tabpanel" style="height: 844px;" tabindex="-1">
+<div class="brz-container">
+<div class="brz-wrapper">
+<p class="brz-tp-paragraph">Slide 3</p>
+</div>
+</div>
+<div class="brz-slick-slider__inner-arrow brz-slick-slider__inner-arrow-next">
+</div>
+<div class="brz-slick-slider__inner-arrow brz-slick-slider__inner-arrow-prev">
+</div>
+</div>
+<div aria-hidden="true" class="brz-section__content slick-slide slick-cloned" data-slick-index="-1" id="" role="tabpanel" style="height: 844px;" tabindex="-1">
+<div class="brz-container">
+<div class="brz-wrapper">
+<p class="brz-tp-paragraph">Slide 4</p>
+</div>
+</div>
+<div class="brz-slick-slider__inner-arrow brz-slick-slider__inner-arrow-next">
+</div>
+<div class="brz-slick-slider__inner-arrow brz-slick-slider__inner-arrow-prev">
+</div>
+</div>
+<div aria-describedby="slick-slide-control#" aria-hidden="false" class="brz-section__content slick-slide slick-current slick-active slick-center" data-slick-index="0" id="slick-slide#" role="tabpanel" style="height: 844px;">
+<div class="brz-container">
+<div class="brz-wrapper">
+<p class="brz-tp-paragraph">Slide 1</p>
+</div>
+<div class="brz-wrapper">
+<a class="brz-a brz-btn" data-brz-link-story="3" href="#" tabindex="0">
+<span class="brz-span brz-text__editor">To 3</span>
+</a>
+</div>
+</div>
+<div class="brz-slick-slider__inner-arrow brz-slick-slider__inner-arrow-next">
+</div>
+<div class="brz-slick-slider__inner-arrow brz-slick-slider__inner-arrow-prev">
+</div>
+</div>
+<div aria-describedby="slick-slide-control#" aria-hidden="true" class="brz-section__content slick-slide" data-slick-index="1" id="slick-slide#" role="tabpanel" style="height: 844px;" tabindex="-1">
+<div class="brz-container">
+<div class="brz-wrapper">
+<p class="brz-tp-paragraph">Slide 2</p>
+</div>
+</div>
+<div class="brz-slick-slider__inner-arrow brz-slick-slider__inner-arrow-next">
+</div>
+<div class="brz-slick-slider__inner-arrow brz-slick-slider__inner-arrow-prev">
+</div>
+</div>
+<div aria-describedby="slick-slide-control#" aria-hidden="true" class="brz-section__content slick-slide" data-slick-index="2" id="slick-slide#" role="tabpanel" style="height: 844px;" tabindex="-1">
+<div class="brz-container">
+<div class="brz-wrapper">
+<p class="brz-tp-paragraph">Slide 3</p>
+</div>
+</div>
+<div class="brz-slick-slider__inner-arrow brz-slick-slider__inner-arrow-next">
+</div>
+<div class="brz-slick-slider__inner-arrow brz-slick-slider__inner-arrow-prev">
+</div>
+</div>
+<div aria-describedby="slick-slide-control#" aria-hidden="true" class="brz-section__content slick-slide" data-slick-index="3" id="slick-slide#" role="tabpanel" style="height: 844px;" tabindex="-1">
+<div class="brz-container">
+<div class="brz-wrapper">
+<p class="brz-tp-paragraph">Slide 4</p>
+</div>
+</div>
+<div class="brz-slick-slider__inner-arrow brz-slick-slider__inner-arrow-next">
+</div>
+<div class="brz-slick-slider__inner-arrow brz-slick-slider__inner-arrow-prev">
+</div>
+</div>
+<div aria-hidden="true" class="brz-section__content slick-slide slick-cloned slick-center" data-slick-index="4" id="" role="tabpanel" style="height: 844px;" tabindex="-1">
+<div class="brz-container">
+<div class="brz-wrapper">
+<p class="brz-tp-paragraph">Slide 1</p>
+</div>
+<div class="brz-wrapper">
+<a class="brz-a brz-btn" data-brz-link-story="3" href="#" tabindex="-1">
+<span class="brz-span brz-text__editor">To 3</span>
+</a>
+</div>
+</div>
+<div class="brz-slick-slider__inner-arrow brz-slick-slider__inner-arrow-next">
+</div>
+<div class="brz-slick-slider__inner-arrow brz-slick-slider__inner-arrow-prev">
+</div>
+</div>
+<div aria-hidden="true" class="brz-section__content slick-slide slick-cloned" data-slick-index="5" id="" role="tabpanel" style="height: 844px;" tabindex="-1">
+<div class="brz-container">
+<div class="brz-wrapper">
+<p class="brz-tp-paragraph">Slide 2</p>
+</div>
+</div>
+<div class="brz-slick-slider__inner-arrow brz-slick-slider__inner-arrow-next">
+</div>
+<div class="brz-slick-slider__inner-arrow brz-slick-slider__inner-arrow-prev">
+</div>
+</div>
+<div aria-hidden="true" class="brz-section__content slick-slide slick-cloned" data-slick-index="6" id="" role="tabpanel" style="height: 844px;" tabindex="-1">
+<div class="brz-container">
+<div class="brz-wrapper">
+<p class="brz-tp-paragraph">Slide 3</p>
+</div>
+</div>
+<div class="brz-slick-slider__inner-arrow brz-slick-slider__inner-arrow-next">
+</div>
+<div class="brz-slick-slider__inner-arrow brz-slick-slider__inner-arrow-prev">
+</div>
+</div>
+<div aria-hidden="true" class="brz-section__content slick-slide slick-cloned" data-slick-index="7" id="" role="tabpanel" style="height: 844px;" tabindex="-1">
+<div class="brz-container">
+<div class="brz-wrapper">
+<p class="brz-tp-paragraph">Slide 4</p>
+</div>
+</div>
+<div class="brz-slick-slider__inner-arrow brz-slick-slider__inner-arrow-next">
+</div>
+<div class="brz-slick-slider__inner-arrow brz-slick-slider__inner-arrow-prev">
+</div>
+</div>
+</div>
+</div>
+<div class="brz-slick-slider__arrow brz-slick-slider__arrow-next slick-arrow">
+<svg class="brz-icon-svg">
+<use href="/static/editor/icons/editor/right-arrow-thin.svg#brz_icon">
+</use>
+</svg>
+</div>
+           <div class="brz-slick-slider__arrow brz-slick-slider__arrow-replay slick-arrow">
+<svg class="brz-icon-svg">
+<use href="/static/editor/icons/glyph/undo-29.svg#nc_icon">
+</use>
+</svg>
+</div>
+<ul class="brz-slick-slider__dots" role="tablist">
+<li class="slick-active" role="presentation">
+<button aria-controls="slick-slide#" aria-label="1 of 4" aria-selected="true" id="slick-slide-control#" role="tab" tabindex="0" type="button">1</button>
+</li>
+<li role="presentation">
+<button aria-controls="slick-slide#" aria-label="2 of 4" id="slick-slide-control#" role="tab" tabindex="-1" type="button">2</button>
+</li>
+<li role="presentation">
+<button aria-controls="slick-slide#" aria-label="3 of 4" id="slick-slide-control#" role="tab" tabindex="-1" type="button">3</button>
+</li>
+<li role="presentation">
+<button aria-controls="slick-slide#" aria-label="4 of 4" id="slick-slide-control#" role="tab" tabindex="-1" type="button">4</button>
+</li>
+</ul>
+</div>"
+`;

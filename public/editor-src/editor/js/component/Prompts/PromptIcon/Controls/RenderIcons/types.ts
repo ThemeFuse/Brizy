@@ -1,5 +1,5 @@
-import { Props as BaseProps } from "../types";
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import type { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import type { Props as BaseProps } from "../types";
 
 export type Props = Omit<BaseProps, "opened" | "onTabClick" | "onClose"> & {
   config: ConfigCommon;

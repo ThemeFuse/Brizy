@@ -1,13 +1,13 @@
-import { ElementModel } from "visual/component/Elements/Types";
-import { Props as EdProps } from "visual/editorComponents/EditorComponent";
+import type { ElementModel } from "visual/component/Elements/Types";
+import type { Props as EdProps } from "visual/editorComponents/EditorComponent";
 
 export type ThirdPartyContextType = {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  // biome-ignore lint/suspicious/noExplicitAny: migrated from eslint
   editorProps: EdProps<ElementModel, Record<string, any>>;
 };
 
 export interface Props {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  // biome-ignore lint/suspicious/noExplicitAny: migrated from eslint
   editorProps: EdProps<ElementModel, Record<string, any>>;
   children: React.ReactNode;
 }

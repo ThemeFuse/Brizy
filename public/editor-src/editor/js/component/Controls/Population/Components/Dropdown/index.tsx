@@ -3,7 +3,7 @@ import React, { useCallback } from "react";
 import { Manager, Popper, Reference } from "react-popper";
 import ClickOutside from "visual/component/ClickOutside";
 import { attachRef } from "visual/utils/react";
-import { FCC } from "visual/utils/react/types";
+import type { FCC } from "visual/utils/react/types";
 import { PopulationIcon } from "../../PopulationIcon";
 import type { Props } from "./types";
 

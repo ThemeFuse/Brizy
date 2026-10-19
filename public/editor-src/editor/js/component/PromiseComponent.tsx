@@ -2,7 +2,7 @@
 // My guess is that the waiting mechanism could be done more elegantly
 // via Promise.race([fetchPromise, timeoutPromise]).
 // Also we should see if the renderProps api should be replaced with something other
-import React, { Reducer, useEffect, useReducer } from "react";
+import React, { type Reducer, useEffect, useReducer } from "react";
 
 type TState<TResolve, TReject> =
   | {
@@ -66,7 +66,7 @@ function reducer<TResolve, TReject>(
 
 type Props<TResolve, TReject> = {
   getPromise: () => Promise<TResolve>;
-  renderResolved: (r: TResolve) => React.ReactElement;
+  renderResolved: (r: TResolve) => React.ReactNode;
   renderRejected?: (e: TReject) => React.ReactElement;
   renderWaiting?: () => React.ReactElement;
   delayMs?: number;
@@ -79,7 +79,7 @@ export function PromiseComponent<TResolve, TReject>({
   renderRejected,
   renderWaiting,
   delayMs = 0
-}: Props<TResolve, TReject>): React.ReactElement | null {
+}: Props<TResolve, TReject>): React.ReactNode {
   const hasDelay = delayMs && delayMs > 0;
   const [state, dispatch] = useReducer<
     Reducer<TState<TResolve, TReject>, TAction<TResolve, TReject>>

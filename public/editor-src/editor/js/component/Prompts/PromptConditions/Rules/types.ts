@@ -1,4 +1,4 @@
-import { EntityTypeRule } from "visual/types/Rule";
+import type { EntityTypeRule } from "visual/types/Rule";
 
 export type StatusRule = "published" | "draft";
 

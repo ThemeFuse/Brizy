@@ -8,6 +8,6 @@ export interface Tab {
   id: string;
   title: string;
   icon: string;
-  // eslint-disable-next-line
+  // biome-ignore lint: migrated from eslint
   component: ComponentClass<any>;
 }

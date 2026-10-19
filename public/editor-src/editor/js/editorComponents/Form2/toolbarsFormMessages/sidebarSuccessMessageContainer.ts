@@ -1,10 +1,10 @@
 import { t } from "visual/utils/i18n";
-import { GetItems } from "../../EditorComponent/types";
+import type { GetItems } from "../../EditorComponent/types";
 import {
   successMessageContainerSelector,
   successMessageSelector
 } from "../css";
-import { Value } from "../types";
+import type { Value } from "../types";
 
 export const getItems: GetItems<Value> = () => {
   return [

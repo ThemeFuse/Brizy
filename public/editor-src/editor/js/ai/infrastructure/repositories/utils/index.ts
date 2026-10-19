@@ -5,16 +5,22 @@ export {
   createDefaultBlock,
   parseBackendBlockData
 } from "./block";
-
 // DND utilities
 export {
   buildAddableFromTo,
   buildMoveFromTo,
   mapToDndContainerType
 } from "./dnd";
-
+export type {
+  ContainerAcceptResult,
+  ContainerCorrectionResult,
+  DuplicateElementInBlockResult,
+  RemoveElementFromBlockResult,
+  UpdateColumnInRowResult
+} from "./element";
 // Element utilities
 export {
+  canContainerAccept,
   correctContainerForElement,
   createDefaultElement,
   duplicateElementInBlock,
@@ -26,45 +32,41 @@ export {
   removeElementFromBlock,
   updateColumnInRow
 } from "./element";
-export type {
-  ContainerCorrectionResult,
-  DuplicateElementInBlockResult,
-  RemoveElementFromBlockResult,
-  UpdateColumnInRowResult
-} from "./element";
-
-// RichText utilities
-export {
-  applyRichTextUpdates,
-  applyTypographyStyles,
-  findAndReplaceInHtml,
-  isFontStyle,
-  replaceAllTextInHtml,
-  updateRichTextColor
-} from "./richtext";
-export type { FontStyleTypes, UpdateRichTextParams } from "./richtext";
-
+export type { AddStyleInput, UpdateStyleInput } from "./project";
 // Project utilities
 export {
   addStyleSchema,
   buildNewStyle,
   duplicateCurrentStyle,
+  knownFontStyleIds,
   mergeStyleUpdate,
   toFontSummaries,
   toStyleDetail,
   toStyleSummary,
+  unknownFontStyleIds,
   updateStyleSchema
 } from "./project";
-export type { AddStyleInput, UpdateStyleInput } from "./project";
-
+export type {
+  FontStyleTypes,
+  UpdateRichTextParams
+} from "./richtext";
+// RichText utilities
+export {
+  applyRichTextUpdates,
+  applyTypographyStyles,
+  containsFindText,
+  findAndReplaceInHtml,
+  isFontStyle,
+  replaceAllTextInHtml,
+  updateRichTextColor
+} from "./richtext";
+export type { InternalSearchResult } from "./search";
 // Search utilities
 export {
   applyFuzzySearch,
   collectElements,
-  searchInElement,
+  compileSearchFilters,
   toSearchResults
 } from "./search";
-export type { InternalSearchResult } from "./search";
-
 // Site (website generation) utilities
-export { removeMenuData, topInsertIndex } from "./site";
+export { topInsertIndex } from "./site";

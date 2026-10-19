@@ -1,9 +1,9 @@
 import { isString } from "es-toolkit";
-import { ElementModel } from "visual/component/Elements/Types";
-import { StoryAnchorAttribute } from "visual/component/Link/types/Slide";
+import type { ElementModel } from "visual/component/Elements/Types";
+import type { StoryAnchorAttribute } from "visual/component/Link/types/Slide";
 import * as LinkTarget from "visual/component/Link/types/Target";
 import * as LinkType from "visual/component/Link/types/Type";
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import type { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { SizeType } from "visual/global/Config/types/configs/common";
 import {
   getPopulatedEntityValues,
@@ -19,7 +19,7 @@ import {
 import { isGIFExtension, isSVGExtension } from "visual/utils/image/utils";
 import * as Num from "visual/utils/reader/number";
 import * as Str from "visual/utils/string/specs";
-import { MValue, isNullish } from "visual/utils/value";
+import { isNullish, type MValue } from "visual/utils/value";
 
 export interface Value extends ElementModel {
   link?: unknown;

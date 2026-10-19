@@ -2,7 +2,7 @@
  * Isolates a plugin slot contribution's render errors so a crashing
  * plugin cannot take down the surrounding editor UI.
  */
-import { Component, ReactNode } from "react";
+import { Component, type ReactNode } from "react";
 
 interface Props {
   children: ReactNode;

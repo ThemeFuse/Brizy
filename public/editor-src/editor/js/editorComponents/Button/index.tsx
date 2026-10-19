@@ -1,9 +1,9 @@
 import classnames from "classnames";
 import React, {
+  createRef,
   type ReactElement,
   type ReactNode,
-  type RefObject,
-  createRef
+  type RefObject
 } from "react";
 import { omit } from "timm";
 import BoxResizer from "visual/component/BoxResizer";

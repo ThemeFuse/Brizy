@@ -1,4 +1,4 @@
 import { createContext } from "react";
-import { TreeContextType } from "./types";
+import type { TreeContextType } from "./types";
 
 export const TreeContext = createContext<TreeContextType | null>(null);

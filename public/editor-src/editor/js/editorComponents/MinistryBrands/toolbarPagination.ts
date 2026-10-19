@@ -1,16 +1,16 @@
-import { ElementModel } from "visual/component/Elements/Types";
+import type { ElementModel } from "visual/component/Elements/Types";
 import { getColorToolbar } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
 import { ACTIVE, HOVER, NORMAL } from "visual/utils/stateMode";
-import { Params } from "../EditorComponent/types";
-import { ToolbarItemType } from "../ToolbarItemType";
+import type { Params } from "../EditorComponent/types";
+import type { ToolbarItemType } from "../ToolbarItemType";
 
 export const getItems = <
   M extends ElementModel,
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  // biome-ignore lint/suspicious/noExplicitAny: migrated from eslint
   P extends Record<string, any> = Record<string, unknown>,
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  // biome-ignore lint/suspicious/noExplicitAny: migrated from eslint
   S extends Record<string, any> = Record<string, unknown>
 >({
   v,

@@ -1,5 +1,5 @@
 import { checkValue, checkValue2 } from "visual/utils/checkValue";
-import { Color, Columns, Network, TargetUrl, View } from "./types";
+import { Color, type Columns, Network, TargetUrl, View } from "./types";
 
 export const getNetworkInfo = (network: Network) => {
   switch (network) {

@@ -3,15 +3,15 @@ import type { ConfigCommon } from "visual/global/Config/types/configs/ConfigComm
 import { loadCollectionItems, searchCollectionItems } from "visual/utils/api";
 import {
   CURRENT_CONTEXT_TYPE,
-  ORDER_BY_FIELD,
   createFieldCollectionId,
   fieldConverter,
   getManualTitle,
+  ORDER_BY_FIELD,
   orderByConverter
 } from "visual/utils/elements/posts";
 import type { ToolbarContext } from "visual/utils/elements/posts/types";
 import { t } from "visual/utils/i18n";
-import type { VDecoded, Value } from "../types";
+import type { Value, VDecoded } from "../types";
 import { decodeV } from "../utils.common";
 
 export function tabFilter({
@@ -46,8 +46,7 @@ export function tabFilter({
   );
 
   const isOrderByField = vd.orderBy === ORDER_BY_FIELD;
-  const showField =
-    isOrderByField && fieldChoices.length > 0;
+  const showField = isOrderByField && fieldChoices.length > 0;
   const collectionChoices = sourceChoices.filter(
     (c) => c.value !== CURRENT_CONTEXT_TYPE
   );

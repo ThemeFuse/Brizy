@@ -1,4 +1,4 @@
-const path = require("path");
+const path = require("node:path");
 const rspack = require("@rspack/core");
 const ESLintImportedFilesPlugin = require("./build-utils/eslint-imported-files-plugin");
 const {
@@ -80,9 +80,6 @@ exports.preview = (options) => {
         }
       }
     },
-    externals: {
-      jquery: "jQuery"
-    },
     performance: {
       hints: options.IS_PRODUCTION ? "warning" : false,
       maxEntrypointSize: 100000,
@@ -125,7 +122,8 @@ exports.libs = (options) => {
   const { free } = LibsConfig;
   const entry = free.reduce((acc, curr) => {
     const { name, path } = curr;
-    return { ...acc, [name]: path };
+    acc[name] = path;
+    return acc;
   }, {});
 
   return {

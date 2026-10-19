@@ -1,18 +1,22 @@
 import { types } from "visual/component/Options/types";
-import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
+import type { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
 import { reduce } from "visual/utils/options/reduce";
-import { Value } from ".";
+import type { Value } from ".";
 
 export function getComponentProps(
   v: Omit<Value, "thirdPartyId">,
   config: ToolbarItemType[]
 ): Record<string, unknown> {
-  const getId = (acc: string[], i: ToolbarItemType): string[] =>
-    i.type in types ? [...acc, i.id] : acc;
+  const getId = (acc: string[], i: ToolbarItemType): string[] => {
+    if (i.type in types) {
+      acc.push(i.id);
+    }
+    return acc;
+  };
   return config
-    .map((item: ToolbarItemType) => reduce(getId, [], item))
-    .flat()
-    .reduce((acc, key) => {
-      return { ...acc, [key]: v[key] };
+    .flatMap((item: ToolbarItemType) => reduce(getId, [], item))
+    .reduce<Record<string, unknown>>((acc, key) => {
+      acc[key] = v[key];
+      return acc;
     }, {});
 }

@@ -1,20 +1,20 @@
 import classnames from "classnames";
 import { debounce } from "es-toolkit";
 import { produce } from "immer";
-import React, { ReactElement } from "react";
+import React, { type ReactElement } from "react";
 import { CodeMirror } from "visual/component/Controls/CodeMirror";
 import { Switch } from "visual/component/Controls/Switch";
 import Tooltip from "visual/component/Controls/Tooltip";
 import EditorIcon from "visual/component/EditorIcon";
 import { EmailDisconnect } from "visual/component/Prompts/PromptForm/Step";
 import { isWp } from "visual/global/Config";
-import { IntegrationType } from "visual/global/Config/types/Form";
+import type { IntegrationType } from "visual/global/Config/types/Form";
 import { getForm, getSmtpIntegration, updateForm } from "visual/utils/api";
 import { isPro } from "visual/utils/env";
 import { t } from "visual/utils/i18n";
 import BaseIntegration from "../common/GlobalApps/BaseIntegration";
 import AppList from "../common/GlobalApps/StepsView/AppsList";
-import {
+import type {
   AppData,
   BaseIntegrationContext,
   BaseIntegrationProps,

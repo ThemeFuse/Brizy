@@ -1,5 +1,5 @@
-import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import type { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
+import type { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import {
   CURRENT_CONTEXT_TYPE,
   orderByConverter
@@ -12,9 +12,9 @@ import {
   termsLoad,
   termsSearch
 } from "visual/utils/elements/posts/index.wp";
-import { ToolbarContext } from "visual/utils/elements/posts/types";
+import type { ToolbarContext } from "visual/utils/elements/posts/types";
 import { t } from "visual/utils/i18n";
-import { VDecoded, Value } from "../types";
+import type { Value, VDecoded } from "../types";
 import { decodeV } from "../utils.common";
 
 export function tabFilter({

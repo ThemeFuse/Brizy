@@ -1,18 +1,18 @@
 import { difference as diff } from "es-toolkit";
-import {
+import type {
   Choice,
   Value
 } from "visual/component/Options/types/dev/MultiSelect2/types";
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import type { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import {
   getAuthors,
-  getPostTaxonomies,
   getPosts,
+  getPostTaxonomies,
   getTermsBy
 } from "visual/utils/api";
 import * as Union from "visual/utils/reader/union";
 import { isT } from "visual/utils/value";
-import {
+import type {
   QueryArgs,
   WPArchiveQuery,
   WPPostsQuery,
@@ -37,7 +37,7 @@ export const authorsLoad =
       }));
     } catch (e) {
       if (process.env.NODE_ENV === "development") {
-        // eslint-disable-next-line no-console
+        // biome-ignore lint/suspicious/noConsole: migrated from eslint
         console.log(e);
       }
 
@@ -57,7 +57,7 @@ export const authorsSearch =
       }));
     } catch (e) {
       if (process.env.NODE_ENV === "development") {
-        // eslint-disable-next-line no-console
+        // biome-ignore lint/suspicious/noConsole: migrated from eslint
         console.log(e);
       }
 
@@ -81,11 +81,11 @@ export const termsLoad =
 
       return terms.map(({ term_id, name, taxonomy, taxonomy_name }) => ({
         title: `${name} (${taxonomy_name})`,
-        value: taxonomy + ":" + term_id
+        value: `${taxonomy}:${term_id}`
       }));
     } catch (e) {
       if (process.env.NODE_ENV === "development") {
-        // eslint-disable-next-line no-console
+        // biome-ignore lint/suspicious/noConsole: migrated from eslint
         console.log(e);
       }
 
@@ -101,11 +101,11 @@ export const termsSearch =
 
       return terms.map(({ term_id, name, taxonomy, taxonomy_name }) => ({
         title: `${name} (${taxonomy_name})`,
-        value: taxonomy + ":" + term_id
+        value: `${taxonomy}:${term_id}`
       }));
     } catch (e) {
       if (process.env.NODE_ENV === "development") {
-        // eslint-disable-next-line no-console
+        // biome-ignore lint/suspicious/noConsole: migrated from eslint
         console.log(e);
       }
 
@@ -132,7 +132,7 @@ export const manualLoad =
       }));
     } catch (e) {
       if (process.env.NODE_ENV === "development") {
-        // eslint-disable-next-line no-console
+        // biome-ignore lint/suspicious/noConsole: migrated from eslint
         console.log(e);
       }
 
@@ -158,7 +158,7 @@ export const manualSearch =
       }));
     } catch (e) {
       if (process.env.NODE_ENV === "development") {
-        // eslint-disable-next-line no-console
+        // biome-ignore lint/suspicious/noConsole: migrated from eslint
         console.log(e);
       }
 
@@ -186,7 +186,7 @@ export const tagsFilterLoad =
       }));
     } catch (e) {
       if (process.env.NODE_ENV === "development") {
-        // eslint-disable-next-line no-console
+        // biome-ignore lint/suspicious/noConsole: migrated from eslint
         console.log(e);
       }
 
@@ -257,8 +257,8 @@ export function postsQuery(v: QueryArgs): WPPostsQuery {
   const hasIncTerms = incBy.includes("term") && incTerm.length > 0;
   const hasExcTerms = excBy.includes("term") && excTerm.length > 0;
   if (hasIncTerms || hasExcTerms) {
-    let includeQuery: WPTaxQuery | undefined = undefined;
-    let excludeQuery: WPTaxQuery | undefined = undefined;
+    let includeQuery: WPTaxQuery | undefined;
+    let excludeQuery: WPTaxQuery | undefined;
 
     if (hasIncTerms) {
       includeQuery = {

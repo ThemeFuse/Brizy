@@ -1,5 +1,5 @@
-const fs = require("fs");
-const path = require("path");
+const fs = require("node:fs");
+const path = require("node:path");
 const { extractTranslations, processTranslations } = require("./utils");
 
 exports.cloudTranslations = async function cloudTranslations({
@@ -12,7 +12,8 @@ exports.cloudTranslations = async function cloudTranslations({
   const rootDirs = [
     path.resolve(paths.editor, "./js"),
     path.resolve(paths.packages, "ai-chat/src"),
-    path.resolve(paths.packages, "ai-support-chat/src")
+    path.resolve(paths.packages, "ai-support-chat/src"),
+    path.resolve(paths.packages, "ai-tools/src")
   ];
 
   const translationSets = [await extractTranslations(rootDirs)];
@@ -51,7 +52,6 @@ async function handleTranslationComparison({
     try {
       existingTranslations = require(translationsJsonPath);
     } catch (error) {
-      // eslint-disable-next-line no-console
       console.warn(
         "Failed to parse existing translations.json:",
         error.message
@@ -92,11 +92,9 @@ async function handleTranslationComparison({
       );
       const diffContent = addedTranslations.join("\n");
       fs.writeFileSync(diffFilePath, diffContent, "utf8");
-      // eslint-disable-next-line no-console
       console.log(`Translation diff file saved to: ${diffFilePath}`);
     }
   } else {
-    // eslint-disable-next-line no-console
     console.log("No translation changes detected - skipping file updates");
   }
 }

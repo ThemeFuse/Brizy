@@ -1,5 +1,5 @@
 // mainly inspired by html2canvas
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import type { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 
 let browsersSupports: boolean | undefined;
 let count = 0;

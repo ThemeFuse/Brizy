@@ -79,7 +79,7 @@ export function getItems({ v, device }) {
                 {
                   id: "color",
                   type: "colorPicker",
-                  states: [NORMAL, HOVER, ACTIVE],
+                  states: [NORMAL, HOVER, ACTIVE]
                 }
               ]
             },
@@ -89,7 +89,7 @@ export function getItems({ v, device }) {
               options: [
                 {
                   id: "arrowsColor",
-                  type: "colorPicker",
+                  type: "colorPicker"
                 }
               ]
             }

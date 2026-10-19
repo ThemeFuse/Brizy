@@ -1,9 +1,9 @@
-import { OptionName } from "visual/component/Options/types";
-import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
-import { Map, withColumns, withOptions, withTabs } from "./maps";
+import type { OptionName } from "visual/component/Options/types";
+import type { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
+import { type MapFn, withColumns, withOptions, withTabs } from "./maps";
 
 type Maps = {
-  [T in OptionName]: Map<T> | undefined;
+  [T in OptionName]: MapFn<T> | undefined;
 };
 
 const fns: Maps = {
@@ -70,7 +70,7 @@ export function _map(
   t: ToolbarItemType
 ): ToolbarItemType {
   const mapped = f(t);
-  const map = fns[mapped.type] as Map<OptionName>;
+  const map = fns[mapped.type] as MapFn<OptionName>;
 
   return map
     ? map((t: ToolbarItemType): ToolbarItemType => _map(f, t), mapped)

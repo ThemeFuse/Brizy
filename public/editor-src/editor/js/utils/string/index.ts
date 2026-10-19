@@ -8,7 +8,7 @@ import type { MValue, ToValue } from "visual/utils/value";
  * @param orElse
  * @return {string}
  */
-export const toString: ToValue<string> = (v, orElse) =>
+export const asString: ToValue<string> = (v, orElse) =>
   typeof v === "string" ? v : orElse;
 
 /**
@@ -16,7 +16,7 @@ export const toString: ToValue<string> = (v, orElse) =>
  *  - if is valid, return value
  *  - otherwise, return orElse
  */
-export const onEmpty: ToValue<string> = (v, orElse) => toString(v) || orElse;
+export const onEmpty: ToValue<string> = (v, orElse) => asString(v) || orElse;
 
 /**
  * Capitalize string
@@ -78,7 +78,7 @@ export const parseFromString = <T>(value: string): MValue<T> => {
 
 export const toHashCode = (value: string): string => {
   let hash = 0;
-  let chr;
+  let chr: number;
 
   for (let i = 0; i < value.length; i++) {
     chr = value.charCodeAt(i);

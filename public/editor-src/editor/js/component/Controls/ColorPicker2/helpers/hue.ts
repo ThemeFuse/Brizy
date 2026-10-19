@@ -1,5 +1,5 @@
-import { MouseEvent, TouchEvent } from "react";
-import { HSLAwithSource } from "visual/component/Controls/ColorPicker2/types";
+import type { MouseEvent, TouchEvent } from "react";
+import type { HSLAwithSource } from "visual/component/Controls/ColorPicker2/types";
 
 import HSLA = tinycolor.ColorFormats.HSLA;
 
@@ -32,7 +32,7 @@ export const calculateChange = ({
     y - (container.getBoundingClientRect().top + contentWindow.pageYOffset);
 
   if (direction === "vertical") {
-    let h;
+    let h: number;
     if (top < 0) {
       h = 359;
     } else if (top > containerHeight) {
@@ -52,7 +52,7 @@ export const calculateChange = ({
       };
     }
   } else {
-    let h;
+    let h: number;
     if (left < 0) {
       h = 0;
     } else if (left > containerWidth) {

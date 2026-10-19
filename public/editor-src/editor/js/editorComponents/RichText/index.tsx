@@ -1,11 +1,12 @@
 import { Str } from "@brizy/readers";
 import classNames from "classnames";
+import { noop } from "es-toolkit";
 import { isNumber } from "es-toolkit/compat";
 import React, {
+  createRef,
   Fragment,
-  MouseEvent,
-  MutableRefObject,
-  createRef
+  type MouseEvent,
+  type MutableRefObject
 } from "react";
 import ReactDOM from "react-dom";
 import { omit } from "timm";
@@ -19,7 +20,7 @@ import ContextMenu from "visual/component/ContextMenu";
 import ListBox from "visual/component/Controls/ListBox";
 import { getCurrentTooltip } from "visual/component/Controls/Tooltip";
 import CustomCSS from "visual/component/CustomCSS";
-import {
+import type {
   ElementModel,
   ElementModelType2
 } from "visual/component/Elements/Types";
@@ -28,9 +29,9 @@ import Link from "visual/component/Link";
 import { ToastNotification } from "visual/component/Notifications";
 import Placeholder from "visual/component/Placeholder";
 import Toolbar from "visual/component/Toolbar";
-import { PortalToolbarType } from "visual/component/Toolbar/PortalToolbar";
+import type { PortalToolbarType } from "visual/component/Toolbar/PortalToolbar";
 import { Tooltip } from "visual/component/Tooltip";
-import { TooltipImperativeProps } from "visual/component/Tooltip/types";
+import type { TooltipImperativeProps } from "visual/component/Tooltip/types";
 import {
   getToolbarPlacement,
   getTooltipPlacement,
@@ -38,26 +39,27 @@ import {
 } from "visual/component/Tooltip/utils";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import EditorComponent from "visual/editorComponents/EditorComponent";
-import {
+import type {
   NewToolbarConfig,
   SidebarConfig
 } from "visual/editorComponents/EditorComponent/types";
 import { createOptionId } from "visual/editorComponents/EditorComponent/utils";
-import { Config, isCloud } from "visual/global/Config/types";
+import { type Config, isCloud } from "visual/global/Config/types";
+import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import {
-  BaseDCItem,
+  type BaseDCItem,
   DCTypes,
   isDCItemHandler
 } from "visual/global/Config/types/DynamicContent";
-import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import { isPopup, isStory } from "visual/providers/EditorModeProvider";
 import { isEditor, isView } from "visual/providers/RenderProvider";
 import {
   blocksDataSelector,
   deviceModeSelector,
-  globalBlocksSelector
+  globalBlocksSelector,
+  menuDataSelector
 } from "visual/redux/selectors";
-import { Block } from "visual/types/Block";
+import type { Block } from "visual/types/Block";
 import { isFirefox } from "visual/utils/devices";
 import { t } from "visual/utils/i18n";
 import { makeAttr, makeDataAttr } from "visual/utils/i18n/attribute";
@@ -67,22 +69,27 @@ import {
   getDynamicContentByPlaceholder,
   getDynamicContentChoices
 } from "visual/utils/options";
-import { Choice } from "visual/utils/options/getDynamicContentChoices";
+import type { Choice } from "visual/utils/options/getDynamicContentChoices";
 import { attachRef, attachRefs } from "visual/utils/react";
 import * as ResponsiveMode from "visual/utils/responsiveMode";
 import { parseFromString } from "visual/utils/string";
 import { Wrapper } from "../tools/Wrapper";
 import { withMigrations } from "../tools/withMigrations";
-import Quill, { Coords, Formats, QuillComponent, triggerCodes } from "./Quill";
 import contextMenuConfig from "./contextMenu";
 import defaultValue from "./defaultValue.json";
 import { migrations } from "./migrations";
 import * as RichTextPatch from "./patch";
+import Quill, {
+  type Coords,
+  type Formats,
+  type QuillComponent,
+  triggerCodes
+} from "./Quill";
 import * as sidebarConfig from "./sidebar";
 import { style, styleDC, styleTooltip } from "./styles";
 import toolbarConfigFn from "./toolbar";
 import tooltipToolbarConfigFn from "./toolbar/tooltipToolbar";
-import { TypographyTags, isTypographyTags, tagId } from "./toolbar/utils";
+import { isTypographyTags, type TypographyTags, tagId } from "./toolbar/utils";
 import tooltipSidebarConfigFn from "./tooltipSidebar";
 import type { Patch, PrepopulationData, Value } from "./types";
 import {
@@ -182,7 +189,7 @@ class RichText extends EditorComponent<Value, Record<string, unknown>, State> {
     }
 
     const itemId = this.context.dynamicContent.itemId;
-    itemId && node.setAttribute("data-item_id", itemId);
+    if (itemId) node.setAttribute("data-item_id", itemId);
     const populations = node.querySelectorAll<HTMLElement>(
       "[data-image_population]"
     );
@@ -437,7 +444,7 @@ class RichText extends EditorComponent<Value, Record<string, unknown>, State> {
           const popupId = popup.value._id;
 
           if (popupId) {
-            if (reduxGb[popupId] && reduxGb[popupId].data) {
+            if (reduxGb[popupId]?.data) {
               return reduxGb[popupId].data;
             }
           }
@@ -522,7 +529,6 @@ class RichText extends EditorComponent<Value, Record<string, unknown>, State> {
         return { pre: false, header: "h5" };
       case "heading6":
         return { pre: false, header: "h6" };
-      case "paragraph":
       default:
         return { pre: false, header: null };
     }
@@ -550,7 +556,7 @@ class RichText extends EditorComponent<Value, Record<string, unknown>, State> {
       prevActive.focus(); // Safely call focus
     }
 
-    if (this.quillRef && this.quillRef.current) {
+    if (this.quillRef?.current) {
       if (
         values.hasOwnProperty("typographyFontStyle") &&
         typeof values.typographyFontStyle !== "undefined"
@@ -577,7 +583,7 @@ class RichText extends EditorComponent<Value, Record<string, unknown>, State> {
 
     const handlePaste = () => {
       const state = this.getReduxState();
-      const innerElement = getInnerElement(state, config.menuData);
+      const innerElement = getInnerElement(state, menuDataSelector(state));
       const device = deviceModeSelector(state);
       if (!innerElement) return;
 
@@ -616,14 +622,14 @@ class RichText extends EditorComponent<Value, Record<string, unknown>, State> {
         break;
     }
   };
-  handleKeyUp = () => {};
+  handleKeyUp = noop;
 
   getClassName(v: Value, vs: Value, vd: Value) {
     const cssDCStyle =
       v.textPopulation &&
       this.css(
-        "dc" + this.getComponentId(),
-        "dc" + this.getId(),
+        `dc${this.getComponentId()}`,
+        `dc${this.getId()}`,
         styleDC({
           v,
           vs,
@@ -719,7 +725,7 @@ class RichText extends EditorComponent<Value, Record<string, unknown>, State> {
             ([k, classes]) =>
               [k, classNamesToV(classes)] as [TypographyTags, ElementModel]
           )
-          .map(([tag, v]) =>
+          .flatMap(([tag, v]) =>
             ResponsiveMode.types.map((device) => {
               const getKey = (k: string) =>
                 defaultValueKey2({
@@ -750,8 +756,7 @@ class RichText extends EditorComponent<Value, Record<string, unknown>, State> {
               }, {});
             })
           )
-          .flat()
-          .reduce((acc, v) => ({ ...acc, ...v }), {});
+          .reduce((acc, v) => Object.assign(acc, v), {});
 
         newPatch = {
           ...newPatch,
@@ -943,7 +948,10 @@ class RichText extends EditorComponent<Value, Record<string, unknown>, State> {
         ] as ElementModelType2;
       }
 
-      return itemData ? [...acc, itemData] : acc;
+      if (itemData) {
+        acc.push(itemData);
+      }
+      return acc;
     }, []);
 
     if (normalizePopups.length === 0) {
@@ -1194,7 +1202,7 @@ class RichText extends EditorComponent<Value, Record<string, unknown>, State> {
     };
 
     if (selectionCoords) {
-      toolbarOptions["customCoordinates"] = selectionCoords;
+      toolbarOptions.customCoordinates = selectionCoords;
     }
 
     if (v.textPopulation) {

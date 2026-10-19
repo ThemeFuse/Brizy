@@ -1,8 +1,8 @@
 import { match } from "fp-utilities";
-import { Config } from "visual/global/Config/types";
-import { Cloud, isCloud } from "visual/global/Config/types/configs/Cloud";
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
-import { WP, isWp } from "visual/global/Config/types/configs/WP";
+import type { Config } from "visual/global/Config/types";
+import { type Cloud, isCloud } from "visual/global/Config/types/configs/Cloud";
+import type { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import { isWp, type WP } from "visual/global/Config/types/configs/WP";
 import { t } from "visual/utils/i18n";
 
 export type M = "on" | "off";

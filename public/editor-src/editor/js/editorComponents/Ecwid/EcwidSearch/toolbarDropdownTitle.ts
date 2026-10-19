@@ -1,6 +1,6 @@
 import { getSpacingFn } from "visual/editorComponents/Ecwid/EcwidFavorites/css";
 import { dropdownTitleAlignCSS } from "visual/editorComponents/Ecwid/EcwidSearch/css";
-import { GetItems } from "visual/editorComponents/EditorComponent/types";
+import type { GetItems } from "visual/editorComponents/EditorComponent/types";
 import { getColorToolbar } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
@@ -11,7 +11,7 @@ import {
   filtersResultsHeadSelector,
   filtersResultsSelector
 } from "./css/selectors";
-import { Value } from "./types";
+import type { Value } from "./types";
 
 export const getItems: GetItems<Value> = ({ v, device, state }) => {
   const dvv = (key: string) => defaultValueValue({ v, key, device, state });

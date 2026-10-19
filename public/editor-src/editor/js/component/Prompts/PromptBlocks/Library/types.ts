@@ -1,18 +1,18 @@
-import { ComponentType } from "react";
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
-import {
+import type { ComponentType } from "react";
+import type {
   SavedBlockAPIMeta,
   SavedLayoutAPIMeta
 } from "visual/global/Config/types/configs/blocks/SavedBlocks";
-import { FontsPayload } from "visual/redux/actions2";
-import { ReduxState } from "visual/redux/types";
-import { BlockMetaType } from "visual/types/GlobalBlock";
-import { ExtraFontStyle } from "visual/types/Style";
-import { BlockScreenshots } from "visual/utils/screenshots/types";
-import {
+import type { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import type { FontsPayload } from "visual/redux/actions2";
+import type { ReduxState } from "visual/redux/types";
+import type { ExtraFontStyle } from "visual/types/Style";
+import type { BlockScreenshots } from "visual/utils/screenshots/types";
+import type {
   BlockCategory,
   BlockTypes,
   PromptBlock,
+  PromptBlockMetaType,
   PromptBlockTemplate
 } from "../types";
 
@@ -61,7 +61,7 @@ export interface Pagination {
 }
 
 export type LibraryProps = {
-  type: BlockMetaType;
+  type: PromptBlockMetaType;
   showSearch: boolean;
   showTitle: boolean;
   onAddBlocks: (b: PromptBlock | PromptBlockTemplate) => void;

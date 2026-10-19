@@ -1,5 +1,5 @@
-import { Literal } from "visual/utils/types/Literal";
-import { ElementModelValue, ChoicesSync, ChoicesAsync } from "./types";
+import type { Literal } from "visual/utils/types/Literal";
+import type { ChoicesAsync, ChoicesSync, ElementModelValue } from "./types";
 
 export const toElement = (v: Literal): ElementModelValue => ({
   value: v

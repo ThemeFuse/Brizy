@@ -9,7 +9,7 @@ const getItems = () => [
     id: "main",
     type: "group",
     title: t("Accordion"),
-    disabled: (item, meta) => meta.isInSubMenu,
+    disabled: (_item, meta) => meta.isInSubMenu,
     items: []
   }
 ];

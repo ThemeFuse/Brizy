@@ -6,7 +6,7 @@ import * as BaseEffect from "../BaseEffect";
 import * as ET from "../EffectType";
 import { EffectType, isEffect } from "../EffectType";
 import { LegacyEffectType } from "../LegacyEffectType";
-import { LegacyModel } from "../LegacyModel";
+import type { LegacyModel } from "../LegacyModel";
 
 export enum Direction {
   down = "down",

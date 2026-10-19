@@ -1,7 +1,7 @@
-export const flat = obj => {
+export const flat = (obj) => {
   const ret = {};
 
-  for (let key in obj) {
+  for (const key in obj) {
     if (
       !Array.isArray(obj[key]) &&
       typeof obj[key] === "object" &&

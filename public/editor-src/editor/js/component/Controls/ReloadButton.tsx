@@ -1,6 +1,6 @@
 import classNames from "classnames";
-import React, { ReactElement } from "react";
-import { WithClassName } from "visual/types/attributes";
+import React, { type ReactElement } from "react";
+import type { WithClassName } from "visual/types/attributes";
 import { t } from "visual/utils/i18n";
 import { Button } from "./Button";
 

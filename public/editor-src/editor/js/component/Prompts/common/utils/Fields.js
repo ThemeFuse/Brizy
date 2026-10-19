@@ -16,7 +16,7 @@ const bundleEmailField = (integrationFields, editorFields) => {
 
 export const getFields = (fieldsMap, fields, formFields, restrictions) => {
   let integrationFields = (fieldsMap && JSON.parse(fieldsMap)) || [];
-  const appFieldsLength = (fields && fields.length) || 0;
+  const appFieldsLength = fields?.length || 0;
   let requiredAppFieldLength = fields.filter((item) => item.required).length;
 
   if (
@@ -34,7 +34,7 @@ export const getFields = (fieldsMap, fields, formFields, restrictions) => {
 
     //it's a condition if app fields are full, and we cannot add _auto_generate
     let target = null;
-    if (field && field.target && field.target !== "_auto_generate") {
+    if (field?.target && field.target !== "_auto_generate") {
       target = field.target;
     } else {
       if (
@@ -70,10 +70,8 @@ export const getEmptyField = (appFields, integrationFields, step) => {
 
 export const substrString = (name) => {
   if (name.length > 22) {
-    /* eslint-disable no-useless-escape */
     const re =
-      /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/;
-    /* eslint-enabled no-useless-escape */
+      /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_+.~#?&//=]*)/;
     return re.test(name)
       ? `...${name.substr(-19, 19)}`
       : `${name.substr(0, 19)}...`;

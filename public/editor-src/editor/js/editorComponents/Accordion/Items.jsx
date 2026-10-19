@@ -2,11 +2,14 @@ import classnames from "classnames";
 import React from "react";
 import { removeAt } from "timm";
 import { TextEditor } from "visual/component/Controls/TextEditor";
-import Toolbar from "visual/component/Toolbar";
-import { hideToolbar } from "visual/component/Toolbar";
+import Toolbar, { hideToolbar } from "visual/component/Toolbar";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import { t } from "visual/utils/i18n";
 import { makeDataAttr } from "visual/utils/i18n/attribute";
+
+// the "All" filter row is not one of the tags: its label is inline-editable,
+// so it gets a fixed key instead of being keyed by its own text
+const ALL_TAG_KEY = "__brz_all_tag__";
 
 class AccordionItems extends EditorArrayComponent {
   static get componentId() {
@@ -36,7 +39,9 @@ class AccordionItems extends EditorArrayComponent {
   getItemsTags = (dbValue) => {
     return dbValue.reduce((acc, cur) => {
       if (cur?.value?.tags) {
-        this.getTags(cur.value.tags).forEach((tag) => acc.add(tag));
+        this.getTags(cur.value.tags).forEach((tag) => {
+          acc.add(tag);
+        });
       }
       return acc;
     }, new Set());
@@ -159,7 +164,10 @@ class AccordionItems extends EditorArrayComponent {
 
     return tags.split(",").reduce((acc, curr) => {
       const tag = curr.trim();
-      return tag ? [...acc, tag.replace(/\s/g, "-")] : acc;
+      if (tag) {
+        acc.push(tag.replace(/\s/g, "-"));
+      }
+      return acc;
     }, []);
   }
 
@@ -194,9 +202,14 @@ class AccordionItems extends EditorArrayComponent {
     return (
       <div className="brz-accordion__filter-wrapper">
         <ul className={`brz-ul ${filterClassName}`}>
-          {tags.map((tag, index) => {
+          {tags.map((tag) => {
             return (
-              <Toolbar {...toolbarExtendFilter} key={index}>
+              // the All row's label is inline-editable, so keying it by its own
+              // text would remount the TextEditor the moment it is renamed
+              <Toolbar
+                {...toolbarExtendFilter}
+                key={tag === allTag ? ALL_TAG_KEY : tag}
+              >
                 {({ ref }) => (
                   <li
                     className={

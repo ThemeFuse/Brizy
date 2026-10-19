@@ -1,11 +1,11 @@
-import { GetItems } from "visual/editorComponents/EditorComponent/types";
+import type { GetItems } from "visual/editorComponents/EditorComponent/types";
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
 import { getColorToolbar as getGlobalColor } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
 import { getDynamicContentOption } from "visual/utils/options";
 import { HOVER, NORMAL } from "visual/utils/stateMode";
-import { Color, ItemValue, Network, TargetUrl, View } from "../types";
+import { Color, type ItemValue, Network, TargetUrl, View } from "../types";
 import { getColor, getTargetUrl, getView } from "../utils";
 
 export const getItems: GetItems<ItemValue> = ({ v, device, context }) => {

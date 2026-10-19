@@ -1,5 +1,5 @@
-import { ElementModel } from "visual/component/Elements/Types";
-import { DynamicStylesProps } from "visual/types";
+import type { ElementModel } from "visual/component/Elements/Types";
+import type { DynamicStylesProps } from "visual/types";
 import { renderStyles } from "visual/utils/cssStyle";
 import type { OutputStyle } from "visual/utils/cssStyle/types";
 

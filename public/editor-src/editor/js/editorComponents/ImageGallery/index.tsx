@@ -1,36 +1,36 @@
 import classnames from "classnames";
-import { debounce, isEqual, noop } from "es-toolkit";
-import React, { Fragment, ReactNode, RefObject } from "react";
+import { debounce, isEqual, isFunction, noop } from "es-toolkit";
+import React, { Fragment, type ReactNode, type RefObject } from "react";
 import ResizeAware from "react-resize-aware";
 import { merge } from "timm";
 import { TextEditor } from "visual/component/Controls/TextEditor";
 import CustomCSS from "visual/component/CustomCSS";
 import Toolbar from "visual/component/Toolbar";
 import EditorComponent, {
-  Props as NextProps
+  type Props as NextProps
 } from "visual/editorComponents/EditorComponent";
-import { ComponentsMeta } from "visual/editorComponents/EditorComponent/types";
-import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
+import type { ComponentsMeta } from "visual/editorComponents/EditorComponent/types";
 import { SizeType } from "visual/global/Config/types/configs/common";
+import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import { isEditor, isView } from "visual/providers/RenderProvider";
-import {
+import type {
   GalleryIsotope,
   GalleryIsotopeType,
   GalleryJustified,
   GalleryJustifiedType
 } from "visual/types/global";
 import { addFilter, applyFilter } from "visual/utils/filters";
-import { isFunction } from "visual/utils/function";
 import { getImageUrl } from "visual/utils/image";
 import { defaultValueKey, defaultValueValue } from "visual/utils/onChange";
 import * as Num from "visual/utils/reader/number";
 import * as Str from "visual/utils/reader/string";
 import { MOBILE, TABLET } from "visual/utils/responsiveMode";
 import { encodeToString } from "visual/utils/string";
-import { MValue } from "visual/utils/value";
+import type { MValue } from "visual/utils/value";
 import EditorArrayComponent from "../EditorArrayComponent";
 import { readSizeType, readUnit } from "../Image/utils";
 import { Wrapper } from "../tools/Wrapper";
+import { withMigrations } from "../tools/withMigrations";
 import defaultValue from "./defaultValue.json";
 import {
   patchOnBigImageAsCurrLayout,
@@ -48,6 +48,7 @@ import {
   patchOnThumbStyleChange
 } from "./imageGalleryChange";
 import Items from "./items";
+import { migrations } from "./migrations";
 import * as sidebarExtendImage from "./sidebarExtendImage";
 import * as sidebarExtendParentConfig from "./sidebarExtendParent";
 import * as sidebarFilterConfig from "./sidebarFilter";
@@ -57,23 +58,25 @@ import * as toolbarExtendParent from "./toolbarExtendParent";
 import * as toolbarFilterConfig from "./toolbarFilter";
 import type { Meta, Patch, Props, Value } from "./types";
 import {
-  JustifySettings,
   breakpoints,
   getRowHeight,
   getSpacing,
   imagesSrc,
+  type JustifySettings,
   makeOptionValueToSettings,
   multiUpload
 } from "./utils";
 import { arrangeGridByTags } from "./utils.export";
-import { migrations } from "./migrations";
-import { withMigrations } from "../tools/withMigrations";
 
 // SCSS import - automatically tracked during static rendering
 import(
   // @ts-expect-error: .scss?chunk=ImageGallery files
   /* webpackChunkName: "imagegallery" */ "sass/editorComponents/image-gallery.scss?componentId=ImageGallery&chunk=imagegallery"
 );
+
+// the "All" filter row is not one of the tags: its label is inline-editable,
+// so it gets a fixed key instead of being keyed by its own text
+const ALL_TAG_KEY = "__brz_all_tag__";
 
 class ImageGallery extends EditorComponent<Value, Props> {
   static defaultValue = defaultValue;
@@ -187,7 +190,8 @@ class ImageGallery extends EditorComponent<Value, Props> {
     const nextSpacing = getSpacing(nextProps.dbValue);
 
     if (isMasonry && !isEqual(currentSpacing, nextSpacing)) {
-      return this.reinitIsotopes();
+      this.reinitIsotopes();
+      return;
     }
 
     const currentRowHeight = getRowHeight(this.props.dbValue);
@@ -436,7 +440,10 @@ class ImageGallery extends EditorComponent<Value, Props> {
 
     return tags.split(",").reduce<string[]>((acc, curr) => {
       const tag = curr.trim();
-      return tag ? [...acc, tag] : acc;
+      if (tag) {
+        acc.push(tag);
+      }
+      return acc;
     }, []);
   }
 
@@ -478,7 +485,7 @@ class ImageGallery extends EditorComponent<Value, Props> {
         ? [allTag].concat(_tags.sort((a, b) => a.localeCompare(b)))
         : [allTag].concat(_tags);
 
-    const options = tags.map((tag: string, index: number) => {
+    const options = tags.map((tag: string) => {
       const tagClassName = tag.replace(/\s/g, "-");
 
       const filter = tag === allTag ? "*" : tagClassName;
@@ -491,7 +498,9 @@ class ImageGallery extends EditorComponent<Value, Props> {
             sidebarFilterConfig,
             { allowExtend: false }
           )}
-          key={index}
+          // the All row's label is inline-editable, so keying it by its own text
+          // would remount the TextEditor the moment it is renamed
+          key={tag === allTag ? ALL_TAG_KEY : tag}
         >
           {({ ref }) => (
             <li
@@ -637,6 +646,7 @@ class ImageGallery extends EditorComponent<Value, Props> {
         const _image = Str.read(image) ?? "";
         return (
           <a
+            // biome-ignore lint/suspicious/noArrayIndexKey: hidden lightbox anchors, one per image; the same src can appear twice in a gallery
             key={index}
             className="brz-image__gallery-big-image-lightbox"
             href={_image}

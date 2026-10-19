@@ -1,10 +1,10 @@
-import {
+import type {
   AdobeFont,
   GoogleFont,
   SystemFont,
   UploadedFont
 } from "visual/types/Fonts";
-import {
+import type {
   ScriptsFree,
   ScriptsPro,
   StylesFree,

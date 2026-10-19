@@ -1,12 +1,12 @@
 import { Box as BoxIcon } from "@brizy/builder-icons/src";
-import React, { ReactElement } from "react";
+import React, { type ReactElement } from "react";
 import { Content } from "visual/component/Prompts/common/Content";
 import {
   getContentText,
   getHeadingText,
   getLinkText
 } from "visual/component/Prompts/utils";
-import { ShopifyTemplate } from "visual/global/Config/types/shopify/ShopifyTemplate";
+import type { ShopifyTemplate } from "visual/global/Config/types/shopify/ShopifyTemplate";
 import { Link } from "./Link";
 import { Text } from "./Text";
 

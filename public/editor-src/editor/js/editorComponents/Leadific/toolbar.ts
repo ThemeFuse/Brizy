@@ -9,8 +9,8 @@ import { popupToOldModel } from "visual/utils/options/PromptAddPopup/utils";
 import { HOVER, NORMAL } from "visual/utils/stateMode";
 import * as Str from "visual/utils/string/specs";
 import { toolbarLinkAnchor } from "visual/utils/toolbar";
-import { GetItems } from "../EditorComponent/types";
-import { Props, Value } from "./types";
+import type { GetItems } from "../EditorComponent/types";
+import type { Props, Value } from "./types";
 
 export const getItems: GetItems<Value, Props> = ({
   v,

@@ -6,11 +6,11 @@ import * as BaseEffect from "../BaseEffect";
 import * as ET from "../EffectType";
 import { EffectType, isEffect } from "../EffectType";
 import {
+  fadeFromEffect,
   LegacyEffectType,
-  LegacyFadeType,
-  fadeFromEffect
+  type LegacyFadeType
 } from "../LegacyEffectType";
-import { LegacyModel } from "../LegacyModel";
+import type { LegacyModel } from "../LegacyModel";
 
 export enum Direction {
   none = "none",
@@ -83,41 +83,20 @@ export const toLegacyEffectType = (v: Fade): LegacyEffectType => {
   switch (v.direction) {
     case Direction.none:
       return LegacyEffectType.fadeIn;
-    case Direction.down: {
-      switch (v.big) {
-        case true:
-          return LegacyEffectType.fadeInDownBig;
-        case false:
-          return LegacyEffectType.fadeInDown;
-      }
-    }
-    // eslint-disable-next-line no-fallthrough
-    case Direction.right: {
-      switch (v.big) {
-        case true:
-          return LegacyEffectType.fadeInRightBig;
-        case false:
-          return LegacyEffectType.fadeInRight;
-      }
-    }
-    // eslint-disable-next-line no-fallthrough
-    case Direction.up: {
-      switch (v.big) {
-        case true:
-          return LegacyEffectType.fadeInUpBig;
-        case false:
-          return LegacyEffectType.fadeInUp;
-      }
-    }
-    // eslint-disable-next-line no-fallthrough
-    case Direction.left: {
-      switch (v.big) {
-        case true:
-          return LegacyEffectType.fadeInLeftBig;
-        case false:
-          return LegacyEffectType.fadeInLeft;
-      }
-    }
+    case Direction.down:
+      return v.big
+        ? LegacyEffectType.fadeInDownBig
+        : LegacyEffectType.fadeInDown;
+    case Direction.right:
+      return v.big
+        ? LegacyEffectType.fadeInRightBig
+        : LegacyEffectType.fadeInRight;
+    case Direction.up:
+      return v.big ? LegacyEffectType.fadeInUpBig : LegacyEffectType.fadeInUp;
+    case Direction.left:
+      return v.big
+        ? LegacyEffectType.fadeInLeftBig
+        : LegacyEffectType.fadeInLeft;
   }
 };
 

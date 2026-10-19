@@ -137,6 +137,7 @@ class Switcher extends EditorComponent {
             );
 
             return (
+              // biome-ignore lint/suspicious/noArrayIndexKey: exactly two fixed tabs from Array(2).fill; position is the identity
               <React.Fragment key={index}>
                 <Toolbar
                   {...this.makeToolbarPropsFromConfig2(

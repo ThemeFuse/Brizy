@@ -1,4 +1,4 @@
-import { IsEqual } from "visual/utils/types/Eq";
+import type { IsEqual } from "visual/utils/types/Eq";
 
 export type Value = {
   value: number;

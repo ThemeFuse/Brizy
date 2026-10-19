@@ -1,8 +1,8 @@
-import {
+import type {
   FromElementModel,
   ToElementModel
 } from "visual/component/Options/Type";
-import { Color } from "./types";
+import type { Color } from "./types";
 
 export const defaultValue: Color[] = [];
 

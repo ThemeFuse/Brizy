@@ -1,12 +1,12 @@
-import { Reader } from "visual/utils/types/Type";
 import * as N from "visual/utils/math/number";
+import type { Reader } from "visual/utils/types/Type";
 
 export type Value = {
   x: number;
   y: number;
 };
 
-export const read: Reader<Value> = v => {
+export const read: Reader<Value> = (v) => {
   if (typeof v !== "object") {
     return undefined;
   }

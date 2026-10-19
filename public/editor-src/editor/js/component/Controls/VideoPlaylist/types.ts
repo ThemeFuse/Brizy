@@ -1,4 +1,4 @@
-import { MouseEventHandler, Attributes } from "react";
+import type { Attributes, MouseEventHandler } from "react";
 
 interface BaseProps {
   coverImageSrc?: string;

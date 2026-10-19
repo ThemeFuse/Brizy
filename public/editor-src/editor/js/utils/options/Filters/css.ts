@@ -1,4 +1,4 @@
-import { CSSStyleFn } from "visual/utils/cssStyle/types";
+import type { CSSStyleFn } from "visual/utils/cssStyle/types";
 
 export const css: CSSStyleFn<"filters"> = ({ meta, value }): string => {
   const { isHalfBrightness, isEmptyHue, isHalfSaturation, isHalfContrast } =

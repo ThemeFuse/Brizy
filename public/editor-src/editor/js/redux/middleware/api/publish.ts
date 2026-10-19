@@ -6,12 +6,12 @@ import {
   pageSelector,
   projectSelector
 } from "visual/redux/selectors";
-import { GlobalBlock } from "visual/types/GlobalBlock";
-import { Page } from "visual/types/Page";
-import { Project } from "visual/types/Project";
-import { MValue, isT } from "visual/utils/value";
+import type { GlobalBlock } from "visual/types/GlobalBlock";
+import type { Page } from "visual/types/Page";
+import type { Project } from "visual/types/Project";
+import { isT, type MValue } from "visual/utils/value";
 import { PUBLISH } from "../../actions2";
-import { Data } from "./types";
+import type { Data } from "./types";
 import {
   apiPublish,
   debouncedApiAutoSave,
@@ -49,7 +49,7 @@ export function handlePublish({
       page?: Page;
       project?: Project;
       globalBlocks?: Array<GlobalBlock>;
-    }> = undefined;
+    }>;
 
     if (!isStory(editorMode)) {
       const changedGBIds = changedGBIdsSelector(state);
@@ -57,6 +57,7 @@ export function handlePublish({
 
       if (changedGBIds.length > 0 || oldGlobalBlocks !== globalBlocks) {
         const newGlobalBlocks = Object.entries(globalBlocks)
+          // biome-ignore lint/suspicious/useIterableCallbackReturn: TEMPORARY - unchanged blocks fall through to an implicit undefined and are removed by the .filter(isT) below, so the behaviour is already correct; left unedited to keep this publish path untouched
           .map(([id, globalBlock]) => {
             // Check the ChangedGBIds
             if (changedGBIds.includes(id)) {

@@ -8,10 +8,10 @@ import Portal from "visual/component/Portal";
 import { ProBlocked } from "visual/component/ProBlocked";
 import { SortableZIndex } from "visual/component/Sortable/SortableZIndex";
 import Sticky from "visual/component/Sticky";
-import { ToolbarExtend, hideToolbar } from "visual/component/Toolbar";
+import { hideToolbar, ToolbarExtend } from "visual/component/Toolbar";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import EditorComponent, {
-  Props as EDProps
+  type Props as EDProps
 } from "visual/editorComponents/EditorComponent";
 import { getOpenedMegaMenu } from "visual/editorComponents/Menu/MenuItem";
 import { isCloud, isShopify } from "visual/global/Config/types/configs/Cloud";
@@ -31,14 +31,20 @@ import {
 } from "visual/utils/onChange";
 import * as State from "visual/utils/stateMode";
 import { parseCustomAttributes } from "visual/utils/string/parseCustomAttributes";
-import { MValue } from "visual/utils/value";
-import { ComponentsMeta } from "../EditorComponent/types";
+import type { MValue } from "visual/utils/value";
+import type { ComponentsMeta } from "../EditorComponent/types";
 import defaultValue from "./defaultValue.json";
 import * as sidebarExtendConfig from "./sidebarExtend";
 import { styleAnimation, styleSection } from "./styles";
 import * as toolbarExtendConfig from "./toolbarExtend";
-import { Meta, Props, RenderType, States, Value } from "./type";
-import { STICKY_ITEM_INDEX, fixedContainerPlus } from "./utils";
+import {
+  type Meta,
+  type Props,
+  RenderType,
+  type States,
+  type Value
+} from "./type";
+import { fixedContainerPlus, STICKY_ITEM_INDEX } from "./utils";
 
 export default class SectionHeader extends EditorComponent<
   Value,

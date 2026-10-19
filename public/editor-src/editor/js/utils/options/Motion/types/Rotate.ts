@@ -1,11 +1,11 @@
 import { mPipe, or, parseStrict, pass } from "fp-utilities";
-import { ElementModel } from "visual/component/Elements/Types";
-import { FromElementModelGetter } from "visual/component/Options/Type";
-import * as Unit from "visual/utils/math/Unit";
+import type { ElementModel } from "visual/component/Elements/Types";
+import type { FromElementModelGetter } from "visual/component/Options/Type";
+import type * as Unit from "visual/utils/math/Unit";
 import { callGetter } from "visual/utils/options/utils/wrap";
 import { prefixKeys } from "../../utils/effects";
-import * as Viewport from "./Viewport";
 import { elementModelToSpeed, elementModelToViewport } from "./utils";
+import * as Viewport from "./Viewport";
 
 export interface Rotate {
   direction: "left" | "right";

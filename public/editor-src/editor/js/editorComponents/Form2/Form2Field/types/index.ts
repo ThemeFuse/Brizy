@@ -1,10 +1,10 @@
 import Calculated from "./Calculated";
 import Checkbox from "./Checkbox";
-import Date from "./Date";
+import DateField from "./Date";
 import Email from "./Email";
 import FileUpload from "./FileUpload";
 import Hidden from "./Hidden";
-import Number from "./Number";
+import NumberField from "./Number";
 import Paragraph from "./Paragraph";
 import Password from "./Password";
 import Phone from "./Phone";
@@ -19,13 +19,13 @@ import UserAgreementCheckbox from "./UserAgreementCheckbox";
 const types = {
   Text,
   Email,
-  Number,
+  Number: NumberField,
   Paragraph,
   Select,
   Radio,
   Checkbox,
   UserAgreementCheckbox,
-  Date,
+  Date: DateField,
   Url,
   Time,
   FileUpload,

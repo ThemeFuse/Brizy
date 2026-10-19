@@ -1,4 +1,4 @@
-import { FontStyleTypes, is } from "visual/utils/fonts/stylesType";
+import { type FontStyleTypes, is } from "visual/utils/fonts/stylesType";
 
 export const blockTagFromStyle = (fontStyle: FontStyleTypes): string => {
   switch (fontStyle) {

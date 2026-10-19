@@ -1,7 +1,7 @@
-import { Icon } from "visual/config/icons/Icon";
-import { TypeId } from "visual/config/icons/Type";
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
-import { Literal } from "visual/utils/types/Literal";
+import type { Icon } from "visual/config/icons/Icon";
+import type { TypeId } from "visual/config/icons/Type";
+import type { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import type { Literal } from "visual/utils/types/Literal";
 
 export interface Category {
   id: Literal;

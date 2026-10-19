@@ -1,8 +1,12 @@
 import classNames from "classnames";
-import React, { MouseEventHandler, ReactElement, useCallback } from "react";
+import React, {
+  type MouseEventHandler,
+  type ReactElement,
+  useCallback
+} from "react";
 import { CheckMark } from "visual/component/CheckMark";
 import { EditorIcon } from "visual/component/EditorIcon";
-import { WithClassName } from "visual/types/attributes";
+import type { WithClassName } from "visual/types/attributes";
 
 export interface Props extends WithClassName {
   icon: string;
@@ -24,7 +28,7 @@ export const FatCheckIcon = ({
 }: Props): ReactElement => {
   const _onCheck = useCallback<MouseEventHandler>(
     (e) => {
-      onCheck && e.stopPropagation();
+      if (onCheck) e.stopPropagation();
       onCheck?.();
     },
     [onCheck]

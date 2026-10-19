@@ -1,14 +1,14 @@
 import classnames from "classnames";
-import React, { ReactNode } from "react";
+import React, { type ReactNode } from "react";
 import CustomCSS from "visual/component/CustomCSS";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { Wrapper } from "visual/editorComponents/tools/Wrapper";
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
-import Items from "./Items";
 import defaultValue from "./defaultValue.json";
+import Items from "./Items";
 import { styleItem } from "./styles";
 import * as toolbar from "./toolbar";
-import { Props, Value } from "./types";
+import type { Props, Value } from "./types";
 
 class ShareButton extends EditorComponent<Value, Props> {
   static defaultValue = defaultValue;

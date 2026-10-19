@@ -1,7 +1,7 @@
 import { isDynamicContent } from "visual/utils/dynamicContent";
 import { makeDataAttr } from "visual/utils/i18n/attribute";
 import * as S from "visual/utils/string/specs";
-import { MRead, Reader } from "visual/utils/types/Type";
+import type { MRead, Reader } from "visual/utils/types/Type";
 import { mCompose } from "visual/utils/value";
 
 export type Attributes = { [K: string]: string | unknown };
@@ -26,7 +26,6 @@ export function parseCustomAttributes(attributes: string): Attributes {
 
   while (match) {
     if (match !== null) {
-      // eslint-disable-next-line prefer-const
       let [, att, , val1] = match;
       const _att = att.toLowerCase();
 

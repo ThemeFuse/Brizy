@@ -1,16 +1,16 @@
-import React, { ReactNode } from "react";
+import React, { type ReactNode } from "react";
 import { ToastNotification } from "visual/component/Notifications";
 import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
-import { DynamicContentHelper } from "visual/editorComponents/WordPress/common/DynamicContentHelper";
 import { Wrapper } from "visual/editorComponents/tools/Wrapper";
+import { DynamicContentHelper } from "visual/editorComponents/WordPress/common/DynamicContentHelper";
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import { updateEkklesiaFields } from "visual/utils/api";
 import { makePlaceholder } from "visual/utils/dynamicContent";
 import { getEkklesiaMessages } from "../utils/helpers";
 import defaultValue from "./defaultValue.json";
 import * as toolbarConfig from "./toolbarConfig";
-import { Props, Value } from "./types";
+import type { Props, Value } from "./types";
 
 export class MinistryBrandsFormWidget extends EditorComponent<Value, Props> {
   static get componentId(): ElementTypes.MinistryBrandsFormWidget {
@@ -41,7 +41,7 @@ export class MinistryBrandsFormWidget extends EditorComponent<Value, Props> {
     });
     if (changedKeys) {
       const messages = getEkklesiaMessages();
-      ToastNotification.warn(messages["form_widget"]);
+      ToastNotification.warn(messages.form_widget);
       this.patchValue(changedKeys);
     }
   }

@@ -1,5 +1,5 @@
 import React from "react";
-import { DCGroup } from "visual/global/Config/types/DynamicContent";
+import type { DCGroup } from "visual/global/Config/types/DynamicContent";
 import { ComponentTypes } from "visual/providers/EditorComponentProvider/ComponentTypes";
 import { Sheet } from "visual/providers/StyleProvider/Sheet";
 

@@ -1,0 +1,229 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`the content moves the inline element into the popup and appends the close button to it 1`] = `
+"<div class="brz-lb-content">
+<div class="brz-video__player" id="inline-player">
+<video>
+</video>
+<button title="Close (Esc)" type="button" class="brz-lb-close">×</button>
+</div>
+</div>"
+`;
+
+exports[`the content shows a url from anywhere else, used as it is 1`] = `
+"<div class="brz-lb-content">
+<div class="brz-lb-iframe-scaler">
+<button title="Close (Esc)" type="button" class="brz-lb-close">×</button>
+<iframe class="brz-lb-iframe" src="//example.com/embed/ABC123?autoplay=1" frameborder="0" allowfullscreen="">
+</iframe>
+</div>
+</div>"
+`;
+
+exports[`the content shows a vimeo embed, whose fragment stays after the query 1`] = `
+"<div class="brz-lb-content">
+<div class="brz-lb-iframe-scaler">
+<button title="Close (Esc)" type="button" class="brz-lb-close">×</button>
+<iframe class="brz-lb-iframe" src="//player.vimeo.com/video/ABC123?autoplay=1&amp;mute=0&amp;loop=0#t=10" frameborder="0" allowfullscreen="">
+</iframe>
+</div>
+</div>"
+`;
+
+exports[`the content shows a youtube embed, which the video element already built 1`] = `
+"<div class="brz-lb-content">
+<div class="brz-lb-iframe-scaler">
+<button title="Close (Esc)" type="button" class="brz-lb-close">×</button>
+<iframe class="brz-lb-iframe" src="//www.youtube.com/embed/ABC123?playlist=ABC123&amp;autoplay=1&amp;mute=0&amp;loop=0&amp;start=0&amp;end=0" frameborder="0" allowfullscreen="">
+</iframe>
+</div>
+</div>"
+`;
+
+exports[`the content shows an untitled image, which shows no title at all 1`] = `
+"<div class="brz-lb-content">
+<div class="brz-lb-figure brz-lb-loading">
+<button title="Close (Esc)" type="button" class="brz-lb-close">×</button>
+<figure>
+<img class="brz-lb-img" alt="Holiday" src="/photos/holiday.jpg" style="max-height: 800px;">
+<figcaption>
+<div class="brz-lb-bottom-bar">
+<div class="brz-lb-title">
+</div>
+<div class="brz-lb-counter">
+</div>
+</div>
+</figcaption>
+</figure>
+</div>
+</div>"
+`;
+
+exports[`the content shows the third image of the same gallery 1`] = `
+"<div class="brz-lb-content">
+<div class="brz-lb-figure brz-lb-loading">
+<button title="Close (Esc)" type="button" class="brz-lb-close">×</button>
+<figure>
+<img class="brz-lb-img" alt="C" src="/c.jpg" style="max-height: 800px;">
+<figcaption>
+<div class="brz-lb-bottom-bar">
+<div class="brz-lb-title">C</div>
+<div class="brz-lb-counter">3 of 3</div>
+</div>
+</figcaption>
+</figure>
+</div>
+</div>"
+`;
+
+exports[`the content shows the titled first image of a gallery 1`] = `
+"<div class="brz-lb-content">
+<div class="brz-lb-figure brz-lb-loading">
+<button title="Close (Esc)" type="button" class="brz-lb-close">×</button>
+<figure>
+<img class="brz-lb-img" alt="A" src="/a.jpg" style="max-height: 800px;">
+<figcaption>
+<div class="brz-lb-bottom-bar">
+<div class="brz-lb-title">A</div>
+<div class="brz-lb-counter">1 of 3</div>
+</div>
+</figcaption>
+</figure>
+</div>
+</div>"
+`;
+
+exports[`the shell builds the same shell for a gallery whose content click does not close 1`] = `
+"<div class="brz-lb-wrap brz-lb-gallery brz-lb-close-btn-in brz-lb-auto-cursor" tabindex="-1" style="overflow: auto; overflow-x: hidden; overflow-y: auto;">
+<div class="brz-lb-container brz-lb-s-loading brz-lb-image-holder">
+<div class="brz-lb-content">
+<div class="brz-lb-figure brz-lb-loading">
+<button title="Close (Esc)" type="button" class="brz-lb-close">×</button>
+<figure>
+<img class="brz-lb-img" alt="A" src="/a.jpg" style="max-height: 800px;">
+<figcaption>
+<div class="brz-lb-bottom-bar">
+<div class="brz-lb-title">A</div>
+<div class="brz-lb-counter">1 of 3</div>
+</div>
+</figcaption>
+</figure>
+</div>
+</div>
+<div class="brz-lb-preloader">Loading...</div>
+<button title="Previous (Left arrow key)" type="button" class="brz-lb-arrow brz-lb-arrow-left brz-lb-prevent-close">
+</button>
+<button title="Next (Right arrow key)" type="button" class="brz-lb-arrow brz-lb-arrow-right brz-lb-prevent-close">
+</button>
+</div>
+</div>"
+`;
+
+exports[`the shell builds the same shell for a gallery with a main class, which also lands on the backdrop 1`] = `
+"<div class="brz-lb-wrap brz-lb-gallery brz-lb-close-btn-in brz-lb-auto-cursor brz brz-lightbox" tabindex="-1" style="overflow: auto; overflow-x: hidden; overflow-y: auto;">
+<div class="brz-lb-container brz-lb-s-loading brz-lb-image-holder">
+<div class="brz-lb-content">
+<div class="brz-lb-figure brz-lb-loading">
+<button title="Close (Esc)" type="button" class="brz-lb-close">×</button>
+<figure>
+<img class="brz-lb-img" alt="A" src="/a.jpg" style="max-height: 800px;">
+<figcaption>
+<div class="brz-lb-bottom-bar">
+<div class="brz-lb-title">A</div>
+<div class="brz-lb-counter">1 of 3</div>
+</div>
+</figcaption>
+</figure>
+</div>
+</div>
+<div class="brz-lb-preloader">Loading...</div>
+<button title="Previous (Left arrow key)" type="button" class="brz-lb-arrow brz-lb-arrow-left brz-lb-prevent-close">
+</button>
+<button title="Next (Right arrow key)" type="button" class="brz-lb-arrow brz-lb-arrow-right brz-lb-prevent-close">
+</button>
+</div>
+</div>"
+`;
+
+exports[`the shell builds the same shell for an iframe whose content click does close 1`] = `
+"<div class="brz-lb-wrap brz-lb-close-btn-in" tabindex="-1" style="overflow: auto; overflow-x: hidden; overflow-y: auto;">
+<div class="brz-lb-container brz-lb-s-ready brz-lb-iframe-holder">
+<div class="brz-lb-content">
+<div class="brz-lb-iframe-scaler">
+<button title="Close (Esc)" type="button" class="brz-lb-close">×</button>
+<iframe class="brz-lb-iframe" src="//example.com/player" frameborder="0" allowfullscreen="">
+</iframe>
+</div>
+</div>
+<div class="brz-lb-preloader">Loading...</div>
+</div>
+</div>"
+`;
+
+exports[`the shell builds the same shell for an iframe whose content click does not close 1`] = `
+"<div class="brz-lb-wrap brz-lb-close-btn-in brz-lb-auto-cursor" tabindex="-1" style="overflow: auto; overflow-x: hidden; overflow-y: auto;">
+<div class="brz-lb-container brz-lb-s-ready brz-lb-iframe-holder">
+<div class="brz-lb-content">
+<div class="brz-lb-iframe-scaler">
+<button title="Close (Esc)" type="button" class="brz-lb-close">×</button>
+<iframe class="brz-lb-iframe" src="//example.com/player" frameborder="0" allowfullscreen="">
+</iframe>
+</div>
+</div>
+<div class="brz-lb-preloader">Loading...</div>
+</div>
+</div>"
+`;
+
+exports[`the shell builds the same shell for inline content whose click does close 1`] = `
+"<div class="brz-lb-wrap brz-lb-close-btn-in" tabindex="-1" style="overflow: auto; overflow-x: hidden; overflow-y: auto;">
+<div class="brz-lb-container brz-lb-s-ready brz-lb-inline-holder">
+<div class="brz-lb-content">
+<div class="brz-video__player" id="inline-player">
+<video>
+</video>
+<button title="Close (Esc)" type="button" class="brz-lb-close">×</button>
+</div>
+</div>
+<div class="brz-lb-preloader">Loading...</div>
+</div>
+</div>"
+`;
+
+exports[`the shell builds the same shell for inline content whose click does not close 1`] = `
+"<div class="brz-lb-wrap brz-lb-close-btn-in brz-lb-auto-cursor" tabindex="-1" style="overflow: auto; overflow-x: hidden; overflow-y: auto;">
+<div class="brz-lb-container brz-lb-s-ready brz-lb-inline-holder">
+<div class="brz-lb-content">
+<div class="brz-video__player" id="inline-player">
+<video>
+</video>
+<button title="Close (Esc)" type="button" class="brz-lb-close">×</button>
+</div>
+</div>
+<div class="brz-lb-preloader">Loading...</div>
+</div>
+</div>"
+`;
+
+exports[`the shell builds the same shell for one image, no gallery, content click closes 1`] = `
+"<div class="brz-lb-wrap brz-lb-close-btn-in" tabindex="-1" style="overflow: auto; overflow-x: hidden; overflow-y: auto;">
+<div class="brz-lb-container brz-lb-s-loading brz-lb-image-holder">
+<div class="brz-lb-content">
+<div class="brz-lb-figure brz-lb-loading">
+<button title="Close (Esc)" type="button" class="brz-lb-close">×</button>
+<figure>
+<img class="brz-lb-img" alt="A" src="/a.jpg" style="max-height: 800px;">
+<figcaption>
+<div class="brz-lb-bottom-bar">
+<div class="brz-lb-title">A</div>
+<div class="brz-lb-counter">
+</div>
+</div>
+</figcaption>
+</figure>
+</div>
+</div>
+<div class="brz-lb-preloader">Loading...</div>
+</div>
+</div>"
+`;

@@ -1,6 +1,6 @@
-import * as Obj from "visual/utils/reader/object";
-import { MigrationImageGallery } from "./types";
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
+import * as Obj from "visual/utils/reader/object";
+import type { MigrationImageGallery } from "./types";
 
 const IMAGE_MASK_KEY_PREFIX = "imagesMask";
 const ITEM_MASK_KEY_PREFIX = "mask";
@@ -34,7 +34,10 @@ export const migrateItemsMaskFromGalleryMask = (
       return itemModel;
     }
 
-    if (itemModel.type !== ElementTypes.Image || !Obj.isObject(itemModel.value)) {
+    if (
+      itemModel.type !== ElementTypes.Image ||
+      !Obj.isObject(itemModel.value)
+    ) {
       return itemModel;
     }
 

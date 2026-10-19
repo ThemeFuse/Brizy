@@ -1,4 +1,4 @@
-import { WithRenderContext } from "visual/providers/RenderProvider";
+import type { WithRenderContext } from "visual/providers/RenderProvider";
 import { cssStyleTextAlign } from "visual/utils/cssStyle/cssStyleAlign";
 import { cssStyleBgColor } from "visual/utils/cssStyle/cssStyleBgColor";
 import { cssStyleBgGradient } from "visual/utils/cssStyle/cssStyleBgGradient";
@@ -10,7 +10,7 @@ import { cssStylePaddingFourFields } from "visual/utils/cssStyle/cssStylePadding
 import { getAllCssStyleTypography } from "visual/utils/cssStyle/cssStyleTypography2";
 import { defaultValueValue } from "visual/utils/onChange";
 import { styleColor } from "visual/utils/style2";
-import { CSSValue } from "visual/utils/style2/types";
+import type { CSSValue } from "visual/utils/style2/types";
 
 export function cssStyleOptionTooltipWidth({
   v,

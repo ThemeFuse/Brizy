@@ -1,7 +1,7 @@
 import React, {
-  CSSProperties,
-  MouseEvent as ReactMouseEvent,
+  type CSSProperties,
   forwardRef,
+  type MouseEvent as ReactMouseEvent,
   useCallback,
   useEffect,
   useMemo,
@@ -9,10 +9,10 @@ import React, {
   useState
 } from "react";
 import {
-  ResizableProps,
-  ResizeRefType,
+  type ResizableProps,
+  type ResizeRefType,
   ResizeType,
-  SizeRefType
+  type SizeRefType
 } from "./types";
 
 const DEFAULT_MIN_W = 240;

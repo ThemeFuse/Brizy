@@ -1,5 +1,5 @@
-import EditorIcon from "visual/component/EditorIcon";
 import React from "react";
+import EditorIcon from "visual/component/EditorIcon";
 
 export const LoadingSpinner = (): JSX.Element => (
   <div

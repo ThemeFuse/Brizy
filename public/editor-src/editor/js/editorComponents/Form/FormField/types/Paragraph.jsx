@@ -1,6 +1,6 @@
 import React from "react";
-import TextField from "./common/TextField";
 import { t } from "visual/utils/i18n";
+import TextField from "./common/TextField";
 
 export default class Paragraph extends TextField {
   static get componentTitle() {
@@ -10,7 +10,7 @@ export default class Paragraph extends TextField {
     return "Paragraph";
   }
 
-  renderForEdit = props => {
+  renderForEdit = (props) => {
     return <textarea className="brz-textarea brz-forms__field" {...props} />;
   };
 }

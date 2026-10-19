@@ -1,6 +1,6 @@
-import * as Option from "visual/component/Options/Type";
-import { SimpleValue } from "visual/component/Options/Type";
-import { Literal, read } from "visual/utils/types/Literal";
+import type * as Option from "visual/component/Options/Type";
+import type { SimpleValue } from "visual/component/Options/Type";
+import { type Literal, read } from "visual/utils/types/Literal";
 
 export const defaultValue: SimpleValue<Literal> = { value: "" };
 

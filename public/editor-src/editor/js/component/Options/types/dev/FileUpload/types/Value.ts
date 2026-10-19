@@ -1,5 +1,5 @@
 import { match2, or } from "fp-utilities";
-import { IsEqual } from "visual/utils/types/Eq";
+import type { IsEqual } from "visual/utils/types/Eq";
 
 export interface WithValue {
   id: string;

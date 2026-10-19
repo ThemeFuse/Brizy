@@ -1,8 +1,8 @@
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
-import { ThirdPartyComponents } from "visual/global/Config/types/configs/ThirdParty";
-import { EditorMode } from "visual/providers/EditorModeProvider";
-import { PageCommon } from "visual/types/Page";
-import { Project } from "visual/types/Project";
+import type { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import type { ThirdPartyComponents } from "visual/global/Config/types/configs/ThirdParty";
+import type { EditorMode } from "visual/providers/EditorModeProvider";
+import type { PageCommon } from "visual/types/Page";
+import type { Project } from "visual/types/Project";
 
 type Config = Omit<ConfigCommon, "pageData" | "projectData" | "mode">;
 

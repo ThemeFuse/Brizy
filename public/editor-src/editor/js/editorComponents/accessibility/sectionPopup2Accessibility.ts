@@ -1,5 +1,5 @@
-import $ from "jquery";
 import { makeAttr } from "visual/utils/i18n/attribute";
+import { popup } from "../SectionPopup2/popup";
 
 const clickOutsideAttr = makeAttr("click_outside_to_close");
 const oldClickOutsideAttr = "data-click_outside_to_close";
@@ -99,11 +99,7 @@ export class SectionPopup2Accessibility {
       if (!this.isOpened()) return;
 
       event.preventDefault();
-      const popup = $(this.root).popup();
-
-      if (popup && typeof popup.close === "function") {
-        popup.close();
-      }
+      popup([this.root]).close();
     };
 
     document.addEventListener("keydown", this.onDocKeyDown, true);

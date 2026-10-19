@@ -1,14 +1,14 @@
 import { isEqual } from "es-toolkit";
 import { every, some } from "es-toolkit/compat";
 import { getIn, setIn } from "timm";
-import {
+import type {
   ElementModel,
   ElementModelType
 } from "visual/component/Elements/Types";
 import { normalizeRowColumns } from "visual/editorComponents/Row/utils";
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import { setIds } from "visual/utils/models";
-import { MValue } from "visual/utils/value";
+import type { MValue } from "visual/utils/value";
 import { addIn, removeIn } from "./addRemove";
 
 //#region Normalize Column Widths
@@ -52,7 +52,7 @@ const moveElement = (
   to: { itemPath: string[]; containerPath: string[] },
   newValue: ElementModelType
 ): MValue<ElementModelType> => {
-  let value;
+  let value: MValue<ElementModelType>;
   if (isSourceFirst(from.itemPath, to.itemPath)) {
     const valueAdded = addIn(oldValue, to.itemPath, newValue);
 
@@ -137,7 +137,7 @@ export const simpleMove = (
   to: { itemPath: string[] },
   movedElement = getIn(oldValue, from.itemPath) as MValue<ElementModelType>
 ): MValue<ElementModelType> => {
-  let value;
+  let value: MValue<ElementModelType>;
 
   if (!movedElement) {
     return undefined;
@@ -282,7 +282,7 @@ export const moveShortcodeToRow = (
     items: [movedShortcode]
   });
 
-  let value;
+  let value: MValue<ElementModelType>;
   if (from.itemPath.length < to.itemPath.length) {
     const newValue = addIn(oldValue, to.itemPath, newColumn);
 

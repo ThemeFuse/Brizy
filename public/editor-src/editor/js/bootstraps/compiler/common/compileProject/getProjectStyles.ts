@@ -1,12 +1,12 @@
 import { uniqBy } from "es-toolkit/array";
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import type { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { currentStyleSelector, fontsSelector } from "visual/redux/selectors";
-import { Store } from "visual/redux/store";
+import type { Store } from "visual/redux/store";
 import {
-  AdobeFont,
+  type AdobeFont,
   FontFamilyType,
-  GoogleFont,
-  UploadedFont
+  type GoogleFont,
+  type UploadedFont
 } from "visual/types/Fonts";
 import {
   makeGlobalStylesColorPalette,
@@ -20,7 +20,7 @@ import {
 } from "visual/utils/fonts/makeRichTextFontStylesCSS";
 import { tripId } from "visual/utils/fonts/transform";
 import { isExternalPopup } from "visual/utils/models";
-import { MValue } from "visual/utils/value";
+import type { MValue } from "visual/utils/value";
 import { projectClassName } from "../utils/projectClassName";
 
 function parseDynamicFontStyles(config: ConfigCommon): string[] {

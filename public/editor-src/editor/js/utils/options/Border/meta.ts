@@ -1,5 +1,5 @@
-import { ToMeta } from "visual/component/Options/Type";
-import { Value } from "visual/utils/options/Border/entities/Value";
+import type { ToMeta } from "visual/component/Options/Type";
+import type { Value } from "visual/utils/options/Border/entities/Value";
 
 export interface Meta {
   isEmpty: boolean;

@@ -1,8 +1,8 @@
 import { findIndex as _findIndex } from "es-toolkit/compat";
 import { insert, removeAt } from "timm";
-import { IsEqual } from "visual/utils/types/Eq";
-import { Reader } from "visual/utils/types/Type";
-import { MValue, onEmpty as _onEmpty, mApply } from "visual/utils/value";
+import type { IsEqual } from "visual/utils/types/Eq";
+import type { Reader } from "visual/utils/types/Type";
+import { onEmpty as _onEmpty, type MValue, mApply } from "visual/utils/value";
 
 export const flatMap = <T, U>(
   arr: T[],

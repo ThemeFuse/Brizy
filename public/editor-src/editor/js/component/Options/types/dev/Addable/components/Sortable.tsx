@@ -1,9 +1,9 @@
 import {
+  closestCorners,
   DndContext,
   DragOverlay,
-  DragStartEvent,
+  type DragStartEvent,
   PointerSensor,
-  closestCorners,
   useDndMonitor,
   useSensor,
   useSensors

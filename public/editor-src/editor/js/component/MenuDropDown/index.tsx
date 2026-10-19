@@ -1,7 +1,12 @@
 import classnames from "classnames";
-import React, { Component, ReactElement, ReactNode, createRef } from "react";
-import { RenderType, isEditor } from "visual/providers/RenderProvider";
-import { DeviceMode } from "visual/types";
+import React, {
+  Component,
+  createRef,
+  type ReactElement,
+  type ReactNode
+} from "react";
+import { isEditor, type RenderType } from "visual/providers/RenderProvider";
+import type { DeviceMode } from "visual/types";
 import { encodeToString } from "visual/utils/string";
 
 export interface Props {

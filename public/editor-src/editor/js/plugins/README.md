@@ -51,7 +51,7 @@ PluginProvider (React Context)
 The `EditorAPI` object is passed to every plugin's `register()` method. One flat interface serves all plugins — no plugin-specific sub-APIs:
 
 ```typescript
-interface EditorAPI {
+interface EditorAPI extends EditorSiteAPI {
   // Infrastructure
   toolServer: IToolServer;   // AI tool discovery + execution
   slots: SlotRegistry;       // Register UI into named slots
@@ -62,6 +62,7 @@ interface EditorAPI {
 
   // Data access
   getBlocksHtml: () => Array<BlocksHTML & { id: string }>;
+  getVisibleSectionsIds: () => string[];
   getPageData: () => unknown;
   getProjectData: () => unknown;
 
@@ -71,6 +72,9 @@ interface EditorAPI {
   getBlockCount: () => number;
   getStateSize: () => number;       // Cached, max 1x/5s, uses requestIdleCallback
   getHistoryInfo: () => { current: number; max: number; snapshotCount: number };
+
+  // Editor UI
+  openHelpSidebar: () => void;
 }
 ```
 
@@ -154,7 +158,9 @@ interface ISharedStore {
 }
 ```
 
-Primary use case: `generateBlock` (in ai-chat's `init.js`) stores block data via `store.set(ref, data)`, then `addBlock` handler reads it via `store.get(ref)`.
+Primary use case: ai-chat's `init.js` (`packages/ai-chat/src/init/index.tsx`) passes the shared
+store through to its site tools and chat UI, and the `addBlocks` handler reads a cached block
+via `store.get(blockRef)`, deleting the entry after use.
 
 ## Bootstrap Flow
 
@@ -162,5 +168,5 @@ Primary use case: `generateBlock` (in ai-chat's `init.js`) stores block data via
 2. `createEditorAPI()` instantiates ToolServer, SlotRegistry, FilterRegistry, EventBus, SharedStore
 3. `PluginRegistry.registerAll()` calls each plugin's `register(api)` synchronously
 4. `PluginProvider` wraps children with React context
-5. `PluginPortals` renders floating panel contributions via Portal
+5. `PluginPortals` renders floating panel contributions directly in the React tree.
 6. On unmount, `registry.destroy()` cleans up all plugins, registries, and event subscriptions

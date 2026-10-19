@@ -1,12 +1,12 @@
 import classNames from "classnames";
-import React, { ReactNode, useCallback, useState } from "react";
+import React, { type ReactNode, useCallback, useState } from "react";
 import ClickOutside from "visual/component/ClickOutside";
 import { InputHex } from "visual/component/Controls/InputHex";
 import EditorIcon from "visual/component/EditorIcon";
 import { EyeDropper } from "visual/component/EyeDropper";
-import { OnChange } from "visual/component/Options/Type";
+import type { OnChange } from "visual/component/Options/Type";
 import { isStory, useEditorMode } from "visual/providers/EditorModeProvider";
-import { Hex } from "visual/utils/color/Hex";
+import type { Hex } from "visual/utils/color/Hex";
 
 export type Props = {
   value: string;

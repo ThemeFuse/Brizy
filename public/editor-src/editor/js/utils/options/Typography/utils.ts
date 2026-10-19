@@ -1,27 +1,27 @@
 import { Arr, Bool, Str } from "@brizy/readers";
 import { mPipe, or } from "fp-utilities";
-import { TypographyProps } from "visual/component/Controls/Typography/types/Props";
-import { OptionValue } from "visual/component/Options/types";
-import { GetConfig } from "visual/providers/ConfigProvider/types";
-import { RenderType } from "visual/providers/RenderProvider";
-import { currentStyleSelector } from "visual/redux/selectors";
+import type { TypographyProps } from "visual/component/Controls/Typography/types/Props";
+import type { OptionValue } from "visual/component/Options/types";
+import type { GetConfig } from "visual/providers/ConfigProvider/types";
+import type { RenderType } from "visual/providers/RenderProvider";
 import {
+  currentStyleSelector,
   extraFontStylesSelector,
   unDeletedFontsSelector
 } from "visual/redux/selectors";
-import { Store } from "visual/redux/store";
-import { UploadedFont } from "visual/types/Fonts";
+import type { Store } from "visual/redux/store";
+import type { UploadedFont } from "visual/types/Fonts";
 import { TextScripts } from "visual/types/Style";
 import {
   getDefaultFont,
   getGroupFontsById
 } from "visual/utils/fonts/getFontById";
 import { t } from "visual/utils/i18n";
-import { TypographyValues } from "visual/utils/options/Typography/types";
+import type { TypographyValues } from "visual/utils/options/Typography/types";
 import * as Union from "visual/utils/reader/union";
-import { ResponsiveMode } from "visual/utils/responsiveMode";
-import { State } from "visual/utils/stateMode";
-import { MValue } from "visual/utils/value";
+import type { ResponsiveMode } from "visual/utils/responsiveMode";
+import type { State } from "visual/utils/stateMode";
+import type { MValue } from "visual/utils/value";
 import {
   styleTextTransformBold,
   styleTextTransformItalic,

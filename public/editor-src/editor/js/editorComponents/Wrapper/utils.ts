@@ -1,4 +1,4 @@
-import { Shortcode } from "visual/types";
+import type { Shortcode } from "visual/types";
 
 export const getThirdPartyShortcodeTitle = (
   shortcodes: Shortcode[],

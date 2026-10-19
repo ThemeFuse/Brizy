@@ -5,9 +5,9 @@ import {
   pageSelector,
   projectSelector
 } from "visual/redux/selectors";
-import { PageCommon } from "visual/types/Page";
+import type { PageCommon } from "visual/types/Page";
 import { ActionTypes } from "../../actions2";
-import { Data } from "./types";
+import type { Data } from "./types";
 import { apiAutoSave, apiOnChange } from "./utils";
 
 export function handleGlobalBlocks({

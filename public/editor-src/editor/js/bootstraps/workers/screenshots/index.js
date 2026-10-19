@@ -52,11 +52,11 @@ function evictByBytes() {
   }
 }
 
-onerror = (e) => {
+self.onerror = (e) => {
   console.error(e);
 };
 
-onmessage = async (e) => {
+self.onmessage = async (e) => {
   scheduleCacheClear();
   const { id, url: incomingUrl, options, assetUrl, siteUrl, proxyUrl } = e.data;
 
@@ -96,7 +96,7 @@ onmessage = async (e) => {
     // Notify main thread so its promise can reject immediately
     // instead of waiting for the 30s timeout.
     console.error("screenshot worker onmessage failed", err);
-    postMessage({ id, error: String(err && err.message ? err.message : err) });
+    postMessage({ id, error: String(err?.message ? err.message : err) });
   }
 };
 
@@ -175,7 +175,9 @@ function traverseAndProcess(root) {
     if (hasClass(cls, "brz-ed-draggable__padding")) {
       if (hasClass(cls, "brz-ed-draggable__padding--active")) {
         css(node, "background", "transparent");
-        children(node).forEach((child) => toRemove.push(child));
+        children(node).forEach((child) => {
+          toRemove.push(child);
+        });
       }
     }
 
@@ -234,7 +236,7 @@ function visitAll(node, cb) {
 function deactivateBackgroundParallax(node) {
   const bgWithParallax = getElementsByClassName(node, "brz-bg-image-parallax");
 
-  bgWithParallax.forEach((node) =>
+  bgWithParallax.forEach((node) => {
     css(node, {
       transform: "none",
       position: "absolute",
@@ -242,8 +244,8 @@ function deactivateBackgroundParallax(node) {
       left: "0",
       width: "100%",
       height: "100%"
-    })
-  );
+    });
+  });
 }
 
 function replaceIframesWithPlaceholders(node, config) {
@@ -272,7 +274,7 @@ function replaceIframesWithPlaceholders(node, config) {
       "brz-soundcloud"
     ];
 
-    for (let className of parentClassNames) {
+    for (const className of parentClassNames) {
       const parentComponent = closestByClassName(node, className);
 
       if (!parentComponent) {
@@ -330,9 +332,9 @@ function replaceIframesWithPlaceholders(node, config) {
 function transformPictureToImg(node) {
   getElementsByTagName(node, "picture").forEach((node) => {
     getElementsByTagName(node, "source").forEach(removeNode);
-    getElementsByTagName(node, "img").forEach((node) =>
-      node.removeAttribute("srcset")
-    );
+    getElementsByTagName(node, "img").forEach((node) => {
+      node.removeAttribute("srcset");
+    });
   });
 }
 
@@ -437,7 +439,8 @@ function blobToDataUri(blob) {
     reader.onload = function () {
       resolve(this.result);
     };
-    reader.onerror = () => reject(new Error("FileReader failed to decode blob"));
+    reader.onerror = () =>
+      reject(new Error("FileReader failed to decode blob"));
     reader.readAsDataURL(blob);
   });
 }

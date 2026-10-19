@@ -31,6 +31,6 @@ export function isView(v: string): v is "view" {
 function throwErrorIfNotContext(v: string): void {
   const env = process.env.NODE_ENV;
   if (!isRenderContext(v) && (env === "development" || env === "test")) {
-    throw new Error("RENDER CONTEXT HAS WRONG VALUE:" + v);
+    throw new Error(`RENDER CONTEXT HAS WRONG VALUE:${v}`);
   }
 }

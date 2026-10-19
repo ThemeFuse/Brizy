@@ -1,5 +1,5 @@
 import classnames from "classnames";
-import React, { JSX } from "react";
+import React, { type JSX } from "react";
 import CustomCSS from "visual/component/CustomCSS";
 import FacebookPlugin from "visual/component/Facebook";
 import Toolbar from "visual/component/Toolbar";

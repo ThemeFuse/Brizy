@@ -19,7 +19,7 @@ const Group = ({ title = "", icon = "", items = [], meta }) => {
       depth: meta.depth + 1,
       isInSubMenu: !isTopLevel
     };
-  }, [meta]);
+  }, [meta, isTopLevel]);
 
   if (isTopLevel) {
     return (

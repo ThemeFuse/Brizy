@@ -1,4 +1,4 @@
-import { Rect } from "./types";
+import type { Rect } from "./types";
 
 // DOM
 
@@ -24,11 +24,12 @@ export function closest(
 }
 
 export function elementDepth(el: Element): number {
-  let el_: Element | null = el;
+  let el_: Element | null = el.parentElement;
   let depth = 0;
 
-  while ((el_ = el_.parentElement)) {
+  while (el_) {
     depth++;
+    el_ = el_.parentElement;
   }
 
   return depth;
@@ -41,11 +42,15 @@ export function elementIndex(el: Element): number {
 }
 
 export function addClass(el: Element, ...classNames: string[]): void {
-  classNames.filter(String).forEach((className) => el.classList.add(className));
+  classNames.filter(String).forEach((className) => {
+    el.classList.add(className);
+  });
 }
 
 export function removeClass(el: Element, ...classNames: string[]): void {
-  classNames.forEach((className) => el.classList.remove(className));
+  classNames.forEach((className) => {
+    el.classList.remove(className);
+  });
 }
 
 // Math
@@ -101,18 +106,6 @@ export function shrinkRect(
     left: lr ? rect.left + by : rect.left,
     right: lr ? rect.right - by : rect.right
   };
-}
-
-export function clamp(value: number, min: number, max: number): number {
-  if (value < min) {
-    return min;
-  }
-
-  if (value > max) {
-    return max;
-  }
-
-  return value;
 }
 
 export const disableSelection = (e: Event): boolean => {

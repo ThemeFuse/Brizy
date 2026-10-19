@@ -1,18 +1,18 @@
 import type { OptionName, OptionValue } from "visual/component/Options/types";
-import { GetConfig } from "visual/providers/ConfigProvider/types";
-import { RenderType } from "visual/providers/RenderProvider";
-import { Store } from "visual/redux/store";
-import { BreakpointsNames } from "visual/utils/breakpoints/types";
+import type { GetConfig } from "visual/providers/ConfigProvider/types";
+import type { RenderType } from "visual/providers/RenderProvider";
+import type { Store } from "visual/redux/store";
+import type { BreakpointsNames } from "visual/utils/breakpoints/types";
 import { addPaletteVarsToModel } from "visual/utils/color/Palette";
 import { getTypographyValues } from "visual/utils/options/Typography/utils";
-import { ResponsiveMode } from "visual/utils/responsiveMode";
-import { State } from "visual/utils/stateMode";
-import { CSSValue } from "visual/utils/style2/types";
-import { MValue } from "visual/utils/value";
-import { fns, toCSS } from ".";
+import type { ResponsiveMode } from "visual/utils/responsiveMode";
+import type { State } from "visual/utils/stateMode";
+import type { CSSValue } from "visual/utils/style2/types";
+import type { MValue } from "visual/utils/value";
 import { getOptionModel } from "../fromElementModel";
 import { getOptionMeta } from "../toMeta/utils";
-import { OptionNameWithStyles } from "./types";
+import { fns, toCSS } from ".";
+import type { OptionNameWithStyles } from "./types";
 
 export const normalizeOptionModel = <T extends OptionName = OptionName>({
   type,

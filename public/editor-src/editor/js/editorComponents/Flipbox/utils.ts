@@ -4,16 +4,16 @@ import { checkValue, checkValue2 } from "visual/utils/checkValue";
 import { mPipe, pipe } from "visual/utils/fp";
 import { DESKTOP } from "visual/utils/responsiveMode";
 import { camelCase, capByPrefix } from "visual/utils/string";
-import { Literal } from "visual/utils/types/Literal";
-import { MValue, onNullish } from "visual/utils/value";
+import type { Literal } from "visual/utils/types/Literal";
+import { type MValue, onNullish } from "visual/utils/value";
 import {
-  BackgroundValue,
-  BackgroundValueGetter,
-  Direction,
-  GetBackgroundValue,
-  Transition,
+  type BackgroundValue,
+  type BackgroundValueGetter,
+  type Direction,
+  type GetBackgroundValue,
+  type Transition,
   Trigger,
-  Value
+  type Value
 } from "./types";
 
 export const getHeight = (
@@ -269,7 +269,7 @@ const bgKeys: Array<keyof BackgroundValue> = [
 const getBackgroundValue: GetBackgroundValue = ({ type, v, device }) => {
   const _device = device === DESKTOP ? "" : device;
 
-  let value = undefined;
+  let value: Record<string, Literal> | undefined;
 
   switch (type) {
     case "front":

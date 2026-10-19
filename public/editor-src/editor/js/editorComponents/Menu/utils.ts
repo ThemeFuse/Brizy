@@ -1,10 +1,10 @@
 import { omit, pick } from "es-toolkit";
 import { produce } from "immer";
-import {
+import type {
   ElementModel,
   ElementModelType
 } from "visual/component/Elements/Types";
-import { MenuItem } from "visual/global/Config/types/configs/ConfigCommon";
+import type { MenuItem } from "visual/global/Config/types/configs/ConfigCommon";
 import { mapModels, setIds } from "visual/utils/models";
 
 const configKeys = [
@@ -62,16 +62,15 @@ export function symbolsToItems(
 }
 
 export function itemsToSymbols(items: ElementModelType[]): ElementModel {
-  return items.reduce((acc, item) => {
-    return {
-      ...acc,
-      [item.value.id as string]: omit(item.value, [
-        // megaMenuItems should stay
-        ...configKeys.filter((k) => k !== "megaMenuItems"),
-        "_id"
-      ]),
-      // @ts-expect-error: Object possible to be undefined
-      ...(item.value.items?.length > 0 ? itemsToSymbols(item.value.items) : {})
-    };
+  return items.reduce<ElementModel>((acc, item) => {
+    acc[item.value.id as string] = omit(item.value, [
+      // megaMenuItems should stay
+      ...configKeys.filter((k) => k !== "megaMenuItems"),
+      "_id"
+    ]);
+    if (item.value.items?.length) {
+      Object.assign(acc, itemsToSymbols(item.value.items));
+    }
+    return acc;
   }, {});
 }

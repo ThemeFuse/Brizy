@@ -1,7 +1,7 @@
-import React, { Component, Fragment } from "react";
 import classnames from "classnames";
-import { preloadImage } from "visual/utils/image";
+import React, { Component, Fragment } from "react";
 import EditorIcon from "visual/component/EditorIcon";
+import { preloadImage } from "visual/utils/image";
 
 export default class ImageLoad extends Component {
   static defaultProps = {

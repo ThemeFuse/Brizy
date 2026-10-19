@@ -1,10 +1,10 @@
 import {
-  Active,
-  Eff,
-  Enable,
+  type Active,
+  type Eff,
+  type Enable,
   Type
 } from "visual/component/Controls/Transform/types/Patch";
-import {
+import type {
   Effect,
   EffectsWithAnchor,
   EffectValueWithAnchor

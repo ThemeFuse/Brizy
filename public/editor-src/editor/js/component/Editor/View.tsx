@@ -1,6 +1,6 @@
 import React from "react";
 import {
-  EditorMode,
+  type EditorMode,
   getCommonEditorMode
 } from "visual/providers/EditorModeProvider";
 import { Page } from "./View/Page";

@@ -37,7 +37,8 @@ class WPPostNavigation extends EditorComponent {
 
     return categories.reduce(
       (acc, curr) => {
-        return { ...acc, [`${curr}_taxonomy`]: v[curr] };
+        acc[`${curr}_taxonomy`] = v[curr];
+        return acc;
       },
       { post_type: categories.join() }
     );

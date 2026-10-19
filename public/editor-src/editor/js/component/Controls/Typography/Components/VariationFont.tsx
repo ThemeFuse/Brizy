@@ -1,15 +1,15 @@
 import React, { useCallback, useMemo, useState } from "react";
 import ClickOutside from "visual/component/ClickOutside";
 import { NumberSlider } from "visual/component/Controls/NumberSlider";
-import { Unit } from "visual/component/Controls/NumberUnit/types";
+import type { Unit } from "visual/component/Controls/NumberUnit/types";
 import EditorIcon from "visual/component/EditorIcon";
 import { Label } from "visual/component/Label";
 import { Scrollbar } from "visual/component/Scrollbar";
 import { t } from "visual/utils/i18n";
 import { clamp } from "visual/utils/math";
 import { isT } from "visual/utils/value";
-import { NumberType, VariationValue } from "../types/FontVariation";
-import { FontVariationProps as Props } from "../types/Props";
+import type { NumberType, VariationValue } from "../types/FontVariation";
+import type { FontVariationProps as Props } from "../types/Props";
 
 export const VariationFont = ({
   variableFontWeight,

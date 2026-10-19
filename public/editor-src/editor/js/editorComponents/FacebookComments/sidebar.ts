@@ -1,4 +1,4 @@
-import { ToolbarItemType } from "../ToolbarItemType";
+import type { ToolbarItemType } from "../ToolbarItemType";
 
 export function getItems(): ToolbarItemType[] {
   return [

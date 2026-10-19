@@ -1,4 +1,4 @@
-import { Choice } from "visual/component/Options/types/dev/Select/types";
+import type { Choice } from "visual/component/Options/types/dev/Select/types";
 import { t } from "../i18n";
 
 export const getMaskShapes = (): Choice[] => [

@@ -1,12 +1,12 @@
-import { CSSProperties, ReactElement } from "react";
-import {
+import type { CSSProperties, ReactElement } from "react";
+import type {
   OnChange as OptionOnChange,
   SimpleValue
 } from "visual/component/Options/Type";
-import { WithSize } from "visual/types/attributes";
-import { Literal } from "visual/utils/types/Literal";
-import { ChoicesAsync } from "../types";
-import { Attributes } from "visual/utils/string/parseCustomAttributes";
+import type { WithSize } from "visual/types/attributes";
+import type { Attributes } from "visual/utils/string/parseCustomAttributes";
+import type { Literal } from "visual/utils/types/Literal";
+import type { ChoicesAsync } from "../types";
 
 export interface SelectDropdownProps {
   style?: CSSProperties;

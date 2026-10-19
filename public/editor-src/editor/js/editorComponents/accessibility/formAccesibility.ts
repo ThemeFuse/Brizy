@@ -1,13 +1,10 @@
-import $ from "jquery";
-
-interface Select2MethodApi {
-  select2: (command: "open" | "close") => void;
-}
+import type { Select2Handle } from "visual/libs/select2";
 
 interface Options {
   select: HTMLSelectElement;
   selectNode: HTMLElement;
   rootNode: HTMLElement;
+  select2: Select2Handle;
 }
 
 export interface MultiStepFormAccessibilityOptions {
@@ -26,11 +23,13 @@ export class FormAccessibility {
   private selectNode: HTMLElement;
   private phoneAccessibilityInitialized = false;
   private rootNode: HTMLElement;
+  private select2: Select2Handle;
 
-  constructor({ select, selectNode, rootNode }: Options) {
+  constructor({ select, selectNode, rootNode, select2 }: Options) {
     this.select = select;
     this.selectNode = selectNode;
     this.rootNode = rootNode;
+    this.select2 = select2;
   }
 
   public init(): void {
@@ -44,9 +43,8 @@ export class FormAccessibility {
     selection.addEventListener("focus", this.handleSelectionFocus);
     selection.addEventListener("blur", this.handleSelectionBlur);
     this.select.addEventListener("change", this.handleStateChange);
-    $(this.select)
-      .on("select2:open", this.handleStateChange)
-      .on("select2:close", this.handleStateChange);
+    this.select.addEventListener("select2:open", this.handleStateChange);
+    this.select.addEventListener("select2:close", this.handleStateChange);
 
     this.sync();
     this.initPhoneAccessibility();
@@ -169,19 +167,15 @@ export class FormAccessibility {
   }
 
   private open(): void {
-    this.getSelect2Api().select2("open");
+    this.select2.open();
   }
 
   private close(): void {
-    this.getSelect2Api().select2("close");
+    this.select2.close();
   }
 
   private isOpen(): boolean {
     return this.getSelection()?.getAttribute("aria-expanded") === "true";
-  }
-
-  private getSelect2Api(): JQuery<HTMLSelectElement> & Select2MethodApi {
-    return $(this.select) as JQuery<HTMLSelectElement> & Select2MethodApi;
   }
 
   private commitHighlightedOption(): void {

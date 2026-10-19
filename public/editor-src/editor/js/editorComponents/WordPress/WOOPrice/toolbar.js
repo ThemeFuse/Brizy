@@ -125,7 +125,7 @@ export const getItems =
                 options: [
                   {
                     id: "color",
-                    type: "colorPicker",
+                    type: "colorPicker"
                   }
                 ]
               }

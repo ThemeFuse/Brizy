@@ -1,33 +1,33 @@
-import * as Positive from "visual/utils/math/Positive";
-import * as Unit from "./types/Unit";
+import type { Value as NV } from "visual/component/Controls/NumberUnit/types";
+import type { Props as SP } from "visual/component/Controls/Spacing";
+import type { Edge } from "visual/component/Controls/Spacing/types";
+import type * as Positive from "visual/utils/math/Positive";
+import type { Setter } from "visual/utils/model";
+import { readWithParser } from "visual/utils/reader/readWithParser";
+import type * as Unit from "./types/Unit";
 import {
-  setBottomRight,
-  setBottomRightUnit,
   setBottomLeft,
   setBottomLeftUnit,
-  setValue,
-  setTopRight,
-  setTopRightUnit,
+  setBottomRight,
+  setBottomRightUnit,
   setTopLeft,
   setTopLeftUnit,
+  setTopRight,
+  setTopRightUnit,
   setUnit,
-  Value
+  setValue,
+  type Value
 } from "./types/Value";
-import { readWithParser } from "visual/utils/reader/readWithParser";
-import { Value as NV } from "visual/component/Controls/NumberUnit/types";
-import { Props as SP } from "visual/component/Controls/Spacing";
-import { Edge } from "visual/component/Controls/Spacing/types";
-import { Setter } from "visual/utils/model";
 
 export const fromNumberSlider = readWithParser<
   NV<Unit.Unit>,
   { number: number; unit: Unit.Unit }
 >({
-  number: v => v.number,
-  unit: v => v.unit
+  number: (v) => v.number,
+  unit: (v) => v.unit
 });
 
-export const getIcon: SP<Unit.Unit, Edge>["getIcon"] = e => {
+export const getIcon: SP<Unit.Unit, Edge>["getIcon"] = (e) => {
   switch (e) {
     case "grouped":
       return "nc-corners-all";

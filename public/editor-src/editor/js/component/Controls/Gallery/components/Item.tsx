@@ -1,13 +1,13 @@
 import classNames from "classnames";
 import { noop } from "es-toolkit";
 import React, {
-  MouseEvent,
-  PropsWithChildren,
-  ReactElement,
+  type MouseEvent,
+  type PropsWithChildren,
+  type ReactElement,
   useCallback
 } from "react";
 import { EditorIcon } from "visual/component/EditorIcon";
-import { WithClassName, WithId } from "visual/types/attributes";
+import type { WithClassName, WithId } from "visual/types/attributes";
 
 export interface Props<T> extends WithClassName, WithId<T> {
   onRemove?: (id: T) => void;
@@ -31,6 +31,7 @@ export function Item<T>({
     <div className={classNames("brz-ed-control__gallery__item", className)}>
       {onRemove && (
         <button
+          type="button"
           onMouseDown={stopPropagation}
           onClick={remove}
           className={"brz-ed-control__gallery__item__remove"}

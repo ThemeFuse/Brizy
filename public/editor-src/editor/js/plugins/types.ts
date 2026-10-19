@@ -4,7 +4,7 @@
  */
 import type { ComponentType } from "react";
 import type { IToolServer } from "visual/ai/application/interfaces/i-tool-server";
-import { BlocksHTML } from "visual/types/Block";
+import type { BlocksHTML } from "visual/types/Block";
 import type { EditorSiteAPI } from "./EditorSite";
 import type { ISharedStore } from "./SharedStore";
 
@@ -13,6 +13,7 @@ import type { ISharedStore } from "./SharedStore";
 export interface EditorPlugin {
   id: string;
   name: string;
+  // biome-ignore lint/suspicious/noConfusingVoidType: `void` is the disposer contract - an implementer whose body just returns is assignable to `void` but not to `undefined`, so narrowing this union breaks every plugin that registers without a teardown
   register(api: EditorAPI): void | (() => void);
 }
 

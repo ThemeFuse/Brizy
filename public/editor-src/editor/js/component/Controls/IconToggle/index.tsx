@@ -1,13 +1,13 @@
 import classNames from "classnames";
-import React, { ReactElement } from "react";
-import {
+import React, { type ReactElement } from "react";
+import type {
   WithClassName,
   WithOnChange,
   WithValue
 } from "visual/types/attributes";
 import { indexOf, nextIndex } from "visual/utils/array";
-import { NonEmptyArray } from "visual/utils/array/types";
-import { Props as ItemProps } from "./IconToggleItem";
+import type { NonEmptyArray } from "visual/utils/array/types";
+import type { Props as ItemProps } from "./IconToggleItem";
 
 export type Props<T> = WithClassName &
   WithValue<T> &
@@ -28,7 +28,7 @@ export function IconToggle<T>({
     const i = indexOf(value, values);
     const j = i !== undefined ? nextIndex(i, values) : undefined;
 
-    j !== undefined && onChange(values[j]);
+    if (j !== undefined) onChange(values[j]);
   };
 
   return (

@@ -12,14 +12,14 @@ import {
   ElementTypes,
   readElementType
 } from "visual/global/Config/types/configs/ElementTypes";
-import { type SymbolsCreatePayload, createSymbol } from "visual/redux/actions2";
+import { createSymbol, type SymbolsCreatePayload } from "visual/redux/actions2";
 import { symbolsSelector } from "visual/redux/selectors";
 import { getFlatShortcodes } from "visual/shortcodeComponents/utils";
 import { ECWID_CATEGORY_TYPE, ECWID_PRODUCT_TYPE } from "visual/utils/ecwid";
 import { t } from "visual/utils/i18n";
 import { isModel } from "visual/utils/models";
 import { omitSymbolsKey } from "visual/utils/symbols";
-import { type ElementModelWithSymbols } from "visual/utils/symbols/types";
+import type { ElementModelWithSymbols } from "visual/utils/symbols/types";
 import {
   getComponentDefaultValue,
   getComponentRulesValue
@@ -377,7 +377,7 @@ const getItems: ContextGetItems<ElementModel> = (v, component) => {
 
               dispatch(createSymbol(newSymbols));
             } else {
-              // eslint-disable-next-line no-console
+              // biome-ignore lint/suspicious/noConsole: migrated from eslint
               console.warn("Missing Type & Value");
             }
           }

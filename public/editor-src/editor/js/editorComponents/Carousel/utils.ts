@@ -1,6 +1,6 @@
 import { postsQuery } from "visual/utils/elements/posts";
-import { CloudQuery } from "visual/utils/elements/posts/types";
-import { Value } from "./types";
+import type { CloudQuery } from "visual/utils/elements/posts/types";
+import type { Value } from "./types";
 import { decodeV } from "./utils.common";
 
 export function getLoopAttributes(v: Value): CloudQuery {

@@ -1,15 +1,15 @@
 import { load as cheerioLoad } from "cheerio";
-import { ReactElement } from "react";
+import type { ReactElement } from "react";
 import ReactDOMServer from "react-dom/server";
 import type { Config } from "visual/global/Config";
-import { ComponentTypes } from "visual/providers/EditorComponentProvider/ComponentTypes";
-import { Sheet } from "visual/providers/StyleProvider/Sheet";
+import type { ComponentTypes } from "visual/providers/EditorComponentProvider/ComponentTypes";
+import type { Sheet } from "visual/providers/StyleProvider/Sheet";
 import {
   defaultFontSelector,
   fontsSelector,
   getDefaultFontDetailsSelector
 } from "visual/redux/selectors";
-import { Store } from "visual/redux/store";
+import type { Store } from "visual/redux/store";
 import {
   clearFamilyCache,
   getUsedModelFontFamily
@@ -20,7 +20,7 @@ import { changeMenuUid } from "../transforms/changeMenuUid";
 import { customAttributes } from "../transforms/customAttributes";
 import { dynamicContent } from "../transforms/dynamicContent";
 import { getUsedFonts } from "../utils/getUsedFonts";
-import { Output } from "./types";
+import type { Output } from "./types";
 
 interface Props {
   store: Store;

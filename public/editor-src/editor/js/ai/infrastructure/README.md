@@ -51,8 +51,8 @@ Pure functions extracted from repositories. Each file is domain-specific.
 | `duplicateElementInBlock` | Clones element within a block                  |
 | `removeElementFromBlock`  | Removes element and returns updated block      |
 | `updateColumnInRow`       | Redistributes column widths on change          |
-| `getNestedValue`          | Deep property access by dot path               |
-| `isRowElement`, `isColumnElement`, `isWrappersTypeElement` | Type guards |
+| `getNestedValue`          | Deep property access by an array path (`string[]`), not dot notation               |
+| `isRowElement`, `isColumnElement`, `isWrappersTypeElement` | Boolean checks against element type (no TS type-predicate return) |
 | `getShortcodeKey`         | Gets shortcode key for element type            |
 
 ### `richtext.ts`
@@ -82,9 +82,9 @@ Pure functions extracted from repositories. Each file is domain-specific.
 | Function           | Purpose                                              |
 |--------------------|------------------------------------------------------|
 | `collectElements`  | Recursively collects all elements from a block tree  |
-| `searchInElement`  | Matches single element against search criteria       |
+| `searchInElement`  | Recursively collects and fuzzy-filters elements within an element's subtree (deprecated)       |
 | `applyFuzzySearch` | Fuzzy text matching on search candidates             |
-| `toSearchResults`  | Converts internal results to `SearchElementsResult`  |
+| `toSearchResults`  | Converts internal results to `SearchResultItem[]`  |
 
 ### Tests (`utils/__tests__/`)
 - `dnd.test.ts` — DND from/to construction

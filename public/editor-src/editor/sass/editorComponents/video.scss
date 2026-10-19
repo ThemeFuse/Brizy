@@ -189,16 +189,16 @@
   height: 0;
 }
 
-// this is magnific popup container class, need for video lightbox mode
-.brz .mfp-container {
-  &.mfp-inline-holder {
-    .mfp-content {
+// lightbox container class, needed for the video lightbox mode
+.brz .brz-lb-container {
+  &.brz-lb-inline-holder {
+    .brz-lb-content {
       width: auto;
     }
   }
 
-  .mfp-content {
-    &:has(.mfp-iframe) {
+  .brz-lb-content {
+    &:has(.brz-lb-iframe) {
       max-width: 900px;
     }
 

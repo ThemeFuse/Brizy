@@ -18,14 +18,14 @@ import {
 } from "rxjs/operators";
 import { EditorIcon } from "visual/component/EditorIcon";
 import { useThrottleOnChange } from "visual/component/hooks";
-import { SectionPopup2Instances } from "visual/editorComponents/SectionPopup2/instances";
 import { SectionPopupInstances } from "visual/editorComponents/SectionPopup/instances";
+import { SectionPopup2Instances } from "visual/editorComponents/SectionPopup2/instances";
 import { useConfig } from "visual/providers/ConfigProvider";
-import { Hex, fromRgb } from "visual/utils/color/Hex";
+import { fromRgb, type Hex } from "visual/utils/color/Hex";
 import { always } from "visual/utils/fp";
 import { browserSupports, makeNodeScreenshot } from "visual/utils/screenshots";
 import * as State from "./types";
-import { Coords, Type } from "./types";
+import { type Coords, Type } from "./types";
 import { nodeClasses, scrollValue } from "./utils";
 
 export interface Props {
@@ -41,13 +41,13 @@ export const EyeDropper = forwardRef<HTMLDivElement, Props>(
     const colorRef = useRef<Hex | null>(null);
     const config = useConfig();
 
-    const updatePointer = () => {
+    const updatePointer = useCallback(() => {
       if (pointerRef.current !== null) {
         const x = coordsRef.current.x;
         const y = coordsRef.current.y;
         pointerRef.current.style.transform = `translate(${x}px, ${y}px)`;
       }
-    };
+    }, []);
 
     const f = useCallback(
       (c: Coords) => {
@@ -82,9 +82,9 @@ export const EyeDropper = forwardRef<HTMLDivElement, Props>(
         updatePointer();
         updateColor(coordsRef.current);
       },
-      [updateColor]
+      [updateColor, updatePointer]
     );
-    const setScroll = (c: Coords) => (scrollRef.current = c);
+    const setScroll = useCallback((c: Coords) => (scrollRef.current = c), []);
 
     useEffect(() => {
       const popups = [
@@ -105,7 +105,7 @@ export const EyeDropper = forwardRef<HTMLDivElement, Props>(
       (e) => {
         e.stopPropagation();
 
-        colorRef.current && onPick(colorRef.current);
+        if (colorRef.current) onPick(colorRef.current);
       },
       [onPick]
     );
@@ -119,7 +119,7 @@ export const EyeDropper = forwardRef<HTMLDivElement, Props>(
           const cb = (e: Event) => {
             e.stopPropagation();
 
-            colorRef.current && onPick(colorRef.current);
+            if (colorRef.current) onPick(colorRef.current);
           };
 
           state.context.node.addEventListener("click", cb);
@@ -187,7 +187,7 @@ export const EyeDropper = forwardRef<HTMLDivElement, Props>(
           };
         }
       }
-    }, [state, config]);
+    }, [state, config, setScroll]);
 
     switch (state.type) {
       case Type.Idle:

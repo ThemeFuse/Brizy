@@ -1,7 +1,7 @@
 import { omit } from "es-toolkit";
-import { ElementModel } from "visual/component/Elements/Types";
-import { Dictionary } from "visual/types/utils";
-import { Deps, Migration } from "visual/utils/migration";
+import type { ElementModel } from "visual/component/Elements/Types";
+import type { Dictionary } from "visual/types/utils";
+import type { Deps, Migration } from "visual/utils/migration";
 import { objectFromEntries } from "visual/utils/object";
 import * as Arr from "visual/utils/reader/array";
 import * as Obj from "visual/utils/reader/object";

@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import { ConditionsComponent } from "visual/component/ConditionsComponent";
 import { globalBlocksSelector } from "visual/redux/selectors";
 import { t } from "visual/utils/i18n";
-import { Props } from "./types";
+import type { Props } from "./types";
 
 export const GbCondition = ({
   className: _className = "",

@@ -1,9 +1,9 @@
-import React, { FC } from "react";
+import React, { type FC } from "react";
 import { makePlaceholder } from "visual/utils/dynamicContent";
+import { Dropdown } from "./Dropdown";
 import { Li } from "./Li";
 import { Link } from "./Link";
 import { MegaMenu } from "./MegaMenu";
-import { Dropdown } from "./Dropdown";
 
 export interface Props {
   menuId: string;

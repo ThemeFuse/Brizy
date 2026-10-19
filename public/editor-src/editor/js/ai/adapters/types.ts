@@ -2,7 +2,7 @@ import type { z } from "zod";
 import type { ISharedStore } from "visual/plugins/SharedStore";
 import type { IPageRepository } from "../application/interfaces/i-page-repository";
 import type { IProjectRepository } from "../application/interfaces/i-project-repository";
-import type { BrizyToolResult, ToolDefinition } from "../entities/models";
+import type { BrizyToolResult } from "../entities/models";
 
 /** Type alias for tool handler arguments */
 export type ToolArgs = Record<string, unknown>;
@@ -24,8 +24,11 @@ export interface HandlerDeps {
  */
 export interface AddToolConfig {
   readonly kind: "add";
-  /** The ToolDefinition that describes this tool to the LLM */
-  readonly definition: ToolDefinition;
+  /**
+   * Handler key. Every catalog tool whose `alias` is this string executes
+   * this config, so one element's many small tools share one handler.
+   */
+  readonly alias: string;
   /** ElementTypes enum value (e.g. ElementTypes.Button) */
   readonly elementType: string;
   /** Zod schema for property validation */
@@ -51,7 +54,7 @@ export interface AddToolConfig {
   /**
    * Escape hatch: if the standard flow does not fit,
    * provide a full custom handler. When set, all other fields
-   * except `definition` are ignored.
+   * except `alias` are ignored.
    */
   readonly handler?: (
     deps: HandlerDeps,
@@ -67,8 +70,11 @@ export interface AddToolConfig {
  */
 export interface UpdateToolConfig {
   readonly kind: "update";
-  /** The ToolDefinition that describes this tool to the LLM */
-  readonly definition: ToolDefinition;
+  /**
+   * Handler key. Every catalog tool whose `alias` is this string executes
+   * this config, so one element's many small tools share one handler.
+   */
+  readonly alias: string;
   /** ElementTypes enum value — passed to pageRepository.updateElement */
   readonly elementType: string;
   /** Zod schema for property validation */
@@ -98,12 +104,26 @@ export interface UpdateToolConfig {
   /**
    * Optional pre-update hook that can modify changes based on current element state.
    * Receives deps, elementId, and the parsed changes. Return the final changes object.
+   *
+   * Must be a pure transform — it runs before the update is known to succeed.
+   * Side writes belong in `afterUpdate`.
    */
   readonly beforeUpdate?: (
     deps: HandlerDeps,
     elementId: string,
     parsed: Record<string, unknown>
   ) => Record<string, unknown>;
+  /**
+   * Optional post-update hook for writes to OTHER elements (e.g. a property
+   * that lives on the parent). Runs only after the main update succeeded.
+   * Receives the parsed props, before beforeUpdate stripped anything.
+   */
+  readonly afterUpdate?: (
+    deps: HandlerDeps,
+    elementId: string,
+    parsed: Record<string, unknown>,
+    result: BrizyToolResult
+  ) => BrizyToolResult | undefined;
   /**
    * Escape hatch: if the standard flow does not fit,
    * provide a full custom handler.
@@ -120,7 +140,8 @@ export interface UpdateToolConfig {
  */
 export interface AddNoPropsToolConfig {
   readonly kind: "addNoProps";
-  readonly definition: ToolDefinition;
+  /** Handler key — see AddToolConfig.alias. */
+  readonly alias: string;
   readonly elementType: string;
 }
 

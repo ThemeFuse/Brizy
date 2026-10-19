@@ -1,4 +1,4 @@
-import { OptionStyle } from "visual/utils/cssStyle/types";
+import type { OptionStyle } from "visual/utils/cssStyle/types";
 
 export const titleAlignCSS: OptionStyle<"toggle"> = ({ value: { value } }) => ({
   "{{WRAPPER}} .brz-chart_title": {

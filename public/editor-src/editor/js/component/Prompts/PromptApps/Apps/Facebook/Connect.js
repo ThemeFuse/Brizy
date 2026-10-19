@@ -31,7 +31,10 @@ class FacebookConnect extends Component {
   }
 
   getDefaultValue() {
-    return apiKeys.reduce((acc, { name }) => ({ ...acc, [`${name}`]: "" }), {});
+    return apiKeys.reduce((acc, { name }) => {
+      acc[`${name}`] = "";
+      return acc;
+    }, {});
   }
 
   handleChange = (value, type) => {
@@ -78,7 +81,7 @@ class FacebookConnect extends Component {
         return;
       }
 
-      if (data && data.id) {
+      if (data?.id) {
         const { success } = await deleteAccount(data.id, config);
 
         if (!success) {

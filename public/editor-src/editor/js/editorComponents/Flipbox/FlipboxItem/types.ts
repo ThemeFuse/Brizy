@@ -1,14 +1,14 @@
-import { Component as ReactComponent } from "react";
-import {
+import type { Component as ReactComponent } from "react";
+import type {
   ElementModel,
   ElementModelType2
 } from "visual/component/Elements/Types";
-import {
+import type {
   ComponentsMeta,
   ToolbarExtend
 } from "visual/editorComponents/EditorComponent/types";
-import { WithClassName } from "visual/types/attributes";
-import { BackgroundValue, FlipboxType, Trigger } from "../types";
+import type { WithClassName } from "visual/types/attributes";
+import type { BackgroundValue, FlipboxType, Trigger } from "../types";
 
 export interface Value extends ElementModel {
   value: {

@@ -1,4 +1,4 @@
-import { ElementType, clearAlerts, getValidateInputs } from "./utils.common";
+import { clearAlerts, ElementType, getValidateInputs } from "./utils.common";
 
 const getRequiredInputsSelector = (elementType: ElementType): string => {
   switch (elementType) {

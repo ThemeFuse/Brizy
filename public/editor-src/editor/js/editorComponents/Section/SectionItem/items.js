@@ -19,7 +19,7 @@ class SectionItemItems extends EditorArrayComponent {
     return "SectionItem.Items";
   }
 
-  getItemProps(itemData, itemIndex) {
+  getItemProps(_itemData, itemIndex) {
     const meta = this.props.meta;
     const cloneRemoveConfig = {
       getItems: () => [

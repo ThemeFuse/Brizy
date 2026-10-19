@@ -1,5 +1,5 @@
-import { MValue } from "visual/utils/value";
-import { Value } from "./types";
+import type { MValue } from "visual/utils/value";
+import type { Value } from "./types";
 
 export const getModifiedField = (
   [b1, v1, h1]: number[],
@@ -8,8 +8,8 @@ export const getModifiedField = (
   return b1 !== b2
     ? "blur"
     : v1 !== v2
-    ? "vertical"
-    : h1 !== h2
-    ? "horizontal"
-    : undefined;
+      ? "vertical"
+      : h1 !== h2
+        ? "horizontal"
+        : undefined;
 };

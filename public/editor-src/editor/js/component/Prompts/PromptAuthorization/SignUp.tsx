@@ -2,20 +2,20 @@ import classnames from "classnames";
 import { noop } from "es-toolkit";
 import { produce } from "immer";
 import React, { Component } from "react";
-import { ConnectedProps, connect } from "react-redux";
+import { type ConnectedProps, connect } from "react-redux";
 import { Alert } from "visual/component/Alert";
 import InputPlaceholder from "visual/component/Controls/InputPlaceholder";
 import { Spacer } from "visual/component/Controls/Spacer";
 import { Button } from "visual/component/Prompts/common/Button";
 import { Loading } from "visual/component/Prompts/common/Loading";
 import { Scrollbar } from "visual/component/Scrollbar";
-import { SuccessResponse } from "visual/global/Config/types/configs/common";
+import type { SuccessResponse } from "visual/global/Config/types/configs/common";
 import { updateAuthorization, updateSyncAllowed } from "visual/redux/actions2";
 import { checkCompatibility, signUp } from "visual/utils/api";
 import { t } from "visual/utils/i18n";
 import { setAuthorized } from "visual/utils/user/getAuthorized";
 import { validateEmail } from "../common/utils";
-import { AuthorizationField, SignAuthorizationProps } from "./types";
+import type { AuthorizationField, SignAuthorizationProps } from "./types";
 
 const getFields = (): AuthorizationField[] => [
   {
@@ -99,7 +99,7 @@ class SignUp extends Component<SingUpProps, SignUpState> {
       data: Integrations.cloudAuthorization,
       loading: false
     });
-    onLoading && onLoading(false);
+    if (onLoading) onLoading(false);
   }
 
   handleChange = <T extends SignUpState["formData"], K extends keyof T>(
@@ -182,7 +182,7 @@ class SignUp extends Component<SingUpProps, SignUpState> {
               checkCompatibility(config).then((r) => {
                 const { success, isSyncAllowed } = r;
                 if (!success) {
-                  // eslint-disable-next-line no-console
+                  // biome-ignore lint/suspicious/noConsole: migrated from eslint
                   console.warn("Something went wrong", r);
                 } else {
                   if (isSyncAllowed) {
@@ -249,22 +249,20 @@ class SignUp extends Component<SingUpProps, SignUpState> {
           <div className="brz-ed-popup-integrations__connect-body">
             {this.renderNotice()}
 
-            {getFields().map(
-              ({ title, name, required, type = "text" }, index) => {
-                return (
-                  <InputPlaceholder
-                    key={index}
-                    title={title}
-                    type={type}
-                    value={`${this.state.formData[name] ?? ""}`}
-                    required={required}
-                    onChange={({ target }): void => {
-                      this.handleChange(name, target.value);
-                    }}
-                  />
-                );
-              }
-            )}
+            {getFields().map(({ title, name, required, type = "text" }) => {
+              return (
+                <InputPlaceholder
+                  key={name}
+                  title={title}
+                  type={type}
+                  value={`${this.state.formData[name] ?? ""}`}
+                  required={required}
+                  onChange={({ target }): void => {
+                    this.handleChange(name, target.value);
+                  }}
+                />
+              );
+            })}
             <div className="brz-ed-popup-authorization__buttons">
               <Button
                 color="teal"

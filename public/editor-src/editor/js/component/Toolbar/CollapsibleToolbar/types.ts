@@ -1,7 +1,7 @@
-import { ToolbarItemsProps } from "visual/component/Toolbar/ToolbarItems";
-import { OptionDefinition } from "visual/editorComponents/ToolbarItemType";
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
-import { DeviceMode } from "visual/types";
+import type { ToolbarItemsProps } from "visual/component/Toolbar/ToolbarItems";
+import type { OptionDefinition } from "visual/editorComponents/ToolbarItemType";
+import type { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import type { DeviceMode } from "visual/types";
 
 export interface CollapsibleToolbarProps
   extends Omit<ToolbarItemsProps, "items"> {

@@ -1,4 +1,4 @@
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import type { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { hexToRgb } from "visual/utils/color";
 import { isExternalPopup } from "visual/utils/models/modes";
 import { uidByConfig } from "visual/utils/uuid";

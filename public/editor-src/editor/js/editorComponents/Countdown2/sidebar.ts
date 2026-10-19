@@ -1,8 +1,8 @@
-import { ElementModel } from "visual/component/Elements/Types";
-import { Params } from "visual/editorComponents/EditorComponent/types";
+import type { ElementModel } from "visual/component/Elements/Types";
+import type { Params } from "visual/editorComponents/EditorComponent/types";
 import { isStory } from "visual/providers/EditorModeProvider";
 import { t } from "visual/utils/i18n";
-import { ToolbarItemType } from "../ToolbarItemType";
+import type { ToolbarItemType } from "../ToolbarItemType";
 
 export const title = () => t("Countdown");
 

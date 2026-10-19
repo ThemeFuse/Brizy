@@ -1,6 +1,6 @@
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
-import { Dictionary } from "visual/types/utils";
-import { RefsById, Sources } from "../elements/posts/types";
+import type { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import type { Dictionary } from "visual/types/utils";
+import type { RefsById, Sources } from "../elements/posts/types";
 
 export enum AutoSave {
   publish = 0,

@@ -1,4 +1,4 @@
-import { Size } from "./Types";
+import type { Size } from "./Types";
 
 export const configSizeToSize = (size: {
   label: string;

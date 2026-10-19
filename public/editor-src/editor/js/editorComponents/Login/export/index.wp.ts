@@ -1,3 +1,4 @@
+import { LoginAccessibility } from "../../accessibility";
 import { getData, validateInputs } from "./utils";
 import {
   addAlerts,
@@ -6,7 +7,6 @@ import {
   loginDisplay
 } from "./utils.common";
 import { getCurrentType } from "./utils.wp";
-import { LoginAccessibility } from "../../accessibility";
 
 const wpHeaders = {
   accept: "*/*",
@@ -16,10 +16,7 @@ const fetchHeaders = new Headers(wpHeaders);
 
 let isSubmitEnabled = true;
 
-export default function ($node: JQuery): void {
-  const node = $node.get(0);
-  if (!node) return;
-
+export default function (node: HTMLElement): void {
   node.querySelectorAll(".brz-login").forEach((element) => {
     loginDisplay(element);
     if (element instanceof HTMLElement) {

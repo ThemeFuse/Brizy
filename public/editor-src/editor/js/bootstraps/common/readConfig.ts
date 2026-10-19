@@ -1,4 +1,4 @@
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import type { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import * as Obj from "visual/utils/reader/object";
 import { parseGlobalBlocks } from "./utils/parseGlobalBlocks";
 import { parsePageCommon } from "./utils/parsePageCommon";

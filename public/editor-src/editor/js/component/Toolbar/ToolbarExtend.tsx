@@ -1,7 +1,7 @@
 import { defaults } from "es-toolkit/compat";
 import React, { useContext, useMemo } from "react";
-import { FCC } from "visual/utils/react/types";
-import { PortalToolbarProps } from "./PortalToolbar/types";
+import type { FCC } from "visual/utils/react/types";
+import type { PortalToolbarProps } from "./PortalToolbar/types";
 
 export type ToolbarExtendProps = Pick<
   PortalToolbarProps,

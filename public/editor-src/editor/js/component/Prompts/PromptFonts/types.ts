@@ -1,5 +1,5 @@
-import { MouseEvent, ReactElement } from "react";
-import { ReduxState } from "visual/redux/types";
+import type { MouseEvent, ReactElement } from "react";
+import type { ReduxState } from "visual/redux/types";
 
 export type Fonts = ReduxState["fonts"];
 

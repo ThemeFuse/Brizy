@@ -1,9 +1,10 @@
+import { noop } from "es-toolkit";
 import React from "react";
 
 const HISTORY_UPDATE_FREQUENCY = 2000;
 const MAX_HISTORY_LENGTH = 10;
 
-let history = new Array(MAX_HISTORY_LENGTH).fill(null);
+const history = new Array(MAX_HISTORY_LENGTH).fill(null);
 let currentHistoryIndex = 0;
 let lastSnapshotTimestamp = 0;
 let canUndo = false;
@@ -45,7 +46,7 @@ const updateHistory = (state, { keysToTrack }, options) => {
     return;
   }
 
-  let newStateIsDifferent = keysToTrack.some(key => {
+  const newStateIsDifferent = keysToTrack.some((key) => {
     if (typeof key === "string") {
       return state[key] !== history[currentHistoryIndex][key];
     } else {
@@ -111,7 +112,7 @@ export const ActionTypes = {
 };
 
 export default function historyEnhancer(reducer, config) {
-  return function(state, action) {
+  return (state, action) => {
     switch (action.type) {
       case ActionTypes.UNDO: {
         const undoSnapshot = undoHistory();
@@ -132,12 +133,12 @@ export default function historyEnhancer(reducer, config) {
         };
       }
       default: {
-        state && delete state.historyTravelling;
+        if (state) delete state.historyTravelling;
         const newState = reducer(state, action);
 
         const {
-          changeHistoryBeforeUpdate = () => {},
-          changeHistoryAfterUpdate = () => {}
+          changeHistoryBeforeUpdate = noop,
+          changeHistoryAfterUpdate = noop
         } = config;
 
         if (action.type !== "@@redux/INIT") {
@@ -149,7 +150,7 @@ export default function historyEnhancer(reducer, config) {
           );
 
           updateHistory(newState, config, {
-            replacePresent: action.meta && action.meta.historyReplacePresent
+            replacePresent: action.meta?.historyReplacePresent
           });
 
           changeHistoryAfterUpdate(
@@ -182,7 +183,7 @@ export class HistoryButtons extends React.Component {
     window.parent.document.removeEventListener("keydown", this.handleKeyDown);
   }
 
-  handleKeyDown = e => {
+  handleKeyDown = (e) => {
     const Z_KEY_CODE = 90;
 
     const modifierKeysWasPressed = e.metaKey || e.ctrlKey;
@@ -191,7 +192,11 @@ export class HistoryButtons extends React.Component {
       (modifierKeysWasPressed || (modifierKeysWasPressed && e.shiftKey))
     ) {
       e.preventDefault();
-      e.shiftKey ? this.triggerRedo() : this.triggerUndo();
+      if (e.shiftKey) {
+        this.triggerRedo();
+      } else {
+        this.triggerUndo();
+      }
     }
   };
 

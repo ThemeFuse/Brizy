@@ -1,7 +1,7 @@
-import React, { JSX } from "react";
-import { Tooltip as TooltipControl } from "visual/component/Controls/Tooltip";
-import { Tooltip as TooltipProps } from "./types";
 import classnames from "classnames";
+import React, { type JSX } from "react";
+import { Tooltip as TooltipControl } from "visual/component/Controls/Tooltip";
+import type { Tooltip as TooltipProps } from "./types";
 
 export const Tooltip = ({
   children,

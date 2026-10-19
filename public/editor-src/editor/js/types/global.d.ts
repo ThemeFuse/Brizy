@@ -17,6 +17,10 @@ import { Swiper } from "swiper";
 import { Autoplay, EffectFade } from "swiper/modules";
 import { Dropdown } from "visual/libs/dropdown";
 import { initEkklesiaPopups } from "visual/libs/group-7";
+import { handleLightBoxZoom, openLightbox } from "visual/libs/lightbox";
+import { select2 } from "visual/libs/select2";
+import { createSlider, onSlider } from "visual/libs/slider";
+import { sticky } from "visual/libs/sticky";
 import { Store } from "visual/redux/store";
 import Chart from "../libs/Chart";
 import Gallery from "../libs/gallery";
@@ -30,8 +34,6 @@ export type SwiperInstanceType = typeof Swiper;
 export type ChartInstanceType = typeof Chart;
 export type ChartType = Chart;
 
-// Our own jquery plugins
-
 declare class WPMediaLibrary {
   get: (selector: string) => import("backbone").Collection;
 }
@@ -39,6 +41,11 @@ declare class WPMediaLibrary {
 declare module "react-dom" {
   export function renderToStaticMarkup(element: ReactElement): string;
   export function renderToString(element: ReactElement): string;
+}
+
+// A jQuery the page brings itself (WordPress always does); Brizy ships none
+interface PageJQuery {
+  fx?: { off?: boolean };
 }
 
 interface BrizyLibs {
@@ -53,6 +60,12 @@ interface BrizyLibs {
   EffectFade: EffectFade;
   Formula?: typeof Formula;
   SlimSelect?: typeof SlimSelect;
+  select2?: typeof select2;
+  sticky?: typeof sticky;
+  openLightbox: typeof openLightbox;
+  handleLightBoxZoom: typeof handleLightBoxZoom;
+  createSlider: typeof createSlider;
+  onSlider: typeof onSlider;
 }
 
 interface BrizyProLibs {
@@ -101,7 +114,7 @@ declare global {
   namespace NodeJS {
     interface Global {
       BRZ_IS_DRAGGING?: boolean;
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      // biome-ignore lint/suspicious/noExplicitAny: migrated from eslint
       Brizy: any;
       parent: Global;
       wp: {
@@ -111,7 +124,13 @@ declare global {
       grecaptcha: {
         render: (
           node: HTMLElement,
-          { sitekey: string, size: string, callback: VoidFunction }
+          // `callback` may be a function or the name of a global one; Form2's
+          // export reads it straight out of `data-callback`, so it is a string
+          options: {
+            sitekey: string;
+            size: string;
+            callback?: string | VoidFunction;
+          }
         ) => string;
         execute: (id: string) => void;
         reset: (recaptchaId: string) => void;
@@ -120,18 +139,58 @@ declare global {
     }
   }
 
+  namespace GoogleTag {
+    type ConsentState = "granted" | "denied";
+
+    type ConsentArg = "default" | "update";
+
+    interface ConsentParams {
+      ad_storage?: ConsentState;
+      ad_user_data?: ConsentState;
+      ad_personalization?: ConsentState;
+      analytics_storage?: ConsentState;
+      functionality_storage?: ConsentState;
+      personalization_storage?: ConsentState;
+      security_storage?: ConsentState;
+      wait_for_update?: number;
+      region?: string[];
+    }
+
+    type CustomParams = Record<string, unknown>;
+
+    interface Commands {
+      js: [config: Date];
+      config: [targetId: string, config?: CustomParams];
+      set:
+        | [targetId: string, config: CustomParams | boolean | string]
+        | [config: CustomParams];
+      event: [eventName: string, eventParams?: CustomParams];
+      get: [
+        targetId: string,
+        fieldName: string,
+        callback?: (field: string | CustomParams | undefined) => void
+      ];
+      consent: [consentArg: ConsentArg, consentParams: ConsentParams];
+    }
+
+    type Gtag = <Command extends keyof Commands>(
+      command: Command,
+      ...args: Commands[Command]
+    ) => void;
+
+    type DataLayerItem = IArguments | Record<string, unknown> | VoidFunction;
+  }
+
   interface Window {
     BrizyLibs: BrizyLibs;
     BrizyProLibs?: BrizyProLibs;
-    jQuery: JQuery;
-    jquery: JQuery;
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    jQuery?: PageJQuery;
+    // biome-ignore lint/suspicious/noExplicitAny: migrated from eslint
     Brz: Record<string, any>;
     brizyProducts?: BrizyProducts;
     brzStore?: Store;
 
-    // Check this types on documentations of twitter
-    // https://developer.twitter.com/en/docs/twitter-for-websites/javascript-api/guides/set-up-twitter-for-websites
+    // The twitter website widget.
     twttr?: {
       init: boolean;
       ready: VoidFunction;
@@ -152,27 +211,9 @@ declare global {
         };
       };
     };
-  }
 
-  interface JQuery {
-    brzParallax(p: unknown, x?: boolean): void;
-    backgroundVideo(b: unknown, c?: unknown): void;
-    select2(s: {
-      width?: string;
-      minimumResultsForSearch: number;
-      dropdownParent: JQuery;
-      placeholder?: string;
-      templateResult?: (item: Record<string, unknown>) => HTMLDivElement;
-      templateSelection?: (
-        item: Record<string, unknown>
-      ) => HTMLDivElement | string;
-      dropdownAutoWidth?: boolean;
-    }): void;
-    popup(): {
-      close?: () => void;
-      open?: () => void;
-    };
-    slick(data: unknown): JQuery;
+    gtag?: GoogleTag.Gtag;
+    dataLayer?: GoogleTag.DataLayerItem[];
   }
 
   type Primitive = undefined | null | string | number | boolean;

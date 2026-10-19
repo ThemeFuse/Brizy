@@ -1,4 +1,4 @@
-import { Positive } from "visual/utils/math/Positive";
+import type { Positive } from "visual/utils/math/Positive";
 
 export interface Value {
   hue: number;

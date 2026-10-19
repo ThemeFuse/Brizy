@@ -1,5 +1,5 @@
 import React, { useRef } from "react";
-import { ContextMenuProviderProps } from "./types";
+import type { ContextMenuProviderProps } from "./types";
 
 const ContextMenu = ({ children }: ContextMenuProviderProps) => {
   const ref = useRef<HTMLElement>(null);
@@ -8,5 +8,5 @@ const ContextMenu = ({ children }: ContextMenuProviderProps) => {
 
 export default ContextMenu;
 
-export { default as ContextMenuExtend } from "./ContextMenuExtend";
 export { default as ContextMenuDisabled } from "./ContextMenuDisabled";
+export { default as ContextMenuExtend } from "./ContextMenuExtend";

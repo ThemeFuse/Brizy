@@ -107,11 +107,14 @@ class Items extends EditorArrayComponent {
 
     return tags.split(",").reduce((acc, curr) => {
       const tag = curr.trim();
-      return tag ? [...acc, tag.replace(/\s/g, "-")] : acc;
+      if (tag) {
+        acc.push(tag.replace(/\s/g, "-"));
+      }
+      return acc;
     }, []);
   }
 
-  renderItemWrapper(item, itemKey, itemIndex, itemData) {
+  renderItemWrapper(item, itemKey, _itemIndex, itemData) {
     const tags = this.getTags(itemData.value.tags);
     const { renderer } = this.props.itemProps;
     const { imageSrc } = itemData.value;

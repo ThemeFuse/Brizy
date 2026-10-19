@@ -1,6 +1,6 @@
-import React, { FC, useCallback } from "react";
+import React, { type FC, useCallback } from "react";
 import { InputWithDebounce as Control } from "visual/component/Controls/Input";
-import { Props } from "./types";
+import type { Props } from "./types";
 import { formatLink } from "./utils";
 
 export const LinkExternal: FC<Props> = ({

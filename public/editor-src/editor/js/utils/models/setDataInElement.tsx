@@ -1,13 +1,13 @@
 import { Obj } from "@brizy/readers";
 import { produce } from "immer";
-import { ElementModel } from "visual/component/Elements/Types";
+import type { ElementModel } from "visual/component/Elements/Types";
 import { NumberSpec } from "visual/utils/math/number";
 
-export function setOffsetsToElementFromWrapper(
-  storyWrapper: ElementModel,
-  rules: Record<string, string>,
+export function setOffsetsToElementFromWrapper<T extends ElementModel>(
+  storyWrapper: T,
+  rules: Record<string, unknown>,
   delta = 5
-): ElementModel {
+): T {
   // @ts-expect-error: Object is of type 'unknown'.
   const elem = storyWrapper.value.items[0].value;
   const _styles: string[] = elem._styles;

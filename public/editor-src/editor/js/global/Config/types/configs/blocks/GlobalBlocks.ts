@@ -1,6 +1,6 @@
-import { GlobalBlock } from "visual/types/GlobalBlock";
-import { ApiRule } from "visual/utils/api/adapter";
-import { Response } from "../common";
+import type { GlobalBlock } from "visual/types/GlobalBlock";
+import type { ApiRule } from "visual/utils/api/adapter";
+import type { Response } from "../common";
 
 //#region Base
 

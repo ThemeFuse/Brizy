@@ -2,9 +2,9 @@ import type { GetItems } from "visual/editorComponents/EditorComponent/types";
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
-import { Value } from "./types";
 import { getDynamicContentOption } from "visual/utils/options";
 import { widthCSS } from "./css";
+import type { Value } from "./types";
 
 export const getItems: GetItems<Value> = ({ v, device, context }) => {
   const dvv = (key: string) => defaultValueValue({ v, key, device });

@@ -1,6 +1,6 @@
 import { makePlaceholder } from "visual/utils/dynamicContent";
 import { getAttr, getDetail, getFeatures } from "../../utils/helpers";
-import { Value } from "../types";
+import type { Value } from "../types";
 
 export const getPlaceholder = (v: Value): string => {
   const {

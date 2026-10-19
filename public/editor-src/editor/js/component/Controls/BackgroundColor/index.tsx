@@ -1,14 +1,14 @@
 import classNames from "classnames";
 import React from "react";
 import {
-  Props as CSProps,
-  ColorPickerSelect
+  ColorPickerSelect,
+  type Props as CSProps
 } from "visual/component/Controls/ColorPickerSelect";
 import { ColorPickerInputs } from "visual/component/Controls/ColorPicketInputs";
 import { AnimatedGradient } from "./AnimatedGradient";
+import type { Type } from "./entities";
 import { Gradient } from "./Gradient";
-import { Type } from "./entities";
-import { Props } from "./types";
+import type { Props } from "./types";
 import { fromColorMeta, renderColorPickerItems } from "./utils";
 
 export const BackgroundColor = ({

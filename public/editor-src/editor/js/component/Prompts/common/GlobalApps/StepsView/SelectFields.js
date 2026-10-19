@@ -28,7 +28,7 @@ class SelectFields extends Component {
   renderSelect(id, target) {
     const { formFields, fields, restrictions, onActive } = this.props;
     const busyFields = formFields.map((o) => o.target);
-    let newFields = fields.filter((item) => {
+    const newFields = fields.filter((item) => {
       return busyFields.indexOf(item.slug) === -1 || item.slug === target;
     });
 

@@ -1,13 +1,13 @@
 import { match, or } from "fp-utilities";
-import * as Option from "visual/component/Options/Type";
-import { FromElementModel } from "visual/component/Options/Type";
-import { Value } from "visual/component/Options/types/dev/ImageUpload/Types";
+import type * as Option from "visual/component/Options/Type";
+import type { FromElementModel } from "visual/component/Options/Type";
+import type { Value } from "visual/component/Options/types/dev/ImageUpload/Types";
 import { always, pipe } from "visual/utils/fp";
 import { ImageType } from "visual/utils/image/types";
-import * as Math from "visual/utils/math";
+import { toNonNegative } from "visual/utils/math";
 import { readImageType } from "visual/utils/options/ImageUpload/utils";
 import { read as readStr } from "visual/utils/reader/string";
-import * as String from "visual/utils/string";
+import * as Str from "visual/utils/string";
 import * as Patch from "./Patch";
 
 export const defaultValue: Value = {
@@ -24,15 +24,15 @@ export const defaultValue: Value = {
 };
 
 export const fromElementModel: FromElementModel<"imageUpload"> = (get) => ({
-  src: String.toString(get("imageSrc"), defaultValue.src),
-  fileName: String.toString(get("imageFileName"), defaultValue.fileName),
-  extension: String.toString(get("imageExtension"), defaultValue.extension),
-  width: Math.toNonNegative(get("imageWidth"), defaultValue.width),
-  height: Math.toNonNegative(get("imageHeight"), defaultValue.height),
-  x: Math.toNonNegative(get("positionX"), defaultValue.x),
-  y: Math.toNonNegative(get("positionY"), defaultValue.y),
-  sizeType: String.toString(get("sizeType"), defaultValue.sizeType),
-  alt: String.toString(get("altTitle"), defaultValue.altTitle),
+  src: Str.asString(get("imageSrc"), defaultValue.src),
+  fileName: Str.asString(get("imageFileName"), defaultValue.fileName),
+  extension: Str.asString(get("imageExtension"), defaultValue.extension),
+  width: toNonNegative(get("imageWidth"), defaultValue.width),
+  height: toNonNegative(get("imageHeight"), defaultValue.height),
+  x: toNonNegative(get("positionX"), defaultValue.x),
+  y: toNonNegative(get("positionY"), defaultValue.y),
+  sizeType: Str.asString(get("sizeType"), defaultValue.sizeType),
+  alt: Str.asString(get("altTitle"), defaultValue.altTitle),
   imageType: or(
     pipe(() => get("imageType"), readStr, readImageType),
     always(defaultValue.imageType)

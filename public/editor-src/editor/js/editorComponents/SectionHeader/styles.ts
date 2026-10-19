@@ -1,8 +1,8 @@
 import { isEditor } from "visual/providers/RenderProvider";
-import { DynamicStylesProps } from "visual/types";
+import type { DynamicStylesProps } from "visual/types";
 import { renderStyles } from "visual/utils/cssStyle";
-import { OutputStyle, Styles } from "visual/utils/cssStyle/types";
-import { Value } from "./type";
+import type { OutputStyle, Styles } from "visual/utils/cssStyle/types";
+import type { Value } from "./type";
 
 export function styleSection(data: DynamicStylesProps<Value>): OutputStyle {
   const { renderContext } = data.contexts;

@@ -111,13 +111,13 @@
 }
 
 // Lightbox
-.mfp-bg {
+.brz-lb-bg {
   z-index: z-index.z("brz-ed-fixed"); // 1100
 }
-.mfp-wrap {
+.brz-lb-wrap {
   z-index: z-index.z("brz-ed-fixed") + 1; // 1101
 }
-.mfp-figure:after,
-.mfp-iframe-scaler iframe {
+.brz-lb-figure:after,
+.brz-lb-iframe-scaler iframe {
   box-shadow: 0 0 40px rgba(0, 0, 0, 0.35);
 }

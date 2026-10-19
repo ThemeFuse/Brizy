@@ -1,9 +1,6 @@
-import { ExportFunction } from "visual/types";
+import type { ExportFunction } from "visual/types";
 
-const fn: ExportFunction = async ($node) => {
-  const node = $node.get(0);
-  if (!node) return;
-
+const fn: ExportFunction = async (node) => {
   const feedItems = node.querySelectorAll<HTMLElement>(".brz-linkedin-feed");
 
   feedItems.forEach((item) => {

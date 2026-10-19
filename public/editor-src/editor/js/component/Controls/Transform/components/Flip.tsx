@@ -3,10 +3,10 @@ import { Switch } from "visual/component/Controls/Switch";
 import { OptionLabel } from "visual/component/OptionLabel";
 import { OptionWrapper } from "visual/component/OptionWrapper";
 import { t } from "visual/utils/i18n";
-import { FCC } from "visual/utils/react/types";
-import { OnChange } from "../types";
-import { EffectProps } from "../types/EffectProps";
-import { Flip as V } from "../types/Flip";
+import type { FCC } from "visual/utils/react/types";
+import type { OnChange } from "../types";
+import type { EffectProps } from "../types/EffectProps";
+import type { Flip as V } from "../types/Flip";
 
 export const Flip: FCC<EffectProps<V>> = ({ value, onChange }) => {
   const onSwitchChangeFlipHorizontal = useCallback<OnChange<boolean>>(

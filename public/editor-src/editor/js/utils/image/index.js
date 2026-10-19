@@ -7,10 +7,10 @@ import imageWrapperSize from "./imageWrapperSize";
 import preloadImage from "./preloadImage";
 
 export {
-  preloadImage,
+  defaultImagePopulation,
+  getImageUrl,
   imagePopulationUrl,
   imageWrapperSize,
   isSVG,
-  getImageUrl,
-  defaultImagePopulation
+  preloadImage
 };

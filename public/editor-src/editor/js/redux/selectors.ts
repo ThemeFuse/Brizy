@@ -3,19 +3,24 @@ import { omit } from "es-toolkit";
 import { produce } from "immer";
 import { createSelector } from "reselect";
 import { getIn } from "timm";
-import {
+import type {
   ElementModel,
   ElementModelType
 } from "visual/component/Elements/Types";
 import configRules from "visual/config/rules";
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
-import { FontKeyTypes } from "visual/redux/actions2";
-import { ReduxState, StoreChanged } from "visual/redux/types";
-import { Authorized, SyncAllowed } from "visual/types";
-import { Block, BlocksHTML } from "visual/types/Block";
-import { AdobeFont, Font } from "visual/types/Fonts";
-import { GlobalBlock, GlobalBlockPopup } from "visual/types/GlobalBlock";
-import { NonEmptyArray } from "visual/utils/array/types";
+import type { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import type { FontKeyTypes } from "visual/redux/actions2";
+import { type ReduxState, StoreChanged } from "visual/redux/types";
+import type { Authorized, SyncAllowed } from "visual/types";
+import type { Block, BlocksHTML } from "visual/types/Block";
+import type { AdobeFont, Font } from "visual/types/Fonts";
+import type {
+  GlobalBlock,
+  GlobalBlockOverlay,
+  GlobalBlockPopup
+} from "visual/types/GlobalBlock";
+import { isGlobalOverlay } from "visual/types/utils";
+import type { NonEmptyArray } from "visual/utils/array/types";
 import { canUseCondition, createGlobalBlockSymbol } from "visual/utils/blocks";
 import {
   getPositions,
@@ -25,7 +30,7 @@ import { getModelPopups } from "visual/utils/blocks/getModelPopups";
 import { getGroupFontsById } from "visual/utils/fonts/getFontById";
 import { mapModels } from "visual/utils/models";
 import { objectFromEntries, objectTraverse2 } from "visual/utils/object";
-import { MValue } from "visual/utils/value";
+import type { MValue } from "visual/utils/value";
 
 //#region === 0 DEPENDENCIES ===
 
@@ -43,6 +48,9 @@ export const projectSelector = (state: ReduxState): ReduxState["project"] =>
 
 export const pageSelector = (state: ReduxState): ReduxState["page"] =>
   state.page;
+
+export const menuDataSelector = (state: ReduxState): ReduxState["menuData"] =>
+  state.menuData ?? [];
 
 export const blocksOrderSelector = (
   state: ReduxState
@@ -166,12 +174,11 @@ export const unDeletedFontsSelector = createSelector(
     return Object.entries(fonts).reduce((acc, curr) => {
       const [type, { data = [] } = { data: [] }] = curr;
 
-      return {
-        ...acc,
+      return Object.assign(acc, {
         [`${type}`]: {
           data: data.filter(deletedPredicate)
         }
-      };
+      });
     }, {});
   }
 );
@@ -202,12 +209,11 @@ export const filteredFontsSelector = createSelector(
     return Object.entries(fonts).reduce((acc, curr) => {
       const [type, { id, data = [] } = { id: "", data: [] }] = curr;
 
-      return {
-        ...acc,
+      return Object.assign(acc, {
         [type]: {
           ...(type === "adobe" ? { id, data } : { data })
         }
-      };
+      });
     }, {});
   }
 );
@@ -225,6 +231,11 @@ export const currentRoleSelector = createSelector(
 export const currentLanguageSelector = createSelector(
   uiSelector,
   (ui) => ui.currentLanguage
+);
+
+export const currentOverlaySelector = createSelector(
+  uiSelector,
+  (ui) => ui.currentOverlay
 );
 
 export const leftSidebarSelector = createSelector(
@@ -371,7 +382,7 @@ export const globalBlocksWithoutPopupsSelector = createSelector(
           blocksData[id].type === "SectionPopup" ||
           blocksData[id].type === "SectionPopup2";
 
-        if (!isPopup) {
+        if (!isPopup && !isGlobalOverlay(value)) {
           acc[id] = value;
         }
 
@@ -390,207 +401,207 @@ export const rulesSelector = createSelector(
     const mergedFontStyles = fontStyles.concat(extraFontStyles);
 
     const generatedColorRules = colorPalette.reduce(
-      (acc, color) => ({
-        ...acc,
-        [`${color.id}__color`]: {
-          colorHex: color.hex
-        },
-        [`${color.id}__hoverColor`]: {
-          hoverColorHex: color.hex
-        },
-        [`${color.id}__bg`]: {
-          bgColorHex: color.hex
-        },
-        [`${color.id}__hoverBg`]: {
-          hoverBgColorHex: color.hex
-        },
-        [`${color.id}__gradient`]: {
-          gradientColorHex: color.hex
-        },
-        [`${color.id}__hoverGradient`]: {
-          hoverGradientColorHex: color.hex
-        },
-        [`${color.id}__bg2`]: {
-          bg2ColorHex: color.hex
-        },
-        [`${color.id}__border`]: {
-          borderColorHex: color.hex
-        },
-        [`${color.id}__hoverBorder`]: {
-          hoverBorderColorHex: color.hex
-        },
-        [`${color.id}__arrowsColor`]: {
-          sliderArrowsColorHex: color.hex
-        },
-        [`${color.id}__dotsColor`]: {
-          sliderDotsColorHex: color.hex
-        },
-        [`${color.id}__boxShadow`]: {
-          boxShadowColorHex: color.hex
-        },
-        [`${color.id}__shapeTopColor`]: {
-          shapeTopColorHex: color.hex
-        },
-        [`${color.id}__shapeBottomColor`]: {
-          shapeBottomColorHex: color.hex
-        },
-        [`${color.id}__paginationColor`]: {
-          paginationColorHex: color.hex
-        },
-        [`${color.id}__tabletBg`]: {
-          tabletBgColorHex: color.hex
-        },
-        [`${color.id}__tabletBorder`]: {
-          tabletBorderColorHex: color.hex
-        },
-        [`${color.id}__mobileBg`]: {
-          mobileBgColorHex: color.hex
-        },
-        [`${color.id}__mobileBorder`]: {
-          mobileBorderColorHex: color.hex
-        },
-        [`${color.id}__subMenuColor`]: {
-          subMenuColorHex: color.hex
-        },
-        [`${color.id}__subMenuHoverColor`]: {
-          subMenuHoverColorHex: color.hex
-        },
-        [`${color.id}__subMenuBgColor`]: {
-          subMenuBgColorHex: color.hex
-        },
-        [`${color.id}__subMenuHoverBgColor`]: {
-          subMenuHoverBgColorHex: color.hex
-        },
-        [`${color.id}__subMenuBorderColor`]: {
-          subMenuBorderColorHex: color.hex
-        },
-        [`${color.id}__mMenuColor`]: {
-          mMenuColorHex: color.hex
-        },
-        [`${color.id}__mMenuHoverColor`]: {
-          mMenuHoverColorHex: color.hex
-        },
-        [`${color.id}__mMenuBgColor`]: {
-          mMenuBgColorHex: color.hex
-        },
-        [`${color.id}__mMenuBorderColor`]: {
-          mMenuBorderColorHex: color.hex
-        },
-        [`${color.id}__mMenuIconColor`]: {
-          mMenuIconColorHex: color.hex
-        },
-        [`${color.id}__tabletMMenuIconColor`]: {
-          tabletMMenuIconColorHex: color.hex
-        },
-        [`${color.id}__mobileMMenuIconColor`]: {
-          mobileMMenuIconColorHex: color.hex
-        },
-        [`${color.id}__labelColor`]: {
-          labelColorHex: color.hex
-        },
-        [`${color.id}__checkboxColor`]: {
-          checkboxColorHex: color.hex
-        },
-        [`${color.id}__selectColor`]: {
-          selectColorHex: color.hex
-        },
-        [`${color.id}__hoverSelectColor`]: {
-          hoverSelectColorHex: color.hex
-        },
-        [`${color.id}__selectBg`]: {
-          selectBgColorHex: color.hex
-        },
-        [`${color.id}__hoverSelectBg`]: {
-          hoverSelectBgColorHex: color.hex
-        },
-        [`${color.id}__selectBorderColor`]: {
-          selectBorderColorHex: color.hex
-        },
-        [`${color.id}__hoverSelectBorderColor`]: {
-          hoverSelectBorderColorHex: color.hex
-        },
-        [`${color.id}__selectBoxShadow`]: {
-          selectBoxShadowColorHex: color.hex
-        },
-        [`${color.id}__hoverSelectBoxShadow`]: {
-          hoverSelectBoxShadowColorHex: color.hex
-        }
-      }),
+      (acc, color) =>
+        Object.assign(acc, {
+          [`${color.id}__color`]: {
+            colorHex: color.hex
+          },
+          [`${color.id}__hoverColor`]: {
+            hoverColorHex: color.hex
+          },
+          [`${color.id}__bg`]: {
+            bgColorHex: color.hex
+          },
+          [`${color.id}__hoverBg`]: {
+            hoverBgColorHex: color.hex
+          },
+          [`${color.id}__gradient`]: {
+            gradientColorHex: color.hex
+          },
+          [`${color.id}__hoverGradient`]: {
+            hoverGradientColorHex: color.hex
+          },
+          [`${color.id}__bg2`]: {
+            bg2ColorHex: color.hex
+          },
+          [`${color.id}__border`]: {
+            borderColorHex: color.hex
+          },
+          [`${color.id}__hoverBorder`]: {
+            hoverBorderColorHex: color.hex
+          },
+          [`${color.id}__arrowsColor`]: {
+            sliderArrowsColorHex: color.hex
+          },
+          [`${color.id}__dotsColor`]: {
+            sliderDotsColorHex: color.hex
+          },
+          [`${color.id}__boxShadow`]: {
+            boxShadowColorHex: color.hex
+          },
+          [`${color.id}__shapeTopColor`]: {
+            shapeTopColorHex: color.hex
+          },
+          [`${color.id}__shapeBottomColor`]: {
+            shapeBottomColorHex: color.hex
+          },
+          [`${color.id}__paginationColor`]: {
+            paginationColorHex: color.hex
+          },
+          [`${color.id}__tabletBg`]: {
+            tabletBgColorHex: color.hex
+          },
+          [`${color.id}__tabletBorder`]: {
+            tabletBorderColorHex: color.hex
+          },
+          [`${color.id}__mobileBg`]: {
+            mobileBgColorHex: color.hex
+          },
+          [`${color.id}__mobileBorder`]: {
+            mobileBorderColorHex: color.hex
+          },
+          [`${color.id}__subMenuColor`]: {
+            subMenuColorHex: color.hex
+          },
+          [`${color.id}__subMenuHoverColor`]: {
+            subMenuHoverColorHex: color.hex
+          },
+          [`${color.id}__subMenuBgColor`]: {
+            subMenuBgColorHex: color.hex
+          },
+          [`${color.id}__subMenuHoverBgColor`]: {
+            subMenuHoverBgColorHex: color.hex
+          },
+          [`${color.id}__subMenuBorderColor`]: {
+            subMenuBorderColorHex: color.hex
+          },
+          [`${color.id}__mMenuColor`]: {
+            mMenuColorHex: color.hex
+          },
+          [`${color.id}__mMenuHoverColor`]: {
+            mMenuHoverColorHex: color.hex
+          },
+          [`${color.id}__mMenuBgColor`]: {
+            mMenuBgColorHex: color.hex
+          },
+          [`${color.id}__mMenuBorderColor`]: {
+            mMenuBorderColorHex: color.hex
+          },
+          [`${color.id}__mMenuIconColor`]: {
+            mMenuIconColorHex: color.hex
+          },
+          [`${color.id}__tabletMMenuIconColor`]: {
+            tabletMMenuIconColorHex: color.hex
+          },
+          [`${color.id}__mobileMMenuIconColor`]: {
+            mobileMMenuIconColorHex: color.hex
+          },
+          [`${color.id}__labelColor`]: {
+            labelColorHex: color.hex
+          },
+          [`${color.id}__checkboxColor`]: {
+            checkboxColorHex: color.hex
+          },
+          [`${color.id}__selectColor`]: {
+            selectColorHex: color.hex
+          },
+          [`${color.id}__hoverSelectColor`]: {
+            hoverSelectColorHex: color.hex
+          },
+          [`${color.id}__selectBg`]: {
+            selectBgColorHex: color.hex
+          },
+          [`${color.id}__hoverSelectBg`]: {
+            hoverSelectBgColorHex: color.hex
+          },
+          [`${color.id}__selectBorderColor`]: {
+            selectBorderColorHex: color.hex
+          },
+          [`${color.id}__hoverSelectBorderColor`]: {
+            hoverSelectBorderColorHex: color.hex
+          },
+          [`${color.id}__selectBoxShadow`]: {
+            selectBoxShadowColorHex: color.hex
+          },
+          [`${color.id}__hoverSelectBoxShadow`]: {
+            hoverSelectBoxShadowColorHex: color.hex
+          }
+        }),
       {}
     );
     const generatedFontRules = mergedFontStyles.reduce(
-      (acc, font) => ({
-        ...acc,
-        [`${font.id}__fsDesktop`]: {
-          fontFamily: font.fontFamily,
-          fontFamilyType: font.fontFamilyType,
-          fontSize: font.fontSize,
-          fontSizeSuffix: font.fontSizeSuffix ?? "px",
-          fontWeight: font.fontWeight,
-          lineHeight: font.lineHeight,
-          letterSpacing: font.letterSpacing
-        },
-        [`${font.id}__fsTablet`]: {
-          tabletFontSize: font.tabletFontSize,
-          tabletFontSizeSuffix: font.tabletFontSizeSuffix ?? "px",
-          tabletFontWeight: font.tabletFontWeight,
-          tabletLineHeight: font.tabletLineHeight,
-          tabletLetterSpacing: font.tabletLetterSpacing
-        },
-        [`${font.id}__fsMobile`]: {
-          mobileFontSize: font.mobileFontSize,
-          mobileFontSizeSuffix: font.mobileFontSizeSuffix ?? "px",
-          mobileFontWeight: font.mobileFontWeight,
-          mobileLineHeight: font.mobileLineHeight,
-          mobileLetterSpacing: font.mobileLetterSpacing
-        },
-        [`${font.id}__subMenuFsDesktop`]: {
-          subMenuFontFamily: font.fontFamily,
-          subMenuFontFamilyType: font.fontFamilyType,
-          subMenuFontSize: font.fontSize,
-          subMenuFontSizeSuffix: font.fontSizeSuffix ?? "px",
-          subMenuFontWeight: font.fontWeight,
-          subMenuLineHeight: font.lineHeight,
-          subMenuLetterSpacing: font.letterSpacing
-        },
-        [`${font.id}__subMenuFsTablet`]: {
-          tabletSubMenuFontSize: font.tabletFontSize,
-          tabletSubMenuFontSizeSuffix: font.tabletFontSizeSuffix ?? "px",
-          tabletSubMenuFontWeight: font.tabletFontWeight,
-          tabletSubMenuLineHeight: font.tabletLineHeight,
-          tabletSubMenuLetterSpacing: font.tabletLetterSpacing
-        },
-        [`${font.id}__subMenuFsMobile`]: {
-          mobileSubMenuFontSize: font.mobileFontSize,
-          mobileSubMenuFontSizeSuffix: font.mobileFontSizeSuffix ?? "px",
-          mobileSubMenuFontWeight: font.mobileFontWeight,
-          mobileSubMenuLineHeight: font.mobileLineHeight,
-          mobileSubMenuLetterSpacing: font.mobileLetterSpacing
-        },
-        [`${font.id}__mMenuFsDesktop`]: {
-          mMenuFontFamily: font.fontFamily,
-          mMenuFontFamilyType: font.fontFamilyType,
-          mMenuFontSize: font.fontSize,
-          mMenuFontSizeSuffix: font.fontSizeSuffix ?? "px",
-          mMenuFontWeight: font.fontWeight,
-          mMenuLineHeight: font.lineHeight,
-          mMenuLetterSpacing: font.letterSpacing
-        },
-        [`${font.id}__mMenuFsTablet`]: {
-          tabletMMenuFontSize: font.tabletFontSize,
-          tabletMMenuFontSizeSuffix: font.tabletFontSizeSuffix ?? "px",
-          tabletMMenuFontWeight: font.tabletFontWeight,
-          tabletMMenuLineHeight: font.tabletLineHeight,
-          tabletMMenuLetterSpacing: font.tabletLetterSpacing
-        },
-        [`${font.id}__mMenuFsMobile`]: {
-          mobileMMenuFontSize: font.mobileFontSize,
-          mobileMMenuFontSizeSuffix: font.mobileFontSizeSuffix ?? "px",
-          mobileMMenuFontWeight: font.mobileFontWeight,
-          mobileMMenuLineHeight: font.mobileLineHeight,
-          mobileMMenuLetterSpacing: font.mobileLetterSpacing
-        }
-      }),
+      (acc, font) =>
+        Object.assign(acc, {
+          [`${font.id}__fsDesktop`]: {
+            fontFamily: font.fontFamily,
+            fontFamilyType: font.fontFamilyType,
+            fontSize: font.fontSize,
+            fontSizeSuffix: font.fontSizeSuffix ?? "px",
+            fontWeight: font.fontWeight,
+            lineHeight: font.lineHeight,
+            letterSpacing: font.letterSpacing
+          },
+          [`${font.id}__fsTablet`]: {
+            tabletFontSize: font.tabletFontSize,
+            tabletFontSizeSuffix: font.tabletFontSizeSuffix ?? "px",
+            tabletFontWeight: font.tabletFontWeight,
+            tabletLineHeight: font.tabletLineHeight,
+            tabletLetterSpacing: font.tabletLetterSpacing
+          },
+          [`${font.id}__fsMobile`]: {
+            mobileFontSize: font.mobileFontSize,
+            mobileFontSizeSuffix: font.mobileFontSizeSuffix ?? "px",
+            mobileFontWeight: font.mobileFontWeight,
+            mobileLineHeight: font.mobileLineHeight,
+            mobileLetterSpacing: font.mobileLetterSpacing
+          },
+          [`${font.id}__subMenuFsDesktop`]: {
+            subMenuFontFamily: font.fontFamily,
+            subMenuFontFamilyType: font.fontFamilyType,
+            subMenuFontSize: font.fontSize,
+            subMenuFontSizeSuffix: font.fontSizeSuffix ?? "px",
+            subMenuFontWeight: font.fontWeight,
+            subMenuLineHeight: font.lineHeight,
+            subMenuLetterSpacing: font.letterSpacing
+          },
+          [`${font.id}__subMenuFsTablet`]: {
+            tabletSubMenuFontSize: font.tabletFontSize,
+            tabletSubMenuFontSizeSuffix: font.tabletFontSizeSuffix ?? "px",
+            tabletSubMenuFontWeight: font.tabletFontWeight,
+            tabletSubMenuLineHeight: font.tabletLineHeight,
+            tabletSubMenuLetterSpacing: font.tabletLetterSpacing
+          },
+          [`${font.id}__subMenuFsMobile`]: {
+            mobileSubMenuFontSize: font.mobileFontSize,
+            mobileSubMenuFontSizeSuffix: font.mobileFontSizeSuffix ?? "px",
+            mobileSubMenuFontWeight: font.mobileFontWeight,
+            mobileSubMenuLineHeight: font.mobileLineHeight,
+            mobileSubMenuLetterSpacing: font.mobileLetterSpacing
+          },
+          [`${font.id}__mMenuFsDesktop`]: {
+            mMenuFontFamily: font.fontFamily,
+            mMenuFontFamilyType: font.fontFamilyType,
+            mMenuFontSize: font.fontSize,
+            mMenuFontSizeSuffix: font.fontSizeSuffix ?? "px",
+            mMenuFontWeight: font.fontWeight,
+            mMenuLineHeight: font.lineHeight,
+            mMenuLetterSpacing: font.letterSpacing
+          },
+          [`${font.id}__mMenuFsTablet`]: {
+            tabletMMenuFontSize: font.tabletFontSize,
+            tabletMMenuFontSizeSuffix: font.tabletFontSizeSuffix ?? "px",
+            tabletMMenuFontWeight: font.tabletFontWeight,
+            tabletMMenuLineHeight: font.tabletLineHeight,
+            tabletMMenuLetterSpacing: font.tabletLetterSpacing
+          },
+          [`${font.id}__mMenuFsMobile`]: {
+            mobileMMenuFontSize: font.mobileFontSize,
+            mobileMMenuFontSizeSuffix: font.mobileFontSizeSuffix ?? "px",
+            mobileMMenuFontWeight: font.mobileFontWeight,
+            mobileMMenuLineHeight: font.mobileLineHeight,
+            mobileMMenuLetterSpacing: font.mobileLetterSpacing
+          }
+        }),
       {}
     );
 
@@ -668,6 +679,45 @@ export const blocksHtmlRawSelector = createSelector(
       };
     });
   }
+);
+
+// Retrieve overlay-type global blocks (e.g. Cookie Banner) whose rules
+// currently allow them. Overlay blocks are never part of blocksOrder/position
+// flows, so this selector is intentionally position-agnostic.
+export const overlayGlobalBlocksSelector = createSelector(
+  globalBlocksAssembled2Selector,
+  pageSelector,
+  configSelector,
+  (globalBlocks, page, config): GlobalBlockOverlay[] =>
+    Object.values(globalBlocks).filter(
+      (globalBlock): globalBlock is GlobalBlockOverlay =>
+        isGlobalOverlay(globalBlock) &&
+        canUseCondition({ globalBlock, page, config })
+    )
+);
+
+// The overlay-type global block currently selected in the left sidebar
+// (ui.currentOverlay holds its uid, or "none"), resolved against the
+// condition-filtered overlays — undefined when none is selected or the
+// selected overlay is not allowed on this page.
+export const currentOverlayGlobalBlockSelector = createSelector(
+  overlayGlobalBlocksSelector,
+  currentOverlaySelector,
+  (overlays, currentOverlay): GlobalBlockOverlay | undefined =>
+    overlays.find(({ uid }) => uid === currentOverlay)
+);
+
+// Retrieve all overlay-type global blocks (e.g. Cookie Banner), regardless of
+// whether their rules currently allow them on this page. Unlike
+// overlayGlobalBlocksSelector, this is intentionally NOT condition-filtered:
+// every overlay edit must be compilable, otherwise an edit to a
+// currently-hidden overlay would never be observed by the runtime compiler,
+// storeGeneration/compiledGeneration would never converge, and publish would
+// deadlock in waitForCompilation.
+export const overlayGlobalBlocksAssembledSelector = createSelector(
+  globalBlocksAssembled2Selector,
+  (globalBlocks): GlobalBlockOverlay[] =>
+    Object.values(globalBlocks).filter(isGlobalOverlay)
 );
 
 //#endregion
@@ -800,17 +850,23 @@ export const globalPopupsInPageSelector = createSelector(
 );
 
 // Retrieve the IDs of all globalBlocks from current page,
-// including global popups
-export const globalBlocksIdsInPageWithPopupsSelector = createSelector(
-  (s: ReduxState, c: ConfigCommon) => globalPopupsInPageSelector(s, c),
-  blocksOrderSelector,
-  globalBlocksSelector,
-  (popups, blocksOrder, globalBlocks) => {
-    const blocksIds = blocksOrder.filter((id) => globalBlocks[id]);
-    const popupsIds = popups.map((popup) => popup.uid);
-    return Array.from(new Set([...blocksIds, ...popupsIds]));
-  }
-);
+// including global popups and overlay-type global blocks (e.g. Cookie
+// Banner). Overlays, like popups, are never part of blocksOrder, but their
+// ids need to be reachable here so their compiled HTML surfaces via
+// globalBlocksHTMLInPageSelector when preparing the publish payload.
+export const globalBlocksIdsInPageWithPopupsWithOverlaysSelector =
+  createSelector(
+    (s: ReduxState, c: ConfigCommon) => globalPopupsInPageSelector(s, c),
+    overlayGlobalBlocksAssembledSelector,
+    blocksOrderSelector,
+    globalBlocksSelector,
+    (popups, overlays, blocksOrder, globalBlocks) => {
+      const blocksIds = blocksOrder.filter((id) => globalBlocks[id]);
+      const popupsIds = popups.map((popup) => popup.uid);
+      const overlayIds = overlays.map((overlay) => overlay.uid);
+      return Array.from(new Set([...blocksIds, ...popupsIds, ...overlayIds]));
+    }
+  );
 
 // Retrieve the IDs of all globalBlocks from current page without global popups
 export const globalBlocksIdsInPageSelector = createSelector(
@@ -825,7 +881,7 @@ export const globalBlocksIdsInPageSelector = createSelector(
 // Retrieve HTML of all globalBlocks with globalPopups from the current page,
 // used when compiling the page inside the browser.
 export const globalBlocksHTMLInPageSelector = createSelector(
-  globalBlocksIdsInPageWithPopupsSelector,
+  globalBlocksIdsInPageWithPopupsWithOverlaysSelector,
   blocksHtmlSelector,
   (blocks, blocksHtml) => {
     return blocks.reduce(
@@ -974,7 +1030,7 @@ export const pageDataNoRefsSelector = createSelector(
         if (model.type === "GlobalBlock") {
           const { _id } = model.value;
 
-          if (_id && globalBlocks[_id] && globalBlocks[_id].data) {
+          if (_id && globalBlocks[_id]?.data) {
             return globalBlocks[_id].data;
           }
         }

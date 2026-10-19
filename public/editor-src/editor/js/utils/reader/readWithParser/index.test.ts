@@ -1,7 +1,7 @@
 import { parseStrict } from "fp-utilities";
 import { mPipe, pipe } from "visual/utils/fp";
-import * as Positive from "visual/utils/math/Positive";
 import * as Num from "visual/utils/math/number";
+import * as Positive from "visual/utils/math/Positive";
 import { prop } from "visual/utils/object/get";
 import * as Str from "visual/utils/string/specs";
 import { onNullish } from "visual/utils/value";

@@ -3,10 +3,10 @@ import getEditorComponents, {
   NotFoundComponent
 } from "visual/editorComponents";
 import { Container } from "visual/editorComponents/ThirdParty/Container";
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import type { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import Editor from "visual/global/Editor";
 import { addFilter } from "visual/utils/filters";
-import { Props } from "./types";
+import type { Props } from "./types";
 
 class RegisterParts extends Component<Props> {
   constructor(props: Props) {

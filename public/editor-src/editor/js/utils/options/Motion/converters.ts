@@ -1,19 +1,19 @@
 import { mPipe, optional, orElse, parseStrict, pass } from "fp-utilities";
-import {
+import type {
   FromElementModel,
   FromElementModelGetter,
   ToElementModel
 } from "visual/component/Options/Type";
-import { OptionPatch } from "visual/component/Options/types";
+import type { OptionPatch } from "visual/component/Options/types";
 import * as Unit from "visual/utils/math/Unit";
 import { callGetter } from "visual/utils/options/utils/wrap";
 import { capByPrefix } from "visual/utils/string";
 import {
-  Type,
   flattEffects,
   flattenObject,
   getEnabledEffects,
-  getPatchType
+  getPatchType,
+  Type
 } from "../utils/effects";
 import { Effects } from "./types";
 import * as Blur from "./types/Blur";
@@ -24,10 +24,10 @@ import { disableEffects } from "./types/Patch";
 import * as Rotate from "./types/Rotate";
 import * as Scale from "./types/Scale";
 import * as Transparency from "./types/Transparency";
-import { Value, isActive } from "./types/Value";
+import { wrap } from "./types/utils";
+import { isActive, type Value } from "./types/Value";
 import * as Vertical from "./types/Vertical";
 import * as Viewport from "./types/Viewport";
-import { wrap } from "./types/utils";
 import { isEnabled } from "./utils";
 
 export const defaultValue: Value = {

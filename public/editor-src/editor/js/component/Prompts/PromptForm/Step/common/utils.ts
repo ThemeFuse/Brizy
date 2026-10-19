@@ -1,5 +1,5 @@
-import { mPipe, match, optional, parse, pass } from "fp-utilities";
-import {
+import { match, mPipe, optional, parse, pass } from "fp-utilities";
+import type {
   AllData,
   HelperFn,
   InputData,

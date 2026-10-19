@@ -1,5 +1,5 @@
-import { CSSProperties, HTMLAttributes } from "react";
-import { TreeItem } from "visual/providers/TreeProvider/types";
+import type { CSSProperties, HTMLAttributes } from "react";
+import type { TreeItem } from "visual/providers/TreeProvider/types";
 
 export interface TreeItemProps {
   item: TreeItem;

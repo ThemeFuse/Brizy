@@ -1,8 +1,8 @@
 import classNames from "classnames";
 import React from "react";
 import EditorIcon from "visual/component/EditorIcon";
-import { FCC } from "visual/utils/react/types";
-import { ItemProps as Props } from "./types";
+import type { FCC } from "visual/utils/react/types";
+import type { ItemProps as Props } from "./types";
 
 export const TabItem: FCC<Props> = ({ icon, title, active, onClick }) => {
   const _className = classNames("brz-ed-popup-tab-item", { active });

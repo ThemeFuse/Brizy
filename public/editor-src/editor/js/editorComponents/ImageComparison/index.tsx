@@ -10,26 +10,23 @@ import { getHoverAnimationOptions } from "visual/component/HoverAnimation/utils"
 import Toolbar from "visual/component/Toolbar";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import EditorComponent, {
-  Props as EditorComponentProps
+  type Props as EditorComponentProps
 } from "visual/editorComponents/EditorComponent";
-import { ECKeyDCInfo } from "visual/editorComponents/EditorComponent/types";
+import type { ECKeyDCInfo } from "visual/editorComponents/EditorComponent/types";
 import { shouldRenderPopup } from "visual/editorComponents/tools/Popup";
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import { isEditor, isView } from "visual/providers/RenderProvider";
 import { blocksDataSelector } from "visual/redux/selectors";
-import { DeviceMode } from "visual/types";
-import { Block } from "visual/types/Block";
+import type { DeviceMode } from "visual/types";
+import type { Block } from "visual/types/Block";
 import { getLinkData } from "visual/utils/models/link";
 import { makeOptionValueToAnimation } from "visual/utils/options/utils/makeValueToOptions";
 import { attachRefs } from "visual/utils/react";
 import { DESKTOP } from "visual/utils/responsiveMode";
 import { HOVER } from "visual/utils/stateMode";
-import ImageWrapper from "../Image/Wrapper";
 import {
-  ExtendedWrapperSizes,
-  ImageComponentState,
-  ImageUtilsContext,
   calculateWrapperSizes,
+  type ExtendedWrapperSizes,
   getContainerSize,
   getDimension,
   getExtraImageProps,
@@ -37,13 +34,15 @@ import {
   getImageUrlsFor,
   getResponsiveUrls,
   handleImageChangePatch,
+  type ImageComponentState,
+  type ImageUtilsContext,
   processDBValue,
   processDCValueHook,
   updateContainerDimensions,
   updateContainerWidth,
   updateHoverImageHeight
 } from "../Image/shared";
-import {
+import type {
   ImageSizes,
   ImagesSources,
   Meta,
@@ -53,13 +52,14 @@ import {
   WrapperSizes
 } from "../Image/types";
 import { showOriginalImage } from "../Image/utils";
+import ImageWrapper from "../Image/Wrapper";
 import { Wrapper } from "../tools/Wrapper";
 import ImageContent from "./components";
 import defaultValue from "./defaultValue.json";
 import * as sidebarConfig from "./sidebar";
 import { style, styleContent, styleHover, styleSlider } from "./styles";
 import toolbarConfigFn from "./toolbar";
-import { Props } from "./types";
+import type { Props } from "./types";
 
 export class ImageComparison extends EditorComponent<Value, Props, State> {
   static defaultProps = {

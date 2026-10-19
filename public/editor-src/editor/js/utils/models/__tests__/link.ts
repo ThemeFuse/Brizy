@@ -1,6 +1,6 @@
 import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { makePlaceholder } from "visual/utils/dynamicContent";
-import { Link, Value, getLinkData } from "../link";
+import { getLinkData, Link, Value } from "../link";
 
 describe("Testing 'getLinkData' function", () => {
   const defaultExpected: Link = {

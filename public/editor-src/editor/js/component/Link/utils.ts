@@ -1,13 +1,13 @@
-import { ElementModel } from "visual/component/Elements/Types";
+import type { ElementModel } from "visual/component/Elements/Types";
 import * as LinkType from "visual/component/Link/types/Type";
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
-import { RenderType, isEditor } from "visual/providers/RenderProvider";
+import type { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import { isEditor, type RenderType } from "visual/providers/RenderProvider";
 import { customFileUrl } from "visual/utils/customFile";
 import { makePlaceholder } from "visual/utils/dynamicContent";
 import { read as readNum } from "visual/utils/reader/number";
 import { read } from "visual/utils/reader/string";
-import { Target, TargetTypes } from "./types/Target";
-import { LinkData, Type } from "./types/Type";
+import type { Target, TargetTypes } from "./types/Target";
+import type { LinkData, Type } from "./types/Type";
 
 export const getAttr = (
   attr: JSX.IntrinsicAttributes
@@ -44,7 +44,7 @@ export const getHref = (
   renderContext: RenderType,
   config: ConfigCommon
 ): string => {
-  let href;
+  let href: string;
 
   switch (type) {
     case "anchor":

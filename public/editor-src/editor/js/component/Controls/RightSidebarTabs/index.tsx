@@ -1,11 +1,12 @@
 import classNames from "classnames";
-import React, { ReactElement, useMemo } from "react";
-import { WithValue } from "visual/types/attributes";
+import React, { type ReactElement, useMemo } from "react";
+import type { WithValue } from "visual/types/attributes";
+import type { Literal } from "visual/utils/types/Literal";
 import { HorizontalScrollContainer } from "../HorizontalScrollContainer";
-import { Props as TabProps } from "../Tabs2/Tab";
-import { TabList, Props as TabListProps } from "../Tabs2/TabList";
+import type { Props as TabProps } from "../Tabs2/Tab";
+import { TabList, type Props as TabListProps } from "../Tabs2/TabList";
 import { Icon } from "./Icon";
-import { Align, Expand, Locked } from "./types";
+import type { Align, Expand, Locked } from "./types";
 import {
   alignIcon,
   alignTitle,
@@ -15,9 +16,9 @@ import {
   lockedTitle
 } from "./utils";
 
-type Child<T> = ReactElement<TabProps<T>>;
+type Child<T extends Literal> = ReactElement<TabProps<T>>;
 
-export interface Props<T> extends WithValue<T> {
+export interface Props<T extends Literal> extends WithValue<T> {
   onChange: TabListProps<T>["onChange"];
   children: Array<Child<T>>;
   align: Align;
@@ -31,7 +32,7 @@ export interface Props<T> extends WithValue<T> {
   };
 }
 
-export function RightSidebarTabs<T>({
+export function RightSidebarTabs<T extends Literal>({
   children,
   config,
   value,
@@ -159,4 +160,3 @@ export function RightSidebarTabs<T>({
 
   return horizontalScroll ? renderScrollableTabsContent() : renderTabsContent();
 }
-

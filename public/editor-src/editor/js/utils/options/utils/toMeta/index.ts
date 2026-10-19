@@ -1,4 +1,4 @@
-import {
+import type {
   OptionMeta,
   OptionName,
   OptionValue
@@ -11,8 +11,8 @@ import { toMeta as filters } from "visual/utils/options/Filters/meta";
 import { toMeta as margin } from "visual/utils/options/Margin/meta";
 import { toMeta as padding } from "visual/utils/options/Padding/meta";
 import { toMeta as textShadow } from "visual/utils/options/TextShadow/meta";
-import { MValue } from "visual/utils/value";
-import { ToMetaFns } from "./types";
+import type { MValue } from "visual/utils/value";
+import type { ToMetaFns } from "./types";
 
 const fns: ToMetaFns = {
   border: border,

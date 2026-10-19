@@ -1,5 +1,5 @@
 // region Thumbnail
-import { WithId } from "visual/types/attributes";
+import type { WithId } from "visual/types/attributes";
 
 export interface Thumbnail<T> extends WithId<T> {
   __type: "thumbnail";

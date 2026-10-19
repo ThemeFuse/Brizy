@@ -1,5 +1,5 @@
 import classnames from "classnames";
-import React, { ReactNode } from "react";
+import React, { type ReactNode } from "react";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import { isEditor, isView } from "visual/providers/RenderProvider";
@@ -7,21 +7,21 @@ import { makeAttr } from "visual/utils/i18n/attribute";
 import { defaultValueValue } from "visual/utils/onChange";
 import * as Str from "visual/utils/reader/string";
 import * as State from "visual/utils/stateMode";
-import { MValue } from "visual/utils/value";
+import type { MValue } from "visual/utils/value";
 import { Wrapper } from "../tools/Wrapper";
-import Items from "./Items";
 import defaultValue from "./defaultValue.json";
+import Items from "./Items";
 import * as Flipboxpatch from "./patch";
 import * as sidebar from "./sidebar";
 import { style } from "./styles";
 import * as toolbar from "./toolbar";
-import {
+import type {
+  State as _State,
   FlipboxType,
   Meta,
   Patch,
   Props,
-  Value,
-  State as _State
+  Value
 } from "./types";
 import { getHeight } from "./utils";
 

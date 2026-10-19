@@ -1,6 +1,6 @@
-import { Icon } from "visual/config/icons/Icon";
-import { IconData } from "../types";
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import type { Icon } from "visual/config/icons/Icon";
+import type { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import type { IconData } from "../types";
 
 export interface Props {
   icons: Icon[];

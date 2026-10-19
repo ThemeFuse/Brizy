@@ -1,26 +1,26 @@
 import classNames from "classnames";
-import React, { ReactElement, useCallback, useMemo } from "react";
+import React, { type ReactElement, useCallback, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { PaletteObject } from "visual/component/Controls/ColorPalette/entities/PaletteObject";
+import type { PaletteObject } from "visual/component/Controls/ColorPalette/entities/PaletteObject";
 import {
   ColorPicker3,
-  Props as ColorPicker3Props
+  type Props as ColorPicker3Props
 } from "visual/component/Controls/ColorPicker3";
 import {
   ColorPickerInputs,
-  Props as ColorPickerInputsProps
+  type Props as ColorPickerInputsProps
 } from "visual/component/Controls/ColorPicketInputs";
-import * as Option from "visual/component/Options/Type";
+import type * as Option from "visual/component/Options/Type";
 import { LeftSidebarOptionsIds } from "visual/global/Config/types/configs/ConfigCommon";
 import { useConfig } from "visual/providers/ConfigProvider";
 import { updateUI } from "visual/redux/actions2";
 import { currentStyleSelector } from "visual/redux/selectors";
-import { WithClassName, WithConfig } from "visual/types/attributes";
+import type { WithClassName, WithConfig } from "visual/types/attributes";
 import * as Hex from "visual/utils/color/Hex";
 import * as Opacity from "visual/utils/cssProps/opacity";
 import { mPipe } from "visual/utils/fp";
-import { Value } from "visual/utils/options/ColorPicker/entities/Value";
 import * as Palette from "visual/utils/options/ColorPicker/entities/palette";
+import type { Value } from "visual/utils/options/ColorPicker/entities/Value";
 import {
   setOpacity as _setOpacity,
   setHex,

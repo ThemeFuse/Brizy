@@ -1,4 +1,4 @@
-import { Category } from "visual/config/icons/Categories";
+import type { Category } from "visual/config/icons/Categories";
 import { t } from "visual/utils/i18n";
 
 export const getCategories = (): Category[] => [

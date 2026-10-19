@@ -8,13 +8,7 @@ import { makeAttr } from "visual/utils/i18n/attribute";
 import { parseFromString } from "visual/utils/string";
 import { blockClicksBySelectors } from "./utils";
 
-export const fn: ExportFunction = ($node) => {
-  const root = $node.get(0);
-
-  if (!root) {
-    return;
-  }
-
+export const fn: ExportFunction = (root) => {
   root
     .querySelectorAll<HTMLDivElement>(".brz-ecwid-favorites")
     .forEach((node) => {

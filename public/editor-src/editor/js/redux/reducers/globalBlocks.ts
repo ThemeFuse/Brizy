@@ -9,6 +9,7 @@ import {
   globalBlocksInPageSelector,
   globalBlocksPositionsSelector
 } from "visual/redux/selectors";
+import { isGlobalOverlay } from "visual/types/utils";
 import {
   changeRule,
   getAllowedGBIds,
@@ -17,8 +18,8 @@ import {
 } from "visual/utils/blocks";
 import { getModelPopups } from "visual/utils/blocks/getModelPopups";
 import { DELETE_GLOBAL_BLOCK } from "../actions";
-import { ActionTypes, ReduxAction } from "../actions2";
-import { ReduxState } from "../types";
+import { ActionTypes, type ReduxAction } from "../actions2";
+import type { ReduxState } from "../types";
 
 type GlobalBlocks = ReduxState["globalBlocks"];
 type RGlobalBlocks = (
@@ -51,7 +52,11 @@ export const globalBlocks: RGlobalBlocks = (state = {}, action, allState) => {
           draft.data.editorVersion = payloadConfig.editorVersion;
         });
 
-        if (legacyGlobalBlockIds.includes(id) && !isPopup(block.data)) {
+        if (
+          legacyGlobalBlockIds.includes(id) &&
+          !isPopup(block.data) &&
+          !isGlobalOverlay(block)
+        ) {
           acc[id] = produce(globalBlock, (draft) => {
             draft.rules = changeRule(
               block,
@@ -119,7 +124,11 @@ export const globalBlocks: RGlobalBlocks = (state = {}, action, allState) => {
     case "UPDATE_GLOBAL_BLOCK": {
       const { uid, data, config } = action.payload;
 
-      if (data.value === null && !isPopup(state[uid].data)) {
+      if (
+        data.value === null &&
+        !isPopup(state[uid].data) &&
+        !isGlobalOverlay(state[uid])
+      ) {
         const globalBlock = changeRule(
           state[uid],
           false,
@@ -152,7 +161,11 @@ export const globalBlocks: RGlobalBlocks = (state = {}, action, allState) => {
       const globalBlockIds = Object.keys(state);
       const _id = blocks[index];
 
-      if (globalBlockIds.includes(blocks[index]) && !isPopup(state[_id].data)) {
+      if (
+        globalBlockIds.includes(blocks[index]) &&
+        !isPopup(state[_id].data) &&
+        !isGlobalOverlay(state[_id])
+      ) {
         const globalBlock = changeRule(
           state[_id],
           false,
@@ -248,7 +261,7 @@ export const globalBlocks: RGlobalBlocks = (state = {}, action, allState) => {
 
       return produce(state, (draft) => {
         gbIds.forEach((id) => {
-          if (!isPopup(draft[id].data)) {
+          if (!isPopup(draft[id].data) && !isGlobalOverlay(draft[id])) {
             draft[id] = changeRule(draft[id], false, allState?.page, config);
           }
         });
@@ -262,7 +275,11 @@ export const globalBlocks: RGlobalBlocks = (state = {}, action, allState) => {
       const gbIds = difference(prevIds, nextIds);
       return produce(state, (draft) => {
         gbIds.forEach((id) => {
-          if (draft[id] && !isPopup(draft[id].data)) {
+          if (
+            draft[id] &&
+            !isPopup(draft[id].data) &&
+            !isGlobalOverlay(draft[id])
+          ) {
             draft[id] = changeRule(draft[id], false, allState?.page, config);
           }
         });
@@ -296,7 +313,8 @@ export const globalBlocks: RGlobalBlocks = (state = {}, action, allState) => {
       const changedGlobalBlocksIds = changedGBIdsSelector(allState);
       const changedGBData = changedGlobalBlocksIds.reduce(
         (acc: GlobalBlocks, gbId: string) => {
-          return { ...acc, [gbId]: allGlobalBlocks[gbId] };
+          acc[gbId] = allGlobalBlocks[gbId];
+          return acc;
         },
         {}
       );
@@ -311,17 +329,24 @@ export const globalBlocks: RGlobalBlocks = (state = {}, action, allState) => {
           const isPopup =
             block.data.type === "SectionPopup" ||
             block.data.type === "SectionPopup2";
+          // Overlay blocks behave like popups here: they are CMS-managed
+          // and are never assigned a top/bottom position on the page.
+          const isPopupOrOverlay = isPopup || isGlobalOverlay(block);
 
           draft.dependencies = getModelPopups(draft.data, allGlobalBlocks)
             .filter((block) => block.type === "GlobalBlock")
             .map((b) => b.value._id);
 
           // The Popup doesn't have any positions on the page
-          if (!isPopup) {
+          if (!isPopupOrOverlay) {
             draft.position = positions[key] || null;
           }
 
-          if (globalBlocksInPage[key] || changedGBData[key] || isPopup) {
+          if (
+            globalBlocksInPage[key] ||
+            changedGBData[key] ||
+            isPopupOrOverlay
+          ) {
             draft.status = "publish";
           }
         });

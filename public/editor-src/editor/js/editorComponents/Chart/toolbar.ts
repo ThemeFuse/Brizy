@@ -1,9 +1,9 @@
-import { GetItems } from "visual/editorComponents/EditorComponent/types";
+import type { GetItems } from "visual/editorComponents/EditorComponent/types";
 import { getColorToolbar } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
 import { widthCSS } from "./css";
-import { ChartType, Props, Value } from "./types";
+import { ChartType, type Props, type Value } from "./types";
 
 const getMaxWidth = (device: string, unit: string) => {
   if (unit === "%") {

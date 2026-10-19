@@ -1,5 +1,5 @@
-import { WithRenderContext } from "visual/providers/RenderProvider";
-import { CSSValue } from "../style2/types";
+import type { WithRenderContext } from "visual/providers/RenderProvider";
+import type { CSSValue } from "../style2/types";
 import { cssStyleBorder } from "./cssStyleBorder";
 import { cssStyleBoxShadow } from "./cssStyleBoxShadow";
 import { cssStyleColor } from "./cssStyleColor";

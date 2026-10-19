@@ -41,13 +41,7 @@ interface Props {
 export function createEditorAPI(props: Props): EditorAPIParts {
   const { getState, dispatch, config, t } = props;
   const store = new SharedStore();
-  const toolServer = new ToolServerImpl(
-    getState,
-    dispatch,
-    config,
-    store,
-    t
-  );
+  const toolServer = new ToolServerImpl(getState, dispatch, config, store, t);
   const globalBlocks = createGlobalBlockRepository(getState, dispatch, config);
   const slotRegistry = new SlotRegistryImpl();
   const filterRegistry = new FilterRegistryImpl();
@@ -59,7 +53,7 @@ export function createEditorAPI(props: Props): EditorAPIParts {
 
   const api: EditorAPI = {
     toolServer,
-    ...createEditorSite(config, globalBlocks),
+    ...createEditorSite(getState, dispatch, globalBlocks, config),
     slots: slotRegistry,
     filters: filterRegistry,
     events: eventBus,

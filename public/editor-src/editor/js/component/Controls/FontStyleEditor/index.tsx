@@ -1,8 +1,8 @@
 import React, { forwardRef } from "react";
 import EditorIcon from "visual/component/EditorIcon";
-import { Scrollbar, ScrollbarRef } from "visual/component/Scrollbar";
+import { Scrollbar, type ScrollbarRef } from "visual/component/Scrollbar";
 import { t } from "visual/utils/i18n";
-import { Props } from "./types";
+import type { Props } from "./types";
 
 export const FontStyle = forwardRef<ScrollbarRef, Props>(
   ({ className, items, onClick }, ref) => (

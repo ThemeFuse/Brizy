@@ -141,3 +141,49 @@ describe("BrizyToolServer.listTools confirmation metadata", () => {
     expect(flagged).toEqual(["setPageStatus"]);
   });
 });
+
+describe("BrizyToolServer.callTool unknown-tool guard", () => {
+  // A bare lookup also finds Object.prototype members: "constructor" resolves
+  // to Object, which hands back the caller's own arguments.
+  it.each([
+    { name: "constructor" },
+    { name: "toString" },
+    { name: "valueOf" },
+    { name: "hasOwnProperty" },
+    { name: "isPrototypeOf" },
+    { name: "__proto__" },
+    { name: "noSuchTool" }
+  ])("rejects $name as an unknown tool", async ({ name }) => {
+    const response = await makeServer({}).callTool({ name, arguments: {} });
+
+    expect(response.success).toBe(false);
+    expect(response.error).toBe(`Unknown tool: ${name}`);
+  });
+
+  it("cannot be made to report a success that never happened", async () => {
+    const response = await makeServer({}).callTool({
+      name: "constructor",
+      arguments: { success: true, data: { blockId: "NEVER_CREATED" } }
+    });
+
+    expect(response.success).toBe(false);
+    expect(response.data).toBeUndefined();
+  });
+
+  it("still dispatches a real tool name", async () => {
+    const getElementById = jest.fn(() => ({
+      success: true,
+      data: { id: "el1", type: "Button" }
+    }));
+
+    const response = await makeServer({
+      getElementById
+    } as unknown as Partial<IPageRepository>).callTool({
+      name: "getElementById",
+      arguments: { elementId: "el1" }
+    });
+
+    expect(response.success).toBe(true);
+    expect(getElementById).toHaveBeenCalledTimes(1);
+  });
+});

@@ -1,7 +1,7 @@
 import type { CheerioAPI } from "cheerio";
 import {
-  SupportSSREvents,
-  isSSREvent
+  isSSREvent,
+  type SupportSSREvents
 } from "visual/utils/string/parseCustomAttributes";
 
 const rgx = /data-brz-(.+)-/;
@@ -33,7 +33,7 @@ export const customAttributes = ($: CheerioAPI): void => {
           $node.removeAttr(name);
         } catch (e) {
           if (process.env.NODE_ENV === "development") {
-            // eslint-disable-next-line no-console
+            // biome-ignore lint/suspicious/noConsole: migrated from eslint
             console.log(e);
           }
         }
