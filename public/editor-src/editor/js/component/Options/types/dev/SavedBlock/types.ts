@@ -1,10 +1,10 @@
-import { FC } from "react";
-import { Props as OptionProps } from "visual/component/Options/Type";
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
-import { ReduxState } from "visual/redux/types";
-import { Block } from "visual/types/Block";
-import { ExtraFontStyle } from "visual/types/Style";
-import { WithClassName, WithConfig } from "visual/types/attributes";
+import type { FC } from "react";
+import type { Props as OptionProps } from "visual/component/Options/Type";
+import type { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import type { ReduxState } from "visual/redux/types";
+import type { WithClassName, WithConfig } from "visual/types/attributes";
+import type { Block } from "visual/types/Block";
+import type { ExtraFontStyle } from "visual/types/Style";
 
 export interface Config {
   blockType: "normal" | "popup";
@@ -43,7 +43,7 @@ export interface HandleCreateBlock {
   config: ConfigCommon;
 }
 
-export interface Error {
+export interface Err {
   message: string;
   type: "error";
 }

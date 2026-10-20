@@ -3,12 +3,14 @@ import {
   formatVToQuilValue
 } from "visual/editorComponents/RichText/utils/transforms";
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
+import type { FontStyle } from "visual/types/Style";
 import { hexToRgb } from "visual/utils/color";
 import {
-  FontStyleTypes,
+  type FontStyleTypes,
   is as isFontStyle
 } from "visual/utils/fonts/stylesType";
 import { getComponentDefaultValue } from "visual/utils/traverse/common";
+import type { MValue } from "visual/utils/value";
 
 /**
  * Predefined font style types available in Brizy
@@ -47,7 +49,48 @@ export interface UpdateRichTextParams {
   fontFamily?: string;
   /** Font source type */
   fontFamilyType?: string;
+  /**
+   * Tablet and mobile overrides, stored as `-sm-` / `-xs-` classes on each
+   * block. Optional because they mirror the parsed tool arguments.
+   */
+  tabletFontSize?: number;
+  tabletFontWeight?: number;
+  tabletLineHeight?: number;
+  tabletTextAlign?: TextAlign;
+  mobileFontSize?: number;
+  mobileFontWeight?: number;
+  mobileLineHeight?: number;
+  mobileTextAlign?: TextAlign;
 }
+
+type TextAlign = "left" | "center" | "right" | "justify";
+
+type Device = "tablet" | "mobile";
+
+/** What one device of a text block is being changed to. */
+interface DeviceTypography {
+  readonly fontSize: number | undefined;
+  readonly fontWeight: number | undefined;
+  readonly lineHeight: number | undefined;
+  readonly textAlign: TextAlign | undefined;
+}
+
+const deviceTypographyOf = (
+  params: UpdateRichTextParams
+): Record<Device, DeviceTypography> => ({
+  tablet: {
+    fontSize: params.tabletFontSize,
+    fontWeight: params.tabletFontWeight,
+    lineHeight: params.tabletLineHeight,
+    textAlign: params.tabletTextAlign
+  },
+  mobile: {
+    fontSize: params.mobileFontSize,
+    fontWeight: params.mobileFontWeight,
+    lineHeight: params.mobileLineHeight,
+    textAlign: params.mobileTextAlign
+  }
+});
 
 export { isFontStyle };
 
@@ -59,16 +102,51 @@ const TABLET_FONT_STYLE_PREFIX =
 const MOBILE_FONT_STYLE_PREFIX =
   blockValues.class.mobileTypographyFontStyle.prefix; // brz-tp-xs
 const FONT_FAMILY_PREFIX = blockValues.class.typographyFontFamily.prefix; // brz-ff
-const FONT_FAMILY_TYPE_PREFIX = blockValues.class.typographyFontFamilyType.prefix; // brz-ft
+const FONT_FAMILY_TYPE_PREFIX =
+  blockValues.class.typographyFontFamilyType.prefix; // brz-ft
 const FONT_SIZE_PREFIX = blockValues.class.typographyFontSize.prefix; // brz-fs-lg
 const FONT_WEIGHT_PREFIX = blockValues.class.typographyFontWeight.prefix; // brz-fw-lg
 const LINE_HEIGHT_PREFIX = blockValues.class.typographyLineHeight.prefix; // brz-lh-lg
+const LETTER_SPACING_PREFIX = blockValues.class.typographyLetterSpacing.prefix; // brz-ls-lg
 const TEXT_ALIGN_PREFIX = blockValues.class.contentHorizontalAlign.prefix; // brz-text-lg
 
+/** The class prefixes one device's typography is written under. */
+const DEVICE_PREFIXES: Record<
+  Device,
+  {
+    readonly fontStyle: string;
+    readonly fontSize: string;
+    readonly fontWeight: string;
+    readonly lineHeight: string;
+    readonly letterSpacing: string;
+    readonly textAlign: string;
+  }
+> = {
+  tablet: {
+    fontStyle: TABLET_FONT_STYLE_PREFIX, // brz-tp-sm
+    fontSize: blockValues.class.tabletTypographyFontSize.prefix, // brz-fs-sm
+    fontWeight: blockValues.class.tabletTypographyFontWeight.prefix, // brz-fw-sm
+    lineHeight: blockValues.class.tabletTypographyLineHeight.prefix, // brz-lh-sm
+    letterSpacing: blockValues.class.tabletTypographyLetterSpacing.prefix, // brz-ls-sm
+    textAlign: blockValues.class.tabletContentHorizontalAlign.prefix // brz-text-sm
+  },
+  mobile: {
+    fontStyle: MOBILE_FONT_STYLE_PREFIX, // brz-tp-xs
+    fontSize: blockValues.class.mobileTypographyFontSize.prefix, // brz-fs-xs
+    fontWeight: blockValues.class.mobileTypographyFontWeight.prefix, // brz-fw-xs
+    lineHeight: blockValues.class.mobileTypographyLineHeight.prefix, // brz-lh-xs
+    letterSpacing: blockValues.class.mobileTypographyLetterSpacing.prefix, // brz-ls-xs
+    textAlign: blockValues.class.mobileContentHorizontalAlign.prefix // brz-text-xs
+  }
+};
+
 // Default typography values from blockValues (used when clearing presets)
-const DEFAULT_FONT_SIZE = blockValues.class.typographyFontSize.defaultValue as number; // 16
-const DEFAULT_FONT_WEIGHT = blockValues.class.typographyFontWeight.defaultValue as number; // 400
-const DEFAULT_LINE_HEIGHT = blockValues.class.typographyLineHeight.defaultValue as number; // 1.3
+const DEFAULT_FONT_SIZE = blockValues.class.typographyFontSize
+  .defaultValue as number; // 16
+const DEFAULT_FONT_WEIGHT = blockValues.class.typographyFontWeight
+  .defaultValue as number; // 400
+const DEFAULT_LINE_HEIGHT = blockValues.class.typographyLineHeight
+  .defaultValue as number; // 1.3
 
 /**
  * Check if block has simple structure (only one span child, no direct text)
@@ -143,9 +221,7 @@ function setWrapperText(wrapper: Element, newText: string): void {
  * Check if element already has a class with the given prefix
  */
 function hasClassWithPrefix(element: Element, prefix: string): boolean {
-  return element.className
-    .split(" ")
-    .some((c) => c.startsWith(`${prefix}-`));
+  return element.className.split(" ").some((c) => c.startsWith(`${prefix}-`));
 }
 
 /**
@@ -227,6 +303,19 @@ export function updateRichTextColor(
   return doc.body.innerHTML;
 }
 
+function collectTextNodes(doc: Document): Text[] {
+  const walker = doc.createTreeWalker(doc.body, NodeFilter.SHOW_TEXT, null);
+
+  const textNodes: Text[] = [];
+  let node: Text | null;
+  // biome-ignore lint/suspicious/noAssignInExpressions: TreeWalker iteration idiom - the alternative duplicates the nextNode() call on both the seed and the advance
+  while ((node = walker.nextNode() as Text | null)) {
+    textNodes.push(node);
+  }
+
+  return textNodes;
+}
+
 /**
  * Find and replace text in HTML content
  * Replaces text content while preserving HTML structure
@@ -244,17 +333,8 @@ export function findAndReplaceInHtml(
   const parser = new DOMParser();
   const doc = parser.parseFromString(html, "text/html");
 
-  // Walk through all text nodes and replace
-  const walker = doc.createTreeWalker(doc.body, NodeFilter.SHOW_TEXT, null);
-
-  const textNodes: Text[] = [];
-  let node: Text | null;
-  while ((node = walker.nextNode() as Text | null)) {
-    textNodes.push(node);
-  }
-
   // Replace text in each text node
-  for (const textNode of textNodes) {
+  for (const textNode of collectTextNodes(doc)) {
     textNode.textContent = (textNode.textContent || "").replace(
       regex,
       replaceWith
@@ -342,6 +422,33 @@ function isLegacyTypographyPreset(cls: string): boolean {
 }
 
 /**
+ * The preset an element currently uses, read before clearTypographyPresets
+ * replaces it with "empty". Both spellings are cleared, so both are read:
+ * brz-tp-lg-heading1 (responsive) and brz-tp-paragraph (legacy).
+ */
+function readTypographyPresetId(element: Element): MValue<string> {
+  const responsivePrefix = `${TYPOGRAPHY_FONT_STYLE_PREFIX}-`;
+  const classes = element.className.split(" ").filter(Boolean);
+
+  for (const cls of classes) {
+    if (
+      cls.startsWith(responsivePrefix) &&
+      cls !== `${responsivePrefix}empty`
+    ) {
+      return cls.slice(responsivePrefix.length);
+    }
+  }
+
+  for (const cls of classes) {
+    if (isLegacyTypographyPreset(cls)) {
+      return cls.slice(LEGACY_TYPOGRAPHY_PREFIX.length);
+    }
+  }
+
+  return undefined;
+}
+
+/**
  * Replace typography preset classes with "empty" to allow custom styles
  * Preset classes like brz-tp-lg-paragraph override custom font-size/weight/etc
  */
@@ -389,10 +496,7 @@ function clearTypographyPresets(element: Element): void {
  * Apply a predefined font style to an element
  * Sets the brz-tp-lg-{style} class
  */
-function applyFontStyle(
-  element: Element,
-  fontStyle: FontStyleTypes
-): void {
+function applyFontStyle(element: Element, fontStyle: FontStyleTypes): void {
   updateClassWithPrefix(element, TYPOGRAPHY_FONT_STYLE_PREFIX, fontStyle);
 }
 
@@ -420,7 +524,9 @@ export function applyTypographyStyles(
     textAlign?: "left" | "center" | "right" | "justify";
     fontFamily?: string;
     fontFamilyType?: string;
-  }
+  },
+  // Project typography presets, used to carry a cleared preset's values over.
+  fontStyles: FontStyle[]
 ): string {
   const {
     fontStyle,
@@ -457,6 +563,9 @@ export function applyTypographyStyles(
     fontFamily !== undefined;
 
   textBlocks.forEach((block) => {
+    // Read the preset before it is cleared, so its values can be carried over.
+    const clearedPresetId = readTypographyPresetId(block);
+
     if (fontStyle !== undefined) {
       // Clear existing presets first
       clearTypographyPresets(block);
@@ -477,18 +586,51 @@ export function applyTypographyStyles(
         FONT_FAMILY_TYPE_PREFIX,
         fontFamilyType ?? "google"
       );
+    }
 
-      // When clearing preset for fontFamily, ensure individual typography
-      // classes exist so text doesn't lose sizing. Add defaults only if
-      // no explicit value was provided AND no existing class is present.
-      if (fontSize === undefined && !hasClassWithPrefix(block, FONT_SIZE_PREFIX)) {
-        updateClassWithPrefix(block, FONT_SIZE_PREFIX, DEFAULT_FONT_SIZE);
-      }
-      if (fontWeight === undefined && !hasClassWithPrefix(block, FONT_WEIGHT_PREFIX)) {
-        updateClassWithPrefix(block, FONT_WEIGHT_PREFIX, DEFAULT_FONT_WEIGHT);
-      }
-      if (lineHeight === undefined && !hasClassWithPrefix(block, LINE_HEIGHT_PREFIX)) {
-        updateClassWithPrefix(block, LINE_HEIGHT_PREFIX, DEFAULT_LINE_HEIGHT);
+    // Detaching drops the preset's size, weight, line-height and letter
+    // spacing, so carry them over as explicit classes — what the editor's
+    // typography option does via Patch.fullFont. Any custom value detaches,
+    // not just fontFamily; the constants are a fallback for an unresolvable
+    // preset.
+    const detachedFromPreset =
+      clearedPresetId !== undefined &&
+      (fontStyle === "" || (fontStyle === undefined && hasCustomValues));
+
+    if (detachedFromPreset) {
+      const preset = fontStyles.find((fs) => fs.id === clearedPresetId);
+
+      const carryOver = [
+        {
+          explicit: fontSize,
+          prefix: FONT_SIZE_PREFIX,
+          value: preset?.fontSize ?? DEFAULT_FONT_SIZE
+        },
+        {
+          explicit: fontWeight,
+          prefix: FONT_WEIGHT_PREFIX,
+          value: preset?.fontWeight ?? DEFAULT_FONT_WEIGHT
+        },
+        {
+          explicit: lineHeight,
+          prefix: LINE_HEIGHT_PREFIX,
+          value: preset?.lineHeight ?? DEFAULT_LINE_HEIGHT
+        },
+        {
+          explicit: undefined,
+          prefix: LETTER_SPACING_PREFIX,
+          value: preset?.letterSpacing
+        }
+      ];
+
+      for (const { explicit, prefix, value } of carryOver) {
+        if (
+          explicit === undefined &&
+          value !== undefined &&
+          !hasClassWithPrefix(block, prefix)
+        ) {
+          updateClassWithPrefix(block, prefix, value);
+        }
       }
     }
 
@@ -505,6 +647,116 @@ export function applyTypographyStyles(
     }
     if (textAlign !== undefined) {
       updateClassWithPrefix(block, TEXT_ALIGN_PREFIX, textAlign);
+    }
+  });
+
+  return doc.body.innerHTML;
+}
+
+/**
+ * The preset one device of a block renders with.
+ *
+ * A device carries its own preset class (`brz-tp-sm-heading2`); with none, it
+ * follows desktop's, and `brz-tp-sm-empty` means it was already detached.
+ */
+function readDevicePresetId(block: Element, device: Device): MValue<string> {
+  const prefix = `${DEVICE_PREFIXES[device].fontStyle}-`;
+  const own = block.className.split(" ").find((cls) => cls.startsWith(prefix));
+
+  if (own === undefined) return readTypographyPresetId(block);
+  return own === `${prefix}empty` ? undefined : own.slice(prefix.length);
+}
+
+/**
+ * Spell a legacy preset the responsive way, so one device can leave it.
+ *
+ * `brz-tp-paragraph` styles all three screen sizes from one class, which
+ * leaves nothing to detach a single device from. `brz-tp-lg-paragraph` is the
+ * same preset on desktop, and tablet and mobile follow it until told
+ * otherwise.
+ */
+function splitLegacyPreset(block: Element): void {
+  block.className = block.className
+    .split(" ")
+    .filter(Boolean)
+    .map((cls) =>
+      isLegacyTypographyPreset(cls)
+        ? `${TYPOGRAPHY_FONT_STYLE_PREFIX}-${cls.slice(LEGACY_TYPOGRAPHY_PREFIX.length)}`
+        : cls
+    )
+    .join(" ");
+}
+
+/**
+ * Apply tablet or mobile typography to every text block.
+ *
+ * Alignment is a class of its own and needs nothing else. A size, weight or
+ * line height only renders once that device has left its preset, exactly as
+ * on desktop — and leaving it drops the preset's other measurements for that
+ * device, so the ones not being set are carried over from the preset's own
+ * tablet or mobile values. Desktop, and the other device, are not touched.
+ */
+export function applyDeviceTypographyStyles(
+  html: string,
+  device: Device,
+  typography: DeviceTypography,
+  fontStyles: FontStyle[]
+): string {
+  const { fontSize, fontWeight, lineHeight, textAlign } = typography;
+  const hasMeasurements =
+    fontSize !== undefined ||
+    fontWeight !== undefined ||
+    lineHeight !== undefined;
+
+  if (!hasMeasurements && textAlign === undefined) {
+    return html;
+  }
+
+  const prefixes = DEVICE_PREFIXES[device];
+  const doc = new DOMParser().parseFromString(html, "text/html");
+
+  doc.body.querySelectorAll("p, h1, h2, h3, h4, h5, h6").forEach((block) => {
+    if (textAlign !== undefined) {
+      updateClassWithPrefix(block, prefixes.textAlign, textAlign);
+    }
+
+    if (!hasMeasurements) return;
+
+    const presetId = readDevicePresetId(block, device);
+    const preset = fontStyles.find((style) => style.id === presetId);
+
+    splitLegacyPreset(block);
+    updateClassWithPrefix(block, prefixes.fontStyle, "");
+
+    const measurements = [
+      {
+        explicit: fontSize,
+        prefix: prefixes.fontSize,
+        carried: preset?.[`${device}FontSize`]
+      },
+      {
+        explicit: fontWeight,
+        prefix: prefixes.fontWeight,
+        carried: preset?.[`${device}FontWeight`]
+      },
+      {
+        explicit: lineHeight,
+        prefix: prefixes.lineHeight,
+        carried: preset?.[`${device}LineHeight`]
+      },
+      {
+        explicit: undefined,
+        prefix: prefixes.letterSpacing,
+        carried: preset?.[`${device}LetterSpacing`]
+      }
+    ];
+
+    for (const { explicit, prefix, carried } of measurements) {
+      if (explicit !== undefined) {
+        updateClassWithPrefix(block, prefix, explicit);
+      } else if (carried !== undefined && !hasClassWithPrefix(block, prefix)) {
+        updateClassWithPrefix(block, prefix, carried);
+      }
     }
   });
 
@@ -533,18 +785,7 @@ function normalizeRichTextHtml(html: string): string {
   return html;
 }
 
-/**
- * Apply RichText updates to the HTML value
- * Returns the updated HTML string
- *
- * LLM sends plain text, this function handles HTML internally:
- * - findText + replaceWith: find and replace specific text
- * - replaceWith only: replace ALL text content
- */
-export function applyRichTextUpdates(
-  currentHtml: string,
-  params: UpdateRichTextParams
-): string {
+function prepareRichTextHtml(currentHtml: string): string {
   let html = currentHtml;
 
   // get from defaultComponent
@@ -557,10 +798,44 @@ export function applyRichTextUpdates(
 
   // Ensure HTML has proper block-level elements (p, h1-h6)
   // Handles cases where the value is plain text without HTML wrapper
-  html = normalizeRichTextHtml(html);
+  return normalizeRichTextHtml(html);
+}
 
-  // Find and replace specific text
-  if (params.findText !== undefined && params.replaceWith !== undefined) {
+/**
+ * Whether a findText replacement would change anything: findAndReplaceInHtml
+ * matches case-sensitively inside one text node of the prepared HTML.
+ */
+export function containsFindText(
+  currentHtml: string,
+  findText: string
+): boolean {
+  const parser = new DOMParser();
+  const html = prepareRichTextHtml(currentHtml);
+  const doc = parser.parseFromString(html, "text/html");
+
+  return collectTextNodes(doc).some((textNode) =>
+    (textNode.textContent ?? "").includes(findText)
+  );
+}
+
+/**
+ * Apply RichText updates to the HTML value
+ * Returns the updated HTML string
+ *
+ * LLM sends plain text, this function handles HTML internally:
+ * - findText + replaceWith: find and replace specific text
+ * - replaceWith only: replace ALL text content
+ */
+export function applyRichTextUpdates(
+  currentHtml: string,
+  params: UpdateRichTextParams,
+  fontStyles: FontStyle[]
+): string {
+  let html = prepareRichTextHtml(currentHtml);
+
+  // An empty findText is treated as absent: it would compile to an empty regex
+  // that matches at every position.
+  if (params.findText && params.replaceWith !== undefined) {
     html = findAndReplaceInHtml(html, params.findText, params.replaceWith);
   } else if (params.replaceWith !== undefined) {
     // Replace ALL text when only replaceWith is provided
@@ -573,15 +848,34 @@ export function applyRichTextUpdates(
   }
 
   // Apply typography styles if provided
-  html = applyTypographyStyles(html, {
-    fontStyle: params.fontStyle,
-    fontSize: params.fontSize,
-    fontWeight: params.fontWeight,
-    lineHeight: params.lineHeight,
-    textAlign: params.textAlign,
-    fontFamily: params.fontFamily,
-    fontFamilyType: params.fontFamilyType
-  });
+  html = applyTypographyStyles(
+    html,
+    {
+      fontStyle: params.fontStyle,
+      fontSize: params.fontSize,
+      fontWeight: params.fontWeight,
+      lineHeight: params.lineHeight,
+      textAlign: params.textAlign,
+      fontFamily: params.fontFamily,
+      fontFamilyType: params.fontFamilyType
+    },
+    fontStyles
+  );
+
+  // Devices last: each reads the desktop preset the step above may have set.
+  const devices = deviceTypographyOf(params);
+  html = applyDeviceTypographyStyles(
+    html,
+    "tablet",
+    devices.tablet,
+    fontStyles
+  );
+  html = applyDeviceTypographyStyles(
+    html,
+    "mobile",
+    devices.mobile,
+    fontStyles
+  );
 
   return html;
 }

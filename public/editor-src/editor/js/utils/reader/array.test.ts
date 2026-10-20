@@ -1,6 +1,6 @@
 import { read, readWithItemReader } from "./array";
-import { read as readString } from "./string";
 import { read as readNumber } from "./number";
+import { read as readString } from "./string";
 
 test("Testing 'read' function", () => {
   expect(read(undefined)).toBe(undefined);

@@ -1,7 +1,7 @@
 import classNames from "classnames";
 import React from "react";
-import { Props } from "./types/Props";
-import { FCC } from "visual/utils/react/types";
+import type { FCC } from "visual/utils/react/types";
+import type { Props } from "./types/Props";
 
 export * from "./types/Props";
 

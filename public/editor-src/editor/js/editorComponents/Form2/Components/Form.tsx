@@ -1,6 +1,6 @@
 import classnames from "classnames";
-import React, { FormEvent } from "react";
-import { FCC } from "visual/utils/react/types";
+import React, { type FormEvent } from "react";
+import type { FCC } from "visual/utils/react/types";
 
 interface Props {
   className?: string;

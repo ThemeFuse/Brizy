@@ -1,5 +1,5 @@
 import React, {
-  FC,
+  type FC,
   useCallback,
   useEffect,
   useMemo,
@@ -9,7 +9,7 @@ import React, {
 import UIEvents, { UIEventType } from "visual/global/UIEvents";
 import { makeDataAttr } from "visual/utils/i18n/attribute";
 import { AnimatedHamburgerIcon } from "../../HamburgerIcon";
-import { MMenuAnimationTypes } from "../../types";
+import type { MMenuAnimationTypes } from "../../types";
 
 interface Props {
   onOpen?: VoidFunction;

@@ -1,8 +1,8 @@
-import React, { JSX } from "react";
-import { BlockThumbnailLabel } from "./BlockThumbnailLabel";
-import { ThumbnailSelectorProps } from "./types";
+import React, { type JSX } from "react";
 import { Scrollbar } from "visual/component/Scrollbar";
+import { BlockThumbnailLabel } from "./BlockThumbnailLabel";
 import { Thumbnails } from "./Thumbnails";
+import type { ThumbnailSelectorProps } from "./types";
 
 export const ThumbnailSelector = ({
   className,

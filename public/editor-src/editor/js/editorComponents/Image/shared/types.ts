@@ -1,10 +1,10 @@
 import React from "react";
-import { EditorComponentContextValue } from "visual/editorComponents/EditorComponent/EditorComponentContext";
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
-import { RenderType } from "visual/providers/RenderProvider";
-import { ReduxState } from "visual/redux/types";
-import { DeviceMode } from "visual/types";
-import {
+import type { EditorComponentContextValue } from "visual/editorComponents/EditorComponent/EditorComponentContext";
+import type { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import type { RenderType } from "visual/providers/RenderProvider";
+import type { ReduxState } from "visual/redux/types";
+import type { DeviceMode } from "visual/types";
+import type {
   Dimensions,
   ImageSizes,
   ImagesSources,
@@ -138,4 +138,12 @@ export interface ExtendedWrapperSizes extends WrapperSizes {
  */
 export type ImagePatchResult = Record<string, unknown>;
 
-export type { Value, Patch, WrapperSizes, ImageSizes, ImagesSources, Dimensions, Meta };
+export type {
+  Dimensions,
+  ImageSizes,
+  ImagesSources,
+  Meta,
+  Patch,
+  Value,
+  WrapperSizes
+};

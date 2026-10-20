@@ -1,10 +1,15 @@
 import classNames from "classnames";
-import React, { ReactElement, useCallback, useEffect, useRef } from "react";
+import React, {
+  type ReactElement,
+  useCallback,
+  useEffect,
+  useRef
+} from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { LeftSidebarOptionsIds } from "visual/global/Config/types/configs/ConfigCommon";
 import { updateUI } from "visual/redux/actions2";
 import { leftSidebarSelector } from "visual/redux/selectors";
-import { DrawerContentTypes } from "visual/redux/types";
+import type { DrawerContentTypes } from "visual/redux/types";
 import { t } from "visual/utils/i18n";
 import Link from "../Options/types/Link";
 

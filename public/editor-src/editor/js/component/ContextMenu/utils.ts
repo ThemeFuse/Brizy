@@ -1,5 +1,5 @@
 import { detectOS } from "visual/utils/dom/detectOS";
-import { Item, Meta } from "./types";
+import type { Item, Meta } from "./types";
 
 export function mergeItems(a: Item[], b: Item[]): Item[] {
   const mergedItems: Item[] = a;

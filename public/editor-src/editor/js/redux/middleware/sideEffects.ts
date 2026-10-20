@@ -1,9 +1,14 @@
 import { Obj } from "@brizy/readers";
 import { difference } from "es-toolkit";
-import { type Dispatch, Middleware, type MiddlewareAPI, isAction } from "redux";
+import {
+  type Dispatch,
+  isAction,
+  type Middleware,
+  type MiddlewareAPI
+} from "redux";
 import { wInMobilePage, wInTabletPage } from "visual/config/columns";
 import UIEvents, { UIEventType } from "visual/global/UIEvents";
-import { GetConfig } from "visual/providers/ConfigProvider/types";
+import type { GetConfig } from "visual/providers/ConfigProvider/types";
 import type { ReduxAction } from "visual/redux/actions2";
 import type { Store } from "visual/redux/store";
 import type { ReduxState } from "visual/redux/types";
@@ -38,8 +43,8 @@ import {
 } from "visual/utils/viewport";
 import { ADD_BLOCK, HYDRATE, UPDATE_UI } from "../actions";
 import {
-  ADD_FONTS,
   ActionTypes,
+  ADD_FONTS,
   DELETE_FONTS,
   UPDATE_DEFAULT_FONT,
   UPDATE_EXTRA_FONT_STYLES,
@@ -86,8 +91,8 @@ type DiffFontResult =
   | { type: "system"; fonts: SystemFont[] };
 
 export default (
-    config: SideEffectsConfig
-  ): Middleware<Record<string, never>, ReduxState, Dispatch<ReduxAction>> =>
+  config: SideEffectsConfig
+): Middleware<Record<string, never>, ReduxState, Dispatch<ReduxAction>> =>
   (store) =>
   (next) =>
   (_action) => {
@@ -487,20 +492,22 @@ function handleDeviceModeChange(callbacks: Callbacks): void {
       brz.className = newBrzClassName;
       blocksIframe.style.maxWidth = iframeMaxWidth;
 
-      isActiveElementInView && activeElementHTMLElement
-        ? scrollToActiveElement({
-            activeElement: activeElementHTMLElement,
-            document: viewportDocument,
-            scrollTo,
-            innerHeight,
-            maxRecursion: 5
-          })
-        : scrollToClosestCenterSection(
-            sections,
-            viewportDocument,
-            scrollTo,
-            innerHeight
-          );
+      if (isActiveElementInView && activeElementHTMLElement) {
+        scrollToActiveElement({
+          activeElement: activeElementHTMLElement,
+          document: viewportDocument,
+          scrollTo,
+          innerHeight,
+          maxRecursion: 5
+        });
+      } else {
+        scrollToClosestCenterSection(
+          sections,
+          viewportDocument,
+          scrollTo,
+          innerHeight
+        );
+      }
     });
   });
 }
@@ -627,12 +634,14 @@ function diffFonts(oldFonts: Fonts, fonts: Fonts): DiffFontResult[] {
     const oldFont = oldFonts[type as keyof Fonts];
 
     if (!oldFont) {
-      return [...acc, { type, fonts: fontData.data } as DiffFontResult];
+      acc.push({ type, fonts: fontData.data } as DiffFontResult);
+      return acc;
     }
 
     if ("data" in oldFont && oldFont.data !== fontData.data) {
       const diffResult = difference(fontData.data, oldFont.data as Font[]);
-      return [...acc, { type, fonts: diffResult } as DiffFontResult];
+      acc.push({ type, fonts: diffResult } as DiffFontResult);
+      return acc;
     }
 
     return acc;

@@ -1,9 +1,9 @@
 import { uniq } from "es-toolkit";
-import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
+import type { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
 import { t } from "visual/utils/i18n";
 import { filter } from "visual/utils/options/filter";
 import { reduceR } from "visual/utils/options/reduce";
-import * as State from "visual/utils/stateMode";
+import type * as State from "visual/utils/stateMode";
 
 export const itemStates = (item: ToolbarItemType): State.State[] => {
   const states = reduceR(

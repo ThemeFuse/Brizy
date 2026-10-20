@@ -1,6 +1,9 @@
 import type { Palette } from "visual/types/Style";
 import type { BrizyToolResult } from "../../entities/models";
-import type { UpdateStyleInput } from "../../infrastructure/repositories/utils";
+import type {
+  UpdateColorPaletteInput,
+  UpdateStyleInput
+} from "../../infrastructure/repositories/utils";
 
 /**
  * Lightweight style summary — just id + title for listing.
@@ -11,8 +14,9 @@ export interface StyleSummary {
 }
 
 /**
- * Lightweight font style summary — desktop essentials only,
- * strips tablet/mobile responsive props and transforms.
+ * Lightweight font style summary — the family plus the four measurements per
+ * device, which is exactly what the font style tools can write. Strips the
+ * transforms and the variable-font axes.
  */
 export interface FontStyleSummary {
   readonly id: string;
@@ -23,6 +27,14 @@ export interface FontStyleSummary {
   readonly fontWeight: number;
   readonly lineHeight: number;
   readonly letterSpacing: number;
+  readonly tabletFontSize: number;
+  readonly tabletFontWeight: number;
+  readonly tabletLineHeight: number;
+  readonly tabletLetterSpacing: number;
+  readonly mobileFontSize: number;
+  readonly mobileFontWeight: number;
+  readonly mobileLineHeight: number;
+  readonly mobileLetterSpacing: number;
 }
 
 /**
@@ -96,18 +108,17 @@ export interface IProjectRepository {
   changeStyle(styleId: string): BrizyToolResult<{ styleId: string }>;
 
   /**
-   * Add a new global style
-   */
-  addStyle(params: {
-    title: string;
-    colorPalette?: Palette[];
-    fontStyles?: Record<string, unknown>[];
-  }): BrizyToolResult<{ styleId: string; title: string }>;
-
-  /**
-   * Update the current active style's color palette and/or font styles
+   * Update the current active style's color palette and/or font styles.
+   * A palette sent here replaces all eight slots.
    */
   updateStyle(params: UpdateStyleInput): BrizyToolResult<{ styleId: string }>;
+
+  /**
+   * Change some of the current active style's palette slots, merged by id
+   */
+  updateColorPalette(
+    params: UpdateColorPaletteInput
+  ): BrizyToolResult<{ styleId: string }>;
 
   /**
    * Duplicate the current active style

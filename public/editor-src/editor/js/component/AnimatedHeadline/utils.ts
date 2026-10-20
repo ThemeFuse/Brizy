@@ -1,13 +1,13 @@
-import { MValue } from "visual/utils/value";
+import { Num, Str } from "@brizy/readers";
+import { checkValue2 } from "visual/utils/checkValue";
+import { makeAttr } from "visual/utils/i18n/attribute";
+import type { MValue } from "visual/utils/value";
 import {
   AnimationStyle,
-  Settings,
+  type Settings,
   SvgEffectTypes,
   TextEffectTypes
 } from "./types";
-import { Num, Str } from "@brizy/readers";
-import { makeAttr } from "visual/utils/i18n/attribute";
-import { checkValue2 } from "visual/utils/checkValue";
 
 export const selectors = {
   headline: ".brz-animatedHeadline",

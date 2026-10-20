@@ -1,4 +1,4 @@
-import { FontFamilyType, VariationFont } from "visual/types/Fonts";
+import { FontFamilyType, type VariationFont } from "visual/types/Fonts";
 
 export type FontsBlock = Partial<{
   config: Array<FontObject>;
@@ -35,7 +35,6 @@ export interface FontObject {
   weights: number[];
   variations?: VariationFont[];
 }
-
 
 export type FontWithType = FontObject & {
   type: FontFamilyType;

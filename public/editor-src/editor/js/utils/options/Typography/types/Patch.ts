@@ -1,12 +1,12 @@
 import { Str } from "@brizy/readers";
-import { FontFamilyType } from "visual/types/Fonts";
-import { FontTransform } from "visual/types/Style";
-import * as SizeSuffix from "visual/utils/fonts/SizeSuffix";
-import { Weight } from "visual/utils/fonts/Weight";
+import type { FontFamilyType } from "visual/types/Fonts";
+import type { FontTransform } from "visual/types/Style";
 import * as FamilyType from "visual/utils/fonts/familyType";
-import { Positive } from "visual/utils/math/Positive";
+import * as SizeSuffix from "visual/utils/fonts/SizeSuffix";
+import type { Weight } from "visual/utils/fonts/Weight";
+import type { Positive } from "visual/utils/math/Positive";
 import * as Obj from "visual/utils/reader/object";
-import { Value } from "./Value";
+import type { Value } from "./Value";
 
 // region FontStyle
 export interface FontStyle {

@@ -1,10 +1,10 @@
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import type { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { getCustomIcons as getCustomIconsApi } from "visual/utils/api";
 import { toArray } from "visual/utils/array";
 import { mPipe } from "visual/utils/fp";
 import { read as readObj } from "visual/utils/reader/object";
 import { isT } from "visual/utils/value";
-import { CustomIcon, Icon, read, readCustom } from "./Icon";
+import { type CustomIcon, type Icon, read, readCustom } from "./Icon";
 import { TypeId } from "./Type";
 
 const readIcons = (m: { default: unknown[] }): Icon[] => {

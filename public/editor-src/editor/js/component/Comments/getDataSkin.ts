@@ -1,4 +1,4 @@
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import type { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { assetUrl } from "visual/utils/asset";
 
 export const getDataSkin = (config: ConfigCommon) => {

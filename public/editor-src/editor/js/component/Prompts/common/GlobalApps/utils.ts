@@ -1,6 +1,6 @@
 import {
   HelpVideos,
-  HelpVideosData
+  type HelpVideosData
 } from "visual/global/Config/types/configs/ConfigCommon";
 
 export const getUrlVideoId = (
@@ -13,8 +13,8 @@ export const getUrlVideoId = (
   return currentTab === "upload" || currentTab === "fonts"
     ? idVideoFonts
     : currentTab === "email" ||
-      currentTab === "service" ||
-      currentTab === "recaptcha"
-    ? idVideoForm
-    : undefined;
+        currentTab === "service" ||
+        currentTab === "recaptcha"
+      ? idVideoForm
+      : undefined;
 };

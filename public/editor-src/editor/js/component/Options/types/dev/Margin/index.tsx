@@ -1,24 +1,24 @@
-import React, { ReactElement, useCallback, useMemo } from "react";
-import { Props as SP, Spacing } from "visual/component/Controls/Spacing";
-import { Edge } from "visual/component/Controls/Spacing/types";
-import {
+import React, { type ReactElement, useCallback, useMemo } from "react";
+import { type Props as SP, Spacing } from "visual/component/Controls/Spacing";
+import type { Edge } from "visual/component/Controls/Spacing/types";
+import type {
   Meta as OptionMeta,
   Props as OptionProps
 } from "visual/component/Options/Type";
-import { WithConfig } from "visual/types/attributes";
-import { Meta } from "visual/utils/options/Margin/meta";
-import { Config } from "visual/utils/options/Margin/types/Config";
-import { ToSpacingEdges } from "visual/utils/options/Margin/types/ToSpacingEdges";
+import type { WithConfig } from "visual/types/attributes";
+import type { Meta } from "visual/utils/options/Margin/meta";
+import type { Config } from "visual/utils/options/Margin/types/Config";
+import type { ToSpacingEdges } from "visual/utils/options/Margin/types/ToSpacingEdges";
+import type { Value } from "visual/utils/options/Margin/types/Value";
 import * as V from "visual/utils/options/Margin/types/Value";
-import { Value } from "visual/utils/options/Margin/types/Value";
 import {
   getIcon,
   toSpacingValue,
   unitSetter,
   valueSetter
 } from "visual/utils/options/Margin/utils";
-import { SpacingUnit } from "visual/utils/options/utils/SpacingUnit";
-import { Type } from "visual/utils/options/utils/Type";
+import type { SpacingUnit } from "visual/utils/options/utils/SpacingUnit";
+import type { Type } from "visual/utils/options/utils/Type";
 
 export interface Props
   extends OptionProps<Value>,

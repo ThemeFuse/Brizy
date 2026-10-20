@@ -2,7 +2,7 @@ import { difference } from "es-toolkit";
 import { t } from "visual/utils/i18n";
 import * as Str from "visual/utils/reader/string";
 import { printf } from "visual/utils/string";
-import { ChoicesAsync, ChoicesSync, Value } from "./types";
+import type { ChoicesAsync, ChoicesSync, Value } from "./types";
 
 export function isChoicesSync(
   choices: ChoicesSync | ChoicesAsync

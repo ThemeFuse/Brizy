@@ -1,43 +1,45 @@
 import { partition } from "es-toolkit";
 import { produce } from "immer";
-import { ThunkAction } from "redux-thunk";
+import type { ThunkAction } from "redux-thunk";
 import { mergeDeep } from "timm";
-import {
+import type {
   ConfigCommon,
+  MenuData,
+  MenuItem,
   PublishData
 } from "visual/global/Config/types/configs/ConfigCommon";
-import { EditorMode } from "visual/providers/EditorModeProvider";
+import type { EditorMode } from "visual/providers/EditorModeProvider";
 import { fontsSelector } from "visual/redux/selectors";
-import {
+import type {
   ActiveElement,
   Authorized,
   DeviceMode,
   ProjectLockStatus
 } from "visual/types";
-import { Block, BlockHtml } from "visual/types/Block";
-import {
+import type { Block, BlockHtml } from "visual/types/Block";
+import type {
   AdobeFont,
   Font,
   GoogleFont,
   SystemFont,
   UploadedFont
 } from "visual/types/Fonts";
-import {
+import type {
   GlobalBlock,
   GlobalBlockNormal,
   GlobalBlockPopup
 } from "visual/types/GlobalBlock";
-import { Layout } from "visual/types/Layout";
-import { ShopifyPage } from "visual/types/Page";
-import { Project } from "visual/types/Project";
-import { Screenshot } from "visual/types/Screenshot";
-import { ExtraFontStyle } from "visual/types/Style";
+import type { Layout } from "visual/types/Layout";
+import type { ShopifyPage } from "visual/types/Page";
+import type { Project } from "visual/types/Project";
+import type { Screenshot } from "visual/types/Screenshot";
+import type { ExtraFontStyle } from "visual/types/Style";
 import type { CSSSymbol, SymbolCSS } from "visual/types/Symbols";
-import { ArrayType } from "visual/utils/array/types";
+import type { ArrayType } from "visual/utils/array/types";
 import { uuid } from "visual/utils/uuid";
 import { DELETE_GLOBAL_BLOCK } from "./actions";
-import { RedoAction, UndoAction } from "./history/types";
-import { ActiveElementMeta, ReduxState, StoreChanged } from "./types";
+import type { RedoAction, UndoAction } from "./history/types";
+import type { ActiveElementMeta, ReduxState, StoreChanged } from "./types";
 
 type UIState = ReduxState["ui"];
 
@@ -108,7 +110,7 @@ export type ActionUpdateGlobalBlock = {
   type: "UPDATE_GLOBAL_BLOCK";
   payload: {
     uid: string;
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // biome-ignore lint/suspicious/noExplicitAny: migrated from eslint
     data: any;
     title?: string;
     tags?: string;
@@ -211,7 +213,7 @@ export type ActionAddGlobalPopup = {
 
 export type ActionUpdatePopupRules = {
   type: "UPDATE_POPUP_RULES";
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  // biome-ignore lint/suspicious/noExplicitAny: migrated from eslint
   payload: any; // TODO need change any to normal value @Alex T
 };
 
@@ -260,7 +262,7 @@ export interface ActionUpdateDefaultFont {
 export type ActionUpdateTriggers = {
   type: "UPDATE_TRIGGERS";
   payload: {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // biome-ignore lint/suspicious/noExplicitAny: migrated from eslint
     data: any; // TODO need change any to normal value @Alex T
   };
 };
@@ -305,8 +307,11 @@ export type ActionUpdateGBRules = {
     id: string;
   };
   meta: {
-    syncSuccess: (s?: void) => void;
-    syncFail: (e?: void) => void;
+    syncSuccess: () => void;
+    // `apiOnChange(...).then(syncSuccess).catch(syncFail)` — the rejection
+    // reason reaches syncFail unvalidated; PromptConditions/Rules parses it
+    // before toasting a `message`.
+    syncFail: (e: unknown) => void;
   };
 };
 
@@ -436,6 +441,9 @@ export type ReduxAction =
   | ActionDeleteSymbol
   | ActionUpdateSymbolsCSS
   | ActionInitializeBlocksHtml
+  | ActionAddMenuData
+  | ActionUpdateMenuData
+  | ActionRemoveMenuData
   | UndoAction
   | RedoAction;
 
@@ -489,8 +497,10 @@ export type ActionUpdatePageStatus = {
   type: typeof PUBLISH;
   payload: PublishPayload;
   meta?: {
-    onSuccess: (s?: void) => void;
-    onError: (e?: void) => void;
+    onSuccess: () => void;
+    // `apiCatch` calls `onError(reason)`; `updatePageStatus` wires it to the
+    // thunk promise's `reject`, so the reason has to travel.
+    onError: (e: unknown) => void;
   };
 };
 
@@ -703,8 +713,7 @@ export const addFonts: ThunkAddFonts =
       const _id = id ? { id } : {};
 
       // Make new Data, check deleted Font
-      return {
-        ...acc,
+      return Object.assign(acc, {
         [type]: {
           ..._id,
           data: fontData
@@ -715,7 +724,7 @@ export const addFonts: ThunkAddFonts =
             )
             .concat(newFonts)
         }
-      };
+      });
     }, {});
 
     return dispatch({
@@ -734,10 +743,10 @@ export const deleteFont: ThunkDeleteFonts =
     const { type, fonts: removedFonts } = payload;
     const fonts = produce(fontsSelector(getState()), (draft) => {
       if (type === "adobe") {
-        delete draft["adobe"];
+        delete draft.adobe;
       }
     });
-    const fontData: Font[] = (fonts[type] && fonts[type]?.data) || [];
+    const fontData: Font[] = fonts[type]?.data || [];
 
     const dataFonts = {
       [type]: {
@@ -968,14 +977,8 @@ export function updateGBRules({
   data,
   meta
 }: {
-  data: {
-    rules: GlobalBlock["rules"];
-    id: string;
-  };
-  meta: {
-    syncSuccess: (s?: void) => void;
-    syncFail: (e?: void) => void;
-  };
+  data: ActionUpdateGBRules["payload"];
+  meta: ActionUpdateGBRules["meta"];
 }): ActionUpdateGBRules {
   return {
     type: "UPDATE_GB_RULES",
@@ -1119,32 +1122,73 @@ export const initializeBlocksHtml = (): ActionInitializeBlocksHtml => {
 //#region Add New Global Style
 
 export enum ActionTypes {
-  "ADD_NEW_GLOBAL_STYLE" = "ADD_NEW_GLOBAL_STYLE",
-  "EDIT_GLOBAL_STYLE_NAME" = "EDIT_GLOBAL_STYLE_NAME",
-  "REMOVE_GLOBAL_STYLE" = "REMOVE_GLOBAL_STYLE",
-  "IMPORT_KIT" = "IMPORT_KIT",
-  "IMPORT_STORY" = "IMPORT_STORY",
-  "IMPORT_TEMPLATE" = "IMPORT_TEMPLATE",
-  "UPDATE_CURRENT_STYLE_ID" = "UPDATE_CURRENT_STYLE_ID",
-  "UPDATE_CURRENT_STYLE" = "UPDATE_CURRENT_STYLE",
-  "COPY_ELEMENT" = "COPY_ELEMENT",
-  "UPDATE_ERROR" = "UPDATE_ERROR",
-  "UPDATE_SCREENSHOT" = "UPDATE_SCREENSHOT",
-  "REMOVE_BLOCK" = "REMOVE_BLOCK",
-  "REMOVE_BLOCKS" = "REMOVE_BLOCKS",
-  "UPDATE_PINNED_ELEMENTS" = "UPDATE_PINNED_ELEMENTS",
-  "REGENERATE_COLORS" = "REGENERATE_COLORS",
-  "REGENERATE_TYPOGRAPHY" = "REGENERATE_TYPOGRAPHY",
-  "UPDATE_BLOCK_HTML" = "UPDATE_BLOCK_HTML",
-  "UPDATE_BLOCKS_HTML" = "UPDATE_BLOCKS_HTML",
-  "UPDATE_GLOBAL_BLOCK_METADATA" = "UPDATE_GLOBAL_BLOCK_METADATA",
-  "CREATE_SYMBOL" = "CREATE_SYMBOL",
-  "UPDATE_SYMBOL" = "UPDATE_SYMBOL",
-  "DELETE_SYMBOL" = "DELETE_SYMBOL",
-  "UPDDATE_SYMBOLS_CSS" = "UPDDATE_SYMBOLS_CSS",
-  "INITIALIZE_BLOCKS_HTML" = "INITIALIZE_BLOCKS_HTML",
-  "UPDATE_BLOCK_DATA" = "UPDATE_BLOCK_DATA"
+  ADD_NEW_GLOBAL_STYLE = "ADD_NEW_GLOBAL_STYLE",
+  EDIT_GLOBAL_STYLE_NAME = "EDIT_GLOBAL_STYLE_NAME",
+  REMOVE_GLOBAL_STYLE = "REMOVE_GLOBAL_STYLE",
+  IMPORT_KIT = "IMPORT_KIT",
+  IMPORT_STORY = "IMPORT_STORY",
+  IMPORT_TEMPLATE = "IMPORT_TEMPLATE",
+  UPDATE_CURRENT_STYLE_ID = "UPDATE_CURRENT_STYLE_ID",
+  UPDATE_CURRENT_STYLE = "UPDATE_CURRENT_STYLE",
+  COPY_ELEMENT = "COPY_ELEMENT",
+  UPDATE_ERROR = "UPDATE_ERROR",
+  UPDATE_SCREENSHOT = "UPDATE_SCREENSHOT",
+  REMOVE_BLOCK = "REMOVE_BLOCK",
+  REMOVE_BLOCKS = "REMOVE_BLOCKS",
+  UPDATE_PINNED_ELEMENTS = "UPDATE_PINNED_ELEMENTS",
+  REGENERATE_COLORS = "REGENERATE_COLORS",
+  REGENERATE_TYPOGRAPHY = "REGENERATE_TYPOGRAPHY",
+  UPDATE_BLOCK_HTML = "UPDATE_BLOCK_HTML",
+  UPDATE_BLOCKS_HTML = "UPDATE_BLOCKS_HTML",
+  UPDATE_GLOBAL_BLOCK_METADATA = "UPDATE_GLOBAL_BLOCK_METADATA",
+  CREATE_SYMBOL = "CREATE_SYMBOL",
+  UPDATE_SYMBOL = "UPDATE_SYMBOL",
+  DELETE_SYMBOL = "DELETE_SYMBOL",
+  UPDDATE_SYMBOLS_CSS = "UPDDATE_SYMBOLS_CSS",
+  INITIALIZE_BLOCKS_HTML = "INITIALIZE_BLOCKS_HTML",
+  UPDATE_BLOCK_DATA = "UPDATE_BLOCK_DATA",
+  ADD_MENU_DATA = "ADD_MENU_DATA",
+  UPDATE_MENU_DATA = "UPDATE_MENU_DATA",
+  REMOVE_MENU_DATA = "REMOVE_MENU_DATA"
 }
+
+//#region MenuData
+
+export type ActionAddMenuData = {
+  type: ActionTypes.ADD_MENU_DATA;
+  payload: MenuData;
+};
+
+export type ActionUpdateMenuData = {
+  type: ActionTypes.UPDATE_MENU_DATA;
+  payload: { id: string; items: MenuItem[] };
+};
+
+export type ActionRemoveMenuData = {
+  type: ActionTypes.REMOVE_MENU_DATA;
+  payload: { id: string };
+};
+
+export const addMenuData = (menu: MenuData): ActionAddMenuData => ({
+  type: ActionTypes.ADD_MENU_DATA,
+  payload: menu
+});
+
+/** Replaces the item list of one menu; the menu keeps its name. */
+export const updateMenuData = (
+  id: string,
+  items: MenuItem[]
+): ActionUpdateMenuData => ({
+  type: ActionTypes.UPDATE_MENU_DATA,
+  payload: { id, items }
+});
+
+export const removeMenuData = (id: string): ActionRemoveMenuData => ({
+  type: ActionTypes.REMOVE_MENU_DATA,
+  payload: { id }
+});
+
+//#endregion
 
 // templates
 

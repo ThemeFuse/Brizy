@@ -1,12 +1,12 @@
 import {
-  ResponsiveMode,
   isDesktop,
-  isMobile
+  isMobile,
+  type ResponsiveMode
 } from "visual/utils/responsiveMode";
-import { String } from "visual/utils/string/specs";
-import { IsEqual } from "visual/utils/types/Eq";
-import { Append, Concat } from "visual/utils/types/Monoid";
-import { MRead, Reader } from "visual/utils/types/Type";
+import { StringSpec } from "visual/utils/string/specs";
+import type { IsEqual } from "visual/utils/types/Eq";
+import type { Append, Concat } from "visual/utils/types/Monoid";
+import type { MRead, Reader } from "visual/utils/types/Type";
 
 export type Device = "all" | "desktop" | "responsive";
 
@@ -37,7 +37,7 @@ export const append: Append<Device> = (a, b) => (a === empty ? b : a);
 
 export const concat: Concat<Device> = (as) => as.reduce(append, empty);
 
-export const eq: IsEqual<Device> = String.eq;
+export const eq: IsEqual<Device> = StringSpec.eq;
 
 /**
  * Takes a value and checks if is a valid device.
@@ -57,7 +57,7 @@ export const RESPONSIVE: Device = "responsive";
  * @param {object} o
  * @returns {string}
  */
-export const getDevice = (o: WithDevice): Device => mRead((o ?? {}).devices);
+export const getDevice = (o: WithDevice): Device => mRead(o?.devices);
 
 /**
  * Check if the option has a specific device

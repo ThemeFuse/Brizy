@@ -1,11 +1,11 @@
 import { Num, Str } from "@brizy/readers";
 import { keyToDCFallback2Key } from "visual/editorComponents/EditorComponent/DynamicContent/utils";
-import { EditorComponentContextValue } from "visual/editorComponents/EditorComponent/EditorComponentContext";
-import { Config } from "visual/global/Config";
-import { DCTypes } from "visual/global/Config/types/DynamicContent";
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import type { EditorComponentContextValue } from "visual/editorComponents/EditorComponent/EditorComponentContext";
+import type { Config } from "visual/global/Config";
+import type { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { isBackgroundPointerEnabled } from "visual/global/Config/types/configs/featuresValue";
-import { DeviceMode } from "visual/types";
+import { DCTypes } from "visual/global/Config/types/DynamicContent";
+import type { DeviceMode } from "visual/types";
 import {
   getColorToolbar as getColor,
   hexToRgba,
@@ -19,8 +19,11 @@ import { read as readNum } from "visual/utils/reader/number";
 import { read as readStr } from "visual/utils/reader/string";
 import { NORMAL } from "visual/utils/stateMode";
 import { capByPrefix } from "visual/utils/string";
-import { BackgroundImage, Patch, Value } from "../types";
-import { PopulationColor, getPopulationColor } from "../utils/dependencies";
+import type { BackgroundImage, Patch, Value } from "../types";
+import {
+  getPopulationColor,
+  type PopulationColor
+} from "../utils/dependencies";
 import { ColorOption } from "./types";
 import { colorValues, gradientValues } from "./utils";
 
@@ -470,7 +473,7 @@ const getColorToolbar = (
     color
   } = v;
 
-  let backgroundColor;
+  let backgroundColor: string | undefined;
 
   const dvv = (k: string) => defaultValueValue({ v, key: k, device });
 

@@ -22,7 +22,7 @@ export const parseJSON = <T>(
 ): Promise<ResponseWithBody<T>> => {
   return response
     .json()
-    .then(body => ({
+    .then((body) => ({
       status: response.status,
       ok: response.ok,
       data: body || null

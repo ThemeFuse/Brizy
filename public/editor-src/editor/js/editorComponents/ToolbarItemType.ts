@@ -1,24 +1,24 @@
 import { Obj } from "@brizy/readers";
-import { ComponentProps } from "react";
-import {
+import type { ComponentProps } from "react";
+import type {
   OptionMeta,
   OptionName,
   OptionTypes,
   OptionValue
 } from "visual/component/Options/types";
-import { UserRole } from "visual/types";
-import {
+import type { UserRole } from "visual/types";
+import type {
   WithClassName,
   WithHelper,
   WithId,
   WithLabel,
   WithPopulation
 } from "visual/types/attributes";
-import { OptionStyle } from "visual/utils/cssStyle/types";
-import { Device } from "visual/utils/devices";
-import { Disabled } from "visual/utils/disabled";
-import { State } from "visual/utils/stateMode";
-import { MValue } from "visual/utils/value";
+import type { OptionStyle } from "visual/utils/cssStyle/types";
+import type { Device } from "visual/utils/devices";
+import type { Disabled } from "visual/utils/disabled";
+import type { State } from "visual/utils/stateMode";
+import type { MValue } from "visual/utils/value";
 
 export type GenericToolbarItemType<K extends OptionName> = WithId<string> &
   WithLabel &

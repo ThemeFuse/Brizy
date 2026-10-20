@@ -1,6 +1,6 @@
 import classNames from "classnames";
 import React, { forwardRef } from "react";
-import { MessageStatus } from "../types";
+import type { MessageStatus } from "../types";
 
 export interface Props {
   status: MessageStatus;

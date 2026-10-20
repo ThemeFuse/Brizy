@@ -20,7 +20,7 @@ export function cssStyleBorder({
   let borderRightWidth = 0;
   let borderBottomWidth = 0;
   let borderLeftWidth = 0;
-  let borderWidthType = styleBorderWidthType({ v, device, state, prefix });
+  const borderWidthType = styleBorderWidthType({ v, device, state, prefix });
 
   let hoverBorderWidthType = "";
   let hoverBorderTopWidth = 0;
@@ -196,5 +196,13 @@ export function cssStyleBorderTransparentColor({
   borderColor = "transparent",
   getConfig
 }) {
-  return cssStyleBorder({ v, device, state, store, prefix, borderColor,getConfig });
+  return cssStyleBorder({
+    v,
+    device,
+    state,
+    store,
+    prefix,
+    borderColor,
+    getConfig
+  });
 }

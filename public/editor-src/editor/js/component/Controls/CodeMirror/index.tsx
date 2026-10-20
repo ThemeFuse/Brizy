@@ -1,7 +1,7 @@
 import loadable from "@loadable/component";
-import React, { ReactElement } from "react";
+import React, { type ReactElement } from "react";
 import { LoadableLoading } from "visual/component/LoadableLoading";
-import { Props } from "./types";
+import type { Props } from "./types";
 
 const LazyCodeMirror = loadable(
   () => import(/* webpackChunkName: "codemirror" */ "./CodeMirrorImpl"),

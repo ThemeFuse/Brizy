@@ -1,8 +1,12 @@
-import { Store } from "visual/redux/store";
-import { FontStyle } from "visual/types/Style";
+import type { Store } from "visual/redux/store";
+import type { FontStyle } from "visual/types/Style";
+import type { KnownKeys } from "visual/utils/types/KnownKeys";
 import { getFontById } from "./getFontById";
 
-const generateStyles = (style: Omit<FontStyle, "id">, store: Store) => {
+const generateStyles = (
+  style: Omit<KnownKeys<FontStyle>, "id">,
+  store: Store
+) => {
   const {
     fontFamily,
     fontFamilyType,

@@ -1,5 +1,5 @@
-import { ConfigTab as PromptFormTab } from "visual/component/Prompts/PromptForm/types";
-import { FormField } from "visual/component/Prompts/common/GlobalApps/type";
+import type { FormField } from "visual/component/Prompts/common/GlobalApps/type";
+import type { ConfigTab as PromptFormTab } from "visual/component/Prompts/PromptForm/types";
 
 export type PromptIconProps = {
   name: string;

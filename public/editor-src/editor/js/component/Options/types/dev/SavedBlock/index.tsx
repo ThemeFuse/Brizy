@@ -1,17 +1,17 @@
-import React, { ReactElement, useEffect, useRef, useState } from "react";
+import React, { type ReactElement, useEffect, useRef, useState } from "react";
 import { shallowEqual, useSelector } from "react-redux";
 import { SavedBlock as Control } from "visual/component/Controls/SavedBlock";
 import { ToastNotification } from "visual/component/Notifications";
-import Prompts, { PromptsProps } from "visual/component/Prompts";
+import Prompts, { type PromptsProps } from "visual/component/Prompts";
 import { useConfig } from "visual/providers/ConfigProvider";
 import {
   extraFontStylesSelector,
   pageDataNoRefsSelector
 } from "visual/redux/selectors";
-import { ReduxState } from "visual/redux/types";
+import type { ReduxState } from "visual/redux/types";
 import { t } from "visual/utils/i18n";
 import { getWhiteLabel } from "visual/utils/whiteLabel";
-import { Component, Selector } from "./types";
+import type { Component, Selector } from "./types";
 import { getBlock, handleCreateSaveBlock, isError, isWarn } from "./utils";
 
 const selector = (state: ReduxState): Selector => ({

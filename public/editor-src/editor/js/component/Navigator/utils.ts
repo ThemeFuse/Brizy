@@ -1,6 +1,6 @@
-import { Modifier } from "@dnd-kit/core";
+import type { Modifier } from "@dnd-kit/core";
 import { clamp } from "es-toolkit/compat";
-import { Component, RefObject } from "react";
+import type { Component, RefObject } from "react";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import UIEvents, { UIEventType } from "visual/global/UIEvents";
 import { getComponentId } from "visual/utils/models/path";
@@ -26,8 +26,8 @@ export const createRestrictToTopWindowEdges = (
     try {
       topWindow =
         typeof window !== "undefined" ? (window.top ?? window) : undefined;
-      /* eslint-disable-next-line @typescript-eslint/no-unused-expressions */
-      topWindow && topWindow.innerWidth; // cross-origin safety check
+      /* biome-ignore lint/suspicious/noUnusedExpressions: migrated from eslint */
+      topWindow?.innerWidth; // cross-origin safety check
     } catch {
       topWindow = undefined;
     }

@@ -1,8 +1,11 @@
-import { GetCollectionItem_collectionItem as CollectionItem } from "visual/global/Config/types/GetCollectionItem";
-import { EcwidCategoryId, EcwidProductId } from "visual/global/Ecwid/types";
-import { Block, BlockHtml } from "./Block";
-import { Layout } from "./Layout";
-import { Rule } from "./Rule";
+import type { GetCollectionItem_collectionItem as CollectionItem } from "visual/global/Config/types/GetCollectionItem";
+import type {
+  EcwidCategoryId,
+  EcwidProductId
+} from "visual/global/Ecwid/types";
+import type { Block, BlockHtml } from "./Block";
+import type { Layout } from "./Layout";
+import type { Rule } from "./Rule";
 
 //#region Page
 
@@ -12,7 +15,8 @@ export interface DataCommon {
   data: {
     items: Block[];
     editorVersion?: string;
-    [k: string]: any; // eslint-disable-line @typescript-eslint/no-explicit-any
+    // biome-ignore lint/suspicious/noExplicitAny: migrated from eslint
+    [k: string]: any;
   };
   dataVersion: number;
   status: "draft" | "publish" | "future" | "private"; // The future status is used for scheduled pages .

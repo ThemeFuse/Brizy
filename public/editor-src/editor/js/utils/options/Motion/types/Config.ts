@@ -1,4 +1,4 @@
-import { Effect } from "./Value";
+import type { Effect } from "./Value";
 
 export interface Config {
   disabled?: Effect[];

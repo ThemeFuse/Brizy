@@ -19,7 +19,7 @@ class SectionMegaMenuItems extends EditorArrayComponent {
     return "SectionMegaMenu.Items";
   }
 
-  getItemProps(itemData, itemIndex) {
+  getItemProps(_itemData, itemIndex) {
     const cloneRemoveConfig = {
       getItems: () => [
         {

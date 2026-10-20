@@ -1,6 +1,6 @@
+import type { OptionDefinition } from "visual/editorComponents/ToolbarItemType";
 import { t } from "visual/utils/i18n";
-import { Color } from "./types";
-import { OptionDefinition } from "visual/editorComponents/ToolbarItemType";
+import type { Color } from "./types";
 
 export const getToolbarItems = (
   value: Color,

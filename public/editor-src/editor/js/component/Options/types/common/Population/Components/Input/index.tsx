@@ -1,7 +1,7 @@
 import React from "react";
 import { Popover } from "visual/component/Controls/Popover";
 import EditorIcon from "visual/component/EditorIcon";
-import { FCC } from "visual/utils/react/types";
+import type { FCC } from "visual/utils/react/types";
 
 export type Props = {
   value: string;

@@ -1,10 +1,10 @@
 import { Num } from "@brizy/readers";
-import { ElementModel } from "visual/component/Elements/Types";
+import type { ElementModel } from "visual/component/Elements/Types";
 import { getColor } from "visual/utils/color";
 import { defaultValueValue } from "visual/utils/onChange";
 import { styleState } from "visual/utils/style";
-import { State } from "../stateMode";
-import { CSSValue } from "../style2/types";
+import type { State } from "../stateMode";
+import type { CSSValue } from "../style2/types";
 import { cssStyleColor } from "./cssStyleColor";
 
 const getState = (v: ElementModel, state: State): State =>

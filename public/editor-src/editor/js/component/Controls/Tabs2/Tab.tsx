@@ -1,7 +1,8 @@
-import React, { PropsWithChildren, ReactElement } from "react";
-import { WithClassName, WithValue } from "visual/types/attributes";
+import React, { type PropsWithChildren, type ReactElement } from "react";
+import type { WithClassName, WithValue } from "visual/types/attributes";
+import type { Literal } from "visual/utils/types/Literal";
 
-export type Props<T> = WithClassName &
+export type Props<T extends Literal> = WithClassName &
   WithValue<T> &
   PropsWithChildren<unknown> & {
     title?: string;
@@ -9,6 +10,6 @@ export type Props<T> = WithClassName &
     icon?: string;
   };
 
-export function Tab<T>({ children }: Props<T>): ReactElement {
+export function Tab<T extends Literal>({ children }: Props<T>): ReactElement {
   return <>{children}</>;
 }

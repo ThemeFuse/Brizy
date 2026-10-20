@@ -1,6 +1,6 @@
 import { Literal } from "visual/utils/types/Literal";
-import { valueChoices, searchChoices, mergeChoices } from "./utils";
 import { ChoicesSync } from "./types";
+import { mergeChoices, searchChoices, valueChoices } from "./utils";
 
 test.each<[Literal[], ChoicesSync, ChoicesSync]>([
   [
@@ -42,7 +42,7 @@ test.each<[Literal[], ChoicesSync, ChoicesSync]>([
     ],
     []
   ]
-])("Testing 'valueChoices' function", function(value, choices, expected) {
+])("Testing 'valueChoices' function", function (value, choices, expected) {
   expect(valueChoices(value, choices)).toEqual(expected);
 });
 
@@ -90,7 +90,7 @@ test.each<[string, ChoicesSync, ChoicesSync]>([
     ],
     [{ title: "Donkey", value: "donkey" }]
   ]
-])("Testing 'searchChoices' function", function(search, choices, expected) {
+])("Testing 'searchChoices' function", function (search, choices, expected) {
   expect(searchChoices(search, choices)).toEqual(expected);
 });
 
@@ -126,13 +126,12 @@ test.each<[ChoicesSync, ChoicesSync, ChoicesSync]>([
       { title: "c", value: "c" }
     ]
   ]
-])("Testing 'mergeChoices' function (2 args)", function(
-  choicesA,
-  choicesB,
-  expected
-) {
-  expect(mergeChoices(choicesA, choicesB)).toEqual(expected);
-});
+])(
+  "Testing 'mergeChoices' function (2 args)",
+  function (choicesA, choicesB, expected) {
+    expect(mergeChoices(choicesA, choicesB)).toEqual(expected);
+  }
+);
 
 test.each<[ChoicesSync, ChoicesSync, ChoicesSync, ChoicesSync]>([
   [[], [], [], []],
@@ -171,11 +170,9 @@ test.each<[ChoicesSync, ChoicesSync, ChoicesSync, ChoicesSync]>([
       { title: "d", value: "d" }
     ]
   ]
-])("Testing 'mergeChoices' function (3 args)", function(
-  choicesA,
-  choicesB,
-  choicesC,
-  expected
-) {
-  expect(mergeChoices(choicesA, choicesB, choicesC)).toEqual(expected);
-});
+])(
+  "Testing 'mergeChoices' function (3 args)",
+  function (choicesA, choicesB, choicesC, expected) {
+    expect(mergeChoices(choicesA, choicesB, choicesC)).toEqual(expected);
+  }
+);

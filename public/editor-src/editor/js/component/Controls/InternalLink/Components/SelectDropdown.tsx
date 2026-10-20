@@ -1,8 +1,8 @@
 import classNames from "classnames";
-import React, { ForwardedRef, ReactElement, useEffect } from "react";
+import React, { type ForwardedRef, type ReactElement, useEffect } from "react";
 import { Scrollbar } from "visual/component/Scrollbar";
 import { Search } from "./Search";
-import { SelectDropdownProps } from "./types";
+import type { SelectDropdownProps } from "./types";
 
 const SelectDropdownComponent = (
   {
@@ -15,12 +15,12 @@ const SelectDropdownComponent = (
   }: SelectDropdownProps,
   ref: ForwardedRef<HTMLDivElement>
 ): ReactElement => {
+  // biome-ignore lint/correctness/useExhaustiveDependencies: migrated from eslint
   useEffect(() => {
     return (): void => {
       onSearchChange?.("");
     };
     // onSearchChange dependency is not nedded
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const className = classNames(

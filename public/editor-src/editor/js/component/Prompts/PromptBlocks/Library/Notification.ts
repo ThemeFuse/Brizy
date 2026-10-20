@@ -1,11 +1,11 @@
 import { ToastNotification } from "visual/component/Notifications";
-import {
+import type {
   SavedBlockImport,
   SavedLayoutImport
 } from "visual/global/Config/types/configs/blocks/SavedBlocks";
-import { SavedBlock, SavedLayout } from "visual/types";
+import type { SavedBlock, SavedLayout } from "visual/types";
 import { isSavedBlock, isSavedLayout, isSavedPopup } from "visual/types/utils";
-import { BlockTypes } from "../types";
+import type { BlockTypes } from "../types";
 
 type Data = SavedBlockImport | SavedLayoutImport;
 

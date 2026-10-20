@@ -1,4 +1,4 @@
-import { ElementModel } from "visual/component/Elements/Types";
+import type { ElementModel } from "visual/component/Elements/Types";
 import { isStory } from "visual/providers/EditorModeProvider";
 import {
   addBreakpointForInterval,
@@ -8,7 +8,7 @@ import {
 import { DESKTOP, MOBILE, TABLET } from "visual/utils/responsiveMode";
 import { HOVER, NORMAL } from "visual/utils/stateMode";
 import * as _onStyles from "./index";
-import {
+import type {
   AssignStyleData,
   CSSOutputData,
   CSSOutputResult,
@@ -86,12 +86,9 @@ function loopStyles<T extends ElementModel = ElementModel>({
   getLoopCases(isStoryMode).forEach(({ device, state }) => {
     const isDesktop = device === DESKTOP;
 
-    Object.entries(styles).forEach(function ([selector, styleValue]) {
-      Object.entries(styleValue).forEach(function ([
-        styleKeyKey,
-        styleValueValue
-      ]) {
-        styleValueValue.forEach(function (cssStyleFn) {
+    Object.entries(styles).forEach(([selector, styleValue]) => {
+      Object.entries(styleValue).forEach(([styleKeyKey, styleValueValue]) => {
+        styleValueValue.forEach((cssStyleFn) => {
           const { styleFn, mode } = getCssStyleFnAndMode(cssStyleFn);
 
           const desktopCustomCSS = onStyles[styleFn]({
@@ -351,20 +348,17 @@ function cssOutput<T extends ElementModel = ElementModel>({
         modelType === "default"
           ? ({} as GeneratorCSSObject)
           : modelType === "rules"
-            ? cssData["default"]
+            ? cssData.default
             : modelType === "custom"
-              ? cssData["rules"]
+              ? cssData.rules
               : undefined;
 
       if (currentCSSData[state]) {
-        Object.entries(currentCSSData[state]).forEach(function ([
-          className,
-          type
-        ]) {
+        Object.entries(currentCSSData[state]).forEach(([className, type]) => {
           goStandart = "";
           goInterval = "";
 
-          Object.entries(type).forEach(function ([typeKey, cssArray]) {
+          Object.entries(type).forEach(([typeKey, cssArray]) => {
             let css = cssArray[device];
 
             const previousModelStyle =
@@ -397,7 +391,7 @@ function cssOutput<T extends ElementModel = ElementModel>({
                 : "";
           });
 
-          let key;
+          let key: string;
           if (state === "normal") {
             key = `${className.replace(":hover", "")}{`;
           } else {
@@ -405,11 +399,11 @@ function cssOutput<T extends ElementModel = ElementModel>({
           }
 
           if (goStandart !== "") {
-            gooutStandart += key + goStandart + "}";
+            gooutStandart += `${key + goStandart}}`;
           }
 
           if (goInterval !== "") {
-            gooutInterval += key + goInterval + "}";
+            gooutInterval += `${key + goInterval}}`;
           }
         });
       }

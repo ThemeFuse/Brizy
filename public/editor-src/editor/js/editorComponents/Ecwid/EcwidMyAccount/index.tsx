@@ -1,6 +1,6 @@
 import classNames from "classnames";
 import { uniqueId } from "es-toolkit/compat";
-import React, { ReactNode, createRef } from "react";
+import React, { createRef, type ReactNode } from "react";
 import CustomCSS from "visual/component/CustomCSS";
 import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
@@ -38,7 +38,7 @@ import * as toolbarProducts from "./toolbarProducts";
 import * as toolbarShopTitle from "./toolbarShopTitle";
 import * as toolbarTerms from "./toolbarTerms";
 import * as toolbarUser from "./toolbarUser";
-import { Value } from "./types/Value";
+import type { Value } from "./types/Value";
 import { valueToEciwdConfig } from "./utils";
 
 export class EcwidMyAccount extends EditorComponent<Value> {
@@ -235,8 +235,10 @@ export class EcwidMyAccount extends EditorComponent<Value> {
                                                               selectorSearchStrategy="dom-tree"
                                                             >
                                                               {({
-                                                                open: openAgreement,
-                                                                ref: agreementRef
+                                                                open:
+                                                                  openAgreement,
+                                                                ref:
+                                                                  agreementRef
                                                               }) => {
                                                                 return (
                                                                   <Toolbar
@@ -244,16 +246,17 @@ export class EcwidMyAccount extends EditorComponent<Value> {
                                                                       toolbarButton,
                                                                       sidebarButton,
                                                                       {
-                                                                        allowExtend:
-                                                                          false
+                                                                        allowExtend: false
                                                                       }
                                                                     )}
                                                                     selector=".form-control__button"
                                                                     selectorSearchStrategy="dom-tree"
                                                                   >
                                                                     {({
-                                                                      open: openButton,
-                                                                      ref: buttonRef
+                                                                      open:
+                                                                        openButton,
+                                                                      ref:
+                                                                        buttonRef
                                                                     }) => {
                                                                       return (
                                                                         <Toolbar
@@ -265,8 +268,10 @@ export class EcwidMyAccount extends EditorComponent<Value> {
                                                                           selectorSearchStrategy="dom-tree"
                                                                         >
                                                                           {({
-                                                                            open: openFooter,
-                                                                            ref: footerRef
+                                                                            open:
+                                                                              openFooter,
+                                                                            ref:
+                                                                              footerRef
                                                                           }) => {
                                                                             return (
                                                                               <Toolbar
@@ -278,8 +283,10 @@ export class EcwidMyAccount extends EditorComponent<Value> {
                                                                                 selectorSearchStrategy="dom-tree"
                                                                               >
                                                                                 {({
-                                                                                  open: openEmpty,
-                                                                                  ref: emptyRef
+                                                                                  open:
+                                                                                    openEmpty,
+                                                                                  ref:
+                                                                                    emptyRef
                                                                                 }) => {
                                                                                   return (
                                                                                     <Toolbar
@@ -291,8 +298,10 @@ export class EcwidMyAccount extends EditorComponent<Value> {
                                                                                       selectorSearchStrategy="dom-tree"
                                                                                     >
                                                                                       {({
-                                                                                        open: openTerms,
-                                                                                        ref: termsRef
+                                                                                        open:
+                                                                                          openTerms,
+                                                                                        ref:
+                                                                                          termsRef
                                                                                       }) => {
                                                                                         return (
                                                                                           <CustomCSS
@@ -302,7 +311,8 @@ export class EcwidMyAccount extends EditorComponent<Value> {
                                                                                             }
                                                                                           >
                                                                                             {({
-                                                                                              ref: cssRef
+                                                                                              ref:
+                                                                                                cssRef
                                                                                             }) => (
                                                                                               <Wrapper
                                                                                                 {...this.makeWrapperProps(

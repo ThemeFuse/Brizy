@@ -54,7 +54,6 @@
     "paragraphUppercase": false,
     "paragraphLowercase": false,
 
-
     "h1FontStyle": "heading1",
     "h1FontFamilyType": "google",
     "h1FontSize": 16,
@@ -71,7 +70,6 @@
     "h1Strike": false,
     "h1Uppercase": false,
     "h1Lowercase": false,
-
 
     "h2FontStyle": "heading2",
     "h2FontFamilyType": "google",

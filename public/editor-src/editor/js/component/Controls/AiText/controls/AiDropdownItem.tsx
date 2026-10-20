@@ -1,9 +1,9 @@
-import { Spacing } from "@brizy/ui/es/Space/utils";
-import React, { ReactElement, useCallback } from "react";
+import type { Spacing } from "@brizy/ui/es/Space/utils";
+import React, { type ReactElement, useCallback } from "react";
 import { Button } from "visual/component/Brizy-ui/Button";
 import { Space } from "visual/component/Brizy-ui/Space";
 import { TypographyText } from "visual/component/Brizy-ui/Typography";
-import { DropdownOption } from "../types";
+import type { DropdownOption } from "../types";
 
 const spaceSpacing: Spacing = [5, 10];
 

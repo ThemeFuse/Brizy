@@ -1,8 +1,8 @@
 import { match, parse } from "fp-utilities";
-import { Block as APIGlobalBlock } from "visual/global/Config/types/configs/blocks/GlobalBlocks";
-import { SavedBlock, SavedLayout } from "visual/types";
-import { GlobalBlock } from "visual/types/GlobalBlock";
-import {
+import type { Block as APIGlobalBlock } from "visual/global/Config/types/configs/blocks/GlobalBlocks";
+import type { SavedBlock, SavedLayout } from "visual/types";
+import type { GlobalBlock } from "visual/types/GlobalBlock";
+import type {
   AllRule,
   CollectionItemRule,
   CollectionTypeRule,
@@ -23,7 +23,7 @@ import {
 } from "visual/utils/traverse";
 import { getUsedModelsImages } from "visual/utils/traverse/images";
 import { onNullish } from "visual/utils/value";
-import { BlogSourceItem } from "./types";
+import type { BlogSourceItem } from "./types";
 
 //#region Saved blocks | Saved layout
 
@@ -46,7 +46,7 @@ export const makeBlockMeta = (
 
   // Added only font upload
   [...fonts, ...fontsStyles].forEach(({ family, type }) => {
-    type === "upload" && fontsSet.add(family);
+    if (type === "upload") fontsSet.add(family);
   });
 
   return { images, uploads, fonts: [...fontsSet] };

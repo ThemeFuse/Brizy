@@ -1,13 +1,13 @@
 import { t } from "visual/utils/i18n";
-import { FCC } from "visual/utils/react/types";
-import { MValue } from "visual/utils/value";
+import type { FCC } from "visual/utils/react/types";
+import type { MValue } from "visual/utils/value";
 import { Flip } from "./components/Flip";
 import { Offset } from "./components/Offset";
 import { Rotate } from "./components/Rotate";
 import { Scale } from "./components/Scale";
 import { Skew } from "./components/Skew";
-import { EffectProps } from "./types/EffectProps";
-import { Effect, EffectValue } from "./types/Value";
+import type { EffectProps } from "./types/EffectProps";
+import type { Effect, EffectValue } from "./types/Value";
 
 type TransformComponent = FCC<EffectProps<EffectValue<Effect>>>;
 

@@ -1,5 +1,5 @@
-import { ComponentType } from "react";
-import { DeviceMode } from "visual/types";
+import type { ComponentType } from "react";
+import type { DeviceMode } from "visual/types";
 
 export interface DynamicContentProps {
   placeholder: string;

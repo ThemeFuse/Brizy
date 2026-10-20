@@ -1,8 +1,8 @@
 import { Str } from "@brizy/readers";
-import { EcwidProductId, EcwidStoreId } from "visual/global/Ecwid/types";
+import type { EcwidProductId, EcwidStoreId } from "visual/global/Ecwid/types";
 import { EcwidService } from "visual/libs/Ecwid";
-import { EcwidConfig } from "visual/libs/Ecwid/types/EcwidConfig";
-import { ExportFunction } from "visual/types";
+import type { EcwidConfig } from "visual/libs/Ecwid/types/EcwidConfig";
+import type { ExportFunction } from "visual/types";
 import { getEcwidShopPathFromAttribute } from "visual/utils/ecwid";
 import { makeAttr } from "visual/utils/i18n/attribute";
 import * as Num from "visual/utils/reader/number";
@@ -14,8 +14,8 @@ import {
   textFieldSelector
 } from "./utils";
 
-export const fn: ExportFunction = ($node) => {
-  $node.find(".brz-ecwid-product").each((_, node) => {
+export const fn: ExportFunction = (root) => {
+  root.querySelectorAll<HTMLElement>(".brz-ecwid-product").forEach((node) => {
     const storeId = node.getAttribute("data-store-id") as EcwidStoreId | null;
     const config = Str.read(node.getAttribute("data-storefront"));
     const cfg = config ? parseFromString<EcwidConfig>(config) : {};

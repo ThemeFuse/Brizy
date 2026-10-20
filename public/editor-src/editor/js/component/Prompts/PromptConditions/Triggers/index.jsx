@@ -129,7 +129,7 @@ class Triggers extends React.Component {
 
   getAvailableItems(currentId) {
     const { values } = this.state;
-    let currentDuplicatesAmount = values.reduce((acc, { id }) => {
+    const currentDuplicatesAmount = values.reduce((acc, { id }) => {
       if (!acc[id]) {
         acc[id] = 1;
       } else {
@@ -184,8 +184,8 @@ class Triggers extends React.Component {
     const { values } = this.state;
     const currentId = values[index].id;
     const triggersList = this.getAvailableItems(currentId).map(
-      ({ id, title }, index) => (
-        <SelectItem key={index} value={id} title={title}>
+      ({ id, title }) => (
+        <SelectItem key={id} value={id} title={title}>
           {title}
         </SelectItem>
       )
@@ -223,6 +223,7 @@ class Triggers extends React.Component {
       return (
         <ItemWrapper
           showTypeButton={false}
+          // biome-ignore lint/suspicious/noArrayIndexKey: trigger ids repeat by design (duplicatesAmount) and rows are edited/removed by index
           key={index}
           active={trigger.active}
           onChange={(value) => this.handleWrapperTriggerChange(index, value)}

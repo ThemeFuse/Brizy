@@ -1,6 +1,6 @@
-import React, { ReactElement } from "react";
-import { Literal } from "visual/utils/types/Literal";
-import { MultiSelectItemProps as Props } from "./types";
+import React, { type ReactElement } from "react";
+import type { Literal } from "visual/utils/types/Literal";
+import type { MultiSelectItemProps as Props } from "./types";
 
 export function MultiSelectItem<T extends Literal>(
   props: Props<T>

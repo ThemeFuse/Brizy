@@ -1,11 +1,11 @@
 import { Obj, Str } from "@brizy/readers";
-import React, { ForwardedRef, forwardRef } from "react";
+import React, { type ForwardedRef, forwardRef } from "react";
 import { CheckGroupItem as CheckboxControlsItem } from "visual/component/Controls/CheckGroup/CheckGroupItem";
 import { TextEditor } from "visual/component/Controls/TextEditor";
 import EditorIcon from "visual/component/EditorIcon";
 import Link from "visual/component/Link";
 import { isUserAgreementCheckbox } from "visual/editorComponents/Form2/utils";
-import { CheckboxItemProps } from "./type";
+import type { CheckboxItemProps } from "./type";
 
 function Item(props: CheckboxItemProps, ref: ForwardedRef<HTMLDivElement>) {
   const {

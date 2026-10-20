@@ -1,5 +1,5 @@
-import { SavedBlock, SavedLayout } from "visual/types";
-import { Response } from "../common";
+import type { SavedBlock, SavedLayout } from "visual/types";
+import type { Response } from "../common";
 
 //#region Base Saved Block
 

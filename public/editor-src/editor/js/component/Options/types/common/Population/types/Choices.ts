@@ -1,4 +1,4 @@
-import { Literal } from "visual/utils/types/Literal";
+import type { Literal } from "visual/utils/types/Literal";
 
 export interface Choices<T extends Literal> {
   value: T;

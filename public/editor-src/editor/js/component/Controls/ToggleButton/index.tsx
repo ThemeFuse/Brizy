@@ -1,9 +1,9 @@
 import classNames from "classnames";
-import React from "react";
+import React, { type ReactNode } from "react";
 import EditorIcon from "visual/component/EditorIcon";
-import { Props } from "./types";
+import type { FCC } from "visual/utils/react/types";
+import type { Props } from "./types";
 import { getButtonClassName } from "./utils";
-import { FCC } from "visual/utils/react/types";
 
 export const ToggleButton: FCC<Props> = ({
   value,
@@ -16,7 +16,7 @@ export const ToggleButton: FCC<Props> = ({
   icon,
   title,
   onClick
-}): JSX.Element => {
+}): ReactNode => {
   const _buttonStyle = getButtonClassName({ type, value, reverseTheme });
 
   const _className = classNames(
@@ -34,7 +34,5 @@ export const ToggleButton: FCC<Props> = ({
         {children && <span className="brz-ed-control__label">{children}</span>}
       </div>
     </>
-  ) : (
-    <></>
-  );
+  ) : null;
 };

@@ -1,6 +1,6 @@
-import { FromElementModelGetter } from "visual/component/Options/Type";
+import type { FromElementModelGetter } from "visual/component/Options/Type";
 import { t } from "visual/utils/i18n";
-import { Effect } from "./types/Value";
+import type { Effect } from "./types/Value";
 
 export const effectIcon = (effect: Effect): string => {
   switch (effect) {

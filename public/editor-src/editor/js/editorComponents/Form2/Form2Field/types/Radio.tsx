@@ -3,7 +3,7 @@ import RadioControls from "visual/component/Controls/Radio";
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import { AddOption } from "./common/AddOption";
 import TextField from "./common/TextField";
-import { RadioProps } from "./type";
+import type { RadioProps } from "./type";
 import { createNewFieldOption } from "./utils";
 
 export default class Radio extends TextField {

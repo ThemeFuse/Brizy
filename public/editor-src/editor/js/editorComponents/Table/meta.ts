@@ -1,22 +1,22 @@
+import type { ElementModel } from "visual/component/Elements/Types";
+import { getPadding } from "visual/utils/meta";
 import {
+  DESKTOP,
+  MOBILE,
+  type ResponsiveMode,
+  TABLET
+} from "visual/utils/responsiveMode";
+import type { State } from "visual/utils/stateMode";
+import {
+  styleBorderWidthGrouped,
   styleBorderWidthType,
+  styleBorderWidthUngrouped,
   styleElementTableAside,
   styleElementTableAsideWidth,
   styleElementTableColumns,
   styleElementTableWidth,
-  stylePaddingType,
-  styleBorderWidthGrouped,
-  styleBorderWidthUngrouped
+  stylePaddingType
 } from "visual/utils/style2";
-import { getPadding } from "visual/utils/meta";
-import {
-  ResponsiveMode,
-  DESKTOP,
-  TABLET,
-  MOBILE
-} from "visual/utils/responsiveMode";
-import { State } from "visual/utils/stateMode";
-import { ElementModel } from "visual/component/Elements/Types";
 
 type Meta = {
   desktopW: number;

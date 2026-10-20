@@ -1,4 +1,4 @@
-import { Hex } from "visual/utils/color/Hex";
+import type { Hex } from "visual/utils/color/Hex";
 
 export type Value<P, O> = {
   hex: Hex;

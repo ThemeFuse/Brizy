@@ -1,9 +1,9 @@
-import React, { JSXElementConstructor, useCallback, useMemo } from "react";
-import { OnChange } from "visual/component/Options/Type";
+import React, { type JSXElementConstructor, useCallback, useMemo } from "react";
+import type { OnChange } from "visual/component/Options/Type";
 import { t } from "visual/utils/i18n";
-import { EffectProps } from "visual/utils/options/Motion/types/EffectProps";
-import { MouseTrack as V } from "visual/utils/options/Motion/types/MouseTrack";
-import { Direction, Props } from "./Direction";
+import type { EffectProps } from "visual/utils/options/Motion/types/EffectProps";
+import type { MouseTrack as V } from "visual/utils/options/Motion/types/MouseTrack";
+import { Direction, type Props } from "./Direction";
 import { UnitSlider } from "./UnitSlider";
 
 export const MouseTrack: JSXElementConstructor<EffectProps<V>> = ({

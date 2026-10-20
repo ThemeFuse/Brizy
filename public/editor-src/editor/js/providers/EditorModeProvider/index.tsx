@@ -1,6 +1,6 @@
-import React, { ReactNode, useMemo } from "react";
+import React, { type ReactNode, useMemo } from "react";
 import {
-  EditorMode,
+  type EditorMode,
   EditorModeContext,
   isPopup,
   isStory

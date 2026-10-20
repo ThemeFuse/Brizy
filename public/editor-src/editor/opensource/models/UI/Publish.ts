@@ -1,5 +1,9 @@
-import { Response } from "../common";
-import { Output, PageDataOutput, ProjectDataOutput } from "../common/Output";
+import type { Response } from "../common";
+import type {
+  Output,
+  PageDataOutput,
+  ProjectDataOutput
+} from "../common/Output";
 
 export interface PublishData {
   projectData?: ProjectDataOutput;

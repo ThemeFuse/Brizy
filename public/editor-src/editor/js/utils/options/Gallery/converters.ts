@@ -1,8 +1,8 @@
-import {
+import type {
   FromElementModel,
   ToElementModel
 } from "visual/component/Options/Type";
-import { Image } from "visual/component/Options/types/dev/Gallery/types/Image";
+import type { Image } from "visual/component/Options/types/dev/Gallery/types/Image";
 import { mPipe, pass, pipe } from "visual/utils/fp";
 import { callGetter } from "visual/utils/options/utils/wrap";
 import * as Json from "visual/utils/reader/json";

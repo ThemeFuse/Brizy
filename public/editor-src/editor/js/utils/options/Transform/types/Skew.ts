@@ -1,7 +1,7 @@
 import { or, parseStrict } from "fp-utilities";
 import * as Degree from "visual/component/Controls/Transform/Degree";
-import { Skew } from "visual/component/Controls/Transform/types/Skew";
-import { FromElementModelGetter } from "visual/component/Options/Type";
+import type { Skew } from "visual/component/Controls/Transform/types/Skew";
+import type { FromElementModelGetter } from "visual/component/Options/Type";
 import { always, mPipe } from "visual/utils/fp";
 import * as Num from "visual/utils/math/number";
 import { callGetter } from "visual/utils/options/utils/wrap";

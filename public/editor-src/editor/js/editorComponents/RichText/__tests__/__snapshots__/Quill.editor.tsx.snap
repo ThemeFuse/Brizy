@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`the text element's markup in the editor tags a line that already has an id 1`] = `"<p class="brz-tp-lg-paragraph" data-uniq-id="abcde" data-generated-css="brz-css-1wkli4b">Text</p>"`;
+
+exports[`the text element's markup in the editor tags a line without classes 1`] = `"<p data-generated-css="brz-css-1r99e7m" data-uniq-id="uid1">Tom &amp; Jerry&nbsp;&lt;3 <br>é 😀</p>"`;
+
+exports[`the text element's markup in the editor tags a paragraph 1`] = `"<p class="brz-tp-lg-paragraph brz-text-lg-center" data-generated-css="brz-css-dqzu38" data-uniq-id="uid1"><span class="brz-cp-color7">Text</span></p>"`;
+
+exports[`the text element's markup in the editor tags a preformatted block 1`] = `"<pre class="brz-tp-lg-paragraph" data-generated-css="brz-css-1wkli4b" data-uniq-id="uid1">code</pre>"`;
+
+exports[`the text element's markup in the editor tags an empty text 1`] = `""`;
+
+exports[`the text element's markup in the editor tags dynamic content blocks 1`] = `"<div class="brz-tp__dc-block brz-tp-lg-paragraph" data-generated-css="brz-css-1wkli4b" data-uniq-id="uid1"><span>{{post}}</span></div><div data-generated-css="brz-css-1r99e7m" data-uniq-id="uid2"><div class="brz-tp-lg-heading1" data-generated-css="brz-css-1s508a2" data-uniq-id="uid3">in</div></div>"`;
+
+exports[`the text element's markup in the editor tags every heading level 1`] = `"<h1 class="brz-tp-lg-heading1" data-generated-css="brz-css-1s508a2" data-uniq-id="uid1">1</h1><h2 class="brz-tp-lg-heading2" data-generated-css="brz-css-1cucf8n" data-uniq-id="uid2">2</h2><h3 class="brz-tp-lg-heading3" data-generated-css="brz-css-1j5auji" data-uniq-id="uid3">3</h3><h4 class="brz-tp-lg-heading4" data-generated-css="brz-css-czo1bm" data-uniq-id="uid4">4</h4><h5 class="brz-tp-lg-heading5" data-generated-css="brz-css-pv0qmx" data-uniq-id="uid5">5</h5><h6 class="brz-tp-lg-heading6" data-generated-css="brz-css-1tsge7m" data-uniq-id="uid6">6</h6>"`;
+
+exports[`the text element's markup in the editor tags heading tags outside h1 to h6 1`] = `"<h0 class="brz-tp-lg-heading1" data-generated-css="brz-css-1s508a2" data-uniq-id="uid1">0</h0><h7 class="brz-tp-lg-heading2" data-generated-css="brz-css-1cucf8n" data-uniq-id="uid2">7</h7><h9 data-generated-css="brz-css-1r99e7m" data-uniq-id="uid3">9</h9>"`;
+
+exports[`the text element's markup in the editor tags list items 1`] = `"<ul><li class="brz-tp-lg-paragraph" data-generated-css="brz-css-1wkli4b" data-uniq-id="uid1">a</li><li data-generated-css="brz-css-1r99e7m" data-uniq-id="uid2">b</li></ul><ol><li class="brz-tp-lg-heading3" data-generated-css="brz-css-1j5auji" data-uniq-id="uid3">c</li></ol>"`;
+
+exports[`the text element's markup in the editor tags text outside any line 1`] = `"lead <span>only</span> tail"`;
+
+exports[`the text element's markup in the editor tags tooltip spans 1`] = `"<p class="brz-tp-lg-paragraph" data-generated-css="brz-css-1wkli4b" data-uniq-id="uid1"><span data-tooltip="%7B%7D">a</span><span data-brz-tooltip="%7B%7D">b</span><span class="plain">c</span></p>"`;

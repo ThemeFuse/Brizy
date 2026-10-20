@@ -1,11 +1,11 @@
-import { MValue } from "visual/utils/value";
+import type { MValue } from "visual/utils/value";
 
 const rgx = /\.[^.]+$/;
 
 export const getFileFormat = (src: string): MValue<string> => {
   const result = rgx.exec(src);
 
-  if (!result || !result.length) {
+  if (!result?.length) {
     return undefined;
   }
 

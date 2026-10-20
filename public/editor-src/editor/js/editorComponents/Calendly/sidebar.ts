@@ -1,5 +1,5 @@
 import { t } from "visual/utils/i18n";
-import { ToolbarItemType } from "../ToolbarItemType";
+import type { ToolbarItemType } from "../ToolbarItemType";
 import { calendlySelector, hoverTransitionCSS } from "./css";
 
 export function getItems(): ToolbarItemType[] {

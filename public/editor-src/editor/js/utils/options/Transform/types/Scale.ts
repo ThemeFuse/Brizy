@@ -1,6 +1,6 @@
 import { or, parseStrict } from "fp-utilities";
-import { Scale } from "visual/component/Controls/Transform/types/Scale";
-import { FromElementModelGetter } from "visual/component/Options/Type";
+import type { Scale } from "visual/component/Controls/Transform/types/Scale";
+import type { FromElementModelGetter } from "visual/component/Options/Type";
 import { mPipe } from "visual/utils/fp";
 import * as Num from "visual/utils/math/number";
 import * as Unit from "visual/utils/math/Unit";

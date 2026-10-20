@@ -1,4 +1,4 @@
-import { Reader } from "./types";
+import type { Reader } from "./types";
 
 export const readWithChoices =
   <T>(choices: T[]): Reader<T> =>

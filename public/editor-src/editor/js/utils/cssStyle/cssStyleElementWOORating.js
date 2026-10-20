@@ -5,7 +5,13 @@ export function cssStyleElementWOORatingSize({ v, device, store, state }) {
   return cssStyleSizeFontSize({ v, device, store, state, prefix: "rating" });
 }
 
-export function cssStyleElementWOORatingTextColor({ v, device, store, getConfig, state }) {
+export function cssStyleElementWOORatingTextColor({
+  v,
+  device,
+  store,
+  getConfig,
+  state
+}) {
   return cssStyleColor({
     v,
     device,

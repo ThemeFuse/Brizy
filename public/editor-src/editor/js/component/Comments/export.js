@@ -1,10 +1,11 @@
-export default function ($node) {
-  const disqusBlock = $node.find("#disqus_thread");
+import { makeAttr } from "visual/utils/i18n/attribute";
+export default function (node) {
+  const disqusBlock = node.querySelector("#disqus_thread");
 
-  if (disqusBlock.length) {
-    const shortname = disqusBlock.attr("data-shortname");
-    const url = disqusBlock.attr("data-url");
-    const identifier = disqusBlock.attr("data-identifier");
+  if (disqusBlock) {
+    const shortname = disqusBlock.getAttribute("data-shortname") ?? undefined;
+    const url = disqusBlock.getAttribute("data-url") ?? undefined;
+    const identifier = disqusBlock.getAttribute("data-identifier") ?? undefined;
 
     // global was added since this variable does not work differently
     global.disqus_config = function () {
@@ -12,11 +13,12 @@ export default function ($node) {
       this.page.identifier = identifier;
     };
 
-    (function () {
-      let d = document,
+    (() => {
+      const d = document,
         s = d.createElement("script");
       s.src = `https://${shortname}.disqus.com/embed.js`;
-      s.setAttribute("data-timestamp", +new Date());
+      s.setAttribute("data-timestamp", Date.now());
+      s.setAttribute(makeAttr("consent"), "marketing");
       (d.head || d.body).appendChild(s);
     })();
   }

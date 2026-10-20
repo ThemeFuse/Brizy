@@ -1,10 +1,10 @@
 import { Prompt } from "visual/component/Prompts/api";
 import {
-  ConfigCommon,
+  type ConfigCommon,
   LeftSidebarMoreOptionsIds
 } from "visual/global/Config/types/configs/ConfigCommon";
 import UIEvents, { UIEventType } from "visual/global/UIEvents";
-import { Option } from "./index";
+import type { Option } from "./index";
 
 export const getMoreOptions = (ui: ConfigCommon["ui"]): Array<Option> => {
   const { leftSidebar = {} } = ui ?? {};

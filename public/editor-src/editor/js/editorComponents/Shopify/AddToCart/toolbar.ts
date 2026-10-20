@@ -1,11 +1,11 @@
-import { GetItems } from "visual/editorComponents/EditorComponent/types";
+import type { GetItems } from "visual/editorComponents/EditorComponent/types";
 import { getCollectionItems } from "visual/utils/api";
 import { getColorToolbar } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
 import * as Str from "visual/utils/reader/string";
 import { HOVER, NORMAL } from "visual/utils/stateMode";
-import { Value } from ".";
+import type { Value } from ".";
 
 export const getItems: GetItems<Value> = ({ v, device, state, component }) => {
   const config = component.getGlobalConfig();

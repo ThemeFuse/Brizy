@@ -1,6 +1,6 @@
-import { MenuItemApi } from "./menuAccessibility";
+import type { MenuItemApi } from "./menuAccessibility";
 
-interface MMenuAccessibilityApi {
+export interface MMenuAccessibilityApi {
   open: VoidFunction;
   close: VoidFunction;
   openPanel: (panel: HTMLElement) => void;
@@ -59,6 +59,9 @@ export class MMenuAccessibilityKeyboard {
       const panelFocusables = activeState.submenu
         ? this.getFocusableElementsInPanel(activeState.submenu)
         : [];
+      // Stays `findIndex`: `document.activeElement` is `Element | null` and
+      // `indexOf` on an `HTMLElement[]` will not take it. Left counted as one
+      // `info` rather than suppressed — the rule buys no ratchet either way.
       const activeIndex = panelFocusables.findIndex(
         (element) => element === activeElement
       );
@@ -581,9 +584,9 @@ export class MMenuAccessibilityKeyboard {
     const currentPanel = this.getCurrentOpenPanel();
     const container = currentPanel ?? this.rootMenu;
 
-    this.allStates.forEach((entry) =>
-      entry.trigger.setAttribute("tabindex", "-1")
-    );
+    this.allStates.forEach((entry) => {
+      entry.trigger.setAttribute("tabindex", "-1");
+    });
     state.trigger.setAttribute("tabindex", "0");
     container.setAttribute("aria-activedescendant", state.trigger.id);
   }
@@ -594,7 +597,7 @@ export class MMenuAccessibilityKeyboard {
       return;
     }
 
-    const index = siblings.findIndex((sibling) => sibling === state);
+    const index = siblings.indexOf(state);
     if (index === -1) {
       return;
     }

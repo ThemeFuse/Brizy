@@ -1,6 +1,6 @@
 import { archiveQuery, postsQuery } from "visual/utils/elements/posts";
-import { CloudQuery } from "visual/utils/elements/posts/types";
-import { CloudTagsQuery, V } from "./types";
+import type { CloudQuery } from "visual/utils/elements/posts/types";
+import type { CloudTagsQuery, V } from "./types";
 import { decodeV } from "./utils.common";
 
 export function getLoopTagsAttributes(_v: V): undefined | CloudTagsQuery {

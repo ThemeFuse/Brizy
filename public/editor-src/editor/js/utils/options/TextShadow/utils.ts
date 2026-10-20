@@ -1,14 +1,14 @@
 import { match2, or } from "fp-utilities";
-import { PaletteType } from "visual/types/Style";
+import type { PaletteType } from "visual/types/Style";
 import { match } from "visual/utils/fp/match";
 import { t } from "visual/utils/i18n";
 import { is } from "visual/utils/value";
 import {
-  Value,
   fromEmpty,
   fromNoEmpty,
   isEmpty,
-  isNoEmpty
+  isNoEmpty,
+  type Value
 } from "./types/Value";
 
 export const getPalette: (v: Value) => PaletteType | undefined = match(

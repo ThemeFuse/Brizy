@@ -1,9 +1,9 @@
 import React, {
-  ChangeEventHandler,
-  KeyboardEventHandler,
-  MouseEvent,
-  MouseEventHandler,
-  ReactElement,
+  type ChangeEventHandler,
+  type KeyboardEventHandler,
+  type MouseEvent,
+  type MouseEventHandler,
+  type ReactElement,
   useEffect,
   useRef,
   useState

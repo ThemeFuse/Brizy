@@ -8,7 +8,7 @@ import { compileProject } from "../../common/compileProject";
 import { blockToStatic } from "../../common/toStatic/blockToStatic";
 import { popupToStatic } from "../../common/toStatic/popupToStatic";
 import { storyToStatic } from "../../common/toStatic/storyToStatic";
-import { GlobalBlockRecord, Props, Static } from "./types";
+import type { GlobalBlockRecord, Props, Static } from "./types";
 
 export async function bootstrap(data: Props): Promise<Static> {
   const { config, page, project, editorMode } = data;

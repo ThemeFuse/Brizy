@@ -1,6 +1,6 @@
-import React, { ForwardedRef, forwardRef } from "react";
+import React, { type ForwardedRef, forwardRef } from "react";
 import EditorIcon from "visual/component/EditorIcon";
-import { SelectItemProps } from "./type";
+import type { SelectItemProps } from "./type";
 
 function Item(props: SelectItemProps, ref: ForwardedRef<HTMLDivElement>) {
   const {
@@ -13,20 +13,18 @@ function Item(props: SelectItemProps, ref: ForwardedRef<HTMLDivElement>) {
 
   return isEditor ? (
     <div className="brz-forms2__select-item" ref={ref}>
-      <>
-        <div className="brz-forms2__select-item__input">
-          <input
-            className="brz-input"
-            value={value}
-            onChange={handleSelectInputChange}
-          />
+      <div className="brz-forms2__select-item__input">
+        <input
+          className="brz-input"
+          value={value}
+          onChange={handleSelectInputChange}
+        />
+      </div>
+      {renderIconTrash && (
+        <div className="brz-forms2__select-item__icon" onClick={onRemove}>
+          <EditorIcon icon="nc-trash" />
         </div>
-        {renderIconTrash && (
-          <div className="brz-forms2__select-item__icon" onClick={onRemove}>
-            <EditorIcon icon="nc-trash" />
-          </div>
-        )}
-      </>
+      )}
     </div>
   ) : (
     <option value={value}>{value}</option>

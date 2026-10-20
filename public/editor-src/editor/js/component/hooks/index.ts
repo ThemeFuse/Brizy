@@ -1,66 +1,23 @@
-import {
-  type DependencyList,
-  type RefObject,
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState
-} from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { type MonoTypeOperatorFunction, Subject } from "rxjs";
 import { debounceTime, throttleTime } from "rxjs/operators";
-import type { TimerType } from "visual/types/TimerType";
 
 const eq = <T>(a: T, b: T): boolean => a === b;
 
-export function useDebouncedEffect(
-  fn: () => void,
-  ms?: number,
-  deps?: DependencyList
-): void {
-  const ref = useRef<TimerType>();
-
-  useEffect(() => {
-    clearTimeout(ref.current);
-    ref.current = setTimeout(fn, ms) as unknown as TimerType;
-    return (): void => clearTimeout(ref.current);
-  }, [deps, fn, ms]);
-}
-
-const useLatest = <T>(value: T): RefObject<T> => {
-  const ref = useRef(value);
-  ref.current = value;
-  return ref;
-};
-
-export function useThrottleEffect(
-  fn: () => void,
-  ms?: number,
-  deps?: DependencyList
-): void {
-  const fnRef = useLatest(fn);
-  const timerRef = useRef<TimerType>();
-
-  useEffect(() => {
-    if (timerRef.current === undefined) {
-      timerRef.current = setTimeout(() => {
-        fnRef.current?.();
-        timerRef.current = undefined;
-      }, ms) as unknown as TimerType;
-    }
-  }, [deps, fnRef, timerRef, ms]);
-}
+export {
+  useDebouncedEffect,
+  useThrottleEffect
+} from "@brizy/builder-ui-components/src/hooks";
 
 const createTimedCallback =
   (
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // biome-ignore lint/suspicious/noExplicitAny: migrated from eslint
     timer: (t: number) => MonoTypeOperatorFunction<any>
   ) =>
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  // biome-ignore lint/suspicious/noExplicitAny: migrated from eslint
   <T extends any[]>(
     callback: (...args: T) => void,
-    timeout: number,
-    deps?: DependencyList
+    timeout: number
   ): ((...args: T) => void) => {
     const subject = useMemo(() => {
       const subject = new Subject<T>();
@@ -72,14 +29,14 @@ const createTimedCallback =
       () => () => {
         subject.complete();
       },
-      [subject, deps]
+      [subject]
     );
 
     return useCallback((...args: T) => subject.next(args), [subject]);
   };
 
 export const createTimedOnchange = (
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  // biome-ignore lint/suspicious/noExplicitAny: migrated from eslint
   timer: (t: number) => MonoTypeOperatorFunction<any>
 ): (<T>(
   value: T,
@@ -104,15 +61,15 @@ export const createTimedOnchange = (
         _onChange(v);
         ref.current = v;
       }
-    }, [v, ref, _onChange, compare]);
+    }, [v, _onChange, compare]);
 
     useEffect(() => {
       if (!compare(value, ref.current)) {
         setV(value);
         ref.current = value;
       }
-    }, [value, ref, compare]);
-    const setValue = useCallback(setV, [setV]);
+    }, [value, compare]);
+    const setValue = useCallback(setV, []);
 
     return [v, setValue];
   };

@@ -1,9 +1,9 @@
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import type { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
-import { Block } from "visual/types/Block";
-import { Page } from "visual/types/Page";
+import type { Block } from "visual/types/Block";
+import type { Page } from "visual/types/Page";
 import { canUseCondition } from "visual/utils/blocks/getAllowedGBIds";
-import { BlockRecord } from "visual/utils/reader/globalBlocks";
+import type { BlockRecord } from "visual/utils/reader/globalBlocks";
 
 export function filterGlobalBlocksByRules(
   globalBlocks: BlockRecord,

@@ -1,4 +1,4 @@
-import { AppData } from "visual/component/Prompts/common/GlobalApps/type";
+import type { AppData } from "visual/component/Prompts/common/GlobalApps/type";
 import * as Obj from "visual/utils/reader/object";
 
 export interface AdobeDisconnectReader {

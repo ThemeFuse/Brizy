@@ -1,12 +1,14 @@
-import { Sheet } from "visual/providers/StyleProvider/Sheet";
+import type { Sheet } from "visual/providers/StyleProvider/Sheet";
+import type { CSSSheet } from "visual/providers/StyleProvider/Sheet/types";
 import { murmurhash2 } from "visual/utils/crypto";
 import { makeAttr } from "visual/utils/i18n/attribute";
+import type { MValue } from "visual/utils/value";
 import type { OutputStyleWithSymbol } from "../types";
 import {
-  DEFAULT_CLASSNAME_PREFIX,
-  RULES_CLASSNAME_PREFIX,
   addUuid,
-  getNodeWithNewReference
+  DEFAULT_CLASSNAME_PREFIX,
+  getNodeWithNewReference,
+  RULES_CLASSNAME_PREFIX
 } from "./utils";
 
 // ====== tujur ======
@@ -16,7 +18,7 @@ export function css(
   [defaultStyle, rulesStyle, elementStyle, symbolStyle]: OutputStyleWithSymbol,
   sheet: Readonly<Sheet>
 ) {
-  let defaultData;
+  let defaultData: MValue<CSSSheet>;
   const isBrowser = typeof window !== "undefined";
   const componentId = _componentId.toLowerCase();
   const instanceId = sheet.getInstanceId() ?? "";
@@ -30,7 +32,7 @@ export function css(
     // how many times this function will be called
     if (!defaultData) {
       const cssText = replacePlaceholders(defaultStyle, defaultClassName);
-      let node;
+      let node: MValue<HTMLStyleElement>;
 
       if (isBrowser) {
         const doc = sheet.getDoc() ?? document;
@@ -71,12 +73,12 @@ export function css(
     }
   }
 
-  let rulesData;
+  let rulesData: MValue<CSSSheet>;
   if (rulesStyle) {
     rulesData = sheet.get(rulesClassName);
     if (!rulesData) {
       const cssText = replacePlaceholders(rulesStyle, rulesClassName);
-      let node;
+      let node: MValue<HTMLStyleElement>;
 
       if (isBrowser) {
         const doc = sheet.getDoc() ?? document;
@@ -107,7 +109,7 @@ export function css(
     }
   }
 
-  let elementData;
+  let elementData: MValue<CSSSheet>;
   if (elementStyle) {
     elementData = sheet.get(symbolClassName);
 
@@ -115,7 +117,7 @@ export function css(
       const className = symbolClassName;
       const cssText = replacePlaceholders(elementStyle, className);
 
-      let node;
+      let node: MValue<HTMLStyleElement>;
 
       if (isBrowser) {
         const doc = sheet.getDoc() ?? document;
@@ -170,7 +172,7 @@ export function css(
     }
   }
 
-  let symbolData;
+  let symbolData: MValue<CSSSheet>;
   if (symbolStyle) {
     symbolData = sheet.get(symbolClassName);
 
@@ -178,7 +180,7 @@ export function css(
       const className = symbolClassName;
       const cssText = replacePlaceholders(symbolStyle, className);
 
-      let node;
+      let node: MValue<HTMLStyleElement>;
 
       if (isBrowser) {
         const doc = sheet.getDoc() ?? document;
@@ -279,7 +281,7 @@ export function css1(
   // Later owners with same content fall through and only bump the counter.
   if (!elementData) {
     const cssText = replacePlaceholdersCb(elementStyle, className);
-    let node;
+    let node: MValue<HTMLStyleElement>;
 
     if (isBrowser) {
       const doc = sheet.getDoc() ?? document;
@@ -353,7 +355,7 @@ function insertStyleNodeIntoDOM(
   const default_ = cssOrdered.default; // can't use default as a identifier
   const rules = cssOrdered.rules;
   const custom = cssOrdered.custom;
-  let refNode;
+  let refNode: MValue<Element> | null;
 
   switch (styleType) {
     case "default":
@@ -378,7 +380,7 @@ function insertStyleNodeIntoDOM(
               : null;
       break;
     default:
-      throw new Error("invalid tujur css node type: " + styleType);
+      throw new Error(`invalid tujur css node type: ${styleType}`);
   }
 
   if (refNode) {

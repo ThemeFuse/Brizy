@@ -1,4 +1,4 @@
-import { Block } from "visual/types/Block";
+import type { Block } from "visual/types/Block";
 import { read as readStr } from "visual/utils/reader/string";
 import { decodeFromString } from "visual/utils/string";
 import { modelTraverse } from "visual/utils/traverse";
@@ -29,12 +29,13 @@ export const getUsedModelsUpload = ({
       const defaultValue = getComponentDefaultValue(type)?.content || {};
       const hrefRgx = /href="(.+?)"/g;
       const text = readStr(value.text || defaultValue.text);
-      let hrefs;
+      let hrefs: RegExpExecArray | null;
 
       if (!text) {
         return;
       }
 
+      // biome-ignore lint/suspicious/noAssignInExpressions: regex exec iteration idiom - matchAll would work here but the rewrite is kept out of this lint PR
       while ((hrefs = hrefRgx.exec(text))) {
         try {
           const [, href] = hrefs;
@@ -48,7 +49,7 @@ export const getUsedModelsUpload = ({
           }
         } catch (e) {
           if (process.env.NODE_ENV === "development") {
-            // eslint-disable-next-line no-console
+            // biome-ignore lint/suspicious/noConsole: migrated from eslint
             console.log(e);
           }
         }

@@ -1,7 +1,7 @@
 import { flowRight } from "es-toolkit";
-import { ElementModelType } from "visual/component/Elements/Types";
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
-import { Screenshot } from "visual/types/Screenshot";
+import type { ElementModelType } from "visual/component/Elements/Types";
+import type { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import type { Screenshot } from "visual/types/Screenshot";
 import {
   isAbsoluteUrl,
   objectToQueryString,
@@ -36,7 +36,7 @@ export const blockThumbnailData = (args: BlockThumbnailData): Data => {
     ? blockScreenshotData(block, screenshot)
     : null;
 
-  let data;
+  let data: Data;
 
   // 1. see if it has a screenshot
   // 2. show placeholder

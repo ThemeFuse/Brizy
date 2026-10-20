@@ -1,10 +1,10 @@
-import {
+import type {
   ConfigCommon,
   PublishedPage
 } from "visual/global/Config/types/configs/ConfigCommon";
 import { blocksHtmlRawSelector } from "visual/redux/selectors";
-import { Store } from "visual/redux/store";
-import { Page } from "visual/types/Page";
+import type { Store } from "visual/redux/store";
+import type { Page } from "visual/types/Page";
 import { assetManager } from "../../assetManager";
 import { getRootAttr, getRootClassNames } from "./utils";
 

@@ -1,14 +1,14 @@
 import { ProgressBar1 } from "@brizy/component/src/Flex/ProgressBar1";
 import { ProgressBar2 } from "@brizy/component/src/Flex/ProgressBar2";
 import classnames from "classnames";
-import React, { ReactNode } from "react";
+import React, { type ReactNode } from "react";
 import { Text } from "visual/component/ContentOptions/types";
 import CustomCSS from "visual/component/CustomCSS";
 import { makeDataAttr } from "visual/utils/i18n/attribute";
 import { Wrapper } from "../tools/Wrapper";
 import { BaseProgressBar } from "./Base";
 import { styleBar, styleBg } from "./styles";
-import { ProgressStyle, Value } from "./types";
+import { ProgressStyle, type Value } from "./types";
 
 export default class ProgressBar extends BaseProgressBar {
   renderForView(v: Value, vs: Value, vd: Value): ReactNode {

@@ -8,9 +8,9 @@ import {
   popupBlocksInPageSelector,
   storeWasChangedSelector
 } from "visual/redux/selectors";
-import { ShopifyPage } from "visual/types/Page";
-import { ReduxAction } from "../actions2";
-import { ReduxState, StoreChanged } from "../types";
+import type { ShopifyPage } from "visual/types/Page";
+import type { ReduxAction } from "../actions2";
+import { type ReduxState, StoreChanged } from "../types";
 
 type Page = ReduxState["page"];
 type RPage = (s: Page, a: ReduxAction, f: ReduxState) => Page;

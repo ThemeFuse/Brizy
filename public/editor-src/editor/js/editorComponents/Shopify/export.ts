@@ -1,4 +1,4 @@
-import { ComponentExport } from "visual/types";
+import type { ComponentExport } from "visual/types";
 
 export const shopifyComponentsManifest: Record<string, ComponentExport> = {
   shopifyAddToCart: {

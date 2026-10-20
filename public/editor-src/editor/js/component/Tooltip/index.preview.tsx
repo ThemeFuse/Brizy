@@ -1,7 +1,7 @@
 import classNames from "classnames";
-import React, { FC } from "react";
+import React, { type FC } from "react";
 import { makeDataAttr } from "visual/utils/i18n/attribute";
-import { type Props } from "./types";
+import type { Props } from "./types";
 
 export const Tooltip: FC<Props> = ({
   overlay,
@@ -34,17 +34,15 @@ export const Tooltip: FC<Props> = ({
   const _className = classNames("brz-tooltip", className);
 
   return (
-    <>
-      <span
-        className={_className}
-        {...offsetAttr}
-        {...triggerAttr}
-        {...placementAttr}
-        {...elementIdAttr}
-      >
-        {overlay}
-        <span className="brz-tooltip--arrow" />
-      </span>
-    </>
+    <span
+      className={_className}
+      {...offsetAttr}
+      {...triggerAttr}
+      {...placementAttr}
+      {...elementIdAttr}
+    >
+      {overlay}
+      <span className="brz-tooltip--arrow" />
+    </span>
   );
 };

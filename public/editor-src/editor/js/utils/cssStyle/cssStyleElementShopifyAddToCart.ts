@@ -1,7 +1,7 @@
 import { getButtonSizes, getSize } from "visual/utils/cssStyle/cssStyleSize";
 import { defaultValueValue } from "visual/utils/onChange";
 import { styleSizeHeight, styleSizeWidth } from "../style2/styleSize";
-import { CSSValue } from "../style2/types";
+import type { CSSValue } from "../style2/types";
 
 export function cssStyleElementShopifyAddToCartSize({
   v,

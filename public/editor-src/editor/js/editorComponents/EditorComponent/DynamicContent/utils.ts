@@ -1,14 +1,14 @@
 import { Obj, Str } from "@brizy/readers";
-import { V } from "visual/types";
-import { GetDynamicContent } from "visual/utils/api/types";
+import type { V } from "visual/types";
+import type { GetDynamicContent } from "visual/utils/api/types";
 import {
   explodePlaceholder,
   isPlaceholderStart
 } from "visual/utils/dynamicContent";
-import { DCPlaceholderStartObj } from "visual/utils/dynamicContent/types";
+import type { DCPlaceholderStartObj } from "visual/utils/dynamicContent/types";
 import { camelCase } from "visual/utils/string";
-import { MValue } from "visual/utils/value";
-import { ECKeyDCInfo } from "../types";
+import type { MValue } from "visual/utils/value";
+import type { ECKeyDCInfo } from "../types";
 
 //#region keys
 
@@ -117,10 +117,10 @@ export const dcApiProxyTestFetcher: GetDynamicContent = ({ placeholders }) => {
           }
 
           if (
-            placeholderObj.attr?.["_fallback"] &&
-            placeholderObj.attr?.["_useFallback"]
+            placeholderObj.attr?._fallback &&
+            placeholderObj.attr?._useFallback
           ) {
-            return [postId, placeholderObj.attr["_fallback"]].join("_");
+            return [postId, placeholderObj.attr._fallback].join("_");
           }
 
           delete placeholderObj.attr?._fallback;

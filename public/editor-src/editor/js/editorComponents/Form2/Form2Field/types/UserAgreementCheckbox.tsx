@@ -2,10 +2,10 @@ import { Obj, Str } from "@brizy/readers";
 import React from "react";
 import { CheckGroupItem as CheckboxControlsItem } from "visual/component/Controls/CheckGroup/CheckGroupItem";
 import { TextEditor } from "visual/component/Controls/TextEditor";
-import { CheckboxIcon } from "./FieldOption/Components/CheckboxIcon";
-import TextField from "./common/TextField";
-import { UserAgreementCheckboxProps } from "./type";
 import { uuid } from "visual/utils/uuid";
+import TextField from "./common/TextField";
+import { CheckboxIcon } from "./FieldOption/Components/CheckboxIcon";
+import type { UserAgreementCheckboxProps } from "./type";
 
 export default class UserAgreementCheckbox extends TextField {
   static get componentType() {
@@ -85,7 +85,7 @@ export default class UserAgreementCheckbox extends TextField {
 
     const isCustomHtml = enableCustomHtml === "on" && customHtml;
 
-    const fieldUniqueId = "terms-" +uuid();
+    const fieldUniqueId = `terms-${uuid()}`;
 
     return (
       <div className={this.getClassName()}>

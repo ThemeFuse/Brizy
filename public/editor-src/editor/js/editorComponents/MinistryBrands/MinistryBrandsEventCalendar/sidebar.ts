@@ -1,7 +1,7 @@
 import type { GetItems } from "visual/editorComponents/EditorComponent/types";
 import { isStory } from "visual/providers/EditorModeProvider";
 import { t } from "visual/utils/i18n";
-import { Props, Value } from "./types";
+import type { Props, Value } from "./types";
 
 export const getItems: GetItems<Value, Props> = ({ editorMode }) => {
   return [

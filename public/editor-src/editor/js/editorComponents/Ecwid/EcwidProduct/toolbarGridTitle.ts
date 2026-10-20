@@ -2,7 +2,7 @@ import type { GetItems } from "visual/editorComponents/EditorComponent/types";
 import { getColorToolbar } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
-import { Value } from "./types/Value";
+import type { Value } from "./types/Value";
 
 export const getItems: GetItems<Value> = ({ v, device, state }) => {
   const dvv = (key: string) => defaultValueValue({ v, key, device, state });

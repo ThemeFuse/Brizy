@@ -1,13 +1,13 @@
 import classnames from "classnames";
-import React, { Fragment, JSX } from "react";
-import Placeholder from "visual/component/Placeholder";
+import React, { Fragment, type JSX } from "react";
 import { withLink } from "visual/component/hooks/withLink";
+import Placeholder from "visual/component/Placeholder";
 import { useConfig } from "visual/providers/ConfigProvider";
 import { isEditor } from "visual/providers/RenderProvider";
 import { useCSS } from "visual/providers/StyleProvider/useCSS";
-import { MValue } from "visual/utils/value";
+import type { MValue } from "visual/utils/value";
 import { stylePicture } from "../styles";
-import { ImageContent } from "../types";
+import type { ImageContent } from "../types";
 import { isAbleToRenderOriginal, showOriginalImage } from "../utils";
 import HoverSimpleImage from "./HoverSimpleImage";
 import HoverSvgImage from "./HoverSvgImage";
@@ -132,7 +132,7 @@ const Content = (props: ImageContent): JSX.Element => {
       );
     }
 
-    return <></>;
+    return null;
   };
 
   if (_isEditor && (imagePopulation || hoverImagePopulation)) {

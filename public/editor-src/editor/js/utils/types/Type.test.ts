@@ -2,7 +2,7 @@ import { Reader } from "visual/utils/types/Type";
 
 test("Prevent jest complaining that files has not tests", () => {});
 
-// eslint-disable-next-line jest/no-export
+// biome-ignore lint/suspicious/noExportsInTest: migrated from eslint
 export function testReader<T>(
   read: Reader<T>,
   valid: Array<unknown>,

@@ -1,4 +1,4 @@
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import type { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { makeStylePaletteCSSVar } from "./makeGlobalStylesColorPallete";
 
 export const makeRichTextColorPaletteCSS = (

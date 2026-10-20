@@ -22,7 +22,8 @@ describe("Testing Image migration", () => {
       {
         imagePopulation:
           // prettier-ignore
-          "{{brizy_dc_collection_item_field slug=\"image\" size=\"original\"}}", // eslint-disable-line
+          // biome-ignore lint: migrated from eslint
+          '{{brizy_dc_collection_item_field slug="image" size="original"}}',
         sizeType: "custom"
       },
       {

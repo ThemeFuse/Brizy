@@ -1,6 +1,6 @@
 import classnames from "classnames";
 import React, { forwardRef } from "react";
-import { ContentProps as Props } from "../types";
+import type { ContentProps as Props } from "../types";
 
 export const Content = forwardRef<HTMLDivElement, Props>((props, ref) => {
   const { type, isActive, animationClassName, children } = props;

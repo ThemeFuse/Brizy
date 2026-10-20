@@ -1,7 +1,7 @@
-import { GetItems } from "visual/editorComponents/EditorComponent/types";
-import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
-import { DCTypes } from "visual/global/Config/types/DynamicContent";
+import type { GetItems } from "visual/editorComponents/EditorComponent/types";
+import type { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
+import { DCTypes } from "visual/global/Config/types/DynamicContent";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
 import { getDynamicContentOption } from "visual/utils/options";
@@ -10,7 +10,7 @@ import {
   isPhoneType,
   isUserAgreementCheckbox
 } from "../../utils";
-import { Props, Value } from "../type";
+import type { Props, Value } from "../type";
 import { getThirtyOptions, inputTypesChoice } from "../utils";
 
 // Flatpickr locales (picker language). Keep it small: popular locales only.
@@ -109,7 +109,6 @@ export const getItems: GetItems<Value, Props> = ({ v, device, component }) => {
         return t("DD-MM-YYYY");
       case "m/d/Y":
         return t("MM/DD/YYYY");
-      case "Y-m-d":
       default:
         return t("YYYY-MM-DD");
     }

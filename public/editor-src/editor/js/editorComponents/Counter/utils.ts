@@ -1,4 +1,4 @@
-import { type BoxResizerPartialProps } from "visual/component/BoxResizer/types";
+import type { BoxResizerPartialProps } from "visual/component/BoxResizer/types";
 
 export const formatNumber = (n: number, separator: string): string =>
   n.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, separator);

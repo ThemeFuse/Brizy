@@ -1,5 +1,5 @@
 import { mPipe } from "fp-utilities";
-import {
+import type {
   FromElementModel,
   SimpleValue,
   ToElementModel

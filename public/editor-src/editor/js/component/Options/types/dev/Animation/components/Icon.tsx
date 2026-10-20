@@ -1,6 +1,6 @@
-import React, { ReactElement, useCallback } from "react";
+import React, { type ReactElement, useCallback } from "react";
 import { FatIcon } from "visual/component/Controls/FatIcon";
-import { OnChange } from "visual/component/Options/Type";
+import type { OnChange } from "visual/component/Options/Type";
 
 export interface Props<T> {
   active: boolean;

@@ -1,10 +1,10 @@
-import { Role } from "visual/utils/membership";
-import { DynamicContent } from "../DynamicContent";
-import { Module } from "../Module";
-import { Rule } from "../Rule";
-import { TemplateType } from "../TemplateType";
-import { Urls } from "../Urls";
-import { ConfigCommon } from "./ConfigCommon";
+import type { Role } from "visual/utils/membership";
+import type { DynamicContent } from "../DynamicContent";
+import type { Module } from "../Module";
+import type { Rule } from "../Rule";
+import type { TemplateType } from "../TemplateType";
+import type { Urls } from "../Urls";
+import type { ConfigCommon } from "./ConfigCommon";
 
 type Term = {
   count: number;

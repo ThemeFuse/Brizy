@@ -2,8 +2,8 @@ import classnames from "classnames";
 import React from "react";
 import { Scrollbar } from "visual/component/Scrollbar";
 
-export { Option as SidebarOption } from "./Option";
 export { List as SidebarList } from "./List";
+export { Option as SidebarOption } from "./Option";
 
 export default function Sidebar(props) {
   const { className: _className, children } = props;

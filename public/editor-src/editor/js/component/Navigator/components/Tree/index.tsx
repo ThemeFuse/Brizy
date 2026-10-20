@@ -1,19 +1,19 @@
 import { Str } from "@brizy/readers";
 import {
-  DndContext,
-  DragEndEvent,
-  DragMoveEvent,
-  DragOverEvent,
-  DragOverlay,
-  DragStartEvent,
-  DropAnimation,
-  MeasuringStrategy,
   closestCenter,
-  defaultDropAnimation
+  DndContext,
+  type DragEndEvent,
+  type DragMoveEvent,
+  type DragOverEvent,
+  DragOverlay,
+  type DragStartEvent,
+  type DropAnimation,
+  defaultDropAnimation,
+  MeasuringStrategy
 } from "@dnd-kit/core";
 import {
-  SortableContext,
   arrayMove,
+  SortableContext,
   verticalListSortingStrategy
 } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
@@ -41,16 +41,15 @@ import {
   globalBlocksSelector,
   pageDataNoRefsSelector
 } from "visual/redux/selectors";
-import { ReduxState } from "visual/redux/types";
-import { Block } from "visual/types/Block";
+import type { ReduxState } from "visual/redux/types";
+import type { Block } from "visual/types/Block";
 import { hasVisibleChildren } from "../utils";
 import { SortableTreeItem } from "./SortableTreeItem";
 import {
-  FlattenedItem,
-  SECTION_TYPES,
   buildTree,
   checkForSectionLevelReorder,
   computeOverIndex,
+  type FlattenedItem,
   findFlatById,
   findItemDeep,
   flattenForRender,
@@ -64,6 +63,7 @@ import {
   normalizeSectionParent,
   removeChildrenOf,
   resolveMoveNode,
+  SECTION_TYPES,
   treeToBlocks,
   validatePlacement
 } from "./utils";
@@ -110,8 +110,12 @@ const SortableTree = () => {
   const flattenedVisibleItems = useMemo(() => {
     const flattenedTree = flattenForRender(items);
     const collapsedItems = flattenedTree.reduce<string[]>(
-      (acc, { children, collapsed, id }) =>
-        collapsed && children && children.length ? [...acc, id] : acc,
+      (acc, { children, collapsed, id }) => {
+        if (collapsed && children?.length) {
+          acc.push(id);
+        }
+        return acc;
+      },
       []
     );
 

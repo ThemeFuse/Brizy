@@ -1,5 +1,8 @@
+import {
+  Choice,
+  read
+} from "visual/component/Options/types/dev/RadioGroup/Choice";
 import { testReader } from "visual/utils/types/Type.test";
-import { Choice, read } from "visual/component/Options/types/dev/RadioGroup/Choice";
 
 describe("Testing Choices reader", () => {
   const valid: Choice[] = [

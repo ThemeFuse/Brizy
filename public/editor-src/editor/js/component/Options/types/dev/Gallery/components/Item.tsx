@@ -1,11 +1,11 @@
-import React, { ReactElement } from "react";
-import { Error } from "visual/component/Controls/Gallery/components/Error";
+import React, { type ReactElement } from "react";
+import { ErrorItem } from "visual/component/Controls/Gallery/components/Error";
 import { Loading } from "visual/component/Controls/Gallery/components/Loading";
 import { Thumbnail } from "visual/component/Controls/Gallery/components/Thumbnail";
 import { SizeType } from "visual/global/Config/types/configs/common";
 import { useConfig } from "visual/providers/ConfigProvider";
 import { getImageUrl } from "visual/utils/image";
-import { Item as ItemType } from "../types/Item";
+import type { Item as ItemType } from "../types/Item";
 
 export interface Props<T> {
   item: ItemType<T>;
@@ -33,7 +33,7 @@ export function Item<T>({ item, onRemove }: Props<T>): ReactElement {
       return <Loading<T> id={item.id} onRemove={onRemove} />;
     case "error":
       return (
-        <Error<T> id={item.id} message={item.payload} onRemove={onRemove} />
+        <ErrorItem<T> id={item.id} message={item.payload} onRemove={onRemove} />
       );
   }
 }

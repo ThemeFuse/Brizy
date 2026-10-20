@@ -1,8 +1,8 @@
-import { Params } from "visual/editorComponents/EditorComponent/types";
-import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
+import type { Params } from "visual/editorComponents/EditorComponent/types";
+import type { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
-import { Value } from "./types";
+import type { Value } from "./types";
 
 export function getItems({ v, device }: Params<Value>): ToolbarItemType[] {
   const dvv = (key: string) =>

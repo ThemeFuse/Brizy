@@ -1,7 +1,7 @@
 import { match } from "fp-utilities";
 import React, {
-  ReactElement,
-  Reducer,
+  type ReactElement,
+  type Reducer,
   useCallback,
   useEffect,
   useReducer
@@ -16,10 +16,10 @@ import {
 import { t } from "visual/utils/i18n";
 import { OptionError } from "../../common/Sidebar/OptionError";
 import { isBlock, isLayout, isPopup } from "../../common/utils";
-import { BlockTypes } from "../../types";
+import type { BlockTypes } from "../../types";
 import * as Actions from "./actions";
-import { State, initState, reducer } from "./reducer";
-import { Props } from "./types";
+import { initState, reducer, type State } from "./reducer";
+import type { Props } from "./types";
 
 const EMPTY = "";
 

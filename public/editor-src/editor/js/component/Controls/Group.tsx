@@ -1,7 +1,7 @@
 import classNames from "classnames";
 import React from "react";
-import { WithClassName } from "visual/types/attributes";
-import { FCC } from "visual/utils/react/types";
+import type { WithClassName } from "visual/types/attributes";
+import type { FCC } from "visual/utils/react/types";
 
 type Props = WithClassName;
 

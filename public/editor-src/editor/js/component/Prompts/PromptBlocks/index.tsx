@@ -3,9 +3,9 @@ import classnames from "classnames";
 import { noop } from "es-toolkit";
 import React, {
   Component,
-  ComponentType,
-  PropsWithChildren,
-  ReactElement
+  type ComponentType,
+  type PropsWithChildren,
+  type ReactElement
 } from "react";
 import ReactDOM from "react-dom";
 import EditorIcon from "visual/component/EditorIcon";
@@ -13,39 +13,42 @@ import HelpIcon from "visual/component/HelpIcon";
 import Fixed from "visual/component/Prompts/Fixed";
 import { getDefaultFilter } from "visual/component/Prompts/PromptBlocks/Layouts/utils";
 import {
-  ConfigCommon,
+  type ConfigCommon,
   HelpVideos
 } from "visual/global/Config/types/configs/ConfigCommon";
 import {
-  EditorMode,
+  type EditorMode,
   isPopup,
   isStory
 } from "visual/providers/EditorModeProvider";
-import { BlockMetaType } from "visual/types/GlobalBlock";
 import { t } from "visual/utils/i18n";
 import { get } from "visual/utils/object/get";
 import { capitalize } from "visual/utils/string";
 import Blocks from "./Blocks";
 import Global from "./Global";
-import { PromptGlobalBlock } from "./Global/types";
+import type { PromptGlobalBlock } from "./Global/types";
 import Layouts from "./Layouts";
 import Library from "./Library";
-import {
+import type {
   PromptBlock,
-  PromptBlockTemplate,
+  PromptBlockMetaType,
   PromptBlocksProps,
   PromptBlocksState,
+  PromptBlockTemplate,
   PromptTabsId
 } from "./types";
 
-interface OnChanges<T extends BlockMetaType> {
+interface OnChanges<T extends PromptBlockMetaType> {
   blocks: PromptBlock;
   template: PromptBlockTemplate;
   saved: PromptBlockTemplate;
   global: PromptGlobalBlock<T>;
 }
 
-interface TabComponentProps<T extends BlockMetaType, A extends PromptTabsId> {
+interface TabComponentProps<
+  T extends PromptBlockMetaType,
+  A extends PromptTabsId
+> {
   type: T;
   showSearch: boolean;
   showSidebar: boolean;
@@ -57,16 +60,16 @@ interface TabComponentProps<T extends BlockMetaType, A extends PromptTabsId> {
   editorMode: EditorMode;
 }
 
-interface Tab<ID extends PromptTabsId, T extends BlockMetaType> {
+interface Tab<ID extends PromptTabsId, T extends PromptBlockMetaType> {
   id: ID;
   title: string;
   icon: string;
   renderTab(props: TabComponentProps<T, ID>): ReactElement;
 }
 
-const getTabs = <T extends BlockMetaType>(
+const getTabs = <T extends PromptBlockMetaType>(
   config: ConfigCommon,
-  type: BlockMetaType,
+  type: PromptBlockMetaType,
   editorMode: EditorMode
 ): Array<Tab<PromptTabsId, T>> => {
   const { defaultLayouts, defaultStories, defaultKits, defaultPopups } =
@@ -186,15 +189,15 @@ const getTabs = <T extends BlockMetaType>(
   return tabs;
 };
 
-type Props<T extends BlockMetaType> = {
+type Props<T extends PromptBlockMetaType> = {
   editorMode: EditorMode;
 } & PromptBlocksProps<T>;
 
-class PromptBlocks<T extends BlockMetaType> extends Component<
+class PromptBlocks<T extends PromptBlockMetaType> extends Component<
   Props<T>,
   PromptBlocksState
 > {
-  static defaultProps: PromptBlocksProps<BlockMetaType> = {
+  static defaultProps: PromptBlocksProps<PromptBlockMetaType> = {
     activeTab: "blocks",
     type: "normal",
     opened: false,

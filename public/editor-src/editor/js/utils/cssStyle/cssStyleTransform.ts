@@ -1,22 +1,20 @@
 import { isT } from "fp-utilities";
-import { Value as TransformValue } from "visual/component/Controls/Transform/types/Value";
+import type { Value as TransformValue } from "visual/component/Controls/Transform/types/Value";
 import { createOptionId } from "visual/editorComponents/EditorComponent/utils";
-import { Transform } from "visual/utils/cssProps/transform";
+import type { Transform } from "visual/utils/cssProps/transform";
 import { read } from "visual/utils/cssProps/transform/Rotate";
 import { defaultValueValue } from "visual/utils/onChange";
 import { fromElementModel as transformFromElementModel } from "visual/utils/options/Transform/converters";
 import { getTransformCSSVars } from "visual/utils/options/Transform/utils";
-import { Literal } from "visual/utils/types/Literal";
-import { mApply, MValue } from "visual/utils/value";
-import { CSSValue } from "../style2/types";
+import type { Literal } from "visual/utils/types/Literal";
+import { type MValue, mApply } from "visual/utils/value";
+import type { CSSValue } from "../style2/types";
 
 export const buildTransform = (v: Transform): string => {
-  return (
-    Object.entries(v).reduce(
-      (acc, [k, v]) => acc + `${k}(${v})`,
-      "transform: "
-    ) + ";"
-  );
+  return `${Object.entries(v).reduce(
+    (acc, [k, v]) => `${acc}${k}(${v})`,
+    "transform: "
+  )};`;
 };
 
 export const getTransformOrigin = (model: Partial<TransformValue>): string => {
@@ -36,14 +34,14 @@ export const getTransformProperties = (
     scale?.scalePreserveSize && scale.scaleXY
       ? "var(--transform-scaleXY)"
       : scale?.scaleX
-      ? "var(--transform-scaleX)"
-      : "1";
+        ? "var(--transform-scaleX)"
+        : "1";
   const _scaleY =
     scale?.scalePreserveSize && scale.scaleXY
       ? "var(--transform-scaleXY)"
       : scale?.scaleY
-      ? "var(--transform-scaleY)"
-      : "1";
+        ? "var(--transform-scaleY)"
+        : "1";
 
   return [
     rotate?.rotate ? " rotateZ(var(--transform-rotateZ))" : undefined,

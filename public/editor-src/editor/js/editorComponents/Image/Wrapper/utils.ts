@@ -1,5 +1,5 @@
-import { SizeRestriction, WidthHeightRestriction } from "./type";
-import { Meta } from "../types";
+import type { Meta } from "../types";
+import type { SizeRestriction, WidthHeightRestriction } from "./type";
 
 export const getSizeRestriction = (): SizeRestriction => ({
   size: {

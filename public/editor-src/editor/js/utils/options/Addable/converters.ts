@@ -1,10 +1,10 @@
-import { Arr, Obj, Str, pipe } from "@brizy/readers";
+import { Arr, Obj, pipe, Str } from "@brizy/readers";
 import { isT, mPipe, parse, pass } from "fp-utilities";
-import {
+import type {
   FromElementModel,
   ToElementModel
 } from "visual/component/Options/Type";
-import {
+import type {
   GroupBase,
   Model
 } from "visual/component/Options/types/dev/Addable/types";

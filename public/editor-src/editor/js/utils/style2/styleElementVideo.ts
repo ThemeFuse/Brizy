@@ -1,6 +1,6 @@
 import { getImageUrl } from "visual/utils/image";
 import { defaultValueValue } from "visual/utils/onChange";
-import { CSSValue } from "./types";
+import type { CSSValue } from "./types";
 
 export function styleElementVideoRatio({ v, device, state }: CSSValue): string {
   const dvv = (key: string) => defaultValueValue({ v, key, device, state });

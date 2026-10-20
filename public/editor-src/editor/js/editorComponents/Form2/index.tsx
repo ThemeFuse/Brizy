@@ -1,9 +1,12 @@
 import classnames from "classnames";
 import { noop } from "es-toolkit";
-import React, { FormEvent, JSX } from "react";
+import React, { type FormEvent, type JSX } from "react";
 import BoxResizer from "visual/component/BoxResizer";
 import CustomCSS from "visual/component/CustomCSS";
-import { ElementPatch, ElementProps } from "visual/component/Elements/Types";
+import type {
+  ElementPatch,
+  ElementProps
+} from "visual/component/Elements/Types";
 import { ThemeIcon } from "visual/component/ThemeIcon";
 import Toolbar from "visual/component/Toolbar";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
@@ -13,10 +16,14 @@ import { Wrapper } from "visual/editorComponents/tools/Wrapper";
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import { isStory } from "visual/providers/EditorModeProvider";
 import { isView } from "visual/providers/RenderProvider";
+import {
+  makeEndPlaceholder,
+  makeStartPlaceholder
+} from "visual/utils/dynamicContent";
 import { t } from "visual/utils/i18n";
 import { makeAttr, makeDataAttr } from "visual/utils/i18n/attribute";
 import * as Attr from "visual/utils/string/parseCustomAttributes";
-import { MValue } from "visual/utils/value";
+import type { MValue } from "visual/utils/value";
 import { withMigrations } from "../tools/withMigrations";
 import { Button, MSButtons, SubmitButton } from "./Components/Buttons";
 import { Form } from "./Components/Form";
@@ -492,7 +499,7 @@ class Form2 extends EditorComponent<Value, ElementProps, State> {
 
     const { action, recaptcha } = config?.integrations?.form ?? {};
     const projectId = config?.project?.id ?? "";
-    const recaptchaSiteKey = recaptcha && recaptcha.siteKey;
+    const recaptchaSiteKey = recaptcha?.siteKey;
 
     const className = classnames(
       "brz-forms2",
@@ -538,6 +545,9 @@ class Form2 extends EditorComponent<Value, ElementProps, State> {
         : {})
     };
 
+    const startPlaceholder = makeStartPlaceholder({ content: "{{ group }}" });
+    const endPlaceholder = makeEndPlaceholder({ content: "{{ end_group }}" });
+
     return (
       <CustomCSS selectorName={this.getId()} css={customCSS}>
         <Wrapper
@@ -546,6 +556,7 @@ class Form2 extends EditorComponent<Value, ElementProps, State> {
             attributes: makeDataAttr({ name: "form-version", value: "2" })
           })}
         >
+          {startPlaceholder}
           <Form
             className="brz-d-xs-flex brz-flex-xs-wrap"
             attributes={attr}
@@ -564,6 +575,7 @@ class Form2 extends EditorComponent<Value, ElementProps, State> {
             )}
             {this.renderMessagesWrapper()}
           </Form>
+          {endPlaceholder}
         </Wrapper>
       </CustomCSS>
     );

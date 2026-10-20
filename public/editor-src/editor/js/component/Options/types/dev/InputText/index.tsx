@@ -1,6 +1,6 @@
 import React, { useCallback } from "react";
 import { InputWithDebounce as Control } from "visual/component/Controls/Input";
-import { Component } from "./Type";
+import type { Component } from "./Type";
 
 export const InputText: Component = ({
   className,

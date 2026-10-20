@@ -1,7 +1,7 @@
-import React from "react";
 import classnames from "classnames";
+import React from "react";
 import { ThemeIcon } from "visual/component/ThemeIcon";
-import { IconProps } from "./types";
+import type { IconProps } from "./types";
 
 export const Icon = (props: IconProps): JSX.Element => {
   const { mMenu, iconName, iconType, iconFilename } = props;

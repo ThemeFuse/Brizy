@@ -33,8 +33,8 @@ export function onNullish<T>(
   return args.length === 1
     ? (v: T | Nullish): T => (isNullish(v) ? args[0] : v)
     : isNullish(args[1])
-    ? args[0]
-    : args[1];
+      ? args[0]
+      : args[1];
 }
 
 export const throwOnNullish =
@@ -125,12 +125,12 @@ export function mCompose<T1, T2, T3, T4, T5, T6, T7, T8>(
   f1: MFn<T1, T2>
 ): MR<T1, T7>;
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+// biome-ignore lint/suspicious/noExplicitAny: migrated from eslint
 export function mCompose<R>(...fns: Array<MFn<any, any>>): MFn<any, R> {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  // biome-ignore lint/suspicious/noExplicitAny: migrated from eslint
   return (v: any): MValue<R> =>
     fns.reduceRight(
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      // biome-ignore lint/suspicious/noExplicitAny: migrated from eslint
       (r, fn: MFn<any, any>) => (!isNullish(r) ? fn(r) : undefined),
       v
     );

@@ -2,7 +2,7 @@ import { IsEqual } from "visual/utils/types/Eq";
 
 test("Prevent jest complaining that files has not tests", () => {});
 
-// eslint-disable-next-line jest/no-export
+// biome-ignore lint/suspicious/noExportsInTest: migrated from eslint
 export function testEq<T>(eq: IsEqual<T>, a1: T, a2: T, b: T): void {
   describe("Testing 'eq' function", function () {
     test("a1 and a2 should be equal", () => {

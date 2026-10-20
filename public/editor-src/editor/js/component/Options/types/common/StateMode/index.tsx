@@ -1,5 +1,5 @@
 import React, {
-  ReactElement,
+  type ReactElement,
   useCallback,
   useLayoutEffect,
   useRef
@@ -7,12 +7,12 @@ import React, {
 import Tab from "visual/component/Controls/Tabs/Tab";
 import Tabs from "visual/component/Controls/Tabs/Tabs";
 import Options from "visual/component/Options";
-import {
+import type {
   Props as OptionProps,
   SimpleValue
 } from "visual/component/Options/Type";
-import { ToolbarItemsInstance } from "visual/component/Toolbar/ToolbarItems";
-import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
+import type { ToolbarItemsInstance } from "visual/component/Toolbar/ToolbarItems";
+import type { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
 import { usePro } from "visual/global/hooks";
 import { useConfig } from "visual/providers/ConfigProvider";
 import {
@@ -21,7 +21,7 @@ import {
   stateIcon,
   stateTitle
 } from "visual/utils/options/StateMode/utils";
-import { FCP } from "visual/utils/react/types";
+import type { FCP } from "visual/utils/react/types";
 import * as State from "visual/utils/stateMode";
 import { isT } from "visual/utils/value";
 
@@ -47,10 +47,10 @@ export const StateMode: FCP<Props, ReactElement | null> = ({
   const onChangeRef = useRef({ onChange });
   onChangeRef.current = { onChange };
 
-  const itemsStates = options.reduce(
-    (acc: State.State[], o) => [...acc, ...itemStates(o)],
-    []
-  );
+  const itemsStates = options.reduce((acc: State.State[], o) => {
+    acc.push(...itemStates(o));
+    return acc;
+  }, []);
   const statesList = states.filter((s) => itemsStates.includes(s));
   const _onChange = useCallback(
     (value: State.State) => onChangeRef.current.onChange({ value }),
@@ -93,12 +93,8 @@ export const StateMode: FCP<Props, ReactElement | null> = ({
             <Tab
               key={state}
               active={value === state}
-              title={
-                statesConfig?.[state]?.title ?? stateTitle(state)
-              }
-              icon={
-                statesConfig?.[state]?.icon ?? stateIcon(state)
-              }
+              title={statesConfig?.[state]?.title ?? stateTitle(state)}
+              icon={statesConfig?.[state]?.icon ?? stateIcon(state)}
               value={state}
             >
               <Options

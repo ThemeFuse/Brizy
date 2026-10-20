@@ -38,8 +38,8 @@ export function styleBorderWidth({ v, device, state, current }) {
   return isHover === "hover" && hoverBorderWidthType === "grouped"
     ? `${hoverBorderWidth}px`
     : isHover === "hover" && hoverBorderWidthType === "ungrouped"
-    ? `${hoverCurrentValue}px`
-    : borderWidthType === "grouped"
-    ? `${borderWidth}px`
-    : `${currentValue}px`;
+      ? `${hoverCurrentValue}px`
+      : borderWidthType === "grouped"
+        ? `${borderWidth}px`
+        : `${currentValue}px`;
 }

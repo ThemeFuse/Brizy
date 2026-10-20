@@ -1,6 +1,6 @@
 import { isWp } from "visual/global/Config";
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
-import { Shortcode } from "visual/types";
+import type { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import type { Shortcode } from "visual/types";
 import { getDaysLeft } from "visual/utils/ecwid";
 import getAccordion from "./Accordion";
 import getAlert from "./Alert";
@@ -55,46 +55,10 @@ import getMinistryBrandsStaffLayout from "./MinistryBrands/MinistryBrandsStaffLa
 import getMinistryBrandsStaffList from "./MinistryBrands/MinistryBrandsStaffList";
 import getPaypal from "./Paypal";
 import getPostExcerpt from "./PostExcerpt";
-import getPostTitle from "./PostTitle";
 import getPosts from "./Posts";
+import getPostTitle from "./PostTitle";
 import getProgressBar from "./ProgressBar";
 import getProtectedPage from "./ProtectedPage";
-import getRow from "./Row";
-import getShareButton from "./ShareButton";
-import getShopCategories from "./ShopCategories";
-import getShopPosts from "./ShopPosts";
-import {
-  getAddToCart,
-  getBlogPostExcerpt,
-  getBlogPostList,
-  getBlogPostMeta,
-  getCollectionList,
-  getPrice,
-  getProductDescription,
-  getProductImage,
-  getProductList,
-  getProductMetafield,
-  getProductTitle,
-  getQuantity,
-  getVariant,
-  getVendor
-} from "./Shopify";
-import getSpacer from "./Spacer";
-import getTabs from "./Tabs";
-import getText from "./Text";
-import getTranslation from "./Translation";
-import getUserEmail from "./UserEmail";
-import getUserFirstName from "./UserFirstName";
-import getUserLastName from "./UserLastName";
-import getUserPhoneNumber from "./UserPhoneNumber";
-import getUserRoles from "./UserRoles";
-import getUserUsername from "./UserUsername";
-import getVideo from "./Video";
-import getWOOCategories from "./WOOCategories";
-import getWOOPages from "./WOOPages";
-import getWPCustomShortcode from "./WPCustomShortcode";
-import getFeaturedImage from "./WPFeaturedImage";
-import getWPSidebar from "./WPSidebar";
 import AnimatedHeadline from "./pro/AnimatedHeadline";
 import getBreadcrumbs from "./pro/Breadcrumbs";
 import getCalendly from "./pro/Calendly";
@@ -103,6 +67,7 @@ import getEmbed from "./pro/Embed";
 import getFacebook from "./pro/Facebook";
 import getFacebookComments from "./pro/FacebookComments";
 import getFlipbox from "./pro/Flipbox";
+import getGoogleSearch from "./pro/GoogleSearch";
 import getImageGallery from "./pro/ImageGallery";
 import getInstagramFeed from "./pro/InstagramFeed";
 import getLinkedinFeed from "./pro/LinkedinFeed";
@@ -118,6 +83,8 @@ import getReview from "./pro/Review";
 import getSearch from "./pro/Search";
 import getStarRating from "./pro/StarRating";
 import getSwitcher from "./pro/Switcher";
+import getStoryLottie from "./pro/story/StoryLottie";
+import getStoryStarRating from "./pro/story/StoryStarRating";
 import getTable from "./pro/Table";
 import getTableOfContents from "./pro/TableOfContents";
 import getTimeline from "./pro/Timeline";
@@ -142,8 +109,27 @@ import getWPBreadcrumbs from "./pro/WPBreadcrumbs";
 import getPostContent from "./pro/WPPostContent";
 import getWPPostInfo from "./pro/WPPostInfo";
 import getWPPostNavigation from "./pro/WPPostNavigation";
-import getStoryLottie from "./pro/story/StoryLottie";
-import getStoryStarRating from "./pro/story/StoryStarRating";
+import getRow from "./Row";
+import getShareButton from "./ShareButton";
+import getShopCategories from "./ShopCategories";
+import {
+  getAddToCart,
+  getBlogPostExcerpt,
+  getBlogPostList,
+  getBlogPostMeta,
+  getCollectionList,
+  getPrice,
+  getProductDescription,
+  getProductImage,
+  getProductList,
+  getProductMetafield,
+  getProductTitle,
+  getQuantity,
+  getVariant,
+  getVendor
+} from "./Shopify";
+import getShopPosts from "./ShopPosts";
+import getSpacer from "./Spacer";
 import getStoryButton from "./story/StoryButton";
 import getStoryCountdown2 from "./story/StoryCountdown2";
 import getStoryCounter from "./story/StoryCounter";
@@ -158,7 +144,21 @@ import getStoryProgressBar from "./story/StoryProgressBar";
 import getStoryShape from "./story/StoryShape";
 import getStoryText from "./story/StoryText";
 import getStoryVideo from "./story/StoryVideo";
-import getGoogleSearch from "./pro/GoogleSearch";
+import getTabs from "./Tabs";
+import getText from "./Text";
+import getTranslation from "./Translation";
+import getUserEmail from "./UserEmail";
+import getUserFirstName from "./UserFirstName";
+import getUserLastName from "./UserLastName";
+import getUserPhoneNumber from "./UserPhoneNumber";
+import getUserRoles from "./UserRoles";
+import getUserUsername from "./UserUsername";
+import getVideo from "./Video";
+import getWOOCategories from "./WOOCategories";
+import getWOOPages from "./WOOPages";
+import getWPCustomShortcode from "./WPCustomShortcode";
+import getFeaturedImage from "./WPFeaturedImage";
+import getWPSidebar from "./WPSidebar";
 
 export function getProShortCodes(
   config: ConfigCommon
@@ -670,6 +670,6 @@ export function getSampleShortCodes(config: ConfigCommon) {
     BlogPostMeta: getBlogPostMeta(config),
     BlogPostExcerpt: getBlogPostExcerpt(config),
 
-    GoogleSearch: getGoogleSearch(),
+    GoogleSearch: getGoogleSearch()
   };
 }

@@ -3,13 +3,13 @@
  *
  * Combines framework components and editor components with webpack chunk names
  */
-import type { ComponentExport } from "visual/types";
+import type { ComponentExport, ExportFunction } from "visual/types";
 import { componentsManifest } from "../../component/index.export";
 import { editorComponentsManifest } from "../../editorComponents/index.export";
 
 interface ComponentConfig {
   selector: string;
-  path: () => Promise<{ default: ($node: JQuery<HTMLElement>) => void }>;
+  path: () => Promise<{ default: ExportFunction }>;
 }
 
 type ComponentManifest = Record<string, ComponentConfig>;

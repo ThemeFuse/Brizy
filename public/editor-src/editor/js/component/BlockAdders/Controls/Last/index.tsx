@@ -1,5 +1,5 @@
 import classnames from "classnames";
-import React, { ReactElement } from "react";
+import React, { type ReactElement } from "react";
 import RoundPlus from "visual/component/RoundPlus";
 import { t } from "visual/utils/i18n";
 import { makeBzelmAttr } from "visual/utils/i18n/attribute";

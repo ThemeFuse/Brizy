@@ -7,48 +7,50 @@ import { getEcwidShopPathFromAttribute } from "visual/utils/ecwid";
 import { makeAttr } from "visual/utils/i18n/attribute";
 import { parseFromString } from "visual/utils/string";
 
-export const fn: ExportFunction = ($node) => {
-  $node.find(".brz-ecwid-my-account").each((_, node) => {
-    const storeId = node.getAttribute("data-store-id") as EcwidStoreId | null;
-    const config = Str.read(node.getAttribute("data-storefront"));
-    const cfg = config ? parseFromString<EcwidConfig>(config) : {};
-    const baseUrl = getEcwidShopPathFromAttribute(node) ?? "";
-    const langLocale = node.getAttribute(makeAttr("lang-locale")) ?? "";
+export const fn: ExportFunction = (root) => {
+  root
+    .querySelectorAll<HTMLElement>(".brz-ecwid-my-account")
+    .forEach((node) => {
+      const storeId = node.getAttribute("data-store-id") as EcwidStoreId | null;
+      const config = Str.read(node.getAttribute("data-storefront"));
+      const cfg = config ? parseFromString<EcwidConfig>(config) : {};
+      const baseUrl = getEcwidShopPathFromAttribute(node) ?? "";
+      const langLocale = node.getAttribute(makeAttr("lang-locale")) ?? "";
 
-    const onPageLoaded = () => {
-      const items = node.querySelectorAll(
-        ".ec-cart__body .ec-confirmation .ec-cart__products-inner .ec-cart__item .ec-cart-item__image"
-      );
-
-      items.forEach((cartItem) => {
-        cartItem.addEventListener(
-          "click",
-          (e) => {
-            e.preventDefault();
-            e.stopPropagation();
-
-            const imageWrap = (e.target as HTMLElement | null)?.closest(
-              ".ec-cart-item__picture"
-            );
-
-            if (imageWrap) {
-              const href = imageWrap.getAttribute("href");
-
-              window.location.href = `${baseUrl}${href}`;
-            }
-          },
-          true
+      const onPageLoaded = () => {
+        const items = node.querySelectorAll(
+          ".ec-cart__body .ec-confirmation .ec-cart__products-inner .ec-cart__item .ec-cart-item__image"
         );
-      });
-    };
 
-    if (storeId) {
-      EcwidService.init(storeId, {
-        ...cfg,
-        onPageLoaded,
-        baseUrl,
-        langLocale
-      }).myAccount(node);
-    }
-  });
+        items.forEach((cartItem) => {
+          cartItem.addEventListener(
+            "click",
+            (e) => {
+              e.preventDefault();
+              e.stopPropagation();
+
+              const imageWrap = (e.target as HTMLElement | null)?.closest(
+                ".ec-cart-item__picture"
+              );
+
+              if (imageWrap) {
+                const href = imageWrap.getAttribute("href");
+
+                window.location.href = `${baseUrl}${href}`;
+              }
+            },
+            true
+          );
+        });
+      };
+
+      if (storeId) {
+        EcwidService.init(storeId, {
+          ...cfg,
+          onPageLoaded,
+          baseUrl,
+          langLocale
+        }).myAccount(node);
+      }
+    });
 };

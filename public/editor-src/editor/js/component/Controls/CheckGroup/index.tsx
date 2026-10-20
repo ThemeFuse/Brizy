@@ -1,6 +1,6 @@
 import classnames from "classnames";
 import React, { forwardRef, useCallback } from "react";
-import { Change, OptionProps, Props } from "./types";
+import type { Change, OptionProps, Props } from "./types";
 
 export const CheckGroup = forwardRef<HTMLDivElement, Props>(
   ({ className, defaultValue, children, onChange }, ref): JSX.Element => {

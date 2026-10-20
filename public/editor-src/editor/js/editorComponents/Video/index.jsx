@@ -288,7 +288,7 @@ class Video extends EditorComponent {
       muted = "on";
     }
 
-    let content = coverImageSrc
+    const content = coverImageSrc
       ? this.renderCover(v)
       : this.renderPlaceholder();
 
@@ -486,7 +486,7 @@ class Video extends EditorComponent {
       `brz-image-fix-${ratio.replace(":", "-")}`
     );
 
-    let content =
+    const content =
       type === "custom" || type === "url" ? (
         this.renderCustomPlayer(v)
       ) : (

@@ -2,7 +2,7 @@ import classNames from "classnames";
 import React from "react";
 import { Badge } from "visual/component/Badge";
 import EditorIcon from "visual/component/EditorIcon";
-import { InternalLinkValueProps } from "./types";
+import type { InternalLinkValueProps } from "./types";
 
 export const InternalLinkValue = React.forwardRef<
   HTMLDivElement,

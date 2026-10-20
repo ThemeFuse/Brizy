@@ -1,6 +1,6 @@
 import { or } from "fp-utilities";
-import * as Option from "visual/component/Options/Type";
-import { SimpleValue } from "visual/component/Options/Type";
+import type * as Option from "visual/component/Options/Type";
+import type { SimpleValue } from "visual/component/Options/Type";
 import { always } from "visual/utils/fp";
 import { readSymbols } from "visual/utils/options/Symbols/utils";
 

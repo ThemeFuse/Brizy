@@ -1,6 +1,6 @@
 import { has } from "es-toolkit/compat";
-import { MouseEvent } from "react";
-import { GlobalMeta } from "visual/component/Options/Type";
+import type { MouseEvent } from "react";
+import type { GlobalMeta } from "visual/component/Options/Type";
 
 import HSLA = tinycolor.ColorFormats.HSLA;
 import HSVA = tinycolor.ColorFormats.HSVA;

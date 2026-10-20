@@ -1,5 +1,5 @@
-import { ApiConnect, Account, CustomFields, Done } from "../Step";
 import { BaseApp } from "../../common/GlobalApps/BaseApp";
+import { Account, ApiConnect, CustomFields, Done } from "../Step";
 
 class Zapier extends BaseApp {
   static connect = ApiConnect;

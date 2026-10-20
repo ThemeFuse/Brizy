@@ -1,9 +1,9 @@
-import React, { useState } from "react";
 import cn from "classnames";
+import React, { useState } from "react";
 import { Dropdown } from "visual/component/Controls/Population/Components/Dropdown";
 import Control from "visual/component/Controls/Select";
 import SelectItem from "visual/component/Controls/Select/SelectItem";
-import { Props } from "./types";
+import type { Props } from "./types";
 
 export const Select = (props: Props): JSX.Element => {
   const { choices, className, value, onChange } = props;

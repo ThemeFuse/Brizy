@@ -1,9 +1,9 @@
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import { defaultValueValue } from "visual/utils/onChange";
-import { DESKTOP, ResponsiveMode } from "visual/utils/responsiveMode";
+import { DESKTOP, type ResponsiveMode } from "visual/utils/responsiveMode";
 import EditorComponent from "../EditorComponent";
 import defaultValue from "./defaultValue.json";
-import { Value } from "./types";
+import type { Value } from "./types";
 
 export class BaseTwitter extends EditorComponent<Value> {
   static defaultValue = defaultValue;

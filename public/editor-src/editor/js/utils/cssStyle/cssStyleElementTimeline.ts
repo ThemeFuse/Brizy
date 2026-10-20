@@ -9,7 +9,7 @@ import {
 } from "visual/utils/cssStyle";
 import { defaultValueValue } from "visual/utils/onChange";
 import { styleBorderColor } from "visual/utils/style2";
-import { CSSValue } from "visual/utils/style2/types";
+import type { CSSValue } from "visual/utils/style2/types";
 
 enum IconType {
   small = "small",

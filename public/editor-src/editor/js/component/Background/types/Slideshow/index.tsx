@@ -1,11 +1,11 @@
 import classnames from "classnames";
-import React, { ReactElement, useCallback, useMemo } from "react";
+import React, { type ReactElement, useCallback, useMemo } from "react";
 import { Autoplay, EffectFade } from "swiper/modules";
 import {
   Swiper as SwiperControl,
   SwiperSlide as SwiperSlideControl
 } from "swiper/react";
-import { SwiperOptions } from "swiper/types";
+import type { SwiperOptions } from "swiper/types";
 import { SizeType } from "visual/global/Config/types/configs/common";
 import { useConfig } from "visual/providers/ConfigProvider";
 import { makeAttr } from "visual/utils/i18n/attribute";
@@ -14,7 +14,7 @@ import { read as readString } from "visual/utils/reader/string";
 import { Effect, KenEffect, Transition } from "../../type";
 import { getSlideType, handleSwiperResize } from "../../utils";
 import { Slide } from "./Slide";
-import { Props } from "./types";
+import type { Props } from "./types";
 
 const Slideshow = ({
   images,
@@ -159,6 +159,7 @@ const Slideshow = ({
       data-brz-total-items={images.length}
     >
       {images.map((item, index) => (
+        // biome-ignore lint/suspicious/noArrayIndexKey: the same image uid can appear twice in a slideshow, so only the slot is unique
         <SwiperSlideControl key={index}>
           <Slide className={classNameItem} item={item} />
         </SwiperSlideControl>

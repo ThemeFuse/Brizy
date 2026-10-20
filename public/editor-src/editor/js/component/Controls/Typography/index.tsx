@@ -5,15 +5,15 @@ import { Select2 } from "visual/component/Controls/Select2";
 import { Item } from "visual/component/Controls/Select2/Item";
 import Stepper from "visual/component/Controls/Stepper";
 import { Label } from "visual/component/Label";
-import { WithValue } from "visual/types/attributes";
-import { SizeSuffix } from "visual/utils/fonts/SizeSuffix";
+import type { WithValue } from "visual/types/attributes";
+import type { SizeSuffix } from "visual/utils/fonts/SizeSuffix";
 import { FontStyle } from "./Components/FontStyle";
 import { FontTransform } from "./Components/FontTransform";
 import { FontWeight } from "./Components/FontWeight";
 import { Icon } from "./Components/TabIcon";
-import { Font } from "./types/FontFamily";
-import { TypographyProps as Props } from "./types/Props";
-import { Value } from "./types/Value";
+import type { Font } from "./types/FontFamily";
+import type { TypographyProps as Props } from "./types/Props";
+import type { Value } from "./types/Value";
 
 export class Typography extends PureComponent<Props> {
   onFontFamily = (v: Font): void =>
@@ -218,9 +218,9 @@ export class Typography extends PureComponent<Props> {
             <div className="brz-ed__col brz-ed__col-1-1">
               {icons?.length && showFontStyles ? (
                 <div className="brz-ed-control__typography-styles_icon">
-                  {icons?.map((icon, index) => (
+                  {icons?.map((icon) => (
                     <Icon
-                      key={index}
+                      key={icon}
                       icon={icon}
                       active={icon === activeIcon}
                       onClick={onIconClick}

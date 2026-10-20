@@ -2,7 +2,7 @@ import React from "react";
 import { Switch } from "visual/component/Controls/Switch";
 import { Field } from "visual/component/Prompts/common/PromptPage/Field";
 import { t } from "visual/utils/i18n";
-import { FCC } from "visual/utils/react/types";
+import type { FCC } from "visual/utils/react/types";
 
 interface Props {
   value: boolean;

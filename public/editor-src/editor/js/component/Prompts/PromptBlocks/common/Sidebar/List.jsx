@@ -1,12 +1,13 @@
-import React from "react";
 import classnames from "classnames";
+import { noop } from "es-toolkit";
+import React from "react";
 import EditorIcon from "visual/component/EditorIcon";
 import { t } from "visual/utils/i18n";
 
 const validate = (v) => v !== null && v !== undefined;
 
 export function List(props) {
-  const { lists = [], counters = {}, value = "", onChange = () => {} } = props;
+  const { lists = [], counters = {}, value = "", onChange = noop } = props;
 
   return lists.map(
     ({ id, title, icon }) =>

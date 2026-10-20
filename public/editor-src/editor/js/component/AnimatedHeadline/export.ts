@@ -28,11 +28,7 @@ const initHeadlineOnViewport = (
   observer.observe(headline);
 };
 
-export default function ($node: JQuery<HTMLElement>) {
-  const rootNode = $node.get(0);
-
-  if (!rootNode) return;
-
+export default function (rootNode: HTMLElement) {
   const headLineWrapper = rootNode.querySelectorAll<HTMLElement>(
     ".brz-animatedHeadline--wrapper"
   );

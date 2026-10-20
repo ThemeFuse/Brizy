@@ -11,13 +11,7 @@ import {
   renderList
 } from "./utils.export";
 
-export default function ($node: JQuery): void {
-  const node = $node.get(0);
-
-  if (!node) {
-    return;
-  }
-
+export default function (node: HTMLElement): void {
   node.querySelectorAll<HTMLDivElement>(".brz-toc").forEach((item) => {
     const tocBody = item.querySelector<HTMLDivElement>(".brz-toc-body");
     const tocHeader = item.querySelector<HTMLDivElement>(".brz-toc-header");

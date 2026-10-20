@@ -1,4 +1,4 @@
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import type { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { t } from "visual/utils/i18n";
 
 export default function (config: ConfigCommon) {

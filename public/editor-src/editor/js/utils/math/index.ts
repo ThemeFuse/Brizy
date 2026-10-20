@@ -9,7 +9,7 @@
  * @param {number} max
  * @returns {number}
  */
-import { MValue } from "visual/utils/value";
+import type { MValue } from "visual/utils/value";
 
 export function clamp(number: number, min: number, max: number): number {
   if (number < min) {
@@ -25,6 +25,10 @@ export function clamp(number: number, min: number, max: number): number {
 
 // was taken here - https://stackoverflow.com/questions/11832914/round-to-at-most-2-decimal-places-only-if-necessary
 export function roundTo(num: number, places: number): number {
+  // The exponent-shift trick reads as a sequence of concatenations; nesting it
+  // into `${...}` obscures the two separate number->string->number round trips
+  // it relies on.
+  // biome-ignore lint/style/useTemplate: kept as concatenation, see above
   return +(Math.round(Number(num + "e+" + places)) + "e-" + places);
 }
 
@@ -39,10 +43,10 @@ export const isNumber = (n: unknown): n is number => typeof n === "number";
 export const isNumeric = (n: unknown): boolean => {
   switch (typeof n) {
     case "number": {
-      return isFinite(n);
+      return Number.isFinite(n);
     }
     case "string": {
-      return isNaN(parseFloat(n)) ? false : isFinite(Number(n));
+      return Number.isNaN(parseFloat(n)) ? false : Number.isFinite(Number(n));
     }
   }
   return false;
@@ -96,8 +100,17 @@ export const toPositive = (v: unknown, orElse?: number): MValue<number> =>
 export const inRange = (min: number, max: number, n: number): boolean =>
   n >= min && n <= max;
 
-export const add = (a: number) => (b: number): number => a + b;
+export const add =
+  (a: number) =>
+  (b: number): number =>
+    a + b;
 
-export const subtract = (a: number) => (b: number): number => a - b;
+export const subtract =
+  (a: number) =>
+  (b: number): number =>
+    a - b;
 
-export const subtractR = (a: number) => (b: number): number => b - a;
+export const subtractR =
+  (a: number) =>
+  (b: number): number =>
+    b - a;

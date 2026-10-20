@@ -8,23 +8,23 @@ import {
 import { createDuplicatedClassName } from "visual/editorComponents/EditorComponent/utils";
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import {
-  type SymbolsCreatePayload,
-  type SymbolsPayload,
   createSymbol,
   deleteSymbol,
+  type SymbolsCreatePayload,
+  type SymbolsPayload,
   updateSymbol
 } from "visual/redux/actions2";
 import { symbolsSelector } from "visual/redux/selectors";
-import { TypedDispatch } from "visual/redux/store";
+import type { TypedDispatch } from "visual/redux/store";
 import type { FCC } from "visual/utils/react/types";
 import { uuid } from "visual/utils/uuid";
 import { type Choice, OnChangeCases } from "../EditableSelect/types";
-import { type Props } from "./types";
+import type { Props } from "./types";
 import {
-  NONE_CHOICE,
   getCurrentValue,
   getSymbolByUid,
   getSymbolsByType,
+  NONE_CHOICE,
   symbolsToChoices
 } from "./utils";
 

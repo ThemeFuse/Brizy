@@ -1,9 +1,9 @@
-import * as AnchorPoint from "./AnchorPoint";
-import * as Flip from "./Flip";
-import * as Offset from "./Offset";
-import * as Rotate from "./Rotate";
-import * as Scale from "./Scale";
-import * as Skew from "./Skew";
+import type * as AnchorPoint from "./AnchorPoint";
+import type * as Flip from "./Flip";
+import type * as Offset from "./Offset";
+import type * as Rotate from "./Rotate";
+import type * as Scale from "./Scale";
+import type * as Skew from "./Skew";
 
 export type EffectsWithAnchor = Exclude<keyof Value, "active">;
 

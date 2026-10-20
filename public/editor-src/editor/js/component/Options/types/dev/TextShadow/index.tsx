@@ -1,16 +1,16 @@
 import classNames from "classnames";
-import React, { ReactElement, useCallback, useMemo } from "react";
+import React, { type ReactElement, useCallback, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { PaletteObject } from "visual/component/Controls/ColorPalette/entities/PaletteObject";
+import type { PaletteObject } from "visual/component/Controls/ColorPalette/entities/PaletteObject";
 import {
   TextShadow as ShadowControl,
-  Props as ShadowProps
+  type Props as ShadowProps
 } from "visual/component/Controls/TextShadow";
-import {
+import type {
   Meta as CMeta,
   Value as CValue
 } from "visual/component/Controls/TextShadow/types";
-import {
+import type {
   GlobalMeta,
   Meta as OptionMeta,
   Props as OptionProps
@@ -19,16 +19,16 @@ import { LeftSidebarOptionsIds } from "visual/global/Config/types/configs/Config
 import { useConfig } from "visual/providers/ConfigProvider";
 import { updateUI } from "visual/redux/actions2";
 import { currentStyleSelector } from "visual/redux/selectors";
-import { PaletteType as Palette } from "visual/types/Style";
-import { WithClassName, WithConfig } from "visual/types/attributes";
+import type { WithClassName, WithConfig } from "visual/types/attributes";
+import type { PaletteType as Palette } from "visual/types/Style";
 import { is as isHex } from "visual/utils/color/Hex";
 import { mPipe } from "visual/utils/fp";
-import { Meta } from "visual/utils/options/TextShadow/meta";
+import type { Meta } from "visual/utils/options/TextShadow/meta";
 import * as Value from "visual/utils/options/TextShadow/types/Value";
 import * as Utils from "visual/utils/options/TextShadow/utils";
 import {
-  SelectType,
   getOptions,
+  type SelectType,
   selectTypeFromValue,
   valueFromSelectType
 } from "visual/utils/options/TextShadow/utils";

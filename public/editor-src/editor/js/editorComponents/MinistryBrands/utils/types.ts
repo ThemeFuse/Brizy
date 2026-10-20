@@ -1,4 +1,4 @@
-import {
+import type {
   EkklesiaFields,
   EkklesiaParentsChilds
 } from "visual/global/Config/types/configs/modules/ekklesia/Ekklesia";

@@ -1,5 +1,5 @@
 import classnames from "classnames";
-import React, { ReactNode } from "react";
+import React, { type ReactNode } from "react";
 import CustomCSS from "visual/component/CustomCSS";
 import Link from "visual/component/Link";
 import Toolbar from "visual/component/Toolbar";
@@ -8,18 +8,18 @@ import { shouldRenderPopup } from "visual/editorComponents/tools/Popup";
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import { isEditor } from "visual/providers/RenderProvider";
 import { blocksDataSelector } from "visual/redux/selectors";
-import { Block } from "visual/types/Block";
+import type { Block } from "visual/types/Block";
 import { makePlaceholder } from "visual/utils/dynamicContent";
 import { getLinkData } from "visual/utils/models/link";
 import { attachRefs } from "visual/utils/react";
 import EditorArrayComponent from "../EditorArrayComponent";
-import { DynamicContentHelper } from "../WordPress/common/DynamicContentHelper";
 import { Wrapper } from "../tools/Wrapper";
+import { DynamicContentHelper } from "../WordPress/common/DynamicContentHelper";
 import defaultValue from "./defaultValue.json";
 import * as sidebarConfig from "./sidebar";
 import { style } from "./styles";
 import * as toolbarConfig from "./toolbar";
-import { Props, Value } from "./types";
+import type { Props, Value } from "./types";
 
 class Leadific extends EditorComponent<Value, Props> {
   static defaultValue = defaultValue;

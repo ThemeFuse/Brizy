@@ -4,8 +4,8 @@ import { ImageSetter } from "visual/component/Controls/ImageSetter";
 import { useConfig } from "visual/providers/ConfigProvider";
 import { t } from "visual/utils/i18n";
 import { ImageType } from "visual/utils/image/types";
-import { Component } from "./Types";
-import { Image } from "./model";
+import type { Image } from "./model";
+import type { Component } from "./Types";
 import { configSizeToSize } from "./utils";
 
 export const ImageUpload: Component = ({ onChange, value, config, label }) => {

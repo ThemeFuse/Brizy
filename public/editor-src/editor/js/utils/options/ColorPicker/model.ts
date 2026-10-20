@@ -1,5 +1,5 @@
 import { _apply, set, setter2 } from "visual/utils/model";
-import { Value } from "visual/utils/options/ColorPicker/entities/Value";
+import type { Value } from "visual/utils/options/ColorPicker/entities/Value";
 
 /**
  * @typedef {{
@@ -33,7 +33,7 @@ export const setOpacity = setter2(getOpacity, (v, m) => {
       [set, "tempOpacity", v === 0 ? getOpacity(m) : undefined],
       [set, "opacity", v],
       [set, "palette", v ? p : ""],
-      [set, "tempPalette", !v ? (p || m.tempPalette) : undefined]
+      [set, "tempPalette", !v ? p || m.tempPalette : undefined]
     ],
     m
   );

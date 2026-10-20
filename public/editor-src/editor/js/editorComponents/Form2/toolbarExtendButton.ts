@@ -20,9 +20,7 @@ export const getItems: GetItems<Value> = ({
 
   const isMultistepEnabled = multistep === "on";
 
-  const inPopup2 = Boolean(
-    component.props.meta && component.props.meta.sectionPopup2
-  );
+  const inPopup2 = Boolean(component.props.meta?.sectionPopup2);
 
   const { linkAction } = getEnabledLinkOptions(component.getGlobalConfig());
 

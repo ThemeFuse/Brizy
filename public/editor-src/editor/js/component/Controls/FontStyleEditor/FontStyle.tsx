@@ -1,10 +1,10 @@
 import classnames from "classnames";
-import React, { JSX, useCallback, useState } from "react";
+import React, { type JSX, useCallback, useState } from "react";
 import EditorIcon from "visual/component/EditorIcon";
 import Toolbar, { hideToolbar } from "visual/component/Toolbar";
 import { DESKTOP } from "visual/utils/responsiveMode";
 import { ToolbarItem } from "./ToolbarItem";
-import { FontStyleProps } from "./types";
+import type { FontStyleProps } from "./types";
 
 const animateClassName = "brz-ed-option__font-style-editor--animate";
 

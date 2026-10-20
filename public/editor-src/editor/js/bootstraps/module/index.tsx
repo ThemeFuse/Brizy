@@ -2,4 +2,4 @@ import { ServerStyleSheet } from "visual/providers/StyleProvider/ServerStyleShee
 import { StyleSheetManager } from "visual/providers/StyleProvider/StyleSheetManager";
 import { Preview } from "./Preview";
 
-export { Preview, StyleSheetManager, ServerStyleSheet };
+export { Preview, ServerStyleSheet, StyleSheetManager };

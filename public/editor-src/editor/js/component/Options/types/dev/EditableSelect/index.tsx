@@ -1,10 +1,20 @@
-import React, { ReactElement, useCallback, useEffect, useState } from "react";
+import React, {
+  type ReactElement,
+  useCallback,
+  useEffect,
+  useState
+} from "react";
 import {
   SelectEditable2,
-  Props as SelectProps
+  type Props as SelectProps
 } from "visual/component/Brizy-ui/SelectEditable";
 import { getActive } from "visual/utils/options/EditableSelect/utils";
-import { Choice, OnChangeActionTypes, OnChangeCases, Props } from "./types";
+import {
+  type Choice,
+  OnChangeActionTypes,
+  OnChangeCases,
+  type Props
+} from "./types";
 
 export const EditableSelect = ({
   choices,
@@ -29,7 +39,7 @@ export const EditableSelect = ({
           break;
         }
         case OnChangeCases.Duplicate: {
-          const newTitle = state.title + "-copy-" + choices.length;
+          const newTitle = `${state.title}-copy-${choices.length}`;
           onChange({ type: OnChangeActionTypes.duplicate, payload: newTitle });
           break;
         }

@@ -1,19 +1,19 @@
 import { reduxBatch } from "@manaflair/redux-batch";
 import {
-  Middleware,
-  Store as RStore,
   applyMiddleware,
   compose,
+  type Middleware,
+  type Store as RStore,
   createStore as reduxCreateStore
 } from "redux";
-import { ThunkAction, ThunkDispatch } from "redux-thunk";
+import type { ThunkAction, ThunkDispatch } from "redux-thunk";
 import type { ReduxAction } from "visual/redux/actions2";
 import type { ReduxState } from "visual/redux/types";
 import rootReducer from "./reducers";
 
 export type Store = RStore<ReduxState, ReduxAction>;
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+// biome-ignore lint/suspicious/noExplicitAny: migrated from eslint
 export type TypedDispatch = ThunkDispatch<ReduxState, any, ReduxAction>;
 export type TypedThunk<ReturnType = void> = ThunkAction<
   ReturnType,

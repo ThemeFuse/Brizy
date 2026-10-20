@@ -1,8 +1,13 @@
+import type { Spacing } from "@brizy/ui/es/Space/utils";
+import type { FieldsTheme } from "@brizy/ui/es/utils/getFieldsTheme";
+import type { Gutter } from "@brizy/ui/lib/Layout/utils";
 import { EnterRounded } from "@brizy/ui-icons/lib/icons/EnterRounded";
-import { Spacing } from "@brizy/ui/es/Space/utils";
-import { FieldsTheme } from "@brizy/ui/es/utils/getFieldsTheme";
-import { Gutter } from "@brizy/ui/lib/Layout/utils";
-import React, { ReactElement, useCallback, useEffect, useState } from "react";
+import React, {
+  type ReactElement,
+  useCallback,
+  useEffect,
+  useState
+} from "react";
 import { Button } from "visual/component/Brizy-ui/Button";
 import { Card } from "visual/component/Brizy-ui/Card";
 import { Icon } from "visual/component/Brizy-ui/Icon";
@@ -87,11 +92,11 @@ export const AiText = ({
       <Space spacing={controlsSpacing}>
         <Card size={cardSize} width="407px" height="16px">
           <Inline spacing={20}>
-            {actions.map((action, index) => (
+            {actions.map((action) => (
               <AiActionButton
                 isTitleSelected={isTitleSelected}
                 disabled={disabled}
-                key={index}
+                key={action.action}
                 onClick={handleClick}
                 action={action}
               />

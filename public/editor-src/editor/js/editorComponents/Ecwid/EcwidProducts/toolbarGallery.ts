@@ -1,9 +1,9 @@
-import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
+import type { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
-import { ResponsiveMode } from "visual/utils/responsiveMode";
-import { State } from "visual/utils/stateMode";
-import { Value } from "./types/Value";
+import type { ResponsiveMode } from "visual/utils/responsiveMode";
+import type { State } from "visual/utils/stateMode";
+import type { Value } from "./types/Value";
 
 export function getItems({
   v,

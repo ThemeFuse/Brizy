@@ -1,9 +1,9 @@
 import React, {
-  ForwardRefRenderFunction,
-  ForwardedRef,
-  JSX,
-  PropsWithoutRef,
-  forwardRef
+  type ForwardedRef,
+  type ForwardRefRenderFunction,
+  forwardRef,
+  type JSX,
+  type PropsWithoutRef
 } from "react";
 import { useRender } from "./";
 

@@ -1,9 +1,9 @@
-import { Shopify } from "visual/global/Config/types/configs/Cloud";
+import type { Shopify } from "visual/global/Config/types/configs/Cloud";
 import { ShopifyTemplate } from "visual/global/Config/types/shopify/ShopifyTemplate";
 import { StoreChanged } from "visual/redux/types";
-import { Page } from "visual/types/Page";
+import type { Page } from "visual/types/Page";
 import { t } from "visual/utils/i18n";
-import { MValue } from "visual/utils/value";
+import type { MValue } from "visual/utils/value";
 
 export type Mode = "withRules" | "withTemplate" | "withArticle";
 
@@ -46,9 +46,12 @@ export const getButtonLabel = (
         case "private": {
           return t("Save");
         }
+        // preserves the previous fallthrough into StoreChanged.pending
+        default: {
+          return t("Saving");
+        }
       }
     }
-    //@eslint-disable-next-line: ESLint: Expected a 'break' statement before 'case'.(no-fallthrough)
     case StoreChanged.pending: {
       return t("Saving");
     }

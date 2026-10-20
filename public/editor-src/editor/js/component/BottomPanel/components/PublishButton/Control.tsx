@@ -1,16 +1,16 @@
 import classnames from "classnames";
 import React, {
   Fragment,
-  MouseEventHandler,
-  ReactElement,
-  ReactNode,
+  type MouseEventHandler,
+  type ReactElement,
+  type ReactNode,
   useMemo
 } from "react";
 import Tooltip, { TooltipItem } from "visual/component/Controls/Tooltip";
 import { EditorIcon } from "visual/component/EditorIcon";
-import { Roles, currentUserRole } from "visual/component/Roles";
+import { currentUserRole, Roles } from "visual/component/Roles";
 import { useConfig } from "visual/providers/ConfigProvider";
-import { ReduxState } from "visual/redux/types";
+import type { ReduxState } from "visual/redux/types";
 import { Label } from "./Label";
 
 type status = ReduxState["page"]["status"];
@@ -40,7 +40,7 @@ const Addons = ({ items }: { items: Item[] }): ReactElement => {
   const currentRole = currentUserRole(config);
 
   const overlay = useMemo(() => {
-    return items.map((item, index) => {
+    return items.map((item) => {
       const {
         title,
         icon,
@@ -52,6 +52,7 @@ const Addons = ({ items }: { items: Item[] }): ReactElement => {
       } = item;
 
       const content = (
+        // biome-ignore lint/correctness/useJsxKeyInIterable: rendered inside the keyed Roles/Fragment wrappers returned below
         <TooltipItem
           className="brz-ed-fixed-bottom-panel-popover__item"
           disabled={disabled}
@@ -70,11 +71,11 @@ const Addons = ({ items }: { items: Item[] }): ReactElement => {
       );
 
       return roles.length > 0 ? (
-        <Roles key={index} currentRole={currentRole} allow={roles}>
+        <Roles key={title} currentRole={currentRole} allow={roles}>
           {content}
         </Roles>
       ) : (
-        <Fragment key={index}>{content}</Fragment>
+        <Fragment key={title}>{content}</Fragment>
       );
     });
   }, [items, currentRole]);
@@ -87,7 +88,7 @@ const Addons = ({ items }: { items: Item[] }): ReactElement => {
       overlay={overlay}
       inPortal={true}
     >
-      <button className="brz-button">
+      <button type="button" className="brz-button">
         <EditorIcon icon="nc-arrow-up" />
       </button>
     </Tooltip>

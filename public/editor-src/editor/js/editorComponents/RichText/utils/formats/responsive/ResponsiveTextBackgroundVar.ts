@@ -18,7 +18,10 @@ class ResponsiveTextBackgroundVar extends Parchment.Attributor.Style {
 
     if (value) {
       node.style.setProperty(this.keyName, value);
-      node.setAttribute(`data-background-color-${this.device}-var`, this.keyName);
+      node.setAttribute(
+        `data-background-color-${this.device}-var`,
+        this.keyName
+      );
     } else {
       node.style.removeProperty(this.keyName);
       node.removeAttribute(`data-background-color-${this.device}-var`);
@@ -52,4 +55,4 @@ const BackgroundMobileVar = new ResponsiveTextBackgroundVar(
   "mobile"
 );
 
-export { BackgroundTabletVar, BackgroundMobileVar };
+export { BackgroundMobileVar, BackgroundTabletVar };

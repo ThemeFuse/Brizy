@@ -1,7 +1,7 @@
-import { Arr, Err, Obj, Str, pipe } from "@brizy/readers";
+import { Arr, Err, Obj, pipe, Str } from "@brizy/readers";
 import { mPipe, parseStrict } from "fp-utilities";
-import { Media } from "visual/global/Config/types/configs/ConfigCommon";
-import { ThirdPartyComponentsHosts } from "visual/global/Config/types/configs/ThirdParty";
+import type { Media } from "visual/global/Config/types/configs/ConfigCommon";
+import type { ThirdPartyComponentsHosts } from "visual/global/Config/types/configs/ThirdParty";
 
 interface TempConfig {
   project?: {
@@ -20,7 +20,7 @@ interface TempConfig {
 
 const parseComponents = mPipe(
   Obj.read,
-  parseStrict({
+  parseStrict<Record<string, unknown>, ThirdPartyComponentsHosts[number]>({
     name: pipe(
       mPipe(Obj.readKey("name"), Str.read),
       Err.throwOnNullish("Invalid name")

@@ -1,5 +1,5 @@
-import { WithClassName, WithValue } from "visual/types/attributes";
-import { Props as OptionProps } from "visual/component/Options/Type";
+import type { Props as OptionProps } from "visual/component/Options/Type";
+import type { WithClassName, WithValue } from "visual/types/attributes";
 
 export interface Choice<T> {
   icon: string;

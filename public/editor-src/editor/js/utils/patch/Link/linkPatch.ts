@@ -1,5 +1,5 @@
 import { mPipe } from "fp-utilities";
-import { ElementModel } from "visual/component/Elements/Types";
+import type { ElementModel } from "visual/component/Elements/Types";
 import { prop } from "visual/utils/object/get";
 import { readWithParser } from "visual/utils/reader/readWithParser";
 import { read } from "visual/utils/string/specs";

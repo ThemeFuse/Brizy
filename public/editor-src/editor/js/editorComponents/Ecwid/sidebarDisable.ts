@@ -1,4 +1,4 @@
-import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
+import type { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
 
 export function getItems(): ToolbarItemType[] {
   return [
