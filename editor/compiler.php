@@ -99,6 +99,9 @@ class Brizy_Editor_Compiler {
 	private function updateGlobalBLocks( $globalBlockData ) {
 		foreach ( $globalBlockData as $blockData ) {
 			$block = $this->blocksManager->getEntity( $blockData['uid'] );
+			if ( ! $block ) {
+				continue;
+			}
 			$this->updatePost( $block, $blockData );
 		}
 	}
