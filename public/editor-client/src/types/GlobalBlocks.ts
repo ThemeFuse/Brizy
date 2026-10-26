@@ -1,5 +1,9 @@
 import { Output } from "@/types/utils";
-import { Response, ResponseWithSuccessStatus } from "./Response";
+import {
+  Response,
+  ResponseWithSuccessStatus,
+  SuccessResponse
+} from "./Response";
 
 export interface GlobalBlock {
   uid: string;
@@ -25,6 +29,18 @@ export interface GlobalBlockConfig {
     rej: Response<string>,
     uid: string
   ) => void;
+  updateRules?: (
+    res: Response<SuccessResponse>,
+    rej: Response<string>,
+    extra: GlobalBlockRules
+  ) => void;
+}
+
+export interface GlobalBlockRules {
+  uid: string;
+  rules: Array<Record<string, unknown>>;
+  dataVersion: number;
+  status: string;
 }
 
 //#endregion
