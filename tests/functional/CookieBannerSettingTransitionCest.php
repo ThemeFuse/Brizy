@@ -313,7 +313,7 @@ class CookieBannerSettingTransitionCest {
 		$this->submitGeneral( true );
 		$ids = $this->bannerIds();
 		$I->assertCount( 1, $ids, 'One banner block should be created' );
-		$I->assertSame( 'publish', get_post_status( $ids[0] ), 'The banner should be published' );
+		$I->assertSame( 'draft', get_post_status( $ids[0] ), 'The banner should stay a draft until the next editor publish' );
 		$I->assertTrue( $this->hasMatchAllRule( $ids[0], Brizy_Admin_Rule::TYPE_INCLUDE ), 'The banner should have the include-all rule set' );
 		$I->assertTrue( $this->storedValue() === true, 'true should be stored' );
 

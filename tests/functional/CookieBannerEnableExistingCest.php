@@ -126,7 +126,7 @@ class CookieBannerEnableExistingCest {
 
 		$I->assertTrue( $result, 'Enable should report success' );
 		$I->assertSame( [ $id ], $this->bannerIds(), 'Enable should create no new block' );
-		$I->assertSame( 'publish', get_post_status( $id ), 'The block should be published' );
+		$I->assertSame( 'draft', get_post_status( $id ), 'The block should stay a draft until the next editor publish' );
 		$I->assertSame( $before['title'], $after['title'], 'The title should be kept' );
 		$I->assertSame( $before['data'], $after['data'], 'The editor data should be kept' );
 		$I->assertSame( $before['meta'], $after['meta'], 'The meta should be kept' );
@@ -186,7 +186,7 @@ class CookieBannerEnableExistingCest {
 	/**
 	 * @param FunctionalTester $I
 	 */
-	public function testEnableKeepsAPublishedBlockPublished( FunctionalTester $I ) {
+	public function testEnableTurnsAPublishedBlockIntoADraft( FunctionalTester $I ) {
 		$this->assertEnableRestoresAndKeepsContent( $I, 'publish' );
 	}
 

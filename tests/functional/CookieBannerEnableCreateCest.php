@@ -76,7 +76,7 @@ class CookieBannerEnableCreateCest {
 		$id    = $block->getWpPostId();
 
 		$I->assertSame( 'Cookie Banner', get_post_field( 'post_title', $id, 'raw' ) );
-		$I->assertSame( 'publish', get_post_status( $id ) );
+		$I->assertSame( 'draft', get_post_status( $id ) );
 		$I->assertSame( [ 'align' => 'bottom', 'top' => 0, 'bottom' => 0 ], get_post_meta( $id, Brizy_Editor_Block::BRIZY_POSITION, true ) );
 		$I->assertSame( [ 'align' => 'bottom', 'top' => 0, 'bottom' => 0 ], $block->getPosition()->convertToOptionValue() );
 		$I->assertSame( [], $block->getDependencies() );

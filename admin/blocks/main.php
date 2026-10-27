@@ -84,9 +84,14 @@ class Brizy_Admin_Blocks_Main
         }
         $blockManager = new Brizy_Admin_Blocks_Manager(Brizy_Admin_Blocks_Main::CP_GLOBAL);
         $blocks = $blockManager->getEntities(['post_status' => 'any']);
+        $cookieBannerEnabled = Brizy_Admin_Blocks_CookieBanner::isCookieBannerEnabled();
         // include all blocks
         $resultBlocks = [];
         foreach ($blocks as $block) {
+            // a disabled cookie banner stays out of the editor, so a publish can not bring it back
+            if (!$cookieBannerEnabled && Brizy_Admin_Blocks_CookieBanner::isCookieBannerUid($block->getUid())) {
+                continue;
+            }
             $resultBlocks[] = Brizy_Editor_Block::get($block->getWpPostId());
         }
         $config['globalBlocks'] = $blockManager->createResponseForEntities($resultBlocks, [], $context);

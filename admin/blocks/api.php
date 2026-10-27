@@ -343,7 +343,7 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi
             } else {
                 // issue: #14271
                 //$block->setDataVersion( $this->param( 'dataVersion' ) );
-                $block->getWpPost()->post_status = $status;
+                $block->getWpPost()->post_status = Brizy_Admin_Blocks_CookieBanner::getAllowedBlockStatus($block->getUid(), $status);
                 // position
                 $position = stripslashes($this->param('position'));
                 if ($position) {
@@ -434,7 +434,7 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi
 
                     // issue: #14271
                     //$block->setDataVersion( $this->param( 'dataVersion' )[ $i ] );
-                    $block->getWpPost()->post_status = $status;
+                    $block->getWpPost()->post_status = Brizy_Admin_Blocks_CookieBanner::getAllowedBlockStatus($uid, $status);
                     // position
                     $position = stripslashes($this->param('position')[$i]);
                     if ($position && ($positionObject = json_decode($position))) {

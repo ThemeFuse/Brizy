@@ -29,6 +29,42 @@ class Brizy_Admin_Blocks_CookieBanner {
 	}
 
 	/**
+	 * The uid of the banner block of the current site.
+	 *
+	 * @return string
+	 */
+	public static function getUid() {
+		return self::UID_PREFIX . get_current_blog_id();
+	}
+
+	/**
+	 * Whether the uid is the one of the banner block of the current site.
+	 *
+	 * @param string $uid
+	 *
+	 * @return bool
+	 */
+	public static function isCookieBannerUid( $uid ): bool {
+		return $uid === self::getUid();
+	}
+
+	/**
+	 * The status a global block update from the editor may write: a disabled banner stays a draft, whatever the editor sends.
+	 *
+	 * @param string $uid
+	 * @param string $status the status sent by the editor
+	 *
+	 * @return string
+	 */
+	public static function getAllowedBlockStatus( $uid, $status ) {
+		if ( self::isCookieBannerUid( $uid ) && ! self::isCookieBannerEnabled() ) {
+			return 'draft';
+		}
+
+		return $status;
+	}
+
+	/**
 	 * @param Brizy_Admin_Blocks_Manager|null $blockManager defaults to the global block manager
 	 * @param Brizy_Admin_Rules_Manager|null $rulesManager
 	 *
@@ -37,13 +73,6 @@ class Brizy_Admin_Blocks_CookieBanner {
 	public function __construct( ?Brizy_Admin_Blocks_Manager $blockManager = null, ?Brizy_Admin_Rules_Manager $rulesManager = null ) {
 		$this->blockManager = $blockManager ?: new Brizy_Admin_Blocks_Manager( Brizy_Admin_Blocks_Main::CP_GLOBAL );
 		$this->rulesManager = $rulesManager ?: new Brizy_Admin_Rules_Manager();
-	}
-
-	/**
-	 * @return string
-	 */
-	private function getUid() {
-		return self::UID_PREFIX . get_current_blog_id();
 	}
 
 	/**
@@ -56,7 +85,7 @@ class Brizy_Admin_Blocks_CookieBanner {
 		$blocks = $this->blockManager->getEntities( [
 			'post_status' => [ 'publish', 'future', 'draft', 'pending', 'private', 'trash' ],
 			'meta_key'    => 'brizy_post_uid',
-			'meta_value'  => $this->getUid(),
+			'meta_value'  => self::getUid(),
 			'orderby'     => 'ID',
 			'order'       => 'ASC',
 		] );
@@ -65,7 +94,7 @@ class Brizy_Admin_Blocks_CookieBanner {
 	}
 
 	/**
-	 * Shows the banner on every Brizy-rendered page: the block is created when missing, published, given the include-all rule set and the option is turned on. Never throws.
+	 * Turns the banner on, hidden from visitors until the next editor publish: the block is created when missing, kept as a draft, given the include-all rule set and the option is turned on. Never throws.
 	 *
 	 * @return bool false when a step threw, true otherwise
 	 */
@@ -80,7 +109,7 @@ class Brizy_Admin_Blocks_CookieBanner {
 
 			$postId = $block->getWpPostId();
 
-			$this->setBlockStatus( $postId, 'publish' );
+			$this->setBlockStatus( $postId, 'draft' );
 
 			$this->applyRules( $postId, $this->includeAllRules() );
 
@@ -200,12 +229,12 @@ class Brizy_Admin_Blocks_CookieBanner {
 	 * @return array
 	 */
 	private function getDefaultPayload() {
-		$uid = $this->getUid();
+		$uid = self::getUid();
 
 		return [
 			'uid'          => $uid,
 			'title'        => 'Cookie Banner',
-			'status'       => 'publish',
+			'status'       => 'draft',
 			'position'     => [
 				'align'  => 'bottom',
 				'top'    => 0,

@@ -90,7 +90,7 @@ class CookieBannerOutcomeCest {
 	}
 
 	/**
-	 * Exactly one banner block, published, with the include-all rule set.
+	 * Exactly one banner block, a draft until the next editor publish, with the include-all rule set.
 	 *
 	 * @param FunctionalTester $I
 	 */
@@ -99,7 +99,7 @@ class CookieBannerOutcomeCest {
 
 		$I->assertCount( 1, $ids, 'There should be exactly one banner block' );
 		$this->resetCaches();
-		$I->assertSame( 'publish', get_post_status( $ids[0] ) );
+		$I->assertSame( 'draft', get_post_status( $ids[0] ) );
 		$this->assertSingleMatchAllRule( $I, $ids[0], Brizy_Admin_Rule::TYPE_INCLUDE );
 	}
 
