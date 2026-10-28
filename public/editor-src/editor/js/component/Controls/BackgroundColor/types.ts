@@ -1,7 +1,6 @@
-import { WithClassName } from "visual/types/attributes";
-import { WithValue } from "visual/types/attributes";
-import { PaletteObject } from "../ColorPalette/entities/PaletteObject";
-import { Meta, Value } from "./entities";
+import type { WithClassName, WithValue } from "visual/types/attributes";
+import type { PaletteObject } from "../ColorPalette/entities/PaletteObject";
+import type { Meta, Value } from "./entities";
 
 export type Props = WithClassName &
   WithValue<Value> & {

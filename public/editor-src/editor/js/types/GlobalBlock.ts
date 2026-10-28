@@ -1,6 +1,6 @@
-import { Block, BlockHtmlWithId } from "./Block";
-import { Rule } from "./Rule";
-import { ExtraFontStyle } from "./Style";
+import type { Block, BlockHtmlWithId } from "./Block";
+import type { Rule } from "./Rule";
+import type { ExtraFontStyle } from "./Style";
 
 export type GlobalBlockPosition = {
   align: "top" | "bottom";
@@ -8,7 +8,9 @@ export type GlobalBlockPosition = {
   bottom: number;
 };
 
-export type BlockMetaType = "normal" | "popup";
+export type BlockMetaType = "normal" | "popup" | "overlay";
+
+export type OverlaySubtype = "cookieBanner";
 
 type Dependency = string;
 
@@ -18,7 +20,7 @@ export interface GlobalBlockBase {
     deleted?: boolean;
     editorVersion?: string;
   };
-  status: "draft" | "publish";
+  status: "draft" | "publish" | "scheduled";
   rules: Rule[];
   position: GlobalBlockPosition | null;
   dataVersion: number;
@@ -52,4 +54,21 @@ export interface GlobalBlockPopup extends GlobalBlockBase {
   };
 }
 
-export type GlobalBlock = GlobalBlockNormal | GlobalBlockPopup;
+export interface GlobalBlockOverlay extends GlobalBlockBase {
+  meta: {
+    type: "overlay";
+    // Set by the CMS that creates overlay blocks; the reader keeps a block
+    // whose subtype is missing or unknown rather than dropping it.
+    subtype: OverlaySubtype | undefined;
+    extraFontStyles: ExtraFontStyle[];
+    _thumbnailSrc?: string;
+    _thumbnailWidth?: number;
+    _thumbnailHeight?: number;
+    _thumbnailTime?: number;
+  };
+}
+
+export type GlobalBlock =
+  | GlobalBlockNormal
+  | GlobalBlockPopup
+  | GlobalBlockOverlay;

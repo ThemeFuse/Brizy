@@ -1,7 +1,7 @@
 import { debounce } from "es-toolkit";
-import { SwiperType } from "visual/types/global";
+import type { SwiperType } from "visual/types/global";
 import { checkValue } from "visual/utils/checkValue";
-import { MValue } from "visual/utils/value";
+import type { MValue } from "visual/utils/value";
 import { Transition } from "../type";
 
 export const getSlideType = (type: Transition): "horizontal" | "vertical" => {
@@ -24,7 +24,7 @@ const debouncedSwiperStart = debounce(() => {
       try {
         swiper.autoplay.start();
       } catch (e) {
-        // eslint-disable-next-line no-console
+        // biome-ignore lint/suspicious/noConsole: migrated from eslint
         console.warn("[Brz] Failed to restart swiper autoplay", e);
       }
     });

@@ -1,7 +1,7 @@
-import React, { ReactElement } from "react";
-import { Props } from "./types";
-import { Sync } from "./Sync";
+import React, { type ReactElement } from "react";
 import { Async } from "./Async";
+import { Sync } from "./Sync";
+import type { Props } from "./types";
 import { isChoicesSync } from "./utils";
 
 export const Select = (props: Props): ReactElement => {

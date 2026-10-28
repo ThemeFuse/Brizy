@@ -1,7 +1,7 @@
 import { makeDataAttr } from "visual/utils/i18n/attribute";
 import TextField from "./common/TextField";
 
-export default class Date extends TextField {
+export default class DateField extends TextField {
   static get componentType() {
     return "Date";
   }

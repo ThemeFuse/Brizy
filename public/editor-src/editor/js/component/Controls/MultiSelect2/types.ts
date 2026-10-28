@@ -1,6 +1,7 @@
-import { ReactElement } from "react";
+import type { ReactElement } from "react";
+import type { Literal } from "visual/utils/types/Literal";
 
-export type MultiSelectProps<T> = {
+export type MultiSelectProps<T extends Literal> = {
   value: T[];
   valueIsLoading?: boolean;
   children: ReactElement<MultiSelectItemProps<T>>[];
@@ -15,7 +16,7 @@ export type MultiSelectProps<T> = {
   useAsSimpleSelect?: boolean;
 };
 
-export type MultiSelectItemProps<T> = {
+export type MultiSelectItemProps<T extends Literal> = {
   title: string;
   value: T;
   disabled?: boolean;

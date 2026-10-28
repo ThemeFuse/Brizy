@@ -1,0 +1,1644 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`groups of options render as nested lists 1`] = `
+"<div class="parent">
+<select data-select2-id="1" tabindex="-1" class="select2-hidden-accessible" aria-hidden="true">
+<optgroup label="Warm" title="Warm colors" data-select2-id="5">
+<option value="red" data-select2-id="3">Red</option>
+<option value="orange" disabled="" data-select2-id="6">Orange</option>
+</optgroup>
+<optgroup label="Cold" disabled="" data-select2-id="7">
+<option value="blue" data-select2-id="8">Blue</option>
+</optgroup>
+<optgroup label="Empty" data-select2-id="9">
+</optgroup>
+</select>
+<span class="select2 select2-container select2-container--default select2-container--below select2-container--open" dir="ltr" data-select2-id="2" style="width: 100%;">
+<span class="selection">
+<span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true" aria-expanded="true" tabindex="0" aria-disabled="false" aria-labelledby="select2-iiii-container" aria-owns="select2-iiii-results" aria-activedescendant="select2-iiii-result-iiii-red">
+<span class="select2-selection__rendered" id="select2-iiii-container" role="textbox" aria-readonly="true" title="Red">Red</span>
+<span class="select2-selection__arrow" role="presentation">
+<b role="presentation">
+</b>
+</span>
+</span>
+</span>
+<span class="dropdown-wrapper" aria-hidden="true">
+</span>
+</span>
+<span class="select2-container select2-container--default select2-container--open" style="position: absolute; top: 0px; left: 0px;">
+<span class="select2-dropdown select2-dropdown--below" dir="ltr" style="width: 0px;">
+<span class="select2-search select2-search--dropdown select2-search--hide">
+<input class="select2-search__field" type="search" tabindex="0" autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false" role="searchbox" aria-autocomplete="list" aria-controls="select2-iiii-results" aria-activedescendant="select2-iiii-result-iiii-red">
+</span>
+<span class="select2-results">
+<ul class="select2-results__options" role="listbox" id="select2-iiii-results" aria-expanded="true" aria-hidden="false">
+<li class="select2-results__option" title="Warm colors" role="group" aria-label="Warm" data-select2-id="10">
+<strong class="select2-results__group">Warm</strong>
+<ul class="select2-results__options select2-results__options--nested">
+<li class="select2-results__option select2-results__option--highlighted" id="select2-iiii-result-iiii-red" role="option" aria-selected="true" data-select2-id="select2-iiii-result-iiii-red">Red</li>
+<li class="select2-results__option" id="select2-iiii-result-iiii-orange" role="option" aria-disabled="true" data-select2-id="select2-iiii-result-iiii-orange">Orange</li>
+</ul>
+</li>
+<li class="select2-results__option" role="group" aria-disabled="true" aria-label="Cold" data-select2-id="11">
+<strong class="select2-results__group">Cold</strong>
+<ul class="select2-results__options select2-results__options--nested">
+<li class="select2-results__option" id="select2-iiii-result-iiii-blue" role="option" aria-selected="false" data-select2-id="select2-iiii-result-iiii-blue">Blue</li>
+</ul>
+</li>
+<li class="select2-results__option" role="group" aria-label="Empty" data-select2-id="12">
+<strong class="select2-results__group">Empty</strong>
+<ul class="select2-results__options select2-results__options--nested">
+</ul>
+</li>
+</ul>
+</span>
+</span>
+</span>
+</div>"
+`;
+
+exports[`the markup of a disabled multiple select, closed 1`] = `
+"<div class="parent">
+<select multiple="" disabled="" data-select2-id="1" tabindex="-1" class="select2-hidden-accessible" aria-hidden="true">
+<option value="red">Red</option>
+<option value="green">Green</option>
+<option value="blue">Blue</option>
+</select>
+<span class="select2 select2-container select2-container--default select2-container--disabled" dir="ltr" data-select2-id="2" style="width: 100%;">
+<span class="selection">
+<span class="select2-selection select2-selection--multiple" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="-1" aria-disabled="true">
+<ul class="select2-selection__rendered">
+<li class="select2-search select2-search--inline">
+<input class="select2-search__field" type="search" tabindex="0" autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false" role="searchbox" aria-autocomplete="list" placeholder="" style="width: 0.75em;" disabled="">
+</li>
+</ul>
+</span>
+</span>
+<span class="dropdown-wrapper" aria-hidden="true">
+</span>
+</span>
+</div>"
+`;
+
+exports[`the markup of a disabled multiple select, closed again 1`] = `
+"<div class="parent">
+<select multiple="" disabled="" data-select2-id="1" tabindex="-1" class="select2-hidden-accessible" aria-hidden="true">
+<option value="red">Red</option>
+<option value="green">Green</option>
+<option value="blue">Blue</option>
+</select>
+<span class="select2 select2-container select2-container--default select2-container--disabled" dir="ltr" data-select2-id="2" style="width: 100%;">
+<span class="selection">
+<span class="select2-selection select2-selection--multiple" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="-1" aria-disabled="true">
+<ul class="select2-selection__rendered">
+<li class="select2-search select2-search--inline">
+<input class="select2-search__field" type="search" tabindex="0" autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false" role="searchbox" aria-autocomplete="list" placeholder="" style="width: 0.75em;" disabled="">
+</li>
+</ul>
+</span>
+</span>
+<span class="dropdown-wrapper" aria-hidden="true">
+</span>
+</span>
+</div>"
+`;
+
+exports[`the markup of a disabled multiple select, open 1`] = `
+"<div class="parent">
+<select multiple="" disabled="" data-select2-id="1" tabindex="-1" class="select2-hidden-accessible" aria-hidden="true">
+<option value="red">Red</option>
+<option value="green">Green</option>
+<option value="blue">Blue</option>
+</select>
+<span class="select2 select2-container select2-container--default select2-container--disabled" dir="ltr" data-select2-id="2" style="width: 100%;">
+<span class="selection">
+<span class="select2-selection select2-selection--multiple" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="-1" aria-disabled="true">
+<ul class="select2-selection__rendered">
+<li class="select2-search select2-search--inline">
+<input class="select2-search__field" type="search" tabindex="0" autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false" role="searchbox" aria-autocomplete="list" placeholder="" style="width: 0.75em;" disabled="">
+</li>
+</ul>
+</span>
+</span>
+<span class="dropdown-wrapper" aria-hidden="true">
+</span>
+</span>
+</div>"
+`;
+
+exports[`the markup of a disabled option, closed 1`] = `
+"<div class="parent">
+<select data-select2-id="1" tabindex="-1" class="select2-hidden-accessible" aria-hidden="true">
+<option value="red" data-select2-id="3">Red</option>
+<option value="green" disabled="">Green</option>
+</select>
+<span class="select2 select2-container select2-container--default" dir="ltr" data-select2-id="2" style="width: 100%;">
+<span class="selection">
+<span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-disabled="false" aria-labelledby="select2-iiii-container">
+<span class="select2-selection__rendered" id="select2-iiii-container" role="textbox" aria-readonly="true" title="Red">Red</span>
+<span class="select2-selection__arrow" role="presentation">
+<b role="presentation">
+</b>
+</span>
+</span>
+</span>
+<span class="dropdown-wrapper" aria-hidden="true">
+</span>
+</span>
+</div>"
+`;
+
+exports[`the markup of a disabled option, closed again 1`] = `
+"<div class="parent">
+<select data-select2-id="1" tabindex="-1" class="select2-hidden-accessible" aria-hidden="true">
+<option value="red" data-select2-id="3">Red</option>
+<option value="green" disabled="" data-select2-id="5">Green</option>
+</select>
+<span class="select2 select2-container select2-container--default select2-container--below select2-container--focus" dir="ltr" data-select2-id="2" style="width: 100%;">
+<span class="selection">
+<span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-disabled="false" aria-labelledby="select2-iiii-container">
+<span class="select2-selection__rendered" id="select2-iiii-container" role="textbox" aria-readonly="true" title="Red">Red</span>
+<span class="select2-selection__arrow" role="presentation">
+<b role="presentation">
+</b>
+</span>
+</span>
+</span>
+<span class="dropdown-wrapper" aria-hidden="true">
+</span>
+</span>
+</div>"
+`;
+
+exports[`the markup of a disabled option, open 1`] = `
+"<div class="parent">
+<select data-select2-id="1" tabindex="-1" class="select2-hidden-accessible" aria-hidden="true">
+<option value="red" data-select2-id="3">Red</option>
+<option value="green" disabled="" data-select2-id="5">Green</option>
+</select>
+<span class="select2 select2-container select2-container--default select2-container--below select2-container--open" dir="ltr" data-select2-id="2" style="width: 100%;">
+<span class="selection">
+<span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true" aria-expanded="true" tabindex="0" aria-disabled="false" aria-labelledby="select2-iiii-container" aria-owns="select2-iiii-results" aria-activedescendant="select2-iiii-result-iiii-red">
+<span class="select2-selection__rendered" id="select2-iiii-container" role="textbox" aria-readonly="true" title="Red">Red</span>
+<span class="select2-selection__arrow" role="presentation">
+<b role="presentation">
+</b>
+</span>
+</span>
+</span>
+<span class="dropdown-wrapper" aria-hidden="true">
+</span>
+</span>
+<span class="select2-container select2-container--default select2-container--open" style="position: absolute; top: 0px; left: 0px;">
+<span class="select2-dropdown select2-dropdown--below" dir="ltr" style="width: 0px;">
+<span class="select2-search select2-search--dropdown select2-search--hide">
+<input class="select2-search__field" type="search" tabindex="0" autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false" role="searchbox" aria-autocomplete="list" aria-controls="select2-iiii-results" aria-activedescendant="select2-iiii-result-iiii-red">
+</span>
+<span class="select2-results">
+<ul class="select2-results__options" role="listbox" id="select2-iiii-results" aria-expanded="true" aria-hidden="false">
+<li class="select2-results__option select2-results__option--highlighted" id="select2-iiii-result-iiii-red" role="option" aria-selected="true" data-select2-id="select2-iiii-result-iiii-red">Red</li>
+<li class="select2-results__option" id="select2-iiii-result-iiii-green" role="option" aria-disabled="true" data-select2-id="select2-iiii-result-iiii-green">Green</li>
+</ul>
+</span>
+</span>
+</span>
+</div>"
+`;
+
+exports[`the markup of a disabled select, closed 1`] = `
+"<div class="parent">
+<select disabled="" data-select2-id="1" tabindex="-1" class="select2-hidden-accessible" aria-hidden="true">
+<option value="" data-select2-id="3">Color</option>
+<option value="red">Red</option>
+<option value="green">Green</option>
+<option value="blue">Blue</option>
+</select>
+<span class="select2 select2-container select2-container--default select2-container--disabled" dir="ltr" data-select2-id="2" style="width: 100%;">
+<span class="selection">
+<span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="-1" aria-disabled="true" aria-labelledby="select2-iiii-container">
+<span class="select2-selection__rendered" id="select2-iiii-container" role="textbox" aria-readonly="true" title="Color">Color</span>
+<span class="select2-selection__arrow" role="presentation">
+<b role="presentation">
+</b>
+</span>
+</span>
+</span>
+<span class="dropdown-wrapper" aria-hidden="true">
+</span>
+</span>
+</div>"
+`;
+
+exports[`the markup of a disabled select, closed again 1`] = `
+"<div class="parent">
+<select disabled="" data-select2-id="1" tabindex="-1" class="select2-hidden-accessible" aria-hidden="true">
+<option value="" data-select2-id="3">Color</option>
+<option value="red">Red</option>
+<option value="green">Green</option>
+<option value="blue">Blue</option>
+</select>
+<span class="select2 select2-container select2-container--default select2-container--disabled" dir="ltr" data-select2-id="2" style="width: 100%;">
+<span class="selection">
+<span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="-1" aria-disabled="true" aria-labelledby="select2-iiii-container">
+<span class="select2-selection__rendered" id="select2-iiii-container" role="textbox" aria-readonly="true" title="Color">Color</span>
+<span class="select2-selection__arrow" role="presentation">
+<b role="presentation">
+</b>
+</span>
+</span>
+</span>
+<span class="dropdown-wrapper" aria-hidden="true">
+</span>
+</span>
+</div>"
+`;
+
+exports[`the markup of a disabled select, open 1`] = `
+"<div class="parent">
+<select disabled="" data-select2-id="1" tabindex="-1" class="select2-hidden-accessible" aria-hidden="true">
+<option value="" data-select2-id="3">Color</option>
+<option value="red">Red</option>
+<option value="green">Green</option>
+<option value="blue">Blue</option>
+</select>
+<span class="select2 select2-container select2-container--default select2-container--disabled" dir="ltr" data-select2-id="2" style="width: 100%;">
+<span class="selection">
+<span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="-1" aria-disabled="true" aria-labelledby="select2-iiii-container">
+<span class="select2-selection__rendered" id="select2-iiii-container" role="textbox" aria-readonly="true" title="Color">Color</span>
+<span class="select2-selection__arrow" role="presentation">
+<b role="presentation">
+</b>
+</span>
+</span>
+</span>
+<span class="dropdown-wrapper" aria-hidden="true">
+</span>
+</span>
+</div>"
+`;
+
+exports[`the markup of a multiple select with a placeholder, closed 1`] = `
+"<div class="parent">
+<select multiple="" data-select2-id="1" tabindex="-1" class="select2-hidden-accessible" aria-hidden="true">
+<option value="">Color</option>
+<option value="red">Red</option>
+<option value="green">Green</option>
+<option value="blue">Blue</option>
+</select>
+<span class="select2 select2-container select2-container--default" dir="ltr" data-select2-id="2" style="width: 100%;">
+<span class="selection">
+<span class="select2-selection select2-selection--multiple" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="-1" aria-disabled="false">
+<ul class="select2-selection__rendered">
+<li class="select2-search select2-search--inline">
+<input class="select2-search__field" type="search" tabindex="0" autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false" role="searchbox" aria-autocomplete="list" placeholder="Pick colors" style="width: 0px;">
+</li>
+</ul>
+</span>
+</span>
+<span class="dropdown-wrapper" aria-hidden="true">
+</span>
+</span>
+</div>"
+`;
+
+exports[`the markup of a multiple select with a placeholder, closed again 1`] = `
+"<div class="parent">
+<select multiple="" data-select2-id="1" tabindex="-1" class="select2-hidden-accessible" aria-hidden="true">
+<option value="" data-select2-id="4">Color</option>
+<option value="red" data-select2-id="5">Red</option>
+<option value="green" data-select2-id="6">Green</option>
+<option value="blue" data-select2-id="7">Blue</option>
+</select>
+<span class="select2 select2-container select2-container--default select2-container--focus select2-container--below" dir="ltr" data-select2-id="2" style="width: 100%;">
+<span class="selection">
+<span class="select2-selection select2-selection--multiple" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="-1" aria-disabled="false">
+<ul class="select2-selection__rendered">
+<li class="select2-search select2-search--inline">
+<input class="select2-search__field" type="search" tabindex="0" autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false" role="searchbox" aria-autocomplete="list" placeholder="Pick colors" style="width: 0px;">
+</li>
+</ul>
+</span>
+</span>
+<span class="dropdown-wrapper" aria-hidden="true">
+</span>
+</span>
+</div>"
+`;
+
+exports[`the markup of a multiple select with a placeholder, open 1`] = `
+"<div class="parent">
+<select multiple="" data-select2-id="1" tabindex="-1" class="select2-hidden-accessible" aria-hidden="true">
+<option value="" data-select2-id="4">Color</option>
+<option value="red" data-select2-id="5">Red</option>
+<option value="green" data-select2-id="6">Green</option>
+<option value="blue" data-select2-id="7">Blue</option>
+</select>
+<span class="select2 select2-container select2-container--default select2-container--focus select2-container--below select2-container--open" dir="ltr" data-select2-id="2" style="width: 100%;">
+<span class="selection">
+<span class="select2-selection select2-selection--multiple" role="combobox" aria-haspopup="true" aria-expanded="true" tabindex="-1" aria-disabled="false" aria-owns="select2-iiii-results" aria-activedescendant="select2-iiii-result-iiii-red">
+<ul class="select2-selection__rendered">
+<li class="select2-search select2-search--inline">
+<input class="select2-search__field" type="search" tabindex="0" autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false" role="searchbox" aria-autocomplete="list" placeholder="Pick colors" style="width: 0px;" aria-controls="select2-iiii-results" aria-activedescendant="select2-iiii-result-iiii-red">
+</li>
+</ul>
+</span>
+</span>
+<span class="dropdown-wrapper" aria-hidden="true">
+</span>
+</span>
+<span class="select2-container select2-container--default select2-container--open" style="position: absolute; top: 0px; left: 0px;">
+<span class="select2-dropdown select2-dropdown--below" dir="ltr" style="width: 0px;">
+<span class="select2-results">
+<ul class="select2-results__options" role="listbox" aria-multiselectable="true" id="select2-iiii-results" aria-expanded="true" aria-hidden="false">
+<li class="select2-results__option select2-results__option--highlighted" id="select2-iiii-result-iiii-red" role="option" aria-selected="false" data-select2-id="select2-iiii-result-iiii-red">Red</li>
+<li class="select2-results__option" id="select2-iiii-result-iiii-green" role="option" aria-selected="false" data-select2-id="select2-iiii-result-iiii-green">Green</li>
+<li class="select2-results__option" id="select2-iiii-result-iiii-blue" role="option" aria-selected="false" data-select2-id="select2-iiii-result-iiii-blue">Blue</li>
+</ul>
+</span>
+</span>
+</span>
+</div>"
+`;
+
+exports[`the markup of a multiple select with a tabindex, closed 1`] = `
+"<div class="parent">
+<select multiple="" tabindex="-1" data-select2-id="1" class="select2-hidden-accessible" aria-hidden="true">
+<option value="red">Red</option>
+<option value="green">Green</option>
+<option value="blue">Blue</option>
+</select>
+<span class="select2 select2-container select2-container--default" dir="ltr" data-select2-id="2" style="width: 100%;">
+<span class="selection">
+<span class="select2-selection select2-selection--multiple" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="-1" aria-disabled="false">
+<ul class="select2-selection__rendered">
+<li class="select2-search select2-search--inline">
+<input class="select2-search__field" type="search" tabindex="3" autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false" role="searchbox" aria-autocomplete="list" placeholder="" style="width: 0.75em;">
+</li>
+</ul>
+</span>
+</span>
+<span class="dropdown-wrapper" aria-hidden="true">
+</span>
+</span>
+</div>"
+`;
+
+exports[`the markup of a multiple select with a tabindex, closed again 1`] = `
+"<div class="parent">
+<select multiple="" tabindex="-1" data-select2-id="1" class="select2-hidden-accessible" aria-hidden="true">
+<option value="red" data-select2-id="4">Red</option>
+<option value="green" data-select2-id="5">Green</option>
+<option value="blue" data-select2-id="6">Blue</option>
+</select>
+<span class="select2 select2-container select2-container--default select2-container--focus select2-container--below" dir="ltr" data-select2-id="2" style="width: 100%;">
+<span class="selection">
+<span class="select2-selection select2-selection--multiple" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="-1" aria-disabled="false">
+<ul class="select2-selection__rendered">
+<li class="select2-search select2-search--inline">
+<input class="select2-search__field" type="search" tabindex="3" autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false" role="searchbox" aria-autocomplete="list" placeholder="" style="width: 0.75em;">
+</li>
+</ul>
+</span>
+</span>
+<span class="dropdown-wrapper" aria-hidden="true">
+</span>
+</span>
+</div>"
+`;
+
+exports[`the markup of a multiple select with a tabindex, open 1`] = `
+"<div class="parent">
+<select multiple="" tabindex="-1" data-select2-id="1" class="select2-hidden-accessible" aria-hidden="true">
+<option value="red" data-select2-id="4">Red</option>
+<option value="green" data-select2-id="5">Green</option>
+<option value="blue" data-select2-id="6">Blue</option>
+</select>
+<span class="select2 select2-container select2-container--default select2-container--focus select2-container--below select2-container--open" dir="ltr" data-select2-id="2" style="width: 100%;">
+<span class="selection">
+<span class="select2-selection select2-selection--multiple" role="combobox" aria-haspopup="true" aria-expanded="true" tabindex="-1" aria-disabled="false" aria-owns="select2-iiii-results" aria-activedescendant="select2-iiii-result-iiii-red">
+<ul class="select2-selection__rendered">
+<li class="select2-search select2-search--inline">
+<input class="select2-search__field" type="search" tabindex="3" autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false" role="searchbox" aria-autocomplete="list" placeholder="" style="width: 0.75em;" aria-controls="select2-iiii-results" aria-activedescendant="select2-iiii-result-iiii-red">
+</li>
+</ul>
+</span>
+</span>
+<span class="dropdown-wrapper" aria-hidden="true">
+</span>
+</span>
+<span class="select2-container select2-container--default select2-container--open" style="position: absolute; top: 0px; left: 0px;">
+<span class="select2-dropdown select2-dropdown--below" dir="ltr" style="width: 0px;">
+<span class="select2-results">
+<ul class="select2-results__options" role="listbox" aria-multiselectable="true" id="select2-iiii-results" aria-expanded="true" aria-hidden="false">
+<li class="select2-results__option select2-results__option--highlighted" id="select2-iiii-result-iiii-red" role="option" aria-selected="false" data-select2-id="select2-iiii-result-iiii-red">Red</li>
+<li class="select2-results__option" id="select2-iiii-result-iiii-green" role="option" aria-selected="false" data-select2-id="select2-iiii-result-iiii-green">Green</li>
+<li class="select2-results__option" id="select2-iiii-result-iiii-blue" role="option" aria-selected="false" data-select2-id="select2-iiii-result-iiii-blue">Blue</li>
+</ul>
+</span>
+</span>
+</span>
+</div>"
+`;
+
+exports[`the markup of a multiple select, closed 1`] = `
+"<div class="parent">
+<select multiple="" data-select2-id="1" tabindex="-1" class="select2-hidden-accessible" aria-hidden="true">
+<option value="red">Red</option>
+<option value="green">Green</option>
+<option value="blue">Blue</option>
+</select>
+<span class="select2 select2-container select2-container--default" dir="ltr" data-select2-id="2" style="width: 100%;">
+<span class="selection">
+<span class="select2-selection select2-selection--multiple" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="-1" aria-disabled="false">
+<ul class="select2-selection__rendered">
+<li class="select2-search select2-search--inline">
+<input class="select2-search__field" type="search" tabindex="0" autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false" role="searchbox" aria-autocomplete="list" placeholder="" style="width: 0.75em;">
+</li>
+</ul>
+</span>
+</span>
+<span class="dropdown-wrapper" aria-hidden="true">
+</span>
+</span>
+</div>"
+`;
+
+exports[`the markup of a multiple select, closed again 1`] = `
+"<div class="parent">
+<select multiple="" data-select2-id="1" tabindex="-1" class="select2-hidden-accessible" aria-hidden="true">
+<option value="red" data-select2-id="4">Red</option>
+<option value="green" data-select2-id="5">Green</option>
+<option value="blue" data-select2-id="6">Blue</option>
+</select>
+<span class="select2 select2-container select2-container--default select2-container--focus select2-container--below" dir="ltr" data-select2-id="2" style="width: 100%;">
+<span class="selection">
+<span class="select2-selection select2-selection--multiple" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="-1" aria-disabled="false">
+<ul class="select2-selection__rendered">
+<li class="select2-search select2-search--inline">
+<input class="select2-search__field" type="search" tabindex="0" autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false" role="searchbox" aria-autocomplete="list" placeholder="" style="width: 0.75em;">
+</li>
+</ul>
+</span>
+</span>
+<span class="dropdown-wrapper" aria-hidden="true">
+</span>
+</span>
+</div>"
+`;
+
+exports[`the markup of a multiple select, open 1`] = `
+"<div class="parent">
+<select multiple="" data-select2-id="1" tabindex="-1" class="select2-hidden-accessible" aria-hidden="true">
+<option value="red" data-select2-id="4">Red</option>
+<option value="green" data-select2-id="5">Green</option>
+<option value="blue" data-select2-id="6">Blue</option>
+</select>
+<span class="select2 select2-container select2-container--default select2-container--focus select2-container--below select2-container--open" dir="ltr" data-select2-id="2" style="width: 100%;">
+<span class="selection">
+<span class="select2-selection select2-selection--multiple" role="combobox" aria-haspopup="true" aria-expanded="true" tabindex="-1" aria-disabled="false" aria-owns="select2-iiii-results" aria-activedescendant="select2-iiii-result-iiii-red">
+<ul class="select2-selection__rendered">
+<li class="select2-search select2-search--inline">
+<input class="select2-search__field" type="search" tabindex="0" autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false" role="searchbox" aria-autocomplete="list" placeholder="" style="width: 0.75em;" aria-controls="select2-iiii-results" aria-activedescendant="select2-iiii-result-iiii-red">
+</li>
+</ul>
+</span>
+</span>
+<span class="dropdown-wrapper" aria-hidden="true">
+</span>
+</span>
+<span class="select2-container select2-container--default select2-container--open" style="position: absolute; top: 0px; left: 0px;">
+<span class="select2-dropdown select2-dropdown--below" dir="ltr" style="width: 0px;">
+<span class="select2-results">
+<ul class="select2-results__options" role="listbox" aria-multiselectable="true" id="select2-iiii-results" aria-expanded="true" aria-hidden="false">
+<li class="select2-results__option select2-results__option--highlighted" id="select2-iiii-result-iiii-red" role="option" aria-selected="false" data-select2-id="select2-iiii-result-iiii-red">Red</li>
+<li class="select2-results__option" id="select2-iiii-result-iiii-green" role="option" aria-selected="false" data-select2-id="select2-iiii-result-iiii-green">Green</li>
+<li class="select2-results__option" id="select2-iiii-result-iiii-blue" role="option" aria-selected="false" data-select2-id="select2-iiii-result-iiii-blue">Blue</li>
+</ul>
+</span>
+</span>
+</span>
+</div>"
+`;
+
+exports[`the markup of a preselected option next to a placeholder, closed 1`] = `
+"<div class="parent">
+<select data-select2-id="1" tabindex="-1" class="select2-hidden-accessible" aria-hidden="true">
+<option value="">Color</option>
+<option value="green" selected="" data-select2-id="3">Green</option>
+<option value="blue">Blue</option>
+</select>
+<span class="select2 select2-container select2-container--default" dir="ltr" data-select2-id="2" style="width: 100%;">
+<span class="selection">
+<span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-disabled="false" aria-labelledby="select2-iiii-container">
+<span class="select2-selection__rendered" id="select2-iiii-container" role="textbox" aria-readonly="true" title="Green">Green</span>
+<span class="select2-selection__arrow" role="presentation">
+<b role="presentation">
+</b>
+</span>
+</span>
+</span>
+<span class="dropdown-wrapper" aria-hidden="true">
+</span>
+</span>
+</div>"
+`;
+
+exports[`the markup of a preselected option next to a placeholder, closed again 1`] = `
+"<div class="parent">
+<select data-select2-id="1" tabindex="-1" class="select2-hidden-accessible" aria-hidden="true">
+<option value="" data-select2-id="5">Color</option>
+<option value="green" selected="" data-select2-id="3">Green</option>
+<option value="blue" data-select2-id="6">Blue</option>
+</select>
+<span class="select2 select2-container select2-container--default select2-container--below select2-container--focus" dir="ltr" data-select2-id="2" style="width: 100%;">
+<span class="selection">
+<span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-disabled="false" aria-labelledby="select2-iiii-container">
+<span class="select2-selection__rendered" id="select2-iiii-container" role="textbox" aria-readonly="true" title="Green">Green</span>
+<span class="select2-selection__arrow" role="presentation">
+<b role="presentation">
+</b>
+</span>
+</span>
+</span>
+<span class="dropdown-wrapper" aria-hidden="true">
+</span>
+</span>
+</div>"
+`;
+
+exports[`the markup of a preselected option next to a placeholder, open 1`] = `
+"<div class="parent">
+<select data-select2-id="1" tabindex="-1" class="select2-hidden-accessible" aria-hidden="true">
+<option value="" data-select2-id="5">Color</option>
+<option value="green" selected="" data-select2-id="3">Green</option>
+<option value="blue" data-select2-id="6">Blue</option>
+</select>
+<span class="select2 select2-container select2-container--default select2-container--below select2-container--open" dir="ltr" data-select2-id="2" style="width: 100%;">
+<span class="selection">
+<span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true" aria-expanded="true" tabindex="0" aria-disabled="false" aria-labelledby="select2-iiii-container" aria-owns="select2-iiii-results" aria-activedescendant="select2-iiii-result-iiii-green">
+<span class="select2-selection__rendered" id="select2-iiii-container" role="textbox" aria-readonly="true" title="Green">Green</span>
+<span class="select2-selection__arrow" role="presentation">
+<b role="presentation">
+</b>
+</span>
+</span>
+</span>
+<span class="dropdown-wrapper" aria-hidden="true">
+</span>
+</span>
+<span class="select2-container select2-container--default select2-container--open" style="position: absolute; top: 0px; left: 0px;">
+<span class="select2-dropdown select2-dropdown--below" dir="ltr" style="width: 0px;">
+<span class="select2-search select2-search--dropdown select2-search--hide">
+<input class="select2-search__field" type="search" tabindex="0" autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false" role="searchbox" aria-autocomplete="list" aria-controls="select2-iiii-results" aria-activedescendant="select2-iiii-result-iiii-green">
+</span>
+<span class="select2-results">
+<ul class="select2-results__options" role="listbox" id="select2-iiii-results" aria-expanded="true" aria-hidden="false">
+<li class="select2-results__option select2-results__option--highlighted" id="select2-iiii-result-iiii-green" role="option" aria-selected="true" data-select2-id="select2-iiii-result-iiii-green">Green</li>
+<li class="select2-results__option" id="select2-iiii-result-iiii-blue" role="option" aria-selected="false" data-select2-id="select2-iiii-result-iiii-blue">Blue</li>
+</ul>
+</span>
+</span>
+</span>
+</div>"
+`;
+
+exports[`the markup of a preselected option, closed 1`] = `
+"<div class="parent">
+<select data-select2-id="1" tabindex="-1" class="select2-hidden-accessible" aria-hidden="true">
+<option value="">Color</option>
+<option value="red">Red</option>
+<option value="green" selected="" data-select2-id="3">Green</option>
+<option value="blue">Blue</option>
+</select>
+<span class="select2 select2-container select2-container--default" dir="ltr" data-select2-id="2" style="width: 100%;">
+<span class="selection">
+<span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-disabled="false" aria-labelledby="select2-iiii-container">
+<span class="select2-selection__rendered" id="select2-iiii-container" role="textbox" aria-readonly="true" title="Green">Green</span>
+<span class="select2-selection__arrow" role="presentation">
+<b role="presentation">
+</b>
+</span>
+</span>
+</span>
+<span class="dropdown-wrapper" aria-hidden="true">
+</span>
+</span>
+</div>"
+`;
+
+exports[`the markup of a preselected option, closed again 1`] = `
+"<div class="parent">
+<select data-select2-id="1" tabindex="-1" class="select2-hidden-accessible" aria-hidden="true">
+<option value="" data-select2-id="5">Color</option>
+<option value="red" data-select2-id="6">Red</option>
+<option value="green" selected="" data-select2-id="3">Green</option>
+<option value="blue" data-select2-id="7">Blue</option>
+</select>
+<span class="select2 select2-container select2-container--default select2-container--below select2-container--focus" dir="ltr" data-select2-id="2" style="width: 100%;">
+<span class="selection">
+<span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-disabled="false" aria-labelledby="select2-iiii-container">
+<span class="select2-selection__rendered" id="select2-iiii-container" role="textbox" aria-readonly="true" title="Green">Green</span>
+<span class="select2-selection__arrow" role="presentation">
+<b role="presentation">
+</b>
+</span>
+</span>
+</span>
+<span class="dropdown-wrapper" aria-hidden="true">
+</span>
+</span>
+</div>"
+`;
+
+exports[`the markup of a preselected option, open 1`] = `
+"<div class="parent">
+<select data-select2-id="1" tabindex="-1" class="select2-hidden-accessible" aria-hidden="true">
+<option value="" data-select2-id="5">Color</option>
+<option value="red" data-select2-id="6">Red</option>
+<option value="green" selected="" data-select2-id="3">Green</option>
+<option value="blue" data-select2-id="7">Blue</option>
+</select>
+<span class="select2 select2-container select2-container--default select2-container--below select2-container--open" dir="ltr" data-select2-id="2" style="width: 100%;">
+<span class="selection">
+<span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true" aria-expanded="true" tabindex="0" aria-disabled="false" aria-labelledby="select2-iiii-container" aria-owns="select2-iiii-results" aria-activedescendant="select2-iiii-result-iiii-green">
+<span class="select2-selection__rendered" id="select2-iiii-container" role="textbox" aria-readonly="true" title="Green">Green</span>
+<span class="select2-selection__arrow" role="presentation">
+<b role="presentation">
+</b>
+</span>
+</span>
+</span>
+<span class="dropdown-wrapper" aria-hidden="true">
+</span>
+</span>
+<span class="select2-container select2-container--default select2-container--open" style="position: absolute; top: 0px; left: 0px;">
+<span class="select2-dropdown select2-dropdown--below" dir="ltr" style="width: 0px;">
+<span class="select2-search select2-search--dropdown select2-search--hide">
+<input class="select2-search__field" type="search" tabindex="0" autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false" role="searchbox" aria-autocomplete="list" aria-controls="select2-iiii-results" aria-activedescendant="select2-iiii-result-iiii-green">
+</span>
+<span class="select2-results">
+<ul class="select2-results__options" role="listbox" id="select2-iiii-results" aria-expanded="true" aria-hidden="false">
+<li class="select2-results__option" role="option" aria-selected="false" data-select2-id="8">Color</li>
+<li class="select2-results__option" id="select2-iiii-result-iiii-red" role="option" aria-selected="false" data-select2-id="select2-iiii-result-iiii-red">Red</li>
+<li class="select2-results__option select2-results__option--highlighted" id="select2-iiii-result-iiii-green" role="option" aria-selected="true" data-select2-id="select2-iiii-result-iiii-green">Green</li>
+<li class="select2-results__option" id="select2-iiii-result-iiii-blue" role="option" aria-selected="false" data-select2-id="select2-iiii-result-iiii-blue">Blue</li>
+</ul>
+</span>
+</span>
+</span>
+</div>"
+`;
+
+exports[`the markup of a select with a name that needs cleaning, closed 1`] = `
+"<div class="parent">
+<select name="color[a.b]:c,d" data-select2-id="1" tabindex="-1" class="select2-hidden-accessible" aria-hidden="true">
+<option value="" data-select2-id="3">Color</option>
+<option value="red">Red</option>
+<option value="green">Green</option>
+<option value="blue">Blue</option>
+</select>
+<span class="select2 select2-container select2-container--default" dir="ltr" data-select2-id="2" style="width: 100%;">
+<span class="selection">
+<span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-disabled="false" aria-labelledby="select2-colorabcd-ii-container">
+<span class="select2-selection__rendered" id="select2-colorabcd-ii-container" role="textbox" aria-readonly="true" title="Color">Color</span>
+<span class="select2-selection__arrow" role="presentation">
+<b role="presentation">
+</b>
+</span>
+</span>
+</span>
+<span class="dropdown-wrapper" aria-hidden="true">
+</span>
+</span>
+</div>"
+`;
+
+exports[`the markup of a select with a name that needs cleaning, closed again 1`] = `
+"<div class="parent">
+<select name="color[a.b]:c,d" data-select2-id="1" tabindex="-1" class="select2-hidden-accessible" aria-hidden="true">
+<option value="" data-select2-id="3">Color</option>
+<option value="red" data-select2-id="5">Red</option>
+<option value="green" data-select2-id="6">Green</option>
+<option value="blue" data-select2-id="7">Blue</option>
+</select>
+<span class="select2 select2-container select2-container--default select2-container--below select2-container--focus" dir="ltr" data-select2-id="2" style="width: 100%;">
+<span class="selection">
+<span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-disabled="false" aria-labelledby="select2-colorabcd-ii-container">
+<span class="select2-selection__rendered" id="select2-colorabcd-ii-container" role="textbox" aria-readonly="true" title="Color">Color</span>
+<span class="select2-selection__arrow" role="presentation">
+<b role="presentation">
+</b>
+</span>
+</span>
+</span>
+<span class="dropdown-wrapper" aria-hidden="true">
+</span>
+</span>
+</div>"
+`;
+
+exports[`the markup of a select with a name that needs cleaning, open 1`] = `
+"<div class="parent">
+<select name="color[a.b]:c,d" data-select2-id="1" tabindex="-1" class="select2-hidden-accessible" aria-hidden="true">
+<option value="" data-select2-id="3">Color</option>
+<option value="red" data-select2-id="5">Red</option>
+<option value="green" data-select2-id="6">Green</option>
+<option value="blue" data-select2-id="7">Blue</option>
+</select>
+<span class="select2 select2-container select2-container--default select2-container--below select2-container--open" dir="ltr" data-select2-id="2" style="width: 100%;">
+<span class="selection">
+<span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true" aria-expanded="true" tabindex="0" aria-disabled="false" aria-labelledby="select2-colorabcd-ii-container" aria-owns="select2-colorabcd-ii-results">
+<span class="select2-selection__rendered" id="select2-colorabcd-ii-container" role="textbox" aria-readonly="true" title="Color">Color</span>
+<span class="select2-selection__arrow" role="presentation">
+<b role="presentation">
+</b>
+</span>
+</span>
+</span>
+<span class="dropdown-wrapper" aria-hidden="true">
+</span>
+</span>
+<span class="select2-container select2-container--default select2-container--open" style="position: absolute; top: 0px; left: 0px;">
+<span class="select2-dropdown select2-dropdown--below" dir="ltr" style="width: 0px;">
+<span class="select2-search select2-search--dropdown select2-search--hide">
+<input class="select2-search__field" type="search" tabindex="0" autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false" role="searchbox" aria-autocomplete="list" aria-controls="select2-colorabcd-ii-results">
+</span>
+<span class="select2-results">
+<ul class="select2-results__options" role="listbox" id="select2-colorabcd-ii-results" aria-expanded="true" aria-hidden="false">
+<li class="select2-results__option select2-results__option--highlighted" role="option" aria-selected="true" data-select2-id="8">Color</li>
+<li class="select2-results__option" id="select2-colorabcd-ii-result-iiii-red" role="option" aria-selected="false" data-select2-id="select2-colorabcd-ii-result-iiii-red">Red</li>
+<li class="select2-results__option" id="select2-colorabcd-ii-result-iiii-green" role="option" aria-selected="false" data-select2-id="select2-colorabcd-ii-result-iiii-green">Green</li>
+<li class="select2-results__option" id="select2-colorabcd-ii-result-iiii-blue" role="option" aria-selected="false" data-select2-id="select2-colorabcd-ii-result-iiii-blue">Blue</li>
+</ul>
+</span>
+</span>
+</span>
+</div>"
+`;
+
+exports[`the markup of a select with a title and a tabindex, closed 1`] = `
+"<div class="parent">
+<select title="Colors" tabindex="-1" data-select2-id="1" class="select2-hidden-accessible" aria-hidden="true">
+<option value="" data-select2-id="3">Color</option>
+<option value="red">Red</option>
+<option value="green">Green</option>
+<option value="blue">Blue</option>
+</select>
+<span class="select2 select2-container select2-container--default" dir="ltr" data-select2-id="2" style="width: 100%;">
+<span class="selection">
+<span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true" aria-expanded="false" title="Colors" tabindex="3" aria-disabled="false" aria-labelledby="select2-iiii-container">
+<span class="select2-selection__rendered" id="select2-iiii-container" role="textbox" aria-readonly="true" title="Color">Color</span>
+<span class="select2-selection__arrow" role="presentation">
+<b role="presentation">
+</b>
+</span>
+</span>
+</span>
+<span class="dropdown-wrapper" aria-hidden="true">
+</span>
+</span>
+</div>"
+`;
+
+exports[`the markup of a select with a title and a tabindex, closed again 1`] = `
+"<div class="parent">
+<select title="Colors" tabindex="-1" data-select2-id="1" class="select2-hidden-accessible" aria-hidden="true">
+<option value="" data-select2-id="3">Color</option>
+<option value="red" data-select2-id="5">Red</option>
+<option value="green" data-select2-id="6">Green</option>
+<option value="blue" data-select2-id="7">Blue</option>
+</select>
+<span class="select2 select2-container select2-container--default select2-container--below select2-container--focus" dir="ltr" data-select2-id="2" style="width: 100%;">
+<span class="selection">
+<span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true" aria-expanded="false" title="Colors" tabindex="3" aria-disabled="false" aria-labelledby="select2-iiii-container">
+<span class="select2-selection__rendered" id="select2-iiii-container" role="textbox" aria-readonly="true" title="Color">Color</span>
+<span class="select2-selection__arrow" role="presentation">
+<b role="presentation">
+</b>
+</span>
+</span>
+</span>
+<span class="dropdown-wrapper" aria-hidden="true">
+</span>
+</span>
+</div>"
+`;
+
+exports[`the markup of a select with a title and a tabindex, open 1`] = `
+"<div class="parent">
+<select title="Colors" tabindex="-1" data-select2-id="1" class="select2-hidden-accessible" aria-hidden="true">
+<option value="" data-select2-id="3">Color</option>
+<option value="red" data-select2-id="5">Red</option>
+<option value="green" data-select2-id="6">Green</option>
+<option value="blue" data-select2-id="7">Blue</option>
+</select>
+<span class="select2 select2-container select2-container--default select2-container--below select2-container--open" dir="ltr" data-select2-id="2" style="width: 100%;">
+<span class="selection">
+<span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true" aria-expanded="true" title="Colors" tabindex="3" aria-disabled="false" aria-labelledby="select2-iiii-container" aria-owns="select2-iiii-results">
+<span class="select2-selection__rendered" id="select2-iiii-container" role="textbox" aria-readonly="true" title="Color">Color</span>
+<span class="select2-selection__arrow" role="presentation">
+<b role="presentation">
+</b>
+</span>
+</span>
+</span>
+<span class="dropdown-wrapper" aria-hidden="true">
+</span>
+</span>
+<span class="select2-container select2-container--default select2-container--open" style="position: absolute; top: 0px; left: 0px;">
+<span class="select2-dropdown select2-dropdown--below" dir="ltr" style="width: 0px;">
+<span class="select2-search select2-search--dropdown select2-search--hide">
+<input class="select2-search__field" type="search" tabindex="0" autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false" role="searchbox" aria-autocomplete="list" aria-controls="select2-iiii-results">
+</span>
+<span class="select2-results">
+<ul class="select2-results__options" role="listbox" id="select2-iiii-results" aria-expanded="true" aria-hidden="false">
+<li class="select2-results__option select2-results__option--highlighted" role="option" aria-selected="true" data-select2-id="8">Color</li>
+<li class="select2-results__option" id="select2-iiii-result-iiii-red" role="option" aria-selected="false" data-select2-id="select2-iiii-result-iiii-red">Red</li>
+<li class="select2-results__option" id="select2-iiii-result-iiii-green" role="option" aria-selected="false" data-select2-id="select2-iiii-result-iiii-green">Green</li>
+<li class="select2-results__option" id="select2-iiii-result-iiii-blue" role="option" aria-selected="false" data-select2-id="select2-iiii-result-iiii-blue">Blue</li>
+</ul>
+</span>
+</span>
+</span>
+</div>"
+`;
+
+exports[`the markup of a select with an id, closed 1`] = `
+"<div class="parent">
+<select id="color" data-select2-id="color" tabindex="-1" class="select2-hidden-accessible" aria-hidden="true">
+<option value="" data-select2-id="2">Color</option>
+<option value="red">Red</option>
+<option value="green">Green</option>
+<option value="blue">Blue</option>
+</select>
+<span class="select2 select2-container select2-container--default" dir="ltr" data-select2-id="1" style="width: 100%;">
+<span class="selection">
+<span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-disabled="false" aria-labelledby="select2-color-container">
+<span class="select2-selection__rendered" id="select2-color-container" role="textbox" aria-readonly="true" title="Color">Color</span>
+<span class="select2-selection__arrow" role="presentation">
+<b role="presentation">
+</b>
+</span>
+</span>
+</span>
+<span class="dropdown-wrapper" aria-hidden="true">
+</span>
+</span>
+</div>"
+`;
+
+exports[`the markup of a select with an id, closed again 1`] = `
+"<div class="parent">
+<select id="color" data-select2-id="color" tabindex="-1" class="select2-hidden-accessible" aria-hidden="true">
+<option value="" data-select2-id="2">Color</option>
+<option value="red" data-select2-id="4">Red</option>
+<option value="green" data-select2-id="5">Green</option>
+<option value="blue" data-select2-id="6">Blue</option>
+</select>
+<span class="select2 select2-container select2-container--default select2-container--below select2-container--focus" dir="ltr" data-select2-id="1" style="width: 100%;">
+<span class="selection">
+<span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-disabled="false" aria-labelledby="select2-color-container">
+<span class="select2-selection__rendered" id="select2-color-container" role="textbox" aria-readonly="true" title="Color">Color</span>
+<span class="select2-selection__arrow" role="presentation">
+<b role="presentation">
+</b>
+</span>
+</span>
+</span>
+<span class="dropdown-wrapper" aria-hidden="true">
+</span>
+</span>
+</div>"
+`;
+
+exports[`the markup of a select with an id, open 1`] = `
+"<div class="parent">
+<select id="color" data-select2-id="color" tabindex="-1" class="select2-hidden-accessible" aria-hidden="true">
+<option value="" data-select2-id="2">Color</option>
+<option value="red" data-select2-id="4">Red</option>
+<option value="green" data-select2-id="5">Green</option>
+<option value="blue" data-select2-id="6">Blue</option>
+</select>
+<span class="select2 select2-container select2-container--default select2-container--below select2-container--open" dir="ltr" data-select2-id="1" style="width: 100%;">
+<span class="selection">
+<span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true" aria-expanded="true" tabindex="0" aria-disabled="false" aria-labelledby="select2-color-container" aria-owns="select2-color-results">
+<span class="select2-selection__rendered" id="select2-color-container" role="textbox" aria-readonly="true" title="Color">Color</span>
+<span class="select2-selection__arrow" role="presentation">
+<b role="presentation">
+</b>
+</span>
+</span>
+</span>
+<span class="dropdown-wrapper" aria-hidden="true">
+</span>
+</span>
+<span class="select2-container select2-container--default select2-container--open" style="position: absolute; top: 0px; left: 0px;">
+<span class="select2-dropdown select2-dropdown--below" dir="ltr" style="width: 0px;">
+<span class="select2-search select2-search--dropdown select2-search--hide">
+<input class="select2-search__field" type="search" tabindex="0" autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false" role="searchbox" aria-autocomplete="list" aria-controls="select2-color-results">
+</span>
+<span class="select2-results">
+<ul class="select2-results__options" role="listbox" id="select2-color-results" aria-expanded="true" aria-hidden="false">
+<li class="select2-results__option select2-results__option--highlighted" role="option" aria-selected="true" data-select2-id="7">Color</li>
+<li class="select2-results__option" id="select2-color-result-iiii-red" role="option" aria-selected="false" data-select2-id="select2-color-result-iiii-red">Red</li>
+<li class="select2-results__option" id="select2-color-result-iiii-green" role="option" aria-selected="false" data-select2-id="select2-color-result-iiii-green">Green</li>
+<li class="select2-results__option" id="select2-color-result-iiii-blue" role="option" aria-selected="false" data-select2-id="select2-color-result-iiii-blue">Blue</li>
+</ul>
+</span>
+</span>
+</span>
+</div>"
+`;
+
+exports[`the markup of a select with its own direction, closed 1`] = `
+"<div class="parent">
+<select dir="rtl" data-select2-id="1" tabindex="-1" class="select2-hidden-accessible" aria-hidden="true">
+<option value="" data-select2-id="3">Color</option>
+<option value="red">Red</option>
+<option value="green">Green</option>
+<option value="blue">Blue</option>
+</select>
+<span class="select2 select2-container select2-container--default" dir="rtl" data-select2-id="2" style="width: 100%;">
+<span class="selection">
+<span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-disabled="false" aria-labelledby="select2-iiii-container">
+<span class="select2-selection__rendered" id="select2-iiii-container" role="textbox" aria-readonly="true" title="Color">Color</span>
+<span class="select2-selection__arrow" role="presentation">
+<b role="presentation">
+</b>
+</span>
+</span>
+</span>
+<span class="dropdown-wrapper" aria-hidden="true">
+</span>
+</span>
+</div>"
+`;
+
+exports[`the markup of a select with its own direction, closed again 1`] = `
+"<div class="parent">
+<select dir="rtl" data-select2-id="1" tabindex="-1" class="select2-hidden-accessible" aria-hidden="true">
+<option value="" data-select2-id="3">Color</option>
+<option value="red" data-select2-id="5">Red</option>
+<option value="green" data-select2-id="6">Green</option>
+<option value="blue" data-select2-id="7">Blue</option>
+</select>
+<span class="select2 select2-container select2-container--default select2-container--below select2-container--focus" dir="rtl" data-select2-id="2" style="width: 100%;">
+<span class="selection">
+<span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-disabled="false" aria-labelledby="select2-iiii-container">
+<span class="select2-selection__rendered" id="select2-iiii-container" role="textbox" aria-readonly="true" title="Color">Color</span>
+<span class="select2-selection__arrow" role="presentation">
+<b role="presentation">
+</b>
+</span>
+</span>
+</span>
+<span class="dropdown-wrapper" aria-hidden="true">
+</span>
+</span>
+</div>"
+`;
+
+exports[`the markup of a select with its own direction, open 1`] = `
+"<div class="parent">
+<select dir="rtl" data-select2-id="1" tabindex="-1" class="select2-hidden-accessible" aria-hidden="true">
+<option value="" data-select2-id="3">Color</option>
+<option value="red" data-select2-id="5">Red</option>
+<option value="green" data-select2-id="6">Green</option>
+<option value="blue" data-select2-id="7">Blue</option>
+</select>
+<span class="select2 select2-container select2-container--default select2-container--below select2-container--open" dir="rtl" data-select2-id="2" style="width: 100%;">
+<span class="selection">
+<span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true" aria-expanded="true" tabindex="0" aria-disabled="false" aria-labelledby="select2-iiii-container" aria-owns="select2-iiii-results">
+<span class="select2-selection__rendered" id="select2-iiii-container" role="textbox" aria-readonly="true" title="Color">Color</span>
+<span class="select2-selection__arrow" role="presentation">
+<b role="presentation">
+</b>
+</span>
+</span>
+</span>
+<span class="dropdown-wrapper" aria-hidden="true">
+</span>
+</span>
+<span class="select2-container select2-container--default select2-container--open" style="position: absolute; top: 0px; left: 0px;">
+<span class="select2-dropdown select2-dropdown--below" dir="rtl" style="width: 0px;">
+<span class="select2-search select2-search--dropdown select2-search--hide">
+<input class="select2-search__field" type="search" tabindex="0" autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false" role="searchbox" aria-autocomplete="list" aria-controls="select2-iiii-results">
+</span>
+<span class="select2-results">
+<ul class="select2-results__options" role="listbox" id="select2-iiii-results" aria-expanded="true" aria-hidden="false">
+<li class="select2-results__option select2-results__option--highlighted" role="option" aria-selected="true" data-select2-id="8">Color</li>
+<li class="select2-results__option" id="select2-iiii-result-iiii-red" role="option" aria-selected="false" data-select2-id="select2-iiii-result-iiii-red">Red</li>
+<li class="select2-results__option" id="select2-iiii-result-iiii-green" role="option" aria-selected="false" data-select2-id="select2-iiii-result-iiii-green">Green</li>
+<li class="select2-results__option" id="select2-iiii-result-iiii-blue" role="option" aria-selected="false" data-select2-id="select2-iiii-result-iiii-blue">Blue</li>
+</ul>
+</span>
+</span>
+</span>
+</div>"
+`;
+
+exports[`the markup of a single select with a placeholder, closed 1`] = `
+"<div class="parent">
+<select data-select2-id="1" tabindex="-1" class="select2-hidden-accessible" aria-hidden="true">
+<option value="" data-select2-id="3">Color</option>
+<option value="red">Red</option>
+<option value="green">Green</option>
+<option value="blue">Blue</option>
+</select>
+<span class="select2 select2-container select2-container--default" dir="ltr" data-select2-id="2" style="width: 100%;">
+<span class="selection">
+<span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-disabled="false" aria-labelledby="select2-iiii-container">
+<span class="select2-selection__rendered" id="select2-iiii-container" role="textbox" aria-readonly="true">
+<span class="select2-selection__placeholder">Pick a color</span>
+</span>
+<span class="select2-selection__arrow" role="presentation">
+<b role="presentation">
+</b>
+</span>
+</span>
+</span>
+<span class="dropdown-wrapper" aria-hidden="true">
+</span>
+</span>
+</div>"
+`;
+
+exports[`the markup of a single select with a placeholder, closed again 1`] = `
+"<div class="parent">
+<select data-select2-id="1" tabindex="-1" class="select2-hidden-accessible" aria-hidden="true">
+<option value="" data-select2-id="3">Color</option>
+<option value="red" data-select2-id="5">Red</option>
+<option value="green" data-select2-id="6">Green</option>
+<option value="blue" data-select2-id="7">Blue</option>
+</select>
+<span class="select2 select2-container select2-container--default select2-container--below select2-container--focus" dir="ltr" data-select2-id="2" style="width: 100%;">
+<span class="selection">
+<span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-disabled="false" aria-labelledby="select2-iiii-container">
+<span class="select2-selection__rendered" id="select2-iiii-container" role="textbox" aria-readonly="true">
+<span class="select2-selection__placeholder">Pick a color</span>
+</span>
+<span class="select2-selection__arrow" role="presentation">
+<b role="presentation">
+</b>
+</span>
+</span>
+</span>
+<span class="dropdown-wrapper" aria-hidden="true">
+</span>
+</span>
+</div>"
+`;
+
+exports[`the markup of a single select with a placeholder, open 1`] = `
+"<div class="parent">
+<select data-select2-id="1" tabindex="-1" class="select2-hidden-accessible" aria-hidden="true">
+<option value="" data-select2-id="3">Color</option>
+<option value="red" data-select2-id="5">Red</option>
+<option value="green" data-select2-id="6">Green</option>
+<option value="blue" data-select2-id="7">Blue</option>
+</select>
+<span class="select2 select2-container select2-container--default select2-container--below select2-container--open" dir="ltr" data-select2-id="2" style="width: 100%;">
+<span class="selection">
+<span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true" aria-expanded="true" tabindex="0" aria-disabled="false" aria-labelledby="select2-iiii-container" aria-owns="select2-iiii-results" aria-activedescendant="select2-iiii-result-iiii-red">
+<span class="select2-selection__rendered" id="select2-iiii-container" role="textbox" aria-readonly="true">
+<span class="select2-selection__placeholder">Pick a color</span>
+</span>
+<span class="select2-selection__arrow" role="presentation">
+<b role="presentation">
+</b>
+</span>
+</span>
+</span>
+<span class="dropdown-wrapper" aria-hidden="true">
+</span>
+</span>
+<span class="select2-container select2-container--default select2-container--open" style="position: absolute; top: 0px; left: 0px;">
+<span class="select2-dropdown select2-dropdown--below" dir="ltr" style="width: 0px;">
+<span class="select2-search select2-search--dropdown select2-search--hide">
+<input class="select2-search__field" type="search" tabindex="0" autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false" role="searchbox" aria-autocomplete="list" aria-controls="select2-iiii-results" aria-activedescendant="select2-iiii-result-iiii-red">
+</span>
+<span class="select2-results">
+<ul class="select2-results__options" role="listbox" id="select2-iiii-results" aria-expanded="true" aria-hidden="false">
+<li class="select2-results__option select2-results__option--highlighted" id="select2-iiii-result-iiii-red" role="option" aria-selected="false" data-select2-id="select2-iiii-result-iiii-red">Red</li>
+<li class="select2-results__option" id="select2-iiii-result-iiii-green" role="option" aria-selected="false" data-select2-id="select2-iiii-result-iiii-green">Green</li>
+<li class="select2-results__option" id="select2-iiii-result-iiii-blue" role="option" aria-selected="false" data-select2-id="select2-iiii-result-iiii-blue">Blue</li>
+</ul>
+</span>
+</span>
+</span>
+</div>"
+`;
+
+exports[`the markup of a single select with an empty placeholder, closed 1`] = `
+"<div class="parent">
+<select data-select2-id="1" tabindex="-1" class="select2-hidden-accessible" aria-hidden="true">
+<option value="" data-select2-id="3">Color</option>
+<option value="red">Red</option>
+<option value="green">Green</option>
+<option value="blue">Blue</option>
+</select>
+<span class="select2 select2-container select2-container--default" dir="ltr" data-select2-id="2" style="width: 100%;">
+<span class="selection">
+<span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-disabled="false" aria-labelledby="select2-iiii-container">
+<span class="select2-selection__rendered" id="select2-iiii-container" role="textbox" aria-readonly="true">
+<span class="select2-selection__placeholder">
+</span>
+</span>
+<span class="select2-selection__arrow" role="presentation">
+<b role="presentation">
+</b>
+</span>
+</span>
+</span>
+<span class="dropdown-wrapper" aria-hidden="true">
+</span>
+</span>
+</div>"
+`;
+
+exports[`the markup of a single select with an empty placeholder, closed again 1`] = `
+"<div class="parent">
+<select data-select2-id="1" tabindex="-1" class="select2-hidden-accessible" aria-hidden="true">
+<option value="" data-select2-id="3">Color</option>
+<option value="red" data-select2-id="5">Red</option>
+<option value="green" data-select2-id="6">Green</option>
+<option value="blue" data-select2-id="7">Blue</option>
+</select>
+<span class="select2 select2-container select2-container--default select2-container--below select2-container--focus" dir="ltr" data-select2-id="2" style="width: 100%;">
+<span class="selection">
+<span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-disabled="false" aria-labelledby="select2-iiii-container">
+<span class="select2-selection__rendered" id="select2-iiii-container" role="textbox" aria-readonly="true">
+<span class="select2-selection__placeholder">
+</span>
+</span>
+<span class="select2-selection__arrow" role="presentation">
+<b role="presentation">
+</b>
+</span>
+</span>
+</span>
+<span class="dropdown-wrapper" aria-hidden="true">
+</span>
+</span>
+</div>"
+`;
+
+exports[`the markup of a single select with an empty placeholder, open 1`] = `
+"<div class="parent">
+<select data-select2-id="1" tabindex="-1" class="select2-hidden-accessible" aria-hidden="true">
+<option value="" data-select2-id="3">Color</option>
+<option value="red" data-select2-id="5">Red</option>
+<option value="green" data-select2-id="6">Green</option>
+<option value="blue" data-select2-id="7">Blue</option>
+</select>
+<span class="select2 select2-container select2-container--default select2-container--below select2-container--open" dir="ltr" data-select2-id="2" style="width: 100%;">
+<span class="selection">
+<span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true" aria-expanded="true" tabindex="0" aria-disabled="false" aria-labelledby="select2-iiii-container" aria-owns="select2-iiii-results" aria-activedescendant="select2-iiii-result-iiii-red">
+<span class="select2-selection__rendered" id="select2-iiii-container" role="textbox" aria-readonly="true">
+<span class="select2-selection__placeholder">
+</span>
+</span>
+<span class="select2-selection__arrow" role="presentation">
+<b role="presentation">
+</b>
+</span>
+</span>
+</span>
+<span class="dropdown-wrapper" aria-hidden="true">
+</span>
+</span>
+<span class="select2-container select2-container--default select2-container--open" style="position: absolute; top: 0px; left: 0px;">
+<span class="select2-dropdown select2-dropdown--below" dir="ltr" style="width: 0px;">
+<span class="select2-search select2-search--dropdown select2-search--hide">
+<input class="select2-search__field" type="search" tabindex="0" autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false" role="searchbox" aria-autocomplete="list" aria-controls="select2-iiii-results" aria-activedescendant="select2-iiii-result-iiii-red">
+</span>
+<span class="select2-results">
+<ul class="select2-results__options" role="listbox" id="select2-iiii-results" aria-expanded="true" aria-hidden="false">
+<li class="select2-results__option select2-results__option--highlighted" id="select2-iiii-result-iiii-red" role="option" aria-selected="false" data-select2-id="select2-iiii-result-iiii-red">Red</li>
+<li class="select2-results__option" id="select2-iiii-result-iiii-green" role="option" aria-selected="false" data-select2-id="select2-iiii-result-iiii-green">Green</li>
+<li class="select2-results__option" id="select2-iiii-result-iiii-blue" role="option" aria-selected="false" data-select2-id="select2-iiii-result-iiii-blue">Blue</li>
+</ul>
+</span>
+</span>
+</span>
+</div>"
+`;
+
+exports[`the markup of a single select, closed 1`] = `
+"<div class="parent">
+<select data-select2-id="1" tabindex="-1" class="select2-hidden-accessible" aria-hidden="true">
+<option value="" data-select2-id="3">Color</option>
+<option value="red">Red</option>
+<option value="green">Green</option>
+<option value="blue">Blue</option>
+</select>
+<span class="select2 select2-container select2-container--default" dir="ltr" data-select2-id="2" style="width: 100%;">
+<span class="selection">
+<span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-disabled="false" aria-labelledby="select2-iiii-container">
+<span class="select2-selection__rendered" id="select2-iiii-container" role="textbox" aria-readonly="true" title="Color">Color</span>
+<span class="select2-selection__arrow" role="presentation">
+<b role="presentation">
+</b>
+</span>
+</span>
+</span>
+<span class="dropdown-wrapper" aria-hidden="true">
+</span>
+</span>
+</div>"
+`;
+
+exports[`the markup of a single select, closed again 1`] = `
+"<div class="parent">
+<select data-select2-id="1" tabindex="-1" class="select2-hidden-accessible" aria-hidden="true">
+<option value="" data-select2-id="3">Color</option>
+<option value="red" data-select2-id="5">Red</option>
+<option value="green" data-select2-id="6">Green</option>
+<option value="blue" data-select2-id="7">Blue</option>
+</select>
+<span class="select2 select2-container select2-container--default select2-container--below select2-container--focus" dir="ltr" data-select2-id="2" style="width: 100%;">
+<span class="selection">
+<span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-disabled="false" aria-labelledby="select2-iiii-container">
+<span class="select2-selection__rendered" id="select2-iiii-container" role="textbox" aria-readonly="true" title="Color">Color</span>
+<span class="select2-selection__arrow" role="presentation">
+<b role="presentation">
+</b>
+</span>
+</span>
+</span>
+<span class="dropdown-wrapper" aria-hidden="true">
+</span>
+</span>
+</div>"
+`;
+
+exports[`the markup of a single select, open 1`] = `
+"<div class="parent">
+<select data-select2-id="1" tabindex="-1" class="select2-hidden-accessible" aria-hidden="true">
+<option value="" data-select2-id="3">Color</option>
+<option value="red" data-select2-id="5">Red</option>
+<option value="green" data-select2-id="6">Green</option>
+<option value="blue" data-select2-id="7">Blue</option>
+</select>
+<span class="select2 select2-container select2-container--default select2-container--below select2-container--open" dir="ltr" data-select2-id="2" style="width: 100%;">
+<span class="selection">
+<span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true" aria-expanded="true" tabindex="0" aria-disabled="false" aria-labelledby="select2-iiii-container" aria-owns="select2-iiii-results">
+<span class="select2-selection__rendered" id="select2-iiii-container" role="textbox" aria-readonly="true" title="Color">Color</span>
+<span class="select2-selection__arrow" role="presentation">
+<b role="presentation">
+</b>
+</span>
+</span>
+</span>
+<span class="dropdown-wrapper" aria-hidden="true">
+</span>
+</span>
+<span class="select2-container select2-container--default select2-container--open" style="position: absolute; top: 0px; left: 0px;">
+<span class="select2-dropdown select2-dropdown--below" dir="ltr" style="width: 0px;">
+<span class="select2-search select2-search--dropdown select2-search--hide">
+<input class="select2-search__field" type="search" tabindex="0" autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false" role="searchbox" aria-autocomplete="list" aria-controls="select2-iiii-results">
+</span>
+<span class="select2-results">
+<ul class="select2-results__options" role="listbox" id="select2-iiii-results" aria-expanded="true" aria-hidden="false">
+<li class="select2-results__option select2-results__option--highlighted" role="option" aria-selected="true" data-select2-id="8">Color</li>
+<li class="select2-results__option" id="select2-iiii-result-iiii-red" role="option" aria-selected="false" data-select2-id="select2-iiii-result-iiii-red">Red</li>
+<li class="select2-results__option" id="select2-iiii-result-iiii-green" role="option" aria-selected="false" data-select2-id="select2-iiii-result-iiii-green">Green</li>
+<li class="select2-results__option" id="select2-iiii-result-iiii-blue" role="option" aria-selected="false" data-select2-id="select2-iiii-result-iiii-blue">Blue</li>
+</ul>
+</span>
+</span>
+</span>
+</div>"
+`;
+
+exports[`the markup of an option with a title, closed 1`] = `
+"<div class="parent">
+<select data-select2-id="1" tabindex="-1" class="select2-hidden-accessible" aria-hidden="true">
+<option value="red" title="The red one" selected="" data-select2-id="3">Red</option>
+</select>
+<span class="select2 select2-container select2-container--default" dir="ltr" data-select2-id="2" style="width: 100%;">
+<span class="selection">
+<span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-disabled="false" aria-labelledby="select2-iiii-container">
+<span class="select2-selection__rendered" id="select2-iiii-container" role="textbox" aria-readonly="true" title="The red one">Red</span>
+<span class="select2-selection__arrow" role="presentation">
+<b role="presentation">
+</b>
+</span>
+</span>
+</span>
+<span class="dropdown-wrapper" aria-hidden="true">
+</span>
+</span>
+</div>"
+`;
+
+exports[`the markup of an option with a title, closed again 1`] = `
+"<div class="parent">
+<select data-select2-id="1" tabindex="-1" class="select2-hidden-accessible" aria-hidden="true">
+<option value="red" title="The red one" selected="" data-select2-id="3">Red</option>
+</select>
+<span class="select2 select2-container select2-container--default select2-container--below select2-container--focus" dir="ltr" data-select2-id="2" style="width: 100%;">
+<span class="selection">
+<span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-disabled="false" aria-labelledby="select2-iiii-container">
+<span class="select2-selection__rendered" id="select2-iiii-container" role="textbox" aria-readonly="true" title="The red one">Red</span>
+<span class="select2-selection__arrow" role="presentation">
+<b role="presentation">
+</b>
+</span>
+</span>
+</span>
+<span class="dropdown-wrapper" aria-hidden="true">
+</span>
+</span>
+</div>"
+`;
+
+exports[`the markup of an option with a title, open 1`] = `
+"<div class="parent">
+<select data-select2-id="1" tabindex="-1" class="select2-hidden-accessible" aria-hidden="true">
+<option value="red" title="The red one" selected="" data-select2-id="3">Red</option>
+</select>
+<span class="select2 select2-container select2-container--default select2-container--below select2-container--open" dir="ltr" data-select2-id="2" style="width: 100%;">
+<span class="selection">
+<span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true" aria-expanded="true" tabindex="0" aria-disabled="false" aria-labelledby="select2-iiii-container" aria-owns="select2-iiii-results" aria-activedescendant="select2-iiii-result-iiii-red">
+<span class="select2-selection__rendered" id="select2-iiii-container" role="textbox" aria-readonly="true" title="The red one">Red</span>
+<span class="select2-selection__arrow" role="presentation">
+<b role="presentation">
+</b>
+</span>
+</span>
+</span>
+<span class="dropdown-wrapper" aria-hidden="true">
+</span>
+</span>
+<span class="select2-container select2-container--default select2-container--open" style="position: absolute; top: 0px; left: 0px;">
+<span class="select2-dropdown select2-dropdown--below" dir="ltr" style="width: 0px;">
+<span class="select2-search select2-search--dropdown select2-search--hide">
+<input class="select2-search__field" type="search" tabindex="0" autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false" role="searchbox" aria-autocomplete="list" aria-controls="select2-iiii-results" aria-activedescendant="select2-iiii-result-iiii-red">
+</span>
+<span class="select2-results">
+<ul class="select2-results__options" role="listbox" id="select2-iiii-results" aria-expanded="true" aria-hidden="false">
+<li class="select2-results__option select2-results__option--highlighted" id="select2-iiii-result-iiii-red" title="The red one" role="option" aria-selected="true" data-select2-id="select2-iiii-result-iiii-red">Red</li>
+</ul>
+</span>
+</span>
+</span>
+</div>"
+`;
+
+exports[`the markup of an option without text, closed 1`] = `
+"<div class="parent">
+<select data-select2-id="1" tabindex="-1" class="select2-hidden-accessible" aria-hidden="true">
+<option value="empty" data-select2-id="3">
+</option>
+<option value="red">Red</option>
+</select>
+<span class="select2 select2-container select2-container--default" dir="ltr" data-select2-id="2" style="width: 100%;">
+<span class="selection">
+<span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-disabled="false" aria-labelledby="select2-iiii-container">
+<span class="select2-selection__rendered" id="select2-iiii-container" role="textbox" aria-readonly="true">
+</span>
+<span class="select2-selection__arrow" role="presentation">
+<b role="presentation">
+</b>
+</span>
+</span>
+</span>
+<span class="dropdown-wrapper" aria-hidden="true">
+</span>
+</span>
+</div>"
+`;
+
+exports[`the markup of an option without text, closed again 1`] = `
+"<div class="parent">
+<select data-select2-id="1" tabindex="-1" class="select2-hidden-accessible" aria-hidden="true">
+<option value="empty" data-select2-id="3">
+</option>
+<option value="red" data-select2-id="5">Red</option>
+</select>
+<span class="select2 select2-container select2-container--default select2-container--below select2-container--focus" dir="ltr" data-select2-id="2" style="width: 100%;">
+<span class="selection">
+<span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-disabled="false" aria-labelledby="select2-iiii-container">
+<span class="select2-selection__rendered" id="select2-iiii-container" role="textbox" aria-readonly="true">
+</span>
+<span class="select2-selection__arrow" role="presentation">
+<b role="presentation">
+</b>
+</span>
+</span>
+</span>
+<span class="dropdown-wrapper" aria-hidden="true">
+</span>
+</span>
+</div>"
+`;
+
+exports[`the markup of an option without text, open 1`] = `
+"<div class="parent">
+<select data-select2-id="1" tabindex="-1" class="select2-hidden-accessible" aria-hidden="true">
+<option value="empty" data-select2-id="3">
+</option>
+<option value="red" data-select2-id="5">Red</option>
+</select>
+<span class="select2 select2-container select2-container--default select2-container--below select2-container--open" dir="ltr" data-select2-id="2" style="width: 100%;">
+<span class="selection">
+<span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true" aria-expanded="true" tabindex="0" aria-disabled="false" aria-labelledby="select2-iiii-container" aria-owns="select2-iiii-results" aria-activedescendant="select2-iiii-result-iiii-empty">
+<span class="select2-selection__rendered" id="select2-iiii-container" role="textbox" aria-readonly="true">
+</span>
+<span class="select2-selection__arrow" role="presentation">
+<b role="presentation">
+</b>
+</span>
+</span>
+</span>
+<span class="dropdown-wrapper" aria-hidden="true">
+</span>
+</span>
+<span class="select2-container select2-container--default select2-container--open" style="position: absolute; top: 0px; left: 0px;">
+<span class="select2-dropdown select2-dropdown--below" dir="ltr" style="width: 0px;">
+<span class="select2-search select2-search--dropdown select2-search--hide">
+<input class="select2-search__field" type="search" tabindex="0" autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false" role="searchbox" aria-autocomplete="list" aria-controls="select2-iiii-results" aria-activedescendant="select2-iiii-result-iiii-empty">
+</span>
+<span class="select2-results">
+<ul class="select2-results__options" role="listbox" id="select2-iiii-results" aria-expanded="true" aria-hidden="false">
+<li class="select2-results__option select2-results__option--highlighted" id="select2-iiii-result-iiii-empty" role="option" aria-selected="true" data-select2-id="select2-iiii-result-iiii-empty">
+</li>
+<li class="select2-results__option" id="select2-iiii-result-iiii-red" role="option" aria-selected="false" data-select2-id="select2-iiii-result-iiii-red">Red</li>
+</ul>
+</span>
+</span>
+</span>
+</div>"
+`;
+
+exports[`the markup of several preselected options, closed 1`] = `
+"<div class="parent">
+<select multiple="" data-select2-id="1" tabindex="-1" class="select2-hidden-accessible" aria-hidden="true">
+<option value="">Color</option>
+<option value="red" selected="" data-select2-id="3">Red</option>
+<option value="green">Green</option>
+<option value="blue" selected="" data-select2-id="4">Blue</option>
+</select>
+<span class="select2 select2-container select2-container--default" dir="ltr" data-select2-id="2" style="width: 100%;">
+<span class="selection">
+<span class="select2-selection select2-selection--multiple" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="-1" aria-disabled="false">
+<ul class="select2-selection__rendered">
+<li class="select2-selection__choice" title="Red" data-select2-id="5">
+<span class="select2-selection__choice__remove" role="presentation">×</span>Red</li>
+<li class="select2-selection__choice" title="Blue" data-select2-id="6">
+<span class="select2-selection__choice__remove" role="presentation">×</span>Blue</li>
+<li class="select2-search select2-search--inline">
+<input class="select2-search__field" type="search" tabindex="0" autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false" role="searchbox" aria-autocomplete="list" placeholder="" style="width: 0.75em;">
+</li>
+</ul>
+</span>
+</span>
+<span class="dropdown-wrapper" aria-hidden="true">
+</span>
+</span>
+</div>"
+`;
+
+exports[`the markup of several preselected options, closed again 1`] = `
+"<div class="parent">
+<select multiple="" data-select2-id="1" tabindex="-1" class="select2-hidden-accessible" aria-hidden="true">
+<option value="" data-select2-id="8">Color</option>
+<option value="red" selected="" data-select2-id="3">Red</option>
+<option value="green" data-select2-id="9">Green</option>
+<option value="blue" selected="" data-select2-id="4">Blue</option>
+</select>
+<span class="select2 select2-container select2-container--default select2-container--focus select2-container--below" dir="ltr" data-select2-id="2" style="width: 100%;">
+<span class="selection">
+<span class="select2-selection select2-selection--multiple" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="-1" aria-disabled="false">
+<ul class="select2-selection__rendered">
+<li class="select2-selection__choice" title="Red" data-select2-id="5">
+<span class="select2-selection__choice__remove" role="presentation">×</span>Red</li>
+<li class="select2-selection__choice" title="Blue" data-select2-id="6">
+<span class="select2-selection__choice__remove" role="presentation">×</span>Blue</li>
+<li class="select2-search select2-search--inline">
+<input class="select2-search__field" type="search" tabindex="0" autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false" role="searchbox" aria-autocomplete="list" placeholder="" style="width: 0.75em;">
+</li>
+</ul>
+</span>
+</span>
+<span class="dropdown-wrapper" aria-hidden="true">
+</span>
+</span>
+</div>"
+`;
+
+exports[`the markup of several preselected options, open 1`] = `
+"<div class="parent">
+<select multiple="" data-select2-id="1" tabindex="-1" class="select2-hidden-accessible" aria-hidden="true">
+<option value="" data-select2-id="8">Color</option>
+<option value="red" selected="" data-select2-id="3">Red</option>
+<option value="green" data-select2-id="9">Green</option>
+<option value="blue" selected="" data-select2-id="4">Blue</option>
+</select>
+<span class="select2 select2-container select2-container--default select2-container--focus select2-container--below select2-container--open" dir="ltr" data-select2-id="2" style="width: 100%;">
+<span class="selection">
+<span class="select2-selection select2-selection--multiple" role="combobox" aria-haspopup="true" aria-expanded="true" tabindex="-1" aria-disabled="false" aria-owns="select2-iiii-results" aria-activedescendant="select2-iiii-result-iiii-red">
+<ul class="select2-selection__rendered">
+<li class="select2-selection__choice" title="Red" data-select2-id="5">
+<span class="select2-selection__choice__remove" role="presentation">×</span>Red</li>
+<li class="select2-selection__choice" title="Blue" data-select2-id="6">
+<span class="select2-selection__choice__remove" role="presentation">×</span>Blue</li>
+<li class="select2-search select2-search--inline">
+<input class="select2-search__field" type="search" tabindex="0" autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false" role="searchbox" aria-autocomplete="list" placeholder="" style="width: 0.75em;" aria-controls="select2-iiii-results" aria-activedescendant="select2-iiii-result-iiii-red">
+</li>
+</ul>
+</span>
+</span>
+<span class="dropdown-wrapper" aria-hidden="true">
+</span>
+</span>
+<span class="select2-container select2-container--default select2-container--open" style="position: absolute; top: 0px; left: 0px;">
+<span class="select2-dropdown select2-dropdown--below" dir="ltr" style="width: 0px;">
+<span class="select2-results">
+<ul class="select2-results__options" role="listbox" aria-multiselectable="true" id="select2-iiii-results" aria-expanded="true" aria-hidden="false">
+<li class="select2-results__option select2-results__option--highlighted" id="select2-iiii-result-iiii-red" role="option" aria-selected="true" data-select2-id="select2-iiii-result-iiii-red">Red</li>
+<li class="select2-results__option" id="select2-iiii-result-iiii-green" role="option" aria-selected="false" data-select2-id="select2-iiii-result-iiii-green">Green</li>
+<li class="select2-results__option" id="select2-iiii-result-iiii-blue" role="option" aria-selected="true" data-select2-id="select2-iiii-result-iiii-blue">Blue</li>
+</ul>
+</span>
+</span>
+</span>
+</div>"
+`;
+
+exports[`the markup of text that needs escaping, closed 1`] = `
+"<div class="parent">
+<select data-select2-id="1" tabindex="-1" class="select2-hidden-accessible" aria-hidden="true">
+<option value="lt" data-select2-id="3">a &lt; b &amp; "c" / d\\e</option>
+</select>
+<span class="select2 select2-container select2-container--default" dir="ltr" data-select2-id="2" style="width: 100%;">
+<span class="selection">
+<span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-disabled="false" aria-labelledby="select2-iiii-container">
+<span class="select2-selection__rendered" id="select2-iiii-container" role="textbox" aria-readonly="true" title="a < b &amp; &quot;c&quot; / d\\e">a &lt; b &amp; "c" / d\\e</span>
+<span class="select2-selection__arrow" role="presentation">
+<b role="presentation">
+</b>
+</span>
+</span>
+</span>
+<span class="dropdown-wrapper" aria-hidden="true">
+</span>
+</span>
+</div>"
+`;
+
+exports[`the markup of text that needs escaping, closed again 1`] = `
+"<div class="parent">
+<select data-select2-id="1" tabindex="-1" class="select2-hidden-accessible" aria-hidden="true">
+<option value="lt" data-select2-id="3">a &lt; b &amp; "c" / d\\e</option>
+</select>
+<span class="select2 select2-container select2-container--default select2-container--below select2-container--focus" dir="ltr" data-select2-id="2" style="width: 100%;">
+<span class="selection">
+<span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-disabled="false" aria-labelledby="select2-iiii-container">
+<span class="select2-selection__rendered" id="select2-iiii-container" role="textbox" aria-readonly="true" title="a < b &amp; &quot;c&quot; / d\\e">a &lt; b &amp; "c" / d\\e</span>
+<span class="select2-selection__arrow" role="presentation">
+<b role="presentation">
+</b>
+</span>
+</span>
+</span>
+<span class="dropdown-wrapper" aria-hidden="true">
+</span>
+</span>
+</div>"
+`;
+
+exports[`the markup of text that needs escaping, open 1`] = `
+"<div class="parent">
+<select data-select2-id="1" tabindex="-1" class="select2-hidden-accessible" aria-hidden="true">
+<option value="lt" data-select2-id="3">a &lt; b &amp; "c" / d\\e</option>
+</select>
+<span class="select2 select2-container select2-container--default select2-container--below select2-container--open" dir="ltr" data-select2-id="2" style="width: 100%;">
+<span class="selection">
+<span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true" aria-expanded="true" tabindex="0" aria-disabled="false" aria-labelledby="select2-iiii-container" aria-owns="select2-iiii-results" aria-activedescendant="select2-iiii-result-iiii-lt">
+<span class="select2-selection__rendered" id="select2-iiii-container" role="textbox" aria-readonly="true" title="a < b &amp; &quot;c&quot; / d\\e">a &lt; b &amp; "c" / d\\e</span>
+<span class="select2-selection__arrow" role="presentation">
+<b role="presentation">
+</b>
+</span>
+</span>
+</span>
+<span class="dropdown-wrapper" aria-hidden="true">
+</span>
+</span>
+<span class="select2-container select2-container--default select2-container--open" style="position: absolute; top: 0px; left: 0px;">
+<span class="select2-dropdown select2-dropdown--below" dir="ltr" style="width: 0px;">
+<span class="select2-search select2-search--dropdown select2-search--hide">
+<input class="select2-search__field" type="search" tabindex="0" autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false" role="searchbox" aria-autocomplete="list" aria-controls="select2-iiii-results" aria-activedescendant="select2-iiii-result-iiii-lt">
+</span>
+<span class="select2-results">
+<ul class="select2-results__options" role="listbox" id="select2-iiii-results" aria-expanded="true" aria-hidden="false">
+<li class="select2-results__option select2-results__option--highlighted" id="select2-iiii-result-iiii-lt" role="option" aria-selected="true" data-select2-id="select2-iiii-result-iiii-lt">a &lt; b &amp; "c" / d\\e</li>
+</ul>
+</span>
+</span>
+</span>
+</div>"
+`;

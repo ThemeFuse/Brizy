@@ -1,4 +1,4 @@
-import { Literal } from ".";
+import type { Literal } from ".";
 
 export interface Block {
   id: string;

@@ -167,6 +167,7 @@ class Select extends TextField {
           <SelectControlItem value="">{label}</SelectControlItem>
           {options.map((item, index) => {
             return (
+              // biome-ignore lint/suspicious/noArrayIndexKey: options are author-typed strings and may repeat, so only the slot is unique
               <SelectControlItem key={index} value={item}>
                 {item}
               </SelectControlItem>

@@ -1,9 +1,9 @@
 import { set } from "es-toolkit/compat";
 import { produce } from "immer";
-import { EditorMode, isPopup } from "visual/providers/EditorModeProvider";
-import { PageCommon } from "visual/types/Page";
+import { type EditorMode, isPopup } from "visual/providers/EditorModeProvider";
+import type { PageCommon } from "visual/types/Page";
 import { setIds } from "visual/utils/models";
-import { BlockRecord } from "visual/utils/reader/globalBlocks";
+import type { BlockRecord } from "visual/utils/reader/globalBlocks";
 import { isNullish } from "visual/utils/value";
 
 const defaultTriggers = [{ id: "pageLoad", active: true, value: "1" }];

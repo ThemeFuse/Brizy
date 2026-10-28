@@ -8,11 +8,11 @@ import { useConfig } from "visual/providers/ConfigProvider";
 import { useTranslation } from "visual/providers/I18nProvider";
 import { updateError } from "visual/redux/actions2";
 import { errorSelector } from "visual/redux/selectors";
-import { ProjectLocked } from "visual/types";
+import type { ProjectLocked } from "visual/types";
 import { isProjectLocked } from "visual/types/utils";
 import { sendHeartBeatTakeOver } from "visual/utils/api";
 import { ErrorCodes } from "visual/utils/errors";
-import { FCC } from "visual/utils/react/types";
+import type { FCC } from "visual/utils/react/types";
 import * as Str from "visual/utils/reader/string";
 import { ToastNotification } from "./ToastNotifications";
 
@@ -116,6 +116,7 @@ const Notification = () => {
           </NotificationContent>
           <NotificationFooter>
             <button
+              type="button"
               className="brz-button brz-ed-btn brz-ed-btn-blue brz-ed-btn-round brz-ed-btn-xs-2"
               onClick={() => {
                 window.parent.location.reload();
@@ -145,6 +146,7 @@ const Notification = () => {
           </NotificationContent>
           <NotificationFooter>
             <button
+              type="button"
               className="brz-button brz-ed-notification__take-over brz-ed-btn brz-ed-btn-blue brz-ed-btn-round brz-ed-btn-xs-2"
               onClick={handleTakeOver}
             >
@@ -168,6 +170,7 @@ const Notification = () => {
           <NotificationContent>{data}</NotificationContent>
           <NotificationFooter>
             <button
+              type="button"
               className="brz-button brz-ed-btn brz-ed-btn-blue brz-ed-btn-round brz-ed-btn-xs-2"
               onClick={() => {
                 window.parent.location.reload();
@@ -197,6 +200,7 @@ const Notification = () => {
           </NotificationContent>
           <NotificationFooter>
             <button
+              type="button"
               className="brz-ed-notification__button-continue"
               onClick={clearError}
             >
@@ -229,6 +233,7 @@ const Notification = () => {
           <NotificationContent>{text}</NotificationContent>
           <NotificationFooter>
             <button
+              type="button"
               className="brz-ed-notification__remove-gb--cancel"
               onClick={clearError}
             >
@@ -236,6 +241,7 @@ const Notification = () => {
               {t("Cancel")}
             </button>
             <button
+              type="button"
               className="brz-button brz-ed-btn brz-ed-btn-blue brz-ed-btn-round brz-ed-btn-xs-2 brz-ed-notification__remove-gb--confirmation"
               onClick={handleDeleteGlobalBlock}
             >

@@ -1,6 +1,6 @@
 import React, { useMemo } from "react";
 import { ThirdPartyContext } from "./context";
-import { Props } from "./types";
+import type { Props } from "./types";
 
 export const ThirdPartyContextProvider = (props: Props): JSX.Element => {
   const { children, editorProps } = props;

@@ -1,13 +1,13 @@
 import { or, parseStrict } from "fp-utilities";
-import { ElementModel } from "visual/component/Elements/Types";
-import { FromElementModelGetter } from "visual/component/Options/Type";
+import type { ElementModel } from "visual/component/Elements/Types";
+import type { FromElementModelGetter } from "visual/component/Options/Type";
 import { mPipe, pass } from "visual/utils/fp";
 import * as Num from "visual/utils/math/number";
 import { callGetter } from "visual/utils/options/utils/wrap";
 import { prefixKeys } from "../../utils/effects";
-import * as Viewport from "./Viewport";
 import { elementModelToViewport } from "./utils";
 import * as Speed from "./utils/Speed";
+import * as Viewport from "./Viewport";
 
 export type Direction = "up" | "down" | "downUp" | "upDown";
 const directions: { [k in Direction]: k } = {

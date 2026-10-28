@@ -1,5 +1,5 @@
 import classnames from "classnames";
-import React, { ReactElement } from "react";
+import React, { type ReactElement } from "react";
 
 export interface Props {
   title: string;

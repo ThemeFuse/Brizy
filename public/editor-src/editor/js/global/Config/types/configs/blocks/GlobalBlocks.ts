@@ -1,6 +1,6 @@
-import { GlobalBlock } from "visual/types/GlobalBlock";
-import { ApiRule } from "visual/utils/api/adapter";
-import { Response } from "../common";
+import type { GlobalBlock } from "visual/types/GlobalBlock";
+import type { ApiRule } from "visual/utils/api/adapter";
+import type { Response, SuccessResponse } from "../common";
 
 //#region Base
 
@@ -21,6 +21,16 @@ export interface Extra {
 export interface APIGlobalBlocks {
   create?: (res: Response<Block>, rej: Response<string>, extra: Block) => void;
   delete?: (res: Response<Block>, rej: Response<string>, uid: string) => void;
+  updateRules?: (
+    res: Response<SuccessResponse>,
+    rej: Response<string>,
+    extra: {
+      uid: string;
+      rules: Array<ApiRule>;
+      dataVersion: number;
+      status: GlobalBlock["status"];
+    }
+  ) => void;
 }
 
 //#endregion

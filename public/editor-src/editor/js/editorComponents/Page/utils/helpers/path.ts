@@ -1,7 +1,7 @@
 import { produce } from "immer";
-import { ElementModelType } from "visual/component/Elements/Types";
-import { FromTo } from "../types";
+import type { ElementModelType } from "visual/component/Elements/Types";
 import { createFullModelPath } from "visual/utils/models";
+import type { FromTo } from "../types";
 
 export const normalizeFromTo = (
   model: ElementModelType,

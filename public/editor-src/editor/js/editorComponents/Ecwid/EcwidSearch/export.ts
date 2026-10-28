@@ -48,13 +48,7 @@ const observerCallback = (mutations: MutationRecord[]): void => {
 
 const observer = new MutationObserver(observerCallback);
 
-export const fn: ExportFunction = ($node) => {
-  const root = $node.get(0);
-
-  if (!root) {
-    return;
-  }
-
+export const fn: ExportFunction = (root) => {
   root.querySelectorAll<HTMLDivElement>(".brz-ecwid-search").forEach((node) => {
     const storeId = node.getAttribute("data-store-id") as EcwidStoreId | null;
     const config = Str.read(node.getAttribute("data-storefront"));

@@ -1,12 +1,12 @@
 import classnames from "classnames";
 import { isEqual, pick } from "es-toolkit";
-import React, { ReactElement, ReactNode } from "react";
+import React, { type ReactElement, type ReactNode } from "react";
 import { Text } from "visual/component/ContentOptions/types";
 import CustomCSS from "visual/component/CustomCSS";
 import { ThemeIcon } from "visual/component/ThemeIcon";
 import Toolbar from "visual/component/Toolbar";
 import EditorComponent, {
-  Props as PrevProps
+  type Props as PrevProps
 } from "visual/editorComponents/EditorComponent";
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import { isEditor } from "visual/providers/RenderProvider";
@@ -17,7 +17,7 @@ import { encodeToString } from "visual/utils/string";
 import { collapse, expand } from "../Accordion/utils";
 import { Wrapper } from "../tools/Wrapper";
 import { Body } from "./Components/Body";
-import { Error } from "./Components/Error";
+import { ErrorMessage } from "./Components/Error";
 import { Header } from "./Components/Header";
 import { List } from "./Components/List";
 import { ListItem } from "./Components/ListItem";
@@ -218,6 +218,7 @@ class TableOfContents extends EditorComponent<Value, Props, State> {
           const numberText = isMarkerNumbers ? String(i + 1) : undefined;
 
           return (
+            // biome-ignore lint/suspicious/noArrayIndexKey: headings are re-scanned from the DOM on every render and repeated heading text is legal
             <ListItem numberText={numberText} key={i}>
               <span className="brz-toc-body__list-content">
                 {item.innerText}
@@ -227,7 +228,7 @@ class TableOfContents extends EditorComponent<Value, Props, State> {
         })}
       </List>
     ) : isEditor(this.props.renderContext) ? (
-      <Error message={t("No headings were found.")} />
+      <ErrorMessage message={t("No headings were found.")} />
     ) : (
       ""
     );

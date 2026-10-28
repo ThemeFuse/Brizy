@@ -1,7 +1,7 @@
 import tinycolor from "tinycolor2";
 import {
-  HSLAChange,
-  HSVAChange,
+  type HSLAChange,
+  type HSVAChange,
   isHSLAChange,
   isHSVAChange
 } from "visual/component/Controls/ColorPicker2/types";
@@ -28,7 +28,7 @@ export default {
       if (data[letter as keyof T]) {
         checked += 1;
 
-        if (!isNaN(data[letter as keyof T] as number)) {
+        if (!Number.isNaN(Number(data[letter as keyof T]))) {
           passed += 1;
         }
         if (letter === "s" || letter === "l") {

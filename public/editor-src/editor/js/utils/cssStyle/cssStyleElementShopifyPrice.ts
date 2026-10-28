@@ -1,4 +1,4 @@
-import { WithRenderContext } from "visual/providers/RenderProvider";
+import type { WithRenderContext } from "visual/providers/RenderProvider";
 import { cssStyleBgColor } from "visual/utils/cssStyle/cssStyleBgColor";
 import { cssStyleBorder } from "visual/utils/cssStyle/cssStyleBorder";
 import { cssStyleBorderRadius } from "visual/utils/cssStyle/cssStyleBorderRadius";
@@ -21,7 +21,7 @@ import {
 } from "visual/utils/cssStyle/cssStyleTypography2";
 import { defaultValueValue } from "visual/utils/onChange";
 import * as Num from "visual/utils/reader/number";
-import { CSSValue } from "../style2/types";
+import type { CSSValue } from "../style2/types";
 
 export function cssStyleElementShopifyBgColorPrice({
   v,

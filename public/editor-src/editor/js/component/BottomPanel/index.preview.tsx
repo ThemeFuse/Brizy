@@ -1,5 +1,4 @@
-import React from "react";
-
-export default function BottomPanel(): JSX.Element {
-  return <></>;
+import type { ReactNode } from "react";
+export default function BottomPanel(): ReactNode {
+  return null;
 }

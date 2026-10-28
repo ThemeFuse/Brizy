@@ -1,8 +1,16 @@
-import { RenderOptions, queries, render, within } from "@testing-library/react";
-import React, { ReactElement, ReactNode } from "react";
+import {
+  queries,
+  type RenderOptions,
+  render,
+  within
+} from "@testing-library/react";
+import React, { type ReactElement, type ReactNode } from "react";
 import { Provider } from "react-redux";
 import { ConfigProvider } from "visual/providers/ConfigProvider";
-import { RenderProvider, RenderType } from "visual/providers/RenderProvider";
+import {
+  RenderProvider,
+  type RenderType
+} from "visual/providers/RenderProvider";
 import * as customQueries from "./custom-queries";
 import { config, store } from "./mocks";
 
@@ -37,10 +45,9 @@ function renderWithProviders(ui: ReactElement, options?: Options) {
 }
 
 export * from "@testing-library/react";
-
 export {
+  customRender as render,
   customScreen as screen,
   customWithin as within,
-  customRender as render,
   renderWithProviders
 };

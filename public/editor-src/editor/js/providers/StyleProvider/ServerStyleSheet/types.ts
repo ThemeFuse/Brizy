@@ -1,4 +1,4 @@
-import { Sheet } from "../Sheet";
+import type { Sheet } from "../Sheet";
 
 export interface ServerStyle {
   instance: Readonly<Sheet>;

@@ -1,4 +1,4 @@
-import { Extensions } from "visual/component/Options/types/dev/ImageUpload/Types";
+import type { Extensions } from "visual/component/Options/types/dev/ImageUpload/Types";
 import { checkValue } from "visual/utils/checkValue";
 
 export function int(a: string): number {

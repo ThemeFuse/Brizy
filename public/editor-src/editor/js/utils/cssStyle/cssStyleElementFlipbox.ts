@@ -1,4 +1,4 @@
-import { WithRenderContext } from "visual/providers/RenderProvider";
+import type { WithRenderContext } from "visual/providers/RenderProvider";
 import { cssStyleFlexColumnVerticalAlign } from "visual/utils/cssStyle/cssStyleAlign";
 import { cssStyleBgGradient } from "visual/utils/cssStyle/cssStyleBgGradient";
 import {
@@ -10,7 +10,7 @@ import { cssStyleBorderRadius } from "visual/utils/cssStyle/cssStyleBorderRadius
 import { cssStyleBoxShadow } from "visual/utils/cssStyle/cssStyleBoxShadow";
 import { cssStyleFilter } from "visual/utils/cssStyle/cssStyleFilter";
 import { styleBgColor, styleBgGradient } from "visual/utils/style2";
-import { CSSValue } from "../style2/types";
+import type { CSSValue } from "../style2/types";
 import { cssStylePaddingFourFields } from "./cssStylePadding";
 
 export const cssStyleElementFlipboxTransitionSpeed = ({

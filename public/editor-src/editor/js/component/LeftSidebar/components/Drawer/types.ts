@@ -1,6 +1,6 @@
-import React, { ReactNode } from "react";
-import { Option } from "visual/component/LeftSidebar/options";
-import { SidebarAlign } from "visual/redux/types";
+import React, { type ReactNode } from "react";
+import type { Option } from "visual/component/LeftSidebar/options";
+import type { SidebarAlign } from "visual/redux/types";
 
 export enum SidebarModes {
   EDIT = "EDIT",

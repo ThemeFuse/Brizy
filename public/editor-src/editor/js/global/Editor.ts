@@ -65,7 +65,7 @@ const Editor = {
     }
 
     if (thirdPartyShortcodes[id]) {
-      // eslint-disable-next-line no-console
+      // biome-ignore lint/suspicious/noConsole: migrated from eslint
       console.warn("Already registered third-party element config", id);
       return;
     }

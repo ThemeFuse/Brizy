@@ -1,5 +1,5 @@
 import { uniqueId } from "es-toolkit/compat";
-import React, { JSX, createRef } from "react";
+import React, { createRef, type JSX } from "react";
 import Toolbar from "visual/component/Toolbar";
 import * as sidebarDisable from "visual/editorComponents/Ecwid/sidebarDisable";
 import EditorComponent from "visual/editorComponents/EditorComponent";
@@ -35,13 +35,13 @@ import * as toolbarProductSoldOutBadge from "./toolbarProductSoldOutBadge";
 import * as toolbarProductTitle from "./toolbarProductTitle";
 import * as toolbarRadio from "./toolbarRadio";
 import * as toolbarRange from "./toolbarRange";
-import * as toolbarSKU from "./toolbarSKU";
 import * as toolbarSalePrice from "./toolbarSalePrice";
 import * as toolbarSearchResults from "./toolbarSearchResults";
 import * as toolbarSecondaryText from "./toolbarSecondaryText";
 import * as toolbarSelectTitle from "./toolbarSelectTitle";
+import * as toolbarSKU from "./toolbarSKU";
 import * as toolbarSubtitle from "./toolbarSubtitle";
-import { Value } from "./types";
+import type { Value } from "./types";
 import { onClickCapture, valueToEciwdConfig } from "./utils";
 
 export class EcwidSearch extends EditorComponent<Value> {
@@ -270,7 +270,8 @@ export class EcwidSearch extends EditorComponent<Value> {
                                                         selectorSearchStrategy="dom-tree"
                                                       >
                                                         {({
-                                                          open: openActiveFilters,
+                                                          open:
+                                                            openActiveFilters,
                                                           ref: activeFiltersRef
                                                         }) => {
                                                           return (
@@ -292,16 +293,17 @@ export class EcwidSearch extends EditorComponent<Value> {
                                                                       toolbarProduct,
                                                                       sidebarProduct,
                                                                       {
-                                                                        allowExtend:
-                                                                          false
+                                                                        allowExtend: false
                                                                       }
                                                                     )}
                                                                     selector=".ec-filters__products .grid-product__wrap-inner .grid-product__image"
                                                                     selectorSearchStrategy="dom-tree"
                                                                   >
                                                                     {({
-                                                                      open: openProduct,
-                                                                      ref: productRef
+                                                                      open:
+                                                                        openProduct,
+                                                                      ref:
+                                                                        productRef
                                                                     }) => {
                                                                       return (
                                                                         <Toolbar
@@ -313,8 +315,10 @@ export class EcwidSearch extends EditorComponent<Value> {
                                                                           selectorSearchStrategy="dom-tree"
                                                                         >
                                                                           {({
-                                                                            open: openProductTitle,
-                                                                            ref: productTitleRef
+                                                                            open:
+                                                                              openProductTitle,
+                                                                            ref:
+                                                                              productTitleRef
                                                                           }) => {
                                                                             return (
                                                                               <Toolbar
@@ -326,8 +330,10 @@ export class EcwidSearch extends EditorComponent<Value> {
                                                                                 selectorSearchStrategy="dom-tree"
                                                                               >
                                                                                 {({
-                                                                                  open: openSku,
-                                                                                  ref: skuRef
+                                                                                  open:
+                                                                                    openSku,
+                                                                                  ref:
+                                                                                    skuRef
                                                                                 }) => {
                                                                                   return (
                                                                                     <Toolbar
@@ -339,8 +345,10 @@ export class EcwidSearch extends EditorComponent<Value> {
                                                                                       selectorSearchStrategy="dom-tree"
                                                                                     >
                                                                                       {({
-                                                                                        open: openPrice,
-                                                                                        ref: priceRef
+                                                                                        open:
+                                                                                          openPrice,
+                                                                                        ref:
+                                                                                          priceRef
                                                                                       }) => {
                                                                                         return (
                                                                                           <Toolbar
@@ -352,8 +360,10 @@ export class EcwidSearch extends EditorComponent<Value> {
                                                                                             selectorSearchStrategy="dom-tree"
                                                                                           >
                                                                                             {({
-                                                                                              open: openSalePrice,
-                                                                                              ref: salePriceRef
+                                                                                              open:
+                                                                                                openSalePrice,
+                                                                                              ref:
+                                                                                                salePriceRef
                                                                                             }) => {
                                                                                               return (
                                                                                                 <Toolbar
@@ -365,8 +375,10 @@ export class EcwidSearch extends EditorComponent<Value> {
                                                                                                   selectorSearchStrategy="dom-tree"
                                                                                                 >
                                                                                                   {({
-                                                                                                    open: openProductBadge,
-                                                                                                    ref: productSaleBadgeRef
+                                                                                                    open:
+                                                                                                      openProductBadge,
+                                                                                                    ref:
+                                                                                                      productSaleBadgeRef
                                                                                                   }) => {
                                                                                                     return (
                                                                                                       <Toolbar
@@ -378,8 +390,10 @@ export class EcwidSearch extends EditorComponent<Value> {
                                                                                                         selectorSearchStrategy="dom-tree"
                                                                                                       >
                                                                                                         {({
-                                                                                                          open: openProductSoldOutBadge,
-                                                                                                          ref: productSoldOutBadgeRef
+                                                                                                          open:
+                                                                                                            openProductSoldOutBadge,
+                                                                                                          ref:
+                                                                                                            productSoldOutBadgeRef
                                                                                                         }) => {
                                                                                                           return (
                                                                                                             <Toolbar
@@ -391,8 +405,10 @@ export class EcwidSearch extends EditorComponent<Value> {
                                                                                                               selectorSearchStrategy="dom-tree"
                                                                                                             >
                                                                                                               {({
-                                                                                                                open: openNoResults,
-                                                                                                                ref: noResultsRef
+                                                                                                                open:
+                                                                                                                  openNoResults,
+                                                                                                                ref:
+                                                                                                                  noResultsRef
                                                                                                               }) => {
                                                                                                                 return (
                                                                                                                   <Toolbar
@@ -404,8 +420,10 @@ export class EcwidSearch extends EditorComponent<Value> {
                                                                                                                     selectorSearchStrategy="dom-tree"
                                                                                                                   >
                                                                                                                     {({
-                                                                                                                      open: openSelectTitle,
-                                                                                                                      ref: selectTitleRef
+                                                                                                                      open:
+                                                                                                                        openSelectTitle,
+                                                                                                                      ref:
+                                                                                                                        selectTitleRef
                                                                                                                     }) => {
                                                                                                                       return (
                                                                                                                         <Toolbar
@@ -417,8 +435,10 @@ export class EcwidSearch extends EditorComponent<Value> {
                                                                                                                           selectorSearchStrategy="dom-tree"
                                                                                                                         >
                                                                                                                           {({
-                                                                                                                            open: openSubtitle,
-                                                                                                                            ref: subtitleRef
+                                                                                                                            open:
+                                                                                                                              openSubtitle,
+                                                                                                                            ref:
+                                                                                                                              subtitleRef
                                                                                                                           }) => {
                                                                                                                             return (
                                                                                                                               <Toolbar
@@ -430,8 +450,10 @@ export class EcwidSearch extends EditorComponent<Value> {
                                                                                                                                 selectorSearchStrategy="dom-tree"
                                                                                                                               >
                                                                                                                                 {({
-                                                                                                                                  open: openPriceLabel,
-                                                                                                                                  ref: priceLabelRef
+                                                                                                                                  open:
+                                                                                                                                    openPriceLabel,
+                                                                                                                                  ref:
+                                                                                                                                    priceLabelRef
                                                                                                                                 }) => {
                                                                                                                                   return (
                                                                                                                                     <Wrapper

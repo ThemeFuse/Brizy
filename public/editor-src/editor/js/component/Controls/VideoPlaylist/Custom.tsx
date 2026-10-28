@@ -1,10 +1,10 @@
+import classnames from "classnames";
 import React from "react";
 import Placeholder from "visual/component/Placeholder";
-import { Cover } from "./components/Cover";
+import type { FCC } from "visual/utils/react/types";
 import { Controls } from "./components/Controls";
-import { VideoProps as Props } from "./types";
-import classnames from "classnames";
-import { FCC } from "visual/utils/react/types";
+import { Cover } from "./components/Cover";
+import type { VideoProps as Props } from "./types";
 import { isCustomVideo } from "./utils";
 
 export const CustomVideoEdit: FCC<Props> = ({

@@ -1,6 +1,6 @@
 import React from "react";
 import { rolesHOC } from "visual/component/Roles";
-import { FCC } from "visual/utils/react/types";
+import type { FCC } from "visual/utils/react/types";
 import { ContextMenuContext } from "./context";
 
 const value = {

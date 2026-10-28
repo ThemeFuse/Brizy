@@ -1,3 +1,5 @@
+import { makeAttr } from "visual/utils/i18n/attribute";
+
 function loadFacebookSDK(lang: string, appId: string): void {
   const scriptId = "facebook-jssdk";
 
@@ -15,16 +17,11 @@ function loadFacebookSDK(lang: string, appId: string): void {
 
   fbScript.id = scriptId;
   fbScript.src = sdkSrc;
+  fbScript.setAttribute(makeAttr("consent"), "marketing");
   firstScript.parentNode?.insertBefore(fbScript, firstScript);
 }
 
-export default function ($node: JQuery): void {
-  const node = $node.get(0);
-
-  if (!node) {
-    return;
-  }
-
+export default function (node: HTMLElement): void {
   const facebookElement = node.querySelector(".brz-facebook");
   const fbRoot = node.querySelector(".fb-root");
 

@@ -1,5 +1,5 @@
-import { SimpleValue } from "visual/component/Options/Type";
-import { ElementModelValue } from "../../types/Value";
+import type { SimpleValue } from "visual/component/Options/Type";
+import type { ElementModelValue } from "../../types/Value";
 
 export interface State {
   isOpen: boolean;

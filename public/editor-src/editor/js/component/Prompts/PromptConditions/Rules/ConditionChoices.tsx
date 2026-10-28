@@ -2,14 +2,14 @@ import React from "react";
 import { removeAt, setIn } from "timm";
 import {
   BlockTypeRule,
-  CollectionItemRule,
-  CollectionTypeRule,
-  Rule
+  type CollectionItemRule,
+  type CollectionTypeRule,
+  type Rule
 } from "visual/types/Rule";
 import ItemWrapper from "../common/ItemWrapper";
 import ConditionGroup from "./ConditionGroup";
 import { DeletedRuleNotification } from "./DeletedRuleNotification";
-import { RuleList, ValueItems } from "./types";
+import type { RuleList, ValueItems } from "./types";
 
 export const getValidRules = (rules: Rule[], rulesList: RuleList[]): Rule[] => {
   const rulesListValues = new Set(rulesList.map((item) => String(item.value)));
@@ -23,8 +23,8 @@ export const getValidRules = (rules: Rule[], rulesList: RuleList[]): Rule[] => {
         if (item.value) {
           availableEntityValues.add(String(item.value));
         }
-        
-        // Add nested item values  
+
+        // Add nested item values
         if ("items" in item && Array.isArray(item.items)) {
           item.items.forEach((valueItem) => {
             availableEntityValues.add(String(valueItem.value));
@@ -139,11 +139,13 @@ class ConditionChoices extends React.Component<Props> {
 
       return rule.deleted ? (
         <DeletedRuleNotification
+          // biome-ignore lint/suspicious/noArrayIndexKey: Rule carries no id and is removed by index; keying by content would collide on duplicate rules
           key={index}
           onRemove={(): void => this.handleRemove(index)}
         />
       ) : (
         <ItemWrapper
+          // biome-ignore lint/suspicious/noArrayIndexKey: Rule carries no id and is removed by index; keying by content would collide on duplicate rules
           key={index}
           active={isInclude}
           onChange={(): void =>

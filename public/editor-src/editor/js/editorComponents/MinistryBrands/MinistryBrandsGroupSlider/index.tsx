@@ -3,9 +3,9 @@ import React from "react";
 import { ToastNotification } from "visual/component/Notifications";
 import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
-import { Model } from "visual/editorComponents/EditorComponent/types";
-import { DynamicContentHelper } from "visual/editorComponents/WordPress/common/DynamicContentHelper";
+import type { Model } from "visual/editorComponents/EditorComponent/types";
 import { Wrapper } from "visual/editorComponents/tools/Wrapper";
+import { DynamicContentHelper } from "visual/editorComponents/WordPress/common/DynamicContentHelper";
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import { updateEkklesiaFields } from "visual/utils/api";
 import { attachRefs } from "visual/utils/react";
@@ -16,8 +16,8 @@ import * as sidebarExtendButtons from "../sidebarExtendButtons";
 import { sidebarMinistryBrandsMeta } from "../sidebars/sidebars";
 import * as toolbarImage from "../toolbarImage";
 import * as toolbarMetaIcons from "../toolbarMetaIcons";
-import * as toolbarTitle from "../toolbarTitle";
 import * as toolbarMetaItemLinkColor from "../toolbars//toolbarMetaItemLinkColor";
+import * as toolbarTitle from "../toolbarTitle";
 import { getEkklesiaMessages } from "../utils/helpers";
 import { MBMetaPrefixKey } from "../utils/types";
 import defaultValue from "./defaultValue.json";
@@ -27,7 +27,7 @@ import * as toolbarButton from "./toolbarButton";
 import * as toolbarExtendParent from "./toolbarExtendParent";
 import * as toolbarMeta from "./toolbarMeta";
 import * as toolbarSliderDots from "./toolbarSliderDots";
-import { Props, Value } from "./types";
+import type { Props, Value } from "./types";
 import { getPlaceholder } from "./utils/dynamicContent";
 
 export class MinistryBrandsGroupSlider extends EditorComponent<Value, Props> {
@@ -62,7 +62,7 @@ export class MinistryBrandsGroupSlider extends EditorComponent<Value, Props> {
 
     if (changedKeys) {
       const messages = getEkklesiaMessages();
-      ToastNotification.warn(messages["group_slider"]);
+      ToastNotification.warn(messages.group_slider);
       this.patchValue(changedKeys);
     }
   }
@@ -263,8 +263,7 @@ export class MinistryBrandsGroupSlider extends EditorComponent<Value, Props> {
                                                               toolbarMetaIcons,
                                                               undefined,
                                                               {
-                                                                allowExtend:
-                                                                  false
+                                                                allowExtend: false
                                                               }
                                                             )}
                                                             selector=".brz-ministryBrands__meta--icons"

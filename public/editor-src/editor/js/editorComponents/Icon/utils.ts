@@ -1,6 +1,6 @@
 import type { Patch, Point } from "visual/component/BoxResizer/types";
-import { ElementModel } from "visual/component/Elements/Types";
-import { Value } from "visual/editorComponents/Icon/types";
+import type { ElementModel } from "visual/component/Elements/Types";
+import type { Value } from "visual/editorComponents/Icon/types";
 
 export const resizerPoints = [
   "topLeft",

@@ -1,6 +1,6 @@
-import { PromptGlobalBlock } from "visual/component/Prompts/PromptBlocks/Global/types";
-import { PromptBlock } from "visual/component/Prompts/PromptBlocks/types";
-import { DeviceMode } from "visual/types";
+import type { PromptGlobalBlock } from "visual/component/Prompts/PromptBlocks/Global/types";
+import type { PromptBlock } from "visual/component/Prompts/PromptBlocks/types";
+import type { DeviceMode } from "visual/types";
 
 export interface Props {
   deviceMode: DeviceMode;

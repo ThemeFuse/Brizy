@@ -1,6 +1,6 @@
 # Utils
 
-Shared utilities used across all AI module layers.
+Shared utilities used across the adapters and infrastructure AI module layers.
 
 ## File: `logger.ts`
 

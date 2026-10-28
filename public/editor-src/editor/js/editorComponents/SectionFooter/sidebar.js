@@ -2,8 +2,7 @@ import { DCTypes } from "visual/global/Config/types/DynamicContent";
 import { getColorToolbar } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
-import { getDynamicContentOption } from "visual/utils/options";
-import { getShapes } from "visual/utils/options";
+import { getDynamicContentOption, getShapes } from "visual/utils/options";
 
 export const title = () => t("Footer");
 

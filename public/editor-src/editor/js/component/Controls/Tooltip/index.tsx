@@ -1,12 +1,19 @@
 import classnames from "classnames";
 import { noop } from "es-toolkit";
-import React, { ReactElement, ReactNode, RefObject } from "react";
+import React, {
+  type ReactElement,
+  type ReactNode,
+  type RefObject
+} from "react";
 import { Manager, Reference } from "react-popper";
 import ClickOutside from "visual/component/ClickOutside";
 import Portal from "visual/component/Portal";
-import { TimerType } from "visual/types/TimerType";
-import { WithClassName } from "visual/types/attributes";
-import { TooltipContent as Content, Props as ContentProps } from "./Content";
+import type { WithClassName } from "visual/types/attributes";
+import type { TimerType } from "visual/types/TimerType";
+import {
+  TooltipContent as Content,
+  type Props as ContentProps
+} from "./Content";
 
 const stack: Tooltip[] = [];
 
@@ -59,8 +66,8 @@ export class Tooltip extends React.Component<Props> {
     clickOutsideExceptions: [],
     nodeRef: undefined,
     children: undefined,
-    onOpen: () => {},
-    onClose: () => {}
+    onOpen: noop,
+    onClose: noop
   };
 
   state: State = {
@@ -187,7 +194,7 @@ export class Tooltip extends React.Component<Props> {
       inPortal,
       portalNode
     } = this.props;
-    const node = (nodeRef && nodeRef.current) || this.contentRef.current;
+    const node = nodeRef?.current || this.contentRef.current;
     const portal = portalNode || node?.ownerDocument.body;
 
     const content = (

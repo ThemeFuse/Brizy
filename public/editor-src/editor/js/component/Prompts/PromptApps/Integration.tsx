@@ -1,7 +1,7 @@
 import { produce } from "immer";
 import { getAccounts, pendingRequest } from "visual/utils/api";
 import BaseIntegration from "../common/GlobalApps/BaseIntegration";
-import { AppData, BaseIntegrationProps } from "../common/GlobalApps/type";
+import type { AppData, BaseIntegrationProps } from "../common/GlobalApps/type";
 import * as AppsComponent from "./Apps";
 
 type Props = BaseIntegrationProps & {

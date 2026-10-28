@@ -15,7 +15,7 @@ class VideoPlaylistItems extends EditorArrayComponent {
     onActiveChange: noop
   };
 
-  getItemProps(itemData, itemIndex, items) {
+  getItemProps(_itemData, itemIndex, items) {
     const cloneRemoveConfig = {
       getItems: () => [
         {

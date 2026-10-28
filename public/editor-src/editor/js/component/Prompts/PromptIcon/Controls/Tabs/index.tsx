@@ -4,9 +4,9 @@ import { getTypes } from "visual/config/icons";
 import { TypeId } from "visual/config/icons/Type";
 import { isWp } from "visual/global/Config";
 import { isPro } from "visual/utils/env";
-import { FCC } from "visual/utils/react/types";
+import type { FCC } from "visual/utils/react/types";
 import { TabItem } from "./TabItem";
-import { Props } from "./types";
+import type { Props } from "./types";
 
 export const Tabs: FCC<Props> = ({
   onClick,

@@ -1,5 +1,5 @@
 import {
-  ConfigCommon,
+  type ConfigCommon,
   LeftSidebarMoreOptionsIds
 } from "visual/global/Config/types/configs/ConfigCommon";
 import { readConsent } from "./consentStorage";

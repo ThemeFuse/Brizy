@@ -2,14 +2,14 @@ import classnames from "classnames";
 import Downshift from "downshift";
 import { has } from "es-toolkit/compat";
 import FuzzySearch from "fuzzy-search";
-import React, { ChangeEvent, Component, RefObject } from "react";
+import React, { type ChangeEvent, Component, type RefObject } from "react";
 import { Manager, Popper, Reference } from "react-popper";
 import { addLast, removeAt, removeLast } from "timm";
 import EditorIcon from "visual/component/EditorIcon";
 import Portal from "visual/component/Portal";
 import { Scrollbar } from "visual/component/Scrollbar";
 import { t } from "visual/utils/i18n";
-import {
+import type {
   DropdownProps,
   InputProps,
   MultipleValue,
@@ -100,7 +100,7 @@ class ReactSelect extends Component<Props, State> {
     }
 
     return items.map((tag, index) => (
-      <div key={index} className="brz-control__select2-tag">
+      <div key={tag} className="brz-control__select2-tag">
         {tag}
         <EditorIcon
           icon="nc-trash"
@@ -126,7 +126,7 @@ class ReactSelect extends Component<Props, State> {
             className={className}
             onClick={() => {
               toggleMenu();
-              !isOpen && this.inputRef.current?.focus();
+              if (!isOpen) this.inputRef.current?.focus();
             }}
           >
             {isMultiple &&

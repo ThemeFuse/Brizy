@@ -1,7 +1,7 @@
 import { noop } from "es-toolkit";
 import React, { useMemo } from "react";
 import Page from "visual/component/Editor/View";
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import type { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { ConfigProvider } from "visual/providers/ConfigProvider";
 import { EditorModeProvider } from "visual/providers/EditorModeProvider";
 import { I18nextProvider } from "visual/providers/I18nProvider";
@@ -10,7 +10,7 @@ import { StyleProvider } from "visual/providers/StyleProvider";
 import { setIds } from "visual/utils/models";
 import { InitStore } from "../components/InitStore";
 import { RegisterParts } from "../components/RegisterParts";
-import { Props } from "./types";
+import type { Props } from "./types";
 import { getMode } from "./utils/getMode";
 
 export const Preview = (props: Props): JSX.Element => {

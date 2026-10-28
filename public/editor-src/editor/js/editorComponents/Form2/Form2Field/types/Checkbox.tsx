@@ -3,7 +3,7 @@ import { CheckGroup as CheckboxControls } from "visual/component/Controls/CheckG
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import { AddOption } from "./common/AddOption";
 import TextField from "./common/TextField";
-import { CheckboxProps } from "./type";
+import type { CheckboxProps } from "./type";
 import { createNewFieldOption } from "./utils";
 
 export default class Checkbox extends TextField {
@@ -46,7 +46,10 @@ export default class Checkbox extends TextField {
     const { active, defaultValue, children } = this.props as CheckboxProps;
     const valueRecord = defaultValue
       ?.split(",")
-      .reduce((acc, f) => ({ ...acc, [f.trim()]: true }), {});
+      .reduce<Record<string, boolean>>((acc, f) => {
+        acc[f.trim()] = true;
+        return acc;
+      }, {});
     const value = { ...active, ...valueRecord };
 
     return (

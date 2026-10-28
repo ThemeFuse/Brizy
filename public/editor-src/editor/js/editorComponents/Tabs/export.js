@@ -1,71 +1,86 @@
 import { Num, Str } from "@brizy/readers";
-import $ from "jquery";
+import { onBodyClick } from "visual/utils/export/delegate";
 import { makeAttr } from "visual/utils/i18n/attribute";
 import {
   getFromStorage,
   setToStorage
 } from "visual/utils/storage/localStorage";
 import { TabsAccessibility } from "../accessibility";
+import {
+  animateScrollTop,
+  children,
+  getInnerHeight,
+  getOffsetTop,
+  getTabsContent,
+  indexOf,
+  siblings
+} from "./utils";
 
 const storageKey = (tabsId) => `brz-tabs-active:${tabsId}`;
 
-function changeTab($tabs, target) {
-  const $tabsContent = $tabs
-    .children(".brz-tabs__content")
-    .children(".brz-tabs__items");
-  const $navItem = $(target).closest("li");
-  const navIndex = $navItem.index();
+function changeTab(tabs, target) {
+  const tabsContent = getTabsContent(tabs);
+  const navItem = target?.closest("li") ?? undefined;
+  const navIndex = indexOf(navItem);
   const mobileActiveClassName = "brz-tabs__nav--mobile--active";
 
   if (navIndex === -1) {
     return;
   }
 
-  const tabsId = $tabs.attr(makeAttr("tabs-id"));
+  const tabsId = tabs.getAttribute(makeAttr("tabs-id")) ?? undefined;
   if (Str.read(tabsId)) {
     setToStorage(storageKey(tabsId), String(navIndex));
   }
 
   // removeClass
-  $tabsContent.removeClass("brz-tabs__items--active");
-  $tabsContent
-    .children(".brz-tabs__nav--mobile")
-    .removeClass(mobileActiveClassName);
-  $navItem.siblings("li").removeClass("brz-tabs__nav--active");
+  tabsContent.forEach((item) => {
+    item.classList.remove("brz-tabs__items--active");
+    children(item, ".brz-tabs__nav--mobile").forEach((navMobile) => {
+      navMobile.classList.remove(mobileActiveClassName);
+    });
+  });
+  siblings(navItem).forEach((sibling) => {
+    if (sibling.matches("li")) {
+      sibling.classList.remove("brz-tabs__nav--active");
+    }
+  });
 
   // addClass
-  $navItem.addClass("brz-tabs__nav--active");
-  $($tabsContent[navIndex])
-    .children(".brz-tabs__nav--mobile")
-    .addClass(mobileActiveClassName);
-  $($tabsContent[navIndex]).addClass("brz-tabs__items--active");
+  const activeContent = tabsContent[navIndex];
+
+  navItem.classList.add("brz-tabs__nav--active");
+  if (activeContent) {
+    children(activeContent, ".brz-tabs__nav--mobile").forEach((navMobile) => {
+      navMobile.classList.add(mobileActiveClassName);
+    });
+    activeContent.classList.add("brz-tabs__items--active");
+  }
 
   // Emit Tabs Changed
-  window.Brz.emit("elements.tabs.changed", $tabs.get(0), {
-    active: $tabsContent[navIndex],
-    tabs: $tabsContent.get()
+  window.Brz.emit("elements.tabs.changed", tabs, {
+    active: activeContent,
+    tabs: tabsContent
   });
 }
 
-export default function ($node) {
-  $node.find(".brz-tabs").each(function () {
-    const $this = $(this);
-    const action = $this.attr(makeAttr("action"));
-    const events = action === "hover" ? "mouseenter" : "click";
-    const orientation = $this.hasClass("brz-tabs--vertical")
+export default function (node) {
+  const instances = new Map();
+
+  node.querySelectorAll(".brz-tabs").forEach((tabs) => {
+    const action = tabs.getAttribute(makeAttr("action")) ?? undefined;
+    const orientation = tabs.classList.contains("brz-tabs--vertical")
       ? "vertical"
       : "horizontal";
     const instanceId = `${Date.now()}-${Math.random().toString(36).slice(2)}`;
-    const $desktopNavItems = $this.children(".brz-tabs__nav").children("li");
-    const $tabsContent = $this
-      .children(".brz-tabs__content")
-      .children(".brz-tabs__items");
+    const navs = children(tabs, ".brz-tabs__nav");
+    const desktopNavItems = navs.flatMap((nav) => children(nav, "li"));
+    const tabsContent = getTabsContent(tabs);
     const tabsAccessibility = new TabsAccessibility({
-      desktopItems: $desktopNavItems
-        .toArray()
+      desktopItems: desktopNavItems
         .map((item, index) => {
           const button = item.querySelector(".brz-tabs__nav--button");
-          const panel = $tabsContent.get(index);
+          const panel = tabsContent[index];
 
           if (
             !(button instanceof HTMLElement) ||
@@ -90,8 +105,7 @@ export default function ($node) {
           };
         })
         .filter(Boolean),
-      mobileItems: $tabsContent
-        .toArray()
+      mobileItems: tabsContent
         .map((panel, index) => {
           const header = panel.querySelector(".brz-tabs__nav--mobile");
           const button = header?.querySelector(".brz-tabs__nav--button");
@@ -126,77 +140,75 @@ export default function ($node) {
 
     tabsAccessibility.init();
 
-    if (events === "click") {
-      $this.children(".brz-tabs__nav").on("click", function (e) {
-        changeTab($this, e.target);
-        tabsAccessibility.sync();
-      });
-    } else {
-      $this.find(".brz-tabs__nav > li").on("mouseenter", function (e) {
-        changeTab($this, e.target);
-        tabsAccessibility.sync();
-      });
-      $this.children(".brz-tabs__nav").on("click", function (e) {
-        changeTab($this, e.target);
-        tabsAccessibility.sync();
+    const handleNavChange = (e) => {
+      changeTab(tabs, e.target);
+      tabsAccessibility.sync();
+    };
+
+    if (action === "hover") {
+      tabs.querySelectorAll(".brz-tabs__nav > li").forEach((navItem) => {
+        navItem.addEventListener("mouseenter", handleNavChange);
       });
     }
 
     // For Mobile
-    const $mobileTabsContent = $this.find(".brz-tabs__nav--mobile");
-
-    $mobileTabsContent.on("click", function () {
-      const $navMobile = $(this);
+    const onMobileNavClick = (navMobile) => {
       const activeClassName = "brz-tabs__items--active";
       const mobileActiveClassName = "brz-tabs__nav--mobile--active";
-      const $item = $navMobile.closest(".brz-tabs__items");
-      const $tabsContent = $this
-        .children(".brz-tabs__content")
-        .children(".brz-tabs__items");
+      const item = navMobile.closest(".brz-tabs__items") ?? undefined;
+      const tabsContent = getTabsContent(tabs);
+      const itemSiblings = item ? siblings(item) : [];
 
-      const navIndex = $item.index();
+      const navIndex = indexOf(item);
       if (navIndex !== -1) {
-        const tabsId = $this.attr(makeAttr("tabs-id"));
+        const tabsId = tabs.getAttribute(makeAttr("tabs-id")) ?? undefined;
         if (Str.read(tabsId)) {
           setToStorage(storageKey(tabsId), String(navIndex));
         }
       }
 
-      $item.siblings().removeClass(activeClassName);
-      $item
-        .siblings()
-        .children(".brz-tabs__nav--mobile")
-        .removeClass(mobileActiveClassName);
+      itemSiblings.forEach((sibling) => {
+        sibling.classList.remove(activeClassName);
+        children(sibling, ".brz-tabs__nav--mobile").forEach((header) => {
+          header.classList.remove(mobileActiveClassName);
+        });
+      });
 
-      $item.addClass(activeClassName);
-      $item.children(".brz-tabs__nav--mobile").addClass(mobileActiveClassName);
+      if (item) {
+        item.classList.add(activeClassName);
+        children(item, ".brz-tabs__nav--mobile").forEach((header) => {
+          header.classList.add(mobileActiveClassName);
+        });
+      }
 
-      setTimeout(function () {
+      setTimeout(() => {
         // normalize content if is outside of Viewport
-        const offsetTop = $navMobile.offset().top;
-        const stickyHeaderHeight = $(
+        const offsetTop = getOffsetTop(navMobile);
+        const stickyHeader = document.querySelector(
           ".brz-section__header-sticky-item"
-        ).innerHeight();
+        );
+        const stickyHeaderHeight = stickyHeader
+          ? getInnerHeight(stickyHeader)
+          : 0;
 
         if (window.scrollY > offsetTop) {
-          $("html, body").animate(
-            { scrollTop: offsetTop - (stickyHeaderHeight ?? 0) },
-            200
-          );
+          animateScrollTop(offsetTop - stickyHeaderHeight);
         }
       }, 100);
 
       // Emit Tabs Changed
-      window.Brz.emit("elements.tabs.changed", $item.get(0), {
-        active: $item.get(0),
-        tabs: $tabsContent.get()
+      window.Brz.emit("elements.tabs.changed", item, {
+        active: item,
+        tabs: tabsContent
       });
 
       tabsAccessibility.sync();
-    });
+    };
+
+    instances.set(tabs, { handleNavChange, onMobileNavClick });
 
     // Restore the last active tab from storage
-    const tabsId = $this.attr(makeAttr("tabs-id"));
+    const tabsId = tabs.getAttribute(makeAttr("tabs-id")) ?? undefined;
     if (Str.read(tabsId)) {
       const raw = getFromStorage(storageKey(tabsId));
 
@@ -206,18 +218,37 @@ export default function ($node) {
         if (
           Number.isInteger(storedIndex) &&
           storedIndex >= 0 &&
-          storedIndex < $tabsContent.length
+          storedIndex < tabsContent.length
         ) {
-          const currentIndex = $tabsContent.index(
-            $tabsContent.filter(".brz-tabs__items--active")
+          const currentIndex = tabsContent.findIndex((item) =>
+            item.classList.contains("brz-tabs__items--active")
           );
 
           if (storedIndex !== currentIndex) {
-            changeTab($this, $desktopNavItems.eq(storedIndex));
+            changeTab(tabs, desktopNavItems[storedIndex]);
             tabsAccessibility.sync();
           }
         }
       }
     }
   });
+
+  onBodyClick([
+    {
+      selector: ".brz-tabs__nav",
+      handler: (nav, event) => {
+        instances.get(nav.parentElement)?.handleNavChange(event);
+      }
+    },
+    {
+      selector: ".brz-tabs__nav--mobile",
+      handler: (navMobile) => {
+        instances.forEach((state, tabs) => {
+          if (tabs.contains(navMobile)) {
+            state.onMobileNavClick(navMobile);
+          }
+        });
+      }
+    }
+  ]);
 }

@@ -1,6 +1,6 @@
-import { TypeId } from "visual/config/icons/Type";
-import { Literal } from "visual/utils/types/Literal";
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import type { TypeId } from "visual/config/icons/Type";
+import type { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import type { Literal } from "visual/utils/types/Literal";
 
 export interface Icon {
   name: string;

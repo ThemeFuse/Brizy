@@ -1,5 +1,5 @@
-import React, { JSX } from "react";
 import classnames from "classnames";
+import React, { type JSX } from "react";
 import EditorIcon from "visual/component/EditorIcon";
 
 interface Props {

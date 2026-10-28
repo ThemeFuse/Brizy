@@ -1,9 +1,9 @@
 import classnames from "classnames";
-import React, { ReactElement, useCallback, useMemo } from "react";
+import React, { type ReactElement, useCallback, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Select from "visual/component/Controls/Select";
 import SelectItem from "visual/component/Controls/Select/SelectItem";
-import { Config } from "visual/global/Config/types";
+import type { Config } from "visual/global/Config/types";
 import { useConfig } from "visual/providers/ConfigProvider";
 import { updateUI } from "visual/redux/actions2";
 import { currentLanguageSelector } from "visual/redux/selectors";
@@ -38,8 +38,8 @@ export const Languages = (props: Props): ReactElement => {
       ...languageChoices
     ];
 
-    return languageOptions.map((item, index) => (
-      <SelectItem key={index} value={item.value}>
+    return languageOptions.map((item) => (
+      <SelectItem key={item.value} value={item.value}>
         {item.title}
       </SelectItem>
     ));

@@ -1,6 +1,6 @@
 import classNames from "classnames";
 import { uniqueId } from "es-toolkit/compat";
-import React, { ReactNode } from "react";
+import React, { type ReactNode } from "react";
 import BoxResizer from "visual/component/BoxResizer";
 import type { Patch as BoxResizerPatch } from "visual/component/BoxResizer/types";
 import CustomCSS from "visual/component/CustomCSS";
@@ -24,7 +24,7 @@ import * as sidebarIcon from "./sidebarIcon";
 import { style } from "./styles";
 import * as toolbarParent from "./toolbar";
 import * as toolbarIcon from "./toolbarIcon";
-import { Value } from "./types/Value";
+import type { Value } from "./types/Value";
 import { resizerRestrictions, resizerTransformValue } from "./utils";
 
 export class EcwidShoppingBag extends EditorComponent<Value> {

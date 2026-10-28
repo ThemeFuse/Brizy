@@ -1,11 +1,11 @@
 import { isCloud } from "visual/global/Config/types";
-import {
+import type {
   ConfigCommon,
   PublishedGlobalBlock
 } from "visual/global/Config/types/configs/ConfigCommon";
 import { globalBlocksHTMLInPageSelector } from "visual/redux/selectors";
-import { Store } from "visual/redux/store";
-import { GlobalBlock } from "visual/types/GlobalBlock";
+import type { Store } from "visual/redux/store";
+import type { GlobalBlock } from "visual/types/GlobalBlock";
 import { stringifyGlobalBlock } from "visual/utils/api/adapter";
 import { assetManager } from "../../assetManager";
 
@@ -16,7 +16,7 @@ export function prepareGlobalBlocks(
 ): Array<PublishedGlobalBlock> {
   const { compiler } = config;
   const state = store.getState();
-  const htmls = globalBlocksHTMLInPageSelector(state, config);
+  const htmls = globalBlocksHTMLInPageSelector(state);
   const is_cloud = isCloud(config);
 
   return globalBlocks.map((globalBlock) => {

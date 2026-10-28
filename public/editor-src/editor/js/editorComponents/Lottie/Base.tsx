@@ -4,10 +4,10 @@ import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import { isEditor } from "visual/providers/RenderProvider";
 import { blocksDataSelector } from "visual/redux/selectors";
-import { Block } from "visual/types/Block";
+import type { Block } from "visual/types/Block";
 import EditorComponent from "../EditorComponent";
 import defaultValue from "./defaultValue.json";
-import { Value } from "./type";
+import type { Value } from "./type";
 
 export class BaseLottie extends EditorComponent<Value> {
   static defaultValue = defaultValue;

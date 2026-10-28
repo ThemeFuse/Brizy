@@ -1,11 +1,11 @@
 import { isStory } from "visual/providers/EditorModeProvider";
 import { isEditor } from "visual/providers/RenderProvider";
-import { DeviceMode, DynamicStylesProps } from "visual/types";
+import type { DeviceMode, DynamicStylesProps } from "visual/types";
 import { renderStyles } from "visual/utils/cssStyle";
-import { OutputStyle, Styles } from "visual/utils/cssStyle/types";
+import type { OutputStyle, Styles } from "visual/utils/cssStyle/types";
 import { defaultValueValue } from "visual/utils/onChange";
 import { getTooltipStyles } from "../tools/Tooltip/styles";
-import { Value } from "./types";
+import type { Value } from "./types";
 
 interface BaseData extends DynamicStylesProps<Value> {
   hasSizing: boolean;

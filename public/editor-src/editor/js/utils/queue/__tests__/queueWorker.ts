@@ -1,4 +1,4 @@
-import { Store, createStore } from "visual/redux/store";
+import { createStore, Store } from "visual/redux/store";
 import { Queue } from "../Queue";
 import { QueueWorker } from "../QueueWorker";
 

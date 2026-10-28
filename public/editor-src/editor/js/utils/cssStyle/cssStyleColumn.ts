@@ -1,6 +1,6 @@
 import { cssStyleSizeMinHeightPx } from "visual/utils/cssStyle";
 import { defaultValueValue } from "visual/utils/onChange";
-import { CSSValue } from "../style2/types";
+import type { CSSValue } from "../style2/types";
 
 export function cssStyleColumnHeight({
   v,
@@ -67,4 +67,12 @@ export function cssStyleColumnVerticalAlignItems({
   }
 
   return "";
+}
+
+export function cssStyleColumnTransformWrapper(): string {
+  return "flex-direction:column; height:100%;";
+}
+
+export function cssStyleColumnTransformBg(): string {
+  return "width:auto; height:auto; inset:0;";
 }

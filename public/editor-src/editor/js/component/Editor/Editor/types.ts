@@ -1,5 +1,5 @@
-import { ElementModel } from "visual/component/Elements/Types";
-import { OnChangeMeta } from "visual/editorComponents/EditorComponent/types";
+import type { ElementModel } from "visual/component/Elements/Types";
+import type { OnChangeMeta } from "visual/editorComponents/EditorComponent/types";
 
 export type OnChange = (
   v: ElementModel | null,

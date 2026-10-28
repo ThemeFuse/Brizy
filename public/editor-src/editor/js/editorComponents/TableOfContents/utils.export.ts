@@ -73,7 +73,7 @@ export const renderList = (
       if (isMarkerNumbers) {
         bodyList.classList.add("brz-toc-body__list-numbers");
         const listMarker = document.createElement("span");
-        listMarker.innerText = String(i + 1) + ".";
+        listMarker.innerText = `${String(i + 1)}.`;
         listMarker.classList.add("brz-toc-body__list-marker");
         li.appendChild(listMarker);
       }

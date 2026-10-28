@@ -1,11 +1,11 @@
-import {
+import type {
   ElementModel,
   ElementModelType2
 } from "visual/component/Elements/Types";
-import { TooltipPlacement } from "visual/component/Tooltip/types";
-import { TypographyTags } from "visual/editorComponents/RichText/toolbar/utils";
-import { Switch } from "visual/types/Options";
-import { TextScripts } from "visual/types/Style";
+import type { TooltipPlacement } from "visual/component/Tooltip/types";
+import type { TypographyTags } from "visual/editorComponents/RichText/toolbar/utils";
+import type { Switch } from "visual/types/Options";
+import type { TextScripts } from "visual/types/Style";
 import type {
   Value as LinkValue,
   PopulationColor as PopulationColorType

@@ -1,5 +1,5 @@
-import { ReactNode } from "react";
-import { RenderType } from "./context";
+import type { ReactNode } from "react";
+import type { RenderType } from "./context";
 
 export interface Props {
   children: ReactNode;

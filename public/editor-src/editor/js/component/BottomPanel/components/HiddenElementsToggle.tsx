@@ -1,4 +1,4 @@
-import React from "react";
+import React, { type ReactNode } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import EditorIcon from "visual/component/EditorIcon";
 import { isStory, useEditorMode } from "visual/providers/EditorModeProvider";
@@ -7,14 +7,14 @@ import { showHiddenElementsSelector } from "visual/redux/selectors";
 import { t } from "visual/utils/i18n";
 import { BottomPanelItem } from "./Item";
 
-function HiddenElementsToggle(): JSX.Element {
+function HiddenElementsToggle(): ReactNode {
   const dispatch = useDispatch();
   const showHiddenElements = useSelector(showHiddenElementsSelector);
   const { mode } = useEditorMode();
 
   // ! write less hacky later
   if (isStory(mode)) {
-    return <></>;
+    return null;
   }
 
   const icon = showHiddenElements ? "nc-eye-17" : "nc-eye-ban-18";

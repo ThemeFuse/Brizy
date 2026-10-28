@@ -1,4 +1,4 @@
-import $ from "jquery";
+import { tween } from "./tween";
 import type { CounterData } from "./types";
 import { formatNumber } from "./utils";
 
@@ -22,22 +22,14 @@ export const animate = (value: CounterData): void => {
       }
     };
 
-    $({ countNum: value.start }).animate(
-      {
-        countNum: value.end
-      },
-      {
-        duration: value.duration * 1000,
-        easing: "linear",
-
-        step: function () {
-          step(this.countNum);
-        },
-
-        complete: function () {
-          step(value.end);
-        }
+    tween({
+      start: value.start,
+      end: value.end,
+      duration: value.duration * 1000,
+      step,
+      complete: () => {
+        step(value.end);
       }
-    );
+    });
   }
 };

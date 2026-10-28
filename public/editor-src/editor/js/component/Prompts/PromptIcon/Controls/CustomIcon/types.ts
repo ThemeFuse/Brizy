@@ -1,5 +1,5 @@
-import { CustomIcon } from "visual/config/icons/Icon";
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import type { CustomIcon } from "visual/config/icons/Icon";
+import type { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 
 export interface Props {
   icons: CustomIcon[];

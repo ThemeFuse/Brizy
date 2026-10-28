@@ -1,0 +1,2550 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`autoplay puts the pause control after the dots 1`] = `
+"<ul aria-label="Slide navigation" class="brz-slick-slider__dots brz-slick-slider__dots--circle">
+<li class="slick-active">
+<button aria-controls="brz-section-slide-0-0" aria-current="true" aria-label="Current slide, Go to slide 1" type="button">1</button>
+</li>
+<li>
+<button aria-controls="brz-section-slide-0-1" aria-label="Go to slide 2" type="button">2</button>
+</li>
+<li>
+<button aria-controls="brz-section-slide-0-2" aria-label="Go to slide 3" type="button">3</button>
+</li>
+<li class="brz-slick-slider__pause">
+<button aria-controls="brz-section-slider-0" aria-label="Pause autoplay" aria-pressed="false" class="brz-slick-slider__pause-button" type="button">
+<svg class="brz-icon-svg button-pause">
+<use href="/static/editor/icons/glyph/button-circle-pause.svg#nc_icon">
+</use>
+</svg>
+<svg class="brz-icon-svg brz-hidden button-play">
+<use href="/static/editor/icons/glyph/button-circle-play.svg#nc_icon">
+</use>
+</svg>
+</button>
+</li>
+</ul>"
+`;
+
+exports[`building the slider renders a slider inside a right-to-left page as before 1`] = `
+"<div aria-label="Section slider 1" aria-roledescription="carousel" class="brz-slick-slider brz-slick-slider__section slick-initialized slick-slider slick-dotted" data-animation-speed="500" data-arrows="true" data-auto-play="false" data-auto-play-speed="3000" data-dots="true" data-dots-class="brz-slick-slider__dots brz-slick-slider__dots--circle" data-fade="false" data-responsive="%5B%7B%22breakpoint%22%3A767%2C%22settings%22%3A%7B%22slidesToShow%22%3A1%2C%22slidesToScroll%22%3A1%7D%7D%5D" data-slider-paused="false" data-slides-to-scroll="1" data-slides-to-show="1" data-swipe="true" data-vertical="false" id="brz-section-slider-0" role="region">
+<button aria-controls="brz-section-slider-0" aria-disabled="false" aria-label="Previous slide" class="brz-slick-slider__arrow brz-slick-slider__arrow-prev slick-arrow" tabindex="0" type="button">
+<svg class="brz-icon-svg">
+<use href="/static/editor/icons/editor/right-arrow-thin.svg#brz_icon">
+</use>
+</svg>
+</button>
+<div class="slick-list draggable">
+<div class="slick-track" style="opacity: 1; width: 7000px; left: -1000px;">
+<div aria-hidden="true" class="slick-slide slick-cloned" data-slick-index="-1" id="" style="width: 1000px;">
+<div class="brz-section__content brz-section--boxed brz-css-d-oh3bvl brz-css-5ca4rf" data-brz-custom-id="haqdykswt2ox">
+<div class="brz-container brz-css-d-x9rvyp brz-css-u4t4s8">
+</div>
+</div>
+</div>
+<div aria-hidden="false" aria-label="Slide 1 of 3" aria-roledescription="slide" class="slick-slide slick-current slick-active" data-slick-index="0" id="brz-section-slide-0-0" role="group" style="width: 1000px;">
+<div class="brz-section__content brz-section--boxed brz-css-d-oh3bvl brz-css-67mhqe" data-brz-custom-id="xw4c37g4ofxx">
+<div class="brz-container brz-css-d-x9rvyp brz-css-126lagi">
+</div>
+</div>
+</div>
+<div aria-hidden="true" aria-label="Slide 2 of 3" aria-roledescription="slide" class="slick-slide" data-slick-index="1" id="brz-section-slide-0-1" role="group" style="width: 1000px;">
+<div class="brz-section__content brz-section--boxed brz-css-d-oh3bvl brz-css-1bdqe26" data-brz-custom-id="nh3mjb7uhtxx">
+<div class="brz-container brz-css-d-x9rvyp brz-css-15a18tg">
+<div class="brz-css-d-1wonu5h brz-css-17xiopa brz-wrapper" id="">
+<div class="brz-counter brz-counter-simple brz-css-d-1l8wdnn brz-css-15fprsz" data-brz-custom-id="ax350n9y09qx" data-brz-duration="2" data-brz-end="100" data-brz-separator="," data-brz-start="0" data-brz-type="simple">
+<div aria-atomic="true" aria-live="polite" class="brz-counter-figures brz-css-d-1sbebwu brz-css-jm1bxm" role="status">
+<span class="brz-counter-numbers">0</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div aria-hidden="true" aria-label="Slide 3 of 3" aria-roledescription="slide" class="slick-slide" data-slick-index="2" id="brz-section-slide-0-2" role="group" style="width: 1000px;">
+<div class="brz-section__content brz-section--boxed brz-css-d-oh3bvl brz-css-5ca4rf" data-brz-custom-id="haqdykswt2ox">
+<div class="brz-container brz-css-d-x9rvyp brz-css-u4t4s8">
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide slick-cloned" data-slick-index="3" id="" style="width: 1000px;">
+<div class="brz-section__content brz-section--boxed brz-css-d-oh3bvl brz-css-67mhqe" data-brz-custom-id="xw4c37g4ofxx">
+<div class="brz-container brz-css-d-x9rvyp brz-css-126lagi">
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide slick-cloned" data-slick-index="4" id="" style="width: 1000px;">
+<div class="brz-section__content brz-section--boxed brz-css-d-oh3bvl brz-css-1bdqe26" data-brz-custom-id="nh3mjb7uhtxx">
+<div class="brz-container brz-css-d-x9rvyp brz-css-15a18tg">
+<div class="brz-css-d-1wonu5h brz-css-17xiopa brz-wrapper" id="">
+<div class="brz-counter brz-counter-simple brz-css-d-1l8wdnn brz-css-15fprsz" data-brz-custom-id="ax350n9y09qx" data-brz-duration="2" data-brz-end="100" data-brz-separator="," data-brz-start="0" data-brz-type="simple">
+<div aria-atomic="true" aria-live="polite" class="brz-counter-figures brz-css-d-1sbebwu brz-css-jm1bxm" role="status">
+<span class="brz-counter-numbers">0</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide slick-cloned" data-slick-index="5" id="" style="width: 1000px;">
+<div class="brz-section__content brz-section--boxed brz-css-d-oh3bvl brz-css-5ca4rf" data-brz-custom-id="haqdykswt2ox">
+<div class="brz-container brz-css-d-x9rvyp brz-css-u4t4s8">
+</div>
+</div>
+</div>
+</div>
+</div>
+<button aria-controls="brz-section-slider-0" aria-disabled="false" aria-label="Next slide" class="brz-slick-slider__arrow brz-slick-slider__arrow-next slick-arrow" tabindex="0" type="button">
+<svg class="brz-icon-svg">
+<use href="/static/editor/icons/editor/right-arrow-thin.svg#brz_icon">
+</use>
+</svg>
+</button>
+<ul aria-label="Slide navigation" class="brz-slick-slider__dots brz-slick-slider__dots--circle">
+<li class="slick-active">
+<button aria-controls="brz-section-slide-0-0" aria-current="true" aria-label="Current slide, Go to slide 1" type="button">1</button>
+</li>
+<li>
+<button aria-controls="brz-section-slide-0-1" aria-label="Go to slide 2" type="button">2</button>
+</li>
+<li>
+<button aria-controls="brz-section-slide-0-2" aria-label="Go to slide 3" type="button">3</button>
+</li>
+<li class="brz-slick-slider__pause">
+<button aria-controls="brz-section-slider-0" aria-label="Pause autoplay" aria-pressed="false" class="brz-slick-slider__pause-button" type="button">
+<svg class="brz-icon-svg button-pause">
+<use href="/static/editor/icons/glyph/button-circle-pause.svg#nc_icon">
+</use>
+</svg>
+<svg class="brz-icon-svg brz-hidden button-play">
+<use href="/static/editor/icons/glyph/button-circle-play.svg#nc_icon">
+</use>
+</svg>
+</button>
+</li>
+</ul>
+</div>"
+`;
+
+exports[`building the slider renders the fade animation slider as before 1`] = `
+"<div aria-label="Section slider 1" aria-roledescription="carousel" class="brz-slick-slider brz-slick-slider__section slick-initialized slick-slider slick-dotted" data-animation-speed="500" data-arrows="true" data-auto-play="false" data-auto-play-speed="3000" data-dots="true" data-dots-class="brz-slick-slider__dots brz-slick-slider__dots--circle" data-fade="true" data-responsive="%5B%7B%22breakpoint%22%3A767%2C%22settings%22%3A%7B%22slidesToShow%22%3A1%2C%22slidesToScroll%22%3A1%7D%7D%5D" data-slider-paused="false" data-slides-to-scroll="1" data-slides-to-show="1" data-swipe="true" data-vertical="false" id="brz-section-slider-0" role="region">
+<button aria-controls="brz-section-slider-0" aria-disabled="false" aria-label="Previous slide" class="brz-slick-slider__arrow brz-slick-slider__arrow-prev slick-arrow" tabindex="0" type="button">
+<svg class="brz-icon-svg">
+<use href="/static/editor/icons/editor/right-arrow-thin.svg#brz_icon">
+</use>
+</svg>
+</button>
+<div class="slick-list draggable">
+<div class="slick-track" style="opacity: 1; width: 3000px;">
+<div aria-hidden="false" aria-label="Slide 1 of 3" aria-roledescription="slide" class="slick-slide slick-current slick-active" data-slick-index="0" id="brz-section-slide-0-0" role="group" style="width: 1000px; position: relative; left: 0px; top: 0px; z-index: 999; opacity: 1;">
+<div class="brz-section__content brz-section--boxed brz-css-d-oh3bvl brz-css-67mhqe" data-brz-custom-id="xw4c37g4ofxx">
+<div class="brz-container brz-css-d-x9rvyp brz-css-126lagi">
+</div>
+</div>
+</div>
+<div aria-hidden="true" aria-label="Slide 2 of 3" aria-roledescription="slide" class="slick-slide" data-slick-index="1" id="brz-section-slide-0-1" role="group" style="width: 1000px; position: relative; left: -1000px; top: 0px; z-index: 998; opacity: 0;">
+<div class="brz-section__content brz-section--boxed brz-css-d-oh3bvl brz-css-1bdqe26" data-brz-custom-id="nh3mjb7uhtxx">
+<div class="brz-container brz-css-d-x9rvyp brz-css-15a18tg">
+<div class="brz-css-d-1wonu5h brz-css-17xiopa brz-wrapper" id="">
+<div class="brz-counter brz-counter-simple brz-css-d-1l8wdnn brz-css-15fprsz" data-brz-custom-id="ax350n9y09qx" data-brz-duration="2" data-brz-end="100" data-brz-separator="," data-brz-start="0" data-brz-type="simple">
+<div aria-atomic="true" aria-live="polite" class="brz-counter-figures brz-css-d-1sbebwu brz-css-jm1bxm" role="status">
+<span class="brz-counter-numbers">0</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div aria-hidden="true" aria-label="Slide 3 of 3" aria-roledescription="slide" class="slick-slide" data-slick-index="2" id="brz-section-slide-0-2" role="group" style="width: 1000px; position: relative; left: -2000px; top: 0px; z-index: 998; opacity: 0;">
+<div class="brz-section__content brz-section--boxed brz-css-d-oh3bvl brz-css-5ca4rf" data-brz-custom-id="haqdykswt2ox">
+<div class="brz-container brz-css-d-x9rvyp brz-css-u4t4s8">
+</div>
+</div>
+</div>
+</div>
+</div>
+<button aria-controls="brz-section-slider-0" aria-disabled="false" aria-label="Next slide" class="brz-slick-slider__arrow brz-slick-slider__arrow-next slick-arrow" tabindex="0" type="button">
+<svg class="brz-icon-svg">
+<use href="/static/editor/icons/editor/right-arrow-thin.svg#brz_icon">
+</use>
+</svg>
+</button>
+<ul aria-label="Slide navigation" class="brz-slick-slider__dots brz-slick-slider__dots--circle">
+<li class="slick-active">
+<button aria-controls="brz-section-slide-0-0" aria-current="true" aria-label="Current slide, Go to slide 1" type="button">1</button>
+</li>
+<li>
+<button aria-controls="brz-section-slide-0-1" aria-label="Go to slide 2" type="button">2</button>
+</li>
+<li>
+<button aria-controls="brz-section-slide-0-2" aria-label="Go to slide 3" type="button">3</button>
+</li>
+<li class="brz-slick-slider__pause">
+<button aria-controls="brz-section-slider-0" aria-label="Pause autoplay" aria-pressed="false" class="brz-slick-slider__pause-button" type="button">
+<svg class="brz-icon-svg button-pause">
+<use href="/static/editor/icons/glyph/button-circle-pause.svg#nc_icon">
+</use>
+</svg>
+<svg class="brz-icon-svg brz-hidden button-play">
+<use href="/static/editor/icons/glyph/button-circle-play.svg#nc_icon">
+</use>
+</svg>
+</button>
+</li>
+</ul>
+</div>"
+`;
+
+exports[`building the slider renders the nested carousels and their focusable elements as before 1`] = `
+"<div aria-label="Section slider 1" aria-roledescription="carousel" class="brz-slick-slider brz-slick-slider__section slick-initialized slick-slider slick-dotted" data-animation-speed="500" data-arrows="true" data-auto-play="false" data-auto-play-speed="3000" data-dots="true" data-dots-class="brz-slick-slider__dots brz-slick-slider__dots--circle" data-fade="false" data-responsive="%5B%7B%22breakpoint%22%3A767%2C%22settings%22%3A%7B%22slidesToShow%22%3A1%2C%22slidesToScroll%22%3A1%7D%7D%5D" data-slider-paused="false" data-slides-to-scroll="1" data-slides-to-show="1" data-swipe="true" data-vertical="false" id="brz-section-slider-0" role="region">
+<button aria-controls="brz-section-slider-0" aria-disabled="false" aria-label="Previous slide" class="brz-slick-slider__arrow brz-slick-slider__arrow-prev slick-arrow" tabindex="0" type="button">
+<svg class="brz-icon-svg">
+<use href="/static/editor/icons/editor/right-arrow-thin.svg#brz_icon">
+</use>
+</svg>
+</button>
+<div class="slick-list draggable">
+<div class="slick-track" style="opacity: 1; width: 7000px; left: -1000px;">
+<div aria-hidden="true" class="slick-slide slick-cloned" data-slick-index="-1" id="" style="width: 1000px;">
+<div class="brz-section__content brz-section--boxed brz-css-d-oh3bvl brz-css-5ca4rf" data-brz-custom-id="haqdykswt2ox">
+<div class="brz-container brz-css-d-x9rvyp brz-css-u4t4s8">
+<div class="brz-css-d-1wonu5h brz-css-1us2ca5 brz-wrapper" id="">
+<div class="brz-carousel brz-css-d-gzcfxr brz-css-n1pplh" data-brz-custom-id="7o83jb3fecnx">
+<div class="brz-carousel__slider" data-arrows="true" data-auto-play="false" data-auto-play-speed="3000" data-dots="true" data-dots-class="brz-slick-slider__dots brz-slick-slider__dots--circle" data-fade="false" data-responsive="%5B%7B%22breakpoint%22%3A991%2C%22settings%22%3A%7B%22slidesToShow%22%3A2%2C%22slidesToScroll%22%3A1%7D%7D%2C%7B%22breakpoint%22%3A767%2C%22settings%22%3A%7B%22slidesToShow%22%3A1%2C%22slidesToScroll%22%3A1%7D%7D%5D" data-slider-paused="false" data-slides-to-scroll="1" data-slides-to-show="3" data-swipe="true" data-transition-speed="3.5">
+<div class="brz-carousel__item">
+<div class="brz-columns brz-css-d-j7y22h brz-css-r-1hbdoml brz-css-13mmds0" data-brz-custom-id="vn2qimyvbaxx">
+<div class="brz-column__items brz-css-d-v5w42e brz-css-11weynt">
+<div class="brz-css-d-1wonu5h brz-css-w1qui7 brz-wrapper" id="">
+<div class="brz-image brz-css-d-4q1l1r brz-css-dqkyu" data-brz-custom-id="m13tfos6ozcx">
+<picture class="brz-picture brz-d-block brz-p-relative brz-css-d-xn7edz brz-css-1sd7ylj">
+<div class="brz-shortcode__placeholder">
+<svg class="brz-icon-svg">
+<use href="/static/editor/icons/editor/img.svg#brz_icon">
+</use>
+</svg>
+</div>
+</picture>
+</div>
+</div>
+<div class="brz-css-d-1wonu5h brz-css-3cdkjb brz-wrapper" id="">
+<div class="brz-rich-text brz-rich-text__custom brz-css-d-1ehz5mr brz-css-1mvwqwl" data-brz-custom-id="h7s5z33b9k5x">
+<div data-brz-translate-text="1">
+<p class="brz-tp-paragraph brz-text-lg-center brz-css-dqzu38">
+<span class="brz-cp-color7">The point of using dummy text for your paragraph is that it has a more-or-less normal distribution of letters. making it look like readable English.</span>
+</p>
+</div>
+</div>
+</div>
+<div class="brz-wrapper-clone brz-flex-xs-wrap brz-css-d-x0dcve brz-css-p42lbs" data-brz-custom-id="wgxd9echcifx">
+<a class="brz-a brz-btn brz-css-d-1syz9i2 brz-css-bda39q brz-css-d-13c78oe brz-css-1p1mp7s" data-brz-custom-id="odx71ez6uufx" data-brz-link-type="external" rel="noopener" target="_self">
+<svg class="brz-icon-svg brz-css-d-o4rfik brz-css-18wyqb3">
+<use href="/static/editor/icons/glyph/tail-right.svg#nc_icon">
+</use>
+</svg>
+<span class="brz-span brz-text__editor" data-brz-translate-text="1">BUTTON</span>
+</a>
+</div>
+</div>
+</div>
+</div>
+<div class="brz-carousel__item">
+<div class="brz-columns brz-css-d-j7y22h brz-css-r-1hbdoml brz-css-m0xms8" data-brz-custom-id="cn2d5o2frl8x">
+<div class="brz-column__items brz-css-d-v5w42e brz-css-17of9ru">
+<div class="brz-css-d-1wonu5h brz-css-47rhad brz-wrapper" id="">
+<div class="brz-image brz-css-d-pnolfs brz-css-1r2w177" data-brz-custom-id="wmsf948ia2xx">
+<picture class="brz-picture brz-d-block brz-p-relative brz-css-d-35ocse brz-css-1ubjaoc">
+<div class="brz-shortcode__placeholder">
+<svg class="brz-icon-svg">
+<use href="/static/editor/icons/editor/img.svg#brz_icon">
+</use>
+</svg>
+</div>
+</picture>
+</div>
+</div>
+<div class="brz-css-d-1wonu5h brz-css-f7dymi brz-wrapper" id="">
+<div class="brz-rich-text brz-rich-text__custom brz-css-d-1ehz5mr brz-css-jtb8dc" data-brz-custom-id="lvuuhx5q5ocx">
+<div data-brz-translate-text="1">
+<p class="brz-tp-paragraph brz-text-lg-center brz-css-dqzu38">
+<span class="brz-cp-color7">The point of using dummy text for your paragraph is that it has a more-or-less normal distribution of letters. making it look like readable English.</span>
+</p>
+</div>
+</div>
+</div>
+<div class="brz-wrapper-clone brz-flex-xs-wrap brz-css-d-x0dcve brz-css-1ok3qow" data-brz-custom-id="mktpsyuehspx">
+<a class="brz-a brz-btn brz-css-d-1syz9i2 brz-css-113szzk brz-css-d-13c78oe brz-css-1gk6rbc" data-brz-custom-id="6em0n50numyx" data-brz-link-type="external" rel="noopener" target="_self">
+<svg class="brz-icon-svg brz-css-d-o4rfik brz-css-um1b5l">
+<use href="/static/editor/icons/glyph/tail-right.svg#nc_icon">
+</use>
+</svg>
+<span class="brz-span brz-text__editor" data-brz-translate-text="1">BUTTON</span>
+</a>
+</div>
+</div>
+</div>
+</div>
+<div class="brz-carousel__item">
+<div class="brz-columns brz-css-d-j7y22h brz-css-r-1hbdoml brz-css-165obhl" data-brz-custom-id="r7opdk1h2ixx">
+<div class="brz-column__items brz-css-d-v5w42e brz-css-1966usx">
+<div class="brz-css-d-1wonu5h brz-css-1mroez3 brz-wrapper" id="">
+<div class="brz-image brz-css-d-1ybtt5t brz-css-1sdos1s" data-brz-custom-id="tlbzy71vu6xx">
+<picture class="brz-picture brz-d-block brz-p-relative brz-css-d-egohed brz-css-eo3jb8">
+<div class="brz-shortcode__placeholder">
+<svg class="brz-icon-svg">
+<use href="/static/editor/icons/editor/img.svg#brz_icon">
+</use>
+</svg>
+</div>
+</picture>
+</div>
+</div>
+<div class="brz-css-d-1wonu5h brz-css-ok4ouy brz-wrapper" id="">
+<div class="brz-rich-text brz-rich-text__custom brz-css-d-1ehz5mr brz-css-1fj7ddp" data-brz-custom-id="fwgo2qiwkyjx">
+<div data-brz-translate-text="1">
+<p class="brz-tp-paragraph brz-text-lg-center brz-css-dqzu38">
+<span class="brz-cp-color7">The point of using dummy text for your paragraph is that it has a more-or-less normal distribution of letters. making it look like readable English.</span>
+</p>
+</div>
+</div>
+</div>
+<div class="brz-wrapper-clone brz-flex-xs-wrap brz-css-d-x0dcve brz-css-s0uy57" data-brz-custom-id="njteukwu78xx">
+<a class="brz-a brz-btn brz-css-d-1syz9i2 brz-css-16fpdkk brz-css-d-13c78oe brz-css-1xkw2wo" data-brz-custom-id="qug4dhki7tlx" data-brz-link-type="external" rel="noopener" target="_self">
+<svg class="brz-icon-svg brz-css-d-o4rfik brz-css-1pwz2dh">
+<use href="/static/editor/icons/glyph/tail-right.svg#nc_icon">
+</use>
+</svg>
+<span class="brz-span brz-text__editor" data-brz-translate-text="1">BUTTON</span>
+</a>
+</div>
+</div>
+</div>
+</div>
+<div class="brz-carousel__item">
+<div class="brz-columns brz-css-d-j7y22h brz-css-r-1hbdoml brz-css-tau6at" data-brz-custom-id="6io8stcgis3x">
+<div class="brz-column__items brz-css-d-v5w42e brz-css-10qyxhj">
+<div class="brz-css-d-1wonu5h brz-css-slur92 brz-wrapper" id="">
+<div class="brz-image brz-css-d-1ypywxh brz-css-1jeoaia" data-brz-custom-id="q1dazru5e3ix">
+<picture class="brz-picture brz-d-block brz-p-relative brz-css-d-18keiwq brz-css-1y0bsw">
+<div class="brz-shortcode__placeholder">
+<svg class="brz-icon-svg">
+<use href="/static/editor/icons/editor/img.svg#brz_icon">
+</use>
+</svg>
+</div>
+</picture>
+</div>
+</div>
+<div class="brz-css-d-1wonu5h brz-css-wrxssq brz-wrapper" id="">
+<div class="brz-rich-text brz-rich-text__custom brz-css-d-1ehz5mr brz-css-1iagiuo" data-brz-custom-id="f8telcw6ne8x">
+<div data-brz-translate-text="1">
+<p class="brz-tp-paragraph brz-text-lg-center brz-css-dqzu38">
+<span class="brz-cp-color7">The point of using dummy text for your paragraph is that it has a more-or-less normal distribution of letters. making it look like readable English.</span>
+</p>
+</div>
+</div>
+</div>
+<div class="brz-wrapper-clone brz-flex-xs-wrap brz-css-d-x0dcve brz-css-dr8qhk" data-brz-custom-id="hmnblt0ztsux">
+<a class="brz-a brz-btn brz-css-d-1syz9i2 brz-css-18ineat brz-css-d-13c78oe brz-css-13aa131" data-brz-custom-id="9d8legery74x" data-brz-link-type="external" rel="noopener" target="_self">
+<svg class="brz-icon-svg brz-css-d-o4rfik brz-css-s454vo">
+<use href="/static/editor/icons/glyph/tail-right.svg#nc_icon">
+</use>
+</svg>
+<span class="brz-span brz-text__editor" data-brz-translate-text="1">BUTTON</span>
+</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div aria-hidden="false" aria-label="Slide 1 of 11" aria-roledescription="slide" class="slick-slide slick-current slick-active" data-slick-index="0" id="brz-section-slide-0-0" role="group" style="width: 1000px;">
+<div class="brz-section__content brz-section--boxed brz-css-d-oh3bvl brz-css-67mhqe" data-brz-custom-id="xw4c37g4ofxx">
+<div class="brz-container brz-css-d-x9rvyp brz-css-126lagi">
+<div class="brz-css-d-1wonu5h brz-css-bg6fi brz-wrapper" id="">
+<div class="brz-carousel brz-css-d-gzcfxr brz-css-1y4uq6m" data-brz-custom-id="0krq71ibhcyb">
+<div aria-label="Carousel 1" aria-roledescription="carousel" class="brz-carousel__slider slick-initialized slick-slider slick-dotted" data-arrows="true" data-auto-play="false" data-auto-play-speed="3000" data-dots="true" data-dots-class="brz-slick-slider__dots brz-slick-slider__dots--circle" data-fade="false" data-responsive="%5B%7B%22breakpoint%22%3A991%2C%22settings%22%3A%7B%22slidesToShow%22%3A2%2C%22slidesToScroll%22%3A1%7D%7D%2C%7B%22breakpoint%22%3A767%2C%22settings%22%3A%7B%22slidesToShow%22%3A1%2C%22slidesToScroll%22%3A1%7D%7D%5D" data-slider-paused="false" data-slides-to-scroll="1" data-slides-to-show="3" data-swipe="true" data-transition-speed="3.5" id="brz-carousel-#" role="region">
+<button aria-controls="brz-carousel-#" aria-disabled="false" aria-label="Previous slide" class="brz-slick-slider__arrow brz-slick-slider__arrow-prev slick-arrow" tabindex="0" type="button">
+<svg class="brz-icon-svg">
+<use href="/static/editor/icons/editor/right-arrow-thin.svg#brz_icon">
+</use>
+</svg>
+</button>
+<div class="slick-list draggable">
+<div class="slick-track" style="opacity: 1; width: 3674px; left: -1002px;">
+<div aria-hidden="true" class="slick-slide slick-cloned" data-slick-index="-3" id="" style="width: 334px;">
+<div>
+<div class="brz-carousel__item" style="width: 100%; display: inline-block;">
+<div class="brz-columns brz-css-d-j7y22h brz-css-r-1hbdoml brz-css-aiv9rm" data-brz-custom-id="4x7cpm0vc1xx">
+<div class="brz-column__items brz-css-d-v5w42e brz-css-1elrino">
+<div class="brz-css-d-1wonu5h brz-css-1i7yk3a brz-wrapper" id="">
+<div class="brz-image brz-css-d-1wnmu55 brz-css-1473vc2" data-brz-custom-id="8os78i21lthx">
+<picture class="brz-picture brz-d-block brz-p-relative brz-css-d-5cix12 brz-css-1fxt51q">
+<div class="brz-shortcode__placeholder">
+<svg class="brz-icon-svg">
+<use href="/static/editor/icons/editor/img.svg#brz_icon">
+</use>
+</svg>
+</div>
+</picture>
+</div>
+</div>
+<div class="brz-css-d-1wonu5h brz-css-5nc8pg brz-wrapper" id="">
+<div class="brz-rich-text brz-rich-text__custom brz-css-d-1ehz5mr brz-css-1s23xnc" data-brz-custom-id="7xhfgxpn42xx">
+<div data-brz-translate-text="1">
+<p class="brz-tp-paragraph brz-text-lg-center brz-css-dqzu38">
+<span class="brz-cp-color7">The point of using dummy text for your paragraph is that it has a more-or-less normal distribution of letters. making it look like readable English.</span>
+</p>
+</div>
+</div>
+</div>
+<div class="brz-wrapper-clone brz-flex-xs-wrap brz-css-d-x0dcve brz-css-1hzum7a" data-brz-custom-id="kivicz5x4xxx">
+<a class="brz-a brz-btn brz-css-d-1syz9i2 brz-css-wxicic brz-css-d-13c78oe brz-css-18cwoj" data-brz-custom-id="ct3sf77pclcx" data-brz-link-type="external" rel="noopener" target="_self">
+<svg class="brz-icon-svg brz-css-d-o4rfik brz-css-jswehg">
+<use href="/static/editor/icons/glyph/tail-right.svg#nc_icon">
+</use>
+</svg>
+<span class="brz-span brz-text__editor" data-brz-translate-text="1">BUTTON</span>
+</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide slick-cloned" data-slick-index="-2" id="" style="width: 334px;">
+<div>
+<div class="brz-carousel__item" style="width: 100%; display: inline-block;">
+<div class="brz-columns brz-css-d-j7y22h brz-css-r-1hbdoml brz-css-ijjsdn" data-brz-custom-id="4t8o7ppkd9mx">
+<div class="brz-column__items brz-css-d-v5w42e brz-css-1awmabu">
+<div class="brz-css-d-1wonu5h brz-css-1304qba brz-wrapper" id="">
+<div class="brz-image brz-css-d-115a82i brz-css-1s9y7fk" data-brz-custom-id="tkedqi4rq8rx">
+<picture class="brz-picture brz-d-block brz-p-relative brz-css-d-1kazn7i brz-css-dskhjh">
+<div class="brz-shortcode__placeholder">
+<svg class="brz-icon-svg">
+<use href="/static/editor/icons/editor/img.svg#brz_icon">
+</use>
+</svg>
+</div>
+</picture>
+</div>
+</div>
+<div class="brz-css-d-1wonu5h brz-css-1vn8q3q brz-wrapper" id="">
+<div class="brz-rich-text brz-rich-text__custom brz-css-d-1ehz5mr brz-css-qb2k1n" data-brz-custom-id="zqr1xry5q5rx">
+<div data-brz-translate-text="1">
+<p class="brz-tp-paragraph brz-text-lg-center brz-css-dqzu38">
+<span class="brz-cp-color7">The point of using dummy text for your paragraph is that it has a more-or-less normal distribution of letters. making it look like readable English.</span>
+</p>
+</div>
+</div>
+</div>
+<div class="brz-wrapper-clone brz-flex-xs-wrap brz-css-d-x0dcve brz-css-ndx4no" data-brz-custom-id="z9s0c4f2v1xx">
+<a class="brz-a brz-btn brz-css-d-1syz9i2 brz-css-1pdwm3c brz-css-d-13c78oe brz-css-jyk92y" data-brz-custom-id="5r9j05xxevnx" data-brz-link-type="external" rel="noopener" target="_self">
+<svg class="brz-icon-svg brz-css-d-o4rfik brz-css-13zhya1">
+<use href="/static/editor/icons/glyph/tail-right.svg#nc_icon">
+</use>
+</svg>
+<span class="brz-span brz-text__editor" data-brz-translate-text="1">BUTTON</span>
+</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide slick-cloned" data-slick-index="-1" id="" style="width: 334px;">
+<div>
+<div class="brz-carousel__item" style="width: 100%; display: inline-block;">
+<div class="brz-columns brz-css-d-j7y22h brz-css-r-1hbdoml brz-css-14a3shc" data-brz-custom-id="fyl6e3wg0nsx">
+<div class="brz-column__items brz-css-d-v5w42e brz-css-1txchh7">
+<div class="brz-css-d-1wonu5h brz-css-7qs1vi brz-wrapper" id="">
+<div class="brz-image brz-css-d-cw5do0 brz-css-tk951d" data-brz-custom-id="8jseqrr8gn7x">
+<picture class="brz-picture brz-d-block brz-p-relative brz-css-d-1nmsjw brz-css-15rml1r">
+<div class="brz-shortcode__placeholder">
+<svg class="brz-icon-svg">
+<use href="/static/editor/icons/editor/img.svg#brz_icon">
+</use>
+</svg>
+</div>
+</picture>
+</div>
+</div>
+<div class="brz-css-d-1wonu5h brz-css-s0ttxr brz-wrapper" id="">
+<div class="brz-rich-text brz-rich-text__custom brz-css-d-1ehz5mr brz-css-qm67jb" data-brz-custom-id="shufz4gq5rbx">
+<div data-brz-translate-text="1">
+<p class="brz-tp-paragraph brz-text-lg-center brz-css-dqzu38">
+<span class="brz-cp-color7">The point of using dummy text for your paragraph is that it has a more-or-less normal distribution of letters. making it look like readable English.</span>
+</p>
+</div>
+</div>
+</div>
+<div class="brz-wrapper-clone brz-flex-xs-wrap brz-css-d-x0dcve brz-css-1w5rhp2" data-brz-custom-id="wwvlqe8lgpnx">
+<a class="brz-a brz-btn brz-css-d-1syz9i2 brz-css-dnq43h brz-css-d-13c78oe brz-css-rkuj1c" data-brz-custom-id="jxq8hzptayax" data-brz-link-type="external" rel="noopener" target="_self">
+<svg class="brz-icon-svg brz-css-d-o4rfik brz-css-2jc2uc">
+<use href="/static/editor/icons/glyph/tail-right.svg#nc_icon">
+</use>
+</svg>
+<span class="brz-span brz-text__editor" data-brz-translate-text="1">BUTTON</span>
+</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div aria-hidden="false" aria-label="Slide 2 of 11" aria-roledescription="slide" class="slick-slide slick-current slick-active" data-slick-index="0" id="brz-section-slide-0-1" role="group" style="width: 334px;">
+<div>
+<div class="brz-carousel__item" style="width: 100%; display: inline-block;">
+<div class="brz-columns brz-css-d-j7y22h brz-css-r-1hbdoml brz-css-13njz83" data-brz-custom-id="sq6bllsgvnxx">
+<div class="brz-column__items brz-css-d-v5w42e brz-css-ckb59x">
+<div class="brz-css-d-1wonu5h brz-css-c9l1rf brz-wrapper" id="">
+<div class="brz-image brz-css-d-hhg6o8 brz-css-bxij5u" data-brz-custom-id="qd1lwb8tm3rx">
+<picture class="brz-picture brz-d-block brz-p-relative brz-css-d-4omeyh brz-css-1i3x9ff">
+<div class="brz-shortcode__placeholder">
+<svg class="brz-icon-svg">
+<use href="/static/editor/icons/editor/img.svg#brz_icon">
+</use>
+</svg>
+</div>
+</picture>
+</div>
+</div>
+<div class="brz-css-d-1wonu5h brz-css-n2gtu1 brz-wrapper" id="">
+<div class="brz-rich-text brz-rich-text__custom brz-css-d-1ehz5mr brz-css-37ewjh" data-brz-custom-id="1lhg0wjq487x">
+<div data-brz-translate-text="1">
+<p class="brz-tp-paragraph brz-text-lg-center brz-css-dqzu38">
+<span class="brz-cp-color7">The point of using dummy text for your paragraph is that it has a more-or-less normal distribution of letters. making it look like readable English.</span>
+</p>
+</div>
+</div>
+</div>
+<div class="brz-wrapper-clone brz-flex-xs-wrap brz-css-d-x0dcve brz-css-2194zx" data-brz-custom-id="070m139q091x">
+<a class="brz-a brz-btn brz-css-d-1syz9i2 brz-css-1y99vkv brz-css-d-13c78oe brz-css-1u63etf" data-brz-custom-id="ybzjg0ziwsdx" data-brz-link-type="external" rel="noopener" target="_self">
+<svg class="brz-icon-svg brz-css-d-o4rfik brz-css-7e7d5y">
+<use href="/static/editor/icons/glyph/tail-right.svg#nc_icon">
+</use>
+</svg>
+<span class="brz-span brz-text__editor" data-brz-translate-text="1">BUTTON</span>
+</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div aria-hidden="false" aria-label="Slide 3 of 11" aria-roledescription="slide" class="slick-slide slick-active" data-slick-index="1" id="brz-section-slide-0-2" role="group" style="width: 334px;">
+<div>
+<div class="brz-carousel__item" style="width: 100%; display: inline-block;">
+<div class="brz-columns brz-css-d-j7y22h brz-css-r-1hbdoml brz-css-aiv9rm" data-brz-custom-id="4x7cpm0vc1xx">
+<div class="brz-column__items brz-css-d-v5w42e brz-css-1elrino">
+<div class="brz-css-d-1wonu5h brz-css-1i7yk3a brz-wrapper" id="">
+<div class="brz-image brz-css-d-1wnmu55 brz-css-1473vc2" data-brz-custom-id="8os78i21lthx">
+<picture class="brz-picture brz-d-block brz-p-relative brz-css-d-5cix12 brz-css-1fxt51q">
+<div class="brz-shortcode__placeholder">
+<svg class="brz-icon-svg">
+<use href="/static/editor/icons/editor/img.svg#brz_icon">
+</use>
+</svg>
+</div>
+</picture>
+</div>
+</div>
+<div class="brz-css-d-1wonu5h brz-css-5nc8pg brz-wrapper" id="">
+<div class="brz-rich-text brz-rich-text__custom brz-css-d-1ehz5mr brz-css-1s23xnc" data-brz-custom-id="7xhfgxpn42xx">
+<div data-brz-translate-text="1">
+<p class="brz-tp-paragraph brz-text-lg-center brz-css-dqzu38">
+<span class="brz-cp-color7">The point of using dummy text for your paragraph is that it has a more-or-less normal distribution of letters. making it look like readable English.</span>
+</p>
+</div>
+</div>
+</div>
+<div class="brz-wrapper-clone brz-flex-xs-wrap brz-css-d-x0dcve brz-css-1hzum7a" data-brz-custom-id="kivicz5x4xxx">
+<a class="brz-a brz-btn brz-css-d-1syz9i2 brz-css-wxicic brz-css-d-13c78oe brz-css-18cwoj" data-brz-custom-id="ct3sf77pclcx" data-brz-link-type="external" rel="noopener" target="_self">
+<svg class="brz-icon-svg brz-css-d-o4rfik brz-css-jswehg">
+<use href="/static/editor/icons/glyph/tail-right.svg#nc_icon">
+</use>
+</svg>
+<span class="brz-span brz-text__editor" data-brz-translate-text="1">BUTTON</span>
+</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div aria-hidden="false" aria-label="Slide 4 of 11" aria-roledescription="slide" class="slick-slide slick-active" data-slick-index="2" id="brz-section-slide-0-3" role="group" style="width: 334px;">
+<div>
+<div class="brz-carousel__item" style="width: 100%; display: inline-block;">
+<div class="brz-columns brz-css-d-j7y22h brz-css-r-1hbdoml brz-css-ijjsdn" data-brz-custom-id="4t8o7ppkd9mx">
+<div class="brz-column__items brz-css-d-v5w42e brz-css-1awmabu">
+<div class="brz-css-d-1wonu5h brz-css-1304qba brz-wrapper" id="">
+<div class="brz-image brz-css-d-115a82i brz-css-1s9y7fk" data-brz-custom-id="tkedqi4rq8rx">
+<picture class="brz-picture brz-d-block brz-p-relative brz-css-d-1kazn7i brz-css-dskhjh">
+<div class="brz-shortcode__placeholder">
+<svg class="brz-icon-svg">
+<use href="/static/editor/icons/editor/img.svg#brz_icon">
+</use>
+</svg>
+</div>
+</picture>
+</div>
+</div>
+<div class="brz-css-d-1wonu5h brz-css-1vn8q3q brz-wrapper" id="">
+<div class="brz-rich-text brz-rich-text__custom brz-css-d-1ehz5mr brz-css-qb2k1n" data-brz-custom-id="zqr1xry5q5rx">
+<div data-brz-translate-text="1">
+<p class="brz-tp-paragraph brz-text-lg-center brz-css-dqzu38">
+<span class="brz-cp-color7">The point of using dummy text for your paragraph is that it has a more-or-less normal distribution of letters. making it look like readable English.</span>
+</p>
+</div>
+</div>
+</div>
+<div class="brz-wrapper-clone brz-flex-xs-wrap brz-css-d-x0dcve brz-css-ndx4no" data-brz-custom-id="z9s0c4f2v1xx">
+<a class="brz-a brz-btn brz-css-d-1syz9i2 brz-css-1pdwm3c brz-css-d-13c78oe brz-css-jyk92y" data-brz-custom-id="5r9j05xxevnx" data-brz-link-type="external" rel="noopener" target="_self">
+<svg class="brz-icon-svg brz-css-d-o4rfik brz-css-13zhya1">
+<use href="/static/editor/icons/glyph/tail-right.svg#nc_icon">
+</use>
+</svg>
+<span class="brz-span brz-text__editor" data-brz-translate-text="1">BUTTON</span>
+</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div aria-hidden="true" aria-label="Slide 5 of 11" aria-roledescription="slide" class="slick-slide" data-slick-index="3" id="brz-section-slide-0-4" role="group" style="width: 334px;">
+<div>
+<div class="brz-carousel__item" style="width: 100%; display: inline-block;">
+<div class="brz-columns brz-css-d-j7y22h brz-css-r-1hbdoml brz-css-14a3shc" data-brz-custom-id="fyl6e3wg0nsx">
+<div class="brz-column__items brz-css-d-v5w42e brz-css-1txchh7">
+<div class="brz-css-d-1wonu5h brz-css-7qs1vi brz-wrapper" id="">
+<div class="brz-image brz-css-d-cw5do0 brz-css-tk951d" data-brz-custom-id="8jseqrr8gn7x">
+<picture class="brz-picture brz-d-block brz-p-relative brz-css-d-1nmsjw brz-css-15rml1r">
+<div class="brz-shortcode__placeholder">
+<svg class="brz-icon-svg">
+<use href="/static/editor/icons/editor/img.svg#brz_icon">
+</use>
+</svg>
+</div>
+</picture>
+</div>
+</div>
+<div class="brz-css-d-1wonu5h brz-css-s0ttxr brz-wrapper" id="">
+<div class="brz-rich-text brz-rich-text__custom brz-css-d-1ehz5mr brz-css-qm67jb" data-brz-custom-id="shufz4gq5rbx">
+<div data-brz-translate-text="1">
+<p class="brz-tp-paragraph brz-text-lg-center brz-css-dqzu38">
+<span class="brz-cp-color7">The point of using dummy text for your paragraph is that it has a more-or-less normal distribution of letters. making it look like readable English.</span>
+</p>
+</div>
+</div>
+</div>
+<div class="brz-wrapper-clone brz-flex-xs-wrap brz-css-d-x0dcve brz-css-1w5rhp2" data-brz-custom-id="wwvlqe8lgpnx">
+<a class="brz-a brz-btn brz-css-d-1syz9i2 brz-css-dnq43h brz-css-d-13c78oe brz-css-rkuj1c" data-brz-custom-id="jxq8hzptayax" data-brz-link-type="external" rel="noopener" target="_self">
+<svg class="brz-icon-svg brz-css-d-o4rfik brz-css-2jc2uc">
+<use href="/static/editor/icons/glyph/tail-right.svg#nc_icon">
+</use>
+</svg>
+<span class="brz-span brz-text__editor" data-brz-translate-text="1">BUTTON</span>
+</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide slick-cloned" data-slick-index="4" id="" style="width: 334px;">
+<div>
+<div class="brz-carousel__item" style="width: 100%; display: inline-block;">
+<div class="brz-columns brz-css-d-j7y22h brz-css-r-1hbdoml brz-css-13njz83" data-brz-custom-id="sq6bllsgvnxx">
+<div class="brz-column__items brz-css-d-v5w42e brz-css-ckb59x">
+<div class="brz-css-d-1wonu5h brz-css-c9l1rf brz-wrapper" id="">
+<div class="brz-image brz-css-d-hhg6o8 brz-css-bxij5u" data-brz-custom-id="qd1lwb8tm3rx">
+<picture class="brz-picture brz-d-block brz-p-relative brz-css-d-4omeyh brz-css-1i3x9ff">
+<div class="brz-shortcode__placeholder">
+<svg class="brz-icon-svg">
+<use href="/static/editor/icons/editor/img.svg#brz_icon">
+</use>
+</svg>
+</div>
+</picture>
+</div>
+</div>
+<div class="brz-css-d-1wonu5h brz-css-n2gtu1 brz-wrapper" id="">
+<div class="brz-rich-text brz-rich-text__custom brz-css-d-1ehz5mr brz-css-37ewjh" data-brz-custom-id="1lhg0wjq487x">
+<div data-brz-translate-text="1">
+<p class="brz-tp-paragraph brz-text-lg-center brz-css-dqzu38">
+<span class="brz-cp-color7">The point of using dummy text for your paragraph is that it has a more-or-less normal distribution of letters. making it look like readable English.</span>
+</p>
+</div>
+</div>
+</div>
+<div class="brz-wrapper-clone brz-flex-xs-wrap brz-css-d-x0dcve brz-css-2194zx" data-brz-custom-id="070m139q091x">
+<a class="brz-a brz-btn brz-css-d-1syz9i2 brz-css-1y99vkv brz-css-d-13c78oe brz-css-1u63etf" data-brz-custom-id="ybzjg0ziwsdx" data-brz-link-type="external" rel="noopener" target="_self">
+<svg class="brz-icon-svg brz-css-d-o4rfik brz-css-7e7d5y">
+<use href="/static/editor/icons/glyph/tail-right.svg#nc_icon">
+</use>
+</svg>
+<span class="brz-span brz-text__editor" data-brz-translate-text="1">BUTTON</span>
+</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide slick-cloned" data-slick-index="5" id="" style="width: 334px;">
+<div>
+<div class="brz-carousel__item" style="width: 100%; display: inline-block;">
+<div class="brz-columns brz-css-d-j7y22h brz-css-r-1hbdoml brz-css-aiv9rm" data-brz-custom-id="4x7cpm0vc1xx">
+<div class="brz-column__items brz-css-d-v5w42e brz-css-1elrino">
+<div class="brz-css-d-1wonu5h brz-css-1i7yk3a brz-wrapper" id="">
+<div class="brz-image brz-css-d-1wnmu55 brz-css-1473vc2" data-brz-custom-id="8os78i21lthx">
+<picture class="brz-picture brz-d-block brz-p-relative brz-css-d-5cix12 brz-css-1fxt51q">
+<div class="brz-shortcode__placeholder">
+<svg class="brz-icon-svg">
+<use href="/static/editor/icons/editor/img.svg#brz_icon">
+</use>
+</svg>
+</div>
+</picture>
+</div>
+</div>
+<div class="brz-css-d-1wonu5h brz-css-5nc8pg brz-wrapper" id="">
+<div class="brz-rich-text brz-rich-text__custom brz-css-d-1ehz5mr brz-css-1s23xnc" data-brz-custom-id="7xhfgxpn42xx">
+<div data-brz-translate-text="1">
+<p class="brz-tp-paragraph brz-text-lg-center brz-css-dqzu38">
+<span class="brz-cp-color7">The point of using dummy text for your paragraph is that it has a more-or-less normal distribution of letters. making it look like readable English.</span>
+</p>
+</div>
+</div>
+</div>
+<div class="brz-wrapper-clone brz-flex-xs-wrap brz-css-d-x0dcve brz-css-1hzum7a" data-brz-custom-id="kivicz5x4xxx">
+<a class="brz-a brz-btn brz-css-d-1syz9i2 brz-css-wxicic brz-css-d-13c78oe brz-css-18cwoj" data-brz-custom-id="ct3sf77pclcx" data-brz-link-type="external" rel="noopener" target="_self">
+<svg class="brz-icon-svg brz-css-d-o4rfik brz-css-jswehg">
+<use href="/static/editor/icons/glyph/tail-right.svg#nc_icon">
+</use>
+</svg>
+<span class="brz-span brz-text__editor" data-brz-translate-text="1">BUTTON</span>
+</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide slick-cloned" data-slick-index="6" id="" style="width: 334px;">
+<div>
+<div class="brz-carousel__item" style="width: 100%; display: inline-block;">
+<div class="brz-columns brz-css-d-j7y22h brz-css-r-1hbdoml brz-css-ijjsdn" data-brz-custom-id="4t8o7ppkd9mx">
+<div class="brz-column__items brz-css-d-v5w42e brz-css-1awmabu">
+<div class="brz-css-d-1wonu5h brz-css-1304qba brz-wrapper" id="">
+<div class="brz-image brz-css-d-115a82i brz-css-1s9y7fk" data-brz-custom-id="tkedqi4rq8rx">
+<picture class="brz-picture brz-d-block brz-p-relative brz-css-d-1kazn7i brz-css-dskhjh">
+<div class="brz-shortcode__placeholder">
+<svg class="brz-icon-svg">
+<use href="/static/editor/icons/editor/img.svg#brz_icon">
+</use>
+</svg>
+</div>
+</picture>
+</div>
+</div>
+<div class="brz-css-d-1wonu5h brz-css-1vn8q3q brz-wrapper" id="">
+<div class="brz-rich-text brz-rich-text__custom brz-css-d-1ehz5mr brz-css-qb2k1n" data-brz-custom-id="zqr1xry5q5rx">
+<div data-brz-translate-text="1">
+<p class="brz-tp-paragraph brz-text-lg-center brz-css-dqzu38">
+<span class="brz-cp-color7">The point of using dummy text for your paragraph is that it has a more-or-less normal distribution of letters. making it look like readable English.</span>
+</p>
+</div>
+</div>
+</div>
+<div class="brz-wrapper-clone brz-flex-xs-wrap brz-css-d-x0dcve brz-css-ndx4no" data-brz-custom-id="z9s0c4f2v1xx">
+<a class="brz-a brz-btn brz-css-d-1syz9i2 brz-css-1pdwm3c brz-css-d-13c78oe brz-css-jyk92y" data-brz-custom-id="5r9j05xxevnx" data-brz-link-type="external" rel="noopener" target="_self">
+<svg class="brz-icon-svg brz-css-d-o4rfik brz-css-13zhya1">
+<use href="/static/editor/icons/glyph/tail-right.svg#nc_icon">
+</use>
+</svg>
+<span class="brz-span brz-text__editor" data-brz-translate-text="1">BUTTON</span>
+</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide slick-cloned" data-slick-index="7" id="" style="width: 334px;">
+<div>
+<div class="brz-carousel__item" style="width: 100%; display: inline-block;">
+<div class="brz-columns brz-css-d-j7y22h brz-css-r-1hbdoml brz-css-14a3shc" data-brz-custom-id="fyl6e3wg0nsx">
+<div class="brz-column__items brz-css-d-v5w42e brz-css-1txchh7">
+<div class="brz-css-d-1wonu5h brz-css-7qs1vi brz-wrapper" id="">
+<div class="brz-image brz-css-d-cw5do0 brz-css-tk951d" data-brz-custom-id="8jseqrr8gn7x">
+<picture class="brz-picture brz-d-block brz-p-relative brz-css-d-1nmsjw brz-css-15rml1r">
+<div class="brz-shortcode__placeholder">
+<svg class="brz-icon-svg">
+<use href="/static/editor/icons/editor/img.svg#brz_icon">
+</use>
+</svg>
+</div>
+</picture>
+</div>
+</div>
+<div class="brz-css-d-1wonu5h brz-css-s0ttxr brz-wrapper" id="">
+<div class="brz-rich-text brz-rich-text__custom brz-css-d-1ehz5mr brz-css-qm67jb" data-brz-custom-id="shufz4gq5rbx">
+<div data-brz-translate-text="1">
+<p class="brz-tp-paragraph brz-text-lg-center brz-css-dqzu38">
+<span class="brz-cp-color7">The point of using dummy text for your paragraph is that it has a more-or-less normal distribution of letters. making it look like readable English.</span>
+</p>
+</div>
+</div>
+</div>
+<div class="brz-wrapper-clone brz-flex-xs-wrap brz-css-d-x0dcve brz-css-1w5rhp2" data-brz-custom-id="wwvlqe8lgpnx">
+<a class="brz-a brz-btn brz-css-d-1syz9i2 brz-css-dnq43h brz-css-d-13c78oe brz-css-rkuj1c" data-brz-custom-id="jxq8hzptayax" data-brz-link-type="external" rel="noopener" target="_self">
+<svg class="brz-icon-svg brz-css-d-o4rfik brz-css-2jc2uc">
+<use href="/static/editor/icons/glyph/tail-right.svg#nc_icon">
+</use>
+</svg>
+<span class="brz-span brz-text__editor" data-brz-translate-text="1">BUTTON</span>
+</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<button aria-controls="brz-section-slider-0" aria-disabled="false" aria-label="Next slide" class="brz-slick-slider__arrow brz-slick-slider__arrow-next slick-arrow" tabindex="0" type="button">
+<svg class="brz-icon-svg">
+<use href="/static/editor/icons/editor/right-arrow-thin.svg#brz_icon">
+</use>
+</svg>
+</button>
+<ul aria-label="Slide navigation" class="brz-slick-slider__dots brz-slick-slider__dots--circle">
+<li class="slick-active">
+<button aria-controls="brz-section-slide-0-0" aria-current="true" aria-label="Current slide, Go to slide 1" type="button">1</button>
+</li>
+<li>
+<button aria-controls="brz-section-slide-0-1" aria-label="Go to slide 2" type="button">2</button>
+</li>
+<li>
+<button aria-controls="brz-section-slide-0-2" aria-label="Go to slide 3" type="button">3</button>
+</li>
+<li>
+<button aria-controls="brz-section-slide-0-3" aria-label="Go to slide 4" type="button">4</button>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div aria-hidden="true" aria-label="Slide 6 of 11" aria-roledescription="slide" class="slick-slide" data-slick-index="1" id="brz-section-slide-0-5" role="group" style="width: 1000px;">
+<div class="brz-section__content brz-section--boxed brz-css-d-oh3bvl brz-css-1bdqe26" data-brz-custom-id="nh3mjb7uhtxx">
+<div class="brz-container brz-css-d-x9rvyp brz-css-15a18tg">
+<div class="brz-css-d-1wonu5h brz-css-17xiopa brz-wrapper" id="">
+<div class="brz-counter brz-counter-simple brz-css-d-1l8wdnn brz-css-15fprsz" data-brz-custom-id="ax350n9y09qx" data-brz-duration="2" data-brz-end="100" data-brz-separator="," data-brz-start="0" data-brz-type="simple">
+<div aria-atomic="true" aria-live="polite" class="brz-counter-figures brz-css-d-1sbebwu brz-css-jm1bxm" role="status">
+<span class="brz-counter-numbers">0</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div aria-hidden="true" aria-label="Slide 7 of 11" aria-roledescription="slide" class="slick-slide" data-slick-index="2" id="brz-section-slide-0-6" role="group" style="width: 1000px;">
+<div class="brz-section__content brz-section--boxed brz-css-d-oh3bvl brz-css-5ca4rf" data-brz-custom-id="haqdykswt2ox">
+<div class="brz-container brz-css-d-x9rvyp brz-css-u4t4s8">
+<div class="brz-css-d-1wonu5h brz-css-1us2ca5 brz-wrapper" id="">
+<div class="brz-carousel brz-css-d-gzcfxr brz-css-n1pplh" data-brz-custom-id="7o83jb3fecnx">
+<div aria-label="Carousel 2" aria-roledescription="carousel" class="brz-carousel__slider slick-initialized slick-slider slick-dotted" data-arrows="true" data-auto-play="false" data-auto-play-speed="3000" data-dots="true" data-dots-class="brz-slick-slider__dots brz-slick-slider__dots--circle" data-fade="false" data-responsive="%5B%7B%22breakpoint%22%3A991%2C%22settings%22%3A%7B%22slidesToShow%22%3A2%2C%22slidesToScroll%22%3A1%7D%7D%2C%7B%22breakpoint%22%3A767%2C%22settings%22%3A%7B%22slidesToShow%22%3A1%2C%22slidesToScroll%22%3A1%7D%7D%5D" data-slider-paused="false" data-slides-to-scroll="1" data-slides-to-show="3" data-swipe="true" data-transition-speed="3.5" id="brz-carousel-#" role="region">
+<button aria-controls="brz-carousel-#" aria-disabled="false" aria-label="Previous slide" class="brz-slick-slider__arrow brz-slick-slider__arrow-prev slick-arrow" data-brz-section-slider-tabindex="0" tabindex="-1" type="button">
+<svg class="brz-icon-svg">
+<use href="/static/editor/icons/editor/right-arrow-thin.svg#brz_icon">
+</use>
+</svg>
+</button>
+<div class="slick-list draggable">
+<div class="slick-track" style="opacity: 1; width: 3674px; left: -1002px;">
+<div aria-hidden="true" class="slick-slide slick-cloned" data-slick-index="-3" id="" style="width: 334px;">
+<div>
+<div class="brz-carousel__item" style="width: 100%; display: inline-block;">
+<div class="brz-columns brz-css-d-j7y22h brz-css-r-1hbdoml brz-css-m0xms8" data-brz-custom-id="cn2d5o2frl8x">
+<div class="brz-column__items brz-css-d-v5w42e brz-css-17of9ru">
+<div class="brz-css-d-1wonu5h brz-css-47rhad brz-wrapper" id="">
+<div class="brz-image brz-css-d-pnolfs brz-css-1r2w177" data-brz-custom-id="wmsf948ia2xx">
+<picture class="brz-picture brz-d-block brz-p-relative brz-css-d-35ocse brz-css-1ubjaoc">
+<div class="brz-shortcode__placeholder">
+<svg class="brz-icon-svg">
+<use href="/static/editor/icons/editor/img.svg#brz_icon">
+</use>
+</svg>
+</div>
+</picture>
+</div>
+</div>
+<div class="brz-css-d-1wonu5h brz-css-f7dymi brz-wrapper" id="">
+<div class="brz-rich-text brz-rich-text__custom brz-css-d-1ehz5mr brz-css-jtb8dc" data-brz-custom-id="lvuuhx5q5ocx">
+<div data-brz-translate-text="1">
+<p class="brz-tp-paragraph brz-text-lg-center brz-css-dqzu38">
+<span class="brz-cp-color7">The point of using dummy text for your paragraph is that it has a more-or-less normal distribution of letters. making it look like readable English.</span>
+</p>
+</div>
+</div>
+</div>
+<div class="brz-wrapper-clone brz-flex-xs-wrap brz-css-d-x0dcve brz-css-1ok3qow" data-brz-custom-id="mktpsyuehspx">
+<a class="brz-a brz-btn brz-css-d-1syz9i2 brz-css-113szzk brz-css-d-13c78oe brz-css-1gk6rbc" data-brz-custom-id="6em0n50numyx" data-brz-link-type="external" rel="noopener" target="_self">
+<svg class="brz-icon-svg brz-css-d-o4rfik brz-css-um1b5l">
+<use href="/static/editor/icons/glyph/tail-right.svg#nc_icon">
+</use>
+</svg>
+<span class="brz-span brz-text__editor" data-brz-translate-text="1">BUTTON</span>
+</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide slick-cloned" data-slick-index="-2" id="" style="width: 334px;">
+<div>
+<div class="brz-carousel__item" style="width: 100%; display: inline-block;">
+<div class="brz-columns brz-css-d-j7y22h brz-css-r-1hbdoml brz-css-165obhl" data-brz-custom-id="r7opdk1h2ixx">
+<div class="brz-column__items brz-css-d-v5w42e brz-css-1966usx">
+<div class="brz-css-d-1wonu5h brz-css-1mroez3 brz-wrapper" id="">
+<div class="brz-image brz-css-d-1ybtt5t brz-css-1sdos1s" data-brz-custom-id="tlbzy71vu6xx">
+<picture class="brz-picture brz-d-block brz-p-relative brz-css-d-egohed brz-css-eo3jb8">
+<div class="brz-shortcode__placeholder">
+<svg class="brz-icon-svg">
+<use href="/static/editor/icons/editor/img.svg#brz_icon">
+</use>
+</svg>
+</div>
+</picture>
+</div>
+</div>
+<div class="brz-css-d-1wonu5h brz-css-ok4ouy brz-wrapper" id="">
+<div class="brz-rich-text brz-rich-text__custom brz-css-d-1ehz5mr brz-css-1fj7ddp" data-brz-custom-id="fwgo2qiwkyjx">
+<div data-brz-translate-text="1">
+<p class="brz-tp-paragraph brz-text-lg-center brz-css-dqzu38">
+<span class="brz-cp-color7">The point of using dummy text for your paragraph is that it has a more-or-less normal distribution of letters. making it look like readable English.</span>
+</p>
+</div>
+</div>
+</div>
+<div class="brz-wrapper-clone brz-flex-xs-wrap brz-css-d-x0dcve brz-css-s0uy57" data-brz-custom-id="njteukwu78xx">
+<a class="brz-a brz-btn brz-css-d-1syz9i2 brz-css-16fpdkk brz-css-d-13c78oe brz-css-1xkw2wo" data-brz-custom-id="qug4dhki7tlx" data-brz-link-type="external" rel="noopener" target="_self">
+<svg class="brz-icon-svg brz-css-d-o4rfik brz-css-1pwz2dh">
+<use href="/static/editor/icons/glyph/tail-right.svg#nc_icon">
+</use>
+</svg>
+<span class="brz-span brz-text__editor" data-brz-translate-text="1">BUTTON</span>
+</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide slick-cloned" data-slick-index="-1" id="" style="width: 334px;">
+<div>
+<div class="brz-carousel__item" style="width: 100%; display: inline-block;">
+<div class="brz-columns brz-css-d-j7y22h brz-css-r-1hbdoml brz-css-tau6at" data-brz-custom-id="6io8stcgis3x">
+<div class="brz-column__items brz-css-d-v5w42e brz-css-10qyxhj">
+<div class="brz-css-d-1wonu5h brz-css-slur92 brz-wrapper" id="">
+<div class="brz-image brz-css-d-1ypywxh brz-css-1jeoaia" data-brz-custom-id="q1dazru5e3ix">
+<picture class="brz-picture brz-d-block brz-p-relative brz-css-d-18keiwq brz-css-1y0bsw">
+<div class="brz-shortcode__placeholder">
+<svg class="brz-icon-svg">
+<use href="/static/editor/icons/editor/img.svg#brz_icon">
+</use>
+</svg>
+</div>
+</picture>
+</div>
+</div>
+<div class="brz-css-d-1wonu5h brz-css-wrxssq brz-wrapper" id="">
+<div class="brz-rich-text brz-rich-text__custom brz-css-d-1ehz5mr brz-css-1iagiuo" data-brz-custom-id="f8telcw6ne8x">
+<div data-brz-translate-text="1">
+<p class="brz-tp-paragraph brz-text-lg-center brz-css-dqzu38">
+<span class="brz-cp-color7">The point of using dummy text for your paragraph is that it has a more-or-less normal distribution of letters. making it look like readable English.</span>
+</p>
+</div>
+</div>
+</div>
+<div class="brz-wrapper-clone brz-flex-xs-wrap brz-css-d-x0dcve brz-css-dr8qhk" data-brz-custom-id="hmnblt0ztsux">
+<a class="brz-a brz-btn brz-css-d-1syz9i2 brz-css-18ineat brz-css-d-13c78oe brz-css-13aa131" data-brz-custom-id="9d8legery74x" data-brz-link-type="external" rel="noopener" target="_self">
+<svg class="brz-icon-svg brz-css-d-o4rfik brz-css-s454vo">
+<use href="/static/editor/icons/glyph/tail-right.svg#nc_icon">
+</use>
+</svg>
+<span class="brz-span brz-text__editor" data-brz-translate-text="1">BUTTON</span>
+</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div aria-hidden="false" aria-label="Slide 8 of 11" aria-roledescription="slide" class="slick-slide slick-current slick-active" data-slick-index="0" id="brz-section-slide-0-7" role="group" style="width: 334px;">
+<div>
+<div class="brz-carousel__item" style="width: 100%; display: inline-block;">
+<div class="brz-columns brz-css-d-j7y22h brz-css-r-1hbdoml brz-css-13mmds0" data-brz-custom-id="vn2qimyvbaxx">
+<div class="brz-column__items brz-css-d-v5w42e brz-css-11weynt">
+<div class="brz-css-d-1wonu5h brz-css-w1qui7 brz-wrapper" id="">
+<div class="brz-image brz-css-d-4q1l1r brz-css-dqkyu" data-brz-custom-id="m13tfos6ozcx">
+<picture class="brz-picture brz-d-block brz-p-relative brz-css-d-xn7edz brz-css-1sd7ylj">
+<div class="brz-shortcode__placeholder">
+<svg class="brz-icon-svg">
+<use href="/static/editor/icons/editor/img.svg#brz_icon">
+</use>
+</svg>
+</div>
+</picture>
+</div>
+</div>
+<div class="brz-css-d-1wonu5h brz-css-3cdkjb brz-wrapper" id="">
+<div class="brz-rich-text brz-rich-text__custom brz-css-d-1ehz5mr brz-css-1mvwqwl" data-brz-custom-id="h7s5z33b9k5x">
+<div data-brz-translate-text="1">
+<p class="brz-tp-paragraph brz-text-lg-center brz-css-dqzu38">
+<span class="brz-cp-color7">The point of using dummy text for your paragraph is that it has a more-or-less normal distribution of letters. making it look like readable English.</span>
+</p>
+</div>
+</div>
+</div>
+<div class="brz-wrapper-clone brz-flex-xs-wrap brz-css-d-x0dcve brz-css-p42lbs" data-brz-custom-id="wgxd9echcifx">
+<a class="brz-a brz-btn brz-css-d-1syz9i2 brz-css-bda39q brz-css-d-13c78oe brz-css-1p1mp7s" data-brz-custom-id="odx71ez6uufx" data-brz-link-type="external" rel="noopener" target="_self">
+<svg class="brz-icon-svg brz-css-d-o4rfik brz-css-18wyqb3">
+<use href="/static/editor/icons/glyph/tail-right.svg#nc_icon">
+</use>
+</svg>
+<span class="brz-span brz-text__editor" data-brz-translate-text="1">BUTTON</span>
+</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div aria-hidden="false" aria-label="Slide 9 of 11" aria-roledescription="slide" class="slick-slide slick-active" data-slick-index="1" id="brz-section-slide-0-8" role="group" style="width: 334px;">
+<div>
+<div class="brz-carousel__item" style="width: 100%; display: inline-block;">
+<div class="brz-columns brz-css-d-j7y22h brz-css-r-1hbdoml brz-css-m0xms8" data-brz-custom-id="cn2d5o2frl8x">
+<div class="brz-column__items brz-css-d-v5w42e brz-css-17of9ru">
+<div class="brz-css-d-1wonu5h brz-css-47rhad brz-wrapper" id="">
+<div class="brz-image brz-css-d-pnolfs brz-css-1r2w177" data-brz-custom-id="wmsf948ia2xx">
+<picture class="brz-picture brz-d-block brz-p-relative brz-css-d-35ocse brz-css-1ubjaoc">
+<div class="brz-shortcode__placeholder">
+<svg class="brz-icon-svg">
+<use href="/static/editor/icons/editor/img.svg#brz_icon">
+</use>
+</svg>
+</div>
+</picture>
+</div>
+</div>
+<div class="brz-css-d-1wonu5h brz-css-f7dymi brz-wrapper" id="">
+<div class="brz-rich-text brz-rich-text__custom brz-css-d-1ehz5mr brz-css-jtb8dc" data-brz-custom-id="lvuuhx5q5ocx">
+<div data-brz-translate-text="1">
+<p class="brz-tp-paragraph brz-text-lg-center brz-css-dqzu38">
+<span class="brz-cp-color7">The point of using dummy text for your paragraph is that it has a more-or-less normal distribution of letters. making it look like readable English.</span>
+</p>
+</div>
+</div>
+</div>
+<div class="brz-wrapper-clone brz-flex-xs-wrap brz-css-d-x0dcve brz-css-1ok3qow" data-brz-custom-id="mktpsyuehspx">
+<a class="brz-a brz-btn brz-css-d-1syz9i2 brz-css-113szzk brz-css-d-13c78oe brz-css-1gk6rbc" data-brz-custom-id="6em0n50numyx" data-brz-link-type="external" rel="noopener" target="_self">
+<svg class="brz-icon-svg brz-css-d-o4rfik brz-css-um1b5l">
+<use href="/static/editor/icons/glyph/tail-right.svg#nc_icon">
+</use>
+</svg>
+<span class="brz-span brz-text__editor" data-brz-translate-text="1">BUTTON</span>
+</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div aria-hidden="false" aria-label="Slide 10 of 11" aria-roledescription="slide" class="slick-slide slick-active" data-slick-index="2" id="brz-section-slide-0-9" role="group" style="width: 334px;">
+<div>
+<div class="brz-carousel__item" style="width: 100%; display: inline-block;">
+<div class="brz-columns brz-css-d-j7y22h brz-css-r-1hbdoml brz-css-165obhl" data-brz-custom-id="r7opdk1h2ixx">
+<div class="brz-column__items brz-css-d-v5w42e brz-css-1966usx">
+<div class="brz-css-d-1wonu5h brz-css-1mroez3 brz-wrapper" id="">
+<div class="brz-image brz-css-d-1ybtt5t brz-css-1sdos1s" data-brz-custom-id="tlbzy71vu6xx">
+<picture class="brz-picture brz-d-block brz-p-relative brz-css-d-egohed brz-css-eo3jb8">
+<div class="brz-shortcode__placeholder">
+<svg class="brz-icon-svg">
+<use href="/static/editor/icons/editor/img.svg#brz_icon">
+</use>
+</svg>
+</div>
+</picture>
+</div>
+</div>
+<div class="brz-css-d-1wonu5h brz-css-ok4ouy brz-wrapper" id="">
+<div class="brz-rich-text brz-rich-text__custom brz-css-d-1ehz5mr brz-css-1fj7ddp" data-brz-custom-id="fwgo2qiwkyjx">
+<div data-brz-translate-text="1">
+<p class="brz-tp-paragraph brz-text-lg-center brz-css-dqzu38">
+<span class="brz-cp-color7">The point of using dummy text for your paragraph is that it has a more-or-less normal distribution of letters. making it look like readable English.</span>
+</p>
+</div>
+</div>
+</div>
+<div class="brz-wrapper-clone brz-flex-xs-wrap brz-css-d-x0dcve brz-css-s0uy57" data-brz-custom-id="njteukwu78xx">
+<a class="brz-a brz-btn brz-css-d-1syz9i2 brz-css-16fpdkk brz-css-d-13c78oe brz-css-1xkw2wo" data-brz-custom-id="qug4dhki7tlx" data-brz-link-type="external" rel="noopener" target="_self">
+<svg class="brz-icon-svg brz-css-d-o4rfik brz-css-1pwz2dh">
+<use href="/static/editor/icons/glyph/tail-right.svg#nc_icon">
+</use>
+</svg>
+<span class="brz-span brz-text__editor" data-brz-translate-text="1">BUTTON</span>
+</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div aria-hidden="true" aria-label="Slide 11 of 11" aria-roledescription="slide" class="slick-slide" data-slick-index="3" id="brz-section-slide-0-10" role="group" style="width: 334px;">
+<div>
+<div class="brz-carousel__item" style="width: 100%; display: inline-block;">
+<div class="brz-columns brz-css-d-j7y22h brz-css-r-1hbdoml brz-css-tau6at" data-brz-custom-id="6io8stcgis3x">
+<div class="brz-column__items brz-css-d-v5w42e brz-css-10qyxhj">
+<div class="brz-css-d-1wonu5h brz-css-slur92 brz-wrapper" id="">
+<div class="brz-image brz-css-d-1ypywxh brz-css-1jeoaia" data-brz-custom-id="q1dazru5e3ix">
+<picture class="brz-picture brz-d-block brz-p-relative brz-css-d-18keiwq brz-css-1y0bsw">
+<div class="brz-shortcode__placeholder">
+<svg class="brz-icon-svg">
+<use href="/static/editor/icons/editor/img.svg#brz_icon">
+</use>
+</svg>
+</div>
+</picture>
+</div>
+</div>
+<div class="brz-css-d-1wonu5h brz-css-wrxssq brz-wrapper" id="">
+<div class="brz-rich-text brz-rich-text__custom brz-css-d-1ehz5mr brz-css-1iagiuo" data-brz-custom-id="f8telcw6ne8x">
+<div data-brz-translate-text="1">
+<p class="brz-tp-paragraph brz-text-lg-center brz-css-dqzu38">
+<span class="brz-cp-color7">The point of using dummy text for your paragraph is that it has a more-or-less normal distribution of letters. making it look like readable English.</span>
+</p>
+</div>
+</div>
+</div>
+<div class="brz-wrapper-clone brz-flex-xs-wrap brz-css-d-x0dcve brz-css-dr8qhk" data-brz-custom-id="hmnblt0ztsux">
+<a class="brz-a brz-btn brz-css-d-1syz9i2 brz-css-18ineat brz-css-d-13c78oe brz-css-13aa131" data-brz-custom-id="9d8legery74x" data-brz-link-type="external" rel="noopener" target="_self">
+<svg class="brz-icon-svg brz-css-d-o4rfik brz-css-s454vo">
+<use href="/static/editor/icons/glyph/tail-right.svg#nc_icon">
+</use>
+</svg>
+<span class="brz-span brz-text__editor" data-brz-translate-text="1">BUTTON</span>
+</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide slick-cloned" data-slick-index="4" id="" style="width: 334px;">
+<div>
+<div class="brz-carousel__item" style="width: 100%; display: inline-block;">
+<div class="brz-columns brz-css-d-j7y22h brz-css-r-1hbdoml brz-css-13mmds0" data-brz-custom-id="vn2qimyvbaxx">
+<div class="brz-column__items brz-css-d-v5w42e brz-css-11weynt">
+<div class="brz-css-d-1wonu5h brz-css-w1qui7 brz-wrapper" id="">
+<div class="brz-image brz-css-d-4q1l1r brz-css-dqkyu" data-brz-custom-id="m13tfos6ozcx">
+<picture class="brz-picture brz-d-block brz-p-relative brz-css-d-xn7edz brz-css-1sd7ylj">
+<div class="brz-shortcode__placeholder">
+<svg class="brz-icon-svg">
+<use href="/static/editor/icons/editor/img.svg#brz_icon">
+</use>
+</svg>
+</div>
+</picture>
+</div>
+</div>
+<div class="brz-css-d-1wonu5h brz-css-3cdkjb brz-wrapper" id="">
+<div class="brz-rich-text brz-rich-text__custom brz-css-d-1ehz5mr brz-css-1mvwqwl" data-brz-custom-id="h7s5z33b9k5x">
+<div data-brz-translate-text="1">
+<p class="brz-tp-paragraph brz-text-lg-center brz-css-dqzu38">
+<span class="brz-cp-color7">The point of using dummy text for your paragraph is that it has a more-or-less normal distribution of letters. making it look like readable English.</span>
+</p>
+</div>
+</div>
+</div>
+<div class="brz-wrapper-clone brz-flex-xs-wrap brz-css-d-x0dcve brz-css-p42lbs" data-brz-custom-id="wgxd9echcifx">
+<a class="brz-a brz-btn brz-css-d-1syz9i2 brz-css-bda39q brz-css-d-13c78oe brz-css-1p1mp7s" data-brz-custom-id="odx71ez6uufx" data-brz-link-type="external" rel="noopener" target="_self">
+<svg class="brz-icon-svg brz-css-d-o4rfik brz-css-18wyqb3">
+<use href="/static/editor/icons/glyph/tail-right.svg#nc_icon">
+</use>
+</svg>
+<span class="brz-span brz-text__editor" data-brz-translate-text="1">BUTTON</span>
+</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide slick-cloned" data-slick-index="5" id="" style="width: 334px;">
+<div>
+<div class="brz-carousel__item" style="width: 100%; display: inline-block;">
+<div class="brz-columns brz-css-d-j7y22h brz-css-r-1hbdoml brz-css-m0xms8" data-brz-custom-id="cn2d5o2frl8x">
+<div class="brz-column__items brz-css-d-v5w42e brz-css-17of9ru">
+<div class="brz-css-d-1wonu5h brz-css-47rhad brz-wrapper" id="">
+<div class="brz-image brz-css-d-pnolfs brz-css-1r2w177" data-brz-custom-id="wmsf948ia2xx">
+<picture class="brz-picture brz-d-block brz-p-relative brz-css-d-35ocse brz-css-1ubjaoc">
+<div class="brz-shortcode__placeholder">
+<svg class="brz-icon-svg">
+<use href="/static/editor/icons/editor/img.svg#brz_icon">
+</use>
+</svg>
+</div>
+</picture>
+</div>
+</div>
+<div class="brz-css-d-1wonu5h brz-css-f7dymi brz-wrapper" id="">
+<div class="brz-rich-text brz-rich-text__custom brz-css-d-1ehz5mr brz-css-jtb8dc" data-brz-custom-id="lvuuhx5q5ocx">
+<div data-brz-translate-text="1">
+<p class="brz-tp-paragraph brz-text-lg-center brz-css-dqzu38">
+<span class="brz-cp-color7">The point of using dummy text for your paragraph is that it has a more-or-less normal distribution of letters. making it look like readable English.</span>
+</p>
+</div>
+</div>
+</div>
+<div class="brz-wrapper-clone brz-flex-xs-wrap brz-css-d-x0dcve brz-css-1ok3qow" data-brz-custom-id="mktpsyuehspx">
+<a class="brz-a brz-btn brz-css-d-1syz9i2 brz-css-113szzk brz-css-d-13c78oe brz-css-1gk6rbc" data-brz-custom-id="6em0n50numyx" data-brz-link-type="external" rel="noopener" target="_self">
+<svg class="brz-icon-svg brz-css-d-o4rfik brz-css-um1b5l">
+<use href="/static/editor/icons/glyph/tail-right.svg#nc_icon">
+</use>
+</svg>
+<span class="brz-span brz-text__editor" data-brz-translate-text="1">BUTTON</span>
+</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide slick-cloned" data-slick-index="6" id="" style="width: 334px;">
+<div>
+<div class="brz-carousel__item" style="width: 100%; display: inline-block;">
+<div class="brz-columns brz-css-d-j7y22h brz-css-r-1hbdoml brz-css-165obhl" data-brz-custom-id="r7opdk1h2ixx">
+<div class="brz-column__items brz-css-d-v5w42e brz-css-1966usx">
+<div class="brz-css-d-1wonu5h brz-css-1mroez3 brz-wrapper" id="">
+<div class="brz-image brz-css-d-1ybtt5t brz-css-1sdos1s" data-brz-custom-id="tlbzy71vu6xx">
+<picture class="brz-picture brz-d-block brz-p-relative brz-css-d-egohed brz-css-eo3jb8">
+<div class="brz-shortcode__placeholder">
+<svg class="brz-icon-svg">
+<use href="/static/editor/icons/editor/img.svg#brz_icon">
+</use>
+</svg>
+</div>
+</picture>
+</div>
+</div>
+<div class="brz-css-d-1wonu5h brz-css-ok4ouy brz-wrapper" id="">
+<div class="brz-rich-text brz-rich-text__custom brz-css-d-1ehz5mr brz-css-1fj7ddp" data-brz-custom-id="fwgo2qiwkyjx">
+<div data-brz-translate-text="1">
+<p class="brz-tp-paragraph brz-text-lg-center brz-css-dqzu38">
+<span class="brz-cp-color7">The point of using dummy text for your paragraph is that it has a more-or-less normal distribution of letters. making it look like readable English.</span>
+</p>
+</div>
+</div>
+</div>
+<div class="brz-wrapper-clone brz-flex-xs-wrap brz-css-d-x0dcve brz-css-s0uy57" data-brz-custom-id="njteukwu78xx">
+<a class="brz-a brz-btn brz-css-d-1syz9i2 brz-css-16fpdkk brz-css-d-13c78oe brz-css-1xkw2wo" data-brz-custom-id="qug4dhki7tlx" data-brz-link-type="external" rel="noopener" target="_self">
+<svg class="brz-icon-svg brz-css-d-o4rfik brz-css-1pwz2dh">
+<use href="/static/editor/icons/glyph/tail-right.svg#nc_icon">
+</use>
+</svg>
+<span class="brz-span brz-text__editor" data-brz-translate-text="1">BUTTON</span>
+</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide slick-cloned" data-slick-index="7" id="" style="width: 334px;">
+<div>
+<div class="brz-carousel__item" style="width: 100%; display: inline-block;">
+<div class="brz-columns brz-css-d-j7y22h brz-css-r-1hbdoml brz-css-tau6at" data-brz-custom-id="6io8stcgis3x">
+<div class="brz-column__items brz-css-d-v5w42e brz-css-10qyxhj">
+<div class="brz-css-d-1wonu5h brz-css-slur92 brz-wrapper" id="">
+<div class="brz-image brz-css-d-1ypywxh brz-css-1jeoaia" data-brz-custom-id="q1dazru5e3ix">
+<picture class="brz-picture brz-d-block brz-p-relative brz-css-d-18keiwq brz-css-1y0bsw">
+<div class="brz-shortcode__placeholder">
+<svg class="brz-icon-svg">
+<use href="/static/editor/icons/editor/img.svg#brz_icon">
+</use>
+</svg>
+</div>
+</picture>
+</div>
+</div>
+<div class="brz-css-d-1wonu5h brz-css-wrxssq brz-wrapper" id="">
+<div class="brz-rich-text brz-rich-text__custom brz-css-d-1ehz5mr brz-css-1iagiuo" data-brz-custom-id="f8telcw6ne8x">
+<div data-brz-translate-text="1">
+<p class="brz-tp-paragraph brz-text-lg-center brz-css-dqzu38">
+<span class="brz-cp-color7">The point of using dummy text for your paragraph is that it has a more-or-less normal distribution of letters. making it look like readable English.</span>
+</p>
+</div>
+</div>
+</div>
+<div class="brz-wrapper-clone brz-flex-xs-wrap brz-css-d-x0dcve brz-css-dr8qhk" data-brz-custom-id="hmnblt0ztsux">
+<a class="brz-a brz-btn brz-css-d-1syz9i2 brz-css-18ineat brz-css-d-13c78oe brz-css-13aa131" data-brz-custom-id="9d8legery74x" data-brz-link-type="external" rel="noopener" target="_self">
+<svg class="brz-icon-svg brz-css-d-o4rfik brz-css-s454vo">
+<use href="/static/editor/icons/glyph/tail-right.svg#nc_icon">
+</use>
+</svg>
+<span class="brz-span brz-text__editor" data-brz-translate-text="1">BUTTON</span>
+</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<button aria-controls="brz-carousel-#" aria-disabled="false" aria-label="Next slide" class="brz-slick-slider__arrow brz-slick-slider__arrow-next slick-arrow" data-brz-section-slider-tabindex="0" tabindex="-1" type="button">
+<svg class="brz-icon-svg">
+<use href="/static/editor/icons/editor/right-arrow-thin.svg#brz_icon">
+</use>
+</svg>
+</button>
+<ul aria-label="Slide navigation" class="brz-slick-slider__dots brz-slick-slider__dots--circle">
+<li class="slick-active">
+<button aria-controls="brz-section-slide-0-4" aria-current="true" aria-label="Current slide, Go to slide 5" data-brz-section-slider-tabindex="" tabindex="-1" type="button">1</button>
+</li>
+<li>
+<button aria-controls="brz-section-slide-0-5" aria-label="Go to slide 6" data-brz-section-slider-tabindex="" tabindex="-1" type="button">2</button>
+</li>
+<li>
+<button aria-controls="brz-section-slide-0-6" aria-label="Go to slide 7" data-brz-section-slider-tabindex="" tabindex="-1" type="button">3</button>
+</li>
+<li>
+<button aria-controls="brz-section-slide-0-7" aria-label="Go to slide 8" data-brz-section-slider-tabindex="" tabindex="-1" type="button">4</button>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide slick-cloned" data-slick-index="3" id="" style="width: 1000px;">
+<div class="brz-section__content brz-section--boxed brz-css-d-oh3bvl brz-css-67mhqe" data-brz-custom-id="xw4c37g4ofxx">
+<div class="brz-container brz-css-d-x9rvyp brz-css-126lagi">
+<div class="brz-css-d-1wonu5h brz-css-bg6fi brz-wrapper" id="">
+<div class="brz-carousel brz-css-d-gzcfxr brz-css-1y4uq6m" data-brz-custom-id="0krq71ibhcyb">
+<div class="brz-carousel__slider" data-arrows="true" data-auto-play="false" data-auto-play-speed="3000" data-dots="true" data-dots-class="brz-slick-slider__dots brz-slick-slider__dots--circle" data-fade="false" data-responsive="%5B%7B%22breakpoint%22%3A991%2C%22settings%22%3A%7B%22slidesToShow%22%3A2%2C%22slidesToScroll%22%3A1%7D%7D%2C%7B%22breakpoint%22%3A767%2C%22settings%22%3A%7B%22slidesToShow%22%3A1%2C%22slidesToScroll%22%3A1%7D%7D%5D" data-slider-paused="false" data-slides-to-scroll="1" data-slides-to-show="3" data-swipe="true" data-transition-speed="3.5">
+<div class="brz-carousel__item">
+<div class="brz-columns brz-css-d-j7y22h brz-css-r-1hbdoml brz-css-13njz83" data-brz-custom-id="sq6bllsgvnxx">
+<div class="brz-column__items brz-css-d-v5w42e brz-css-ckb59x">
+<div class="brz-css-d-1wonu5h brz-css-c9l1rf brz-wrapper" id="">
+<div class="brz-image brz-css-d-hhg6o8 brz-css-bxij5u" data-brz-custom-id="qd1lwb8tm3rx">
+<picture class="brz-picture brz-d-block brz-p-relative brz-css-d-4omeyh brz-css-1i3x9ff">
+<div class="brz-shortcode__placeholder">
+<svg class="brz-icon-svg">
+<use href="/static/editor/icons/editor/img.svg#brz_icon">
+</use>
+</svg>
+</div>
+</picture>
+</div>
+</div>
+<div class="brz-css-d-1wonu5h brz-css-n2gtu1 brz-wrapper" id="">
+<div class="brz-rich-text brz-rich-text__custom brz-css-d-1ehz5mr brz-css-37ewjh" data-brz-custom-id="1lhg0wjq487x">
+<div data-brz-translate-text="1">
+<p class="brz-tp-paragraph brz-text-lg-center brz-css-dqzu38">
+<span class="brz-cp-color7">The point of using dummy text for your paragraph is that it has a more-or-less normal distribution of letters. making it look like readable English.</span>
+</p>
+</div>
+</div>
+</div>
+<div class="brz-wrapper-clone brz-flex-xs-wrap brz-css-d-x0dcve brz-css-2194zx" data-brz-custom-id="070m139q091x">
+<a class="brz-a brz-btn brz-css-d-1syz9i2 brz-css-1y99vkv brz-css-d-13c78oe brz-css-1u63etf" data-brz-custom-id="ybzjg0ziwsdx" data-brz-link-type="external" rel="noopener" target="_self">
+<svg class="brz-icon-svg brz-css-d-o4rfik brz-css-7e7d5y">
+<use href="/static/editor/icons/glyph/tail-right.svg#nc_icon">
+</use>
+</svg>
+<span class="brz-span brz-text__editor" data-brz-translate-text="1">BUTTON</span>
+</a>
+</div>
+</div>
+</div>
+</div>
+<div class="brz-carousel__item">
+<div class="brz-columns brz-css-d-j7y22h brz-css-r-1hbdoml brz-css-aiv9rm" data-brz-custom-id="4x7cpm0vc1xx">
+<div class="brz-column__items brz-css-d-v5w42e brz-css-1elrino">
+<div class="brz-css-d-1wonu5h brz-css-1i7yk3a brz-wrapper" id="">
+<div class="brz-image brz-css-d-1wnmu55 brz-css-1473vc2" data-brz-custom-id="8os78i21lthx">
+<picture class="brz-picture brz-d-block brz-p-relative brz-css-d-5cix12 brz-css-1fxt51q">
+<div class="brz-shortcode__placeholder">
+<svg class="brz-icon-svg">
+<use href="/static/editor/icons/editor/img.svg#brz_icon">
+</use>
+</svg>
+</div>
+</picture>
+</div>
+</div>
+<div class="brz-css-d-1wonu5h brz-css-5nc8pg brz-wrapper" id="">
+<div class="brz-rich-text brz-rich-text__custom brz-css-d-1ehz5mr brz-css-1s23xnc" data-brz-custom-id="7xhfgxpn42xx">
+<div data-brz-translate-text="1">
+<p class="brz-tp-paragraph brz-text-lg-center brz-css-dqzu38">
+<span class="brz-cp-color7">The point of using dummy text for your paragraph is that it has a more-or-less normal distribution of letters. making it look like readable English.</span>
+</p>
+</div>
+</div>
+</div>
+<div class="brz-wrapper-clone brz-flex-xs-wrap brz-css-d-x0dcve brz-css-1hzum7a" data-brz-custom-id="kivicz5x4xxx">
+<a class="brz-a brz-btn brz-css-d-1syz9i2 brz-css-wxicic brz-css-d-13c78oe brz-css-18cwoj" data-brz-custom-id="ct3sf77pclcx" data-brz-link-type="external" rel="noopener" target="_self">
+<svg class="brz-icon-svg brz-css-d-o4rfik brz-css-jswehg">
+<use href="/static/editor/icons/glyph/tail-right.svg#nc_icon">
+</use>
+</svg>
+<span class="brz-span brz-text__editor" data-brz-translate-text="1">BUTTON</span>
+</a>
+</div>
+</div>
+</div>
+</div>
+<div class="brz-carousel__item">
+<div class="brz-columns brz-css-d-j7y22h brz-css-r-1hbdoml brz-css-ijjsdn" data-brz-custom-id="4t8o7ppkd9mx">
+<div class="brz-column__items brz-css-d-v5w42e brz-css-1awmabu">
+<div class="brz-css-d-1wonu5h brz-css-1304qba brz-wrapper" id="">
+<div class="brz-image brz-css-d-115a82i brz-css-1s9y7fk" data-brz-custom-id="tkedqi4rq8rx">
+<picture class="brz-picture brz-d-block brz-p-relative brz-css-d-1kazn7i brz-css-dskhjh">
+<div class="brz-shortcode__placeholder">
+<svg class="brz-icon-svg">
+<use href="/static/editor/icons/editor/img.svg#brz_icon">
+</use>
+</svg>
+</div>
+</picture>
+</div>
+</div>
+<div class="brz-css-d-1wonu5h brz-css-1vn8q3q brz-wrapper" id="">
+<div class="brz-rich-text brz-rich-text__custom brz-css-d-1ehz5mr brz-css-qb2k1n" data-brz-custom-id="zqr1xry5q5rx">
+<div data-brz-translate-text="1">
+<p class="brz-tp-paragraph brz-text-lg-center brz-css-dqzu38">
+<span class="brz-cp-color7">The point of using dummy text for your paragraph is that it has a more-or-less normal distribution of letters. making it look like readable English.</span>
+</p>
+</div>
+</div>
+</div>
+<div class="brz-wrapper-clone brz-flex-xs-wrap brz-css-d-x0dcve brz-css-ndx4no" data-brz-custom-id="z9s0c4f2v1xx">
+<a class="brz-a brz-btn brz-css-d-1syz9i2 brz-css-1pdwm3c brz-css-d-13c78oe brz-css-jyk92y" data-brz-custom-id="5r9j05xxevnx" data-brz-link-type="external" rel="noopener" target="_self">
+<svg class="brz-icon-svg brz-css-d-o4rfik brz-css-13zhya1">
+<use href="/static/editor/icons/glyph/tail-right.svg#nc_icon">
+</use>
+</svg>
+<span class="brz-span brz-text__editor" data-brz-translate-text="1">BUTTON</span>
+</a>
+</div>
+</div>
+</div>
+</div>
+<div class="brz-carousel__item">
+<div class="brz-columns brz-css-d-j7y22h brz-css-r-1hbdoml brz-css-14a3shc" data-brz-custom-id="fyl6e3wg0nsx">
+<div class="brz-column__items brz-css-d-v5w42e brz-css-1txchh7">
+<div class="brz-css-d-1wonu5h brz-css-7qs1vi brz-wrapper" id="">
+<div class="brz-image brz-css-d-cw5do0 brz-css-tk951d" data-brz-custom-id="8jseqrr8gn7x">
+<picture class="brz-picture brz-d-block brz-p-relative brz-css-d-1nmsjw brz-css-15rml1r">
+<div class="brz-shortcode__placeholder">
+<svg class="brz-icon-svg">
+<use href="/static/editor/icons/editor/img.svg#brz_icon">
+</use>
+</svg>
+</div>
+</picture>
+</div>
+</div>
+<div class="brz-css-d-1wonu5h brz-css-s0ttxr brz-wrapper" id="">
+<div class="brz-rich-text brz-rich-text__custom brz-css-d-1ehz5mr brz-css-qm67jb" data-brz-custom-id="shufz4gq5rbx">
+<div data-brz-translate-text="1">
+<p class="brz-tp-paragraph brz-text-lg-center brz-css-dqzu38">
+<span class="brz-cp-color7">The point of using dummy text for your paragraph is that it has a more-or-less normal distribution of letters. making it look like readable English.</span>
+</p>
+</div>
+</div>
+</div>
+<div class="brz-wrapper-clone brz-flex-xs-wrap brz-css-d-x0dcve brz-css-1w5rhp2" data-brz-custom-id="wwvlqe8lgpnx">
+<a class="brz-a brz-btn brz-css-d-1syz9i2 brz-css-dnq43h brz-css-d-13c78oe brz-css-rkuj1c" data-brz-custom-id="jxq8hzptayax" data-brz-link-type="external" rel="noopener" target="_self">
+<svg class="brz-icon-svg brz-css-d-o4rfik brz-css-2jc2uc">
+<use href="/static/editor/icons/glyph/tail-right.svg#nc_icon">
+</use>
+</svg>
+<span class="brz-span brz-text__editor" data-brz-translate-text="1">BUTTON</span>
+</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide slick-cloned" data-slick-index="4" id="" style="width: 1000px;">
+<div class="brz-section__content brz-section--boxed brz-css-d-oh3bvl brz-css-1bdqe26" data-brz-custom-id="nh3mjb7uhtxx">
+<div class="brz-container brz-css-d-x9rvyp brz-css-15a18tg">
+<div class="brz-css-d-1wonu5h brz-css-17xiopa brz-wrapper" id="">
+<div class="brz-counter brz-counter-simple brz-css-d-1l8wdnn brz-css-15fprsz" data-brz-custom-id="ax350n9y09qx" data-brz-duration="2" data-brz-end="100" data-brz-separator="," data-brz-start="0" data-brz-type="simple">
+<div aria-atomic="true" aria-live="polite" class="brz-counter-figures brz-css-d-1sbebwu brz-css-jm1bxm" role="status">
+<span class="brz-counter-numbers">0</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide slick-cloned" data-slick-index="5" id="" style="width: 1000px;">
+<div class="brz-section__content brz-section--boxed brz-css-d-oh3bvl brz-css-5ca4rf" data-brz-custom-id="haqdykswt2ox">
+<div class="brz-container brz-css-d-x9rvyp brz-css-u4t4s8">
+<div class="brz-css-d-1wonu5h brz-css-1us2ca5 brz-wrapper" id="">
+<div class="brz-carousel brz-css-d-gzcfxr brz-css-n1pplh" data-brz-custom-id="7o83jb3fecnx">
+<div class="brz-carousel__slider" data-arrows="true" data-auto-play="false" data-auto-play-speed="3000" data-dots="true" data-dots-class="brz-slick-slider__dots brz-slick-slider__dots--circle" data-fade="false" data-responsive="%5B%7B%22breakpoint%22%3A991%2C%22settings%22%3A%7B%22slidesToShow%22%3A2%2C%22slidesToScroll%22%3A1%7D%7D%2C%7B%22breakpoint%22%3A767%2C%22settings%22%3A%7B%22slidesToShow%22%3A1%2C%22slidesToScroll%22%3A1%7D%7D%5D" data-slider-paused="false" data-slides-to-scroll="1" data-slides-to-show="3" data-swipe="true" data-transition-speed="3.5">
+<div class="brz-carousel__item">
+<div class="brz-columns brz-css-d-j7y22h brz-css-r-1hbdoml brz-css-13mmds0" data-brz-custom-id="vn2qimyvbaxx">
+<div class="brz-column__items brz-css-d-v5w42e brz-css-11weynt">
+<div class="brz-css-d-1wonu5h brz-css-w1qui7 brz-wrapper" id="">
+<div class="brz-image brz-css-d-4q1l1r brz-css-dqkyu" data-brz-custom-id="m13tfos6ozcx">
+<picture class="brz-picture brz-d-block brz-p-relative brz-css-d-xn7edz brz-css-1sd7ylj">
+<div class="brz-shortcode__placeholder">
+<svg class="brz-icon-svg">
+<use href="/static/editor/icons/editor/img.svg#brz_icon">
+</use>
+</svg>
+</div>
+</picture>
+</div>
+</div>
+<div class="brz-css-d-1wonu5h brz-css-3cdkjb brz-wrapper" id="">
+<div class="brz-rich-text brz-rich-text__custom brz-css-d-1ehz5mr brz-css-1mvwqwl" data-brz-custom-id="h7s5z33b9k5x">
+<div data-brz-translate-text="1">
+<p class="brz-tp-paragraph brz-text-lg-center brz-css-dqzu38">
+<span class="brz-cp-color7">The point of using dummy text for your paragraph is that it has a more-or-less normal distribution of letters. making it look like readable English.</span>
+</p>
+</div>
+</div>
+</div>
+<div class="brz-wrapper-clone brz-flex-xs-wrap brz-css-d-x0dcve brz-css-p42lbs" data-brz-custom-id="wgxd9echcifx">
+<a class="brz-a brz-btn brz-css-d-1syz9i2 brz-css-bda39q brz-css-d-13c78oe brz-css-1p1mp7s" data-brz-custom-id="odx71ez6uufx" data-brz-link-type="external" rel="noopener" target="_self">
+<svg class="brz-icon-svg brz-css-d-o4rfik brz-css-18wyqb3">
+<use href="/static/editor/icons/glyph/tail-right.svg#nc_icon">
+</use>
+</svg>
+<span class="brz-span brz-text__editor" data-brz-translate-text="1">BUTTON</span>
+</a>
+</div>
+</div>
+</div>
+</div>
+<div class="brz-carousel__item">
+<div class="brz-columns brz-css-d-j7y22h brz-css-r-1hbdoml brz-css-m0xms8" data-brz-custom-id="cn2d5o2frl8x">
+<div class="brz-column__items brz-css-d-v5w42e brz-css-17of9ru">
+<div class="brz-css-d-1wonu5h brz-css-47rhad brz-wrapper" id="">
+<div class="brz-image brz-css-d-pnolfs brz-css-1r2w177" data-brz-custom-id="wmsf948ia2xx">
+<picture class="brz-picture brz-d-block brz-p-relative brz-css-d-35ocse brz-css-1ubjaoc">
+<div class="brz-shortcode__placeholder">
+<svg class="brz-icon-svg">
+<use href="/static/editor/icons/editor/img.svg#brz_icon">
+</use>
+</svg>
+</div>
+</picture>
+</div>
+</div>
+<div class="brz-css-d-1wonu5h brz-css-f7dymi brz-wrapper" id="">
+<div class="brz-rich-text brz-rich-text__custom brz-css-d-1ehz5mr brz-css-jtb8dc" data-brz-custom-id="lvuuhx5q5ocx">
+<div data-brz-translate-text="1">
+<p class="brz-tp-paragraph brz-text-lg-center brz-css-dqzu38">
+<span class="brz-cp-color7">The point of using dummy text for your paragraph is that it has a more-or-less normal distribution of letters. making it look like readable English.</span>
+</p>
+</div>
+</div>
+</div>
+<div class="brz-wrapper-clone brz-flex-xs-wrap brz-css-d-x0dcve brz-css-1ok3qow" data-brz-custom-id="mktpsyuehspx">
+<a class="brz-a brz-btn brz-css-d-1syz9i2 brz-css-113szzk brz-css-d-13c78oe brz-css-1gk6rbc" data-brz-custom-id="6em0n50numyx" data-brz-link-type="external" rel="noopener" target="_self">
+<svg class="brz-icon-svg brz-css-d-o4rfik brz-css-um1b5l">
+<use href="/static/editor/icons/glyph/tail-right.svg#nc_icon">
+</use>
+</svg>
+<span class="brz-span brz-text__editor" data-brz-translate-text="1">BUTTON</span>
+</a>
+</div>
+</div>
+</div>
+</div>
+<div class="brz-carousel__item">
+<div class="brz-columns brz-css-d-j7y22h brz-css-r-1hbdoml brz-css-165obhl" data-brz-custom-id="r7opdk1h2ixx">
+<div class="brz-column__items brz-css-d-v5w42e brz-css-1966usx">
+<div class="brz-css-d-1wonu5h brz-css-1mroez3 brz-wrapper" id="">
+<div class="brz-image brz-css-d-1ybtt5t brz-css-1sdos1s" data-brz-custom-id="tlbzy71vu6xx">
+<picture class="brz-picture brz-d-block brz-p-relative brz-css-d-egohed brz-css-eo3jb8">
+<div class="brz-shortcode__placeholder">
+<svg class="brz-icon-svg">
+<use href="/static/editor/icons/editor/img.svg#brz_icon">
+</use>
+</svg>
+</div>
+</picture>
+</div>
+</div>
+<div class="brz-css-d-1wonu5h brz-css-ok4ouy brz-wrapper" id="">
+<div class="brz-rich-text brz-rich-text__custom brz-css-d-1ehz5mr brz-css-1fj7ddp" data-brz-custom-id="fwgo2qiwkyjx">
+<div data-brz-translate-text="1">
+<p class="brz-tp-paragraph brz-text-lg-center brz-css-dqzu38">
+<span class="brz-cp-color7">The point of using dummy text for your paragraph is that it has a more-or-less normal distribution of letters. making it look like readable English.</span>
+</p>
+</div>
+</div>
+</div>
+<div class="brz-wrapper-clone brz-flex-xs-wrap brz-css-d-x0dcve brz-css-s0uy57" data-brz-custom-id="njteukwu78xx">
+<a class="brz-a brz-btn brz-css-d-1syz9i2 brz-css-16fpdkk brz-css-d-13c78oe brz-css-1xkw2wo" data-brz-custom-id="qug4dhki7tlx" data-brz-link-type="external" rel="noopener" target="_self">
+<svg class="brz-icon-svg brz-css-d-o4rfik brz-css-1pwz2dh">
+<use href="/static/editor/icons/glyph/tail-right.svg#nc_icon">
+</use>
+</svg>
+<span class="brz-span brz-text__editor" data-brz-translate-text="1">BUTTON</span>
+</a>
+</div>
+</div>
+</div>
+</div>
+<div class="brz-carousel__item">
+<div class="brz-columns brz-css-d-j7y22h brz-css-r-1hbdoml brz-css-tau6at" data-brz-custom-id="6io8stcgis3x">
+<div class="brz-column__items brz-css-d-v5w42e brz-css-10qyxhj">
+<div class="brz-css-d-1wonu5h brz-css-slur92 brz-wrapper" id="">
+<div class="brz-image brz-css-d-1ypywxh brz-css-1jeoaia" data-brz-custom-id="q1dazru5e3ix">
+<picture class="brz-picture brz-d-block brz-p-relative brz-css-d-18keiwq brz-css-1y0bsw">
+<div class="brz-shortcode__placeholder">
+<svg class="brz-icon-svg">
+<use href="/static/editor/icons/editor/img.svg#brz_icon">
+</use>
+</svg>
+</div>
+</picture>
+</div>
+</div>
+<div class="brz-css-d-1wonu5h brz-css-wrxssq brz-wrapper" id="">
+<div class="brz-rich-text brz-rich-text__custom brz-css-d-1ehz5mr brz-css-1iagiuo" data-brz-custom-id="f8telcw6ne8x">
+<div data-brz-translate-text="1">
+<p class="brz-tp-paragraph brz-text-lg-center brz-css-dqzu38">
+<span class="brz-cp-color7">The point of using dummy text for your paragraph is that it has a more-or-less normal distribution of letters. making it look like readable English.</span>
+</p>
+</div>
+</div>
+</div>
+<div class="brz-wrapper-clone brz-flex-xs-wrap brz-css-d-x0dcve brz-css-dr8qhk" data-brz-custom-id="hmnblt0ztsux">
+<a class="brz-a brz-btn brz-css-d-1syz9i2 brz-css-18ineat brz-css-d-13c78oe brz-css-13aa131" data-brz-custom-id="9d8legery74x" data-brz-link-type="external" rel="noopener" target="_self">
+<svg class="brz-icon-svg brz-css-d-o4rfik brz-css-s454vo">
+<use href="/static/editor/icons/glyph/tail-right.svg#nc_icon">
+</use>
+</svg>
+<span class="brz-span brz-text__editor" data-brz-translate-text="1">BUTTON</span>
+</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<button aria-disabled="false" aria-label="Next slide" class="brz-slick-slider__arrow brz-slick-slider__arrow-next slick-arrow" tabindex="0" type="button">
+<svg class="brz-icon-svg">
+<use href="/static/editor/icons/editor/right-arrow-thin.svg#brz_icon">
+</use>
+</svg>
+</button>
+<ul class="brz-slick-slider__dots brz-slick-slider__dots--circle">
+<li class="slick-active">
+<button aria-controls="brz-section-slide-0-8" aria-current="true" aria-label="Current slide, Go to slide 9" type="button">1</button>
+</li>
+<li>
+<button aria-controls="brz-section-slide-0-9" aria-label="Go to slide 10" type="button">2</button>
+</li>
+<li>
+<button aria-controls="brz-section-slide-0-10" aria-label="Go to slide 11" type="button">3</button>
+</li>
+<li class="brz-slick-slider__pause">
+<button aria-controls="brz-section-slider-0" aria-label="Pause autoplay" aria-pressed="false" class="brz-slick-slider__pause-button" type="button">
+<svg class="brz-icon-svg button-pause">
+<use href="/static/editor/icons/glyph/button-circle-pause.svg#nc_icon">
+</use>
+</svg>
+<svg class="brz-icon-svg brz-hidden button-play">
+<use href="/static/editor/icons/glyph/button-circle-play.svg#nc_icon">
+</use>
+</svg>
+</button>
+</li>
+</ul>
+</div>"
+`;
+
+exports[`building the slider renders the no arrows and no dots slider as before 1`] = `
+"<div aria-label="Section slider 1" aria-roledescription="carousel" class="brz-slick-slider brz-slick-slider__section slick-initialized slick-slider" data-animation-speed="500" data-arrows="false" data-auto-play="false" data-auto-play-speed="3000" data-dots="false" data-dots-class="brz-slick-slider__dots brz-slick-slider__dots--circle" data-fade="false" data-responsive="%5B%7B%22breakpoint%22%3A767%2C%22settings%22%3A%7B%22slidesToShow%22%3A1%2C%22slidesToScroll%22%3A1%7D%7D%5D" data-slider-paused="false" data-slides-to-scroll="1" data-slides-to-show="1" data-swipe="true" data-vertical="false" id="brz-section-slider-0" role="region">
+<div class="slick-list draggable">
+<div class="slick-track" style="opacity: 1; width: 7000px; left: -1000px;">
+<div aria-hidden="true" class="slick-slide slick-cloned" data-slick-index="-1" id="" style="width: 1000px;">
+<div class="brz-section__content brz-section--boxed brz-css-d-oh3bvl brz-css-5ca4rf" data-brz-custom-id="haqdykswt2ox">
+<div class="brz-container brz-css-d-x9rvyp brz-css-u4t4s8">
+</div>
+</div>
+</div>
+<div aria-hidden="false" aria-label="Slide 1 of 3" aria-roledescription="slide" class="slick-slide slick-current slick-active" data-slick-index="0" id="brz-section-slide-0-0" role="group" style="width: 1000px;">
+<div class="brz-section__content brz-section--boxed brz-css-d-oh3bvl brz-css-67mhqe" data-brz-custom-id="xw4c37g4ofxx">
+<div class="brz-container brz-css-d-x9rvyp brz-css-126lagi">
+</div>
+</div>
+</div>
+<div aria-hidden="true" aria-label="Slide 2 of 3" aria-roledescription="slide" class="slick-slide" data-slick-index="1" id="brz-section-slide-0-1" role="group" style="width: 1000px;">
+<div class="brz-section__content brz-section--boxed brz-css-d-oh3bvl brz-css-1bdqe26" data-brz-custom-id="nh3mjb7uhtxx">
+<div class="brz-container brz-css-d-x9rvyp brz-css-15a18tg">
+<div class="brz-css-d-1wonu5h brz-css-17xiopa brz-wrapper" id="">
+<div class="brz-counter brz-counter-simple brz-css-d-1l8wdnn brz-css-15fprsz" data-brz-custom-id="ax350n9y09qx" data-brz-duration="2" data-brz-end="100" data-brz-separator="," data-brz-start="0" data-brz-type="simple">
+<div aria-atomic="true" aria-live="polite" class="brz-counter-figures brz-css-d-1sbebwu brz-css-jm1bxm" role="status">
+<span class="brz-counter-numbers">0</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div aria-hidden="true" aria-label="Slide 3 of 3" aria-roledescription="slide" class="slick-slide" data-slick-index="2" id="brz-section-slide-0-2" role="group" style="width: 1000px;">
+<div class="brz-section__content brz-section--boxed brz-css-d-oh3bvl brz-css-5ca4rf" data-brz-custom-id="haqdykswt2ox">
+<div class="brz-container brz-css-d-x9rvyp brz-css-u4t4s8">
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide slick-cloned" data-slick-index="3" id="" style="width: 1000px;">
+<div class="brz-section__content brz-section--boxed brz-css-d-oh3bvl brz-css-67mhqe" data-brz-custom-id="xw4c37g4ofxx">
+<div class="brz-container brz-css-d-x9rvyp brz-css-126lagi">
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide slick-cloned" data-slick-index="4" id="" style="width: 1000px;">
+<div class="brz-section__content brz-section--boxed brz-css-d-oh3bvl brz-css-1bdqe26" data-brz-custom-id="nh3mjb7uhtxx">
+<div class="brz-container brz-css-d-x9rvyp brz-css-15a18tg">
+<div class="brz-css-d-1wonu5h brz-css-17xiopa brz-wrapper" id="">
+<div class="brz-counter brz-counter-simple brz-css-d-1l8wdnn brz-css-15fprsz" data-brz-custom-id="ax350n9y09qx" data-brz-duration="2" data-brz-end="100" data-brz-separator="," data-brz-start="0" data-brz-type="simple">
+<div aria-atomic="true" aria-live="polite" class="brz-counter-figures brz-css-d-1sbebwu brz-css-jm1bxm" role="status">
+<span class="brz-counter-numbers">0</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide slick-cloned" data-slick-index="5" id="" style="width: 1000px;">
+<div class="brz-section__content brz-section--boxed brz-css-d-oh3bvl brz-css-5ca4rf" data-brz-custom-id="haqdykswt2ox">
+<div class="brz-container brz-css-d-x9rvyp brz-css-u4t4s8">
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>"
+`;
+
+exports[`building the slider renders the slide animation slider as before 1`] = `
+"<div aria-label="Section slider 1" aria-roledescription="carousel" class="brz-slick-slider brz-slick-slider__section slick-initialized slick-slider slick-dotted" data-animation-speed="500" data-arrows="true" data-auto-play="false" data-auto-play-speed="3000" data-dots="true" data-dots-class="brz-slick-slider__dots brz-slick-slider__dots--circle" data-fade="false" data-responsive="%5B%7B%22breakpoint%22%3A767%2C%22settings%22%3A%7B%22slidesToShow%22%3A1%2C%22slidesToScroll%22%3A1%7D%7D%5D" data-slider-paused="false" data-slides-to-scroll="1" data-slides-to-show="1" data-swipe="true" data-vertical="false" id="brz-section-slider-0" role="region">
+<button aria-controls="brz-section-slider-0" aria-disabled="false" aria-label="Previous slide" class="brz-slick-slider__arrow brz-slick-slider__arrow-prev slick-arrow" tabindex="0" type="button">
+<svg class="brz-icon-svg">
+<use href="/static/editor/icons/editor/right-arrow-thin.svg#brz_icon">
+</use>
+</svg>
+</button>
+<div class="slick-list draggable">
+<div class="slick-track" style="opacity: 1; width: 7000px; left: -1000px;">
+<div aria-hidden="true" class="slick-slide slick-cloned" data-slick-index="-1" id="" style="width: 1000px;">
+<div class="brz-section__content brz-section--boxed brz-css-d-oh3bvl brz-css-5ca4rf" data-brz-custom-id="haqdykswt2ox">
+<div class="brz-container brz-css-d-x9rvyp brz-css-u4t4s8">
+</div>
+</div>
+</div>
+<div aria-hidden="false" aria-label="Slide 1 of 3" aria-roledescription="slide" class="slick-slide slick-current slick-active" data-slick-index="0" id="brz-section-slide-0-0" role="group" style="width: 1000px;">
+<div class="brz-section__content brz-section--boxed brz-css-d-oh3bvl brz-css-67mhqe" data-brz-custom-id="xw4c37g4ofxx">
+<div class="brz-container brz-css-d-x9rvyp brz-css-126lagi">
+</div>
+</div>
+</div>
+<div aria-hidden="true" aria-label="Slide 2 of 3" aria-roledescription="slide" class="slick-slide" data-slick-index="1" id="brz-section-slide-0-1" role="group" style="width: 1000px;">
+<div class="brz-section__content brz-section--boxed brz-css-d-oh3bvl brz-css-1bdqe26" data-brz-custom-id="nh3mjb7uhtxx">
+<div class="brz-container brz-css-d-x9rvyp brz-css-15a18tg">
+<div class="brz-css-d-1wonu5h brz-css-17xiopa brz-wrapper" id="">
+<div class="brz-counter brz-counter-simple brz-css-d-1l8wdnn brz-css-15fprsz" data-brz-custom-id="ax350n9y09qx" data-brz-duration="2" data-brz-end="100" data-brz-separator="," data-brz-start="0" data-brz-type="simple">
+<div aria-atomic="true" aria-live="polite" class="brz-counter-figures brz-css-d-1sbebwu brz-css-jm1bxm" role="status">
+<span class="brz-counter-numbers">0</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div aria-hidden="true" aria-label="Slide 3 of 3" aria-roledescription="slide" class="slick-slide" data-slick-index="2" id="brz-section-slide-0-2" role="group" style="width: 1000px;">
+<div class="brz-section__content brz-section--boxed brz-css-d-oh3bvl brz-css-5ca4rf" data-brz-custom-id="haqdykswt2ox">
+<div class="brz-container brz-css-d-x9rvyp brz-css-u4t4s8">
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide slick-cloned" data-slick-index="3" id="" style="width: 1000px;">
+<div class="brz-section__content brz-section--boxed brz-css-d-oh3bvl brz-css-67mhqe" data-brz-custom-id="xw4c37g4ofxx">
+<div class="brz-container brz-css-d-x9rvyp brz-css-126lagi">
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide slick-cloned" data-slick-index="4" id="" style="width: 1000px;">
+<div class="brz-section__content brz-section--boxed brz-css-d-oh3bvl brz-css-1bdqe26" data-brz-custom-id="nh3mjb7uhtxx">
+<div class="brz-container brz-css-d-x9rvyp brz-css-15a18tg">
+<div class="brz-css-d-1wonu5h brz-css-17xiopa brz-wrapper" id="">
+<div class="brz-counter brz-counter-simple brz-css-d-1l8wdnn brz-css-15fprsz" data-brz-custom-id="ax350n9y09qx" data-brz-duration="2" data-brz-end="100" data-brz-separator="," data-brz-start="0" data-brz-type="simple">
+<div aria-atomic="true" aria-live="polite" class="brz-counter-figures brz-css-d-1sbebwu brz-css-jm1bxm" role="status">
+<span class="brz-counter-numbers">0</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide slick-cloned" data-slick-index="5" id="" style="width: 1000px;">
+<div class="brz-section__content brz-section--boxed brz-css-d-oh3bvl brz-css-5ca4rf" data-brz-custom-id="haqdykswt2ox">
+<div class="brz-container brz-css-d-x9rvyp brz-css-u4t4s8">
+</div>
+</div>
+</div>
+</div>
+</div>
+<button aria-controls="brz-section-slider-0" aria-disabled="false" aria-label="Next slide" class="brz-slick-slider__arrow brz-slick-slider__arrow-next slick-arrow" tabindex="0" type="button">
+<svg class="brz-icon-svg">
+<use href="/static/editor/icons/editor/right-arrow-thin.svg#brz_icon">
+</use>
+</svg>
+</button>
+<ul aria-label="Slide navigation" class="brz-slick-slider__dots brz-slick-slider__dots--circle">
+<li class="slick-active">
+<button aria-controls="brz-section-slide-0-0" aria-current="true" aria-label="Current slide, Go to slide 1" type="button">1</button>
+</li>
+<li>
+<button aria-controls="brz-section-slide-0-1" aria-label="Go to slide 2" type="button">2</button>
+</li>
+<li>
+<button aria-controls="brz-section-slide-0-2" aria-label="Go to slide 3" type="button">3</button>
+</li>
+<li class="brz-slick-slider__pause">
+<button aria-controls="brz-section-slider-0" aria-label="Pause autoplay" aria-pressed="false" class="brz-slick-slider__pause-button" type="button">
+<svg class="brz-icon-svg button-pause">
+<use href="/static/editor/icons/glyph/button-circle-pause.svg#nc_icon">
+</use>
+</svg>
+<svg class="brz-icon-svg brz-hidden button-play">
+<use href="/static/editor/icons/glyph/button-circle-play.svg#nc_icon">
+</use>
+</svg>
+</button>
+</li>
+</ul>
+</div>"
+`;
+
+exports[`building the slider renders the vertical animation slider as before 1`] = `
+"<div aria-label="Section slider 1" aria-roledescription="carousel" class="brz-slick-slider brz-slick-slider__section slick-initialized slick-slider slick-dotted slick-vertical" data-animation-speed="500" data-arrows="true" data-auto-play="false" data-auto-play-speed="3000" data-dots="true" data-dots-class="brz-slick-slider__dots brz-slick-slider__dots--circle" data-fade="false" data-responsive="%5B%7B%22breakpoint%22%3A767%2C%22settings%22%3A%7B%22slidesToShow%22%3A1%2C%22slidesToScroll%22%3A1%7D%7D%5D" data-slider-paused="false" data-slides-to-scroll="1" data-slides-to-show="1" data-swipe="true" data-vertical="true" id="brz-section-slider-0" role="region">
+<button aria-controls="brz-section-slider-0" aria-disabled="false" aria-label="Previous slide" class="brz-slick-slider__arrow brz-slick-slider__arrow-prev slick-arrow" tabindex="0" type="button">
+<svg class="brz-icon-svg">
+<use href="/static/editor/icons/editor/right-arrow-thin.svg#brz_icon">
+</use>
+</svg>
+</button>
+<div class="slick-list draggable" style="height: 400px;">
+<div class="slick-track" style="opacity: 1; height: 2800px; top: -400px;">
+<div aria-hidden="true" class="slick-slide slick-cloned" data-slick-index="-1" id="" style="width: 1000px;">
+<div class="brz-section__content brz-section--boxed brz-css-d-oh3bvl brz-css-5ca4rf" data-brz-custom-id="haqdykswt2ox">
+<div class="brz-container brz-css-d-x9rvyp brz-css-u4t4s8">
+</div>
+</div>
+</div>
+<div aria-hidden="false" aria-label="Slide 1 of 3" aria-roledescription="slide" class="slick-slide slick-current slick-active" data-slick-index="0" id="brz-section-slide-0-0" role="group" style="width: 1000px;">
+<div class="brz-section__content brz-section--boxed brz-css-d-oh3bvl brz-css-67mhqe" data-brz-custom-id="xw4c37g4ofxx">
+<div class="brz-container brz-css-d-x9rvyp brz-css-126lagi">
+</div>
+</div>
+</div>
+<div aria-hidden="true" aria-label="Slide 2 of 3" aria-roledescription="slide" class="slick-slide" data-slick-index="1" id="brz-section-slide-0-1" role="group" style="width: 1000px;">
+<div class="brz-section__content brz-section--boxed brz-css-d-oh3bvl brz-css-1bdqe26" data-brz-custom-id="nh3mjb7uhtxx">
+<div class="brz-container brz-css-d-x9rvyp brz-css-15a18tg">
+<div class="brz-css-d-1wonu5h brz-css-17xiopa brz-wrapper" id="">
+<div class="brz-counter brz-counter-simple brz-css-d-1l8wdnn brz-css-15fprsz" data-brz-custom-id="ax350n9y09qx" data-brz-duration="2" data-brz-end="100" data-brz-separator="," data-brz-start="0" data-brz-type="simple">
+<div aria-atomic="true" aria-live="polite" class="brz-counter-figures brz-css-d-1sbebwu brz-css-jm1bxm" role="status">
+<span class="brz-counter-numbers">0</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div aria-hidden="true" aria-label="Slide 3 of 3" aria-roledescription="slide" class="slick-slide" data-slick-index="2" id="brz-section-slide-0-2" role="group" style="width: 1000px;">
+<div class="brz-section__content brz-section--boxed brz-css-d-oh3bvl brz-css-5ca4rf" data-brz-custom-id="haqdykswt2ox">
+<div class="brz-container brz-css-d-x9rvyp brz-css-u4t4s8">
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide slick-cloned" data-slick-index="3" id="" style="width: 1000px;">
+<div class="brz-section__content brz-section--boxed brz-css-d-oh3bvl brz-css-67mhqe" data-brz-custom-id="xw4c37g4ofxx">
+<div class="brz-container brz-css-d-x9rvyp brz-css-126lagi">
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide slick-cloned" data-slick-index="4" id="" style="width: 1000px;">
+<div class="brz-section__content brz-section--boxed brz-css-d-oh3bvl brz-css-1bdqe26" data-brz-custom-id="nh3mjb7uhtxx">
+<div class="brz-container brz-css-d-x9rvyp brz-css-15a18tg">
+<div class="brz-css-d-1wonu5h brz-css-17xiopa brz-wrapper" id="">
+<div class="brz-counter brz-counter-simple brz-css-d-1l8wdnn brz-css-15fprsz" data-brz-custom-id="ax350n9y09qx" data-brz-duration="2" data-brz-end="100" data-brz-separator="," data-brz-start="0" data-brz-type="simple">
+<div aria-atomic="true" aria-live="polite" class="brz-counter-figures brz-css-d-1sbebwu brz-css-jm1bxm" role="status">
+<span class="brz-counter-numbers">0</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide slick-cloned" data-slick-index="5" id="" style="width: 1000px;">
+<div class="brz-section__content brz-section--boxed brz-css-d-oh3bvl brz-css-5ca4rf" data-brz-custom-id="haqdykswt2ox">
+<div class="brz-container brz-css-d-x9rvyp brz-css-u4t4s8">
+</div>
+</div>
+</div>
+</div>
+</div>
+<button aria-controls="brz-section-slider-0" aria-disabled="false" aria-label="Next slide" class="brz-slick-slider__arrow brz-slick-slider__arrow-next slick-arrow" tabindex="0" type="button">
+<svg class="brz-icon-svg">
+<use href="/static/editor/icons/editor/right-arrow-thin.svg#brz_icon">
+</use>
+</svg>
+</button>
+<ul aria-label="Slide navigation" class="brz-slick-slider__dots brz-slick-slider__dots--circle">
+<li class="slick-active">
+<button aria-controls="brz-section-slide-0-0" aria-current="true" aria-label="Current slide, Go to slide 1" type="button">1</button>
+</li>
+<li>
+<button aria-controls="brz-section-slide-0-1" aria-label="Go to slide 2" type="button">2</button>
+</li>
+<li>
+<button aria-controls="brz-section-slide-0-2" aria-label="Go to slide 3" type="button">3</button>
+</li>
+<li class="brz-slick-slider__pause">
+<button aria-controls="brz-section-slider-0" aria-label="Pause autoplay" aria-pressed="false" class="brz-slick-slider__pause-button" type="button">
+<svg class="brz-icon-svg button-pause">
+<use href="/static/editor/icons/glyph/button-circle-pause.svg#nc_icon">
+</use>
+</svg>
+<svg class="brz-icon-svg brz-hidden button-play">
+<use href="/static/editor/icons/glyph/button-circle-play.svg#nc_icon">
+</use>
+</svg>
+</button>
+</li>
+</ul>
+</div>"
+`;
+
+exports[`moving between slides moves a right-to-left slider as before 1`] = `
+{
+  "current": "1",
+  "left": "-2000px",
+}
+`;
+
+exports[`moving between slides moves the track frame by frame with slick's linear easing 1`] = `
+[
+  "-1224px",
+  "-1480px",
+  "-1736px",
+  "-1992px",
+]
+`;
+
+exports[`moving between slides renders the fade slider after a move as before 1`] = `
+"<div aria-label="Section slider 1" aria-roledescription="carousel" class="brz-slick-slider brz-slick-slider__section slick-initialized slick-slider slick-dotted" data-animation-speed="500" data-arrows="true" data-auto-play="false" data-auto-play-speed="3000" data-dots="true" data-dots-class="brz-slick-slider__dots brz-slick-slider__dots--circle" data-fade="true" data-responsive="%5B%7B%22breakpoint%22%3A767%2C%22settings%22%3A%7B%22slidesToShow%22%3A1%2C%22slidesToScroll%22%3A1%7D%7D%5D" data-slider-paused="false" data-slides-to-scroll="1" data-slides-to-show="1" data-swipe="true" data-vertical="false" id="brz-section-slider-0" role="region">
+<button aria-controls="brz-section-slider-0" aria-disabled="false" aria-label="Previous slide" class="brz-slick-slider__arrow brz-slick-slider__arrow-prev slick-arrow" tabindex="0" type="button">
+<svg class="brz-icon-svg">
+<use href="/static/editor/icons/editor/right-arrow-thin.svg#brz_icon">
+</use>
+</svg>
+</button>
+<div class="slick-list draggable">
+<div class="slick-track" style="opacity: 1; width: 3000px;">
+<div aria-hidden="true" aria-label="Slide 1 of 3" aria-roledescription="slide" class="slick-slide" data-slick-index="0" id="brz-section-slide-0-0" role="group" style="width: 1000px; position: relative; left: 0px; top: 0px; z-index: 998; opacity: 0; transition: opacity 500ms ease;">
+<div class="brz-section__content brz-section--boxed brz-css-d-oh3bvl brz-css-67mhqe" data-brz-custom-id="xw4c37g4ofxx">
+<div class="brz-container brz-css-d-x9rvyp brz-css-126lagi">
+</div>
+</div>
+</div>
+<div aria-hidden="false" aria-label="Slide 2 of 3" aria-roledescription="slide" class="slick-slide slick-current slick-active" data-slick-index="1" id="brz-section-slide-0-1" role="group" style="width: 1000px; position: relative; left: -1000px; top: 0px; z-index: 999; opacity: 1;">
+<div class="brz-section__content brz-section--boxed brz-css-d-oh3bvl brz-css-1bdqe26" data-brz-custom-id="nh3mjb7uhtxx">
+<div class="brz-container brz-css-d-x9rvyp brz-css-15a18tg">
+<div class="brz-css-d-1wonu5h brz-css-17xiopa brz-wrapper" id="">
+<div class="brz-counter brz-counter-simple brz-css-d-1l8wdnn brz-css-15fprsz" data-brz-custom-id="ax350n9y09qx" data-brz-duration="2" data-brz-end="100" data-brz-separator="," data-brz-start="0" data-brz-type="simple">
+<div aria-atomic="true" aria-live="polite" class="brz-counter-figures brz-css-d-1sbebwu brz-css-jm1bxm" role="status">
+<span class="brz-counter-numbers">0</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div aria-hidden="true" aria-label="Slide 3 of 3" aria-roledescription="slide" class="slick-slide" data-slick-index="2" id="brz-section-slide-0-2" role="group" style="width: 1000px; position: relative; left: -2000px; top: 0px; z-index: 998; opacity: 0;">
+<div class="brz-section__content brz-section--boxed brz-css-d-oh3bvl brz-css-5ca4rf" data-brz-custom-id="haqdykswt2ox">
+<div class="brz-container brz-css-d-x9rvyp brz-css-u4t4s8">
+</div>
+</div>
+</div>
+</div>
+</div>
+<button aria-controls="brz-section-slider-0" aria-disabled="false" aria-label="Next slide" class="brz-slick-slider__arrow brz-slick-slider__arrow-next slick-arrow" tabindex="0" type="button">
+<svg class="brz-icon-svg">
+<use href="/static/editor/icons/editor/right-arrow-thin.svg#brz_icon">
+</use>
+</svg>
+</button>
+<ul aria-label="Slide navigation" class="brz-slick-slider__dots brz-slick-slider__dots--circle">
+<li class="">
+<button aria-controls="brz-section-slide-0-0" aria-label="Go to slide 1" type="button">1</button>
+</li>
+<li class="slick-active">
+<button aria-controls="brz-section-slide-0-1" aria-current="true" aria-label="Current slide, Go to slide 2" type="button">2</button>
+</li>
+<li>
+<button aria-controls="brz-section-slide-0-2" aria-label="Go to slide 3" type="button">3</button>
+</li>
+<li class="brz-slick-slider__pause">
+<button aria-controls="brz-section-slider-0" aria-label="Pause autoplay" aria-pressed="false" class="brz-slick-slider__pause-button" type="button">
+<svg class="brz-icon-svg button-pause">
+<use href="/static/editor/icons/glyph/button-circle-pause.svg#nc_icon">
+</use>
+</svg>
+<svg class="brz-icon-svg brz-hidden button-play">
+<use href="/static/editor/icons/glyph/button-circle-play.svg#nc_icon">
+</use>
+</svg>
+</button>
+</li>
+</ul>
+</div>"
+`;
+
+exports[`moving between slides renders the vertical slider after a move as before 1`] = `
+"<div aria-label="Section slider 1" aria-roledescription="carousel" class="brz-slick-slider brz-slick-slider__section slick-initialized slick-slider slick-dotted slick-vertical" data-animation-speed="500" data-arrows="true" data-auto-play="false" data-auto-play-speed="3000" data-dots="true" data-dots-class="brz-slick-slider__dots brz-slick-slider__dots--circle" data-fade="false" data-responsive="%5B%7B%22breakpoint%22%3A767%2C%22settings%22%3A%7B%22slidesToShow%22%3A1%2C%22slidesToScroll%22%3A1%7D%7D%5D" data-slider-paused="false" data-slides-to-scroll="1" data-slides-to-show="1" data-swipe="true" data-vertical="true" id="brz-section-slider-0" role="region">
+<button aria-controls="brz-section-slider-0" aria-disabled="false" aria-label="Previous slide" class="brz-slick-slider__arrow brz-slick-slider__arrow-prev slick-arrow" tabindex="0" type="button">
+<svg class="brz-icon-svg">
+<use href="/static/editor/icons/editor/right-arrow-thin.svg#brz_icon">
+</use>
+</svg>
+</button>
+<div class="slick-list draggable" style="height: 400px;">
+<div class="slick-track" style="opacity: 1; height: 2800px; top: -800px;">
+<div aria-hidden="true" class="slick-slide slick-cloned" data-slick-index="-1" id="" style="width: 1000px;">
+<div class="brz-section__content brz-section--boxed brz-css-d-oh3bvl brz-css-5ca4rf" data-brz-custom-id="haqdykswt2ox">
+<div class="brz-container brz-css-d-x9rvyp brz-css-u4t4s8">
+</div>
+</div>
+</div>
+<div aria-hidden="true" aria-label="Slide 1 of 3" aria-roledescription="slide" class="slick-slide" data-slick-index="0" id="brz-section-slide-0-0" role="group" style="width: 1000px;">
+<div class="brz-section__content brz-section--boxed brz-css-d-oh3bvl brz-css-67mhqe" data-brz-custom-id="xw4c37g4ofxx">
+<div class="brz-container brz-css-d-x9rvyp brz-css-126lagi">
+</div>
+</div>
+</div>
+<div aria-hidden="false" aria-label="Slide 2 of 3" aria-roledescription="slide" class="slick-slide slick-current slick-active" data-slick-index="1" id="brz-section-slide-0-1" role="group" style="width: 1000px;">
+<div class="brz-section__content brz-section--boxed brz-css-d-oh3bvl brz-css-1bdqe26" data-brz-custom-id="nh3mjb7uhtxx">
+<div class="brz-container brz-css-d-x9rvyp brz-css-15a18tg">
+<div class="brz-css-d-1wonu5h brz-css-17xiopa brz-wrapper" id="">
+<div class="brz-counter brz-counter-simple brz-css-d-1l8wdnn brz-css-15fprsz" data-brz-custom-id="ax350n9y09qx" data-brz-duration="2" data-brz-end="100" data-brz-separator="," data-brz-start="0" data-brz-type="simple">
+<div aria-atomic="true" aria-live="polite" class="brz-counter-figures brz-css-d-1sbebwu brz-css-jm1bxm" role="status">
+<span class="brz-counter-numbers">0</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div aria-hidden="true" aria-label="Slide 3 of 3" aria-roledescription="slide" class="slick-slide" data-slick-index="2" id="brz-section-slide-0-2" role="group" style="width: 1000px;">
+<div class="brz-section__content brz-section--boxed brz-css-d-oh3bvl brz-css-5ca4rf" data-brz-custom-id="haqdykswt2ox">
+<div class="brz-container brz-css-d-x9rvyp brz-css-u4t4s8">
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide slick-cloned" data-slick-index="3" id="" style="width: 1000px;">
+<div class="brz-section__content brz-section--boxed brz-css-d-oh3bvl brz-css-67mhqe" data-brz-custom-id="xw4c37g4ofxx">
+<div class="brz-container brz-css-d-x9rvyp brz-css-126lagi">
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide slick-cloned" data-slick-index="4" id="" style="width: 1000px;">
+<div class="brz-section__content brz-section--boxed brz-css-d-oh3bvl brz-css-1bdqe26" data-brz-custom-id="nh3mjb7uhtxx">
+<div class="brz-container brz-css-d-x9rvyp brz-css-15a18tg">
+<div class="brz-css-d-1wonu5h brz-css-17xiopa brz-wrapper" id="">
+<div class="brz-counter brz-counter-simple brz-css-d-1l8wdnn brz-css-15fprsz" data-brz-custom-id="ax350n9y09qx" data-brz-duration="2" data-brz-end="100" data-brz-separator="," data-brz-start="0" data-brz-type="simple">
+<div aria-atomic="true" aria-live="polite" class="brz-counter-figures brz-css-d-1sbebwu brz-css-jm1bxm" role="status">
+<span class="brz-counter-numbers">0</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide slick-cloned" data-slick-index="5" id="" style="width: 1000px;">
+<div class="brz-section__content brz-section--boxed brz-css-d-oh3bvl brz-css-5ca4rf" data-brz-custom-id="haqdykswt2ox">
+<div class="brz-container brz-css-d-x9rvyp brz-css-u4t4s8">
+</div>
+</div>
+</div>
+</div>
+</div>
+<button aria-controls="brz-section-slider-0" aria-disabled="false" aria-label="Next slide" class="brz-slick-slider__arrow brz-slick-slider__arrow-next slick-arrow" tabindex="0" type="button">
+<svg class="brz-icon-svg">
+<use href="/static/editor/icons/editor/right-arrow-thin.svg#brz_icon">
+</use>
+</svg>
+</button>
+<ul aria-label="Slide navigation" class="brz-slick-slider__dots brz-slick-slider__dots--circle">
+<li class="">
+<button aria-controls="brz-section-slide-0-0" aria-label="Go to slide 1" type="button">1</button>
+</li>
+<li class="slick-active">
+<button aria-controls="brz-section-slide-0-1" aria-current="true" aria-label="Current slide, Go to slide 2" type="button">2</button>
+</li>
+<li>
+<button aria-controls="brz-section-slide-0-2" aria-label="Go to slide 3" type="button">3</button>
+</li>
+<li class="brz-slick-slider__pause">
+<button aria-controls="brz-section-slider-0" aria-label="Pause autoplay" aria-pressed="false" class="brz-slick-slider__pause-button" type="button">
+<svg class="brz-icon-svg button-pause">
+<use href="/static/editor/icons/glyph/button-circle-pause.svg#nc_icon">
+</use>
+</svg>
+<svg class="brz-icon-svg brz-hidden button-play">
+<use href="/static/editor/icons/glyph/button-circle-play.svg#nc_icon">
+</use>
+</svg>
+</button>
+</li>
+</ul>
+</div>"
+`;
+
+exports[`resizing keeps the slider laid out across the mobile breakpoint 1`] = `
+{
+  "events": [
+    {
+      "args": [
+        {
+          "node": "section",
+          "slick": "carousel-slide:0",
+        },
+      ],
+      "name": "elements.section.slide.change",
+    },
+    {
+      "args": [
+        {
+          "node": "section",
+          "slick": "carousel-slide:0",
+        },
+      ],
+      "name": "elements.section.slide.change",
+    },
+    {
+      "args": [
+        {
+          "node": "section",
+          "slick": "carousel-slide:0",
+        },
+      ],
+      "name": "elements.section.slide.change",
+    },
+    {
+      "args": [
+        {
+          "node": "section",
+          "slick": "carousel-slide:0",
+        },
+      ],
+      "name": "elements.section.slide.change",
+    },
+    {
+      "args": [
+        {
+          "node": "section",
+          "slick": "carousel-slide:0",
+        },
+      ],
+      "name": "elements.section.slide.change",
+    },
+    {
+      "args": [
+        {
+          "node": "section",
+          "slick": "carousel-slide:0",
+        },
+      ],
+      "name": "elements.section.slide.change",
+    },
+    {
+      "args": [
+        {
+          "node": "section",
+          "slick": "carousel-slide:1",
+        },
+      ],
+      "name": "elements.section.slide.change",
+    },
+    {
+      "args": [
+        {
+          "node": "section",
+          "slick": "carousel-slide:0",
+        },
+      ],
+      "name": "elements.section.slide.change",
+    },
+    {
+      "args": [
+        {
+          "node": "section",
+          "slick": "section-slide:0",
+        },
+      ],
+      "name": "elements.section.slide.change",
+    },
+    {
+      "args": [
+        {
+          "node": "section",
+          "slick": "section-slide:0",
+        },
+      ],
+      "name": "elements.section.slide.change",
+    },
+    {
+      "args": [
+        {
+          "node": "section",
+          "slick": "section-slide:0",
+        },
+      ],
+      "name": "elements.section.slide.change",
+    },
+    {
+      "args": [
+        {
+          "node": "section",
+          "slick": "section-slide:0",
+        },
+      ],
+      "name": "elements.section.slide.change",
+    },
+    {
+      "args": [
+        {
+          "node": "section",
+          "slick": "section-slide:0",
+        },
+      ],
+      "name": "elements.section.slide.change",
+    },
+    {
+      "args": [
+        {
+          "node": "section",
+          "slick": "section-slide:0",
+        },
+      ],
+      "name": "elements.section.slide.change",
+    },
+    {
+      "args": [
+        {
+          "node": "section",
+          "slick": "section-slide:0",
+        },
+      ],
+      "name": "elements.section.slide.change",
+    },
+    {
+      "args": [
+        {
+          "node": "section",
+          "slick": "section-slide:0",
+        },
+      ],
+      "name": "elements.section.slide.change",
+    },
+    {
+      "args": [
+        {
+          "node": "section",
+          "slick": "section-slide:0",
+        },
+      ],
+      "name": "elements.section.slide.change",
+    },
+    {
+      "args": [
+        {
+          "node": "section",
+          "slick": "section-slide:1",
+        },
+      ],
+      "name": "elements.section.slide.change",
+    },
+    {
+      "args": [
+        {
+          "node": "section",
+          "slick": "section-slide:2",
+        },
+      ],
+      "name": "elements.section.slide.change",
+    },
+    {
+      "args": [
+        {
+          "node": "section",
+          "slick": "section-slide:2",
+        },
+      ],
+      "name": "elements.section.slide.change",
+    },
+    {
+      "args": [
+        {
+          "node": "section",
+          "slick": "section-slide:1",
+        },
+      ],
+      "name": "elements.section.slide.change",
+    },
+    {
+      "args": [
+        {
+          "node": "section",
+          "slick": "section-slide:2",
+        },
+      ],
+      "name": "elements.section.slide.change",
+    },
+    {
+      "args": [
+        {
+          "node": "section",
+          "slick": "section-slide:1",
+        },
+      ],
+      "name": "elements.section.slide.change",
+    },
+    {
+      "args": [
+        {
+          "node": "section",
+          "slick": "section-slide:2",
+        },
+      ],
+      "name": "elements.section.slide.change",
+    },
+    {
+      "args": [
+        {
+          "node": "section",
+          "slick": "section-slide:0",
+        },
+      ],
+      "name": "elements.section.slide.change",
+    },
+    {
+      "args": [
+        {
+          "node": "section",
+          "slick": "section-slide:1",
+        },
+      ],
+      "name": "elements.section.slide.change",
+    },
+    {
+      "args": [
+        {
+          "node": "section",
+          "slick": "section-slide:1",
+        },
+      ],
+      "name": "elements.section.slide.change",
+    },
+    {
+      "args": [
+        {
+          "node": "section",
+          "slick": "section-slide:1",
+        },
+      ],
+      "name": "elements.section.slide.change",
+    },
+    {
+      "args": [
+        {
+          "node": "section",
+          "slick": "section-slide:1",
+        },
+      ],
+      "name": "elements.section.slide.change",
+    },
+    {
+      "args": [
+        {
+          "node": "section",
+          "slick": "section-slide:0",
+        },
+      ],
+      "name": "elements.section.slide.change",
+    },
+    {
+      "args": [
+        {
+          "node": "section",
+          "slick": "section-slide:0",
+        },
+      ],
+      "name": "elements.section.slide.change",
+    },
+    {
+      "args": [
+        {
+          "node": "section",
+          "slick": "section-slide:1",
+        },
+      ],
+      "name": "elements.section.slide.change",
+    },
+    {
+      "args": [
+        {
+          "node": "section",
+          "slick": "section-slide:0",
+        },
+      ],
+      "name": "elements.section.slide.change",
+    },
+    {
+      "args": [
+        {
+          "node": "section",
+          "slick": "section-slide:0",
+        },
+      ],
+      "name": "elements.section.slide.change",
+    },
+  ],
+  "track": "opacity: 1; width: 4900px; left: -700px;",
+}
+`;
+
+exports[`resizing keeps the slider laid out across the mobile breakpoint 2`] = `
+"<div aria-label="Section slider 1" aria-roledescription="carousel" class="brz-slick-slider brz-slick-slider__section slick-initialized slick-slider slick-dotted" data-animation-speed="500" data-arrows="true" data-auto-play="false" data-auto-play-speed="3000" data-dots="true" data-dots-class="brz-slick-slider__dots brz-slick-slider__dots--circle" data-fade="false" data-responsive="%5B%7B%22breakpoint%22%3A767%2C%22settings%22%3A%7B%22slidesToShow%22%3A1%2C%22slidesToScroll%22%3A1%7D%7D%5D" data-slider-paused="false" data-slides-to-scroll="1" data-slides-to-show="1" data-swipe="true" data-vertical="false" id="brz-section-slider-0" role="region">
+<button aria-disabled="false" aria-label="Previous slide" class="brz-slick-slider__arrow brz-slick-slider__arrow-prev slick-arrow" tabindex="0" type="button">
+<svg class="brz-icon-svg">
+<use href="/static/editor/icons/editor/right-arrow-thin.svg#brz_icon">
+</use>
+</svg>
+</button>
+<div class="slick-list draggable">
+<div class="slick-track" style="opacity: 1; width: 4900px; left: -700px;">
+<div aria-hidden="true" aria-label="Slide 3 of 3" aria-roledescription="slide" class="slick-slide slick-cloned" data-slick-index="-1" id="" role="group" style="width: 700px;">
+<div class="brz-section__content brz-section--boxed brz-css-d-oh3bvl brz-css-5ca4rf" data-brz-custom-id="haqdykswt2ox">
+<div class="brz-container brz-css-d-x9rvyp brz-css-u4t4s8">
+</div>
+</div>
+</div>
+<div aria-hidden="false" aria-label="Slide 1 of 3" aria-roledescription="slide" class="slick-slide slick-current slick-active" data-slick-index="0" id="brz-section-slide-0-0" role="group" style="width: 700px;">
+<div class="brz-section__content brz-section--boxed brz-css-d-oh3bvl brz-css-67mhqe" data-brz-custom-id="xw4c37g4ofxx">
+<div class="brz-container brz-css-d-x9rvyp brz-css-126lagi">
+</div>
+</div>
+</div>
+<div aria-hidden="true" aria-label="Slide 2 of 3" aria-roledescription="slide" class="slick-slide" data-slick-index="1" id="brz-section-slide-0-1" role="group" style="width: 700px;">
+<div class="brz-section__content brz-section--boxed brz-css-d-oh3bvl brz-css-1bdqe26" data-brz-custom-id="nh3mjb7uhtxx">
+<div class="brz-container brz-css-d-x9rvyp brz-css-15a18tg">
+<div class="brz-css-d-1wonu5h brz-css-17xiopa brz-wrapper" id="">
+<div class="brz-counter brz-counter-simple brz-css-d-1l8wdnn brz-css-15fprsz" data-brz-custom-id="ax350n9y09qx" data-brz-duration="2" data-brz-end="100" data-brz-separator="," data-brz-start="0" data-brz-type="simple">
+<div aria-atomic="true" aria-live="polite" class="brz-counter-figures brz-css-d-1sbebwu brz-css-jm1bxm" role="status">
+<span class="brz-counter-numbers">0</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div aria-hidden="true" aria-label="Slide 3 of 3" aria-roledescription="slide" class="slick-slide" data-slick-index="2" id="brz-section-slide-0-2" role="group" style="width: 700px;">
+<div class="brz-section__content brz-section--boxed brz-css-d-oh3bvl brz-css-5ca4rf" data-brz-custom-id="haqdykswt2ox">
+<div class="brz-container brz-css-d-x9rvyp brz-css-u4t4s8">
+</div>
+</div>
+</div>
+<div aria-hidden="true" aria-label="Slide 1 of 3" aria-roledescription="slide" class="slick-slide slick-cloned" data-slick-index="3" id="" role="group" style="width: 700px;">
+<div class="brz-section__content brz-section--boxed brz-css-d-oh3bvl brz-css-67mhqe" data-brz-custom-id="xw4c37g4ofxx">
+<div class="brz-container brz-css-d-x9rvyp brz-css-126lagi">
+</div>
+</div>
+</div>
+<div aria-hidden="true" aria-label="Slide 2 of 3" aria-roledescription="slide" class="slick-slide slick-cloned" data-slick-index="4" id="" role="group" style="width: 700px;">
+<div class="brz-section__content brz-section--boxed brz-css-d-oh3bvl brz-css-1bdqe26" data-brz-custom-id="nh3mjb7uhtxx">
+<div class="brz-container brz-css-d-x9rvyp brz-css-15a18tg">
+<div class="brz-css-d-1wonu5h brz-css-17xiopa brz-wrapper" id="">
+<div class="brz-counter brz-counter-simple brz-css-d-1l8wdnn brz-css-15fprsz" data-brz-custom-id="ax350n9y09qx" data-brz-duration="2" data-brz-end="100" data-brz-separator="," data-brz-start="0" data-brz-type="simple">
+<div aria-atomic="true" aria-live="polite" class="brz-counter-figures brz-css-d-1sbebwu brz-css-jm1bxm" role="status">
+<span class="brz-counter-numbers">0</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div aria-hidden="true" aria-label="Slide 3 of 3" aria-roledescription="slide" class="slick-slide slick-cloned" data-slick-index="5" id="" role="group" style="width: 700px;">
+<div class="brz-section__content brz-section--boxed brz-css-d-oh3bvl brz-css-5ca4rf" data-brz-custom-id="haqdykswt2ox">
+<div class="brz-container brz-css-d-x9rvyp brz-css-u4t4s8">
+</div>
+</div>
+</div>
+</div>
+</div>
+<button aria-disabled="false" aria-label="Next slide" class="brz-slick-slider__arrow brz-slick-slider__arrow-next slick-arrow" tabindex="0" type="button">
+<svg class="brz-icon-svg">
+<use href="/static/editor/icons/editor/right-arrow-thin.svg#brz_icon">
+</use>
+</svg>
+</button>
+<ul class="brz-slick-slider__dots brz-slick-slider__dots--circle">
+<li class="slick-active">
+<button aria-current="true" aria-label="Current slide, Go to slide 1" type="button">1</button>
+</li>
+<li>
+<button aria-label="Go to slide 2" type="button">2</button>
+</li>
+<li>
+<button aria-label="Go to slide 3" type="button">3</button>
+</li>
+</ul>
+</div>"
+`;

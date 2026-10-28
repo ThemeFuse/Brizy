@@ -1,16 +1,16 @@
-import { ComponentType, ElementType } from "react";
+import type { ComponentType, ElementType } from "react";
 import {
-  ConfigCommon,
-  LeftSidebarOption,
+  type ConfigCommon,
+  type LeftSidebarOption,
   LeftSidebarOptionsIds
 } from "visual/global/Config/types/configs/ConfigCommon";
 import {
-  EditorMode,
+  type EditorMode,
   isPopup,
   isStory
 } from "visual/providers/EditorModeProvider";
 import { getShortcodeComponents } from "visual/shortcodeComponents";
-import { DeviceMode, Shortcodes } from "visual/types";
+import type { DeviceMode, Shortcodes } from "visual/types";
 import { t } from "visual/utils/i18n";
 import { getBaseDrawer } from "../components/AddElements";
 import { getBlocksSortable } from "../components/BlocksSortable";
@@ -56,16 +56,24 @@ interface GetItemsProps {
   config: ConfigCommon;
   device: DeviceMode;
   editorMode: EditorMode;
+  hasOverlays: boolean;
 }
 
 const getItems = ({
   config,
   device,
-  editorMode
+  editorMode,
+  hasOverlays
 }: GetItemsProps): Record<LeftSidebarOptionsIds, OptionType> => {
   const { ui, urls } = config;
+  const _isPopup = isPopup(editorMode);
+  const _isStory = isStory(editorMode);
 
-  const pageSettingsOptions = getPageSettings(ui);
+  // Overlays render only on pages (GlobalBlocksOverlays is mounted by the Page
+  // editor), so popups and stories never offer "Show Widget".
+  const pageSettingsOptions = getPageSettings(ui, {
+    showOverlays: hasOverlays && !_isPopup && !_isStory
+  });
   const moreOptions = getMoreOptions(ui);
 
   const onClick = (): void => {
@@ -73,8 +81,6 @@ const getItems = ({
       window.open(`${urls.collaborationToolUrl}&device=${device}`, "_blank");
     }
   };
-  const _isPopup = isPopup(editorMode);
-  const _isStory = isStory(editorMode);
   const helpIcon = config?.ui?.help?.showIcon;
 
   return {
@@ -150,7 +156,8 @@ const getTabsOrder = (
 export const getOptions = (
   config: ConfigCommon,
   device: DeviceMode,
-  editorMode: EditorMode
+  editorMode: EditorMode,
+  hasOverlays: boolean
 ): Options => {
   const { leftSidebar = {} } = config.ui ?? {};
   const { topTabsOrder = [], bottomTabsOrder = [] } = leftSidebar;
@@ -158,7 +165,8 @@ export const getOptions = (
   const options = getItems({
     config,
     device,
-    editorMode
+    editorMode,
+    hasOverlays
   });
 
   const top = getTabsOrder(topTabsOrder, options, config);

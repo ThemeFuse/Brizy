@@ -1,6 +1,6 @@
-import { DynamicStylesProps } from "visual/types";
+import type { DynamicStylesProps } from "visual/types";
 import { renderStyles } from "visual/utils/cssStyle";
-import { Value } from "./type";
+import type { Value } from "./type";
 
 export function style(data: DynamicStylesProps<Value>) {
   const styles = {

@@ -1,6 +1,6 @@
 import { debounce } from "es-toolkit";
 import React, {
-  ReactElement,
+  type ReactElement,
   useCallback,
   useEffect,
   useMemo,
@@ -12,10 +12,14 @@ import { Status } from "visual/component/Controls/InternalLink/types";
 import { ToastNotification } from "visual/component/Notifications";
 import { useConfig } from "visual/providers/ConfigProvider";
 import { read } from "visual/utils/reader/string";
-import { Literal } from "visual/utils/types/Literal";
-import { ActionTypes, State, reducer } from "./reducer";
-import type { ChoiceWithPermalink, DebouncedSearch, Props } from "./types";
-import { ChoicesSync } from "./types";
+import type { Literal } from "visual/utils/types/Literal";
+import { ActionTypes, reducer, type State } from "./reducer";
+import type {
+  ChoicesSync,
+  ChoiceWithPermalink,
+  DebouncedSearch,
+  Props
+} from "./types";
 import { getCollectionChoices, isValidValue, normalizeItems } from "./utils";
 
 export const InternalLink = ({
@@ -48,25 +52,19 @@ export const InternalLink = ({
     postType: source
   });
 
-  const dispatchLoading = useCallback(
-    (loading: boolean) => {
-      dispatch({
-        type: ActionTypes.SET_LOADING,
-        payload: loading
-      });
-    },
-    [dispatch]
-  );
+  const dispatchLoading = useCallback((loading: boolean) => {
+    dispatch({
+      type: ActionTypes.SET_LOADING,
+      payload: loading
+    });
+  }, []);
 
-  const dispatchMultiple = useCallback(
-    (payload: Partial<State>) => {
-      dispatch({
-        type: ActionTypes.SET_MULTIPLE,
-        payload
-      });
-    },
-    [dispatch]
-  );
+  const dispatchMultiple = useCallback((payload: Partial<State>) => {
+    dispatch({
+      type: ActionTypes.SET_MULTIPLE,
+      payload
+    });
+  }, []);
 
   const { items, status, loading, postType } = state;
 
@@ -86,18 +84,15 @@ export const InternalLink = ({
       payload: []
     });
     _onChange({ title: "", value: "", source: postType });
-  }, [_onChange, postType, dispatch]);
+  }, [_onChange, postType]);
 
-  const onChangePostType = useCallback(
-    ({ value }: { value: Literal }) => {
-      const _value = read(value) ?? "";
-      dispatch({
-        type: ActionTypes.SET_POST_TYPE,
-        payload: _value
-      });
-    },
-    [dispatch]
-  );
+  const onChangePostType = useCallback(({ value }: { value: Literal }) => {
+    const _value = read(value) ?? "";
+    dispatch({
+      type: ActionTypes.SET_POST_TYPE,
+      payload: _value
+    });
+  }, []);
 
   useEffect(() => {
     if (lastPostType.current !== postType) {

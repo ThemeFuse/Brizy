@@ -1,6 +1,6 @@
-import * as Option from "visual/component/Options/Type";
-import { Attributes } from "react";
-import { WithClassName } from "visual/types/attributes";
+import type { Attributes } from "react";
+import type * as Option from "visual/component/Options/Type";
+import type { WithClassName } from "visual/types/attributes";
 
 export interface Attr extends Attributes {
   className: string;

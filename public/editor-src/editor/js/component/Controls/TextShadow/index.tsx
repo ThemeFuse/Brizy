@@ -1,23 +1,23 @@
 import classNames from "classnames";
-import React, { ReactElement, useCallback, useMemo } from "react";
+import React, { type ReactElement, useCallback, useMemo } from "react";
 import {
-  Props as CProps,
-  ColorPickerSelect
+  ColorPickerSelect,
+  type Props as CProps
 } from "visual/component/Controls/ColorPickerSelect";
 import {
   ColorPickerInputs,
-  Props as ColorPickerInputsProps
+  type Props as ColorPickerInputsProps
 } from "visual/component/Controls/ColorPicketInputs";
 import MultiInputOptionType from "visual/component/Controls/MultiInput";
 import { Item } from "visual/component/Controls/Select2/Item";
-import {
+import type {
   WithClassName,
   WithOnChange2,
   WithValue
 } from "visual/types/attributes";
-import { Hex } from "visual/utils/color/Hex";
-import { PaletteObject } from "../ColorPalette/entities/PaletteObject";
-import { Meta, Value } from "./types";
+import type { Hex } from "visual/utils/color/Hex";
+import type { PaletteObject } from "../ColorPalette/entities/PaletteObject";
+import type { Meta, Value } from "./types";
 import { getModifiedField } from "./utils";
 
 export interface Props<P, O>

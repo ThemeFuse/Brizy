@@ -1,6 +1,6 @@
 import { pipe } from "./pipe";
 
-test("Testing 'pipe' function", function() {
+test("Testing 'pipe' function", function () {
   const increment = (n: number) => n + 1;
   const double = (n: number) => n * 2;
   const repeatThree = (s: string) => s.repeat(3);

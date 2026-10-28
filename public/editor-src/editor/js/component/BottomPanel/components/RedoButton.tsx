@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import EditorIcon from "visual/component/EditorIcon";
 import HotKeys from "visual/component/HotKeys";
 import { redo } from "visual/redux/actions2";
-import { ReduxState } from "visual/redux/types";
+import type { ReduxState } from "visual/redux/types";
 import { t } from "visual/utils/i18n";
 import { BottomPanelItem } from "./Item";
 

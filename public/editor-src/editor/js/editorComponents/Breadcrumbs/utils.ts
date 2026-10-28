@@ -1,6 +1,6 @@
 import { Obj, Str } from "@brizy/readers";
 import { parseStrict } from "fp-utilities";
-import { Breadcrumb } from "visual/editorComponents/Breadcrumbs/types";
+import type { Breadcrumb } from "visual/editorComponents/Breadcrumbs/types";
 import { mPipe, pipe } from "visual/utils/fp";
 import { readWithItemReader } from "visual/utils/reader/array";
 import { onNullish, throwOnNullish } from "visual/utils/value";

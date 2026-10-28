@@ -1,23 +1,25 @@
 import { differenceWith, isEqual } from "es-toolkit";
-import React, { Component, ReactElement } from "react";
-import { ConnectedProps, connect } from "react-redux";
+import React, { Component, type ReactElement } from "react";
+import { type ConnectedProps, connect } from "react-redux";
 import { ConfigContext } from "visual/providers/ConfigProvider/context";
 import {
   blocksHtmlSelector,
   globalPopupsInPageSelector,
+  overlayGlobalBlocksAssembledSelector,
   pageBlocksDataSelector,
   pageDataDraftBlocksSelector,
   symbolsSelector
 } from "visual/redux/selectors";
-import { ReduxState } from "visual/redux/types";
-import { Block } from "visual/types/Block";
+import type { ReduxState } from "visual/redux/types";
+import type { Block } from "visual/types/Block";
 import { FlushDom } from "./FlushDom";
-import { ContextType, OwnProps, StateProps } from "./types";
+import type { ContextType, OwnProps, StateProps } from "./types";
 
 const mapState = (state: ReduxState): StateProps => ({
   page: pageDataDraftBlocksSelector(state),
   getBlockData: (c) => pageBlocksDataSelector(state, c),
   getGlobalPopups: (c) => globalPopupsInPageSelector(state, c),
+  getOverlays: () => overlayGlobalBlocksAssembledSelector(state),
   blocksHTML: blocksHtmlSelector(state).blocks,
   symbols: symbolsSelector(state).classes
 });
@@ -43,9 +45,10 @@ class _RuntimeCompiler extends Component<
       return;
     }
 
-    const { getBlockData, getGlobalPopups, blocksHTML } = props;
+    const { getBlockData, getGlobalPopups, getOverlays, blocksHTML } = props;
     const blockData = getBlockData(config);
     const popups = getGlobalPopups(config).map((f) => f.data);
+    const overlays = getOverlays().map((f) => f.data);
 
     blockData.forEach((block) => {
       const id = block.value._id;
@@ -62,6 +65,14 @@ class _RuntimeCompiler extends Component<
         this.changedBlocks.push(popup);
       }
     });
+
+    overlays.forEach((overlay) => {
+      const id = overlay.value._id;
+
+      if (!blocksHTML[id]) {
+        this.changedBlocks.push(overlay);
+      }
+    });
   }
 
   shouldComponentUpdate(nextProps: Props): boolean {
@@ -71,7 +82,7 @@ class _RuntimeCompiler extends Component<
       return false;
     }
 
-    const { getBlockData, getGlobalPopups } = this.props;
+    const { getBlockData, getGlobalPopups, getOverlays } = this.props;
 
     const blocks = differenceWith(
       nextProps.getBlockData(config),
@@ -83,8 +94,13 @@ class _RuntimeCompiler extends Component<
       getGlobalPopups(config).map((f) => f.data),
       isEqual
     );
+    const overlays = differenceWith(
+      nextProps.getOverlays().map((f) => f.data),
+      getOverlays().map((f) => f.data),
+      isEqual
+    );
 
-    this.changedBlocks = [...blocks, ...popups];
+    this.changedBlocks = [...blocks, ...popups, ...overlays];
 
     if (this.changedBlocks.length > 0) {
       return true;

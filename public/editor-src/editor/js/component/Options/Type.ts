@@ -1,14 +1,14 @@
-import { ReactNode } from "react";
-import { ElementModel } from "visual/component/Elements/Types";
-import {
+import type { ReactNode } from "react";
+import type { ElementModel } from "visual/component/Elements/Types";
+import type {
   OptionMeta,
   OptionName,
   OptionPatch,
   OptionValue
 } from "visual/component/Options/types";
-import { ToolbarItemsInstance } from "visual/component/Toolbar/ToolbarItems";
-import { Literal } from "visual/utils/types/Literal";
-import { MValue } from "visual/utils/value";
+import type { ToolbarItemsInstance } from "visual/component/Toolbar/ToolbarItems";
+import type { Literal } from "visual/utils/types/Literal";
+import type { MValue } from "visual/utils/value";
 
 export interface GlobalMeta {
   isChanging: boolean;
@@ -18,7 +18,8 @@ export type OnChange<T, M = GlobalMeta> = (v: T, m?: M) => void;
 
 export type SimpleValue<T> = { value: T };
 
-export type FromElementModelGetterValue = MValue<Literal | boolean>;
+// `unknown[]` for the options whose model value is a list (addable)
+export type FromElementModelGetterValue = MValue<Literal | boolean | unknown[]>;
 
 export type FromElementModelGetter = (
   k: string,

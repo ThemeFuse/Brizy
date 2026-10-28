@@ -1,4 +1,4 @@
-import {
+import type {
   Settings as MotionSettings,
   Mouse3DFit,
   MouseSettings,
@@ -142,12 +142,11 @@ const parseDecodeData = <T>(data?: string): T | undefined => {
   }
 };
 
-export default function ($node: JQuery): void {
+export default function (root: HTMLElement): void {
   const { Motions } = getFreeLibs();
   const { ImagesLoaded } = getProLibs();
 
-  const root = $node.get(0);
-  if (!Motions || !root) {
+  if (!Motions) {
     return;
   }
 

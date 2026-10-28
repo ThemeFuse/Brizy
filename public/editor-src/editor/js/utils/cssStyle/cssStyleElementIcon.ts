@@ -7,7 +7,7 @@ import {
 import { isStory } from "visual/utils/models";
 import { defaultValueValue } from "visual/utils/onChange";
 import { checkValue } from "../checkValue";
-import { CSSValue } from "../style2/types";
+import type { CSSValue } from "../style2/types";
 
 type FillType = "filled" | "outline" | "default";
 

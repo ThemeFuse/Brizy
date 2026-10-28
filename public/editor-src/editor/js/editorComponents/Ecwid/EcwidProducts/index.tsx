@@ -1,6 +1,6 @@
 import classNames from "classnames";
 import { uniqueId } from "es-toolkit/compat";
-import React, { ReactNode, createRef } from "react";
+import React, { createRef, type ReactNode } from "react";
 import CustomCSS from "visual/component/CustomCSS";
 import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
@@ -32,7 +32,7 @@ import * as toolbarShopTitle from "./toolbarShopTitle";
 import * as toolbarSortingOption from "./toolbarSortingOption";
 import * as toolbarSubtitle from "./toolbarSubtitle";
 import * as toolbarTitle from "./toolbarTitle";
-import { Value } from "./types/Value";
+import type { Value } from "./types/Value";
 import { valueToEciwdConfigProducts } from "./utils";
 
 export class EcwidProducts extends EditorComponent<Value> {
@@ -221,16 +221,17 @@ export class EcwidProducts extends EditorComponent<Value> {
                                                                 toolbarPagination,
                                                                 sidebarPagination,
                                                                 {
-                                                                  allowExtend:
-                                                                    false
+                                                                  allowExtend: false
                                                                 }
                                                               )}
                                                               selector=".pager__body.pager__body--has-next"
                                                               selectorSearchStrategy="dom-tree"
                                                             >
                                                               {({
-                                                                open: openPagination,
-                                                                ref: paginationRef
+                                                                open:
+                                                                  openPagination,
+                                                                ref:
+                                                                  paginationRef
                                                               }) => {
                                                                 return (
                                                                   <Toolbar
@@ -242,8 +243,10 @@ export class EcwidProducts extends EditorComponent<Value> {
                                                                     selectorSearchStrategy="dom-tree"
                                                                   >
                                                                     {({
-                                                                      open: openFooter,
-                                                                      ref: footerRef
+                                                                      open:
+                                                                        openFooter,
+                                                                      ref:
+                                                                        footerRef
                                                                     }) => {
                                                                       return (
                                                                         <CustomCSS
@@ -253,7 +256,8 @@ export class EcwidProducts extends EditorComponent<Value> {
                                                                           }
                                                                         >
                                                                           {({
-                                                                            ref: cssRef
+                                                                            ref:
+                                                                              cssRef
                                                                           }) => (
                                                                             <Wrapper
                                                                               {...this.makeWrapperProps(

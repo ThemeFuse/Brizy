@@ -1,21 +1,20 @@
 import classnames from "classnames";
 import React, {
-  CSSProperties,
   Component,
-  ReactElement,
-  ReactNode,
-  RefObject
+  type CSSProperties,
+  type ReactElement,
+  type ReactNode,
+  type RefObject
 } from "react";
 import ResizeAware from "react-resize-aware";
 import UIEvents, { UIEventType } from "visual/global/UIEvents";
-import { RenderType, isEditor } from "visual/providers/RenderProvider";
+import { isEditor, type RenderType } from "visual/providers/RenderProvider";
 import { fromRecord as readImageItem } from "visual/utils/options/Gallery/utils";
 import { read as readJson } from "visual/utils/reader/json";
 import { isT } from "visual/utils/value";
-import type { Transition } from "./type";
-import { KenEffect } from "./type";
+import type { KenEffect, Transition } from "./type";
 import Image from "./types/Image";
-import Map from "./types/Map";
+import MapBackground from "./types/Map";
 import Shape from "./types/Shape";
 import Slideshow from "./types/Slideshow";
 import Video from "./types/Video";
@@ -171,7 +170,7 @@ class Background extends Component<Props> {
             )}
             {map && (
               <div className="brz-bg-map">
-                {map && <Map map={map} mapZoom={mapZoom} />}
+                {map && <MapBackground map={map} mapZoom={mapZoom} />}
               </div>
             )}
             {opacity && <div className="brz-bg-color" />}

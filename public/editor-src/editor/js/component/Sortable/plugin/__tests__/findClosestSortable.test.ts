@@ -1,4 +1,4 @@
-import { SortableBox, findClosestSortable } from "../findClosestSortable";
+import { findClosestSortable, SortableBox } from "../findClosestSortable";
 import { Point } from "../types";
 
 const findClosestSortableTest = findClosestSortable({
@@ -41,7 +41,7 @@ describe("testing 'findClosestSortable'", () => {
     [{ x: 0, y: 0 }],
     [{ x: 100, y: 100 }],
     [{ x: 15, y: 17 }]
-  ])("0 boxes", point => {
+  ])("0 boxes", (point) => {
     expect(findClosestSortableTest([], point)).toBe(undefined);
   });
 

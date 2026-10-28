@@ -1,9 +1,9 @@
 import classNames from "classnames";
-import React, { ReactNode } from "react";
+import React, { type ReactNode } from "react";
 import { Alert } from "visual/component/Alert";
 import { Spacer } from "visual/component/Controls/Spacer";
 import { Scrollbar } from "visual/component/Scrollbar";
-import { FCC } from "visual/utils/react/types";
+import type { FCC } from "visual/utils/react/types";
 import { Loading } from "./Loading";
 
 export interface Props {
@@ -46,14 +46,12 @@ export const Content: FCC<Props> = (props) => {
   return (
     <div className={className}>
       {head && (
-        <>
-          <div className="brz-ed-popup-content__head">
-            <p className="brz-p">
-              <strong className="brz-strong">{head}</strong>
-            </p>
-            <Spacer space="19px" />
-          </div>
-        </>
+        <div className="brz-ed-popup-content__head">
+          <p className="brz-p">
+            <strong className="brz-strong">{head}</strong>
+          </p>
+          <Spacer space="19px" />
+        </div>
       )}
 
       {error && <Alert message={error} type="error" />}

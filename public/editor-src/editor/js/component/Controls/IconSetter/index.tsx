@@ -1,9 +1,9 @@
 import classnames from "classnames";
-import React, { ReactElement, ReactNode } from "react";
+import React, { type ReactElement, type ReactNode } from "react";
 import EditorIcon from "visual/component/EditorIcon";
 import Prompts from "visual/component/Prompts";
 import { ThemeIcon } from "visual/component/ThemeIcon";
-import { WithClassName } from "visual/types/attributes";
+import type { WithClassName } from "visual/types/attributes";
 
 export interface Value {
   name: string;
@@ -43,7 +43,10 @@ export class IconSetter extends React.Component<Props> {
 
   renderSelectIcon = (): ReactElement => {
     return (
-      <div className="brz-ed-control__icon-setter__box" onClick={this.handleClick}>
+      <div
+        className="brz-ed-control__icon-setter__box"
+        onClick={this.handleClick}
+      >
         <EditorIcon icon="nc-add" />
       </div>
     );
@@ -63,7 +66,11 @@ export class IconSetter extends React.Component<Props> {
 
   renderIcon = ({ name, type, filename }: Value): ReactNode => {
     return [
-      <div key="first" className="brz-ed-control__icon-setter__box" onClick={this.handleClick}>
+      <div
+        key="first"
+        className="brz-ed-control__icon-setter__box"
+        onClick={this.handleClick}
+      >
         <div className="brz-ed-control__icon-setter--active">
           <ThemeIcon
             className="grid-16 stroke-2"

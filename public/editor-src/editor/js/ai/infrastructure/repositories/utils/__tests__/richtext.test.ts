@@ -1,6 +1,9 @@
+import { FontFamilyType } from "visual/types/Fonts";
+import type { FontStyle } from "visual/types/Style";
 import {
   applyRichTextUpdates,
   applyTypographyStyles,
+  containsFindText,
   findAndReplaceInHtml,
   replaceAllTextInHtml,
   updateRichTextColor
@@ -90,6 +93,39 @@ describe("RichText Utilities", () => {
         expect(result).toBe(expected);
       }
     );
+  });
+
+  describe("containsFindText", () => {
+    // Each row must agree with findAndReplaceInHtml: true exactly when the
+    // replacement would change the HTML.
+    it.each([
+      { case: "text in a paragraph", html: "<p>The cat sat</p>", out: true },
+      {
+        case: "text inside a nested span",
+        html: "<p class='brz-tp-paragraph'><span class='brz-cp-color7'>The cat sat</span></p>",
+        out: true
+      },
+      { case: "plain text without a block", html: "The cat sat", out: true },
+      { case: "absent text", html: "<p>The dog sat</p>", out: false },
+      {
+        case: "a different letter case",
+        html: "<p>The Cat sat</p>",
+        out: false
+      },
+      {
+        case: "text split across two nodes",
+        html: "<p><span>ca</span>t</p>",
+        out: false
+      },
+      {
+        case: "text only in an attribute",
+        html: '<p title="cat">dog</p>',
+        out: false
+      },
+      { case: "an empty element", html: "", out: false }
+    ])("is $out for $case", ({ html, out }) => {
+      expect(containsFindText(html, "cat")).toBe(out);
+    });
   });
 
   describe("updateRichTextColor", () => {
@@ -236,13 +272,22 @@ describe("RichText Utilities", () => {
         params: { findText: "$50.00", replaceWith: "$75.00" },
         shouldContain: ["$75.00"],
         shouldNotContain: ["$50.00"]
+      },
+      {
+        // Empty means "omitted", so it takes the replace-all path rather than
+        // compiling to //g, which matches at every position.
+        name: "treat an empty findText as omitted instead of shredding the text",
+        html: "<p>The cat sat on the mat</p>",
+        params: { findText: "", replaceWith: "Hi" },
+        shouldContain: ["Hi"],
+        shouldNotContain: ["HiT", "cat"]
       }
     ];
 
     it.each(testCases)(
       "should $name",
       ({ html, params, shouldContain, shouldNotContain }) => {
-        const result = applyRichTextUpdates(html, params);
+        const result = applyRichTextUpdates(html, params, []);
 
         shouldContain.forEach((str) => {
           expect(result).toContain(str);
@@ -256,26 +301,29 @@ describe("RichText Utilities", () => {
 
     it("should use provided colorOpacity", () => {
       const html = "<p><span>Text</span></p>";
-      const result = applyRichTextUpdates(html, {
-        colorHex: "#FF0000",
-        colorOpacity: 0.8
-      });
+      const result = applyRichTextUpdates(
+        html,
+        { colorHex: "#FF0000", colorOpacity: 0.8 },
+        []
+      );
       expect(result).toMatch(/rgba\(.*,\s*0\.8\)/);
     });
 
     it("should return unchanged html when no params provided", () => {
       const html =
         "<p class='brz-tp-paragraph'><span class='brz-cp-color7'>Text</span></p>";
-      const result = applyRichTextUpdates(html, {});
+      const result = applyRichTextUpdates(html, {}, []);
       expect(result).toBe(html);
     });
 
     it("should replace ALL text when only replaceWith is provided", () => {
       const html =
         "<p class='brz-tp-paragraph'><span class='brz-cp-color7'>Old content here</span></p>";
-      const result = applyRichTextUpdates(html, {
-        replaceWith: "Completely new text"
-      });
+      const result = applyRichTextUpdates(
+        html,
+        { replaceWith: "Completely new text" },
+        []
+      );
       expect(result).toContain("Completely new text");
       expect(result).toContain("brz-tp-paragraph");
       expect(result).toContain("brz-cp-color7"); // span preserved (simple structure)
@@ -284,7 +332,7 @@ describe("RichText Utilities", () => {
 
     it("should ignore findText without replaceWith", () => {
       const html = "<p>Original text</p>";
-      const result = applyRichTextUpdates(html, { findText: "Original" });
+      const result = applyRichTextUpdates(html, { findText: "Original" }, []);
       expect(result).toBe(html);
     });
   });
@@ -444,7 +492,12 @@ describe("RichText Utilities", () => {
         name: "preserve non-typography classes while adding new ones",
         html: '<p class="brz-bcp-color7 custom-class">Text</p>',
         params: { fontSize: 16 },
-        shouldContain: ["brz-bcp-color7", "custom-class", "brz-fs-lg-16", "Text"]
+        shouldContain: [
+          "brz-bcp-color7",
+          "custom-class",
+          "brz-fs-lg-16",
+          "Text"
+        ]
       },
       {
         name: "replace existing typography class with new value",
@@ -586,7 +639,7 @@ describe("RichText Utilities", () => {
         html: '<p class="brz-tp-lg-heading1">Title</p>',
         params: { fontStyle: "" as const },
         shouldContain: ["brz-tp-lg-empty"],
-        shouldNotContain: ["brz-tp-lg-heading1", "brz-tp-lg-\"\""]
+        shouldNotContain: ["brz-tp-lg-heading1", 'brz-tp-lg-""']
       },
       {
         name: "clear fontStyle with empty string clears all responsive presets",
@@ -632,7 +685,7 @@ describe("RichText Utilities", () => {
     it.each(testCases)(
       "should $name",
       ({ html, params, shouldContain, shouldNotContain }) => {
-        const result = applyTypographyStyles(html, params);
+        const result = applyTypographyStyles(html, params, []);
 
         shouldContain.forEach((str) => {
           expect(result).toContain(str);
@@ -888,7 +941,7 @@ describe("RichText Utilities", () => {
     it.each(testCases)(
       "should $name",
       ({ html, params, shouldContain, shouldNotContain }) => {
-        const result = applyRichTextUpdates(html, params);
+        const result = applyRichTextUpdates(html, params, []);
 
         shouldContain.forEach((str) => {
           expect(result).toContain(str);
@@ -901,5 +954,270 @@ describe("RichText Utilities", () => {
         }
       }
     );
+  });
+});
+
+describe("applyTypographyStyles — detaching from a global preset", () => {
+  // Changing a typography property detaches the element from the global preset,
+  // so the preset's own values must be carried over as explicit classes — what
+  // the editor's typography option does via Patch.fullFont.
+  const fontStyles = [
+    {
+      id: "heading1",
+      fontSize: 32,
+      fontWeight: 700,
+      lineHeight: 2.4,
+      letterSpacing: -1
+    },
+    {
+      id: "paragraph",
+      fontSize: 16,
+      fontWeight: 400,
+      lineHeight: 1.6,
+      letterSpacing: 0
+    }
+  ] as FontStyle[];
+
+  it.each([
+    {
+      case: "heading1",
+      html: '<h1 class="brz-tp-lg-heading1">Title</h1>',
+      expected: ["brz-fs-lg-32", "brz-fw-lg-700", "brz-lh-lg-2_4"]
+    },
+    {
+      case: "paragraph",
+      html: '<p class="brz-tp-lg-paragraph">Body</p>',
+      expected: ["brz-fs-lg-16", "brz-fw-lg-400", "brz-lh-lg-1_6"]
+    }
+  ])(
+    "carries $case's own values over when only fontFamily changes",
+    ({ html, expected }) => {
+      const result = applyTypographyStyles(
+        html,
+        { fontFamily: "roboto", fontFamilyType: "google" },
+        fontStyles
+      );
+
+      expect(result).toContain("brz-tp-lg-empty");
+      expect(result).toContain("brz-ff-roboto");
+      expected.forEach((cls) => expect(result).toContain(cls));
+    }
+  );
+
+  // brz-tp-paragraph (no -lg-) is the legacy spelling, cleared the same way.
+  it.each([
+    {
+      case: "responsive",
+      html: '<h1 class="brz-tp-lg-heading1">Title</h1>',
+      preset: "heading1",
+      expected: ["brz-fs-lg-32", "brz-fw-lg-700", "brz-lh-lg-2_4"]
+    },
+    {
+      case: "legacy",
+      html: '<p class="brz-tp-paragraph"><span class="brz-cp-color7">The point of using dummy text.</span></p>',
+      preset: "paragraph",
+      expected: ["brz-fs-lg-16", "brz-fw-lg-400", "brz-lh-lg-1_6"]
+    },
+    {
+      case: "legacy heading",
+      html: '<h1 class="brz-tp-heading1">Title</h1>',
+      preset: "heading1",
+      expected: ["brz-fs-lg-32", "brz-fw-lg-700", "brz-lh-lg-2_4"]
+    }
+  ])("carries the preset over from a $case class", ({ html, expected }) => {
+    const result = applyTypographyStyles(
+      html,
+      { fontFamily: "roboto", fontFamilyType: "google" },
+      fontStyles
+    );
+
+    expected.forEach((cls) => expect(result).toContain(cls));
+  });
+
+  it("does not overwrite a value the caller sent explicitly", () => {
+    const result = applyTypographyStyles(
+      '<h1 class="brz-tp-lg-heading1">Title</h1>',
+      { fontFamily: "roboto", fontSize: 48 },
+      fontStyles
+    );
+
+    expect(result).toContain("brz-fs-lg-48");
+    expect(result).not.toContain("brz-fs-lg-32");
+    // the untouched properties still come from the preset
+    expect(result).toContain("brz-lh-lg-2_4");
+  });
+
+  // Any custom typography value detaches, not only fontFamily: withTextDefaults
+  // injects fontStyle:"" whenever one is present.
+  it.each([
+    {
+      case: "fontSize only",
+      params: { fontSize: 40 },
+      expected: ["brz-fs-lg-40", "brz-fw-lg-700", "brz-lh-lg-2_4"]
+    },
+    {
+      case: "fontWeight only",
+      params: { fontWeight: 300 },
+      expected: ["brz-fs-lg-32", "brz-fw-lg-300", "brz-lh-lg-2_4"]
+    },
+    {
+      case: "lineHeight only",
+      params: { lineHeight: 1.1 },
+      expected: ["brz-fs-lg-32", "brz-fw-lg-700", "brz-lh-lg-1_1"]
+    },
+    {
+      case: "an explicit fontStyle clear",
+      params: { fontStyle: "" as const },
+      expected: ["brz-fs-lg-32", "brz-fw-lg-700", "brz-lh-lg-2_4"]
+    }
+  ])("carries the rest of heading1 over on $case", ({ params, expected }) => {
+    const result = applyTypographyStyles(
+      '<h1 class="brz-tp-lg-heading1">Title</h1>',
+      params,
+      fontStyles
+    );
+
+    expected.forEach((cls) => expect(result).toContain(cls));
+  });
+
+  it("does not carry anything over when swapping to another preset", () => {
+    const result = applyTypographyStyles(
+      '<h1 class="brz-tp-lg-heading1">Title</h1>',
+      { fontStyle: "heading2" as const },
+      fontStyles
+    );
+
+    expect(result).toContain("brz-tp-lg-heading2");
+    expect(result).not.toContain("brz-fs-lg-");
+    expect(result).not.toContain("brz-lh-lg-");
+  });
+
+  it("falls back to the body constants when the preset cannot be resolved", () => {
+    const result = applyTypographyStyles(
+      '<h1 class="brz-tp-lg-heading1">Title</h1>',
+      { fontFamily: "roboto" },
+      []
+    );
+
+    expect(result).toContain("brz-fs-lg-16");
+    expect(result).toContain("brz-fw-lg-400");
+  });
+});
+
+describe("applyRichTextUpdates — tablet and mobile typography", () => {
+  // A text block keeps a device's typography as its own classes (-sm- for
+  // tablet, -xs- for mobile) and follows desktop where it has none. Setting a
+  // device size detaches that device alone from the preset, so the preset's
+  // other values for that device are carried over, as on desktop.
+  const heading1: FontStyle = {
+    id: "heading1",
+    title: "Heading 1",
+    deletable: "off",
+    fontFamily: "lato",
+    fontFamilyType: FontFamilyType.google,
+    bold: false,
+    italic: false,
+    underline: false,
+    strike: false,
+    uppercase: false,
+    lowercase: false,
+    fontSize: 46,
+    fontWeight: 700,
+    lineHeight: 1.3,
+    letterSpacing: -1.5,
+    tabletFontSize: 38,
+    tabletFontWeight: 600,
+    tabletLineHeight: 1.2,
+    tabletLetterSpacing: -1,
+    mobileFontSize: 30,
+    mobileFontWeight: 500,
+    mobileLineHeight: 1.1,
+    mobileLetterSpacing: -0.5
+  };
+
+  const classesOf = (html: string): string[] =>
+    (html.match(/class="([^"]*)"/)?.[1] ?? "").split(" ").sort();
+
+  it.each([
+    {
+      case: "a tablet size on a preset heading, carrying the preset's tablet values",
+      html: '<h1 class="brz-tp-lg-heading1">Title</h1>',
+      params: { tabletFontSize: 28 },
+      out: [
+        "brz-tp-lg-heading1",
+        "brz-tp-sm-empty",
+        "brz-fs-sm-28",
+        "brz-fw-sm-600",
+        "brz-lh-sm-1_2",
+        "brz-ls-sm-m_1"
+      ]
+    },
+    {
+      case: "a mobile weight and line height together",
+      html: '<h1 class="brz-tp-lg-heading1">Title</h1>',
+      params: { mobileFontWeight: 400, mobileLineHeight: 1.5 },
+      out: [
+        "brz-tp-lg-heading1",
+        "brz-tp-xs-empty",
+        "brz-fs-xs-30",
+        "brz-fw-xs-400",
+        "brz-lh-xs-1_5",
+        "brz-ls-xs-m_0_5"
+      ]
+    },
+    {
+      case: "a legacy preset, respelled so one device can leave it",
+      html: '<h1 class="brz-tp-heading1">Title</h1>',
+      params: { tabletFontSize: 28 },
+      out: [
+        "brz-tp-lg-heading1",
+        "brz-tp-sm-empty",
+        "brz-fs-sm-28",
+        "brz-fw-sm-600",
+        "brz-lh-sm-1_2",
+        "brz-ls-sm-m_1"
+      ]
+    },
+    {
+      case: "a device that already left its preset, keeping what it has",
+      html: '<h1 class="brz-tp-lg-heading1 brz-tp-sm-empty brz-fw-sm-300">Title</h1>',
+      params: { tabletFontSize: 28 },
+      out: [
+        "brz-tp-lg-heading1",
+        "brz-tp-sm-empty",
+        "brz-fw-sm-300",
+        "brz-fs-sm-28"
+      ]
+    },
+    {
+      case: "custom desktop type, where there is no preset to carry from",
+      html: '<p class="brz-tp-lg-empty brz-fs-lg-20">Body</p>',
+      params: { mobileFontSize: 15 },
+      out: [
+        "brz-tp-lg-empty",
+        "brz-fs-lg-20",
+        "brz-tp-xs-empty",
+        "brz-fs-xs-15"
+      ]
+    },
+    {
+      case: "a mobile alignment alone, which leaves the preset attached",
+      html: '<h1 class="brz-tp-lg-heading1 brz-text-lg-left">Title</h1>',
+      params: { mobileTextAlign: "center" as const },
+      out: ["brz-tp-lg-heading1", "brz-text-lg-left", "brz-text-xs-center"]
+    },
+    {
+      case: "tablet and mobile in one call, each on its own classes",
+      html: '<p class="brz-tp-lg-empty">Body</p>',
+      params: {
+        tabletTextAlign: "right" as const,
+        mobileTextAlign: "left" as const
+      },
+      out: ["brz-tp-lg-empty", "brz-text-sm-right", "brz-text-xs-left"]
+    }
+  ])("applies $case", ({ html, params, out }) => {
+    const result = applyRichTextUpdates(html, params, [heading1]);
+
+    expect(classesOf(result)).toEqual([...out].sort());
   });
 });

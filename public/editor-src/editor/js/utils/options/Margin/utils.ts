@@ -1,9 +1,8 @@
-import { Value as NV } from "visual/component/Controls/NumberUnit/types";
-import { Props as SpacingPops } from "visual/component/Controls/Spacing";
-import { Edge } from "visual/component/Controls/Spacing/types";
-import { Setter } from "visual/utils/model";
+import type { Value as NV } from "visual/component/Controls/NumberUnit/types";
+import type { Props as SpacingPops } from "visual/component/Controls/Spacing";
+import type { Edge } from "visual/component/Controls/Spacing/types";
+import type { Setter } from "visual/utils/model";
 import {
-  Value,
   setBottom,
   setBottomUnit,
   setLeft,
@@ -13,11 +12,12 @@ import {
   setTop,
   setTopUnit,
   setUnit,
-  setValue
+  setValue,
+  type Value
 } from "visual/utils/options/Margin/types/Value";
-import * as Unit from "visual/utils/options/utils/SpacingUnit";
+import type * as Unit from "visual/utils/options/utils/SpacingUnit";
 import { readWithParser } from "visual/utils/reader/readWithParser";
-import { Config } from "./types/Config";
+import type { Config } from "./types/Config";
 
 export const fromNumberSlider = readWithParser<
   NV<Unit.SpacingUnit>,

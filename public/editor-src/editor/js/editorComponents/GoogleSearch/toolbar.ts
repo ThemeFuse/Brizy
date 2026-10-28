@@ -1,10 +1,10 @@
-import { GetItems } from "visual/editorComponents/EditorComponent/types";
+import type { GetItems } from "visual/editorComponents/EditorComponent/types";
 import { getColorToolbar } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
 import { HOVER, NORMAL } from "visual/utils/stateMode";
 import { heightCSS, horizontalAlignCSS, widthCSS } from "./css";
-import { Value } from "./types";
+import type { Value } from "./types";
 
 export const getItems: GetItems<Value> = ({ v, device }) => {
   const dvv = (key: string) =>
@@ -34,7 +34,7 @@ export const getItems: GetItems<Value> = ({ v, device }) => {
           helper: {
             content: t(
               "Enter the search engine ID to use for the Google Search engine."
-            ),
+            )
           }
         },
         {

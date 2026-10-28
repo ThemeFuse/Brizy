@@ -1,13 +1,13 @@
 import classNames from "classnames";
-import React, { ReactElement, useCallback, useMemo, useRef } from "react";
+import React, { type ReactElement, useCallback, useMemo, useRef } from "react";
 import {
-  Props as NP,
+  type Props as NP,
   NumberSlider
 } from "visual/component/Controls/NumberSlider";
 import { OptionLabel } from "visual/component/OptionLabel";
+import type { OnChange } from "visual/component/Options/Type";
 import { OptionWrapper } from "visual/component/OptionWrapper";
-import { OnChange } from "visual/component/Options/Type";
-import { Literal } from "visual/utils/types/Literal";
+import type { Literal } from "visual/utils/types/Literal";
 
 export type Props<U> = {
   className?: string;

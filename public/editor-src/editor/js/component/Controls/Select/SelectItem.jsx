@@ -31,7 +31,7 @@ class SelectItem extends React.Component {
 
   render() {
     const { title, disabled, onClick, value, children } = this.props;
-    const fn = disabled ? () => {} : onClick;
+    const fn = disabled ? noop : onClick;
 
     return (
       <div

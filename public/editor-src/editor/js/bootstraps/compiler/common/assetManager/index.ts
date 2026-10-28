@@ -1,5 +1,5 @@
 import { pipe } from "visual/utils/fp";
-import {
+import type {
   Asset,
   ScriptsFree,
   ScriptsPro,

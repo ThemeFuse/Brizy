@@ -1,8 +1,8 @@
 import type { ElementModel } from "visual/component/Elements/Types";
 import type { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
+import type { WithClassName } from "visual/types/attributes";
 import type { ViewType } from "../Form2Steps/types";
 import type { MultiStep } from "../types";
-import type { WithClassName } from "visual/types/attributes";
 
 export interface Value extends ElementModel {
   iconName: string;

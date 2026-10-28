@@ -1,5 +1,5 @@
 export const makeUrl = (baseUrl, params = {}) => {
-  let url = new URL(baseUrl);
+  const url = new URL(baseUrl);
 
   Object.entries(params).forEach(([key, value]) => {
     url.searchParams.append(key, value);
@@ -8,10 +8,10 @@ export const makeUrl = (baseUrl, params = {}) => {
   return url;
 };
 
-export const parseJSON = res => {
+export const parseJSON = (res) => {
   return res
     .json()
-    .then(json => ({
+    .then((json) => ({
       ...json,
       status: res.status,
       ok: res.ok,
@@ -28,7 +28,7 @@ export const parseJSON = res => {
 
 // For wp if success === false
 // need see in data.code the status code
-const reqStatus = res => {
+const reqStatus = (res) => {
   if (res.success) {
     return res;
   } else {
@@ -41,7 +41,7 @@ const reqStatus = res => {
 };
 
 export const fakeRequest = () =>
-  new Promise(resolve => {
+  new Promise((resolve) => {
     setTimeout(() => {
       resolve(true);
     }, 650);

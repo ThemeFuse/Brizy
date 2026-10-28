@@ -7,7 +7,7 @@ import {
   getView
 } from "visual/editorComponents/ShareButton/utils";
 import { defaultValueValue } from "visual/utils/onChange";
-import { CSSValue } from "../style2/types";
+import type { CSSValue } from "../style2/types";
 import {
   cssStyleBgColor,
   cssStyleBgGradient,

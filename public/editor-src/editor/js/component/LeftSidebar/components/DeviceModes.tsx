@@ -4,12 +4,12 @@ import { useDispatch, useStore } from "react-redux";
 import HotKeys from "visual/component/HotKeys";
 import { LeftSidebarOptionsIds } from "visual/global/Config/types/configs/ConfigCommon";
 import UIEvents, { UIEventType } from "visual/global/UIEvents";
-import { ReduxAction, setDeviceMode } from "visual/redux/actions2";
+import { type ReduxAction, setDeviceMode } from "visual/redux/actions2";
 import { deviceModeSelector } from "visual/redux/selectors";
-import { ReduxState } from "visual/redux/types";
-import { DeviceMode } from "visual/types";
+import type { ReduxState } from "visual/redux/types";
+import type { DeviceMode } from "visual/types";
 import { t } from "visual/utils/i18n";
-import { FCC } from "visual/utils/react/types";
+import type { FCC } from "visual/utils/react/types";
 
 const DeviceModeMobile = () => ({
   id: "mobile",
@@ -149,7 +149,10 @@ const WithHotKeys: FCC = ({ children }) => {
 
       dispatch(setDeviceMode(deviceModeOptions[index].id as DeviceMode));
       setTimeout(() => {
-        UIEvents.emit(UIEventType.DeviceModeChange, deviceModeOptions[index].id);
+        UIEvents.emit(
+          UIEventType.DeviceModeChange,
+          deviceModeOptions[index].id
+        );
       }, 300);
     },
     [store, dispatch]

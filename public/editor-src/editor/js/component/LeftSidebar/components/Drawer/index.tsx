@@ -8,14 +8,14 @@ import {
   alignTitle
 } from "visual/component/Controls/RightSidebarTabs/utils";
 import { leftSidebarSelector } from "visual/redux/selectors";
-import { SidebarAlign } from "visual/redux/types";
+import type { SidebarAlign } from "visual/redux/types";
 import { makeBzelmAttr } from "visual/utils/i18n/attribute";
 import { SidebarExtraControls } from "../AddElements/SidebarExtraControls";
 import {
-  SidebarBodyProps,
-  SidebarHeadProps,
+  type SidebarBodyProps,
+  type SidebarHeadProps,
   SidebarModes,
-  SidebarProps
+  type SidebarProps
 } from "./types";
 
 export function SidebarWrapper({ options }: SidebarProps): JSX.Element {

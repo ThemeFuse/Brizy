@@ -239,7 +239,7 @@ export default class ContainerBorder extends React.Component {
     let handled = false;
     const button = this.buttonInnerRef.current;
 
-    if (button && button.contains(e.target)) {
+    if (button?.contains(e.target)) {
       this.setActive(true, true);
       handled = true;
     }
@@ -349,7 +349,7 @@ export default class ContainerBorder extends React.Component {
       <div ref={this.innerBorderRef} className={borderClassName} />
     );
 
-    let attr = makeDataAttr({ name: "border", value: type });
+    const attr = makeDataAttr({ name: "border", value: type });
 
     if (color) {
       attr[makeAttr(`border--${color}`)] = type;

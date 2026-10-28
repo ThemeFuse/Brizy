@@ -1,13 +1,13 @@
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
-import { FontsPayload } from "visual/redux/actions2";
-import { Block } from "visual/types/Block";
-import {
+import type { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import type { FontsPayload } from "visual/redux/actions2";
+import type { Block } from "visual/types/Block";
+import type {
   BlockMetaType,
   GlobalBlockNormal,
   GlobalBlockPopup
 } from "visual/types/GlobalBlock";
-import { ExtraFontStyle, Style } from "visual/types/Style";
-import { PromptGlobalBlock } from "./Global/types";
+import type { ExtraFontStyle, Style } from "visual/types/Style";
+import type { PromptGlobalBlock } from "./Global/types";
 
 export type PromptTabsId = "template" | "blocks" | "saved" | "global";
 
@@ -17,7 +17,11 @@ export type PromptBlock = {
   extraFontStyles?: ExtraFontStyle[];
 };
 
-export type NormalOrPopup<T extends BlockMetaType> = T extends "normal"
+// Prompts only ever deal with normal and popup global blocks — overlay ones
+// (e.g. Cookie Banner) are CMS-only and never go through the block library.
+export type PromptBlockMetaType = Exclude<BlockMetaType, "overlay">;
+
+export type NormalOrPopup<T extends PromptBlockMetaType> = T extends "normal"
   ? GlobalBlockNormal
   : GlobalBlockPopup;
 
@@ -29,7 +33,7 @@ export interface PromptBlockTemplate {
   currentStyleId?: string;
 }
 
-export interface PromptBlocksProps<T extends BlockMetaType> {
+export interface PromptBlocksProps<T extends PromptBlockMetaType> {
   activeTab?: PromptTabsId;
   type: T;
   opened?: boolean;

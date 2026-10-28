@@ -39,6 +39,7 @@ class MenuItem extends EditorComponent {
     level: 0,
     mMenu: false,
     menuSelected: undefined,
+    parentMenuId: undefined,
     mods: {
       desktop: "vertical",
       tablet: "vertical",
@@ -56,6 +57,11 @@ class MenuItem extends EditorComponent {
 
   static get componentId() {
     return ElementTypes.MenuItem;
+  }
+
+  // Items get their _id at runtime, so shortcuts act on the Menu element itself
+  getHotKeysTargetId() {
+    return this.props.parentMenuId ?? this.getId();
   }
 
   componentDidUpdate(nextProps) {
@@ -222,12 +228,12 @@ class MenuItem extends EditorComponent {
     ) : null;
   }
 
-  renderLink(v, vs, vd, content, ref) {
+  renderLink(v, _vs, _vd, content, ref) {
     const { target, classes, attrTitle } = v;
-    let type = "";
-    let href = "";
+    const type = "";
+    const href = "";
 
-    let props = {
+    const props = {
       href,
       type,
       target: target === "_blank" ? "on" : "off",
@@ -444,8 +450,15 @@ class MenuItem extends EditorComponent {
       return null;
     }
 
-    const { level, toolbarExtend, mMenu, meta, menuSelected, mods } =
-      this.props;
+    const {
+      level,
+      toolbarExtend,
+      mMenu,
+      meta,
+      menuSelected,
+      mods,
+      parentMenuId
+    } = this.props;
     const itemProps = this.makeSubcomponentProps({
       toolbarExtend,
       level,
@@ -453,6 +466,7 @@ class MenuItem extends EditorComponent {
       meta,
       mods,
       menuSelected,
+      parentMenuId,
       itemId: v.id,
       bindWithKey: "items",
       megaMenu: false

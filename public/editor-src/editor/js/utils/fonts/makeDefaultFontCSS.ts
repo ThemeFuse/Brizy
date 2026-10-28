@@ -1,4 +1,4 @@
-import { FontGroup, FontKeyTypes } from "./getFontById";
+import type { FontGroup, FontKeyTypes } from "./getFontById";
 
 export const makeDefaultFontCSS = ({
   font

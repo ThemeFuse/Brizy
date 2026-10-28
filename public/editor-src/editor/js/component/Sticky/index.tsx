@@ -1,4 +1,4 @@
-import React, { ReactElement } from "react";
+import React, { type ReactElement } from "react";
 import { observer } from "./utils";
 
 const getElement = (selector: string): HTMLElement | null => {

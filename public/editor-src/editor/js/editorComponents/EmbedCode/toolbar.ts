@@ -1,14 +1,14 @@
-import { Params } from "visual/editorComponents/EditorComponent/types";
+import type { Params } from "visual/editorComponents/EditorComponent/types";
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
 import { isStory } from "visual/providers/EditorModeProvider";
 import { getColorToolbar } from "visual/utils/color";
-import { t } from "visual/utils/i18n";
 import { shouldRunEmbedCodeInEditor } from "visual/utils/elements/embedCode";
+import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
 import { getDynamicContentOption } from "visual/utils/options";
 import { HOVER, NORMAL } from "visual/utils/stateMode";
-import { ToolbarItemType } from "../ToolbarItemType";
-import { Value } from "./types";
+import type { ToolbarItemType } from "../ToolbarItemType";
+import type { Value } from "./types";
 
 export function getItems({
   v,
@@ -19,7 +19,9 @@ export function getItems({
 }: Params<Value>): ToolbarItemType[] {
   const dvv = (key: string) => defaultValueValue({ v, key, device });
 
-  const codeNotRunning = !shouldRunEmbedCodeInEditor(component.getGlobalConfig());
+  const codeNotRunning = !shouldRunEmbedCodeInEditor(
+    component.getGlobalConfig()
+  );
 
   const borderColor = getColorToolbar(
     dvv("borderColorPalette"),
@@ -46,6 +48,23 @@ export function getItems({
       devices: "desktop",
       position: 90,
       options: [
+        {
+          id: "consentCategory",
+          label: t("Consent category"),
+          type: "select",
+          choices: [
+            { title: t("Auto"), value: "auto" },
+            { title: t("Preferences"), value: "preferences" },
+            { title: t("Statistics"), value: "statistics" },
+            { title: t("Marketing"), value: "marketing" },
+            { title: t("Other"), value: "other" }
+          ],
+          helper: {
+            content: t(
+              'Consent category for the external &lt;script src&gt; tags in this code. It only matters on pages that have the cookie banner; everywhere else the scripts run as usual. Auto lets the banner decide: a known vendor gets its own category, an unknown host falls under Other, and first-party scripts are not blocked. Pick a category and it is applied to every external script that doesn\'t already have a data-brz-consent attribute. Inline scripts are left alone either way. To gate one, write it as &lt;script type="text/plain" data-brz-consent="…"&gt;.'
+            )
+          }
+        },
         {
           id: "code",
           type: "codeMirror",

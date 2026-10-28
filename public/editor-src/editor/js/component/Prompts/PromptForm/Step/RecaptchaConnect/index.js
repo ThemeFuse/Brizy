@@ -36,7 +36,10 @@ class RecaptchaConnect extends Component {
   }
 
   getDefaultValue() {
-    return apiKeys.reduce((acc, { name }) => ({ ...acc, [`${name}`]: "" }), {});
+    return apiKeys.reduce((acc, { name }) => {
+      acc[`${name}`] = "";
+      return acc;
+    }, {});
   }
 
   handleChange = (value, type) => {

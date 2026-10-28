@@ -2,20 +2,21 @@ import { isEqual } from "es-toolkit";
 import React, { useCallback, useMemo } from "react";
 import { useDispatch, useSelector, useStore } from "react-redux";
 import { DraggableOverlay } from "visual/component/DraggableOverlay";
+import { GlobalBlocksOverlays } from "visual/component/GlobalBlocksOverlays";
 import { RootContainer } from "visual/component/RootContainer";
 import EditorGlobal from "visual/global/Editor";
 import { useConfig } from "visual/providers/ConfigProvider";
 import { EditorComponentProvider } from "visual/providers/EditorComponentProvider";
 import { useEditorMode } from "visual/providers/EditorModeProvider";
 import { useTranslation } from "visual/providers/I18nProvider";
-import { ReduxAction, updateBlocks } from "visual/redux/actions2";
+import { type ReduxAction, updateBlocks } from "visual/redux/actions2";
 import {
   pageDataDraftBlocksSelector,
   stateSelector
 } from "visual/redux/selectors";
-import { ReduxState } from "visual/redux/types";
+import type { ReduxState } from "visual/redux/types";
 import { areStatesEqual, getPageId } from "../utils";
-import { OnChange } from "./types";
+import type { OnChange } from "./types";
 
 const Page = (): JSX.Element => {
   const dispatch = useDispatch();
@@ -78,6 +79,7 @@ const Page = (): JSX.Element => {
           getGlobalConfig={getGlobalConfig}
         />
         <DraggableOverlay />
+        <GlobalBlocksOverlays />
       </EditorComponentProvider>
     </RootContainer>
   );

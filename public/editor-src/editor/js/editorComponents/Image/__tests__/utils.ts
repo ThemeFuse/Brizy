@@ -1,12 +1,12 @@
 import { ImageType } from "visual/utils/image/types";
 import { V } from "../types";
 import {
-  ImageValue,
-  PredefinedCustomSize,
   calcWrapperOriginalSizes,
   calcWrapperPredefinedSizes,
   getImageSize,
-  getSizeType
+  getSizeType,
+  ImageValue,
+  PredefinedCustomSize
 } from "../utils";
 
 export const imageSizes = [

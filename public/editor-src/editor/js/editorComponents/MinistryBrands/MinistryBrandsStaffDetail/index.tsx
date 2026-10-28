@@ -5,8 +5,8 @@ import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { toolbarMinistryBrandsMeta } from "visual/editorComponents/MinistryBrands/toolbars/toolbars";
 import { getEkklesiaMessages } from "visual/editorComponents/MinistryBrands/utils/helpers";
-import { DynamicContentHelper } from "visual/editorComponents/WordPress/common/DynamicContentHelper";
 import { Wrapper } from "visual/editorComponents/tools/Wrapper";
+import { DynamicContentHelper } from "visual/editorComponents/WordPress/common/DynamicContentHelper";
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import { updateEkklesiaFields } from "visual/utils/api";
 import { attachRefs } from "visual/utils/react";
@@ -16,14 +16,14 @@ import * as toolbarMetaIcons from "../toolbarMetaIcons";
 import * as toolbarMetaLinks from "../toolbarMetaLinks";
 import * as toolbarMetaTypography from "../toolbarMetaTypography";
 import * as toolbarPreview from "../toolbarPreview";
-import * as toolbarTitle from "../toolbarTitle";
 import * as toolbarImage from "../toolbars/toolbarMinistryStaffImage";
+import * as toolbarTitle from "../toolbarTitle";
 import { MBMetaPrefixKey } from "../utils/types";
 import defaultValue from "./defaultValue.json";
 import { style } from "./styles";
 import * as toolbarExtendParent from "./toolbarExtendParent";
 import * as toolbarSocial from "./toolbarSocial";
-import { Props, Value } from "./types";
+import type { Props, Value } from "./types";
 import { getPlaceholder } from "./utils/dynamicContent";
 
 export class MinistryBrandsStaffDetail extends EditorComponent<Value, Props> {
@@ -55,7 +55,7 @@ export class MinistryBrandsStaffDetail extends EditorComponent<Value, Props> {
 
     if (changedKeys) {
       const messages = getEkklesiaMessages();
-      ToastNotification.warn(messages["staff_detail"]);
+      ToastNotification.warn(messages.staff_detail);
       this.patchValue(changedKeys);
     }
   }

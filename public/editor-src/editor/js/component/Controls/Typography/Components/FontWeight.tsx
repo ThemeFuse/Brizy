@@ -4,8 +4,8 @@ import { Select2 } from "visual/component/Controls/Select2";
 import { Item } from "visual/component/Controls/Select2/Item";
 import { VariationFont } from "visual/component/Controls/Typography/Components/VariationFont";
 import { Label } from "visual/component/Label";
-import { Weight } from "visual/utils/fonts/Weight";
-import { FontWeightProps as Props } from "../types/Props";
+import type { Weight } from "visual/utils/fonts/Weight";
+import type { FontWeightProps as Props } from "../types/Props";
 
 export const FontWeight = ({
   label,

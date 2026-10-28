@@ -1,8 +1,8 @@
-import {
+import type {
   FromElementModel,
   ToElementModel
 } from "visual/component/Options/Type";
-import {
+import type {
   ElementModelValue,
   Value
 } from "visual/component/Options/types/dev/MultiSelect2/types";

@@ -1,11 +1,11 @@
-import React, { ReactElement, useState } from "react";
+import React, { type ReactElement, useState } from "react";
 import { Textarea as Control } from "visual/component/Controls/Textarea";
 import { useDebouncedEffect } from "visual/component/hooks";
-import {
+import type {
   Props as OptionProps,
   SimpleValue
 } from "visual/component/Options/Type";
-import {
+import type {
   WithClassName,
   WithConfig,
   WithPlaceholder,
@@ -38,7 +38,7 @@ export const Textarea = ({
       }
     },
     1000,
-    [_value]
+    [_value, value, onChange]
   );
 
   return (

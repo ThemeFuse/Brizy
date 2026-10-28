@@ -1,9 +1,9 @@
-import { Hex } from "visual/utils/color/Hex";
-import { Opacity } from "visual/utils/cssProps/opacity";
-import { Style } from "visual/utils/options/Border/entities/style";
-import { Width } from "visual/utils/options/Border/entities/width";
-import { WidthType } from "visual/utils/options/Border/entities/widthType";
-import { Palette } from "visual/utils/options/ColorPicker/entities/palette";
+import type { Hex } from "visual/utils/color/Hex";
+import type { Opacity } from "visual/utils/cssProps/opacity";
+import type { Style } from "visual/utils/options/Border/entities/style";
+import type { Width } from "visual/utils/options/Border/entities/width";
+import type { WidthType } from "visual/utils/options/Border/entities/widthType";
+import type { Palette } from "visual/utils/options/ColorPicker/entities/palette";
 
 export interface Value {
   style: Style;

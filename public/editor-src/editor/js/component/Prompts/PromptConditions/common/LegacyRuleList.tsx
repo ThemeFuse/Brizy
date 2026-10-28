@@ -1,9 +1,9 @@
 import React from "react";
-import { LegacyRuleListProps } from "../Rules/types";
-import { SelectItem } from "visual/component/Controls/InternalLink/Components/SelectItem";
 import { Badge } from "visual/component/Badge";
+import { SelectItem } from "visual/component/Controls/InternalLink/Components/SelectItem";
+import type { FCC } from "visual/utils/react/types";
+import type { LegacyRuleListProps } from "../Rules/types";
 import { getOptionItemClassNames } from "../Rules/utils";
-import { FCC } from "visual/utils/react/types";
 
 export const LegacyRuleList: FCC<LegacyRuleListProps> = ({
   item: { title, value, status },

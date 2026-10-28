@@ -1,4 +1,4 @@
-import { breakpoints, desktopBreakpoints, responsiveBreakpoints } from ".";
+import type { breakpoints, desktopBreakpoints, responsiveBreakpoints } from ".";
 
 export type BreakpointsNames = keyof typeof breakpoints;
 

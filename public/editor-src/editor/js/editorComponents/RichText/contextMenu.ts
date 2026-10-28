@@ -1,12 +1,19 @@
 import { Str } from "@brizy/readers";
 import deepmerge from "deepmerge";
 import { setIn } from "timm";
+import type { Config } from "visual/global/Config";
 import { updateCopiedElement } from "visual/redux/actions2";
-import { pageDataNoRefsSelector } from "visual/redux/selectors";
+import {
+  menuDataSelector,
+  pageDataNoRefsSelector
+} from "visual/redux/selectors";
 import { overwriteMerge } from "visual/utils/array";
 import { t } from "visual/utils/i18n";
 import { createFullModelPath } from "visual/utils/models";
-import { ContextGetItems, ContextMenuItem } from "../EditorComponent/types";
+import type {
+  ContextGetItems,
+  ContextMenuItem
+} from "../EditorComponent/types";
 import type { Value } from "./types";
 import {
   getInnerElement,
@@ -14,12 +21,11 @@ import {
   handlePasteStyles,
   handleRenderText
 } from "./utils/ContextMenu";
-import { Config } from "visual/global/Config";
 
 const getItems: ContextGetItems<Value> = (_, component): ContextMenuItem[] => {
   const config = component.getGlobalConfig() as Config;
   const state = component.getReduxStore().getState();
-  const innerElement = getInnerElement(state, config.menuData);
+  const innerElement = getInnerElement(state, menuDataSelector(state));
   const canPaste = component.getComponentId() === innerElement?.type;
   const device = component.getDeviceMode();
 
@@ -78,7 +84,7 @@ const getItems: ContextGetItems<Value> = (_, component): ContextMenuItem[] => {
           inactive: !canPaste,
           helperText: handleRenderText(["⇧", "V"]),
           onChange: () => {
-            if (!innerElement || !innerElement.value) return;
+            if (!innerElement?.value) return;
             handlePasteStyles({
               innerElement,
               // @ts-expect-error couldn't extend component type

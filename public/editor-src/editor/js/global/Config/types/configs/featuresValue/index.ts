@@ -1,4 +1,4 @@
-import { ConfigCommon } from "../ConfigCommon";
+import type { ConfigCommon } from "../ConfigCommon";
 
 export const isImageZoomEnabled = (config: ConfigCommon): boolean => {
   const featureValue = config.ui?.features?.imageZoom;
@@ -46,7 +46,7 @@ interface LinkOptions {
   linkUpload: boolean;
   linkAnchor: boolean;
   linkPopup: boolean;
-  linkAction: boolean
+  linkAction: boolean;
 }
 
 export const getEnabledLinkOptions = (config: ConfigCommon): LinkOptions => {

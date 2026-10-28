@@ -1,15 +1,15 @@
 import React, {
-  ComponentType,
-  PropsWithChildren,
-  ReactElement,
+  type ComponentType,
+  type PropsWithChildren,
+  type ReactElement,
   useMemo,
   useRef
 } from "react";
 import Sidebar, {
   SidebarOption
 } from "visual/component/Prompts/PromptBlocks/common/Sidebar";
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
-import { BlockMetaType } from "visual/types/GlobalBlock";
+import type { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import type { BlockMetaType } from "visual/types/GlobalBlock";
 import { t } from "visual/utils/i18n";
 import DataFilter from "../common/DataFilter";
 import SearchInput from "../common/SearchInput";
@@ -18,7 +18,7 @@ import { ALL_CAT, UNCATEGORISED_CAT } from "../types";
 import { Empty } from "./controls/Empty";
 import { Grid } from "./controls/Grid";
 import { Loading } from "./controls/Loading";
-import { Filter, Thumbnail } from "./types";
+import type { Filter, Thumbnail } from "./types";
 import { filterFn, getMessage, getSrc, getTags } from "./utils";
 
 export interface Props<T extends Thumbnail> {

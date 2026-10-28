@@ -1,8 +1,8 @@
 import { Obj } from "@brizy/readers";
 import classnames from "classnames";
 import React, {
-  ReactElement,
-  Reducer,
+  type ReactElement,
+  type Reducer,
   useCallback,
   useEffect,
   useMemo,
@@ -21,11 +21,11 @@ import {
 } from "rxjs/operators";
 import {
   Gallery as Control,
-  Props as ControlProps
+  type Props as ControlProps
 } from "visual/component/Controls/Gallery";
 import { ToastNotification } from "visual/component/Notifications";
-import * as Option from "visual/component/Options/Type";
-import { AddImageData } from "visual/global/Config/types/configs/common";
+import type * as Option from "visual/component/Options/Type";
+import type { AddImageData } from "visual/global/Config/types/configs/common";
 import { useConfig } from "visual/providers/ConfigProvider";
 import * as Arr from "visual/utils/array";
 import { pipe } from "visual/utils/fp";

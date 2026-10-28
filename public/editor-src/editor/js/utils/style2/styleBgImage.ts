@@ -1,13 +1,13 @@
 import { defaultCrop } from "visual/global/Config/types/configs/common";
 import { getImageUrl } from "visual/utils/image";
 import {
-  UNSPLASH_BG_IMAGE_WIDTH,
-  isUnsplashImage
+  isUnsplashImage,
+  UNSPLASH_BG_IMAGE_WIDTH
 } from "visual/utils/image/utils";
 import { defaultValueValue } from "visual/utils/onChange";
 import { camelCase, capByPrefix } from "visual/utils/string";
 import { styleState } from "visual/utils/style";
-import { CSSValue } from "./types";
+import type { CSSValue } from "./types";
 
 export function styleBgImage({
   v,

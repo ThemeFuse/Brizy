@@ -1,8 +1,8 @@
 import classnames from "classnames";
 import React, {
-  ChangeEventHandler,
-  KeyboardEventHandler,
-  ReactElement,
+  type ChangeEventHandler,
+  type KeyboardEventHandler,
+  type ReactElement,
   useState
 } from "react";
 import SelectItem from "visual/component/Controls/Select/SelectItem";

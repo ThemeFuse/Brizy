@@ -15,6 +15,7 @@ import { makeOptionValueToMotion } from "visual/component/ScrollMotions/utils";
 import { SortableElement } from "visual/component/Sortable/SortableElement";
 import SortableHandle from "visual/component/Sortable/SortableHandle";
 import Toolbar, { ToolbarExtend } from "visual/component/Toolbar";
+import { TransformWrapper } from "visual/component/TransformWrapper";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { shouldRenderPopup } from "visual/editorComponents/tools/Popup";
@@ -38,9 +39,9 @@ import * as State from "visual/utils/stateMode";
 import { parseCustomAttributes } from "visual/utils/string/parseCustomAttributes";
 import * as Str from "visual/utils/string/specs";
 import { currentUserRole } from "../../component/Roles";
-import Items from "./Items";
 import contextMenuConfig from "./contextMenu";
 import defaultValue from "./defaultValue.json";
+import Items from "./Items";
 import * as sidebarConfig from "./sidebar";
 import { styleAnimation, styleContainer, styleRow } from "./styles";
 import * as toolbarConfig from "./toolbar";
@@ -378,7 +379,9 @@ class Row extends EditorComponent {
           isHidden={isHidden}
           withoutWrapper={true}
         >
-          {this.renderContent(v, vs, vd)}
+          <TransformWrapper v={v} className="brz-row__transform">
+            {this.renderContent(v, vs, vd)}
+          </TransformWrapper>
         </HoverAnimation>
       </ScrollMotion>
     );
@@ -509,16 +512,18 @@ class Row extends EditorComponent {
                 isHidden={isHidden}
                 withoutWrapper={true}
               >
-                {this.renderContent(v, vs, vd)}
-                {linkData.href && (
-                  <Link
-                    className="brz-link-container"
-                    type={linkData.type}
-                    href={linkData.href}
-                    target={linkData.target}
-                    rel={linkData.rel}
-                  />
-                )}
+                <TransformWrapper v={v} className="brz-row__transform">
+                  {this.renderContent(v, vs, vd)}
+                  {linkData.href && (
+                    <Link
+                      className="brz-link-container"
+                      type={linkData.type}
+                      href={linkData.href}
+                      target={linkData.target}
+                      rel={linkData.rel}
+                    />
+                  )}
+                </TransformWrapper>
               </HoverAnimation>
             </ScrollMotion>
           </Animation>

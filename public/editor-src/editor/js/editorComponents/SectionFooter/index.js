@@ -8,8 +8,7 @@ import CustomCSS from "visual/component/CustomCSS";
 import HotKeys from "visual/component/HotKeys";
 import PaddingResizer from "visual/component/PaddingResizer";
 import { ProBlocked } from "visual/component/ProBlocked";
-import { Roles } from "visual/component/Roles";
-import { currentUserRole } from "visual/component/Roles";
+import { currentUserRole, Roles } from "visual/component/Roles";
 import { CollapsibleToolbar, ToolbarExtend } from "visual/component/Toolbar";
 import {
   minWInBoxedPage,
@@ -41,8 +40,8 @@ import { attachRefs } from "visual/utils/react";
 import { DESKTOP, MOBILE, TABLET } from "visual/utils/responsiveMode";
 import * as State from "visual/utils/stateMode";
 import { parseCustomAttributes } from "visual/utils/string/parseCustomAttributes";
-import SectionFooterItems from "./Items";
 import defaultValue from "./defaultValue.json";
+import SectionFooterItems from "./Items";
 import * as sidebarConfig from "./sidebar";
 import { styleAnimation, styleContainer, styleSection } from "./styles";
 import * as toolbarConfig from "./toolbar";

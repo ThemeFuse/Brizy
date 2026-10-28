@@ -2,7 +2,7 @@ import { getFontCssStyle } from "visual/utils/fonts/getFontCssStyle";
 import { defaultValueValue } from "visual/utils/onChange";
 import { getOptionFontByGlobal } from "visual/utils/options";
 import { capByPrefix } from "visual/utils/string";
-import { CSSValue } from "visual/utils/style2/types";
+import type { CSSValue } from "visual/utils/style2/types";
 
 export function styleTextTransformBold({
   v,

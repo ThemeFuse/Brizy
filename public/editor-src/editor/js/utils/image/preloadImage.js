@@ -1,14 +1,14 @@
 export default function preloadImage(src) {
-  return new Promise(function(resolve, reject) {
+  return new Promise((resolve, reject) => {
     const image = new Image();
 
-    image.onload = function() {
+    image.onload = function () {
       resolve(this);
     };
-    image.onabort = function() {
+    image.onabort = () => {
       reject(`preloadImage("${src}") onabort`);
     };
-    image.onerror = function() {
+    image.onerror = () => {
       reject(`preloadImage("${src}") onerror`);
     };
 

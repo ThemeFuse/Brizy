@@ -1,10 +1,10 @@
-import { OnChange } from "visual/component/Options/Type";
+import type { OnChange } from "visual/component/Options/Type";
 import { hideToolbar } from "visual/component/Toolbar";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
-import { ResponsiveMode } from "visual/utils/responsiveMode";
-import { ToolbarItemType } from "../../ToolbarItemType";
-import { Value } from "../types";
+import type { ResponsiveMode } from "visual/utils/responsiveMode";
+import type { ToolbarItemType } from "../../ToolbarItemType";
+import type { Value } from "../types";
 
 export default function (v: Value, onChange: OnChange<Partial<Value>>) {
   return { getItems: getItems(v, onChange) };

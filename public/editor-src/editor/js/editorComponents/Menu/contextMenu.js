@@ -11,7 +11,7 @@ function getItems() {
       type: "group",
       title: t("Menu"),
       icon: "nc-tabs",
-      disabled: (item, meta) => meta.isInSubMenu,
+      disabled: (_item, meta) => meta.isInSubMenu,
       items: []
     }
   ];

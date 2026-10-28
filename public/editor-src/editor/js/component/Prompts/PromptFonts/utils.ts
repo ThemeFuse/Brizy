@@ -1,6 +1,6 @@
-import { ReduxState } from "visual/redux/types";
-import { Font } from "visual/types/Fonts";
-import { FontGroup, FontTypes } from "./types";
+import type { ReduxState } from "visual/redux/types";
+import type { Font } from "visual/types/Fonts";
+import type { FontGroup, FontTypes } from "./types";
 
 export const compareFont = (a: Font, b: Font): 1 | -1 | 0 => {
   const familyA = a.family.toUpperCase();

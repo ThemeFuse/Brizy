@@ -63,10 +63,10 @@ class List extends Component {
 
   getApiKeyValue({ listProperties }) {
     return Array.isArray(listProperties)
-      ? listProperties.reduce(
-          (acc, { name }) => ({ ...acc, [`${name}`]: "" }),
-          {}
-        )
+      ? listProperties.reduce((acc, { name }) => {
+          acc[`${name}`] = "";
+          return acc;
+        }, {})
       : [];
   }
 

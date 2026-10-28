@@ -1,28 +1,46 @@
-import $ from "jquery";
-import { AccordionAccessibility } from "../accessibility";
+import { noop } from "es-toolkit";
+import { onBodyClick } from "visual/utils/export/delegate";
 import { makeAttr } from "visual/utils/i18n/attribute";
-import { collapse, expand } from "./utils";
+import { AccordionAccessibility } from "../accessibility";
+import {
+  animateScrollTop,
+  collapse,
+  expand,
+  getInnerHeight,
+  getOffsetTop,
+  hasTag,
+  indexOf,
+  siblings
+} from "./utils";
 
 const activeClassName = "brz-accordion__item--active";
 let accordionInstance = 0;
 
-export default function ($node) {
-  $node.find(".brz-accordion").each(function () {
-    const _this = this;
-    const $accordionNavItems = $(_this).find(
-      "> .brz-accordion__item > .brz-accordion__nav"
+export default function (node) {
+  const accordions = new Map();
+
+  node.querySelectorAll(".brz-accordion").forEach((accordion) => {
+    const accordionNavItems = Array.from(
+      accordion.querySelectorAll(
+        ":scope > .brz-accordion__item > .brz-accordion__nav"
+      )
     );
-    const $accordionFilter = $(_this).find(".brz-accordion__filter-wrapper");
-    const $collapsible = $accordionNavItems.attr(makeAttr("collapsible"));
-    const duration = Number(_this.dataset.brzDuration || 0);
-    const contents = $(_this)
-      .find("> .brz-accordion__item > .brz-accordion__content")
-      .toArray();
+    const accordionFilters = Array.from(
+      accordion.querySelectorAll(".brz-accordion__filter-wrapper")
+    );
+    const collapsible =
+      accordionNavItems[0]?.getAttribute(makeAttr("collapsible")) ?? undefined;
+    const duration = Number(accordion.dataset.brzDuration || 0);
+    const contents = Array.from(
+      accordion.querySelectorAll(
+        ":scope > .brz-accordion__item > .brz-accordion__content"
+      )
+    );
     const instanceId = accordionInstance++;
     const accordionAccessibility = new AccordionAccessibility({
-      items: $(_this)
-        .find("> .brz-accordion__item")
-        .toArray()
+      items: Array.from(
+        accordion.querySelectorAll(":scope > .brz-accordion__item")
+      )
         .map((item, index) => {
           const button = item.querySelector(":scope > .brz-accordion__nav");
           const panel = item.querySelector(":scope > .brz-accordion__content");
@@ -50,27 +68,31 @@ export default function ($node) {
             keepOnePanelOpen:
               button.getAttribute(makeAttr("collapsible")) === "on",
             api: {
-              open: () => {},
-              close: () => {},
+              open: noop,
+              close: noop,
               toggle: () => button.click(),
               isOpen: () => item.classList.contains(activeClassName)
             }
           };
         })
         .filter(Boolean),
-      filterButtons: $(_this)
-        .find(".brz-accordion__filter__button, .brz-accordion__filter__item")
-        .toArray()
+      filterButtons: Array.from(
+        accordion.querySelectorAll(
+          ".brz-accordion__filter__button, .brz-accordion__filter__item"
+        )
+      )
     });
 
     accordionAccessibility.init();
 
-    $accordionNavItems.on("click", function () {
-      const $item = $(this).closest(".brz-accordion__item");
-      const $itemContent = $item.find("> .brz-accordion__content");
-      const itemIndex = $accordionFilter.length
-        ? $item.index() - 1
-        : $item.index();
+    const onNavClick = (nav) => {
+      const item = nav.closest(".brz-accordion__item");
+      const itemContent = item.querySelector(
+        ":scope > .brz-accordion__content"
+      );
+      const itemIndex = accordionFilters.length
+        ? indexOf(item) - 1
+        : indexOf(item);
 
       // need to calculate inner elements height
       // it's needed for animation
@@ -84,35 +106,38 @@ export default function ($node) {
       // 2. need to see if offset top of elements is outside of viewport
       const handleAnimationComplete = () => {
         // Emit Accordion Changed
-        const offsetTop = $item.offset().top;
-        window.Brz.emit("elements.accordion.changed", _this, {
-          active: $item.get(0),
-          tabs: $item.siblings().get()
+        const offsetTop = getOffsetTop(item);
+        window.Brz.emit("elements.accordion.changed", accordion, {
+          active: item,
+          tabs: siblings(item)
         });
 
-        const stickyHeaderHeight = $(
+        const stickyHeader = document.querySelector(
           ".brz-section__header-sticky-item"
-        ).innerHeight();
+        );
+        const stickyHeaderHeight = stickyHeader
+          ? getInnerHeight(stickyHeader)
+          : 0;
 
         // verify if content is outside of viewport
         if (window.scrollY > offsetTop) {
-          $("html, body").animate(
-            { scrollTop: offsetTop - (stickyHeaderHeight ?? 0) },
-            200
-          );
+          animateScrollTop(offsetTop - stickyHeaderHeight);
         }
       };
 
-      if ($collapsible === "on") {
-        if ($item.hasClass(activeClassName)) {
+      if (collapsible === "on") {
+        if (item.classList.contains(activeClassName)) {
           return;
         }
 
         // animation
-        $item
-          .siblings()
-          .find("> .brz-accordion__content")
-          .each((idx, node) => {
+        siblings(item)
+          .flatMap((sibling) =>
+            Array.from(
+              sibling.querySelectorAll(":scope > .brz-accordion__content")
+            )
+          )
+          .forEach((node, idx) => {
             const activeNode = node.closest(".brz-accordion__item--active");
 
             if (activeNode) {
@@ -126,67 +151,92 @@ export default function ($node) {
             }
           });
 
-        const node = $itemContent.get(0);
         const height = heights[itemIndex];
-        collapse(node, {
+        collapse(itemContent, {
           height,
           duration,
           onFinish: handleAnimationComplete
         });
 
-        $item.addClass(activeClassName);
+        item.classList.add(activeClassName);
       } else {
-        const node = $itemContent.get(0);
         const height = heights[itemIndex];
 
-        if ($item.hasClass(activeClassName)) {
-          expand(node, {
+        if (item.classList.contains(activeClassName)) {
+          expand(itemContent, {
             height,
             duration,
             onFinish: handleAnimationComplete
           });
-          $item.removeClass(activeClassName);
+          item.classList.remove(activeClassName);
         } else {
-          collapse(node, {
+          collapse(itemContent, {
             height,
             duration,
             onFinish: handleAnimationComplete
           });
-          $item.addClass(activeClassName);
+          item.classList.add(activeClassName);
         }
       }
 
       accordionAccessibility.sync();
-    });
+    };
 
-    $accordionFilter.on("click", function ({ target }) {
-      const $this = $(this);
+    const onFilterClick = (filterWrapper, target) => {
       const hiddenClassName = "brz-accordion__hidden";
-      const $filterItem = $(target).closest(".brz-accordion__filter__item");
+      const filterActiveClassName = "brz-accordion__filter__item--active";
+      const filterItem = target.closest(".brz-accordion__filter__item");
 
       // Active Tag
-      if (!$filterItem.hasClass("brz-accordion__filter__item--active")) {
-        $filterItem.addClass("brz-accordion__filter__item--active");
-        $filterItem
-          .siblings()
-          .removeClass("brz-accordion__filter__item--active");
+      if (filterItem && !filterItem.classList.contains(filterActiveClassName)) {
+        filterItem.classList.add(filterActiveClassName);
+        siblings(filterItem).forEach((sibling) => {
+          sibling.classList.remove(filterActiveClassName);
+        });
       }
 
-      if ($filterItem.length) {
-        const { brzFilter } = $filterItem.data();
+      if (filterItem) {
+        const { brzFilter } = filterItem.dataset;
+        const wrapperSiblings = siblings(filterWrapper);
 
         if (brzFilter === "*") {
-          $this.siblings().removeClass(hiddenClassName);
+          wrapperSiblings.forEach((sibling) => {
+            sibling.classList.remove(hiddenClassName);
+          });
         } else {
-          $this
-            .siblings()
-            .addClass(hiddenClassName)
-            .siblings(`.${brzFilter}`)
-            .removeClass(hiddenClassName);
+          wrapperSiblings.forEach((sibling) => {
+            sibling.classList.add(hiddenClassName);
+          });
+          new Set(wrapperSiblings.flatMap(siblings)).forEach((sibling) => {
+            if (hasTag(sibling, `${brzFilter}`)) {
+              sibling.classList.remove(hiddenClassName);
+            }
+          });
         }
       }
 
       accordionAccessibility.sync();
-    });
+    };
+
+    accordions.set(accordion, { onNavClick, onFilterClick });
   });
+
+  onBodyClick([
+    {
+      selector: ".brz-accordion__nav",
+      handler: (nav) => {
+        accordions.get(nav.closest(".brz-accordion"))?.onNavClick(nav);
+      }
+    },
+    {
+      selector: ".brz-accordion__filter-wrapper",
+      handler: (filterWrapper, { target }) => {
+        accordions.forEach((state, accordion) => {
+          if (accordion.contains(filterWrapper)) {
+            state.onFilterClick(filterWrapper, target);
+          }
+        });
+      }
+    }
+  ]);
 }

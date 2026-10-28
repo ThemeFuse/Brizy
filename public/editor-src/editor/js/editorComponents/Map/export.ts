@@ -127,10 +127,7 @@ const lazyLoadMap = (mapWrapper: HTMLElement): void => {
   mapObserver.observe(mapWrapper);
 };
 
-export default function ($node: JQuery): void {
-  const node = $node.get(0);
-  if (!node) return;
-
+export default function (node: HTMLElement): void {
   node.querySelectorAll<HTMLElement>(".brz-map").forEach((item) => {
     const mapWrapper = item.querySelector<HTMLElement>(
       ".brz-ui-ed-map-content"

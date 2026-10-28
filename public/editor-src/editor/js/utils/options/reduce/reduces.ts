@@ -1,5 +1,5 @@
-import { OptionName } from "visual/component/Options/types";
-import {
+import type { OptionName } from "visual/component/Options/types";
+import type {
   GenericToolbarItemType,
   ToolbarItemType
 } from "visual/editorComponents/ToolbarItemType";

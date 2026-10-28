@@ -1,74 +1,67 @@
-import {
+import type {
   Output,
   ProjectOutput
 } from "visual/bootstraps/compiler/browser/types";
-import { ElementModel } from "visual/component/Elements/Types";
-import { ChoicesSync as ChoiceSync } from "visual/component/Options/types/dev/MultiSelect2/types";
-import {
+import type { ElementModel } from "visual/component/Elements/Types";
+import type { ChoicesSync as ChoiceSync } from "visual/component/Options/types/dev/MultiSelect2/types";
+import type {
   ChoicesAsync,
   ChoicesSync
 } from "visual/component/Options/types/dev/Select/types";
-import { BlockTypes } from "visual/component/Prompts/PromptBlocks/types";
-import { RuleList } from "visual/component/Prompts/PromptConditions/Rules/types";
-import { Ref } from "visual/component/Prompts/PromptConditions/Rules/utils/api";
-import {
+import type { BlockTypes } from "visual/component/Prompts/PromptBlocks/types";
+import type { RuleList } from "visual/component/Prompts/PromptConditions/Rules/types";
+import type { Ref } from "visual/component/Prompts/PromptConditions/Rules/utils/api";
+import type {
   FontFile,
   UploadFont
 } from "visual/component/Prompts/PromptFonts/api/types";
-import { FormInputTypesName } from "visual/editorComponents/Form2/Form2Field/types";
-import {
+import type { FormInputTypesName } from "visual/editorComponents/Form2/Form2Field/types";
+import type {
   EkklesiaFieldMap,
   EkklesiaKeys,
   EkklesiaParams
 } from "visual/editorComponents/MinistryBrands/utils/types";
-import { VideoTypes } from "visual/editorComponents/Video/types";
-import {
+import type { VideoTypes } from "visual/editorComponents/Video/types";
+import type {
   DynamicContent,
   GetPlaceholderData
 } from "visual/global/Config/types/DynamicContent";
-import { ImageDataSize } from "visual/global/Config/types/ImageSize";
-import { PostTypesTax } from "visual/global/Config/types/PostTypesTax";
-import { Taxonomy } from "visual/global/Config/types/Taxonomy";
-import { UrlsCommon } from "visual/global/Config/types/Urls";
-import { EcwidProductId, EcwidStoreId } from "visual/global/Ecwid/types";
-import { CategoriesList } from "visual/libs/EcwidSdk/categories";
-import { ProductsList } from "visual/libs/EcwidSdk/products";
+import type { ImageDataSize } from "visual/global/Config/types/ImageSize";
+import type { PostTypesTax } from "visual/global/Config/types/PostTypesTax";
+import type { Taxonomy } from "visual/global/Config/types/Taxonomy";
+import type { UrlsCommon } from "visual/global/Config/types/Urls";
+import type { EcwidProductId, EcwidStoreId } from "visual/global/Ecwid/types";
+import type { CategoriesList } from "visual/libs/EcwidSdk/categories";
+import type { ProductsList } from "visual/libs/EcwidSdk/products";
 import type { EditorPlugin } from "visual/plugins/types";
-import { UploadedFont } from "visual/types/Fonts";
-import { GlobalBlock } from "visual/types/GlobalBlock";
-import { Page, PageCommon } from "visual/types/Page";
-import { Project } from "visual/types/Project";
-import { Rule } from "visual/types/Rule";
-import { FontStyle, Palette } from "visual/types/Style";
+import type { UploadedFont } from "visual/types/Fonts";
+import type { GlobalBlock } from "visual/types/GlobalBlock";
+import type { Page, PageCommon } from "visual/types/Page";
+import type { Project } from "visual/types/Project";
+import type { Rule } from "visual/types/Rule";
+import type { FontStyle, Palette } from "visual/types/Style";
 import type { CSSSymbol } from "visual/types/Symbols";
-import {
+import type {
   AdobeAddAccount,
   AdobeFonts,
   CollectionSourceItem,
   PostsSources,
   RulePostGroupList
 } from "visual/utils/api/types";
-import { Language } from "visual/utils/multilanguages";
-import { Literal } from "visual/utils/types/Literal";
-import { GetCollectionItem_collectionItem as CollectionItem } from "../../types/GetCollectionItem";
-import { CollectionTypesInfo } from "../../types/Posts";
-import { Authorisation } from "../Authorisation";
-import { Form } from "../Form";
-import { Pro } from "../Pro";
-import { User } from "../User";
-import type { Compiler } from "./Compiler";
-import { ElementTypes } from "./ElementTypes";
-import {
-  ThirdPartyComponents,
-  ThirdPartyComponentsHosts,
-  ThirdPartyUrls
-} from "./ThirdParty";
-import {
+import type { Language } from "visual/utils/multilanguages";
+import type { Literal } from "visual/utils/types/Literal";
+import type { GetCollectionItem_collectionItem as CollectionItem } from "../../types/GetCollectionItem";
+import type { CollectionTypesInfo } from "../../types/Posts";
+import type { Authorisation } from "../Authorisation";
+import type { Form } from "../Form";
+import type { Pro } from "../Pro";
+import type { User } from "../User";
+import type {
   Block as APIGlobalBlock,
   APIGlobalBlocks,
   APIGlobalPopups
 } from "./blocks/GlobalBlocks";
-import {
+import type {
   BlocksArray,
   DefaultBlock,
   DefaultBlockWithID,
@@ -82,12 +75,13 @@ import {
   PopupsWithThumbs,
   StoriesWithThumbs
 } from "./blocks/PredefinedBlocks";
-import {
+import type {
   APISavedBlocks,
   APISavedLayouts,
   APISavedPopups
 } from "./blocks/SavedBlocks";
-import {
+import type { Compiler } from "./Compiler";
+import type {
   AddFileData,
   AddFileExtra,
   AddImageData,
@@ -100,11 +94,17 @@ import {
   ScreenshotData,
   SizeType
 } from "./common";
-import {
+import { ElementTypes } from "./ElementTypes";
+import type {
   EkklesiaExtra,
   EkklesiaFields,
   EkklesiaModules
 } from "./modules/ekklesia/Ekklesia";
+import type {
+  ThirdPartyComponents,
+  ThirdPartyComponentsHosts,
+  ThirdPartyUrls
+} from "./ThirdParty";
 
 export enum Mode {
   page = "page",
@@ -162,7 +162,8 @@ export enum LeftSidebarPageSettingsOptionsIds {
   membership = "membership",
   language = "language",
   template = "template",
-  featuredImage = "featuredImage"
+  featuredImage = "featuredImage",
+  overlays = "overlays"
 }
 
 export enum LeftSidebarMoreOptionsIds {

@@ -1,10 +1,10 @@
-import { GetItems } from "visual/editorComponents/EditorComponent/types";
+import type { GetItems } from "visual/editorComponents/EditorComponent/types";
 import { getEkklesiaChoiches } from "visual/utils/api";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
 import { toolbarParentColors } from "../toolbarParent";
 import { getHelperDateFormatInputHTML } from "../utils/helpers";
-import { Props, Value } from "./types";
+import type { Props, Value } from "./types";
 
 export const getItems: GetItems<Value, Props> = (data) => {
   const { v, device, state, component } = data;

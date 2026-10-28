@@ -1,5 +1,5 @@
-import { Reader } from "./types/Type";
 import { pass } from "./fp";
+import type { Reader } from "./types/Type";
 
 // returns a functions that takes one parameter,
 // and checks if this parameter includes in array `ts`

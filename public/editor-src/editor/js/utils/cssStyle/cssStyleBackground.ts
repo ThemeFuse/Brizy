@@ -1,6 +1,6 @@
-import { defaultValueValue } from "visual/utils/onChange";
-import { CSSValue } from "visual/utils/style2/types";
 import { BgRepeat } from "visual/utils/containers/types";
+import { defaultValueValue } from "visual/utils/onChange";
+import type { CSSValue } from "visual/utils/style2/types";
 
 export function cssStyleBgSize({ v, device, state }: CSSValue): string {
   const dvv = (key: string) => defaultValueValue({ v, key, device, state });

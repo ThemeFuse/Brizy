@@ -1,6 +1,6 @@
 import classNames from "classnames";
 import React, {
-  SyntheticEvent,
+  type SyntheticEvent,
   useCallback,
   useEffect,
   useMemo,
@@ -8,12 +8,12 @@ import React, {
   useState
 } from "react";
 import EditorIcon from "visual/component/EditorIcon";
-import { Scrollbar, ScrollbarRef } from "visual/component/Scrollbar";
+import { Scrollbar, type ScrollbarRef } from "visual/component/Scrollbar";
 import { useTranslation } from "visual/providers/I18nProvider";
 import { scrollToActiveFont } from "visual/utils/fonts/scrollHelpers";
-import { FCC } from "visual/utils/react/types";
+import type { FCC } from "visual/utils/react/types";
 import { FontFamilyItem } from "./Item";
-import { Props } from "./types";
+import type { Props } from "./types";
 import { normalizeFonts } from "./utils";
 
 export const FontFamily: FCC<Props> = ({

@@ -1,8 +1,8 @@
 import classnames from "classnames";
-import React, { Attributes } from "react";
+import React, { type Attributes } from "react";
 import { Slide } from "visual/component/Background/types/Slideshow/Slide";
 import type { Image } from "visual/component/Options/types/dev/Gallery/types/Image";
-import { FCC } from "visual/utils/react/types";
+import type { FCC } from "visual/utils/react/types";
 
 interface Props {
   className?: string;
@@ -20,6 +20,7 @@ export const SlideshowPreview: FCC<Props> = ({
   <div className={classnames("swiper", className)} {...attributes}>
     <div className="swiper-wrapper">
       {images.map((item, index) => (
+        // biome-ignore lint/suspicious/noArrayIndexKey: the same image uid can appear twice in a slideshow, so only the slot is unique
         <div className="swiper-slide" key={index}>
           <Slide className={itemClassName} item={item} />
         </div>

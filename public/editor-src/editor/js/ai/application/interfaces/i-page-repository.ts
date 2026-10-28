@@ -147,6 +147,20 @@ export interface UpdateRichTextParams {
   readonly fontFamily?: string;
   /** Font source type */
   readonly fontFamilyType?: string;
+  /**
+   * Tablet and mobile overrides. A text block keeps these as classes in its
+   * HTML — `brz-fs-sm-14`, `brz-text-xs-center` — not as device-prefixed keys
+   * on the element, and a device left unset follows desktop. Optional because
+   * they mirror the parsed tool arguments, where every one of them is.
+   */
+  readonly tabletFontSize?: number;
+  readonly tabletFontWeight?: number;
+  readonly tabletLineHeight?: number;
+  readonly tabletTextAlign?: "left" | "center" | "right" | "justify";
+  readonly mobileFontSize?: number;
+  readonly mobileFontWeight?: number;
+  readonly mobileLineHeight?: number;
+  readonly mobileTextAlign?: "left" | "center" | "right" | "justify";
 }
 
 /**

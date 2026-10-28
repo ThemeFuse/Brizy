@@ -1,13 +1,13 @@
 import * as Hex from "visual/utils/color/Hex";
 import { _apply, set, setter2 } from "visual/utils/model";
-import { Value } from "visual/utils/options/Border/entities/Value";
 import * as Style from "visual/utils/options/Border/entities/style";
-import * as Width from "visual/utils/options/Border/entities/width";
-import * as WidthType from "visual/utils/options/Border/entities/widthType";
+import type { Value } from "visual/utils/options/Border/entities/Value";
+import type * as Width from "visual/utils/options/Border/entities/width";
+import type * as WidthType from "visual/utils/options/Border/entities/widthType";
 import * as Palette from "visual/utils/options/ColorPicker/entities/palette";
 import { mApply } from "visual/utils/value";
-import { getHex, getOpacity, getPalette } from "../ColorPicker/model";
 import * as ColorPicker from "../ColorPicker/model";
+import { getHex, getOpacity, getPalette } from "../ColorPicker/model";
 import { toggleColor } from "../ColorPicker/utils";
 import { _setWidthEdge, toggleStyle, toggleWidth } from "./utils";
 

@@ -2,7 +2,7 @@ import React from "react";
 import { Alert } from "visual/component/Alert";
 import { t } from "visual/utils/i18n";
 import { Button as PromptButton } from "./Button";
-import { PromptViewProp } from "./types";
+import type { PromptViewProp } from "./types";
 
 export const PromptView: React.FC<PromptViewProp> = ({
   img,

@@ -1,13 +1,13 @@
 import { isEqual } from "es-toolkit";
-import { Draft, produce } from "immer";
-import { ElementModelType2 } from "visual/component/Elements/Types";
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import { type Draft, produce } from "immer";
+import type { ElementModelType2 } from "visual/component/Elements/Types";
+import type { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import { updateGlobalBlock } from "visual/redux/actions2";
-import { Block } from "visual/types/Block";
+import type { Block } from "visual/types/Block";
 import { findDeep } from "visual/utils/object";
 import { modelTraverse } from "visual/utils/traverse/model";
-import { TreeItem, TreeItems } from "./types";
+import type { TreeItem, TreeItems } from "./types";
 
 export function setAll<T extends keyof TreeItem>(
   items: TreeItems,
@@ -17,10 +17,9 @@ export function setAll<T extends keyof TreeItem>(
   return items.map((item) => ({
     ...item,
     [property]: value,
-    children:
-      item.children && item.children.length
-        ? setAll(item.children, property, value)
-        : null
+    children: item.children?.length
+      ? setAll(item.children, property, value)
+      : null
   }));
 }
 
@@ -37,7 +36,7 @@ export function setProperty<T extends keyof TreeItem>(
         [property]: setter(item[property])
       };
     }
-    if (item.children && item.children.length) {
+    if (item.children?.length) {
       return {
         ...item,
         children: setProperty(item.children, id, property, setter)
@@ -109,7 +108,7 @@ const walk = (
       return true;
     }
 
-    if (item.value.items && item.value.items.length) {
+    if (item.value.items?.length) {
       const found = walk(
         item.value.items as Draft<ElementModelType2[]>,
         [...parents, item],
@@ -305,7 +304,7 @@ export function checkForGlobalBlockChanges(
     }
 
     const parent = newBlocks[path[0]];
-    if (parent && parent.value && globalBlockIds.includes(parent.value._id)) {
+    if (parent?.value && globalBlockIds.includes(parent.value._id)) {
       return parent;
     }
   }

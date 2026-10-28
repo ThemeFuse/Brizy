@@ -31,7 +31,7 @@ class Core {
     try {
       importScripts(...thirdPartyScriptsUrl);
     } catch (e) {
-      // eslint-disable-next-line no-console
+      // biome-ignore lint/suspicious/noConsole: migrated from eslint
       console.warn("IMPORT THIRD PARTY SCRIPT ERROR: ", e);
     }
 

@@ -1,48 +1,52 @@
 import classNames from "classnames";
 import { identity } from "es-toolkit";
 import React, {
-  ComponentType,
-  MouseEventHandler,
-  PropsWithChildren,
-  ReactElement,
-  ReactNode,
-  Ref,
-  forwardRef
+  type ComponentType,
+  forwardRef,
+  type MouseEventHandler,
+  type PropsWithChildren,
+  type ReactElement,
+  type ReactNode,
+  type Ref
 } from "react";
 import { useStore } from "react-redux";
 import Animation from "visual/component/Animation";
-import { ElementModel } from "visual/component/Elements/Types";
-import { StoryAnchorAttribute } from "visual/component/Link/types/Slide";
+import type { ElementModel } from "visual/component/Elements/Types";
+import type { StoryAnchorAttribute } from "visual/component/Link/types/Slide";
 import { hideToolbar } from "visual/component/Toolbar";
 import { DH, DW } from "visual/editorComponents/Story/utils";
 import { Draggable } from "visual/editorComponents/tools/Draggable";
-import { Value as DraggableV } from "visual/editorComponents/tools/Draggable/entities/Value";
+import type { Value as DraggableV } from "visual/editorComponents/tools/Draggable/entities/Value";
 import { useConfig } from "visual/providers/ConfigProvider";
-import { GetConfig } from "visual/providers/ConfigProvider/types";
-import { EditorMode } from "visual/providers/EditorModeProvider";
-import { RenderType, isEditor, isView } from "visual/providers/RenderProvider";
+import type { GetConfig } from "visual/providers/ConfigProvider/types";
+import type { EditorMode } from "visual/providers/EditorModeProvider";
+import {
+  isEditor,
+  isView,
+  type RenderType
+} from "visual/providers/RenderProvider";
 import { useCSS } from "visual/providers/StyleProvider/useCSS";
-import { ReduxAction } from "visual/redux/actions2";
+import type { ReduxAction } from "visual/redux/actions2";
 import { deviceModeSelector } from "visual/redux/selectors";
-import { ReduxState } from "visual/redux/types";
-import { WithClassName } from "visual/types/attributes";
+import type { ReduxState } from "visual/redux/types";
+import type { WithClassName } from "visual/types/attributes";
 import { defaultValueKey, defaultValueValue } from "visual/utils/onChange";
 import * as Position from "visual/utils/position/element";
 import { attachRef } from "visual/utils/react";
 import * as Str from "visual/utils/reader/string";
 import * as State from "visual/utils/stateMode";
-import { Literal } from "visual/utils/types/Literal";
+import type { Literal } from "visual/utils/types/Literal";
 import { uuid } from "visual/utils/uuid";
-import { MValue } from "visual/utils/value";
+import type { MValue } from "visual/utils/value";
 import { style } from "./styles";
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+// biome-ignore lint/suspicious/noExplicitAny: migrated from eslint
 export type Plugin<P extends Record<string, unknown> = any> = [
   ComponentType<P> | keyof JSX.IntrinsicElements,
   P
 ];
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+// biome-ignore lint/suspicious/noExplicitAny: migrated from eslint
 export interface Props<T extends Record<any, any>> extends WithClassName {
   component?: ComponentType<T> | keyof JSX.IntrinsicElements;
   attributes: Record<string, unknown | number> | undefined;
@@ -67,7 +71,7 @@ export interface Props<T extends Record<any, any>> extends WithClassName {
 
 const wrapperId = uuid(7);
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+// biome-ignore lint/suspicious/noExplicitAny: migrated from eslint
 export function WrapperComponent<T extends WithClassName & Record<any, any>>(
   {
     children,

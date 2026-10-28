@@ -1,5 +1,5 @@
-import { ActionTypes, ReduxAction } from "../actions2";
-import { ReduxState, StoreChanged } from "../types";
+import { ActionTypes, type ReduxAction } from "../actions2";
+import { type ReduxState, StoreChanged } from "../types";
 
 type StoreWasChanged = ReduxState["storeWasChanged"];
 type RStoreWasChanged = (s: StoreWasChanged, a: ReduxAction) => StoreWasChanged;

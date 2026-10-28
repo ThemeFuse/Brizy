@@ -1,4 +1,4 @@
-import React, { MouseEvent, ReactElement } from "react";
+import React, { type MouseEvent, type ReactElement } from "react";
 import SelectItem from "visual/component/Controls/Select/SelectItem";
 import EditorIcon from "visual/component/EditorIcon";
 import { t } from "visual/utils/i18n";

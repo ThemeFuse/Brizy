@@ -1,7 +1,7 @@
-import { ReactElement, RefObject } from "react";
-import { OptionDefinition } from "visual/editorComponents/ToolbarItemType";
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
-import { PortalToolbarPositionerProps } from "./PortalToolbarPositioner";
+import type { ReactElement, RefObject } from "react";
+import type { OptionDefinition } from "visual/editorComponents/ToolbarItemType";
+import type { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import type { PortalToolbarPositionerProps } from "./PortalToolbarPositioner";
 
 export type PortalToolbarProps = {
   config: ConfigCommon;

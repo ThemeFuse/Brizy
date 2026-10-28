@@ -1,8 +1,9 @@
 import { noop } from "es-toolkit";
-import React, { KeyboardEvent, ReactElement } from "react";
+import React, { type KeyboardEvent, type ReactElement } from "react";
 import { ToastContainer } from "react-toastify";
 import { RuntimeCompiler } from "visual/bootstraps/compiler/Runtime";
 import BottomPanel from "visual/component/BottomPanel";
+import { EmbedCodeConsentInit } from "visual/component/EmbedCodeConsent";
 import HotKeys from "visual/component/HotKeys";
 import { LeftSidebar } from "visual/component/LeftSidebar";
 import NavigatorRoot from "visual/component/Navigator";
@@ -13,11 +14,10 @@ import { RightSidebar } from "visual/component/RightSidebar";
 import UIEvents, { UIEventType } from "visual/global/UIEvents";
 import { PluginPortals } from "visual/plugins/PluginPortals";
 import { getCommonEditorMode } from "visual/providers/EditorModeProvider";
-import { EmbedCodeConsentInit } from "visual/component/EmbedCodeConsent";
 import Page from "./Editor/Page";
 import Popup from "./Editor/Popup";
 import Story from "./Editor/Story";
-import { Props } from "./types";
+import type { Props } from "./types";
 
 class Editor extends React.Component<Props> {
   parentWindowDocument = () => {

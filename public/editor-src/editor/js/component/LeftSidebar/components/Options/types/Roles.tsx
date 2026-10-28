@@ -1,5 +1,5 @@
 import classnames from "classnames";
-import React, { ReactElement, useCallback, useMemo } from "react";
+import React, { type ReactElement, useCallback, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Select from "visual/component/Controls/Select";
 import SelectItem from "visual/component/Controls/Select/SelectItem";
@@ -35,8 +35,8 @@ export const Roles = (props: Props): ReactElement => {
       ..._membershipRoles
     ];
 
-    return membershipRoles.map((item, index) => (
-      <SelectItem key={index} value={item.role}>
+    return membershipRoles.map((item) => (
+      <SelectItem key={item.role} value={item.role}>
         {item.name}
       </SelectItem>
     ));

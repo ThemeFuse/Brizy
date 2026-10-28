@@ -1,6 +1,6 @@
 import type { GetItems } from "visual/editorComponents/EditorComponent/types";
-import { DCTypes } from "visual/global/Config/types/DynamicContent";
 import { isBackgroundPointerEnabled } from "visual/global/Config/types/configs/featuresValue";
+import { DCTypes } from "visual/global/Config/types/DynamicContent";
 import { isPopup } from "visual/providers/EditorModeProvider";
 import { getColorToolbar } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
@@ -16,7 +16,7 @@ import { getDynamicContentOption } from "visual/utils/options";
 import { read as readString } from "visual/utils/reader/string";
 import { HOVER, NORMAL } from "visual/utils/stateMode";
 import { getInstanceParentId } from "visual/utils/toolbar";
-import { Value } from "./toolbarClose";
+import type { Value } from "./toolbarClose";
 
 // @ts-expect-error need to change to new options
 export const getItems: GetItems<Value> = ({

@@ -1,6 +1,6 @@
-import { ExternalVideoEdit } from "./External";
 import { CustomVideoEdit } from "./Custom";
-import { PlaylistPreview } from "./Preview";
 import { Sidebar } from "./components/Sidebar";
+import { ExternalVideoEdit } from "./External";
+import { PlaylistPreview } from "./Preview";
 
-export { ExternalVideoEdit, CustomVideoEdit, PlaylistPreview, Sidebar };
+export { CustomVideoEdit, ExternalVideoEdit, PlaylistPreview, Sidebar };

@@ -1,4 +1,4 @@
-import { WithRenderContext } from "visual/providers/RenderProvider";
+import type { WithRenderContext } from "visual/providers/RenderProvider";
 import {
   cssStyleBgColor,
   cssStyleBorder,
@@ -13,7 +13,7 @@ import {
   cssStyleTypography2LineHeight
 } from "visual/utils/cssStyle";
 import { defaultValueValue } from "visual/utils/onChange";
-import { CSSValue } from "visual/utils/style2/types";
+import type { CSSValue } from "visual/utils/style2/types";
 
 export function cssStyleElementTOCPropertyHoverTransition(): string {
   return "transition-property: color, background-color, text-shadow, box-shadow, border,height;";

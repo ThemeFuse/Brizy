@@ -1,5 +1,8 @@
-import { EcwidCategoryId, EcwidProductId } from "visual/global/Ecwid/types";
-import { NewType } from "visual/types/NewType";
+import type {
+  EcwidCategoryId,
+  EcwidProductId
+} from "visual/global/Ecwid/types";
+import type { NewType } from "visual/types/NewType";
 
 export enum BlockTypeRule {
   include = 1,

@@ -1,17 +1,17 @@
 import type { GetItems } from "visual/editorComponents/EditorComponent/types";
 import { isUserAgreementCheckbox } from "visual/editorComponents/Form2/utils";
-import { DCTypes } from "visual/global/Config/types/DynamicContent";
 import {
   ElementTypes,
   readElementType
 } from "visual/global/Config/types/configs/ElementTypes";
 import { getEnabledLinkOptions } from "visual/global/Config/types/configs/featuresValue";
+import { DCTypes } from "visual/global/Config/types/DynamicContent";
 import { isPopup, isStory } from "visual/providers/EditorModeProvider";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
 import { getDynamicContentOption } from "visual/utils/options";
 import { toolbarLinkAnchor } from "visual/utils/toolbar";
-import { Props, Value } from "./type";
+import type { Props, Value } from "./type";
 
 export const getItems: GetItems<Value, Props> = ({
   v,

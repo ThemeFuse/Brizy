@@ -17,6 +17,7 @@ import { makeOptionValueToMotion } from "visual/component/ScrollMotions/utils";
 import { SortableElement } from "visual/component/Sortable/SortableElement";
 import SortableHandle from "visual/component/Sortable/SortableHandle";
 import Toolbar, { ToolbarExtend } from "visual/component/Toolbar";
+import { TransformWrapper } from "visual/component/TransformWrapper";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { shouldRenderPopup } from "visual/editorComponents/tools/Popup";
@@ -39,10 +40,10 @@ import { parseCustomAttributes } from "visual/utils/string/parseCustomAttributes
 import * as Str from "visual/utils/string/specs";
 import { styleSizeWidth } from "visual/utils/style2";
 import { currentUserRole } from "../../component/Roles";
-import Items from "./Items";
 import ColumnResizer from "./components/ColumnResizer";
 import contextMenuConfig from "./contextMenu";
 import defaultValue from "./defaultValue.json";
+import Items from "./Items";
 import * as sidebarConfig from "./sidebar";
 import { styleAnimation, styleColumn, styleItems } from "./styles";
 import * as toolbarConfig from "./toolbar";
@@ -162,7 +163,7 @@ class Column extends EditorComponent {
   isInnerRow() {
     const { meta } = this.props;
 
-    return meta.row && meta.row.isInner;
+    return meta.row?.isInner;
   }
 
   dvv = (key) => {
@@ -401,7 +402,9 @@ class Column extends EditorComponent {
           isHidden={isHidden}
           withoutWrapper={true}
         >
-          {this.renderContent(v, vs, vd)}
+          <TransformWrapper v={v} className="brz-columns__transform">
+            {this.renderContent(v, vs, vd)}
+          </TransformWrapper>
         </HoverAnimation>
       </ScrollMotion>
     );
@@ -548,16 +551,18 @@ class Column extends EditorComponent {
                 isHidden={isHidden}
                 withoutWrapper={true}
               >
-                {this.renderContent(v, vs, vd)}
-                {linkData.href && (
-                  <Link
-                    className="brz-container-link"
-                    type={linkData.type}
-                    href={linkData.href}
-                    target={linkData.target}
-                    rel={linkData.rel}
-                  />
-                )}
+                <TransformWrapper v={v} className="brz-columns__transform">
+                  {this.renderContent(v, vs, vd)}
+                  {linkData.href && (
+                    <Link
+                      className="brz-container-link"
+                      type={linkData.type}
+                      href={linkData.href}
+                      target={linkData.target}
+                      rel={linkData.rel}
+                    />
+                  )}
+                </TransformWrapper>
               </HoverAnimation>
             </ScrollMotion>
           </Animation>

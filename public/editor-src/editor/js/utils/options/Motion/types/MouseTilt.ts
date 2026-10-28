@@ -1,8 +1,8 @@
 import { or, parseStrict } from "fp-utilities";
-import { ElementModel } from "visual/component/Elements/Types";
-import { FromElementModelGetter } from "visual/component/Options/Type";
+import type { ElementModel } from "visual/component/Elements/Types";
+import type { FromElementModelGetter } from "visual/component/Options/Type";
 import { mPipe, pass } from "visual/utils/fp";
-import * as Unit from "visual/utils/math/Unit";
+import type * as Unit from "visual/utils/math/Unit";
 import { callGetter } from "visual/utils/options/utils/wrap";
 import { elementModelToSpeed } from "./utils";
 

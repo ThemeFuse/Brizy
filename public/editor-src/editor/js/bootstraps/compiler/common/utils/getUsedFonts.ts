@@ -1,15 +1,15 @@
-import { FontKeyTypes } from "visual/redux/actions2";
-import { ReduxState } from "visual/redux/types";
-import {
+import type { FontKeyTypes } from "visual/redux/actions2";
+import type { ReduxState } from "visual/redux/types";
+import type {
   AdobeFont,
+  FontFamilyType,
   GoogleFont,
   SystemFont,
   UploadedFont
 } from "visual/types/Fonts";
-import { FontFamilyType } from "visual/types/Fonts";
-import { FontGroup } from "visual/utils/fonts/getFontById";
+import type { FontGroup } from "visual/utils/fonts/getFontById";
 import { findFonts, projectFontsData } from "visual/utils/fonts/transform";
-import { ProjectFontsData } from "../types";
+import type { ProjectFontsData } from "../types";
 
 interface UsedFonts {
   fonts: {
@@ -77,12 +77,12 @@ export const getUsedFonts = (data: Data): UsedFonts => {
       }
       case "upload": {
         const font = findFonts(upload, family, "upload");
-        font && _font.upload.push(font);
+        if (font) _font.upload.push(font);
         break;
       }
       case "google": {
         const font = findFonts(google, family);
-        font && _font.google.push(font);
+        if (font) _font.google.push(font);
         break;
       }
     }

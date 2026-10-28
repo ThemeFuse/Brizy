@@ -1,5 +1,5 @@
-import { ComponentProps } from "react";
-import { Meta, Props } from "visual/component/Options/Type";
+import type { ComponentProps } from "react";
+import type { Meta, Props } from "visual/component/Options/Type";
 import { Population } from "visual/component/Options/types/common/Population";
 import { Addable } from "visual/component/Options/types/dev/Addable";
 import { AdvancedSettings } from "visual/component/Options/types/dev/AdvancedSettings";
@@ -53,7 +53,7 @@ import { FormApps as FormAppsDev } from "./dev/FormApps";
 import { GlobalBlockOption as GlobalBlockDev } from "./dev/GlobalBlock";
 import { LinkExternal } from "./dev/LinkExternal";
 import { Margin } from "./dev/Margin";
-import { Number } from "./dev/Number";
+import { NumberOption } from "./dev/Number";
 import { Padding } from "./dev/Padding";
 import { Popover as PopoverDev } from "./dev/Popover";
 import { PromptAddPopup } from "./dev/PromptAddPopup";
@@ -90,7 +90,7 @@ export const types = {
   margin: Margin,
   motion: Motion,
   multiSelect: MultiSelect,
-  number: Number,
+  number: NumberOption,
   textarea: TextareaDev,
   radioGroup: RadioGroupDev,
   range: RangeDev,
@@ -140,7 +140,7 @@ export type OptionMeta<T extends OptionName> =
   ComponentProps<OptionTypes[T]> extends Meta<infer M> ? M : unknown;
 
 export type OptionPatch<T extends OptionName> =
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  // biome-ignore lint/suspicious/noExplicitAny: migrated from eslint
   ComponentProps<OptionTypes[T]> extends Props<any, infer M>
     ? M
     : OptionValue<T>;

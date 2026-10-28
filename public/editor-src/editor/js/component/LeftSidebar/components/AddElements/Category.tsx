@@ -1,10 +1,10 @@
 import classnames from "classnames";
 import { noop } from "es-toolkit";
-import React, { ReactElement, ReactNode } from "react";
+import React, { type ReactElement, type ReactNode } from "react";
 import Sortable from "visual/component/Sortable";
-import { Shortcode } from "visual/types";
+import type { Shortcode } from "visual/types";
 import { makeBzelmAttr } from "visual/utils/i18n/attribute";
-import { SortData } from "./types";
+import type { SortData } from "./types";
 
 const sortableBlindZone = {
   left: 0,

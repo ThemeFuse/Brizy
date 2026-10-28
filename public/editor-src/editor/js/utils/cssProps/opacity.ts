@@ -1,7 +1,7 @@
-import { inRange } from "visual/utils/math";
-import { Append, Concat } from "visual/utils/types/Monoid";
-import { NewType } from "visual/types/NewType";
+import type { NewType } from "visual/types/NewType";
 import { mPipe, pass } from "visual/utils/fp";
+import { inRange } from "visual/utils/math";
+import type { Append, Concat } from "visual/utils/types/Monoid";
 
 enum opacity {
   opacity = "opacity"
@@ -17,7 +17,7 @@ export const empty: Opacity = 0 as Opacity;
 
 export const append: Append<Opacity> = (a, b) => (a === empty ? b : a);
 
-export const concat: Concat<Opacity> = as => as.reduce(append, empty);
+export const concat: Concat<Opacity> = (as) => as.reduce(append, empty);
 
 export const unsafe = (n: number): Opacity => n as Opacity;
 

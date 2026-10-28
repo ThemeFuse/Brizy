@@ -7,7 +7,7 @@ import {
 import classnames from "classnames";
 import React from "react";
 import BoxResizer from "visual/component/BoxResizer";
-import { Patch } from "visual/component/BoxResizer/types";
+import type { Patch } from "visual/component/BoxResizer/types";
 import { ToastNotification } from "visual/component/Notifications";
 import Toolbar from "visual/component/Toolbar";
 import { shouldRenderPopup } from "visual/editorComponents/tools/Popup";
@@ -20,7 +20,7 @@ import { BaseLottie } from "./Base";
 import * as sidebarConfig from "./sidebar";
 import { style } from "./styles";
 import * as toolbarConfig from "./toolbar";
-import { Meta, State, Value } from "./type";
+import type { Meta, State, Value } from "./type";
 import {
   getBoxResizerParams,
   getDirection,

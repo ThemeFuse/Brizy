@@ -5,7 +5,7 @@ import { getIn } from "timm";
 import Toolbar from "visual/component/Toolbar";
 import { Translate } from "visual/component/Translate";
 import EditorComponent from "visual/editorComponents/EditorComponent";
-import { Model } from "visual/editorComponents/EditorComponent/types";
+import type { Model } from "visual/editorComponents/EditorComponent/types";
 import {
   isPhoneType,
   isUserAgreementCheckbox
@@ -17,15 +17,15 @@ import { getCSSId } from "visual/utils/models/cssId";
 import { parseCustomAttributes } from "visual/utils/string/parseCustomAttributes";
 import { uuid } from "visual/utils/uuid";
 import { migrations } from "../migrations/Form2Field";
-import Form2FieldItems from "./Items";
 import defaultValue from "./defaultValue.json";
+import Form2FieldItems from "./Items";
 import * as sidebar from "./sidebar";
 import { style } from "./styles";
 import * as toolbar from "./toolbars/toolbar";
-import { Error, FormInput, Props, Value } from "./type";
+import { type FieldError, FormInput, type Props, type Value } from "./type";
 import { Label } from "./types/common/Label";
 import types from "./types/index";
-import { Active } from "./types/type";
+import type { Active } from "./types/type";
 
 class Form2Field extends EditorComponent<Value, Props> {
   static defaultValue = defaultValue;
@@ -35,7 +35,7 @@ class Form2Field extends EditorComponent<Value, Props> {
     return ElementTypes.Form2Field;
   }
 
-  getError(v: Value): Error {
+  getError(v: Value): FieldError {
     const {
       type,
       fileSizeErrorMessage,
@@ -280,9 +280,12 @@ class Form2Field extends EditorComponent<Value, Props> {
       ? {
           active: {
             ...(Obj.isObject(active) ? active : {}),
-            ...defaultValue
+            ...(defaultValue
               ?.split(",")
-              .reduce((acc, k) => ({ ...acc, [k.trim()]: true }), {})
+              .reduce<Record<string, boolean>>((acc, k) => {
+                acc[k.trim()] = true;
+                return acc;
+              }, {}) ?? {})
           }
         }
       : {};

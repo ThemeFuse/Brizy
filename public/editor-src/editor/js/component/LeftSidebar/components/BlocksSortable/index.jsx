@@ -1,8 +1,8 @@
 import {
+  closestCenter,
   DndContext,
   KeyboardSensor,
   PointerSensor,
-  closestCenter,
   useSensor,
   useSensors
 } from "@dnd-kit/core";
@@ -11,8 +11,8 @@ import {
   restrictToWindowEdges
 } from "@dnd-kit/modifiers";
 import {
-  SortableContext,
   arrayMove,
+  SortableContext,
   useSortable,
   verticalListSortingStrategy
 } from "@dnd-kit/sortable";
@@ -166,7 +166,7 @@ class _DrawerComponent extends React.Component {
   getContainer = () => {
     const node = this.content.current;
 
-    return node && node.parentElement;
+    return node?.parentElement;
   };
 
   handleSortEnd = (event) => {

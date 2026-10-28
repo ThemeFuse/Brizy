@@ -1,14 +1,14 @@
-import {
+import type {
   ElementModel,
   ElementModelType2,
   ElementProps
 } from "visual/component/Elements/Types";
-import { ToolbarExtend } from "visual/editorComponents/EditorComponent/types";
-import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
-import { Translation } from "visual/utils/i18n/t";
-import { Literal } from "visual/utils/types/Literal";
-import { FormInputTypesName } from "./types";
-import { Active } from "./types/type";
+import type { ToolbarExtend } from "visual/editorComponents/EditorComponent/types";
+import type { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
+import type { Translation } from "visual/utils/i18n/t";
+import type { Literal } from "visual/utils/types/Literal";
+import type { FormInputTypesName } from "./types";
+import type { Active } from "./types/type";
 
 export interface Props extends ElementProps {
   labelType: "inside" | "outside";
@@ -20,7 +20,7 @@ export interface Props extends ElementProps {
   toolbarExtendSelect: ToolbarExtend;
 }
 
-export interface Error {
+export interface FieldError {
   fileMaxSizeError?: string;
   fileTypeError?: string;
   minNumError?: string;
@@ -41,6 +41,7 @@ export interface Value extends Omit<ElementModel, "items"> {
   numberMinMessage: string;
   numberMaxMessage: string;
   phoneDefaultCountry: string;
+  phoneShowDialCode: string;
   placeholder?: string;
   label?: string;
   customID: string;

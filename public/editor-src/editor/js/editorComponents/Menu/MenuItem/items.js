@@ -1,3 +1,4 @@
+import { noop } from "es-toolkit";
 import React from "react";
 import { ContextMenuExtend } from "visual/component/ContextMenu";
 import HotKeys from "visual/component/HotKeys";
@@ -38,19 +39,28 @@ class MenuItemItems extends EditorArrayComponent {
     mMenu: false,
     toolbarExtend: null,
     level: 0,
-    getParent: () => {},
+    getParent: noop,
     meta: {},
     placement: null
   };
 
   getItemProps(itemData, itemIndex, items) {
     const props = super.getItemProps(itemData, itemIndex, items);
-    let { level, toolbarExtend, mMenu, meta, getParent, mods, menuSelected } =
-      this.props;
+    let {
+      level,
+      toolbarExtend,
+      mMenu,
+      meta,
+      getParent,
+      mods,
+      menuSelected,
+      parentMenuId
+    } = this.props;
 
     return {
       ...props,
       menuSelected,
+      parentMenuId,
       mMenu,
       toolbarExtend,
       meta,

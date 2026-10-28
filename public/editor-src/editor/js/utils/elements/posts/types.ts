@@ -1,7 +1,7 @@
-import { Choice } from "visual/component/Options/types/dev/Select/types";
-import { EditorComponentContextValue } from "visual/editorComponents/EditorComponent/EditorComponentContext";
-import { Switch } from "visual/types/Options";
-import { Dictionary } from "visual/types/utils";
+import type { Choice } from "visual/component/Options/types/dev/Select/types";
+import type { EditorComponentContextValue } from "visual/editorComponents/EditorComponent/EditorComponentContext";
+import type { Switch } from "visual/types/Options";
+import type { Dictionary } from "visual/types/utils";
 
 export type GetManualTitle = (data: {
   type?: string;

@@ -1,8 +1,8 @@
-import { EditorMode } from "visual/providers/EditorModeProvider";
-import { RenderType } from "visual/providers/RenderProvider";
-import { Store } from "visual/redux/store";
-import { WithClassName } from "visual/types/attributes";
-import { Meta, V, WrapperSizes } from "../Image/types";
+import type { EditorMode } from "visual/providers/EditorModeProvider";
+import type { RenderType } from "visual/providers/RenderProvider";
+import type { Store } from "visual/redux/store";
+import type { WithClassName } from "visual/types/attributes";
+import type { Meta, V, WrapperSizes } from "../Image/types";
 
 export interface Props extends WithClassName {
   meta: Meta;

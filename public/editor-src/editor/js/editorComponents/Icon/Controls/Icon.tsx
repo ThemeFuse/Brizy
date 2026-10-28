@@ -1,6 +1,6 @@
 import React from "react";
 import { ThemeIcon } from "visual/component/ThemeIcon";
-import { ThemeIconProps } from "visual/component/ThemeIcon/types";
+import type { ThemeIconProps } from "visual/component/ThemeIcon/types";
 
 interface IconWrapperProps extends ThemeIconProps {
   classNameIcon: string;

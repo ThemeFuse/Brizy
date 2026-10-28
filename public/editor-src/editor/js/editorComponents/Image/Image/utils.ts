@@ -1,9 +1,9 @@
-import { RetinaData } from "visual/editorComponents/Image/Image/SimpleImage";
-import { Meta } from "visual/editorComponents/Image/types";
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import type { RetinaData } from "visual/editorComponents/Image/Image/SimpleImage";
+import type { Meta } from "visual/editorComponents/Image/types";
+import type { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import {
-  SizeType,
-  defaultCrop
+  defaultCrop,
+  SizeType
 } from "visual/global/Config/types/configs/common";
 import { getImageUrl } from "visual/utils/image";
 

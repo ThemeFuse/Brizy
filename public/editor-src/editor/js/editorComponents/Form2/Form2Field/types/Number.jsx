@@ -2,7 +2,7 @@ import { makeDataAttr } from "visual/utils/i18n/attribute";
 import { encodeToString } from "visual/utils/string";
 import TextField from "./common/TextField";
 
-export default class Number extends TextField {
+export default class NumberField extends TextField {
   static get componentType() {
     return "Number";
   }

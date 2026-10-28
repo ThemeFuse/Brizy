@@ -3,7 +3,7 @@ import { defaultValueValue } from "visual/utils/onChange";
 import * as Str from "visual/utils/string/specs";
 import { isNullish } from "visual/utils/value";
 import { capByPrefix } from "../string";
-import { CSSValue } from "../style2/types";
+import type { CSSValue } from "../style2/types";
 
 const VALID_TIMING = [
   "ease",

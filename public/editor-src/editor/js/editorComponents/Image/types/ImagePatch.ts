@@ -1,15 +1,15 @@
 import { Obj } from "@brizy/readers";
 import { mPipe, optional } from "fp-utilities";
-import { ElementModel } from "visual/component/Elements/Types";
-import { DeviceMode } from "visual/types";
+import type { ElementModel } from "visual/component/Elements/Types";
+import type { DeviceMode } from "visual/types";
 import * as Num from "visual/utils/math/number";
 import { prop } from "visual/utils/object/get";
 import { defaultValueKey } from "visual/utils/onChange";
-import { LinkDCPatch } from "visual/utils/patch/Link/linkPatch";
+import type { LinkDCPatch } from "visual/utils/patch/Link/linkPatch";
 import { readWithParser } from "visual/utils/reader/readWithParser";
 import * as Str from "visual/utils/string/specs";
-import { MValue } from "visual/utils/value";
-import { Unit } from "../types";
+import type { MValue } from "visual/utils/value";
+import type { Unit } from "../types";
 
 export interface ImagePatch {
   imageExtension: string;

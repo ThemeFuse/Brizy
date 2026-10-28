@@ -1,6 +1,6 @@
 import { or, parseStrict } from "fp-utilities";
-import { Offset } from "visual/component/Controls/Transform/types/Offset";
-import { FromElementModelGetter } from "visual/component/Options/Type";
+import type { Offset } from "visual/component/Controls/Transform/types/Offset";
+import type { FromElementModelGetter } from "visual/component/Options/Type";
 import { always, mPipe } from "visual/utils/fp";
 import * as Num from "visual/utils/math/number";
 import { callGetter } from "visual/utils/options/utils/wrap";

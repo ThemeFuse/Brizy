@@ -1,6 +1,6 @@
-import { EcwidConfig } from "visual/libs/Ecwid/types/EcwidConfig";
+import type { EcwidConfig } from "visual/libs/Ecwid/types/EcwidConfig";
 import { onOffToBool } from "visual/utils/boolean";
-import { Value } from "./types/Value";
+import { EcwidProductThumb, type Value } from "./types/Value";
 
 function descriptionPosition(v: "besideImage" | "belowImage"): boolean {
   switch (v) {
@@ -90,3 +90,16 @@ const replacePlaceholder = (
 export const getReplacePlaceholderFn =
   (node: HTMLElement) => (placeholder: string, selector: string) =>
     replacePlaceholder(placeholder, selector, node);
+
+export const getEcwidThumbClassName = (
+  thumbStyle: Value["thumbStyle"]
+): string => {
+  switch (thumbStyle) {
+    case EcwidProductThumb.ImgFeed:
+      return "brz-ecwid-product-wrapper--thumb-feed";
+    case EcwidProductThumb.ImgThumbHorizontal:
+      return "brz-ecwid-product-wrapper--thumb-horizontal";
+    case EcwidProductThumb.ImgThumbVertical:
+      return "brz-ecwid-product-wrapper--thumb-vertical";
+  }
+};

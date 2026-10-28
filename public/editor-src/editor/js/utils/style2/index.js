@@ -24,8 +24,6 @@ export * from "./styleElementCountdown";
 export * from "./styleElementForm2";
 // Element IconBox
 export * from "./styleElementIconBox";
-// Element Image Gallery
-export * from "./styleElementImageGallery";
 // Element MegaMenu
 export * from "./styleElementMegaMenu";
 // Element Menu
@@ -66,11 +64,11 @@ export * from "./styleShowOnDevices";
 export * from "./styleSize";
 // Text Shadow
 export * from "./styleTextShadow";
+// Text Transform
+export * from "./styleTextTransform";
 // Typography
 export * from "./styleTypography";
 // Typography
 export * from "./styleTypography2";
-// Text Transform
-export * from "./styleTextTransform";
 // Z Index
 export * from "./styleZIndex";

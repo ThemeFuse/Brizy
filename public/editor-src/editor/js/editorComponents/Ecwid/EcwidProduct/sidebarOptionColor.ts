@@ -1,7 +1,7 @@
-import { GetItems } from "visual/editorComponents/EditorComponent/types";
+import type { GetItems } from "visual/editorComponents/EditorComponent/types";
 import { t } from "visual/utils/i18n";
 import { optionColorItemSelector, optionColorTooltipSelector } from "./css";
-import { Value } from "./types/Value";
+import type { Value } from "./types/Value";
 
 export const getItems: GetItems<Value> = () => [
   {

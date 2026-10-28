@@ -1,11 +1,16 @@
-import React, { ReactElement, useCallback, useContext, useState } from "react";
-import { IntegrationType } from "visual/global/Config/types/Form";
+import React, {
+  type ReactElement,
+  useCallback,
+  useContext,
+  useState
+} from "react";
+import type { IntegrationType } from "visual/global/Config/types/Form";
 import { useConfig } from "visual/providers/ConfigProvider";
 import { deleteSmtpIntegration, pendingRequest } from "visual/utils/api";
 import { t } from "visual/utils/i18n";
 import { Context } from "../../common/GlobalApps/Context";
 import { Disconnect } from "../../common/GlobalApps/StepsView";
-import { AppData } from "../../common/GlobalApps/type";
+import type { AppData } from "../../common/GlobalApps/type";
 
 interface Props {
   app?: AppData;

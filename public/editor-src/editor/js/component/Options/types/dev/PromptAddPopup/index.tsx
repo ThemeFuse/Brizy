@@ -3,15 +3,15 @@ import React, { useCallback, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { insert } from "timm";
 import { PromptAddPopup as Control } from "visual/component/Controls/PromptAddPopup";
-import Prompts, { PromptsProps } from "visual/component/Prompts";
-import { PromptBlockTemplate } from "visual/component/Prompts/PromptBlocks/types";
+import Prompts, { type PromptsProps } from "visual/component/Prompts";
+import type { PromptBlockTemplate } from "visual/component/Prompts/PromptBlocks/types";
 import { hideToolbar } from "visual/component/Toolbar";
-import { SectionPopup2Instances } from "visual/editorComponents/SectionPopup2/instances";
 import { SectionPopupInstances } from "visual/editorComponents/SectionPopup/instances";
+import { SectionPopup2Instances } from "visual/editorComponents/SectionPopup2/instances";
 import { useConfig } from "visual/providers/ConfigProvider";
 import {
-  FontsPayload,
   addFonts,
+  type FontsPayload,
   updateExtraFontStyles,
   updateGlobalBlock
 } from "visual/redux/actions2";
@@ -19,12 +19,12 @@ import {
   globalBlocksAssembledSelector,
   pageBlocksSelector
 } from "visual/redux/selectors";
-import { TypedDispatch } from "visual/redux/store";
-import { Block } from "visual/types/Block";
+import type { TypedDispatch } from "visual/redux/store";
+import type { Block } from "visual/types/Block";
 import { insertItem } from "visual/utils/models";
-import { FCC } from "visual/utils/react/types";
+import type { FCC } from "visual/utils/react/types";
 import { uuid } from "visual/utils/uuid";
-import { Props } from "./types";
+import type { Props } from "./types";
 
 export const PromptAddPopup: FCC<Props> = ({
   label,
@@ -51,7 +51,7 @@ export const PromptAddPopup: FCC<Props> = ({
         dispatch(addFonts(fonts));
       }
 
-      let newPopups;
+      let newPopups: typeof popups;
 
       if (blockData.type === "GlobalBlock") {
         const { _id } = blockData.value;

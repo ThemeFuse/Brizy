@@ -1,5 +1,5 @@
 import { cssStyleMarginAlign, cssStyleSizeWidth } from "visual/utils/cssStyle";
-import { CSSValue } from "visual/utils/style2/types";
+import type { CSSValue } from "visual/utils/style2/types";
 import { defaultValueValue } from "../onChange";
 
 export function cssStyleElementFacebookWidth({

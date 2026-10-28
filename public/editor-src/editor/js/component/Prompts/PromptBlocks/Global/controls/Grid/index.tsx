@@ -1,8 +1,8 @@
-import React, { ReactElement } from "react";
+import React, { type ReactElement } from "react";
 import { Scrollbar } from "visual/component/Scrollbar";
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import type { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import ThumbnailGrid from "../../../common/ThumbnailGrid";
-import { Thumbnail } from "../../types";
+import type { Thumbnail } from "../../types";
 
 export interface Props<T extends Thumbnail> {
   data: Array<T>;

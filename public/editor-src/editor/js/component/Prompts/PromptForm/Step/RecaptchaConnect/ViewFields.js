@@ -64,12 +64,12 @@ class ViewFields extends Component {
   renderItems() {
     const { data, onChange } = this.props;
 
-    return data.map((key, index) => {
+    return data.map((key) => {
       const { title, name, value } = key;
 
       return (
         <InputPlaceholder
-          key={index}
+          key={name}
           title={title}
           value={value}
           required={true}

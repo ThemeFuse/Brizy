@@ -1,5 +1,5 @@
 import { defaultValueValue } from "visual/utils/onChange";
-import { CSSValue } from "../style2/types";
+import type { CSSValue } from "../style2/types";
 
 export function cssStyleElementFormMargin({ v, device, state }: CSSValue) {
   const dvv = (key: string) => defaultValueValue({ v, key, device, state });

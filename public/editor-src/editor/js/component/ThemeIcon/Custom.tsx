@@ -1,7 +1,7 @@
 import classnames from "classnames";
 import React, { useMemo } from "react";
-import { FCC } from "visual/utils/react/types";
-import { CustomIconProps as Props } from "./types";
+import type { FCC } from "visual/utils/react/types";
+import type { CustomIconProps as Props } from "./types";
 
 export const CustomIcon: FCC<Props> = ({ src, className, ariaLabel }) => {
   const _className = classnames("brz-icon-svg-custom", className);

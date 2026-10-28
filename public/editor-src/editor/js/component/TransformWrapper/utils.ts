@@ -1,14 +1,14 @@
-import { ValuePartial } from "visual/component/Controls/Transform/types/Value";
-import { ElementModel } from "visual/component/Elements/Types";
-import { FromElementModelGetter } from "visual/component/Options/Type";
+import type { ValuePartial } from "visual/component/Controls/Transform/types/Value";
+import type { ElementModel } from "visual/component/Elements/Types";
+import type { FromElementModelGetter } from "visual/component/Options/Type";
 import { createOptionId } from "visual/editorComponents/EditorComponent/utils";
-import { Store } from "visual/redux/store";
+import type { Store } from "visual/redux/store";
 import { defaultValueValue } from "visual/utils/onChange/device";
 import { fromElementModel } from "visual/utils/options/Transform/converters";
 import {
   DESKTOP,
   MOBILE,
-  ResponsiveMode,
+  type ResponsiveMode,
   TABLET
 } from "visual/utils/responsiveMode";
 import { NORMAL } from "visual/utils/stateMode";

@@ -1,12 +1,12 @@
 import classnames from "classnames";
+import { noop } from "es-toolkit";
 import React from "react";
 import ReactDOM from "react-dom";
 import Background from "visual/component/Background";
 import ContainerBorder from "visual/component/ContainerBorder";
 import { ContextMenuDisabled } from "visual/component/ContextMenu";
 import CustomCSS from "visual/component/CustomCSS";
-import { Roles } from "visual/component/Roles";
-import { currentUserRole } from "visual/component/Roles";
+import { currentUserRole, Roles } from "visual/component/Roles";
 import { SortableZIndex } from "visual/component/Sortable/SortableZIndex";
 import { ThemeIcon } from "visual/component/ThemeIcon";
 import { CollapsibleToolbar } from "visual/component/Toolbar";
@@ -37,13 +37,13 @@ import * as toolbarExtend from "./toolbarExtend";
  * @deprecated use import {SectionPopupInstances} from "visual/editorComponents/SectionPopup/instances";
  * @type {Map<any, any>}
  */
-export let SectionPopupInstances = Instances;
+export const SectionPopupInstances = Instances;
 
 class SectionPopup extends EditorComponent {
   static defaultProps = {
     meta: {},
-    onOpen: () => {},
-    onClose: () => {}
+    onOpen: noop,
+    onClose: noop
   };
   static defaultValue = defaultValue;
 

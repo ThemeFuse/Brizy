@@ -1,5 +1,5 @@
 import { once } from "es-toolkit";
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon.js";
+import type { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon.js";
 import { isWp } from "visual/global/Config/types/configs/WP";
 import { assetUrl } from "visual/utils/asset";
 import { urlContainsQueryString } from "visual/utils/url";

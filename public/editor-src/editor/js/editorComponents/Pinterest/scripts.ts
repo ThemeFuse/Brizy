@@ -1,3 +1,4 @@
+import { makeAttr } from "visual/utils/i18n/attribute";
 import { PINTEREST_SCRIPT_ID, PINTEREST_SCRIPT_SRC } from "./constants";
 
 function appendPinterestScript(doc: Document, script: HTMLScriptElement): void {
@@ -39,6 +40,7 @@ export function loadPinterestScript(doc: Document): void {
   script.setAttribute("async", "true");
   script.setAttribute("src", PINTEREST_SCRIPT_SRC);
   script.setAttribute("data-pin-build", "true");
+  script.setAttribute(makeAttr("consent"), "marketing");
 
   appendPinterestScript(doc, script);
 }
@@ -108,6 +110,7 @@ export function reinitPinterestScript(doc: Document): void {
   script.setAttribute("async", "true");
   script.setAttribute("src", `${PINTEREST_SCRIPT_SRC}?t=${Date.now()}`);
   script.setAttribute("data-pin-build", "true");
+  script.setAttribute(makeAttr("consent"), "marketing");
 
   appendPinterestScript(doc, script);
 }

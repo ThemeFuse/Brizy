@@ -1,11 +1,11 @@
 import { type Cheerio, type CheerioAPI, load as cheerioLoad } from "cheerio";
 import type { AnyNode } from "domhandler";
-import { Type as LinkType } from "visual/component/Link/types/Type";
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import type { Type as LinkType } from "visual/component/Link/types/Type";
+import type { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { SizeType } from "visual/global/Config/types/configs/common";
 import { pageDataNoRefsSelector } from "visual/redux/selectors";
-import { Store } from "visual/redux/store";
-import { Block } from "visual/types/Block";
+import type { Store } from "visual/redux/store";
+import type { Block } from "visual/types/Block";
 import { customFileUrl } from "visual/utils/customFile";
 import { makePlaceholder } from "visual/utils/dynamicContent";
 import {
@@ -22,10 +22,7 @@ const linkClassNames = [
   "is-empty"
 ];
 
-const addDataColorAttribute = (
-  $: CheerioAPI,
-  $richText: Cheerio<AnyNode>
-) => {
+const addDataColorAttribute = ($: CheerioAPI, $richText: Cheerio<AnyNode>) => {
   $richText.find(".brz-tp__dc-block").each((_, el) => {
     const $this = $(el);
     const dataColor = $this.find("[data-color]").attr("data-color");
@@ -160,7 +157,7 @@ export const changeRichText = (
     const $this = $(el);
     const population = Str.read($this.attr("data-population"));
     const $blockDynamicContentElem = $this.closest(".brz-tp__dc-block");
-    let $elem: Cheerio<AnyNode> | undefined = undefined;
+    let $elem: Cheerio<AnyNode> | undefined;
 
     if ($blockDynamicContentElem.length) {
       $elem = $blockDynamicContentElem;
@@ -239,7 +236,6 @@ type Data = {
 };
 
 function getLinkContentByType(data: Data, config: ConfigCommon): string {
-  // eslint-disable-next-line prefer-const
   let { type, href, pageBlocks } = data;
 
   switch (type) {
@@ -254,8 +250,7 @@ function getLinkContentByType(data: Data, config: ConfigCommon): string {
         attr: { uid: href }
       });
       const anchorName =
-        (blockByHref && blockByHref.value.anchorName) ||
-        `${uidPlaceholder}_${href}`;
+        blockByHref?.value.anchorName || `${uidPlaceholder}_${href}`;
 
       return `#${anchorName}`;
     }

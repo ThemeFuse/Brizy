@@ -1,8 +1,8 @@
-import React, { ReactElement } from "react";
-import { isChoicesSync } from "./utils";
-import { Props } from "./types";
-import { Sync } from "./Sync";
+import React, { type ReactElement } from "react";
 import { Async } from "./Async";
+import { Sync } from "./Sync";
+import type { Props } from "./types";
+import { isChoicesSync } from "./utils";
 
 export const MultiSelect = (props: Props): ReactElement => {
   if (isChoicesSync(props.choices)) {

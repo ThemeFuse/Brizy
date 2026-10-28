@@ -1,14 +1,14 @@
 import { omit, without } from "es-toolkit";
 import { find } from "es-toolkit/compat";
-import React, { JSX, useCallback, useMemo } from "react";
+import React, { type JSX, useCallback, useMemo } from "react";
 import { useDispatch } from "react-redux";
 import { CheckGroup } from "visual/component/Controls/CheckGroup";
 import { CheckGroupIcon } from "visual/component/Controls/CheckGroup/CheckGroupIcon";
 import { CheckGroupItem } from "visual/component/Controls/CheckGroup/CheckGroupItem";
-import Fixed from "visual/component/Prompts/Fixed";
 import { EmptyContentWithDefaults } from "visual/component/Prompts/common/PromptPage/EmptyContent";
 import { HeaderFooterField } from "visual/component/Prompts/common/PromptPage/HeaderFooterField";
 import { useStateReducer } from "visual/component/Prompts/common/states/Classic/useStateReducer";
+import Fixed from "visual/component/Prompts/Fixed";
 import {
   canSyncPage,
   getAllOptionText,
@@ -20,14 +20,14 @@ import {
   isShopifyLayout
 } from "visual/component/Prompts/utils";
 import {
-  Shopify,
   isCloud,
-  isShopify
+  isShopify,
+  type Shopify
 } from "visual/global/Config/types/configs/Cloud";
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import type { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import {
-  ShopifyTemplate,
-  getShopifyTemplate
+  getShopifyTemplate,
+  ShopifyTemplate
 } from "visual/global/Config/types/shopify/ShopifyTemplate";
 import { useConfig } from "visual/providers/ConfigProvider";
 import {
@@ -41,7 +41,7 @@ import {
   getPageRelations,
   shopifySyncRules
 } from "visual/utils/api";
-import { SelectedItem } from "visual/utils/api/types";
+import type { SelectedItem } from "visual/utils/api/types";
 import { isNonEmptyArray } from "visual/utils/array/types";
 import { ErrorCodes } from "visual/utils/errors";
 import { t } from "visual/utils/i18n";
@@ -53,7 +53,7 @@ import { Input } from "../common/PromptPage/Input";
 import { Tabs } from "../common/PromptPage/types";
 import * as Actions from "../common/states/Classic/types/Actions";
 import { reducer } from "./reducer";
-import { Item, Props, RulesState, Valid } from "./types";
+import type { Item, Props, RulesState, Valid } from "./types";
 import * as Setters from "./types/Setters";
 
 const getErrors = (s: RulesState): string | undefined => {

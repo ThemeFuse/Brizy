@@ -1,24 +1,26 @@
-import React from "react";
+import React, { type ReactNode } from "react";
 import { useStore } from "react-redux";
-import { ReduxAction } from "visual/redux/actions2";
-import { ReduxState } from "visual/redux/types";
+import type { ReduxAction } from "visual/redux/actions2";
+import type { ReduxState } from "visual/redux/types";
 import { hasTransform } from "./utils";
 
 interface Props<T extends Record<string, unknown> = Record<string, unknown>> {
   v: T;
-  children: JSX.Element;
+  className: string;
+  children: ReactNode;
   needWrapper?: boolean;
 }
 
 export const TransformWrapper = <T extends Record<string, unknown>>({
   v,
+  className,
   children,
   needWrapper
-}: Props<T>): JSX.Element => {
+}: Props<T>): ReactNode => {
   const store = useStore<ReduxState, ReduxAction>();
 
   return hasTransform(v, store) || needWrapper ? (
-    <div className="brz-wrapper-transform">{children}</div>
+    <div className={className}>{children}</div>
   ) : (
     children
   );

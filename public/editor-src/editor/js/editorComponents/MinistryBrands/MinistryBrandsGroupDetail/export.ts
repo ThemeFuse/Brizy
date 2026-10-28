@@ -1,9 +1,6 @@
-import { ExportFunction } from "visual/types";
+import type { ExportFunction } from "visual/types";
 
-export const fn: ExportFunction = ($node) => {
-  const node = $node.get(0);
-  if (!node) return;
-
+export const fn: ExportFunction = (node) => {
   node.querySelectorAll<HTMLElement>(".brz-groupDetail").forEach((element) => {
     element.addEventListener("click", (e) => {
       const element = e.target;

@@ -1,4 +1,4 @@
-import { SizeSuffix } from "visual/utils/fonts/SizeSuffix";
+import type { SizeSuffix } from "visual/utils/fonts/SizeSuffix";
 
 export interface FontSize {
   size: number;

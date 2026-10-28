@@ -1,14 +1,14 @@
 import classnames from "classnames";
 import React from "react";
-import { ConnectedProps, connect } from "react-redux";
+import { type ConnectedProps, connect } from "react-redux";
 import { currentUserRole } from "visual/component/Roles";
 import { isWp } from "visual/global/Config";
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import type { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { useConfig } from "visual/providers/ConfigProvider";
 import { setDeviceMode } from "visual/redux/actions2";
 import { deviceModeSelector, pageSelector } from "visual/redux/selectors";
-import { ReduxState } from "visual/redux/types";
-import { Option as OptionData } from "../../options";
+import type { ReduxState } from "visual/redux/types";
+import type { Option as OptionData } from "../../options";
 import Option from "./Option";
 
 const fillerOption = (option: OptionData, currentUserRole: string) => {
@@ -90,6 +90,7 @@ class _Options extends React.Component<Props> {
       .filter((data) => fillerOption(data, currentUserRole(config)))
       .map((option, index) => (
         <Option
+          // biome-ignore lint/suspicious/noArrayIndexKey: option definitions render in a fixed order and OptionDefinition.id is optional
           key={index}
           className={optionClassName}
           data={option}

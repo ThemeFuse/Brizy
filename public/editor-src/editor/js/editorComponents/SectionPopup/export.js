@@ -1,55 +1,95 @@
-import $ from "jquery";
-import { makeDataAttrString } from "visual/utils/i18n/attribute";
+import { onBodyClick } from "visual/utils/export/delegate";
+import { makeAttr, makeDataAttrString } from "visual/utils/i18n/attribute";
 
-export default function ($node) {
-  $node
-    .find(makeDataAttrString({ name: "link-type", value: "popup" }))
-    .on("click", function (e) {
-      e.preventDefault();
+// exact attribute match over the document; the value may not be a CSS identifier
+const findByAttr = (name, value) => {
+  const attrName = makeAttr(name);
 
-      const popupId = this.getAttribute("href").slice(1); // without the `#`
+  return Array.from(document.querySelectorAll(`[${attrName}]`)).filter(
+    (node) => node.getAttribute(attrName) === value
+  );
+};
 
-      if (popupId) {
-        const $popup = $(makeDataAttrString({ name: "popup", value: popupId }));
+export default function (node) {
+  const linkSelector = makeDataAttrString({
+    name: "link-type",
+    value: "popup"
+  });
+  const links = new Set(node.querySelectorAll(linkSelector));
+  const popupClicks = new Map();
 
-        if ($popup.hasClass("brz-popup")) {
-          openPopup($popup.get(0));
+  onBodyClick([
+    {
+      selector: linkSelector,
+      handler: (link, e) => {
+        if (!links.has(link)) {
+          return;
+        }
+
+        e.preventDefault();
+
+        const popupId = link.getAttribute("href").slice(1); // without the `#`
+
+        if (popupId) {
+          const popups = findByAttr("popup", popupId);
+
+          if (popups.some((popup) => popup.classList.contains("brz-popup"))) {
+            openPopup(popups[0]);
+          }
         }
       }
-    });
-
-  $node.find(".brz-popup:not(.brz-initialized)").click(function (e) {
-    const clickedInsideContent =
-      $(e.target).closest(".brz-container").length === 0;
-
-    if (clickedInsideContent) {
-      closePopup(this);
+    },
+    {
+      selector: ".brz-popup",
+      handler: (nearest, e) => {
+        // every popup around the click, innermost first
+        for (
+          let popup = nearest;
+          popup;
+          popup = popup.parentElement?.closest(".brz-popup")
+        ) {
+          popupClicks.get(popup)?.(e);
+        }
+      }
     }
+  ]);
+
+  node.querySelectorAll(".brz-popup:not(.brz-initialized)").forEach((popup) => {
+    popupClicks.set(popup, (e) => {
+      const clickedInsideContent = !e.target.closest(".brz-container");
+
+      if (clickedInsideContent) {
+        closePopup(popup);
+      }
+    });
   });
 
-  $(".brz-popup").addClass("brz-initialized");
+  document.querySelectorAll(".brz-popup").forEach((popup) => {
+    popup.classList.add("brz-initialized");
+  });
 
   // closes a popup when an anchor link is clicked inside it
   window.Brz.on("elements.anchor.startScrolled", (anchor) => {
-    const $closestPopup = $(anchor).closest(".brz-popup");
+    const closestPopup =
+      anchor instanceof Element ? anchor.closest(".brz-popup") : null;
 
-    if ($closestPopup.length > 0) {
-      closePopup($closestPopup.get(0));
+    if (closestPopup) {
+      closePopup(closestPopup);
     }
   });
 
   function closePopup(popup) {
-    $(popup).removeClass("brz-popup--opened");
-    $("html").removeClass("brz-ow-hidden");
+    popup.classList.remove("brz-popup--opened");
+    document.documentElement.classList.remove("brz-ow-hidden");
 
     // trigger an event so that other components could listen
-    $(document).trigger("brz.popup.close", [popup]);
+    window.Brz.emit("brz.popup.close", popup);
     window.Brz.emit("elements.popup.close", popup);
   }
 
   function openPopup(popup) {
-    $(popup).addClass("brz-popup--opened");
-    $("html").addClass("brz-ow-hidden");
+    popup.classList.add("brz-popup--opened");
+    document.documentElement.classList.add("brz-ow-hidden");
     window.Brz.emit("elements.popup.open", popup);
   }
 }

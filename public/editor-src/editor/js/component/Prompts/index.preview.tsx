@@ -1,5 +1,4 @@
-import React from "react";
-
-export default function PromptsPreview(): JSX.Element {
-  return <></>;
+import type { ReactNode } from "react";
+export default function PromptsPreview(): ReactNode {
+  return null;
 }
