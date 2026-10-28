@@ -281,7 +281,7 @@ class Brizy_Admin_Settings
         Brizy_Editor_Storage_Common::instance()->set('json-upload', $jsonEnabled);
 		Brizy_Editor_Storage_Common::instance()->set( 'getting-started-video-enabled', $gettingStartedVideoEnabled );
         $cookieBannerWasEnabled = Brizy_Admin_Blocks_CookieBanner::isCookieBannerEnabled();
-        $cookieBannerUpdated = false;
+        $cookieBannerUpdated = true;
         if ($cookieBannerEnabled && !$cookieBannerWasEnabled) {
             $cookieBannerUpdated = $this->getCookieBanner()->enable();
         } elseif (!$cookieBannerEnabled && $cookieBannerWasEnabled) {
