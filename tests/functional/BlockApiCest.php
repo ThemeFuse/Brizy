@@ -294,6 +294,34 @@ class BlockApiCest {
 		$I->assertFalse( isset( $block->synchronizable ), 'Block should not contain property:  synchronizable' );
 	}
 
+	/**
+	 * The permission check must run before anything is written, a rejected request
+	 * used to leave a published global block with its compiled assets and rules behind.
+	 *
+	 * @param FunctionalTester $I
+	 */
+	public function createGlobalBlockAsContributorTest( FunctionalTester $I ) {
+		$I->haveUserInDatabase( 'contributor', 'contributor', [ 'user_pass' => 'contributor' ] );
+		$I->loginAs( 'contributor', 'contributor' );
+
+		$uid = 'contributorglobalblockuid';
+
+		$I->sendAjaxPostRequest( 'wp-admin/admin-ajax.php?' . build_query( [
+				'action'  => 'brizy-create-global-block',
+				'version' => BRIZY_EDITOR_VERSION,
+			] ), [
+			'uid'      => $uid,
+			'data'     => '{"type":"Section","value":{"items":[]}}',
+			'compiled' => '{"blocks":[]}',
+			'rules'    => '[{"type":1,"appliedFor":null,"entityType":"","entityValues":[]}]',
+			'meta'     => '{}',
+			'status'   => 'publish',
+		] );
+
+		$I->seeResponseCodeIs( 403 );
+		$I->dontSeePostMetaInDatabase( [ 'meta_key' => 'brizy_post_uid', 'meta_value' => $uid ] );
+	}
+
 	public function createGlobalBlocksTest( FunctionalTester $I ) {
 		$meta  = '{"_thumbnailSrc": "","_thumbnailWidth": 0}';
 		$media = '{"fonts":["pvfegzyhgbmoprmzmsxfakudbermsvztkyel","jzuulmiplxnszgangurbqaexkirdbgpfhfxm"],"images":["dd81059582abb5710fa8ca1da32a825a4f4bc587.jpeg","e3959c03766425afcfa8bd16e72fb505b6221ae1.jpeg"]}';

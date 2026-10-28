@@ -161,6 +161,10 @@ class Brizy_Editor_AssetSanitizer {
 					if ( $url === '' && (string) $asset['content']['url'] !== '' ) {
 						return $keep ? $this->emptyContent( $asset ) : null;
 					}
+					// an external file is enqueued as <script src>, only trusted hosts may be used
+					if ( ! Brizy_Editor_AssetUrlPolicy::isAllowed( $url, $isStyleGroup ) ) {
+						return $keep ? $this->emptyContent( $asset ) : null;
+					}
 					$asset['content']['url'] = $url;
 				}
 				break;

@@ -183,7 +183,10 @@ class Brizy_Public_AssetEnqueueManager
 
         foreach ($this->styles as $handle => $asset) {
             if ($asset->getType() == Asset::TYPE_FILE) {
-                wp_register_style($handle, $this->getAssetUrl($asset), [], apply_filters('brizy_asset_version', BRIZY_EDITOR_VERSION, $asset));
+                if (!($url = $this->getAssetUrl($asset, true))) {
+                    continue;
+                }
+                wp_register_style($handle, $url, [], apply_filters('brizy_asset_version', BRIZY_EDITOR_VERSION, $asset));
                 wp_enqueue_style($handle);
             }
         }
@@ -229,7 +232,10 @@ class Brizy_Public_AssetEnqueueManager
         $registered = [];
         foreach ($this->scripts as $handle => $asset) {
             if ($asset->getType() == Asset::TYPE_FILE) {
-                wp_register_script($handle, $this->getAssetUrl($asset), [], apply_filters('brizy_asset_version', BRIZY_EDITOR_VERSION, $asset), true);
+                if (!($url = $this->getAssetUrl($asset, false))) {
+                    continue;
+                }
+                wp_register_script($handle, $url, [], apply_filters('brizy_asset_version', BRIZY_EDITOR_VERSION, $asset), true);
                 wp_enqueue_script($handle);
                 $registered[] = $asset;
 
@@ -311,10 +317,21 @@ class Brizy_Public_AssetEnqueueManager
         return $content;
     }
 
-    private function getAssetUrl(Asset $asset)
+    /**
+     * @param Asset $asset
+     * @param bool $isStyle
+     *
+     * @return string|null Null when the asset is hosted on a host that is not trusted.
+     */
+    private function getAssetUrl(Asset $asset, $isStyle)
     {
 
         if (strpos($asset->getUrl(), '://') !== false) {
+            // second layer for content stored before the asset urls were checked on save
+            if (!Brizy_Editor_AssetUrlPolicy::isAllowed($asset->getUrl(), $isStyle)) {
+                return null;
+            }
+
             return $asset->getUrl();
         }
 

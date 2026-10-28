@@ -204,6 +204,11 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi
     public function actionCreateGlobalBlock()
     {
         $this->verifyAuthorization(self::nonce);
+        // createEntity() inserts the post and some setters below write straight to post meta
+        $this->verifyGlobalBlockWriteAccess();
+        if (!current_user_can('edit_pages')) {
+            $this->error(403, 'Unauthorized.');
+        }
         if (!$this->param('uid')) {
             $this->error(400, 'Invalid uid');
         }
@@ -265,9 +270,6 @@ class Brizy_Admin_Blocks_Api extends Brizy_Admin_AbstractApi
             if ($rulesData) {
                 $rules = $this->ruleManager->createRulesFromJson($rulesData, Brizy_Admin_Blocks_Main::CP_GLOBAL);
                 $this->ruleManager->addRules($block->getWpPostId(), $rules);
-            }
-            if (!current_user_can('edit_pages')) {
-                $this->error(403, 'Unauthorized.');
             }
             $block->save();
             do_action('brizy_global_block_created', $block);
