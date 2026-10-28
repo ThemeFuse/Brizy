@@ -237,7 +237,9 @@ class Brizy_Admin_Settings
 
     public function settings_submit()
     {
-
+        if (!current_user_can('manage_options')) {
+            return;
+        }
         $screen = get_current_screen();
         if ($this->screenName != $screen->id) {
             return;
@@ -281,7 +283,32 @@ class Brizy_Admin_Settings
 
     public function maintenance_settings_submit()
     {
-        Brizy_Editor_Storage_Common::instance()->set('maintenance', $_POST['brizy-maintenance']);
+        $raw = isset($_POST['brizy-maintenance']) && is_array($_POST['brizy-maintenance'])
+            ? $_POST['brizy-maintenance']
+            : array();
+
+        $allowed_roles = array_map(array($this, 'role_to_id'), $this->list_wp_roles());
+
+        $mode = isset($raw['mode']) && in_array($raw['mode'], array('', 'coming_soon', 'maintenance'), true)
+            ? $raw['mode'] : '';
+        $who = isset($raw['who']) && in_array($raw['who'], array('logged', 'custom'), true)
+            ? $raw['who'] : 'logged';
+        $page = isset($raw['page']) ? absint($raw['page']) : 0;
+        if ($page > 0 && get_post_type($page) !== 'page') {
+            $page = 0;
+        }
+        $roles = (isset($raw['roles']) && is_array($raw['roles']))
+            ? array_values(array_intersect($raw['roles'], $allowed_roles))
+            : array();
+        $ips = isset($raw['ips']) ? sanitize_textarea_field($raw['ips']) : '';
+
+        Brizy_Editor_Storage_Common::instance()->set('maintenance', array(
+            'mode'  => $mode,
+            'who'   => $who,
+            'roles' => $roles,
+            'ips'   => $ips,
+            'page'  => $page ?: '',
+        ));
     }
 
     /**
@@ -347,7 +374,7 @@ class Brizy_Admin_Settings
     public function render()
     {
 
-        if (is_network_admin()) {
+        if (is_network_admin() || !current_user_can('manage_options')) {
             return;
         }
         try {
@@ -361,7 +388,7 @@ class Brizy_Admin_Settings
     public function renderPageTools()
     {
 
-        if (is_network_admin()) {
+        if (is_network_admin() || !current_user_can('manage_options')) {
             return;
         }
         try {
@@ -394,14 +421,16 @@ class Brizy_Admin_Settings
      **/
     public function action_validate_form_submit()
     {
-
         if (count($_POST) == 0) {
             return;
         }
         if (!isset($_POST['tab'])) {
             return;
         }
-        if (!isset($_POST['_wpnonce']) || !wp_verify_nonce($_POST['_wpnonce'])) {
+        if (!current_user_can('manage_options')) {
+            return;
+        }
+        if (!isset($_POST['_wpnonce']) || !wp_verify_nonce($_POST['_wpnonce'], 'brizy-settings')) {
             return;
         }
         do_action('brizy_settings_submit');

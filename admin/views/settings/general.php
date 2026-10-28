@@ -5,7 +5,7 @@
 
 <form method="post" novalidate="novalidate">
     <input type="hidden" name="tab" value="general"/>
-	<?php wp_nonce_field() ?>
+	<?php wp_nonce_field( 'brizy-settings' ) ?>
     <table class="form-table">
         <tbody>
         <tr>
