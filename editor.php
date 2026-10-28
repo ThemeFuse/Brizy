@@ -239,7 +239,7 @@ class Brizy_Editor
 
     public function handleEditorPreviewMode()
     {
-        $pid = Brizy_Editor::get()->currentPostId();
+        $pid = Brizy_Editor::get()->currentQueriedPostId();
         if (!$pid || !Brizy_Editor_Entity::isBrizyEnabled($pid)) {
             return;
 
@@ -410,15 +410,13 @@ class Brizy_Editor
      */
     function currentPostId()
     {
-        $pid = null;
-        global $wp_query;
-        if ($wp_query && $wp_query->is_posts_page) {
-            $pid = absint(get_queried_object_id());
-        } elseif ($wp_query && ($apid = get_queried_object_id()) && (is_single() || is_page()) && $wp_query->queried_object instanceof WP_Post) {
-            $pid = absint($apid);
-        } elseif (function_exists('is_shop') && is_shop()) {
-            $pid = wc_get_page_id('shop');
-        } elseif (isset($_REQUEST[Brizy_Editor::prefix('_post')])) {
+        $pid = $this->currentQueriedPostId();
+
+        if ($pid) {
+            return $pid;
+        }
+
+        if (isset($_REQUEST[Brizy_Editor::prefix('_post')])) {
             $pid = absint($_REQUEST[Brizy_Editor::prefix('_post')]);
         } elseif (isset($_REQUEST['post'])) {
             $pid = absint($_REQUEST['post']);
@@ -431,6 +429,30 @@ class Brizy_Editor
         }
 
         return $pid;
+    }
+
+    /**
+     * Resolve the post id only from the main query (never from request parameters).
+     *
+     * @return int|null
+     */
+    function currentQueriedPostId()
+    {
+        global $wp_query;
+
+        if ($wp_query && $wp_query->is_posts_page) {
+            return absint(get_queried_object_id());
+        }
+
+        if ($wp_query && ($apid = get_queried_object_id()) && (is_single() || is_page()) && $wp_query->queried_object instanceof WP_Post) {
+            return absint($apid);
+        }
+
+        if (function_exists('is_shop') && is_shop()) {
+            return wc_get_page_id('shop');
+        }
+
+        return null;
     }
 
     static public function get_slug()
