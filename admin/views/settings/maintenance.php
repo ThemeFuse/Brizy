@@ -2,7 +2,7 @@
 
 <form method="post" novalidate="novalidate">
 	<input type="hidden" name="tab" value="maintenance"/>
-	<?php wp_nonce_field() ?>
+	<?php wp_nonce_field( 'brizy-settings' ) ?>
 	<table class="form-table">
 		<tbody>
             <tr id="brizy-maintenance-js-mode">
