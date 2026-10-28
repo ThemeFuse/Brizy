@@ -45,7 +45,7 @@ class Brizy_Content_Placeholders_UniquePageUrl extends Brizy_Content_Placeholder
 		}
 
 		if(is_archive()) {
-			$url =  add_query_arg($wp->query_vars, home_url() );
+			$url =  add_query_arg( urlencode_deep( $wp->query_vars ), home_url() );
 		}
 
 		if ( $object instanceof WP_User ) {
@@ -63,7 +63,12 @@ class Brizy_Content_Placeholders_UniquePageUrl extends Brizy_Content_Placeholder
 
 		remove_filter( 'pre_term_link', $closure );
 
-		return $url;
+		if ( is_wp_error( $url ) ) {
+			return '';
+		}
+
+		// The value is printed inside HTML attributes (data-url, data-identifier, data-href)
+		return esc_url( $url );
 	}
 
 
