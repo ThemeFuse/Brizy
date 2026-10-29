@@ -4,7 +4,7 @@ type Test = {
   test: number;
 };
 
-describe("Testing 'get' function", function() {
+describe("Testing 'get' function", function () {
   test("Return value under specified key", () => {
     expect(get("test", { test: 1 })).toBe(1);
   });
@@ -14,7 +14,7 @@ describe("Testing 'get' function", function() {
   });
 });
 
-describe("Testing 'getOr' function", function() {
+describe("Testing 'getOr' function", function () {
   test("Return value under specified key", () => {
     expect(getOr(2, "test", { test: 1 })).toBe(1);
   });

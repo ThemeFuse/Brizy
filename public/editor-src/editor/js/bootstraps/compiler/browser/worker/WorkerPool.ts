@@ -1,6 +1,6 @@
-import { Remote, wrap } from "comlink";
+import { type Remote, wrap } from "comlink";
 import type { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
-import { Page } from "visual/types/Page";
+import type { Page } from "visual/types/Page";
 import type { Project } from "visual/types/Project";
 import { uuid } from "visual/utils/uuid";
 import { _Worker } from "visual/utils/worker";

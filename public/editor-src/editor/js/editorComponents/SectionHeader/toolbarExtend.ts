@@ -1,14 +1,14 @@
-import { GetItems } from "visual/editorComponents/EditorComponent/types";
+import type { GetItems } from "visual/editorComponents/EditorComponent/types";
+import type { Cloud } from "visual/global/Config";
 import { t } from "visual/utils/i18n";
 import { getAllMembershipChoices } from "visual/utils/membership";
 import { getLanguagesChoices } from "visual/utils/multilanguages";
 import { defaultValueValue } from "visual/utils/onChange";
+import { Toggle } from "visual/utils/options/utils/Type";
 import * as Str from "visual/utils/reader/string";
 import { capitalize } from "visual/utils/string";
 import { getInstanceParentId } from "visual/utils/toolbar";
-import { Toggle } from "visual/utils/options/utils/Type";
-import { Props, RenderType, Value } from "./type";
-import { Cloud } from "visual/global/Config";
+import { type Props, RenderType, type Value } from "./type";
 
 export const getItems: GetItems<Value, Props> = ({ v, device, component }) => {
   const config = component.getGlobalConfig();

@@ -1,4 +1,4 @@
-import { CSSValue } from "../style2/types";
+import type { CSSValue } from "../style2/types";
 import { cssStyleIconPosition } from "./cssStylePosition";
 import { cssStyleIconMargin } from "./cssStyleSize";
 

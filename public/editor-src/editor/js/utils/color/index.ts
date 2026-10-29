@@ -1,6 +1,6 @@
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import type { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import * as Hex from "visual/utils/color/Hex";
-import { MValue } from "visual/utils/value";
+import type { MValue } from "visual/utils/value";
 import {
   makeGlobalStylesColorPalette,
   makeStylePaletteCSSVar
@@ -44,7 +44,7 @@ export function hexToRgba(_hex: string, opacity: number): MValue<string> {
 
   if (isHex(hex)) {
     hex = hex.replace("#", "");
-    opacity = !isNaN(opacity) ? opacity : 1;
+    opacity = !Number.isNaN(Number(opacity)) ? opacity : 1;
 
     const r = parseInt(hex.substring(0, 2), 16);
     const g = parseInt(hex.substring(2, 4), 16);

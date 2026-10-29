@@ -1,9 +1,9 @@
 import { getIn } from "timm";
-import { ElementModel } from "visual/component/Elements/Types";
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import type { ElementModel } from "visual/component/Elements/Types";
+import type { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { getFlatShortcodes } from "visual/shortcodeComponents/utils";
-import { Shortcode } from "visual/types";
-import { Block } from "visual/types/Block";
+import type { Shortcode } from "visual/types";
+import type { Block } from "visual/types/Block";
 import { isModel } from "visual/utils/models";
 import { findDeep } from "visual/utils/object";
 

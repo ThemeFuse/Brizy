@@ -8,7 +8,7 @@ type Props = {
   mapZoom?: string;
 };
 
-const Map = ({ map, mapZoom }: Props): JSX.Element => {
+const MapBackground = ({ map, mapZoom }: Props): JSX.Element => {
   const iframeStyle = {
     display: map ? "block" : "none"
   };
@@ -27,4 +27,4 @@ const Map = ({ map, mapZoom }: Props): JSX.Element => {
   );
 };
 
-export default Map;
+export default MapBackground;

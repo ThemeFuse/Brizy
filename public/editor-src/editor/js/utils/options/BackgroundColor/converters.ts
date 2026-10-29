@@ -1,22 +1,22 @@
-import { GradientStop } from "visual/component/Controls/BackgroundColor/entities";
-import {
+import type { GradientStop } from "visual/component/Controls/BackgroundColor/entities";
+import type {
   FromElementModel,
   ToElementModel
 } from "visual/component/Options/Type";
 import * as Hex from "visual/utils/color/Hex";
 import * as Opacity from "visual/utils/cssProps/opacity";
 import { mPipe } from "visual/utils/fp";
-import * as Math from "visual/utils/math";
+import { toNonNegative } from "visual/utils/math";
 import * as Num from "visual/utils/math/number";
 import * as Palette from "visual/utils/options/ColorPicker/entities/palette";
 import * as Arr from "visual/utils/reader/array";
 import * as Obj from "visual/utils/reader/object";
 import * as Str from "visual/utils/string/specs";
-import { MValue } from "visual/utils/value";
+import type { MValue } from "visual/utils/value";
 import * as GradientActivePointer from "./entities/GradientActivePointer";
 import * as GradientType from "./entities/GradientType";
 import * as Type from "./entities/Type";
-import { Value } from "./entities/Value";
+import type { Value } from "./entities/Value";
 
 export const defaultValue: Value = {
   type: "none",
@@ -120,9 +120,8 @@ export const fromElementModel: FromElementModel<"backgroundColor"> = (get) => {
       )() ?? defaultValue.tempGradientPalette,
     gradientType:
       GradientType.read(get("gradientType")) ?? defaultValue.gradientType,
-    start:
-      Math.toNonNegative(get("gradientStartPointer")) ?? defaultValue.start,
-    end: Math.toNonNegative(get("gradientFinishPointer")) ?? defaultValue.end,
+    start: toNonNegative(get("gradientStartPointer")) ?? defaultValue.start,
+    end: toNonNegative(get("gradientFinishPointer")) ?? defaultValue.end,
     active: GradientActivePointer.read(pointer),
     linearDegree:
       Num.read(get("gradientLinearDegree")) ?? defaultValue.linearDegree,

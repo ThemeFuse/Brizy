@@ -1,9 +1,12 @@
 import { Num, Str } from "@brizy/readers";
-import { Store } from "visual/redux/store";
-import { ModelFamilyType, getFontById } from "visual/utils/fonts/getFontById";
+import type { Store } from "visual/redux/store";
+import {
+  getFontById,
+  type ModelFamilyType
+} from "visual/utils/fonts/getFontById";
 import { weightTitle } from "visual/utils/fonts/i10n";
 import { t } from "../i18n";
-import { Literal } from "../types/Literal";
+import type { Literal } from "../types/Literal";
 import * as Weight from "./Weight";
 
 // Encoding for italic weights: italic weight = base weight + 10000

@@ -1,15 +1,15 @@
-import { ElementModel } from "visual/component/Elements/Types";
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
-import { GetConfig } from "visual/providers/ConfigProvider/types";
-import { EditorMode } from "visual/providers/EditorModeProvider";
-import { RenderType } from "visual/providers/RenderProvider";
-import { Store } from "visual/redux/store";
-import { ErrorCodes } from "visual/utils/errors";
-import { Block } from "./Block";
-import { BlockMetaType } from "./GlobalBlock";
-import { PageCommon } from "./Page";
-import { ExtraFontStyle, Style } from "./Style";
-import { Dictionary } from "./utils";
+import type { ElementModel } from "visual/component/Elements/Types";
+import type { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import type { GetConfig } from "visual/providers/ConfigProvider/types";
+import type { EditorMode } from "visual/providers/EditorModeProvider";
+import type { RenderType } from "visual/providers/RenderProvider";
+import type { Store } from "visual/redux/store";
+import type { ErrorCodes } from "visual/utils/errors";
+import type { Block } from "./Block";
+import type { BlockMetaType } from "./GlobalBlock";
+import type { PageCommon } from "./Page";
+import type { ExtraFontStyle, Style } from "./Style";
+import type { Dictionary } from "./utils";
 
 export type V = Dictionary<unknown>;
 
@@ -131,7 +131,7 @@ export type ShortcodeComponents = ShortcodeComponent[];
 
 export type UserRole = string;
 
-export type ExportFunction = ($el: JQuery) => void;
+export type ExportFunction = (node: HTMLElement) => void;
 
 // region CustomerId
 declare const _customerId: unique symbol;
@@ -190,7 +190,7 @@ type RemoveGlobalBlockError = {
   };
 };
 
-export type Error =
+export type EditorError =
   | ProjectLockError
   | HeartBeatError
   | ProjectDataError
@@ -414,7 +414,7 @@ export type Triggers = Array<Trigger>;
 
 export interface ComponentExport {
   selector: string;
-  export: () => Promise<{ default: ($node: JQuery<HTMLElement>) => void }>;
+  export: () => Promise<{ default: ExportFunction }>;
 }
 
 //#endregion

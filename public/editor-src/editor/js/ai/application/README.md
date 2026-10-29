@@ -34,7 +34,7 @@ Abstracts Redux state access for project-level data: styles and fonts.
 
 | Method group | Methods                                                         |
 |--------------|-----------------------------------------------------------------|
-| Styles       | `getProjectStyles`, `changeStyle`, `addStyle`, `duplicateStyle` |
+| Styles       | `getProjectStyles`, `changeStyle`, `updateStyle`, `updateColorPalette`, `duplicateStyle` |
 | Fonts        | `getProjectFonts`, `getGoogleFonts`, `addFont`, `deleteFont`, `changeDefaultFont` |
 
 Also defines lightweight summary types for LLM consumption:
@@ -42,8 +42,8 @@ Also defines lightweight summary types for LLM consumption:
 | Type               | Purpose                                      |
 |--------------------|----------------------------------------------|
 | `StyleSummary`     | id + title only                              |
-| `FontStyleSummary` | Desktop-only typography props (no responsive)|
+| `FontStyleSummary` | Typography props for desktop, tablet, mobile |
 | `StyleDetail`      | id + title + colorPalette + fontStyles       |
 | `FontSummary`      | brizyId + family + type + category           |
-| `GoogleFontSummary`| family + category + variants + weights       |
+| `GoogleFontSummary` | id + title + family + category + variants + weights |
 | `AddFontParams`    | Discriminated union: google \| adobe         |

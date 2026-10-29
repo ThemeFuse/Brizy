@@ -1,4 +1,4 @@
-import {
+import type {
   FromElementModel,
   ToElementModel
 } from "visual/component/Options/Type";
@@ -9,8 +9,8 @@ import { mPipe } from "visual/utils/fp";
 import * as Num from "visual/utils/math/number";
 import * as Palette from "visual/utils/options/ColorPicker/entities/palette";
 import * as Str from "visual/utils/string/specs";
-import { Value } from "./entities/Value";
 import * as Style from "./entities/style";
+import type { Value } from "./entities/Value";
 import * as Width from "./entities/width";
 import * as WidthType from "./entities/widthType";
 import {
@@ -124,12 +124,12 @@ export const fromElementModel: FromElementModel<"border"> = (get) => {
       defaultValue.tempOpacity,
     palette: isEmpty
       ? Palette.empty
-      : mPipe(() => get("colorPalette"), Str.read, Palette.fromString)() ??
-        defaultValue.palette,
+      : (mPipe(() => get("colorPalette"), Str.read, Palette.fromString)() ??
+        defaultValue.palette),
     tempPalette: isEmpty
       ? Palette.empty
-      : mPipe(() => get("tempColorPalette"), Str.read, Palette.fromString)() ??
-        defaultValue.tempPalette,
+      : (mPipe(() => get("tempColorPalette"), Str.read, Palette.fromString)() ??
+        defaultValue.tempPalette),
     widthType:
       mPipe(() => get("widthType"), Str.read, WidthType.fromString)() ??
       defaultValue.widthType,

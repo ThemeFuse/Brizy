@@ -1,6 +1,6 @@
 import classnames from "classnames";
-import React, { ReactElement } from "react";
-import { FCC } from "visual/utils/react/types";
+import React, { type ReactElement } from "react";
+import type { FCC } from "visual/utils/react/types";
 
 type ProgressProps = {
   stage?: string;

@@ -6,8 +6,8 @@ import { IconToggleItem } from "visual/component/Controls/IconToggle/IconToggleI
 import { getCurrentTooltip } from "visual/component/Controls/Tooltip";
 import { showHiddenElementsSelector } from "visual/redux/selectors";
 import { Toggle } from "visual/utils/options/utils/Type";
-import { Literal } from "visual/utils/types/Literal";
-import { Props } from "./types";
+import type { Literal } from "visual/utils/types/Literal";
+import type { Props } from "./types";
 import { isNonEmptyArray } from "./utils";
 
 export const ShowOnDevice = ({
@@ -34,8 +34,13 @@ export const ShowOnDevice = ({
     [closeTooltip, showHiddenElements, onChange]
   );
 
-  const items = choices.map(({ icon, value, title }, i) => (
-    <IconToggleItem<Literal> key={i} value={value} icon={icon} title={title} />
+  const items = choices.map(({ icon, value, title }) => (
+    <IconToggleItem<Literal>
+      key={value}
+      value={value}
+      icon={icon}
+      title={title}
+    />
   ));
 
   return isNonEmptyArray(items) ? (

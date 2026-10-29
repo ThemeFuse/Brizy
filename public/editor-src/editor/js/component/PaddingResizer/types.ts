@@ -1,4 +1,4 @@
-import { RenderType } from "visual/providers/RenderProvider";
+import type { RenderType } from "visual/providers/RenderProvider";
 
 export interface Value {
   paddingType: string;

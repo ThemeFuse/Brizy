@@ -498,7 +498,38 @@
 
     "mobileMotionActive": false,
     "mobileMotionMouseTrackEnabled": false,
-    "mobileMotionMouseTiltEnabled": false
+    "mobileMotionMouseTiltEnabled": false,
+
+    "transformActive": false,
+
+    "transformRotateDegree": "°",
+    "transformRotateEnabled": false,
+    "transformRotateRotate": 0,
+    "transformRotateRotate3D": "off",
+    "transformRotateRotateX": 0,
+    "transformRotateRotateY": 0,
+    "transformRotateRotatePerspective": 1000,
+
+    "transformOffsetEnabled": false,
+    "transformOffsetOffsetX": 0,
+    "transformOffsetOffsetY": 0,
+
+    "transformSkewEnabled": false,
+    "transformSkewSkewX": 0,
+    "transformSkewSkewY": 0,
+
+    "transformScaleEnabled": false,
+    "transformScaleScaleX": 0.1,
+    "transformScaleScaleY": 0.1,
+    "transformScaleScaleXY": 0.1,
+    "transformScaleScalePreserveSize": false,
+
+    "transformFlipEnabled": false,
+    "transformFlipFlipHorizontal": false,
+    "transformFlipFlipVertical": false,
+
+    "transformAnchorPointX": "center",
+    "transformAnchorPointY": "center"
   },
 
   "animation": {

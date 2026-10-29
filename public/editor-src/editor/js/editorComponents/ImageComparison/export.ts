@@ -1,9 +1,6 @@
 import { Num } from "@brizy/readers";
 
-export default function ($node: JQuery): void {
-  const node = $node.get(0);
-  if (!node) return;
-
+export default function (node: HTMLElement): void {
   // Find all image comparison slider wrappers
   const sliders = node.querySelectorAll<HTMLElement>(
     ".brz-image-comparison__slider-wrapper"

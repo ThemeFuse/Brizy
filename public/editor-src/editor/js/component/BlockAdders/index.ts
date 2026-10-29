@@ -1,11 +1,11 @@
 import FirstBlockAdder from "./FirstBlockAdder";
-import MiddleBlockAdder from "./MiddleBlockAdder";
-import LastBlockAdder from "./LastBlockAdder";
 import FirstPopupBlockAdder from "./FirstPopupBlockAdder";
+import LastBlockAdder from "./LastBlockAdder";
+import MiddleBlockAdder from "./MiddleBlockAdder";
 
 export {
   FirstBlockAdder,
-  MiddleBlockAdder,
+  FirstPopupBlockAdder,
   LastBlockAdder,
-  FirstPopupBlockAdder
+  MiddleBlockAdder
 };

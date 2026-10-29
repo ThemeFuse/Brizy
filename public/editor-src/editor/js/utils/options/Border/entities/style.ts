@@ -1,8 +1,8 @@
-import { MRead, Reader } from "visual/utils/types/Type";
-import { Append, Concat } from "visual/utils/types/Monoid";
-import { MValue } from "visual/utils/value";
 import { mPipe, pass } from "visual/utils/fp";
 import * as Str from "visual/utils/string/specs";
+import type { Append, Concat } from "visual/utils/types/Monoid";
+import type { MRead, Reader } from "visual/utils/types/Type";
+import type { MValue } from "visual/utils/value";
 
 export const NONE = "none";
 export const SOLID = "solid";
@@ -61,11 +61,11 @@ export const empty: Style = "none";
  *
  *  @deprecated, use fromString
  */
-export const mRead: MRead<Style> = v => read(v) ?? empty;
+export const mRead: MRead<Style> = (v) => read(v) ?? empty;
 
 export const append: Append<Style> = (a, b) => (a === empty ? b : a);
 
-export const concat: Concat<Style> = as => as.reduce(append, empty);
+export const concat: Concat<Style> = (as) => as.reduce(append, empty);
 
 /**
  * Return undefined if the style is empty, otherwise return the style

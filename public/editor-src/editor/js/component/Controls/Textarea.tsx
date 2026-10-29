@@ -1,6 +1,6 @@
 import classNames from "classnames";
-import React, { ChangeEventHandler, useCallback } from "react";
-import {
+import React, { type ChangeEventHandler, useCallback } from "react";
+import type {
   WithClassName,
   WithOnChange,
   WithPlaceholder,

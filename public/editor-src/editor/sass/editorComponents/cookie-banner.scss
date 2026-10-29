@@ -1,0 +1,203 @@
+@use "../functions/z-index";
+
+// Cookie Banner overlay: three independently fixed-positioned views (bar /
+// badge / preferences dialog), portaled into #brz-overlays in the editor;
+// position: fixed does the job on the published page. z-index sits below
+// popups (see variables.$z-indexes "cookie-banner", 1050, below
+// "section-popup" 1060). The backdrop/dialog stack one level above the bar
+// and badge so the preferences dialog always sits on top of them.
+.brz-cookie-banner {
+  &__bar {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: z-index.z("cookie-banner");
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+
+  &__text {
+    flex: 1 1 320px;
+  }
+
+  // Center, not the flex default stretch: a bigger button keeps its own height.
+  &__buttons {
+    display: flex;
+    flex: 0 0 auto;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+  }
+
+  // Colors, border and typography are per-button options; what is left here is
+  // the shared geometry. The 1px transparent border is load bearing: it keeps
+  // every button the same height whatever its Border option says.
+  &__btn {
+    display: inline-block;
+    color: inherit;
+    background-color: transparent;
+    border: 1px solid transparent;
+    padding: 10px 20px;
+    font: inherit;
+    white-space: nowrap;
+    cursor: pointer;
+    transition:
+      opacity 0.2s ease,
+      background-color 0.2s ease;
+
+    // Default hover feedback; the per-button Colors options (Normal + Hover
+    // states) layer on top of it.
+    &:hover {
+      opacity: 0.85;
+    }
+  }
+
+  &__badge {
+    position: fixed;
+    bottom: 20px;
+    z-index: z-index.z("cookie-banner");
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  }
+
+  &__badge-icon {
+    width: 24px;
+    height: 24px;
+  }
+
+  &__backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: z-index.z("cookie-banner") + 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+
+  &__dialog {
+    font-family: "Lato", sans-serif;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 560px;
+    max-height: calc(100vh - 40px);
+    overflow: hidden;
+    border-radius: 8px;
+  }
+
+  &__dialog-title {
+    flex: 0 0 auto;
+    margin: 0 0 16px;
+    font-size: 18px;
+    font-weight: 600;
+  }
+
+  &__dialog-body {
+    flex: 1 1 auto;
+    overflow-y: auto;
+  }
+
+  // Two columns: the label and the description stack in the left one, the
+  // switch sits in the right one spanning both rows, so it stays centred
+  // against the two lines of text.
+  &__category {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    column-gap: 20px;
+    align-items: center;
+    padding: 12px 0;
+
+    & + & {
+      border-top: 1px solid rgba(0, 0, 0, 0.1);
+    }
+  }
+
+  &__category-label {
+    grid-column: 1;
+    margin: 0 0 4px;
+    font-size: 14px;
+    font-weight: 600;
+  }
+
+  &__category-description {
+    grid-column: 1;
+    margin: 0;
+    font-size: 13px;
+    opacity: 0.7;
+  }
+
+  &__dialog-footer {
+    flex: 0 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 10px;
+    padding-top: 16px;
+  }
+
+  // Pure-CSS toggle switch: a visually hidden checkbox driving a styled
+  // slider via the general sibling combinator.
+  &__switch {
+    position: relative;
+    grid-column: 2;
+    grid-row: 1 / span 2;
+    display: inline-flex;
+    width: 40px;
+    height: 24px;
+    cursor: pointer;
+  }
+
+  &__switch-input {
+    position: absolute;
+    inset: 0;
+    margin: 0;
+    opacity: 0;
+    cursor: pointer;
+
+    &:disabled {
+      cursor: not-allowed;
+    }
+
+    &:disabled ~ .brz-cookie-banner__switch-slider {
+      opacity: 0.6;
+    }
+  }
+
+  &__switch-slider {
+    position: absolute;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.25);
+    border-radius: 12px;
+    transition: background-color 0.2s ease;
+
+    &::before {
+      content: "";
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      width: 20px;
+      height: 20px;
+      background-color: #fff;
+      border-radius: 50%;
+      transition: transform 0.2s ease;
+    }
+  }
+}
+
+.brz-cookie-banner__switch-input:checked
+  ~ .brz-cookie-banner__switch-slider::before {
+  transform: translateX(16px);
+}

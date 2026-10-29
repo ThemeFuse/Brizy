@@ -7,7 +7,7 @@ import * as VAlign from "visual/utils/position/VAlign";
 import { capByPrefix } from "visual/utils/string";
 import * as Str from "visual/utils/string/specs";
 import { styleZIndex } from "visual/utils/style2";
-import { CSSValue } from "visual/utils/style2/types";
+import type { CSSValue } from "visual/utils/style2/types";
 import { checkValue } from "../checkValue";
 
 type Direction = "top" | "right" | "bottom" | "left";

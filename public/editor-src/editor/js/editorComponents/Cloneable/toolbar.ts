@@ -1,7 +1,7 @@
-import { GetItems } from "visual/editorComponents/EditorComponent/types";
+import type { GetItems } from "visual/editorComponents/EditorComponent/types";
 import { t } from "visual/utils/i18n";
-import { capitalize } from "visual/utils/string";
 import { Toggle } from "visual/utils/options/utils/Type";
+import { capitalize } from "visual/utils/string";
 
 export const getItems: GetItems = ({ device }) => {
   const deviceCapitalize = capitalize(device);

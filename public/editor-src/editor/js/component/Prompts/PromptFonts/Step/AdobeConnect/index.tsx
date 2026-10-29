@@ -1,9 +1,9 @@
-import React, { JSX, useCallback, useContext, useState } from "react";
+import React, { type JSX, useCallback, useContext, useState } from "react";
 import { useDispatch } from "react-redux";
-import { BaseIntegrationContext } from "visual/component/Prompts/common/GlobalApps/type";
+import type { BaseIntegrationContext } from "visual/component/Prompts/common/GlobalApps/type";
 import { PromptView } from "visual/component/Prompts/common/PromptView";
 import { addFonts } from "visual/redux/actions2";
-import { TypedDispatch } from "visual/redux/store";
+import type { TypedDispatch } from "visual/redux/store";
 import { addAdobeFonts, getAdobeFonts, pendingRequest } from "visual/utils/api";
 import { t } from "visual/utils/i18n";
 import { Context } from "../../../common/GlobalApps/Context";
@@ -11,7 +11,7 @@ import { isAdobeConnectData } from "../types";
 import { adobeConnectReader } from "../utils";
 import { Description } from "./components/Description";
 import { Items } from "./components/Items";
-import { OnBeforeLoadProps, Typekit } from "./types";
+import type { OnBeforeLoadProps, Typekit } from "./types";
 import { getApiKeys, getDefaultValue } from "./utils";
 
 const AdobeConnect = (): JSX.Element => {
@@ -27,15 +27,12 @@ const AdobeConnect = (): JSX.Element => {
   const [prevLoading, setPrevLoading] = useState(false);
   const [error, setError] = useState<null | string>(null);
 
-  const handleChange = useCallback(
-    (value: string, type: string) => {
-      setApiKeyValue((prevState) => ({
-        ...prevState,
-        [type]: value.trim()
-      }));
-    },
-    [setApiKeyValue]
-  );
+  const handleChange = useCallback((value: string, type: string) => {
+    setApiKeyValue((prevState) => ({
+      ...prevState,
+      [type]: value.trim()
+    }));
+  }, []);
 
   const handleNext = useCallback(async () => {
     try {
@@ -79,20 +76,13 @@ const AdobeConnect = (): JSX.Element => {
       setNextLoading(false);
       setError(t("An unexpected error occurred"));
     }
-  }, [
-    config.api,
-    apiKeyValue,
-    dispatch,
-    setNextLoading,
-    setError,
-    onChangeNext
-  ]);
+  }, [config.api, apiKeyValue, dispatch, onChangeNext]);
 
   const handlePrev = useCallback(async () => {
     setPrevLoading(true);
     await pendingRequest();
     onChangePrev("appList");
-  }, [setPrevLoading, onChangePrev]);
+  }, [onChangePrev]);
 
   const data = getApiKeys().map(({ title, name }) => ({
     title,

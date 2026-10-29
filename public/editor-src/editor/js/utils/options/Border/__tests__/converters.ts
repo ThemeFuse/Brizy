@@ -11,8 +11,8 @@ import {
   isEmptyWidth,
   toElementModel
 } from "../converters";
-import { Value } from "../entities/Value";
 import * as Style from "../entities/style";
+import { Value } from "../entities/Value";
 import * as Width from "../entities/width";
 import * as WidthType from "../entities/widthType";
 

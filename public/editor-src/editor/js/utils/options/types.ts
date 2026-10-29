@@ -1,4 +1,4 @@
-import { DCTypes } from "visual/global/Config/types/DynamicContent";
+import type { DCTypes } from "visual/global/Config/types/DynamicContent";
 
 // without reference & multiReference
 export type TypeChoices =

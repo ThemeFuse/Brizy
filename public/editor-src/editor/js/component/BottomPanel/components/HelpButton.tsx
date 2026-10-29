@@ -1,4 +1,4 @@
-import React, { ReactElement, useCallback, useEffect } from "react";
+import React, { type ReactElement, useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import ClickOutside from "visual/component/ClickOutside";
 import EditorIcon from "visual/component/EditorIcon";

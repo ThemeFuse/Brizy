@@ -1,10 +1,10 @@
 import classnames from "classnames";
-import React, { ReactNode } from "react";
+import React, { type ReactNode } from "react";
 import { ToastNotification } from "visual/component/Notifications";
 import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
-import { DynamicContentHelper } from "visual/editorComponents/WordPress/common/DynamicContentHelper";
 import { Wrapper } from "visual/editorComponents/tools/Wrapper";
+import { DynamicContentHelper } from "visual/editorComponents/WordPress/common/DynamicContentHelper";
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import { updateEkklesiaFields } from "visual/utils/api";
 import { attachRefs } from "visual/utils/react";
@@ -18,14 +18,14 @@ import * as toolbarMetaIcons from "../toolbarMetaIcons";
 import * as toolbarMetaLinks from "../toolbarMetaLinks";
 import * as toolbarMetaTypography from "../toolbarMetaTypography";
 import * as toolbarPreview from "../toolbarPreview";
-import * as toolbarTitle from "../toolbarTitle";
 import * as toolbarMetaItemLinkColor from "../toolbars/toolbarMetaItemLinkColor";
+import * as toolbarTitle from "../toolbarTitle";
 import { getEkklesiaMessages } from "../utils/helpers";
 import { MBMetaPrefixKey } from "../utils/types";
 import defaultValue from "./defaultValue.json";
 import { style } from "./styles";
 import * as toolbarExtendParent from "./toolbarExtendParent";
-import { Props, Value } from "./types";
+import type { Props, Value } from "./types";
 import { getPlaceholder } from "./utils/dynamicContent";
 
 export class MinistryBrandsSermonDetail extends EditorComponent<Value, Props> {
@@ -57,7 +57,7 @@ export class MinistryBrandsSermonDetail extends EditorComponent<Value, Props> {
 
     if (changedKeys) {
       const messages = getEkklesiaMessages();
-      ToastNotification.warn(messages["sermon_detail"]);
+      ToastNotification.warn(messages.sermon_detail);
       this.patchValue(changedKeys);
     }
   }
@@ -238,8 +238,7 @@ export class MinistryBrandsSermonDetail extends EditorComponent<Value, Props> {
                                                               toolbarMetaIcons,
                                                               undefined,
                                                               {
-                                                                allowExtend:
-                                                                  false
+                                                                allowExtend: false
                                                               }
                                                             )}
                                                             selector=".brz-ministryBrands__meta--icons"

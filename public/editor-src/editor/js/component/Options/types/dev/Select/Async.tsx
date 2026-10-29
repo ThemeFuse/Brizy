@@ -1,11 +1,11 @@
 import { isEqual } from "es-toolkit";
-import React, { ReactElement, useEffect, useRef, useState } from "react";
+import React, { type ReactElement, useEffect, useRef, useState } from "react";
 import EditorIcon from "visual/component/EditorIcon";
 import { ToastNotification } from "visual/component/Notifications";
 import { t } from "visual/utils/i18n";
-import { MValue } from "visual/utils/value";
+import type { MValue } from "visual/utils/value";
 import { Sync } from "./Sync";
-import { ChoicesAsync, ChoicesSync, Props } from "./types";
+import type { ChoicesAsync, ChoicesSync, Props } from "./types";
 
 export const Async = (
   props: Omit<Props, "choices"> & {
@@ -18,6 +18,7 @@ export const Async = (
 
   const prevChoices = useRef<MValue<ChoicesSync>>(undefined);
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: migrated from eslint
   useEffect(() => {
     const controller = new AbortController();
 
@@ -45,7 +46,6 @@ export const Async = (
       controller?.abort();
     };
     // all "props" object is not needed
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.choices]);
 
   if (!isLoaded) {

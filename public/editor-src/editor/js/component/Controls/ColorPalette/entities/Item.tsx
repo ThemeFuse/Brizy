@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import React, { VFC, useCallback, useMemo } from "react";
+import React, { useCallback, useMemo, type VFC } from "react";
 
 type Props = {
   id: string;

@@ -1,6 +1,6 @@
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import type { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { getColor } from "visual/utils/color";
-import { MValue } from "visual/utils/value";
+import type { MValue } from "visual/utils/value";
 
 interface Color {
   hex?: string;

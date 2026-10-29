@@ -1,4 +1,4 @@
-import { CSSStyleFn } from "visual/utils/cssStyle/types";
+import type { CSSStyleFn } from "visual/utils/cssStyle/types";
 
 export const css: CSSStyleFn<"padding"> = ({ meta, value }): string => {
   const { top, topUnit, right, rightUnit, bottom, bottomUnit, left, leftUnit } =

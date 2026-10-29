@@ -1,7 +1,7 @@
 import classNames from "classnames";
 import React from "react";
 import { Tooltip } from "visual/component/Controls/Tooltip";
-import { Props } from "./types";
+import type { Props } from "./types";
 
 export const Popover = ({
   className,

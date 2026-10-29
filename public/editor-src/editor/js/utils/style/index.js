@@ -1,100 +1,72 @@
 // Style State
 export { styleState } from "./state";
-
-// Border Style
-export { styleBorderStyle } from "./styleBorderStyle";
-
-// Border Radius
-export { styleBorderRadius } from "./styleBorderRadius";
-
-// Border Width
-export { styleBorderWidth } from "./styleBorderWidth";
-
-// Color
-export { styleColor } from "./styleColor";
-
-// BG Color
-export { styleBgColor } from "./styleBgColor";
-
-// Border Color
-export { styleBorderColor } from "./styleBorderColor";
-
 // Align
 export {
-  styleAlignVerticalAlign,
-  styleAlignHorizontalAlign
+  styleAlignHorizontalAlign,
+  styleAlignVerticalAlign
 } from "./styleAlign";
-
-// ReverseColumns
-export {
-  styleReverseColumnsRow,
-  styleReverseColumnsWrap,
-  styleReverseColumnsJustify
-} from "./styleReverseColumns";
-
-// Size
-export {
-  styleSizeWidthPercent,
-  styleSizeHeightPx,
-  styleSizeSizePercent,
-  styleSizeContainerSizePercent
-} from "./styleSize";
-
+// BG Color
+export { styleBgColor } from "./styleBgColor";
+// Border Color
+export { styleBorderColor } from "./styleBorderColor";
+// Border Radius
+export { styleBorderRadius } from "./styleBorderRadius";
+// Border Style
+export { styleBorderStyle } from "./styleBorderStyle";
+// Border Width
+export { styleBorderWidth } from "./styleBorderWidth";
+// Color
+export { styleColor } from "./styleColor";
 // Container Type
 export { styleContainerType } from "./styleContainerType";
-
-// Padding
-export { stylePadding } from "./stylePadding";
-
-// Margin
-export { styleMargin } from "./styleMargin";
-
-// Shape
-export {
-  styleShapeTopHeight,
-  styleShapeBottomHeight,
-  styleShapeTopFlip,
-  styleShapeBottomFlip,
-  styleShapeTopIndex,
-  styleShapeBottomIndex,
-  styleShapeTopBackgroundSize,
-  styleShapeBottomBackgroundSize
-} from "./styleShape";
-
-// Show on Devices
-export {
-  styleShowOnDesktopFilter,
-  styleShowOnDesktopOpacity,
-  styleShowOnTabletFilter,
-  styleShowOnTabletOpacity,
-  styleShowOnMobileFilter,
-  styleShowOnMobileOpacity
-} from "./styleShowOnDevices";
-
 // Display -> Export
 export {
   styleDisplayShowOnDesktop,
-  styleDisplayShowOnTablet,
-  styleDisplayShowOnMobile
+  styleDisplayShowOnMobile,
+  styleDisplayShowOnTablet
 } from "./styleDisplay";
-
-// Z Index
-export { styleZIndex } from "./styleZIndex";
-
-// Element Line
-export { styleElementLineBorderWidth } from "./styleElementLine";
-
 // Element Column
 export { styleElementColumnMinHeight } from "./styleElementColumn";
-
+// Element Line
+export { styleElementLineBorderWidth } from "./styleElementLine";
 // Element Cloneable
 export {
-  styleItemPaddingTop,
-  styleItemPaddingRight,
+  styleItemMarginBottom,
+  styleItemMarginLeft,
+  styleItemMarginRight,
+  styleItemMarginTop,
   styleItemPaddingBottom,
   styleItemPaddingLeft,
-  styleItemMarginTop,
-  styleItemMarginRight,
-  styleItemMarginBottom,
-  styleItemMarginLeft
+  styleItemPaddingRight,
+  styleItemPaddingTop
 } from "./styleItemPadding";
+// Margin
+export { styleMargin } from "./styleMargin";
+// Padding
+export { stylePadding } from "./stylePadding";
+// ReverseColumns
+export {
+  styleReverseColumnsJustify,
+  styleReverseColumnsRow,
+  styleReverseColumnsWrap
+} from "./styleReverseColumns";
+// Shape
+export {
+  styleShapeBottomBackgroundSize,
+  styleShapeBottomFlip,
+  styleShapeBottomHeight,
+  styleShapeBottomIndex,
+  styleShapeTopBackgroundSize,
+  styleShapeTopFlip,
+  styleShapeTopHeight,
+  styleShapeTopIndex
+} from "./styleShape";
+// Size
+export {
+  styleSizeContainerSizePercent,
+  styleSizeHeightPx,
+  styleSizeSizePercent,
+  styleSizeWidthPercent
+} from "./styleSize";
+// Z Index
+export { styleZIndex } from "./styleZIndex";

@@ -1,7 +1,7 @@
 import React from "react";
-import { FCC } from "visual/utils/react/types";
+import type { FCC } from "visual/utils/react/types";
 import { Adder, Main, Thumbnail } from "./Components";
-import { Props } from "./types";
+import type { Props } from "./types";
 
 export const PromptAddPopup: FCC<Props> = ({
   label,

@@ -1,5 +1,5 @@
-import { DCTypes } from "visual/global/Config/types/DynamicContent";
 import { isBackgroundPointerEnabled } from "visual/global/Config/types/configs/featuresValue";
+import { DCTypes } from "visual/global/Config/types/DynamicContent";
 import { getColorToolbar } from "visual/utils/color";
 import { isPro } from "visual/utils/env";
 import { t } from "visual/utils/i18n";

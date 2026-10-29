@@ -2,17 +2,17 @@ import { isEqual } from "es-toolkit";
 import { produce } from "immer";
 import React, {
   Component,
-  ComponentProps,
-  ElementType,
-  JSX,
-  ReactElement
+  type ComponentProps,
+  type ElementType,
+  type JSX,
+  type ReactElement
 } from "react";
-import { SignAuthorizationProps } from "visual/component/Prompts/PromptAuthorization/types";
-import { PromptBlocksProps } from "visual/component/Prompts/PromptBlocks/types";
-import { Props as PromptPageArticleProps } from "visual/component/Prompts/PromptPageArticle/types";
-import { Props as PromptPageRulesProps } from "visual/component/Prompts/PromptPageRules/types";
-import { Props as PromptPageTemplateProps } from "visual/component/Prompts/PromptPageTemplate/types";
-import {
+import type { SignAuthorizationProps } from "visual/component/Prompts/PromptAuthorization/types";
+import type { PromptBlocksProps } from "visual/component/Prompts/PromptBlocks/types";
+import type { Props as PromptPageArticleProps } from "visual/component/Prompts/PromptPageArticle/types";
+import type { Props as PromptPageRulesProps } from "visual/component/Prompts/PromptPageRules/types";
+import type { Props as PromptPageTemplateProps } from "visual/component/Prompts/PromptPageTemplate/types";
+import type {
   PromptAppsProps,
   PromptConditionsProps,
   PromptFontsProps,
@@ -21,14 +21,15 @@ import {
   PromptKeyHelperProps,
   PromptsOpenProps
 } from "visual/component/Prompts/types";
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import type { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import UIState from "visual/global/UIState";
 import { useConfig } from "visual/providers/ConfigProvider";
-import { EditorMode } from "visual/providers/EditorModeProvider";
-import { BlockMetaType } from "visual/types/GlobalBlock";
+import type { EditorMode } from "visual/providers/EditorModeProvider";
+import { Prompt } from "./api";
 import Apps from "./PromptApps";
 import Authorization from "./PromptAuthorization";
 import Blocks from "./PromptBlocks";
+import type { PromptBlockMetaType } from "./PromptBlocks/types";
 import Conditions from "./PromptConditions";
 import Fonts from "./PromptFonts";
 import Form from "./PromptForm";
@@ -37,7 +38,6 @@ import KeyHelper from "./PromptKeyHelper";
 import { PromptPageArticle } from "./PromptPageArticle";
 import { PromptPageRules } from "./PromptPageRules";
 import { PromptPageTemplate } from "./PromptPageTemplate";
-import { Prompt } from "./api";
 
 const PROMPTS = {
   icon: Icon,
@@ -57,7 +57,7 @@ export type PromptTypes = typeof PROMPTS;
 export type PromptKey = keyof PromptTypes;
 export type PromptsMode = "single" | "stack";
 
-export type PromptsProps<T extends BlockMetaType = "normal"> = {
+export type PromptsProps<T extends PromptBlockMetaType = "normal"> = {
   mode: PromptsMode;
   prompt: PromptKey;
   props:
@@ -140,7 +140,7 @@ class _Prompts extends Component<PromptProps, PromptsState> {
       produce((state) => {
         const prompt = state.prompts[position];
 
-        if (prompt && prompt.opened) {
+        if (prompt?.opened) {
           prompt.opened = false;
         }
       }),
@@ -158,7 +158,7 @@ class _Prompts extends Component<PromptProps, PromptsState> {
     const { mode = "single" } = data;
     const { prompts } = this.state;
     const promptIndex = prompts.findIndex(
-      ({ prompt }) => prompt == data.prompt
+      ({ prompt }) => prompt === data.prompt
     );
 
     if (promptIndex === -1) {

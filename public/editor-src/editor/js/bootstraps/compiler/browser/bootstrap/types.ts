@@ -1,10 +1,10 @@
 import type { Config } from "visual/global/Config";
-import { EditorMode } from "visual/providers/EditorModeProvider";
-import { GlobalBlock } from "visual/types/GlobalBlock";
-import { Page } from "visual/types/Page";
-import { Project } from "visual/types/Project";
-import { Output } from "../../common/toStatic/types";
-import { Asset } from "../../common/transforms/assets";
+import type { EditorMode } from "visual/providers/EditorModeProvider";
+import type { GlobalBlock } from "visual/types/GlobalBlock";
+import type { Page } from "visual/types/Page";
+import type { Project } from "visual/types/Project";
+import type { Output } from "../../common/toStatic/types";
+import type { Asset } from "../../common/transforms/assets";
 
 export type GlobalBlockRecord = Record<string, GlobalBlock>;
 

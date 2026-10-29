@@ -1,11 +1,11 @@
-import { GetItems } from "visual/editorComponents/EditorComponent/types";
+import type { GetItems } from "visual/editorComponents/EditorComponent/types";
 import {
   getMaxContainerSuffix,
   getMinContainerSuffix
 } from "visual/editorComponents/Section/utils";
-import { Cloud } from "visual/global/Config";
-import { DCTypes } from "visual/global/Config/types/DynamicContent";
+import type { Cloud } from "visual/global/Config";
 import { isBackgroundPointerEnabled } from "visual/global/Config/types/configs/featuresValue";
+import { DCTypes } from "visual/global/Config/types/DynamicContent";
 import { getColorToolbar } from "visual/utils/color";
 import { BgRepeat, BgSize } from "visual/utils/containers/types";
 import { t } from "visual/utils/i18n";

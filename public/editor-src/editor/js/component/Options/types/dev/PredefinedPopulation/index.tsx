@@ -1,5 +1,5 @@
 import { produce } from "immer";
-import React, { ReactElement, useCallback } from "react";
+import React, { type ReactNode, useCallback } from "react";
 import { findDCChoiceByPlaceholder } from "visual/utils/options/Population/utils";
 import * as Str from "visual/utils/reader/string";
 import { auto } from "visual/utils/string/specs";
@@ -8,7 +8,7 @@ import { PopulationSelect } from "../../common/Population/Components/Select";
 import type { Value } from "../../common/Population/types/Value";
 import type { Props } from "./types";
 
-export const PredefinedPopulation = (props: Props): ReactElement => {
+export const PredefinedPopulation = (props: Props): ReactNode => {
   const { config, onChange } = props;
   const { activeChoice } = config ?? {};
 
@@ -31,7 +31,7 @@ export const PredefinedPopulation = (props: Props): ReactElement => {
       );
     }
 
-    return <></>;
+    return null;
   }
 
   const { value } = props;

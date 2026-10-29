@@ -1,9 +1,9 @@
-import { ElementModel } from "visual/component/Elements/Types";
+import type { ElementModel } from "visual/component/Elements/Types";
 import { isStory } from "visual/providers/EditorModeProvider";
 import { isEditor } from "visual/providers/RenderProvider";
-import { DynamicStylesProps } from "visual/types";
+import type { DynamicStylesProps } from "visual/types";
 import { renderStyles } from "visual/utils/cssStyle";
-import { OutputStyle } from "visual/utils/cssStyle/types";
+import type { OutputStyle } from "visual/utils/cssStyle/types";
 import { getTooltipStyles } from "../tools/Tooltip/styles";
 
 export function style(data: DynamicStylesProps<ElementModel>): OutputStyle {

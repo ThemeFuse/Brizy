@@ -1,7 +1,7 @@
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
-import { capitalize } from "visual/utils/string";
 import { Toggle } from "visual/utils/options/utils/Type";
+import { capitalize } from "visual/utils/string";
 
 export const getItems = ({ v, device }) => {
   const dvv = (key) => defaultValueValue({ v, key, device });

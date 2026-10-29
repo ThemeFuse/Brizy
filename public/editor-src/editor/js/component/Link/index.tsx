@@ -1,10 +1,10 @@
 import classNames from "classnames";
 import React, {
-  CSSProperties,
-  PropsWithChildren,
-  ReactElement,
-  Ref,
+  type CSSProperties,
   forwardRef,
+  type PropsWithChildren,
+  type ReactElement,
+  type Ref,
   useCallback,
   useEffect,
   useMemo,
@@ -12,13 +12,13 @@ import React, {
 } from "react";
 import { useConfig } from "visual/providers/ConfigProvider";
 import { useRender } from "visual/providers/RenderProvider";
-import { WithClassName } from "visual/types/attributes";
+import type { WithClassName } from "visual/types/attributes";
 import { makeDataAttr } from "visual/utils/i18n/attribute";
 import { attachRef } from "visual/utils/react";
 import { mRead } from "visual/utils/string/specs";
-import { StoryAnchorAttribute } from "./types/Slide";
-import { Target, empty as defaultTarget } from "./types/Target";
-import { Type, empty as defaultType } from "./types/Type";
+import type { StoryAnchorAttribute } from "./types/Slide";
+import { empty as defaultTarget, type Target } from "./types/Target";
+import { empty as defaultType, type Type } from "./types/Type";
 import { getAttr, getHref, getRel, getTarget } from "./utils";
 
 type Props = PropsWithChildren<
@@ -107,7 +107,7 @@ const LinkComponent = (
       attachRef(v, ref || null);
       attachRef(v, innerRef || null);
     },
-    [ref, innerRef]
+    [ref]
   );
 
   return (

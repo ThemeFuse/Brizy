@@ -1,4 +1,4 @@
-import { isObject, hasKey, hasKeys } from "./object";
+import { hasKey, hasKeys, isObject } from "./object";
 
 test("Testing 'isObject' function", () => {
   expect(isObject(undefined)).toBe(false);

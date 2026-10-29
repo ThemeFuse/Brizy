@@ -1,11 +1,11 @@
-import { GetItems } from "visual/editorComponents/EditorComponent/types";
+import type { GetItems } from "visual/editorComponents/EditorComponent/types";
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
 import { getColorToolbar } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
 import { getDynamicContentOption } from "visual/utils/options";
 import { NORMAL } from "visual/utils/stateMode";
-import { Props, Value } from "./types";
+import type { Props, Value } from "./types";
 
 export const getItems: GetItems<Value, Props> = ({ v, device, context }) => {
   const dvv = (key: string) => defaultValueValue({ v, key, device });

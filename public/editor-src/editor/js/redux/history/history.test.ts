@@ -1,9 +1,9 @@
-import { History } from "./types";
 import {
-  createHistorySnapshot,
   addHistoryDataToState,
+  createHistorySnapshot,
   isHistoryEnhancedState
 } from "./reducers";
+import { History } from "./types";
 
 describe("testing 'History' class", () => {
   const config = {
@@ -166,7 +166,7 @@ describe("testing 'History' class", () => {
   it("Should collapse frequent updates", async () => {
     const history = new History({ ...config, collapseFrequency: 10 });
     const wait = (ms: number): Promise<void> =>
-      new Promise(res => setTimeout(res, ms));
+      new Promise((res) => setTimeout(res, ms));
 
     history.update({ a: 1 });
     await wait(20);

@@ -1,10 +1,7 @@
-import { ExportFunction } from "visual/types";
+import type { ExportFunction } from "visual/types";
 import { attachMailtoLinkHandler } from "../utils.export";
 
-export const fn: ExportFunction = ($root) => {
-  const root = $root.get(0);
-  if (!root) return;
-
+export const fn: ExportFunction = (root) => {
   root.querySelectorAll<HTMLElement>(".brz-staffDetail").forEach((element) => {
     element.addEventListener("click", (e) => {
       const element = e.target;

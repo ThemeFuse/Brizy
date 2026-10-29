@@ -38,8 +38,8 @@ export function styleBorderRadius({ v, device, state, current }) {
   return isHover === "hover" && hoverBorderRadiusType === "grouped"
     ? `${hoverBorderRadius}px`
     : isHover === "hover" && hoverBorderRadiusType === "ungrouped"
-    ? `${hoverCurrentValue}px`
-    : borderRadiusType === "grouped"
-    ? `${borderRadius}px`
-    : `${currentValue}px`;
+      ? `${hoverCurrentValue}px`
+      : borderRadiusType === "grouped"
+        ? `${borderRadius}px`
+        : `${currentValue}px`;
 }

@@ -1,32 +1,32 @@
 import classNames from "classnames";
 import React, {
-  Attributes,
-  ComponentType,
-  MutableRefObject,
-  ReactElement,
-  ReactNode,
-  RefObject,
-  createRef
+  type Attributes,
+  type ComponentType,
+  createRef,
+  type MutableRefObject,
+  type ReactElement,
+  type ReactNode,
+  type RefObject
 } from "react";
 import ContainerBorder from "visual/component/ContainerBorder";
 import ContextMenu from "visual/component/ContextMenu";
-import { ElementModel } from "visual/component/Elements/Types";
+import type { ElementModel } from "visual/component/Elements/Types";
 import { currentUserRole } from "visual/component/Roles";
 import { SortableElement } from "visual/component/Sortable/SortableElement";
 import SortableHandle from "visual/component/Sortable/SortableHandle";
 import Toolbar, {
   ToolbarExtend as _ToolbarExtend
 } from "visual/component/Toolbar";
-import { PortalToolbarType } from "visual/component/Toolbar/PortalToolbar";
+import type { PortalToolbarType } from "visual/component/Toolbar/PortalToolbar";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import EditorComponent from "visual/editorComponents/EditorComponent";
-import {
+import type {
   ComponentsMeta,
   ToolbarExtend
 } from "visual/editorComponents/EditorComponent/types";
-import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
+import type { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
-import { CssId } from "visual/utils/models/cssId";
+import type { CssId } from "visual/utils/models/cssId";
 import {
   defaultValueValue,
   validateKeyByProperty
@@ -36,8 +36,8 @@ import { attachRefs } from "visual/utils/react";
 import * as State from "visual/utils/stateMode";
 import { parseCustomAttributes } from "visual/utils/string/parseCustomAttributes";
 import * as Str from "visual/utils/string/specs";
-import { Literal } from "visual/utils/types/Literal";
-import { MValue } from "visual/utils/value";
+import type { Literal } from "visual/utils/types/Literal";
+import type { MValue } from "visual/utils/value";
 import contextMenuConfig from "./contextMenu";
 import defaultValue from "./defaultValue.json";
 import * as sidebarConfig from "./sidebar";

@@ -4,7 +4,7 @@ import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
 import { getDynamicContentOption } from "visual/utils/options";
 import { widthCSS } from "./css";
-import { Value } from "./types";
+import type { Value } from "./types";
 
 export const getItems: GetItems<Value> = ({ v, device, context }) => {
   const dvv = (key: string) => defaultValueValue({ v, key, device });

@@ -1,5 +1,5 @@
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
-import { GoogleFont } from "visual/types/Fonts";
+import type { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import type { GoogleFont } from "visual/types/Fonts";
 import { assetUrl } from "visual/utils/asset";
 import { t } from "visual/utils/i18n";
 

@@ -1,4 +1,4 @@
-import { JSX } from "react";
+import type { JSX } from "react";
 
 export interface Props {
   data: { name: string; title: string; value: string }[];

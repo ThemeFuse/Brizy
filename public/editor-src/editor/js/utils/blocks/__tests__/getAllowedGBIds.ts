@@ -1,10 +1,10 @@
 import { noop } from "es-toolkit";
-import { DCTypes } from "visual/global/Config/types/DynamicContent";
 import {
   ConfigCommon,
   Mode
 } from "visual/global/Config/types/configs/ConfigCommon";
 import { Prop as WPPropConfig } from "visual/global/Config/types/configs/WP";
+import { DCTypes } from "visual/global/Config/types/DynamicContent";
 import { GlobalBlock } from "visual/types/GlobalBlock";
 import { Page, PageCollection, PageCommon } from "visual/types/Page";
 import {

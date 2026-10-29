@@ -1,12 +1,12 @@
 import { TwitterFollowPreview } from "@brizy/component/src/Flex/TwitterFollowButton";
 import { TwitterMentionPreview } from "@brizy/component/src/Flex/TwitterMentionButton";
 import classnames from "classnames";
-import React, { ReactNode } from "react";
+import React, { type ReactNode } from "react";
 import CustomCSS from "visual/component/CustomCSS";
 import { Wrapper } from "../tools/Wrapper";
 import { BaseTwitter } from "./Base";
 import { style } from "./styles";
-import { PreviewTwitterOptions, Value } from "./types";
+import type { PreviewTwitterOptions, Value } from "./types";
 
 class Twitter extends BaseTwitter {
   renderPreviewByType(props: PreviewTwitterOptions) {

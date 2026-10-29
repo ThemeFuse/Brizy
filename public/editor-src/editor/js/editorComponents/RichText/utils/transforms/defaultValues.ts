@@ -1,5 +1,5 @@
 import deepMerge from "deepmerge";
-import { ElementModel } from "visual/component/Elements/Types";
+import type { ElementModel } from "visual/component/Elements/Types";
 import { TextScripts } from "visual/types/Style";
 
 // represent how data will store inside html

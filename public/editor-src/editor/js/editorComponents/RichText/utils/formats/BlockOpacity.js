@@ -1,6 +1,6 @@
 import Quill from "quill";
 
-let Parchment = Quill.import("parchment");
+const Parchment = Quill.import("parchment");
 
 class BlockOpacity extends Parchment.Attributor.Style {}
 

@@ -11,7 +11,11 @@ export const generateTags = (input: string): OpeningAndClosingTags => {
 
   let lastIndex = 0;
 
-  for (let match; (match = regex.exec(input)) !== null; ) {
+  for (
+    let match: RegExpExecArray | null;
+    // biome-ignore lint/suspicious/noAssignInExpressions: regex exec loop with an early break - the assignment is the loop's advance step
+    (match = regex.exec(input)) !== null;
+  ) {
     if (match.index > lastIndex) {
       break;
     }

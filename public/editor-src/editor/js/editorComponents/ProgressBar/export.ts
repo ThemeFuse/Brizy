@@ -3,13 +3,7 @@ import { read as readNumber } from "visual/utils/reader/number";
 import { ProgressStyle } from "./types";
 import { animate, readType } from "./utils";
 
-export default function ($node: JQuery): void {
-  const node = $node.get(0);
-
-  if (!node) {
-    return;
-  }
-
+export default function (node: HTMLElement): void {
   node.querySelectorAll<HTMLDivElement>(".brz-progress-bar").forEach((item) => {
     const wrapper = item.querySelector<HTMLDivElement>(
       ".brz-progress-bar__wrapper"

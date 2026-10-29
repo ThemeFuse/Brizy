@@ -1,8 +1,8 @@
-import { GetConfig } from "visual/providers/ConfigProvider/types";
-import { EditorMode } from "visual/providers/EditorModeProvider";
-import { Store } from "visual/redux/store";
-import { ReduxState } from "visual/redux/types";
-import { ReduxAction } from "../../actions2";
+import type { GetConfig } from "visual/providers/ConfigProvider/types";
+import type { EditorMode } from "visual/providers/EditorModeProvider";
+import type { Store } from "visual/redux/store";
+import type { ReduxState } from "visual/redux/types";
+import type { ReduxAction } from "../../actions2";
 
 export interface Data {
   action: ReduxAction;
@@ -14,7 +14,7 @@ export interface Data {
     promise: Promise<unknown>,
     action: ReduxAction,
     onSuccess: VoidFunction,
-    onError: VoidFunction
+    onError: (e: unknown) => void
   ) => void;
   editorMode: EditorMode;
 }

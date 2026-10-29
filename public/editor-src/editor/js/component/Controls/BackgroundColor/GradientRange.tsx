@@ -1,6 +1,6 @@
 import classNames from "classnames";
-import { HandleProps as ControlHandleProps, Handle } from "rc-slider";
-import React, { ReactElement } from "react";
+import { type HandleProps as ControlHandleProps, Handle } from "rc-slider";
+import React, { type ReactElement } from "react";
 import Range from "visual/component/Controls/Range";
 
 type Edge = "start" | "end";
@@ -51,7 +51,6 @@ export const GradientRange = ({
           className,
           index,
           // we need to ignore this prop
-          // eslint-disable-next-line @typescript-eslint/no-unused-vars
           dragging,
           ...other
         } = props as HandleProps;

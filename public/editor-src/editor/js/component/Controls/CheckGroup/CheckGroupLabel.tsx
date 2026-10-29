@@ -1,6 +1,6 @@
-import EditorIcon from "visual/component/EditorIcon";
 import React from "react";
-import { CheckGroupLabelProps as Props } from "visual/component/Controls/CheckGroup/types";
+import type { CheckGroupLabelProps as Props } from "visual/component/Controls/CheckGroup/types";
+import EditorIcon from "visual/component/EditorIcon";
 
 export const CheckGroupLabel = ({ label, helperContent }: Props) => (
   <div className="brz-ed-option__label brz-ed-option__check-group__label">

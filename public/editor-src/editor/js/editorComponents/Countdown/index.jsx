@@ -1,13 +1,12 @@
 import classnames from "classnames";
 import { isEqual, pick } from "es-toolkit";
-import jQuery from "jquery";
 import React from "react";
 import BoxResizer from "visual/component/BoxResizer";
 import CustomCSS from "visual/component/CustomCSS";
 import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
-import "visual/libs/countdown/jquery.countdown";
+import { countdown, getCountdown } from "visual/libs/countdown/countdown";
 import { makeDataAttr } from "visual/utils/i18n/attribute";
 import { attachRefs } from "visual/utils/react";
 import defaultValue from "./defaultValue.json";
@@ -63,11 +62,7 @@ class Countdown extends EditorComponent {
       this.patchValue({ date: formatDate(after30days, "d/m/Y") });
     }
 
-    this.initPlugin({
-      onTick: (remaining) => {
-        this.setState(remaining);
-      }
-    });
+    this.initPlugin();
   }
 
   componentDidUpdate(prevProps) {
@@ -82,7 +77,9 @@ class Countdown extends EditorComponent {
   }
 
   componentWillUnmount() {
-    jQuery(this.countdown).countdown("destroy");
+    if (this.countdown) {
+      getCountdown(this.countdown)?.destroy();
+    }
     super.componentWillUnmount();
   }
 
@@ -95,19 +92,48 @@ class Countdown extends EditorComponent {
     return getTime(formatDate(convertedDate, "m/d/Y"), hours, minutes);
   }
 
-  initPlugin(options = null) {
+  // The labels use the language of the last init, and an unknown language keeps
+  // the previous one, as the former jQuery plugin did.
+  handleTick = ({ days, hours, minutes, seconds }) => {
+    const language = this.language;
+
+    this.setState({
+      days: {
+        title: language.whichLabels(days)[3],
+        amount: days
+      },
+      hours: {
+        title: language.whichLabels(hours)[4],
+        amount: hours
+      },
+      minutes: {
+        title: language.whichLabels(minutes)[5],
+        amount: minutes
+      },
+      seconds: {
+        title: language.whichLabels(seconds)[6],
+        amount: seconds
+      }
+    });
+  };
+
+  initPlugin() {
     const { timeZone, language } = this.getValue();
 
     const timeZoneOffset = timeZone * 60 * 1000;
     const currentLanguage = getLanguage(language);
 
-    jQuery(this.countdown).countdown({
+    if (!this.countdown) {
+      return;
+    }
+
+    this.language = currentLanguage ?? this.language;
+    countdown(this.countdown, {
       now: Date.now(),
       endDate: this.endDate,
       timeZoneOffset: timeZoneOffset,
       tickInterval: 1000,
-      language: currentLanguage,
-      ...options
+      onTick: this.handleTick
     });
   }
 
@@ -119,10 +145,8 @@ class Countdown extends EditorComponent {
 
     return (
       <div className={className}>
-        <div className="brz-countdown__number">
-          {this.state[name]["amount"]}
-        </div>
-        <div className="brz-countdown__label">{this.state[name]["title"]}</div>
+        <div className="brz-countdown__number">{this.state[name].amount}</div>
+        <div className="brz-countdown__label">{this.state[name].title}</div>
       </div>
     );
   }

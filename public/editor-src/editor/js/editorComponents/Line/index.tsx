@@ -1,6 +1,6 @@
-import React, { ReactNode } from "react";
+import React, { type ReactNode } from "react";
 import BoxResizer from "visual/component/BoxResizer";
-import { Patch, Point } from "visual/component/BoxResizer/types";
+import type { Patch, Point } from "visual/component/BoxResizer/types";
 import { Text } from "visual/component/ContentOptions/types";
 import CustomCSS from "visual/component/CustomCSS";
 import { ThemeIcon } from "visual/component/ThemeIcon";

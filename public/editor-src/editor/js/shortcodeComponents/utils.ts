@@ -1,10 +1,10 @@
 import { pipe } from "@brizy/readers";
 import deepMerge from "deepmerge";
 import { flatten } from "es-toolkit";
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import type { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { getShortcodeComponents } from "visual/shortcodeComponents/index";
-import { type Shortcode, ShortcodeComponents, Shortcodes } from "visual/types";
-import { MValue } from "visual/utils/value";
+import type { Shortcode, ShortcodeComponents, Shortcodes } from "visual/types";
+import type { MValue } from "visual/utils/value";
 
 const getThirdPartyShortcodeConfig = (element: {
   id: string;

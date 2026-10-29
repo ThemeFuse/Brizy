@@ -1,9 +1,9 @@
 import { get } from "visual/utils/object/get";
 import * as Obj from "visual/utils/reader/object";
-import { String } from "visual/utils/string/specs";
-import { Eq, IsEqual } from "visual/utils/types/Eq";
-import { Literal } from "visual/utils/types/Literal";
-import { Reader, Type } from "visual/utils/types/Type";
+import { StringSpec } from "visual/utils/string/specs";
+import type { Eq, IsEqual } from "visual/utils/types/Eq";
+import type { Literal } from "visual/utils/types/Literal";
+import type { Reader, Type } from "visual/utils/types/Type";
 
 export interface PopulationMethod {
   title: string;
@@ -30,14 +30,14 @@ export interface PopulationMethodHandler {
 
 export const read: Reader<PopulationMethod> = (v) => {
   if (Obj.isObject(v)) {
-    const title = String.read(get("title", v));
-    const value = String.read(get("value", v));
-    const icon = String.read(get("icon", v));
-    const alias = String.read(get("alias", v));
+    const title = StringSpec.read(get("title", v));
+    const value = StringSpec.read(get("value", v));
+    const icon = StringSpec.read(get("icon", v));
+    const alias = StringSpec.read(get("alias", v));
     const attr = Obj.read(get("attr", v)) as
       | PopulationMethod["attr"]
       | undefined;
-    const display = String.read(get("display", v)) as
+    const display = StringSpec.read(get("display", v)) as
       | PopulationMethod["display"]
       | undefined;
 

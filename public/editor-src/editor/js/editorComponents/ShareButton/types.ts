@@ -1,13 +1,13 @@
-import { Component as ReactComponent } from "react";
-import {
+import type { Component as ReactComponent } from "react";
+import type {
   ElementModel,
   ElementModelType2
 } from "visual/component/Elements/Types";
-import {
+import type {
   ComponentsMeta,
   ContextMenuItem
 } from "visual/editorComponents/EditorComponent/types";
-import { WithClassName } from "visual/types/attributes";
+import type { WithClassName } from "visual/types/attributes";
 
 export enum Network {
   Facebook = "Facebook",

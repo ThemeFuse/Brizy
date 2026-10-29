@@ -2,7 +2,7 @@ import React, { forwardRef } from "react";
 import { TextEditor } from "visual/component/Controls/TextEditor";
 import { t } from "visual/utils/i18n";
 import { Toggle } from "visual/utils/options/utils/Type";
-import { ToolbarItemProp } from "./types";
+import type { ToolbarItemProp } from "./types";
 
 export const ToolbarItem = forwardRef<HTMLDivElement, ToolbarItemProp>(
   ({ deletable, style, title, onClick }, ref) => (

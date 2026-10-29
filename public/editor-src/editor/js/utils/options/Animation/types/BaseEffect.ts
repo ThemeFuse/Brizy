@@ -1,8 +1,8 @@
 import { mPipe } from "visual/utils/fp";
-import * as Positive from "visual/utils/math/Positive";
 import * as Num from "visual/utils/math/number";
-import { EffectType } from "./EffectType";
-import { LegacyModel } from "./LegacyModel";
+import * as Positive from "visual/utils/math/Positive";
+import type { EffectType } from "./EffectType";
+import type { LegacyModel } from "./LegacyModel";
 
 export interface WithType<T extends EffectType> {
   type: T;

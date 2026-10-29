@@ -1,7 +1,7 @@
 import React from "react";
 import { ThemeIcon } from "visual/component/ThemeIcon";
-import { FCC } from "visual/utils/react/types";
-import { ControlProps as Props } from "../types";
+import type { FCC } from "visual/utils/react/types";
+import type { ControlProps as Props } from "../types";
 
 export const Controls: FCC<Props> = ({ hasPauseIcon, hasUnmuteIcon }) => (
   <>

@@ -1,9 +1,9 @@
-import {
+import type {
   ConfigCommon,
   PublishedProject
 } from "visual/global/Config/types/configs/ConfigCommon";
-import { Store } from "visual/redux/store";
-import { Project } from "visual/types/Project";
+import type { Store } from "visual/redux/store";
+import type { Project } from "visual/types/Project";
 import { makeStyles } from "../../assetManager/utils";
 import { compileProject } from "../../compileProject";
 

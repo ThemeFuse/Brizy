@@ -1,11 +1,16 @@
 import { create } from "fontkit";
 import { isT, orElse } from "fp-utilities";
 import { produce } from "immer";
-import { VariationFont } from "visual/types/Fonts";
+import type { VariationFont } from "visual/types/Fonts";
 import { checkValue2 } from "visual/utils/checkValue";
 import { pipe } from "visual/utils/fp";
 import * as Obj from "visual/utils/reader/object";
-import { FontFile, Response, VariationAxes, VariationAxesTags } from "./types";
+import {
+  type FontFile,
+  type Response,
+  type VariationAxes,
+  VariationAxesTags
+} from "./types";
 
 const readVariationAxes = (font: unknown) =>
   pipe(Obj.read, orElse({}), Obj.readKey("variationAxes"))(font);
@@ -60,7 +65,7 @@ export const normalizeFonts = (
       delete draft.data.uid;
     }
 
-    if (variations && variations.length) {
+    if (variations?.length) {
       draft.data.variations = variations;
     }
   });

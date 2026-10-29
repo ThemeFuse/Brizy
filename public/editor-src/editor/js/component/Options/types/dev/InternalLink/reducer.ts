@@ -1,5 +1,5 @@
-import { ChoicesSync } from "./types";
-import { Status } from "visual/component/Controls/InternalLink/types";
+import type { Status } from "visual/component/Controls/InternalLink/types";
+import type { ChoicesSync } from "./types";
 
 export interface State {
   items: ChoicesSync;

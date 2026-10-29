@@ -1,4 +1,4 @@
-import { OptionStyle } from "visual/utils/cssStyle/types";
+import type { OptionStyle } from "visual/utils/cssStyle/types";
 
 export const successMessageSelector =
   "{{WRAPPER}} .brz-forms2__alert--success .brz-forms2__alert-text";

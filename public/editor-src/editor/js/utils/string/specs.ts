@@ -1,6 +1,6 @@
-import { Eq, IsEqual, eq as defaultEq } from "visual/utils/types/Eq";
-import { Monoid } from "visual/utils/types/Monoid";
-import { MRead, Reader, ToValue, Type, toValue } from "visual/utils/types/Type";
+import { eq as defaultEq, type Eq, type IsEqual } from "visual/utils/types/Eq";
+import type { Monoid } from "visual/utils/types/Monoid";
+import type { MRead, Reader, Type } from "visual/utils/types/Type";
 
 export const read: Reader<string> = (a) => {
   switch (typeof a) {
@@ -12,8 +12,6 @@ export const read: Reader<string> = (a) => {
       return undefined;
   }
 };
-
-export const toString: ToValue<string> = toValue(read);
 
 export type Empty = "";
 
@@ -33,7 +31,7 @@ export const eq: IsEqual<string> = defaultEq;
 
 export const mRead: MRead<string> = (v) => read(v) ?? "";
 
-export const String: Type<string> & Monoid<string> & Eq<string> = {
+export const StringSpec: Type<string> & Monoid<string> & Eq<string> = {
   read,
   empty,
   append,

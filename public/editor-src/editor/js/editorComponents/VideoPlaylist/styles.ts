@@ -1,6 +1,6 @@
-import { ElementModel } from "visual/component/Elements/Types";
+import type { ElementModel } from "visual/component/Elements/Types";
 import { isEditor, isView } from "visual/providers/RenderProvider";
-import { DynamicStylesProps } from "visual/types";
+import type { DynamicStylesProps } from "visual/types";
 import { renderStyles } from "visual/utils/cssStyle";
 import type { OutputStyle, Styles } from "visual/utils/cssStyle/types";
 

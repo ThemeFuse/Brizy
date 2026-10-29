@@ -1,15 +1,15 @@
 import { Num, Str } from "@brizy/readers";
-import { ChartInstanceType } from "visual/types/global";
+import type { ChartInstanceType } from "visual/types/global";
 import { hexToRgba } from "visual/utils/color";
 import { camelCase } from "visual/utils/string";
-import { MValue } from "visual/utils/value";
+import type { MValue } from "visual/utils/value";
 import {
-  ChartData as ChartDataType,
-  ChartDataValue,
+  type ChartData as ChartDataType,
+  type ChartDataValue,
   ChartType,
-  Switch,
-  Value,
-  readChartItems
+  readChartItems,
+  type Switch,
+  type Value
 } from "./types";
 
 export const splitNumber = (text = ""): MValue<number[]> =>

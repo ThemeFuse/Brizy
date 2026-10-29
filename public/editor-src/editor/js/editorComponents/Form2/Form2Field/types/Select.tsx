@@ -4,17 +4,17 @@ import React from "react";
 import { connect } from "react-redux";
 import ClickOutside from "visual/component/ClickOutside";
 import Portal from "visual/component/Portal";
-import { Scrollbar, ScrollbarRef } from "visual/component/Scrollbar";
+import { Scrollbar, type ScrollbarRef } from "visual/component/Scrollbar";
 import { ThemeIcon } from "visual/component/ThemeIcon";
 import Toolbar from "visual/component/Toolbar";
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import { deviceModeSelector } from "visual/redux/selectors";
-import { ReduxState } from "visual/redux/types";
+import type { ReduxState } from "visual/redux/types";
 import { makeDataAttr } from "visual/utils/i18n/attribute";
 import { attachRef, attachRefs } from "visual/utils/react";
 import { AddOption } from "./common/AddOption";
 import TextField from "./common/TextField";
-import { SelectAttributes, SelectProps, SelectState } from "./type";
+import type { SelectAttributes, SelectProps, SelectState } from "./type";
 import { createNewFieldOption } from "./utils";
 
 const MAX_ITEM_DROPDOWN = 5;
@@ -87,12 +87,12 @@ class Select extends TextField {
   handleClick = (e: React.MouseEvent<HTMLElement>): void => {
     e.preventDefault();
     const node = this.input.current;
-    node && node.classList.add("brz-ed-dd-cancel");
+    if (node) node.classList.add("brz-ed-dd-cancel");
   };
 
   handleBlur = (): void => {
     const node = this.input.current;
-    node && node.classList.remove("brz-ed-dd-cancel");
+    if (node) node.classList.remove("brz-ed-dd-cancel");
   };
 
   handleOpen = (e: React.MouseEvent<HTMLElement>): void => {

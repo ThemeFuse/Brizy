@@ -1,4 +1,4 @@
-import React, { ForwardedRef, forwardRef } from "react";
+import React, { type ForwardedRef, forwardRef } from "react";
 import { isEditor } from "visual/providers/RenderProvider";
 import { FormInput } from "../../type";
 

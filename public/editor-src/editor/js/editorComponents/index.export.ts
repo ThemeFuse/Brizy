@@ -2,7 +2,7 @@
  * Editor Components Export Manifest
  * Defines all editor components with their selectors and export functions
  */
-import { ComponentExport } from "visual/types";
+import type { ComponentExport } from "visual/types";
 import { makeDataAttrString } from "visual/utils/i18n/attribute";
 import { ecwidComponentsManifest } from "./Ecwid/export";
 import { ministryBrandsComponentsManifest } from "./MinistryBrands/export";
@@ -22,6 +22,11 @@ export const editorComponentsManifest: Record<string, ComponentExport> = {
   audio: {
     selector: ".brz-audio",
     export: () => import("./Audio/export")
+  },
+
+  cookieBanner: {
+    selector: ".brz-cookie-banner",
+    export: () => import("./CookieBanner/export")
   },
 
   countdown: {
@@ -67,6 +72,11 @@ export const editorComponentsManifest: Record<string, ComponentExport> = {
   map: {
     selector: ".brz-map",
     export: () => import("./Map/export")
+  },
+
+  posts: {
+    selector: ".brz-posts",
+    export: () => import("./Posts/export")
   },
 
   progressBar: {

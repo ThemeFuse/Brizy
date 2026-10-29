@@ -1,5 +1,5 @@
 import { Num, Str } from "@brizy/readers";
-import { WithRenderContext } from "visual/providers/RenderProvider";
+import type { WithRenderContext } from "visual/providers/RenderProvider";
 import { getColor } from "visual/utils/color";
 import { isNullish } from "visual/utils/value";
 import { defaultValueValue } from "../onChange";

@@ -1,8 +1,8 @@
 import { noop } from "es-toolkit";
 import React from "react";
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
-import { BaseKey } from "./BaseApp";
-import { BaseIntegrationContext } from "./type";
+import type { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import type { BaseKey } from "./BaseApp";
+import type { BaseIntegrationContext } from "./type";
 
 const app = {
   id: "",

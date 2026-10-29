@@ -1,6 +1,6 @@
-import { Middleware } from "redux";
+import type { Middleware } from "redux";
 import { thunk } from "redux-thunk";
-import { GetConfig } from "visual/providers/ConfigProvider/types";
+import type { GetConfig } from "visual/providers/ConfigProvider/types";
 import sideEffects from "visual/redux/middleware/sideEffects";
 
 export function getMiddleware({

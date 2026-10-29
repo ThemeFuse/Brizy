@@ -1,7 +1,7 @@
 import { keyToDCFallback2Key } from "visual/editorComponents/EditorComponent/DynamicContent/utils";
-import { GetItems } from "visual/editorComponents/EditorComponent/types";
-import { DCTypes } from "visual/global/Config/types/DynamicContent";
+import type { GetItems } from "visual/editorComponents/EditorComponent/types";
 import { isImagePointerEnabled } from "visual/global/Config/types/configs/featuresValue";
+import { DCTypes } from "visual/global/Config/types/DynamicContent";
 import { getColorToolbar } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { ImageType } from "visual/utils/image/types";
@@ -11,9 +11,9 @@ import { getDynamicContentOption } from "visual/utils/options";
 import { read as readString } from "visual/utils/reader/string";
 import { HOVER, NORMAL } from "visual/utils/stateMode";
 import { SizeType } from "../../global/Config/types/configs/common";
-import { Device, V as Value } from "../Image/types";
+import type { Device, V as Value } from "../Image/types";
 import { getImageDCSize } from "../Image/utils";
-import { Props } from "./types";
+import type { Props } from "./types";
 
 interface Data {
   desktopContainerWidth: number;
@@ -113,7 +113,7 @@ export const getItems =
                   {
                     id: "image",
                     type: "population",
-                    label: t("Image") + " " + imageCount,
+                    label: `${t("Image")} ${imageCount}`,
                     states: [NORMAL, HOVER],
                     statesConfig: {
                       normal: {

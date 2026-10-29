@@ -52,7 +52,7 @@ export default class Tabs extends React.Component {
       `brz-ed-control__tabs__${tabsPosition}`,
       tabsClassName
     );
-    const items = childrenArr.map((child, index) => {
+    const items = childrenArr.map((child) => {
       const { icon, value: childValue, title, label } = child.props;
       const className = classnames("brz-li brz-ed-control__tab", {
         "brz-ed-control__tab__icon": icon,
@@ -61,7 +61,7 @@ export default class Tabs extends React.Component {
 
       return (
         <li
-          key={index}
+          key={childValue}
           title={title}
           className={className}
           onClick={() => onChange(childValue)}

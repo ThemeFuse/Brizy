@@ -1,10 +1,13 @@
 import { Sheet } from "../Sheet";
-import { ServerStyle } from "./types";
+import type { ServerStyle } from "./types";
 
 export class ServerStyleSheet implements ServerStyle {
   readonly instance: Readonly<Sheet>;
 
-  constructor({ doc, instanceId }: { doc?: Document; instanceId?: string } = {}) {
+  constructor({
+    doc,
+    instanceId
+  }: { doc?: Document; instanceId?: string } = {}) {
     this.instance = Object.freeze(new Sheet({ doc, instanceId }));
   }
 

@@ -2,24 +2,29 @@ import {
   ElementDefaultValue,
   ElementModel
 } from "visual/component/Elements/Types";
+import { OptionGroup } from "visual/component/Options/types/dev/Addable/types";
 import { ToolbarConfig } from "visual/editorComponents/EditorComponent/types";
-import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
-import { createStore } from "visual/redux/store";
+import {
+  OptionDefinition,
+  ToolbarItemType
+} from "visual/editorComponents/ToolbarItemType";
 import { DeviceMode } from "visual/types";
 import { ALL, Device, RESPONSIVE } from "visual/utils/devices";
 import { flattenDefaultValue as flattenDefaultValue_ } from "visual/utils/models/flattenDefaultValue";
+import { expand } from "visual/utils/options/utils/expand";
 import {
   DESKTOP,
+  empty,
   MOBILE,
   ResponsiveMode,
-  TABLET,
-  empty
+  TABLET
 } from "visual/utils/responsiveMode";
 import {
   createOptionId,
   getOptionValueByDevice,
   getResponsiveModeByDevice,
   getToolbarData,
+  getToolbarDefaults,
   inDevelopment,
   makeToolbarPropsFromConfigDefaults,
   optionMode,
@@ -321,8 +326,6 @@ describe("Testing 'flattenDefaultValue' function", () => {
 });
 
 describe("Testing 'getToolbarData' function", () => {
-  const store = createStore();
-
   const testCase: [
     ToolbarItemType[],
     {
@@ -566,11 +569,175 @@ describe("Testing 'getToolbarData' function", () => {
   test.each(testCase)(
     "default value & DCKeys parsing",
     (toolbarConfig, expected) => {
-      const _parsedToolbarData = getToolbarData(store, toolbarConfig);
+      const _parsedToolbarData = getToolbarData(toolbarConfig);
       expect(_parsedToolbarData.dv).toStrictEqual(expected.defaultValue);
       expect(_parsedToolbarData.DCKeys).toStrictEqual(expected.DCKeys);
     }
   );
+});
+
+describe("Testing addable defaults", () => {
+  const s1 = { id: "s1", title: "Item 1" };
+  const shape = [
+    { id: "score", type: "number", default: { value: 77 } },
+    { id: "title", type: "inputText", default: { value: "Untitled" } },
+    // no default, the value comes from the converter of the option
+    { id: "note", type: "inputText" }
+  ];
+
+  const addable = (over: Record<string, unknown> = {}): ToolbarItemType =>
+    ({
+      id: "spinItems",
+      type: "addable",
+      shape,
+      ...over
+    }) as unknown as ToolbarItemType;
+
+  const defaults = (toolbar: ToolbarItemType[], v: ElementModel = {}) =>
+    getToolbarDefaults(toolbar, v, DESKTOP).dv;
+
+  test("the declaration alone yields the groups, not their options", () => {
+    expect(
+      getToolbarData([addable({ default: { value: [s1] } })]).dv
+    ).toStrictEqual({ spinItems: [s1] });
+  });
+
+  test("every declared group gets a full set of shape values", () => {
+    const toolbar = [
+      addable({
+        default: {
+          value: [
+            {
+              id: "s1",
+              title: "Item 1",
+              defaults: { score: { value: 10 }, title: { value: "First" } }
+            },
+            { id: "s2", title: "Item 2", defaults: { score: { value: 20 } } },
+            { id: "s3", title: "Item 3" }
+          ]
+        }
+      })
+    ];
+
+    expect(defaults(toolbar)).toStrictEqual({
+      // `defaults` is declared only, the groups are stored as id + title
+      spinItems: [
+        { id: "s1", title: "Item 1" },
+        { id: "s2", title: "Item 2" },
+        { id: "s3", title: "Item 3" }
+      ],
+      // the group's own `defaults`
+      spinItemsS1Score: 10,
+      spinItemsS1Title: "First",
+      // declared in part, the rest from the shape default
+      spinItemsS2Score: 20,
+      spinItemsS2Title: "Untitled",
+      // nothing declared, all from the shape default
+      spinItemsS3Score: 77,
+      spinItemsS3Title: "Untitled",
+      // no shape default either, so the converter of `inputText` answers
+      spinItemsS1Note: "",
+      spinItemsS2Note: "",
+      spinItemsS3Note: ""
+    });
+  });
+
+  test("a group added at runtime gets the same keys as a declared one", () => {
+    // `corners` declares no default, its converter fills the whole model
+    const s = [{ id: "corners", type: "corners" }];
+    const declared = defaults([
+      addable({ shape: s, default: { value: [s1] } })
+    ]);
+    // the same group, known only from the stored model — as after "Add New"
+    const added = defaults([addable({ shape: s })], { spinItems: [s1] });
+
+    expect(Object.keys(added).sort()).toStrictEqual(
+      Object.keys(declared).sort()
+    );
+  });
+
+  test("`defaults` are declared, so a stored group still gets them", () => {
+    const withDefaults = { ...s1, defaults: { score: { value: 11 } } };
+
+    expect(
+      defaults([addable({ default: { value: [withDefaults] } })], {
+        spinItems: [s1]
+      })
+    ).toMatchObject({ spinItemsS1Score: 11 });
+  });
+
+  test("shape values follow the `devices` of the shape option", () => {
+    const toolbar = [
+      addable({
+        default: { value: [s1] },
+        shape: [
+          {
+            id: "score",
+            type: "number",
+            devices: RESPONSIVE,
+            default: { value: 77 }
+          }
+        ]
+      })
+    ];
+
+    expect(defaults(toolbar)).toStrictEqual({
+      spinItems: [s1],
+      tabletSpinItemsS1Score: 77,
+      mobileSpinItemsS1Score: 77
+    });
+  });
+
+  // The docs teach the object form only. A bare value still works — `parseOption`
+  // hands it to every key the option asks for — and widgets in the wild may rely
+  // on it, so it stays covered here.
+  test("a bare value in `defaults` is read like `{ value: ... }`", () => {
+    const toolbar = [
+      addable({ default: { value: [{ ...s1, defaults: { score: 10 } }] } })
+    ];
+
+    expect(defaults(toolbar)).toHaveProperty("spinItemsS1Score", 10);
+  });
+
+  test("a `defaults` entry can be a whole model, like any option default", () => {
+    const toolbar = [
+      addable({
+        shape: [{ id: "color", type: "colorPicker" }],
+        default: {
+          value: [
+            { ...s1, defaults: { color: { hex: "#DD4B39", opacity: 0.5 } } }
+          ]
+        }
+      })
+    ];
+
+    expect(defaults(toolbar)).toMatchObject({
+      spinItemsS1ColorHex: "#DD4B39",
+      spinItemsS1ColorOpacity: 0.5
+    });
+  });
+
+  test("the generated keys are the ids `expand` mints", () => {
+    const option = addable({
+      shape: [{ id: "score", type: "number", default: { value: 77 } }],
+      default: { value: [s1] }
+    });
+    const expanded = expand({
+      ...option,
+      value: { value: [s1] }
+    }) as OptionDefinition<"addable"> & { optionGroups: Array<OptionGroup> };
+
+    expect(expanded.optionGroups[0].options[0].id).toBe("spinItemsS1Score");
+    expect(defaults([option])).toHaveProperty("spinItemsS1Score");
+  });
+
+  // A third party declares the type, so the registry lookup has to be an own-key
+  // one — `fns["toString"]` inherits a function.
+  test("a type inherited from Object.prototype does not expand", () => {
+    const option = { id: "x", type: "toString" } as unknown as ToolbarItemType;
+
+    expect(expand(option)).toBe(option);
+  });
 });
 
 describe("Testing 'getResponsiveModeByDevice' function", () => {
@@ -679,8 +846,6 @@ describe("Testing 'getOptionValueByDevice' function ", () => {
     customOnChange: "test",
     nullableCustomOnChange: null
   };
-  const store = createStore();
-
   const testCasesByDevice: {
     input: { id: string; currentDevice: DeviceMode };
     result: Record<string, unknown> | undefined | null;
@@ -775,7 +940,7 @@ describe("Testing 'getOptionValueByDevice' function ", () => {
   ];
 
   test.each(testCasesByDevice)("getValueByDevice", ({ input, result }) => {
-    const value = getOptionValueByDevice({ ...input, v, toolbarConfig, store });
+    const value = getOptionValueByDevice({ ...input, v, toolbarConfig });
 
     expect(value).toStrictEqual(result);
   });

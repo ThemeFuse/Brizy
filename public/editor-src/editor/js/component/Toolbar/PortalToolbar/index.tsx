@@ -1,32 +1,32 @@
 import { noop } from "es-toolkit";
 import { isT } from "fp-utilities";
-import React, { JSX, RefObject, createRef, forwardRef } from "react";
+import React, { createRef, forwardRef, type JSX, type RefObject } from "react";
 import ReactDOM from "react-dom";
-import { ConnectedProps, connect } from "react-redux";
+import { type ConnectedProps, connect } from "react-redux";
 import ClickOutside from "visual/component/ClickOutside";
 import HotKeys from "visual/component/HotKeys";
 import { targetExceptions } from "visual/component/Options/constants";
 import { RightSidebarItems } from "visual/component/RightSidebar/RightSidebarItems";
 import { currentUserRole } from "visual/component/Roles";
 import { filterOptions } from "visual/editorComponents/EditorComponent/utils";
-import { OptionDefinition } from "visual/editorComponents/ToolbarItemType";
+import type { OptionDefinition } from "visual/editorComponents/ToolbarItemType";
 import { useConfig } from "visual/providers/ConfigProvider";
 import { setActiveElement, setActiveElementMeta } from "visual/redux/actions2";
 import { deviceModeSelector } from "visual/redux/selectors";
-import { ReduxState } from "visual/redux/types";
+import type { ReduxState } from "visual/redux/types";
 import { applyFilter } from "visual/utils/filters";
 import { attachRef } from "visual/utils/react";
 import {
-  ToolbarExtendContext,
-  ToolbarExtendContextType
-} from "../ToolbarExtend";
-import {
-  DeactivationOptions,
-  ToolbarMonitorHandler,
-  monitor
+  type DeactivationOptions,
+  monitor,
+  type ToolbarMonitorHandler
 } from "../monitor";
+import {
+  ToolbarExtendContext,
+  type ToolbarExtendContextType
+} from "../ToolbarExtend";
 import { PortalToolbarPositioner } from "./PortalToolbarPositioner";
-import { PortalToolbarProps } from "./types";
+import type { PortalToolbarProps } from "./types";
 import { selectorSearchCoordinates, selectorSearchDomTree } from "./utils";
 
 const portalNodesByDocument: Map<Document, HTMLElement> = new Map();
@@ -249,10 +249,10 @@ class _PortalToolbar
       const { onBeforeOpen, onOpen } = this.props;
 
       monitor.setActive(this);
-      onBeforeOpen && onBeforeOpen();
+      if (onBeforeOpen) onBeforeOpen();
 
       this.setState({ opened: true }, () => {
-        onOpen && onOpen();
+        if (onOpen) onOpen();
 
         if (this.node !== null) {
           const e = new CustomEvent("brz.toolbar.open", {
@@ -272,9 +272,9 @@ class _PortalToolbar
     if (this.state.opened) {
       const { onBeforeClose, onClose } = this.props;
 
-      onBeforeClose && onBeforeClose();
+      if (onBeforeClose) onBeforeClose();
       this.setState({ opened: false }, () => {
-        onClose && onClose();
+        if (onClose) onClose();
 
         if (this.node !== null) {
           const e = new CustomEvent("brz.toolbar.close", {
@@ -298,6 +298,7 @@ class _PortalToolbar
   clickOutsideException = (clickTarget: HTMLElement): boolean => {
     try {
       const node = this.ref.current;
+      // biome-ignore lint/complexity/useOptionalChain: `node?.contains(...)` widens the return to `boolean | undefined` and fails tsc (TS2322). `?? false` would compile, but the explicit `!== null` states the author's intent - a ref is either attached or it is not - so it is kept rather than reshaped to satisfy a lint rule
       return node !== null && node.contains(clickTarget);
     } catch (_) {
       return false;

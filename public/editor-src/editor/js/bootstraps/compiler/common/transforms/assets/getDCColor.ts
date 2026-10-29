@@ -1,7 +1,7 @@
 import type { CheerioAPI } from "cheerio";
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import type { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { makeRichTextDCColorCSS } from "visual/utils/color";
-import { Opacity } from "visual/utils/cssProps/opacity";
+import type { Opacity } from "visual/utils/cssProps/opacity";
 import { decodeFromString } from "visual/utils/string";
 import { uuid } from "visual/utils/uuid";
 

@@ -1,10 +1,10 @@
 import { Num as NumReader } from "@brizy/readers";
-import { ElementModel } from "visual/component/Elements/Types";
+import type { ElementModel } from "visual/component/Elements/Types";
 import { wInFullPage } from "visual/config/columns";
 import * as Num from "visual/utils/math";
 import { defaultValueValue } from "visual/utils/onChange";
-import { ResponsiveMode } from "visual/utils/responsiveMode";
-import { State as StateMode } from "visual/utils/stateMode";
+import type { ResponsiveMode } from "visual/utils/responsiveMode";
+import type { State as StateMode } from "visual/utils/stateMode";
 import * as Str from "visual/utils/string";
 import {
   styleBorderWidthGrouped,
@@ -215,9 +215,9 @@ export const getWidthByPosition = ({
 }: WidthByPosition): { w: number; wNoSpacing: number } => {
   const dvv = (key: string): unknown =>
     defaultValueValue({ v, key, device, state });
-  const position = Str.toString(dvv("elementPosition"));
+  const position = Str.asString(dvv("elementPosition"));
   const width = Num.toNumber(dvv("width")) ?? w;
-  const widthSuffix = Str.toString(dvv("widthSuffix")) ?? "px";
+  const widthSuffix = Str.asString(dvv("widthSuffix")) ?? "px";
 
   if (position === "fixed") {
     const w = percentageToPixels(width, widthSuffix, wInFullPage);

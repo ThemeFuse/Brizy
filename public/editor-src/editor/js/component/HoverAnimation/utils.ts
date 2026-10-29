@@ -1,7 +1,7 @@
-import { Value } from "visual/utils/options/Animation/types/Value";
+import type { Value } from "visual/utils/options/Animation/types/Value";
 import { isNullish } from "visual/utils/value";
 import { getAnimations } from "./animations";
-import { HoverTarget, MultiAnimation } from "./types";
+import type { HoverTarget, MultiAnimation } from "./types";
 
 export const setHoverOptions = <T>(data: T): string => {
   return encodeURI(

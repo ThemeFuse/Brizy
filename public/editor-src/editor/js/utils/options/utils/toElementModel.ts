@@ -1,6 +1,6 @@
-import { ElementModel } from "visual/component/Elements/Types";
-import { ToElementModel } from "visual/component/Options/Type";
-import { OptionName, OptionValue } from "visual/component/Options/types";
+import type { ElementModel } from "visual/component/Elements/Types";
+import type { ToElementModel } from "visual/component/Options/Type";
+import type { OptionName, OptionValue } from "visual/component/Options/types";
 import { toElementModel as addable } from "visual/utils/options/Addable/converters";
 import { toElementModel as advancedSettings } from "visual/utils/options/AdvancedSettings/converters";
 import { toElementModel as ai } from "visual/utils/options/AiText/converters";
@@ -57,8 +57,8 @@ import { toElementModel as stateMode } from "visual/utils/options/StateMode/conv
 import { toElementModel as _switch } from "visual/utils/options/Switch/converters";
 import { toElementModel as symbols } from "visual/utils/options/Symbols/converters";
 import { toElementModel as tabs } from "visual/utils/options/Tabs/converters";
-import { toElementModel as textShadow } from "visual/utils/options/TextShadow/converters";
 import { toElementModel as textarea } from "visual/utils/options/Textarea/converters";
+import { toElementModel as textShadow } from "visual/utils/options/TextShadow/converters";
 import { toElementModel as toggle } from "visual/utils/options/Toggle/converters";
 import { toElementModel as toggleButton } from "visual/utils/options/ToggleButton/converters";
 import { toElementModel as transform } from "visual/utils/options/Transform/converters";

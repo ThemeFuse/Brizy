@@ -7,7 +7,7 @@ import {
   isTypeWithoutWeight,
   readLineAlign
 } from "visual/editorComponents/Line/utils";
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import type { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { getColor } from "visual/utils/color";
 import type {
   OptionStyle,
@@ -116,7 +116,7 @@ export const iconSizeCSS: OptionStyle<"radioGroup"> = ({
     if (css) {
       return {
         "{{WRAPPER}}.brz-line-icon .brz-line-content": {
-          "font-size": css + ";"
+          "font-size": `${css};`
         }
       };
     }
@@ -137,7 +137,7 @@ export const spacingCSS = (
 ): OutputOptionStyle => ({
   "{{WRAPPER}}.brz-line-text .brz-line-content, {{WRAPPER}} .brz-line-icon-wrapper":
     {
-      margin: getIconSpacingCSS(align, value) + ";"
+      margin: `${getIconSpacingCSS(align, value)};`
     }
 });
 

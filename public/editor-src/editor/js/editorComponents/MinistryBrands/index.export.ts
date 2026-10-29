@@ -1,3 +1,7 @@
+export { fn as MinistryBrandsArticleDetail } from "./MinistryBrandsArticleDetail/export";
+export { fn as MinistryBrandsArticleFeatured } from "./MinistryBrandsArticleFeatured/export";
+export { fn as MinistryBrandsArticleLayout } from "./MinistryBrandsArticleLayout/export";
+export { fn as MinistryBrandsArticleList } from "./MinistryBrandsArticleList/export";
 export { fn as MinistryBrandsEventCalendar } from "./MinistryBrandsEventCalendar/export";
 export { fn as MinistryBrandsEventDetail } from "./MinistryBrandsEventDetail/export";
 export { fn as MinistryBrandsEventLayout } from "./MinistryBrandsEventLayout/export";
@@ -8,11 +12,7 @@ export { fn as MinistryBrandsSermonDetail } from "./MinistryBrandsSermonDetail/e
 export { fn as MinistryBrandsSermonFeatured } from "./MinistryBrandsSermonFeatured/export";
 export { fn as MinistryBrandsSermonLayout } from "./MinistryBrandsSermonLayout/export";
 export { fn as MinistryBrandsSermonList } from "./MinistryBrandsSermonList/export";
-export { fn as MinistryBrandsStaffFeatured } from "./MinistryBrandsStaffFeatured/export";
-export { fn as MinistryBrandsStaffList } from "./MinistryBrandsStaffList/export";
-export { fn as MinistryBrandsArticleLayout } from "./MinistryBrandsArticleLayout/export";
-export { fn as MinistryBrandsStaffLayout } from "./MinistryBrandsStaffLayout/export";
 export { fn as MinistryBrandsStaffDetail } from "./MinistryBrandsStaffDetail/export";
-export { fn as MinistryBrandsArticleList } from "./MinistryBrandsArticleList/export";
-export { fn as MinistryBrandsArticleDetail } from "./MinistryBrandsArticleDetail/export";
-export { fn as MinistryBrandsArticleFeatured } from "./MinistryBrandsArticleFeatured/export";
+export { fn as MinistryBrandsStaffFeatured } from "./MinistryBrandsStaffFeatured/export";
+export { fn as MinistryBrandsStaffLayout } from "./MinistryBrandsStaffLayout/export";
+export { fn as MinistryBrandsStaffList } from "./MinistryBrandsStaffList/export";

@@ -1,12 +1,12 @@
 import type { Patch as BoxResizerPatch } from "visual/component/BoxResizer/types";
-import { ElementModel } from "visual/component/Elements/Types";
-import { Target } from "visual/component/Link/types/Target";
-import { Type } from "visual/component/Link/types/Type";
-import { TooltipPlacement } from "visual/component/Tooltip/types";
-import { ComponentsMeta } from "visual/editorComponents/EditorComponent/types";
-import { Block } from "visual/types/Block";
-import { WithClassName } from "visual/types/attributes";
-import { CssId } from "visual/utils/models/cssId";
+import type { ElementModel } from "visual/component/Elements/Types";
+import type { Target } from "visual/component/Link/types/Target";
+import type { Type } from "visual/component/Link/types/Type";
+import type { TooltipPlacement } from "visual/component/Tooltip/types";
+import type { ComponentsMeta } from "visual/editorComponents/EditorComponent/types";
+import type { WithClassName } from "visual/types/attributes";
+import type { Block } from "visual/types/Block";
+import type { CssId } from "visual/utils/models/cssId";
 
 export interface Value extends ElementModel, CssId {
   name: string;

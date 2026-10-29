@@ -1,6 +1,6 @@
-import { Style } from "../Project/Style";
-import { Literal, Response } from "../common";
-import { Block, Categories } from "../common/Block";
+import type { Literal, Response } from "../common";
+import type { Block, Categories } from "../common/Block";
+import type { Style } from "../Project/Style";
 
 interface BlockWithThumbs extends Block {
   thumbnailSrc: string;

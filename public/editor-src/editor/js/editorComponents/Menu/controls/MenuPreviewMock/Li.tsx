@@ -1,11 +1,11 @@
-import React, { ReactNode } from "react";
+import cn from "classnames";
+import React, { type ReactNode } from "react";
 import {
   makeEndPlaceholder,
   makePlaceholder,
   makeStartPlaceholder
 } from "visual/utils/dynamicContent";
-import cn from "classnames";
-import { FCC } from "visual/utils/react/types";
+import type { FCC } from "visual/utils/react/types";
 
 interface Props {
   menuId: string;

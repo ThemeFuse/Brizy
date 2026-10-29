@@ -1,0 +1,369 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`the markup with flags off and names off: closed 1`] = `
+"<div class="brz-translation" data-brz-showflags="off" data-brz-showname="off">
+<div class="brz-translation__dc h-full">
+<select class="brz-select select2-hidden-accessible" data-select2-id="1" tabindex="-1" aria-hidden="true">
+<option value="en" data-flag="/flags/en.svg" data-href="#lang-en" selected="" data-select2-id="3">English</option>
+<option value="ro" data-flag="/flags/ro.svg" data-href="#lang-ro">Română</option>
+<option value="fr" data-flag="/flags/fr.svg" data-href="#lang-fr">Français</option>
+</select>
+<span class="select2 select2-container select2-container--default" dir="ltr" data-select2-id="2" style="width: auto;">
+<span class="selection">
+<span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="listbox" aria-expanded="false" tabindex="0" aria-disabled="false" aria-labelledby="select2-iiii-container">
+<span class="select2-selection__rendered" id="select2-iiii-container" aria-readonly="true" title="English">
+<div class="brz-translation__select-item">
+</div>
+</span>
+<span class="select2-selection__arrow" role="presentation">
+<b role="presentation">
+</b>
+</span>
+</span>
+</span>
+<span class="dropdown-wrapper" aria-hidden="true">
+</span>
+</span>
+</div>
+</div>"
+`;
+
+exports[`the markup with flags off and names off: open 1`] = `
+"<div class="brz-translation" data-brz-showflags="off" data-brz-showname="off">
+<div class="brz-translation__dc h-full">
+<select class="brz-select select2-hidden-accessible" data-select2-id="1" tabindex="-1" aria-hidden="true">
+<option value="en" data-flag="/flags/en.svg" data-href="#lang-en" selected="" data-select2-id="3">English</option>
+<option value="ro" data-flag="/flags/ro.svg" data-href="#lang-ro" data-select2-id="5">Română</option>
+<option value="fr" data-flag="/flags/fr.svg" data-href="#lang-fr" data-select2-id="6">Français</option>
+</select>
+<span class="select2 select2-container select2-container--default select2-container--below select2-container--open" dir="ltr" data-select2-id="2" style="width: auto;">
+<span class="selection">
+<span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="listbox" aria-expanded="true" tabindex="0" aria-disabled="false" aria-labelledby="select2-iiii-container" aria-owns="select2-iiii-results" aria-activedescendant="select2-iiii-result-iiii-en">
+<span class="select2-selection__rendered" id="select2-iiii-container" aria-readonly="true" title="English">
+<div class="brz-translation__select-item">
+</div>
+</span>
+<span class="select2-selection__arrow" role="presentation">
+<b role="presentation">
+</b>
+</span>
+</span>
+</span>
+<span class="dropdown-wrapper" aria-hidden="true">
+</span>
+</span>
+<span class="select2-container select2-container--default select2-container--open" style="position: absolute; top: 0px; left: 0px;">
+<span class="select2-dropdown select2-dropdown--below ps" dir="ltr" style="width: auto; min-width: 0px; position: relative; max-height: 0px;">
+<span class="select2-search select2-search--dropdown select2-search--hide">
+<input class="select2-search__field" type="search" tabindex="0" autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false" role="searchbox" aria-autocomplete="list" aria-controls="select2-iiii-results" aria-activedescendant="select2-iiii-result-iiii-en">
+</span>
+<span class="select2-results">
+<ul class="select2-results__options" role="listbox" id="select2-iiii-results" aria-expanded="true" aria-hidden="false">
+<li class="select2-results__option select2-results__option--highlighted" id="select2-iiii-result-iiii-en" role="option" aria-selected="true" data-select2-id="select2-iiii-result-iiii-en">
+<div class="brz-translation__select-item">
+</div>
+</li>
+<li class="select2-results__option" id="select2-iiii-result-iiii-ro" role="option" aria-selected="false" data-select2-id="select2-iiii-result-iiii-ro">
+<div class="brz-translation__select-item">
+</div>
+</li>
+<li class="select2-results__option" id="select2-iiii-result-iiii-fr" role="option" aria-selected="false" data-select2-id="select2-iiii-result-iiii-fr">
+<div class="brz-translation__select-item">
+</div>
+</li>
+</ul>
+</span>
+<div class="ps__rail-x" style="left: 0px; top: 0px;">
+<div class="ps__thumb-x" tabindex="0" style="left: 0px; width: 0px;">
+</div>
+</div>
+<div class="ps__rail-y" style="top: 0px; left: 0px;">
+<div class="ps__thumb-y" tabindex="0" style="top: 0px; height: 0px;">
+</div>
+</div>
+</span>
+</span>
+</div>
+</div>"
+`;
+
+exports[`the markup with flags off and names on: closed 1`] = `
+"<div class="brz-translation" data-brz-showflags="off" data-brz-showname="on">
+<div class="brz-translation__dc h-full">
+<select class="brz-select select2-hidden-accessible" data-select2-id="1" tabindex="-1" aria-hidden="true">
+<option value="en" data-flag="/flags/en.svg" data-href="#lang-en" selected="" data-select2-id="3">English</option>
+<option value="ro" data-flag="/flags/ro.svg" data-href="#lang-ro">Română</option>
+<option value="fr" data-flag="/flags/fr.svg" data-href="#lang-fr">Français</option>
+</select>
+<span class="select2 select2-container select2-container--default" dir="ltr" data-select2-id="2" style="width: auto;">
+<span class="selection">
+<span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="listbox" aria-expanded="false" tabindex="0" aria-disabled="false" aria-labelledby="select2-iiii-container">
+<span class="select2-selection__rendered" id="select2-iiii-container" aria-readonly="true" title="English">
+<div class="brz-translation__select-item">
+<span class="brz-span">English</span>
+</div>
+</span>
+<span class="select2-selection__arrow" role="presentation">
+<b role="presentation">
+</b>
+</span>
+</span>
+</span>
+<span class="dropdown-wrapper" aria-hidden="true">
+</span>
+</span>
+</div>
+</div>"
+`;
+
+exports[`the markup with flags off and names on: open 1`] = `
+"<div class="brz-translation" data-brz-showflags="off" data-brz-showname="on">
+<div class="brz-translation__dc h-full">
+<select class="brz-select select2-hidden-accessible" data-select2-id="1" tabindex="-1" aria-hidden="true">
+<option value="en" data-flag="/flags/en.svg" data-href="#lang-en" selected="" data-select2-id="3">English</option>
+<option value="ro" data-flag="/flags/ro.svg" data-href="#lang-ro" data-select2-id="5">Română</option>
+<option value="fr" data-flag="/flags/fr.svg" data-href="#lang-fr" data-select2-id="6">Français</option>
+</select>
+<span class="select2 select2-container select2-container--default select2-container--below select2-container--open" dir="ltr" data-select2-id="2" style="width: auto;">
+<span class="selection">
+<span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="listbox" aria-expanded="true" tabindex="0" aria-disabled="false" aria-labelledby="select2-iiii-container" aria-owns="select2-iiii-results" aria-activedescendant="select2-iiii-result-iiii-en">
+<span class="select2-selection__rendered" id="select2-iiii-container" aria-readonly="true" title="English">
+<div class="brz-translation__select-item">
+<span class="brz-span">English</span>
+</div>
+</span>
+<span class="select2-selection__arrow" role="presentation">
+<b role="presentation">
+</b>
+</span>
+</span>
+</span>
+<span class="dropdown-wrapper" aria-hidden="true">
+</span>
+</span>
+<span class="select2-container select2-container--default select2-container--open" style="position: absolute; top: 0px; left: 0px;">
+<span class="select2-dropdown select2-dropdown--below ps" dir="ltr" style="width: auto; min-width: 0px; position: relative; max-height: 0px;">
+<span class="select2-search select2-search--dropdown select2-search--hide">
+<input class="select2-search__field" type="search" tabindex="0" autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false" role="searchbox" aria-autocomplete="list" aria-controls="select2-iiii-results" aria-activedescendant="select2-iiii-result-iiii-en">
+</span>
+<span class="select2-results">
+<ul class="select2-results__options" role="listbox" id="select2-iiii-results" aria-expanded="true" aria-hidden="false">
+<li class="select2-results__option select2-results__option--highlighted" id="select2-iiii-result-iiii-en" role="option" aria-selected="true" data-select2-id="select2-iiii-result-iiii-en">
+<div class="brz-translation__select-item">
+<span class="brz-span">English</span>
+</div>
+</li>
+<li class="select2-results__option" id="select2-iiii-result-iiii-ro" role="option" aria-selected="false" data-select2-id="select2-iiii-result-iiii-ro">
+<div class="brz-translation__select-item">
+<span class="brz-span">Română</span>
+</div>
+</li>
+<li class="select2-results__option" id="select2-iiii-result-iiii-fr" role="option" aria-selected="false" data-select2-id="select2-iiii-result-iiii-fr">
+<div class="brz-translation__select-item">
+<span class="brz-span">Français</span>
+</div>
+</li>
+</ul>
+</span>
+<div class="ps__rail-x" style="left: 0px; top: 0px;">
+<div class="ps__thumb-x" tabindex="0" style="left: 0px; width: 0px;">
+</div>
+</div>
+<div class="ps__rail-y" style="top: 0px; left: 0px;">
+<div class="ps__thumb-y" tabindex="0" style="top: 0px; height: 0px;">
+</div>
+</div>
+</span>
+</span>
+</div>
+</div>"
+`;
+
+exports[`the markup with flags on and names off: closed 1`] = `
+"<div class="brz-translation" data-brz-showflags="on" data-brz-showname="off">
+<div class="brz-translation__dc h-full">
+<select class="brz-select select2-hidden-accessible" data-select2-id="1" tabindex="-1" aria-hidden="true">
+<option value="en" data-flag="/flags/en.svg" data-href="#lang-en" selected="" data-select2-id="3">English</option>
+<option value="ro" data-flag="/flags/ro.svg" data-href="#lang-ro">Română</option>
+<option value="fr" data-flag="/flags/fr.svg" data-href="#lang-fr">Français</option>
+</select>
+<span class="select2 select2-container select2-container--default" dir="ltr" data-select2-id="2" style="width: auto;">
+<span class="selection">
+<span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="listbox" aria-expanded="false" tabindex="0" aria-disabled="false" aria-labelledby="select2-iiii-container">
+<span class="select2-selection__rendered" id="select2-iiii-container" aria-readonly="true" title="English">
+<div class="brz-translation__select-item">
+<img class="brz-translation__flag" src="/flags/en.svg" alt="en">
+</div>
+</span>
+<span class="select2-selection__arrow" role="presentation">
+<b role="presentation">
+</b>
+</span>
+</span>
+</span>
+<span class="dropdown-wrapper" aria-hidden="true">
+</span>
+</span>
+</div>
+</div>"
+`;
+
+exports[`the markup with flags on and names off: open 1`] = `
+"<div class="brz-translation" data-brz-showflags="on" data-brz-showname="off">
+<div class="brz-translation__dc h-full">
+<select class="brz-select select2-hidden-accessible" data-select2-id="1" tabindex="-1" aria-hidden="true">
+<option value="en" data-flag="/flags/en.svg" data-href="#lang-en" selected="" data-select2-id="3">English</option>
+<option value="ro" data-flag="/flags/ro.svg" data-href="#lang-ro" data-select2-id="5">Română</option>
+<option value="fr" data-flag="/flags/fr.svg" data-href="#lang-fr" data-select2-id="6">Français</option>
+</select>
+<span class="select2 select2-container select2-container--default select2-container--below select2-container--open" dir="ltr" data-select2-id="2" style="width: auto;">
+<span class="selection">
+<span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="listbox" aria-expanded="true" tabindex="0" aria-disabled="false" aria-labelledby="select2-iiii-container" aria-owns="select2-iiii-results" aria-activedescendant="select2-iiii-result-iiii-en">
+<span class="select2-selection__rendered" id="select2-iiii-container" aria-readonly="true" title="English">
+<div class="brz-translation__select-item">
+<img class="brz-translation__flag" src="/flags/en.svg" alt="en">
+</div>
+</span>
+<span class="select2-selection__arrow" role="presentation">
+<b role="presentation">
+</b>
+</span>
+</span>
+</span>
+<span class="dropdown-wrapper" aria-hidden="true">
+</span>
+</span>
+<span class="select2-container select2-container--default select2-container--open" style="position: absolute; top: 0px; left: 0px;">
+<span class="select2-dropdown select2-dropdown--below ps" dir="ltr" style="width: auto; min-width: 0px; position: relative; max-height: 0px;">
+<span class="select2-search select2-search--dropdown select2-search--hide">
+<input class="select2-search__field" type="search" tabindex="0" autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false" role="searchbox" aria-autocomplete="list" aria-controls="select2-iiii-results" aria-activedescendant="select2-iiii-result-iiii-en">
+</span>
+<span class="select2-results">
+<ul class="select2-results__options" role="listbox" id="select2-iiii-results" aria-expanded="true" aria-hidden="false">
+<li class="select2-results__option select2-results__option--highlighted" id="select2-iiii-result-iiii-en" role="option" aria-selected="true" data-select2-id="select2-iiii-result-iiii-en">
+<div class="brz-translation__select-item">
+<img class="brz-translation__flag" src="/flags/en.svg" alt="en">
+</div>
+</li>
+<li class="select2-results__option" id="select2-iiii-result-iiii-ro" role="option" aria-selected="false" data-select2-id="select2-iiii-result-iiii-ro">
+<div class="brz-translation__select-item">
+<img class="brz-translation__flag" src="/flags/ro.svg" alt="ro">
+</div>
+</li>
+<li class="select2-results__option" id="select2-iiii-result-iiii-fr" role="option" aria-selected="false" data-select2-id="select2-iiii-result-iiii-fr">
+<div class="brz-translation__select-item">
+<img class="brz-translation__flag" src="/flags/fr.svg" alt="fr">
+</div>
+</li>
+</ul>
+</span>
+<div class="ps__rail-x" style="left: 0px; top: 0px;">
+<div class="ps__thumb-x" tabindex="0" style="left: 0px; width: 0px;">
+</div>
+</div>
+<div class="ps__rail-y" style="top: 0px; left: 0px;">
+<div class="ps__thumb-y" tabindex="0" style="top: 0px; height: 0px;">
+</div>
+</div>
+</span>
+</span>
+</div>
+</div>"
+`;
+
+exports[`the markup with flags on and names on: closed 1`] = `
+"<div class="brz-translation" data-brz-showflags="on" data-brz-showname="on">
+<div class="brz-translation__dc h-full">
+<select class="brz-select select2-hidden-accessible" data-select2-id="1" tabindex="-1" aria-hidden="true">
+<option value="en" data-flag="/flags/en.svg" data-href="#lang-en" selected="" data-select2-id="3">English</option>
+<option value="ro" data-flag="/flags/ro.svg" data-href="#lang-ro">Română</option>
+<option value="fr" data-flag="/flags/fr.svg" data-href="#lang-fr">Français</option>
+</select>
+<span class="select2 select2-container select2-container--default" dir="ltr" data-select2-id="2" style="width: auto;">
+<span class="selection">
+<span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="listbox" aria-expanded="false" tabindex="0" aria-disabled="false" aria-labelledby="select2-iiii-container">
+<span class="select2-selection__rendered" id="select2-iiii-container" aria-readonly="true" title="English">
+<div class="brz-translation__select-item">
+<span class="brz-span">English</span>
+<img class="brz-translation__flag" src="/flags/en.svg" alt="en">
+</div>
+</span>
+<span class="select2-selection__arrow" role="presentation">
+<b role="presentation">
+</b>
+</span>
+</span>
+</span>
+<span class="dropdown-wrapper" aria-hidden="true">
+</span>
+</span>
+</div>
+</div>"
+`;
+
+exports[`the markup with flags on and names on: open 1`] = `
+"<div class="brz-translation" data-brz-showflags="on" data-brz-showname="on">
+<div class="brz-translation__dc h-full">
+<select class="brz-select select2-hidden-accessible" data-select2-id="1" tabindex="-1" aria-hidden="true">
+<option value="en" data-flag="/flags/en.svg" data-href="#lang-en" selected="" data-select2-id="3">English</option>
+<option value="ro" data-flag="/flags/ro.svg" data-href="#lang-ro" data-select2-id="5">Română</option>
+<option value="fr" data-flag="/flags/fr.svg" data-href="#lang-fr" data-select2-id="6">Français</option>
+</select>
+<span class="select2 select2-container select2-container--default select2-container--below select2-container--open" dir="ltr" data-select2-id="2" style="width: auto;">
+<span class="selection">
+<span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="listbox" aria-expanded="true" tabindex="0" aria-disabled="false" aria-labelledby="select2-iiii-container" aria-owns="select2-iiii-results" aria-activedescendant="select2-iiii-result-iiii-en">
+<span class="select2-selection__rendered" id="select2-iiii-container" aria-readonly="true" title="English">
+<div class="brz-translation__select-item">
+<span class="brz-span">English</span>
+<img class="brz-translation__flag" src="/flags/en.svg" alt="en">
+</div>
+</span>
+<span class="select2-selection__arrow" role="presentation">
+<b role="presentation">
+</b>
+</span>
+</span>
+</span>
+<span class="dropdown-wrapper" aria-hidden="true">
+</span>
+</span>
+<span class="select2-container select2-container--default select2-container--open" style="position: absolute; top: 0px; left: 0px;">
+<span class="select2-dropdown select2-dropdown--below ps" dir="ltr" style="width: auto; min-width: 0px; position: relative; max-height: 0px;">
+<span class="select2-search select2-search--dropdown select2-search--hide">
+<input class="select2-search__field" type="search" tabindex="0" autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false" role="searchbox" aria-autocomplete="list" aria-controls="select2-iiii-results" aria-activedescendant="select2-iiii-result-iiii-en">
+</span>
+<span class="select2-results">
+<ul class="select2-results__options" role="listbox" id="select2-iiii-results" aria-expanded="true" aria-hidden="false">
+<li class="select2-results__option select2-results__option--highlighted" id="select2-iiii-result-iiii-en" role="option" aria-selected="true" data-select2-id="select2-iiii-result-iiii-en">
+<div class="brz-translation__select-item">
+<span class="brz-span">English</span>
+<img class="brz-translation__flag" src="/flags/en.svg" alt="en">
+</div>
+</li>
+<li class="select2-results__option" id="select2-iiii-result-iiii-ro" role="option" aria-selected="false" data-select2-id="select2-iiii-result-iiii-ro">
+<div class="brz-translation__select-item">
+<span class="brz-span">Română</span>
+<img class="brz-translation__flag" src="/flags/ro.svg" alt="ro">
+</div>
+</li>
+<li class="select2-results__option" id="select2-iiii-result-iiii-fr" role="option" aria-selected="false" data-select2-id="select2-iiii-result-iiii-fr">
+<div class="brz-translation__select-item">
+<span class="brz-span">Français</span>
+<img class="brz-translation__flag" src="/flags/fr.svg" alt="fr">
+</div>
+</li>
+</ul>
+</span>
+<div class="ps__rail-x" style="left: 0px; top: 0px;">
+<div class="ps__thumb-x" tabindex="0" style="left: 0px; width: 0px;">
+</div>
+</div>
+<div class="ps__rail-y" style="top: 0px; left: 0px;">
+<div class="ps__thumb-y" tabindex="0" style="top: 0px; height: 0px;">
+</div>
+</div>
+</span>
+</span>
+</div>
+</div>"
+`;

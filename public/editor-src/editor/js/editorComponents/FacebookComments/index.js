@@ -85,14 +85,7 @@ class FacebookComments extends EditorComponent {
   }
 
   renderForEdit(v, vs, vd) {
-    const {
-      type,
-      targetUrl,
-      href,
-      disqusShortname,
-      skin,
-      review
-    } = v;
+    const { type, targetUrl, href, disqusShortname, skin, review } = v;
 
     const appData = this.getAppDataEditor();
     const data = {
@@ -150,14 +143,7 @@ class FacebookComments extends EditorComponent {
   }
 
   renderForView(v, vs, vd) {
-    const {
-      type,
-      numPosts,
-      targetUrl,
-      href,
-      disqusShortname,
-      skin
-    } = v;
+    const { type, numPosts, targetUrl, href, disqusShortname, skin } = v;
 
     const appData = this.getAppDataPreview();
     const data = {

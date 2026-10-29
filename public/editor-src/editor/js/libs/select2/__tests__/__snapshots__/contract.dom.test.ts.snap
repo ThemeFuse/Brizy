@@ -1,0 +1,70 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`destroy gives back the select of a closed multiple select 1`] = `
+"<div>
+<div class="parent">
+<select multiple="" tabindex="0" class="" aria-hidden="false">
+<option value="red">Red</option>
+<option value="green" selected="">Green</option>
+</select>
+</div>
+</div>"
+`;
+
+exports[`destroy gives back the select of a closed single select 1`] = `
+"<div>
+<div class="parent">
+<select tabindex="3" class="" aria-hidden="false">
+<option value="red">Red</option>
+<option value="green" selected="">Green</option>
+</select>
+</div>
+</div>"
+`;
+
+exports[`destroy gives back the select of an open multiple select 1`] = `
+"<div>
+<div class="parent">
+<select multiple="" tabindex="0" class="" aria-hidden="false">
+<option value="red">Red</option>
+<option value="green" selected="">Green</option>
+</select>
+</div>
+</div>"
+`;
+
+exports[`destroy gives back the select of an open single select 1`] = `
+"<div>
+<div class="parent">
+<select tabindex="0" class="" aria-hidden="false">
+<option value="red">Red</option>
+<option value="green" selected="">Green</option>
+</select>
+</div>
+</div>"
+`;
+
+exports[`mounting again on the same select replaces the first container 1`] = `
+"<div>
+<div class="parent">
+<select tabindex="-1" class="select2-hidden-accessible" aria-hidden="true" data-select2-id="6">
+<option value="red" data-select2-id="8">Red</option>
+<option value="green">Green</option>
+<option value="blue">Blue</option>
+</select>
+<span class="select2 select2-container select2-container--default" dir="ltr" data-select2-id="7" style="width: 100%;">
+<span class="selection">
+<span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-disabled="false" aria-labelledby="select2-iiii-container">
+<span class="select2-selection__rendered" id="select2-iiii-container" role="textbox" aria-readonly="true" title="Red">Red</span>
+<span class="select2-selection__arrow" role="presentation">
+<b role="presentation">
+</b>
+</span>
+</span>
+</span>
+<span class="dropdown-wrapper" aria-hidden="true">
+</span>
+</span>
+</div>
+</div>"
+`;

@@ -1,7 +1,7 @@
 import classnames from "classnames";
-import React, { MouseEvent } from "react";
+import React, { type MouseEvent } from "react";
 import EditorIcon from "visual/component/EditorIcon";
-import { FCC } from "visual/utils/react/types";
+import type { FCC } from "visual/utils/react/types";
 
 export interface Props {
   className?: string;
@@ -70,7 +70,7 @@ export const Button: FCC<Props> = (props) => {
     }
     case "button": {
       return (
-        <button className={className} onClick={onClick}>
+        <button type="button" className={className} onClick={onClick}>
           {content}
         </button>
       );

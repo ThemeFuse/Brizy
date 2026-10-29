@@ -1,13 +1,13 @@
 import { noop } from "es-toolkit";
 import React, {
-  CSSProperties,
   Component,
-  ErrorInfo,
-  MouseEvent,
-  ReactNode
+  type CSSProperties,
+  type ErrorInfo,
+  type MouseEvent,
+  type ReactNode
 } from "react";
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
-import { RenderType, isEditor } from "visual/providers/RenderProvider";
+import type { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import { isEditor, type RenderType } from "visual/providers/RenderProvider";
 import { t } from "visual/utils/i18n";
 
 type ErrorBoundaryProps = {
@@ -94,7 +94,7 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
                 className="brz-details"
                 style={{ whiteSpace: "pre-wrap" }}
               >
-                {error && error.toString()}
+                {error?.toString()}
                 <br />
                 {errorInfo.componentStack}
               </details>

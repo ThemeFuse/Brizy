@@ -1,4 +1,4 @@
-import { ElementModel } from "visual/component/Elements/Types";
+import type { ElementModel } from "visual/component/Elements/Types";
 import { isObject } from "visual/utils/reader/object";
 
 export interface LinkPatch {

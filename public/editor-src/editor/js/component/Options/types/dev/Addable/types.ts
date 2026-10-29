@@ -1,9 +1,9 @@
-import { DragEndEvent } from "@dnd-kit/core";
-import { SyntheticListenerMap } from "@dnd-kit/core/dist/hooks/utilities";
-import { FC, ReactNode } from "react";
-import { Props as OptionProps } from "visual/component/Options/Type";
-import { ToolbarItemsInstance } from "visual/component/Toolbar/ToolbarItems";
-import {
+import type { DragEndEvent } from "@dnd-kit/core";
+import type { SyntheticListenerMap } from "@dnd-kit/core/dist/hooks/utilities";
+import type { FC, ReactNode } from "react";
+import type { Props as OptionProps } from "visual/component/Options/Type";
+import type { ToolbarItemsInstance } from "visual/component/Toolbar/ToolbarItems";
+import type {
   OptionDefinition,
   ToolbarItemType
 } from "visual/editorComponents/ToolbarItemType";
@@ -12,6 +12,12 @@ import {
 export interface GroupBase {
   id: string;
   title: string;
+
+  /**
+   * The `default` of each shape option in this group, keyed by option id.
+   * Declared only, never stored: a group is saved as `id` and `title`.
+   */
+  defaults?: Record<string, unknown>;
 }
 
 export interface Model {

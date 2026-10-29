@@ -1,7 +1,7 @@
-import React, { JSX } from "react";
+import React, { type JSX } from "react";
 import { useThirdParty } from "visual/editorComponents/tools/ThirdPartyContext/useThirdParty";
 import Items from "../Items";
-import { ContainerProps } from "../types";
+import type { ContainerProps } from "../types";
 
 export function Container(props: ContainerProps): JSX.Element {
   const { editorProps } = useThirdParty();

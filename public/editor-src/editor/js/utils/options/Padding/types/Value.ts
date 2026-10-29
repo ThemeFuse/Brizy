@@ -1,6 +1,6 @@
-import { Positive } from "visual/utils/math/Positive";
-import { Spacing } from "visual/utils/options/utils/Spacing";
-import { SpacingUnit } from "visual/utils/options/utils/SpacingUnit";
+import type { Positive } from "visual/utils/math/Positive";
+import type { Spacing } from "visual/utils/options/utils/Spacing";
+import type { SpacingUnit } from "visual/utils/options/utils/SpacingUnit";
 
 export * from "visual/utils/options/utils/Spacing";
 

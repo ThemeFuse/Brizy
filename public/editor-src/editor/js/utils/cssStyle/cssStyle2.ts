@@ -1,14 +1,14 @@
 import { produce } from "immer";
-import { ElementModel, ModelType } from "visual/component/Elements/Types";
-import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
-import { GetConfig } from "visual/providers/ConfigProvider/types";
-import { RenderType, isEditor } from "visual/providers/RenderProvider";
-import { Store } from "visual/redux/store";
+import type { ElementModel, ModelType } from "visual/component/Elements/Types";
+import type { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
+import type { GetConfig } from "visual/providers/ConfigProvider/types";
+import { isEditor, type RenderType } from "visual/providers/RenderProvider";
+import type { Store } from "visual/redux/store";
 import { DESKTOP } from "visual/utils/responsiveMode";
 import { getBreakpoints } from "../breakpoints";
-import { BreakpointsNames } from "../breakpoints/types";
-import { ACTIVE, HOVER, NORMAL, State, mRead } from "../stateMode";
-import { AllCSSKeys, CSS, GeneratedCSS } from "./types";
+import type { BreakpointsNames } from "../breakpoints/types";
+import { ACTIVE, HOVER, mRead, NORMAL, type State } from "../stateMode";
+import type { AllCSSKeys, CSS, GeneratedCSS } from "./types";
 import {
   concatStyles,
   filterDeviceValues,
@@ -275,7 +275,7 @@ export const filterMergedStylesByDevice = (
   styles: GeneratedCSS<string>
 ): GeneratedCSS<string> => {
   const filteredByDevicesData = produce(styles, (draft) => {
-    const desktopStyle = draft["desktop"];
+    const desktopStyle = draft.desktop;
 
     Object.keys(draft).forEach((_key) => {
       const key = _key as BreakpointsNames;

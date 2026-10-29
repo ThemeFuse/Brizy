@@ -1,5 +1,11 @@
-import { DndContext, DragEndEvent, Modifier } from "@dnd-kit/core";
-import React, { FC, useCallback, useEffect, useRef, useState } from "react";
+import { DndContext, type DragEndEvent, type Modifier } from "@dnd-kit/core";
+import React, {
+  type FC,
+  useCallback,
+  useEffect,
+  useRef,
+  useState
+} from "react";
 import { createRestrictToTopWindowEdges } from "visual/component/Navigator/utils";
 import UIEvents, { UIEventType } from "visual/global/UIEvents";
 import { TreeContextProvider } from "visual/providers/TreeProvider";

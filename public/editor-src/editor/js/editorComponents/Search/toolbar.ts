@@ -1,5 +1,5 @@
-import { GetItems } from "visual/editorComponents/EditorComponent/types";
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import type { GetItems } from "visual/editorComponents/EditorComponent/types";
+import type { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { getCollectionTypes } from "visual/utils/api";
 import { getColorToolbar } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
@@ -50,9 +50,7 @@ export const getItems: GetItems = ({ v, device, component }) => {
           devices: "desktop",
           placeholder: t("All"),
           helper: {
-            content: t(
-              "Select the content type you want to search for."
-            )
+            content: t("Select the content type you want to search for.")
           },
           config: {
             search: false,
@@ -62,7 +60,7 @@ export const getItems: GetItems = ({ v, device, component }) => {
             load: () => getCollectionTypesChoices(config.api),
             search: () => getCollectionTypesChoices(config.api)
           }
-        },
+        }
       ]
     },
     {

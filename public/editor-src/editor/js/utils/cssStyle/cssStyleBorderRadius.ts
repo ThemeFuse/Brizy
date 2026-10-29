@@ -2,7 +2,7 @@ import { styleBorderRadiusType } from "visual/utils/style2";
 import { checkValue } from "../checkValue";
 import { defaultValueValue } from "../onChange";
 import { capByPrefix } from "../string";
-import { CSSValue } from "../style2/types";
+import type { CSSValue } from "../style2/types";
 
 type BorderRadiusType = "square" | "rounded" | "custom";
 

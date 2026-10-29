@@ -1,11 +1,11 @@
 import { Base64 } from "js-base64";
-import { GlobalBlock } from "visual/types/GlobalBlock";
-import { PageCommon } from "visual/types/Page";
+import type { GlobalBlock } from "visual/types/GlobalBlock";
+import type { PageCommon } from "visual/types/Page";
 import { mPipe } from "visual/utils/fp";
 import * as Json from "visual/utils/reader/json";
 import * as Obj from "visual/utils/reader/object";
 import * as Str from "visual/utils/reader/string";
-import { MValue } from "visual/utils/value";
+import type { MValue } from "visual/utils/value";
 
 const reader = mPipe(Obj.readKey("data"), Str.read, Base64.decode, Json.read);
 

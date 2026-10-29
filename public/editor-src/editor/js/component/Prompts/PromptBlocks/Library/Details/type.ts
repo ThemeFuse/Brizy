@@ -1,4 +1,4 @@
-import {
+import type {
   BlockData,
   SavedLayoutWithThumbs
 } from "visual/component/Prompts/PromptBlocks/Library/types";

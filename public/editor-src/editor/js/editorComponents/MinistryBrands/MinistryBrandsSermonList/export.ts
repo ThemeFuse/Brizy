@@ -1,10 +1,7 @@
 import { getFreeLibs } from "visual/libs";
-import { ExportFunction } from "visual/types";
+import type { ExportFunction } from "visual/types";
 
-export const fn: ExportFunction = ($root) => {
-  const root = $root.get(0);
-  if (!root) return;
-
+export const fn: ExportFunction = (root) => {
   const { initEkklesiaPopups } = getFreeLibs();
 
   if (typeof initEkklesiaPopups === "function") {

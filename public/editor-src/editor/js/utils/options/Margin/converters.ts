@@ -1,5 +1,5 @@
 import { mPipe, parseStrict } from "fp-utilities";
-import {
+import type {
   FromElementModel,
   FromElementModelGetter,
   ToElementModel
@@ -11,7 +11,7 @@ import { onNullish } from "visual/utils/value";
 import * as Unit from "../utils/SpacingUnit";
 import * as Type from "../utils/Type";
 import { callGetter } from "../utils/wrap";
-import { Value } from "./types/Value";
+import type { Value } from "./types/Value";
 
 export const defaultValue: Value = {
   type: "grouped",

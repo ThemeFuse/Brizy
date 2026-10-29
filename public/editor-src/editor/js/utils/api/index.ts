@@ -1,34 +1,86 @@
 import { prepareHTML } from "visual/bootstraps/compiler/common/utils/prepareHTML";
-import { ChoicesSync } from "visual/component/Options/types/dev/InternalLink/types";
-import {
+import type { ChoicesSync } from "visual/component/Options/types/dev/InternalLink/types";
+import type {
   ChoicesSync as ChoiceSync,
   ChoicesAsync as MultiSelectChoicesAsync
 } from "visual/component/Options/types/dev/MultiSelect2/types";
-import {
+import type {
   Choice,
   ChoicesAsync
 } from "visual/component/Options/types/dev/Select/types";
-import { RuleList } from "visual/component/Prompts/PromptConditions/Rules/types";
-import {
+import type { RuleList } from "visual/component/Prompts/PromptConditions/Rules/types";
+import type {
   FontFile,
   UploadFont
 } from "visual/component/Prompts/PromptFonts/api/types";
-import {
+import type {
   EkklesiaFieldMap,
   EkklesiaKeys,
   EkklesiaParams
 } from "visual/editorComponents/MinistryBrands/utils/types";
-import { Config } from "visual/global/Config";
-import {
+import type { Config } from "visual/global/Config";
+import type {
   CheckCompatibilityResponse,
   SignIn,
   SignUp
 } from "visual/global/Config/types/Authorisation";
+import { isShopifyShop } from "visual/global/Config/types/configs/Base";
+import type { Block as APIGlobalBlock } from "visual/global/Config/types/configs/blocks/GlobalBlocks";
+import type {
+  BlocksArray,
+  BlockWithThumbs,
+  CustomTemplatePage,
+  DefaultBlock,
+  DefaultBlockWithID,
+  KitItem,
+  KitsWithThumbs,
+  LayoutsPages,
+  LayoutsWithThumbs,
+  PopupsWithThumbs,
+  StoriesWithThumbs
+} from "visual/global/Config/types/configs/blocks/PredefinedBlocks";
+import type {
+  CreateSavedBlock,
+  CreateSavedLayout,
+  DeleteSavedBlock,
+  DeleteSavedLayout,
+  SavedBlockAPIMeta,
+  SavedBlockFilter,
+  SavedBlockImport,
+  SavedLayoutAPIMeta,
+  SavedLayoutFilter,
+  SavedLayoutImport,
+  UpdateSavedBlock,
+  UpdateSavedLayout
+} from "visual/global/Config/types/configs/blocks/SavedBlocks";
 import {
+  isCloud,
+  type Shopify
+} from "visual/global/Config/types/configs/Cloud";
+import type {
+  AutoSave,
+  ConditionalTypesData,
+  ConfigCommon,
+  ExportBlockURLData,
+  MenuSimple,
+  Sidebar
+} from "visual/global/Config/types/configs/ConfigCommon";
+import type {
+  AdobeFontData,
+  Response as APIResponse,
+  IconUploadData,
+  ScreenshotData,
+  SuccessResponse
+} from "visual/global/Config/types/configs/common";
+import type {
+  EkklesiaExtra,
+  EkklesiaFields
+} from "visual/global/Config/types/configs/modules/ekklesia/Ekklesia";
+import type {
   ConfigDCItem,
   DCTypes
 } from "visual/global/Config/types/DynamicContent";
-import {
+import type {
   AddAccount,
   AddRecaptcha,
   CreateIntegrationAccount,
@@ -44,82 +96,31 @@ import {
   UpdateIntegration,
   UpdateSmtpIntegration
 } from "visual/global/Config/types/Form";
-import { GetCollectionItem_collectionItem as CollectionItem } from "visual/global/Config/types/GetCollectionItem";
-import { CollectionTypesInfo } from "visual/global/Config/types/Posts";
-import { isShopifyShop } from "visual/global/Config/types/configs/Base";
-import { Shopify, isCloud } from "visual/global/Config/types/configs/Cloud";
-import {
-  AutoSave,
-  ConditionalTypesData,
-  ConfigCommon,
-  ExportBlockURLData,
-  MenuSimple,
-  Sidebar
-} from "visual/global/Config/types/configs/ConfigCommon";
-import { Block as APIGlobalBlock } from "visual/global/Config/types/configs/blocks/GlobalBlocks";
-import {
-  BlockWithThumbs,
-  BlocksArray,
-  CustomTemplatePage,
-  DefaultBlock,
-  DefaultBlockWithID,
-  KitItem,
-  KitsWithThumbs,
-  LayoutsPages,
-  LayoutsWithThumbs,
-  PopupsWithThumbs,
-  StoriesWithThumbs
-} from "visual/global/Config/types/configs/blocks/PredefinedBlocks";
-import {
-  CreateSavedBlock,
-  CreateSavedLayout,
-  DeleteSavedBlock,
-  DeleteSavedLayout,
-  SavedBlockAPIMeta,
-  SavedBlockFilter,
-  SavedBlockImport,
-  SavedLayoutAPIMeta,
-  SavedLayoutFilter,
-  SavedLayoutImport,
-  UpdateSavedBlock,
-  UpdateSavedLayout
-} from "visual/global/Config/types/configs/blocks/SavedBlocks";
+import type { GetCollectionItem_collectionItem as CollectionItem } from "visual/global/Config/types/GetCollectionItem";
+import type { CollectionTypesInfo } from "visual/global/Config/types/Posts";
+import type { CategoriesList } from "visual/libs/EcwidSdk/categories";
+import type { ProductsList } from "visual/libs/EcwidSdk/products";
+import type { Store } from "visual/redux/store";
+import type { SavedBlock, SavedLayout } from "visual/types";
+import type { UploadedFont } from "visual/types/Fonts";
 import type {
-  Response as APIResponse,
-  SuccessResponse
-} from "visual/global/Config/types/configs/common";
-import {
-  AdobeFontData,
-  IconUploadData,
-  ScreenshotData
-} from "visual/global/Config/types/configs/common";
-import {
-  EkklesiaExtra,
-  EkklesiaFields
-} from "visual/global/Config/types/configs/modules/ekklesia/Ekklesia";
-import { type CategoriesList } from "visual/libs/EcwidSdk/categories";
-import { type ProductsList } from "visual/libs/EcwidSdk/products";
-import { Store } from "visual/redux/store";
-import { SavedBlock, SavedLayout } from "visual/types";
-import { UploadedFont } from "visual/types/Fonts";
-import {
   GlobalBlock,
   GlobalBlockNormal,
   GlobalBlockPopup
 } from "visual/types/GlobalBlock";
-import { Page, PageCommon, ShopifyPage } from "visual/types/Page";
-import { Project } from "visual/types/Project";
-import { Rule } from "visual/types/Rule";
-import { FontStyle, Palette } from "visual/types/Style";
-import { Dictionary } from "visual/types/utils";
-import {
+import type { Page, PageCommon, ShopifyPage } from "visual/types/Page";
+import type { Project } from "visual/types/Project";
+import type { Rule } from "visual/types/Rule";
+import type { FontStyle, Palette } from "visual/types/Style";
+import type { Dictionary } from "visual/types/utils";
+import type {
   AdobeAddAccount,
   AdobeFonts,
   BlogSourceItem,
   CollectionSourceItem,
   GetAuthors,
-  GetPostTaxonomies,
   GetPosts,
+  GetPostTaxonomies,
   GetRulePostsGroupList,
   GetTerms,
   GetTermsBy,
@@ -1488,6 +1489,28 @@ export const deleteGlobalBlock = (
       rej(t("API: No globalBlocks delete found."));
     } else {
       deleteFn(res, rej, uid);
+    }
+  });
+};
+
+export const updateGBRules = (
+  uid: string,
+  rules: GlobalBlock["rules"],
+  dataVersion: number,
+  status: GlobalBlock["status"],
+  config: ConfigCommon
+): Promise<unknown> => {
+  return new Promise((res, rej) => {
+    const { globalBlocks } = config.api ?? {};
+    const updateFn = globalBlocks?.updateRules;
+
+    if (!updateFn) {
+      rej(t("API: No globalBlocks updateRules found."));
+    } else {
+      const _isCloud = isCloud(config);
+      const apiRules = rules.map((rule) => editorRuleToApiRule(rule, _isCloud));
+
+      updateFn(res, rej, { uid, rules: apiRules, dataVersion, status });
     }
   });
 };

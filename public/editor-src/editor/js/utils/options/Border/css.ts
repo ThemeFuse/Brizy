@@ -1,5 +1,5 @@
 import { getColor } from "visual/utils/color";
-import { CSSStyleFn } from "visual/utils/cssStyle/types";
+import type { CSSStyleFn } from "visual/utils/cssStyle/types";
 
 export const css: CSSStyleFn<"border"> = ({ meta, value, config }): string => {
   const {

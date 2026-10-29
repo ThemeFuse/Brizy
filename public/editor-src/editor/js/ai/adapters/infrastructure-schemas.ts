@@ -1,10 +1,11 @@
+import { hexColorRequired } from "@brizy/ai-tools";
 import { z } from "zod";
-import { hexColorRequired } from "./schema-primitives";
 
 /**
  * Zod schemas for infrastructure tool handler argument validation.
  *
- * These mirror the JSON Schemas in `infrastructure-definitions.ts` but run at
+ * These mirror the JSON Schemas the catalog advertises in
+ * `@brizy/ai-tools`'s `infrastructure/tools.ts`, but run at
  * runtime — the LLM (or any caller) does not always honor the declared schema,
  * so handlers validate args before touching the repositories.
  *

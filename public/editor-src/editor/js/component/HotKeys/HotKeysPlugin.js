@@ -99,7 +99,7 @@ class HotKeysPlugin extends React.Component {
     if (
       _modifier["⌘"] === e.keyCode ||
       _modifier["right_⌘"] === e.keyCode ||
-      _modifier["ctrl"] === e.keyCode
+      _modifier.ctrl === e.keyCode
     ) {
       downKeysMap = [];
     } else {
@@ -140,17 +140,18 @@ class HotKeysPlugin extends React.Component {
         state
       );
       if (e.type === "keydown") {
-        // eslint-disable-next-line no-unused-vars
         filteredItems.forEach(({ onKeyDown, onKeyUp, ...rest }) => {
-          this.props.shouldKeyDownHandle(e, rest) && onKeyDown(e, rest);
+          if (this.props.shouldKeyDownHandle(e, rest)) {
+            onKeyDown(e, rest);
+          }
         });
       }
       if (e.type === "keyup") {
-        filteredItems.forEach(
-          // eslint-disable-next-line no-unused-vars
-          ({ onKeyDown, onKeyUp, ...rest }) =>
-            this.props.shouldKeyUpHandle(e, rest) && onKeyUp(e, rest)
-        );
+        filteredItems.forEach(({ onKeyDown, onKeyUp, ...rest }) => {
+          if (this.props.shouldKeyUpHandle(e, rest)) {
+            onKeyUp(e, rest);
+          }
+        });
       }
     }
   }

@@ -1,9 +1,9 @@
-import React, { JSXElementConstructor, useCallback, useMemo } from "react";
-import { OnChange } from "visual/component/Options/Type";
+import React, { type JSXElementConstructor, useCallback, useMemo } from "react";
+import type { OnChange } from "visual/component/Options/Type";
 import { t } from "visual/utils/i18n";
-import { EffectProps } from "visual/utils/options/Motion/types/EffectProps";
-import { Vertical as V } from "visual/utils/options/Motion/types/Vertical";
-import { Direction, Props } from "./Direction";
+import type { EffectProps } from "visual/utils/options/Motion/types/EffectProps";
+import type { Vertical as V } from "visual/utils/options/Motion/types/Vertical";
+import { Direction, type Props } from "./Direction";
 import { UnitSlider } from "./UnitSlider";
 import { Viewport } from "./Viewport";
 

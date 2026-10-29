@@ -1,6 +1,6 @@
-import { ActionTypes, ReduxAction } from "visual/redux/actions2";
-import { ReduxState } from "visual/redux/types";
-import { NonEmptyArray } from "visual/utils/array/types";
+import { ActionTypes, type ReduxAction } from "visual/redux/actions2";
+import type { ReduxState } from "visual/redux/types";
+import type { NonEmptyArray } from "visual/utils/array/types";
 
 type CurrentStyle = ReduxState["currentStyle"];
 type RCurrentStyle = (

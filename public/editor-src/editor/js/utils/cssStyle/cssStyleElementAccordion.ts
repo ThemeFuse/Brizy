@@ -1,4 +1,4 @@
-import { WithRenderContext } from "visual/providers/RenderProvider";
+import type { WithRenderContext } from "visual/providers/RenderProvider";
 import {
   cssStyleBgColor,
   cssStyleBorder,
@@ -24,7 +24,7 @@ import {
   styleElementAccordionFilterSpacing,
   styleElementAccordionSpacing
 } from "visual/utils/style2/styleElementAccordion";
-import { CSSValue } from "../style2/types";
+import type { CSSValue } from "../style2/types";
 import { cssStyleFlexHorizontalAlign } from "./cssStyleAlign";
 
 export function cssStyleElementAccordionFilterColor({

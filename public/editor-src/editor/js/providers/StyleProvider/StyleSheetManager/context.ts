@@ -1,6 +1,6 @@
 import { createContext } from "react";
-import { MValue } from "visual/utils/value";
-import { Sheet } from "../Sheet";
+import type { MValue } from "visual/utils/value";
+import type { Sheet } from "../Sheet";
 
 export interface StyleSheetManagerProvider {
   sheet: Readonly<Sheet>;

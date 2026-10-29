@@ -1,6 +1,6 @@
 import { Str } from "@brizy/readers";
 import classNames from "classnames";
-import { Store } from "visual/redux/store";
+import type { Store } from "visual/redux/store";
 import { getFontStyle } from "visual/utils/fonts/getFontStyle";
 import { isNumber } from "visual/utils/math";
 import { read } from "visual/utils/math/number";
@@ -10,9 +10,9 @@ import {
   buttonHoverInAnimations
 } from "visual/utils/options/Animation/utils";
 import * as Num from "visual/utils/reader/number";
-import { ResponsiveMode } from "visual/utils/responsiveMode";
-import { State } from "visual/utils/stateMode";
-import { Value } from "./types";
+import type { ResponsiveMode } from "visual/utils/responsiveMode";
+import type { State } from "visual/utils/stateMode";
+import type { Value } from "./types";
 
 export const hasSizing = (
   v: Record<string, unknown>,

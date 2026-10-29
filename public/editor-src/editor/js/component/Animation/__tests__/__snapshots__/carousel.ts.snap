@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`entrance animations in a carousel watches the animations of the original and the cloned slides 1`] = `
+{
+  "cloned": [
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+  ],
+  "original": [
+    2,
+    2,
+    2,
+    2,
+  ],
+}
+`;

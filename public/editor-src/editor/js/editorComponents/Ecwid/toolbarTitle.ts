@@ -1,10 +1,10 @@
-import { ElementModel } from "visual/component/Elements/Types";
+import type { ElementModel } from "visual/component/Elements/Types";
 import type { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
 import { getColorToolbar } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
 import type { ResponsiveMode } from "visual/utils/responsiveMode";
-import { HOVER, NORMAL, State } from "visual/utils/stateMode";
+import { HOVER, NORMAL, type State } from "visual/utils/stateMode";
 import type { EcwidToolbarCSSData } from "./utils/Value";
 
 export const ecwidToolbarTitle = <T extends ElementModel = ElementModel>(
@@ -42,7 +42,7 @@ export const ecwidToolbarTitle = <T extends ElementModel = ElementModel>(
             config: {
               fontFamily: device === "desktop"
             },
-            ...data?.["titleTypography"]
+            ...data?.titleTypography
           }
         ]
       },
@@ -64,7 +64,7 @@ export const ecwidToolbarTitle = <T extends ElementModel = ElementModel>(
             id: "titleColor",
             type: "colorPicker",
             states: [NORMAL, HOVER],
-            ...data?.["titleColor"]
+            ...data?.titleColor
           }
         ]
       },
@@ -77,7 +77,7 @@ export const ecwidToolbarTitle = <T extends ElementModel = ElementModel>(
           { icon: "nc-text-align-center", title: t("Align"), value: "center" },
           { icon: "nc-text-align-right", title: t("Align"), value: "right" }
         ],
-        ...data?.["titleHorizontalAlign"]
+        ...data?.titleHorizontalAlign
       },
       {
         id: "toolbarSettings",
@@ -95,7 +95,7 @@ export const ecwidToolbarTitle = <T extends ElementModel = ElementModel>(
               max: 100,
               units: [{ value: "px", title: "px" }]
             },
-            ...data?.["titleSpacing"]
+            ...data?.titleSpacing
           }
         ]
       }

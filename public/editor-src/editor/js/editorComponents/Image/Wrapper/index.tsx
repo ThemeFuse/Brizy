@@ -2,7 +2,7 @@ import { Num } from "@brizy/readers";
 import classnames from "classnames";
 import React, { useCallback } from "react";
 import BoxResizer from "visual/component/BoxResizer";
-import { type Patch as BoxResizerPatch } from "visual/component/BoxResizer/types";
+import type { Patch as BoxResizerPatch } from "visual/component/BoxResizer/types";
 import {
   calcWrapperSizes,
   getSizeType
@@ -15,10 +15,10 @@ import { useCSS } from "visual/providers/StyleProvider/useCSS";
 import { isGIFExtension, isSVGExtension } from "visual/utils/image/utils";
 import { clamp } from "visual/utils/math";
 import { mobileSyncOnChange, tabletSyncOnChange } from "visual/utils/onChange";
-import { FCC } from "visual/utils/react/types";
+import type { FCC } from "visual/utils/react/types";
 import { DESKTOP } from "visual/utils/responsiveMode";
 import { styleWrapper, styleWrapperContainer } from "../styles";
-import { ImageProps, Meta, Patch, V } from "../types";
+import type { ImageProps, Meta, Patch, V } from "../types";
 import { showOriginalImage } from "../utils";
 import useResizerPoints from "./useResizerPoints";
 
@@ -162,75 +162,75 @@ const Image: FCC<ImageProps> = (props) => {
       ...(sizeType !== SizeType.custom && !isSvgOrGif && { size })
     };
   }
+};
 
-  function resizerTransformPatch(
-    patch: BoxResizerPatch["patch"],
-    v: V,
-    meta: Meta
-  ): Patch {
-    const { desktopW: containerWidth } = meta;
-    const {
+function resizerTransformPatch(
+  patch: BoxResizerPatch["patch"],
+  v: V,
+  meta: Meta
+): Patch {
+  const { desktopW: containerWidth } = meta;
+  const {
+    imageWidth,
+    imageHeight,
+    width,
+    height,
+    widthSuffix,
+    heightSuffix,
+    hoverImageWidth,
+    hoverImageHeight,
+    hoverHeight,
+    elementPosition,
+    offsetY,
+    size
+  } = v;
+
+  const w = patch.width ?? width;
+  const h = patch.height ?? height;
+
+  const wrapperSize = calcWrapperSizes(
+    {
+      width: w,
+      height: h,
       imageWidth,
       imageHeight,
-      width,
-      height,
       widthSuffix,
       heightSuffix,
-      hoverImageWidth,
-      hoverImageHeight,
-      hoverHeight,
-      elementPosition,
-      offsetY,
       size
-    } = v;
+    },
+    containerWidth
+  );
 
-    const w = patch.width ?? width;
-    const h = patch.height ?? height;
+  const newHoverWrapperSizes = calcWrapperSizes(
+    {
+      imageWidth: hoverImageWidth,
+      imageHeight: hoverImageHeight,
+      width: w,
+      height: Num.read(hoverHeight) ?? h,
+      widthSuffix,
+      heightSuffix,
+      size
+    },
+    containerWidth
+  );
 
-    const wrapperSize = calcWrapperSizes(
-      {
-        width: w,
-        height: h,
-        imageWidth,
-        imageHeight,
-        widthSuffix,
-        heightSuffix,
-        size
-      },
-      containerWidth
-    );
+  const newHoverCH =
+    (wrapperSize.height * (hoverHeight || 100)) / newHoverWrapperSizes.height;
 
-    const newHoverWrapperSizes = calcWrapperSizes(
-      {
-        imageWidth: hoverImageWidth,
-        imageHeight: hoverImageHeight,
-        width: w,
-        height: Num.read(hoverHeight) ?? h,
-        widthSuffix,
-        heightSuffix,
-        size
-      },
-      containerWidth
-    );
+  const isAbsoluteOrFixed =
+    elementPosition === "absolute" || elementPosition === "fixed";
 
-    const newHoverCH =
-      (wrapperSize.height * (hoverHeight || 100)) / newHoverWrapperSizes.height;
+  let newPatch = {};
+  if (isAbsoluteOrFixed) {
+    const ratio = imageWidth / imageHeight;
 
-    const isAbsoluteOrFixed =
-      elementPosition === "absolute" || elementPosition === "fixed";
-
-    let newPatch = {};
-    if (isAbsoluteOrFixed) {
-      const ratio = imageWidth / imageHeight;
-
-      newPatch = {
-        offsetY: patch.offsetY || offsetY,
-        ...(patch.height !== undefined ? { height: patch.height * ratio } : {})
-      };
-    }
-
-    return { ...patch, ...newPatch, hoverHeight: newHoverCH };
+    newPatch = {
+      offsetY: patch.offsetY || offsetY,
+      ...(patch.height !== undefined ? { height: patch.height * ratio } : {})
+    };
   }
-};
+
+  return { ...patch, ...newPatch, hoverHeight: newHoverCH };
+}
 
 export default Image;

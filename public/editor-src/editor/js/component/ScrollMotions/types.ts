@@ -1,5 +1,5 @@
-import { Ref, ReactElement } from "react";
-import { Settings as MotionSettings } from "@brizy/motion/es/types";
+import type { Settings as MotionSettings } from "@brizy/motion/es/types";
+import type { ReactElement, Ref } from "react";
 
 export interface ScrollAttr {
   "data-motion-scroll-blur"?: string;

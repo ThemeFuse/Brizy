@@ -3,7 +3,7 @@ import { read as readString } from "visual/utils/string/specs";
 import { getImageUrl } from "../image";
 import { defaultValueValue } from "../onChange";
 import { capByPrefix } from "../string";
-import { CSSValue } from "./types";
+import type { CSSValue } from "./types";
 
 export function styleMaskSize({
   maskSize,

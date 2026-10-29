@@ -1,0 +1,253 @@
+{
+  "mode": "page",
+  "platform": "ecwid",
+  "modules": {
+    "shop": {
+      "ecwidCategoryTypeId": null,
+      "ecwidProductTypeId": null
+    }
+  },
+  "pageData": {
+    "id": "/collection_items/12599",
+    "matchingItemId": "/collection_items/12599",
+    "collectionType": {
+      "id": "/collection_types/12729",
+      "title": "Page"
+    },
+    "data": "{\"items\":[{\"type\":\"Section\",\"value\":{\"_id\":\"qsJ3VUxi65xA\",\"items\":[]}},{\"blockId\":\"Kit2Blank000Light\",\"type\":\"GlobalBlock\",\"value\":{\"_id\":\"pjGrhLaEWTI2EAr1lXMdd0B0Ih7TAWQx\"}},{\"type\":\"Section\",\"value\":{\"_id\":\"vBkC16s4kxBA\",\"items\":[]}},{\"blockId\":\"Kit2Blank000Light\",\"type\":\"GlobalBlock\",\"value\":{\"_id\":\"qZk32Un_fi0gtOTsn7ljbLbzyq3YsE7k\"}},{\"type\":\"Section\",\"value\":{\"_id\":\"yV8IiDvDWDPS\",\"items\":[]}}]}"
+  },
+  "globalBlocks": [
+    {
+      "uid": "pjGrhLaEWTI2EAr1lXMdd0B0Ih7TAWQx",
+      "id": 0,
+      "title": "Global Block",
+      "status": "publish",
+      "dataVersion": 1,
+      "position": {
+        "align": "bottom",
+        "top": 1,
+        "bottom": 1
+      },
+      "meta": "{\"type\":\"normal\",\"extraFontStyles\":[]}",
+      "rules": [
+        {
+          "id": "/rules/862",
+          "mode": "include",
+          "type": "specific",
+          "entityTypeSlug": null,
+          "entityType": "/collection_types/12729",
+          "entityId": "/collection_items/12599",
+          "externalType": null,
+          "externalId": null,
+          "entityTypeField": null,
+          "fieldValueItem": null
+        }
+      ],
+      "data": "{\"type\":\"Section\",\"value\":{\"_id\":\"pjGrhLaEWTI2EAr1lXMdd0B0Ih7TAWQx\",\"items\":[]}}"
+    },
+    {
+      "uid": "qZk32Un_fi0gtOTsn7ljbLbzyq3YsE7k",
+      "id": 0,
+      "title": "Global Block",
+      "status": "publish",
+      "dataVersion": 1,
+      "position": {
+        "align": "bottom",
+        "top": 2,
+        "bottom": 2
+      },
+      "meta": "{\"type\":\"normal\",\"extraFontStyles\":[]}",
+      "rules": [
+        {
+          "id": "/rules/861",
+          "mode": "include",
+          "type": "specific",
+          "entityTypeSlug": null,
+          "entityType": "/collection_types/12729",
+          "entityId": "/collection_items/12599",
+          "externalType": null,
+          "externalId": null,
+          "entityTypeField": null,
+          "fieldValueItem": null
+        }
+      ],
+      "data": "{\"type\":\"Section\",\"value\":{\"_id\":\"qZk32Un_fi0gtOTsn7ljbLbzyq3YsE7k\",\"items\":[]}}"
+    },
+    {
+      "uid": "aqHAvOnan39H",
+      "id": 0,
+      "title": "Unnamed global block",
+      "status": "publish",
+      "dataVersion": 1,
+      "position": {
+        "align": "top",
+        "top": 0,
+        "bottom": 0
+      },
+      "meta": "{\"type\":\"normal\",\"extraFontStyles\":[],\"_thumbnailSrc\":9147,\"_thumbnailWidth\":600,\"_thumbnailHeight\":30,\"_thumbnailTime\":1782914041763}",
+      "rules": [
+        {
+          "id": "/rules/558",
+          "mode": "include",
+          "type": "referenced",
+          "entityTypeSlug": null,
+          "entityType": null,
+          "entityId": null,
+          "externalType": "ecwid-category",
+          "externalId": "179508506",
+          "entityTypeField": null,
+          "fieldValueItem": null
+        },
+        {
+          "id": "/rules/559",
+          "mode": "include",
+          "type": "specific",
+          "entityTypeSlug": null,
+          "entityType": "/collection_types/12729",
+          "entityId": "/collection_items/12585",
+          "externalType": null,
+          "externalId": null,
+          "entityTypeField": null,
+          "fieldValueItem": null
+        },
+        {
+          "id": "/rules/855",
+          "mode": "include",
+          "type": "referenced",
+          "entityTypeSlug": null,
+          "entityType": "/collection_types/12731",
+          "entityId": null,
+          "externalType": null,
+          "externalId": null,
+          "entityTypeField": "/collection_type_fields/36474",
+          "fieldValueItem": "/collection_items/12602"
+        },
+        {
+          "id": "/rules/856",
+          "mode": "include",
+          "type": "specific",
+          "entityTypeSlug": null,
+          "entityType": "/collection_types/12729",
+          "entityId": "/collection_items/12599",
+          "externalType": null,
+          "externalId": null,
+          "entityTypeField": null,
+          "fieldValueItem": null
+        },
+        {
+          "id": "/rules/858",
+          "mode": "include",
+          "type": "specific",
+          "entityTypeSlug": "customer",
+          "entityType": null,
+          "entityId": "/customers/253",
+          "externalType": null,
+          "externalId": null,
+          "entityTypeField": null,
+          "fieldValueItem": null
+        },
+        {
+          "id": "/rules/860",
+          "mode": "include",
+          "type": "specific",
+          "entityTypeSlug": null,
+          "entityType": "/collection_types/12734",
+          "entityId": "/collection_items/12589",
+          "externalType": null,
+          "externalId": null,
+          "entityTypeField": null,
+          "fieldValueItem": null
+        }
+      ],
+      "data": "{\"type\":\"SectionHeader\",\"value\":{\"_id\":\"aqHAvOnan39H\",\"items\":[]}}"
+    },
+    {
+      "uid": "dPWKsc32JX7V",
+      "id": 0,
+      "title": "Unnamed global block",
+      "status": "publish",
+      "dataVersion": 1,
+      "position": {
+        "align": "bottom",
+        "top": 3,
+        "bottom": 3
+      },
+      "meta": "{\"type\":\"normal\",\"extraFontStyles\":[],\"_thumbnailSrc\":8662,\"_thumbnailWidth\":600,\"_thumbnailHeight\":72,\"_thumbnailTime\":1765806283028}",
+      "rules": [
+        {
+          "id": "/rules/565",
+          "mode": "exclude",
+          "type": "specific",
+          "entityTypeSlug": null,
+          "entityType": "/collection_types/12729",
+          "entityId": "/collection_items/12600",
+          "externalType": null,
+          "externalId": null,
+          "entityTypeField": null,
+          "fieldValueItem": null
+        },
+        {
+          "id": "/rules/851",
+          "mode": "exclude",
+          "type": "referenced",
+          "entityTypeSlug": null,
+          "entityType": null,
+          "entityId": null,
+          "externalType": "ecwid-category",
+          "externalId": "179508506",
+          "entityTypeField": null,
+          "fieldValueItem": null
+        },
+        {
+          "id": "/rules/853",
+          "mode": "include",
+          "type": "specific",
+          "entityTypeSlug": null,
+          "entityType": "/collection_types/12731",
+          "entityId": "/collection_items/12601",
+          "externalType": null,
+          "externalId": null,
+          "entityTypeField": null,
+          "fieldValueItem": null
+        },
+        {
+          "id": "/rules/854",
+          "mode": "include",
+          "type": "specific",
+          "entityTypeSlug": null,
+          "entityType": "/collection_types/12729",
+          "entityId": "/collection_items/12599",
+          "externalType": null,
+          "externalId": null,
+          "entityTypeField": null,
+          "fieldValueItem": null
+        },
+        {
+          "id": "/rules/857",
+          "mode": "include",
+          "type": "specific",
+          "entityTypeSlug": null,
+          "entityType": "/collection_types/12731",
+          "entityId": "/collection_items/12608",
+          "externalType": null,
+          "externalId": null,
+          "entityTypeField": null,
+          "fieldValueItem": null
+        },
+        {
+          "id": "/rules/859",
+          "mode": "exclude",
+          "type": "specific",
+          "entityTypeSlug": "customer",
+          "entityType": null,
+          "entityId": "/customers/253",
+          "externalType": null,
+          "externalId": null,
+          "entityTypeField": null,
+          "fieldValueItem": null
+        }
+      ],
+      "data": "{\"type\":\"SectionFooter\",\"value\":{\"_id\":\"dPWKsc32JX7V\",\"items\":[]}}"
+    }
+  ]
+}

@@ -3,7 +3,7 @@ import classNames from "classnames";
 import { isEqual, noop } from "es-toolkit";
 import { get } from "es-toolkit/compat";
 import React, { type ReactElement, type RefObject } from "react";
-import { Subject, Subscription, from } from "rxjs";
+import { from, Subject, type Subscription } from "rxjs";
 import {
   debounceTime,
   distinctUntilChanged,
@@ -16,7 +16,7 @@ import EditorIcon from "visual/component/EditorIcon";
 import Placeholder from "visual/component/Placeholder";
 import { migrations } from "visual/editorComponents/Carousel/migrations";
 import EditorComponent, {
-  Props as EDProps
+  type Props as EDProps
 } from "visual/editorComponents/EditorComponent";
 import { DCApiProxyInstance } from "visual/editorComponents/EditorComponent/DynamicContent/DCApiProxyInstance";
 import type { Meta } from "visual/editorComponents/ToolbarItemType";
@@ -39,9 +39,9 @@ import { getCurrentPageId } from "visual/utils/env";
 import { percentageToPixels } from "visual/utils/meta";
 import { attachRefs } from "visual/utils/react";
 import * as json from "visual/utils/reader/json";
-import Items from "./Items";
 import contextMenuConfig from "./contextMenu";
 import defaultValue from "./defaultValue.json";
+import Items from "./Items";
 import * as sidebarExtendParent from "./sidebarExtendParent";
 import { style } from "./styles";
 import toolbarConfigFn from "./toolbar/toolbarExtend";

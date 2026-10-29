@@ -3,9 +3,9 @@
  * Plugins call add() to register components into named slots (e.g. "leftSidebar.drawer").
  */
 import type {
+  SlotRegistry as ISlotRegistry,
   SlotContribution,
-  SlotName,
-  SlotRegistry as ISlotRegistry
+  SlotName
 } from "./types";
 
 const DEFAULT_ORDER = 100;
@@ -14,11 +14,13 @@ export class SlotRegistryImpl implements ISlotRegistry {
   private contributions = new Map<SlotName, SlotContribution[]>();
 
   add(slot: SlotName, contribution: SlotContribution): () => void {
-    if (!this.contributions.has(slot)) {
-      this.contributions.set(slot, []);
+    let list = this.contributions.get(slot);
+
+    if (!list) {
+      list = [];
+      this.contributions.set(slot, list);
     }
 
-    const list = this.contributions.get(slot)!;
     list.push(contribution);
 
     return () => {

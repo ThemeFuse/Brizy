@@ -1,8 +1,8 @@
 import { isEditor } from "visual/providers/RenderProvider";
-import { DynamicStylesProps } from "visual/types";
+import type { DynamicStylesProps } from "visual/types";
 import { renderStyles } from "visual/utils/cssStyle";
-import { OutputStyle } from "visual/utils/cssStyle/types";
-import { Value } from "./types";
+import type { OutputStyle } from "visual/utils/cssStyle/types";
+import type { Value } from "./types";
 
 export function styleFormFields(data: DynamicStylesProps<Value>): OutputStyle {
   const styles = {
@@ -93,6 +93,9 @@ export function styleFormFields(data: DynamicStylesProps<Value>): OutputStyle {
     },
     ".brz && .brz-forms2__field-phone .brz-forms2__phone--number": {
       standart: ["cssStyleElementFieldsInputSizePhoneFieldInput"]
+    },
+    ".brz && .brz-forms2__field-phone .brz-forms2__phone--country-code": {
+      standart: ["cssStyleTypography2FontSize"]
     },
     ".brz && .brz-forms2__field:not(.brz-forms2__radio):not(.brz-forms2__checkbox), .brz && .brz-forms2__radio, .brz && .brz-forms2__checkbox, .brz && .brz-forms2__select-item__input":
       {

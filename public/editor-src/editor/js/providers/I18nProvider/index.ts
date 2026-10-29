@@ -1,8 +1,8 @@
 import { Component, createElement, useContext } from "react";
 import { I18n } from "visual/utils/i18n";
-import { Dictionary } from "visual/utils/i18n/I18n";
+import type { Dictionary } from "visual/utils/i18n/I18n";
 import { I18nContext } from "./context";
-import { Props } from "./types";
+import type { Props } from "./types";
 
 export class I18nextProvider extends Component<Props> {
   private i18n: Dictionary;

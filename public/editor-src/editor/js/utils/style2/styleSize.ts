@@ -1,8 +1,8 @@
 import * as N from "visual/utils/math/number";
 import { defaultValueValue } from "visual/utils/onChange";
 import { capByPrefix } from "visual/utils/string";
-import { CSSValue } from "visual/utils/style2/types";
-import { MValue } from "visual/utils/value";
+import type { CSSValue } from "visual/utils/style2/types";
+import type { MValue } from "visual/utils/value";
 
 type Get = (k: string) => MValue<unknown>;
 type MNum = MValue<number>;

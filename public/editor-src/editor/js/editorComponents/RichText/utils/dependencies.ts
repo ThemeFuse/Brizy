@@ -1,6 +1,6 @@
 import { setIn } from "timm";
-import { DeviceMode } from "visual/types";
-import { TextScripts } from "visual/types/Style";
+import type { DeviceMode } from "visual/types";
+import type { TextScripts } from "visual/types/Style";
 import { defaultValueValue } from "visual/utils/onChange";
 import { isObject } from "visual/utils/reader/object";
 import { capByPrefix, encodeToString } from "visual/utils/string";

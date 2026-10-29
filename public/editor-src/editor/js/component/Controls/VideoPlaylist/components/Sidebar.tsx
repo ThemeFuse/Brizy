@@ -1,7 +1,7 @@
 import React, { forwardRef, useMemo } from "react";
 import { TextEditor } from "visual/component/Controls/TextEditor";
 import Placeholder from "visual/component/Placeholder";
-import { SidebarProps as Props } from "../types";
+import type { SidebarProps as Props } from "../types";
 import { isCustomVideo } from "../utils";
 
 export const Sidebar = forwardRef<HTMLDivElement, Props>(

@@ -1,5 +1,5 @@
 import { t } from "visual/utils/i18n";
-import { Align, Expand, Locked } from "./types";
+import type { Align, Expand, Locked } from "./types";
 
 export const alignIcon = (align: Align): string => {
   switch (align) {
@@ -37,6 +37,8 @@ export const lockedTitle = (l: Locked): string => {
   }
 };
 
-export const expandIcon = (expand: Expand): string => expand ? "t2-contract" : "t2-expand";
+export const expandIcon = (expand: Expand): string =>
+  expand ? "t2-contract" : "t2-expand";
 
-export const expandTitle = (expand: Expand): string => expand ? t("Contract Sidebar") : t("Expand Sidebar");
+export const expandTitle = (expand: Expand): string =>
+  expand ? t("Contract Sidebar") : t("Expand Sidebar");

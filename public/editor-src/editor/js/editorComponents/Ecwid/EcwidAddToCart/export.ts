@@ -40,11 +40,7 @@ const handleClick = (
   }
 };
 
-export const fn: ExportFunction = ($node) => {
-  const node = $node.get(0);
-
-  if (!node) return;
-
+export const fn: ExportFunction = (node) => {
   node
     .querySelectorAll<HTMLButtonElement>(".brz-ecwid-add-to-cart")
     .forEach((item) => {

@@ -57,7 +57,7 @@ export function getItems({ v, device, state }) {
                   id: "postHref",
                   type: "inputText",
                   devices: "desktop",
-                  disabled: dvv("type") === "post" ? false : true,
+                  disabled: dvv("type") !== "post",
                   config: {
                     size: "medium"
                   }
@@ -67,7 +67,7 @@ export function getItems({ v, device, state }) {
                   id: "videoHref",
                   type: "inputText",
                   devices: "desktop",
-                  disabled: dvv("type") === "video" ? false : true,
+                  disabled: dvv("type") !== "video",
                   config: {
                     size: "medium"
                   }
@@ -89,21 +89,21 @@ export function getItems({ v, device, state }) {
                   label: t("Full Screen"),
                   type: "switch",
                   devices: "desktop",
-                  disabled: dvv("type") === "video" ? false : true
+                  disabled: dvv("type") !== "video"
                 },
                 {
                   id: "videoAutoPlay",
                   label: t("AutoPlay"),
                   type: "switch",
                   devices: "desktop",
-                  disabled: dvv("type") === "video" ? false : true
+                  disabled: dvv("type") !== "video"
                 },
                 {
                   id: "videoCaptions",
                   label: t("Captions"),
                   type: "switch",
                   devices: "desktop",
-                  disabled: dvv("type") === "video" ? false : true
+                  disabled: dvv("type") !== "video"
                 }
               ]
             }

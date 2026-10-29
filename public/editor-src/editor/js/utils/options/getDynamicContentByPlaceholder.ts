@@ -1,4 +1,4 @@
-import {
+import type {
   ConfigDCItem,
   DCGroup
 } from "visual/global/Config/types/DynamicContent";

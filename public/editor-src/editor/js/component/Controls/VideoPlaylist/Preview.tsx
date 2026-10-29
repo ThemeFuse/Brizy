@@ -1,10 +1,10 @@
-import React from "react";
-import { Cover } from "./components/Cover";
-import Placeholder from "visual/component/Placeholder";
 import classnames from "classnames";
+import React from "react";
+import Placeholder from "visual/component/Placeholder";
+import type { FCC } from "visual/utils/react/types";
 import { Controls } from "./components/Controls";
-import { VideoProps as PreviewProps } from "./types";
-import { FCC } from "visual/utils/react/types";
+import { Cover } from "./components/Cover";
+import type { VideoProps as PreviewProps } from "./types";
 import { isCustomVideo } from "./utils";
 
 export const PlaylistPreview: FCC<PreviewProps> = ({
@@ -86,6 +86,7 @@ export const PlaylistPreview: FCC<PreviewProps> = ({
               allowFullScreen={true}
               allow="autoplay"
               src={videoSrc}
+              title="video-playlist"
             />
           )}
         </div>

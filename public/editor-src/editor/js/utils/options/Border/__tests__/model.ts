@@ -10,8 +10,8 @@ import {
 import { capByPrefix } from "visual/utils/string";
 import * as Palette from "../../ColorPicker/entities/palette";
 import { defaultValue } from "../converters";
-import { Value } from "../entities/Value";
 import * as Style from "../entities/style";
+import { Value } from "../entities/Value";
 import * as Width from "../entities/width";
 import * as WidthType from "../entities/widthType";
 import {

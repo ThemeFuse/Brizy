@@ -1,13 +1,13 @@
 import { debounce, once } from "es-toolkit";
 import { prepareHTML } from "visual/bootstraps/compiler/common/utils/prepareHTML";
-import {
+import type {
   ConfigCommon,
   PublishData
 } from "visual/global/Config/types/configs/ConfigCommon";
-import { Store } from "visual/redux/store";
-import { GlobalBlock } from "visual/types/GlobalBlock";
-import { Page } from "visual/types/Page";
-import { Project } from "visual/types/Project";
+import type { Store } from "visual/redux/store";
+import type { GlobalBlock } from "visual/types/GlobalBlock";
+import type { Page } from "visual/types/Page";
+import type { Project } from "visual/types/Project";
 import {
   autoSave as apiAutoSave,
   createGlobalBlock as apiCreateGlobalBlock,
@@ -21,14 +21,14 @@ import {
 import * as Obj from "visual/utils/reader/object";
 
 export {
-  apiPublish,
   apiAutoSave,
-  apiOnChange,
   apiCreateGlobalBlock,
   apiCreateSavedBlock,
   apiDeleteSavedBlock,
-  apiUpdatePopupRules,
-  apiSendHeartBeat
+  apiOnChange,
+  apiPublish,
+  apiSendHeartBeat,
+  apiUpdatePopupRules
 };
 
 const DEBOUNCE_WAIT = 2000;

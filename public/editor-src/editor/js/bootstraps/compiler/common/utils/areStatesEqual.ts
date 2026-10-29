@@ -1,4 +1,4 @@
-import { ReduxState } from "visual/redux/types";
+import type { ReduxState } from "visual/redux/types";
 
 export const areStatesEqual = (
   state: ReduxState,

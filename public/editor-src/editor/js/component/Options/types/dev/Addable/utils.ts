@@ -1,5 +1,5 @@
 import { includes } from "es-toolkit/compat";
-import { OptionGroup, SidebarAlignment } from "./types";
+import { type OptionGroup, SidebarAlignment } from "./types";
 
 const ALIGN_KEY = "brz-addableSidebarAlign";
 

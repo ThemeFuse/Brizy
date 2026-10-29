@@ -14,10 +14,10 @@ import {
   UPDATE_TRIGGERS
 } from "../../actions";
 import {
+  ActionTypes,
   ADD_FONTS,
   ADD_GLOBAL_BLOCK,
   ADD_GLOBAL_POPUP,
-  ActionTypes,
   DELETE_FONTS,
   UPDATE_CURRENT_KIT_ID,
   UPDATE_DEFAULT_FONT,
@@ -339,13 +339,13 @@ function handleHeartBeat({ action, state, getConfig, apiHandler }) {
   }
 }
 
-function apiCatch(next, p, action, onSuccess = noop, onError = noop) {
+function apiCatch(next, p, _action, onSuccess = noop, onError = noop) {
   return p
     .then((r) => {
       onSuccess(r);
     })
     .catch((r) => {
-      if (r && r.heartBeat) {
+      if (r?.heartBeat) {
         next(
           updateError({
             code: ErrorCodes.HEART_BEAT_ERROR,

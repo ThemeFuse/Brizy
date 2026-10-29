@@ -1,14 +1,14 @@
 import classNames from "classnames";
-import React, { ReactElement, useCallback } from "react";
+import React, { type ReactElement, useCallback } from "react";
 import { NumberUnit } from "visual/component/Controls/NumberUnit";
-import { Unit, Value } from "visual/component/Controls/NumberUnit/types";
+import type { Unit, Value } from "visual/component/Controls/NumberUnit/types";
 import { Slider2 } from "visual/component/Controls/Slider2";
-import {
+import type {
   WithClassName,
   WithOnChange2,
   WithValue
 } from "visual/types/attributes";
-import { Literal } from "visual/utils/types/Literal";
+import type { Literal } from "visual/utils/types/Literal";
 
 export type Meta = { editing: boolean };
 

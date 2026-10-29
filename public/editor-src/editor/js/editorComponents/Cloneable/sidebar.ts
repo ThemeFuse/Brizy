@@ -1,4 +1,4 @@
-import { GetItems } from "visual/editorComponents/EditorComponent/types";
+import type { GetItems } from "visual/editorComponents/EditorComponent/types";
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";

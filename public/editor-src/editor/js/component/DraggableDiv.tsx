@@ -1,8 +1,8 @@
 import classNames from "classnames";
-import React, { CSSProperties, ReactNode } from "react";
+import React, { type CSSProperties, type ReactNode } from "react";
 import Draggable from "visual/component/Draggable";
-import { WithClassName } from "visual/types/attributes";
-import { FCC } from "visual/utils/react/types";
+import type { WithClassName } from "visual/types/attributes";
+import type { FCC } from "visual/utils/react/types";
 
 export type Props = WithClassName & {
   onDragStart?: () => void;

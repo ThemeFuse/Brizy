@@ -1,6 +1,6 @@
-import { PaletteType } from "visual/types/Style";
+import type { PaletteType } from "visual/types/Style";
 import * as P from "visual/utils/color/Palette";
-import { Append, Concat } from "visual/utils/types/Monoid";
+import type { Append, Concat } from "visual/utils/types/Monoid";
 
 export type Palette = "" | PaletteType;
 

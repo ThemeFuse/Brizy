@@ -5,8 +5,8 @@ import { isGIFExtension, isSVGExtension } from "visual/utils/image/utils";
 import { defaultValueValue } from "visual/utils/onChange";
 import { hoverEffects } from "visual/utils/options/Animation/utils";
 import { read as readString } from "visual/utils/string/specs";
-import { GetItems } from "../EditorComponent/types";
-import { V } from "../Image/types";
+import type { GetItems } from "../EditorComponent/types";
+import type { V } from "../Image/types";
 import type { Props } from "./types";
 
 const getHtml = () => {

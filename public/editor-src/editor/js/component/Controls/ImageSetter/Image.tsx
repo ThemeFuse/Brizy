@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import {
+import type {
   MouseCoordinates,
   Props
 } from "visual/component/Controls/ImageSetter/types";
@@ -42,8 +42,8 @@ function Image(props: Props) {
   }
 
   function handleChangePosition(value: MouseCoordinates) {
-    value.x !== x && setX(value.x);
-    value.y !== y && setY(value.y);
+    if (value.x !== x) setX(value.x);
+    if (value.y !== y) setY(value.y);
 
     onChange(value, { isChanged: "pointer" });
   }

@@ -1,14 +1,15 @@
+import { noop } from "es-toolkit";
 import { mPipe } from "fp-utilities";
 import React from "react";
 import { Slider } from "visual/component/Controls/Spacing/Slider";
-import * as Option from "visual/component/Options/Type";
-import { GlobalMeta } from "visual/component/Options/Type";
+import type * as Option from "visual/component/Options/Type";
+import type { GlobalMeta } from "visual/component/Options/Type";
 import { t } from "visual/utils/i18n";
 import { fromNumber } from "visual/utils/math/Positive";
-import { Meta } from "visual/utils/options/Filters/meta";
-import { empty, set } from "visual/utils/options/Filters/utils";
+import type { Meta } from "visual/utils/options/Filters/meta";
+import { set } from "visual/utils/options/Filters/utils";
 import { FilterSlider } from "./FilterSlider";
-import { Value } from "./types/Value";
+import type { Value } from "./types/Value";
 
 export interface Props extends Option.Props<Value>, Option.Meta<Meta> {}
 
@@ -34,7 +35,7 @@ export const Filters = ({ value, onChange }: Props): JSX.Element => {
         value={value.hue}
         unit="deg"
         onValue={(v: number, m?: GlobalMeta) => handleChange("hue", v, m)}
-        onUnit={empty}
+        onUnit={noop}
         units={[{ value: "deg", title: "deg" }]}
         step={1}
         min={0}

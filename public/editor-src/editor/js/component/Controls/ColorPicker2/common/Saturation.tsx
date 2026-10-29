@@ -1,7 +1,12 @@
 import { throttle } from "es-toolkit";
-import React, { Component, ComponentType, MouseEvent, TouchEvent } from "react";
-import { HSVAChange } from "visual/component/Controls/ColorPicker2/types";
-import { GlobalMeta } from "visual/component/Options/Type";
+import React, {
+  Component,
+  type ComponentType,
+  type MouseEvent,
+  type TouchEvent
+} from "react";
+import type { HSVAChange } from "visual/component/Controls/ColorPicker2/types";
+import type { GlobalMeta } from "visual/component/Options/Type";
 import * as saturation from "../helpers/saturation";
 import { disableIframeEvents, enableIframeEvents, isInIframe } from "../utils";
 
@@ -50,10 +55,11 @@ export class Saturation extends Component<Props> {
       container: this.container
     }) as HSVAChange;
 
-    this.props.onChange &&
+    if (this.props.onChange) {
       this.throttle(this.props.onChange, data, {
         isChanging: isChanging ?? false
       });
+    }
   };
 
   handleMouseDown = (e: MouseEvent) => {

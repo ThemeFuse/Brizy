@@ -1,7 +1,7 @@
-import React, { ReactElement, useCallback } from "react";
+import React, { type ReactElement, useCallback } from "react";
 import { Button } from "visual/component/Brizy-ui/Button";
 import { TypographyText } from "visual/component/Brizy-ui/Typography";
-import { Action } from "../types";
+import type { Action } from "../types";
 
 interface Props {
   onClick: (v: string) => void;

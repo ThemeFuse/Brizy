@@ -9,8 +9,8 @@ import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import { isEditor, isView } from "visual/providers/RenderProvider";
 import { makeDataAttr } from "visual/utils/i18n/attribute";
 import { collapse, expand } from "../utils";
-import ItemItems from "./Items";
 import defaultValue from "./defaultValue.json";
+import ItemItems from "./Items";
 import * as sidebar from "./sidebar";
 import * as toolbar from "./toolbar";
 

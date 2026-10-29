@@ -1,12 +1,15 @@
-import { WithEditorMode, isStory } from "visual/providers/EditorModeProvider";
+import {
+  isStory,
+  type WithEditorMode
+} from "visual/providers/EditorModeProvider";
 import { hexToRgba } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
-import { ResponsiveMode } from "visual/utils/responsiveMode";
+import type { ResponsiveMode } from "visual/utils/responsiveMode";
 import { HOVER, NORMAL } from "visual/utils/stateMode";
-import { ToolbarItemType } from "../ToolbarItemType";
+import type { ToolbarItemType } from "../ToolbarItemType";
 import { calendlySelector, getSizeCSSFn } from "./css";
-import { Value } from "./types";
+import type { Value } from "./types";
 
 export function getItems({
   v,

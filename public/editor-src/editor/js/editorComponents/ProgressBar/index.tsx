@@ -1,7 +1,7 @@
 import { ProgressBar1 } from "@brizy/component/src/Flex/ProgressBar1";
 import { ProgressBar2 } from "@brizy/component/src/Flex/ProgressBar2";
 import classnames from "classnames";
-import React, { ReactNode } from "react";
+import React, { type ReactNode } from "react";
 import BoxResizer from "visual/component/BoxResizer";
 import { Text } from "visual/component/ContentOptions/types";
 import CustomCSS from "visual/component/CustomCSS";
@@ -14,7 +14,7 @@ import { BaseProgressBar } from "./Base";
 import * as sidebarConfig from "./sidebar";
 import { styleBar, styleBg } from "./styles";
 import * as toolbarConfig from "./toolbar";
-import { ProgressStyle, Value } from "./types";
+import { ProgressStyle, type Value } from "./types";
 
 export default class ProgressBar extends BaseProgressBar {
   handleChange = (patch: Partial<Value>): void => this.patchValue(patch);

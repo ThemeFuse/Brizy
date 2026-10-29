@@ -4,7 +4,7 @@ import type {
   ContextMenuItem
 } from "visual/editorComponents/EditorComponent/types";
 import {
-  ElementTypes,
+  type ElementTypes,
   readElementType
 } from "visual/global/Config/types/configs/ElementTypes";
 import { t } from "visual/utils/i18n";
@@ -21,7 +21,7 @@ const suffix = "Container";
 const getItems: ContextGetItems<ElementModel> = (v): ContextMenuItem[] => {
   const type = readElementType(v.items?.[0]?.type);
   const translation = getTranslationsMap();
-  const title = type ? (translation[type] ?? "") + ` ${suffix}` : suffix;
+  const title = type ? `${translation[type] ?? ""} ${suffix}` : suffix;
 
   return [
     {

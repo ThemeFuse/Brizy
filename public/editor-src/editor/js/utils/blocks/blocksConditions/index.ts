@@ -6,18 +6,24 @@ import {
   isEcwidCategoryPage,
   isEcwidProductPage
 } from "visual/global/Config/types/configs/Cloud";
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import type { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { isWp } from "visual/global/Config/types/configs/WP";
-import { EcwidCategoryId, EcwidProductId } from "visual/global/Ecwid/types";
-import { GlobalBlock, GlobalBlockPosition } from "visual/types/GlobalBlock";
-import { Page } from "visual/types/Page";
+import type {
+  EcwidCategoryId,
+  EcwidProductId
+} from "visual/global/Ecwid/types";
+import type {
+  GlobalBlock,
+  GlobalBlockPosition
+} from "visual/types/GlobalBlock";
+import type { Page } from "visual/types/Page";
 import {
   BlockTypeRule,
-  CloudReferenceAllEntity,
-  CloudReferenceEntity,
-  CollectionTypeRule
+  type CloudReferenceAllEntity,
+  type CloudReferenceEntity,
+  type CollectionTypeRule
 } from "visual/types/Rule";
-import { isGlobalPopup } from "visual/types/utils";
+import { isGlobalOverlay, isGlobalPopup } from "visual/types/utils";
 import {
   ECWID_PRODUCT_CATEGORY_TYPE,
   ECWID_PRODUCT_TYPE
@@ -26,7 +32,7 @@ import { isTemplate } from "visual/utils/models";
 import * as NoEmptyString from "visual/utils/string/NoEmptyString";
 import { canUseCondition } from "../getAllowedGBIds";
 import { isCollectionItemRule } from "../guards";
-import {
+import type {
   AlignsList,
   GB,
   GBIds,
@@ -206,7 +212,13 @@ export const getSurroundedGBIds = (
           return;
         }
 
-        if (globalBlock?.position && globalBlock.position.align) {
+        // Overlay blocks are fixed-position, CMS-managed, and never
+        // part of the top/bottom sortable page flow.
+        if (isGlobalOverlay(globalBlock)) {
+          return;
+        }
+
+        if (globalBlock?.position?.align) {
           const { position } = globalBlock;
           surroundedConditionsIds[position.align].push(pageBlockId);
         }

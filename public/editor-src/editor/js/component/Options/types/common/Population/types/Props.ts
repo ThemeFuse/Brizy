@@ -1,10 +1,13 @@
-import { Handler } from "./Handler";
-import { Value } from "./Value";
-import { DCTypes } from "visual/global/Config/types/DynamicContent";
-import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
-import { Props as OptionProps } from "visual/component/Options/Type";
-import { WithClassName, WithConfig } from "visual/types/attributes";
-import { PopulationMethod, PopulationOptgroupMethod } from "./PopulationMethod";
+import type { Props as OptionProps } from "visual/component/Options/Type";
+import type { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
+import type { DCTypes } from "visual/global/Config/types/DynamicContent";
+import type { WithClassName, WithConfig } from "visual/types/attributes";
+import type { Handler } from "./Handler";
+import type {
+  PopulationMethod,
+  PopulationOptgroupMethod
+} from "./PopulationMethod";
+import type { Value } from "./Value";
 
 export interface Base {
   iconOnly?: boolean;

@@ -1,13 +1,13 @@
 import { isEqual } from "es-toolkit";
 import React from "react";
 import EditorComponent from "visual/editorComponents/EditorComponent";
-import { OnChangeMeta } from "visual/editorComponents/EditorComponent/types";
+import type { OnChangeMeta } from "visual/editorComponents/EditorComponent/types";
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import Editor from "visual/global/Editor";
 import { updateGlobalBlock } from "visual/redux/actions2";
 import { canUseCondition } from "visual/utils/blocks";
 import { connector } from "./connector";
-import { Props, Value } from "./types";
+import type { Props, Value } from "./types";
 
 class GlobalBlock extends EditorComponent<Value, Props> {
   static defaultValue = {};
@@ -40,6 +40,11 @@ class GlobalBlock extends EditorComponent<Value, Props> {
 
     if (props.defaultFont !== nextProps.defaultFont) {
       // console.log("scu", this.getComponentId(), "project", true);
+      return true;
+    }
+
+    // A header global block is where the Menu usually lives.
+    if (props.menuData !== nextProps.menuData) {
       return true;
     }
 

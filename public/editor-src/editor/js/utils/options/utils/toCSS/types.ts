@@ -1,6 +1,6 @@
-import { OptionMeta, OptionValue } from "visual/component/Options/types";
-import { MValue } from "visual/utils/value";
-import { fns } from "./index";
+import type { OptionMeta, OptionValue } from "visual/component/Options/types";
+import type { MValue } from "visual/utils/value";
+import type { fns } from "./index";
 
 export type OptionNameWithStyles = keyof typeof fns;
 

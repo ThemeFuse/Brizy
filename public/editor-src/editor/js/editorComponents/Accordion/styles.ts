@@ -1,7 +1,7 @@
-import { ElementModel } from "visual/component/Elements/Types";
-import { DynamicStylesProps } from "visual/types";
+import type { ElementModel } from "visual/component/Elements/Types";
+import type { DynamicStylesProps } from "visual/types";
 import { renderStyles } from "visual/utils/cssStyle";
-import { OutputStyle, Styles } from "visual/utils/cssStyle/types";
+import type { OutputStyle, Styles } from "visual/utils/cssStyle/types";
 
 export function style<T extends ElementModel>(
   data: DynamicStylesProps<T>

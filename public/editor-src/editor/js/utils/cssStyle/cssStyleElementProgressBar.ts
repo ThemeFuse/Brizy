@@ -1,11 +1,14 @@
-import { WithRenderContext, isView } from "visual/providers/RenderProvider";
+import {
+  isView,
+  type WithRenderContext
+} from "visual/providers/RenderProvider";
 import {
   cssStyleSizeHeight,
   cssStyleSizeMaxWidthPrefixEmpty,
   cssStyleSizeMinHeightPx
 } from "visual/utils/cssStyle";
 import { stylePaddingUngrouped } from "visual/utils/style2";
-import { CSSValue } from "../style2/types";
+import type { CSSValue } from "../style2/types";
 
 export function cssStyleElementProgressBarPadding({
   v,

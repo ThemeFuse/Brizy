@@ -1,14 +1,14 @@
 import classnames from "classnames";
-import React, { useMemo } from "react";
+import React, { type ReactNode, useMemo } from "react";
 import { CheckGroup as CheckGroupControl } from "visual/component/Controls/CheckGroup";
 import { CheckGroupItem } from "visual/component/Controls/CheckGroup/CheckGroupItem";
-import EditorIcon from "visual/component/EditorIcon";
-import { Choices, Props } from "./types";
 import { CheckGroupLabel } from "visual/component/Controls/CheckGroup/CheckGroupLabel";
+import EditorIcon from "visual/component/EditorIcon";
+import type { Choices, Props } from "./types";
 
 export const CheckGroup = ({ onChange, config, label }: Props): JSX.Element => {
-  const renderLabel = useMemo((): JSX.Element => {
-    const _label = label ?? <></>;
+  const renderLabel = useMemo((): ReactNode => {
+    const _label = label;
 
     if (config?.helper) {
       return (
@@ -23,7 +23,7 @@ export const CheckGroup = ({ onChange, config, label }: Props): JSX.Element => {
   }, [config?.helper, config?.helperContent, label]);
 
   const choices = useMemo((): JSX.Element[] => {
-    if (config && config.choices) {
+    if (config?.choices) {
       return config.choices.map(({ value, title, icon }: Choices) => {
         const className = classnames({
           "brz-ed-option__check-group--boxed": icon

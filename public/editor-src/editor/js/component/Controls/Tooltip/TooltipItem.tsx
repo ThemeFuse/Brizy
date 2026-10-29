@@ -1,5 +1,9 @@
 import classnames from "classnames";
-import React, { MouseEvent, ReactElement, ReactNode } from "react";
+import React, {
+  type MouseEvent,
+  type ReactElement,
+  type ReactNode
+} from "react";
 
 type TooltipItemProps = {
   children: ReactNode;

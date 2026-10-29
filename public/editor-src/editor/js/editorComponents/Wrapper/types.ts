@@ -1,12 +1,12 @@
-import { ComponentType, Ref } from "react";
-import {
+import type { ComponentType, Ref } from "react";
+import type {
   ElementModel,
   ElementModelType
 } from "visual/component/Elements/Types";
-import { SortableElementDataAttributes } from "visual/component/Sortable/SortableElement";
-import { WithClassName } from "visual/types/attributes";
-import { CssId } from "visual/utils/models/cssId";
-import { ElementModelWithSymbols } from "visual/utils/symbols/types";
+import type { SortableElementDataAttributes } from "visual/component/Sortable/SortableElement";
+import type { WithClassName } from "visual/types/attributes";
+import type { CssId } from "visual/utils/models/cssId";
+import type { ElementModelWithSymbols } from "visual/utils/symbols/types";
 
 export interface Value extends ElementModel, CssId, ElementModelWithSymbols {
   items: ElementModelType[];

@@ -1,18 +1,18 @@
 import { flatten } from "es-toolkit";
 import { mPipe } from "fp-utilities";
-import {
+import type {
   ElementModel,
   ElementModelType2
 } from "visual/component/Elements/Types";
-import { ConfigTab as PromptTab } from "visual/component/Prompts/PromptForm/types";
 import type { FormField } from "visual/component/Prompts/common/GlobalApps/type";
+import type { ConfigTab as PromptTab } from "visual/component/Prompts/PromptForm/types";
 import type { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import type { DeviceMode } from "visual/types";
 import type { Device } from "visual/utils/devices";
 import { defaultValueKey } from "visual/utils/onChange";
 import * as Str from "visual/utils/reader/string";
-import { State } from "visual/utils/stateMode";
+import type { State } from "visual/utils/stateMode";
 
 interface Data {
   v: ElementModel;

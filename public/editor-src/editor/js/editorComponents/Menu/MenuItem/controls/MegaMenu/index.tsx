@@ -1,10 +1,10 @@
 import React from "react";
-import { Props } from "./types";
 import {
   makeEndPlaceholder,
   makeStartPlaceholder
 } from "visual/utils/dynamicContent";
-import { FCC } from "visual/utils/react/types";
+import type { FCC } from "visual/utils/react/types";
+import type { Props } from "./types";
 
 export const MegaMenuContainer: FCC<Props> = (props) => {
   const { wrapInPlaceholder, itemId, children } = props;

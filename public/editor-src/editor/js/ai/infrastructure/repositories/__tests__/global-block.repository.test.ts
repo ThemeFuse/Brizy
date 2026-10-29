@@ -1,4 +1,7 @@
 import type { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import type { ReduxAction } from "visual/redux/actions2";
+import { blocksData as blocksDataReducer } from "visual/redux/reducers/blocksData";
+import { blocksOrder as blocksOrderReducer } from "visual/redux/reducers/blocksOrder";
 import type { TypedDispatch } from "visual/redux/store";
 import type { ReduxState } from "visual/redux/types";
 import type { IGlobalBlockRepository } from "../../../application/interfaces/i-global-block-repository";
@@ -27,6 +30,7 @@ interface Behaviours {
 interface Harness {
   repo: IGlobalBlockRepository;
   dispatch: jest.Mock;
+  state: ReduxState;
   globalBlockCalls: Record<string, unknown>[];
   deleteCalls: string[];
 }
@@ -72,18 +76,27 @@ function harness(behaviours: Behaviours = {}): Harness {
   const state = {
     globalBlocks: behaviours.globalBlocks ?? {},
     blocksData: behaviours.blocksData ?? {},
-    blocksOrder: behaviours.blocksOrder ?? []
+    blocksOrder: behaviours.blocksOrder ?? [],
+    extraFontStyles: [],
+    page: openPage
   };
   const dispatch = jest.fn();
 
+  const reduxState = state as unknown as ReduxState;
   const repo = createGlobalBlockRepository(
-    () => state as unknown as ReduxState,
+    () => reduxState,
     dispatch as unknown as TypedDispatch,
     config
   );
 
-  return { repo, dispatch, globalBlockCalls, deleteCalls };
+  return { repo, dispatch, state: reduxState, globalBlockCalls, deleteCalls };
 }
+
+const openPage = {
+  id: "/collection_items/222059",
+  collectionType: { id: "/collection_types/120656", title: "Pages" },
+  fields: null
+};
 
 const stateGlobalBlock = (
   overrides: {
@@ -161,25 +174,59 @@ describe("GlobalBlockRepository.create", () => {
   it("persists, then inserts the block and converts it in place", async () => {
     const { repo, dispatch } = harness();
 
-    const result = await repo.create(headerBlock(), "top", 0);
+    await repo.create(headerBlock(), "top", 0);
 
-    expect(result.uid).toBe("header-1");
     expect(dispatch.mock.calls.map(([action]) => action.type)).toEqual([
       "ADD_BLOCK",
       "MAKE_BLOCK_TO_GLOBAL_BLOCK"
     ]);
   });
 
-  it("sends a rule the API serialiser understands", async () => {
-    // Regression: an "all pages" rule that spells out appliedFor/entityType/
-    // entityValues matches no branch of `editorRuleToApiRule`, so it is sent as
-    // `rules=[null]` and the backend rejects the block with a 400.
+  it("leaves the global block's data in the page store under its uid", async () => {
+    const { repo, dispatch, state } = harness();
+
+    const { uid } = await repo.create(headerBlock(), "top", 0);
+
+    const actions: ReduxAction[] = dispatch.mock.calls.map(([a]) => a);
+    const data = actions.reduce(
+      (acc, action) => blocksDataReducer(acc, action, state),
+      state.blocksData
+    );
+    const order = actions.reduce(
+      (acc, action) => blocksOrderReducer(acc, action, state),
+      state.blocksOrder
+    );
+
+    expect(order).toEqual([uid]);
+    expect(Object.keys(data)).toEqual([uid]);
+    expect(data[uid]).toMatchObject({ value: { _id: uid } });
+  });
+
+  it("gives the block a fresh 32-char uid that is also its root _id", async () => {
+    const { repo, globalBlockCalls } = harness();
+
+    const { uid } = await repo.create(headerBlock(), "top", 0);
+
+    expect(uid).toHaveLength(32);
+    expect(uid).not.toBe("header-1");
+    expect(globalBlockCalls[0]).toMatchObject({
+      uid,
+      data: { value: { _id: uid } }
+    });
+  });
+
+  it("rules the block onto every page of the open page's type", async () => {
     const { repo, globalBlockCalls } = harness();
 
     await repo.create(headerBlock(), "top", 0);
 
     expect(globalBlockCalls[0].rules).toEqual([
-      { type: 1, appliedFor: null, entityType: "", entityValues: [] }
+      {
+        type: 1,
+        appliedFor: 1,
+        entityType: "/collection_types/120656",
+        entityValues: []
+      }
     ]);
   });
 

@@ -1,13 +1,13 @@
 import { createReducer } from "visual/component/Prompts/common/states/Classic/reducer";
 import {
-  Either,
+  type Either,
   left,
   right
 } from "visual/component/Prompts/common/states/Classic/types/Either";
 import { t } from "visual/utils/i18n";
 import * as NoEmptyString from "visual/utils/string/NoEmptyString";
-import { Invalid, Valid } from "./types";
-import { Setters } from "./types/Setters";
+import type { Invalid, Valid } from "./types";
+import type { Setters } from "./types/Setters";
 
 export const setters = (v: Invalid, a: Setters): Invalid => {
   switch (a.type) {

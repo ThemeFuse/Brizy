@@ -1,9 +1,9 @@
-import { AnimateLayoutChanges, useSortable } from "@dnd-kit/sortable";
+import { type AnimateLayoutChanges, useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import React, { CSSProperties, FC, useMemo } from "react";
+import React, { type CSSProperties, type FC, useMemo } from "react";
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import { TreeItem } from "./TreeItem";
-import { TreeItemProps } from "./types";
+import type { TreeItemProps } from "./types";
 
 const animateLayoutChanges: AnimateLayoutChanges = ({
   isSorting,

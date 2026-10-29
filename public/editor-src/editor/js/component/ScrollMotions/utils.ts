@@ -1,22 +1,22 @@
-import {
+import type {
   Settings as MotionSettings,
   Viewport as MotionViewport,
   MouseSettings,
   ScrollSettings
 } from "@brizy/motion/es/types";
 import { setIn } from "timm";
-import { ElementModel } from "visual/component/Elements/Types";
-import { FromElementModelGetter } from "visual/component/Options/Type";
+import type { ElementModel } from "visual/component/Elements/Types";
+import type { FromElementModelGetter } from "visual/component/Options/Type";
 import { createOptionId } from "visual/editorComponents/EditorComponent/utils";
-import { Store } from "visual/redux/store";
+import type { Store } from "visual/redux/store";
 import { defaultValueValue } from "visual/utils/onChange/device";
 import { fromElementModel } from "visual/utils/options/Motion/converters";
-import { Value as MotionValue } from "visual/utils/options/Motion/types/Value";
-import { Viewport } from "visual/utils/options/Motion/types/Viewport";
+import type { Value as MotionValue } from "visual/utils/options/Motion/types/Value";
+import type { Viewport } from "visual/utils/options/Motion/types/Viewport";
 import { DESKTOP, MOBILE, TABLET } from "visual/utils/responsiveMode";
 import { NORMAL } from "visual/utils/stateMode";
 import { encodeToString } from "visual/utils/string";
-import { MouseAttr, ScrollAttr, ScrollMotionAttr } from "./types";
+import type { MouseAttr, ScrollAttr, ScrollMotionAttr } from "./types";
 
 const optionTypeScrollToAttr = (settings: ScrollSettings): ScrollAttr => {
   switch (settings.type) {
@@ -200,7 +200,7 @@ const createResponsiveOptions = (
     });
   }
 
-  let motionSettings: MotionSettings | undefined = undefined;
+  let motionSettings: MotionSettings | undefined;
 
   if (scrollOptions.length) {
     motionSettings = {
@@ -255,7 +255,7 @@ export const makeOptionValueToMotion = (data: {
   isPro: boolean;
 }): MotionSettings | undefined => {
   const { v, prefix = "motion", isPro } = data;
-  let settings = undefined;
+  let settings: MotionSettings | undefined;
 
   if (isPro) {
     const getDesktop: FromElementModelGetter = (k) =>

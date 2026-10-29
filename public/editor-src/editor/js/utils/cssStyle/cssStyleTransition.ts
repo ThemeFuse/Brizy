@@ -1,5 +1,5 @@
 import { defaultValueValue } from "visual/utils/onChange";
-import { CSSValue } from "visual/utils/style2/types";
+import type { CSSValue } from "visual/utils/style2/types";
 import { capByPrefix } from "../string";
 
 export function cssStyleHoverTransition({
@@ -56,6 +56,6 @@ export function cssStyleHoverTransitionFlash({
   return hoverTransition === undefined
     ? ""
     : bgType
-    ? "transition-duration:0s; transition-property:opacity;"
-    : `transition-duration:0.${hoverTransition}s;`;
+      ? "transition-duration:0s; transition-property:opacity;"
+      : `transition-duration:0.${hoverTransition}s;`;
 }

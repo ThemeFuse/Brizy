@@ -11,7 +11,7 @@ export default (itemIndex) => ({
   getItems: getItems(itemIndex)
 });
 
-const getItems = (itemIndex) => (v, component) => {
+const getItems = (itemIndex) => (_v, component) => {
   const dynamicItems = component.canAddColumn()
     ? [
         {
@@ -19,7 +19,7 @@ const getItems = (itemIndex) => (v, component) => {
           type: "button",
           title: t("Add New"),
           helperText: ({ isInSubMenu }) =>
-            getKeyModifierSubMenu(isInSubMenu) + " + N",
+            `${getKeyModifierSubMenu(isInSubMenu)} + N`,
           onChange() {
             component.addColumn(itemIndex + 1);
           }
@@ -41,7 +41,7 @@ const getItems = (itemIndex) => (v, component) => {
           type: "button",
           title: t("Copy"),
           helperText: ({ isInSubMenu }) =>
-            getKeyModifierSubMenu(isInSubMenu) + " + C",
+            `${getKeyModifierSubMenu(isInSubMenu)} + C`,
           onChange: () => component.copy(itemIndex)
         },
         {
@@ -49,7 +49,7 @@ const getItems = (itemIndex) => (v, component) => {
           type: "button",
           title: t("Paste"),
           helperText: ({ isInSubMenu }) =>
-            getKeyModifierSubMenu(isInSubMenu) + " + V",
+            `${getKeyModifierSubMenu(isInSubMenu)} + V`,
           inactive: !canPaste,
           onChange: () => component.paste(itemIndex)
         },
@@ -58,7 +58,7 @@ const getItems = (itemIndex) => (v, component) => {
           type: "button",
           title: t("Paste Styles"),
           helperText: ({ isInSubMenu }) =>
-            getKeyModifierSubMenu(isInSubMenu) + " + ⇧ + V",
+            `${getKeyModifierSubMenu(isInSubMenu)} + ⇧ + V`,
           inactive: !canPaste,
           onChange: () => component.pasteStyles(itemIndex)
         },
@@ -67,7 +67,7 @@ const getItems = (itemIndex) => (v, component) => {
           type: "button",
           title: t("Duplicate"),
           helperText: ({ isInSubMenu }) =>
-            getKeyModifierSubMenu(isInSubMenu) + " + D",
+            `${getKeyModifierSubMenu(isInSubMenu)} + D`,
           onChange() {
             component.cloneItem(itemIndex);
           }

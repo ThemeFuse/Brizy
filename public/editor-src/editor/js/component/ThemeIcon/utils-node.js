@@ -17,7 +17,7 @@ function caesarShift(str, amount) {
     let c = str[i];
 
     if (c.match(/[a-z]/i)) {
-      let code = str.charCodeAt(i);
+      const code = str.charCodeAt(i);
 
       if (code >= 65 && code <= 90)
         c = String.fromCharCode(((code - 65 + amount) % 26) + 65);
@@ -36,7 +36,7 @@ function caesarShift(str, amount) {
  * @returns {string}
  */
 module.exports.encrypt = function encrypt(base64) {
-  const half = parseInt(base64.length / 2);
+  const half = parseInt(base64.length / 2, 10);
   const base64Encoded = base64.slice(0, half) + KEY + base64.slice(half);
 
   return caesarShift(base64Encoded, 20);

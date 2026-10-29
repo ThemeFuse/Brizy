@@ -3,7 +3,7 @@ import React, { createRef } from "react";
 import { AnimatedHeadline as Control } from "visual/component/AnimatedHeadline";
 import { AnimationStyle } from "visual/component/AnimatedHeadline/types";
 import CustomCSS from "visual/component/CustomCSS";
-import { ElementProps } from "visual/component/Elements/Types";
+import type { ElementProps } from "visual/component/Elements/Types";
 import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
@@ -13,7 +13,7 @@ import { Wrapper } from "../tools/Wrapper";
 import defaultValue from "./defaultValue.json";
 import * as sidebarConfig from "./sidebar";
 import * as toolbarConfig from "./toolbar";
-import { Value } from "./types";
+import type { Value } from "./types";
 import { getAnimationOptions } from "./utils";
 
 // SCSS import - automatically tracked during static rendering
@@ -36,21 +36,24 @@ class AnimatedHeadline extends EditorComponent<Value, ElementProps> {
     const v = this.getValue();
     const options = getAnimationOptions(v);
 
-    return Object.entries(options).reduce((acc, [name, _value]) => {
-      const value =
-        typeof _value === "boolean" ? String(_value) : Str.read(_value);
+    return Object.entries(options).reduce<Record<string, string>>(
+      (acc, [name, _value]) => {
+        const value =
+          typeof _value === "boolean" ? String(_value) : Str.read(_value);
 
-      if (value) {
-        return {
-          ...acc,
-          ...makeDataAttr({
-            name: name.toLocaleLowerCase(),
-            value
-          })
-        };
-      }
-      return acc;
-    }, {});
+        if (value) {
+          Object.assign(
+            acc,
+            makeDataAttr({
+              name: name.toLocaleLowerCase(),
+              value
+            })
+          );
+        }
+        return acc;
+      },
+      {}
+    );
   }
 
   renderForEdit(v: Value): JSX.Element {

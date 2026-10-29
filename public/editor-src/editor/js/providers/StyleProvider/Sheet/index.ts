@@ -2,7 +2,7 @@ import classNames from "classnames";
 import { css } from "visual/utils/cssStyle/css/tujur";
 import type { OutputStyleWithSymbol } from "visual/utils/cssStyle/types";
 import type { MValue } from "visual/utils/value";
-import type { CSSOrdered, CSSSheet, ClassNamesCounter, Data } from "./types";
+import type { ClassNamesCounter, CSSOrdered, CSSSheet, Data } from "./types";
 
 export class Sheet {
   private css = new Map<string, CSSSheet>();
@@ -21,7 +21,10 @@ export class Sheet {
   // Mirrors the classNames present in cssOrdered, for O(1) lookups on render.
   private orderedClassNames = new Set<string>();
 
-  constructor({ doc, instanceId }: { doc?: Document; instanceId?: string } = {}) {
+  constructor({
+    doc,
+    instanceId
+  }: { doc?: Document; instanceId?: string } = {}) {
     this.doc = doc ?? (typeof window === "undefined" ? undefined : document);
 
     if (instanceId) {

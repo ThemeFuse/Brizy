@@ -1,8 +1,8 @@
 import classNames from "classnames";
 import React, {
-  CSSProperties,
-  ReactElement,
-  Ref,
+  type CSSProperties,
+  type ReactElement,
+  type Ref,
   useEffect,
   useState
 } from "react";
@@ -11,7 +11,8 @@ import ClickOutside from "visual/component/ClickOutside";
 import EditorIcon from "visual/component/EditorIcon";
 import { Scrollbar } from "visual/component/Scrollbar";
 import { t } from "visual/utils/i18n";
-import {
+import type { Literal } from "visual/utils/types/Literal";
+import type {
   MultiSelectItemProps as ItemProps,
   MultiSelectProps as Props
 } from "./types";
@@ -19,7 +20,7 @@ import { toggleItemValue, valueTitle } from "./utils";
 
 export { MultiSelectItem } from "./Item";
 
-export function MultiSelect<T>({
+export function MultiSelect<T extends Literal>({
   value,
   valueIsLoading,
   children,
@@ -100,7 +101,7 @@ export function MultiSelect<T>({
   );
 }
 
-type SelectValueProps<T> = {
+type SelectValueProps<T extends Literal> = {
   customRef: Ref<HTMLDivElement>;
   items: ItemProps<T>[];
   value: T[];
@@ -109,7 +110,7 @@ type SelectValueProps<T> = {
   showArrow?: boolean;
   onClick: () => void;
 };
-function SelectValue<T>({
+function SelectValue<T extends Literal>({
   customRef,
   items,
   value,
@@ -153,7 +154,7 @@ function SelectValue<T>({
   );
 }
 
-type SelectDropdownProps<T> = {
+type SelectDropdownProps<T extends Literal> = {
   customRef: Ref<HTMLDivElement>; // this was done because React.forwardRef does not work with generics
   items: ItemProps<T>[];
   value: T[];
@@ -165,7 +166,7 @@ type SelectDropdownProps<T> = {
   onItemClick: (item: ItemProps<T>) => void;
   onSearchChange?: (s: string) => void;
 };
-function SelectDropdown<T>({
+function SelectDropdown<T extends Literal>({
   customRef, // this was done because React.forwardRef does not work with generics
   items,
   value,
@@ -177,12 +178,12 @@ function SelectDropdown<T>({
   onItemClick,
   onSearchChange
 }: SelectDropdownProps<T>): ReactElement {
+  // biome-ignore lint/correctness/useExhaustiveDependencies: migrated from eslint
   useEffect(() => {
     return (): void => {
       onSearchChange?.("");
     };
     // onSearchChange dependency is not nedded
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const className = classNames("brz-ed-control__multiSelect2__dropdown", {
@@ -217,7 +218,7 @@ function SelectDropdown<T>({
         <ul className="brz-ul">
           {items.map((item) => (
             <SelectItem
-              key={String(item.value)}
+              key={item.value}
               title={item.title}
               value={item.value}
               icon={!useAsSimpleSelect}
@@ -232,14 +233,14 @@ function SelectDropdown<T>({
   );
 }
 
-type SelectItemProps<T> = {
+type SelectItemProps<T extends Literal> = {
   title: string;
   value: T;
   active?: boolean;
   onClick: () => void;
   icon?: boolean;
 };
-function SelectItem<T>({
+function SelectItem<T extends Literal>({
   title,
   active = false,
   onClick,

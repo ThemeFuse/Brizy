@@ -1,4 +1,5 @@
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import type { ReactNode } from "react";
+import type { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import HelpButton from "./components/HelpButton";
 import HiddenElementsToggle from "./components/HiddenElementsToggle";
 import { PreviewButton } from "./components/PreviewButton";
@@ -6,7 +7,7 @@ import PublishButton from "./components/PublishButton";
 import { RedoButton } from "./components/RedoButton";
 import { UndoButton } from "./components/UndoButton";
 
-type Component = () => JSX.Element;
+type Component = () => ReactNode;
 
 export const getComponents = (
   config: ConfigCommon

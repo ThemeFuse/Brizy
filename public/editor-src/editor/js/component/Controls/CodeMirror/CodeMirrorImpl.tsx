@@ -1,9 +1,9 @@
 import Code from "@uiw/react-codemirror";
 import classNames from "classnames";
-import React, { ReactElement, useMemo } from "react";
+import React, { type ReactElement, useMemo } from "react";
 import { getLangExtension } from "./langs";
 import { useTheme } from "./themes/useTheme";
-import { Props } from "./types";
+import type { Props } from "./types";
 
 const CodeMirrorImpl = ({
   className,

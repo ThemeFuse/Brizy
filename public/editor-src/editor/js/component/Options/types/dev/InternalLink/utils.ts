@@ -1,16 +1,16 @@
 import { partial } from "es-toolkit";
 import { property } from "es-toolkit/compat";
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import type { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { getCollectionTypes } from "visual/utils/api";
 import * as A from "visual/utils/array";
 import { makePlaceholder } from "visual/utils/dynamicContent";
 import { t } from "visual/utils/i18n";
 import { toObject } from "visual/utils/object";
-import { String } from "visual/utils/string/specs";
-import { Reader } from "visual/utils/types/Type";
+import { StringSpec } from "visual/utils/string/specs";
+import type { Reader } from "visual/utils/types/Type";
 import { mCompose } from "visual/utils/value";
-import { Choice, ChoicesAsync } from "../Select/types";
-import { ChoiceWithPermalink, ChoicesSync } from "./types";
+import type { Choice, ChoicesAsync } from "../Select/types";
+import type { ChoicesSync, ChoiceWithPermalink } from "./types";
 
 const readPost: Reader<ChoiceWithPermalink> = (v) => {
   type _Post = {
@@ -22,8 +22,8 @@ const readPost: Reader<ChoiceWithPermalink> = (v) => {
     return undefined;
   }
 
-  const value = String.read((v as _Post).value);
-  const title = String.read((v as _Post).title);
+  const value = StringSpec.read((v as _Post).value);
+  const title = StringSpec.read((v as _Post).title);
 
   return value && title ? { title, value } : undefined;
 };

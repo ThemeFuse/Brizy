@@ -1,15 +1,15 @@
-import { ElementModel } from "visual/component/Elements/Types";
-import { Params } from "visual/editorComponents/EditorComponent/types";
-import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
-import { MBMetaPrefixKey } from "../utils/types";
+import type { ElementModel } from "visual/component/Elements/Types";
+import type { Params } from "visual/editorComponents/EditorComponent/types";
+import type { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
+import type { MBMetaPrefixKey } from "../utils/types";
 import { getItems as _getItems } from "./toolbarMinistryBrandsMeta";
 
 export const toolbarMinistryBrandsMeta = (metaPrefixKey: MBMetaPrefixKey) => ({
   getItems: <
     M extends ElementModel,
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // biome-ignore lint/suspicious/noExplicitAny: migrated from eslint
     P extends Record<string, any> = Record<string, unknown>,
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // biome-ignore lint/suspicious/noExplicitAny: migrated from eslint
     S extends Record<string, any> = Record<string, unknown>
   >(
     data: Params<M, P, S>

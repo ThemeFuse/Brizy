@@ -1,14 +1,14 @@
-import React, { FC, memo, useEffect, useMemo } from "react";
+import React, { type FC, memo, useEffect, useMemo } from "react";
 import { shallowEqual, useSelector, useStore } from "react-redux";
 import { createSelector } from "reselect";
 import { useConfig } from "visual/providers/ConfigProvider";
 import { useTreeContext } from "visual/providers/TreeProvider";
-import { TreeItems } from "visual/providers/TreeProvider/types";
+import type { TreeItems } from "visual/providers/TreeProvider/types";
 import {
   globalBlocksIdsInPageSelector,
   pageDataNoRefsSelector
 } from "visual/redux/selectors";
-import { ReduxState } from "visual/redux/types";
+import type { ReduxState } from "visual/redux/types";
 import SortableTree from "./Tree";
 import {
   applyCollapsedWithActive,

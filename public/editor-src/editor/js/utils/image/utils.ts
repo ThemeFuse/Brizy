@@ -1,19 +1,19 @@
 import normalizeUrl from "normalize-url";
 import {
-  SizeType,
-  defaultCrop
+  defaultCrop,
+  SizeType
 } from "visual/global/Config/types/configs/common";
 import { makeUrl } from "visual/utils/api";
 import { parseCropData } from "visual/utils/image/parsers";
 import { read as readStr } from "visual/utils/reader/string";
 import * as Str from "../reader/string";
 import {
-  CustomSize,
-  Data,
-  DataUrl,
+  type CustomSize,
+  type Data,
+  type DataUrl,
   ImageType,
-  PlaceholdersValues,
-  ResizeData
+  type PlaceholdersValues,
+  type ResizeData
 } from "./types";
 
 export const isCropSize = (d: Data): d is CustomSize =>
