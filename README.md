@@ -2,9 +2,9 @@
 
 Contributors: themefuse<br>
 Requires at least: 4.5<br>
-Tested up to: 7.1<br>
+Tested up to: 7.1.4<br>
 Requires PHP: 7.4<br>
-Stable tag: 2.8.23<br>
+Stable tag: 2.8.25<br>
 License: GPLv3<br>
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -135,6 +135,45 @@ $bodyHtml = apply_filters( 'brizy_content', $html->get_body(), Brizy_Editor_Proj
 [Privacy policy](https://brizy.io/privacy/)
 
 ## Changelog
+
+### 2.8.25 - 2026-11-02
+* New: Transform options for Row and Column elements
+* New: Default item options for groups and repeatable elements
+* New: Free Cookie Banner widget for managing visitor consent
+* New: Turn the cookie banner on or off from the plugin's General settings
+* New: Agencies can rebrand the AI page generator with their own logo and service, or hide it completely
+* New: Image descriptions can now be shown as dynamic content
+* Improved: Builder performance and stability with updated internal libraries
+* Improved: Faster and more reliable editor interactions
+* Improved: Accessibility for buttons, video playlists and chat inputs
+* Improved: Better compatibility with modern browser security policies
+* Improved: Updated TypeScript and development tools for long-term stability
+* Improved: Reduced reliance on older JavaScript libraries for better performance
+* Improved: More reliable component rendering and event handling
+* Improved: Replaced legacy jQuery functionality with modern browser APIs
+* Improved: Forms and dropdowns updated to reduce reliance on older libraries
+* Improved: Slider components updated for better performance
+* Improved: Removed unused code and outdated components
+* Improved: Optimized internal event handling across the builder
+* Improved: Updated build tools and dependencies
+* Improved: Improved code quality and consistency with updated development tooling
+* Improved: Clearer "Edit with Brizy" button and switch in the WordPress block editor
+* Improved: Global blocks, such as headers, now always appear on the live site and are easier to manage
+* Improved: Starter templates show the Install and Go Pro buttons clearly
+* Fixed: Forms – phone field placeholder now displays correctly in preview
+* Fixed: Forms – select fields now work correctly in preview
+* Fixed: Forms – unique field IDs prevent conflicts between forms
+* Fixed: Animated Headline – removed unnecessary spacing around animated text
+* Fixed: Rich-Text – improved handling of text changes while typing
+* Fixed: Rich-Text – improved compatibility with stricter website security settings
+* Fixed: AI Text – background colors are no longer overridden by the Astra WordPress theme
+* Fixed: Countdown – improved date handling for more accurate comparisons
+* Fixed: Image – resizing restored for externally hosted images with custom dimensions
+* Fixed: Buttons – improved accessibility with explicit button types
+* Fixed: Editor – improved handling of component exports and interactions
+* Fixed: Editor – resolved issues with delayed updates and cleanup when elements are removed
+* Fixed: Cloud sync now runs in the background even when no one is logged in
+* Fixed: Brizy now requires PHP 7.4 or newer, plus better translation support
 
 ### 2.8.23 - 2026-09-09
 * Fixed: Wordpress 7.1 compatibility fixes

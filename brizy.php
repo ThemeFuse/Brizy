@@ -5,7 +5,7 @@
  * Plugin URI: https://brizy.io/
  * Author: Brizy.io
  * Author URI: https://brizy.io/
- * Version: 2.8.23
+ * Version: 2.8.25
  * Text Domain: brizy
  * License: GPLv3
  * Domain Path: /languages
@@ -16,13 +16,13 @@
 if (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && stripos($_SERVER['HTTP_X_FORWARDED_PROTO'], 'https') !== false) {
     $_SERVER['HTTPS'] = 'on';
 }
-define('BRIZY_DEVELOPMENT', false);
-define('BRIZY_LOG', false);
-define('BRIZY_VERSION', '2.8.23');
+define('BRIZY_DEVELOPMENT', false );
+define('BRIZY_LOG', false );
+define('BRIZY_VERSION', '2.8.25');
 define('BRIZY_MINIMUM_PRO_VERSION', '2.4.15');
 define('BRIZY_MINIMUM_COMPILER_VERSION', '353-wp');
-define('BRIZY_RECOMPILE_TAG', 1787557492);
-define('BRIZY_EDITOR_VERSION', BRIZY_DEVELOPMENT ? 'dev' : '383-wp' );
+define('BRIZY_RECOMPILE_TAG', 1793613567 );
+define('BRIZY_EDITOR_VERSION', BRIZY_DEVELOPMENT ? 'dev' : '383-wp'  );
 define('BRIZY_SYNC_VERSION', '383');
 define('BRIZY_FILE', __FILE__);
 define('BRIZY_PLUGIN_BASE', plugin_basename(BRIZY_FILE));
