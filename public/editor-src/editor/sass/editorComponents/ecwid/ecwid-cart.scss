@@ -1,5 +1,7 @@
 .brz .brz-ecwid-wrapper {
   &.brz-ecwid-cart-wrapper {
+    max-width: 100% !important;
+
     .ec-page-title {
       .ec-breadcrumbs {
         display: none !important;

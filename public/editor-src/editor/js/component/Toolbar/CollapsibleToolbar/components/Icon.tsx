@@ -1,6 +1,6 @@
 import classNames from "classnames";
 import React from "react";
-import { TransitionState } from "react-transition-state";
+import type { TransitionState } from "react-transition-state";
 import EditorIcon from "visual/component/EditorIcon";
 
 export interface IconProps extends TransitionState {

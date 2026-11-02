@@ -1,4 +1,4 @@
-import { Response } from "../common";
+import type { Response } from "../common";
 
 export interface FormFieldsOption {
   title: string;

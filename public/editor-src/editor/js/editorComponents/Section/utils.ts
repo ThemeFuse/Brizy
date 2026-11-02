@@ -1,4 +1,4 @@
-import { ElementModel } from "visual/component/Elements/Types";
+import type { ElementModel } from "visual/component/Elements/Types";
 import {
   maxWidthPercentage,
   minWInBoxedPage,
@@ -9,17 +9,17 @@ import {
   wInMobilePage,
   wInTabletPage
 } from "visual/config/columns";
-import { DeviceMode } from "visual/types";
+import type { DeviceMode } from "visual/types";
 import { defaultValueValue } from "visual/utils/onChange";
 import {
   DESKTOP,
   MOBILE,
-  ResponsiveMode,
+  type ResponsiveMode,
   TABLET
 } from "visual/utils/responsiveMode";
 import { NORMAL } from "visual/utils/stateMode";
 import { createOptionId } from "../EditorComponent/utils";
-import { Value } from "./type";
+import type { Value } from "./type";
 
 export function getMinContainerSuffix({
   v,

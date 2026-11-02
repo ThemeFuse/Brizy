@@ -1,5 +1,5 @@
-import { ElementModel } from "visual/component/Elements/Types";
-import { TooltipPlacement } from "./types";
+import type { ElementModel } from "visual/component/Elements/Types";
+import type { TooltipPlacement } from "./types";
 
 type SimpleTooltipPlacement = "top" | "bottom" | "left" | "right";
 

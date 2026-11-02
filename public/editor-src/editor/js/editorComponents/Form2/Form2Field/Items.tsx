@@ -1,14 +1,14 @@
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
+import type { ArrayItem } from "visual/editorComponents/EditorArrayComponent/types";
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
-import { Form2FieldOption } from "../migrations/Form2Field/type";
-import { Value } from "./type";
+import type { Form2FieldOption } from "../migrations/Form2Field/type";
 
 class Form2FieldItems extends EditorArrayComponent {
   static get componentId(): ElementTypes.Form2FieldItems {
     return ElementTypes.Form2FieldItems;
   }
 
-  getItemProps(itemData: Value, itemIndex: number, items: Value[]) {
+  getItemProps(itemData: ArrayItem, itemIndex: number, items: ArrayItem[]) {
     const props = super.getItemProps(itemData, itemIndex, items);
     const itemProps = this.props.itemProps;
 

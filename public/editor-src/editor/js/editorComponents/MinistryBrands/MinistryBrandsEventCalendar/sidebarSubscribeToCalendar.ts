@@ -1,5 +1,8 @@
-import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
-import { WithEditorMode, isStory } from "visual/providers/EditorModeProvider";
+import type { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
+import {
+  isStory,
+  type WithEditorMode
+} from "visual/providers/EditorModeProvider";
 import { t } from "visual/utils/i18n";
 
 export function getItems({ editorMode }: WithEditorMode): ToolbarItemType[] {

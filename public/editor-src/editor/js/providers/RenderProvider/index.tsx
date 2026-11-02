@@ -1,16 +1,16 @@
 import React, { useContext, useMemo } from "react";
 import {
-  RenderContext,
-  RenderType,
-  WithRenderContext,
   isEditor,
   isRenderContext,
-  isView
+  isView,
+  RenderContext,
+  type RenderType,
+  type WithRenderContext
 } from "./context";
-import { Props } from "./types";
+import type { Props } from "./types";
 
-export { isRenderContext, isEditor, isView };
-export type { WithRenderContext, RenderType };
+export type { RenderType, WithRenderContext };
+export { isEditor, isRenderContext, isView };
 
 export function RenderProvider(props: Props): JSX.Element {
   const { children, renderType } = props;

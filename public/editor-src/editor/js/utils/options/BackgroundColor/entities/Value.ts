@@ -1,10 +1,10 @@
-import { GradientStop } from "visual/component/Controls/BackgroundColor/entities";
-import { Hex } from "visual/utils/color/Hex";
-import { Opacity } from "visual/utils/cssProps/opacity";
-import { Palette } from "visual/utils/options/ColorPicker/entities/palette";
-import { GradientActivePointer } from "./GradientActivePointer";
-import { GradientType } from "./GradientType";
-import { Type } from "./Type";
+import type { GradientStop } from "visual/component/Controls/BackgroundColor/entities";
+import type { Hex } from "visual/utils/color/Hex";
+import type { Opacity } from "visual/utils/cssProps/opacity";
+import type { Palette } from "visual/utils/options/ColorPicker/entities/palette";
+import type { GradientActivePointer } from "./GradientActivePointer";
+import type { GradientType } from "./GradientType";
+import type { Type } from "./Type";
 
 export type Value = {
   hex: Hex;

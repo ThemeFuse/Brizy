@@ -4,7 +4,7 @@ import type { Image } from "visual/component/Options/types/dev/Gallery/types/Ima
 import { SizeType } from "visual/global/Config/types/configs/common";
 import { useConfig } from "visual/providers/ConfigProvider";
 import { getImageUrl } from "visual/utils/image";
-import { FCC } from "visual/utils/react/types";
+import type { FCC } from "visual/utils/react/types";
 import { read as readString } from "visual/utils/reader/string";
 
 interface Props {

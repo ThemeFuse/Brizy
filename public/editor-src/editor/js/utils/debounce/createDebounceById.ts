@@ -11,7 +11,7 @@ export function createDebounceById<T extends unknown[], R>(
     }
   };
 
-  const set = (id: string, ...args: T): Promise<R | void> => {
+  const set = (id: string, ...args: T): Promise<R> => {
     return new Promise((resolve) => {
       cancel(id);
 

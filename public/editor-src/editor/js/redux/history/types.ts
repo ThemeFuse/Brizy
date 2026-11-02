@@ -89,13 +89,13 @@ export class History<Snapshot extends UnknownDict> {
       const index_ = index - 1;
       return this.snapshots[index_] ?? null;
     } else {
-      const index_ = this.snapshots.filter(s => s !== null).length + index;
+      const index_ = this.snapshots.filter((s) => s !== null).length + index;
       return this.snapshots[index_] ?? null;
     }
   }
 
   update(state: Snapshot, options?: { replacePresent: boolean }): void {
-    const newStateIsDifferent = Object.keys(state).some(key => {
+    const newStateIsDifferent = Object.keys(state).some((key) => {
       return state[key] !== this.snapshots[this.currentIndex]?.[key];
     });
 

@@ -1,8 +1,8 @@
 import { arrayMove } from "@dnd-kit/sortable";
 import {
-  Actions,
+  type Actions,
   AddableActions,
-  AddableState,
+  type AddableState,
   SidebarAlignment
 } from "./types";
 import { setSidebarAlignment } from "./utils";

@@ -1,6 +1,6 @@
-import { Patch } from "../types";
-import { LinkDCPatch, fromLinkElementModel } from "./linkPatch";
-import { LinkPatch, PatchValue, isDCPatch } from "./types";
+import type { Patch } from "../types";
+import { fromLinkElementModel, type LinkDCPatch } from "./linkPatch";
+import { isDCPatch, type LinkPatch, type PatchValue } from "./types";
 
 export const patchOnDCChange = ({
   linkPopulation

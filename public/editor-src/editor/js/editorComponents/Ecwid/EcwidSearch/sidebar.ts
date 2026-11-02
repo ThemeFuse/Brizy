@@ -1,7 +1,7 @@
 import type { GetItems } from "visual/editorComponents/EditorComponent/types";
 import { t } from "visual/utils/i18n";
 import { containerSelector } from "./css/selectors";
-import { Value } from "./types";
+import type { Value } from "./types";
 
 export const getItems: GetItems<Value> = () => [
   {

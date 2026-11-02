@@ -14,9 +14,9 @@ import {
 import { attachRefs } from "visual/utils/react";
 import * as State from "visual/utils/stateMode";
 import { Wrapper } from "../tools/Wrapper";
-import Items from "./Items";
 import contextMenuConfig from "./contextMenu";
 import defaultValue from "./defaultValue.json";
+import Items from "./Items";
 import * as sidebarExtend from "./sidebarExtend";
 import * as sidebarExtendParent from "./sidebarExtendParent";
 import { styleAnimation, styleTabs } from "./styles";

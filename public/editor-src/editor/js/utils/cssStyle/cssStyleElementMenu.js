@@ -40,14 +40,14 @@ import {
   styleBorderStyle,
   styleBorderWidthGrouped,
   styleColor,
-  styleElementMMenu,
-  styleElementMMenuIconPosition,
-  styleElementMMenuIconSpacing,
   styleElementMenuIconPosition,
   styleElementMenuIconSpacing,
   styleElementMenuMode,
   styleElementMenuSubMenuIconPosition,
   styleElementMenuSubMenuIconSpacing,
+  styleElementMMenu,
+  styleElementMMenuIconPosition,
+  styleElementMMenuIconSpacing,
   styleItemMarginBottom,
   styleItemMarginLeft,
   styleItemMarginRight,
@@ -711,7 +711,9 @@ export function cssStyleElementMMenuBtnNext({ v, device, store, getConfig }) {
     paddingRightSuffix
   } = cssStylePadding({ v, device, prefix: "mMenu" });
 
-  const typographyHeightSuffix = isNaN(mMenuLineHeight) ? "" : "px";
+  const typographyHeightSuffix = Number.isNaN(Number(mMenuLineHeight))
+    ? ""
+    : "px";
   const typographyHeight = `${mMenuLineHeight} * ${mMenuFontSize}${typographyHeightSuffix}`;
   const _paddingTop = `${paddingTop}${paddingTopSuffix}`;
   const _paddingBottom = `${paddingBottom}${paddingBottomSuffix}`;

@@ -1,5 +1,5 @@
 import { getColor } from "visual/utils/color";
-import { CSSStyleFn } from "visual/utils/cssStyle/types";
+import type { CSSStyleFn } from "visual/utils/cssStyle/types";
 
 // INFO: in old cssStyle style function persists conditions for text shadow type "inset"
 // but i didn't find any trace of inset text shadow

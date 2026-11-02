@@ -1,5 +1,5 @@
 import { setIn } from "timm";
-import {
+import type {
   ElementModel,
   ElementModelType
 } from "visual/component/Elements/Types";
@@ -12,7 +12,7 @@ import { defaultValueValue } from "visual/utils/onChange";
 import {
   DESKTOP,
   MOBILE,
-  ResponsiveMode,
+  type ResponsiveMode,
   TABLET
 } from "visual/utils/responsiveMode";
 

@@ -1,14 +1,15 @@
 import classNames from "classnames";
-import React, { ReactElement } from "react";
-import { WithClassName, WithOnChange } from "visual/types/attributes";
-import { Props as ItemProps } from "./Item";
+import React, { type ReactElement } from "react";
+import type { WithClassName, WithOnChange } from "visual/types/attributes";
+import type { Literal } from "visual/utils/types/Literal";
+import type { Props as ItemProps } from "./Item";
 
-export type Props<T> = WithOnChange<T> &
+export type Props<T extends Literal> = WithOnChange<T> &
   WithClassName & {
     children: ReactElement<ItemProps<T>>[];
   };
 
-export function RadioGroup2<T>({
+export function RadioGroup2<T extends Literal>({
   children,
   onChange,
   className
@@ -17,7 +18,7 @@ export function RadioGroup2<T>({
 
   return (
     <div className={_className}>
-      {children.map((item, i) => {
+      {children.map((item) => {
         const _className = classNames("brz-ed-control__radio-group2__item", {
           "brz-ed-control__radio-group2__item--active": item.props.active
         });
@@ -27,7 +28,7 @@ export function RadioGroup2<T>({
         return (
           <div
             className={_className}
-            key={i}
+            key={value}
             onClick={(): void => onChange(value)}
             title={title}
             data-value={value}

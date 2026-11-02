@@ -1,4 +1,4 @@
-import React, { ReactElement, ReactNode, forwardRef } from "react";
+import React, { forwardRef, type ReactElement, type ReactNode } from "react";
 
 interface Props {
   icon?: ReactElement;

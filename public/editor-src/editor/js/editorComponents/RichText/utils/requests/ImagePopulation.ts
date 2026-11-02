@@ -1,5 +1,5 @@
 import { DCApiProxyInstance } from "visual/editorComponents/EditorComponent/DynamicContent/DCApiProxyInstance";
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import type { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 
 export const getImagePopulation = async (
   placeholder: string,

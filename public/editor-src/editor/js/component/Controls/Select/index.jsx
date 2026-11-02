@@ -75,7 +75,7 @@ class Select extends React.Component {
       if (child?.props) {
         const { items } = child.props;
 
-        if (items && items.length) {
+        if (items?.length) {
           childrenOptgroupCount += items.length;
         }
       }
@@ -204,7 +204,7 @@ class Select extends React.Component {
 
       const { items } = child.props;
 
-      if (items && items.length) {
+      if (items?.length) {
         const children = React.Children.toArray(child.props.items);
 
         selectedItem = children.find(
@@ -227,22 +227,22 @@ class Select extends React.Component {
   renderItems(children = this.props.children) {
     const { currentValue } = this.state;
 
-    return React.Children.map(children, (child, index) => {
+    return React.Children.map(children, (child) => {
       if (!child) {
         return null;
       }
 
       const { value, disabled, items } = child.props;
 
-      if (items && items.length) {
+      if (items?.length) {
         return React.cloneElement(child, {
-          key: index,
+          key: value,
           items: this.renderItems(items)
         });
       }
 
       return React.cloneElement(child, {
-        key: index,
+        key: value,
         active: value === currentValue,
         onClick: disabled ? null : () => this.handleItemClick(value)
       });
@@ -326,24 +326,20 @@ class Select extends React.Component {
         onClickOutside={this.onClickOutside}
       >
         {({ ref }) => (
-                <div
-                  className={className}
-                  ref={(node) => this.handleContentRef(node, ref)}
-                >
-                  <div
-                    className={`brz-control__select-current brz-control__select-current__${labelType}`}
-                    onClick={this.handleLabelClick}
-                  >
-                    {this.renderLabelForEdit()}
-                  </div>
-                  {this.renderDropdownForEdit()}
-                  <input
-                    type="hidden"
-                    value={currentValue}
-                    {...inputAttributes}
-                  />
-                </div>
-              )}
+          <div
+            className={className}
+            ref={(node) => this.handleContentRef(node, ref)}
+          >
+            <div
+              className={`brz-control__select-current brz-control__select-current__${labelType}`}
+              onClick={this.handleLabelClick}
+            >
+              {this.renderLabelForEdit()}
+            </div>
+            {this.renderDropdownForEdit()}
+            <input type="hidden" value={currentValue} {...inputAttributes} />
+          </div>
+        )}
       </ClickOutside>
     );
   }
@@ -396,7 +392,7 @@ class Select extends React.Component {
 
       const { items } = item.props;
 
-      if (items && items.length) {
+      if (items?.length) {
         selectedItem = this.findFirstItem(items);
       } else {
         selectedItem = item;

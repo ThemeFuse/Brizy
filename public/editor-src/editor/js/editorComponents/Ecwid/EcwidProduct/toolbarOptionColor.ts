@@ -9,7 +9,7 @@ import {
   optionColorSpacingCSS,
   optionColorTooltipSelector
 } from "./css";
-import { Value } from "./types/Value";
+import type { Value } from "./types/Value";
 
 export const getItems: GetItems<Value> = ({ v, device, state }) => {
   const dvv = (key: string) => defaultValueValue({ v, key, device, state });

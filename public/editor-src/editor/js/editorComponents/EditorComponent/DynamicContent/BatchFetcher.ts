@@ -1,6 +1,6 @@
-import { Dictionary } from "visual/types/utils";
-import { GetDynamicContent } from "visual/utils/api/types";
-import { DCApiProxyConfig, DCApiProxyFetcher, Options } from "./types";
+import type { Dictionary } from "visual/types/utils";
+import type { GetDynamicContent } from "visual/utils/api/types";
+import type { DCApiProxyConfig, DCApiProxyFetcher, Options } from "./types";
 
 export class BatchFetcher implements DCApiProxyFetcher {
   private readonly fetcher: GetDynamicContent;

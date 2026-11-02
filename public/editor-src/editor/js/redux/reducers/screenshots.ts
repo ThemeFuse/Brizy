@@ -1,14 +1,14 @@
 import { produce } from "immer";
-import {
+import type {
   ElementModel,
   ElementModelType2 as ElementModelType
 } from "visual/component/Elements/Types";
-import { ReduxState } from "visual/redux/types";
-import { Block } from "visual/types/Block";
-import { GlobalBlock } from "visual/types/GlobalBlock";
-import { Screenshot } from "visual/types/Screenshot";
+import type { ReduxState } from "visual/redux/types";
+import type { Block } from "visual/types/Block";
+import type { GlobalBlock } from "visual/types/GlobalBlock";
+import type { Screenshot } from "visual/types/Screenshot";
 import { objectTraverse2 } from "visual/utils/object";
-import { ActionTypes, ReduxAction } from "../actions2";
+import { ActionTypes, type ReduxAction } from "../actions2";
 
 interface ScreenshotModel extends ElementModel, Screenshot {
   _id: string;
@@ -21,7 +21,7 @@ interface ScreenshotModelType extends ElementModelType {
 const validateScreenshots = (
   obj: ScreenshotModelType | ElementModel | Block
 ): obj is ScreenshotModelType => {
-  return obj.type && obj.value && obj.value._id && obj.value._thumbnailSrc;
+  return obj.type && obj.value?._id && obj.value._thumbnailSrc;
 };
 
 const getScreenshot = <T extends GlobalBlock["meta"]>(

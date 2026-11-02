@@ -5,7 +5,7 @@ const nodeTypes = {
 export function getElementsByClassName(node, className) {
   const ret = [];
 
-  visitNode(node, node => {
+  visitNode(node, (node) => {
     if (node.nodeType === nodeTypes.ELEMENT_NODE) {
       if (hasClassName(node, className)) {
         ret.push(node);
@@ -19,7 +19,7 @@ export function getElementsByClassName(node, className) {
 export function getElementsByTagName(node, tagName) {
   const ret = [];
 
-  visitNode(node, node => {
+  visitNode(node, (node) => {
     if (node.nodeType === nodeTypes.ELEMENT_NODE) {
       if (node.tagName === tagName) {
         ret.push(node);
@@ -33,12 +33,12 @@ export function getElementsByTagName(node, tagName) {
 export function getElementsByAttribute(node, attributeName, attributeValue) {
   const ret = [];
 
-  visitNode(node, node => {
+  visitNode(node, (node) => {
     if (node.nodeType === nodeTypes.ELEMENT_NODE) {
       const nodeAttributes = Array.from(node.attributes);
       let nodeAdded = false;
 
-      nodeAttributes.forEach(attribute => {
+      nodeAttributes.forEach((attribute) => {
         if (
           !nodeAdded &&
           attribute.nodeName === attributeName &&
@@ -85,6 +85,7 @@ export function css(node, property, value) {
   const styleObj = {};
   {
     let match, property, value;
+    // biome-ignore lint/suspicious/noAssignInExpressions: regex exec iteration idiom - rewriting duplicates the exec call
     while ((match = regex.exec(style))) {
       [, property, value] = match;
 
@@ -102,6 +103,7 @@ export function closestByClassName(node, className) {
         return node;
       }
     }
+    // biome-ignore lint/suspicious/noAssignInExpressions: do/while parent walk - the body must run once before the first test, which a pre-test loop would change
   } while ((node = node.parentNode));
 
   return null;
@@ -130,11 +132,13 @@ function visitNode(node, callback) {
     return true;
   }
 
+  // biome-ignore lint/suspicious/noAssignInExpressions: DOM child/sibling walk idiom
   if ((node = node.firstChild)) {
     do {
       if (visitNode(node, callback)) {
         return true;
       }
+      // biome-ignore lint/suspicious/noAssignInExpressions: DOM child/sibling walk idiom
     } while ((node = node.nextSibling));
   }
 }

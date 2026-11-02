@@ -1,8 +1,8 @@
 import { isEditor } from "visual/providers/RenderProvider";
-import { DynamicStylesProps } from "visual/types";
+import type { DynamicStylesProps } from "visual/types";
 import { renderStyles } from "visual/utils/cssStyle";
-import { OutputStyle } from "visual/utils/cssStyle/types";
-import { Value } from ".";
+import type { OutputStyle } from "visual/utils/cssStyle/types";
+import type { Value } from ".";
 
 export function style(data: DynamicStylesProps<Value>): OutputStyle {
   const { renderContext } = data.contexts;

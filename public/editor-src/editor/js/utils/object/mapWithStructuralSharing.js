@@ -3,7 +3,7 @@ export function mapWithStructuralSharing(obj, cb) {
   const patched = cb(obj);
   let patch;
 
-  for (let key in obj) {
+  for (const key in obj) {
     if (!obj.hasOwnProperty(key)) continue;
 
     if (typeof obj[key] === "object" && obj[key] !== null) {

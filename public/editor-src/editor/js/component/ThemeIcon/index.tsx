@@ -1,13 +1,13 @@
 import cn from "classnames";
 import { uniqueId } from "es-toolkit/compat";
-import React, { useMemo } from "react";
+import React, { type ReactNode, useMemo } from "react";
 import { IconTypes } from "visual/config/icons/Type";
 import { useConfig } from "visual/providers/ConfigProvider";
 import { RenderFor } from "visual/providers/RenderProvider/RenderFor";
 import { makePlaceholder } from "visual/utils/dynamicContent";
 import { compileTemplateIconUrl, templateIconUrl } from "visual/utils/icons";
 import { CustomIcon } from "./Custom";
-import { ThemeIconProps as Props } from "./types";
+import type { ThemeIconProps as Props } from "./types";
 
 type Suffix = "nc_icon" | "brz_icon" | "fa_icon";
 
@@ -52,7 +52,7 @@ const Svg = ({
   );
 };
 
-const ThemeIconPreview = (props: Props): JSX.Element => {
+const ThemeIconPreview = (props: Props): ReactNode => {
   const { type, name, className: _className, filename, ariaLabel } = props;
 
   const config = useConfig();
@@ -75,12 +75,10 @@ const ThemeIconPreview = (props: Props): JSX.Element => {
   }
 
   return config?.urls?.compileTemplateIconsPlaceholder ? (
-    <>
-      {makePlaceholder({
-        content: config?.urls?.compileTemplateIconsPlaceholder,
-        attr: { type, name, class: className }
-      })}
-    </>
+    makePlaceholder({
+      content: config?.urls?.compileTemplateIconsPlaceholder,
+      attr: { type, name, class: className }
+    })
   ) : (
     <Svg
       className={className}

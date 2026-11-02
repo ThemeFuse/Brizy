@@ -79,7 +79,7 @@ class Brizy_Admin_Layouts_Api extends Brizy_Admin_AbstractApi
             }, $explode);
             $items = array_filter($items);
             if (count($items) == 0) {
-                $this->error(404, __('There are no layouts to be archived'));
+                $this->error(404, __('There are no layouts to be archived', 'brizy'));
             }
 
             $zipPath = "Layout-" . date(DATE_ATOM) . ".zip";

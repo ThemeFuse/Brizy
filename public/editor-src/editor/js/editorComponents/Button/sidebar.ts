@@ -7,7 +7,7 @@ import { defaultValueValue } from "visual/utils/onChange";
 import { getDynamicContentOption } from "visual/utils/options";
 import { buttonHoverEffects } from "visual/utils/options/Animation/utils";
 import { read as readString } from "visual/utils/string/specs";
-import { Props, Value } from "./types";
+import type { Props, Value } from "./types";
 import { isButtonFillHover } from "./utils";
 
 export const title = () => t("Button");

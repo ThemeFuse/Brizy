@@ -2,7 +2,10 @@ import {
   FlexHorizontalAligns,
   readHorizontalAlign
 } from "visual/utils/cssStyle";
-import { OptionStyle, OutputOptionStyle } from "visual/utils/cssStyle/types";
+import type {
+  OptionStyle,
+  OutputOptionStyle
+} from "visual/utils/cssStyle/types";
 import { optionColorWrapperSelector } from "./selectors";
 
 export * from "./selectors";

@@ -51,7 +51,7 @@ export default class BrizyFields extends Component<Props<Value>, State> {
     this.setState({ hex });
     if (hex.length < 6 || !color.isValidHex(hex)) return;
 
-    hex = hex[0] === "#" ? hex : "#" + hex;
+    hex = hex[0] === "#" ? hex : `#${hex}`;
     onChange({
       hex: hex.toLowerCase(),
       opacity,

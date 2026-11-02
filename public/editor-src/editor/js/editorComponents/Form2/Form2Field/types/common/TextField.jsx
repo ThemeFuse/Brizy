@@ -115,12 +115,12 @@ export default class TextField extends Component {
   handleClick = (e) => {
     e.preventDefault();
     const node = this.input.current;
-    node && node.classList.add("brz-ed-dd-cancel");
+    if (node) node.classList.add("brz-ed-dd-cancel");
   };
 
   handleBlur = () => {
     const node = this.input.current;
-    node && node.classList.remove("brz-ed-dd-cancel");
+    if (node) node.classList.remove("brz-ed-dd-cancel");
   };
 
   hanleInputChange = (v, e) => {

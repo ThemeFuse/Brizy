@@ -1,7 +1,7 @@
 import classnames from "classnames";
-import React, { ReactElement, useEffect } from "react";
+import React, { type ReactElement, useEffect } from "react";
 import Placeholder from "visual/component/Placeholder";
-import { DCApiProxy } from "visual/editorComponents/EditorComponent/DynamicContent/DCApiProxy";
+import type { DCApiProxy } from "visual/editorComponents/EditorComponent/DynamicContent/DCApiProxy";
 import { useDC } from "visual/editorComponents/EditorComponent/DynamicContent/useDC";
 import { isEditor, isView, useRender } from "visual/providers/RenderProvider";
 

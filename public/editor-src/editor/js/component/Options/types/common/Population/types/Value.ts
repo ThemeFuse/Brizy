@@ -1,5 +1,5 @@
-import { Literal } from "visual/utils/types/Literal";
-import { SimpleValue } from "visual/component/Options/Type";
+import type { SimpleValue } from "visual/component/Options/Type";
+import type { Literal } from "visual/utils/types/Literal";
 
 export type ElementModelValue = SimpleValue<Literal>;
 

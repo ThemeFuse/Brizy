@@ -2,7 +2,7 @@ import type { GetItems } from "visual/editorComponents/EditorComponent/types";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
 import { is } from "visual/utils/string/NoEmptyString";
-import { Props, Value } from "./index";
+import type { Props, Value } from "./index";
 
 const getVerticalLabel = () => {
   const verticalTranslate = is(t("Vertical")) ? t("Vertical") : "Vertical";

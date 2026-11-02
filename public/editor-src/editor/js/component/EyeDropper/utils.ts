@@ -1,4 +1,4 @@
-import { Coords, State, Type } from "./types";
+import { type Coords, type State, Type } from "./types";
 
 export const nodeClasses: { [k in State["type"]]: string[] } = {
   Idle: [],

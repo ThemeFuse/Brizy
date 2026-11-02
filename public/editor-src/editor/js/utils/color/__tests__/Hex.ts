@@ -1,9 +1,9 @@
 import {
-  is,
   fromString,
-  toLonghand,
+  is,
+  isShorthand,
   ShortHex,
-  isShorthand
+  toLonghand
 } from "visual/utils/color/Hex";
 
 describe("Testing 'is' function", function () {
@@ -46,7 +46,7 @@ describe("Testing if is a shorthand of hex color", () => {
     [undefined, false],
     [NaN, false],
     [[], false],
-    [{},false],
+    [{}, false],
     [123, false],
     ["asd", false],
     ["#FFFFFF", false],

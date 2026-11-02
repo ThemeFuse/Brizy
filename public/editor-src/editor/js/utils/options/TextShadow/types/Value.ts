@@ -1,8 +1,8 @@
-import { PaletteType } from "visual/types/Style";
-import { Hex } from "visual/utils/color/Hex";
+import type { PaletteType } from "visual/types/Style";
+import type { Hex } from "visual/utils/color/Hex";
 import { match } from "visual/utils/fp/match";
-import { NoEmptyBlur } from "./NoEmptyBlur";
-import { NoEmptyOpacity } from "./NoEmptyOpacity";
+import type { NoEmptyBlur } from "./NoEmptyBlur";
+import type { NoEmptyOpacity } from "./NoEmptyOpacity";
 
 // region Empty
 export interface Empty {
@@ -156,7 +156,7 @@ export const setHorizontal = (horizontal: number, value: Value): Value => {
   return match(
     [
       isEmpty,
-      (v): Value => (horizontal == 0 ? v : { ...fromEmpty(v), horizontal })
+      (v): Value => (horizontal === 0 ? v : { ...fromEmpty(v), horizontal })
     ],
     [isNoEmpty, (v): Value => ({ ...v, horizontal })]
   )(value);
@@ -166,7 +166,7 @@ export const setVertical = (vertical: number, value: Value): Value => {
   return match(
     [
       isEmpty,
-      (v): Value => (vertical == 0 ? v : { ...fromEmpty(v), vertical })
+      (v): Value => (vertical === 0 ? v : { ...fromEmpty(v), vertical })
     ],
     [isNoEmpty, (v): Value => ({ ...v, vertical })]
   )(value);

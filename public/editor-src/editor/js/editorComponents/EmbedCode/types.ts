@@ -1,9 +1,20 @@
 import type { ElementModel } from "visual/component/Elements/Types";
 import type { ComponentsMeta } from "visual/editorComponents/EditorComponent/types";
 
+export const consentCategories = [
+  "auto",
+  "preferences",
+  "statistics",
+  "marketing",
+  "other"
+] as const;
+
+export type ConsentCategory = (typeof consentCategories)[number];
+
 export interface Value extends ElementModel {
   code: string;
   customCSS: string;
+  consentCategory: ConsentCategory;
 }
 
 export interface Meta extends ComponentsMeta {

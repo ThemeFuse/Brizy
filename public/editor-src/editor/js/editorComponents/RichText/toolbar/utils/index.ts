@@ -1,17 +1,17 @@
 import { Obj, Str } from "@brizy/readers";
 import { produce } from "immer";
-import { Config } from "visual/global/Config";
-import { DeviceMode } from "visual/types";
+import type { Config } from "visual/global/Config";
+import type { DeviceMode } from "visual/types";
 import { hexToRgba, makeStylePaletteCSSVar } from "visual/utils/color";
 import { defaultValueKey } from "visual/utils/onChange";
 import { capByPrefix } from "visual/utils/string";
 import {
   ColorOption,
-  GradientBgValues,
-  GradientColorValues,
-  GradientValue,
-  HexToString,
-  Value
+  type GradientBgValues,
+  type GradientColorValues,
+  type GradientValue,
+  type HexToString,
+  type Value
 } from "../types";
 
 export enum TypographyTags {
@@ -195,22 +195,20 @@ export const colorValues = ({
 export const mergeTypographyFontFamily = (data: Record<string, unknown>) =>
   produce(data, (draft) => {
     if (Obj.hasKey("tabletTypographyFontFamily", data)) {
-      draft["typographyFontFamily"] = data["tabletTypographyFontFamily"];
-      delete draft["tabletTypographyFontFamily"];
+      draft.typographyFontFamily = data.tabletTypographyFontFamily;
+      delete draft.tabletTypographyFontFamily;
     }
     if (Obj.hasKey("tabletTypographyFontFamilyType", data)) {
-      draft["typographyFontFamilyType"] =
-        data["tabletTypographyFontFamilyType"];
-      delete draft["tabletTypographyFontFamilyType"];
+      draft.typographyFontFamilyType = data.tabletTypographyFontFamilyType;
+      delete draft.tabletTypographyFontFamilyType;
     }
 
     if (Obj.hasKey("mobileTypographyFontFamily", data)) {
-      draft["typographyFontFamily"] = data["mobileTypographyFontFamily"];
-      delete draft["mobileTypographyFontFamily"];
+      draft.typographyFontFamily = data.mobileTypographyFontFamily;
+      delete draft.mobileTypographyFontFamily;
     }
     if (Obj.hasKey("mobileTypographyFontFamilyType", data)) {
-      draft["typographyFontFamilyType"] =
-        data["mobileTypographyFontFamilyType"];
-      delete draft["mobileTypographyFontFamilyType"];
+      draft.typographyFontFamilyType = data.mobileTypographyFontFamilyType;
+      delete draft.mobileTypographyFontFamilyType;
     }
   });

@@ -1,4 +1,4 @@
-import { Tabs } from "visual/component/Prompts/common/PromptPage/types";
+import type { Tabs } from "visual/component/Prompts/common/PromptPage/types";
 
 export interface St {
   activeTab: Tabs;

@@ -1,26 +1,24 @@
+import { getFreeLibs } from "visual/libs";
 import { makeAttr } from "visual/utils/i18n/attribute";
 import { observe } from "./observer";
 import { animate } from "./utils.export";
 
-export default function ($node: JQuery): void {
-  const node = $node.get(0);
-
-  if (!node) {
-    return;
-  }
-
+export default function (node: HTMLElement): void {
   const isStory = node.querySelectorAll<HTMLElement>(".brz-story").length > 0;
 
   if (isStory) {
-    const $slider = $node.find(".brz-slick-slider");
+    const { onSlider } = getFreeLibs();
+    const countCurrentSlide = ({
+      slides,
+      currentSlide
+    }: {
+      slides: HTMLElement[];
+      currentSlide: number;
+    }) => {
+      const current = slides[currentSlide];
+      const counters = current?.querySelectorAll<HTMLElement>(".brz-counter");
 
-    $slider.on("afterChange init", (_, slick) => {
-      const { currentSlide, $slides } = slick;
-
-      const $currentSlide = $slides[currentSlide];
-      const counters = $currentSlide.querySelectorAll(".brz-counter");
-
-      if (counters.length) {
+      if (counters?.length) {
         counters.forEach((item: HTMLElement) => {
           animate({
             elem: item,
@@ -31,6 +29,11 @@ export default function ($node: JQuery): void {
           });
         });
       }
+    };
+
+    node.querySelectorAll(".brz-slick-slider").forEach((slider) => {
+      onSlider(slider, "afterChange", countCurrentSlide);
+      onSlider(slider, "init", countCurrentSlide);
     });
   } else {
     node.querySelectorAll<HTMLElement>(".brz-counter").forEach((element) => {

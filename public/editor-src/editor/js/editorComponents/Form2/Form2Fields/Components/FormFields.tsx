@@ -1,5 +1,5 @@
-import React, { CSSProperties } from "react";
-import { FCC } from "visual/utils/react/types";
+import React, { type CSSProperties } from "react";
+import type { FCC } from "visual/utils/react/types";
 
 interface Props {
   style?: CSSProperties;

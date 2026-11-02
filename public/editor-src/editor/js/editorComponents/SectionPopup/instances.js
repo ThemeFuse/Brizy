@@ -1,1 +1,1 @@
-export let SectionPopupInstances = new Map();
+export const SectionPopupInstances = new Map();

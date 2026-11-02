@@ -34,7 +34,7 @@ class AccordionItemItems extends EditorArrayComponent {
       value: "true"
     });
 
-    if (meta.row && meta.row.isInner) {
+    if (meta.row?.isInner) {
       if (from.elementType === "column" || from.elementType === "row") {
         return false;
       }
@@ -59,7 +59,7 @@ class AccordionItemItems extends EditorArrayComponent {
     return true;
   };
 
-  getItemProps(itemData, itemIndex) {
+  getItemProps(_itemData, itemIndex) {
     const cloneRemoveConfig = {
       getItems: () => [
         {

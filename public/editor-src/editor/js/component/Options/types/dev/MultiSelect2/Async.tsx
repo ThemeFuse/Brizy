@@ -1,6 +1,6 @@
 import { difference } from "es-toolkit";
 import React, {
-  ReactElement,
+  type ReactElement,
   useCallback,
   useEffect,
   useMemo,
@@ -12,9 +12,15 @@ import {
   MultiSelect as Control,
   MultiSelectItem as ControlItem
 } from "visual/component/Controls/MultiSelect2";
-import { MultiSelectItemProps as ControlItemProps } from "visual/component/Controls/MultiSelect2/types";
-import { OnChange } from "visual/component/Options/Type";
-import { ChoicesAsync, ChoicesSync, Props, Value, ValueItem } from "./types";
+import type { MultiSelectItemProps as ControlItemProps } from "visual/component/Controls/MultiSelect2/types";
+import type { OnChange } from "visual/component/Options/Type";
+import type {
+  ChoicesAsync,
+  ChoicesSync,
+  Props,
+  Value,
+  ValueItem
+} from "./types";
 import { mergeChoices, missingChoices } from "./utils";
 
 function useDebounce<T>(value: T, delay: number): T {

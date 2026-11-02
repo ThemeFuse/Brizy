@@ -1,8 +1,8 @@
-import {
+import { pipe, Str } from "@brizy/readers";
+import type {
   FromElementModel,
   ToElementModel
 } from "visual/component/Options/Type";
-import { pipe, Str } from "@brizy/readers";
 import { onNullish } from "visual/utils/value";
 
 export const defaultValue = {

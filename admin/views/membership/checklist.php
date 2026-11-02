@@ -9,7 +9,7 @@ $creating = isset( $_POST['createuser'] );
 $selected_roles = $creating && isset( $_POST['editor_multiple_roles'] ) ? wp_unslash( $_POST['editor_multiple_roles'] ) : '';
 ?>
 
-<div class="editor-checklist-roles" style="display:none;" data-label-text="<?php echo esc_attr( __( 'Roles' ) ); ?>">
+<div class="editor-checklist-roles" style="display:none;" data-label-text="<?php echo esc_attr( __( 'Roles', 'brizy' ) ); ?>">
 	<?php foreach( $roles as $name => $label ) : ?>
 		<label >
 			<input

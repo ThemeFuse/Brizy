@@ -1,15 +1,15 @@
 import { omit } from "es-toolkit";
-import { ChoicesAsync } from "visual/component/Options/types/dev/Select/types";
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
-import {
+import type { ChoicesAsync } from "visual/component/Options/types/dev/Select/types";
+import type { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import type {
   FormFieldsOption,
   Response
 } from "visual/global/Config/types/configs/common";
 import { t } from "visual/utils/i18n";
-import { Translation } from "visual/utils/i18n/t";
-import { MValue } from "visual/utils/value";
-import { InputType, InputTypeChoice, MatchTypeToNameProps } from "./type";
-import types, { FormInputTypesName } from "./types";
+import type { Translation } from "visual/utils/i18n/t";
+import type { MValue } from "visual/utils/value";
+import type { InputType, InputTypeChoice, MatchTypeToNameProps } from "./type";
+import types, { type FormInputTypesName } from "./types";
 
 export const getThirtyOptions = (
   fieldId: string,

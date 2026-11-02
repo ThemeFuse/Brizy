@@ -1,5 +1,5 @@
-import { CSSStyleFn } from "visual/utils/cssStyle/types";
-import { TypographyCssValue } from "visual/utils/options/Typography/types";
+import type { CSSStyleFn } from "visual/utils/cssStyle/types";
+import type { TypographyCssValue } from "visual/utils/options/Typography/types";
 import { readTextTransformValue } from "./utils";
 
 export const css: CSSStyleFn<"typography"> = ({

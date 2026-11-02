@@ -1,5 +1,5 @@
 import { isFunction } from "es-toolkit";
-import React, { ReactNode, forwardRef } from "react";
+import React, { forwardRef, type ReactNode } from "react";
 import { useConfig } from "../../providers/ConfigProvider";
 import { currentUserRole } from "./utils";
 
@@ -8,7 +8,7 @@ interface RolesHOCOptions<P extends object> {
   fallbackComponent?: React.ComponentType<P>;
   allow?: string[];
   render?: (props: P) => React.ReactNode;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  // biome-ignore lint/suspicious/noExplicitAny: migrated from eslint
   fallbackRender?: (props: any) => ReactNode;
 }
 

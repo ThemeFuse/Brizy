@@ -1,5 +1,5 @@
-import { ApiConnect, Account, Client, Fields, List, Done } from "../Step";
 import { BaseApp } from "../../common/GlobalApps/BaseApp";
+import { Account, ApiConnect, Client, Done, Fields, List } from "../Step";
 
 class CampaignMonitor extends BaseApp {
   static connect = ApiConnect;

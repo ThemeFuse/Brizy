@@ -1,7 +1,6 @@
-import React, { MutableRefObject, ReactElement } from "react";
-import { ElementModel } from "visual/component/Elements/Types";
-import Sortable from "visual/component/Sortable";
-import { SortableAttr } from "visual/component/Sortable";
+import React, { type MutableRefObject, type ReactElement } from "react";
+import type { ElementModel } from "visual/component/Elements/Types";
+import Sortable, { type SortableAttr } from "visual/component/Sortable";
 import SortableEmpty from "visual/component/Sortable/SortableEmpty";
 import { hideToolbar } from "visual/component/Toolbar";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
@@ -9,8 +8,8 @@ import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import { isView } from "visual/providers/RenderProvider";
 import { t } from "visual/utils/i18n";
 import { makeAttr } from "visual/utils/i18n/attribute";
-import { GetItems } from "../EditorComponent/types";
-import { ItemsProps, SortableAcceptElements } from "./types";
+import type { GetItems } from "../EditorComponent/types";
+import type { ItemsProps, SortableAcceptElements } from "./types";
 
 class ThirdPartyItems extends EditorArrayComponent {
   static get componentId() {

@@ -1,6 +1,10 @@
-import { Style } from "../Project/Style";
-import { Literal, Response } from "../common";
-import { BlocksArray, Categories, DefaultBlockWithID } from "../common/Block";
+import type { Literal, Response } from "../common";
+import type {
+  BlocksArray,
+  Categories,
+  DefaultBlockWithID
+} from "../common/Block";
+import type { Style } from "../Project/Style";
 
 interface TemplatePage {
   id: string;

@@ -1,34 +1,34 @@
-import { NonEmptyArray } from "visual/utils/array/types";
+import type { NonEmptyArray } from "visual/utils/array/types";
 import {
-  Def,
-  Dirty,
-  Optional,
-  ParseFunction,
-  ParserSource,
-  Pure,
-  Simple,
-  Strict,
   _or,
-  _parse
+  _parse,
+  type Def,
+  type Dirty,
+  type Optional,
+  type ParseFunction,
+  type ParserSource,
+  type Pure,
+  type Simple,
+  type Strict
 } from "./internals";
 
 // region Parser
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+// biome-ignore lint/suspicious/noExplicitAny: migrated from eslint
 export type PureParser<A, B extends Record<any, any> | undefined> = {
   [K in keyof B]: unknown extends B[K]
     ? Pure<A, B[K]>
     : undefined extends B[K]
-    ? Optional<Pure<A, B[K]>>
-    : Pure<A, B[K]>;
+      ? Optional<Pure<A, B[K]>>
+      : Pure<A, B[K]>;
 };
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+// biome-ignore lint/suspicious/noExplicitAny: migrated from eslint
 export type DirtyParser<A, B extends Record<any, any> | undefined> = {
   [K in keyof B]: unknown extends B[K]
     ? Simple<Dirty<A, B[K]>>
     : undefined extends B[K]
-    ? Def<Dirty<A, B[K]>>
-    : Dirty<A, B[K]>;
+      ? Def<Dirty<A, B[K]>>
+      : Dirty<A, B[K]>;
 };
 // endregion
 
@@ -69,16 +69,16 @@ export const strict = <A, B>(
  *  optional by specs and it is allowed to be undefined.
  *  - strict - even if the key is optional, user may want to stop parsing if current parser will return undefined
  */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+// biome-ignore lint/suspicious/noExplicitAny: migrated from eslint
 export function readWithParser<A, B extends Record<any, any> | undefined>(
   parsers: DirtyParser<A, B>
 ): (object: A) => B | undefined;
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+// biome-ignore lint/suspicious/noExplicitAny: migrated from eslint
 export function readWithParser<A, B extends Record<any, any> | undefined>(
   parsers: DirtyParser<A, B>,
   object: A
 ): B | undefined;
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+// biome-ignore lint/suspicious/noExplicitAny: migrated from eslint
 export function readWithParser<A, B extends Record<any, any> | undefined>(
   parsers: DirtyParser<A, B>,
   object?: A
@@ -114,36 +114,130 @@ export function readWithParser<A, B extends Record<any, any> | undefined>(
 export function or<A, B>(...args: [NonEmptyArray<Pure<A, B>>]): (v: A) => B;
 export function or<A, B>(...args: [NonEmptyArray<Pure<A, B>>, A]): B;
 // prettier-ignore
-export function or<A, B>(...args: [[ParseFunction<A, B>, Pure<A, B>]]): (v: A) => B;
+export function or<A, B>(
+  ...args: [[ParseFunction<A, B>, Pure<A, B>]]
+): (v: A) => B;
 // prettier-ignore
-export function or<A, B>(...args: [[ParseFunction<A, B>,ParseFunction<A, B>,  Pure<A, B>]]): (v: A) => B;
+export function or<A, B>(
+  ...args: [[ParseFunction<A, B>, ParseFunction<A, B>, Pure<A, B>]]
+): (v: A) => B;
 // prettier-ignore
-export function or<A, B>(...args: [[ParseFunction<A, B>,ParseFunction<A, B>, ParseFunction<A, B>,  Pure<A, B>]]): (v: A) => B;
+export function or<A, B>(
+  ...args: [
+    [ParseFunction<A, B>, ParseFunction<A, B>, ParseFunction<A, B>, Pure<A, B>]
+  ]
+): (v: A) => B;
 // prettier-ignore
-export function or<A, B>(...args: [[ParseFunction<A, B>,ParseFunction<A, B>, ParseFunction<A, B>, ParseFunction<A, B>,  Pure<A, B>]]): (v: A) => B;
+export function or<A, B>(
+  ...args: [
+    [
+      ParseFunction<A, B>,
+      ParseFunction<A, B>,
+      ParseFunction<A, B>,
+      ParseFunction<A, B>,
+      Pure<A, B>
+    ]
+  ]
+): (v: A) => B;
 // prettier-ignore
-export function or<A, B>(...args: [[ParseFunction<A, B>,ParseFunction<A, B>, ParseFunction<A, B>, ParseFunction<A, B>, ParseFunction<A, B>,  Pure<A, B>]]): (v: A) => B;
+export function or<A, B>(
+  ...args: [
+    [
+      ParseFunction<A, B>,
+      ParseFunction<A, B>,
+      ParseFunction<A, B>,
+      ParseFunction<A, B>,
+      ParseFunction<A, B>,
+      Pure<A, B>
+    ]
+  ]
+): (v: A) => B;
 // prettier-ignore
-export function or<A, B>(...args: [[ParseFunction<A, B>,ParseFunction<A, B>, ParseFunction<A, B>, ParseFunction<A, B>, ParseFunction<A, B>, ParseFunction<A, B>,  Pure<A, B>]]): (v: A) => B;
+export function or<A, B>(
+  ...args: [
+    [
+      ParseFunction<A, B>,
+      ParseFunction<A, B>,
+      ParseFunction<A, B>,
+      ParseFunction<A, B>,
+      ParseFunction<A, B>,
+      ParseFunction<A, B>,
+      Pure<A, B>
+    ]
+  ]
+): (v: A) => B;
 export function or<A, B>(...args: [[ParseFunction<A, B>, Pure<A, B>], A]): B;
 // prettier-ignore
-export function or<A, B>(...args: [[ParseFunction<A, B>, ParseFunction<A, B>, Pure<A, B>], A]): B;
+export function or<A, B>(
+  ...args: [[ParseFunction<A, B>, ParseFunction<A, B>, Pure<A, B>], A]
+): B;
 // prettier-ignore
-export function or<A, B>(...args: [[ParseFunction<A, B>, ParseFunction<A, B>, ParseFunction<A, B>, Pure<A, B>], A]): B;
+export function or<A, B>(
+  ...args: [
+    [ParseFunction<A, B>, ParseFunction<A, B>, ParseFunction<A, B>, Pure<A, B>],
+    A
+  ]
+): B;
 // prettier-ignore
-export function or<A, B>(...args: [[ParseFunction<A, B>, ParseFunction<A, B>, ParseFunction<A, B>, ParseFunction<A, B>, Pure<A, B>], A]): B;
+export function or<A, B>(
+  ...args: [
+    [
+      ParseFunction<A, B>,
+      ParseFunction<A, B>,
+      ParseFunction<A, B>,
+      ParseFunction<A, B>,
+      Pure<A, B>
+    ],
+    A
+  ]
+): B;
 // prettier-ignore
-export function or<A, B>(...args: [[ParseFunction<A, B>, ParseFunction<A, B>, ParseFunction<A, B>, ParseFunction<A, B>, ParseFunction<A, B>, Pure<A, B>], A]): B;
+export function or<A, B>(
+  ...args: [
+    [
+      ParseFunction<A, B>,
+      ParseFunction<A, B>,
+      ParseFunction<A, B>,
+      ParseFunction<A, B>,
+      ParseFunction<A, B>,
+      Pure<A, B>
+    ],
+    A
+  ]
+): B;
 // prettier-ignore
-export function or<A, B>(...args: [[ParseFunction<A, B>, ParseFunction<A, B>, ParseFunction<A, B>, ParseFunction<A, B>, ParseFunction<A, B>, ParseFunction<A, B>, Pure<A, B>], A]): B;
+export function or<A, B>(
+  ...args: [
+    [
+      ParseFunction<A, B>,
+      ParseFunction<A, B>,
+      ParseFunction<A, B>,
+      ParseFunction<A, B>,
+      ParseFunction<A, B>,
+      ParseFunction<A, B>,
+      Pure<A, B>
+    ],
+    A
+  ]
+): B;
 // prettier-ignore
-export function or<A, B>(...args: [NonEmptyArray<Pure<A, B>>] | [NonEmptyArray<Pure<A, B>>, A]): ((v: A) => B) | B;
+export function or<A, B>(
+  ...args: [NonEmptyArray<Pure<A, B>>] | [NonEmptyArray<Pure<A, B>>, A]
+): ((v: A) => B) | B;
 // prettier-ignore
-export function or<A, B>(...args: [NonEmptyArray<ParseFunction<A, B>>]): (v: A) => B | undefined;
+export function or<A, B>(
+  ...args: [NonEmptyArray<ParseFunction<A, B>>]
+): (v: A) => B | undefined;
 // prettier-ignore
-export function or<A, B>(...args: [NonEmptyArray<ParseFunction<A, B>>, A]): B | undefined;
+export function or<A, B>(
+  ...args: [NonEmptyArray<ParseFunction<A, B>>, A]
+): B | undefined;
 // prettier-ignore
-export function or<A, B>(...args: | [NonEmptyArray<ParseFunction<A, B>>] | [NonEmptyArray<ParseFunction<A, B>>, A]): ((v: A) => B | undefined) | B | undefined {
+export function or<A, B>(
+  ...args:
+    | [NonEmptyArray<ParseFunction<A, B>>]
+    | [NonEmptyArray<ParseFunction<A, B>>, A]
+): ((v: A) => B | undefined) | B | undefined {
   return args.length === 1
     ? (a: A): B | undefined => _or(args[0], a)
     : _or(args[0], args[1]);

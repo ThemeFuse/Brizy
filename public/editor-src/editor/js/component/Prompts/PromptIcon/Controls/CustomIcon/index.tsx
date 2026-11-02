@@ -1,7 +1,7 @@
 import { Num } from "@brizy/readers";
-import { Size } from "@brizy/ui/es/Card/utils";
-import { IconSetData } from "@brizy/ui/es/IconSet";
-import { Literal } from "@brizy/ui/es/types";
+import type { Size } from "@brizy/ui/es/Card/utils";
+import type { IconSetData } from "@brizy/ui/es/IconSet";
+import type { Literal } from "@brizy/ui/es/types";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { Align } from "visual/component/Brizy-ui/Align";
 import { Button } from "visual/component/Brizy-ui/Button";
@@ -13,7 +13,7 @@ import { IconTypes } from "visual/config/icons/Type";
 import { addCustomIcon, deleteCustomIcon } from "visual/utils/api";
 import { t } from "visual/utils/i18n";
 import { templateIconUrl } from "visual/utils/icons";
-import { Props } from "./types";
+import type { Props } from "./types";
 import { normalizeCustomIcons } from "./utils";
 
 const wrapperSize: Size = { custom: [0, 0] };
@@ -70,9 +70,11 @@ export const CustomIcon = ({
         await deleteCustomIcon(name, config.api);
         setIcons((icons) => icons.filter((icon) => icon.name !== name));
       } catch (e) {
-        typeof e === "string"
-          ? ToastNotification.error(e)
-          : ToastNotification.error(t("Failed to delete icon"));
+        if (typeof e === "string") {
+          ToastNotification.error(e);
+        } else {
+          ToastNotification.error(t("Failed to delete icon"));
+        }
       }
     },
     [_icons, config.api]
@@ -87,9 +89,11 @@ export const CustomIcon = ({
       const normalisedIcons = uploadedIcons.map(normalizeCustomIcons);
       setIcons((icons) => [...normalisedIcons, ...icons]);
     } catch (e) {
-      typeof e === "string"
-        ? ToastNotification.error(e)
-        : ToastNotification.error(t("Failed to upload icon"));
+      if (typeof e === "string") {
+        ToastNotification.error(e);
+      } else {
+        ToastNotification.error(t("Failed to upload icon"));
+      }
     }
   }, [config.api]);
 

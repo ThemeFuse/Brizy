@@ -1,6 +1,6 @@
 import Quill from "quill";
 
-let Parchment = Quill.import("parchment");
+const Parchment = Quill.import("parchment");
 
 class BlockColor extends Parchment.Attributor.Style {
   value(node) {
@@ -14,9 +14,9 @@ class BlockColor extends Parchment.Attributor.Style {
       "#" +
       value
         .split(",")
-        .map(function(component) {
-          return ("00" + parseInt(component, 10).toString(16)).slice(-2);
-        })
+        .map((component) =>
+          `00${parseInt(component, 10).toString(16)}`.slice(-2)
+        )
         .join("")
     );
   }

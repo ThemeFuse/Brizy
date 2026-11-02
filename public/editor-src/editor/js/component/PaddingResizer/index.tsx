@@ -1,12 +1,12 @@
 import React, { useCallback, useRef } from "react";
 import { useStore } from "react-redux";
 import { isView } from "visual/providers/RenderProvider";
-import { ReduxAction } from "visual/redux/actions2";
+import type { ReduxAction } from "visual/redux/actions2";
 import { deviceModeSelector } from "visual/redux/selectors";
-import { ReduxState } from "visual/redux/types";
-import { FCC } from "visual/utils/react/types";
+import type { ReduxState } from "visual/redux/types";
+import type { FCC } from "visual/utils/react/types";
 import Handle from "./Handle";
-import { DragInfo, Props, Value } from "./types";
+import type { DragInfo, Props, Value } from "./types";
 
 type ChangedTypes = keyof Omit<
   Value,
@@ -137,14 +137,12 @@ const PaddingResizer: FCC<Props> = (props) => {
   }
 
   let {
-    /* eslint-disable prefer-const */
     padding,
     tabletPadding,
     mobilePadding,
     paddingType,
     tabletPaddingType,
     mobilePaddingType,
-    /* eslint-enable prefer-const */
     paddingTop,
     paddingBottom,
     tabletPaddingTop,

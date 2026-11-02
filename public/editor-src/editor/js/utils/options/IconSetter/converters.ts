@@ -1,10 +1,10 @@
 import { mPipe, optional, orElse, parse, pass } from "fp-utilities";
-import {
+import type {
   FromElementModel,
   FromElementModelGetter,
   ToElementModel
 } from "visual/component/Options/Type";
-import {
+import type {
   Value,
   WithValue
 } from "visual/component/Options/types/dev/IconSetter/types/Value";

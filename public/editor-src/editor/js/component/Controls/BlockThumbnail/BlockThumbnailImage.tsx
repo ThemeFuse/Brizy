@@ -1,10 +1,16 @@
-import React, { JSX, useCallback, useEffect, useRef, useState } from "react";
+import React, {
+  type JSX,
+  useCallback,
+  useEffect,
+  useRef,
+  useState
+} from "react";
 import EditorIcon from "visual/component/EditorIcon";
-import { Block } from "visual/types/Block";
 import { useConfig } from "visual/providers/ConfigProvider";
+import type { Block } from "visual/types/Block";
 import { blockThumbnailData } from "visual/utils/blocks";
 import { preloadImage } from "visual/utils/image";
-import { ThumbnailImage } from "./types";
+import type { ThumbnailImage } from "./types";
 
 const MAX_THUMBNAIL_WIDTH = 132;
 
@@ -40,7 +46,7 @@ export const BlockThumbnailImage = ({
 
       return () => (canceled = true);
     },
-    [isUnmounted, setData, screenshot, config]
+    [screenshot, config]
   );
 
   useEffect(() => {

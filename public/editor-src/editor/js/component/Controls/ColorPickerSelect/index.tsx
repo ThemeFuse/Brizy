@@ -1,12 +1,12 @@
 import classNames from "classnames";
-import React, { ComponentProps, ReactElement } from "react";
-import { PaletteObject } from "visual/component/Controls/ColorPalette/entities/PaletteObject";
+import React, { type ComponentProps, type ReactElement } from "react";
+import type { PaletteObject } from "visual/component/Controls/ColorPalette/entities/PaletteObject";
 import { ColorPicker3 } from "visual/component/Controls/ColorPicker3";
 import { Select2 } from "visual/component/Controls/Select2";
-import { Props as ItemProps } from "visual/component/Controls/Select2/Item";
-import { WithClassName } from "visual/types/attributes";
-import { Literal } from "visual/utils/types/Literal";
-import { Meta, Value } from "./entities";
+import type { Props as ItemProps } from "visual/component/Controls/Select2/Item";
+import type { WithClassName } from "visual/types/attributes";
+import type { Literal } from "visual/utils/types/Literal";
+import type { Meta, Value } from "./entities";
 
 type C3Props = ComponentProps<typeof ColorPicker3>;
 type ItemType<T> = ReactElement<ItemProps<T>>;

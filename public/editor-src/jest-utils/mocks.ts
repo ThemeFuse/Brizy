@@ -1,5 +1,5 @@
-import { Action, createStore } from "redux";
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import { type Action, createStore } from "redux";
+import type { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 
 const __MOCKED_VISUAL_CONFIG__ = {
   urls: {
@@ -356,4 +356,4 @@ function reducer(state = initialState, action: Action) {
 // TODO: in future meybe we need to use store instance with structure like our real production store
 const store = createStore(reducer);
 
-export { store, __MOCKED_VISUAL_CONFIG__ as config, jestGetConfig };
+export { __MOCKED_VISUAL_CONFIG__ as config, jestGetConfig, store };

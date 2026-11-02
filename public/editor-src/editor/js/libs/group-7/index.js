@@ -1,5 +1,3 @@
-import jQuery from "jquery";
-
 /**
  * Monk Media Popup v.1 - a script to open window with videoplayer
  * (c) 2010 Adam Randlett : monkdevelopment.com
@@ -130,10 +128,3 @@ export const initEkklesiaPopups = (nodes) => {
 
   nodes.forEach((node) => doMediaEvents(node));
 };
-
-// In webpack.config is specific what jq is used
-// In WP jQuery is added automated with WordPress
-// In cloud jQuery is used from node_modules
-if (!window.jQuery) {
-  window.jQuery = jQuery;
-}

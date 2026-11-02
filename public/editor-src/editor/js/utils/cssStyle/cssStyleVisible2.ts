@@ -1,11 +1,11 @@
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import type { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import * as Arr from "visual/utils/array";
-import { Role, getMembershipRoles } from "visual/utils/membership";
+import { getMembershipRoles, type Role } from "visual/utils/membership";
 import {
-  Language,
-  getTranslationsLanguages
+  getTranslationsLanguages,
+  type Language
 } from "visual/utils/multilanguages";
-import { CSSValue } from "visual/utils/style2/types";
+import type { CSSValue } from "visual/utils/style2/types";
 
 type Value = {
   membership: "on" | "off";
@@ -52,11 +52,10 @@ const getRolesData = (
     roles
   );
 
-  const cssRoles =
-    otherRoles
-      .map((item) => `var(--role-${item}`)
-      .join(", ")
-      .replace(/\//g, "") + ",";
+  const cssRoles = `${otherRoles
+    .map((item) => `var(--role-${item}`)
+    .join(", ")
+    .replace(/\//g, "")},`;
 
   return {
     rolesCount: otherRoles.length,
@@ -86,11 +85,10 @@ const getLangsData = (
     langs
   );
 
-  const cssLangs =
-    otherLangs
-      .map((item) => `var(--lang-${item}`)
-      .join(", ")
-      .replace(/\//g, "") + ",";
+  const cssLangs = `${otherLangs
+    .map((item) => `var(--lang-${item}`)
+    .join(", ")
+    .replace(/\//g, "")},`;
 
   return {
     langsCount: otherLangs.length,

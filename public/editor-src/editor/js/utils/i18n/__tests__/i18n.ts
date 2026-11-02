@@ -1,5 +1,5 @@
-import { I18n } from "../I18n";
 import { makeAttr, makeDataAttr, makeDataAttrString } from "../attribute";
+import { I18n } from "../I18n";
 import { t } from "../t";
 
 describe("Testing 'translate' function", function () {

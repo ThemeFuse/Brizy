@@ -39,6 +39,7 @@ class ColumnResizer extends Component {
       if (index > 0) {
         acc.push(
           <span
+            // biome-ignore lint/suspicious/noArrayIndexKey: separators between positional width readouts; there is nothing but position to key on
             key={`${index}-divider`}
             className="brz-ed-draggable__column-popover__divider"
           >
@@ -49,6 +50,7 @@ class ColumnResizer extends Component {
 
       acc.push(
         <span
+          // biome-ignore lint/suspicious/noArrayIndexKey: width readouts are positional; equal widths are the normal case
           key={`${index}-value`}
           className="brz-ed-draggable__column-popover__percent"
         >

@@ -237,7 +237,8 @@ export enum ElementTypes {
   EcwidMyAccount = "EcwidMyAccount",
   EcwidFavorites = "EcwidFavorites",
 
-  ImageComparison = "ImageComparison"
+  ImageComparison = "ImageComparison",
+  CookieBanner = "CookieBanner"
 }
 
 export const MinistryBrandsGroups = [

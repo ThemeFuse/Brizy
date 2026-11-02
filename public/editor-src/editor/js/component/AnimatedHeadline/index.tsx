@@ -1,7 +1,7 @@
 import { forwardRef, useEffect, useRef } from "react";
 import { isHTMLElement } from "visual/utils/dom/isHTMLElement";
 import { Headline } from "./Headline";
-import { Settings } from "./types";
+import type { Settings } from "./types";
 
 export const AnimatedHeadline = forwardRef<HTMLDivElement, Settings>(
   (settings, wrapperRef) => {
@@ -9,7 +9,7 @@ export const AnimatedHeadline = forwardRef<HTMLDivElement, Settings>(
 
     useEffect(() => {
       const ref =
-        typeof wrapperRef == "function"
+        typeof wrapperRef === "function"
           ? wrapperRef(null)
           : wrapperRef?.current;
 

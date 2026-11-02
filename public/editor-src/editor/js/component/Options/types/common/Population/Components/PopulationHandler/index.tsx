@@ -1,12 +1,12 @@
-import React, { useCallback, useMemo } from "react";
 import cn from "classnames";
-import { Props } from "./types";
-import { t } from "visual/utils/i18n";
-import { ToastNotification } from "visual/component/Notifications";
+import React, { useCallback, useMemo } from "react";
 import { PopulationIcon } from "visual/component/Controls/Population/PopulationIcon";
-import { PopulationInput } from "../Input";
+import { ToastNotification } from "visual/component/Notifications";
 import Options from "visual/component/Options";
+import { t } from "visual/utils/i18n";
+import { PopulationInput } from "../Input";
 import { Select } from "./Components/Select";
+import type { Props } from "./types";
 
 const CHOICE_HANDLER = "CHOICE_HANDLER";
 const CUSTOM_TEXT = "CUSTOM_TEXT";

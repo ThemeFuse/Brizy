@@ -1,7 +1,7 @@
-import React, { JSX } from "react";
+import React, { type JSX } from "react";
 import { Icon } from "./Icon";
 import { Label } from "./Label";
-import { IconLabel as Props } from "./types";
+import type { IconLabel as Props } from "./types";
 
 export const IconLabel = ({
   icon,

@@ -1,4 +1,4 @@
-import React, { ReactElement } from "react";
+import React, { type ReactElement } from "react";
 import Select from "visual/component/Controls/Select";
 import { ItemAdd } from "./ItemAdd";
 import { ItemEdit } from "./ItemEdit";
@@ -24,9 +24,9 @@ export const Control = <T extends string>(props: Props<T>): ReactElement => {
       itemHeight="30"
       onChange={onChange}
     >
-      {choices.map((choice, index) => (
+      {choices.map((choice) => (
         <ItemEdit
-          key={index}
+          key={choice.item}
           value={choice.item}
           onDelete={choice.deletable ? onDelete : undefined}
           onEdit={

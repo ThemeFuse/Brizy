@@ -54,11 +54,11 @@ export default class CreateList extends Component {
     const choices = value
       ? _choices
       : [{ id: "", name: "Please Select Folder" }, ..._choices];
-    const options = choices.map((option, index) => {
+    const options = choices.map((option) => {
       const { id, name } = option;
 
       return (
-        <SelectItem key={index} value={id}>
+        <SelectItem key={id} value={id}>
           {name}
         </SelectItem>
       );
@@ -99,12 +99,12 @@ export default class CreateList extends Component {
   }
 
   renderApiKeys() {
-    const fields = this.props.listsCreate.map((key, index) => {
+    const fields = this.props.listsCreate.map((key) => {
       const { title, type } = key;
 
       return (
         <div
-          key={index}
+          key={title}
           className="brz-ed-popup-integrations-step__fields-option"
         >
           <p className="brz-p">{title}</p>

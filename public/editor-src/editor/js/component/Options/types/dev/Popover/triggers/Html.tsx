@@ -1,5 +1,5 @@
-import React, { ComponentProps } from "react";
 import classNames from "classnames";
+import React, { type ComponentProps } from "react";
 
 type Props = ComponentProps<"div"> & {
   content?: string;

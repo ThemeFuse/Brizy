@@ -1,5 +1,11 @@
 import classNames from "classnames";
-import React, { JSX, useCallback, useEffect, useRef, useState } from "react";
+import React, {
+  type JSX,
+  useCallback,
+  useEffect,
+  useRef,
+  useState
+} from "react";
 import { useDebouncedEffect } from "visual/component/hooks";
 
 export interface Props {

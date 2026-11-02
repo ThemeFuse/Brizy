@@ -1,8 +1,8 @@
 import { match } from "fp-utilities";
-import React, { ReactElement, useCallback, useRef, useState } from "react";
+import React, { type ReactElement, useCallback, useRef, useState } from "react";
 import EditorIcon from "visual/component/EditorIcon";
 import { ToastNotification } from "visual/component/Notifications";
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import type { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import {
   getExportBlockUrl,
   getSavedBlockById,
@@ -13,7 +13,7 @@ import { t } from "visual/utils/i18n";
 import { blockIsPro } from "visual/utils/traverse/blockIsPro";
 import { getContentType } from "visual/utils/url";
 import { isBlock, isLayout, isPopup } from "../common/utils";
-import { BlockTypes } from "../types";
+import type { BlockTypes } from "../types";
 
 export interface Props {
   id: string;
@@ -81,7 +81,7 @@ export const DownloadBlock = (props: Props): ReactElement => {
         showNotification(type);
       }
     }
-  }, [id, type, rootEl, config]);
+  }, [id, type, config]);
 
   const handleCheck = useCallback(() => {
     setSrc(undefined);

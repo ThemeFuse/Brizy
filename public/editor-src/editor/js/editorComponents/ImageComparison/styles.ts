@@ -1,7 +1,10 @@
-import { ElementModel, ElementProps } from "visual/component/Elements/Types";
-import { DynamicStylesProps } from "visual/types";
+import type {
+  ElementModel,
+  ElementProps
+} from "visual/component/Elements/Types";
+import type { DynamicStylesProps } from "visual/types";
 import { renderStyles } from "visual/utils/cssStyle";
-import { OutputStyle, Styles } from "visual/utils/cssStyle/types";
+import type { OutputStyle, Styles } from "visual/utils/cssStyle/types";
 
 interface Props extends DynamicStylesProps<ElementModel> {
   props: ElementProps;
@@ -55,10 +58,7 @@ export function style(data: Props): OutputStyle {
       standart: ["cssStyleBorderRadius|||preview"]
     },
     ".brz &&:hover .brz-picture:after": {
-      standart: [
-        "cssStyleBgColor|||preview",
-        "cssStyleBgGradient|||preview"
-      ]
+      standart: ["cssStyleBgColor|||preview", "cssStyleBgGradient|||preview"]
     },
     ".brz &&:hover .brz-picture": {
       standart: ["cssStyleElementImageFilter|||preview"]

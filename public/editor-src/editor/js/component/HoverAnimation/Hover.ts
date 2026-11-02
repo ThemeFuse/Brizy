@@ -1,5 +1,5 @@
 import { noop } from "es-toolkit";
-import { AnimationBase, AnimationMode } from "./types";
+import type { AnimationBase, AnimationMode } from "./types";
 
 /**
  * Return a single animation to the element's natural state as part of a hover

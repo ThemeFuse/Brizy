@@ -1,9 +1,9 @@
-import { Config } from "visual/global/Config";
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import type { Config } from "visual/global/Config";
+import type { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { fontsSelector } from "visual/redux/selectors";
-import { Store } from "visual/redux/store";
+import type { Store } from "visual/redux/store";
 import { toHashCode } from "visual/utils/string";
-import { Asset } from "../transforms/assets";
+import type { Asset } from "../transforms/assets";
 import { makePageFonts } from "../transforms/assets/makeStyles";
 import { OTHERS_SCORE } from "../transforms/assets/scores";
 import {

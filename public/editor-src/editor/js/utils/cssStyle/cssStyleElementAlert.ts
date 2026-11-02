@@ -1,4 +1,4 @@
-import { WithRenderContext } from "visual/providers/RenderProvider";
+import type { WithRenderContext } from "visual/providers/RenderProvider";
 import {
   cssStyleBoxShadow,
   cssStyleColor,
@@ -16,7 +16,7 @@ import {
 import { styleBgColor, styleColor } from "visual/utils/style2";
 import { readIconSize } from "visual/utils/types/Type";
 import { defaultValueValue } from "../onChange";
-import { CSSValue } from "../style2/types";
+import type { CSSValue } from "../style2/types";
 
 export function cssStyleAlertContainerShadow({
   v,

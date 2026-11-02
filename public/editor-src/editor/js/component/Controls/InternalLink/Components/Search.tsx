@@ -2,7 +2,7 @@ import classNames from "classnames";
 import React from "react";
 import EditorIcon from "visual/component/EditorIcon";
 import { t } from "visual/utils/i18n";
-import { SearchProps } from "./types";
+import type { SearchProps } from "./types";
 
 export const Search = ({ loading, onChange }: SearchProps): JSX.Element => {
   const spinnerClassName = classNames("brz-ed-control__internalLink__spinner", {

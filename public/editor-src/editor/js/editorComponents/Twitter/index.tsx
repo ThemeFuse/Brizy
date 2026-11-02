@@ -1,21 +1,21 @@
 import { TwitterFollowEditor } from "@brizy/component/src/Flex/TwitterFollowButton";
 import { TwitterMentionEditor } from "@brizy/component/src/Flex/TwitterMentionButton";
 import classnames from "classnames";
-import React, { ReactNode } from "react";
+import React, { type ReactNode } from "react";
 import ResizeAware from "react-resize-aware";
 import CustomCSS from "visual/component/CustomCSS";
 import Toolbar from "visual/component/Toolbar";
 import { BaseTwitter } from "visual/editorComponents/Twitter/Base";
-import { Patch } from "visual/utils/patch/types";
+import type { Patch } from "visual/utils/patch/types";
 import { attachRefs } from "visual/utils/react";
-import { Model } from "../EditorComponent/types";
-import { Meta } from "../ToolbarItemType";
+import type { Model } from "../EditorComponent/types";
+import type { Meta } from "../ToolbarItemType";
 import { Wrapper } from "../tools/Wrapper";
 import { DeprecatedTwitter } from "./Deprecated";
 import * as sidebarConfig from "./sidebar";
 import { style } from "./styles";
 import * as toolbarConfig from "./toolbar";
-import { TwitterOptions, Value } from "./types";
+import type { TwitterOptions, Value } from "./types";
 
 class Twitter extends BaseTwitter {
   componentWillUnmount(): void {

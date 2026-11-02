@@ -1,11 +1,11 @@
-import React, { ReactElement, useMemo } from "react";
+import React, { type ReactElement, useMemo } from "react";
 import EditorIcon from "visual/component/EditorIcon";
 import { useConfig } from "visual/providers/ConfigProvider";
-import { Block } from "visual/types/Block";
+import type { Block } from "visual/types/Block";
 import { blockThumbnailData } from "visual/utils/blocks";
 import { t } from "visual/utils/i18n";
 import { imageWrapperSize } from "visual/utils/image";
-import { FCC } from "visual/utils/react/types";
+import type { FCC } from "visual/utils/react/types";
 
 interface Props {
   block: Block;

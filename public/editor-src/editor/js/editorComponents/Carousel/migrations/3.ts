@@ -1,4 +1,4 @@
-import { Deps, Migration } from "visual/utils/migration";
+import type { Deps, Migration } from "visual/utils/migration";
 import * as Obj from "visual/utils/reader/object";
 import * as Str from "visual/utils/reader/string";
 import { ArrowStyle } from "../types";

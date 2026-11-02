@@ -1,11 +1,11 @@
-import { ElementModel } from "visual/component/Elements/Types";
+import type { ElementModel } from "visual/component/Elements/Types";
 import { ShopifyTemplate } from "visual/global/Config/types/shopify/ShopifyTemplate";
-import { Dictionary } from "visual/types/utils";
+import type { Dictionary } from "visual/types/utils";
 import * as Obj from "visual/utils/reader/object";
 import * as Union from "visual/utils/reader/union";
 import { ECWID_CATEGORY_TYPE, ECWID_PRODUCT_TYPE } from "../../ecwid";
 import { t } from "../../i18n";
-import {
+import type {
   CloudArchiveQuery,
   CloudPostsQuery,
   GetManualTitle,

@@ -3,7 +3,7 @@ export const read = (v) => {
     case "string":
       return v;
     case "number":
-      return isNaN(v) ? undefined : v.toString();
+      return Number.isNaN(v) ? undefined : v.toString();
     default:
       return undefined;
   }
@@ -17,10 +17,10 @@ const makeDataAttr = (name, value) => {
   return read(value) ? attribute : {};
 };
 
-(function (window, document) {
+((window, document) => {
   var loadingPromises = {};
 
-  window.brzExternalPopup = function (url) {
+  window.brzExternalPopup = (url) => {
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
       var hostDocument = document;
@@ -28,8 +28,8 @@ const makeDataAttr = (name, value) => {
 
       var isEditor = hostDocument.querySelector(".brz-ed");
 
-      if (this.readyState == 4 && this.status == 200) {
-        var parser = new DOMParser();
+      if (this.readyState === 4 && this.status === 200) {
+        const parser = new DOMParser();
         guestDocument = parser.parseFromString(xhttp.responseText, "text/html");
 
         appendFonts({})
@@ -37,19 +37,19 @@ const makeDataAttr = (name, value) => {
           .then(appendStyles)
           .then(appendHTML)
           .then(appendScripts)
-          .then(function (data) {
+          .then((data) => {
             if (data.html) {
-              window.Brz.emit("init.dom", window.jQuery(data.html));
+              window.Brz.emit("init.dom", data.html);
             }
           })
-          .catch(function (r) {
-            // eslint-disable-next-line no-console
+          .catch((r) => {
+            // biome-ignore lint/suspicious/noConsole: migrated from eslint
             console.log("Error", r);
           });
       }
 
       function appendFonts(data) {
-        var googleFonts = new Promise(function (res) {
+        var googleFonts = new Promise((res) => {
           var hostGoogleFonts = hostDocument.querySelector(
             "link.brz-link-google"
           );
@@ -63,11 +63,13 @@ const makeDataAttr = (name, value) => {
           }
 
           if (hostGoogleFonts && guestGoogleFonts) {
-            var guestGoogleFontsArr = _parseGoogleFonts(guestGoogleFonts.href);
-            var hostGoogleFontsArr = _parseGoogleFonts(hostGoogleFonts.href);
-            var diff = guestGoogleFontsArr.filter(function (font) {
-              return !_includes(hostGoogleFontsArr, font);
-            });
+            const guestGoogleFontsArr = _parseGoogleFonts(
+              guestGoogleFonts.href
+            );
+            const hostGoogleFontsArr = _parseGoogleFonts(hostGoogleFonts.href);
+            const diff = guestGoogleFontsArr.filter(
+              (font) => !_includes(hostGoogleFontsArr, font)
+            );
 
             if (diff.length) {
               hostGoogleFonts.href = setGoogleFontUrl(
@@ -80,7 +82,7 @@ const makeDataAttr = (name, value) => {
           res();
         });
 
-        var uploadFonts = new Promise(function (res) {
+        var uploadFonts = new Promise((res) => {
           var guestUploadFonts = guestDocument.querySelector(
             "link.brz-link-upload"
           );
@@ -93,9 +95,7 @@ const makeDataAttr = (name, value) => {
           }
         });
 
-        return Promise.all([googleFonts, uploadFonts]).then(function () {
-          return data;
-        });
+        return Promise.all([googleFonts, uploadFonts]).then(() => data);
       }
 
       function appendStylesheets(data) {
@@ -125,94 +125,89 @@ const makeDataAttr = (name, value) => {
 
         if (!isEditor) {
           if (guestLibCSS) {
-            var guestLibGroup = guestLibCSS.dataset.group || "";
-            var hostLibGroup = (hostLibCSS && hostLibCSS.dataset.group) || "";
+            const guestLibGroup = guestLibCSS.dataset.group || "";
+            const hostLibGroup = hostLibCSS?.dataset.group || "";
 
             if (
               !hostLibCSS ||
               (hostLibGroup !== "group-all" && guestLibGroup !== hostLibGroup)
             ) {
-              loadingPromises["hostLibCSS"] = new Promise(function (res) {
+              loadingPromises.hostLibCSS = new Promise((res) => {
                 guestLibCSS.onload = res;
                 hostDocument.head.appendChild(guestLibCSS);
               });
             } else {
-              if (!loadingPromises["hostLibCSS"]) {
-                loadingPromises["hostLibCSS"] = Promise.resolve();
+              if (!loadingPromises.hostLibCSS) {
+                loadingPromises.hostLibCSS = Promise.resolve();
               }
             }
 
-            promises.push(loadingPromises["hostLibCSS"]);
+            promises.push(loadingPromises.hostLibCSS);
           }
 
           if (guestLibProCSS) {
-            var guestLibProGroup = guestLibProCSS.dataset.group || "";
-            var hostLibProGroup =
-              (hostLibProCSS && hostLibProCSS.dataset.group) || "";
+            const guestLibProGroup = guestLibProCSS.dataset.group || "";
+            const hostLibProGroup = hostLibProCSS?.dataset.group || "";
 
             if (
               !hostLibProCSS ||
               (hostLibProGroup !== "group-all" &&
                 guestLibProGroup !== hostLibProGroup)
             ) {
-              loadingPromises["hostLibProCSS"] = new Promise(function (res) {
+              loadingPromises.hostLibProCSS = new Promise((res) => {
                 guestLibProCSS.onload = res;
                 hostDocument.head.appendChild(guestLibProCSS);
               });
             } else {
-              if (!loadingPromises["hostLibProCSS"]) {
-                loadingPromises["hostLibProCSS"] = Promise.resolve();
+              if (!loadingPromises.hostLibProCSS) {
+                loadingPromises.hostLibProCSS = Promise.resolve();
               }
             }
 
-            promises.push(loadingPromises["hostLibProCSS"]);
+            promises.push(loadingPromises.hostLibProCSS);
           }
 
           if (guestPreviewCSS) {
             if (!hostPreviewCSS && !hostPreviewProCSS) {
-              loadingPromises["hostPreviewCSS"] = new Promise(function (res) {
+              loadingPromises.hostPreviewCSS = new Promise((res) => {
                 guestPreviewCSS.onload = res;
                 hostDocument.head.appendChild(guestPreviewCSS);
               });
             } else {
-              if (!loadingPromises["hostPreviewCSS"]) {
-                loadingPromises["hostPreviewCSS"] = Promise.resolve();
+              if (!loadingPromises.hostPreviewCSS) {
+                loadingPromises.hostPreviewCSS = Promise.resolve();
               }
             }
 
-            promises.push(loadingPromises["hostPreviewCSS"]);
+            promises.push(loadingPromises.hostPreviewCSS);
           }
 
           if (guestPreviewProCSS) {
             if (!hostPreviewProCSS) {
-              loadingPromises["hostPreviewProCSS"] = new Promise(function (
-                res
-              ) {
+              loadingPromises.hostPreviewProCSS = new Promise((res) => {
                 guestPreviewProCSS.onload = res;
                 hostDocument.head.appendChild(guestPreviewProCSS);
               });
             } else {
-              if (!loadingPromises["hostPreviewProCSS"]) {
-                loadingPromises["hostPreviewProCSS"] = Promise.resolve();
+              if (!loadingPromises.hostPreviewProCSS) {
+                loadingPromises.hostPreviewProCSS = Promise.resolve();
               }
             }
 
-            promises.push(loadingPromises["hostPreviewProCSS"]);
+            promises.push(loadingPromises.hostPreviewProCSS);
           }
 
-          return Promise.all(promises).then(function () {
-            return data;
-          });
+          return Promise.all(promises).then(() => data);
         }
 
         return Promise.resolve(data);
       }
 
       function appendStyles(data) {
-        return new Promise(function (res) {
+        return new Promise((res) => {
           var styles = guestDocument.querySelectorAll("style.brz-style");
 
-          styles.forEach(function (style) {
+          styles.forEach((style) => {
             document.head.appendChild(style);
           });
 
@@ -221,7 +216,7 @@ const makeDataAttr = (name, value) => {
       }
 
       function appendHTML(data) {
-        return new Promise(function (res) {
+        return new Promise((res) => {
           var popup = guestDocument.body.querySelector(".brz-conditions-popup");
           var div;
 
@@ -230,9 +225,9 @@ const makeDataAttr = (name, value) => {
             div.classList.add("brz", "brz-external-popup-elem");
             div.appendChild(popup);
 
-            var embeds = div.querySelectorAll(".brz-embed-code script");
+            const embeds = div.querySelectorAll(".brz-embed-code script");
 
-            for (var i = 0; i < embeds.length; i++) {
+            for (let i = 0; i < embeds.length; i++) {
               overrideScripts(hostDocument, embeds[i]);
             }
             hostDocument.body.appendChild(div);
@@ -266,14 +261,14 @@ const makeDataAttr = (name, value) => {
         var promises = [];
 
         if (guestLibJS) {
-          var guestLibGroup = guestLibJS.dataset.group || "";
-          var hostLibGroup = (hostLibJS && hostLibJS.dataset.group) || "";
+          const guestLibGroup = guestLibJS.dataset.group || "";
+          const hostLibGroup = hostLibJS?.dataset.group || "";
 
           if (
             !hostLibJS ||
             (hostLibGroup !== "group-all" && hostLibGroup !== guestLibGroup)
           ) {
-            loadingPromises["hostLibJS"] = new Promise(function (res) {
+            loadingPromises.hostLibJS = new Promise((res) => {
               _appendScript(hostDocument, {
                 className: guestLibJS.className,
                 src: guestLibJS.src,
@@ -283,25 +278,24 @@ const makeDataAttr = (name, value) => {
               });
             });
           } else {
-            if (!loadingPromises["hostLibJS"]) {
-              loadingPromises["hostLibJS"] = Promise.resolve();
+            if (!loadingPromises.hostLibJS) {
+              loadingPromises.hostLibJS = Promise.resolve();
             }
           }
 
-          promises.push(loadingPromises["hostLibJS"]);
+          promises.push(loadingPromises.hostLibJS);
         }
 
         if (guestLibProJS) {
-          var guestLibProGroup = guestLibProJS.dataset.group || "";
-          var hostLibProGroup =
-            (hostLibProJS && hostLibProJS.dataset.group) || "";
+          const guestLibProGroup = guestLibProJS.dataset.group || "";
+          const hostLibProGroup = hostLibProJS?.dataset.group || "";
 
           if (
             !hostLibProJS ||
             (hostLibProGroup !== "group-all" &&
               guestLibProGroup !== hostLibProGroup)
           ) {
-            loadingPromises["hostLibProJS"] = new Promise(function (res) {
+            loadingPromises.hostLibProJS = new Promise((res) => {
               _appendScript(hostDocument, {
                 className: guestLibProJS.className,
                 src: guestLibProJS.src,
@@ -310,17 +304,17 @@ const makeDataAttr = (name, value) => {
               });
             });
           } else {
-            if (!loadingPromises["hostLibProJS"]) {
-              loadingPromises["hostLibProJS"] = Promise.resolve();
+            if (!loadingPromises.hostLibProJS) {
+              loadingPromises.hostLibProJS = Promise.resolve();
             }
           }
 
-          promises.push(loadingPromises["hostLibProJS"]);
+          promises.push(loadingPromises.hostLibProJS);
         }
 
         if (guestJS) {
           if (!hostJS && !hostProJS) {
-            loadingPromises["hostJS"] = new Promise(function (res) {
+            loadingPromises.hostJS = new Promise((res) => {
               _appendScript(hostDocument, {
                 className: guestJS.className,
                 src: guestJS.src,
@@ -329,17 +323,17 @@ const makeDataAttr = (name, value) => {
               });
             });
           } else {
-            if (!loadingPromises["hostJS"]) {
-              loadingPromises["hostJS"] = Promise.resolve();
+            if (!loadingPromises.hostJS) {
+              loadingPromises.hostJS = Promise.resolve();
             }
           }
 
-          promises.push(loadingPromises["hostJS"]);
+          promises.push(loadingPromises.hostJS);
         }
 
         if (guestProJS) {
           if (!hostProJS) {
-            loadingPromises["hostProJS"] = new Promise(function (res) {
+            loadingPromises.hostProJS = new Promise((res) => {
               _appendScript(hostDocument, {
                 className: guestProJS.className,
                 src: guestProJS.src,
@@ -348,17 +342,15 @@ const makeDataAttr = (name, value) => {
               });
             });
           } else {
-            if (!loadingPromises["hostProJS"]) {
-              loadingPromises["hostProJS"] = Promise.resolve();
+            if (!loadingPromises.hostProJS) {
+              loadingPromises.hostProJS = Promise.resolve();
             }
           }
 
-          promises.push(loadingPromises["hostProJS"]);
+          promises.push(loadingPromises.hostProJS);
         }
 
-        return Promise.all(promises).then(function () {
-          return data;
-        });
+        return Promise.all(promises).then(() => data);
       }
     };
 
@@ -381,7 +373,7 @@ const makeDataAttr = (name, value) => {
 
   function setGoogleFontUrl(fonts, url) {
     var parsedUrl = new URL(url);
-    parsedUrl.search = "family=" + fonts.join("|");
+    parsedUrl.search = `family=${fonts.join("|")}`;
 
     return parsedUrl.href;
   }
@@ -416,7 +408,10 @@ const makeDataAttr = (name, value) => {
     function sameValueZero(x, y) {
       return (
         x === y ||
-        (typeof x === "number" && typeof y === "number" && isNaN(x) && isNaN(y))
+        (typeof x === "number" &&
+          typeof y === "number" &&
+          Number.isNaN(x) &&
+          Number.isNaN(y))
       );
     }
 
@@ -438,7 +433,7 @@ const makeDataAttr = (name, value) => {
   function _appendScript(doc, attributes) {
     var script = doc.createElement("script");
 
-    Object.keys(attributes).forEach(function (attr) {
+    Object.keys(attributes).forEach((attr) => {
       script[attr] = attributes[attr];
     });
 
@@ -451,8 +446,8 @@ const makeDataAttr = (name, value) => {
 
     docScript.innerHTML = script.innerHTML;
 
-    for (var i = 0; i < attributes.length; i++) {
-      var attrs = attributes[i];
+    for (let i = 0; i < attributes.length; i++) {
+      const attrs = attributes[i];
       docScript.setAttribute(attrs.name, attrs.value);
     }
 

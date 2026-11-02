@@ -1,9 +1,9 @@
 import React from "react";
 import { Scrollbar } from "visual/component/Scrollbar";
 import { useConfig } from "visual/providers/ConfigProvider";
-import { Shortcodes } from "visual/types";
+import type { Shortcodes } from "visual/types";
 import { t } from "visual/utils/i18n";
-import { Control, Props } from "./Control";
+import { Control, type Props } from "./Control";
 
 interface Option {
   id: string;

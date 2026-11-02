@@ -54,6 +54,9 @@ rm -rf ./public/editor-src \
        ./vendor/bagrinsergiu/brizy-migration-utils/tests/ \
        ./Jenkinsfile \
        ./.gitignore \
+       ./.claude \
+       ./.cavekit \
+       ./context \
        ./.gitmodules \
        ./.git \
        ./composer.* \

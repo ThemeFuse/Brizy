@@ -1,24 +1,25 @@
 import { Num, Str } from "@brizy/readers";
 import { getIn } from "timm";
-import {
+import type {
   ElementModel,
   ElementModelType
 } from "visual/component/Elements/Types";
 import configRules from "visual/config/rules";
 import { attachMenu } from "visual/editorComponents/Page/utils/helpers/normalize";
-import {
+import type { Config } from "visual/global/Config";
+import type {
   ConfigCommon,
   MenuData
 } from "visual/global/Config/types/configs/ConfigCommon";
-import { EditorMode, isStory } from "visual/providers/EditorModeProvider";
+import { type EditorMode, isStory } from "visual/providers/EditorModeProvider";
 import { copiedElementNoRefsSelector } from "visual/redux/selectors";
-import { ReduxState } from "visual/redux/types";
-import { DeviceMode } from "visual/types";
+import type { ReduxState } from "visual/redux/types";
+import type { DeviceMode } from "visual/types";
 import { hexToRgba } from "visual/utils/color";
 import { detectOS } from "visual/utils/dom/detectOS";
 import { hasSomeKey } from "visual/utils/reader/object";
 import { capByPrefix } from "visual/utils/string";
-import { MValue } from "visual/utils/value";
+import type { MValue } from "visual/utils/value";
 import defaultValue from "../defaultValue.json";
 import {
   changeColor,
@@ -26,9 +27,8 @@ import {
   patchImagePopulation
 } from "../toolbar/color";
 import { ColorOption } from "../toolbar/types";
-import { Patch, patchTextTransform } from "./dependencies";
-import { Value } from "../types";
-import { Config } from "visual/global/Config";
+import type { Value } from "../types";
+import { type Patch, patchTextTransform } from "./dependencies";
 
 type CopiedElementRef = {
   path: string[];
@@ -44,7 +44,6 @@ type InnerElementType = {
   value: InnerValue;
 };
 
-
 type PatchValue = Partial<Value>;
 
 export const handleRenderText = (key: string[]) => () => {
@@ -58,7 +57,7 @@ export const getInnerElement = (
   state: ReduxState,
   menuData: MValue<MenuData[]>
 ): InnerElementType | null => {
-  let copiedElement;
+  let copiedElement: unknown;
   const { path, value } = copiedElementNoRefsSelector(
     state
   ) as unknown as CopiedElementRef;
@@ -80,12 +79,15 @@ const getStyles = (
   component: InnerElementType["value"],
   prefixes: string[]
 ) => {
-  return Object.entries(component).reduce((styles: InnerValue, [key, value]) => {
-    const hasPrefix = prefixes.some((prefix) => key.includes(prefix));
+  return Object.entries(component).reduce(
+    (styles: InnerValue, [key, value]) => {
+      const hasPrefix = prefixes.some((prefix) => key.includes(prefix));
 
-    if (hasPrefix) styles[key] = value;
-    return styles;
-  }, {});
+      if (hasPrefix) styles[key] = value;
+      return styles;
+    },
+    {}
+  );
 };
 
 const convertStylesFromDCToCustom = (dcValue: PatchValue, config: Config) => {
@@ -133,7 +135,11 @@ const patchDCValue = (values: PatchValue) => {
   };
 };
 
-const patchCustomValue = (values: PatchValue, v: Value, config: ConfigCommon) => {
+const patchCustomValue = (
+  values: PatchValue,
+  v: Value,
+  config: ConfigCommon
+) => {
   const {
     imageSrc = v.imageSrc,
     imageFileName = v.imageFileName,
@@ -260,7 +266,11 @@ export const handlePasteStyles = ({
       );
     }
 
-    const customValues = patchCustomValue(extraStyles, v as Value, config) as PatchValue;
+    const customValues = patchCustomValue(
+      extraStyles,
+      v as Value,
+      config
+    ) as PatchValue;
     onChange(customValues);
   }
 };

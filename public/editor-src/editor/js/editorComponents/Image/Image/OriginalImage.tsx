@@ -3,7 +3,7 @@ import React from "react";
 import { SizeType } from "visual/global/Config/types/configs/common";
 import { useConfig } from "visual/providers/ConfigProvider";
 import { getImageUrl } from "visual/utils/image";
-import { ImageProps, V } from "../types";
+import type { ImageProps, V } from "../types";
 import { showOriginalImage } from "../utils";
 
 interface Props {

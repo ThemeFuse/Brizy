@@ -3,7 +3,7 @@ import type {
   OptionName,
   OptionValue
 } from "visual/component/Options/types";
-import { MValue } from "visual/utils/value";
+import type { MValue } from "visual/utils/value";
 import { toMeta } from ".";
 
 export const getOptionMeta = <T extends OptionName>(

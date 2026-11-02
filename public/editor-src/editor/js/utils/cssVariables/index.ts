@@ -1,4 +1,4 @@
-import { Theme } from "visual/global/Config/types/configs/ConfigCommon";
+import type { Theme } from "visual/global/Config/types/configs/ConfigCommon";
 
 export const makeVariablesColor = (colors: Theme["colors"]) => {
   if (Object.keys(colors).length > 0) {

@@ -1,10 +1,10 @@
+import { Str } from "@brizy/readers";
 import type { GetItems } from "visual/editorComponents/EditorComponent/types";
 import {
   isViewType,
   isViewTypeWithIcon
 } from "visual/editorComponents/Form2/utils";
 import { t } from "visual/utils/i18n";
-import { Str } from "@brizy/readers";
 import type { Props, Value } from "./types";
 
 export const getItems: GetItems<Value, Props> = ({ component }) => {

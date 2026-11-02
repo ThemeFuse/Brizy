@@ -1,6 +1,6 @@
-import React, { JSX } from "react";
+import React, { type JSX } from "react";
 import EditorIcon from "visual/component/EditorIcon";
-import { ThumbnailLabelProps } from "./types";
+import type { ThumbnailLabelProps } from "./types";
 
 export const BlockThumbnailLabel = ({
   label,

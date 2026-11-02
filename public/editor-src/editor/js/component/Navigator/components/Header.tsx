@@ -1,6 +1,6 @@
-import { DraggableAttributes } from "@dnd-kit/core";
+import type { DraggableAttributes } from "@dnd-kit/core";
 import classNames from "classnames";
-import React, { FC, memo } from "react";
+import React, { type FC, memo } from "react";
 import EditorIcon from "visual/component/EditorIcon";
 import { useTranslation } from "visual/providers/I18nProvider";
 import { useTreeContext } from "visual/providers/TreeProvider";

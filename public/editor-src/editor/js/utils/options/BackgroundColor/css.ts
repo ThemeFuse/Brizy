@@ -1,5 +1,5 @@
 import { getColor } from "visual/utils/color";
-import { CSSStyleFn } from "visual/utils/cssStyle/types";
+import type { CSSStyleFn } from "visual/utils/cssStyle/types";
 import { normalizeGradientStops } from "visual/utils/style2/styleBgGradient";
 import { styleAnimatedGradient } from "visual/utils/style2/utils";
 

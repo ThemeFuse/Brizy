@@ -1,4 +1,4 @@
-import { Action, ActionKind, State } from "./types";
+import { type Action, ActionKind, type State } from "./types";
 
 export function reducer(_state: State, action: Action) {
   const { type, error } = action;

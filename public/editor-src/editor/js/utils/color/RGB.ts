@@ -1,5 +1,5 @@
-import { isNullish, MValue } from "visual/utils/value";
 import { isHex } from "visual/utils/color";
+import { isNullish, type MValue } from "visual/utils/value";
 
 export interface RGB {
   r: number;

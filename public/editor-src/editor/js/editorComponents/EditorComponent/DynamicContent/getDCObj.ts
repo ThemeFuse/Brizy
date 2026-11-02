@@ -1,9 +1,9 @@
-import { EditorComponentContextValue } from "visual/editorComponents/EditorComponent/EditorComponentContext";
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
-import { Dictionary } from "visual/types/utils";
+import type { EditorComponentContextValue } from "visual/editorComponents/EditorComponent/EditorComponentContext";
+import type { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import type { Dictionary } from "visual/types/utils";
 import { makePlaceholder } from "visual/utils/dynamicContent";
-import { ECKeyDCInfo } from "../types";
-import { DCApiProxy } from "./DCApiProxy";
+import type { ECKeyDCInfo } from "../types";
+import type { DCApiProxy } from "./DCApiProxy";
 import { DCApiProxyInstance } from "./DCApiProxyInstance";
 import { placeholderObjFromECKeyDCInfo } from "./utils";
 

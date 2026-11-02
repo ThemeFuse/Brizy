@@ -3,8 +3,8 @@
  * UI components use usePluginRegistry() to read slot contributions.
  */
 import React, {
-  type ReactNode,
   createContext,
+  type ReactNode,
   useContext,
   useMemo
 } from "react";

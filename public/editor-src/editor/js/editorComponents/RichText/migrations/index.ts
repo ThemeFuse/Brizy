@@ -1,4 +1,4 @@
-import { MigrationRichText } from "./types";
+import type { MigrationRichText } from "./types";
 import { m2 } from "./version2";
 import { m3 } from "./version3";
 

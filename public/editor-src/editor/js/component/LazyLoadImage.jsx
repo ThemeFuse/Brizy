@@ -3,7 +3,7 @@ import React, { Component } from "react";
 import EditorIcon from "visual/component/EditorIcon";
 import { preloadImage } from "visual/utils/image";
 
-let observerInstances = new Map();
+const observerInstances = new Map();
 let observer = null;
 
 export default class LazyLoadImage extends Component {
@@ -111,13 +111,10 @@ export default class LazyLoadImage extends Component {
             <EditorIcon icon="nc-circle-02" className="brz-ed-animated--spin" />
           </div>
         )}
+        {/* alt is empty on purpose: callers render this inside a labelled,
+            clickable container and have no name to pass through */}
         {imageFetched && (
-          <img
-            className="brz-img"
-            style={style}
-            src={src}
-            alt="lazyLoad Image"
-          />
+          <img className="brz-img" style={style} src={src} alt="" />
         )}
       </div>
     );

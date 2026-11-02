@@ -2,8 +2,8 @@ import type { ElementModelType2 } from "visual/component/Elements/Types";
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import type { Block } from "visual/types/Block";
 import {
-  type DuplicateElementInBlockResult,
   correctContainerForElement,
+  type DuplicateElementInBlockResult,
   duplicateElementInBlock,
   removeElementFromBlock
 } from "../element";
@@ -238,13 +238,7 @@ describe("correctContainerForElement", () => {
       expect(result.success).toBe(true);
       if (result.success) {
         expect(result.container).toBe(timeline);
-        expect(result.path).toEqual([
-          "some",
-          "path",
-          "value",
-          "items",
-          "0"
-        ]);
+        expect(result.path).toEqual(["some", "path", "value", "items", "0"]);
       }
     });
 
@@ -274,13 +268,7 @@ describe("correctContainerForElement", () => {
       expect(result.success).toBe(true);
       if (result.success) {
         expect(result.container).toBe(column);
-        expect(result.path).toEqual([
-          "some",
-          "path",
-          "value",
-          "items",
-          "0"
-        ]);
+        expect(result.path).toEqual(["some", "path", "value", "items", "0"]);
       }
     });
 
@@ -404,13 +392,7 @@ describe("correctContainerForElement", () => {
       expect(result.success).toBe(true);
       if (result.success) {
         expect(result.container).toBe(switcherTab);
-        expect(result.path).toEqual([
-          "some",
-          "path",
-          "value",
-          "items",
-          "0"
-        ]);
+        expect(result.path).toEqual(["some", "path", "value", "items", "0"]);
       }
     });
   });
@@ -442,6 +424,28 @@ describe("correctContainerForElement", () => {
       expect(result.success).toBe(false);
       if (!result.success) {
         expect(result.error).toContain("maximum 2 children");
+      }
+    });
+
+    // Without maxChildren a clone gives [field, field, field, button] and the
+    // button slice items[2,3) renders the cloned field instead.
+    it("should reject a third field in a ResetPassword (maxChildren: 3)", () => {
+      const field1 = createMockElement(ElementTypes.ResetPasswordField);
+      const field2 = createMockElement(ElementTypes.ResetPasswordField);
+      const button = createMockElement(ElementTypes.Button);
+      const form = createMockElement(ElementTypes.ResetPassword, [
+        field1,
+        field2,
+        button
+      ]);
+      const result = correctContainerForElement(
+        form,
+        ["some", "path"],
+        ElementTypes.ResetPasswordField
+      );
+      expect(result.success).toBe(false);
+      if (!result.success) {
+        expect(result.error).toContain("maximum 3 children");
       }
     });
 
@@ -539,34 +543,29 @@ describe("correctContainerForElement", () => {
       { name: "Cloneable", elementType: ElementTypes.Cloneable },
       { name: "Button", elementType: ElementTypes.Button },
       { name: "Icon", elementType: ElementTypes.Icon }
-    ])(
-      "should reject $name inside Wrapper (forbidden)",
-      ({ elementType }) => {
-        const child = createMockElement(ElementTypes.Column);
-        const wrapperWithChild = createMockElement(ElementTypes.Wrapper, [
-          child
-        ]);
+    ])("should reject $name inside Wrapper (forbidden)", ({ elementType }) => {
+      const child = createMockElement(ElementTypes.Column);
+      const wrapperWithChild = createMockElement(ElementTypes.Wrapper, [child]);
 
-        // Wrapper has no allowOnly, so redirect always applies —
-        // these elements land in the Column (Wrapper's child) after redirect.
-        const result = correctContainerForElement(
-          wrapperWithChild,
-          ["some", "path"],
-          elementType
-        );
+      // Wrapper has no allowOnly, so redirect always applies —
+      // these elements land in the Column (Wrapper's child) after redirect.
+      const result = correctContainerForElement(
+        wrapperWithChild,
+        ["some", "path"],
+        elementType
+      );
 
-        // Column requires Row as parent, so Column inside Column fails
-        if (elementType === ElementTypes.Column) {
-          expect(result.success).toBe(false);
-          if (!result.success) {
-            expect(result.error).toContain("ONLY be added inside a Row");
-          }
-        } else {
-          // Other forbidden elements pass because Column has no restrictions
-          expect(result.success).toBe(true);
+      // Column requires Row as parent, so Column inside Column fails
+      if (elementType === ElementTypes.Column) {
+        expect(result.success).toBe(false);
+        if (!result.success) {
+          expect(result.error).toContain("ONLY be added inside a Row");
         }
+      } else {
+        // Other forbidden elements pass because Column has no restrictions
+        expect(result.success).toBe(true);
       }
-    );
+    });
   });
 
   describe("Chained Redirects", () => {
@@ -616,13 +615,7 @@ describe("correctContainerForElement", () => {
         // Only Section → SectionItem redirect (Step 1)
         // SectionItem is not a Row, so Step 2 doesn't apply
         expect(result.container).toBe(sectionItem);
-        expect(result.path).toEqual([
-          "blocks",
-          "0",
-          "value",
-          "items",
-          "0"
-        ]);
+        expect(result.path).toEqual(["blocks", "0", "value", "items", "0"]);
       }
     });
 
@@ -718,7 +711,6 @@ describe("correctContainerForElement", () => {
     });
   });
 });
-
 
 describe("removeElementFromBlock", () => {
   // Helper to create a block structure
@@ -1118,6 +1110,31 @@ describe("removeElementFromBlock", () => {
       if (result?.success) {
         const timelineItems = result.updatedBlock.value.items[0].value.items;
         expect(timelineItems).toHaveLength(1);
+      }
+    });
+
+    // ResetPassword reads items positionally — [0,2) fields, [2,3) submit
+    // button. Losing one silently reassigns the roles of the rest.
+    it("should reject removing the submit Button from ResetPassword (minChildren: 3)", () => {
+      const field1 = createMockElement(ElementTypes.ResetPasswordField);
+      const field2 = createMockElement(ElementTypes.ResetPasswordField);
+      const button = createMockElement(ElementTypes.Button);
+      const form = {
+        type: ElementTypes.ResetPassword,
+        value: { _id: "rp-1", items: [field1, field2, button] }
+      } as ElementModelType2;
+      const block = createBlock([form]);
+
+      const result = removeElementFromBlock(
+        block,
+        ["value", "items", "0", "value", "items", "2"],
+        button.value._id as string
+      );
+
+      expect(result).toBeDefined();
+      expect(result?.success).toBe(false);
+      if (result && !result.success) {
+        expect(result.error).toContain("at least 3");
       }
     });
 

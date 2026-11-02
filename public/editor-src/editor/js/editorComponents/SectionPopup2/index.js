@@ -1,4 +1,5 @@
 import classnames from "classnames";
+import { noop } from "es-toolkit";
 import React from "react";
 import ReactDOM from "react-dom";
 import Background from "visual/component/Background";
@@ -7,8 +8,7 @@ import { ContextMenuDisabled } from "visual/component/ContextMenu";
 import CustomCSS from "visual/component/CustomCSS";
 import EditorIcon from "visual/component/EditorIcon";
 import HotKeys from "visual/component/HotKeys";
-import { Roles } from "visual/component/Roles";
-import { currentUserRole } from "visual/component/Roles";
+import { currentUserRole, Roles } from "visual/component/Roles";
 import { SortableZIndex } from "visual/component/Sortable/SortableZIndex";
 import { ThemeIcon } from "visual/component/ThemeIcon";
 import Toolbar, {
@@ -53,8 +53,8 @@ export const SectionPopup2Instances = Instances;
 class SectionPopup2 extends EditorComponent {
   static defaultProps = {
     meta: {},
-    onOpen: () => {},
-    onClose: () => {}
+    onOpen: noop,
+    onClose: noop
   };
   static defaultValue = defaultValue;
   static experimentalDynamicContent = true;
@@ -76,7 +76,7 @@ class SectionPopup2 extends EditorComponent {
 
       this.state = { isOpened };
 
-      isOpened && document.documentElement.classList.add("brz-ow-hidden");
+      if (isOpened) document.documentElement.classList.add("brz-ow-hidden");
       SectionPopup2.tmpGlobal = null;
 
       this.popupsContainer = document.getElementById("brz-popups");
@@ -328,7 +328,7 @@ class SectionPopup2 extends EditorComponent {
     const scrollPageBehind = popupSettings.scrollPageBehind;
     const clickOutside = popupSettings.clickOutsideToClose;
 
-    let attr = {};
+    const attr = {};
     if (scrollPage === "on" && scrollPageBehind === true) {
       attr[makeAttr("scroll_page")] = "true";
     }
@@ -386,6 +386,7 @@ class SectionPopup2 extends EditorComponent {
               >
                 {!isGlobal && (
                   <button
+                    type="button"
                     className="brz-button brz-popup2__button-go-to-editor"
                     onClick={this.handleDropClick}
                   >
@@ -447,7 +448,7 @@ class SectionPopup2 extends EditorComponent {
     const scrollPageBehind = popupSettings.scrollPageBehind;
     const clickOutside = popupSettings.clickOutsideToClose;
 
-    let attr = {};
+    const attr = {};
     if (scrollPage === "on" && scrollPageBehind === true) {
       attr[makeAttr("scroll_page")] = "true";
     }

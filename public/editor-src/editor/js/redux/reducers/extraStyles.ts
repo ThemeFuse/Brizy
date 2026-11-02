@@ -1,6 +1,6 @@
 import { produce } from "immer";
-import { ActionTypes, ReduxAction } from "visual/redux/actions2";
-import { ReduxState } from "visual/redux/types";
+import { ActionTypes, type ReduxAction } from "visual/redux/actions2";
+import type { ReduxState } from "visual/redux/types";
 
 type ExtraStyles = ReduxState["extraStyles"];
 type RExtraStyles = (

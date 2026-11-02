@@ -54,7 +54,8 @@
     "enableCustomHtml": "off",
     "customHtml": "",
 
-    "phoneDefaultCountry": "US"
+    "phoneDefaultCountry": "US",
+    "phoneShowDialCode": "off"
   },
 
   "style": {

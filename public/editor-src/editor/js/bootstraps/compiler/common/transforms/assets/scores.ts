@@ -1,3 +1,6 @@
+// lowest score: must render/run before every other emitted script
+export const CONSENT_BLOCKER_SCORE = 5;
+
 export const DEPENDENCY_SCORE = 10;
 export const CRITICAL_SCORE = 15;
 export const LIBS_SCORE = 20;

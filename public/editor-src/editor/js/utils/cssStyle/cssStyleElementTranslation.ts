@@ -1,6 +1,6 @@
 import { defaultValueValue } from "visual/utils/onChange";
 import { styleColor } from "../style2";
-import { CSSValue } from "../style2/types";
+import type { CSSValue } from "../style2/types";
 import { cssStyleFlexHorizontalAlign } from "./cssStyleAlign";
 import { cssStyleBgColor } from "./cssStyleBgColor";
 import { cssStyleBorder } from "./cssStyleBorder";

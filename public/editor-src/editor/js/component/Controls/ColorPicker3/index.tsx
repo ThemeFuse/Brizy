@@ -1,9 +1,9 @@
 import classNames from "classnames";
 import React from "react";
 import { ColorPalette } from "visual/component/Controls/ColorPalette";
-import { PaletteObject } from "visual/component/Controls/ColorPalette/entities/PaletteObject";
+import type { PaletteObject } from "visual/component/Controls/ColorPalette/entities/PaletteObject";
 import ColorPicker2 from "visual/component/Controls/ColorPicker2";
-import { WithClassName, WithValue } from "visual/types/attributes";
+import type { WithClassName, WithValue } from "visual/types/attributes";
 
 export const paletteHex = (
   id: PaletteObject["id"],

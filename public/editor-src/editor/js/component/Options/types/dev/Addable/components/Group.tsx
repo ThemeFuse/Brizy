@@ -1,11 +1,11 @@
 import classNames from "classnames";
 import React, { forwardRef, useCallback } from "react";
 import EditorIcon from "visual/component/EditorIcon";
-import Option from "visual/component/Options/Option";
 import { useDebouncedOnChange } from "visual/component/hooks";
+import Option from "visual/component/Options/Option";
 import { usePro } from "visual/global/hooks";
 import { useConfig } from "visual/providers/ConfigProvider";
-import {
+import type {
   GroupBodyProps,
   GroupHeadProps,
   GroupProps,
@@ -101,6 +101,7 @@ function GroupBody(props: GroupBodyProps) {
     <div className="brz-ed-addable__group__body">
       {options.map((option, index) => (
         <Option
+          // biome-ignore lint/suspicious/noArrayIndexKey: option definitions render in a fixed order and OptionDefinition.id is optional
           key={index}
           data={option}
           toolbar={toolbar}

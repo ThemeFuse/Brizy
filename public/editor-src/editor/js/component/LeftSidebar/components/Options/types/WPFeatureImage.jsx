@@ -97,7 +97,7 @@ export default class WPFeatureImage extends React.Component {
       );
     }
 
-    if (this.props.meta && this.props.meta.popover) {
+    if (this.props.meta?.popover) {
       this.props.meta.popover.hide();
     }
 
@@ -122,7 +122,7 @@ export default class WPFeatureImage extends React.Component {
     frame.on("close", () => {
       iframe?.classList.remove("media-modal-open");
 
-      if (this.props.meta && this.props.meta.popover) {
+      if (this.props.meta?.popover) {
         this.props.meta.popover.show();
       }
     });

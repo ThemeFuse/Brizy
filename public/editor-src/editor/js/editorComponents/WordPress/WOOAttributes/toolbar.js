@@ -138,7 +138,7 @@ export function getItems({ v, device }) {
                 {
                   id: "titleColor",
                   type: "colorPicker",
-                  disabled: titleEnabled,
+                  disabled: titleEnabled
                 }
               ]
             },
@@ -148,7 +148,7 @@ export function getItems({ v, device }) {
               options: [
                 {
                   id: "attributeColor",
-                  type: "colorPicker",
+                  type: "colorPicker"
                 }
               ]
             },

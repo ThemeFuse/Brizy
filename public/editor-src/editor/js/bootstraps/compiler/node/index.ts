@@ -1,10 +1,10 @@
 import { mergeDeep } from "timm";
 import { readConfig } from "visual/bootstraps/common/readConfig";
 import type { Config } from "visual/global/Config";
-import { Page } from "visual/types/Page";
+import type { Page } from "visual/types/Page";
 import { getTempConfig } from "../common/utils/getTempConfig";
 import { preloadComponents } from "../common/utils/preloadComponents";
-import { Static } from "./bootstrap/types";
+import type { Static } from "./bootstrap/types";
 import { registerThirdParty } from "./thirdParty";
 import "./utils/globals";
 
@@ -35,7 +35,7 @@ async function Core(data: unknown): Promise<Compiled> {
   try {
     await registerThirdParty(_config);
   } catch (e) {
-    // eslint-disable-next-line no-console
+    // biome-ignore lint/suspicious/noConsole: migrated from eslint
     console.warn("IMPORT THIRD PARTY SCRIPT ERROR: ", e);
   }
 

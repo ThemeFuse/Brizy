@@ -1,6 +1,6 @@
-import React, { ReactElement } from "react";
+import React, { type ReactElement } from "react";
 import Tooltip, { TooltipItem } from "visual/component/Controls/Tooltip";
-import { ReduxState } from "visual/redux/types";
+import type { ReduxState } from "visual/redux/types";
 import { t } from "visual/utils/i18n";
 
 type status = ReduxState["page"]["status"];

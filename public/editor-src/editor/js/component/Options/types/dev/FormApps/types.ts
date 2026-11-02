@@ -1,8 +1,8 @@
-import { FC } from "react";
-import * as Option from "visual/component/Options/Type";
-import { ConfigTab as PromptTab } from "visual/component/Prompts/PromptForm/types";
-import { FormField } from "visual/component/Prompts/common/GlobalApps/type";
-import { WithClassName, WithConfig } from "visual/types/attributes";
+import type { FC } from "react";
+import type * as Option from "visual/component/Options/Type";
+import type { FormField } from "visual/component/Prompts/common/GlobalApps/type";
+import type { ConfigTab as PromptTab } from "visual/component/Prompts/PromptForm/types";
+import type { WithClassName, WithConfig } from "visual/types/attributes";
 
 export interface Config {
   id: string;

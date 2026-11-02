@@ -1,8 +1,8 @@
 import React from "react";
-import { Cover } from "./components/Cover";
 import Placeholder from "visual/component/Placeholder";
-import { ExternalVideoEdit as Props } from "./types";
-import { FCC } from "visual/utils/react/types";
+import type { FCC } from "visual/utils/react/types";
+import { Cover } from "./components/Cover";
+import type { ExternalVideoEdit as Props } from "./types";
 
 export const ExternalVideoEdit: FCC<Props> = ({
   coverImageSrc,

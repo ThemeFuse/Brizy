@@ -1,7 +1,7 @@
-import React, { Component, ReactElement } from "react";
+import React, { Component, type ReactElement } from "react";
 import { t } from "visual/utils/i18n";
 import { Context } from "../../common/GlobalApps/Context";
-import {
+import type {
   BaseIntegrationContext,
   FormField
 } from "../../common/GlobalApps/type";

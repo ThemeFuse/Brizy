@@ -1,7 +1,7 @@
-import { DeviceMode } from "visual/types";
+import type { DeviceMode } from "visual/types";
 import { defaultValueKey } from "visual/utils/onChange";
 import { NORMAL } from "visual/utils/stateMode";
-import { ModelType, Styles } from "./types";
+import type { ModelType, Styles } from "./types";
 
 export const optionValueToModel = (value: Styles, device: DeviceMode) => {
   const model: ModelType = {};

@@ -26,7 +26,7 @@ class TableRow extends EditorComponent {
       bindWithKey: "items",
       sliceStartIndex: HEAD_ITEM_INDEX,
       sliceEndIndex: ASIDE_ITEM_INDEX,
-      itemProps: (itemData, itemIndex) => {
+      itemProps: (_itemData, itemIndex) => {
         return {
           meta,
           toolbarExtend,

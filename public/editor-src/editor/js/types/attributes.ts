@@ -1,4 +1,4 @@
-import {
+import type {
   PopulationMethod,
   PopulationMethodHandler,
   PopulationOptgroupMethod
@@ -76,7 +76,7 @@ export interface WithValue<T> {
 }
 
 export const hasValue = <T>(
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  // biome-ignore lint/suspicious/noExplicitAny: migrated from eslint
   o: Record<string, any>,
   check?: (o: unknown) => o is T
 ): o is WithValue<T> =>

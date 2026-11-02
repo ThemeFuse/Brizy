@@ -8,6 +8,7 @@ import {
   FooterRoutes
 } from "visual/libs/Ecwid/types/EcwidConfig";
 import * as EcwidWidget from "visual/libs/Ecwid/types/EcwidWidget";
+import { makeAttr } from "visual/utils/i18n/attribute";
 import { Literal } from "visual/utils/types/Literal";
 import { EcwidCartCheckoutStep } from "../../editorComponents/Ecwid/EcwidCart/types/Value";
 import {
@@ -320,8 +321,11 @@ export class EcwidService {
       const langLocaleParam = langLocale ? `&lang=${langLocale}` : "";
 
       script.id = `ecwid-script`;
-      script.src = `https://app.ecwid.com/script.js?${this.storeId}&data_platform=code${langLocaleParam}`;
       script.type = "text/javascript";
+      // Label before src: the cookie-consent blocker classifies a script at
+      // src-set time, so the stamp must already be on the node by then.
+      script.setAttribute(makeAttr("consent"), "necessary");
+      script.src = `https://app.ecwid.com/script.js?${this.storeId}&data_platform=code${langLocaleParam}`;
       script.onload = () => {
         Ecwid.OnAPILoaded.add(() => {
           this.$load.next();

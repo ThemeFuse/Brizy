@@ -1,14 +1,14 @@
-import { FCC } from "visual/utils/react/types";
-import { Props } from "./types";
-import { t } from "visual/utils/i18n";
+import classNames from "classnames";
 import React, {
-  ChangeEvent,
-  KeyboardEvent,
+  type ChangeEvent,
+  type KeyboardEvent,
   useCallback,
   useState
 } from "react";
 import EditorIcon from "visual/component/EditorIcon";
-import classNames from "classnames";
+import { t } from "visual/utils/i18n";
+import type { FCC } from "visual/utils/react/types";
+import type { Props } from "./types";
 
 export const AddOption: FCC<Props> = ({
   onAdd,
@@ -24,7 +24,7 @@ export const AddOption: FCC<Props> = ({
   );
 
   const handleAdd = useCallback(() => {
-    if (value && value.trim()) {
+    if (value?.trim()) {
       onAdd(value);
       setValue("");
     }

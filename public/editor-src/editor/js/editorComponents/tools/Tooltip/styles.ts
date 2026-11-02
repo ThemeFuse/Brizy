@@ -1,4 +1,4 @@
-import { Styles } from "visual/utils/cssStyle/types";
+import type { Styles } from "visual/utils/cssStyle/types";
 
 export const getTooltipStyles = (): Styles => ({
   ".brz &&.brz-tooltip": {

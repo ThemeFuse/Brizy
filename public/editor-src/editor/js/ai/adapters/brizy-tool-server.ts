@@ -46,7 +46,14 @@ export class BrizyToolServer implements IToolServer {
   }
 
   async callTool(request: ToolCallRequest): Promise<ToolExecutionResponse> {
-    const handler = this.handlers[request.name];
+    // Own properties only: a bare lookup also finds Object.prototype members
+    // ("constructor" resolves to Object) and invokes them as handlers.
+    const handler = Object.prototype.hasOwnProperty.call(
+      this.handlers,
+      request.name
+    )
+      ? this.handlers[request.name]
+      : undefined;
 
     if (!handler) {
       return {

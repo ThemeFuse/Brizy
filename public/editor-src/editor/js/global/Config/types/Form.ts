@@ -1,6 +1,6 @@
-import { ConfigTab as PromptFormTab } from "visual/component/Prompts/PromptForm/types";
-import { ConfigCommon } from "./configs/ConfigCommon";
-import {
+import type { ConfigTab as PromptFormTab } from "visual/component/Prompts/PromptForm/types";
+import type { ConfigCommon } from "./configs/ConfigCommon";
+import type {
   Response as APIResponse,
   FormFieldsOption,
   SuccessResponse

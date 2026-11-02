@@ -1,8 +1,8 @@
 import classnames from "classnames";
-import React, { MouseEvent, useCallback } from "react";
+import React, { type MouseEvent, useCallback } from "react";
 import { ThemeIcon } from "visual/component/ThemeIcon";
 import { t } from "visual/utils/i18n";
-import { MValue } from "visual/utils/value";
+import type { MValue } from "visual/utils/value";
 
 export interface Props {
   className?: string;

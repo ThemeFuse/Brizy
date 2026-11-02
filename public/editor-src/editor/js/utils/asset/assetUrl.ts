@@ -1,4 +1,4 @@
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import type { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 
 export function assetUrl(url: string, config: ConfigCommon): string {
   // @ts-expect-error: Need to move urls from WP | Cloud to ConfigCommon

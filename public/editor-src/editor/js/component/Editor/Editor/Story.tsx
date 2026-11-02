@@ -6,11 +6,11 @@ import { useConfig } from "visual/providers/ConfigProvider";
 import { EditorComponentProvider } from "visual/providers/EditorComponentProvider";
 import { useEditorMode } from "visual/providers/EditorModeProvider";
 import { useTranslation } from "visual/providers/I18nProvider";
-import { ReduxAction, updateBlocks } from "visual/redux/actions2";
+import { type ReduxAction, updateBlocks } from "visual/redux/actions2";
 import { pageBlocksSelector, stateSelector } from "visual/redux/selectors";
-import { ReduxState } from "visual/redux/types";
+import type { ReduxState } from "visual/redux/types";
 import { areStatesEqual, getPageId } from "../utils";
-import { OnChange } from "./types";
+import type { OnChange } from "./types";
 
 const Story = (): JSX.Element => {
   const state = useSelector(stateSelector, areStatesEqual);

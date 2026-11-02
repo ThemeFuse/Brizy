@@ -1,5 +1,5 @@
-import { ReduxAction } from "../actions2";
-import { ReduxState } from "../types";
+import type { ReduxAction } from "../actions2";
+import type { ReduxState } from "../types";
 
 type UIState = ReduxState["ui"];
 
@@ -20,7 +20,8 @@ const defaultState: UIState = {
   },
   showHiddenElements: false,
   currentRole: "default",
-  currentLanguage: "default"
+  currentLanguage: "default",
+  currentOverlay: "none"
 };
 
 export function ui(

@@ -2,6 +2,7 @@ import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import type { ISharedStore } from "visual/plugins/SharedStore";
 import type { IPageRepository } from "../../application/interfaces/i-page-repository";
 import type { IProjectRepository } from "../../application/interfaces/i-project-repository";
+import { componentConfigs } from "../tool-configs";
 import {
   createBrizyToolHandlers,
   getBrizyToolDefinitions
@@ -34,18 +35,40 @@ const handlersWith = (pageRepository: unknown) =>
   );
 
 describe("addShape / updateShape registration", () => {
-  it("exposes both tools", () => {
-    const names = getBrizyToolDefinitions(t).map((d) => d.name);
-    expect(names).toEqual(expect.arrayContaining(["addShape", "updateShape"]));
+  it("exposes the Shape through an add tool and several update tools", () => {
+    const catalog = getBrizyToolDefinitions(t);
+
+    expect(catalog.map((d) => d.name)).toContain("addShape");
+    expect(
+      catalog.filter((d) => d.alias === "updateShape").length
+    ).toBeGreaterThan(1);
   });
 
-  it("keeps updateShape under the RAG split threshold of 20 properties", () => {
-    const def = getBrizyToolDefinitions(t).find((d) => d.name === "updateShape");
-    const count = Object.keys(def!.parameters.properties).length;
+  it("offers no argument the element's own schema would drop", () => {
+    // The catalog and the handlers are written separately; this is what keeps
+    // them honest. Zod strips keys it does not declare, so a tool advertising
+    // one would silently do nothing.
+    const byAlias = new Map(
+      componentConfigs.map((config) => [config.alias, config])
+    );
 
-    // group_tools.py splits update tools with > 20 properties (elementId counts)
-    // and throws away the handwritten description.
-    expect(count).toBeLessThanOrEqual(20);
+    const undeclared: string[] = [];
+    for (const tool of getBrizyToolDefinitions(t)) {
+      const config = byAlias.get(tool.alias);
+      if (config === undefined || !("schema" in config)) continue;
+
+      const shape = (config.schema as unknown as { shape: object }).shape;
+      const declared = new Set(Object.keys(shape));
+      for (const property of Object.keys(tool.parameters.properties)) {
+        if (property === "elementId" || property === "containerId") continue;
+        if (property === "insertIndex" || property === "formId") continue;
+        if (!declared.has(property)) {
+          undeclared.push(`${tool.name}.${property}`);
+        }
+      }
+    }
+
+    expect(undeclared).toEqual([]);
   });
 
   it("adds a StoryShape and pins the unit keys the CSS needs", () => {
@@ -156,7 +179,7 @@ describe("addShape / updateShape registration", () => {
     }));
     const handlers = handlersWith({ updateElement, getElementById });
 
-    handlers.updateShape({ elementId: "shape-1", anchor: "center" });
+    handlers.updateShapeLayout({ elementId: "shape-1", anchor: "center" });
 
     // Centring is the one case that needs the stored size:
     // width 20 => offsetX (100-20)/2 = 40; height 100 of a 20-wide shape on a
@@ -181,7 +204,10 @@ describe("addShape / updateShape registration", () => {
     }));
     const handlers = handlersWith({ updateElement, getElementById });
 
-    handlers.updateShape({ elementId: "shape-1", bgColorHex: "#0000FF" });
+    handlers.updateShapeBackground({
+      elementId: "shape-1",
+      bgColorHex: "#0000FF"
+    });
 
     expect(updateElement).toHaveBeenCalledWith(
       expect.objectContaining({
@@ -205,7 +231,7 @@ describe("addShape / updateShape registration", () => {
     }));
     const handlers = handlersWith({ updateElement, getElementById });
 
-    const result = await handlers.updateShape({
+    const result = await handlers.updateShapeBackground({
       elementId: "image-1",
       bgColorHex: "#0000FF"
     });

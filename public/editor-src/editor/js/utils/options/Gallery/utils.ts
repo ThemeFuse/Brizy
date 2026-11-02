@@ -1,14 +1,14 @@
 import { mPipe, optional } from "fp-utilities";
-import { Items, Value } from "visual/component/Options/types/dev/Gallery";
-import {
+import type { Items, Value } from "visual/component/Options/types/dev/Gallery";
+import type {
   AddImageData,
   Image
 } from "visual/component/Options/types/dev/Gallery/types/Image";
 import { thumbnail } from "visual/component/Options/types/dev/Gallery/types/Item";
-import { UploadData } from "visual/component/Options/types/dev/Gallery/types/UploadData";
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import type { UploadData } from "visual/component/Options/types/dev/Gallery/types/UploadData";
+import type { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { SizeType } from "visual/global/Config/types/configs/common";
-import { WithId } from "visual/types/attributes";
+import type { WithId } from "visual/types/attributes";
 import { getImageUrl, preloadImage } from "visual/utils/image";
 import { prop } from "visual/utils/object/get";
 import * as Num from "visual/utils/reader/number";
@@ -54,7 +54,7 @@ export const toInitialStructure = (
     ...payload
   }));
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+// biome-ignore lint/suspicious/noExplicitAny: migrated from eslint
 export const fromRecord = readWithParser<Record<any, any>, Image>({
   uid: mPipe(prop("uid"), Str.read),
   fileName: optional(mPipe(prop("fileName"), Str.read)),

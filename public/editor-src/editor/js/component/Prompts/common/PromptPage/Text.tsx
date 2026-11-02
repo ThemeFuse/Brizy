@@ -1,5 +1,5 @@
 import classnames from "classnames";
-import React, { CSSProperties } from "react";
+import React, { type CSSProperties } from "react";
 
 interface Props {
   className?: string;

@@ -1,8 +1,8 @@
-import React, { forwardRef, Ref } from "react";
+import React, { forwardRef, type Ref } from "react";
 import Fixed from "visual/component/Prompts/Fixed";
 import { RenderIcons } from "./RenderIcons";
 import { Tabs } from "./Tabs";
-import { Props } from "./types";
+import type { Props } from "./types";
 
 const PromptIcon = (
   {

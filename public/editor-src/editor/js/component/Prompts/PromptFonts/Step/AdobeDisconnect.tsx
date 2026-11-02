@@ -1,11 +1,11 @@
-import React, { JSX, useCallback, useContext, useState } from "react";
+import React, { type JSX, useCallback, useContext, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteFont } from "visual/redux/actions2";
 import {
   adobeFontsSelector,
   defaultFontSelector
 } from "visual/redux/selectors";
-import { TypedDispatch } from "visual/redux/store";
+import type { TypedDispatch } from "visual/redux/store";
 import { pendingRequest } from "visual/utils/api";
 import { t } from "visual/utils/i18n";
 import { snakeCase } from "visual/utils/string";

@@ -1,26 +1,30 @@
 import classnames from "classnames";
-import jQuery from "jquery";
-import { ReactElement, RefObject, useRef } from "react";
+import { type ReactElement, type RefObject, useRef } from "react";
 import { useStore } from "react-redux";
 import { isWp } from "visual/global/Config";
 import { useConfig } from "visual/providers/ConfigProvider";
-import { RenderType, isEditor } from "visual/providers/RenderProvider";
-import { ReduxAction } from "visual/redux/actions2.js";
+import { isEditor, type RenderType } from "visual/providers/RenderProvider";
+import type { ReduxAction } from "visual/redux/actions2.js";
 import { deviceModeSelector } from "visual/redux/selectors";
-import { ReduxState } from "visual/redux/types.js";
-import "../lib/jquery.parallax.js";
+import type { ReduxState } from "visual/redux/types.js";
+import { destroyParallax, initParallax } from "../lib/parallax";
 import { useLayoutEffect } from "../utils";
 
-const destroyParallax = (node: HTMLElement): void => {
+const destroy = (node: HTMLElement): void => {
   if (node.parentElement) {
-    jQuery(node.parentElement).brzParallax("destroy");
+    destroyParallax(node.parentElement);
   }
 };
 
-const initParallax = (node: HTMLElement, wheelIgnoreClass?: string[]): void => {
+const init = (
+  node: HTMLElement,
+  wheelIgnoreClass: string[] | undefined
+): void => {
   if (node.parentElement) {
-    jQuery(node.parentElement).brzParallax({
-      bgClass: "brz-bg-image", // WARNING: intentionally not `brz-bg-image-parallax`
+    initParallax(node.parentElement, {
+      // WARNING: intentionally not `brz-bg-image-parallax`. React drops that class from the DOM
+      // before this effect runs, so the editor has to look for the one that is always there.
+      bgClass: "brz-bg-image",
       wheelIgnoreClass: [
         "brz-ed-container-plus",
         "brz-ed-container-whiteout-show",
@@ -67,7 +71,7 @@ const Image = ({
   useLayoutEffect(
     () => (): void => {
       if (imageRef.current) {
-        destroyParallax(imageRef.current);
+        destroy(imageRef.current);
       }
     },
     []
@@ -79,13 +83,15 @@ const Image = ({
       isInitialMount.current = false;
 
       if (imageRef.current && showParallax) {
-        initParallax(imageRef.current, wheelIgnoreClass);
+        init(imageRef.current, wheelIgnoreClass);
       }
     } else {
       if (imageRef.current) {
-        showParallax
-          ? initParallax(imageRef.current, wheelIgnoreClass)
-          : destroyParallax(imageRef.current);
+        if (showParallax) {
+          init(imageRef.current, wheelIgnoreClass);
+        } else {
+          destroy(imageRef.current);
+        }
       }
     }
   });

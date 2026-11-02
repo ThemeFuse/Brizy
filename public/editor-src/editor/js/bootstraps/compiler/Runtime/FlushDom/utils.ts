@@ -1,18 +1,19 @@
 import { produce } from "immer";
 import { ToastNotification } from "visual/component/Notifications";
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import type { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { initializeBlocksHtml, updateBlocksHtml } from "visual/redux/actions2";
 import {
   fontsSelector,
   globalPopupsInPageSelector,
+  menuDataSelector,
   pageSelector,
   projectSelector,
   stylesSelector
 } from "visual/redux/selectors";
-import { Store } from "visual/redux/store";
-import { Block } from "visual/types/Block";
+import type { Store } from "visual/redux/store";
+import type { Block } from "visual/types/Block";
 import { createDebounceById } from "visual/utils/debounce/createDebounceById";
-import { Queue } from "visual/utils/queue/Queue";
+import type { Queue } from "visual/utils/queue/Queue";
 import { compilePage } from "../../browser/worker";
 
 function compile(blocksData: Array<Block>, store: Store, config: ConfigCommon) {
@@ -43,7 +44,12 @@ function compile(blocksData: Array<Block>, store: Store, config: ConfigCommon) {
     const compileData = {
       config: {
         ...config,
-        globalBlocks: globalPopups
+        globalBlocks: globalPopups,
+        // Menus live in the store since hydrate, so `config.menuData` still
+        // holds whatever the page booted with. The worker builds its own store
+        // out of this config, and Menu resolves `menuSelected` against it — a
+        // menu created or deleted mid-session would compile to an empty nav.
+        menuData: menuDataSelector(state)
       },
       page,
       project

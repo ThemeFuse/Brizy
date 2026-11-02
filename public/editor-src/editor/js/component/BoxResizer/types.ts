@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
-import { ElementModel } from "visual/component/Elements/Types";
-import { DeviceMode } from "visual/types";
+import type { ElementModel } from "visual/component/Elements/Types";
+import type { DeviceMode } from "visual/types";
 
 export type RestrictionsClamp = {
   min: number;

@@ -1,10 +1,10 @@
-import { Num, Obj, Str, pipe } from "@brizy/readers";
+import { Num, Obj, pipe, Str } from "@brizy/readers";
 import { mPipe, optional, parseStrict } from "fp-utilities";
 import { toArray } from "visual/utils/array";
 import { always } from "visual/utils/fp";
-import { Reader } from "visual/utils/types/Type";
+import type { Reader } from "visual/utils/types/Type";
 import { throwOnNullish } from "visual/utils/value";
-import * as Cat from "./Categories";
+import type * as Cat from "./Categories";
 import * as Type from "./Type";
 import { IconTypes } from "./Type";
 

@@ -1,8 +1,8 @@
-import { GetItems } from "visual/editorComponents/EditorComponent/types";
+import type { GetItems } from "visual/editorComponents/EditorComponent/types";
 import { getColorToolbar } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
-import { Patch, Value } from "../types";
+import type { Patch, Value } from "../types";
 import { handleChangeTooltip } from "../utils/dependencies";
 
 type OnChangeCallback = (value: Patch) => void;

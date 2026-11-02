@@ -1,4 +1,4 @@
-import { Tabs } from "visual/component/RightSidebar/types";
+import type { Tabs } from "visual/component/RightSidebar/types";
 
 export const tabs: Tabs = {
   tabs: [

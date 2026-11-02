@@ -1,7 +1,7 @@
 import classnames from "classnames";
-import React, { JSX } from "react";
-import { AnchorInput as _AnchorInput, ThumbnailsProps } from "./types";
+import React, { type JSX } from "react";
 import { ThumbnailBlockWithInput } from "./ThumbnailBlockWithInput";
+import type { AnchorInput as _AnchorInput, ThumbnailsProps } from "./types";
 
 export const Thumbnails = ({
   blocks,

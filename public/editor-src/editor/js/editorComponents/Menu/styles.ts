@@ -1,7 +1,7 @@
-import { DynamicStylesProps } from "visual/types";
+import type { DynamicStylesProps } from "visual/types";
 import { renderStyles } from "visual/utils/cssStyle";
-import { OutputStyle } from "visual/utils/cssStyle/types";
-import { Value } from "./types";
+import type { OutputStyle } from "visual/utils/cssStyle/types";
+import type { Value } from "./types";
 
 export function styleMenuContainer(
   data: DynamicStylesProps<Value>
@@ -167,14 +167,6 @@ export function styleMenu(data: DynamicStylesProps<Value>): OutputStyle {
     ".brz &&:hover > .brz-menu__ul > .brz-menu__item-dropdown .brz-menu__sub-menu > .brz-menu__item.brz-menu__item--current > .brz-a":
       {
         standart: ["cssStyleElementMenuSubMenuCurrentColor"]
-      },
-    ".brz &&:hover > .brz-menu__ul > .brz-menu__item-dropdown .brz-menu__sub-menu > .brz-menu__item.brz-menu__item--current":
-      {
-        standart: ["cssStyleElementMenuSubMenuCurrentBgColor"]
-      },
-    ".brz &&:hover > .brz-menu__ul > .brz-menu__item-dropdown .brz-menu__sub-menu > .brz-menu__item.brz-menu__item--current:hover":
-      {
-        standart: ["cssStyleElementMenuSubMenuCurrentBgColor"]
       },
     ".brz &&:hover > .brz-menu__ul > .brz-menu__item-dropdown > .brz-menu__item--current .brz-menu__sub-menu":
       {

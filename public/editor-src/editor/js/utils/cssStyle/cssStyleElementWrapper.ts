@@ -1,6 +1,6 @@
 import { defaultValueValue } from "visual/utils/onChange";
 import * as Position from "visual/utils/position/Position";
-import { CSSValue } from "../style2/types";
+import type { CSSValue } from "../style2/types";
 
 export function cssStyleWrapperFixedFlex({
   v,

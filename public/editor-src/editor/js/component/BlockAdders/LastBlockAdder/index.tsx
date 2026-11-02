@@ -1,10 +1,10 @@
-import React, { ReactElement, useCallback } from "react";
+import React, { type ReactElement, useCallback } from "react";
 import Prompts from "visual/component/Prompts";
-import { PromptTabsId } from "visual/component/Prompts/PromptBlocks/types";
+import type { PromptTabsId } from "visual/component/Prompts/PromptBlocks/types";
 import { rolesHOC } from "visual/component/Roles";
 import { useConfig } from "visual/providers/ConfigProvider";
 import { Last as Control } from "../Controls/Last";
-import { Props } from "./types";
+import type { Props } from "./types";
 
 const LastBlockAdder = (props: Props): ReactElement => {
   const { onAddBlock, onAddTemplate, onAddGlobalBlock } = props;

@@ -1,8 +1,8 @@
-import { ConnectedProps } from "react-redux";
-import { ElementModel } from "visual/component/Elements/Types";
-import { ComponentsMeta } from "visual/editorComponents/EditorComponent/types";
-import { WithClassName } from "visual/types/attributes";
-import { connector } from "./connector";
+import type { ConnectedProps } from "react-redux";
+import type { ElementModel } from "visual/component/Elements/Types";
+import type { ComponentsMeta } from "visual/editorComponents/EditorComponent/types";
+import type { WithClassName } from "visual/types/attributes";
+import type { connector } from "./connector";
 
 export type Value = ElementModel;
 

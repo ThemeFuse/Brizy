@@ -5,16 +5,22 @@ export {
   createDefaultBlock,
   parseBackendBlockData
 } from "./block";
-
 // DND utilities
 export {
   buildAddableFromTo,
   buildMoveFromTo,
   mapToDndContainerType
 } from "./dnd";
-
+export type {
+  ContainerAcceptResult,
+  ContainerCorrectionResult,
+  DuplicateElementInBlockResult,
+  RemoveElementFromBlockResult,
+  UpdateColumnInRowResult
+} from "./element";
 // Element utilities
 export {
+  canContainerAccept,
   correctContainerForElement,
   createDefaultElement,
   duplicateElementInBlock,
@@ -26,45 +32,46 @@ export {
   removeElementFromBlock,
   updateColumnInRow
 } from "./element";
+export type { UpdateColorPaletteInput, UpdateStyleInput } from "./project";
+// Project utilities
+export {
+  duplicateCurrentStyle,
+  knownFontStyleIds,
+  knownPaletteSlots,
+  mergePaletteUpdate,
+  mergeStyleUpdate,
+  toFontSummaries,
+  toStyleDetail,
+  toStyleSummary,
+  unknownFontStyleIds,
+  unknownPaletteSlots,
+  updateColorPaletteSchema,
+  updateFontStyleMobileSchema,
+  updateFontStyleSchema,
+  updateFontStyleTabletSchema,
+  updateStyleSchema
+} from "./project";
 export type {
-  ContainerCorrectionResult,
-  DuplicateElementInBlockResult,
-  RemoveElementFromBlockResult,
-  UpdateColumnInRowResult
-} from "./element";
-
+  FontStyleTypes,
+  UpdateRichTextParams
+} from "./richtext";
 // RichText utilities
 export {
   applyRichTextUpdates,
   applyTypographyStyles,
+  containsFindText,
   findAndReplaceInHtml,
   isFontStyle,
   replaceAllTextInHtml,
   updateRichTextColor
 } from "./richtext";
-export type { FontStyleTypes, UpdateRichTextParams } from "./richtext";
-
-// Project utilities
-export {
-  addStyleSchema,
-  buildNewStyle,
-  duplicateCurrentStyle,
-  mergeStyleUpdate,
-  toFontSummaries,
-  toStyleDetail,
-  toStyleSummary,
-  updateStyleSchema
-} from "./project";
-export type { AddStyleInput, UpdateStyleInput } from "./project";
-
+export type { InternalSearchResult } from "./search";
 // Search utilities
 export {
   applyFuzzySearch,
   collectElements,
-  searchInElement,
+  compileSearchFilters,
   toSearchResults
 } from "./search";
-export type { InternalSearchResult } from "./search";
-
 // Site (website generation) utilities
-export { removeMenuData, topInsertIndex } from "./site";
+export { topInsertIndex } from "./site";

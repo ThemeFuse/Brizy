@@ -1,4 +1,4 @@
-import { ElementModelType } from "visual/component/Elements/Types";
+import type { ElementModelType } from "visual/component/Elements/Types";
 
 export type ElementTypes = "shortcode" | "column" | "row" | "addable";
 

@@ -1,4 +1,4 @@
-import { Layout } from "visual/types/Layout";
+import type { Layout } from "visual/types/Layout";
 
 //#region SetTitle
 

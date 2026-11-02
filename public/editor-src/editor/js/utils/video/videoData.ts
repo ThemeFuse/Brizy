@@ -14,7 +14,7 @@ export default function getVideoData(
     keyMatch = input.match(/vimeo\.com.*?\/([0-9]{1,20})/);
   }
 
-  if (!type || !(keyMatch && keyMatch[1])) {
+  if (!type || !keyMatch?.[1]) {
     return undefined;
   }
 

@@ -1,5 +1,5 @@
-import { Unit } from "visual/component/Controls/NumberUnit/types";
-import { Size } from "visual/types/attributes";
+import type { Unit } from "visual/component/Controls/NumberUnit/types";
+import type { Size } from "visual/types/attributes";
 
 export type Config = {
   min?: number;

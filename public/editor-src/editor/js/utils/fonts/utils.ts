@@ -1,5 +1,5 @@
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
-import { FontStyle } from "visual/types/Style";
+import type { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import type { FontStyle } from "visual/types/Style";
 import { makeStyleCSSVar } from "visual/utils/fonts/makeGlobalStylesTypography";
 import { DESKTOP, MOBILE, TABLET } from "visual/utils/responsiveMode";
 

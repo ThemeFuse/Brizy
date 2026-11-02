@@ -1,5 +1,5 @@
-import React, { ReactElement } from "react";
 import classNames from "classnames";
+import React, { type ReactElement } from "react";
 import EditorIcon from "visual/component/EditorIcon";
 
 export interface Props {

@@ -5,19 +5,19 @@ function closest(el, fn) {
   }
 }
 
-export default function($node) {
-  $node.find(".brz-woo-add-to-cart").each(function() {
-    const variationsForm = $node.find(".variations_form").get(0);
+export default function (node) {
+  if (node.querySelector(".brz-woo-add-to-cart")) {
+    const variationsForm = node.querySelector(".variations_form");
 
     if (variationsForm) {
       const productGalleryExists = Boolean(
-        $node.find(".woocommerce-product-gallery").get(0)
+        node.querySelector(".woocommerce-product-gallery")
       );
 
       if (productGalleryExists) {
         const closestProductGalleryContainer = closest(
           variationsForm,
-          el => el.querySelector(".woocommerce-product-gallery") != null
+          (el) => el.querySelector(".woocommerce-product-gallery") != null
         );
 
         if (closestProductGalleryContainer) {
@@ -26,5 +26,5 @@ export default function($node) {
         }
       }
     }
-  });
+  }
 }

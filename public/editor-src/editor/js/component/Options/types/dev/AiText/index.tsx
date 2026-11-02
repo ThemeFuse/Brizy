@@ -8,7 +8,7 @@ import {
   generateTags,
   purifyTextContent
 } from "visual/utils/options/AiText/utils";
-import { Component } from "./Type";
+import type { Component } from "./Type";
 
 export const Ai: Component = (props) => {
   const [loading, setLoading] = useState<boolean>(false);
@@ -70,9 +70,11 @@ export const Ai: Component = (props) => {
         }
       }
     } catch (e) {
-      typeof e === "string"
-        ? ToastNotification.error(e)
-        : ToastNotification.error(t("Something went wrong, please try again"));
+      if (typeof e === "string") {
+        ToastNotification.error(e);
+      } else {
+        ToastNotification.error(t("Something went wrong, please try again"));
+      }
     } finally {
       setLoading(false);
     }

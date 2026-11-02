@@ -1,9 +1,9 @@
-import { mPipe } from "./mPipe";
-import * as Json from "visual/utils/reader/json";
 import * as Arr from "visual/utils/reader/array";
+import * as Json from "visual/utils/reader/json";
 import * as Str from "visual/utils/reader/string";
+import { mPipe } from "./mPipe";
 
-test("Testing 'mPipe' function", function() {
+test("Testing 'mPipe' function", function () {
   const jsonToStrArr = mPipe(Json.read, Arr.readWithItemReader(Str.read));
   const strReadRepeat = mPipe(Str.read, (s: string) => s.repeat(3));
 

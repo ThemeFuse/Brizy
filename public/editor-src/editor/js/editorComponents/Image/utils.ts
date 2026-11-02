@@ -1,10 +1,10 @@
 import { Str } from "@brizy/readers";
-import { Value as ImageUploadValue } from "visual/component/Options/types/dev/ImageUpload/Types";
-import { EditorComponentContextValue } from "visual/editorComponents/EditorComponent/EditorComponentContext";
-import { DCTypes } from "visual/global/Config/types/DynamicContent";
-import { ImageDataSize } from "visual/global/Config/types/ImageSize";
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import type { Value as ImageUploadValue } from "visual/component/Options/types/dev/ImageUpload/Types";
+import type { EditorComponentContextValue } from "visual/editorComponents/EditorComponent/EditorComponentContext";
+import type { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { SizeType } from "visual/global/Config/types/configs/common";
+import { DCTypes } from "visual/global/Config/types/DynamicContent";
+import type { ImageDataSize } from "visual/global/Config/types/ImageSize";
 import { flatMap } from "visual/utils/array";
 import { getImageUrl } from "visual/utils/image";
 import { ImageType } from "visual/utils/image/types";
@@ -12,13 +12,13 @@ import { isGIFExtension, isSVGExtension } from "visual/utils/image/utils";
 import { clamp, roundTo } from "visual/utils/math";
 import { defaultValueValue } from "visual/utils/onChange";
 import { getDynamicContentChoices } from "visual/utils/options";
-import { Choice } from "visual/utils/options/getDynamicContentChoices";
-import { ResponsiveMode } from "visual/utils/responsiveMode";
+import type { Choice } from "visual/utils/options/getDynamicContentChoices";
+import type { ResponsiveMode } from "visual/utils/responsiveMode";
 import { capByPrefix } from "visual/utils/string";
 import { is as isNoEmptyString } from "visual/utils/string/NoEmptyString";
-import { MValue, isNullish } from "visual/utils/value";
+import { isNullish, type MValue } from "visual/utils/value";
 import { placeholderObjFromStr } from "./migrations/version2";
-import { ImageSize, Unit, V } from "./types";
+import type { ImageSize, Unit, V } from "./types";
 
 export interface ImageValue {
   size: number;
@@ -71,7 +71,7 @@ type CustomSize = SizeType.custom;
 type ALLSizes = PredefinedCustomSize | PredefinedOriginalSize | CustomSize;
 
 const calcImageMargin = (sizes: Sizes, isPreview: boolean): ImageMargin => {
-  let mL, mH;
+  let mL: number, mH: number;
 
   const ratioX = sizes.positionX;
   const ratioY = sizes.positionY;
@@ -292,9 +292,9 @@ export const getSizeType = (v: V, device: ResponsiveMode): string => {
 export const showOriginalImage = (v: V): boolean =>
   Boolean(
     !isSVGExtension(v.imageExtension) &&
-    !isGIFExtension(v.imageExtension) &&
-    v.imageSrc &&
-    v.showOriginalImage === "on"
+      !isGIFExtension(v.imageExtension) &&
+      v.imageSrc &&
+      v.showOriginalImage === "on"
   );
 
 export function getCustomImageUrl(

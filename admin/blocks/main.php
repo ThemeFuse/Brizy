@@ -36,6 +36,9 @@ class Brizy_Admin_Blocks_Main
         if (Brizy_Editor_User::is_user_allowed()) {
             add_action('wp_loaded', array($this, 'initializeActions'));
         }
+        // Not user-gated: a page is usually recompiled by an anonymous visitor,
+        // and without this its global blocks are never compiled.
+        add_filter('brizy_editor_config', [$this, 'compilePageGlobalBlocks'], 10, 2);
         add_action('brizy_preview_mode', array($this, 'initializePreviewActions'));
     }
 
@@ -62,7 +65,6 @@ class Brizy_Admin_Blocks_Main
     {
 
         add_filter('brizy_editor_config', [$this, 'addPageGlobalBlocks'], 10, 2);
-        add_filter('brizy_editor_config', [$this, 'compilePageGlobalBlocks'], 10, 2);
         Brizy_Admin_Blocks_Api::_init();
     }
 
@@ -164,7 +166,7 @@ class Brizy_Admin_Blocks_Main
             'labels' => $labels,
             'public' => false,
             'has_archive' => false,
-            'description' => __bt('brizy', 'Brizy') . ' ' . __('global block.'),
+            'description' => __bt('brizy', 'Brizy') . ' ' . __('global block.', 'brizy'),
             'publicly_queryable' => false,
             'show_ui' => false,
             'show_in_menu' => false,
@@ -250,13 +252,23 @@ class Brizy_Admin_Blocks_Main
     {
 
         $resultBlocks = array();
-        $allBlocks = get_posts(array(
-            'post_type' => [self::CP_GLOBAL],
-            'numberposts' => -1,
-            'post_status' => 'publish',
-        ));
-        $ruleManager = new Brizy_Admin_Rules_Manager();
-        $ruleSets = [];
+	    $args         = array(
+		    'post_type'   => [ self::CP_GLOBAL ],
+		    'numberposts' => - 1,
+		    'post_status' => 'publish',
+	    );
+
+	    if ( !Brizy_Admin_Blocks_CookieBanner::isCookieBannerEnabled() ) {
+			$args['meta_query'][] = array(
+				'key'     => 'brizy_post_uid',
+				'value'   => Brizy_Admin_Blocks_CookieBanner::UID_PREFIX,
+				'compare' => 'NOT LIKE',
+			);
+		}
+
+	    $allBlocks    = get_posts( $args );
+        $ruleManager  = new Brizy_Admin_Rules_Manager();
+        $ruleSets     = [];
         foreach ($allBlocks as $aBlock) {
             $ruleSets[$aBlock->ID] = $ruleManager->getRuleSet($aBlock->ID);
         }

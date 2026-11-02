@@ -3,9 +3,9 @@ import {
   TriggerType
 } from "@brizy/component/src/Flex/Lottie/types";
 import { Num, pipe } from "@brizy/readers";
-import { DotLottie } from "@lottiefiles/dotlottie-web";
+import type { DotLottie } from "@lottiefiles/dotlottie-web";
 import { throttle } from "es-toolkit";
-import { AnimationDirection, AnimationItem } from "lottie-web";
+import type { AnimationDirection, AnimationItem } from "lottie-web";
 import type {
   BoxResizerPartialProps,
   Point

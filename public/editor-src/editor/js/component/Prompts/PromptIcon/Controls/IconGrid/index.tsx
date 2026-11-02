@@ -4,9 +4,9 @@ import SmartGrid from "visual/component/Prompts/common/SmartGrid";
 import { getIconClassName, getTypes } from "visual/config/icons";
 import { isWp } from "visual/global/Config";
 import { isPro } from "visual/utils/env";
-import { FCC } from "visual/utils/react/types";
+import type { FCC } from "visual/utils/react/types";
 import { LoadingSpinner } from "../LoadingSpinner";
-import { Props } from "./types";
+import type { Props } from "./types";
 
 export const IconGrid: FCC<Props> = ({ icons, value, onChange, config }) => {
   const [gridSize, setGridSize] = useState<{
@@ -67,7 +67,7 @@ export const IconGrid: FCC<Props> = ({ icons, value, onChange, config }) => {
         const icon = icons[index];
 
         if (!icon) {
-          return <></>;
+          return null;
         }
 
         const { type, name } = {

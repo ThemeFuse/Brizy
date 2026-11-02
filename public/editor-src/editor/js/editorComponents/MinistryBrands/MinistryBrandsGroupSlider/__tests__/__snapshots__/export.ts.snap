@@ -1,0 +1,745 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`building the group slider renders the slider with arrows and dots as before 1`] = `
+"<div>
+<div class="brz-ministryBrands brz-groupSlider">
+<div class="brz-groupSlider__wrapper">
+<div class="brz-groupSlider_wrap" data-brz-showarrows="1">
+<div class="brz-groupSlider-swiper-container">
+<div class="brz-groupSlider-swiper-wrapper slick-initialized slick-slider slick-dotted" data-brz-pagination="1" data-brz-show="3">
+<div class="slick-list draggable">
+<div class="slick-track" style="opacity: 1; width: 5200px; transform: translate3d(-1200px, 0px, 0px);">
+<div aria-hidden="true" class="slick-slide slick-cloned" data-slick-index="-3" id="" style="width: 400px;" tabindex="-1">
+<div>
+<div class="brz-groupSlider-swiper-slide" style="width: 100%; display: inline-block;">
+<div class="brz-groupSlider-info">
+<h4 class="brz-groupSlider_heading">Group 3</h4>
+<div class="brz-groupSlider_detail_button">
+<a class="brz-button" href="/group-3" tabindex="-1">View</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide slick-cloned" data-slick-index="-2" id="" style="width: 400px;" tabindex="-1">
+<div>
+<div class="brz-groupSlider-swiper-slide" style="width: 100%; display: inline-block;">
+<div class="brz-groupSlider-info">
+<h4 class="brz-groupSlider_heading">Group 4</h4>
+<div class="brz-groupSlider_detail_button">
+<a class="brz-button" href="/group-4" tabindex="-1">View</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide slick-cloned" data-slick-index="-1" id="" style="width: 400px;" tabindex="-1">
+<div>
+<div class="brz-groupSlider-swiper-slide" style="width: 100%; display: inline-block;">
+<div class="brz-groupSlider-info">
+<h4 class="brz-groupSlider_heading">Group 5</h4>
+<div class="brz-groupSlider_detail_button">
+<a class="brz-button" href="/group-5" tabindex="-1">View</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div aria-hidden="false" class="slick-slide slick-current slick-active" data-slick-index="0" id="slick-slide#" role="tabpanel" style="width: 400px;">
+<div>
+<div class="brz-groupSlider-swiper-slide" style="width: 100%; display: inline-block;">
+<div class="brz-groupSlider-info">
+<h4 class="brz-groupSlider_heading">Group 1</h4>
+<div class="brz-groupSlider_detail_button">
+<a class="brz-button" href="/group-1" tabindex="0">View</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div aria-hidden="false" class="slick-slide slick-active" data-slick-index="1" id="slick-slide#" role="tabpanel" style="width: 400px;">
+<div>
+<div class="brz-groupSlider-swiper-slide" style="width: 100%; display: inline-block;">
+<div class="brz-groupSlider-info">
+<h4 class="brz-groupSlider_heading">Group 2</h4>
+<div class="brz-groupSlider_detail_button">
+<a class="brz-button" href="/group-2" tabindex="0">View</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div aria-hidden="false" class="slick-slide slick-active" data-slick-index="2" id="slick-slide#" role="tabpanel" style="width: 400px;">
+<div>
+<div class="brz-groupSlider-swiper-slide" style="width: 100%; display: inline-block;">
+<div class="brz-groupSlider-info">
+<h4 class="brz-groupSlider_heading">Group 3</h4>
+<div class="brz-groupSlider_detail_button">
+<a class="brz-button" href="/group-3" tabindex="0">View</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide" data-slick-index="3" id="slick-slide#" role="tabpanel" style="width: 400px;" tabindex="-1">
+<div>
+<div class="brz-groupSlider-swiper-slide" style="width: 100%; display: inline-block;">
+<div class="brz-groupSlider-info">
+<h4 class="brz-groupSlider_heading">Group 4</h4>
+<div class="brz-groupSlider_detail_button">
+<a class="brz-button" href="/group-4" tabindex="-1">View</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide" data-slick-index="4" id="slick-slide#" role="tabpanel" style="width: 400px;" tabindex="-1">
+<div>
+<div class="brz-groupSlider-swiper-slide" style="width: 100%; display: inline-block;">
+<div class="brz-groupSlider-info">
+<h4 class="brz-groupSlider_heading">Group 5</h4>
+<div class="brz-groupSlider_detail_button">
+<a class="brz-button" href="/group-5" tabindex="-1">View</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide slick-cloned" data-slick-index="5" id="" style="width: 400px;" tabindex="-1">
+<div>
+<div class="brz-groupSlider-swiper-slide" style="width: 100%; display: inline-block;">
+<div class="brz-groupSlider-info">
+<h4 class="brz-groupSlider_heading">Group 1</h4>
+<div class="brz-groupSlider_detail_button">
+<a class="brz-button" href="/group-1" tabindex="-1">View</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide slick-cloned" data-slick-index="6" id="" style="width: 400px;" tabindex="-1">
+<div>
+<div class="brz-groupSlider-swiper-slide" style="width: 100%; display: inline-block;">
+<div class="brz-groupSlider-info">
+<h4 class="brz-groupSlider_heading">Group 2</h4>
+<div class="brz-groupSlider_detail_button">
+<a class="brz-button" href="/group-2" tabindex="-1">View</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide slick-cloned" data-slick-index="7" id="" style="width: 400px;" tabindex="-1">
+<div>
+<div class="brz-groupSlider-swiper-slide" style="width: 100%; display: inline-block;">
+<div class="brz-groupSlider-info">
+<h4 class="brz-groupSlider_heading">Group 3</h4>
+<div class="brz-groupSlider_detail_button">
+<a class="brz-button" href="/group-3" tabindex="-1">View</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide slick-cloned" data-slick-index="8" id="" style="width: 400px;" tabindex="-1">
+<div>
+<div class="brz-groupSlider-swiper-slide" style="width: 100%; display: inline-block;">
+<div class="brz-groupSlider-info">
+<h4 class="brz-groupSlider_heading">Group 4</h4>
+<div class="brz-groupSlider_detail_button">
+<a class="brz-button" href="/group-4" tabindex="-1">View</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide slick-cloned" data-slick-index="9" id="" style="width: 400px;" tabindex="-1">
+<div>
+<div class="brz-groupSlider-swiper-slide" style="width: 100%; display: inline-block;">
+<div class="brz-groupSlider-info">
+<h4 class="brz-groupSlider_heading">Group 5</h4>
+<div class="brz-groupSlider_detail_button">
+<a class="brz-button" href="/group-5" tabindex="-1">View</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<ul class="brz-slick-slider__dots" role="tablist">
+<li class="slick-active" role="presentation">
+<button aria-controls="slick-slide#" aria-label="1 of 2" aria-selected="true" id="slick-slide-control#" role="tab" tabindex="0" type="button">1</button>
+</li>
+<li role="presentation">
+<button aria-controls="slick-slide#" aria-label="2 of 2" id="slick-slide-control#" role="tab" tabindex="-1" type="button">2</button>
+</li>
+<li role="presentation">
+<button aria-controls="slick-slide#" aria-label="3 of 2" id="slick-slide-control#" role="tab" tabindex="-1" type="button">3</button>
+</li>
+<li role="presentation">
+<button aria-controls="slick-slide#" aria-label="4 of 2" id="slick-slide-control#" role="tab" tabindex="-1" type="button">4</button>
+</li>
+<li role="presentation">
+<button aria-controls="slick-slide#" aria-label="5 of 2" id="slick-slide-control#" role="tab" tabindex="-1" type="button">5</button>
+</li>
+</ul>
+</div>
+</div>
+<div class="brz-swiper-arrow brz-swiper-arrow_prev slick-arrow">
+<svg class="brz-icon-svg">
+</svg>
+</div>
+<div class="brz-swiper-arrow brz-swiper-arrow_next slick-arrow">
+<svg class="brz-icon-svg">
+</svg>
+</div>
+</div>
+</div>
+</div>
+</div>"
+`;
+
+exports[`building the group slider renders the slider without arrows and dots as before 1`] = `
+"<div>
+<div class="brz-ministryBrands brz-groupSlider">
+<div class="brz-groupSlider__wrapper">
+<div class="brz-groupSlider_wrap" data-brz-showarrows="0">
+<div class="brz-groupSlider-swiper-container">
+<div class="brz-groupSlider-swiper-wrapper slick-initialized slick-slider" data-brz-pagination="0" data-brz-show="3">
+<div class="slick-list draggable">
+<div class="slick-track" style="opacity: 1; width: 5200px; transform: translate3d(-1200px, 0px, 0px);">
+<div aria-hidden="true" class="slick-slide slick-cloned" data-slick-index="-3" id="" style="width: 400px;" tabindex="-1">
+<div>
+<div class="brz-groupSlider-swiper-slide" style="width: 100%; display: inline-block;">
+<div class="brz-groupSlider-info">
+<h4 class="brz-groupSlider_heading">Group 3</h4>
+<div class="brz-groupSlider_detail_button">
+<a class="brz-button" href="/group-3" tabindex="-1">View</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide slick-cloned" data-slick-index="-2" id="" style="width: 400px;" tabindex="-1">
+<div>
+<div class="brz-groupSlider-swiper-slide" style="width: 100%; display: inline-block;">
+<div class="brz-groupSlider-info">
+<h4 class="brz-groupSlider_heading">Group 4</h4>
+<div class="brz-groupSlider_detail_button">
+<a class="brz-button" href="/group-4" tabindex="-1">View</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide slick-cloned" data-slick-index="-1" id="" style="width: 400px;" tabindex="-1">
+<div>
+<div class="brz-groupSlider-swiper-slide" style="width: 100%; display: inline-block;">
+<div class="brz-groupSlider-info">
+<h4 class="brz-groupSlider_heading">Group 5</h4>
+<div class="brz-groupSlider_detail_button">
+<a class="brz-button" href="/group-5" tabindex="-1">View</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div aria-hidden="false" class="slick-slide slick-current slick-active" data-slick-index="0" style="width: 400px;">
+<div>
+<div class="brz-groupSlider-swiper-slide" style="width: 100%; display: inline-block;">
+<div class="brz-groupSlider-info">
+<h4 class="brz-groupSlider_heading">Group 1</h4>
+<div class="brz-groupSlider_detail_button">
+<a class="brz-button" href="/group-1" tabindex="0">View</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div aria-hidden="false" class="slick-slide slick-active" data-slick-index="1" style="width: 400px;">
+<div>
+<div class="brz-groupSlider-swiper-slide" style="width: 100%; display: inline-block;">
+<div class="brz-groupSlider-info">
+<h4 class="brz-groupSlider_heading">Group 2</h4>
+<div class="brz-groupSlider_detail_button">
+<a class="brz-button" href="/group-2" tabindex="0">View</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div aria-hidden="false" class="slick-slide slick-active" data-slick-index="2" style="width: 400px;">
+<div>
+<div class="brz-groupSlider-swiper-slide" style="width: 100%; display: inline-block;">
+<div class="brz-groupSlider-info">
+<h4 class="brz-groupSlider_heading">Group 3</h4>
+<div class="brz-groupSlider_detail_button">
+<a class="brz-button" href="/group-3" tabindex="0">View</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide" data-slick-index="3" style="width: 400px;" tabindex="-1">
+<div>
+<div class="brz-groupSlider-swiper-slide" style="width: 100%; display: inline-block;">
+<div class="brz-groupSlider-info">
+<h4 class="brz-groupSlider_heading">Group 4</h4>
+<div class="brz-groupSlider_detail_button">
+<a class="brz-button" href="/group-4" tabindex="-1">View</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide" data-slick-index="4" style="width: 400px;" tabindex="-1">
+<div>
+<div class="brz-groupSlider-swiper-slide" style="width: 100%; display: inline-block;">
+<div class="brz-groupSlider-info">
+<h4 class="brz-groupSlider_heading">Group 5</h4>
+<div class="brz-groupSlider_detail_button">
+<a class="brz-button" href="/group-5" tabindex="-1">View</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide slick-cloned" data-slick-index="5" id="" style="width: 400px;" tabindex="-1">
+<div>
+<div class="brz-groupSlider-swiper-slide" style="width: 100%; display: inline-block;">
+<div class="brz-groupSlider-info">
+<h4 class="brz-groupSlider_heading">Group 1</h4>
+<div class="brz-groupSlider_detail_button">
+<a class="brz-button" href="/group-1" tabindex="-1">View</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide slick-cloned" data-slick-index="6" id="" style="width: 400px;" tabindex="-1">
+<div>
+<div class="brz-groupSlider-swiper-slide" style="width: 100%; display: inline-block;">
+<div class="brz-groupSlider-info">
+<h4 class="brz-groupSlider_heading">Group 2</h4>
+<div class="brz-groupSlider_detail_button">
+<a class="brz-button" href="/group-2" tabindex="-1">View</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide slick-cloned" data-slick-index="7" id="" style="width: 400px;" tabindex="-1">
+<div>
+<div class="brz-groupSlider-swiper-slide" style="width: 100%; display: inline-block;">
+<div class="brz-groupSlider-info">
+<h4 class="brz-groupSlider_heading">Group 3</h4>
+<div class="brz-groupSlider_detail_button">
+<a class="brz-button" href="/group-3" tabindex="-1">View</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide slick-cloned" data-slick-index="8" id="" style="width: 400px;" tabindex="-1">
+<div>
+<div class="brz-groupSlider-swiper-slide" style="width: 100%; display: inline-block;">
+<div class="brz-groupSlider-info">
+<h4 class="brz-groupSlider_heading">Group 4</h4>
+<div class="brz-groupSlider_detail_button">
+<a class="brz-button" href="/group-4" tabindex="-1">View</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide slick-cloned" data-slick-index="9" id="" style="width: 400px;" tabindex="-1">
+<div>
+<div class="brz-groupSlider-swiper-slide" style="width: 100%; display: inline-block;">
+<div class="brz-groupSlider-info">
+<h4 class="brz-groupSlider_heading">Group 5</h4>
+<div class="brz-groupSlider_detail_button">
+<a class="brz-button" href="/group-5" tabindex="-1">View</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="brz-swiper-arrow brz-swiper-arrow_prev">
+<svg class="brz-icon-svg">
+</svg>
+</div>
+<div class="brz-swiper-arrow brz-swiper-arrow_next">
+<svg class="brz-icon-svg">
+</svg>
+</div>
+</div>
+</div>
+</div>
+</div>"
+`;
+
+exports[`moving between slides follows ArrowLeft inside the slider 1`] = `
+{
+  "after": "opacity: 1; width: 5200px; transform: translate3d(-2800px, 0px, 0px);",
+  "during": [
+    "opacity: 1; width: 5200px; transform: translate3d(-800px, 0px, 0px); transition: transform 500ms ease;",
+  ],
+}
+`;
+
+exports[`moving between slides follows ArrowRight inside the slider 1`] = `
+{
+  "after": "opacity: 1; width: 5200px; transform: translate3d(-1600px, 0px, 0px);",
+  "during": [
+    "opacity: 1; width: 5200px; transform: translate3d(-1600px, 0px, 0px); transition: transform 500ms ease;",
+  ],
+}
+`;
+
+exports[`moving between slides follows the next arrow 1`] = `
+{
+  "after": "opacity: 1; width: 5200px; transform: translate3d(-1600px, 0px, 0px);",
+  "during": [
+    "opacity: 1; width: 5200px; transform: translate3d(-1600px, 0px, 0px); transition: transform 500ms ease;",
+  ],
+}
+`;
+
+exports[`moving between slides follows the previous arrow 1`] = `
+{
+  "after": "opacity: 1; width: 5200px; transform: translate3d(-2800px, 0px, 0px);",
+  "during": [
+    "opacity: 1; width: 5200px; transform: translate3d(-800px, 0px, 0px); transition: transform 500ms ease;",
+  ],
+}
+`;
+
+exports[`moving between slides follows the third dot 1`] = `
+{
+  "after": "opacity: 1; width: 5200px; transform: translate3d(-2000px, 0px, 0px);",
+  "during": [
+    "opacity: 1; width: 5200px; transform: translate3d(-2000px, 0px, 0px); transition: transform 500ms ease;",
+  ],
+}
+`;
+
+exports[`responsive layout shows one group per view on mobile 1`] = `
+"<div class="brz-groupSlider-swiper-wrapper slick-initialized slick-slider slick-dotted" data-brz-pagination="1" data-brz-show="3">
+<div class="slick-list draggable">
+<div class="slick-track" style="opacity: 1; width: 7700px; transform: translate3d(-700px, 0px, 0px);">
+<div aria-hidden="true" class="slick-slide slick-cloned" data-slick-index="-1" id="" style="width: 700px;" tabindex="-1">
+<div>
+<div class="brz-groupSlider-swiper-slide" style="width: 100%; display: inline-block;">
+<div class="brz-groupSlider-info">
+<h4 class="brz-groupSlider_heading">Group 5</h4>
+<div class="brz-groupSlider_detail_button">
+<a class="brz-button" href="/group-5" tabindex="-1">View</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div aria-describedby="slick-slide-control#" aria-hidden="false" class="slick-slide slick-current slick-active" data-slick-index="0" id="slick-slide#" role="tabpanel" style="width: 700px;">
+<div>
+<div class="brz-groupSlider-swiper-slide" style="width: 100%; display: inline-block;">
+<div class="brz-groupSlider-info">
+<h4 class="brz-groupSlider_heading">Group 1</h4>
+<div class="brz-groupSlider_detail_button">
+<a class="brz-button" href="/group-1" tabindex="0">View</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div aria-describedby="slick-slide-control#" aria-hidden="true" class="slick-slide" data-slick-index="1" id="slick-slide#" role="tabpanel" style="width: 700px;" tabindex="-1">
+<div>
+<div class="brz-groupSlider-swiper-slide" style="width: 100%; display: inline-block;">
+<div class="brz-groupSlider-info">
+<h4 class="brz-groupSlider_heading">Group 2</h4>
+<div class="brz-groupSlider_detail_button">
+<a class="brz-button" href="/group-2" tabindex="-1">View</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div aria-describedby="slick-slide-control#" aria-hidden="true" class="slick-slide" data-slick-index="2" id="slick-slide#" role="tabpanel" style="width: 700px;" tabindex="-1">
+<div>
+<div class="brz-groupSlider-swiper-slide" style="width: 100%; display: inline-block;">
+<div class="brz-groupSlider-info">
+<h4 class="brz-groupSlider_heading">Group 3</h4>
+<div class="brz-groupSlider_detail_button">
+<a class="brz-button" href="/group-3" tabindex="-1">View</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div aria-describedby="slick-slide-control#" aria-hidden="true" class="slick-slide" data-slick-index="3" id="slick-slide#" role="tabpanel" style="width: 700px;" tabindex="-1">
+<div>
+<div class="brz-groupSlider-swiper-slide" style="width: 100%; display: inline-block;">
+<div class="brz-groupSlider-info">
+<h4 class="brz-groupSlider_heading">Group 4</h4>
+<div class="brz-groupSlider_detail_button">
+<a class="brz-button" href="/group-4" tabindex="-1">View</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div aria-describedby="slick-slide-control#" aria-hidden="true" class="slick-slide" data-slick-index="4" id="slick-slide#" role="tabpanel" style="width: 700px;" tabindex="-1">
+<div>
+<div class="brz-groupSlider-swiper-slide" style="width: 100%; display: inline-block;">
+<div class="brz-groupSlider-info">
+<h4 class="brz-groupSlider_heading">Group 5</h4>
+<div class="brz-groupSlider_detail_button">
+<a class="brz-button" href="/group-5" tabindex="-1">View</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide slick-cloned" data-slick-index="5" id="" style="width: 700px;" tabindex="-1">
+<div>
+<div class="brz-groupSlider-swiper-slide" style="width: 100%; display: inline-block;">
+<div class="brz-groupSlider-info">
+<h4 class="brz-groupSlider_heading">Group 1</h4>
+<div class="brz-groupSlider_detail_button">
+<a class="brz-button" href="/group-1" tabindex="-1">View</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide slick-cloned" data-slick-index="6" id="" style="width: 700px;" tabindex="-1">
+<div>
+<div class="brz-groupSlider-swiper-slide" style="width: 100%; display: inline-block;">
+<div class="brz-groupSlider-info">
+<h4 class="brz-groupSlider_heading">Group 2</h4>
+<div class="brz-groupSlider_detail_button">
+<a class="brz-button" href="/group-2" tabindex="-1">View</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide slick-cloned" data-slick-index="7" id="" style="width: 700px;" tabindex="-1">
+<div>
+<div class="brz-groupSlider-swiper-slide" style="width: 100%; display: inline-block;">
+<div class="brz-groupSlider-info">
+<h4 class="brz-groupSlider_heading">Group 3</h4>
+<div class="brz-groupSlider_detail_button">
+<a class="brz-button" href="/group-3" tabindex="-1">View</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide slick-cloned" data-slick-index="8" id="" style="width: 700px;" tabindex="-1">
+<div>
+<div class="brz-groupSlider-swiper-slide" style="width: 100%; display: inline-block;">
+<div class="brz-groupSlider-info">
+<h4 class="brz-groupSlider_heading">Group 4</h4>
+<div class="brz-groupSlider_detail_button">
+<a class="brz-button" href="/group-4" tabindex="-1">View</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide slick-cloned" data-slick-index="9" id="" style="width: 700px;" tabindex="-1">
+<div>
+<div class="brz-groupSlider-swiper-slide" style="width: 100%; display: inline-block;">
+<div class="brz-groupSlider-info">
+<h4 class="brz-groupSlider_heading">Group 5</h4>
+<div class="brz-groupSlider_detail_button">
+<a class="brz-button" href="/group-5" tabindex="-1">View</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<ul class="brz-slick-slider__dots" role="tablist">
+<li class="slick-active" role="presentation">
+<button aria-controls="slick-slide#" aria-label="1 of 5" aria-selected="true" id="slick-slide-control#" role="tab" tabindex="0" type="button">1</button>
+</li>
+<li role="presentation">
+<button aria-controls="slick-slide#" aria-label="2 of 5" id="slick-slide-control#" role="tab" tabindex="-1" type="button">2</button>
+</li>
+<li role="presentation">
+<button aria-controls="slick-slide#" aria-label="3 of 5" id="slick-slide-control#" role="tab" tabindex="-1" type="button">3</button>
+</li>
+<li role="presentation">
+<button aria-controls="slick-slide#" aria-label="4 of 5" id="slick-slide-control#" role="tab" tabindex="-1" type="button">4</button>
+</li>
+<li role="presentation">
+<button aria-controls="slick-slide#" aria-label="5 of 5" id="slick-slide-control#" role="tab" tabindex="-1" type="button">5</button>
+</li>
+</ul>
+</div>"
+`;
+
+exports[`responsive layout shows one group per view on tablet 1`] = `
+"<div class="brz-groupSlider-swiper-wrapper slick-initialized slick-slider slick-dotted" data-brz-pagination="1" data-brz-show="3">
+<div class="slick-list draggable">
+<div class="slick-track" style="opacity: 1; width: 9900px; transform: translate3d(-900px, 0px, 0px);">
+<div aria-hidden="true" class="slick-slide slick-cloned" data-slick-index="-1" id="" style="width: 900px;" tabindex="-1">
+<div>
+<div class="brz-groupSlider-swiper-slide" style="width: 100%; display: inline-block;">
+<div class="brz-groupSlider-info">
+<h4 class="brz-groupSlider_heading">Group 5</h4>
+<div class="brz-groupSlider_detail_button">
+<a class="brz-button" href="/group-5" tabindex="-1">View</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div aria-describedby="slick-slide-control#" aria-hidden="false" class="slick-slide slick-current slick-active" data-slick-index="0" id="slick-slide#" role="tabpanel" style="width: 900px;">
+<div>
+<div class="brz-groupSlider-swiper-slide" style="width: 100%; display: inline-block;">
+<div class="brz-groupSlider-info">
+<h4 class="brz-groupSlider_heading">Group 1</h4>
+<div class="brz-groupSlider_detail_button">
+<a class="brz-button" href="/group-1" tabindex="0">View</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div aria-describedby="slick-slide-control#" aria-hidden="true" class="slick-slide" data-slick-index="1" id="slick-slide#" role="tabpanel" style="width: 900px;" tabindex="-1">
+<div>
+<div class="brz-groupSlider-swiper-slide" style="width: 100%; display: inline-block;">
+<div class="brz-groupSlider-info">
+<h4 class="brz-groupSlider_heading">Group 2</h4>
+<div class="brz-groupSlider_detail_button">
+<a class="brz-button" href="/group-2" tabindex="-1">View</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div aria-describedby="slick-slide-control#" aria-hidden="true" class="slick-slide" data-slick-index="2" id="slick-slide#" role="tabpanel" style="width: 900px;" tabindex="-1">
+<div>
+<div class="brz-groupSlider-swiper-slide" style="width: 100%; display: inline-block;">
+<div class="brz-groupSlider-info">
+<h4 class="brz-groupSlider_heading">Group 3</h4>
+<div class="brz-groupSlider_detail_button">
+<a class="brz-button" href="/group-3" tabindex="-1">View</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div aria-describedby="slick-slide-control#" aria-hidden="true" class="slick-slide" data-slick-index="3" id="slick-slide#" role="tabpanel" style="width: 900px;" tabindex="-1">
+<div>
+<div class="brz-groupSlider-swiper-slide" style="width: 100%; display: inline-block;">
+<div class="brz-groupSlider-info">
+<h4 class="brz-groupSlider_heading">Group 4</h4>
+<div class="brz-groupSlider_detail_button">
+<a class="brz-button" href="/group-4" tabindex="-1">View</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div aria-describedby="slick-slide-control#" aria-hidden="true" class="slick-slide" data-slick-index="4" id="slick-slide#" role="tabpanel" style="width: 900px;" tabindex="-1">
+<div>
+<div class="brz-groupSlider-swiper-slide" style="width: 100%; display: inline-block;">
+<div class="brz-groupSlider-info">
+<h4 class="brz-groupSlider_heading">Group 5</h4>
+<div class="brz-groupSlider_detail_button">
+<a class="brz-button" href="/group-5" tabindex="-1">View</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide slick-cloned" data-slick-index="5" id="" style="width: 900px;" tabindex="-1">
+<div>
+<div class="brz-groupSlider-swiper-slide" style="width: 100%; display: inline-block;">
+<div class="brz-groupSlider-info">
+<h4 class="brz-groupSlider_heading">Group 1</h4>
+<div class="brz-groupSlider_detail_button">
+<a class="brz-button" href="/group-1" tabindex="-1">View</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide slick-cloned" data-slick-index="6" id="" style="width: 900px;" tabindex="-1">
+<div>
+<div class="brz-groupSlider-swiper-slide" style="width: 100%; display: inline-block;">
+<div class="brz-groupSlider-info">
+<h4 class="brz-groupSlider_heading">Group 2</h4>
+<div class="brz-groupSlider_detail_button">
+<a class="brz-button" href="/group-2" tabindex="-1">View</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide slick-cloned" data-slick-index="7" id="" style="width: 900px;" tabindex="-1">
+<div>
+<div class="brz-groupSlider-swiper-slide" style="width: 100%; display: inline-block;">
+<div class="brz-groupSlider-info">
+<h4 class="brz-groupSlider_heading">Group 3</h4>
+<div class="brz-groupSlider_detail_button">
+<a class="brz-button" href="/group-3" tabindex="-1">View</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide slick-cloned" data-slick-index="8" id="" style="width: 900px;" tabindex="-1">
+<div>
+<div class="brz-groupSlider-swiper-slide" style="width: 100%; display: inline-block;">
+<div class="brz-groupSlider-info">
+<h4 class="brz-groupSlider_heading">Group 4</h4>
+<div class="brz-groupSlider_detail_button">
+<a class="brz-button" href="/group-4" tabindex="-1">View</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide slick-cloned" data-slick-index="9" id="" style="width: 900px;" tabindex="-1">
+<div>
+<div class="brz-groupSlider-swiper-slide" style="width: 100%; display: inline-block;">
+<div class="brz-groupSlider-info">
+<h4 class="brz-groupSlider_heading">Group 5</h4>
+<div class="brz-groupSlider_detail_button">
+<a class="brz-button" href="/group-5" tabindex="-1">View</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<ul class="brz-slick-slider__dots" role="tablist">
+<li class="slick-active" role="presentation">
+<button aria-controls="slick-slide#" aria-label="1 of 5" aria-selected="true" id="slick-slide-control#" role="tab" tabindex="0" type="button">1</button>
+</li>
+<li role="presentation">
+<button aria-controls="slick-slide#" aria-label="2 of 5" id="slick-slide-control#" role="tab" tabindex="-1" type="button">2</button>
+</li>
+<li role="presentation">
+<button aria-controls="slick-slide#" aria-label="3 of 5" id="slick-slide-control#" role="tab" tabindex="-1" type="button">3</button>
+</li>
+<li role="presentation">
+<button aria-controls="slick-slide#" aria-label="4 of 5" id="slick-slide-control#" role="tab" tabindex="-1" type="button">4</button>
+</li>
+<li role="presentation">
+<button aria-controls="slick-slide#" aria-label="5 of 5" id="slick-slide-control#" role="tab" tabindex="-1" type="button">5</button>
+</li>
+</ul>
+</div>"
+`;

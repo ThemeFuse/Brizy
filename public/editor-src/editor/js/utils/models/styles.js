@@ -17,7 +17,7 @@ const filterKeys = [
 const fontFamilyFlattenDefaultValue = flattenDefaultValue(["families"]);
 
 export function getElementOfArrayLoop(list, currentValue, operation) {
-  let currentIndex = list.findIndex((item) => item === currentValue);
+  let currentIndex = list.indexOf(currentValue);
 
   let newIndex = operation === "increase" ? ++currentIndex : --currentIndex;
   if (newIndex === list.length) {
@@ -34,9 +34,7 @@ export function getParentWhichContainsStyleProperty(path, value, property) {
     if (v.type) {
       const { defaultValue } = Editor.getComponent(v.type) || {};
 
-      return defaultValue && defaultValue.style
-        ? defaultValue.style[property]
-        : false;
+      return defaultValue?.style ? defaultValue.style[property] : false;
     }
 
     return;
@@ -46,7 +44,7 @@ export function getParentWhichContainsStyleProperty(path, value, property) {
 export function getClosestParent(path, value, cb) {
   const copiedPath = [...path];
 
-  let newPath = [];
+  const newPath = [];
   for (let i = 0; i <= path.length; i++) {
     const newValue = getIn(value, copiedPath);
     const propertyExist = cb(newValue);
@@ -140,7 +138,7 @@ function getStyles({ value, type }, deviceMode, rules = {}) {
       Object.entries(rule).filter(([key]) => allowedKeys.includes(key))
     );
 
-    return { ...acc, ...filteredValues };
+    return Object.assign(acc, filteredValues);
   }, {});
 
   if (deviceMode === DESKTOP) {
@@ -180,11 +178,7 @@ export function setStyles(data) {
   if (componentValue.value.items && i <= depth) {
     const newItems = componentValue.value.items.map((item, index) => {
       let newItem = {};
-      if (
-        newValue.value &&
-        newValue.value.items &&
-        newValue.value.items[index]
-      ) {
+      if (newValue.value?.items?.[index]) {
         newItem = newValue.value.items[index];
       }
       return setStyles({

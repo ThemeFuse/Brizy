@@ -2,9 +2,9 @@ import classNames from "classnames";
 import Downshift from "downshift";
 import { property } from "es-toolkit/compat";
 import React, {
-  ComponentProps,
-  KeyboardEvent,
-  ReactElement,
+  type ComponentProps,
+  type KeyboardEvent,
+  type ReactElement,
   useCallback,
   useEffect,
   useRef,
@@ -12,17 +12,20 @@ import React, {
 } from "react";
 import { usePopper } from "react-popper";
 import { SelectItem } from "visual/component/Controls/Select2/SelectItem";
-import { Tag } from "visual/component/Controls/Select2/Tag";
+import type { Tag } from "visual/component/Controls/Select2/Tag";
 import EditorIcon from "visual/component/EditorIcon";
-import { OnChange } from "visual/component/Options/Type";
-import { Scrollbar, ScrollbarUpdateValues } from "visual/component/Scrollbar";
-import { WithClassName } from "visual/types/attributes";
+import type { OnChange } from "visual/component/Options/Type";
+import {
+  Scrollbar,
+  type ScrollbarUpdateValues
+} from "visual/component/Scrollbar";
+import type { WithClassName } from "visual/types/attributes";
 import { makeDataAttr } from "visual/utils/i18n/attribute";
-import { Position } from "visual/utils/position/Position";
+import type { Position } from "visual/utils/position/Position";
 import { mRead } from "visual/utils/string/specs";
-import { Literal } from "visual/utils/types/Literal";
+import type { Literal } from "visual/utils/types/Literal";
 import { mCompose } from "visual/utils/value";
-import { Props as ItemProps } from "./Item";
+import type { Props as ItemProps } from "./Item";
 import { dropdownHeight } from "./utils";
 
 type ItemInstance<T> = ReactElement<ItemProps<T>>;
@@ -75,6 +78,7 @@ export function Component<T extends Literal>({
 
   const onScrollUpdate = useCallback(
     ({ scrollHeight }: ScrollbarUpdateValues): void => {
+      // biome-ignore lint/suspicious/noUnusedExpressions: left as the original short-circuit - height comes from useState(0) so `height ||` and `if (!height)` are equivalent, and this path sizes the dropdown
       height ||
         setHeight(dropdownHeight(scrollHeight, children.length, scroll));
     },
@@ -120,7 +124,7 @@ export function Component<T extends Literal>({
         }): ReactElement => {
           const triggerOpen = (): void => {
             if (!isOpen) {
-              onOpen && onOpen();
+              if (onOpen) onOpen();
               openMenu();
             } else if (autoClose) {
               closeMenu();
@@ -128,13 +132,14 @@ export function Component<T extends Literal>({
             inputRef.current?.focus();
           };
 
-          const items = children.map((item, i) => {
+          const items = children.map((item) => {
             const props = getItemProps({
               item,
-              key: i,
               disabled: item.props.disabled
             });
-            return <SelectItem key={i} {...props} {...item.props} />;
+            return (
+              <SelectItem key={item.props.value} {...props} {...item.props} />
+            );
           });
 
           return (

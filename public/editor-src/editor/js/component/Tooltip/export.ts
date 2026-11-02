@@ -1,13 +1,7 @@
 import { makeAttr } from "visual/utils/i18n/attribute";
 import { setupTooltip } from "./utils.export";
 
-export default function ($node: JQuery) {
-  const node = $node.get(0);
-
-  if (!node) {
-    return;
-  }
-
+export default function (node: HTMLElement) {
   node.querySelectorAll<HTMLElement>(".brz-tooltip").forEach((tooltip) => {
     const arrow = tooltip.querySelector<HTMLElement>(".brz-tooltip--arrow");
     const elementId = tooltip.getAttribute(makeAttr("element-id"));

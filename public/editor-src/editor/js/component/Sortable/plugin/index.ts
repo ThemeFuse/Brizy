@@ -1,13 +1,13 @@
 import { makeAttr, makeDataAttrString } from "visual/utils/i18n/attribute";
-import * as Observer from "./Observer";
+import { clamp } from "visual/utils/math";
 import {
-  SortableBox as SortableBoxT,
-  findClosestSortable as findClosestSortableT
+  findClosestSortable as findClosestSortableT,
+  type SortableBox as SortableBoxT
 } from "./findClosestSortable";
-import { GlobalState, SortablePluginOptions } from "./types";
+import * as Observer from "./Observer";
+import type { GlobalState, SortablePluginOptions } from "./types";
 import {
   addClass,
-  clamp,
   closest,
   disableSelection,
   elementDepth,
@@ -471,12 +471,13 @@ export default class SortablePlugin {
           }
         }
 
-        showLines &&
+        if (showLines) {
           addClass(
             targetElementForClassName,
             hoveredClass,
             hoveredClassPosition
           );
+        }
       }
 
       globalState.dragInfo.target = {
@@ -507,7 +508,9 @@ export default class SortablePlugin {
     const { allSortables } = globalState;
 
     if (allSortables) {
-      allSortables.forEach((node) => removeClass(node, receiverClass));
+      allSortables.forEach((node) => {
+        removeClass(node, receiverClass);
+      });
     }
 
     if (source) {
@@ -524,13 +527,14 @@ export default class SortablePlugin {
         hoveredClassRight
       );
 
-      target.targetElement.previousElementSibling &&
+      if (target.targetElement.previousElementSibling) {
         removeClass(
           target.targetElement.previousElementSibling,
           hoveredClass,
           hoveredClassTop,
           hoveredClassBottom
         );
+      }
     }
   }
 
@@ -668,59 +672,63 @@ export default class SortablePlugin {
   // DOM events
 
   attachContainerEvents(): void {
-    events.start.forEach((eventName) =>
-      this.el.addEventListener(eventName, this.handleContainerStart, false)
-    );
+    events.start.forEach((eventName) => {
+      this.el.addEventListener(eventName, this.handleContainerStart, false);
+    });
   }
 
   detachContainerEvents(): void {
-    events.start.forEach((eventName) =>
-      this.el.removeEventListener(eventName, this.handleContainerStart, false)
-    );
+    events.start.forEach((eventName) => {
+      this.el.removeEventListener(eventName, this.handleContainerStart, false);
+    });
   }
 
   attachPendingEvents(): void {
-    events.move.forEach((eventName) =>
-      this.document.addEventListener(eventName, this.handlePendingMove, false)
-    );
+    events.move.forEach((eventName) => {
+      this.document.addEventListener(eventName, this.handlePendingMove, false);
+    });
 
-    events.end.forEach((eventName) =>
-      this.document.addEventListener(eventName, this.handlePendingEnd, false)
-    );
+    events.end.forEach((eventName) => {
+      this.document.addEventListener(eventName, this.handlePendingEnd, false);
+    });
   }
 
   detachPendingEvents(): void {
-    events.move.forEach((eventName) =>
+    events.move.forEach((eventName) => {
       this.document.removeEventListener(
         eventName,
         this.handlePendingMove,
         false
-      )
-    );
+      );
+    });
 
-    events.end.forEach((eventName) =>
-      this.document.removeEventListener(eventName, this.handlePendingEnd, false)
-    );
+    events.end.forEach((eventName) => {
+      this.document.removeEventListener(
+        eventName,
+        this.handlePendingEnd,
+        false
+      );
+    });
   }
 
   attachSortEvents(): void {
-    events.move.forEach((eventName) =>
-      this.document.addEventListener(eventName, this.handleSortMove, false)
-    );
+    events.move.forEach((eventName) => {
+      this.document.addEventListener(eventName, this.handleSortMove, false);
+    });
 
-    events.end.forEach((eventName) =>
-      this.document.addEventListener(eventName, this.handleSortEnd, false)
-    );
+    events.end.forEach((eventName) => {
+      this.document.addEventListener(eventName, this.handleSortEnd, false);
+    });
   }
 
   detachSortEvents(): void {
-    events.move.forEach((eventName) =>
-      this.document.removeEventListener(eventName, this.handleSortMove, false)
-    );
+    events.move.forEach((eventName) => {
+      this.document.removeEventListener(eventName, this.handleSortMove, false);
+    });
 
-    events.end.forEach((eventName) =>
-      this.document.removeEventListener(eventName, this.handleSortEnd, false)
-    );
+    events.end.forEach((eventName) => {
+      this.document.removeEventListener(eventName, this.handleSortEnd, false);
+    });
   }
 
   attachUserSelectEvents(): void {

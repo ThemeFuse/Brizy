@@ -1,12 +1,12 @@
-import React, { ReactElement, useMemo } from "react";
+import React, { type ReactElement, useMemo } from "react";
 import { Grid as Control } from "visual/component/Controls/Grid";
 import { Column } from "visual/component/Controls/Grid/Column";
 import Options from "visual/component/Options";
-import { Props as OptionProps } from "visual/component/Options/Type";
+import type { Props as OptionProps } from "visual/component/Options/Type";
 import { usePro } from "visual/global/hooks";
 import { useConfig } from "visual/providers/ConfigProvider";
-import { WithClassName, WithConfig } from "visual/types/attributes";
-import { Column as ColumnType, Config } from "./types";
+import type { WithClassName, WithConfig } from "visual/types/attributes";
+import type { Column as ColumnType, Config } from "./types";
 
 export interface Props
   extends OptionProps<undefined>,
@@ -37,6 +37,7 @@ export const Grid = ({
       separator={config?.separator ?? false}
     >
       {columns.map((col, k) => (
+        // biome-ignore lint/suspicious/noArrayIndexKey: columns are a fixed layout definition with no id; position is the identity
         <Column className={col.className} key={k} align={col.align ?? "start"}>
           <Options
             wrapOptions={false}

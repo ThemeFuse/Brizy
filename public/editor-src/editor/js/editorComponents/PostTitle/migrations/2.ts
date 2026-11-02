@@ -1,5 +1,5 @@
-import { ElementModel } from "visual/component/Elements/Types";
-import { Deps, Migration } from "visual/utils/migration";
+import type { ElementModel } from "visual/component/Elements/Types";
+import type { Deps, Migration } from "visual/utils/migration";
 import * as Obj from "visual/utils/reader/object";
 import * as Str from "visual/utils/reader/string";
 

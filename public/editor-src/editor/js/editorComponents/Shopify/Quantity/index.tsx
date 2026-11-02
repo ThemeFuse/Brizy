@@ -11,7 +11,7 @@ import defaultValue from "./defaultValue.json";
 import * as sidebar from "./sidebar";
 import { style } from "./styles";
 import * as toolbar from "./toolbar";
-import { Value } from "./types";
+import type { Value } from "./types";
 
 export class Quantity extends EditorComponent<Value> {
   static defaultValue = defaultValue;

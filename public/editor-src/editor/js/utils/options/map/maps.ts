@@ -1,10 +1,10 @@
-import { OptionName } from "visual/component/Options/types";
-import {
+import type { OptionName } from "visual/component/Options/types";
+import type {
   GenericToolbarItemType,
   ToolbarItemType
 } from "visual/editorComponents/ToolbarItemType";
 
-export type Map<T extends OptionName> = (
+export type MapFn<T extends OptionName> = (
   f: (t: ToolbarItemType) => ToolbarItemType,
   t: GenericToolbarItemType<T>
 ) => ToolbarItemType;

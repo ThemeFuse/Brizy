@@ -1,4 +1,7 @@
-import { OptionStyle, OutputOptionStyle } from "visual/utils/cssStyle/types";
+import type {
+  OptionStyle,
+  OutputOptionStyle
+} from "visual/utils/cssStyle/types";
 
 export const widthCSS: OptionStyle<"slider"> = ({ value: { value, unit } }) => {
   return {

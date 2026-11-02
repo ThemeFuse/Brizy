@@ -1,8 +1,8 @@
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import type { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { checkValue2 } from "visual/utils/checkValue";
 import { capitalize } from "visual/utils/string";
 import type { Literal } from "visual/utils/types/Literal";
-import { ChoiceTypes, Ratio, VideoTypes } from "./types";
+import { type ChoiceTypes, Ratio, type VideoTypes } from "./types";
 
 export const containsShorts = (s: string): boolean => s.includes("/shorts/");
 

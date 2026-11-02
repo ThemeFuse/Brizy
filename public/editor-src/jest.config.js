@@ -18,15 +18,16 @@ const swcConfig = {
 module.exports = {
   testEnvironment: "jsdom",
   moduleDirectories: ["node_modules", "jest-utils", "__dirname"],
-  setupFilesAfterEnv: ["@testing-library/jest-dom"],
   moduleNameMapper: {
-    "^visual/(.*)$": "<rootDir>/editor/js/$1"
+    "^visual/(.*)$": "<rootDir>/editor/js/$1",
+    "^@brizy/ai-tools$": "<rootDir>/../packages/ai-tools/src/index.ts"
   },
   transform: {
     "\\.(tsx|ts|js|jsx)?$": ["@swc/jest", swcConfig]
   },
+  // the optional prefix also covers a copy npm nests under another package
   transformIgnorePatterns: [
-    "/node_modules/(?!(nanoid|normalize-url|cheerio)/)"
+    "/node_modules/(?!(.*/node_modules/)?(nanoid|normalize-url|cheerio)/)"
   ],
   modulePathIgnorePatterns: ["<rootDir>/dist"],
   globals: {

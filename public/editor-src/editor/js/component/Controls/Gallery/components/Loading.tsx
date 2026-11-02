@@ -1,6 +1,6 @@
-import React, { ReactElement } from "react";
+import React, { type ReactElement } from "react";
 import { EditorIcon } from "visual/component/EditorIcon";
-import { WithId } from "visual/types/attributes";
+import type { WithId } from "visual/types/attributes";
 import { Item } from "./Item";
 
 export interface Props<T> extends WithId<T> {

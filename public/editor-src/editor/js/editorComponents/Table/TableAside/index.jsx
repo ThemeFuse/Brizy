@@ -59,15 +59,13 @@ class TableAside extends EditorComponent {
     );
 
     return (
-      <>
-        <Toolbar {...this.makeToolbarPropsFromConfig2(toolbar)}>
-          {({ ref }) => (
-            <th className={className} ref={ref}>
-              {isFromBody || showHead ? content : null}
-            </th>
-          )}
-        </Toolbar>
-      </>
+      <Toolbar {...this.makeToolbarPropsFromConfig2(toolbar)}>
+        {({ ref }) => (
+          <th className={className} ref={ref}>
+            {isFromBody || showHead ? content : null}
+          </th>
+        )}
+      </Toolbar>
     );
   }
 }

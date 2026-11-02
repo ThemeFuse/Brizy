@@ -1,15 +1,15 @@
 import { isWp } from "visual/global/Config";
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import type { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { getFileFormat } from "visual/utils/customFile/utils";
 import { isDynamicContent } from "visual/utils/dynamicContent";
 import { parseImagePatterns } from "visual/utils/image/parsers";
 import {
-  NoEmptyString,
-  is as isNoEmptyString
+  is as isNoEmptyString,
+  type NoEmptyString
 } from "visual/utils/string/NoEmptyString";
 import { isAbsoluteUrl } from "visual/utils/url";
-import { MValue } from "visual/utils/value";
-import { Data, DataUrl, ImageType } from "./types";
+import type { MValue } from "visual/utils/value";
+import { type Data, type DataUrl, ImageType } from "./types";
 import {
   generateUrl,
   getUnsplashCrop,

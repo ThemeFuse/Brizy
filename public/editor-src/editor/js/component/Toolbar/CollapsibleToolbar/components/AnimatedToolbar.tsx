@@ -1,5 +1,8 @@
-import React, { ReactElement, useEffect } from "react";
-import { TransitionState, useTransitionState } from "react-transition-state";
+import React, { type ReactElement, useEffect } from "react";
+import {
+  type TransitionState,
+  useTransitionState
+} from "react-transition-state";
 import type { BadgeProps } from "./Badge";
 import type { IconProps } from "./Icon";
 import type { ToolbarProps } from "./Toolbar";

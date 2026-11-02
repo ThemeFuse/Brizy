@@ -1,6 +1,6 @@
 import { get } from "es-toolkit/compat";
-import { ElementModelType } from "visual/component/Elements/Types";
-import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
+import type { ElementModelType } from "visual/component/Elements/Types";
+import type EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import { checkValue2 } from "visual/utils/checkValue";
 import { isModel } from "visual/utils/models";

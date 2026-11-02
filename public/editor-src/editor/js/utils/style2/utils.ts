@@ -1,6 +1,6 @@
 import { isNullish } from "visual/utils/value";
 import { clamp } from "../math";
-import { GradientCssDeclaration, GradientStop } from "./types";
+import type { GradientCssDeclaration, GradientStop } from "./types";
 
 export const styleAnimatedGradient = (
   gradientStops: GradientStop[],

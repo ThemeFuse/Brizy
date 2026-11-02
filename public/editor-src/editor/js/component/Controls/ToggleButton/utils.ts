@@ -1,5 +1,5 @@
-import { ButtonStyle } from "./types";
 import classNames from "classnames";
+import type { ButtonStyle } from "./types";
 
 export const getButtonClassName = ({
   type,

@@ -1,7 +1,7 @@
-export { getOptionFontByGlobal } from "./getOptionFontByGlobal";
-export { getDynamicContentChoices } from "./getDynamicContentChoices";
 export { getDynamicContentByPlaceholder } from "./getDynamicContentByPlaceholder";
+export { getDynamicContentChoices } from "./getDynamicContentChoices";
 export { getDynamicContentOption } from "./getDynamicContentOption";
+export { getOptionFontByGlobal } from "./getOptionFontByGlobal";
 export { getShapes } from "./getShapes";
 export {
   getTaxonomies,

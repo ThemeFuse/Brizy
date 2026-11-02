@@ -1,10 +1,10 @@
 import { optional, parse } from "fp-utilities";
-import {
+import type {
   FromElementModel,
   ToElementModel
 } from "visual/component/Options/Type";
-import { Image } from "visual/component/Options/types/dev/Gallery/types/Image";
-import { Value } from "visual/component/Options/types/dev/GalleryForGallery";
+import type { Image } from "visual/component/Options/types/dev/Gallery/types/Image";
+import type { Value } from "visual/component/Options/types/dev/GalleryForGallery";
 import { mPipe, pass, pipe } from "visual/utils/fp";
 import * as Num from "visual/utils/math/number";
 import { prop } from "visual/utils/object/get";

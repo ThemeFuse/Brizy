@@ -1,5 +1,5 @@
 import classnames from "classnames";
-import React, { JSX, useMemo } from "react";
+import React, { type JSX, useMemo } from "react";
 import { HOVER } from "visual/utils/stateMode";
 
 type Props = {

@@ -93,7 +93,7 @@ export function cssStylePadding({ v, device, state, prefix = "" }) {
   let paddingRightSuffix = "px";
   let paddingBottomSuffix = "px";
   let paddingLeftSuffix = "px";
-  let paddingType = stylePaddingType({ v, device, state, prefix });
+  const paddingType = stylePaddingType({ v, device, state, prefix });
 
   if (paddingType === "grouped") {
     const padding = stylePaddingGrouped({ v, device, state, prefix });

@@ -1,19 +1,19 @@
 import classnames from "classnames";
-import React, { ReactElement } from "react";
+import React, { type ReactElement } from "react";
 import Select from "visual/component/Controls/Select";
 import SelectItem from "visual/component/Controls/Select/SelectItem";
 import SelectOptgroup from "visual/component/Controls/Select/SelectOptgroup";
 import EditorIcon from "visual/component/EditorIcon";
-import {
+import type {
   Choices,
   OptGroup
 } from "visual/component/Options/types/common/Population/types/Choices";
+import type { Config } from "visual/component/Options/types/dev/Select/types";
 import { isOptgroup } from "visual/utils/options/Population/utils";
-import { Literal } from "visual/utils/types/Literal";
+import type { Literal } from "visual/utils/types/Literal";
 import { Async as SelectAsync } from "../../Options/types/dev/Select/Async";
 import { Dropdown } from "./Components/Dropdown";
 import type { Props } from "./types";
-import { Config } from "visual/component/Options/types/dev/Select/types";
 
 const selectConfig: Config = {
   autoClose: true,
@@ -88,6 +88,7 @@ export const Control = <T extends Literal>({
       clickOutsideExceptions={clickOutsideExceptions}
       onOpened={onOpened}
     >
+      {/* biome-ignore lint/complexity/noUselessFragments: Dropdown declares a single JSX.Element child, so the two branches need packing */}
       <>
         {!predefinedEntityType && (
           <SelectAsync

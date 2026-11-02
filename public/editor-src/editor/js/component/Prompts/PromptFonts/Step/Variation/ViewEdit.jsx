@@ -33,12 +33,12 @@ class ViewEdit extends Component {
 
   renderOptions() {
     const { data, onActive } = this.props;
-    const options = data.map((option, index) => {
+    const options = data.map((option) => {
       const { id, title, type } = option;
 
       return (
         <div
-          key={index}
+          key={id}
           className="brz-ed-popup-integrations-step__fields-option brz-ed-popup-integrations-step__fields-option--big"
         >
           <p className="brz-p brz-ed-popup-integration__font-name">{title}</p>

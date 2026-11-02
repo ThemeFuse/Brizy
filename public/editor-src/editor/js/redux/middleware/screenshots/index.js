@@ -241,7 +241,7 @@ async function pageBlockTaskCb(
   store,
   config,
   next,
-  options,
+  _options,
   block,
   enqueueAgain
 ) {
@@ -265,7 +265,7 @@ async function pageBlockTaskCb(
       screenshot = await makeNodeScreenshot(node, config);
     } catch (e) {
       if (process.env.NODE_ENV === "development") {
-        /* eslint-disable-next-line no-console */
+        /* biome-ignore lint/suspicious/noConsole: migrated from eslint */
         console.warn(e);
       }
       return;
@@ -305,28 +305,24 @@ async function pageBlockTaskCb(
       screenshotId = id;
     }
   }
-
-  // update store
-  {
-    if (!blockIsInThePage(blockId, store)) {
-      return;
-    }
-
-    next(
-      updateScreenshot({
-        blockId,
-        data: {
-          _thumbnailSrc: screenshotId,
-          _thumbnailWidth: screenshot.width,
-          _thumbnailHeight: screenshot.height,
-          _thumbnailTime: Date.now()
-        },
-        meta: {
-          blockType: "normal"
-        }
-      })
-    );
+  if (!blockIsInThePage(blockId, store)) {
+    return;
   }
+
+  next(
+    updateScreenshot({
+      blockId,
+      data: {
+        _thumbnailSrc: screenshotId,
+        _thumbnailWidth: screenshot.width,
+        _thumbnailHeight: screenshot.height,
+        _thumbnailTime: Date.now()
+      },
+      meta: {
+        blockType: "normal"
+      }
+    })
+  );
 }
 async function globalBlockTaskCb(
   store,
@@ -367,7 +363,7 @@ async function globalBlockTaskCb(
       screenshot = await makeNodeScreenshot(node, config);
     } catch (e) {
       if (process.env.NODE_ENV === "development") {
-        /* eslint-disable-next-line no-console */
+        /* biome-ignore lint/suspicious/noConsole: migrated from eslint */
         console.warn(e);
       }
       return;
@@ -388,9 +384,8 @@ async function globalBlockTaskCb(
 
     const screenshots = screenshotsSelector(store.getState());
 
-    const publishedScreenshot =
-      screenshots._published[_id] && screenshots._published[_id]._thumbnailSrc;
-    const latestScreenshot = screenshots[_id] && screenshots[_id]._thumbnailSrc;
+    const publishedScreenshot = screenshots._published[_id]?._thumbnailSrc;
+    const latestScreenshot = screenshots[_id]?._thumbnailSrc;
     if (!publishedScreenshot || publishedScreenshot === latestScreenshot) {
       const r = await apiCreateBlockScreenshot(
         {
@@ -452,7 +447,7 @@ async function popupBlockTaskCb(
   config,
   next,
   options,
-  block,
+  _block,
   enqueueAgain
 ) {
   const { dbId: popupDBId, domId: popupDOMId } = options.popup;
@@ -475,9 +470,8 @@ async function popupBlockTaskCb(
       screenshot = await makeNodeScreenshot(node, config);
     } catch (e) {
       if (process.env.NODE_ENV === "development") {
-        /* eslint-disable no-console */
+        // biome-ignore lint/suspicious/noConsole: migrated from eslint
         console.warn(e);
-        /* eslint-enabled no-console */
       }
       return;
     }
@@ -487,7 +481,7 @@ async function popupBlockTaskCb(
   {
     const pageBlocks = getPageBlocks(store.getState());
     const popup = getIn(pageBlocks, pathToPopupInBlocks);
-    const popupIsInPage = popup && popup.value && popup.value._id === popupId;
+    const popupIsInPage = popup?.value && popup.value._id === popupId;
     if (!popupIsInPage) {
       return;
     }
@@ -499,11 +493,8 @@ async function popupBlockTaskCb(
 
     const screenshots = screenshotsSelector(store.getState());
 
-    const publishedScreenshot =
-      screenshots._published[popupId] &&
-      screenshots._published[popupId]._thumbnailSrc;
-    const latestScreenshot =
-      screenshots[popupId] && screenshots[popupId]._thumbnailSrc;
+    const publishedScreenshot = screenshots._published[popupId]?._thumbnailSrc;
+    const latestScreenshot = screenshots[popupId]?._thumbnailSrc;
     if (!latestScreenshot || latestScreenshot === publishedScreenshot) {
       const r = await apiCreateBlockScreenshot(
         {
@@ -540,7 +531,7 @@ async function popupBlockTaskCb(
   {
     const pageBlocks = getPageBlocks(store.getState());
     const popup = getIn(pageBlocks, pathToPopupInBlocks);
-    const popupIsInPage = (popup && popup.value && popup.value._id) === popupId;
+    const popupIsInPage = popup?.value?._id === popupId;
     if (!popupIsInPage) {
       return;
     }
@@ -580,7 +571,7 @@ async function popupBlockInsideGlobalBlockTaskCb(
 
   const { obj: popupData } = findDeep(
     globalBlock,
-    (obj) => obj && obj.value && obj.value._id === popupDbId
+    (obj) => obj?.value && obj.value._id === popupDbId
   );
 
   if (!popupData) {
@@ -603,9 +594,8 @@ async function popupBlockInsideGlobalBlockTaskCb(
       screenshot = await makeNodeScreenshot(node, config);
     } catch (e) {
       if (process.env.NODE_ENV === "development") {
-        /* eslint-disable no-console */
+        // biome-ignore lint/suspicious/noConsole: migrated from eslint
         console.warn(e);
-        /* eslint-enabled no-console */
       }
       return;
     }
@@ -623,7 +613,7 @@ async function popupBlockInsideGlobalBlockTaskCb(
 
     const { obj: popup } = findDeep(
       globalBlock,
-      (obj) => obj && obj.value && obj.value._id === popupDbId
+      (obj) => obj?.value && obj.value._id === popupDbId
     );
     const popupIsInPage = Boolean(popup);
     if (!popupIsInPage) {
@@ -695,7 +685,7 @@ async function popupBlockInsideGlobalBlockTaskCb(
 
     const { obj: popup } = findDeep(
       globalBlock,
-      (obj) => obj && obj.value && obj.value._id === popupDbId
+      (obj) => obj?.value && obj.value._id === popupDbId
     );
     const popupIsInPage = Boolean(popup);
     if (!popupIsInPage) {

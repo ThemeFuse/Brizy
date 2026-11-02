@@ -1,6 +1,6 @@
 import QuickLRU from "quick-lru";
-import { MValue } from "visual/utils/value";
-import { DCApiProxyConfig, DCApiProxyFetcher } from "./types";
+import type { MValue } from "visual/utils/value";
+import type { DCApiProxyConfig, DCApiProxyFetcher } from "./types";
 
 export class DCApiProxy {
   private fetcher: DCApiProxyFetcher;

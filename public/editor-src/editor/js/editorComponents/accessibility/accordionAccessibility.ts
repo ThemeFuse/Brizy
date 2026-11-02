@@ -50,7 +50,9 @@ export class AccordionAccessibility {
   }
 
   public sync(): void {
-    this.items.forEach((item) => this.syncItem(item));
+    this.items.forEach((item) => {
+      this.syncItem(item);
+    });
     this.syncFilterButtons();
   }
 
@@ -172,9 +174,7 @@ export class AccordionAccessibility {
     currentButton: HTMLElement,
     direction: 1 | -1
   ): void {
-    const currentIndex = this.filterButtons.findIndex(
-      (button) => button === currentButton
-    );
+    const currentIndex = this.filterButtons.indexOf(currentButton);
 
     if (currentIndex === -1) {
       return;
@@ -187,10 +187,7 @@ export class AccordionAccessibility {
     this.filterButtons[nextIndex]?.focus();
   }
 
-  private handleFilterKeyDown(
-    event: KeyboardEvent,
-    button: HTMLElement
-  ): void {
+  private handleFilterKeyDown(event: KeyboardEvent, button: HTMLElement): void {
     switch (event.key) {
       case "Enter":
       case " ":

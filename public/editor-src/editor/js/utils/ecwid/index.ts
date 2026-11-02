@@ -1,16 +1,16 @@
 import { Num, Str } from "@brizy/readers";
-import { MouseEvent as ReactMouseEvent } from "react";
-import { isCloudWithShopModules } from "visual/global/Config/types/Module";
+import type { MouseEvent as ReactMouseEvent } from "react";
 import { isEcwidShop } from "visual/global/Config/types/configs/Base";
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
-import {
+import type { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import { isCloudWithShopModules } from "visual/global/Config/types/Module";
+import type {
   EcwidProductId,
   EcwidProductIdWithSlug
 } from "visual/global/Ecwid/types";
 import { makePlaceholder } from "visual/utils/dynamicContent";
 import { makeAttr } from "visual/utils/i18n/attribute";
-import { Literal } from "visual/utils/types/Literal";
-import { MValue } from "visual/utils/value";
+import type { Literal } from "visual/utils/types/Literal";
+import type { MValue } from "visual/utils/value";
 
 export const ECWID_PRODUCT_TYPE = "ecwid-product";
 export const ECWID_PRODUCT_CATEGORY_TYPE = "ecwid-product-category";

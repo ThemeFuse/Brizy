@@ -1,4 +1,4 @@
-import { MValue } from "visual/utils/value";
+import type { MValue } from "visual/utils/value";
 
 type Props<T> = { props: { value: T } };
 

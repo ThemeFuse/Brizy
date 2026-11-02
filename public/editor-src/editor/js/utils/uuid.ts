@@ -1,7 +1,7 @@
 import { once } from "es-toolkit";
 import { Base64 } from "js-base64";
 import { customAlphabet } from "nanoid";
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import type { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { makePlaceholder } from "visual/utils/dynamicContent";
 
 const alphabet = "abcdefghijklmnopqrstuvwxyz";

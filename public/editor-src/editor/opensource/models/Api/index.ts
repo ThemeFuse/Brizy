@@ -1,12 +1,12 @@
-import { CollectionItems } from "./CollectionItems";
-import { CollectionTypes } from "./CollectionTypes";
-import { CustomFile } from "./CustomFile";
-import { DefaultKits } from "./DefaultKits";
-import { DefaultLayouts } from "./DefaultLayouts";
-import { DefaultPopups } from "./DefaultPopups";
-import { DefaultStories } from "./DefaultStories";
-import { Media } from "./Media";
-import { Screenshots } from "./Screenshots";
+import type { CollectionItems } from "./CollectionItems";
+import type { CollectionTypes } from "./CollectionTypes";
+import type { CustomFile } from "./CustomFile";
+import type { DefaultKits } from "./DefaultKits";
+import type { DefaultLayouts } from "./DefaultLayouts";
+import type { DefaultPopups } from "./DefaultPopups";
+import type { DefaultStories } from "./DefaultStories";
+import type { Media } from "./Media";
+import type { Screenshots } from "./Screenshots";
 
 export interface Api {
   // Media

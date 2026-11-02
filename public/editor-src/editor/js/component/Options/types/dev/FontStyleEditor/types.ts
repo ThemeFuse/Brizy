@@ -1,7 +1,7 @@
-import { DeviceMode } from "visual/types";
-import { ModelFamilyType } from "visual/utils/fonts/getFontById";
-import { CSSProperties } from "react";
-import { OptionDefinition } from "visual/editorComponents/ToolbarItemType";
+import type { CSSProperties } from "react";
+import type { OptionDefinition } from "visual/editorComponents/ToolbarItemType";
+import type { DeviceMode } from "visual/types";
+import type { ModelFamilyType } from "visual/utils/fonts/getFontById";
 
 type Switch = "on" | "off";
 
@@ -66,6 +66,7 @@ export interface FontStyleEditorItem extends StyleCommon {
 }
 
 export interface FontStyleEditorData extends FontStyleProps {
+  [k: string]: unknown;
   deleted: boolean;
   id: string;
   deletable: Switch;

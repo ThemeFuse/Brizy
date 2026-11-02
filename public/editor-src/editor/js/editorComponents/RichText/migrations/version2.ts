@@ -1,5 +1,5 @@
-import { ElementModel } from "visual/component/Elements/Types";
-import { MigrationRichText } from "visual/editorComponents/RichText/migrations/types";
+import type { ElementModel } from "visual/component/Elements/Types";
+import type { MigrationRichText } from "visual/editorComponents/RichText/migrations/types";
 import { makePlaceholder } from "visual/utils/dynamicContent";
 import { mPipe } from "visual/utils/fp";
 import * as Obj from "visual/utils/reader/object";

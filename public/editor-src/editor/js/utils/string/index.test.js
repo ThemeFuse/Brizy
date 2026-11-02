@@ -1,9 +1,9 @@
 import {
+  asString,
   camelCase,
   capByPrefix,
   capitalize,
-  onEmpty,
-  toString
+  onEmpty
 } from "visual/utils/string/index";
 import {
   testMonoidBehavior,
@@ -11,14 +11,14 @@ import {
 } from "visual/utils/value/utilites.test";
 import { snakeCase } from "./index";
 
-describe("Testing 'toString' function", function () {
+describe("Testing 'asString' function", function () {
   test("if value is string type, return value", () => {
-    ["", "0", "test"].map((v) => expect(toString(v)).toBe(v));
+    ["", "0", "test"].map((v) => expect(asString(v)).toBe(v));
   });
 
   test("if value is not string type, return empty string", () => {
     [undefined, null, 1, {}, () => ({})].map((v) =>
-      expect(toString(v, "")).toBe("")
+      expect(asString(v, "")).toBe("")
     );
   });
 });

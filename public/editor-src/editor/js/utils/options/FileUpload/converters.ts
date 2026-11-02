@@ -1,4 +1,4 @@
-import * as Option from "visual/component/Options/Type";
+import type * as Option from "visual/component/Options/Type";
 import * as Str from "visual/utils/string/specs";
 
 export const defaultValue = {

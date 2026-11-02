@@ -3,15 +3,9 @@ import { getProLibs } from "visual/libs";
 import { checkValue2 } from "visual/utils/checkValue";
 import { parseFromString } from "visual/utils/string";
 import { ChartType, readChartDataValues } from "./types";
-import { TypographyConfig, getChart } from "./utils";
+import { getChart, type TypographyConfig } from "./utils";
 
-export default function ($node: JQuery) {
-  const node = $node.get(0);
-
-  if (!node) {
-    return;
-  }
-
+export default function (node: HTMLElement) {
   node.querySelectorAll<HTMLElement>(".brz-chart").forEach((chart) => {
     const {
       chartType,

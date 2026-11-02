@@ -1,6 +1,6 @@
 import type { Placement as PopperPlacement } from "@popperjs/core";
-import { ElementModel } from "visual/component/Elements/Types";
-import { DeviceMode } from "visual/types";
+import type { ElementModel } from "visual/component/Elements/Types";
+import type { DeviceMode } from "visual/types";
 
 export interface Value extends ElementModel {
   closeColorHex: string;

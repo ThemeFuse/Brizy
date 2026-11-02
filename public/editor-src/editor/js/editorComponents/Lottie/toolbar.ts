@@ -2,10 +2,10 @@ import {
   RendererType,
   TriggerType
 } from "@brizy/component/src/Flex/Lottie/types";
-import { GetItems } from "visual/editorComponents/EditorComponent/types";
-import { DCTypes } from "visual/global/Config/types/DynamicContent";
+import type { GetItems } from "visual/editorComponents/EditorComponent/types";
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import { getEnabledLinkOptions } from "visual/global/Config/types/configs/featuresValue";
+import { DCTypes } from "visual/global/Config/types/DynamicContent";
 import { isPopup, isStory } from "visual/providers/EditorModeProvider";
 import { getColorToolbar } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
@@ -14,7 +14,7 @@ import { getDynamicContentOption } from "visual/utils/options";
 import { popupToOldModel } from "visual/utils/options/PromptAddPopup/utils";
 import { HOVER, NORMAL } from "visual/utils/stateMode";
 import { toolbarLinkAnchor } from "visual/utils/toolbar";
-import { Value } from "./type";
+import type { Value } from "./type";
 import { isLottieFile } from "./utils";
 
 export const getItems: GetItems<Value> = ({

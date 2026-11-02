@@ -1,5 +1,5 @@
-import React, { ReactElement, useEffect } from "react";
-import { CellComponentProps, Grid, useGridRef } from "react-window";
+import React, { type ReactElement, useEffect } from "react";
+import { type CellComponentProps, Grid, useGridRef } from "react-window";
 import { useIsRTL } from "visual/global/hooks";
 
 type SmartGridProps = {

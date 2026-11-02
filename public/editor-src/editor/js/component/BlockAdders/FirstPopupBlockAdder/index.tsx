@@ -1,14 +1,14 @@
-import React, { ReactElement, useCallback } from "react";
+import React, { type ReactElement, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import Prompts, { PromptsProps } from "visual/component/Prompts";
+import Prompts, { type PromptsProps } from "visual/component/Prompts";
 import { rolesHOC } from "visual/component/Roles";
 import { useConfig } from "visual/providers/ConfigProvider";
 import { setDeviceMode } from "visual/redux/actions2";
 import { deviceModeSelector } from "visual/redux/selectors";
-import { DeviceMode } from "visual/types";
+import type { DeviceMode } from "visual/types";
 import { t } from "visual/utils/i18n";
 import { First as Control } from "../Controls/First";
-import { Props } from "./types";
+import type { Props } from "./types";
 
 interface TextsDevice {
   title: string;

@@ -1,4 +1,4 @@
-import { PageCommon } from "visual/types/Page";
+import type { PageCommon } from "visual/types/Page";
 
 //#region Page
 

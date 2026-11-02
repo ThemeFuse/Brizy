@@ -1,13 +1,13 @@
 import { uniq } from "es-toolkit";
 import { pass } from "fp-utilities";
-import React, { ReactElement, useCallback, useMemo } from "react";
+import React, { type ReactElement, useCallback, useMemo } from "react";
 import { Group } from "visual/component/Controls/Group";
 import { ReloadButton } from "visual/component/Controls/ReloadButton";
 import { FatIconsGrid } from "visual/component/FatIconsGrid";
+import type * as Option from "visual/component/Options/Type";
+import type { OnChange } from "visual/component/Options/Type";
 import { OptionWrapper } from "visual/component/OptionWrapper";
-import * as Option from "visual/component/Options/Type";
-import { OnChange } from "visual/component/Options/Type";
-import { WithClassName } from "visual/types/attributes";
+import type { WithClassName } from "visual/types/attributes";
 import { always, mPipe } from "visual/utils/fp";
 import { t } from "visual/utils/i18n";
 import { fromNumber } from "visual/utils/math/Positive";
@@ -16,13 +16,13 @@ import {
   effectTypeIcon,
   effectTypeTitle
 } from "visual/utils/options/Animation/types/EffectType";
+import * as Attention from "visual/utils/options/Animation/types/effects/Attention";
+import * as Fade from "visual/utils/options/Animation/types/effects/Fade";
+import * as Reveal from "visual/utils/options/Animation/types/effects/Reveal";
 import * as Value from "visual/utils/options/Animation/types/Value";
 import { setDelay } from "visual/utils/options/Animation/types/WithDelay";
 import { setDuration } from "visual/utils/options/Animation/types/WithDuration";
 import { setInfiniteAnimation } from "visual/utils/options/Animation/types/WithInfiniteAnimation";
-import * as Attention from "visual/utils/options/Animation/types/effects/Attention";
-import * as Fade from "visual/utils/options/Animation/types/effects/Fade";
-import * as Reveal from "visual/utils/options/Animation/types/effects/Reveal";
 import {
   defaultEffects,
   getDirections,

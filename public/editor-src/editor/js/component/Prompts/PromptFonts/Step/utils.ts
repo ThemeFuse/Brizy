@@ -1,9 +1,9 @@
-import {
+import type { AppData } from "visual/component/Prompts/common/GlobalApps/type";
+import type {
   AdobeConnectReader,
   AdobeDisconnectApp,
   AdobeDisconnectReader
 } from "visual/component/Prompts/PromptFonts/Step/types";
-import { AppData } from "visual/component/Prompts/common/GlobalApps/type";
 
 export const adobeConnectReader = (app: AppData): AdobeConnectReader => ({
   title: app.title,

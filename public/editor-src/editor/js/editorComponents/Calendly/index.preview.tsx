@@ -1,10 +1,10 @@
-import React, { ReactNode } from "react";
+import React, { type ReactNode } from "react";
 import Placeholder from "visual/component/Placeholder";
 import { Wrapper } from "../tools/Wrapper";
 import { BaseCalendly } from "./Base";
 import * as sidebarConfig from "./sidebar";
 import * as toolbarConfig from "./toolbar";
-import { Value } from "./types";
+import type { Value } from "./types";
 
 class Calendly extends BaseCalendly {
   renderForView(v: Value): ReactNode {

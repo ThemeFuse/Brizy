@@ -7,7 +7,7 @@ export function styleElementForm2FieldColumns({
   state,
   prefix = ""
 }) {
-  const dvv = key => defaultValueValue({ v, key, device, state });
+  const dvv = (key) => defaultValueValue({ v, key, device, state });
 
   return dvv(capByPrefix(prefix, "columns"));
 }

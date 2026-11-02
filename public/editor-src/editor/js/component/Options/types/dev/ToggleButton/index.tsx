@@ -1,7 +1,7 @@
 import React, { useCallback, useMemo } from "react";
 import { ToggleButton as Control } from "visual/component/Controls/ToggleButton";
-import { Props } from "./types";
 import { Toggle } from "visual/utils/options/utils/Type";
+import type { Props } from "./types";
 
 export const ToggleButton = ({
   value: { value },

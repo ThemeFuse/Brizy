@@ -1,4 +1,4 @@
-import { FontFamilyType } from "./Fonts";
+import type { FontFamilyType } from "./Fonts";
 
 export type PaletteType =
   | "color1"
@@ -11,9 +11,9 @@ export type PaletteType =
   | "color8";
 
 export enum TextScripts {
-  "None" = "",
-  "Super" = "super",
-  "Sub" = "sub"
+  None = "",
+  Super = "super",
+  Sub = "sub"
 }
 
 export interface FontTransform {
@@ -27,6 +27,7 @@ export interface FontTransform {
 }
 
 export interface FontStyle extends FontTransform {
+  [k: string]: unknown;
   deletable: "off" | "on";
   deleted?: boolean;
   id: string;

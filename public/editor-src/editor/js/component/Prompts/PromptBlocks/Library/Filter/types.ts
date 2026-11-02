@@ -1,5 +1,5 @@
-import { BlockTypes } from "../../types";
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import type { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import type { BlockTypes } from "../../types";
 
 export interface Props<T extends BlockTypes> {
   type: T;

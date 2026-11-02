@@ -1,7 +1,5 @@
 import * as Parse from "visual/utils/reader/readWithParser";
 import { EffectType } from "./EffectType";
-import { LegacyEffectType } from "./LegacyEffectType";
-import { LegacyModel } from "./LegacyModel";
 import * as Attention from "./effects/Attention";
 import * as Bounce from "./effects/Bounce";
 import * as Buzz from "./effects/Buzz";
@@ -18,6 +16,8 @@ import * as Skew from "./effects/Skew";
 import * as Slide from "./effects/Slide";
 import * as Wobble from "./effects/Wobble";
 import * as Zoom from "./effects/Zoom";
+import { LegacyEffectType } from "./LegacyEffectType";
+import type { LegacyModel } from "./LegacyModel";
 
 export type Value =
   | Attention.Attention

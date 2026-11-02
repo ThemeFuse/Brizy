@@ -1,38 +1,14 @@
 // ===========================================
-// Tool types (local copies — editor owns these)
+// Tool types
 // ===========================================
 
 /**
- * JSON Schema type for tool parameters
+ * The LLM-facing tool contract lives in `@brizy/ai-tools`, which owns the
+ * catalog. It is re-exported here so the ai layer keeps one import path for
+ * its own models, and so `packages/ai-chat` continues to see the shape it
+ * structurally expects across the plugin boundary.
  */
-export interface ToolParameterSchema {
-  readonly type: "object";
-  readonly properties: Record<string, unknown>;
-  readonly required?: readonly string[];
-  readonly additionalProperties?: boolean;
-}
-
-/**
- * Tool definition — describes a tool the LLM can call
- */
-export interface ToolDefinition {
-  readonly name: string;
-  readonly description: string;
-  readonly parameters: ToolParameterSchema;
-  readonly category?: string;
-  readonly strict?: boolean;
-
-  /**
-   * When true, the chat client must ask the user for an explicit go-ahead
-   * before the tool runs. Independent of any `confirm` argument the LLM
-   * itself has to pass — this one is the human in the loop.
-   */
-  readonly requiresConfirmation?: boolean;
-  /** What the confirmation prompt tells the user is about to happen. */
-  readonly confirmationMessage?: string;
-  /** Label of the approve button (defaults to a generic "Confirm"). */
-  readonly confirmLabel?: string;
-}
+export type { ToolDefinition, ToolParameterSchema } from "@brizy/ai-tools";
 
 /**
  * Tool execution response

@@ -10,7 +10,7 @@ export const setToStorage = (key: string, value: string): void => {
   try {
     localStorage.setItem(key, value);
   } catch (_) {
-    // eslint-disable-next-line no-console
+    // biome-ignore lint/suspicious/noConsole: migrated from eslint
     console.warn("Could not access localStorage");
   }
 };

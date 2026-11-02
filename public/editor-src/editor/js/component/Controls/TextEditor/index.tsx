@@ -5,7 +5,7 @@ import { Translate } from "visual/component/Translate";
 import { useTranslation } from "visual/providers/I18nProvider";
 import { renderHOC } from "visual/providers/RenderProvider/renderHOC";
 import { t } from "visual/utils/i18n";
-import { DefaultProps, Props, State } from "./types";
+import type { DefaultProps, Props, State } from "./types";
 
 const keyCodes = {
   ENTER: 13,

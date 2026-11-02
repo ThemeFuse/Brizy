@@ -1,9 +1,9 @@
-import { OptionName } from "visual/component/Options/types";
-import {
+import type { OptionName } from "visual/component/Options/types";
+import type {
   GenericToolbarItemType,
   ToolbarItemType
 } from "visual/editorComponents/ToolbarItemType";
-import { Reduce, withColumns, withOptions, withTabs } from "./reduces";
+import { type Reduce, withColumns, withOptions, withTabs } from "./reduces";
 
 type Reducers = {
   [K in OptionName]:

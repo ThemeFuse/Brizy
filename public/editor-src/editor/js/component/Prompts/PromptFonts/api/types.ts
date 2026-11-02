@@ -1,5 +1,5 @@
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
-import { UploadedFont, VariationFont } from "visual/types/Fonts";
+import type { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import type { UploadedFont, VariationFont } from "visual/types/Fonts";
 
 export interface FontFile {
   [type: string]: {

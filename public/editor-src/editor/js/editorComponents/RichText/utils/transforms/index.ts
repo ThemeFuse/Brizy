@@ -1,4 +1,4 @@
-import { ElementModel } from "visual/component/Elements/Types";
+import type { ElementModel } from "visual/component/Elements/Types";
 import { isNumeric } from "visual/utils/math";
 import {
   blockValues,
@@ -11,9 +11,9 @@ import {
 
 export {
   blockValues,
-  inlineValues,
-  customValues,
   currentBlockValues,
+  customValues,
+  inlineValues,
   legacyValues
 };
 
@@ -65,7 +65,7 @@ export const getElementValues = (classList: string[]): ElementModel => {
   // add conditions for data attributes and styles if it's needed
 
   if (classList.length) {
-    const regex = new RegExp("^(.*)-(.*$)");
+    const regex = /^(.*)-(.*$)/;
 
     classList.forEach((className) => {
       const result = className.match(regex);

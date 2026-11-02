@@ -1,4 +1,4 @@
-import { ElementModel } from "visual/component/Elements/Types";
+import type { ElementModel } from "visual/component/Elements/Types";
 
 type BaseSwitchType = "on" | "off";
 
@@ -17,7 +17,8 @@ interface SoundCloudButtonOptions {
 }
 
 interface SoundCloudOptions
-  extends SoundCloudAppeareanceOptions, SoundCloudButtonOptions {}
+  extends SoundCloudAppeareanceOptions,
+    SoundCloudButtonOptions {}
 
 //TODO: review if Value contain all the Element keys
 export interface Value extends ElementModel, SoundCloudOptions {

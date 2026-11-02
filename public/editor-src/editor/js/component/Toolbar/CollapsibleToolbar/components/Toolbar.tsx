@@ -1,8 +1,8 @@
 import classNames from "classnames";
 import React, { forwardRef } from "react";
-import { TransitionState } from "react-transition-state";
+import type { TransitionState } from "react-transition-state";
 import { ToolbarItems } from "visual/component/Toolbar/ToolbarItems";
-import { OptionDefinition } from "visual/editorComponents/ToolbarItemType";
+import type { OptionDefinition } from "visual/editorComponents/ToolbarItemType";
 
 export interface ToolbarProps extends TransitionState {
   items: OptionDefinition[];

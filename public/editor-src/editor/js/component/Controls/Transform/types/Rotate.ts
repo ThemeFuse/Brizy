@@ -1,4 +1,4 @@
-import * as Degree from "../Degree";
+import type * as Degree from "../Degree";
 
 export interface Rotate {
   rotate: Degree.Degree;

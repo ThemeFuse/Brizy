@@ -1,4 +1,4 @@
-import {
+import type {
   FromElementModel,
   ToElementModel
 } from "visual/component/Options/Type";
@@ -10,7 +10,7 @@ import * as Num from "visual/utils/math/number";
 import * as Str from "visual/utils/string/specs";
 import * as Palette from "../ColorPicker/entities/palette";
 import * as T from "./entities/Type";
-import { Value } from "./entities/Value";
+import type { Value } from "./entities/Value";
 import { fromLegacyType, toLegacyType } from "./utils";
 
 export const defaultValue: Value = {

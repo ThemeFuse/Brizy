@@ -1,10 +1,10 @@
-import React, { ReactElement, useCallback } from "react";
+import React, { type ReactElement, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Button as Control } from "visual/component/Controls/Button";
-import { Props as OptionProps } from "visual/component/Options/Type";
+import type { Props as OptionProps } from "visual/component/Options/Type";
 import { updateUI } from "visual/redux/actions2";
 import { uiSelector } from "visual/redux/selectors";
-import { WithConfig } from "visual/types/attributes";
+import type { WithConfig } from "visual/types/attributes";
 import { pipe } from "visual/utils/fp";
 import { prop } from "visual/utils/object/get";
 
@@ -40,10 +40,8 @@ export const SidebarTabsButton = ({ config }: Props): ReactElement => {
   );
 
   return (
-    <>
-      <Control onClick={onClick} icon={icon} align={align}>
-        {text}
-      </Control>
-    </>
+    <Control onClick={onClick} icon={icon} align={align}>
+      {text}
+    </Control>
   );
 };

@@ -1,9 +1,9 @@
 import React, {
-  HTMLAttributes,
-  PropsWithChildren,
-  ReactElement,
-  Ref,
-  forwardRef
+  forwardRef,
+  type HTMLAttributes,
+  type PropsWithChildren,
+  type ReactElement,
+  type Ref
 } from "react";
 
 type TranslateTagProps = PropsWithChildren<{

@@ -1,4 +1,4 @@
-import { ToMeta } from "visual/component/Options/Type";
+import type { ToMeta } from "visual/component/Options/Type";
 import { isEmpty, isNoEmptyGrouped } from "visual/utils/options/Margin/meta";
 
 export interface Meta {

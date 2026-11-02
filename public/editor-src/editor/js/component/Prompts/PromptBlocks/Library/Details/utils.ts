@@ -1,4 +1,4 @@
-import { CSSProperties } from "react";
+import type { CSSProperties } from "react";
 
 export const animationStyle = {
   animationName: "fadeIn",
@@ -25,7 +25,7 @@ export const getThumbnailHeightStyle = (
   | Record<string, unknown> => {
   if (height) {
     return {
-      ["--thumbnailHeight"]: height
+      "--thumbnailHeight": height
     };
   }
   return {};
@@ -38,7 +38,7 @@ export const getPreviewPointerStyle = (
   | Record<string, unknown> => {
   if (previewPointer) {
     return {
-      ["--previewPointer"]: previewPointer
+      "--previewPointer": previewPointer
     };
   }
   return {};
@@ -51,7 +51,7 @@ export const getTransitionPreview = (
   | Record<string, unknown> => {
   if (thumbnailHeight) {
     return {
-      ["--transitionPreview"]: `transform ${getTransition(
+      "--transitionPreview": `transform ${getTransition(
         thumbnailHeight ?? 0
       )}s linear`
     };

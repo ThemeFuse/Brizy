@@ -1,4 +1,5 @@
 import { MMenuAnimationTypes } from "visual/editorComponents/Menu/types";
+import { menuDataSelector } from "visual/redux/selectors";
 import { getColorToolbar } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
@@ -46,7 +47,7 @@ export function getItems({ v, device, component }) {
           label: t("Menu"),
           choices: getMenuChoices(
             menuSelected,
-            component.getGlobalConfig().menuData
+            menuDataSelector(component.getReduxState())
           )
         },
         {

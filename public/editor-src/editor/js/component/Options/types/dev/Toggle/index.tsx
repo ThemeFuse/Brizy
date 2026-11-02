@@ -1,8 +1,8 @@
-import React from "react";
 import classNames from "classnames";
+import React from "react";
 import { Toggle as Control } from "visual/component/Controls/Toggle";
-import { Props } from "visual/component/Controls/Toggle/types";
-import { Literal } from "visual/utils/types/Literal";
+import type { Props } from "visual/component/Controls/Toggle/types";
+import type { Literal } from "visual/utils/types/Literal";
 
 export const Toggle = <T extends Literal>({
   className,

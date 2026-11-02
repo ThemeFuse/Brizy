@@ -1,12 +1,12 @@
 import { Obj } from "@brizy/readers";
 import { flatten } from "es-toolkit";
-import {
+import type {
   ConfigDCItem,
   DCGroup
 } from "visual/global/Config/types/DynamicContent";
-import { MValue } from "visual/utils/value";
-import { Literal } from "../types/Literal";
-import { TypeChoices } from "./types";
+import type { MValue } from "visual/utils/value";
+import type { Literal } from "../types/Literal";
+import type { TypeChoices } from "./types";
 
 type Options = DCGroup<"wp"> | DCGroup<"cloud">;
 

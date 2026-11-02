@@ -1,11 +1,11 @@
-import React, { ReactNode, createRef } from "react";
+import React, { createRef, type ReactNode } from "react";
 import { TextEditor } from "visual/component/Controls/TextEditor";
 import CustomCSS from "visual/component/CustomCSS";
 import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { Wrapper } from "visual/editorComponents/tools/Wrapper";
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
-import { ChartType as ChartInstanceType } from "visual/types/global";
+import type { ChartType as ChartInstanceType } from "visual/types/global";
 import { hexToRgba } from "visual/utils/color";
 import { addFilter, applyFilter, removeFilter } from "visual/utils/filters";
 import { isVariableFont } from "visual/utils/options/Typography/utils";
@@ -15,7 +15,7 @@ import defaultValue from "./defaultValue.json";
 import * as sidebarConfig from "./sidebar";
 import * as toolbarConfig from "./toolbar";
 import * as toolbarTitleConfig from "./toolbarTitle";
-import { ChartType, Props, Value } from "./types";
+import { ChartType, type Props, type Value } from "./types";
 import { getChart, getChartItems } from "./utils";
 
 class Chart extends EditorComponent<Value, Props> {

@@ -1,9 +1,9 @@
 import classnames from "classnames";
-import React, { CSSProperties, forwardRef, useMemo } from "react";
+import React, { type CSSProperties, forwardRef, useMemo } from "react";
 import { Text } from "visual/component/ContentOptions/types";
 import { ThemeIcon } from "visual/component/ThemeIcon";
 import { ViewType } from "visual/editorComponents/Form2/Form2Steps/types";
-import { RenderType, isEditor } from "visual/providers/RenderProvider";
+import { isEditor, type RenderType } from "visual/providers/RenderProvider";
 import type { Value } from "../types";
 
 interface Props {

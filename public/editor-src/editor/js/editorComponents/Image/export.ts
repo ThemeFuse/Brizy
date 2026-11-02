@@ -1,14 +1,9 @@
-import $ from "jquery";
-import { handleLightBoxZoom } from "visual/utils/export/lightbox";
+import { getFreeLibs } from "visual/libs";
 
-export default function ($node: JQuery) {
-  const node = $node.get(0);
+export default function (node: HTMLElement) {
+  const { openLightbox, handleLightBoxZoom } = getFreeLibs();
 
-  if (!node) {
-    return;
-  }
-
-  node.querySelectorAll(".brz-image__lightbox").forEach((item) => {
+  node.querySelectorAll<HTMLElement>(".brz-image__lightbox").forEach((item) => {
     item.addEventListener("click", (e) => {
       e.preventDefault();
       e.stopPropagation();
@@ -16,17 +11,18 @@ export default function ($node: JQuery) {
       const aTag = item.querySelector("a");
 
       if (aTag) {
-        $(item)
-          // @ts-expect-error magnificPopup have no types
-          .magnificPopup({
+        openLightbox({
+          kind: "element",
+          target: item,
+          options: {
             delegate: "a",
             type: "image",
+            gallery: undefined,
             closeOnContentClick: true,
-            callbacks: {
-              open: handleLightBoxZoom
-            }
-          })
-          .magnificPopup("open");
+            mainClass: "",
+            callbacks: { open: handleLightBoxZoom, close: undefined }
+          }
+        }).open();
       }
     });
   });

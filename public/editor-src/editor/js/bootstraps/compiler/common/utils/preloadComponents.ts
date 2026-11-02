@@ -1,12 +1,12 @@
-import { ElementModelType2 } from "visual/component/Elements/Types";
+import type { ElementModelType2 } from "visual/component/Elements/Types";
 import {
   ecwidLazyComponents,
   ministryBrandsLazyComponents,
   shopifyLazyComponents
 } from "visual/editorComponents";
-import { Config } from "visual/global/Config";
+import type { Config } from "visual/global/Config";
 import { isCloud } from "visual/global/Config/types/configs/Cloud";
-import { Page } from "visual/types/Page";
+import type { Page } from "visual/types/Page";
 import { mapModels } from "visual/utils/models";
 
 interface Data {
@@ -52,7 +52,7 @@ export function preloadComponents(data: Data) {
           component.preload();
         }
       } catch (error) {
-        // eslint-disable-next-line no-console
+        // biome-ignore lint/suspicious/noConsole: migrated from eslint
         console.warn("Failed to preload component:", error);
       }
     }

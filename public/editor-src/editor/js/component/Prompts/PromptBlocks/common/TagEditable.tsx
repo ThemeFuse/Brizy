@@ -1,7 +1,7 @@
 import React, {
-  ChangeEventHandler,
-  KeyboardEventHandler,
-  ReactElement
+  type ChangeEventHandler,
+  type KeyboardEventHandler,
+  type ReactElement
 } from "react";
 import EditorIcon from "visual/component/EditorIcon";
 import { t } from "visual/utils/i18n";

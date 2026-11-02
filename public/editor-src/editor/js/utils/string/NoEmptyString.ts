@@ -1,5 +1,5 @@
 import { pass } from "fp-utilities";
-import { NewType } from "visual/types/NewType";
+import type { NewType } from "visual/types/NewType";
 
 enum type {}
 

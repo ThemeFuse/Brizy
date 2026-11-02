@@ -23,9 +23,12 @@ jest.mock("visual/ai/infrastructure/repositories/project.repository", () => ({
   createProjectRepository: jest.fn()
 }));
 
-jest.mock("visual/ai/infrastructure/repositories/global-block.repository", () => ({
-  createGlobalBlockRepository: jest.fn()
-}));
+jest.mock(
+  "visual/ai/infrastructure/repositories/global-block.repository",
+  () => ({
+    createGlobalBlockRepository: jest.fn()
+  })
+);
 
 const makeResponse = (
   overrides: Partial<ToolExecutionResponse> = {}

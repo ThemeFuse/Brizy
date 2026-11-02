@@ -3,7 +3,7 @@ import { readSymbol } from "visual/utils/elements/posts";
 import * as Num from "visual/utils/reader/number";
 import * as Obj from "visual/utils/reader/object";
 import * as Str from "visual/utils/reader/string";
-import { V, VDecoded } from "./types";
+import type { V, VDecoded } from "./types";
 
 export function decodeV(v: V): VDecoded {
   const {

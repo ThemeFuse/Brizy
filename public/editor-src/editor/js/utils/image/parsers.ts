@@ -1,10 +1,10 @@
+import { Num, Obj, Str } from "@brizy/readers";
 import { mPipe, optional } from "fp-utilities";
-import {
+import type {
   CropData,
   ImagePatterns
 } from "visual/global/Config/types/configs/common";
 import { readWithParser } from "visual/utils/reader/readWithParser";
-import { Num, Str, Obj } from "@brizy/readers";
 
 export const parseCropData = mPipe(
   Obj.read,

@@ -4,25 +4,25 @@ import { noop } from "es-toolkit";
 import { find } from "es-toolkit/compat";
 import React, {
   Component,
-  ComponentType,
-  PropsWithChildren,
-  ReactElement,
-  ReactNode
+  type ComponentType,
+  type PropsWithChildren,
+  type ReactElement,
+  type ReactNode
 } from "react";
-import { ConnectedProps, connect } from "react-redux";
+import { type ConnectedProps, connect } from "react-redux";
 import EditorIcon from "visual/component/EditorIcon";
 import { ToastNotification } from "visual/component/Notifications";
-import { LayoutData } from "visual/component/Prompts/PromptBlocks/Layouts/types";
-import { PromptBlockTemplate } from "visual/component/Prompts/PromptBlocks/types";
+import type { LayoutData } from "visual/component/Prompts/PromptBlocks/Layouts/types";
+import type { PromptBlockTemplate } from "visual/component/Prompts/PromptBlocks/types";
 import { Scrollbar } from "visual/component/Scrollbar";
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import type { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { fontsSelector, stylesSelector } from "visual/redux/selectors";
-import { ReduxState } from "visual/redux/types";
-import { Block } from "visual/types/Block";
-import { Style } from "visual/types/Style";
+import type { ReduxState } from "visual/redux/types";
+import type { Block } from "visual/types/Block";
+import type { Style } from "visual/types/Style";
 import { defaultLayoutsData, defaultStoriesData } from "visual/utils/api";
 import { flatMap } from "visual/utils/array";
-import { ArrayType } from "visual/utils/array/types";
+import type { ArrayType } from "visual/utils/array/types";
 import { placeholderBlockThumbnailUrl } from "visual/utils/blocks";
 import { normalizeFonts } from "visual/utils/fonts/normalizeFonts";
 import { normalizeStyles } from "visual/utils/fonts/transform";
@@ -254,7 +254,7 @@ class Details extends Component<AllProps, State> {
     const activePageSrc =
       currentPage?.thumbnailSrc ?? placeholderBlockThumbnailUrl(config);
 
-    const renderSectionPage = pages.map((el, index) => {
+    const renderSectionPage = pages.map((el) => {
       const pageSrc = el.thumbnailSrc ?? placeholderBlockThumbnailUrl(config);
 
       const className = classnames(
@@ -267,7 +267,7 @@ class Details extends Component<AllProps, State> {
 
       return (
         <div
-          key={index}
+          key={el.id}
           className={className}
           onClick={(): void => {
             this.setState({ active: el.id });

@@ -1,4 +1,4 @@
-import { Size, getButtonSizes, getSize } from "visual/utils/cssStyle";
+import { getButtonSizes, getSize, type Size } from "visual/utils/cssStyle";
 import type {
   OptionStyle,
   OutputOptionStyle

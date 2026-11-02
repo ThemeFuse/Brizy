@@ -11,7 +11,7 @@ export default class FormItemItems extends EditorArrayComponent {
     className: ""
   };
 
-  getItemProps(itemData, itemIndex, items) {
+  getItemProps(_itemData, itemIndex, items) {
     const cloneRemoveConfig = {
       getItems: () => [
         {

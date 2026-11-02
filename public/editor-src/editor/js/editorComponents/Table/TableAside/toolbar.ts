@@ -1,9 +1,9 @@
-import { ElementModel } from "visual/component/Elements/Types";
-import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
+import type { ElementModel } from "visual/component/Elements/Types";
+import type { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
-import { ResponsiveMode } from "visual/utils/responsiveMode";
-import { State } from "visual/utils/stateMode";
+import type { ResponsiveMode } from "visual/utils/responsiveMode";
+import type { State } from "visual/utils/stateMode";
 
 const getItems =
   (isFirstItem: boolean | undefined, widthType: string, isFromBody: boolean) =>

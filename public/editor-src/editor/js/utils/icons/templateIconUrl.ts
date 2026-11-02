@@ -1,5 +1,5 @@
 import { IconTypes } from "visual/config/icons/Type";
-import { TemplateIconData } from "./types";
+import type { TemplateIconData } from "./types";
 import { getCustomIconUrl } from "./utils";
 
 export function templateIconUrl({

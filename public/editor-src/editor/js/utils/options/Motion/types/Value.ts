@@ -1,5 +1,5 @@
 import { mPipe, parseStrict, pass } from "fp-utilities";
-import { FromElementModelGetter } from "visual/component/Options/Type";
+import type { FromElementModelGetter } from "visual/component/Options/Type";
 import { callGetter } from "visual/utils/options/utils/wrap";
 import { optional } from "visual/utils/reader/readWithParser";
 import { isEnabled } from "../utils";
@@ -10,8 +10,8 @@ import * as MouseTrack from "./MouseTrack";
 import * as Rotate from "./Rotate";
 import * as Scale from "./Scale";
 import * as Transparency from "./Transparency";
-import * as Vertical from "./Vertical";
 import { wrap } from "./utils";
+import * as Vertical from "./Vertical";
 
 export type Effect = Exclude<keyof Value, "active">;
 

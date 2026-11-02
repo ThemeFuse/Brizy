@@ -1,6 +1,6 @@
-import React, { ReactElement } from "react";
+import React, { type ReactElement } from "react";
 import AutoCorrectingInput from "visual/component/Controls/AutoCorrectingInput";
-import { WithOnChange, WithValue } from "visual/types/attributes";
+import type { WithOnChange, WithValue } from "visual/types/attributes";
 
 type Props = WithValue<number> & WithOnChange<number>;
 

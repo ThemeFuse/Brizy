@@ -1,10 +1,10 @@
 import { mPipe, optional, parseStrict } from "fp-utilities";
-import {
+import type {
   FromElementModel,
   FromElementModelGetter,
   ToElementModel
 } from "visual/component/Options/Type";
-import { Value } from "visual/component/Options/types/common/Population/types/Value";
+import type { Value } from "visual/component/Options/types/common/Population/types/Value";
 import { callGetter } from "visual/utils/options/utils/wrap";
 import { fromString } from "visual/utils/string/NoEmptyString";
 import * as Str from "visual/utils/string/specs";

@@ -1,9 +1,11 @@
 import { mapValues } from "es-toolkit";
 
 export { findDeep } from "./findDeep";
-export { traverse as objectTraverse } from "./traverse";
-export { traverse2 as objectTraverse2 } from "./traverse";
 export { objectFromEntries } from "./fromEntries";
+export {
+  traverse as objectTraverse,
+  traverse2 as objectTraverse2
+} from "./traverse";
 
 /**
  * Map a function over a value

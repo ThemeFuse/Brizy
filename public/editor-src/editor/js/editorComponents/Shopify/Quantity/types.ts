@@ -1,8 +1,8 @@
-import {
+import type {
   ElementModel,
   ElementModelType
 } from "visual/component/Elements/Types";
-import { Dictionary } from "visual/types/utils";
+import type { Dictionary } from "visual/types/utils";
 
 export interface Value extends ElementModel {
   items: ElementModelType[];

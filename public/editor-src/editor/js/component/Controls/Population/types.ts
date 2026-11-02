@@ -1,13 +1,13 @@
-import {
+import type {
   Choices,
   OptGroup
 } from "visual/component/Options/types/common/Population/types/Choices";
-import { PopulationMethod } from "visual/component/Options/types/common/Population/types/PopulationMethod";
-import {
+import type { PopulationMethod } from "visual/component/Options/types/common/Population/types/PopulationMethod";
+import type {
   ChoicesAsync,
   ElementModelValue
 } from "visual/component/Options/types/dev/Select/types";
-import { WithClassName } from "visual/types/attributes";
+import type { WithClassName } from "visual/types/attributes";
 
 export interface Props<T extends string | number> extends WithClassName {
   isOpen: boolean;

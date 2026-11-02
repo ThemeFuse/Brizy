@@ -42,7 +42,7 @@ class GoogleConnect extends Component {
     onChange(id, { ...data, fonts: googleFonts });
   }
 
-  handleAddNewFont = (name, value) => {
+  handleAddNewFont = (_name, value) => {
     this.setState({
       selectedFont: value
     });

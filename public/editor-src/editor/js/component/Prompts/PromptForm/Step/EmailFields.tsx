@@ -1,7 +1,7 @@
-import React, { Component, ReactElement } from "react";
+import React, { Component, type ReactElement } from "react";
 import { t } from "visual/utils/i18n";
 import { Context } from "../../common/GlobalApps/Context";
-import { FormField } from "../../common/GlobalApps/type";
+import type { FormField } from "../../common/GlobalApps/type";
 import { HelperCopy } from "./common/HelperToolip";
 import Smtp from "./common/Smtp";
 

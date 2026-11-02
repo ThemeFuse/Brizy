@@ -9,7 +9,7 @@ import { attachRefs } from "visual/utils/react";
 import { Wrapper } from "../tools/Wrapper";
 import defaultValue from "./defaultValue.json";
 import * as toolbarConfig from "./toolbar";
-import { Value } from "./types";
+import type { Value } from "./types";
 
 export default class LinkedinFeed extends EditorComponent<Value> {
   static get componentId(): ElementTypes.LinkedinFeed {

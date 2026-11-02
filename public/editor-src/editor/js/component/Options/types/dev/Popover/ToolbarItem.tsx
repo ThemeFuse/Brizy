@@ -1,6 +1,6 @@
-import React, { ReactElement } from "react";
+import React, { type ReactElement } from "react";
 import { Content } from "visual/component/Options/types/dev/Popover/Content";
-import { ToolbarItemProps } from "./types";
+import type { ToolbarItemProps } from "./types";
 
 export const ToolbarItems = ({
   className,

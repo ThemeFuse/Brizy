@@ -1,6 +1,6 @@
-import { ReactNode } from "react";
-import { DynamicContent } from "visual/global/Config/types/DynamicContent";
-import { ComponentTypes } from "./ComponentTypes";
+import type { ReactNode } from "react";
+import type { DynamicContent } from "visual/global/Config/types/DynamicContent";
+import type { ComponentTypes } from "./ComponentTypes";
 
 type DC = DynamicContent<"wp"> | DynamicContent<"cloud">;
 

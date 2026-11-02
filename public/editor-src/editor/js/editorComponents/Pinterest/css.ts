@@ -1,4 +1,4 @@
-import { OptionStyle } from "visual/utils/cssStyle/types";
+import type { OptionStyle } from "visual/utils/cssStyle/types";
 
 const size = {
   small: "16px",

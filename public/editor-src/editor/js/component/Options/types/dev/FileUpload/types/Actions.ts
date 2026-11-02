@@ -1,5 +1,5 @@
-import { Value } from "../types/Value";
-import { WithValue } from "./Value";
+import type { Value } from "../types/Value";
+import type { WithValue } from "./Value";
 
 export interface Upload {
   type: "Upload";

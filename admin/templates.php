@@ -162,30 +162,30 @@ class Brizy_Admin_Templates
 
         $messages[self::CP_TEMPLATE] = array(
             0 => '', // Unused. Messages start at index 1.
-            1 => __('Template updated.'),
-            2 => __('Custom field updated.'),
-            3 => __('Custom field deleted.'),
-            4 => __('Template updated.'),
+            1 => __('Template updated.', 'brizy'),
+            2 => __('Custom field updated.', 'brizy'),
+            3 => __('Custom field deleted.', 'brizy'),
+            4 => __('Template updated.', 'brizy'),
             /* translators: %s: date and time of the revision */
             5 => isset($_GET['revision']) ? sprintf(
-                __('Template restored to revision from %s'),
+                __('Template restored to revision from %s', 'brizy'),
                 wp_post_revision_title((int)$_GET['revision'], false)
             ) : false,
-            6 => __('Template published.'),
-            7 => __('Template saved.'),
-            8 => __('Template submitted.'),
+            6 => __('Template published.', 'brizy'),
+            7 => __('Template saved.', 'brizy'),
+            8 => __('Template submitted.', 'brizy'),
             9 => sprintf(
-                __('Template scheduled for: <strong>%1$s</strong>.'),
+                __('Template scheduled for: <strong>%1$s</strong>.', 'brizy'),
                 // translators: Publish box date format, see http://php.net/date
-                date_i18n(__('M j, Y @ G:i'), strtotime($post->post_date))
+                date_i18n(__('M j, Y @ G:i', 'brizy'), strtotime($post->post_date))
             ),
-            10 => __('Template draft updated.'),
+            10 => __('Template draft updated.', 'brizy'),
         );
 
         if ($post_type_object->publicly_queryable && 'Template' === $post_type) {
             $permalink = get_permalink($post->ID);
 
-            $view_link = sprintf(' <a href="%s">%s</a>', esc_url($permalink), __('View Template'));
+            $view_link = sprintf(' <a href="%s">%s</a>', esc_url($permalink), __('View Template', 'brizy'));
             $messages[$post_type][1] .= $view_link;
             $messages[$post_type][6] .= $view_link;
             $messages[$post_type][9] .= $view_link;
@@ -194,7 +194,7 @@ class Brizy_Admin_Templates
             $preview_link = sprintf(
                 ' <a target="_blank" href="%s">%s</a>',
                 esc_url($preview_permalink),
-                __('Preview Template')
+                __('Preview Template', 'brizy')
             );
             $messages[$post_type][8] .= $preview_link;
             $messages[$post_type][10] .= $preview_link;

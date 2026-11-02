@@ -1,13 +1,13 @@
 import React, { useCallback } from "react";
 import { PromiseComponent } from "visual/component/PromiseComponent";
-import { Icon } from "visual/config/icons/Icon";
+import type { Icon } from "visual/config/icons/Icon";
 import { getTypeIcons } from "visual/config/icons/icons";
 import { useConfig } from "visual/providers/ConfigProvider";
-import { FCC } from "visual/utils/react/types";
+import type { FCC } from "visual/utils/react/types";
 import { Filters } from "../Filters";
 import { IconGrid } from "../IconGrid";
 import { LoadingSpinner } from "../LoadingSpinner";
-import { Props } from "./types";
+import type { Props } from "./types";
 import { getIcons } from "./utils";
 
 export const RenderSimple: FCC<Props> = ({
@@ -59,7 +59,7 @@ export const RenderSimple: FCC<Props> = ({
             const normalisedIcons = getIcons(icons);
 
             if (!normalisedIcons) {
-              return <></>;
+              return null;
             }
 
             const filteredIcons = filterIcons(normalisedIcons);

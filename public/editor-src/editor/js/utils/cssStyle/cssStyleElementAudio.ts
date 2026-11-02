@@ -1,4 +1,4 @@
-import { WithRenderContext } from "visual/providers/RenderProvider";
+import type { WithRenderContext } from "visual/providers/RenderProvider";
 import { cssStyleBorder } from "visual/utils/cssStyle/cssStyleBorder";
 import { cssStyleBorderRadius } from "visual/utils/cssStyle/cssStyleBorderRadius";
 import { cssStyleBoxShadow } from "visual/utils/cssStyle/cssStyleBoxShadow";
@@ -10,7 +10,7 @@ import { cssStyleStrokeText } from "visual/utils/cssStyle/cssStyleStroke";
 import { getAllCssStyleTypography } from "visual/utils/cssStyle/cssStyleTypography2";
 import { defaultValueValue } from "visual/utils/onChange";
 import { styleColor } from "visual/utils/style2";
-import { CSSValue } from "visual/utils/style2/types";
+import type { CSSValue } from "visual/utils/style2/types";
 
 export function cssStyleElementAudioTitleTypography({
   v,

@@ -1,9 +1,9 @@
-import React, { ReactElement, useCallback } from "react";
+import React, { type ReactElement, useCallback } from "react";
 import { RangeSlider as Control } from "visual/component/Controls/RangeSlider";
 import { useThrottleOnChange } from "visual/component/hooks";
-import { Props as OptionProps } from "visual/component/Options/Type";
-import { WithClassName, WithConfig } from "visual/types/attributes";
-import { eq, Value } from "./types/Value";
+import type { Props as OptionProps } from "visual/component/Options/Type";
+import type { WithClassName, WithConfig } from "visual/types/attributes";
+import { eq, type Value } from "./types/Value";
 
 export type Config = {
   min?: number;

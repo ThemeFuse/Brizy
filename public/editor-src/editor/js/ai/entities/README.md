@@ -11,7 +11,7 @@ Domain models shared across all layers. No dependencies on other AI module layer
 | `ToolParameterSchema`   | JSON Schema object describing tool parameters        |
 | `ToolDefinition`        | Tool metadata sent to LLM (name, description, params)|
 | `ToolExecutionResponse` | Result returned after tool execution                 |
-| `ToolHandler`           | Function signature `(args) => Promise<unknown> \| unknown` |
+| `ToolHandler`           | Function signature `(args: Record<string, unknown>) => Promise<BrizyToolResult> \| BrizyToolResult` |
 
 ### Page / Element Types
 

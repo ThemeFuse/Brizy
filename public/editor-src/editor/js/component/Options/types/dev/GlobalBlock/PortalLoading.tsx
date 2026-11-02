@@ -1,4 +1,4 @@
-import React, { ReactElement } from "react";
+import React, { type ReactElement } from "react";
 import { createPortal } from "react-dom";
 import EditorIcon from "visual/component/EditorIcon";
 

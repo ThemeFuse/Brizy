@@ -1,13 +1,20 @@
-import $ from "jquery";
+import { getFreeLibs } from "visual/libs";
 import { initHoverAnimation } from "visual/libs/hoveranimation/utils";
+import type { SliderHandle } from "visual/libs/slider";
+import { sliderDataSchema } from "visual/utils/export/schemas";
 import {
+  appendToEach,
   attachSliderControls,
-  makePausePlayItem
+  DEFAULT_NEXT_ARROW,
+  DEFAULT_PREV_ARROW,
+  makePausePlayItem,
+  readBreakpoints,
+  readDataAttributes
 } from "../../utils/export/slider";
-import { CarouselAccessibility } from "../accessibility";
 
 const SECTION_SLIDER_CLASS = "brz-slick-slider__section";
 const sliderPausedState = new WeakMap<Element, boolean>();
+const sliders = new WeakMap<Element, SliderHandle>();
 let carouselInstance = 0;
 
 const observer = new IntersectionObserver(
@@ -16,26 +23,35 @@ const observer = new IntersectionObserver(
       const element = entry.target;
       const isPaused = sliderPausedState.get(element) ?? false;
       if (entry.isIntersecting && !isPaused) {
-        $(element).slick("slickPlay");
+        sliders.get(element)?.play();
       } else {
-        $(element).slick("slickPause");
+        sliders.get(element)?.pause();
       }
     });
   },
   { threshold: 0.5 }
 );
 
-export default function ($node: JQuery) {
-  const isRtl = $node.closest("[dir='rtl']").length > 0;
-  const makeArrow = (node: HTMLElement) => {
-    const $svg = $(node).children(".brz-icon-svg");
+export default function (node: HTMLElement) {
+  const { openLightbox, handleLightBoxZoom, createSlider } = getFreeLibs();
+  const isRtl = node.closest("[dir='rtl']") !== null;
+  const makeArrow = (slider: HTMLElement) => {
+    const icons = Array.from(slider.children).filter((child) =>
+      child.matches(".brz-icon-svg")
+    );
+    const [first] = icons;
 
-    if (!$svg.length) return () => "";
+    if (!first) return () => "";
 
-    const $clone = $svg.clone().removeClass("brz-hidden");
-    const svgHTML = $clone[0].outerHTML;
+    const clone = first.cloneNode(true);
+    const svg = clone instanceof Element ? clone : undefined;
 
-    $svg.remove();
+    svg?.classList.remove("brz-hidden");
+    const svgHTML = svg?.outerHTML ?? "";
+
+    icons.forEach((icon) => {
+      icon.remove();
+    });
 
     return (className: string) => {
       const isNext = className.includes("next");
@@ -45,12 +61,15 @@ export default function ($node: JQuery) {
     };
   };
 
-  const makeCustomDots = (node: HTMLElement) => {
-    const customSvgElement = node.querySelector(".brz-carousel-dot-custom");
+  const makeCustomDots = (slider: HTMLElement): string | undefined => {
+    const customSvgElement = slider.querySelector(".brz-carousel-dot-custom");
 
-    if (!customSvgElement) return null;
+    if (!customSvgElement) return undefined;
 
-    const clonedElement = customSvgElement.cloneNode(true) as HTMLElement;
+    const clonedElement = customSvgElement.cloneNode(true);
+
+    if (!(clonedElement instanceof Element)) return undefined;
+
     clonedElement.classList.remove("brz-hidden");
     const outerHTML = clonedElement.outerHTML;
 
@@ -59,159 +78,179 @@ export default function ($node: JQuery) {
     return outerHTML;
   };
 
-  const handleClickPlay = ($this: JQuery<Element>) => {
-    $this.slick("slickPlay");
-    $this.attr("data-slider-paused", "false");
-    sliderPausedState.set($this[0], false);
+  const handleClickPlay = (slider: HTMLElement) => {
+    sliders.get(slider)?.play();
+    slider.setAttribute("data-slider-paused", "false");
+    sliderPausedState.set(slider, false);
   };
 
-  const handleClickPause = ($this: JQuery<Element>) => {
-    $this.slick("slickPause");
-    $this.attr("data-slider-paused", "true");
-    sliderPausedState.set($this[0], true);
+  const handleClickPause = (slider: HTMLElement) => {
+    sliders.get(slider)?.pause();
+    slider.setAttribute("data-slider-paused", "true");
+    sliderPausedState.set(slider, true);
   };
 
-  $node.find(".brz-carousel__slider").each(function () {
-    // eslint-disable-next-line @typescript-eslint/no-this-alias
-    const _this = this;
-    const $this = $(this);
-    const data = $this.data();
-    const slidesToShow = data.slidesToShow;
-    const slidesToScroll = data.slidesToScroll;
-    const dots = data.dots;
-    const dotsClass = data.dotsClass;
-    const arrows = data.arrows;
-    const fade = data.fade;
-    const vertical = data.vertical;
-    const autoPlay = data.autoPlay;
-    const autoPlaySpeed = data.autoPlaySpeed;
-    const transitionSpeed = data.transitionSpeed;
-    const swipe = data.swipe;
-    const responsive = JSON.parse(decodeURIComponent(data.responsive));
-    const playPauseItem = makePausePlayItem(_this);
-    const instanceId = carouselInstance++;
+  node
+    .querySelectorAll<HTMLElement>(".brz-carousel__slider")
+    .forEach((slider) => {
+      const data = sliderDataSchema.parse(readDataAttributes(slider));
+      const responsive = readBreakpoints(data.responsive);
+      const playPauseItem = makePausePlayItem(slider);
+      const instanceId = carouselInstance++;
 
-    const isInsideSectionSlider = !!$this.closest(`.${SECTION_SLIDER_CLASS}`).length;
+      const isInsideSectionSlider =
+        slider.closest(`.${SECTION_SLIDER_CLASS}`) !== null;
 
-    $this.on("init", function () {
-      initHoverAnimation(_this);
-      $this.find(".brz-image__lightbox").each(function () {
-        this.addEventListener("click", (e) => {
-          e.preventDefault();
-          e.stopPropagation();
+      // After the build: hover animation, lightbox, play/pause in the dots, ready event.
+      const afterSlickInit = () => {
+        initHoverAnimation(slider);
 
-          const aTag = this.querySelector("a");
+        slider
+          .querySelectorAll<HTMLElement>(".brz-image__lightbox")
+          .forEach((lightbox) => {
+            lightbox.addEventListener("click", (e) => {
+              e.preventDefault();
+              e.stopPropagation();
 
-          if (aTag) {
-            $(this)
-              // @ts-expect-error magnificPopup have no types
-              .magnificPopup({
-                delegate: "a",
-                type: "image",
-                closeOnContentClick: true
-              })
-              .magnificPopup("open");
-          }
-        });
-      });
+              const aTag = lightbox.querySelector("a");
 
-      const $dots = $this.find(".brz-slick-slider__dots");
-      if ($dots.length && playPauseItem) {
-        $dots.append(playPauseItem);
-        attachSliderControls(
-          $this,
-          playPauseItem,
-          handleClickPause,
-          handleClickPlay
+              if (aTag) {
+                openLightbox({
+                  kind: "element",
+                  target: lightbox,
+                  options: {
+                    delegate: "a",
+                    type: "image",
+                    gallery: undefined,
+                    closeOnContentClick: true,
+                    mainClass: "",
+                    callbacks: { open: handleLightBoxZoom, close: undefined }
+                  }
+                }).open();
+              }
+            });
+          });
+
+        const dots = Array.from(
+          slider.querySelectorAll(".brz-slick-slider__dots")
         );
-      }
-
-      window.Brz.emit("elements.carousel.ready", $this);
-    });
-
-    const customDotIcon = makeCustomDots(_this);
-    const getArrow = makeArrow(_this);
-
-    sliderPausedState.set(_this, false);
-    $this.attr("data-slider-paused", "false");
-
-    const initCarouselSlick = () => {
-      const $slick = $this.slick({
-        slidesToShow,
-        slidesToScroll,
-        swipe,
-        dots,
-        dotsClass,
-        arrows,
-        fade,
-        vertical,
-        responsive,
-        useTransform: false,
-        speed: transitionSpeed * 100,
-        draggable: swipe,
-        nextArrow: arrows && getArrow("brz-slick-slider__arrow-next"),
-        prevArrow: arrows && getArrow("brz-slick-slider__arrow-prev"),
-        customPaging: customDotIcon
-          ? () => `<button>${customDotIcon}</button>`
-          : undefined,
-        autoplay: false,
-        autoplaySpeed: autoPlaySpeed,
-        rtl: isRtl,
-        accessibility: false,
-        pauseOnFocus: false
-      });
-
-      const carouselAccessibility = new CarouselAccessibility({
-        slick: $slick,
-        instanceId
-      });
-      carouselAccessibility.init();
-
-      if (autoPlay) {
-        observer.observe(_this);
-      }
-
-      window.Brz.emit("elements.slick.ready", {
-        slick: $this.get(0)
-      });
-
-      const elements = [
-        "elements.tabs.changed",
-        "elements.accordion.changed",
-        "elements.switcher.changed",
-        "elements.mmenu.panel.opened"
-      ];
-
-      elements.forEach((id) => {
-        window.Brz.on(id, (element: Element) => {
-          if (element && element.contains(_this)) {
-            $slick.slick("setPosition");
-          }
-        });
-      });
-    };
-
-    if (isInsideSectionSlider) {
-      let inited = false;
-
-      window.Brz.on(
-        "elements.slick.ready",
-        (payload: { wrapper?: Element }) => {
-          const wrapper = payload?.wrapper;
-          if (
-            !wrapper ||
-            !wrapper.querySelector(`.${SECTION_SLIDER_CLASS}`) ||
-            !wrapper.contains(_this) ||
-            inited
-          ) {
-            return;
-          }
-          inited = true;
-          initCarouselSlick();
+        if (dots.length && playPauseItem) {
+          appendToEach(dots, playPauseItem);
+          attachSliderControls(
+            playPauseItem,
+            () => handleClickPause(slider),
+            () => handleClickPlay(slider)
+          );
         }
-      );
-    } else {
-      initCarouselSlick();
-    }
-  });
+
+        window.Brz.emit("elements.carousel.ready", slider);
+      };
+
+      const customDotIcon = makeCustomDots(slider);
+      const getArrow = makeArrow(slider);
+      // Without `data-arrows` the slider builds its own arrows.
+      const arrow = (className: string, fallback: string) =>
+        data.arrows === undefined
+          ? fallback
+          : data.arrows && getArrow(className);
+
+      sliderPausedState.set(slider, false);
+      slider.setAttribute("data-slider-paused", "false");
+
+      const initCarouselSlick = () => {
+        const handle = createSlider(slider, {
+          slidesToShow: data.slidesToShow ?? 1,
+          slidesToScroll: data.slidesToScroll ?? 1,
+          swipe: data.swipe ?? true,
+          dots: data.dots ?? false,
+          dotsClass: data.dotsClass ?? "slick-dots",
+          arrows: data.arrows ?? true,
+          fade: data.fade ?? false,
+          vertical: data.vertical ?? false,
+          responsive,
+          useTransform: false,
+          speed: Number(data.transitionSpeed) * 100,
+          draggable: data.swipe ?? true,
+          nextArrow: arrow("brz-slick-slider__arrow-next", DEFAULT_NEXT_ARROW),
+          prevArrow: arrow("brz-slick-slider__arrow-prev", DEFAULT_PREV_ARROW),
+          customPaging: customDotIcon
+            ? () => `<button>${customDotIcon}</button>`
+            : undefined,
+          autoplay: false,
+          autoplaySpeed: data.autoPlaySpeed ?? 3000,
+          rtl: isRtl,
+          accessibility: false,
+          pauseOnFocus: false,
+          pauseOnHover: true,
+          infinite: true,
+          touchThreshold: 5,
+          rows: 1,
+          centerMode: false,
+          centerPadding: "50px",
+          variableWidth: false,
+          focusOnSelect: false,
+          lazyLoad: "ondemand"
+        });
+
+        handle.mount();
+
+        sliders.set(slider, handle);
+
+        afterSlickInit();
+
+        handle.setupAccessibility({
+          regionId: `brz-carousel-${instanceId}`,
+          regionLabel: `Carousel ${instanceId + 1}`,
+          slideIdPrefix: `brz-carousel-slide-${instanceId}`,
+          controls: "parent",
+          focusableArrows: false,
+          tabindexKey: "brzCarouselTabindex"
+        });
+
+        if (data.autoPlay) {
+          observer.observe(slider);
+        }
+
+        window.Brz.emit("elements.slick.ready", {
+          slick: slider
+        });
+
+        const elements = [
+          "elements.tabs.changed",
+          "elements.accordion.changed",
+          "elements.switcher.changed",
+          "elements.mmenu.panel.opened"
+        ];
+
+        elements.forEach((id) => {
+          window.Brz.on(id, (element: Element) => {
+            if (element?.contains(slider)) {
+              handle.setPosition();
+            }
+          });
+        });
+      };
+
+      if (isInsideSectionSlider) {
+        let inited = false;
+
+        window.Brz.on(
+          "elements.slick.ready",
+          (payload: { wrapper?: Element }) => {
+            const wrapper = payload?.wrapper;
+            if (
+              !wrapper?.querySelector(`.${SECTION_SLIDER_CLASS}`) ||
+              !wrapper.contains(slider) ||
+              inited
+            ) {
+              return;
+            }
+            inited = true;
+            initCarouselSlick();
+          }
+        );
+      } else {
+        initCarouselSlick();
+      }
+    });
 }

@@ -1,6 +1,11 @@
 import classnames from "classnames";
-import React, { Attributes, CSSProperties, ReactNode, forwardRef } from "react";
-import { FCC } from "visual/utils/react/types";
+import React, {
+  type Attributes,
+  type CSSProperties,
+  forwardRef,
+  type ReactNode
+} from "react";
+import type { FCC } from "visual/utils/react/types";
 
 interface Props {
   className?: string;

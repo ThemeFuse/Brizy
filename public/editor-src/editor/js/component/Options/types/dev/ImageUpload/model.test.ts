@@ -2,13 +2,13 @@
 import { identity } from "es-toolkit";
 import { times } from "es-toolkit/compat";
 import {
-  Image,
   getExtension,
   getHeight,
   getSrc,
   getWidth,
   getX,
   getY,
+  Image,
   setExtension,
   setHeight,
   setSrc,

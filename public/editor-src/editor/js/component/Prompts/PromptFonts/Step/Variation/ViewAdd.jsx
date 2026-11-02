@@ -65,6 +65,7 @@ class ViewAdd extends Component {
           <Fragment>
             <span className="brz-span">{value.name}</span>
             <button
+              type="button"
               className="brz-button brz-ed-btn brz-ed-btn-xs brz-ed-btn-gray brz-ed-btn-red--hover brz-ed-btn-rounded brz-fw-700"
               onClick={() => {
                 this.props.onActive(name, "");
@@ -106,12 +107,12 @@ class ViewAdd extends Component {
   }
 
   renderOptions() {
-    const options = this.props.data.map((option, index) => {
+    const options = this.props.data.map((option) => {
       const { title, type, helper } = option;
 
       return (
         <div
-          key={index}
+          key={title}
           className="brz-ed-popup-integrations-step__fields-option"
         >
           <div className="brz-d-xs-flex brz-align-items-xs-center">

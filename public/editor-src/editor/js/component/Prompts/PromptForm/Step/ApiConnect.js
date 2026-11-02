@@ -37,7 +37,8 @@ class ApiConnect extends Component {
     const generatedValues = accountApiKeys.reduce(
       (acc, { name, value, choices }) => {
         const defaultChoice = choices ? choices[0].id : "";
-        return { ...acc, [`${name}`]: value ?? defaultChoice };
+        acc[`${name}`] = value ?? defaultChoice;
+        return acc;
       },
       {}
     );
@@ -74,7 +75,7 @@ class ApiConnect extends Component {
 
     onChange(id, { ...appData, accountApiKeys: data });
 
-    if (appData.usedAccount || (appData.accounts && appData.accounts.length)) {
+    if (appData.usedAccount || appData.accounts?.length) {
       props.onChangeNext();
     } else {
       onChangeProgress({ showProgress: false });

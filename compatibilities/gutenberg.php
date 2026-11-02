@@ -88,16 +88,6 @@ class Brizy_Compatibilities_Gutenberg {
                     </div>
                     <?php $this->admin_head(); ?>
                 </script>
-                <script id="brizy-gutenberg-btn-middle" type="text/html">
-                    <div class="brizy-buttons brizy-buttons-gutenberg">
-                        <a href="<?php echo Brizy_Editor_Entity::getEditUrl( get_the_ID() ); ?>" class="">
-                            <div class="button button-primary button-large">
-	                            <?php printf( esc_html__( 'Edit with %s', 'brizy' ), __bt( 'brizy', 'Brizy' ) ); ?>
-                            </div>
-                        </a>
-                    </div>
-                    <?php $this->admin_head(); ?>
-                </script>
 
 				<?php
 			} else {

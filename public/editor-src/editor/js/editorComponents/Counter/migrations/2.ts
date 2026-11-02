@@ -1,4 +1,4 @@
-import { Deps, Migration, MigrationValues } from "visual/utils/migration";
+import type { Deps, Migration, MigrationValues } from "visual/utils/migration";
 import * as Num from "visual/utils/reader/number";
 import * as Obj from "visual/utils/reader/object";
 import * as Str from "visual/utils/reader/string";

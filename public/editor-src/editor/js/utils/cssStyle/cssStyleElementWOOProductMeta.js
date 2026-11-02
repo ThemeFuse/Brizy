@@ -16,7 +16,7 @@ import {
 } from "visual/utils/style2";
 
 export function cssStyleElementWOOProductMetaType({ v, device, state }) {
-  let type =
+  const type =
     styleElementWOOProductMetaType({
       v,
       device,

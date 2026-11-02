@@ -1,8 +1,8 @@
-import { GetItems } from "visual/editorComponents/EditorComponent/types";
+import type { GetItems } from "visual/editorComponents/EditorComponent/types";
 import { getColorToolbar } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
-import { Slug, Value } from "./types";
+import { Slug, type Value } from "./types";
 
 export const getItems: GetItems<Value> = ({ v, device }) => {
   const dvv = (key: string) =>
@@ -102,7 +102,7 @@ export const getItems: GetItems<Value> = ({ v, device }) => {
               options: [
                 {
                   id: "color",
-                  type: "colorPicker",
+                  type: "colorPicker"
                 }
               ]
             },
@@ -112,7 +112,7 @@ export const getItems: GetItems<Value> = ({ v, device }) => {
               options: [
                 {
                   id: "iconsColor",
-                  type: "colorPicker",
+                  type: "colorPicker"
                 }
               ]
             }

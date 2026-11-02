@@ -1,6 +1,6 @@
 import { parseStrict } from "fp-utilities";
-import { ElementModel } from "visual/component/Elements/Types";
-import {
+import type { ElementModel } from "visual/component/Elements/Types";
+import type {
   FromElementModel,
   FromElementModelGetter,
   ToElementModel
@@ -16,9 +16,9 @@ import { optional, readWithParser } from "visual/utils/reader/readWithParser";
 import * as Str from "visual/utils/string/specs";
 import { onNullish } from "visual/utils/value";
 import { call } from "../Animation/utils";
-import { NoEmptyBlur, fromBlur } from "./types/NoEmptyBlur";
-import { NoEmptyOpacity, fromOpacity } from "./types/NoEmptyOpacity";
-import { Empty, NoEmpty, isEmpty, isNoEmpty } from "./types/Value";
+import { fromBlur, type NoEmptyBlur } from "./types/NoEmptyBlur";
+import { fromOpacity, type NoEmptyOpacity } from "./types/NoEmptyOpacity";
+import { type Empty, isEmpty, isNoEmpty, type NoEmpty } from "./types/Value";
 
 export const defaultValue: Empty = {
   blur: 0,

@@ -1,6 +1,6 @@
 import { t } from "visual/utils/i18n";
-import { GetItems } from "../EditorComponent/types";
-import { Value } from "./toolbarExtend";
+import type { GetItems } from "../EditorComponent/types";
+import type { Value } from "./toolbarExtend";
 
 export const getItems: GetItems<Value> = () => {
   return [

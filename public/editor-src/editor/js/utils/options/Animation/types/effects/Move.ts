@@ -3,11 +3,10 @@ import { t } from "visual/utils/i18n";
 import { prop } from "visual/utils/object/get";
 import * as Parse from "visual/utils/reader/readWithParser";
 import * as BaseEffect from "../BaseEffect";
-import { isEffect } from "../EffectType";
 import * as ET from "../EffectType";
-import { EffectType } from "../EffectType";
+import { EffectType, isEffect } from "../EffectType";
 import { LegacyEffectType } from "../LegacyEffectType";
-import { LegacyModel } from "../LegacyModel";
+import type { LegacyModel } from "../LegacyModel";
 
 export enum Direction {
   up = "up",

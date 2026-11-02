@@ -1,5 +1,5 @@
-import { Actions } from "visual/component/Prompts/common/states/Classic/types/Actions";
-import * as State from "visual/component/Prompts/common/states/Classic/types/State";
+import type { Actions } from "visual/component/Prompts/common/states/Classic/types/Actions";
+import type * as State from "visual/component/Prompts/common/states/Classic/types/State";
 
 export type Reducer<
   Invalid extends State.St,

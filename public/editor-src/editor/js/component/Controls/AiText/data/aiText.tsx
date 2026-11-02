@@ -1,7 +1,7 @@
 import { Microphone } from "@brizy/ui-icons/lib/icons/Microphone";
 import React from "react";
 import { Icon } from "visual/component/Brizy-ui/Icon";
-import { DropdownButtonData } from "visual/component/Controls/AiText/types";
+import type { DropdownButtonData } from "visual/component/Controls/AiText/types";
 import { t } from "visual/utils/i18n";
 
 export const data: DropdownButtonData[] = [

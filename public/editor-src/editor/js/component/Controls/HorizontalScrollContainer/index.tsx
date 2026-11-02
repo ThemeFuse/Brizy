@@ -1,13 +1,13 @@
 import classNames from "classnames";
 import React, {
-  ReactElement,
+  type ReactElement,
   useCallback,
   useEffect,
   useRef,
   useState
 } from "react";
 import EditorIcon from "visual/component/EditorIcon";
-import { HorizontalScrollContainerProps } from "./types";
+import type { HorizontalScrollContainerProps } from "./types";
 
 export const HorizontalScrollContainer = ({
   children,

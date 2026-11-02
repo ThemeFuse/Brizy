@@ -1,9 +1,9 @@
-import { PaletteObject } from "visual/component/Controls/ColorPalette/entities/PaletteObject";
-import { Hex } from "visual/utils/color/Hex";
-import { Opacity } from "visual/utils/cssProps/opacity";
-import { Setter, _apply, get } from "visual/utils/model";
-import { Value } from "visual/utils/options/ColorPicker/entities/Value";
-import { MValue } from "visual/utils/value";
+import type { PaletteObject } from "visual/component/Controls/ColorPalette/entities/PaletteObject";
+import type { Hex } from "visual/utils/color/Hex";
+import type { Opacity } from "visual/utils/cssProps/opacity";
+import { _apply, get, type Setter } from "visual/utils/model";
+import type { Value } from "visual/utils/options/ColorPicker/entities/Value";
+import type { MValue } from "visual/utils/value";
 import * as ColorPicker from "./model";
 
 /**

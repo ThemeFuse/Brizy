@@ -1,10 +1,10 @@
 import { mPipe } from "fp-utilities";
 import { Base64 } from "js-base64";
-import { Dictionary } from "visual/types/utils";
+import type { Dictionary } from "visual/types/utils";
 import * as Str from "visual/utils/reader/string";
-import { MValue } from "visual/utils/value";
+import type { MValue } from "visual/utils/value";
 import { isPlaceholderName } from "./common";
-import { DCPlaceholderObj } from "./types";
+import type { DCPlaceholderObj } from "./types";
 
 const _unescape = mPipe(Str.read, unescape);
 
@@ -33,10 +33,11 @@ export function placeholderObjFromStr(
     return { name, content };
   }
 
-  let attr: Dictionary<string> | undefined = undefined;
-  let match;
+  let attr: Dictionary<string> | undefined;
+  let match: RegExpExecArray | null;
 
   const r3 = /(\w+)=("|'|&quot;|&apos;)(.*?)\2/g;
+  // biome-ignore lint/suspicious/noAssignInExpressions: regex exec iteration idiom - matchAll would work here but the rewrite is kept out of this lint PR
   while ((match = r3.exec(attrStr.trim()))) {
     attr = attr ?? {};
     attr[match[1]] = _unescape(match[3]);

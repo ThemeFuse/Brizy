@@ -1,15 +1,15 @@
 import { mPipe } from "fp-utilities";
 import React, { useCallback, useMemo } from "react";
 import { NumberSlider } from "visual/component/Controls/NumberSlider";
-import { Unit, Value } from "visual/component/Controls/NumberUnit/types";
+import type { Unit, Value } from "visual/component/Controls/NumberUnit/types";
 import { OptionLabel } from "visual/component/OptionLabel";
 import { OptionWrapper } from "visual/component/OptionWrapper";
 import { t } from "visual/utils/i18n";
-import * as Number from "visual/utils/math/number";
-import { FCC } from "visual/utils/react/types";
-import { OnChange } from "../types";
-import { EffectProps } from "../types/EffectProps";
-import { Offset as V } from "../types/Offset";
+import { read as readNumber } from "visual/utils/math/number";
+import type { FCC } from "visual/utils/react/types";
+import type { OnChange } from "../types";
+import type { EffectProps } from "../types/EffectProps";
+import type { Offset as V } from "../types/Offset";
 
 const units: Unit<"px">[] = [
   {
@@ -20,12 +20,12 @@ const units: Unit<"px">[] = [
 
 export const Offset: FCC<EffectProps<V>> = ({ value, onChange }) => {
   const onOffsetYChange = useCallback<OnChange<number>>(
-    (v) => mPipe(Number.read, (offsetY) => onChange({ ...value, offsetY }))(v),
+    (v) => mPipe(readNumber, (offsetY) => onChange({ ...value, offsetY }))(v),
     [value, onChange]
   );
 
   const onOffsetXChange = useCallback<OnChange<number>>(
-    (v) => mPipe(Number.read, (offsetX) => onChange({ ...value, offsetX }))(v),
+    (v) => mPipe(readNumber, (offsetX) => onChange({ ...value, offsetX }))(v),
     [value, onChange]
   );
 

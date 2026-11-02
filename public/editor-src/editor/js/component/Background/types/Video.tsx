@@ -1,9 +1,22 @@
-import jQuery from "jquery";
-import React, { ReactElement, RefObject, useMemo, useRef } from "react";
+import React, {
+  type ReactElement,
+  type ReactNode,
+  type RefObject,
+  useMemo,
+  useRef
+} from "react";
 import { useConfig } from "visual/providers/ConfigProvider";
 import { customFileUrl } from "visual/utils/customFile";
 import { videoUrl } from "visual/utils/video";
-import "../lib/jquery.background-video.js";
+import {
+  destroyBackgroundVideo,
+  initBackgroundVideo,
+  reinitBackgroundVideo,
+  resizeBackgroundVideo,
+  seekBackgroundVideo,
+  setBackgroundVideoLoop,
+  typeChangeBackgroundVideo
+} from "../lib/backgroundVideo";
 import { useLayoutEffect } from "../utils";
 
 enum VideoType {
@@ -30,7 +43,7 @@ type Props = {
       "data-start"?: string;
       className?: string;
     };
-    children: ReactElement;
+    children: ReactNode;
   }) => ReactElement;
 };
 
@@ -72,32 +85,33 @@ const Video = ({
 
   useLayoutEffect(() => {
     if (videoRef.current) {
-      jQuery(videoRef.current).backgroundVideo("destroy");
+      destroyBackgroundVideo(videoRef.current);
     }
   }, []);
 
   useLayoutEffect(() => {
     if (!isInitialMount.current && videoRef.current) {
-      jQuery(videoRef.current).backgroundVideo("resize");
+      resizeBackgroundVideo(videoRef.current);
     }
   });
 
   useLayoutEffect(() => {
     if (!isInitialMount.current && videoRef.current) {
-      jQuery(videoRef.current).backgroundVideo("setLoop", videoLoop);
+      setBackgroundVideoLoop(videoRef.current, videoLoop);
     }
   }, [videoLoop]);
 
   useLayoutEffect(() => {
     if (!isInitialMount.current && videoRef.current) {
-      jQuery(videoRef.current).backgroundVideo("seekTo", videoStart);
+      seekBackgroundVideo(videoRef.current, videoStart);
     }
   }, [videoStart]);
 
   useLayoutEffect(() => {
     if (videoRef.current && isCustomVideo && !isInitialMount.current) {
-      jQuery(videoRef.current).backgroundVideo("reinit", {
+      reinitBackgroundVideo(videoRef.current, {
         type: "custom",
+        key: undefined,
         loop: videoLoop,
         start: videoStart
       });
@@ -108,7 +122,7 @@ const Video = ({
     if (isInitialMount.current && videoRef.current && !isCustomVideo) {
       isInitialMount.current = false;
 
-      jQuery(videoRef.current).backgroundVideo({
+      initBackgroundVideo(videoRef.current, {
         type: type,
         key: key,
         loop: videoLoop,
@@ -117,14 +131,15 @@ const Video = ({
     } else if (isInitialMount.current && videoRef.current && isCustomVideo) {
       isInitialMount.current = false;
 
-      jQuery(videoRef.current).backgroundVideo({
+      initBackgroundVideo(videoRef.current, {
         type: "custom",
+        key: undefined,
         loop: videoLoop,
         start: videoStart
       });
     } else {
       if (videoRef.current) {
-        jQuery(videoRef.current).backgroundVideo("typeChange", {
+        typeChangeBackgroundVideo(videoRef.current, {
           type: type,
           key: key,
           loop: videoLoop,
@@ -134,7 +149,6 @@ const Video = ({
     }
 
     // videoLoop and videoStart dependency are not nedded
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [type, key]);
 
   const src =
@@ -144,7 +158,7 @@ const Video = ({
         ? customFileUrl(customVideo, config)
         : customVideo;
 
-  const getContent = useMemo((): ReactElement => {
+  const getContent = useMemo((): ReactNode => {
     if (video && !isCustomVideo) {
       return (
         <>
@@ -181,7 +195,7 @@ const Video = ({
         </>
       );
     }
-    return <></>;
+    return null;
   }, [video, customVideo, isCustomVideo, src, iframeStyle]);
 
   return (

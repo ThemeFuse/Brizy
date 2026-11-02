@@ -1,10 +1,10 @@
 import { noop } from "es-toolkit";
-import React, { Attributes, useMemo } from "react";
+import React, { type Attributes, useMemo } from "react";
 import { Translate } from "visual/component/Translate";
 import { makePlaceholder } from "visual/utils/dynamicContent";
 import { makeDataAttr } from "visual/utils/i18n/attribute";
 import { uuid } from "visual/utils/uuid";
-import { CheckGroupView } from "./types";
+import type { CheckGroupView } from "./types";
 
 export const CheckGroupItemView = ({
   className,

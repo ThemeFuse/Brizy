@@ -1,14 +1,13 @@
-import { Value as NV } from "visual/component/Controls/NumberUnit/types";
-import { Edge } from "visual/component/Controls/Spacing/types";
+import type { Value as NV } from "visual/component/Controls/NumberUnit/types";
+import type { Edge } from "visual/component/Controls/Spacing/types";
 import { mPipe } from "visual/utils/fp";
 import * as Positive from "visual/utils/math/Positive";
-import { Setter } from "visual/utils/model";
+import type { Setter } from "visual/utils/model";
 import { prop } from "visual/utils/object/get";
 import * as Margin from "visual/utils/options/Margin/utils";
-import * as Unit from "visual/utils/options/utils/SpacingUnit";
+import type * as Unit from "visual/utils/options/utils/SpacingUnit";
 import { readWithParser } from "visual/utils/reader/readWithParser";
 import {
-  Value,
   setBottom,
   setBottomUnit,
   setLeft,
@@ -18,7 +17,8 @@ import {
   setTop,
   setTopUnit,
   setUnit,
-  setValue
+  setValue,
+  type Value
 } from "./types/Value";
 
 export const fromNumberSlider = readWithParser<

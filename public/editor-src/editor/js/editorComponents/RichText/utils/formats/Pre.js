@@ -1,6 +1,6 @@
 import Quill from "quill";
 
-let Block = Quill.import("blots/block");
+const Block = Quill.import("blots/block");
 
 class Pre extends Block {}
 

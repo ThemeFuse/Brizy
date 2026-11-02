@@ -1,15 +1,15 @@
 import { isEqual } from "es-toolkit";
 import React, {
-  MutableRefObject,
-  ReactElement,
-  ReactNode,
+  type MutableRefObject,
+  type ReactElement,
+  type ReactNode,
   useCallback,
   useEffect,
   useRef
 } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { rolesHOC } from "visual/component/Roles";
-import { SortablePluginOptions } from "visual/component/Sortable/plugin/types";
+import type { SortablePluginOptions } from "visual/component/Sortable/plugin/types";
 import { hideToolbar } from "visual/component/Toolbar";
 import { LeftSidebarOptionsIds } from "visual/global/Config/types/configs/ConfigCommon";
 import UIEvents, { UIEventType } from "visual/global/UIEvents";
@@ -18,7 +18,7 @@ import { updateUI } from "visual/redux/actions2";
 import { uiSelector } from "visual/redux/selectors";
 import { makeAttr, makeDataAttr } from "visual/utils/i18n/attribute";
 import SortablePlugin from "./plugin";
-import { AcceptElements } from "./plugin/types";
+import type { AcceptElements } from "./plugin/types";
 
 export interface SortableAttr {
   "data-brz-sortable-type": string;

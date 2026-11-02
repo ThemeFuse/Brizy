@@ -1,7 +1,6 @@
-import { Style } from "../Project/Style";
-import { Response } from "../common";
-import { Literal } from "../common";
-import { BlocksArray, Categories, DefaultBlock } from "../common/Block";
+import type { Literal, Response } from "../common";
+import type { BlocksArray, Categories, DefaultBlock } from "../common/Block";
+import type { Style } from "../Project/Style";
 
 interface StoriesTemplate {
   layoutId: string;

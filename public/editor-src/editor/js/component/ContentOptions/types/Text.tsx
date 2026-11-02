@@ -1,10 +1,10 @@
 import classnames from "classnames";
 import { noop } from "es-toolkit";
-import React, { ReactElement } from "react";
+import React, { type ReactElement } from "react";
 import { TextEditor } from "visual/component/Controls/TextEditor";
 import { Translate } from "visual/component/Translate";
 import { hasDC } from "visual/editorComponents/EditorComponent/DynamicContent/utils";
-import { V } from "visual/types";
+import type { V } from "visual/types";
 import * as str from "visual/utils/reader/string";
 
 type Props = {

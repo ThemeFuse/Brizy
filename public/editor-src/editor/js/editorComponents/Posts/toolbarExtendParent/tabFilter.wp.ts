@@ -1,7 +1,7 @@
-import { Props as TabsOptionProps } from "visual/component/Options/types/dev/Tabs";
-import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
-import { ArrayType } from "visual/utils/array/types";
+import type { Props as TabsOptionProps } from "visual/component/Options/types/dev/Tabs";
+import type { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
+import type { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import type { ArrayType } from "visual/utils/array/types";
 import {
   CURRENT_CONTEXT_TYPE,
   orderByConverter
@@ -14,10 +14,10 @@ import {
   termsLoad,
   termsSearch
 } from "visual/utils/elements/posts/index.wp";
-import { Context } from "visual/utils/elements/posts/types";
+import type { Context } from "visual/utils/elements/posts/types";
 import { t } from "visual/utils/i18n";
-import { MValue } from "visual/utils/value";
-import { CloudComponentConfig, V, VDecoded } from "../types";
+import type { MValue } from "visual/utils/value";
+import type { CloudComponentConfig, V, VDecoded } from "../types";
 import { decodeV } from "../utils.common";
 
 type TabOptionType = ArrayType<Required<TabsOptionProps>["tabs"]>;
@@ -118,8 +118,8 @@ function getIncludeExclude(
   type: "include" | "exclude",
   vd: VDecoded,
   disabled: boolean,
-  // @ts-expect-error is not used, but was sent to preserve the same structure as in Cloud
-  componentConfig: MValue<CloudComponentConfig>,
+  // not used, but sent to preserve the same structure as in Cloud
+  _componentConfig: MValue<CloudComponentConfig>,
   config: ConfigCommon
 ): ToolbarItemType {
   const include = type === "include";

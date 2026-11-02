@@ -1,22 +1,22 @@
 import { isEqual, isFunction } from "es-toolkit";
 import React, {
-  FC,
-  PropsWithChildren,
+  type FC,
+  type PropsWithChildren,
   useContext,
   useEffect,
   useMemo,
   useRef
 } from "react";
 import { useStore } from "react-redux";
-import { Unsubscribe } from "redux";
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
-import { UIEventType } from "visual/global/UIEventType";
+import type { Unsubscribe } from "redux";
+import type { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import UIEvents from "visual/global/UIEvents";
+import { UIEventType } from "visual/global/UIEventType";
 import { ConfigContext } from "visual/providers/ConfigProvider/context";
-import { GetConfig } from "visual/providers/ConfigProvider/types";
-import { ReduxAction } from "visual/redux/actions2";
+import type { GetConfig } from "visual/providers/ConfigProvider/types";
+import type { ReduxAction } from "visual/redux/actions2";
 import { isInitializedSelector } from "visual/redux/selectors";
-import { ReduxState } from "visual/redux/types";
+import type { ReduxState } from "visual/redux/types";
 
 export const ConfigProvider: FC<
   PropsWithChildren<{ config: ConfigCommon }>

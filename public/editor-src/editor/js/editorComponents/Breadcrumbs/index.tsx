@@ -17,7 +17,7 @@ import defaultValue from "./defaultValue.json";
 import * as sidebarConfig from "./sidebar";
 import { style } from "./styles";
 import * as toolbarConfig from "./toolbar";
-import { Value } from "./types";
+import type { Value } from "./types";
 import { readBreadcrumbs } from "./utils";
 
 // SCSS import - automatically tracked during static rendering

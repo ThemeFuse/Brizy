@@ -1,10 +1,10 @@
 import { throttle } from "es-toolkit";
-import React, { ReactElement, useRef } from "react";
-import {
+import React, { type ReactElement, useRef } from "react";
+import type {
   HSLAChange,
   HSVAChange
 } from "visual/component/Controls/ColorPicker2/types";
-import { GlobalMeta } from "visual/component/Options/Type";
+import type { GlobalMeta } from "visual/component/Options/Type";
 import { hexToRgba, isHex } from "visual/utils/color";
 import Brizy from "./Brizy";
 
@@ -44,7 +44,7 @@ function ColorPicker2({
     });
 
   const hex = !isHex(value.hex) ? DEFAULT_HEX : value.hex;
-  const opacity = isNaN(Number(value.opacity))
+  const opacity = Number.isNaN(Number(value.opacity))
     ? DEFAULT_OPACITY
     : value.opacity;
 

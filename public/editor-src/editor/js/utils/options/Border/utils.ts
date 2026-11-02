@@ -1,16 +1,16 @@
-import { StyleObject } from "visual/component/Controls/Border";
-import * as Opacity from "visual/utils/cssProps/opacity";
+import type { StyleObject } from "visual/component/Controls/Border";
+import type * as Opacity from "visual/utils/cssProps/opacity";
 import { t } from "visual/utils/i18n";
 import { _apply, set } from "visual/utils/model";
 import { isEmptyWidth } from "visual/utils/options/Border/converters";
-import { Value } from "visual/utils/options/Border/entities/Value";
 import * as BorderStyle from "visual/utils/options/Border/entities/style";
 import * as Style from "visual/utils/options/Border/entities/style";
+import type { Value } from "visual/utils/options/Border/entities/Value";
 import * as Width from "visual/utils/options/Border/entities/width";
 import { capByPrefix } from "visual/utils/string";
 import { mApply } from "visual/utils/value";
-import { toggleColor } from "../ColorPicker/utils";
 import * as ColorUtils from "../ColorPicker/utils";
+import { toggleColor } from "../ColorPicker/utils";
 import { getStyle, setOpacity, setStyle } from "./model";
 
 const widthTemp = (k: string): string => capByPrefix("temp", k);
@@ -49,7 +49,7 @@ export const _getWidth = <V extends WithWidth>(
  */
 export const toggleStyle = (enable: boolean, m: Value): Value => {
   const style = enable
-    ? mApply(Style.noEmpty, getStyle(m)) ?? Style.read(m?.tempStyle)
+    ? (mApply(Style.noEmpty, getStyle(m)) ?? Style.read(m?.tempStyle))
     : Style.empty;
   return _apply([[setStyle, style]], m);
 };

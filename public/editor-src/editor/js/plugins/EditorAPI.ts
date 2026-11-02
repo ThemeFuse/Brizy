@@ -7,6 +7,7 @@ import type { ConfigCommon } from "visual/global/Config/types/configs/ConfigComm
 import { updateUI } from "visual/redux/actions2";
 import {
   blocksHtmlSelector,
+  deviceModeSelector,
   pageBlocksDataSelector,
   projectAssembled,
   uiSelector
@@ -41,13 +42,7 @@ interface Props {
 export function createEditorAPI(props: Props): EditorAPIParts {
   const { getState, dispatch, config, t } = props;
   const store = new SharedStore();
-  const toolServer = new ToolServerImpl(
-    getState,
-    dispatch,
-    config,
-    store,
-    t
-  );
+  const toolServer = new ToolServerImpl(getState, dispatch, config, store, t);
   const globalBlocks = createGlobalBlockRepository(getState, dispatch, config);
   const slotRegistry = new SlotRegistryImpl();
   const filterRegistry = new FilterRegistryImpl();
@@ -59,7 +54,7 @@ export function createEditorAPI(props: Props): EditorAPIParts {
 
   const api: EditorAPI = {
     toolServer,
-    ...createEditorSite(config, globalBlocks),
+    ...createEditorSite(getState, dispatch, globalBlocks, config),
     slots: slotRegistry,
     filters: filterRegistry,
     events: eventBus,
@@ -90,6 +85,7 @@ export function createEditorAPI(props: Props): EditorAPIParts {
         return [];
       }
     },
+    getDeviceMode: () => deviceModeSelector(getState()),
     getPageData: () => pageBlocksDataSelector(getState(), config),
     getProjectData: () => projectAssembled(getState()).data,
     getPageId: () => getState().page?.id ?? "",

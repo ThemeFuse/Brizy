@@ -1,4 +1,4 @@
-import { ComponentsMeta } from "visual/editorComponents/EditorComponent/types";
+import type { ComponentsMeta } from "visual/editorComponents/EditorComponent/types";
 import { t } from "visual/utils/i18n";
 
 const getItems = () => [

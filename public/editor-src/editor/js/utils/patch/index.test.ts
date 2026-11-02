@@ -1,10 +1,10 @@
 import { Getter } from "visual/utils/model";
-import { Patcher, apply, filterPatchValues, patcher } from "./index";
+import { apply, filterPatchValues, Patcher, patcher } from "./index";
 
 /**
  * Testing patch function behavior
  */
-// eslint-disable-next-line jest/no-export
+// biome-ignore lint/suspicious/noExportsInTest: migrated from eslint
 export const testPatchFunction = <V, M extends P, P>(
   patch: Patcher<V, M, P>,
   getter: Getter<V, M>,

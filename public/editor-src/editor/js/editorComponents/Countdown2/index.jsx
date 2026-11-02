@@ -1,6 +1,5 @@
 import classnames from "classnames";
 import { isEqual, pick } from "es-toolkit";
-import jQuery from "jquery";
 import React from "react";
 import BoxResizer from "visual/component/BoxResizer";
 import { TextEditor } from "visual/component/Controls/TextEditor";
@@ -8,7 +7,7 @@ import CustomCSS from "visual/component/CustomCSS";
 import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
-import "visual/libs/countdown2/jquery.countdown";
+import { countdown, getCountdown } from "visual/libs/countdown/countdown";
 import { makeDataAttr } from "visual/utils/i18n/attribute";
 import { attachRefs } from "visual/utils/react";
 import { capitalize } from "visual/utils/string";
@@ -47,27 +46,7 @@ class Countdown2 extends EditorComponent {
       this.patchValue({ date: formatDate(after30days, "d/m/Y") });
     }
 
-    const leftPadWith0 = function (number) {
-      return ("0" + number).slice(-2);
-    };
-
-    this.initPlugin(v, {
-      onTick: ({ days, hours, minutes, seconds }) => {
-        const newV = this.getValue();
-        if (newV.showDays === "on") {
-          this.days.current.innerText = days;
-        }
-        if (newV.showHours === "on") {
-          this.hours.current.innerText = leftPadWith0(hours);
-        }
-        if (newV.showMinutes === "on") {
-          this.minutes.current.innerText = leftPadWith0(minutes);
-        }
-        if (newV.showSeconds === "on") {
-          this.seconds.current.innerText = leftPadWith0(seconds);
-        }
-      }
-    });
+    this.initPlugin(v);
   }
 
   componentDidUpdate(prevProps) {
@@ -84,7 +63,9 @@ class Countdown2 extends EditorComponent {
   }
 
   componentWillUnmount() {
-    jQuery(this.countdown).countdown2("destroy");
+    if (this.countdown) {
+      getCountdown(this.countdown)?.destroy();
+    }
     super.componentWillUnmount();
   }
 
@@ -97,16 +78,38 @@ class Countdown2 extends EditorComponent {
     return getTime(formatDate(convertedDate, "m/d/Y"), hours, minutes);
   }
 
-  initPlugin(v, options = null) {
-    const timeZoneOffset = v.timeZone * 60 * 1000;
+  handleTick = ({ days, hours, minutes, seconds }) => {
+    const leftPadWith0 = (number) => `0${number}`.slice(-2);
+    const newV = this.getValue();
+    if (newV.showDays === "on") {
+      this.days.current.innerText = days;
+    }
+    if (newV.showHours === "on") {
+      this.hours.current.innerText = leftPadWith0(hours);
+    }
+    if (newV.showMinutes === "on") {
+      this.minutes.current.innerText = leftPadWith0(minutes);
+    }
+    if (newV.showSeconds === "on") {
+      this.seconds.current.innerText = leftPadWith0(seconds);
+    }
+  };
 
-    jQuery(this.countdown).countdown2({
+  initPlugin(v) {
+    const timeZoneOffset = v.timeZone * 60 * 1000;
+    const settings = {
       now: Date.now(),
       endDate: this.getEndDate(v),
       timeZoneOffset: timeZoneOffset,
       tickInterval: 1000,
-      ...options
-    });
+      onTick: this.handleTick
+    };
+
+    if (!this.countdown) {
+      return;
+    }
+
+    countdown(this.countdown, settings);
   }
 
   renderParts(v) {
@@ -323,11 +326,7 @@ class Countdown2 extends EditorComponent {
         >
           {this.renderParts(v)}
           {actions === "showMessage" && (
-            <div
-              className={classNameMessage}
-              role="status"
-              aria-live="polite"
-            >
+            <div className={classNameMessage} role="status" aria-live="polite">
               {messageText}
             </div>
           )}

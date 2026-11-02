@@ -1,10 +1,10 @@
-import { ElementModel } from "visual/component/Elements/Types";
+import type { ElementModel } from "visual/component/Elements/Types";
 import type { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
 import { getColorToolbar } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
 import type { ResponsiveMode } from "visual/utils/responsiveMode";
-import { HOVER, NORMAL, State } from "visual/utils/stateMode";
+import { HOVER, NORMAL, type State } from "visual/utils/stateMode";
 import type { EcwidToolbarCSSData } from "./utils/Value";
 
 export const ecwidToolbarFooter = <T extends ElementModel = ElementModel>(
@@ -49,7 +49,7 @@ export const ecwidToolbarFooter = <T extends ElementModel = ElementModel>(
                   { value: "large", icon: "nc-32" },
                   { value: "custom", icon: "nc-more" }
                 ],
-                ...data?.["footerIconSize"]
+                ...data?.footerIconSize
               },
               {
                 id: "footerIconCustomSize",
@@ -60,7 +60,7 @@ export const ecwidToolbarFooter = <T extends ElementModel = ElementModel>(
                   max: 50,
                   units: [{ title: "px", value: "px" }]
                 },
-                ...data?.["footerIconCustomSize"]
+                ...data?.footerIconCustomSize
               }
             ]
           }
@@ -82,7 +82,7 @@ export const ecwidToolbarFooter = <T extends ElementModel = ElementModel>(
             config: {
               fontFamily: device === "desktop"
             },
-            ...data?.["footerTypography"]
+            ...data?.footerTypography
           }
         ]
       },
@@ -112,7 +112,7 @@ export const ecwidToolbarFooter = <T extends ElementModel = ElementModel>(
                     id: "footerColor",
                     type: "colorPicker",
                     states: [NORMAL, HOVER],
-                    ...data?.["footerColor"]
+                    ...data?.footerColor
                   }
                 ]
               },
@@ -124,7 +124,7 @@ export const ecwidToolbarFooter = <T extends ElementModel = ElementModel>(
                     id: "footerIconColor",
                     type: "colorPicker",
                     states: [NORMAL, HOVER],
-                    ...data?.["footerIconColor"]
+                    ...data?.footerIconColor
                   }
                 ]
               }
@@ -147,7 +147,7 @@ export const ecwidToolbarFooter = <T extends ElementModel = ElementModel>(
               max: 100,
               units: [{ title: "px", value: "px" }]
             },
-            ...data?.["footerSpacing"]
+            ...data?.footerSpacing
           }
         ]
       }

@@ -21,6 +21,7 @@ import { globalPopupsToStatic } from "../../common/toStatic/globalPopupsToStatic
 import { pageToStatic } from "../../common/toStatic/pageToStatic";
 import { popupToStatic } from "../../common/toStatic/popupToStatic";
 import { storyToStatic } from "../../common/toStatic/storyToStatic";
+import type { GlobalBlockStatic } from "../../common/toStatic/types";
 import type { SymbolAsset } from "../../common/transforms/assets/makeSymbols";
 import {
   getRootAttr,
@@ -33,17 +34,16 @@ export async function bootstrap(config: Config): Promise<Static> {
   const project = config.projectData;
   const _page = config.pageData;
 
-  if (!project || !project.data) {
+  if (!project?.data) {
     throw new Error("Missing project data in config");
   }
 
-  if (!_page || !_page.data) {
+  if (!_page?.data) {
     throw new Error("Missing page data in config");
   }
 
   const page = readPageData(_page);
-  const globalBlocks =
-    parseGlobalBlocksToRecord(config.globalBlocks) ?? {};
+  const globalBlocks = parseGlobalBlocksToRecord(config.globalBlocks) ?? {};
   const { fonts } = project.data;
 
   // NEW FONTS FOUND
@@ -88,7 +88,7 @@ export async function bootstrap(config: Config): Promise<Static> {
   const compiledProject = compileProject(config, store);
 
   const commonConfig = { store, config, editorMode };
-  let globalPopupsStatic = undefined;
+  let globalPopupsStatic: GlobalBlockStatic[] | undefined;
   const globalPopupsInPage = Object.values(globalBlocks).filter(isGlobalPopup);
 
   const allSymbols: SymbolAsset[] = [];
@@ -175,7 +175,7 @@ export async function bootstrap(config: Config): Promise<Static> {
   }
 
   const globalBlocksInPage = Object.values(globalBlocks).filter(isGlobalBlock);
-  let globalBlocksStatic = undefined;
+  let globalBlocksStatic: GlobalBlockStatic[] | undefined;
 
   if (globalBlocksInPage.length > 0) {
     const staticData = globalBlocksToStatic({

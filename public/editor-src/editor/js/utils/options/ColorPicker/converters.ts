@@ -1,14 +1,14 @@
 import { Num, Str } from "@brizy/readers";
 import { mPipe } from "fp-utilities";
-import {
+import type {
   FromElementModel,
   ToElementModel
 } from "visual/component/Options/Type";
 import * as Hex from "visual/utils/color/Hex";
 import { Black } from "visual/utils/color/Hex";
 import * as Opacity from "visual/utils/cssProps/opacity";
-import { Value } from "./entities/Value";
 import * as Palette from "./entities/palette";
+import type { Value } from "./entities/Value";
 
 export const defaultValue: Value = {
   hex: Black,

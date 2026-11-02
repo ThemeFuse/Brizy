@@ -1,10 +1,10 @@
-import React, { JSX, useCallback, useEffect } from "react";
 import classnames from "classnames";
-import { Props } from "./types";
-import { uiSelector } from "visual/redux/selectors";
-import { updateUI } from "visual/redux/actions2";
-import { IconLabel } from "visual/component/Controls/AdvancedSettings/IconLabel";
+import React, { type JSX, useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { IconLabel } from "visual/component/Controls/AdvancedSettings/IconLabel";
+import { updateUI } from "visual/redux/actions2";
+import { uiSelector } from "visual/redux/selectors";
+import type { Props } from "./types";
 
 const type = "rightSidebar";
 
@@ -27,6 +27,7 @@ export const AdvancedSettings = ({
     attr?.className || {}
   );
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: migrated from eslint
   useEffect(
     () => () => {
       if (isOpen && lock === undefined) {
@@ -39,7 +40,6 @@ export const AdvancedSettings = ({
       }
     },
     // dependency is not needed
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     []
   );
 

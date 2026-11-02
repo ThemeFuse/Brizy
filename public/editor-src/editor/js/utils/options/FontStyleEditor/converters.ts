@@ -1,4 +1,4 @@
-import {
+import type {
   FromElementModel,
   ToElementModel
 } from "visual/component/Options/Type";

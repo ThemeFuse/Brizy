@@ -1,7 +1,7 @@
-import { DynamicStylesProps } from "visual/types";
+import type { DynamicStylesProps } from "visual/types";
 import { renderStyles } from "visual/utils/cssStyle";
-import { OutputStyle } from "visual/utils/cssStyle/types";
-import { Value } from "./types/Value";
+import type { OutputStyle } from "visual/utils/cssStyle/types";
+import type { Value } from "./types/Value";
 
 export function style(data: DynamicStylesProps<Value>): OutputStyle {
   const styles = {
@@ -855,7 +855,7 @@ export function style(data: DynamicStylesProps<Value>): OutputStyle {
       {
         standart: ["cssStyleElementEcwidProductGalleryBoxShadow"]
       },
-    "#ecwid_html #ecwid_body && .ecwid .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details .product-details__gallery .details-gallery__wrap .details-gallery__wrap-inner .details-gallery__thumbs":
+    "#ecwid_html #ecwid_body &&.brz-ecwid-product-wrapper--thumb-horizontal .ecwid .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details .product-details__gallery .details-gallery__wrap .details-gallery__wrap-inner .details-gallery__thumbs":
       { standart: ["cssStyleElementEcwidProductThumbnailWidth"] },
     "#ecwid_html #ecwid_body && .ecwid .ecwid-productBrowser div div div .ec-wrapper .ec-store .ec-store__content-wrapper .product-details .product-details__gallery .details-gallery__wrap .details-gallery__wrap-inner .details-gallery__thumbs .details-gallery__thumb:not(.details-gallery__thumb.details-gallery__thumb--active)":
       {

@@ -1,5 +1,5 @@
-import { Config as ConfigType } from "visual/global/Config/types";
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import type { Config as ConfigType } from "visual/global/Config/types";
+import type { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { isWp } from "visual/global/Config/types/configs/WP";
 import * as Str from "visual/utils/reader/string";
 

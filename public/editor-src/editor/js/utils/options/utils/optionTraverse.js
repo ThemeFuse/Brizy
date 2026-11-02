@@ -5,7 +5,7 @@ export default function optionTraverse(option, cb) {
     cb(option);
   }
 
-  for (let key in option) {
+  for (const key in option) {
     if (!option.hasOwnProperty(key)) continue;
 
     if (typeof option[key] === "object" && option[key] !== null)

@@ -1,20 +1,23 @@
-import { ElementModel } from "visual/component/Elements/Types";
+import type { ElementModel } from "visual/component/Elements/Types";
 import { hideToolbar } from "visual/component/Toolbar";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
+import type { ArrayItem } from "visual/editorComponents/EditorArrayComponent/types";
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import { t } from "visual/utils/i18n";
+import { isModel } from "visual/utils/models";
 import type { Props } from "./types";
 
-export default class Form2Steps extends EditorArrayComponent {
+export default class Form2Steps extends EditorArrayComponent<
+  ElementModel,
+  {
+    itemProps: Props;
+  }
+> {
   static get componentId(): ElementTypes.Form2StepsItems {
     return ElementTypes.Form2StepsItems;
   }
 
-  getItemProps(
-    itemData: ElementModel,
-    itemIndex: number,
-    items: ElementModel[]
-  ) {
+  getItemProps(itemData: ArrayItem, itemIndex: number, items: ArrayItem[]) {
     const props = super.getItemProps(itemData, itemIndex, items);
     const itemProps = this.props.itemProps as Props;
 
@@ -88,12 +91,11 @@ export default class Form2Steps extends EditorArrayComponent {
 
   cloneItem(itemIndex: number, toIndex: number = itemIndex + 1): void {
     const dbValue = this.getDBValue() || [];
+    const itemData = dbValue[itemIndex];
 
-    if (!dbValue[itemIndex]) {
+    if (!isModel(itemData)) {
       throw new Error(`Can't clone invalid item at index ${itemIndex}`);
     }
-
-    const itemData = dbValue[itemIndex];
 
     this.insertItem(toIndex, itemData);
   }

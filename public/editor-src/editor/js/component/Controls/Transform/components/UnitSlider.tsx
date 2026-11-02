@@ -1,15 +1,15 @@
 import React, { useCallback, useMemo } from "react";
 import {
-  NumberSlider,
-  Props as NSProps
+  type Props as NSProps,
+  NumberSlider
 } from "visual/component/Controls/NumberSlider";
-import { Value } from "visual/component/Controls/NumberUnit/types";
+import type { Value } from "visual/component/Controls/NumberUnit/types";
 import { OptionLabel } from "visual/component/OptionLabel";
 import { OptionWrapper } from "visual/component/OptionWrapper";
 import { mPipe } from "visual/utils/fp";
 import * as Unit from "visual/utils/math/Unit";
-import { FCC } from "visual/utils/react/types";
-import { OnChange } from "../types";
+import type { FCC } from "visual/utils/react/types";
+import type { OnChange } from "../types";
 
 export interface Props {
   label: string;

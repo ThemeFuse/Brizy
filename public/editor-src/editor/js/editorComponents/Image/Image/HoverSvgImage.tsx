@@ -6,9 +6,9 @@ import { useConfig } from "visual/providers/ConfigProvider";
 import { useCSS } from "visual/providers/StyleProvider/useCSS";
 import { getImageUrl } from "visual/utils/image";
 import { isGIFExtension, isSVGExtension } from "visual/utils/image/utils";
-import { FCC } from "visual/utils/react/types";
+import type { FCC } from "visual/utils/react/types";
 import { styleSvgHoverWrapper } from "../styles";
-import { HoverSvgImageProps } from "../types";
+import type { HoverSvgImageProps } from "../types";
 import HoverSimpleImage from "./HoverSimpleImage";
 
 const HoverSvgImage: FCC<HoverSvgImageProps> = ({

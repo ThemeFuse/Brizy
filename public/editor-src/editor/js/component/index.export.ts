@@ -3,10 +3,7 @@
  * Defines all framework components with their selectors and export functions
  */
 
-interface ComponentExport {
-  selector: string;
-  export: () => Promise<{ default: ($node: JQuery<HTMLElement>) => void }>;
-}
+import type { ComponentExport } from "visual/types";
 
 export const componentsManifest: Record<string, ComponentExport> = {
   animation: {
@@ -47,11 +44,6 @@ export const componentsManifest: Record<string, ComponentExport> = {
   link: {
     selector: ".brz-anchor, .link--anchor, .link--external",
     export: () => import("./Link/export")
-  },
-
-  sticky: {
-    selector: ".brz-section__header--animated, .brz-section__header--fixed",
-    export: () => import("./Sticky/export.js")
   },
 
   twitter: {

@@ -1,15 +1,15 @@
-import React, { useCallback } from "react";
-import cn from "classnames";
 import { pipe } from "@brizy/readers";
-import { parsePopulation } from "visual/utils/options/Population/utils";
+import cn from "classnames";
+import React, { type ReactNode, useCallback } from "react";
 import Options from "visual/component/Options";
-import { isChoices, isHandler, Props } from "./types/Props";
-import { PopulationHandler } from "./Components/PopulationHandler";
+import type { OnChange } from "visual/component/Options/Type";
+import { parsePopulation } from "visual/utils/options/Population/utils";
 import { PopulationChoices } from "./Components/PopulationChoices";
-import { OnChange } from "visual/component/Options/Type";
-import { Value } from "./types/Value";
+import { PopulationHandler } from "./Components/PopulationHandler";
+import { isChoices, isHandler, type Props } from "./types/Props";
+import type { Value } from "./types/Value";
 
-export function Population(props: Props): JSX.Element {
+export function Population(props: Props): ReactNode {
   const { config, onChange } = props;
 
   const handlePopulationChange = useCallback<OnChange<Value>>(
@@ -77,5 +77,5 @@ export function Population(props: Props): JSX.Element {
     );
   }
 
-  return <></>;
+  return null;
 }

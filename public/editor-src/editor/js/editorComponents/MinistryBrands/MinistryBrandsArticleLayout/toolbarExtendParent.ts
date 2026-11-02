@@ -2,7 +2,7 @@ import type { GetItems } from "visual/editorComponents/EditorComponent/types";
 import { getEkklesiaChoiches } from "visual/utils/api";
 import { t } from "visual/utils/i18n";
 import { toolbarParentColors } from "../toolbarParent";
-import { Props, Value } from "./utils/types";
+import type { Props, Value } from "./utils/types";
 
 export const getItems: GetItems<Value, Props> = (data) => {
   const { v, component } = data;

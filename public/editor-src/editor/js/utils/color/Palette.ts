@@ -1,7 +1,7 @@
 import { Obj } from "@brizy/readers";
-import { OptionValue } from "visual/component/Options/types";
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
-import { PaletteType } from "visual/types/Style";
+import type { OptionValue } from "visual/component/Options/types";
+import type { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import type { PaletteType } from "visual/types/Style";
 import { mPipe, pass } from "visual/utils/fp";
 import { makeStylePaletteCSSVar } from "./makeGlobalStylesColorPallete";
 

@@ -1,16 +1,16 @@
 import classnames from "classnames";
-import React, { ReactNode } from "react";
-import { ElementModel } from "visual/component/Elements/Types";
+import React, { type ReactNode } from "react";
+import type { ElementModel } from "visual/component/Elements/Types";
 import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
-import { Model } from "visual/editorComponents/EditorComponent/types";
+import type { Model } from "visual/editorComponents/EditorComponent/types";
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import defaultValue from "./defaultValue.json";
 import * as sidebar from "./sidebar";
 import { style } from "./styles";
 import * as toolbar from "./toolbar";
-import { Value } from "./type";
-import * as types from "./types/index";
+import type { Value } from "./type";
+import { components } from "./types/index";
 
 export default class Input extends EditorComponent<Value> {
   static defaultValue = defaultValue;
@@ -22,7 +22,16 @@ export default class Input extends EditorComponent<Value> {
   renderForEdit(v: Value, vs: Value, vd: Value): ReactNode {
     const { className } = this.props;
     const { type } = v;
-    const Component = types[type as keyof typeof types];
+    // `components` is a plain object literal, so an unknown `type` from the
+    // stored model would otherwise resolve to an Object.prototype member
+    // instead of undefined, as it did when this was a namespace lookup.
+    const Component = Object.hasOwn(components, type)
+      ? components[type as keyof typeof components]
+      : undefined;
+
+    if (!Component) {
+      return null;
+    }
 
     const _className = classnames(
       "brz-forms__item",

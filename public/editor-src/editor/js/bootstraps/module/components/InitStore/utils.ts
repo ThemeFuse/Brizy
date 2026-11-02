@@ -1,10 +1,10 @@
-import {
+import type {
   ConfigCommon,
   PublishData
 } from "visual/global/Config/types/configs/ConfigCommon";
-import { EditorMode } from "visual/providers/EditorModeProvider/context";
+import type { EditorMode } from "visual/providers/EditorModeProvider/context";
 import { fetchPageSuccess } from "visual/redux/actions2";
-import { Store } from "visual/redux/store";
+import type { Store } from "visual/redux/store";
 
 export const waitForPendingAndDispatch = (
   type: "external" | "externalForce",

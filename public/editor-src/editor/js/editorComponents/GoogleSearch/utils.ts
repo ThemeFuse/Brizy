@@ -48,7 +48,7 @@ export const clearGoogleSearchParams = () => {
   } catch {
     const { href, hash } = location;
 
-    if (hash && hash.includes("gsc.")) {
+    if (hash?.includes("gsc.")) {
       const newHref = href.replace(hash, "");
       history.replaceState(null, "", newHref);
     }

@@ -19,7 +19,6 @@ import {
 } from "visual/redux/selectors";
 import type { TypedDispatch } from "visual/redux/store";
 import type { ReduxState } from "visual/redux/types";
-import type { Palette } from "visual/types/Style";
 import { addAdobeFonts, getAdobeFonts } from "visual/utils/api";
 import { getGroupFontsById } from "visual/utils/fonts/getFontById";
 import { getGoogleFonts } from "visual/utils/fonts/getGoogleFonts";
@@ -33,14 +32,18 @@ import type {
   StyleSummary
 } from "../../application/interfaces/i-project-repository";
 import type { BrizyToolResult } from "../../entities/models";
-import type { UpdateStyleInput } from "./utils";
+import type { UpdateColorPaletteInput, UpdateStyleInput } from "./utils";
 import {
-  buildNewStyle,
   duplicateCurrentStyle,
+  knownFontStyleIds,
+  knownPaletteSlots,
+  mergePaletteUpdate,
   mergeStyleUpdate,
   toFontSummaries,
   toStyleDetail,
-  toStyleSummary
+  toStyleSummary,
+  unknownFontStyleIds,
+  unknownPaletteSlots
 } from "./utils";
 
 class ProjectRepository implements IProjectRepository {
@@ -74,8 +77,14 @@ class ProjectRepository implements IProjectRepository {
   }
 
   changeStyle(styleId: string): BrizyToolResult<{ styleId: string }> {
-    const styles = stylesSelector(this.getState());
-    const style = styles.find((s) => s.id === styleId);
+    const state = this.getState();
+
+    // ADD_NEW_GLOBAL_STYLE appends to extraStyles, never to styles, and the
+    // currentStyle reducer resolves UPDATE_CURRENT_STYLE_ID from both.
+    const style = [
+      ...stylesSelector(state),
+      ...extraStylesSelector(state)
+    ].find((s) => s.id === styleId);
 
     if (!style) {
       return {
@@ -92,28 +101,41 @@ class ProjectRepository implements IProjectRepository {
     };
   }
 
-  addStyle(params: {
-    title: string;
-    colorPalette?: Palette[];
-    fontStyles?: Record<string, unknown>[];
-  }): BrizyToolResult<{ styleId: string; title: string }> {
+  updateStyle(params: UpdateStyleInput): BrizyToolResult<{ styleId: string }> {
     const currentStyle = currentStyleSelector(this.getState());
-    const newStyle = buildNewStyle({ ...params, currentStyle });
 
-    this.dispatch(addNewGlobalStyle(newStyle));
+    const unknown = unknownFontStyleIds(currentStyle, params.fontStyles);
+    if (unknown.length > 0) {
+      return {
+        success: false,
+        error: `Unknown font style id(s): ${unknown.join(", ")}. Available: ${knownFontStyleIds(currentStyle).join(", ")}.`
+      };
+    }
+
+    const updated = mergeStyleUpdate(currentStyle, params);
+
+    this.dispatch(updateCurrentStyle(updated));
 
     return {
       success: true,
-      data: {
-        styleId: newStyle.id,
-        title: newStyle.title
-      }
+      data: { styleId: updated.id }
     };
   }
 
-  updateStyle(params: UpdateStyleInput): BrizyToolResult<{ styleId: string }> {
+  updateColorPalette(
+    params: UpdateColorPaletteInput
+  ): BrizyToolResult<{ styleId: string }> {
     const currentStyle = currentStyleSelector(this.getState());
-    const updated = mergeStyleUpdate(currentStyle, params);
+
+    const unknown = unknownPaletteSlots(currentStyle, params.colorPalette);
+    if (unknown.length > 0) {
+      return {
+        success: false,
+        error: `Unknown palette slot(s): ${unknown.join(", ")}. Available: ${knownPaletteSlots(currentStyle).join(", ")}.`
+      };
+    }
+
+    const updated = mergePaletteUpdate(currentStyle, params.colorPalette);
 
     this.dispatch(updateCurrentStyle(updated));
 
@@ -206,6 +228,9 @@ class ProjectRepository implements IProjectRepository {
   ): Promise<BrizyToolResult<{ family: string; type: string }>> {
     try {
       let family: string;
+      // project.data.font holds a font id (tripId of the family), not a display
+      // name; getGroupFontsById matches on that id.
+      let defaultFontId: string | undefined;
 
       switch (params.type) {
         case "google": {
@@ -238,6 +263,7 @@ class ProjectRepository implements IProjectRepository {
           }
 
           family = font.family;
+          defaultFontId = fontDetails.id;
           break;
         }
         case "adobe": {
@@ -259,12 +285,22 @@ class ProjectRepository implements IProjectRepository {
 
           this.dispatch(addFonts([{ type: "adobe", id: adobeKitId, fonts }]));
           family = fonts.map((f: { family: string }) => f.family).join(", ");
+          // A kit adds many families at once, but the default font is one id.
+          defaultFontId = fonts[0] ? tripId(fonts[0].family) : undefined;
           break;
         }
       }
 
       if (params.setAsDefault) {
-        this.dispatch(updateDefaultFont(family));
+        // An Adobe kit with no families yields no id.
+        if (defaultFontId === undefined) {
+          return {
+            success: false,
+            error: `Added ${family}, but no font id could be derived to set as the default. Use changeDefaultFont with a specific family.`
+          };
+        }
+
+        this.dispatch(updateDefaultFont(defaultFontId));
       }
 
       return {
@@ -309,7 +345,16 @@ class ProjectRepository implements IProjectRepository {
   }
 
   changeDefaultFont(font: string): BrizyToolResult<{ font: string }> {
-    this.dispatch(updateDefaultFont(font));
+    // fontExists trips the id before looking it up; the dispatch must use the
+    // same form or the selector misses and falls back to an arbitrary font.
+    if (!this.fontExists(font)) {
+      return {
+        success: false,
+        error: `Font "${font}" is not in the project. Use getProjectFonts to see available fonts, or addFont to add it first.`
+      };
+    }
+
+    this.dispatch(updateDefaultFont(tripId(font)));
 
     return {
       success: true,

@@ -1,12 +1,15 @@
-import { DCGroup, DCTypes } from "visual/global/Config/types/DynamicContent";
-import { MValue } from "visual/utils/value";
+import type {
+  DCGroup,
+  DCTypes
+} from "visual/global/Config/types/DynamicContent";
+import type { MValue } from "visual/utils/value";
 import {
-  Choice,
-  OptGroup,
-  getDynamicContentChoices
+  type Choice,
+  getDynamicContentChoices,
+  type OptGroup
 } from "./getDynamicContentChoices";
 import { getDynamicContentHandler } from "./getDynamicContentHandler";
-import { TypeChoices } from "./types";
+import type { TypeChoices } from "./types";
 
 interface Base {
   show?: boolean;

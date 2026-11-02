@@ -1,4 +1,4 @@
-import { ToMeta } from "visual/component/Options/Type";
+import type { ToMeta } from "visual/component/Options/Type";
 import { isEmpty } from "./types/Value";
 
 export interface Meta {

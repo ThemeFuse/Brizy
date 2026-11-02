@@ -1,6 +1,6 @@
-import React, { ReactElement } from "react";
-import { t } from "visual/utils/i18n";
+import React, { type ReactElement } from "react";
 import EditorIcon from "visual/component/EditorIcon";
+import { t } from "visual/utils/i18n";
 
 export type Props = {
   text: string;

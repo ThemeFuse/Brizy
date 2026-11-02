@@ -1,11 +1,11 @@
 import classnames from "classnames";
 import React, {
-  CSSProperties,
-  ChangeEvent,
-  KeyboardEvent,
-  MouseEvent,
-  RefObject,
+  type ChangeEvent,
+  type CSSProperties,
   forwardRef,
+  type KeyboardEvent,
+  type MouseEvent,
+  type RefObject,
   useCallback,
   useEffect,
   useMemo,
@@ -17,8 +17,8 @@ import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import { isStory, useEditorMode } from "visual/providers/EditorModeProvider";
 import { useTreeContext } from "visual/providers/TreeProvider";
 import { attachRefs } from "visual/utils/react";
-import { TreeItemProps } from "./types";
-import { SPACING_SIZE, getDragPad, isOnlyImageInImageGallery } from "./utils";
+import type { TreeItemProps } from "./types";
+import { getDragPad, isOnlyImageInImageGallery, SPACING_SIZE } from "./utils";
 
 export const TreeItem = forwardRef<HTMLDivElement, TreeItemProps>(
   (
@@ -110,7 +110,7 @@ export const TreeItem = forwardRef<HTMLDivElement, TreeItemProps>(
           block: "center"
         });
       }
-    }, [activeId, id, ref]);
+    }, [activeId, id]);
 
     useEffect(() => {
       setEditedTitle(suffixTitle ?? "");
@@ -143,22 +143,16 @@ export const TreeItem = forwardRef<HTMLDivElement, TreeItemProps>(
 
     const handleProperties = isSectionItem ? undefined : handleProps;
 
-    const handleDoubleClickItem = useCallback(
-      () => setIsEditing(true),
-      [setIsEditing]
-    );
+    const handleDoubleClickItem = useCallback(() => setIsEditing(true), []);
 
     const handleUpdateTitle = useCallback(() => {
       setIsEditing(false);
       updateItemTitle(id, editedTitle);
     }, [id, editedTitle, updateItemTitle]);
 
-    const handleEditTitle = useCallback(
-      (e: ChangeEvent<HTMLInputElement>) => {
-        setEditedTitle(e.target.value);
-      },
-      [setEditedTitle]
-    );
+    const handleEditTitle = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+      setEditedTitle(e.target.value);
+    }, []);
 
     const handleKeyDownTitle = useCallback(
       (e: KeyboardEvent) => {

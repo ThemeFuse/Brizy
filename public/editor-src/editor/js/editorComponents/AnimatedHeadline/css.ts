@@ -1,6 +1,6 @@
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import type { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { getColor } from "visual/utils/color";
-import { OptionStyle } from "visual/utils/cssStyle/types";
+import type { OptionStyle } from "visual/utils/cssStyle/types";
 
 export const shapeStrokeCSS =
   (config: ConfigCommon): OptionStyle<"colorPicker"> =>

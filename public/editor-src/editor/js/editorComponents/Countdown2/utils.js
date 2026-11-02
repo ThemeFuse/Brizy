@@ -1,6 +1,6 @@
 export const formatDate = (date, template = "d/m/Y") => {
   date = new Date(date);
-  if (isNaN(Date.parse(date))) return date;
+  if (Number.isNaN(Date.parse(date))) return date;
 
   const year = date.getFullYear();
   const month = date.getMonth() + 1;
@@ -19,20 +19,18 @@ export const formatDate = (date, template = "d/m/Y") => {
 };
 
 function isValidDate(date) {
-  /* eslint-disable no-useless-escape */
-  const matches = /^(\d{1,2})[-\/](\d{1,2})[-\/](\d{4})$/.exec(date);
-  /* eslint-enabled no-useless-escape */
+  const matches = /^(\d{1,2})[-/](\d{1,2})[-/](\d{4})$/.exec(date);
   if (matches === null) return false;
 
-  const d = matches[2];
-  const m = matches[1] - 1;
-  const y = matches[3];
+  const d = Number(matches[2]);
+  const m = Number(matches[1]) - 1;
+  const y = Number(matches[3]);
   const composedDate = new Date(y, m, d);
 
   return (
-    composedDate.getDate() == d &&
-    composedDate.getMonth() == m &&
-    composedDate.getFullYear() == y
+    composedDate.getDate() === d &&
+    composedDate.getMonth() === m &&
+    composedDate.getFullYear() === y
   );
 }
 

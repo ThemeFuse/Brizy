@@ -1,6 +1,6 @@
-import { Reader } from "visual/utils/types/Type";
+import type { Reader } from "visual/utils/types/Type";
 
 export type GradientActivePointer = "start" | "end";
 
-export const read: Reader<GradientActivePointer> = v =>
+export const read: Reader<GradientActivePointer> = (v) =>
   v === "start" || v === "end" ? v : undefined;

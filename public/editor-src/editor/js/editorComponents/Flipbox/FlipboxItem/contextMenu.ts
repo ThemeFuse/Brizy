@@ -8,10 +8,10 @@ import {
 } from "visual/component/ContextMenu/utils";
 import { openNavigatorFromContextMenu } from "visual/component/Navigator/utils";
 import { hideToolbar } from "visual/component/Toolbar";
-import { ContextMenuItem } from "visual/editorComponents/EditorComponent/types";
+import type { ContextMenuItem } from "visual/editorComponents/EditorComponent/types";
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import { t } from "visual/utils/i18n";
-import { Component, Value } from "./types";
+import type { Component, Value } from "./types";
 
 export default (
   itemIndex: number

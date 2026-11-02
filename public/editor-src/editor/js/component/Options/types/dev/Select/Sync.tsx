@@ -1,13 +1,13 @@
 import classnames from "classnames";
-import React, { ReactElement } from "react";
+import React, { type ReactElement } from "react";
 import { Select2 } from "visual/component/Controls/Select2";
 import {
   Item,
-  Props as ItemProps
+  type Props as ItemProps
 } from "visual/component/Controls/Select2/Item";
 import { EditorIcon } from "visual/component/EditorIcon";
-import { Literal } from "visual/utils/types/Literal";
-import { ChoicesSync, Props } from "./types";
+import type { Literal } from "visual/utils/types/Literal";
+import type { ChoicesSync, Props } from "./types";
 import { toElement } from "./utils";
 
 type ItemInstance = ReactElement<ItemProps<Literal>>;
@@ -35,8 +35,8 @@ export const Sync = ({
         onChange(toElement(value));
       }}
     >
-      {choices.map(({ title, icon, value }, i): ItemInstance => {
-        let icon_;
+      {choices.map(({ title, icon, value }): ItemInstance => {
+        let icon_: ReactElement | undefined;
 
         if (icon) {
           const iconClassName = classnames(
@@ -52,7 +52,7 @@ export const Sync = ({
         }
 
         return (
-          <Item key={i} value={value}>
+          <Item key={value} value={value}>
             {icon_}
             {title}
           </Item>

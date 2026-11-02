@@ -1,5 +1,5 @@
 import Quill from "quill";
-import { GetConfig } from "visual/providers/ConfigProvider/types";
+import type { GetConfig } from "visual/providers/ConfigProvider/types";
 import { encodeToString, parseFromString } from "visual/utils/string";
 import { getStyle } from "../BackgroundGradient";
 

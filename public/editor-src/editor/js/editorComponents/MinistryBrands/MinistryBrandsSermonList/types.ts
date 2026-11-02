@@ -1,7 +1,7 @@
-import { ElementModel } from "visual/component/Elements/Types";
-import { ComponentsMeta } from "visual/editorComponents/EditorComponent/types";
-import { WithClassName } from "visual/types/attributes";
-import { Switch } from "../utils/types";
+import type { ElementModel } from "visual/component/Elements/Types";
+import type { ComponentsMeta } from "visual/editorComponents/EditorComponent/types";
+import type { WithClassName } from "visual/types/attributes";
+import type { Switch } from "../utils/types";
 
 export interface Props extends WithClassName {
   meta: ComponentsMeta;

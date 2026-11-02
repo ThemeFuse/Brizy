@@ -1,4 +1,4 @@
-import { EditorConfig } from "../models/Config";
+import type { EditorConfig } from "../models/Config";
 
 export enum ActionKind {
   idle = "idle",

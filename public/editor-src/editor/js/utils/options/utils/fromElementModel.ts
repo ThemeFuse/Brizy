@@ -1,9 +1,9 @@
-import { ElementModel } from "visual/component/Elements/Types";
-import { FromElementModel } from "visual/component/Options/Type";
+import type { ElementModel } from "visual/component/Elements/Types";
+import type { FromElementModel } from "visual/component/Options/Type";
 import type { OptionName, OptionValue } from "visual/component/Options/types";
 import { createOptionId } from "visual/editorComponents/EditorComponent/utils";
-import { Store } from "visual/redux/store";
-import { BreakpointsNames } from "visual/utils/breakpoints/types";
+import type { Store } from "visual/redux/store";
+import type { BreakpointsNames } from "visual/utils/breakpoints/types";
 import { defaultValueValue } from "visual/utils/onChange";
 import { fromElementModel as addable } from "visual/utils/options/Addable/converters";
 import { fromElementModel as advancedSettings } from "visual/utils/options/AdvancedSettings/converters";
@@ -61,17 +61,17 @@ import { fromElementModel as stateMode } from "visual/utils/options/StateMode/co
 import { fromElementModel as _switch } from "visual/utils/options/Switch/converters";
 import { fromElementModel as symbols } from "visual/utils/options/Symbols/converters";
 import { fromElementModel as tabs } from "visual/utils/options/Tabs/converters";
-import { fromElementModel as textShadow } from "visual/utils/options/TextShadow/converters";
 import { fromElementModel as textarea } from "visual/utils/options/Textarea/converters";
+import { fromElementModel as textShadow } from "visual/utils/options/TextShadow/converters";
 import { fromElementModel as toggle } from "visual/utils/options/Toggle/converters";
 import { fromElementModel as toggleButton } from "visual/utils/options/ToggleButton/converters";
 import { fromElementModel as transform } from "visual/utils/options/Transform/converters";
 import { fromElementModel as typography } from "visual/utils/options/Typography/converters";
 import { read as readObject, replaceNullish } from "visual/utils/reader/object";
 import { DESKTOP } from "visual/utils/responsiveMode";
-import { NORMAL, State } from "visual/utils/stateMode";
-import { Literal } from "visual/utils/types/Literal";
-import { MValue } from "visual/utils/value";
+import { NORMAL, type State } from "visual/utils/stateMode";
+import type { Literal } from "visual/utils/types/Literal";
+import type { MValue } from "visual/utils/value";
 import { fromElementModel as linkExternal } from "../LinkExternal/converters";
 import { applyDefaultValueToOption } from "./defaultValue";
 

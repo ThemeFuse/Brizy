@@ -1,12 +1,6 @@
-import React, { ReactElement, useCallback } from "react";
+import React, { type ReactElement, useCallback } from "react";
 import { useDispatch } from "react-redux";
 import { Switch } from "visual/component/Controls/Switch";
-import Fixed from "visual/component/Prompts/Fixed";
-import {
-  setIsHomePage,
-  setLayout,
-  setTitle
-} from "visual/component/Prompts/PromptPageTemplate/types/Setters";
 import { Field } from "visual/component/Prompts/common/PromptPage/Field";
 import { HeaderFooterField } from "visual/component/Prompts/common/PromptPage/HeaderFooterField";
 import {
@@ -15,6 +9,12 @@ import {
   switchTab
 } from "visual/component/Prompts/common/states/Classic/types/Actions";
 import { useStateReducer } from "visual/component/Prompts/common/states/Classic/useStateReducer";
+import Fixed from "visual/component/Prompts/Fixed";
+import {
+  setIsHomePage,
+  setLayout,
+  setTitle
+} from "visual/component/Prompts/PromptPageTemplate/types/Setters";
 import {
   canSyncPage,
   getChoices,
@@ -22,11 +22,11 @@ import {
   isShopifyLayout
 } from "visual/component/Prompts/utils";
 import {
-  Shopify,
   isCloud,
-  isShopify
+  isShopify,
+  type Shopify
 } from "visual/global/Config/types/configs/Cloud";
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import type { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { useConfig } from "visual/providers/ConfigProvider";
 import {
   updateError,
@@ -43,9 +43,9 @@ import { Button } from "../common/Button";
 import { Content } from "../common/Content";
 import { Header } from "../common/Header";
 import { Input } from "../common/PromptPage/Input";
-import { Tabs, getTabs } from "../common/PromptPage/types";
+import { getTabs, Tabs } from "../common/PromptPage/types";
 import { reducer } from "./reducer";
-import { Props, Valid } from "./types";
+import type { Props, Valid } from "./types";
 
 export const PromptPageTemplate = (props: Props): ReactElement => {
   const _config = useConfig();

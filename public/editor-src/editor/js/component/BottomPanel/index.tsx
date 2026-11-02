@@ -1,4 +1,4 @@
-import React, { ComponentType, ReactElement } from "react";
+import React, { type ComponentType, type ReactElement } from "react";
 import { usePluginSlot } from "visual/plugins/PluginProvider";
 import { SlotErrorBoundary } from "visual/plugins/SlotErrorBoundary";
 import { useConfig } from "visual/providers/ConfigProvider";
@@ -20,6 +20,7 @@ export default function BottomPanel(): JSX.Element {
   const panelItems = getComponents(config)
     .filter(isComponentType)
     .map((Item, index): ReactElement => {
+      // biome-ignore lint/suspicious/noArrayIndexKey: panel items are components from a fixed config list with no id; position is the identity
       return <Item key={index} />;
     });
 

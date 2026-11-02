@@ -1,10 +1,10 @@
 import React from "react";
-import SelectOptgroup from "visual/component/Controls/Select/SelectOptgroup";
-import { SelectItem } from "visual/component/Controls/InternalLink/Components/SelectItem";
 import { Badge } from "visual/component/Badge";
-import { FCC } from "visual/utils/react/types";
+import { SelectItem } from "visual/component/Controls/InternalLink/Components/SelectItem";
+import SelectOptgroup from "visual/component/Controls/Select/SelectOptgroup";
+import type { FCC } from "visual/utils/react/types";
+import type { RuleListProps } from "../Rules/types";
 import { getOptionItemClassNames } from "../Rules/utils";
-import { RuleListProps } from "../Rules/types";
 
 export const ListItems: FCC<RuleListProps> = ({
   item: { title, items, mode },
@@ -15,9 +15,9 @@ export const ListItems: FCC<RuleListProps> = ({
     <SelectOptgroup title={title}>
       <span className="brz-span">{title}</span>
     </SelectOptgroup>
-    {items.map(({ title, status, value }, _index) => (
+    {items.map(({ title, status, value }) => (
       <div
-        key={_index}
+        key={value}
         onClick={() => onClick(`${mode}|||${value}`)}
         className={getOptionItemClassNames(title === valueSelected)}
       >

@@ -1,5 +1,5 @@
 import { match } from "fp-utilities";
-import {
+import type {
   ToolbarItemType,
   ToolbarItemTypeWithChildOption,
   ToolbarItemTypeWithColumns,

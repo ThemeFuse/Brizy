@@ -1,20 +1,20 @@
 import { difference, intersection } from "es-toolkit";
 import { isT } from "fp-utilities";
 import { isWp } from "visual/global/Config";
-import {
-  GetCollectionItem_collectionItem_fields_CollectionItemFieldMultiReference as CollectionItemFieldMultiReference,
-  GetCollectionItem_collectionItem_fields_CollectionItemFieldReference as CollectionItemFieldReference
-} from "visual/global/Config/types/GetCollectionItem";
 import { isCustomerPage } from "visual/global/Config/types/configs/Base";
 import {
   isCloud,
   isCollectionPage
 } from "visual/global/Config/types/configs/Cloud";
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
-import { ReduxState } from "visual/redux/types";
-import { GlobalBlock } from "visual/types/GlobalBlock";
-import { Page, PageCollection } from "visual/types/Page";
-import {
+import type { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import type {
+  GetCollectionItem_collectionItem_fields_CollectionItemFieldMultiReference as CollectionItemFieldMultiReference,
+  GetCollectionItem_collectionItem_fields_CollectionItemFieldReference as CollectionItemFieldReference
+} from "visual/global/Config/types/GetCollectionItem";
+import type { ReduxState } from "visual/redux/types";
+import type { GlobalBlock } from "visual/types/GlobalBlock";
+import type { Page, PageCollection } from "visual/types/Page";
+import type {
   AllRule,
   CollectionItemRule,
   CollectionTypeRule,
@@ -32,11 +32,11 @@ import {
 import { isTemplate } from "visual/utils/models";
 import {
   CUSTOMER_TYPE,
-  TEMPLATES_GROUP_ID,
-  TEMPLATE_TYPE,
   createEntityValue,
   getCurrentRule,
-  getEntityValue
+  getEntityValue,
+  TEMPLATE_TYPE,
+  TEMPLATES_GROUP_ID
 } from "./blocksConditions";
 import {
   isAllRule,
@@ -102,6 +102,7 @@ export function canUseConditionInTemplates(data: Data): boolean {
   const rules = globalBlock.rules;
   const { ruleMatches } = config.wp;
 
+  // biome-ignore lint/suspicious/useIterableCallbackReturn: TEMPORARY - the type guard falls through to an implicit undefined, which find/some consume through ToBoolean exactly as they would false, so the behaviour is already correct; left unedited because canUseConditionInTemplates has no test coverage
   const templateCondition = rules.find((rule) => {
     if (isCollectionItemRule(rule)) {
       return (
@@ -164,6 +165,7 @@ export function canUseConditionInTemplates(data: Data): boolean {
     )
   );
 
+  // biome-ignore lint/suspicious/useIterableCallbackReturn: TEMPORARY - the type guard falls through to an implicit undefined, which find/some consume through ToBoolean exactly as they would false, so the behaviour is already correct; left unedited because canUseConditionInTemplates has no test coverage
   const templateCondition2 = rules.find((rule) => {
     if (isCollectionTypeRule(rule)) {
       return (
@@ -324,9 +326,9 @@ export function pageCMSSplitRules(
   });
 
   const referenceSingle = specificReference.find((rule) => {
-    const intersectionRule = refs
-      .map((ref) => intersection(ref.entityValues, rule.entityValues))
-      .flat();
+    const intersectionRule = refs.flatMap((ref) =>
+      intersection(ref.entityValues, rule.entityValues)
+    );
 
     return intersectionRule.length;
   });
@@ -392,6 +394,7 @@ function pageWPSplitRules(data: RuleData): ReferenceRule {
   }
 
   const referenceSingle = referenceRule.find((r) => {
+    // biome-ignore lint/suspicious/useIterableCallbackReturn: TEMPORARY - the type guard falls through to an implicit undefined, which find/some consume through ToBoolean exactly as they would false, so the behaviour is already correct; left unedited to keep this global-block visibility path byte-identical
     return r.entityValues.some((v) => {
       if (isReferenceSpecificAuthor(v)) {
         const arr = v.split("|");
@@ -414,6 +417,7 @@ function pageWPSplitRules(data: RuleData): ReferenceRule {
   });
 
   const referenceAll = referenceRule.find((r) => {
+    // biome-ignore lint/suspicious/useIterableCallbackReturn: TEMPORARY - the type guard falls through to an implicit undefined, which find/some consume through ToBoolean exactly as they would false, so the behaviour is already correct; left unedited to keep this global-block visibility path byte-identical
     return r.entityValues.some((v) => {
       if (isReferenceAllAuthor(v)) {
         return isT(postAuthor);
@@ -515,46 +519,49 @@ export function getFieldsReferences(
     return undefined;
   }
 
-  return fields
-    .filter(
-      (
-        v
-      ): v is
-        | CollectionItemFieldReference
-        | CollectionItemFieldMultiReference =>
-        v.__typename === "CollectionItemFieldReference" ||
-        v.__typename === "CollectionItemFieldMultiReference"
-    )
-    .map<FieldsReferences>((field) => {
-      switch (field.__typename) {
-        case "CollectionItemFieldReference": {
-          const entityType = field.type.collectionType.id;
-          const entityValues = createEntityValue({
-            fieldId: field.type.id,
-            collectionId: field.referenceValues.collectionItem.id
-          });
+  return (
+    fields
+      .filter(
+        (
+          v
+        ): v is
+          | CollectionItemFieldReference
+          | CollectionItemFieldMultiReference =>
+          v.__typename === "CollectionItemFieldReference" ||
+          v.__typename === "CollectionItemFieldMultiReference"
+      )
+      // biome-ignore lint/suspicious/useIterableCallbackReturn: the switch is exhaustive over the two __typename values the type-predicate filter above already guarantees, so every reachable path returns; a default branch would have to invent a FieldsReferences value or assert a type that is false
+      .map<FieldsReferences>((field) => {
+        switch (field.__typename) {
+          case "CollectionItemFieldReference": {
+            const entityType = field.type.collectionType.id;
+            const entityValues = createEntityValue({
+              fieldId: field.type.id,
+              collectionId: field.referenceValues.collectionItem.id
+            });
 
-          return {
-            appliedFor: 1,
-            entityType,
-            entityValues: [entityValues],
-            fieldId: field.type.id
-          };
-        }
-        case "CollectionItemFieldMultiReference": {
-          const entityType = field.type.collectionType.id;
-          const entityValues = field.multiReferenceValues.collectionItems.map(
-            ({ id }) =>
-              createEntityValue({ fieldId: field.type.id, collectionId: id })
-          );
+            return {
+              appliedFor: 1,
+              entityType,
+              entityValues: [entityValues],
+              fieldId: field.type.id
+            };
+          }
+          case "CollectionItemFieldMultiReference": {
+            const entityType = field.type.collectionType.id;
+            const entityValues = field.multiReferenceValues.collectionItems.map(
+              ({ id }) =>
+                createEntityValue({ fieldId: field.type.id, collectionId: id })
+            );
 
-          return {
-            appliedFor: 1,
-            entityType,
-            entityValues,
-            fieldId: field.type.id
-          };
+            return {
+              appliedFor: 1,
+              entityType,
+              entityValues,
+              fieldId: field.type.id
+            };
+          }
         }
-      }
-    });
+      })
+  );
 }

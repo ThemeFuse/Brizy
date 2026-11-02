@@ -1,29 +1,23 @@
-import $ from "jquery";
-import { getProLibs } from "visual/libs";
-import Gallery, { Settings } from "visual/libs/gallery";
-import { handleLightBoxZoom } from "visual/utils/export/lightbox";
+import { getFreeLibs, getProLibs } from "visual/libs";
+import type Gallery from "visual/libs/gallery";
+import type { Settings } from "visual/libs/gallery";
 import { decodeFromString } from "visual/utils/string";
 import {
   initImageGalleryBigImageAccessibility,
   initImageGalleryFilterAccessibility
 } from "../accessibility";
-import { IsotopeSettings, JustifySettings } from "./utils";
+import type { IsotopeSettings, JustifySettings } from "./utils";
 import {
   arrangeGridByTags,
   isJustified,
   removeUselessInfo
 } from "./utils.export";
 
-export default function ($node: JQuery): void {
+export default function (root: HTMLElement): void {
+  const { openLightbox, handleLightBoxZoom } = getFreeLibs();
   const { Isotope, ImagesLoaded, Gallery } = getProLibs();
 
   if (!Isotope || !ImagesLoaded || !Gallery) {
-    return;
-  }
-
-  const root = $node.get(0);
-
-  if (!root) {
     return;
   }
 
@@ -61,10 +55,6 @@ export default function ($node: JQuery): void {
               ImagesLoaded(wrapper, () => {
                 // init Isotope after all images have loaded
                 iso = new Isotope(wrapper, gallerySettings ?? {});
-
-                // add isotope for data attr uses in tabs and accordion
-                // need to find alternative for "data" method, because dataset set [object Object]
-                $(wrapper).data("isotope", iso);
 
                 window.Brz.emit("elements.gallery.changed", wrapper, {
                   type: "masonry"
@@ -120,11 +110,8 @@ export default function ($node: JQuery): void {
       }
 
       const lightBox = bigImageWrapper.getAttribute("data-lightbox");
-      const links = bigImageWrapper.querySelectorAll<HTMLElement>(
-        ".brz-image__gallery-big-image-lightbox"
-      );
 
-      if (imageItems && imageItems.length && imagesSrc.length && bigImage) {
+      if (imageItems?.length && imagesSrc.length && bigImage) {
         removeUselessInfo(bigImageWrapper);
 
         if (lightBox === "on") {
@@ -134,27 +121,28 @@ export default function ($node: JQuery): void {
               currentIndex = index;
             };
           });
-          // small hack to open lightBox by click on bigImage
+
+          const lightbox = openLightbox({
+            kind: "element",
+            target: bigImageWrapper,
+            options: {
+              delegate: "a",
+              type: "image",
+              gallery: { enabled: true },
+              closeOnContentClick: false,
+              mainClass: "",
+              callbacks: { open: handleLightBoxZoom, close: undefined }
+            }
+          });
+
+          // Clicking the big image opens the lightbox on the thumbnail it is showing.
           bigImageWrapper.onclick = (e) => {
             e.preventDefault();
             e.stopPropagation();
 
-            if (links[currentIndex]) {
-              links[currentIndex].click();
-            }
+            lightbox.open();
+            lightbox.goTo(currentIndex);
           };
-
-          // @ts-expect-error magnificPopup have no types
-          $(bigImageWrapper).magnificPopup({
-            delegate: "a",
-            type: "image",
-            gallery: {
-              enabled: true
-            },
-            callbacks: {
-              open: handleLightBoxZoom
-            }
-          });
         } else {
           imageItems.forEach((item, index) => {
             item.onclick = () => {
@@ -252,43 +240,45 @@ export default function ($node: JQuery): void {
 
     elements.forEach((id: string) => {
       window.Brz.on(id, (element: HTMLElement) => {
-        if (iso && element && element.contains(_this)) {
+        if (iso && element?.contains(_this)) {
           iso.arrange({});
         }
-        if (galleryInstance && element && element.contains(_this)) {
+        if (galleryInstance && element?.contains(_this)) {
           galleryInstance.arrange();
         }
       });
     });
   });
 
-  // MagnificPopup
-  root.querySelectorAll(".brz-image__gallery-lightbox").forEach((item) => {
-    const aTag = item.querySelectorAll(
-      ".brz-image__gallery-item  .brz-image > a"
-    );
+  // Lightbox
+  root
+    .querySelectorAll<HTMLElement>(".brz-image__gallery-lightbox")
+    .forEach((item) => {
+      const aTag = item.querySelectorAll(
+        ".brz-image__gallery-item  .brz-image > a"
+      );
 
-    aTag.forEach((img, index) => {
-      img.addEventListener("click", (e) => {
-        e.preventDefault();
-        e.stopPropagation();
+      aTag.forEach((img, index) => {
+        img.addEventListener("click", (e) => {
+          e.preventDefault();
+          e.stopPropagation();
 
-        $(item)
-          // @ts-expect-error magnificPopup have no types
-          .magnificPopup({
-            delegate: "a",
-            type: "image",
-            gallery: {
-              enabled: true
-            },
-            mainClass: "brz brz-lightbox",
-            callbacks: {
-              open: handleLightBoxZoom
+          const lightbox = openLightbox({
+            kind: "element",
+            target: item,
+            options: {
+              delegate: "a",
+              type: "image",
+              gallery: { enabled: true },
+              closeOnContentClick: false,
+              mainClass: "brz brz-lightbox",
+              callbacks: { open: handleLightBoxZoom, close: undefined }
             }
-          })
-          .magnificPopup("open")
-          .magnificPopup("goTo", index);
+          });
+
+          lightbox.open();
+          lightbox.goTo(index);
+        });
       });
     });
-  });
 }

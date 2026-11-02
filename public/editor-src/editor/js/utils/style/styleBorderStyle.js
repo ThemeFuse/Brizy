@@ -18,6 +18,6 @@ export function styleBorderStyle({ v, device, state }) {
       ? "none"
       : v.hoverBorderStyle
     : borderStyle === ""
-    ? "none"
-    : borderStyle;
+      ? "none"
+      : borderStyle;
 }

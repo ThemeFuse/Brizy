@@ -1,4 +1,4 @@
-import React, { JSX, createRef } from "react";
+import React, { createRef, type JSX } from "react";
 import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { Wrapper } from "visual/editorComponents/tools/Wrapper";

@@ -1,6 +1,6 @@
 import { flatten } from "es-toolkit";
-import { Store } from "visual/redux/store";
-import { DeviceMode } from "visual/types";
+import type { Store } from "visual/redux/store";
+import type { DeviceMode } from "visual/types";
 import { FontFamilyType } from "visual/types/Fonts";
 import { getDefaultFont } from "visual/utils/fonts/getFontById";
 import { getFontStyle } from "visual/utils/fonts/getFontStyle";
@@ -10,10 +10,10 @@ import {
   defaultValue,
   fromElementModel
 } from "visual/utils/options/Typography/converters";
-import { Literal } from "visual/utils/types/Literal";
-import { MValue } from "visual/utils/value";
-import { FontsBlock } from "./types/FontsBlocks";
-import { Value } from "./types/Value";
+import type { Literal } from "visual/utils/types/Literal";
+import type { MValue } from "visual/utils/value";
+import type { FontsBlock } from "./types/FontsBlocks";
+import type { Value } from "./types/Value";
 
 const hasFont = (fonts: FontsBlock, fontId: string): boolean => {
   return Object.values(fonts).some((fontList) =>
@@ -115,4 +115,3 @@ export const getValue = (data: {
     }
   }
 };
-

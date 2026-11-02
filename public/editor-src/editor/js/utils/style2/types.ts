@@ -1,8 +1,8 @@
-import { ElementModel } from "visual/component/Elements/Types";
-import { GetConfig } from "visual/providers/ConfigProvider/types";
-import { Store } from "visual/redux/store";
-import { ResponsiveMode } from "visual/utils/responsiveMode";
-import { State } from "visual/utils/stateMode";
+import type { ElementModel } from "visual/component/Elements/Types";
+import type { GetConfig } from "visual/providers/ConfigProvider/types";
+import type { Store } from "visual/redux/store";
+import type { ResponsiveMode } from "visual/utils/responsiveMode";
+import type { State } from "visual/utils/stateMode";
 
 export type CSSValue<
   T extends ElementModel = ElementModel,

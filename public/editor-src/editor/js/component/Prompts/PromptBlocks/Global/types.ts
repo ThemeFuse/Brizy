@@ -1,17 +1,16 @@
-import { ComponentType, ReactElement } from "react";
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
-import { FontsPayload } from "visual/redux/actions2";
-import { ReduxState } from "visual/redux/types";
-import { BlockMetaType } from "visual/types/GlobalBlock";
-import { BlockScreenshots } from "visual/utils/screenshots/types";
-import { NormalOrPopup } from "../types";
+import type { ComponentType, ReactElement } from "react";
+import type { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import type { FontsPayload } from "visual/redux/actions2";
+import type { ReduxState } from "visual/redux/types";
+import type { BlockScreenshots } from "visual/utils/screenshots/types";
+import type { NormalOrPopup, PromptBlockMetaType } from "../types";
 
-export type PromptGlobalBlock<T extends BlockMetaType> = {
+export type PromptGlobalBlock<T extends PromptBlockMetaType> = {
   fonts: FontsPayload;
   block: NormalOrPopup<T>["data"];
 };
 
-export interface Props<T extends BlockMetaType> {
+export interface Props<T extends PromptBlockMetaType> {
   type: T;
   showSearch?: boolean;
   showSidebar?: boolean;

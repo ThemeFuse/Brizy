@@ -1,8 +1,8 @@
 import classnames from "classnames";
-import React, { ReactElement } from "react";
+import React, { type ReactElement } from "react";
 import Select from "visual/component/Controls/Select";
 import SelectItem from "visual/component/Controls/Select/SelectItem";
-import { TemplateProps } from "visual/component/LeftSidebar/components/Options/utils";
+import type { TemplateProps } from "visual/component/LeftSidebar/components/Options/utils";
 
 export interface Props extends TemplateProps {
   label?: string;
@@ -24,8 +24,8 @@ export default class Template extends React.Component<Props> {
     templates: { id: string; title: string }[]
   ): JSX.Element[] {
     if (isWP) {
-      return templates.map((template, index) => (
-        <SelectItem key={index} value={template.id}>
+      return templates.map((template) => (
+        <SelectItem key={template.id} value={template.id}>
           {template.title}
         </SelectItem>
       ));

@@ -1,19 +1,19 @@
+import type { ElementModel } from "visual/component/Elements/Types";
+import {
+  wInFullPage,
+  wInMobilePage,
+  wInTabletPage
+} from "visual/config/columns";
 import {
   DESKTOP,
   MOBILE,
-  TABLET,
-  ResponsiveMode
+  type ResponsiveMode,
+  TABLET
 } from "visual/utils/responsiveMode";
-import {
-  wInFullPage,
-  wInTabletPage,
-  wInMobilePage
-} from "visual/config/columns";
 import {
   styleElementMegaMenuWidth,
   styleElementMegaMenuWidthSuffix
 } from "visual/utils/style2";
-import { ElementModel } from "visual/component/Elements/Types";
 
 interface Meta {
   desktopW: number;

@@ -93,7 +93,7 @@ class Brizy_Editor_Project extends Brizy_Editor_Entity
         register_post_type(self::BRIZY_PROJECT, array(
             'public' => false,
             'has_archive' => false,
-            'description' => __('Brizy Project.'),
+            'description' => __('Brizy Project.', 'brizy'),
             'publicly_queryable' => false,
             'show_ui' => false,
             'show_in_menu' => false,

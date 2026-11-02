@@ -3,7 +3,7 @@
  */
 import { keyToDCFallback2Key } from "visual/editorComponents/EditorComponent/DynamicContent/utils";
 import { inDevelopment } from "visual/editorComponents/EditorComponent/utils";
-import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
+import type { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
 
 export const bindPopulation = (
   option: ToolbarItemType,

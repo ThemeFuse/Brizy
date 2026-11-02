@@ -1,4 +1,9 @@
 import { tripId } from "visual/utils/fonts/transform";
+import {
+  defaultValueValue,
+  parseDefaultValueKey,
+  tempValueKey
+} from "visual/utils/onChange/device";
 import type { HandlerDeps } from "./types";
 
 const fontFamilyKeyRe = /^(?:.+F|f)ontFamily$/;
@@ -66,8 +71,7 @@ export function withAllFontFamilyNormalize<T extends Record<string, unknown>>(
       continue;
     }
 
-    const prefix =
-      key === "fontFamily" ? "" : key.replace(/FontFamily$/i, "");
+    const prefix = key === "fontFamily" ? "" : key.replace(/FontFamily$/i, "");
     result = withFontFamilyNormalize(result, prefix);
   }
 
@@ -75,102 +79,35 @@ export function withAllFontFamilyNormalize<T extends Record<string, unknown>>(
 }
 
 /**
- * Color hex to palette mapping.
- * When LLM provides hex without palette, we auto-clear the palette.
+ * Clear the palette slot whenever a hex colour is sent without one.
+ *
+ * A stored colour is a pair — `<name>ColorHex` and `<name>ColorPalette` — and
+ * the palette slot wins while it holds a slot id, so a hex sent on its own
+ * would be stored and never painted. The pairing is derived from the key
+ * rather than listed: every colour in the builder is spelled this way, and the
+ * list this replaced had to be extended by hand for each new element, which is
+ * a silent failure when it is forgotten (the call succeeds and the colour does
+ * not change). `restoreColorOpacity` below reads the pair the same way.
  */
-const COLOR_DEFAULTS: Array<{ hex: string; palette: string }> = [
-  { hex: "bgColorHex", palette: "bgColorPalette" },
-  { hex: "colorHex", palette: "colorPalette" },
-  { hex: "borderColorHex", palette: "borderColorPalette" },
-  { hex: "hoverBgColorHex", palette: "hoverBgColorPalette" },
-  { hex: "hoverColorHex", palette: "hoverColorPalette" },
-  { hex: "hoverBorderColorHex", palette: "hoverBorderColorPalette" },
-  { hex: "gradientColorHex", palette: "gradientColorPalette" },
-  { hex: "hoverGradientColorHex", palette: "hoverGradientColorPalette" },
-  { hex: "boxShadowColorHex", palette: "boxShadowColorPalette" },
-  { hex: "hoverBoxShadowColorHex", palette: "hoverBoxShadowColorPalette" },
-  { hex: "activeColorHex", palette: "activeColorPalette" },
-  { hex: "activeBgColorHex", palette: "activeBgColorPalette" },
-  { hex: "backBgColorHex", palette: "backBgColorPalette" },
-  { hex: "thumbArrowColorHex", palette: "thumbArrowColorPalette" },
-  { hex: "thumbArrowBgColorHex", palette: "thumbArrowBgColorPalette" },
-  { hex: "iconColorHex", palette: "iconColorPalette" },
-  { hex: "menuBgColorHex", palette: "menuBgColorPalette" },
-  { hex: "hoverMenuBgColorHex", palette: "hoverMenuBgColorPalette" },
-  { hex: "menuBorderColorHex", palette: "menuBorderColorPalette" },
-  { hex: "arrowsColorHex", palette: "arrowsColorPalette" },
-  { hex: "textColorHex", palette: "textColorPalette" },
-  { hex: "linkColorHex", palette: "linkColorPalette" },
-  { hex: "lostColorHex", palette: "lostColorPalette" },
-  { hex: "labelColorHex", palette: "labelColorPalette" },
-  { hex: "registerInfoColorHex", palette: "registerInfoColorPalette" },
-  { hex: "registerLinkColorHex", palette: "registerLinkColorPalette" },
-  { hex: "loginLinkColorHex", palette: "loginLinkColorPalette" },
-  { hex: "checkboxColorHex", palette: "checkboxColorPalette" },
-  { hex: "agreementColorHex", palette: "agreementColorPalette" },
-  { hex: "titleColorHex", palette: "titleColorPalette" },
-  { hex: "hoverTitleColorHex", palette: "hoverTitleColorPalette" },
-  { hex: "titleTextShadowColorHex", palette: "titleTextShadowColorPalette" },
-  {
-    hex: "hoverTitleTextShadowColorHex",
-    palette: "hoverTitleTextShadowColorPalette"
-  },
-  {
-    hex: "chartPieItemsGoogleColorHex",
-    palette: "chartPieItemsGoogleColorPalette"
-  },
-  {
-    hex: "chartPieItemsFacebookColorHex",
-    palette: "chartPieItemsFacebookColorPalette"
-  },
-  {
-    hex: "chartPieItemsTwitterColorHex",
-    palette: "chartPieItemsTwitterColorPalette"
-  },
+const paletteKeyFor = (key: string): string | undefined => {
+  const match = key.match(/^(.*[Cc]olor)Hex$/);
+  return match ? `${match[1]}Palette` : undefined;
+};
 
-  {
-    hex: "chartBarItemsGoogleColorHex",
-    palette: "chartBarItemsGoogleColorPalette"
-  },
-  {
-    hex: "chartBarItemsFacebookColorHex",
-    palette: "chartBarItemsFacebookColorPalette"
-  },
-  {
-    hex: "chartBarItemsTwitterColorHex",
-    palette: "chartBarItemsTwitterColorPalette"
-  },
-
-  {
-    hex: "chartLineItemsGoogleColorHex",
-    palette: "chartLineItemsGoogleColorPalette"
-  },
-  {
-    hex: "chartLineItemsFacebookColorHex",
-    palette: "chartLineItemsFacebookColorPalette"
-  },
-  {
-    hex: "chartLineItemsTwitterColorHex",
-    palette: "chartLineItemsTwitterColorPalette"
-  }
-];
-
-/**
- * Merges default palette values when LLM provides hex colors without clearing palette.
- * This ensures custom colors work even if LLM forgets to set palette to "".
- */
 export function withColorDefaults<T extends Record<string, unknown>>(
   props: T
 ): T {
-  const result = { ...props };
+  const result: Record<string, unknown> = { ...props };
 
-  for (const { hex, palette } of COLOR_DEFAULTS) {
-    if (hex in result && result[hex] !== undefined && !(palette in result)) {
-      (result as Record<string, unknown>)[palette] = "";
-    }
+  for (const key of Object.keys(props)) {
+    const palette = paletteKeyFor(key);
+    if (palette === undefined || result[key] === undefined) continue;
+    if (palette in result) continue;
+
+    result[palette] = "";
   }
 
-  return result;
+  return result as T;
 }
 
 /**
@@ -184,6 +121,12 @@ export function withColorDefaults<T extends Record<string, unknown>>(
  * beforeUpdate hook). Only fills the gap — an explicit opacity in `changes`, or
  * a non-zero stored opacity, is left untouched, so a legitimately semi-
  * transparent color is never clobbered by a hex-only edit.
+ *
+ * The stored opacity is read the way the editor paints it, through
+ * `defaultValueValue`: a tablet or mobile colour with no opacity of its own
+ * paints with the desktop one. Looking only at the device key would find
+ * nothing on almost every element and force a deliberately translucent
+ * desktop colour to solid on that device.
  */
 export function restoreColorOpacity(
   stored: Record<string, unknown>,
@@ -198,12 +141,22 @@ export function restoreColorOpacity(
     const opacityKey = `${match[1]}Opacity`;
     if (opacityKey in changes) continue; // caller set opacity explicitly
 
-    const current = stored[opacityKey];
-    if (typeof current === "number" && current !== 0) continue; // already visible
+    const { key: opacity, device, state } = parseDefaultValueKey(opacityKey);
+    const painted = (valueKey: string): number | undefined => {
+      const value = defaultValueValue({
+        v: stored,
+        key: valueKey,
+        device,
+        state
+      });
+      return typeof value === "number" ? value : undefined;
+    };
 
-    const tempKey = `temp${opacityKey[0].toUpperCase()}${opacityKey.slice(1)}`;
-    const temp = stored[tempKey];
-    result[opacityKey] = typeof temp === "number" && temp !== 0 ? temp : 1;
+    const current = painted(opacity);
+    if (current !== undefined && current !== 0) continue; // already visible
+
+    const temp = painted(tempValueKey(opacity));
+    result[opacityKey] = temp !== undefined && temp !== 0 ? temp : 1;
   }
 
   return result;

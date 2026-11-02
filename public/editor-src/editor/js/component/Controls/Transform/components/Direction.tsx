@@ -3,7 +3,7 @@ import { Select2 } from "visual/component/Controls/Select2";
 import { Item } from "visual/component/Controls/Select2/Item";
 import { OptionLabel } from "visual/component/OptionLabel";
 import { OptionWrapper } from "visual/component/OptionWrapper";
-import { OnChange } from "../types";
+import type { OnChange } from "../types";
 
 export type Props<T extends string> = {
   value: T;

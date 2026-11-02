@@ -1,4 +1,4 @@
-import { Type } from "./Type";
+import type { Type } from "./Type";
 
 export interface Spacing<V, U> {
   type: Type;

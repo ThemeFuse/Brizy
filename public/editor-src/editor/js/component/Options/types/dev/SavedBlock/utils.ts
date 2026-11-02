@@ -1,5 +1,5 @@
-import { SavedBlock } from "visual/types";
-import { Block } from "visual/types/Block";
+import type { SavedBlock } from "visual/types";
+import type { Block } from "visual/types/Block";
 import {
   createBlockScreenshot,
   createSavedBlock,
@@ -11,9 +11,9 @@ import { findDeep } from "visual/utils/object";
 import { isObject } from "visual/utils/reader/object";
 import { browserSupports, makeNodeScreenshot } from "visual/utils/screenshots";
 import { uuid } from "visual/utils/uuid";
-import { Error, GetBlock, HandleCreateBlock, Warn } from "./types";
+import type { Err, GetBlock, HandleCreateBlock, Warn } from "./types";
 
-export const isError = (e: unknown): e is Error => {
+export const isError = (e: unknown): e is Err => {
   return isObject(e) && e.type === "error";
 };
 
@@ -30,7 +30,7 @@ export const getBlock = ({
   blockId,
   blockType
 }: GetBlock): Block | undefined | null => {
-  let block;
+  let block: Block | undefined | null;
   if (blockType === "normal") {
     block = pageItems.find((block: Block) => hasBlock(block, blockId));
   } else {

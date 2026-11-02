@@ -1,7 +1,7 @@
-import React, { ChangeEvent, ReactElement, useCallback } from "react";
+import React, { type ChangeEvent, type ReactElement, useCallback } from "react";
 import InputPlaceholder from "visual/component/Controls/InputPlaceholder";
 import { RadioItemField } from "./Radio/RadioItemField";
-import { InputFieldProps } from "./types";
+import type { InputFieldProps } from "./types";
 
 export const InputField = (props: InputFieldProps): ReactElement => {
   const {

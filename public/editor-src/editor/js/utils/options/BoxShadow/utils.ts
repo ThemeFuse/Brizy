@@ -1,10 +1,10 @@
-import { TypeObject } from "visual/component/Controls/BoxShadow/types";
+import type { TypeObject } from "visual/component/Controls/BoxShadow/types";
 import * as Blur from "visual/utils/cssProps/Blur";
-import * as Opacity from "visual/utils/cssProps/opacity";
+import type * as Opacity from "visual/utils/cssProps/opacity";
 import { t } from "visual/utils/i18n";
 import { _apply, get } from "visual/utils/model";
 import * as T from "visual/utils/options/BoxShadow/entities/Type";
-import { Value } from "visual/utils/options/BoxShadow/entities/Value";
+import type { Value } from "visual/utils/options/BoxShadow/entities/Value";
 import * as ColorUtils from "../ColorPicker/utils";
 import {
   getBlur,

@@ -4,13 +4,13 @@ import { Sheet } from "visual/providers/StyleProvider/Sheet";
 import { DeviceMode } from "visual/types";
 import {
   ElementModelToValue,
-  PatchUnit,
-  Size,
-  Value,
   elementModelToValue,
+  PatchUnit,
   patchOnDCChange,
   patchOnSizeTypeChange,
-  pathOnUnitChange
+  pathOnUnitChange,
+  Size,
+  Value
 } from "../imageChange";
 import { ImageDCPatch, SizeTypePatch, UnitPatch } from "../types/ImagePatch";
 import { imageSizes } from "./utils";

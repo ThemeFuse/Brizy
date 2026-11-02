@@ -1,9 +1,13 @@
-import { FC } from "react";
-import {
+import type { FC } from "react";
+import type {
   Props as OptionProps,
   SimpleValue
 } from "visual/component/Options/Type";
-import { WithClassName, WithConfig, WithSize } from "visual/types/attributes";
+import type {
+  WithClassName,
+  WithConfig,
+  WithSize
+} from "visual/types/attributes";
 
 export type Config = WithSize & {
   min?: number;

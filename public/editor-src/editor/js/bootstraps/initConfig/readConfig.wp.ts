@@ -1,6 +1,6 @@
 import { mPipe, parseStrict, pass } from "fp-utilities";
-import { Rule } from "visual/global/Config/types/Rule";
-import { WP } from "visual/global/Config/types/configs/WP";
+import type { WP } from "visual/global/Config/types/configs/WP";
+import type { Rule } from "visual/global/Config/types/Rule";
 import { pipe } from "visual/utils/fp";
 import * as Arr from "visual/utils/reader/array";
 import * as Num from "visual/utils/reader/number";

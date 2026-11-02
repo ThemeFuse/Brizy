@@ -1,14 +1,14 @@
 import { produce } from "immer";
 import { setIn } from "timm";
 import { isStory } from "visual/providers/EditorModeProvider";
-import { Block } from "visual/types/Block";
+import type { Block } from "visual/types/Block";
 import { createGlobalBlockSymbol } from "visual/utils/blocks";
 import { insertItemsBatch, isModel, mapModels } from "visual/utils/models";
 import { map, objectTraverse2 } from "visual/utils/object";
 import { DELETE_GLOBAL_BLOCK } from "../actions";
-import { ActionTypes, ReduxAction } from "../actions2";
+import { ActionTypes, type ReduxAction } from "../actions2";
 import { blocksOrderSelector, globalBlocksSelector } from "../selectors";
-import { ReduxState } from "../types";
+import type { ReduxState } from "../types";
 
 type BlocksData = ReduxState["blocksData"];
 type RBlocksData = (s: BlocksData, a: ReduxAction, f: ReduxState) => BlocksData;

@@ -8,7 +8,9 @@
     "offsetX": 0,
     "offsetY": 0,
 
-    "overflow": "off"
+    "overflow": "off",
+
+    "consentCategory": "auto"
   },
 
   "toolbar": {

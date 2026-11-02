@@ -1,10 +1,10 @@
 import { mPipe, or, parseStrict } from "fp-utilities";
-import {
+import type {
   FromElementModel,
   FromElementModelGetter,
   ToElementModel
 } from "visual/component/Options/Type";
-import { Value } from "visual/component/Options/types/dev/Range/types/Value";
+import type { Value } from "visual/component/Options/types/dev/Range/types/Value";
 import { always } from "visual/utils/fp";
 import * as Num from "visual/utils/math/number";
 import { callGetter } from "visual/utils/options/utils/wrap";

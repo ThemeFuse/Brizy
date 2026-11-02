@@ -1,10 +1,10 @@
 import classNames from "classnames";
-import React, { MouseEvent, ReactElement } from "react";
+import React, { type MouseEvent, type ReactElement } from "react";
 import { Button as Control } from "visual/component/Controls/Button";
 import { ToastNotification } from "visual/component/Notifications";
-import Prompts, { PromptsProps } from "visual/component/Prompts";
+import Prompts, { type PromptsProps } from "visual/component/Prompts";
 import { t } from "visual/utils/i18n";
-import { Component } from "./types";
+import type { Component } from "./types";
 
 export const FormApps: Component = ({ className, config }): ReactElement => {
   const { id, fields, icon, tabs } = config || {};
@@ -13,7 +13,8 @@ export const FormApps: Component = ({ className, config }): ReactElement => {
     event.preventDefault();
 
     if (!(id && fields)) {
-      return ToastNotification.error(t("Something went wrong"));
+      ToastNotification.error(t("Something went wrong"));
+      return;
     }
 
     const data: PromptsProps = {

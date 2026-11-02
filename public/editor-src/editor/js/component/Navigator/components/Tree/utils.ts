@@ -1,11 +1,11 @@
 import { arrayMove } from "@dnd-kit/sortable";
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
-import { TreeItem, TreeItems } from "visual/providers/TreeProvider/types";
+import type { TreeItem, TreeItems } from "visual/providers/TreeProvider/types";
 import {
-  WRAPPER_TYPES,
-  recalculateColumnWidths
+  recalculateColumnWidths,
+  WRAPPER_TYPES
 } from "visual/providers/TreeProvider/utils";
-import { Block } from "visual/types/Block";
+import type { Block } from "visual/types/Block";
 import { findDeep } from "visual/utils/object";
 import { uuid } from "visual/utils/uuid";
 
@@ -57,11 +57,11 @@ export function flattenTree(
   depth = 0
 ): FlattenedItem[] {
   return items.reduce<FlattenedItem[]>((acc, item, index) => {
-    return [
-      ...acc,
+    acc.push(
       { ...item, parentId, depth, index },
       ...flattenTree(item.children ?? [], item.id, depth + 1)
-    ];
+    );
+    return acc;
   }, []);
 }
 
@@ -152,7 +152,7 @@ const countChildren = (items: TreeItem[], count = 0): number =>
 export function getChildCount(items: TreeItems, id: string): number {
   const item = findItemDeep(items, id);
 
-  return item && item.children ? countChildren(item.children) : 0;
+  return item?.children ? countChildren(item.children) : 0;
 }
 
 export function getProjection(
@@ -414,7 +414,6 @@ const mergeNode = (t: Block, byId: Map<string, Block>): Block => {
       nextValue = { ...base, items: itemsRef };
     } else {
       // Explicitly remove items when the new node has no children
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { items, ...rest } = base;
       nextValue = rest;
     }
@@ -428,7 +427,6 @@ const mergeNode = (t: Block, byId: Map<string, Block>): Block => {
 
   // Handle values that should preserve original but override specific properties
   if (t.value._preserveOriginal && orig) {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { _preserveOriginal, items, ...overrideProps } = t.value;
     // Start with original values and only apply the specific overrides (excluding items)
     nextValue = { ...orig.value, ...overrideProps };

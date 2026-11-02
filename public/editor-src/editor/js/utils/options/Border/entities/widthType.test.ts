@@ -2,7 +2,7 @@ import { head } from "es-toolkit";
 import { testMonoid } from "visual/utils/types/Monoid.test";
 import { testReader } from "visual/utils/types/Type.test";
 import * as WidthType from "./widthType";
-import { GROUPED, UNGROUPED, empty, read, types } from "./widthType";
+import { empty, GROUPED, read, types, UNGROUPED } from "./widthType";
 
 describe("Testing GROUPED constant", function () {
   test("Should be 'grouped'", () => {

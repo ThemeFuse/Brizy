@@ -2,7 +2,7 @@ import { Gap } from "@brizy/component/src/Flex/Gap";
 import classnames from "classnames";
 import React from "react";
 import BoxResizer from "visual/component/BoxResizer";
-import { Patch, Point } from "visual/component/BoxResizer/types";
+import type { Patch, Point } from "visual/component/BoxResizer/types";
 import Toolbar from "visual/component/Toolbar";
 import { BaseSpacer } from "visual/editorComponents/Spacer/Base";
 import * as sidebarConfig from "./sidebar";

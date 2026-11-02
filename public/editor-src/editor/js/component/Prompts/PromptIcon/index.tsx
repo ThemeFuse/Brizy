@@ -5,7 +5,7 @@ import { isWp } from "visual/global/Config";
 import { isPro } from "visual/utils/env";
 import { t } from "visual/utils/i18n";
 import Control from "./Controls";
-import { Icon, Props, State } from "./types";
+import type { Icon, Props, State } from "./types";
 import { loadFonts } from "./utils";
 
 export default class PromptIcon extends Component<Props, State> {

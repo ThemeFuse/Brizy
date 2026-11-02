@@ -1,7 +1,7 @@
-import { GetItems } from "visual/editorComponents/EditorComponent/types";
+import type { GetItems } from "visual/editorComponents/EditorComponent/types";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
-import { Value } from "./type";
+import type { Value } from "./type";
 import { getTypeChoices } from "./utils";
 
 export const getItems: GetItems<Value> = ({ v, device }) => {

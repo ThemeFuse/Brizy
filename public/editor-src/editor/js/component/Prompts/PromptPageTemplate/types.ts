@@ -1,12 +1,12 @@
-import {
+import type {
   Tabs,
   ThemeLayout
 } from "visual/component/Prompts/common/PromptPage/types";
-import { Actions as _Actions } from "visual/component/Prompts/common/states/Classic/types/Actions";
-import { State } from "visual/component/Prompts/common/states/Classic/types/State";
-import { Layout } from "visual/types/Layout";
-import { ShopifyPage } from "visual/types/Page";
-import { Setters } from "./types/Setters";
+import type { Actions as _Actions } from "visual/component/Prompts/common/states/Classic/types/Actions";
+import type { State } from "visual/component/Prompts/common/states/Classic/types/State";
+import type { Layout } from "visual/types/Layout";
+import type { ShopifyPage } from "visual/types/Page";
+import type { Setters } from "./types/Setters";
 
 export interface Props {
   selectedLayout: ShopifyPage["layout"] | undefined;

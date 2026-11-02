@@ -1,4 +1,4 @@
-import { Type } from "./Type";
+import type { Type } from "./Type";
 
 export interface Config {
   type?: Exclude<Type, "none">;

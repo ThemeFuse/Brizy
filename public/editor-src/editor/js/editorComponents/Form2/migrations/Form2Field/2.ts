@@ -1,9 +1,9 @@
 import { Arr, Obj } from "@brizy/readers";
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
-import { Deps, Migration } from "visual/utils/migration";
+import type { Deps, Migration } from "visual/utils/migration";
 import { setIds } from "visual/utils/models";
-import { Value } from "../../types";
-import { Form2FieldOption } from "./type";
+import type { Value } from "../../types";
+import type { Form2FieldOption } from "./type";
 
 // Select, Radio, Checkbox
 const migrateFieldOptions = (v: Partial<Value>): Form2FieldOption[] => {

@@ -1,13 +1,13 @@
 import { Effects } from "../../Transform/types";
 import {
-  Type,
   flattEffects,
   flattenObject,
   getEnabledEffects,
   getPatchType,
   hasActive,
   hasEffect,
-  prefixKeys
+  prefixKeys,
+  Type
 } from "../effects";
 
 describe("prefixKeys function", () => {

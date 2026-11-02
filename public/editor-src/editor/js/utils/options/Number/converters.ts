@@ -1,5 +1,5 @@
-import * as Option from "visual/component/Options/Type";
-import { SimpleValue } from "visual/component/Options/Type";
+import type * as Option from "visual/component/Options/Type";
+import type { SimpleValue } from "visual/component/Options/Type";
 import { NumberSpec } from "visual/utils/math/number";
 
 export const defaultValue: SimpleValue<number> = { value: 0 };

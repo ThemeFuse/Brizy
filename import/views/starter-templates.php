@@ -24,7 +24,7 @@
         </form>
     </div>
 
-    <?php if ( empty( $isWhiteLabel ) && ! empty( $isPro ) ) : ?>
+    <?php if ( ! empty( $isAiEnabled ) && ! empty( $isPro ) ) : ?>
     <div class="brz-ai-banner">
         <div class="brz-ai-banner-bg-circle"></div>
 
@@ -98,8 +98,11 @@
         </div>
 
         <div class="brz-ai-banner-right">
-            <a href="https://ai.brizy.io/" target="_blank" rel="noopener noreferrer" title="<?php echo esc_attr($l10n['aiBrizy']); ?>" class="brz-ai-logo-link">
+            <a href="<?php echo esc_url(Brizy_Config::getAiUrl() . '/'); ?>" target="_blank" rel="noopener noreferrer" title="<?php echo esc_attr($l10n['aiBrizy']); ?>" class="brz-ai-logo-link">
                 <div class="brz-ai-logo-container">
+                    <?php if (!empty($aiLogo)): ?>
+                    <img class="brz-ai-logo-img" src="<?php echo esc_url($aiLogo); ?>" alt="<?php echo esc_attr($l10n['aiBrizy']); ?>">
+                    <?php else: ?>
                     <svg width="200px" height="76px" viewBox="0 0 113.968401 43.0000985" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" role="img" aria-label="<?php echo esc_attr($l10n['aiLogoAlt']); ?>">
                         <title>Brizy</title>
                         <defs>
@@ -117,6 +120,7 @@
                             </g>
                         </g>
                     </svg>
+                    <?php endif; ?>
                 </div>
             </a>
         </div>

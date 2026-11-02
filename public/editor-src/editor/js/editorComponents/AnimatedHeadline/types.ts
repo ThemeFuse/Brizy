@@ -1,9 +1,9 @@
-import {
+import type {
   AnimationStyle,
   SvgEffectTypes,
   TextEffectTypes
 } from "visual/component/AnimatedHeadline/types";
-import { ElementModel } from "visual/component/Elements/Types";
+import type { ElementModel } from "visual/component/Elements/Types";
 
 export interface Value extends ElementModel {
   textBefore: string;

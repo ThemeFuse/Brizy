@@ -13,7 +13,7 @@ import { getLinkData } from "visual/utils/models/link";
 import { Wrapper } from "../tools/Wrapper";
 import { BaseLottie } from "./Base";
 import { style } from "./styles";
-import { Value } from "./type";
+import type { Value } from "./type";
 import { getRendererType, isLottieFile } from "./utils";
 
 class Lottie extends BaseLottie {

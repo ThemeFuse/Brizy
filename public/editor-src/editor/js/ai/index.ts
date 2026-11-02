@@ -1,11 +1,9 @@
 // Entities
-export * from "./entities";
-
-// Application interfaces
-export * from "./application";
-
-// Infrastructure
-export * from "./infrastructure";
 
 // Adapters (tools exposed to AI chat)
 export * from "./adapters";
+// Application interfaces
+export * from "./application";
+export * from "./entities";
+// Infrastructure
+export * from "./infrastructure";

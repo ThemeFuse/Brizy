@@ -73,7 +73,7 @@ class Brizy_Admin_NetworkSettings {
 			$is_active_class = $tab['is_selected'] ? 'nav-tab-active' : '';
 			?>
             <a href="<?php echo $tab['href'] ?>"
-               class="nav-tab <?php echo $is_active_class ?>"><?php echo __( $tab['label'] ) ?></a>
+               class="nav-tab <?php echo $is_active_class ?>"><?php echo __( $tab['label'], 'brizy' ) ?></a>
 			<?php
 		}
 	}

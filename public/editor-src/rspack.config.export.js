@@ -1,4 +1,4 @@
-const path = require("path");
+const path = require("node:path");
 const rspack = require("@rspack/core");
 const { RsdoctorRspackPlugin } = require("@rsdoctor/rspack-plugin");
 const editorConfigFn = require("./rspack.config.editor");
@@ -13,8 +13,6 @@ const nullLoaderArr = [
   /@apollo\/client/,
   /quill/,
   /isotope-layout/,
-  /magnific-popup/,
-  /slick-carousel/,
   /react-slick/,
   /@uiw/,
   /@brizy\/ui\//,
@@ -28,7 +26,6 @@ const nullLoaderArr = [
   /\/editor\/js\/utils\/toolbar\//,
   /\/node_modules\/lottie-react\//,
   /\/node_modules\/lottie-web\//,
-  /\/node_modules\/jquery\//,
   /\/node_modules\/react-facebook\//
 ];
 

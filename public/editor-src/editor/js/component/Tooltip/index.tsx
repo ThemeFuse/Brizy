@@ -4,13 +4,14 @@ import React, {
   useCallback,
   useImperativeHandle,
   useMemo,
+  useRef,
   useState
 } from "react";
 import { usePopper } from "react-popper";
 import ClickOutside from "visual/component/ClickOutside";
 import { makeAttr } from "visual/utils/i18n/attribute";
 import { attachRef } from "visual/utils/react";
-import { type Props, TooltipImperativeProps } from "./types";
+import type { Props, TooltipImperativeProps } from "./types";
 import { TOOLTIP_OUTSIDE_EXCEPTIONS } from "./utils";
 
 export const Tooltip = forwardRef<TooltipImperativeProps, Props>(
@@ -49,13 +50,14 @@ export const Tooltip = forwardRef<TooltipImperativeProps, Props>(
       }
     );
 
+    // usePopper returns a new object every render, so read `update` through a
+    // ref: the callback stays stable and still calls the latest function.
+    const popperRef = useRef(popper);
+    popperRef.current = popper;
+
     const handleUpdate = useCallback(() => {
-      // Extract `update` here so the callback always uses the latest function, since it won’t retrigger otherwise
-      const { update } = popper;
-      if (update) {
-        update();
-      }
-    }, [popper]);
+      popperRef.current.update?.();
+    }, []);
 
     const handleRef = useCallback(
       (el: HTMLDivElement | null) => {

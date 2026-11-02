@@ -1,4 +1,3 @@
-import $ from "jquery";
 import { makeAttr } from "visual/utils/i18n/attribute";
 
 const getFromStorage = (key) => {
@@ -13,7 +12,7 @@ const setToStorage = (key, value) => {
   try {
     localStorage.setItem(key, value);
   } catch (_) {
-    // eslint-disable-next-line no-console
+    // biome-ignore lint/suspicious/noConsole: migrated from eslint
     console.warn("Could not access to localStorage");
   }
 };
@@ -43,7 +42,7 @@ var lastVisit = Number(getFromStorage("brz-lastVisit")) || Date.now();
 
   setToStorage("brz-pagesViews", ++pagesViews);
 
-  setTimeout(function () {
+  setTimeout(() => {
     setToStorage("brz-lastVisit", Date.now());
   }, 0);
 
@@ -52,21 +51,20 @@ var lastVisit = Number(getFromStorage("brz-lastVisit")) || Date.now();
   }
 })();
 
-(function (window, document) {
-  $(document).on("brz.popup.close", function (e, popup) {
-    var $popup = $(popup);
+((window, document) => {
+  // the jQuery set was always truthy, so every closed popup is recorded
+  window.Brz.on("brz.popup.close", (popup) => {
+    const showedPopups = JSON.parse(getFromStorage("brz-showedPopups") || "[]");
 
-    if ($popup.closest(".brz-conditions-popup")) {
-      var showedPopups = JSON.parse(getFromStorage("brz-showedPopups") || "[]");
+    const popupId =
+      popup?.getAttribute(makeAttr("once-id")) ??
+      popup?.getAttribute(makeAttr("custom-id")) ??
+      undefined;
 
-      var popupId =
-        $popup.attr(makeAttr("once-id")) ?? $popup.attr(makeAttr("custom-id"));
-
-      setToStorage(
-        "brz-showedPopups",
-        JSON.stringify([...new Set([...showedPopups, popupId])])
-      );
-    }
+    setToStorage(
+      "brz-showedPopups",
+      JSON.stringify([...new Set([...showedPopups, popupId])])
+    );
   });
 
   window.brzPopup = function (options) {
@@ -85,7 +83,7 @@ var lastVisit = Number(getFromStorage("brz-lastVisit")) || Date.now();
 
     function _init() {
       if (options.pageLoad) {
-        var pageLoad = Number(options.pageLoad);
+        const pageLoad = Number(options.pageLoad);
         setTimeout(showPopup, pageLoad * 1000);
       }
 
@@ -94,7 +92,7 @@ var lastVisit = Number(getFromStorage("brz-lastVisit")) || Date.now();
       }
 
       if (options.inactivity) {
-        var activityChangeFn = _debounce(() => {
+        const activityChangeFn = _debounce(() => {
           showPopup();
         }, options.inactivity * 1000);
 
@@ -131,7 +129,7 @@ var lastVisit = Number(getFromStorage("brz-lastVisit")) || Date.now();
 
       // Advanced Rules
       if (options.showing) {
-        options.showing.forEach(function (item) {
+        options.showing.forEach((item) => {
           // || "equals" - is for old projects which don't have type
           const type = item.type || "equals";
 
@@ -140,40 +138,42 @@ var lastVisit = Number(getFromStorage("brz-lastVisit")) || Date.now();
           var isMore = type === "is more";
 
           switch (item.value) {
-            case "views":
-              var pageViews = Number(getFromStorage("brz-pagesViews"));
-              var itemViews = Number(item.views);
+            case "views": {
+              const pageViews = Number(getFromStorage("brz-pagesViews"));
+              const itemViews = Number(item.views);
 
-              isFewer && pageViews < itemViews && showPopup();
-              isEqual && pageViews === itemViews && showPopup();
-              isMore && pageViews > itemViews && showPopup();
+              if (isFewer && pageViews < itemViews) showPopup();
+              if (isEqual && pageViews === itemViews) showPopup();
+              if (isMore && pageViews > itemViews) showPopup();
 
               break;
-            case "sessions":
-              var pagesViewsInSession = getFromStorage(
+            }
+            case "sessions": {
+              const pagesViewsInSession = getFromStorage(
                 "brz-pagesViewsInSessionTimeLine"
               );
-              var sessions = Number(getFromStorage("brz-sessions"));
-              var itemsSessions = Number(item.sessions);
+              const sessions = Number(getFromStorage("brz-sessions"));
+              const itemsSessions = Number(item.sessions);
               if (pagesViewsInSession !== 1) {
                 break;
               }
 
-              isFewer && sessions < itemsSessions && showPopup();
-              isEqual && sessions === itemsSessions && showPopup();
-              isMore && sessions > itemsSessions && showPopup();
+              if (isFewer && sessions < itemsSessions) showPopup();
+              if (isEqual && sessions === itemsSessions) showPopup();
+              if (isMore && sessions > itemsSessions) showPopup();
 
               break;
+            }
           }
         });
       }
 
       if (options.loggedIn) {
-        var roles = __CONFIG__.currentUser.roles;
+        const roles = __CONFIG__.currentUser.roles;
 
-        var hideForUser = options.loggedIn.find(function (user) {
-          return user.value === "all" || roles.includes(user.user);
-        });
+        const hideForUser = options.loggedIn.find(
+          (user) => user.value === "all" || roles.includes(user.user)
+        );
 
         if (hideForUser) {
           hidePopup();
@@ -181,24 +181,26 @@ var lastVisit = Number(getFromStorage("brz-lastVisit")) || Date.now();
       }
 
       if (options.referrer) {
-        options.referrer.forEach(function (item) {
+        options.referrer.forEach((item) => {
           switch (item.value) {
             case "show":
-              _clearUrl(document.referrer) === _clearUrl(item.url) &&
+              if (_clearUrl(document.referrer) === _clearUrl(item.url)) {
                 showPopup();
+              }
               break;
             case "hide":
-              _clearUrl(document.referrer) === _clearUrl(item.url) &&
+              if (_clearUrl(document.referrer) === _clearUrl(item.url)) {
                 hidePopup();
+              }
               break;
             case "regex":
-              new RegExp(item.url).test(document.referrer) && showPopup();
+              if (new RegExp(item.url).test(document.referrer)) showPopup();
               break;
-            case "source":
-              var type = item.type || "is";
-              var source = item.source;
+            case "source": {
+              const type = item.type || "is";
+              const source = item.source;
 
-              var SEARCH_ENGINES = [
+              const SEARCH_ENGINES = [
                 "search_engines",
                 "bing",
                 "yandex",
@@ -213,7 +215,7 @@ var lastVisit = Number(getFromStorage("brz-lastVisit")) || Date.now();
                 "sogou"
               ];
 
-              var SOCIAL_NETWORKS = [
+              const SOCIAL_NETWORKS = [
                 "social_networks",
                 "facebook",
                 "pinterest",
@@ -221,36 +223,30 @@ var lastVisit = Number(getFromStorage("brz-lastVisit")) || Date.now();
                 "linkedin"
               ];
 
-              var _referrerIs = function (str) {
-                return (
-                  source === str && _clearUrl(document.referrer).startsWith(str)
-                );
-              };
+              const _referrerIs = (str) =>
+                source === str && _clearUrl(document.referrer).startsWith(str);
 
-              var referrerIncludes = function (items) {
-                return items.some(function (item) {
-                  return _referrerIs(item);
-                });
-              };
+              const referrerIncludes = (items) =>
+                items.some((item) => _referrerIs(item));
 
-              var isFromSearchEngine =
+              const isFromSearchEngine =
                 source === "search_engines" && referrerIncludes(SEARCH_ENGINES);
 
-              var isFromSocialNetworks =
+              const isFromSocialNetworks =
                 source === "social_networks" &&
                 referrerIncludes(SOCIAL_NETWORKS);
 
-              var isFromInternal =
+              const isFromInternal =
                 source === "internal" &&
                 _clearUrl(document.referrer).startsWith(location.host);
 
-              var isFromExternal =
+              const isFromExternal =
                 source === "external" &&
                 document.referrer &&
                 !isFromSearchEngine &&
                 !isFromInternal;
 
-              var popupPassedChecks =
+              const popupPassedChecks =
                 _referrerIs(source) ||
                 isFromSearchEngine ||
                 isFromSocialNetworks ||
@@ -259,50 +255,51 @@ var lastVisit = Number(getFromStorage("brz-lastVisit")) || Date.now();
 
               switch (type) {
                 case "is": {
-                  popupPassedChecks && showPopup();
+                  if (popupPassedChecks) showPopup();
                   break;
                 }
                 // ! is not working correctly
                 case "is not": {
-                  !popupPassedChecks && showPopup();
+                  if (!popupPassedChecks) showPopup();
                   break;
                 }
               }
+            }
           }
         });
       }
 
       if (options.devices) {
-        var currentDevice = _detectCurrentDevice();
+        const currentDevice = _detectCurrentDevice();
         if (!options.devices.includes(currentDevice)) {
           hidePopup();
         }
       }
 
       if (options.currentUrl) {
-        options.currentUrl.forEach(function (item) {
+        options.currentUrl.forEach((item) => {
           var parsedHref = _clearUrl(document.location.href);
           var parsedValue = _clearUrl(item.value);
 
           switch (item.type) {
             case "matches":
-              parsedHref === parsedValue && showPopup();
+              if (parsedHref === parsedValue) showPopup();
               break;
             case "does not match":
-              parsedHref !== parsedValue && showPopup();
+              if (parsedHref !== parsedValue) showPopup();
               break;
             case "contains":
-              parsedHref.includes(parsedValue) && showPopup();
+              if (parsedHref.includes(parsedValue)) showPopup();
               break;
             case "does not contain":
-              !parsedHref.includes(parsedValue) && showPopup();
+              if (!parsedHref.includes(parsedValue)) showPopup();
               break;
           }
         });
       }
 
       if (options.currentDate) {
-        options.currentDate.forEach(function (item) {
+        options.currentDate.forEach((item) => {
           var timeStamp = new Date(
             item.value.split(/[/.-]/).reverse().join(" ")
           ).getTime();
@@ -312,37 +309,37 @@ var lastVisit = Number(getFromStorage("brz-lastVisit")) || Date.now();
           ).getTime();
           switch (item.type) {
             case "matches":
-              currentTimeStamp === timeStamp && showPopup();
+              if (currentTimeStamp === timeStamp) showPopup();
               break;
             case "before":
-              currentTimeStamp < timeStamp && showPopup();
+              if (currentTimeStamp < timeStamp) showPopup();
               break;
             case "after":
-              currentTimeStamp > timeStamp && showPopup();
+              if (currentTimeStamp > timeStamp) showPopup();
               break;
           }
         });
       }
 
       if (options.os) {
-        options.os.forEach(function (item) {
+        options.os.forEach((item) => {
           var os = _detectOS();
           var devices = os.getAll();
           var popupPassedChecks = devices[item.value];
 
           switch (item.type) {
             case "is":
-              popupPassedChecks && showPopup();
+              if (popupPassedChecks) showPopup();
               break;
             case "is not":
-              !popupPassedChecks && showPopup();
+              if (!popupPassedChecks) showPopup();
               break;
           }
         });
       }
 
       if (options.cookie) {
-        options.cookie.forEach(function (item) {
+        options.cookie.forEach((item) => {
           var param = item.param;
           var value = item.value;
 
@@ -351,49 +348,49 @@ var lastVisit = Number(getFromStorage("brz-lastVisit")) || Date.now();
 
           switch (item.type) {
             case "matches":
-              currentCookie === value && showPopup();
+              if (currentCookie === value) showPopup();
               break;
             case "does not match":
-              currentCookie !== value && showPopup();
+              if (currentCookie !== value) showPopup();
               break;
             case "contains":
-              currentCookie.includes(value) && showPopup();
+              if (currentCookie.includes(value)) showPopup();
               break;
             case "does not contain":
-              !currentCookie.includes(value) && showPopup();
+              if (!currentCookie.includes(value)) showPopup();
               break;
           }
         });
       }
 
       if (options.timeFrom) {
-        options.timeFrom.forEach(function (item) {
+        options.timeFrom.forEach((item) => {
           var visit = item.visit;
           var time = item.time === "days" ? 3600 * 24 * 1000 : 3600 * 1000;
           var value = Number(item.value);
           var firstVisit =
             Number(getFromStorage("brz-firstVisit")) || Date.now();
-          const isFirst = visit == "first";
-          const isLast = visit == "last";
+          const isFirst = visit === "first";
+          const isLast = visit === "last";
 
           var firstTimeIsGreater = firstVisit + value * time < Date.now();
           var secondTimeIsGreater = lastVisit + value * time < Date.now();
 
           switch (item.type) {
             case "greater":
-              isFirst && firstTimeIsGreater && showPopup();
-              isLast && secondTimeIsGreater && showPopup();
+              if (isFirst && firstTimeIsGreater) showPopup();
+              if (isLast && secondTimeIsGreater) showPopup();
               break;
             case "less":
-              isFirst && !firstTimeIsGreater && showPopup();
-              isLast && !secondTimeIsGreater && showPopup();
+              if (isFirst && !firstTimeIsGreater) showPopup();
+              if (isLast && !secondTimeIsGreater) showPopup();
               break;
           }
         });
       }
 
       if (options.lastVisitDate) {
-        options.lastVisitDate.forEach(function (item) {
+        options.lastVisitDate.forEach((item) => {
           var timeStamp = new Date(
             item.value.split(/[/.-]/).reverse().join(" ")
           ).getTime();
@@ -403,13 +400,13 @@ var lastVisit = Number(getFromStorage("brz-lastVisit")) || Date.now();
           ).getTime();
           switch (item.type) {
             case "matches":
-              lastVisitTimeStamp === timeStamp && showPopup();
+              if (lastVisitTimeStamp === timeStamp) showPopup();
               break;
             case "before":
-              lastVisitTimeStamp < timeStamp && showPopup();
+              if (lastVisitTimeStamp < timeStamp) showPopup();
               break;
             case "after":
-              lastVisitTimeStamp > timeStamp && showPopup();
+              if (lastVisitTimeStamp > timeStamp) showPopup();
               break;
           }
         });
@@ -477,13 +474,13 @@ var lastVisit = Number(getFromStorage("brz-lastVisit")) || Date.now();
     function showPopup() {
       var showPopupNow = true;
       if (options.specificPopup) {
-        options.specificPopup.forEach(function (item) {
+        options.specificPopup.forEach((item) => {
           var value = item.value.replace("#", "");
           var specificElem = document.getElementById(value);
 
-          var anotherPopupWasShown =
-            specificElem &&
-            specificElem.classList.contains("brz-popup2--was-shown");
+          var anotherPopupWasShown = specificElem?.classList.contains(
+            "brz-popup2--was-shown"
+          );
 
           showPopupNow = item.type === "was" && anotherPopupWasShown;
         });
@@ -494,7 +491,7 @@ var lastVisit = Number(getFromStorage("brz-lastVisit")) || Date.now();
       );
 
       if (options.otherPopups) {
-        options.otherPopups.forEach(function (item) {
+        options.otherPopups.forEach((item) => {
           var value = item.value;
           var alreadyShowedPopups = document.querySelector(
             ".brz-popup2--was-shown"
@@ -557,8 +554,8 @@ var lastVisit = Number(getFromStorage("brz-lastVisit")) || Date.now();
     }
 
     function _detachAll() {
-      for (var i = 0; i < listeners.length; i++) {
-        var listener = listeners[i];
+      for (let i = 0; i < listeners.length; i++) {
+        const listener = listeners[i];
 
         listener.elem.removeEventListener(listener.type, listener.handler);
       }
@@ -566,17 +563,15 @@ var lastVisit = Number(getFromStorage("brz-lastVisit")) || Date.now();
 
     function _debounce(func, wait, immediate) {
       var timeout;
-      return function () {
-        var context = this,
-          args = arguments;
-        var later = function () {
+      return function (...args) {
+        var later = () => {
           timeout = null;
-          if (!immediate) func.apply(context, args);
+          if (!immediate) func.apply(this, args);
         };
         var callNow = immediate && !timeout;
         clearTimeout(timeout);
         timeout = setTimeout(later, wait);
-        if (callNow) func.apply(context, args);
+        if (callNow) func.apply(this, args);
       };
     }
 
@@ -600,61 +595,37 @@ var lastVisit = Number(getFromStorage("brz-lastVisit")) || Date.now();
 
     function _detectOS() {
       var os = {
-        getUserAgent: function () {
-          return navigator.userAgent;
-        },
-        getPlatform: function () {
-          return navigator.platform;
-        },
-        isIos: function () {
-          return /iPhone|iPad|iPod/.test(os.getPlatform());
-        },
-        isAndroid: function () {
-          return /Android/.test(os.getUserAgent());
-        },
-        isBlackBerry: function () {
-          return /BlackBerry/.test(os.getPlatform());
-        },
-        isBada: function () {
-          return /Bada/.test(os.getPlatform());
-        },
-        isMac: function () {
-          return /Mac/.test(os.getPlatform());
-        },
-        isWindows: function () {
-          return /Win/.test(os.getPlatform());
-        },
-        isLinux: function () {
-          return /Linux/.test(os.getPlatform()) && !os.isAndroid();
-        },
-        isChromeOS: function () {
-          return /\bCrOS\b/.test(os.getPlatform());
-        },
-        isFirefoxOS: function () {
-          return /\bFxiOS\b/.test(os.getPlatform());
-        },
-        getAll: function () {
-          return {
-            blackberry: os.isBlackBerry(),
-            firefoxOs: os.isFirefoxOS(),
-            windows: os.isWindows(),
-            android: os.isAndroid(),
-            chromeOs: os.isChromeOS(),
-            linux: os.isLinux(),
-            bada: os.isBada(),
-            ios: os.isIos(),
-            mac: os.isMac()
-          };
-        }
+        getUserAgent: () => navigator.userAgent,
+        getPlatform: () => navigator.platform,
+        isIos: () => /iPhone|iPad|iPod/.test(os.getPlatform()),
+        isAndroid: () => /Android/.test(os.getUserAgent()),
+        isBlackBerry: () => /BlackBerry/.test(os.getPlatform()),
+        isBada: () => /Bada/.test(os.getPlatform()),
+        isMac: () => /Mac/.test(os.getPlatform()),
+        isWindows: () => /Win/.test(os.getPlatform()),
+        isLinux: () => /Linux/.test(os.getPlatform()) && !os.isAndroid(),
+        isChromeOS: () => /\bCrOS\b/.test(os.getPlatform()),
+        isFirefoxOS: () => /\bFxiOS\b/.test(os.getPlatform()),
+        getAll: () => ({
+          blackberry: os.isBlackBerry(),
+          firefoxOs: os.isFirefoxOS(),
+          windows: os.isWindows(),
+          android: os.isAndroid(),
+          chromeOs: os.isChromeOS(),
+          linux: os.isLinux(),
+          bada: os.isBada(),
+          ios: os.isIos(),
+          mac: os.isMac()
+        })
       };
 
       return os;
     }
 
     function _getCookie(name) {
-      var value = "; " + document.cookie;
-      var parts = value.split("; " + name + "=");
-      if (parts.length == 2) return parts.pop().split(";").shift();
+      var value = `; ${document.cookie}`;
+      var parts = value.split(`; ${name}=`);
+      if (parts.length === 2) return parts.pop().split(";").shift();
     }
 
     return this;

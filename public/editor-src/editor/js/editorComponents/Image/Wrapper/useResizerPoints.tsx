@@ -1,11 +1,10 @@
 import type { Point } from "visual/component/BoxResizer/types";
-import { EditorComponentContextValue } from "visual/editorComponents/EditorComponent/EditorComponentContext";
 import { SizeType } from "visual/global/Config/types/configs/common";
 import { ImageType } from "visual/utils/image/types";
 import { isGIFExtension, isSVGExtension } from "visual/utils/image/utils";
-import { ImageProps } from "../types";
+import type { ImageProps } from "../types";
 import { getImageDCSize, showOriginalImage } from "../utils";
-import { SizeRestriction, WidthHeightRestriction } from "./type";
+import type { SizeRestriction, WidthHeightRestriction } from "./type";
 import { getSizeRestriction, getWidthRestriction } from "./utils";
 
 const resize = [
@@ -53,11 +52,13 @@ const resizeImageExternal = {
 };
 
 type UseResizerPoints = (
-  props: ImageProps & { context: EditorComponentContextValue }
+  props: Pick<ImageProps, "v" | "meta" | "gallery" | "context">
 ) => ResizerCustomSize | ResizerPredefinedSize;
 
 const useResizerPoints: UseResizerPoints = ({ v, meta, gallery, context }) => {
-  const { sizeType, imagePopulation, imageType } = v;
+  const { sizeType, imagePopulation, imageType, elementPosition } = v;
+  const isAbsoluteOrFixed =
+    elementPosition === "absolute" || elementPosition === "fixed";
 
   if (imagePopulation) {
     const dcSize = getImageDCSize(imagePopulation, context);
@@ -73,16 +74,22 @@ const useResizerPoints: UseResizerPoints = ({ v, meta, gallery, context }) => {
   }
 
   if (imageType !== ImageType.Internal) {
+    // a custom size is dragged by width and height, which the size limits do not cover
+    if (sizeType === SizeType.custom) {
+      return {
+        points: resize,
+        restrictions: getWidthRestriction(meta, isAbsoluteOrFixed)
+      };
+    }
+
     return resizeImageExternal;
   }
 
   if (sizeType === SizeType.custom) {
-    const { imageExtension, elementPosition } = v;
-    const isAbsoluteOrFixed =
-      elementPosition === "absolute" || elementPosition === "fixed";
+    const { imageExtension } = v;
     let points = POINTS.default;
 
-    if (gallery && gallery.inGallery) {
+    if (gallery?.inGallery) {
       if (gallery.layout && gallery.layout === "masonry") {
         points = POINTS.gallery;
       } else if (v?.clonedFromGallery) {

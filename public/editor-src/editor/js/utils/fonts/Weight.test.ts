@@ -1,5 +1,5 @@
 import { identity, sortBy } from "es-toolkit";
-import { Weight, empty, weights } from "visual/utils/fonts/Weight";
+import { empty, Weight, weights } from "visual/utils/fonts/Weight";
 
 describe("Testing font weights constants", function () {
   test("THIN should be 100", () => expect(Weight.THIN).toBe(100));

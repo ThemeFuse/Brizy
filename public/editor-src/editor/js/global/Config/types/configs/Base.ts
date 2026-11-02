@@ -1,14 +1,17 @@
-import { DynamicContent } from "visual/global/Config/types/DynamicContent";
-import { Urls } from "visual/global/Config/types/Urls";
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
-import { Ecwid } from "visual/global/Config/types/configs/modules/shop/Ecwid";
-import { EcwidCategoryId, EcwidProductId } from "visual/global/Ecwid/types";
-import { CollectionItemId, CustomerId } from "visual/types";
-import { WithId } from "visual/types/attributes";
-import { Role } from "visual/utils/membership";
-import { Module } from "../Module";
-import { WhiteLabel } from "./WhiteLabel";
-import { Shopify } from "./modules/shop/Shopify";
+import type { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import type { Ecwid } from "visual/global/Config/types/configs/modules/shop/Ecwid";
+import type { DynamicContent } from "visual/global/Config/types/DynamicContent";
+import type { Urls } from "visual/global/Config/types/Urls";
+import type {
+  EcwidCategoryId,
+  EcwidProductId
+} from "visual/global/Ecwid/types";
+import type { CollectionItemId, CustomerId } from "visual/types";
+import type { WithId } from "visual/types/attributes";
+import type { Role } from "visual/utils/membership";
+import type { Module } from "../Module";
+import type { Shopify } from "./modules/shop/Shopify";
+import type { WhiteLabel } from "./WhiteLabel";
 
 export type ShopModules = undefined | Ecwid | Shopify;
 

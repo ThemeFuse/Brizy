@@ -430,7 +430,7 @@ class Brizy_Editor_UrlBuilder {
 			$path = substr($path, strpos($path,"/wp-content"));
 		}
 
-		$urlInfo = parse_url( home_url( $path ) );
+		$urlInfo = parse_url( site_url( $path ) );
 		$portPart = "";
 		if(isset($urlInfo['port']))
 		{

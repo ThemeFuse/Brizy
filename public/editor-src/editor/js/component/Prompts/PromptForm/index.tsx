@@ -1,5 +1,5 @@
 import { noop } from "es-toolkit";
-import React, { Component, ReactElement } from "react";
+import React, { Component, type ReactElement } from "react";
 import type { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import Tabs from "../common/GlobalApps/Tabs";
 import type { FormField } from "../common/GlobalApps/type";

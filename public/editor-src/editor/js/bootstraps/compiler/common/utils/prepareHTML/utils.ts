@@ -1,9 +1,9 @@
 import { Arr, Bool, Str } from "@brizy/readers";
 import { mPipe, or } from "fp-utilities";
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import type { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { triggersSelector } from "visual/redux/selectors";
-import { Store } from "visual/redux/store";
-import { TriggerType, Triggers } from "visual/types";
+import type { Store } from "visual/redux/store";
+import { type Triggers, TriggerType } from "visual/types";
 import { makeAttr } from "visual/utils/i18n/attribute";
 import { isInternalPopup, isPopup, isStory } from "visual/utils/models";
 

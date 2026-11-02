@@ -1,5 +1,5 @@
-import { ApiConnect, Account, List, Fields, Done } from "../Step";
 import { BaseApp } from "../../common/GlobalApps/BaseApp";
+import { Account, ApiConnect, Done, Fields, List } from "../Step";
 
 class Hubspot extends BaseApp {
   static connect = ApiConnect;

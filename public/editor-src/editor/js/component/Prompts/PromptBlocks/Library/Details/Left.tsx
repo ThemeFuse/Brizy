@@ -1,5 +1,6 @@
 import React, { useMemo } from "react";
 import EditorIcon from "visual/component/EditorIcon";
+import ImageLoad from "visual/component/Prompts/PromptBlocks/common/ImageLoad";
 import {
   animationStyle,
   getPreviewPointerStyle,
@@ -7,7 +8,6 @@ import {
   getTransitionPreview,
   previewClassName
 } from "visual/component/Prompts/PromptBlocks/Library/Details/utils";
-import ImageLoad from "visual/component/Prompts/PromptBlocks/common/ImageLoad";
 import { t } from "visual/utils/i18n";
 
 export interface Props {

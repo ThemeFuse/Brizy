@@ -25,11 +25,7 @@ export class TabsAccessibility {
   private mobileItems: TabsMobileItem[];
   private orientation: "horizontal" | "vertical";
 
-  constructor({
-    desktopItems,
-    mobileItems,
-    orientation
-  }: Options) {
+  constructor({ desktopItems, mobileItems, orientation }: Options) {
     this.desktopItems = desktopItems;
     this.mobileItems = mobileItems;
     this.orientation = orientation;
@@ -63,7 +59,9 @@ export class TabsAccessibility {
     });
 
     this.mobileItems.forEach((item) => {
-      const isActive = item.header.classList.contains("brz-tabs__nav--mobile--active");
+      const isActive = item.header.classList.contains(
+        "brz-tabs__nav--mobile--active"
+      );
 
       item.button.setAttribute("aria-expanded", String(isActive));
       item.panel.setAttribute("aria-hidden", String(!isActive));
@@ -83,10 +81,7 @@ export class TabsAccessibility {
     item.button.setAttribute("tabindex", "0");
   }
 
-  private handleKeyDown(
-    event: KeyboardEvent,
-    ctx: TabsKeyDownContext
-  ): void {
+  private handleKeyDown(event: KeyboardEvent, ctx: TabsKeyDownContext): void {
     const { mode, item } = ctx;
 
     switch (event.key) {

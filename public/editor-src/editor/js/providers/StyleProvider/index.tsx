@@ -5,10 +5,10 @@ import React, {
   useRef,
   useState
 } from "react";
+import { SheetContext } from "./context";
 import { Sheet } from "./Sheet";
 import { useStyleSheetManager } from "./StyleSheetManager";
-import { SheetContext } from "./context";
-import { Props } from "./types";
+import type { Props } from "./types";
 
 export function StyleProvider(props: Props) {
   const { children } = props;

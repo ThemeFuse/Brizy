@@ -2,7 +2,7 @@ import { cssStyleBgColor } from "visual/utils/cssStyle/cssStyleBgColor";
 import { cssStyleBgGradient } from "visual/utils/cssStyle/cssStyleBgGradient";
 import { cssStyleBorder } from "visual/utils/cssStyle/cssStyleBorder";
 import { ACTIVE, NORMAL } from "visual/utils/stateMode";
-import { CSSValue } from "visual/utils/style2/types";
+import type { CSSValue } from "visual/utils/style2/types";
 
 export const cssStyleElementEcwidSearchCheckboxesBg = (
   data: CSSValue

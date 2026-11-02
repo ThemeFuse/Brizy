@@ -57,7 +57,11 @@ export class AudioAccessibility {
       this.playPauseButton.setAttribute("aria-label", "Play or pause audio");
       this.playPauseButton.setAttribute("aria-pressed", "false");
       this.playPauseButton.addEventListener("keydown", (event) => {
-        if (event.key === " " || event.key === "Enter" || event.key === "Spacebar") {
+        if (
+          event.key === " " ||
+          event.key === "Enter" ||
+          event.key === "Spacebar"
+        ) {
           event.preventDefault();
           (event.currentTarget as HTMLElement).click();
         }
@@ -70,7 +74,11 @@ export class AudioAccessibility {
       this.muteButton.setAttribute("aria-label", "Mute or unmute audio");
       this.muteButton.setAttribute("aria-pressed", "false");
       this.muteButton.addEventListener("keydown", (event) => {
-        if (event.key === " " || event.key === "Enter" || event.key === "Spacebar") {
+        if (
+          event.key === " " ||
+          event.key === "Enter" ||
+          event.key === "Spacebar"
+        ) {
           event.preventDefault();
           (event.currentTarget as HTMLElement).click();
         }
@@ -83,7 +91,11 @@ export class AudioAccessibility {
       this.captionButton.setAttribute("aria-label", "Toggle audio captions");
       this.captionButton.setAttribute("aria-pressed", "false");
       this.captionButton.addEventListener("keydown", (event) => {
-        if (event.key === " " || event.key === "Enter" || event.key === "Spacebar") {
+        if (
+          event.key === " " ||
+          event.key === "Enter" ||
+          event.key === "Spacebar"
+        ) {
           event.preventDefault();
           (event.currentTarget as HTMLElement).click();
         }
@@ -119,7 +131,10 @@ export class AudioAccessibility {
     }
 
     if (this.captionButton) {
-      this.captionButton.setAttribute("aria-pressed", captionsActive.toString());
+      this.captionButton.setAttribute(
+        "aria-pressed",
+        captionsActive.toString()
+      );
     }
 
     if (this.progressSlider) {
@@ -220,4 +235,3 @@ export class AudioAccessibility {
     return value;
   }
 }
-

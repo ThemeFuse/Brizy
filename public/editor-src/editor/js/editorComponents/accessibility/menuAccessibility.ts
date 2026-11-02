@@ -68,8 +68,7 @@ export class MenuAccessibilityKeyboard {
   private rootMenuRole: "menubar" | "menu" = "menubar";
 
   private readonly onKeyDown = (event: KeyboardEvent): void => {
-    if ("__brzMenuA11yHandled" in event && event.__brzMenuA11yHandled)
-      return;
+    if ("__brzMenuA11yHandled" in event && event.__brzMenuA11yHandled) return;
 
     const activeElement = document.activeElement;
     if (!(activeElement instanceof HTMLElement)) {
@@ -123,7 +122,11 @@ export class MenuAccessibilityKeyboard {
         this.isSubmenuOpen(activeState) &&
         activeElement !== activeState.trigger &&
         activeState.submenu?.contains(activeElement) &&
-        this.handleTabInsideOpenSubmenu(activeState, activeElement, !event.shiftKey)
+        this.handleTabInsideOpenSubmenu(
+          activeState,
+          activeElement,
+          !event.shiftKey
+        )
       ) {
         event.preventDefault();
         return;
@@ -131,7 +134,7 @@ export class MenuAccessibilityKeyboard {
 
       if (event.shiftKey && activeState.parent) {
         const siblings = this.getSiblings(activeState);
-        const index = siblings.findIndex((s) => s === activeState);
+        const index = siblings.indexOf(activeState);
         if (index > 0) {
           event.preventDefault();
           const prev = siblings[index - 1];
@@ -549,7 +552,7 @@ export class MenuAccessibilityKeyboard {
     forward: boolean
   ): boolean {
     const sm = state.submenu;
-    if (!sm || !sm.contains(activeEl)) {
+    if (!sm?.contains(activeEl)) {
       return false;
     }
 
@@ -690,7 +693,9 @@ export class MenuAccessibilityKeyboard {
         ? this.rootMenu
         : (state.parent.submenu ?? this.rootMenu);
 
-    this.allStates.forEach((s) => s.trigger.setAttribute("tabindex", "-1"));
+    this.allStates.forEach((s) => {
+      s.trigger.setAttribute("tabindex", "-1");
+    });
     state.trigger.setAttribute("tabindex", focusOnTrigger ? "0" : "-1");
     container.setAttribute("aria-activedescendant", state.trigger.id);
   }
@@ -754,7 +759,7 @@ export class MenuAccessibilityKeyboard {
     const siblings = this.getSiblings(state);
     if (!siblings.length) return;
 
-    const index = siblings.findIndex((s) => s === state);
+    const index = siblings.indexOf(state);
     if (index === -1) return;
 
     const nextIndex = (index + offset + siblings.length) % siblings.length;
@@ -841,7 +846,7 @@ export class MenuAccessibilityKeyboard {
       sm?.contains(activeEl) &&
       activeEl !== activeState.trigger
     ) {
-      this.cycleFocusableInSubmenu(sm!, activeEl, activeState, delta);
+      this.cycleFocusableInSubmenu(sm, activeEl, activeState, delta);
       return;
     }
 

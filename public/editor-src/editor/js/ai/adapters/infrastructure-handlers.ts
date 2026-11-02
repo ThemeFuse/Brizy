@@ -1,6 +1,11 @@
+import type { z } from "zod";
 import type { ToolHandler } from "../entities/models";
+import type { UpdateStyleInput } from "../infrastructure/repositories/utils";
 import {
-  addStyleSchema,
+  updateColorPaletteSchema,
+  updateFontStyleMobileSchema,
+  updateFontStyleSchema,
+  updateFontStyleTabletSchema,
   updateStyleSchema
 } from "../infrastructure/repositories/utils";
 import { log } from "../utils/logger";
@@ -47,6 +52,35 @@ function validateStyleFonts(
 
   return null;
 }
+
+/**
+ * A tool that changes the current style through `updateStyle`.
+ *
+ * updateProjectStyle and the three font style tools write the same thing and
+ * differ only in what their schema lets through, so the schema is the one part
+ * each of them supplies.
+ */
+const updateStyleWith =
+  (
+    deps: HandlerDeps,
+    tool: string,
+    schema: z.ZodType<UpdateStyleInput, z.ZodTypeDef, unknown>
+  ): ToolHandler =>
+  (args: ToolArgs) => {
+    log.tools(`${tool} input %o`, args);
+
+    const parsed = schema.safeParse(args);
+    if (!parsed.success) {
+      return { success: false, error: parsed.error.message };
+    }
+
+    const fontError = validateStyleFonts(deps, parsed.data);
+    if (fontError) return fontError;
+
+    const result = deps.projectRepository.updateStyle(parsed.data);
+    log.tools(`${tool} output %o`, result);
+    return result;
+  };
 
 /**
  * Create infrastructure tool handlers: read tools, block tools, and generic element tools.
@@ -322,37 +356,42 @@ export function createInfrastructureHandlers(
       return result;
     },
 
-    addStyle: (args: ToolArgs) => {
-      log.tools("addStyle input %o", args);
+    updateColorPalette: (args: ToolArgs) => {
+      log.tools("updateColorPalette input %o", args);
 
-      const parsed = addStyleSchema.safeParse(args);
+      const parsed = updateColorPaletteSchema.safeParse(args);
       if (!parsed.success) {
         return { success: false, error: parsed.error.message };
       }
 
-      const fontError = validateStyleFonts(deps, parsed.data);
-      if (fontError) return fontError;
-
-      const result = projectRepository.addStyle(parsed.data);
-      log.tools("addStyle output %o", result);
+      const result = projectRepository.updateColorPalette(parsed.data);
+      log.tools("updateColorPalette output %o", result);
       return result;
     },
 
-    updateProjectStyle: (args: ToolArgs) => {
-      log.tools("updateProjectStyle input %o", args);
+    updateFontStyle: updateStyleWith(
+      deps,
+      "updateFontStyle",
+      updateFontStyleSchema
+    ),
 
-      const parsed = updateStyleSchema.safeParse(args);
-      if (!parsed.success) {
-        return { success: false, error: parsed.error.message };
-      }
+    updateFontStyleTablet: updateStyleWith(
+      deps,
+      "updateFontStyleTablet",
+      updateFontStyleTabletSchema
+    ),
 
-      const fontError = validateStyleFonts(deps, parsed.data);
-      if (fontError) return fontError;
+    updateFontStyleMobile: updateStyleWith(
+      deps,
+      "updateFontStyleMobile",
+      updateFontStyleMobileSchema
+    ),
 
-      const result = projectRepository.updateStyle(parsed.data);
-      log.tools("updateProjectStyle output %o", result);
-      return result;
-    },
+    updateProjectStyle: updateStyleWith(
+      deps,
+      "updateProjectStyle",
+      updateStyleSchema
+    ),
 
     duplicateStyle: (args: ToolArgs) => {
       log.tools("duplicateStyle input %o", args);

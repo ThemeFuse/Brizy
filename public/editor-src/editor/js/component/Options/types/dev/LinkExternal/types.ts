@@ -1,5 +1,5 @@
-import { Props as OptionProps } from "visual/component/Options/Type";
-import { WithClassName } from "visual/types/attributes";
+import type { Props as OptionProps } from "visual/component/Options/Type";
+import type { WithClassName } from "visual/types/attributes";
 
 export interface Model {
   value: string;

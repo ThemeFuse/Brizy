@@ -1,5 +1,5 @@
-import { ApiConnect, Account, Fields, List, Done } from "../Step";
 import { BaseApp } from "../../common/GlobalApps/BaseApp";
+import { Account, ApiConnect, Done, Fields, List } from "../Step";
 
 class Mailjet extends BaseApp {
   static connect = ApiConnect;

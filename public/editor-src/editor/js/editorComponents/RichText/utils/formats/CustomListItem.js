@@ -2,7 +2,7 @@ import Quill from "quill";
 
 // import { getStyle } from "./BackgroundGradient";
 
-let Parchment = Quill.import("parchment");
+const Parchment = Quill.import("parchment");
 const List = Quill.import("formats/list");
 const ListItemBlot = Quill.import("formats/list/item");
 

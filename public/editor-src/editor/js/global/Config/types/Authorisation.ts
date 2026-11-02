@@ -1,4 +1,4 @@
-import {
+import type {
   Response as APIResponse,
   SuccessResponse
 } from "visual/global/Config/types/configs/common";

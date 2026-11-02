@@ -1,16 +1,16 @@
-import React, { ComponentProps, ReactElement, useMemo } from "react";
+import React, { type ComponentProps, type ReactElement, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { BackgroundColor as Bg } from "visual/component/Controls/BackgroundColor";
-import { PaletteObject } from "visual/component/Controls/ColorPalette/entities/PaletteObject";
-import * as O from "visual/component/Options/Type";
+import type { PaletteObject } from "visual/component/Controls/ColorPalette/entities/PaletteObject";
+import type * as O from "visual/component/Options/Type";
 import { LeftSidebarOptionsIds } from "visual/global/Config/types/configs/ConfigCommon";
 import { useConfig } from "visual/providers/ConfigProvider";
 import { updateUI } from "visual/redux/actions2";
 import { currentStyleSelector } from "visual/redux/selectors";
 import * as Hex from "visual/utils/color/Hex";
 import * as Opacity from "visual/utils/cssProps/opacity";
-import { Value } from "visual/utils/options/BackgroundColor/entities/Value";
-import { Meta } from "visual/utils/options/BackgroundColor/meta";
+import type { Value } from "visual/utils/options/BackgroundColor/entities/Value";
+import type { Meta } from "visual/utils/options/BackgroundColor/meta";
 import * as Model from "visual/utils/options/BackgroundColor/model";
 import { toBgControlValue } from "visual/utils/options/BackgroundColor/utils";
 import * as Palette from "visual/utils/options/ColorPicker/entities/palette";
@@ -102,22 +102,23 @@ export const BackgroundColor = ({
       case "hex": {
         const setter = isStart ? Model.setHex : Model.setGradientHex;
         const hex = Hex.fromString(v.hex);
-        hex !== undefined && onChange(setter(hex, value), { isChanging });
+        if (hex !== undefined) onChange(setter(hex, value), { isChanging });
         break;
       }
       case "opacity": {
         const setter = isStart ? Model.setOpacity : Model.setGradientOpacity;
         const opacity = Opacity.fromNumber(v.opacity);
-        opacity !== undefined &&
+        if (opacity !== undefined) {
           onChange(setOpacity(setter, opacity, value, isChanging), {
             isChanging
           });
+        }
         break;
       }
       case "palette": {
         const setter = isStart ? Model.setPalette : Model.setGradientPalette;
         const palette = Palette.fromString(v.palette);
-        palette !== undefined && onChange(setter(palette, value));
+        if (palette !== undefined) onChange(setter(palette, value));
         break;
       }
       case "gradientSpeed": {

@@ -1,7 +1,7 @@
 import { CURRENT_CONTEXT_TYPE } from "visual/utils/elements/posts";
 import { archiveQuery, postsQuery } from "visual/utils/elements/posts/index.wp";
-import { WPQuery } from "visual/utils/elements/posts/types";
-import { Value } from "./types";
+import type { WPQuery } from "visual/utils/elements/posts/types";
+import type { Value } from "./types";
 import { decodeV } from "./utils.common";
 
 export function getLoopAttributes(v: Value): WPQuery {

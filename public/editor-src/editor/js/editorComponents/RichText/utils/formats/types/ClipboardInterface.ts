@@ -1,5 +1,5 @@
-import Quill, { Sources } from "quill";
-import Delta from "quill-delta";
+import Quill, { type Sources } from "quill";
+import type Delta from "quill-delta";
 
 declare class Selection {
   update(s: Sources): void;

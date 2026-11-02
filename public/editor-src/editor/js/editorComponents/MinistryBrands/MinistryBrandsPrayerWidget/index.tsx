@@ -1,11 +1,11 @@
-import React, { ReactNode } from "react";
-import { ElementModel } from "visual/component/Elements/Types";
+import React, { type ReactNode } from "react";
+import type { ElementModel } from "visual/component/Elements/Types";
 import EditorComponent from "visual/editorComponents/EditorComponent";
-import { ComponentsMeta } from "visual/editorComponents/EditorComponent/types";
+import type { ComponentsMeta } from "visual/editorComponents/EditorComponent/types";
 import { Wrapper } from "visual/editorComponents/tools/Wrapper";
 import { DynamicContentHelper } from "visual/editorComponents/WordPress/common/DynamicContentHelper";
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
-import { WithClassName } from "visual/types/attributes";
+import type { WithClassName } from "visual/types/attributes";
 import { makePlaceholder } from "visual/utils/dynamicContent";
 
 export interface Props extends WithClassName {

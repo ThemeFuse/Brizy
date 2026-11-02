@@ -1,6 +1,6 @@
-import { GetItems } from "visual/editorComponents/EditorComponent/types";
-import { DCTypes } from "visual/global/Config/types/DynamicContent";
+import type { GetItems } from "visual/editorComponents/EditorComponent/types";
 import { getEnabledLinkOptions } from "visual/global/Config/types/configs/featuresValue";
+import { DCTypes } from "visual/global/Config/types/DynamicContent";
 import { isPopup, isStory } from "visual/providers/EditorModeProvider";
 import { getColorToolbar } from "visual/utils/color";
 import { DESKTOP } from "visual/utils/devices";
@@ -10,7 +10,7 @@ import { getDynamicContentOption } from "visual/utils/options";
 import { popupToOldModel } from "visual/utils/options/PromptAddPopup/utils";
 import { HOVER, NORMAL } from "visual/utils/stateMode";
 import { toolbarLinkAnchor } from "visual/utils/toolbar";
-import { Props, Value } from "./types";
+import type { Props, Value } from "./types";
 
 export const getItems: GetItems<Value, Props> = ({
   v,

@@ -1,24 +1,24 @@
 import { identity as id } from "es-toolkit";
-import React, { ReactElement, useCallback, useMemo } from "react";
+import React, { type ReactElement, useCallback, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   Border as Control,
-  Props as ControlProps
+  type Props as ControlProps
 } from "visual/component/Controls/Border";
-import { PaletteObject } from "visual/component/Controls/ColorPalette/entities/PaletteObject";
-import * as Option from "visual/component/Options/Type";
+import type { PaletteObject } from "visual/component/Controls/ColorPalette/entities/PaletteObject";
+import type * as Option from "visual/component/Options/Type";
 import { LeftSidebarOptionsIds } from "visual/global/Config/types/configs/ConfigCommon";
 import { useConfig } from "visual/providers/ConfigProvider";
 import { updateUI } from "visual/redux/actions2";
 import { currentStyleSelector } from "visual/redux/selectors";
-import { WithClassName, WithConfig } from "visual/types/attributes";
+import type { WithClassName, WithConfig } from "visual/types/attributes";
 import * as Hex from "visual/utils/color/Hex";
 import * as Opacity from "visual/utils/cssProps/opacity";
-import { Config } from "visual/utils/options/Border/entities/Config";
-import { Value } from "visual/utils/options/Border/entities/Value";
+import type { Config } from "visual/utils/options/Border/entities/Config";
 import * as BorderStyle from "visual/utils/options/Border/entities/style";
+import type { Value } from "visual/utils/options/Border/entities/Value";
 import * as Width from "visual/utils/options/Border/entities/width";
-import { Meta } from "visual/utils/options/Border/meta";
+import type { Meta } from "visual/utils/options/Border/meta";
 import * as BorderModel from "visual/utils/options/Border/model";
 import { _setOpacity, getStyleObject } from "visual/utils/options/Border/utils";
 import { paletteHex } from "visual/utils/options/ColorPicker/utils";
@@ -59,17 +59,18 @@ export const Border = ({
   const changeHex = useCallback<ControlProps["onChangeHex"]>(
     (v, m) => {
       const _v = Hex.fromString(v);
-      _v !== undefined && onChange(BorderModel.setHex(_v, value), m);
+      if (_v !== undefined) onChange(BorderModel.setHex(_v, value), m);
     },
     [onChange, value]
   );
   const changeOpacity = useCallback<ControlProps["onChangeOpacity"]>(
     (v, isChanging) => {
       const _v = Opacity.fromNumber(v);
-      _v !== undefined &&
+      if (_v !== undefined) {
         onChange(_setOpacity(_v, value, !isChanging), {
           isChanging
         });
+      }
     },
     [onChange, value]
   );
@@ -84,35 +85,35 @@ export const Border = ({
   const changeWidth = useCallback<ControlProps["onChangeWidth"]>(
     (v) => {
       const _v = Width.fromNumber(minWidth(v));
-      _v !== undefined && onChange(BorderModel.setWidth(_v, value));
+      if (_v !== undefined) onChange(BorderModel.setWidth(_v, value));
     },
     [onChange, value, minWidth]
   );
   const changeTopWidth = useCallback<ControlProps["onChangeTopWidth"]>(
     (v) => {
       const _v = Width.fromNumber(minWidth(v));
-      _v !== undefined && onChange(BorderModel.setTopWidth(_v, value));
+      if (_v !== undefined) onChange(BorderModel.setTopWidth(_v, value));
     },
     [onChange, value, minWidth]
   );
   const changeRightWidth = useCallback<ControlProps["onChangeRightWidth"]>(
     (v) => {
       const _v = Width.fromNumber(minWidth(v));
-      _v !== undefined && onChange(BorderModel.setRightWidth(_v, value));
+      if (_v !== undefined) onChange(BorderModel.setRightWidth(_v, value));
     },
     [onChange, value, minWidth]
   );
   const changeBottomWidth = useCallback<ControlProps["onChangeBottomWidth"]>(
     (v) => {
       const _v = Width.fromNumber(minWidth(v));
-      _v !== undefined && onChange(BorderModel.setBottomWidth(_v, value));
+      if (_v !== undefined) onChange(BorderModel.setBottomWidth(_v, value));
     },
     [onChange, value, minWidth]
   );
   const changeLeftWidth = useCallback<ControlProps["onChangeLeftWidth"]>(
     (v) => {
       const _v = Width.fromNumber(minWidth(v));
-      _v !== undefined && onChange(BorderModel.setLeftWidth(_v, value));
+      if (_v !== undefined) onChange(BorderModel.setLeftWidth(_v, value));
     },
     [onChange, value, minWidth]
   );

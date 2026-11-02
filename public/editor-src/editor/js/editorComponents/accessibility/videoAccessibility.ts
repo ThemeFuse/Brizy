@@ -31,7 +31,7 @@ export class VideoAccessibility {
 
       // Only expose the cover as a button if it is actually clickable
       const hasClickHandler =
-        typeof (cover.onclick) === "function" ||
+        typeof cover.onclick === "function" ||
         cover.closest(".brz-video, .brz-custom-video") !== null;
 
       if (!hasClickHandler) {
@@ -63,8 +63,9 @@ export class VideoAccessibility {
   }
 
   private initLightboxes(): void {
-    const lightboxes =
-      this.root.querySelectorAll<HTMLAnchorElement>(".brz-video__lightbox");
+    const lightboxes = this.root.querySelectorAll<HTMLAnchorElement>(
+      ".brz-video__lightbox"
+    );
 
     lightboxes.forEach((lightbox) => {
       if (lightbox.getAttribute("data-brz-a11y-init") === "true") {
@@ -288,7 +289,7 @@ export class VideoAccessibility {
           );
           const video = shortcodeVideo?.querySelector("video");
 
-          if (!shortcodeVideo || !video || !video.duration) {
+          if (!shortcodeVideo || !video?.duration) {
             return;
           }
 
@@ -299,7 +300,10 @@ export class VideoAccessibility {
           switch (event.key) {
             case "ArrowRight":
             case "ArrowUp":
-              newTime = Math.min(video.duration, video.currentTime + stepSeconds);
+              newTime = Math.min(
+                video.duration,
+                video.currentTime + stepSeconds
+              );
               handled = true;
               break;
             case "ArrowLeft":

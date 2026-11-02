@@ -221,6 +221,15 @@
     display: block;
 }
 
+/* White label logo */
+.brz-ai-logo-container img {
+    display: block;
+    width: auto;
+    height: auto;
+    max-width: 200px;
+    max-height: 76px;
+}
+
 /* Responsive Breakpoints */
 @media screen and (max-width: 1024px) {
     .brz-ai-banner {
@@ -305,7 +314,8 @@
         width: 100% !important;
     }
 
-    .brz-ai-banner-right .brz-ai-logo-container svg {
+    .brz-ai-banner-right .brz-ai-logo-container svg,
+    .brz-ai-banner-right .brz-ai-logo-container img {
         width: clamp(70px, 20vw, 100px) !important;
         height: auto !important;
         max-width: 100px !important;
@@ -352,7 +362,8 @@
         padding: 12px !important;
     }
 
-    .brz-ai-banner-right .brz-ai-logo-container svg {
+    .brz-ai-banner-right .brz-ai-logo-container svg,
+    .brz-ai-banner-right .brz-ai-logo-container img {
         width: clamp(60px, 18vw, 80px) !important;
         max-width: 80px !important;
     }

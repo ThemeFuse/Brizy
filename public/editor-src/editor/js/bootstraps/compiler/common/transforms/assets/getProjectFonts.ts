@@ -1,5 +1,5 @@
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
-import {
+import type { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import type {
   AdobeFont,
   ExtraFontData,
   GoogleFont,

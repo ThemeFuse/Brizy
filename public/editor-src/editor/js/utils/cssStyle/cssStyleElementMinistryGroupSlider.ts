@@ -1,4 +1,4 @@
-import { WithRenderContext } from "visual/providers/RenderProvider";
+import type { WithRenderContext } from "visual/providers/RenderProvider";
 import {
   cssStyleBgColor,
   cssStyleBorder,
@@ -15,7 +15,7 @@ import {
   getAllCssStyleTypography
 } from "visual/utils/cssStyle";
 import { defaultValueValue } from "visual/utils/onChange";
-import { CSSValue } from "visual/utils/style2/types";
+import type { CSSValue } from "visual/utils/style2/types";
 import { ACTIVE } from "../stateMode";
 import {
   cssStyleElementMinistryBrandsButtonsBgColor,

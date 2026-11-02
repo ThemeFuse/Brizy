@@ -54,7 +54,7 @@ function preciseOperation(type: "add" | "sub", a: number, b: number) {
 
   const a_ = a * mul;
   const b_ = b * mul;
-  let res;
+  let res: number;
 
   switch (type) {
     case "add":

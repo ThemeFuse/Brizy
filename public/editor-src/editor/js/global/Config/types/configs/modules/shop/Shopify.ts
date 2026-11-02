@@ -1,11 +1,11 @@
-import { ChoicesSync } from "visual/component/Options/types/dev/Select/types";
-import { ShopifyPage } from "visual/types/Page";
-import {
+import type { ChoicesSync } from "visual/component/Options/types/dev/Select/types";
+import type { ShopifyPage } from "visual/types/Page";
+import type {
   BlogSourceItem,
   Rule as PublishRule,
   SelectedItem
 } from "visual/utils/api/types";
-import { Response } from "../../common";
+import type { Response } from "../../common";
 
 export interface Shopify {
   type: "shopify";

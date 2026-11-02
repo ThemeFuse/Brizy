@@ -1,4 +1,5 @@
 import { Item } from "@radix-ui/react-context-menu";
+import { noop } from "es-toolkit";
 import React from "react";
 import EditorIcon from "visual/component/EditorIcon";
 
@@ -7,7 +8,7 @@ export default class Button extends React.Component {
     title: "",
     helperText: () => "",
     inactive: false,
-    onChange: () => {}
+    onChange: noop
   };
 
   render() {

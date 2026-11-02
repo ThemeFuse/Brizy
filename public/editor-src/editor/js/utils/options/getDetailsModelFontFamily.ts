@@ -1,14 +1,13 @@
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
-import { RenderType, isView } from "visual/providers/RenderProvider";
-import { Store } from "visual/redux/store";
-import { Fonts } from "visual/types/Fonts";
-import type { FontFamilyType } from "visual/types/Fonts";
+import type { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import { isView, type RenderType } from "visual/providers/RenderProvider";
+import type { Store } from "visual/redux/store";
+import type { FontFamilyType, Fonts } from "visual/types/Fonts";
 import { getDefaultFont, getFontById } from "visual/utils/fonts/getFontById";
 import { getFontStyle } from "visual/utils/fonts/getFontStyle";
 import { makeStyleCSSVar } from "visual/utils/fonts/makeGlobalStylesTypography";
 import { FONT_INITIAL } from "visual/utils/fonts/utils";
 import { DESKTOP } from "visual/utils/responsiveMode";
-import { MValue } from "visual/utils/value";
+import type { MValue } from "visual/utils/value";
 
 interface Data {
   family: string;
@@ -47,8 +46,8 @@ function storeFamilyToCache(data: Data) {
   });
 
   if (fontStyle) {
-    const fontFamily = fontStyle["fontFamily"] || family;
-    const fontFamilyType = fontStyle["fontFamilyType"] || familyType;
+    const fontFamily = fontStyle.fontFamily || family;
+    const fontFamilyType = fontStyle.fontFamilyType || familyType;
     familyCache.set(fontFamily, fontFamilyType);
   } else {
     const defaultFont = getDefaultFont(store.getState());

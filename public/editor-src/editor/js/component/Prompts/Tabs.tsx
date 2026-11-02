@@ -1,15 +1,16 @@
 import classnames from "classnames";
-import React, { Key, ReactElement, ReactNode } from "react";
+import React, { type ReactElement, type ReactNode } from "react";
 import EditorIcon from "visual/component/EditorIcon";
 import Fixed from "visual/component/Prompts/Fixed";
+import type { Literal } from "visual/utils/types/Literal";
 
-export interface Tab<T extends Key> {
+export interface Tab<T extends Literal> {
   id: T;
   title: string;
   icon: string;
 }
 
-export interface Props<T extends Key> {
+export interface Props<T extends Literal> {
   tabs: Tab<T>[];
   onChange: (t: T) => void;
   value: T;
@@ -17,7 +18,7 @@ export interface Props<T extends Key> {
   children?: ReactNode;
 }
 
-export function Tabs<T extends Key>({
+export function Tabs<T extends Literal>({
   onClose,
   children,
   value,
@@ -48,7 +49,9 @@ export function Tabs<T extends Key>({
                   <div className="brz-ed-popup-tab-icon">
                     <EditorIcon icon={icon} />
                   </div>
-                  <div className="brz-ed-popup-tab-name" title={title}>{title}</div>
+                  <div className="brz-ed-popup-tab-name" title={title}>
+                    {title}
+                  </div>
                 </div>
               );
             })}

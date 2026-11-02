@@ -2,15 +2,15 @@ process.on("unhandledRejection", (error) => {
   console.log("unhandledRejection", error.message, error);
 });
 
-const fs = require("fs");
-const path = require("path");
+const fs = require("node:fs");
+const path = require("node:path");
 const glob = require("fast-glob");
 
 // gulp
 const gulp = require("gulp");
 const gulpPlugins = require("gulp-load-plugins")();
 const cleanCSS = require("gulp-clean-css"); // for some reason doesn't work with gulpPlugins
-const { Readable } = require("stream");
+const { Readable } = require("node:stream");
 const Vinyl = require("vinyl");
 
 // rspack
@@ -137,7 +137,7 @@ function verifications(done) {
 
     if (r.test(fileContents)) {
       aborted = true;
-      messages.push("set BRIZY_DEVELOPMENT to true in " + filePath);
+      messages.push(`set BRIZY_DEVELOPMENT to true in ${filePath}`);
     }
   }
 
@@ -148,13 +148,13 @@ function verifications(done) {
 
     if (r.test(fileContents)) {
       aborted = true;
-      messages.push("set BRIZY_PRO_DEVELOPMENT to true in " + filePath);
+      messages.push(`set BRIZY_PRO_DEVELOPMENT to true in ${filePath}`);
     }
   }
 
   if (aborted) {
     console.log("");
-    console.error(messages.map((m) => chalk.red.bold("* " + m)).join("\n\n"));
+    console.error(messages.map((m) => chalk.red.bold(`* ${m}`)).join("\n\n"));
     console.log("");
 
     throw new Error("aborting...");
@@ -164,11 +164,11 @@ function verifications(done) {
 }
 
 function clean(done) {
-  del.sync(paths.buildLocal + "/*", { force: true });
-  del.sync(paths.build + "/*", { force: true });
+  del.sync(`${paths.buildLocal}/*`, { force: true });
+  del.sync(`${paths.build}/*`, { force: true });
 
   if (IS_PRO) {
-    del.sync(paths.buildPro + "/*", { force: true });
+    del.sync(`${paths.buildPro}/*`, { force: true });
   }
 
   done();
@@ -215,7 +215,7 @@ function editorJS(done) {
       return;
     }
 
-    if (stats && stats.hasErrors()) {
+    if (stats?.hasErrors()) {
       gulpPlugins.util.log(
         chalk.red("[rspack] ✖ Compilation FAILED with errors")
       );
@@ -230,7 +230,7 @@ function editorJS(done) {
       if (!watchMode) {
         done(new Error("Rspack compilation failed"));
       }
-    } else if (stats && stats.hasWarnings()) {
+    } else if (stats?.hasWarnings()) {
       gulpPlugins.util.log(chalk.yellow("[rspack] ⚠ Compiled with warnings"));
       console.log(
         stats.toString({
@@ -295,25 +295,25 @@ function editorJS(done) {
   }
 }
 function editorIcons() {
-  const src = paths.editor + "/sass/editor/icons/**/*.{eot,svg,ttf,woff,woff2}";
-  const dest = paths.build + "/editor/icons";
+  const src = `${paths.editor}/sass/editor/icons/**/*.{eot,svg,ttf,woff,woff2}`;
+  const dest = `${paths.build}/editor/icons`;
 
   return gulp.src(src).pipe(gulp.dest(dest));
 }
 function editorKitIcons() {
-  const src = paths.editor + "/icons/**/*";
-  const dest = paths.build + "/editor/icons";
+  const src = `${paths.editor}/icons/**/*`;
+  const dest = `${paths.build}/editor/icons`;
   return gulp.src(src).pipe(gulp.dest(dest));
 }
 function editorImg() {
-  const src = paths.editor + "/img/*";
-  const dest = paths.build + "/editor/img";
+  const src = `${paths.editor}/img/*`;
+  const dest = `${paths.build}/editor/img`;
 
   return gulp.src(src).pipe(gulp.dest(dest));
 }
 function editorTwig() {
-  const src = paths.editor + "/templates/editor.html.twig";
-  const dest = paths.build + "/editor/views";
+  const src = `${paths.editor}/templates/editor.html.twig`;
+  const dest = `${paths.build}/editor/views`;
 
   return (
     gulp
@@ -344,7 +344,7 @@ function exportJS(done) {
     CHECK_BUNDLE_SIZE
   };
 
-  let rspackConfig = [];
+  const rspackConfig = [];
 
   console.log(chalk.cyan("[rspack] Loading export/preview configurations:"));
   console.log(chalk.cyan(" - rspack.config.export.js (node)"));
@@ -381,7 +381,7 @@ function exportJS(done) {
       return;
     }
 
-    if (stats && stats.hasErrors()) {
+    if (stats?.hasErrors()) {
       gulpPlugins.util.log(
         chalk.red("[rspack] ✖ Compilation FAILED with errors")
       );
@@ -396,7 +396,7 @@ function exportJS(done) {
       if (!watchMode) {
         done(new Error("Rspack compilation failed"));
       }
-    } else if (stats && stats.hasWarnings()) {
+    } else if (stats?.hasWarnings()) {
       gulpPlugins.util.log(chalk.yellow("[rspack] ⚠ Compiled with warnings"));
       console.log(
         stats.toString({
@@ -462,9 +462,7 @@ function exportJS(done) {
 
 function exportLibsCSS() {
   const { free } = LibsConfig;
-  const src = free.reduce((acc, { path }) => {
-    return [...acc, `${path}/*.scss`];
-  }, []);
+  const src = free.map(({ path }) => `${path}/*.scss`);
 
   const rename = (path) => {
     if (path.extname) {
@@ -543,7 +541,7 @@ function proJS(done) {
       return;
     }
 
-    if (stats && stats.hasErrors()) {
+    if (stats?.hasErrors()) {
       gulpPlugins.util.log(
         chalk.red("[rspack pro] ✖ Compilation FAILED with errors")
       );
@@ -558,7 +556,7 @@ function proJS(done) {
       if (!watchMode) {
         done(new Error("Rspack compilation failed"));
       }
-    } else if (stats && stats.hasWarnings()) {
+    } else if (stats?.hasWarnings()) {
       gulpPlugins.util.log(
         chalk.yellow("[rspack pro] ⚠ Compiled with warnings")
       );
@@ -625,9 +623,7 @@ function proJS(done) {
 
 function proExportLibsCSS() {
   const { pro } = LibsConfig;
-  const src = pro.reduce((acc, { path }) => {
-    return [...acc, `${path}/*.scss`];
-  }, []);
+  const src = pro.map(({ path }) => `${path}/*.scss`);
 
   const rename = (path) => {
     if (path.extname) {
@@ -661,7 +657,7 @@ function proExportLibsCSS() {
 
 function config() {
   const src = [
-    paths.editor + "/js/config/googleFonts.json",
+    `${paths.editor}/js/config/googleFonts.json`,
     path.resolve(__dirname, "./backend/config/defaults.json")
   ];
   const dest = paths.build;
@@ -670,8 +666,8 @@ function config() {
 }
 
 async function wpTranslations() {
-  let dest = path.resolve(paths.build, "texts.php");
-  let phpSourceCode = await wpTranslationsUtil({
+  const dest = path.resolve(paths.build, "texts.php");
+  const phpSourceCode = await wpTranslationsUtil({
     paths,
     IS_PRODUCTION,
     VERSION
@@ -681,8 +677,8 @@ async function wpTranslations() {
 }
 
 async function cloudTranslations() {
-  let dest = path.resolve(paths.build, "translations.json");
-  let jsonSourceCode = await cloudTranslationsUtil({
+  const dest = path.resolve(paths.build, "translations.json");
+  const jsonSourceCode = await cloudTranslationsUtil({
     paths,
     VERSION
   });
@@ -710,7 +706,7 @@ function wpOpenSource() {
     "!**/editor/js/libs/mmenu/",
     "!**/editor/js/libs/mmenu/**"
   ];
-  const dest = paths.buildLocal + "/editor-src";
+  const dest = `${paths.buildLocal}/editor-src`;
 
   return gulp
     .src(src, { dot: true })
@@ -733,7 +729,7 @@ function buildVersions(done) {
     null,
     2
   );
-  fs.writeFileSync(paths.build + "/versions.json", versionsJSON, "utf8");
+  fs.writeFileSync(`${paths.build}/versions.json`, versionsJSON, "utf8");
 
   if (IS_PRO) {
     const versionsJSON = JSON.stringify(
@@ -743,7 +739,7 @@ function buildVersions(done) {
       null,
       2
     );
-    fs.writeFileSync(paths.buildPro + "/versions.json", versionsJSON, "utf8");
+    fs.writeFileSync(`${paths.buildPro}/versions.json`, versionsJSON, "utf8");
   }
 
   done();
@@ -751,19 +747,19 @@ function buildVersions(done) {
 function buildStats(done) {
   const files = [
     // editor
-    ["editor.min.js", paths.build + "/editor/js/editor.min.js"],
-    ["editor.vendor.min.js", paths.build + "/editor/js/editor.vendor.min.js"],
-    ["main.editor.min.css", paths.build + "/editor/css/main.editor.min.css"],
+    ["editor.min.js", `${paths.build}/editor/js/editor.min.js`],
+    ["editor.vendor.min.js", `${paths.build}/editor/js/editor.vendor.min.js`],
+    ["main.editor.min.css", `${paths.build}/editor/css/main.editor.min.css`],
 
     // export
-    ["preview.min.js", paths.build + "/editor/js/preview.min.js"],
-    ["main.base.min.css", paths.build + "/editor/css/main.base.min.css"],
+    ["preview.min.js", `${paths.build}/editor/js/preview.min.js`],
+    ["main.base.min.css", `${paths.build}/editor/css/main.base.min.css`],
 
     // static
-    ["export.js", paths.build + "/editor/js/export.js"]
+    ["export.js", `${paths.build}/editor/js/export.js`]
   ];
   fs.writeFileSync(
-    paths.build + "/stats.json",
+    `${paths.build}/stats.json`,
     getFileSizesJSON(files),
     "utf8"
   );
@@ -771,10 +767,10 @@ function buildStats(done) {
   if (IS_PRO) {
     const files = [
       // editor
-      ["editor.pro.min.js", paths.buildPro + "/js/editor.pro.min.js"]
+      ["editor.pro.min.js", `${paths.buildPro}/js/editor.pro.min.js`]
     ];
     fs.writeFileSync(
-      paths.buildPro + "/stats.json",
+      `${paths.buildPro}/stats.json`,
       getFileSizesJSON(files),
       "utf8"
     );
@@ -785,7 +781,7 @@ function buildStats(done) {
   function getFileSizesJSON(files) {
     const fileSizes = files.reduce((acc, [name, path]) => {
       const stats = fs.statSync(path);
-      acc[name] = stats["size"] / 1000000.0;
+      acc[name] = stats.size / 1000000.0;
       return acc;
     }, {});
 
@@ -905,14 +901,14 @@ exports.build = gulp.series.apply(undefined, [
 //#region External Popup
 
 function externalPopupsPopup() {
-  const src = paths.editor + "/js/bootstraps/popups/popup.js";
-  const dest = paths.build + "/editor/js/";
+  const src = `${paths.editor}/js/bootstraps/popups/popup.js`;
+  const dest = `${paths.build}/editor/js/`;
 
   return gulp.src(src).pipe(gulpPlugins.terser()).pipe(gulp.dest(dest));
 }
 function externalPopupsCodeInjection() {
-  const src = paths.editor + "/js/bootstraps/popups/popup_injection.js";
-  const dest = paths.build + "/editor/js";
+  const src = `${paths.editor}/js/bootstraps/popups/popup_injection.js`;
+  const dest = `${paths.build}/editor/js`;
 
   return gulp.src(src).pipe(gulpPlugins.terser()).pipe(gulp.dest(dest));
 }
@@ -944,7 +940,7 @@ const k_combinations = (set, k) => {
   }
 
   if (k === 1) {
-    return set.reduce((acc, cur) => [...acc, [cur]], []);
+    return set.map((cur) => [cur]);
   }
 
   const combs = [];
@@ -1087,7 +1083,7 @@ function generateLibs() {
   const freeGroups = groups.filter(isFree);
   const proGroups = groups.filter(isPro);
 
-  let rs = new Readable({
+  const rs = new Readable({
     objectMode: true
   });
 
@@ -1182,19 +1178,13 @@ function generateLibsConfig(done) {
 
   const formattedFiles = [...freeFiles, ...proFiles, ...groupAll];
 
-  fs.writeFileSync(dest + "/libs.json", getConfig(formattedFiles), "utf8");
+  fs.writeFileSync(`${dest}/libs.json`, getConfig(formattedFiles), "utf8");
 
   done();
 
   function getConfig(files) {
     const config = {
-      free: [
-        {
-          name: "group-jq",
-          path: "./editor/js/libs/common/jQuery",
-          selectors: [".brz__group__jquery"]
-        }
-      ],
+      free: [],
       pro: []
     };
     const dirname = path.resolve(__dirname);

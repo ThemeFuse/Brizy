@@ -20,20 +20,20 @@ import { attachRefs } from "visual/utils/react";
 import { read as readBoolean } from "visual/utils/reader/bool";
 import * as State from "visual/utils/stateMode";
 import { read as readString } from "visual/utils/string/specs";
-import { Literal } from "visual/utils/types/Literal";
-import { MValue } from "visual/utils/value";
+import type { Literal } from "visual/utils/types/Literal";
+import type { MValue } from "visual/utils/value";
 import { Wrapper } from "../tools/Wrapper";
 import defaultValue from "./defaultValue.json";
 import * as sidebarConfig from "./sidebar";
 import * as toolbarConfig from "./toolbar";
-import { Value } from "./type";
+import type { Value } from "./type";
 import {
   getBoxResizerParams,
   resizerTransformPatch,
   resizerTransformValue
 } from "./utils";
 
-class Map extends EditorComponent<Value> {
+class MapComponent extends EditorComponent<Value> {
   static defaultValue = defaultValue;
   static experimentalDynamicContent = true;
   isWp = isWp(this.getGlobalConfig());
@@ -165,4 +165,4 @@ class Map extends EditorComponent<Value> {
   }
 }
 
-export default Map;
+export default MapComponent;

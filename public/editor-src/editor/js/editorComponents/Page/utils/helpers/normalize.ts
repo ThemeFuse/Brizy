@@ -1,6 +1,6 @@
 import { produce } from "immer";
-import { Dispatch } from "redux";
-import {
+import type { Dispatch } from "redux";
+import type {
   ElementModel,
   ElementModelType
 } from "visual/component/Elements/Types";
@@ -9,17 +9,17 @@ import {
   normalizeMenuItems,
   symbolsToItems
 } from "visual/editorComponents/Menu/utils";
-import {
+import type {
   ConfigCommon,
   MenuData
 } from "visual/global/Config/types/configs/ConfigCommon";
-import { ReduxAction, updateGlobalBlock } from "visual/redux/actions2";
-import { ReduxState } from "visual/redux/types";
-import { Block } from "visual/types/Block";
+import { type ReduxAction, updateGlobalBlock } from "visual/redux/actions2";
+import type { ReduxState } from "visual/redux/types";
+import type { Block } from "visual/types/Block";
 import { mapModels } from "visual/utils/models";
 import { objectTraverse2 } from "visual/utils/object";
-import { MValue } from "visual/utils/value";
-import { FromTo } from "../types";
+import type { MValue } from "visual/utils/value";
+import type { FromTo } from "../types";
 
 type GlobalBlocks = ReduxState["globalBlocks"];
 
@@ -112,7 +112,7 @@ export function gbTransform(
     if (model.type === "GlobalBlock") {
       const { _id } = model.value;
 
-      if (_id && gb[_id] && gb[_id].data) {
+      if (_id && gb[_id]?.data) {
         return gb[_id].data;
       }
     }

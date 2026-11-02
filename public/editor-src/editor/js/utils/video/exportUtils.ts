@@ -320,7 +320,7 @@ export const changePlayerState = (shortcodeVideo: Element): void => {
         video.play();
       });
     }
-    
+
     if (playPauseBtn) {
       video.addEventListener("ended", () => {
         changeIconVisibility(playPauseBtn, false);
@@ -347,7 +347,7 @@ export const changePlayerState = (shortcodeVideo: Element): void => {
         ".brz-video-custom-volume-controls"
       );
 
-      let offsetPercent;
+      let offsetPercent: number;
       if (isSliderClick) {
         offsetPercent = getSliderOffset(slider, evt.pageX);
         video.currentTime = (offsetPercent * video.duration) / 100;

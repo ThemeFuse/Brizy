@@ -3,20 +3,21 @@ import { conformsTo } from "es-toolkit/compat";
 import { pass } from "fp-utilities";
 import { isWp } from "visual/global/Config";
 import {
-  ConfigCommon,
-  LeftSidebarAddElementsType,
-  LeftSidebarOptionBase,
+  type ConfigCommon,
+  type LeftSidebarAddElementsType,
+  type LeftSidebarOptionBase,
   LeftSidebarOptionsIds
 } from "visual/global/Config/types/configs/ConfigCommon";
-import { ProjectLocked, SavedBlock, SavedLayout } from "visual/types";
+import type { ProjectLocked, SavedBlock, SavedLayout } from "visual/types";
 import { checkValue2 } from "visual/utils/checkValue";
-import {
+import type {
   GlobalBlock,
   GlobalBlockNormal,
+  GlobalBlockOverlay,
   GlobalBlockPopup
 } from "./GlobalBlock";
-import { Page, PageWP } from "./Page";
-import {
+import type { Page, PageWP } from "./Page";
+import type {
   EntityTypeRule,
   WPReferenceAllAuthor,
   WPReferenceAllInEntity,
@@ -24,7 +25,7 @@ import {
   WPReferenceSpecificAuthor,
   WPReferenceSpecificInEntity
 } from "./Rule";
-import { ExtraFontStyle, Style, TextScripts } from "./Style";
+import { type ExtraFontStyle, type Style, TextScripts } from "./Style";
 
 export type Dictionary<T> = {
   [k: string]: T | undefined;
@@ -149,6 +150,10 @@ export const isGlobalBlock = (b: GlobalBlock): b is GlobalBlockNormal => {
 
 export const isGlobalPopup = (b: GlobalBlock): b is GlobalBlockPopup => {
   return b.meta.type === "popup";
+};
+
+export const isGlobalOverlay = (b: GlobalBlock): b is GlobalBlockOverlay => {
+  return b.meta.type === "overlay";
 };
 
 //#endregion

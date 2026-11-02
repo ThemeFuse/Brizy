@@ -14,24 +14,8 @@ const asset: Asset = {
 
 const libsMap: Array<AssetLibsMap> = [
   {
-    name: "group-jq",
-    selectors: [".brz__group__jquery"],
-    score: 20,
-    content: {
-      type: "file",
-      url: "/static/editor/css/group-jq.css",
-      attr: {
-        class: "brz-link brz-link-preview-lib",
-        "data-group": "group-jq",
-        rel: "stylesheet"
-      }
-    },
-    pro: false
-  },
-  {
     name: "group-1",
     selectors: [
-      ".brz__group__jquery",
       ".brz-forms",
       ".brz-forms2",
       ".brz-filters__main",
@@ -52,7 +36,6 @@ const libsMap: Array<AssetLibsMap> = [
   {
     name: "group-2",
     selectors: [
-      ".brz__group__jquery",
       ".brz-slick-slider",
       ".brz-carousel",
       ".brz-countdown",
@@ -73,7 +56,6 @@ const libsMap: Array<AssetLibsMap> = [
   {
     name: "group-3",
     selectors: [
-      ".brz__group__jquery",
       ".brz-animated",
       ".brz-image__lightbox",
       ".brz-image__gallery-lightbox",
@@ -94,7 +76,6 @@ const libsMap: Array<AssetLibsMap> = [
   {
     name: "group-1_2",
     selectors: [
-      ".brz__group__jquery",
       ".brz-forms",
       ".brz-forms2",
       ".brz-filters__main",
@@ -119,7 +100,6 @@ const libsMap: Array<AssetLibsMap> = [
   {
     name: "group-1_3",
     selectors: [
-      ".brz__group__jquery",
       ".brz-forms",
       ".brz-forms2",
       ".brz-filters__main",
@@ -144,7 +124,6 @@ const libsMap: Array<AssetLibsMap> = [
   {
     name: "group-2_3",
     selectors: [
-      ".brz__group__jquery",
       ".brz-slick-slider",
       ".brz-carousel",
       ".brz-countdown",
@@ -169,7 +148,6 @@ const libsMap: Array<AssetLibsMap> = [
   {
     name: "group-all",
     selectors: [
-      ".brz__group__jquery",
       ".brz-forms",
       ".brz-forms2",
       ".brz-filters__main",
@@ -197,14 +175,13 @@ const libsMap: Array<AssetLibsMap> = [
   }
 ];
 
-const groupJQ = libsMap[0];
-const group1 = libsMap[1];
-const group2 = libsMap[2];
-const group3 = libsMap[3];
-const group1_2 = libsMap[4];
-const group1_3 = libsMap[5];
-const group2_3 = libsMap[6];
-const groupAll = libsMap[7];
+const group1 = libsMap[0];
+const group2 = libsMap[1];
+const group3 = libsMap[2];
+const group1_2 = libsMap[3];
+const group1_3 = libsMap[4];
+const group2_3 = libsMap[5];
+const groupAll = libsMap[6];
 
 describe("assetManager utils", () => {
   test.each<[Array<AssetLibsMap>, Array<string>, MValue<AssetLibsMap>]>([
@@ -214,9 +191,10 @@ describe("assetManager utils", () => {
 
     [[{ ...asset, selectors: [".brz-forms"] }], [".brz-forms1"], undefined],
 
-    [libsMap, [".brz__group__jquery"], groupJQ],
+    // a block compiled before the jQuery group was removed still asks for it
+    [libsMap, [".brz__group__jquery"], undefined],
 
-    [libsMap, [group1.selectors[1]], group1],
+    [libsMap, [group1.selectors[0]], group1],
 
     [libsMap, group1.selectors, group1],
 
@@ -224,17 +202,17 @@ describe("assetManager utils", () => {
 
     [libsMap, group3.selectors, group3],
 
+    [libsMap, [group1.selectors[0], group2.selectors[1]], group1_2],
+
     [libsMap, [group1.selectors[1], group2.selectors[2]], group1_2],
 
-    [libsMap, [group1.selectors[2], group2.selectors[3]], group1_2],
-
-    [libsMap, [group1.selectors[1], group3.selectors[3]], group1_3],
+    [libsMap, [group1.selectors[0], group3.selectors[2]], group1_3],
 
     [libsMap, [...group2.selectors, ...group3.selectors], group2_3],
 
     [
       libsMap,
-      [group1.selectors[1], group2.selectors[1], group3.selectors[1]],
+      [group1.selectors[0], group2.selectors[0], group3.selectors[0]],
       groupAll
     ],
 

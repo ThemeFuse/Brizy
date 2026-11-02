@@ -9,7 +9,7 @@ export default class Hidden extends TextField {
 
   static Label(...props) {
     // input hidden don't have label on preview
-    return isEditor(props[0].renderContext) ? super.Label(...props) : null;
+    return isEditor(props[0].renderContext) ? TextField.Label(...props) : null;
   }
 
   renderForView(v) {

@@ -1,14 +1,12 @@
-import { GroupBase } from "visual/component/Options/types/dev/Addable/types";
-import {
+import type {
   GenericToolbarItemType,
   OptionDefinition,
   ToolbarItemType
 } from "visual/editorComponents/ToolbarItemType";
 import { filter } from "visual/utils/options/filter";
 import { reduce } from "visual/utils/options/reduce";
-import { DESKTOP, ResponsiveMode } from "visual/utils/responsiveMode";
-import * as State from "visual/utils/stateMode/index";
-import { camelCase } from "visual/utils/string";
+import { DESKTOP, type ResponsiveMode } from "visual/utils/responsiveMode";
+import type * as State from "visual/utils/stateMode/index";
 
 type StatesConfig = Record<string, { icon?: string; title?: string }>;
 
@@ -53,7 +51,7 @@ const collectStatesConfig = (
   }
 
   // Merge all configs, later configs override earlier ones
-  return configs.reduce((acc, config) => ({ ...acc, ...config }), {});
+  return configs.reduce((acc, config) => Object.assign(acc, config), {});
 };
 
 export const bindStateToOption = <T extends OptionDefinition | ToolbarItemType>(
@@ -112,26 +110,6 @@ export const bindStateToOption = <T extends OptionDefinition | ToolbarItemType>(
           };
         })
       };
-    case "addable": {
-      const {
-        id: addableId,
-        value,
-        shape
-      } = option as OptionDefinition<"addable">;
-
-      return {
-        ...option,
-        optionGroups: value.value.map(({ id: groupId, title }: GroupBase) => ({
-          id: groupId,
-          title,
-          options: shape.map((shape) => ({
-            ...shape,
-            id: camelCase([addableId, groupId, shape.id])
-          }))
-        }))
-      };
-    }
-
     default:
       return option;
   }

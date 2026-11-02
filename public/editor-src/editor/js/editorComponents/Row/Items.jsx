@@ -195,7 +195,7 @@ class RowItems extends EditorArrayComponent {
       case "tablet": {
         return (
           N.read(dbValue[index]?.value?.[widthKey]) ??
-          N.read(dbValue[index]?.value?.["width"]) ??
+          N.read(dbValue[index]?.value?.width) ??
           50
         );
       }
@@ -291,7 +291,7 @@ class RowItems extends EditorArrayComponent {
     return { min: isNumeric(min) ? min : 5, max: isNumeric(max) ? max : 100 };
   }
 
-  getItemProps(itemData, itemIndex, items) {
+  getItemProps(_itemData, itemIndex, items) {
     const { isInner } = this.props.meta.row;
 
     const isOnly = items.length === 1;
@@ -430,7 +430,7 @@ class RowItems extends EditorArrayComponent {
           }
         ];
 
-        let config = [columnWidthConfig];
+        const config = [columnWidthConfig];
         if (device === "desktop") {
           config.push(...cloneRemoveConfig);
         }

@@ -1,21 +1,21 @@
-import { ElementModel, ModelType } from "visual/component/Elements/Types";
-import {
+import type { ElementModel, ModelType } from "visual/component/Elements/Types";
+import type {
   OptionMeta,
   OptionName,
   OptionValue
 } from "visual/component/Options/types";
-import { GenericToolbarItemType } from "visual/editorComponents/ToolbarItemType";
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
-import { EditorMode } from "visual/providers/EditorModeProvider";
-import { WithRenderContext } from "visual/providers/RenderProvider";
-import { Store } from "visual/redux/store";
-import { StylesContexts } from "visual/types";
-import { ResponsiveMode } from "visual/utils/responsiveMode";
-import { State } from "visual/utils/stateMode";
-import { CSSValue } from "visual/utils/style2/types";
-import { Literal } from "visual/utils/types/Literal";
-import { MValue } from "visual/utils/value";
-import { BreakpointsNames } from "../breakpoints/types";
+import type { GenericToolbarItemType } from "visual/editorComponents/ToolbarItemType";
+import type { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import type { EditorMode } from "visual/providers/EditorModeProvider";
+import type { WithRenderContext } from "visual/providers/RenderProvider";
+import type { Store } from "visual/redux/store";
+import type { StylesContexts } from "visual/types";
+import type { ResponsiveMode } from "visual/utils/responsiveMode";
+import type { State } from "visual/utils/stateMode";
+import type { CSSValue } from "visual/utils/style2/types";
+import type { Literal } from "visual/utils/types/Literal";
+import type { MValue } from "visual/utils/value";
+import type { BreakpointsNames } from "../breakpoints/types";
 
 export type AllCSSKeys = BreakpointsNames | Exclude<State, "normal">;
 

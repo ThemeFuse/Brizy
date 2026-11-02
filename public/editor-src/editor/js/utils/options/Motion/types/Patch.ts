@@ -1,6 +1,6 @@
-import { ElementModel } from "visual/component/Elements/Types";
+import type { ElementModel } from "visual/component/Elements/Types";
 import { Type } from "../../utils/effects";
-import { Effect, EffectValue } from "./Value";
+import type { Effect, EffectValue } from "./Value";
 
 export type Active = {
   type: Type.active;

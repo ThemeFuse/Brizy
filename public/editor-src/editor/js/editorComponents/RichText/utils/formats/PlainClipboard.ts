@@ -1,6 +1,6 @@
 import Quill from "quill";
-import IDelta from "quill-delta";
-import { ClipboardInterface } from "./types/ClipboardInterface";
+import type IDelta from "quill-delta";
+import type { ClipboardInterface } from "./types/ClipboardInterface";
 
 const Clipboard: typeof ClipboardInterface = Quill.import("modules/clipboard");
 const Delta: typeof IDelta = Quill.import("delta");
@@ -47,8 +47,6 @@ export default class PlainClipboard extends Clipboard {
             ...(header ? { typographyFontStyle: `heading${header}` } : {})
           };
         }
-
-        return d;
       });
 
       //@ts-expect-error: Quil problems:

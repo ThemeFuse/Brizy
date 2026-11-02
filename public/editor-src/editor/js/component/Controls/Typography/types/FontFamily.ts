@@ -1,6 +1,5 @@
-import { VariationFont } from "visual/types/Fonts";
-import { FontFamilyType } from "visual/types/Fonts";
-import { Weight } from "visual/utils/fonts/Weight";
+import { FontFamilyType, type VariationFont } from "visual/types/Fonts";
+import type { Weight } from "visual/utils/fonts/Weight";
 
 export type FontsBlock = Partial<{
   config: Array<FontObject>;

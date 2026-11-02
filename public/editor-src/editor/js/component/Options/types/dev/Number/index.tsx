@@ -1,13 +1,13 @@
 import { mPipe } from "fp-utilities";
 import React, { useCallback } from "react";
 import { NumberComponent as Control } from "visual/component/Controls/Number";
-import { OnChange } from "visual/component/Options/Type";
 import { useDebouncedOnChange } from "visual/component/hooks";
+import type { OnChange } from "visual/component/Options/Type";
 import { add, clamp, subtractR } from "visual/utils/math";
-import { MValue } from "visual/utils/value";
-import { Component } from "./Type";
+import type { MValue } from "visual/utils/value";
+import type { Component } from "./Type";
 
-export const Number: Component = ({
+export const NumberOption: Component = ({
   className,
   onChange,
   value: { value },

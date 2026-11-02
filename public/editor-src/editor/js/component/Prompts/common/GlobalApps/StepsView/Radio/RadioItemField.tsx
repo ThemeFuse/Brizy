@@ -1,6 +1,6 @@
-import React, { ReactElement, useCallback } from "react";
+import React, { type ReactElement, useCallback } from "react";
 import Radio, { RadioItem } from "visual/component/Controls/Radio";
-import { RadioItemProps } from "../types";
+import type { RadioItemProps } from "../types";
 
 export const RadioItemField = ({
   choices,

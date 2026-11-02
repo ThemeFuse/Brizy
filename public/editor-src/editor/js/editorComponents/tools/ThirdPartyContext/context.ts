@@ -1,5 +1,5 @@
 import { createContext } from "react";
-import { ThirdPartyContextType } from "./types";
+import type { ThirdPartyContextType } from "./types";
 
 export const ThirdPartyContext = createContext<
   ThirdPartyContextType | undefined

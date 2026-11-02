@@ -1,9 +1,9 @@
 import * as GalleryItem from "visual/component/Controls/Gallery/types/Item";
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import type { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { SizeType } from "visual/global/Config/types/configs/common";
-import { WithId } from "visual/types/attributes";
+import type { WithId } from "visual/types/attributes";
 import { getImageUrl } from "visual/utils/image";
-import { Image } from "./Image";
+import type { Image } from "./Image";
 
 // region Thumbnail
 export interface Thumbnail<T> extends WithId<T> {

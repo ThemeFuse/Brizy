@@ -1,5 +1,4 @@
 import classnames from "classnames";
-import jQuery from "jquery";
 import React from "react";
 import BoxResizer from "visual/component/BoxResizer";
 import CustomCSS from "visual/component/CustomCSS";
@@ -67,7 +66,7 @@ export default class WOOPages extends EditorComponent {
       );
 
       if (gallery) {
-        jQuery(gallery).wc_product_gallery?.();
+        window.jQuery?.(gallery).wc_product_gallery?.();
       }
     }
   };

@@ -1,4 +1,4 @@
-import {
+import type {
   GenericToolbarItemType,
   ToolbarItemType
 } from "visual/editorComponents/ToolbarItemType";

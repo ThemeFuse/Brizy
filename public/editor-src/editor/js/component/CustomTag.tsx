@@ -1,4 +1,8 @@
-import React, { PropsWithChildren, ReactElement, Ref } from "react";
+import React, {
+  type PropsWithChildren,
+  type ReactElement,
+  type Ref
+} from "react";
 
 type CustomTagProps = PropsWithChildren<{
   tagName?: keyof JSX.IntrinsicElements;

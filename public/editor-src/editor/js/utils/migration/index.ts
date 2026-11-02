@@ -1,5 +1,5 @@
-import { ElementModel } from "visual/component/Elements/Types";
-import { RenderType } from "visual/providers/RenderProvider";
+import type { ElementModel } from "visual/component/Elements/Types";
+import type { RenderType } from "visual/providers/RenderProvider";
 
 export interface Deps<T> {
   [k: string]: T;

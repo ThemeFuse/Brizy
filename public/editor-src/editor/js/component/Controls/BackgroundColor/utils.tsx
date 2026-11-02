@@ -1,8 +1,8 @@
 import React from "react";
-import * as Color from "visual/component/Controls/ColorPickerSelect/entities";
+import type * as Color from "visual/component/Controls/ColorPickerSelect/entities";
 import { t } from "visual/utils/i18n";
 import { Item } from "../Select2/Item";
-import { Meta, Type } from "./entities";
+import type { Meta, Type } from "./entities";
 
 export const fromColorMeta = (m: Color.Meta): Meta => ({
   isChanged: m.isChanged === "select" ? "type" : m.isChanged,
@@ -14,12 +14,13 @@ export const renderColorPickerItems = (
   animatedGradient: boolean
 ) => {
   const items = [];
-  none &&
+  if (none) {
     items.push(
       <Item<Type> key="none" value="none">
         {t("None")}
       </Item>
     );
+  }
   items.push(
     <Item<Type> key="solid" value="solid">
       {t("Solid")}
@@ -30,11 +31,12 @@ export const renderColorPickerItems = (
       {t("Gradient")}
     </Item>
   );
-  animatedGradient &&
+  if (animatedGradient) {
     items.push(
       <Item<Type> key="animated-gradient" value="animated-gradient">
         {t("Animated Gradient")}
       </Item>
     );
+  }
   return items;
 };

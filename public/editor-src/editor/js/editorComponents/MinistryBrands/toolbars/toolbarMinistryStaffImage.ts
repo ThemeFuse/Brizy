@@ -1,7 +1,7 @@
 import { Str } from "@brizy/readers";
-import { ElementModel } from "visual/component/Elements/Types";
-import { Params } from "visual/editorComponents/EditorComponent/types";
-import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
+import type { ElementModel } from "visual/component/Elements/Types";
+import type { Params } from "visual/editorComponents/EditorComponent/types";
+import type { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
 import { getColorToolbar } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import {
@@ -15,9 +15,9 @@ import { HOVER, NORMAL } from "visual/utils/stateMode";
 
 export const getItems = <
   M extends ElementModel,
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  // biome-ignore lint/suspicious/noExplicitAny: migrated from eslint
   P extends Record<string, any> = Record<string, unknown>,
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  // biome-ignore lint/suspicious/noExplicitAny: migrated from eslint
   S extends Record<string, any> = Record<string, unknown>
 >({
   v,

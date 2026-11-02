@@ -1,5 +1,5 @@
 import { makeAttr } from "visual/utils/i18n/attribute";
-import { Role } from "visual/utils/membership";
+import type { Role } from "visual/utils/membership";
 import { decodeFromString } from "visual/utils/string";
 
 const INPUT_TYPE_CHECKBOX = "checkbox";
@@ -326,7 +326,7 @@ export const loginDisplay = (element: Element): void => {
 
   // For Login form
   if (isLogged) {
-    authorizedNode && displayChange(authorizedNode, "block");
+    if (authorizedNode) displayChange(authorizedNode, "block");
   } else {
     // For Login form
     if (type === ElementType.login && loginNode) {

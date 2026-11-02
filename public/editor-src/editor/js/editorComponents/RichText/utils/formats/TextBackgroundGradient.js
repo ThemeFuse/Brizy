@@ -6,7 +6,7 @@ export const getTextBackgroundGradient = (getConfig) => {
   class TextBackgroundGradient extends BackgroundGradient {
     static className = "text-gradient-bg";
     static setValue(value, node) {
-      super.setValue(value, node);
+      BackgroundGradient.setValue(value, node);
       node.classList.remove("brz-image-gradient");
     }
   }

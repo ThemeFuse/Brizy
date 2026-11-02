@@ -1,6 +1,6 @@
-import { Positive } from "visual/utils/math/Positive";
-import { Type } from "../../utils/Type";
-import { Unit } from "./Unit";
+import type { Positive } from "visual/utils/math/Positive";
+import type { Type } from "../../utils/Type";
+import type { Unit } from "./Unit";
 
 export interface Value {
   type: Type;

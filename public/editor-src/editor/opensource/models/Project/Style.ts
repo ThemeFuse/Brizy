@@ -1,5 +1,5 @@
-import { Literal } from "../common";
-import { FontFamilyType } from "./Fonts";
+import type { Literal } from "../common";
+import type { FontFamilyType } from "./Fonts";
 
 export type PaletteType =
   | "color1"

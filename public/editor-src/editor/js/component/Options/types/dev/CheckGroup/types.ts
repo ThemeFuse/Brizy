@@ -1,8 +1,8 @@
-import {
+import type {
   Props as OptionProps,
   SimpleValue
 } from "visual/component/Options/Type";
-import { WithClassName, WithConfig } from "visual/types/attributes";
+import type { WithClassName, WithConfig } from "visual/types/attributes";
 
 export interface Choices {
   value: string;

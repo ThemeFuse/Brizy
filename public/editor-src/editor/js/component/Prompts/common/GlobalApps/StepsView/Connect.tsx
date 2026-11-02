@@ -1,10 +1,10 @@
 import { noop } from "es-toolkit";
-import React, { Component, KeyboardEvent } from "react";
+import React, { Component, type KeyboardEvent } from "react";
 import { Scrollbar } from "visual/component/Scrollbar";
 import { t } from "visual/utils/i18n";
 import { Button } from "../../Button";
 import { InputField } from "./index";
-import { ConnectProps } from "./types";
+import type { ConnectProps } from "./types";
 
 class Connect extends Component<ConnectProps> {
   static defaultProps = {
@@ -39,7 +39,7 @@ class Connect extends Component<ConnectProps> {
   handleKeyDown = (e: KeyboardEvent<HTMLInputElement>): void => {
     // prevent enter
     if (e.which === 13) {
-      this.props.onNext && this.props.onNext();
+      if (this.props.onNext) this.props.onNext();
     }
   };
 
@@ -77,9 +77,9 @@ class Connect extends Component<ConnectProps> {
           </div>
           <div className="brz-ed-popup-integrations__connect-body">
             {error && this.renderError()}
-            {data?.map((field, index) => (
+            {data?.map((field) => (
               <InputField
-                key={index}
+                key={field.name}
                 field={field}
                 onChange={onChange}
                 onKeyDown={this.handleKeyDown}

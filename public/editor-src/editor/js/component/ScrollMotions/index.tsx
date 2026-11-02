@@ -1,9 +1,9 @@
 import { Motions } from "@brizy/motion";
 import classnames from "classnames";
-import React, { ReactElement, useEffect, useRef } from "react";
+import React, { type ReactElement, useEffect, useRef } from "react";
 import { isView, useRender } from "visual/providers/RenderProvider";
 import { applyFilter } from "visual/utils/filters";
-import { ScrollMotionsAttr, ScrollMotionsProps } from "./types";
+import type { ScrollMotionsAttr, ScrollMotionsProps } from "./types";
 import { makeOptionToAttr } from "./utils";
 
 export const ScrollMotion = (props: ScrollMotionsProps): ReactElement => {
@@ -50,6 +50,7 @@ export const ScrollMotion = (props: ScrollMotionsProps): ReactElement => {
     };
   }, [options]);
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: migrated from eslint
   useEffect(() => {
     // destroy Motions on unMount
     return () => {
@@ -60,7 +61,6 @@ export const ScrollMotion = (props: ScrollMotionsProps): ReactElement => {
     };
     // Don't need to add option in deps because this effects needed
     // only when the component is unMounted
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   if (isView(renderType) && options) {

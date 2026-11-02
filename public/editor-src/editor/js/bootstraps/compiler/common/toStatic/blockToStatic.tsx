@@ -3,13 +3,13 @@ import type { Config } from "visual/global/Config";
 import EditorGlobal from "visual/global/Editor";
 import { useConfig } from "visual/providers/ConfigProvider";
 import { ComponentTypes } from "visual/providers/EditorComponentProvider/ComponentTypes";
-import { EditorMode } from "visual/providers/EditorModeProvider";
+import type { EditorMode } from "visual/providers/EditorModeProvider";
 import { ServerStyleSheet } from "visual/providers/StyleProvider/ServerStyleSheet";
-import { Store } from "visual/redux/store";
-import { Block } from "visual/types/Block";
+import type { Store } from "visual/redux/store";
+import type { Block } from "visual/types/Block";
 import { Providers } from "../controls/Providers";
 import { baseToStatic } from "./baseToStatic";
-import { Output } from "./types";
+import type { Output } from "./types";
 
 interface Props {
   block: Block;

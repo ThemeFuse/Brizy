@@ -1,10 +1,10 @@
 import {
+  closestCenter,
   DndContext,
-  DragEndEvent,
+  type DragEndEvent,
   KeyboardSensor,
   PointerSensor,
-  UniqueIdentifier,
-  closestCenter,
+  type UniqueIdentifier,
   useSensor,
   useSensors
 } from "@dnd-kit/core";
@@ -12,12 +12,12 @@ import { SortableContext, useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import classNames from "classnames";
 import { noop } from "es-toolkit";
-import React, { ReactElement, useCallback } from "react";
-import { Item } from "visual/component/Controls/Gallery/types/Item";
+import React, { type ReactElement, useCallback } from "react";
+import type { Item } from "visual/component/Controls/Gallery/types/Item";
 import { EditorIcon } from "visual/component/EditorIcon";
-import { WithClassName } from "visual/types/attributes";
-import { ImageUpload, Props as UploadProps } from "../ImageUpload";
-import { Error } from "./components/Error";
+import type { WithClassName } from "visual/types/attributes";
+import { ImageUpload, type Props as UploadProps } from "../ImageUpload";
+import { ErrorItem } from "./components/Error";
 import { Loading } from "./components/Loading";
 import { Thumbnail } from "./components/Thumbnail";
 
@@ -26,10 +26,10 @@ interface SortableItemProps<T> {
   item: Item<T>;
 }
 
-const SortableItem = function <T extends UniqueIdentifier>({
+const SortableItem = <T extends UniqueIdentifier>({
   item,
   onRemove
-}: SortableItemProps<T>) {
+}: SortableItemProps<T>) => {
   const { active, attributes, listeners, transform, transition, setNodeRef } =
     useSortable({
       id: item.id
@@ -57,7 +57,9 @@ const SortableItem = function <T extends UniqueIdentifier>({
           />
         );
       case "error":
-        return <Error onRemove={remove} id={item.id} message={item.payload} />;
+        return (
+          <ErrorItem onRemove={remove} id={item.id} message={item.payload} />
+        );
       case "loading":
         return <Loading onRemove={remove} id={item.id} />;
     }
@@ -84,14 +86,14 @@ interface SortableProps<T> extends WithClassName {
   isLoading?: boolean;
 }
 
-const Sortable = function <T extends number | string>({
+const Sortable = <T extends number | string>({
   className,
   items,
   onAdd,
   onRemove,
   onSortEnd,
   isLoading
-}: SortableProps<T>) {
+}: SortableProps<T>) => {
   const itemsId = items.map((item) => item.id);
 
   const onDragEnd = useCallback(

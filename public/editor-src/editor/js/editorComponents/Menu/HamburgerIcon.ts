@@ -1,5 +1,5 @@
 import { throttle } from "es-toolkit";
-import { DeviceMode } from "visual/types";
+import type { DeviceMode } from "visual/types";
 import { getCurrentDevice } from "visual/utils/export";
 import { DESKTOP } from "visual/utils/responsiveMode";
 import { MMenuAnimationTypes } from "./types";
@@ -126,7 +126,9 @@ export class AnimatedHamburgerIcon {
   destroy() {
     this.container.removeEventListener("click", this.handleClick);
     this.container.removeEventListener("keydown", this.handleKeyDown);
-    this.bars.forEach((bar) => bar.remove());
+    this.bars.forEach((bar) => {
+      bar.remove();
+    });
     this.bars = [];
     this.wrappers = [];
     this.container.removeAttribute("style");

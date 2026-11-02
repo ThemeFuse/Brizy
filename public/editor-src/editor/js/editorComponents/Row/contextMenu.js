@@ -16,7 +16,7 @@ function getItems(v, component) {
       type: "group",
       icon: "nc-row",
       title: t("Row"),
-      disabled: (item, meta) => {
+      disabled: (_item, meta) => {
         return (
           v.showToolbar === "off" ||
           inPopup ||

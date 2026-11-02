@@ -1,6 +1,6 @@
-const path = require("path");
+const path = require("node:path");
 
-module.exports = function (argv) {
+module.exports = (argv) => {
   const argv_ = require("minimist")(argv.slice(2));
 
   /**
@@ -14,17 +14,17 @@ module.exports = function (argv) {
   const VERSION_PRO = argv_["version-pro"];
   const BUILD_DIR = argv_["build-dir"];
   const BUILD_DIR_PRO = argv_["build-dir-pro"];
-  const NO_WATCH = argv_["watch"] === false;
-  const NO_VERIFICATION = argv_["verification"] === false;
+  const NO_WATCH = argv_.watch === false;
+  const NO_VERIFICATION = argv_.verification === false;
   const PORT = argv_.port || 3000;
-  const ANALYZE_EDITOR = Boolean(argv_["analyze_editor"]);
-  const ANALYZE_PREVIEW = Boolean(argv_["analyze_preview"]);
-  const ANALYZE_LIBS = Boolean(argv_["analyze_libs"]);
-  const ANALYZE_EXPORT_NODE = Boolean(argv_["analyze_export_node"]);
-  const ANALYZE_EXPORT_BROWSER = Boolean(argv_["analyze_export_browser"]);
-  const ANALYZE_MODULE_PREVIEW = Boolean(argv_["analyze_module_preview"]);
-  const ANALYZE_MODULE_EDITOR = Boolean(argv_["analyze_module_editor"]);
-  const AUTHORIZATION_URL = argv_["authUrl"]; // https://auth.brizylocal.com/authorize
+  const ANALYZE_EDITOR = Boolean(argv_.analyze_editor);
+  const ANALYZE_PREVIEW = Boolean(argv_.analyze_preview);
+  const ANALYZE_LIBS = Boolean(argv_.analyze_libs);
+  const ANALYZE_EXPORT_NODE = Boolean(argv_.analyze_export_node);
+  const ANALYZE_EXPORT_BROWSER = Boolean(argv_.analyze_export_browser);
+  const ANALYZE_MODULE_PREVIEW = Boolean(argv_.analyze_module_preview);
+  const ANALYZE_MODULE_EDITOR = Boolean(argv_.analyze_module_editor);
+  const AUTHORIZATION_URL = argv_.authUrl; // https://auth.brizylocal.com/authorize
   const CHECK_BUNDLE_SIZE = Boolean(argv_["check-bundle-size"]);
   const WITH_TRANSLATIONS = Boolean(argv_["with-translations"]);
   // Limits how many rspack configs compile at once (MultiCompiler parallelism).

@@ -1,17 +1,11 @@
 import { Num } from "@brizy/readers";
-import { Placement } from "@popperjs/core";
+import type { Placement } from "@popperjs/core";
 import { makeAttr } from "visual/utils/i18n/attribute";
 import { parseFromString } from "visual/utils/string";
 import { setupTooltip } from "../../component/Tooltip/utils.export";
-import { TooltipAttributes } from "./types";
+import type { TooltipAttributes } from "./types";
 
-export default function ($node: JQuery) {
-  const node = $node.get(0);
-
-  if (!node) {
-    return;
-  }
-
+export default function (node: HTMLElement) {
   const tooltipNodes = node.querySelectorAll<HTMLElement>(
     `.brz-rich-text [${makeAttr("tooltip")}], .brz-rich-text [data-tooltip]`
   );

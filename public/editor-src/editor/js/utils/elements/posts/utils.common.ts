@@ -1,13 +1,13 @@
 import { Arr, Json, Str } from "@brizy/readers";
 import { mPipe } from "fp-utilities";
 import { produce } from "immer";
-import { ElementModel } from "visual/component/Elements/Types";
-import { Choice } from "visual/component/Options/types/dev/Select/types";
+import type { ElementModel } from "visual/component/Elements/Types";
+import type { Choice } from "visual/component/Options/types/dev/Select/types";
 import { isT } from "visual/utils/value";
-import {
+import type {
+  Attributes,
   AttributeValue,
   AttributeValueObjectValue,
-  Attributes,
   PostsTypes,
   Sources
 } from "./types";
@@ -62,7 +62,7 @@ function stringifyAttributeValueObject([k, v]: [
       .join("&");
   }
 
-  throw new Error("can't stringify v: " + v);
+  throw new Error(`can't stringify v: ${v}`);
 }
 
 export function getLoopName(type: PostsTypes): string {

@@ -1,7 +1,7 @@
 import classnames from "classnames";
-import React, { Component, ComponentType, ReactElement } from "react";
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
-import { ArrayType } from "visual/utils/array/types";
+import React, { Component, type ComponentType, type ReactElement } from "react";
+import type { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import type { ArrayType } from "visual/utils/array/types";
 import Thumbnail from "./Thumbnail";
 
 export interface Responsive {
@@ -98,7 +98,7 @@ export default class ThumbnailGrid<T extends Data> extends Component<
     const windowW = window.innerWidth;
     const { responsive: _responsive, columns } = this.props;
 
-    if (_responsive && _responsive.length) {
+    if (_responsive?.length) {
       const responsive = _responsive.reduce((acc, item) => {
         return item.breakpoint > windowW &&
           (acc.breakpoint === undefined || acc.breakpoint > item.breakpoint)
@@ -107,8 +107,7 @@ export default class ThumbnailGrid<T extends Data> extends Component<
       }, {} as Responsive);
 
       this.setState({
-        currentColumns:
-          (responsive.settings && responsive.settings.columns) || columns
+        currentColumns: responsive.settings?.columns || columns
       });
     }
   };
@@ -172,6 +171,7 @@ export default class ThumbnailGrid<T extends Data> extends Component<
       }, arr)
       .map((column, index) => (
         <div
+          // biome-ignore lint/suspicious/noArrayIndexKey: columns are positional buckets built by index % currentColumns
           key={index}
           className={gridClassName}
           style={{

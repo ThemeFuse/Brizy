@@ -8,8 +8,8 @@ import {
   deviceModeSelector,
   leftSidebarSelector
 } from "visual/redux/selectors";
-import { DrawerContentTypes } from "visual/redux/types";
-import { DeviceMode } from "visual/types";
+import type { DrawerContentTypes } from "visual/redux/types";
+import type { DeviceMode } from "visual/types";
 import Icon from "../../Icon";
 
 interface DrawerIconProps {
@@ -66,17 +66,15 @@ function DrawerIcon({
     drawerContentType === id ? "brz-ed-sidebar__control__item--active" : "";
 
   return (
-    <>
-      <Icon
-        key={id}
-        tagName="div"
-        className={className}
-        icon={icon}
-        title={drawerTitle}
-        onClick={handleDrawerContentTypeChange}
-        {...iconPropsClass}
-      />
-    </>
+    <Icon
+      key={id}
+      tagName="div"
+      className={className}
+      icon={icon}
+      title={drawerTitle}
+      onClick={handleDrawerContentTypeChange}
+      {...iconPropsClass}
+    />
   );
 }
 

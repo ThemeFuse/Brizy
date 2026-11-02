@@ -1,7 +1,7 @@
 import classnames from "classnames";
 import { noop } from "es-toolkit";
-import React, { Component, ReactElement } from "react";
-import {
+import React, { Component, type ReactElement } from "react";
+import type {
   ChangeFunction,
   OnSwatchHover
 } from "visual/component/Controls/ColorPicker2/types";

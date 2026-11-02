@@ -1,9 +1,9 @@
-import { Params } from "visual/editorComponents/EditorComponent/types";
+import type { Params } from "visual/editorComponents/EditorComponent/types";
 import { isStory } from "visual/providers/EditorModeProvider";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
-import { ToolbarItemType } from "../ToolbarItemType";
-import { Value } from "./toolbar";
+import type { ToolbarItemType } from "../ToolbarItemType";
+import type { Value } from "./toolbar";
 
 export const title = () => t("Rating");
 

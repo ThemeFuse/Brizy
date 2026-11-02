@@ -1,9 +1,10 @@
 import { noop } from "es-toolkit";
-import React, { ReactElement, useEffect, useMemo, useState } from "react";
+import React, { type ReactElement, useEffect, useMemo, useState } from "react";
 import { useSelector } from "react-redux";
 import EditorIcon from "visual/component/EditorIcon";
 import { ToastNotification } from "visual/component/Notifications";
-import {
+import { rejectionMessageSchema } from "visual/component/Prompts/PromptConditions/Rules/schemas";
+import type {
   CmsListItem,
   RuleList,
   ValueItems
@@ -20,14 +21,13 @@ import { useConfig } from "visual/providers/ConfigProvider";
 import { isPopup, useEditorMode } from "visual/providers/EditorModeProvider";
 import { pageSelector } from "visual/redux/selectors";
 import {
-  AllRule,
+  type AllRule,
   BlockTypeRule,
-  CollectionItemRule,
-  CollectionTypeRule,
-  Rule
+  type CollectionItemRule,
+  type CollectionTypeRule,
+  type Rule
 } from "visual/types/Rule";
-import { getConditionalItems } from "visual/utils/api";
-import { pendingRequest } from "visual/utils/api";
+import { getConditionalItems, pendingRequest } from "visual/utils/api";
 import {
   CUSTOMER_TYPE,
   PAGES_GROUP_ID
@@ -57,7 +57,7 @@ interface Props {
     };
     meta: {
       syncSuccess: () => void;
-      syncFail: (data: { message?: string }) => void;
+      syncFail: (data: unknown) => void;
     };
   }) => void;
 }
@@ -107,7 +107,7 @@ const Rules = (props: Props): ReactElement => {
       setRules(rules);
     }
 
-    asyncGetValue && fetchData(asyncGetValue);
+    if (asyncGetValue) fetchData(asyncGetValue);
   }, [config, asyncGetValue]);
 
   function handleAdd(): void {
@@ -163,7 +163,10 @@ const Rules = (props: Props): ReactElement => {
           },
           syncFail: (data): void => {
             setLoading(false);
-            ToastNotification.error(data.message ?? t("Something went wrong"));
+            const parsed = rejectionMessageSchema.safeParse(data);
+            ToastNotification.error(
+              parsed.success ? parsed.data : t("Something went wrong")
+            );
           }
         }
       });

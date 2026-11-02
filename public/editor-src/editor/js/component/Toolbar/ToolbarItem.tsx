@@ -1,7 +1,7 @@
-import React, { JSX } from "react";
+import React, { type JSX } from "react";
 import Option from "visual/component/Options/Option";
-import { ToolbarItemsInstance } from "visual/component/Toolbar/ToolbarItems";
-import { OptionDefinition } from "visual/editorComponents/ToolbarItemType";
+import type { ToolbarItemsInstance } from "visual/component/Toolbar/ToolbarItems";
+import type { OptionDefinition } from "visual/editorComponents/ToolbarItemType";
 import { usePro } from "visual/global/hooks";
 import { useConfig } from "visual/providers/ConfigProvider";
 

@@ -1,6 +1,6 @@
-import jQuery from "jquery";
 import { createNanoEvents } from "nanoevents";
 import initExports from "./initExports";
+import { type InitPayload, rootsOf } from "./roots";
 
 window.Brz = {
   emitter: createNanoEvents(),
@@ -27,16 +27,19 @@ window.Brz = {
         f(...args);
       }
     }
-    
+
     // Also subscribe for any future emissions
     return this.emitter.on(id, f);
-  },
+  }
 };
 
 // Enhanced init with lazy component loading
-window.Brz.on("init.dom", async ($node: JQuery<HTMLElement>) => {
+window.Brz.on("init.dom", async (payload: InitPayload) => {
   try {
-    await initExports($node);
+    // A jQuery set can hold several nodes
+    for (const node of rootsOf(payload)) {
+      await initExports(node);
+    }
     window.Brz.emit("init.complete");
   } catch (err) {
     console.error("[Brz] Initialization failed", err);
@@ -50,7 +53,7 @@ const init = () => {
     // Initialize DOM after one frame to ensure
     // the user profile is already attached to "init.dom" events
     requestAnimationFrame(() => {
-      window.Brz.emit("init.dom", jQuery(document.body));
+      window.Brz.emit("init.dom", document.body);
     });
   }
 };

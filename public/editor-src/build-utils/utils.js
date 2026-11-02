@@ -1,6 +1,6 @@
-const fs = require("fs");
-const util = require("util");
-const path = require("path");
+const fs = require("node:fs");
+const util = require("node:util");
+const path = require("node:path");
 const parser = require("@babel/parser");
 const traverse = require("@babel/traverse").default;
 const readRecursive = util.promisify(require("recursive-readdir"));
@@ -56,7 +56,6 @@ async function extractTranslations(rootDirs) {
           translations.add(translation);
         }
       } else {
-        // eslint-disable-next-line no-console
         console.warn(`The content of the file are empty ${file}`);
       }
     }

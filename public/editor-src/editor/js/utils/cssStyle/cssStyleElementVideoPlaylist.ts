@@ -1,4 +1,4 @@
-import { WithRenderContext } from "visual/providers/RenderProvider";
+import type { WithRenderContext } from "visual/providers/RenderProvider";
 import {
   cssStyleBgColor,
   cssStyleBorder,
@@ -15,7 +15,7 @@ import {
   cssStyleTypography2LineHeight
 } from "visual/utils/cssStyle";
 import { defaultValueValue } from "visual/utils/onChange";
-import { CSSValue } from "../style2/types";
+import type { CSSValue } from "../style2/types";
 
 // Style Typography Title Video
 

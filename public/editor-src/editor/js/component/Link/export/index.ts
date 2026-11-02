@@ -64,9 +64,7 @@ const getEndLocation = (
   return 0;
 };
 
-export default function ($node: JQuery): void {
-  const root = $node.get(0);
-  if (!root) return;
+export default function (root: HTMLElement): void {
   const anchorSelector =
     ".brz-a:not([data-brz-link-type='popup']), .brz-anchor, .link--anchor, .link--external, .brz-menu__ul a.menu-item";
 

@@ -1,7 +1,7 @@
 import { Obj, Str } from "@brizy/readers";
 import { isEqual } from "es-toolkit";
 import React, {
-  ReactElement,
+  type ReactElement,
   useCallback,
   useEffect,
   useReducer,
@@ -13,11 +13,11 @@ import { getCollectionItems, getCollectionTypes } from "visual/utils/api";
 import { t } from "visual/utils/i18n";
 import { findDCChoiceByPlaceholder } from "visual/utils/options/Population/utils";
 import { auto, isAuto } from "visual/utils/string/specs";
-import { Literal } from "visual/utils/types/Literal";
-import { Choices, OptGroup } from "../../types/Choices";
-import { PopulationMethod } from "../../types/PopulationMethod";
-import { ElementModelValue, Value } from "./../../types/Value";
-import { ActionTypes, State, reducer } from "./reducer";
+import type { Literal } from "visual/utils/types/Literal";
+import type { Choices, OptGroup } from "../../types/Choices";
+import type { PopulationMethod } from "../../types/PopulationMethod";
+import type { ElementModelValue, Value } from "./../../types/Value";
+import { ActionTypes, reducer, type State } from "./reducer";
 
 export interface Props<T extends Literal> {
   value: T;
@@ -91,6 +91,7 @@ export function PopulationSelect<T extends Literal>({
     }
   };
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: migrated from eslint
   useEffect(() => {
     const v = Str.read(value);
 
@@ -113,16 +114,16 @@ export function PopulationSelect<T extends Literal>({
     }
     // There is no need to add all keys to the dependencies;
     // I only need to update the data when the prop values change, for example, when switching from normal to hover.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [value, vEntityType, vEntityId]);
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: migrated from eslint
   useEffect(() => {
     if (!isEqual(oldState.current, state)) {
       oldState.current = state;
 
       const populationEntityType = isAuto(entityType.value)
         ? ""
-        : Str.read(entityType.value) ?? "";
+        : (Str.read(entityType.value) ?? "");
 
       onChange({
         population: placeholder,
@@ -131,7 +132,6 @@ export function PopulationSelect<T extends Literal>({
       });
     }
     // state is not needed as dependency
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [placeholder, entityType, entityId, onChange]);
 
   const onPopulationChange = (payload: string) => {

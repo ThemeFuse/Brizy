@@ -1,5 +1,5 @@
-import { Page } from "../Page";
-import { Project } from "../Project";
+import type { Page } from "../Page";
+import type { Project } from "../Project";
 
 export interface AutoSaveOutput {
   pageData?: Page;

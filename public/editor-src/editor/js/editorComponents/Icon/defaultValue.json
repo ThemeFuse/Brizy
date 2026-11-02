@@ -347,7 +347,7 @@
     "tooltipTypographyUnderline": false,
     "tooltipTypographyStrike": false,
     "tooltipTypographyUppercase": false,
-    "tooltipTypographyLowercase" : false,
+    "tooltipTypographyLowercase": false,
 
     "tooltipPaddingType": "grouped",
     "tooltipPadding": 10,

@@ -1,7 +1,7 @@
 import { isCloud } from "visual/global/Config/types";
 import { isShopify } from "visual/global/Config/types/configs/Cloud";
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
-import { MValue } from "visual/utils/value";
+import type { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import type { MValue } from "visual/utils/value";
 
 export enum ShopifyTemplate {
   Product = "shopify-product",

@@ -1,39 +1,80 @@
-import $ from "jquery";
+import { readDataAttr } from "visual/utils/export/dataAttr";
+import { onBodyClick } from "visual/utils/export/delegate";
 
-export default function ($node) {
-  $node.find(".brz-input__upload").each(function () {
-    const $this = $(this);
-    const $input = $this.children(".brz-input");
-    const $button = $this.find(".brz-button");
-    const $placeholder = $this.find(".brz-span");
+export default function (node) {
+  const withDelete = new Set();
 
-    $input.on("change", function () {
-      const file = $input[0].files[0];
-      const $delete = $this.find(".brz-input__upload-delete");
+  node.querySelectorAll(".brz-input__upload").forEach((upload) => {
+    const input = upload.querySelector(":scope > .brz-input");
+    const buttons = upload.querySelectorAll(".brz-button");
+    const placeholders = upload.querySelectorAll(".brz-span");
 
-      if (file && file.name) {
-        $placeholder.text(file.name);
-        $button.addClass("brz-hidden");
-        $delete.removeClass("brz-hidden");
-        $input.prop("disabled", true);
+    if (!input) {
+      return;
+    }
+
+    input.addEventListener("change", () => {
+      const file = input.files[0];
+      const deletes = upload.querySelectorAll(".brz-input__upload-delete");
+
+      if (file?.name) {
+        placeholders.forEach((placeholder) => {
+          placeholder.textContent = file.name;
+        });
+        buttons.forEach((button) => {
+          button.classList.add("brz-hidden");
+        });
+        deletes.forEach((item) => {
+          item.classList.remove("brz-hidden");
+        });
+        input.disabled = true;
       } else {
-        resetUpload($this);
+        resetUpload(upload);
       }
 
-      $delete.on("click", () => resetUpload($this));
+      withDelete.add(upload);
     });
   });
+
+  onBodyClick([
+    {
+      selector: ".brz-input__upload-delete",
+      handler: (item) => {
+        const upload = item.closest(".brz-input__upload");
+
+        if (withDelete.has(upload)) {
+          resetUpload(upload);
+        }
+      }
+    }
+  ]);
 }
 
-function resetUpload($upload) {
-  const $input = $upload.children(".brz-input");
+function resetUpload(upload) {
+  const input = upload.querySelector(":scope > .brz-input");
 
-  $upload.find(".brz-span").text($input.data("brz-placeholder"));
-  $input.val("");
-  $upload.find(".brz-button").removeClass("brz-hidden");
-  $upload.find(".brz-input__upload-delete").addClass("brz-hidden");
+  if (input?.hasAttribute("data-brz-placeholder")) {
+    const placeholder = readDataAttr(input, "brz-placeholder");
 
-  setTimeout(function () {
-    $input.prop("disabled", false);
+    upload.querySelectorAll(".brz-span").forEach((span) => {
+      span.textContent = placeholder === undefined ? "" : String(placeholder);
+    });
+  }
+
+  if (input) {
+    input.value = "";
+  }
+
+  upload.querySelectorAll(".brz-button").forEach((button) => {
+    button.classList.remove("brz-hidden");
+  });
+  upload.querySelectorAll(".brz-input__upload-delete").forEach((item) => {
+    item.classList.add("brz-hidden");
+  });
+
+  setTimeout(() => {
+    if (input) {
+      input.disabled = false;
+    }
   }, 500);
 }

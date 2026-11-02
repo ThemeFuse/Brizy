@@ -1,11 +1,15 @@
 import React from "react";
-import { Manager, Popper, Reference } from "react-popper";
-import { PopperChildrenProps } from "react-popper";
+import {
+  Manager,
+  Popper,
+  type PopperChildrenProps,
+  Reference
+} from "react-popper";
 import ClickOutside from "visual/component/ClickOutside";
 import { InternalLinkValue } from "visual/component/Controls/InternalLink/Components/InternalLinkValue";
 import { SelectDropdown } from "visual/component/Controls/InternalLink/Components/SelectDropdown";
-import { StatusRule } from "visual/component/Prompts/PromptConditions/Rules/types";
-import { FCC } from "visual/utils/react/types";
+import type { StatusRule } from "visual/component/Prompts/PromptConditions/Rules/types";
+import type { FCC } from "visual/utils/react/types";
 
 interface ControlTypeOptionsProps {
   onClickOutside: () => void;

@@ -1,11 +1,11 @@
-import React, { ReactElement, useCallback, useMemo } from "react";
+import React, { type ReactElement, useCallback, useMemo } from "react";
 import {
-  Props as NSProps,
+  type Props as NSProps,
   NumberSlider
 } from "visual/component/Controls/NumberSlider";
 import { OptionLabel } from "visual/component/OptionLabel";
+import type { OnChange } from "visual/component/Options/Type";
 import { OptionWrapper } from "visual/component/OptionWrapper";
-import { OnChange } from "visual/component/Options/Type";
 import { t } from "visual/utils/i18n";
 
 export interface Props {

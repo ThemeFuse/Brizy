@@ -1,6 +1,6 @@
 import { Obj } from "@brizy/readers";
-import { ShopModules } from "./configs/Base";
-import { EkklesiaModules } from "./configs/modules/ekklesia/Ekklesia";
+import type { ShopModules } from "./configs/Base";
+import type { EkklesiaModules } from "./configs/modules/ekklesia/Ekklesia";
 
 interface CommonModules {
   ekklesia: EkklesiaModules;
@@ -14,7 +14,6 @@ export const isCloudWithShopModules = (obj: unknown): obj is CloudModules => {
   return Obj.isObject(obj) && Obj.hasKey("shop", obj);
 };
 
-// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 interface WPModules extends CommonModules {}
 
 type Config = {

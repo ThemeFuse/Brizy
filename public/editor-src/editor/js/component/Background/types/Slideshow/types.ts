@@ -1,5 +1,5 @@
 import type { Image } from "visual/component/Options/types/dev/Gallery/types/Image";
-import { KenEffect, Transition } from "../../type";
+import type { KenEffect, Transition } from "../../type";
 
 export interface Props {
   images: Image[];

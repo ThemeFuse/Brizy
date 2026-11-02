@@ -3,11 +3,10 @@ import {
   fontsSelector,
   unDeletedFontsSelector
 } from "visual/redux/selectors";
-import { Store } from "visual/redux/store";
-import { ReduxState } from "visual/redux/types";
-import { Font } from "visual/types/Fonts";
-import { FontFamilyType } from "visual/types/Fonts";
-import { ArrayType, NonEmptyArray } from "visual/utils/array/types";
+import type { Store } from "visual/redux/store";
+import type { ReduxState } from "visual/redux/types";
+import type { Font, FontFamilyType } from "visual/types/Fonts";
+import type { ArrayType, NonEmptyArray } from "visual/utils/array/types";
 import { findFonts, fontTransform, projectFontsData } from "./transform";
 
 export type ModelFamilyType =

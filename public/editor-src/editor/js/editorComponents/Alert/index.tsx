@@ -1,5 +1,5 @@
 import classnames from "classnames";
-import React, { type ReactElement, RefObject } from "react";
+import React, { type ReactElement, type RefObject } from "react";
 import BoxResizer from "visual/component/BoxResizer";
 import type {
   Patch,

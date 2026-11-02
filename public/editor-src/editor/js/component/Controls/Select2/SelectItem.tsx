@@ -1,5 +1,5 @@
-import React, { PropsWithChildren, ReactElement } from "react";
 import classNames from "classnames";
+import React, { type PropsWithChildren, type ReactElement } from "react";
 
 type Props = PropsWithChildren<
   JSX.IntrinsicAttributes & {

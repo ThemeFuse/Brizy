@@ -1,5 +1,5 @@
 import { t } from "visual/utils/i18n";
-import { Align } from "./types";
+import type { Align } from "./types";
 
 export const isDisabled = (
   i: "prev" | "next",

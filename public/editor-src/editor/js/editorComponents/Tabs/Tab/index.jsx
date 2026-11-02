@@ -8,8 +8,8 @@ import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import { isView } from "visual/providers/RenderProvider";
-import Items from "./Items";
 import defaultValue from "./defaultValue.json";
+import Items from "./Items";
 import * as toolbarConfig from "./toolbar";
 
 class Tab extends EditorComponent {

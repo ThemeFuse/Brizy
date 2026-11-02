@@ -1,10 +1,10 @@
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
-import { Store } from "visual/redux/store";
-import { BlockHtml } from "visual/types/Block";
-import { GlobalBlock } from "visual/types/GlobalBlock";
-import { Page } from "visual/types/Page";
-import { Project } from "visual/types/Project";
-import {
+import type { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import type { Store } from "visual/redux/store";
+import type { BlockHtml } from "visual/types/Block";
+import type { GlobalBlock } from "visual/types/GlobalBlock";
+import type { Page } from "visual/types/Page";
+import type { Project } from "visual/types/Project";
+import type {
   Asset,
   ScriptsFree,
   ScriptsPro,
