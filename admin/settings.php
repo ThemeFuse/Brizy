@@ -1,10 +1,9 @@
-<?php if (!defined('ABSPATH')) {
-    die('Direct access forbidden.');
+<?php if ( ! defined( 'ABSPATH' ) ) {
+    die( 'Direct access forbidden.' );
 }
 
 
-class Brizy_Admin_Settings
-{
+class Brizy_Admin_Settings {
 
     private $selected_post_types;
 
@@ -23,16 +22,14 @@ class Brizy_Admin_Settings
     private $cookieBanner;
 
 
-    public static function menu_slug()
-    {
-        return Brizy_Editor::prefix('-settings');
+    public static function menu_slug() {
+        return Brizy_Editor::prefix( '-settings' );
     }
 
     /**
      * @return Brizy_Admin_Settings
      */
-    public static function _init()
-    {
+    public static function _init() {
 
         static $instance;
 
@@ -42,30 +39,32 @@ class Brizy_Admin_Settings
     /**
      * Brizy_Admin_Settings constructor.
      */
-    private function __construct()
-    {
+    private function __construct() {
 
-        add_action('admin_menu', array($this, 'actionRegisterSettingsPage'));
-        if (!is_network_admin()) {
-            add_action('admin_menu', array($this, 'actionRegisterSubMenuSettingsPage'), 11);
-            add_action('admin_menu', array($this, 'actionRegisterSubMenuGetHelpLink'), 20);
-            add_action('admin_menu', array($this, 'actionRegisterSubMenuGoProPage'), 20);
-            add_action('wp_ajax_brizy_replace_url', [$this, 'replaceUrl']);
+        add_action( 'admin_menu', array( $this, 'actionRegisterSettingsPage' ) );
+        if ( ! is_network_admin() ) {
+            add_action( 'admin_menu', array( $this, 'actionRegisterSubMenuSettingsPage' ), 11 );
+            add_action( 'admin_menu', array( $this, 'actionRegisterSubMenuGetHelpLink' ), 20 );
+            add_action( 'admin_menu', array( $this, 'actionRegisterSubMenuGoProPage' ), 20 );
+            add_action( 'wp_ajax_brizy_replace_url', [ $this, 'replaceUrl' ] );
         }
-        add_action('submenu_file', array($this, 'submenu_file'), 10, 2);
-        add_action('current_screen', array($this, 'action_validate_form_submit'));
-        add_action('brizy_settings_role_capability_row', array($this, 'role_capability_select_row'));
-        add_action('brizy_settings_post_type_row', array($this, 'post_type_row'));
-        add_action('brizy_settings_submit', array($this, 'settings_submit'));
-        add_action('brizy_settings_render_tabs', array($this, 'render_tabs'));
-        add_action('brizy_settings_render_content', array($this, 'render_tab_content'));
-        $this->role_list = self::get_role_list();
+        add_action( 'submenu_file', array( $this, 'submenu_file' ), 10, 2 );
+        add_action( 'current_screen', array( $this, 'action_validate_form_submit' ) );
+        add_action( 'brizy_settings_role_capability_row', array( $this, 'role_capability_select_row' ) );
+        add_action( 'brizy_settings_post_type_row', array( $this, 'post_type_row' ) );
+        if ( ! current_user_can( 'manage_options' ) ) {
+            add_action( 'brizy_settings_submit', array( $this, 'settings_submit' ) );
+            add_action( 'brizy_settings_render_tabs', array( $this, 'render_tabs' ) );
+            add_action( 'brizy_settings_render_content', array( $this, 'render_tab_content' ) );
+
+        }
+        $this->role_list          = self::get_role_list();
         $this->capability_options = $this->get_capability_options();
         try {
-            $this->selected_post_types = Brizy_Editor_Storage_Common::instance()->get('post-types');
-        } catch (Exception $e) {
-            $this->selected_post_types = array('post', 'page');
-            Brizy_Editor_Storage_Common::instance()->set('post-types', $this->selected_post_types);
+            $this->selected_post_types = Brizy_Editor_Storage_Common::instance()->get( 'post-types' );
+        } catch ( Exception $e ) {
+            $this->selected_post_types = array( 'post', 'page' );
+            Brizy_Editor_Storage_Common::instance()->set( 'post-types', $this->selected_post_types );
         }
     }
 
@@ -75,10 +74,9 @@ class Brizy_Admin_Settings
      * @param $submenu_file
      * @param $parent_file
      */
-    function submenu_file($submenu_file, $parent_file)
-    {
+    function submenu_file( $submenu_file, $parent_file ) {
         global $post_type, $pagenow;
-        if ($parent_file !== Brizy_Admin_Settings::menu_slug() || $pagenow !== 'post-new.php') {
+        if ( $parent_file !== Brizy_Admin_Settings::menu_slug() || $pagenow !== 'post-new.php' ) {
             return $submenu_file;
         }
 
@@ -88,108 +86,101 @@ class Brizy_Admin_Settings
     /**
      * @internal
      */
-    function actionRegisterSettingsPage()
-    {
+    function actionRegisterSettingsPage() {
 
-        if (!Brizy_Editor_User::is_user_allowed() || is_network_admin()) {
+        if ( ! Brizy_Editor_User::is_user_allowed() || is_network_admin() ) {
             return;
         }
-        $this->screenName = add_menu_page(Brizy_Editor::get()->get_name(), Brizy_Editor::get()->get_name(), 'read', self::menu_slug(), array(
+        $this->screenName = add_menu_page( Brizy_Editor::get()->get_name(), Brizy_Editor::get()->get_name(), 'read', self::menu_slug(), array(
                 $this,
                 'render'
-        ), '', '58');
+        ), '', '58' );
     }
 
     /**
      * @internal
      */
-    function actionRegisterSubMenuSettingsPage()
-    {
-        add_submenu_page(self::menu_slug(), __('Settings', 'brizy'), __('Settings', 'brizy'), 'manage_options', self::menu_slug(), [
+    function actionRegisterSubMenuSettingsPage() {
+        add_submenu_page( self::menu_slug(), __( 'Settings', 'brizy' ), __( 'Settings', 'brizy' ), 'manage_options', self::menu_slug(), [
                 $this,
                 'render'
-        ], 0);
-        add_submenu_page(self::menu_slug(), __('Tools', 'brizy'), __('Tools', 'brizy'), 'manage_options', Brizy_Editor::prefix('-tools'), [
+        ], 0 );
+        add_submenu_page( self::menu_slug(), __( 'Tools', 'brizy' ), __( 'Tools', 'brizy' ), 'manage_options', Brizy_Editor::prefix( '-tools' ), [
                 $this,
                 'renderPageTools'
-        ], 6);
+        ], 6 );
     }
 
     /**
      * @internal
      */
-    function actionRegisterSubMenuGetHelpLink()
-    {
+    function actionRegisterSubMenuGetHelpLink() {
 
-        if (apply_filters('brizy_wl_enabled', false)) {
+        if ( apply_filters( 'brizy_wl_enabled', false ) ) {
             return;
         }
-        if (!class_exists('BrizyPro_Main')) {
+        if ( ! class_exists( 'BrizyPro_Main' ) ) {
             return;
         }
         global $submenu;
-        $submenu[self::menu_slug()][] = array(
-                '<span id="get-help"></span>' . __('Get Help', 'brizy'),
+        $submenu[ self::menu_slug() ][] = array(
+                '<span id="get-help"></span>' . __( 'Get Help', 'brizy' ),
                 'manage_options',
-                __bt('support-url', apply_filters('brizy_support_url', Brizy_Config::SUPPORT_URL))
+                __bt( 'support-url', apply_filters( 'brizy_support_url', Brizy_Config::SUPPORT_URL ) )
         );
     }
 
     /**
      * @internal
      */
-    public function actionRegisterSubMenuGoProPage()
-    {
+    public function actionRegisterSubMenuGoProPage() {
 
         global $submenu;
-        if (class_exists('BrizyPro_Main')) {
+        if ( class_exists( 'BrizyPro_Main' ) ) {
             return;
         }
-        $submenu[self::menu_slug()][] = array(
+        $submenu[ self::menu_slug() ][] = array(
                 '<span style="display:flex;color:#00b9eb;" id="go-pro">
                 <svg height="20" width="20">
                     <path d="M13,7 L12,7 L12,4.73333333 C12,2.6744 10.206,1 8,1 C5.794,1 4,2.6744 4,4.73333333 L4,7 L3,7 C2.448,7 2,7.41813333 2,7.93333333 L2,14.0666667 C2,14.5818667 2.448,15 3,15 L13,15 C13.552,15 14,14.5818667 14,14.0666667 L14,7.93333333 C14,7.41813333 13.552,7 13,7 Z M10,5 L12,5 L12,7 L10,7 L6,7 L6,5 C6,3.897 6.897,3 8,3 C9.103,3 10,3.897 10,5 Z" fill="#00b9eb" fill-rule="nonzero"/>
-                </svg>' . __('Go Pro', 'brizy') . "</span>",
+                </svg>' . __( 'Go Pro', 'brizy' ) . "</span>",
                 'manage_options',
                 Brizy_Config::getUpgradeUrl()
         );
     }
 
-    private function get_selected_tab()
-    {
-        return (!empty($_REQUEST['tab'])) ? esc_attr($_REQUEST['tab']) : null;
+    private function get_selected_tab() {
+        return ( ! empty( $_REQUEST['tab'] ) ) ? esc_attr( $_REQUEST['tab'] ) : null;
     }
 
-    private function get_tabs()
-    {
+    private function get_tabs() {
         $selected_tab = $this->get_selected_tab();
-        $tabs = [
+        $tabs         = [
                 [
-                        'id' => 'general',
-                        'label' => __('General', 'brizy'),
-                        'is_selected' => is_null($selected_tab) || $selected_tab == 'general',
-                        'href' => menu_page_url(self::menu_slug(), false) . '&tab=general'
+                        'id'          => 'general',
+                        'label'       => __( 'General', 'brizy' ),
+                        'is_selected' => is_null( $selected_tab ) || $selected_tab == 'general',
+                        'href'        => menu_page_url( self::menu_slug(), false ) . '&tab=general'
                 ],
                 [
-                        'id' => 'roles',
-                        'label' => __('Role Manager', 'brizy'),
+                        'id'          => 'roles',
+                        'label'       => __( 'Role Manager', 'brizy' ),
                         'is_selected' => $selected_tab == 'roles',
-                        'href' => menu_page_url(self::menu_slug(), false) . '&tab=roles'
+                        'href'        => menu_page_url( self::menu_slug(), false ) . '&tab=roles'
                 ],
                 [
-                        'id' => 'maintenance',
-                        'label' => __('Maintenance Mode', 'brizy'),
+                        'id'          => 'maintenance',
+                        'label'       => __( 'Maintenance Mode', 'brizy' ),
                         'is_selected' => $selected_tab == 'maintenance',
-                        'href' => menu_page_url(self::menu_slug(), false) . '&tab=maintenance'
+                        'href'        => menu_page_url( self::menu_slug(), false ) . '&tab=maintenance'
                 ]
         ];
 
-        return apply_filters('brizy_settings_tabs', $tabs, $selected_tab);
+        return apply_filters( 'brizy_settings_tabs', $tabs, $selected_tab );
     }
 
-    private function get_tab_content($tab)
-    {
-        switch ($tab) {
+    private function get_tab_content( $tab ) {
+        switch ( $tab ) {
             default:
             case 'general':
                 return $this->get_general_tab();
@@ -204,54 +195,48 @@ class Brizy_Admin_Settings
         }
     }
 
-    private function get_general_tab()
-    {
-        $list_post_types = $this->list_post_types();
-        $prepared_types = array_map(array($this, 'is_selected'), $list_post_types);
-        $svgEnabled = Brizy_Admin_Svg_Main::isSvgEnabled();
-        $jsonEnabled = Brizy_Admin_Json_Main::isJsonEnabled();
-		$gettingStartedVideoEnabled = Brizy_Admin_GettingStarted::isVideoEnabled();
-        $cookieBannerEnabled = Brizy_Admin_Blocks_CookieBanner::isCookieBannerEnabled();
+    private function get_general_tab() {
+        $list_post_types            = $this->list_post_types();
+        $prepared_types             = array_map( array( $this, 'is_selected' ), $list_post_types );
+        $svgEnabled                 = Brizy_Admin_Svg_Main::isSvgEnabled();
+        $jsonEnabled                = Brizy_Admin_Json_Main::isJsonEnabled();
+        $gettingStartedVideoEnabled = Brizy_Admin_GettingStarted::isVideoEnabled();
+        $cookieBannerEnabled        = Brizy_Admin_Blocks_CookieBanner::isCookieBannerEnabled();
 
-        return Brizy_Admin_View::render('settings/general', [
-                'types' => $prepared_types,
-                'svgUploadEnabled' => $svgEnabled,
-                'jsonUploadEnabled' => $jsonEnabled,
-				'gettingStartedVideoEnabled' => $gettingStartedVideoEnabled,
-                'cookieBannerEnabled' => $cookieBannerEnabled
-			] );
-	}
+        return Brizy_Admin_View::render( 'settings/general', [
+                'types'                      => $prepared_types,
+                'svgUploadEnabled'           => $svgEnabled,
+                'jsonUploadEnabled'          => $jsonEnabled,
+                'gettingStartedVideoEnabled' => $gettingStartedVideoEnabled,
+                'cookieBannerEnabled'        => $cookieBannerEnabled
+        ] );
+    }
 
-    private function get_roles_tab()
-    {
-        return Brizy_Admin_View::render('settings/roles', array(
-                'roles' => array_map(array(
+    private function get_roles_tab() {
+        return Brizy_Admin_View::render( 'settings/roles', array(
+                'roles' => array_map( array(
                         $this,
                         'is_role_selected'
-                ), $this->list_wp_roles()),
-        ));
+                ), $this->list_wp_roles() ),
+        ) );
     }
 
-    private function get_maintenance_tab()
-    {
+    private function get_maintenance_tab() {
 
-        $args = Brizy_MaintenanceMode::get_settings();
-        $args['pages'] = wp_list_pluck(get_pages(), 'post_title', 'ID');
+        $args                    = Brizy_MaintenanceMode::get_settings();
+        $args['pages']           = wp_list_pluck( get_pages(), 'post_title', 'ID' );
         $args['available_roles'] = $this->list_wp_roles();
 
-        return Brizy_Admin_View::render('settings/maintenance', $args);
+        return Brizy_Admin_View::render( 'settings/maintenance', $args );
     }
 
-    public function settings_submit()
-    {
-        if (!current_user_can('manage_options')) {
-            return;
-        }
+    public function settings_submit() {
+
         $screen = get_current_screen();
-        if ($this->screenName != $screen->id) {
+        if ( $this->screenName != $screen->id ) {
             return;
         }
-        switch ($_POST['tab']) {
+        switch ( $_POST['tab'] ) {
             case 'general':
                 $this->general_settings_submit();
                 break;
@@ -264,40 +249,39 @@ class Brizy_Admin_Settings
         }
     }
 
-    public function general_settings_submit()
-    {
-        $error_count = 0;
-        $allowed_post_types = array_map(array($this, 'to_type'), $this->post_types());
-        $post_types = isset($_POST['post-types']) ? (array)$_POST['post-types'] : array();
-        $array_diff = array_diff($post_types, $allowed_post_types);
-        $svgEnabled = isset($_POST['svg-upload-enabled']) ? (bool)$_POST['svg-upload-enabled'] : false;
-        $jsonEnabled = isset($_POST['json-upload-enabled']) ? (bool)$_POST['json-upload-enabled'] : false;
+    public function general_settings_submit() {
+        $error_count                = 0;
+        $allowed_post_types         = array_map( array( $this, 'to_type' ), $this->post_types() );
+        $post_types                 = isset( $_POST['post-types'] ) ? (array) $_POST['post-types'] : array();
+        $array_diff                 = array_diff( $post_types, $allowed_post_types );
+        $svgEnabled                 = isset( $_POST['svg-upload-enabled'] ) ? (bool) $_POST['svg-upload-enabled'] : false;
+        $jsonEnabled                = isset( $_POST['json-upload-enabled'] ) ? (bool) $_POST['json-upload-enabled'] : false;
         $gettingStartedVideoEnabled = isset( $_POST['getting-started-video-enabled'] );
-        $cookieBannerEnabled = isset($_POST['cookie-banner-enabled']);
-        if (count($array_diff) > 0) {
+        $cookieBannerEnabled        = isset( $_POST['cookie-banner-enabled'] );
+        if ( count( $array_diff ) > 0 ) {
             //error
-            Brizy_Admin_Flash::instance()->add_error('Invalid post type selected');
-            $error_count++;
+            Brizy_Admin_Flash::instance()->add_error( 'Invalid post type selected' );
+            $error_count ++;
         }
-        Brizy_Editor_Storage_Common::instance()->set('svg-upload', $svgEnabled);
-        Brizy_Editor_Storage_Common::instance()->set('json-upload', $jsonEnabled);
-		Brizy_Editor_Storage_Common::instance()->set( 'getting-started-video-enabled', $gettingStartedVideoEnabled );
+        Brizy_Editor_Storage_Common::instance()->set( 'svg-upload', $svgEnabled );
+        Brizy_Editor_Storage_Common::instance()->set( 'json-upload', $jsonEnabled );
+        Brizy_Editor_Storage_Common::instance()->set( 'getting-started-video-enabled', $gettingStartedVideoEnabled );
         $cookieBannerWasEnabled = Brizy_Admin_Blocks_CookieBanner::isCookieBannerEnabled();
-        $cookieBannerUpdated = true;
-        if ($cookieBannerEnabled && !$cookieBannerWasEnabled) {
+        $cookieBannerUpdated    = true;
+        if ( $cookieBannerEnabled && ! $cookieBannerWasEnabled ) {
             $cookieBannerUpdated = $this->getCookieBanner()->enable();
-        } elseif (!$cookieBannerEnabled && $cookieBannerWasEnabled) {
+        } elseif ( ! $cookieBannerEnabled && $cookieBannerWasEnabled ) {
             $cookieBannerUpdated = $this->getCookieBanner()->disable();
         }
 
-        if (!$cookieBannerUpdated) {
+        if ( ! $cookieBannerUpdated ) {
             // keep the previous value, so saving the same checkbox state again retries
-            Brizy_Admin_Flash::instance()->add_error(__('Unable to update the cookie banner. Please try again.', 'brizy'));
+            Brizy_Admin_Flash::instance()->add_error( __( 'Unable to update the cookie banner. Please try again.', 'brizy' ) );
         }
 
-        if ($error_count == 0) {
+        if ( $error_count == 0 ) {
             $this->selected_post_types = $post_types;
-            Brizy_Editor_Storage_Common::instance()->set('post-types', $post_types);
+            Brizy_Editor_Storage_Common::instance()->set( 'post-types', $post_types );
         }
 
     }
@@ -305,9 +289,8 @@ class Brizy_Admin_Settings
     /**
      * @return Brizy_Admin_Blocks_CookieBanner
      */
-    private function getCookieBanner()
-    {
-        if (!$this->cookieBanner) {
+    private function getCookieBanner() {
+        if ( ! $this->cookieBanner ) {
             $this->cookieBanner = new Brizy_Admin_Blocks_CookieBanner();
         }
 
@@ -315,54 +298,52 @@ class Brizy_Admin_Settings
     }
 
     /**
+     * @param Brizy_Admin_Blocks_CookieBanner $cookieBanner
+     *
      * @internal Lets tests replace the cookie banner with a test double.
      *
-     * @param Brizy_Admin_Blocks_CookieBanner $cookieBanner
      */
-    public function setCookieBanner(Brizy_Admin_Blocks_CookieBanner $cookieBanner)
-    {
+    public function setCookieBanner( Brizy_Admin_Blocks_CookieBanner $cookieBanner ) {
         $this->cookieBanner = $cookieBanner;
     }
 
-    public function maintenance_settings_submit()
-    {
-        $raw = isset($_POST['brizy-maintenance']) && is_array($_POST['brizy-maintenance'])
-            ? $_POST['brizy-maintenance']
-            : array();
+    public function maintenance_settings_submit() {
+        $raw = isset( $_POST['brizy-maintenance'] ) && is_array( $_POST['brizy-maintenance'] )
+                ? $_POST['brizy-maintenance']
+                : array();
 
-        $allowed_roles = array_map(array($this, 'role_to_id'), $this->list_wp_roles());
+        $allowed_roles = array_map( array( $this, 'role_to_id' ), $this->list_wp_roles() );
 
-        $mode = isset($raw['mode']) && in_array($raw['mode'], array('', 'coming_soon', 'maintenance'), true)
-            ? $raw['mode'] : '';
-        $who = isset($raw['who']) && in_array($raw['who'], array('logged', 'custom'), true)
-            ? $raw['who'] : 'logged';
-        $page = isset($raw['page']) ? absint($raw['page']) : 0;
-        if ($page > 0 && get_post_type($page) !== 'page') {
+        $mode = isset( $raw['mode'] ) && in_array( $raw['mode'], array( '', 'coming_soon', 'maintenance' ), true )
+                ? $raw['mode'] : '';
+        $who  = isset( $raw['who'] ) && in_array( $raw['who'], array( 'logged', 'custom' ), true )
+                ? $raw['who'] : 'logged';
+        $page = isset( $raw['page'] ) ? absint( $raw['page'] ) : 0;
+        if ( $page > 0 && get_post_type( $page ) !== 'page' ) {
             $page = 0;
         }
-        $roles = (isset($raw['roles']) && is_array($raw['roles']))
-            ? array_values(array_intersect($raw['roles'], $allowed_roles))
-            : array();
-        $ips = isset($raw['ips']) ? sanitize_textarea_field($raw['ips']) : '';
+        $roles = ( isset( $raw['roles'] ) && is_array( $raw['roles'] ) )
+                ? array_values( array_intersect( $raw['roles'], $allowed_roles ) )
+                : array();
+        $ips   = isset( $raw['ips'] ) ? sanitize_textarea_field( $raw['ips'] ) : '';
 
-        Brizy_Editor_Storage_Common::instance()->set('maintenance', array(
-            'mode'  => $mode,
-            'who'   => $who,
-            'roles' => $roles,
-            'ips'   => $ips,
-            'page'  => $page ?: '',
-        ));
+        Brizy_Editor_Storage_Common::instance()->set( 'maintenance', array(
+                'mode'  => $mode,
+                'who'   => $who,
+                'roles' => $roles,
+                'ips'   => $ips,
+                'page'  => $page ?: '',
+        ) );
     }
 
     /**
      * Return the list of allowed capabilities Ids
      * @return array
      */
-    public function get_capabilities()
-    {
+    public function get_capabilities() {
         $capabilities = $this->get_capability_options();
-        $caps = array();
-        foreach ($capabilities as $capability) {
+        $caps         = array();
+        foreach ( $capabilities as $capability ) {
             $caps[] = $capability['capability'];
         }
 
@@ -374,38 +355,36 @@ class Brizy_Admin_Settings
      *
      * @return mixed|void
      */
-    public function get_capability_options()
-    {
-        return apply_filters('brizy_settings_capability_options', array(
-                array('capability' => '', 'label' => __('No Access', 'brizy')),
+    public function get_capability_options() {
+        return apply_filters( 'brizy_settings_capability_options', array(
+                array( 'capability' => '', 'label' => __( 'No Access', 'brizy' ) ),
                 array(
                         'capability' => Brizy_Admin_Capabilities::CAP_EDIT_WHOLE_PAGE,
-                        'label' => __('Full Access', 'brizy')
+                        'label'      => __( 'Full Access', 'brizy' )
                 )
-        ));
+        ) );
     }
 
-    public function roles_settings_submit()
-    {
-        $allowed_roles = array_map(array($this, 'role_to_id'), $this->list_wp_roles());
+    public function roles_settings_submit() {
+        $allowed_roles        = array_map( array( $this, 'role_to_id' ), $this->list_wp_roles() );
         $allowed_capabilities = $this->get_capabilities();
-        $roles = isset($_POST['role-capability']) ? (array)$_POST['role-capability'] : array();
-        if (count($roles) != 0) {
-            foreach ($roles as $role_id => $capability) {
+        $roles                = isset( $_POST['role-capability'] ) ? (array) $_POST['role-capability'] : array();
+        if ( count( $roles ) != 0 ) {
+            foreach ( $roles as $role_id => $capability ) {
 
-                if (!in_array($role_id, $allowed_roles)) {
+                if ( ! in_array( $role_id, $allowed_roles ) ) {
                     continue;
                 }
                 // validate capability
-                if ($capability != "" && !in_array($capability, $allowed_capabilities)) {
+                if ( $capability != "" && ! in_array( $capability, $allowed_capabilities ) ) {
                     continue;
                 }
                 // remove all brizy capabilities from this role
-                foreach ($allowed_capabilities as $cap) {
-                    wp_roles()->remove_cap($role_id, $cap);
+                foreach ( $allowed_capabilities as $cap ) {
+                    wp_roles()->remove_cap( $role_id, $cap );
                 }
-                if ($capability != "") {
-                    wp_roles()->add_cap($role_id, $capability);
+                if ( $capability != "" ) {
+                    wp_roles()->add_cap( $role_id, $capability );
                 }
             }
         }
@@ -414,93 +393,86 @@ class Brizy_Admin_Settings
     /**
      * @internal
      */
-    public function render()
-    {
+    public function render() {
 
-        if (is_network_admin() || !current_user_can('manage_options')) {
+        if ( is_network_admin() || ! current_user_can( 'manage_options' ) ) {
             return;
         }
         try {
-            echo Brizy_Admin_View::render('settings/view', array());
+            echo Brizy_Admin_View::render( 'settings/view', array() );
 
-        } catch (Exception $e) {
+        } catch ( Exception $e ) {
 
         }
     }
 
-    public function renderPageTools()
-    {
+    public function renderPageTools() {
 
-        if (is_network_admin() || !current_user_can('manage_options')) {
+        if ( is_network_admin() || ! current_user_can( 'manage_options' ) ) {
             return;
         }
         try {
-            echo Brizy_Admin_View::render('settings/tools', []);
-        } catch (Exception $e) {
+            echo Brizy_Admin_View::render( 'settings/tools', [] );
+        } catch ( Exception $e ) {
         }
     }
 
-    public function render_tabs()
-    {
+    public function render_tabs() {
         $tabs = $this->get_tabs();
-        foreach ($tabs as $tab) {
+        foreach ( $tabs as $tab ) {
             $is_active_class = $tab['is_selected'] ? 'nav-tab-active' : '';
             ?>
             <a href="<?php echo $tab['href'] ?>"
-               class="nav-tab <?php echo $is_active_class ?>"><?php echo __($tab['label'], 'brizy') ?></a>
+               class="nav-tab <?php echo $is_active_class ?>"><?php echo __( $tab['label'], 'brizy' ) ?></a>
             <?php
         }
     }
 
-    public function render_tab_content()
-    {
+    public function render_tab_content() {
         $tab = $this->get_selected_tab();
-        echo apply_filters('brizy_settings_render_tab', $this->get_tab_content($tab), $tab);
+        echo apply_filters( 'brizy_settings_render_tab', $this->get_tab_content( $tab ), $tab );
     }
 
 
     /**
      * @internal
      **/
-    public function action_validate_form_submit()
-    {
-        if (count($_POST) == 0) {
+    public function action_validate_form_submit() {
+        if ( count( $_POST ) == 0 ) {
             return;
         }
-        if (!isset($_POST['tab'])) {
+        if ( ! isset( $_POST['tab'] ) ) {
             return;
         }
-        if (!current_user_can('manage_options')) {
+        if ( ! current_user_can( 'manage_options' ) ) {
             return;
         }
-        if (!isset($_POST['_wpnonce']) || !wp_verify_nonce($_POST['_wpnonce'], 'brizy-settings')) {
+        if ( ! isset( $_POST['_wpnonce'] ) || ! wp_verify_nonce( $_POST['_wpnonce'], 'brizy-settings' ) ) {
             return;
         }
-        do_action('brizy_settings_submit');
-        if (!Brizy_Admin_Flash::instance()->has_notice_type(Brizy_Admin_Flash::ERROR)) {
-            Brizy_Admin_Flash::instance()->add_success('Settings saved.');
+        do_action( 'brizy_settings_submit' );
+        if ( ! Brizy_Admin_Flash::instance()->has_notice_type( Brizy_Admin_Flash::ERROR ) ) {
+            Brizy_Admin_Flash::instance()->add_success( 'Settings saved.' );
         }
         $tab = $this->get_selected_tab();
-        wp_redirect(menu_page_url($this->menu_slug(), false) . ($tab ? '&tab=' . $tab : ''));
+        wp_redirect( menu_page_url( $this->menu_slug(), false ) . ( $tab ? '&tab=' . $tab : '' ) );
         exit;
 
     }
 
-    protected function list_post_types()
-    {
+    protected function list_post_types() {
         $types = $this->post_types();
 
-        return array_map(array($this, 'post_type_to_choice'), $types);
+        return array_map( array( $this, 'post_type_to_choice' ), $types );
     }
 
-    static public function get_role_list()
-    {
+    static public function get_role_list() {
         $roles = wp_roles()->roles;
-        unset($roles['administrator']);
-        foreach ($roles as $key => $role) {
-            $roles[$key]['id'] = $key;
+        unset( $roles['administrator'] );
+        foreach ( $roles as $key => $role ) {
+            $roles[ $key ]['id'] = $key;
         }
-        $roles = apply_filters('brizy_settings_roles', $roles);
+        $roles = apply_filters( 'brizy_settings_roles', $roles );
 
         return $roles;
     }
@@ -508,78 +480,69 @@ class Brizy_Admin_Settings
     /**
      * @return array
      */
-    public function list_wp_roles()
-    {
+    public function list_wp_roles() {
         return $this->role_list;
     }
 
     /**
      * @return array
      */
-    protected function post_types()
-    {
+    protected function post_types() {
 
-        $types = get_post_types(array('public' => true), 'objects');
-        $types = array_filter($types, array($this, 'filter_types'));
+        $types = get_post_types( array( 'public' => true ), 'objects' );
+        $types = array_filter( $types, array( $this, 'filter_types' ) );
 
-        return apply_filters('brizy_settings_post_types', $types);
+        return apply_filters( 'brizy_settings_post_types', $types );
     }
 
 
-    private function post_type_to_choice(WP_Post_Type $type)
-    {
+    private function post_type_to_choice( WP_Post_Type $type ) {
         return array(
                 'type' => $type->name,
                 'name' => $type->labels->name,
         );
     }
 
-    private function to_type(WP_Post_Type $type)
-    {
+    private function to_type( WP_Post_Type $type ) {
         return $type->name;
     }
 
-    private function role_to_id($value)
-    {
+    private function role_to_id( $value ) {
         return $value['id'];
     }
 
 
-    private function filter_types(WP_Post_Type $type)
-    {
-        return !in_array($type->name, array(
+    private function filter_types( WP_Post_Type $type ) {
+        return ! in_array( $type->name, array(
                 'attachment',
                 'elementor_library',
                 Brizy_Admin_Stories_Main::CP_STORY
-        ));
+        ) );
     }
 
-    private function is_selected($type)
-    {
-        $type['selected'] = in_array($type['type'], $this->selected_post_types);
+    private function is_selected( $type ) {
+        $type['selected'] = in_array( $type['type'], $this->selected_post_types );
 
         return $type;
     }
 
-    private function is_role_selected($role)
-    {
-        $role['selected'] = !isset($role['capabilities'][Brizy_Admin_Capabilities::CAP_EDIT_WHOLE_PAGE]);
+    private function is_role_selected( $role ) {
+        $role['selected'] = ! isset( $role['capabilities'][ Brizy_Admin_Capabilities::CAP_EDIT_WHOLE_PAGE ] );
 
         return $role;
     }
 
-    public function role_capability_select_row($role)
-    {
+    public function role_capability_select_row( $role ) {
         ?>
         <tr class="user-display-name-wrap">
             <th><label for="display_name"><?php echo $role['name'] ?></label></th>
             <td>
                 <select name="role-capability[<?php echo $role['id'] ?>]">
                     <?php
-                    foreach ($this->capability_options as $option) {
+                    foreach ( $this->capability_options as $option ) {
                         ?>
                         <option value="<?php echo $option['capability'] ?>"
-                                <?php echo isset($role['capabilities'][$option['capability']]) ? 'selected' : '' ?>>
+                                <?php echo isset( $role['capabilities'][ $option['capability'] ] ) ? 'selected' : '' ?>>
                             <?php echo $option['label'] ?>
                         </option>
                         <?php
@@ -591,8 +554,7 @@ class Brizy_Admin_Settings
         <?php
     }
 
-    public function post_type_row($type)
-    {
+    public function post_type_row( $type ) {
         ?>
         <label>
             <input type="checkbox"
@@ -605,160 +567,88 @@ class Brizy_Admin_Settings
         <?php
     }
 
-    public function replaceUrl()
-    {
-        check_ajax_referer('brizy-admin-nonce', 'nonce');
-        if (!current_user_can('manage_options')) {
-            wp_send_json_error(['message' => __('You must be an administrator running a replace URL session', 'brizy')]);
+    public function replaceUrl() {
+        check_ajax_referer( 'brizy-admin-nonce', 'nonce' );
+        if ( ! current_user_can( 'manage_options' ) ) {
+            wp_send_json_error( [ 'message' => __( 'You must be an administrator running a replace URL session', 'brizy' ) ] );
         }
-        $from = trim($_POST['from']);
-        $to = trim($_POST['to']);
-        $fromEncoded     = urlencode($from);
-        $toEncoded       = urlencode($to);
-        $fromJsonEscaped = strtr($from, ['/' => '\/']);
-        $toJsonEscaped   = strtr($to,   ['/' => '\/']);
-        if ($from === $to) {
-            wp_send_json_error(['message' => __("The old and new URLs must be different", 'brizy')]);
+        $from            = trim( $_POST['from'] );
+        $to              = trim( $_POST['to'] );
+        $fromEncoded     = urlencode( $from );
+        $toEncoded       = urlencode( $to );
+        $fromJsonEscaped = strtr( $from, [ '/' => '\/' ] );
+        $toJsonEscaped   = strtr( $to, [ '/' => '\/' ] );
+        if ( $from === $to ) {
+            wp_send_json_error( [ 'message' => __( "The old and new URLs must be different", 'brizy' ) ] );
         }
-        if (!filter_var($from, FILTER_VALIDATE_URL) || !filter_var($to, FILTER_VALIDATE_URL)) {
-            wp_send_json_error(['message' => esc_html__("The old and new URLs must be valid URLs", 'brizy')]);
+        if ( ! filter_var( $from, FILTER_VALIDATE_URL ) || ! filter_var( $to, FILTER_VALIDATE_URL ) ) {
+            wp_send_json_error( [ 'message' => esc_html__( "The old and new URLs must be valid URLs", 'brizy' ) ] );
         }
-        wp_raise_memory_limit('admin');
+        wp_raise_memory_limit( 'admin' );
         global $wpdb;
         $offset = 0;
-        while (true) {
+        while ( true ) {
 
-            $rows = $wpdb->get_results("SELECT pm.meta_value, pm.post_id FROM {$wpdb->postmeta} pm INNER JOIN {$wpdb->posts} p ON p.ID = pm.post_id WHERE pm.meta_key = 'brizy' AND p.post_status != 'inherit' ORDER BY pm.meta_id ASC LIMIT {$offset}, 100", ARRAY_A);
-            if (empty($rows)) {
+            $rows = $wpdb->get_results( "SELECT pm.meta_value, pm.post_id FROM {$wpdb->postmeta} pm INNER JOIN {$wpdb->posts} p ON p.ID = pm.post_id WHERE pm.meta_key = 'brizy' AND p.post_status != 'inherit' ORDER BY pm.meta_id ASC LIMIT {$offset}, 100", ARRAY_A );
+            if ( empty( $rows ) ) {
                 break;
             }
-            foreach ($rows as $row) {
+            foreach ( $rows as $row ) {
 
-                if (($data = maybe_unserialize($row['meta_value'])) === false) {
+                if ( ( $data = maybe_unserialize( $row['meta_value'] ) ) === false ) {
                     continue;
                 }
 
-                if (!empty($data['brizy-post']['editor_data'])) {
-                    $json = base64_decode($data['brizy-post']['editor_data']);
-                    if ($json) {
-                        $inEditorPlain   = strpos($json, $from) !== false;
-                        $inEditorEncoded = strpos($json, $fromEncoded) !== false;
-                        $inEditorEscaped = strpos($json, $fromJsonEscaped) !== false;
-                        if ($inEditorPlain || $inEditorEncoded || $inEditorEscaped) {
-                            $json = strtr($json, [
-                                $from            => $to,
-                                $fromEncoded     => $toEncoded,
-                                $fromJsonEscaped => $toJsonEscaped,
-                            ]);
-                            $data['brizy-post']['editor_data'] = base64_encode($json);
+                if ( ! empty( $data['brizy-post']['editor_data'] ) ) {
+                    $json = base64_decode( $data['brizy-post']['editor_data'] );
+                    if ( $json ) {
+                        $inEditorPlain   = strpos( $json, $from ) !== false;
+                        $inEditorEncoded = strpos( $json, $fromEncoded ) !== false;
+                        $inEditorEscaped = strpos( $json, $fromJsonEscaped ) !== false;
+                        if ( $inEditorPlain || $inEditorEncoded || $inEditorEscaped ) {
+                            $json                                = strtr( $json, [
+                                    $from            => $to,
+                                    $fromEncoded     => $toEncoded,
+                                    $fromJsonEscaped => $toJsonEscaped,
+                            ] );
+                            $data['brizy-post']['editor_data']   = base64_encode( $json );
                             $data['brizy-post']['compiled_html'] = '';
-                            update_post_meta($row['post_id'], 'brizy', $data);
+                            update_post_meta( $row['post_id'], 'brizy', $data );
                         }
                     }
                 }
 
-                $compiledRaw = get_post_meta($row['post_id'], Brizy_Editor_Post::BRIZY_POST_COMPILED_SECTIONS, true);
-                if ($compiledRaw) {
-                    $compiledJson = base64_decode($compiledRaw);
-                    if ($compiledJson) {
-                        $newCompiledJson = strtr($compiledJson, [
+                $compiledRaw = get_post_meta( $row['post_id'], Brizy_Editor_Post::BRIZY_POST_COMPILED_SECTIONS, true );
+                if ( $compiledRaw ) {
+                    $compiledJson = base64_decode( $compiledRaw );
+                    if ( $compiledJson ) {
+                        $newCompiledJson = strtr( $compiledJson, [
+                                $from            => $to,
+                                $fromJsonEscaped => $toJsonEscaped,
+                                $fromEncoded     => $toEncoded,
+                        ] );
+                        if ( $newCompiledJson !== $compiledJson ) {
+                            update_post_meta( $row['post_id'], Brizy_Editor_Post::BRIZY_POST_COMPILED_SECTIONS, base64_encode( $newCompiledJson ) );
+                        }
+                    }
+                }
+
+                $wpPost = get_post( $row['post_id'] );
+                if ( $wpPost && $wpPost->post_content ) {
+                    $newContent = strtr( $wpPost->post_content, [
                             $from            => $to,
                             $fromJsonEscaped => $toJsonEscaped,
                             $fromEncoded     => $toEncoded,
-                        ]);
-                        if ($newCompiledJson !== $compiledJson) {
-                            update_post_meta($row['post_id'], Brizy_Editor_Post::BRIZY_POST_COMPILED_SECTIONS, base64_encode($newCompiledJson));
-                        }
-                    }
-                }
-
-                $wpPost = get_post($row['post_id']);
-                if ($wpPost && $wpPost->post_content) {
-                    $newContent = strtr($wpPost->post_content, [
-                        $from            => $to,
-                        $fromJsonEscaped => $toJsonEscaped,
-                        $fromEncoded     => $toEncoded,
-                    ]);
-                    if ($newContent !== $wpPost->post_content) {
-                        $wpdb->update($wpdb->posts, ['post_content' => $newContent], ['ID' => $row['post_id']]);
-                        clean_post_cache($row['post_id']);
+                    ] );
+                    if ( $newContent !== $wpPost->post_content ) {
+                        $wpdb->update( $wpdb->posts, [ 'post_content' => $newContent ], [ 'ID' => $row['post_id'] ] );
+                        clean_post_cache( $row['post_id'] );
                     }
                 }
             }
             $offset += 100;
         }
         Brizy_Editor_Post::markAllForCompilation();
-        wp_send_json_success(['message' => __('The replacement was successful', 'brizy')]);
+        wp_send_json_success( [ 'message' => __( 'The replacement was successful', 'brizy' ) ] );
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

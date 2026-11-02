@@ -66,6 +66,23 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi
         parent::__construct();
     }
 
+    /**
+     * Authorize against the post actually being operated on.
+     *
+     * The target post is resolved once (Brizy_Editor::currentPostId) from any of
+     * several request params (brizy_post, post, page_id, post_ID, id). The parent
+     * only validates $_REQUEST['post'], so a request could target one post via
+     * another param while passing the role-level check. Gate on $this->post here.
+     */
+    protected function verifyUserCanEdit()
+    {
+        parent::verifyUserCanEdit();
+
+        if ($this->post && !Brizy_Editor_User::is_user_allowed($this->post->getWpPostId())) {
+            $this->error(403, 'You are not allowed to edit this post');
+        }
+    }
+
     protected function initializeApiActions()
     {
         $n = 'wp_ajax_nopriv_' . Brizy_Editor::prefix();
@@ -483,6 +500,9 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi
     {
         try {
             $this->verifyAuthorization(self::nonce);
+            if (!$this->post) {
+                $this->error(400, 'Invalid post');
+            }
             $data = $this->sanitizeJson(stripslashes($this->param('data')));
             $atemplate = $this->param('template');
             $dependencies = json_decode(stripslashes($this->param('dependencies')));
@@ -522,9 +542,6 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi
             }
 
             $this->post->getWpPost()->post_status = $status;
-            if (!current_user_can('edit_post', $this->post->getWpPostId())) {
-                $this->error(403, 'Unauthorized post save.');
-            }
             if ((int)$this->param('is_autosave') == 1) {
                 $this->post->save(1);
             } else {
@@ -975,6 +992,9 @@ class Brizy_Editor_API extends Brizy_Admin_AbstractApi
             $attachment_id = (int)$_REQUEST['attachment_id'];
             if (!$attachment_id || get_post_status($attachment_id) === false) {
                 $this->error(400, 'Invalid attachment id');
+            }
+            if ($apost && !Brizy_Editor_User::is_user_allowed($apost)) {
+                $this->error(403, 'You are not allowed to edit this post');
             }
             $uid = $this->createMediaKey($apost, $attachment_id);
             $this->success(array('uid' => $uid));
