@@ -1,5 +1,5 @@
 import classnames from "classnames";
-import React, { ReactElement, useMemo } from "react";
+import React, { type ReactElement, useMemo } from "react";
 import { SlideshowPreview } from "visual/component/Background/types/Slideshow/SlideshowPreview";
 import { SizeType } from "visual/global/Config/types/configs/common";
 import { useConfig } from "visual/providers/ConfigProvider";
@@ -7,7 +7,7 @@ import { makeAttr } from "visual/utils/i18n/attribute";
 import { getImageUrl } from "visual/utils/image";
 import { read as readString } from "visual/utils/reader/string";
 import { KenEffect, Transition } from "../../type";
-import { Props } from "./types";
+import type { Props } from "./types";
 
 const Slideshow = ({
   images,

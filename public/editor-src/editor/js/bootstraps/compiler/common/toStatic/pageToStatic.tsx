@@ -74,6 +74,7 @@ export const pageToStatic = (
     const componentTypes = new ComponentTypes();
 
     const Page = (
+      // biome-ignore lint/correctness/useJsxKeyInIterable: rendered to a string by baseToStatic, never mounted as a list child
       <Providers
         store={store}
         sheet={sheet.instance}

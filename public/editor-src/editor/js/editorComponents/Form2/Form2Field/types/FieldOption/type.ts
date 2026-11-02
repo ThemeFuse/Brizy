@@ -1,14 +1,17 @@
-import { ElementModel, ElementProps } from "visual/component/Elements/Types";
-import { StoryAnchorAttribute } from "visual/component/Link/types/Slide";
-import { Target } from "visual/component/Link/types/Target";
-import * as LinkTarget from "visual/component/Link/types/Target";
-import { Type } from "visual/component/Link/types/Type";
-import * as LinkType from "visual/component/Link/types/Type";
-import { DeviceMode } from "visual/types";
-import { Block } from "visual/types/Block";
-import { Link } from "visual/utils/models/link";
-import { FormInput } from "../../type";
-import { Active } from "../type";
+import type {
+  ElementModel,
+  ElementProps
+} from "visual/component/Elements/Types";
+import type { StoryAnchorAttribute } from "visual/component/Link/types/Slide";
+import type * as LinkTarget from "visual/component/Link/types/Target";
+import type { Target } from "visual/component/Link/types/Target";
+import type * as LinkType from "visual/component/Link/types/Type";
+import type { Type } from "visual/component/Link/types/Type";
+import type { DeviceMode } from "visual/types";
+import type { Block } from "visual/types/Block";
+import type { Link } from "visual/utils/models/link";
+import type { FormInput } from "../../type";
+import type { Active } from "../type";
 
 export interface Value extends ElementModel {
   label: string;

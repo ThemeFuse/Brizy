@@ -1,12 +1,12 @@
 import { Str } from "@brizy/readers";
 import { memoize } from "es-toolkit";
-import { Option } from "slim-select";
+import type { Option } from "slim-select";
 import type { BoxResizerPartialProps } from "visual/component/BoxResizer/types";
 import { checkValue } from "visual/utils/checkValue";
 import { makeAttr } from "visual/utils/i18n/attribute";
-import { PhoneOption } from "./Form2Field/types/type";
+import type { PhoneOption } from "./Form2Field/types/type";
 import { ViewType } from "./Form2Steps/types";
-import { MessageStatus, ResponseMessages } from "./types";
+import { MessageStatus, type ResponseMessages } from "./types";
 
 export const isViewType = (v: string): v is ViewType =>
   !!checkValue<ViewType>([
@@ -44,13 +44,10 @@ export const getTranslatedResponseMessages = (
     const status = _status.toLowerCase();
 
     const translatedMessage = Str.read(
-      form.getAttribute(makeAttr("default-" + status, true))
+      form.getAttribute(makeAttr(`default-${status}`, true))
     );
 
-    return {
-      ...acc,
-      [status]: translatedMessage
-    };
+    return Object.assign(acc, { [status]: translatedMessage });
   }, {} as ResponseMessages);
 
 export const isUserAgreementCheckbox = (type: string | undefined): boolean =>

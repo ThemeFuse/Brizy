@@ -1,11 +1,18 @@
 import classnames from "classnames";
-import React, { CSSProperties, ReactElement, ReactNode } from "react";
+import React, {
+  type CSSProperties,
+  type ReactElement,
+  type ReactNode
+} from "react";
 import { Popper } from "react-popper";
 import { ReactReduxContext } from "react-redux";
-import { ToolbarItemsInstance } from "visual/component/Toolbar/ToolbarItems";
-import { getPosition as getToolbarPosition } from "visual/component/Toolbar/state";
+import {
+  getPosition as getToolbarPosition,
+  type PositionState
+} from "visual/component/Toolbar/state";
+import type { ToolbarItemsInstance } from "visual/component/Toolbar/ToolbarItems";
 import { deviceModeSelector } from "visual/redux/selectors";
-import { WithClassName } from "visual/types/attributes";
+import type { WithClassName } from "visual/types/attributes";
 import { clamp } from "visual/utils/math";
 import { attachRef } from "visual/utils/react";
 
@@ -213,7 +220,7 @@ export class TooltipContent extends React.Component<Props, State> {
       };
     };
 
-    let tooltipAlignment;
+    let tooltipAlignment: PositionState | undefined;
     if (toolbarPosition === "above") {
       if (canAlignAbove) {
         tooltipAlignment = "above";

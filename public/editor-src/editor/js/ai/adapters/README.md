@@ -1,6 +1,12 @@
 # Adapters
 
-Outermost layer — wires tool definitions, Zod validation, and handlers together. This is where the AI chat client connects to the editor internals.
+Outermost layer — wires the tool catalog, Zod validation, and handlers
+together. This is where the AI chat client connects to the editor internals.
+
+The catalog itself lives in `@brizy/ai-tools`: every tool name, description and
+argument schema. What is here is what runs. The two are joined by `alias` — an
+element is exposed as several small tools that all carry one alias and so all
+resolve to the single handler its config builds.
 
 ## Files
 
@@ -8,8 +14,8 @@ Outermost layer — wires tool definitions, Zod validation, and handlers togethe
 
 `BrizyToolServer` implements `IToolServer`. Entry point for the AI chat client.
 
-- **Constructor:** `(pageRepository, projectRepository, store)`
-- **Factory:** `createBrizyToolServer(pageRepository, projectRepository, store)`
+- **Constructor:** `(pageRepository, projectRepository, store, t)`
+- **Factory:** `createBrizyToolServer(pageRepository, projectRepository, store, t)`
 - Combines definitions from `tool-registry` with handlers
 - `callTool()` looks up handler by name, measures execution time, catches errors
 
@@ -17,31 +23,34 @@ Outermost layer — wires tool definitions, Zod validation, and handlers togethe
 
 Central registry that assembles all tool definitions and handlers.
 
-- `getBrizyToolDefinitions(t)` — returns all `ToolDefinition[]` (infrastructure + component), building the confirmation copy with the editor's `t`
-- `createBrizyToolHandlers(pageRepository, projectRepository, store)` — returns `Record<string, ToolHandler>`
-- Component tools imported from each `editorComponents/*/definitions.ts` file
+- `getBrizyToolDefinitions(t)` — the catalog from `@brizy/ai-tools`, with the
+  confirmation copy built through the editor's `t`
+- `createBrizyToolHandlers(pageRepository, projectRepository, store)` — builds
+  one handler per `ToolConfig` and registers it under **every** catalog name
+  that aliases to it, so `updateButtonBackground` and `updateButtonPadding`
+  share one handler
+- Component wiring comes from `tool-configs/`, not from the element folders
 
-### `infrastructure-definitions.ts`
+### `tool-configs/`
 
-`ToolDefinition` objects for non-component tools. Each definition has:
-- `name` — tool identifier
-- `description` — LLM-facing documentation
-- `parameters` — JSON Schema for arguments
-- `category` — read | block | project | element | history
-- `strict` — enables strict JSON mode
+One file per element, holding only what the editor can supply: the
+`ElementTypes` value, the prop-normalisation pipeline, and any hooks that need
+the element's stored state. `tool-configs/index.ts` collects them into
+`componentConfigs`.
 
-Definitions: `getPageStructure` (optional `depth` param, no upper limit — defaults to full tree), `getElementById`, `searchElements`, `getAvailableIcons`, `isPro`, `getGoogleFonts`, `addBlock`, `addBlankBlock`, `removeBlock`, `clearPage`, `moveBlock`, `duplicateBlock`, `getProjectStyles`, `changeStyle`, `addStyle`, `duplicateStyle`, `getProjectFonts`, `addFont`, `deleteFont`, `changeDefaultFont`, `removeElement`, `duplicateElement`, `moveElement`, `undoLastChange` (no params).
+A config carries an `alias`, not a definition — the definitions live in
+`@brizy/ai-tools`. Adding a concern to an element is a change there alone.
 
 ### `infrastructure-handlers.ts`
 
 Handler functions for infrastructure tools. Connects tool calls to repository methods.
 
 - **Read tools** → `pageRepository` (getPageStructure — defaults to full depth when `depth` omitted, getElementById, searchElements, isPro, getAvailableIcons)
-- **Block tools** → `pageRepository` (addBlock, addBlankBlock, removeBlock, moveBlock, duplicateBlock, clearPage)
-- **Project tools** → `projectRepository` (getProjectStyles, changeStyle, addStyle, duplicateStyle, getProjectFonts, getGoogleFonts, addFont, deleteFont, changeDefaultFont)
+- **Block tools** → `pageRepository` (addBlocks, addBlankBlock, removeBlock, moveBlock, duplicateBlock, clearPage)
+- **Project tools** → `projectRepository` (getProjectStyles, changeStyle, updateColorPalette, updateFontStyle, updateFontStyleTablet, updateFontStyleMobile, updateProjectStyle, duplicateStyle, getProjectFonts, getGoogleFonts, addFont, deleteFont, changeDefaultFont)
 - **Element tools** → `pageRepository` (removeElement, duplicateElement, moveElement)
 - **History tools** → `pageRepository` (undoLastChange — reverts the last change via the editor history; no-op when there is nothing to undo)
-- `addStyle` handler validates input with `addStyleSchema` (Zod) before calling repository
+- The current style is changed through four tools the agent is offered — `updateColorPalette` (the slots that change, merged by id) and `updateFontStyle`, `updateFontStyleTablet`, `updateFontStyleMobile` (one device's keys each) — and through `updateProjectStyle`, which takes a whole style at once and is sent only by `ai-chatbot-api` after it generates a page. The font style tools and `updateProjectStyle` share one handler body (`updateStyleWith`) and differ in their Zod schema; the four agent-facing schemas are strict, so a key sent to the wrong tool is refused instead of stripped
 
 ### `handler-factory.ts`
 
@@ -55,9 +64,23 @@ Builds handlers from declarative `ToolConfig` objects. Three patterns:
 
 Both add flows validate `containerId` with `containerIdSchema` (non-empty string) before touching the repository. A missing or blank `containerId` returns `{ success: false, error }` and never calls `addElement`, so the failure is clear instead of surfacing as a vague downstream error.
 
-Supports escape hatches: `handler` override, `afterAdd` hook, `beforeUpdate` hook, `transformProps`, `validateType`.
+Supports escape hatches: `handler` override, `afterAdd` hook, `precondition` check, `beforeUpdate` hook, `transformProps`, `validateType`.
 
-Components that need custom validation (e.g., font family checks) use the `handler` escape hatch to run their own flow in `definitions.ts` rather than adding generic validation to the factory. These custom handlers run the same `containerIdSchema` check inline (Button, RichText, Chart, Switcher, AnimatedHeadline, Paypal, Login).
+Both flows do two things before the element's own `defaults` run:
+
+- **`inferStoredFlags(config.schema, props)`** fills in the render toggles the
+  catalog never asks the LLM for — `bgColorType`, `boxShadow`,
+  `borderRadiusType` and the rest. Each rule offers candidate values and the
+  first the element's schema accepts is used, so an element that spells a mode
+  differently, or does not have the flag at all, is left alone.
+  It runs every rule again for `tablet…` and `mobile…` keys, so a device value
+  gets its own flag (`tabletPaddingType`, `mobileBoxShadow`,
+  `tabletFontStyle: ""`). A config with a hand-written `handler` skips this
+  pass and keeps its own desktop inference, so it calls
+  `inferDeviceStoredFlags` for the device half.
+- **`validateFonts(deps, parsed)`** checks every `*FontFamily` against the
+  project. It walks the keys and does nothing when there are none, so detecting
+  them beats a per-config flag a new element could forget to set.
 
 `addFormField` uses the `handler` escape hatch for a different reason: it is a
 **composite** — `duplicateElement` on the group's last field, then
@@ -71,48 +94,39 @@ also resolves `formId` from a `Form2`, `Form2Step`, `Form2Fields` or
 
 - The LLM sends only the props it wants to change; `defaults`/`transformProps` see just that patch. When correctness depends on the element's **stored** value, do it in `beforeUpdate`, which gets `deps` + `elementId` and can call `deps.pageRepository.getElementById(elementId)`. Precedents: `Table` (resize items when rows/columns change), `Menu` (restore color opacity, route alignment).
 - A `beforeUpdate` may **write to another element**: `Menu.horizontalAlign` is routed to the parent Wrapper (the Menu has no page-align prop of its own) via a `pageRepository.updateElement` on `parentId`, and stripped from the returned menu changes.
-- Restoring color opacity (`restoreColorOpacity` in `prop-defaults.ts`) mirrors the toolbar's `setHex` rule so a hex applied to a stored-transparent color (default `*ColorOpacity: 0`) is visible. Currently wired per-tool (Menu); candidate to lift into the update handler if it recurs — see the `ponytail:` note in `Menu/definitions.ts`.
-- Wrong-tool errors should name the right tool (`page.repository.ts` uses `update${type}`) so the agent recovers instead of falsely reporting the capability as unsupported.
+- Restoring color opacity (`restoreColorOpacity` in `prop-defaults.ts`) mirrors the toolbar's `setHex` rule so a hex applied to a stored-transparent color (default `*ColorOpacity: 0`) is visible. Currently wired per-tool (Menu); candidate to lift into the update handler if it recurs — see the `ponytail:` note in `tool-configs/menu.ts`.
+- A tablet or mobile hex is judged by the opacity that device paints with — its own, or desktop's when it has none. `restoreColorOpacity` splits the key with `parseDefaultValueKey` and reads it through `defaultValueValue` (`utils/onChange/device.ts`), the same fallback the components paint with.
+- Wrong-tool errors should name the right tool (`handler-factory.ts` substitutes `${type}` into
+  the component's `validateType.errorMessage`) so the agent recovers instead of falsely
+  reporting the capability as unsupported.
+
+**Tablet and mobile values** arrive as device-prefixed keys under the element's ordinary alias (`updateRowPaddingTablet` → `updateRow`, `{ tabletPaddingTop }`), so they take the same flow as a desktop patch and are written as sent — `updateElement` is key-agnostic. Which keys exist per device is the element schema's decision (`responsiveFields` in `@brizy/ai-tools`); a device key the schema does not declare is stripped. Three elements need more:
+
+- `Menu` paints either the bar of links or the hamburger drawer on a device, by that device's `mMenu` (the Menu ships with both `tabletMMenu` and `mobileMMenu` on). Its `precondition` turns back a device value for the one that device does not show, naming the switch, rather than storing something invisible. `tabletHorizontalAlign` / `mobileHorizontalAlign` are routed to the parent Wrapper like the desktop one.
+- `Column` stores `tabletWidth` / `mobileWidth` without rebalancing the siblings, as the editor's own resizer does off desktop; only the bare `width` redistributes.
+- `RichText` has no device keys at all: `applyDeviceTypographyStyles` writes `tabletFontSize`, `mobileTextAlign` and the rest as `-sm-` / `-xs-` classes in the markup, detaching that one device from its preset and carrying the preset's other values for it over.
+
+**`precondition`** runs on the parsed props before anything is written and may return a failure. It is for a patch that is valid on its own but would change nothing on this particular element; anything that only reshapes the patch belongs in `beforeUpdate`.
 
 **Form2 container rules** (`infrastructure/repositories/utils/element.ts`):
 
 - `Form2` and `Form2Step` redirect to their `items[0]` (`Form2Fields`), so the
   agent can pass a form id or a step id wherever a container is expected.
 - `Form2Field` has `REQUIRED_PARENT = Form2Fields`; anywhere else the add/move
-  fails with a message naming the `searchElements` call to make next.
+  fails with a message naming what to look up next.
 - `Form2` has `minChildren: 5` and `Form2Fields` `minChildren: 1`. `Form2.items`
   is positional — removing a direct child silently reassigns the roles of the
   rest — and the editor itself forbids deleting a group's last field.
 
-### `schema-primitives.ts`
+### Shared zod primitives
 
-Reusable Zod primitives shared across all tool schemas.
-
-| Primitive            | Type / Constraint                                 |
-|----------------------|---------------------------------------------------|
-| `hexColorRequired`   | `string` matching `#RRGGBB`                       |
-| `hexColor`           | Optional variant of above                         |
-| `opacity`            | `number` 0–1, optional                            |
-| `paletteIdEnum`      | `color1`–`color8`                                 |
-| `colorPalette`       | `string`, optional (palette slot or empty)        |
-| `paletteColorSchema` | `{ id: paletteIdEnum, hex: hexColorRequired }`    |
-| `containerIdSchema`  | `string` min 1 — target Section/Column id, validated at add-handler entry |
-| `linkTypes`          | `"external"`                                      |
-| `onOff`              | `"on" \| "off"`                                   |
-| `plainText`          | `string` rejecting HTML tags                      |
-| `fontStyleEnum`      | paragraph, subtitle, abovetitle, heading1–6, button |
-| `fontFamilyTypeEnum` | google, upload, adobe, system                     |
-| `fontFamilySchema`   | `string` min 1, optional — element-level font     |
-| `fontFamilyPropertyDefinition` | Shared tool param definition for fontFamily |
-| `fontSize`           | `number` 1–200                                    |
-| `fontWeight`         | `number` 100–900                                  |
-| `lineHeight`         | `number` 0.5–5                                    |
-| `letterSpacing`      | `number`                                          |
-| `textAlignEnum`      | left, center, right, justify                      |
+`hexColor`, `opacity`, `containerIdSchema`, `fontStyleEnum` and the rest now
+live in `@brizy/ai-tools` (`primitives/zod.ts`), because the catalog and the
+handlers validate against the same shapes.
 
 ### `prop-defaults.ts`
 
-Prop transformation and validation utilities used in component `definitions.ts` files.
+Prop transformation and validation utilities used by the configs in `tool-configs/`.
 
 | Function                | Purpose                                                       |
 |-------------------------|---------------------------------------------------------------|
@@ -133,7 +147,10 @@ Type definitions for the adapter layer.
 | `AddNoPropsToolConfig` | Config for simple add tools (no schema)                |
 | `ToolConfig`       | Union of all config types                                  |
 
-### Tests (`__tests__/handler-factory.ts`)
+Each config carries an `alias` — the handler key every catalog tool for that
+element resolves through.
+
+### Tests (`__tests__/`)
 
 Tests for `buildHandler` covering:
 - Add tool with schema validation

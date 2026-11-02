@@ -1,9 +1,6 @@
 import { makeAttr } from "visual/utils/i18n/attribute";
 
-export default function ($node: JQuery): void {
-  const node = $node.get(0);
-  if (!node) return;
-
+export default function (node: HTMLElement): void {
   node.querySelectorAll(".brz-alert").forEach((item) => {
     const closeButton = item.querySelector(".brz-alert-close");
     const showCloseButtonAfter = item.getAttribute(makeAttr("delay"));

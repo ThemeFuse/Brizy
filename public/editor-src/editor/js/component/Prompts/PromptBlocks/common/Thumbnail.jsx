@@ -99,13 +99,10 @@ class Thumbnail extends Component {
 
     const dataTags = data.tags?.split(",") ?? [];
 
-    return tags.reduce(
-      (acc, curr) => ({
-        ...acc,
-        [curr]: dataTags.includes(curr)
-      }),
-      {}
-    );
+    return tags.reduce((acc, curr) => {
+      acc[curr] = dataTags.includes(curr);
+      return acc;
+    }, {});
   }
 
   handleTagsTooltipOpen = () => {
@@ -297,10 +294,10 @@ class Thumbnail extends Component {
 
     return (
       <>
-        {tags.map(([name, checked], index) => {
+        {tags.map(([name, checked]) => {
           return (
             <TagLists
-              key={index}
+              key={name}
               name={name}
               checked={checked}
               onChange={(v) => this.updateCategory(name, v)}

@@ -1,6 +1,6 @@
-import React from "react";
 import classnames from "classnames";
-import { FCC } from "visual/utils/react/types";
+import React from "react";
+import type { FCC } from "visual/utils/react/types";
 
 export interface Props {
   className?: string;

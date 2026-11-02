@@ -3,7 +3,7 @@ import React from "react";
 import { ConditionsComponent } from "visual/component/ConditionsComponent";
 import { useConfig } from "visual/providers/ConfigProvider";
 import { t } from "visual/utils/i18n";
-import { Props } from "./types";
+import type { Props } from "./types";
 import { useConditions } from "./utils";
 
 export const PopupCondition = ({

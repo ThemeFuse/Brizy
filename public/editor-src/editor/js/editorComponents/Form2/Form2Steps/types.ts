@@ -1,6 +1,6 @@
 import type { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
-import type { MultiStep } from "../types";
 import type { WithClassName } from "visual/types/attributes";
+import type { MultiStep } from "../types";
 
 export enum ViewType {
   None = "none",

@@ -4,6 +4,6 @@ interface Props {
   message: string;
 }
 
-export const Error = ({ message }: Props): JSX.Element => (
+export const ErrorMessage = ({ message }: Props): JSX.Element => (
   <span className="brz-toc-message">{message}</span>
 );

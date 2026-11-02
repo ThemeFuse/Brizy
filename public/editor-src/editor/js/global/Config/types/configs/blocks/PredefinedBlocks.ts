@@ -1,7 +1,7 @@
-import { ElementModelType } from "visual/component/Elements/Types";
-import { Palette, FontStyle as _FontStyle } from "visual/types/Style";
-import { Literal } from "visual/utils/types/Literal";
-import { Response } from "../common";
+import type { ElementModelType } from "visual/component/Elements/Types";
+import type { FontStyle as _FontStyle, Palette } from "visual/types/Style";
+import type { Literal } from "visual/utils/types/Literal";
+import type { Response } from "../common";
 
 export interface DefaultBlock extends ElementModelType {
   deleted?: boolean;

@@ -1,7 +1,12 @@
 import Loadable from "@loadable/component";
 import classnames from "classnames";
 import { noop } from "es-toolkit";
-import React, { CSSProperties, MouseEvent, Ref, forwardRef } from "react";
+import React, {
+  type CSSProperties,
+  forwardRef,
+  type MouseEvent,
+  type Ref
+} from "react";
 import { useConfig } from "visual/providers/ConfigProvider";
 import { RenderFor } from "visual/providers/RenderProvider/RenderFor";
 import { editorIconUrl } from "visual/utils/icons";
@@ -49,10 +54,7 @@ const _EditorIcon = forwardRef<HTMLDivElement, Props>((props, ref) => {
     onClick = noop
   } = props;
 
-  const className = classnames(
-    "brz-icon-svg brz-ed-icon-svg",
-    _className
-  );
+  const className = classnames("brz-icon-svg brz-ed-icon-svg", _className);
 
   return isType2(icon) ? (
     <LoadableIcon

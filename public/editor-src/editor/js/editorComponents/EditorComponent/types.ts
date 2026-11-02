@@ -1,25 +1,28 @@
-import { ElementModel } from "visual/component/Elements/Types";
-import { OptionName, OptionValue } from "visual/component/Options/types";
-import {
+import type { ElementModel } from "visual/component/Elements/Types";
+import type { OptionName, OptionValue } from "visual/component/Options/types";
+import type {
   Meta,
   OptionDefinition,
   ToolbarItemType
 } from "visual/editorComponents/ToolbarItemType";
-import { EditorMode } from "visual/providers/EditorModeProvider";
-import { RenderType } from "visual/providers/RenderProvider";
-import { Dictionary } from "visual/types/utils";
-import { Choices, Handler } from "visual/utils/options/getDynamicContentOption";
-import { TypeChoices } from "visual/utils/options/types";
-import * as Responsive from "visual/utils/responsiveMode";
-import * as State from "visual/utils/stateMode";
-import { MValue } from "visual/utils/value";
-import { Editor } from ".";
-import {
+import type { EditorMode } from "visual/providers/EditorModeProvider";
+import type { RenderType } from "visual/providers/RenderProvider";
+import type { Dictionary } from "visual/types/utils";
+import type {
+  Choices,
+  Handler
+} from "visual/utils/options/getDynamicContentOption";
+import type { TypeChoices } from "visual/utils/options/types";
+import type * as Responsive from "visual/utils/responsiveMode";
+import type * as State from "visual/utils/stateMode";
+import type { MValue } from "visual/utils/value";
+import type { Editor } from ".";
+import type {
   DCObjDetails,
   DCObjIncomplete,
   DCObjResult
 } from "./DynamicContent/getDCObj";
-import { EditorComponentContextValue } from "./EditorComponentContext";
+import type { EditorComponentContextValue } from "./EditorComponentContext";
 
 export interface ECDC {
   pendingDCObjIncomplete?: DCObjIncomplete;
@@ -81,9 +84,9 @@ export type Getter = (key: string) => OptionValue<OptionName>;
 
 export type Params<
   M extends ElementModel,
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  // biome-ignore lint/suspicious/noExplicitAny: migrated from eslint
   P extends Record<string, any> = Record<string, unknown>,
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  // biome-ignore lint/suspicious/noExplicitAny: migrated from eslint
   S extends Record<string, any> = Record<string, unknown>,
   C extends Record<string, unknown> = Record<string, unknown>
 > = {
@@ -100,18 +103,18 @@ export type Params<
 
 export type GetItems<
   M extends ElementModel = ElementModel,
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  // biome-ignore lint/suspicious/noExplicitAny: migrated from eslint
   P extends Record<string, any> = Record<string, unknown>,
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  // biome-ignore lint/suspicious/noExplicitAny: migrated from eslint
   S extends Record<string, any> = Record<string, unknown>,
   C extends Record<string, unknown> = Record<string, unknown>
 > = (d: Params<M, P, S, C>) => ToolbarItemType[];
 
 export type SidebarConfig<
   M extends ElementModel,
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  // biome-ignore lint/suspicious/noExplicitAny: migrated from eslint
   P extends Record<string, any> = Record<string, unknown>,
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  // biome-ignore lint/suspicious/noExplicitAny: migrated from eslint
   S extends Record<string, any> = Record<string, unknown>,
   C extends Record<string, unknown> = Record<string, unknown>
 > = {
@@ -121,9 +124,9 @@ export type SidebarConfig<
 
 export type NewToolbarConfig<
   M extends ElementModel,
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  // biome-ignore lint/suspicious/noExplicitAny: migrated from eslint
   P extends Record<string, any> = Record<string, unknown>,
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  // biome-ignore lint/suspicious/noExplicitAny: migrated from eslint
   S extends Record<string, any> = Record<string, unknown>,
   C extends Record<string, unknown> = Record<string, unknown>
 > = {

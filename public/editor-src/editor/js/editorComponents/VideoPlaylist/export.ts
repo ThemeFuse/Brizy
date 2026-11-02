@@ -1,5 +1,5 @@
 import { Num } from "@brizy/readers";
-import { ExportFunction } from "visual/types";
+import type { ExportFunction } from "visual/types";
 import { makeUrl } from "visual/utils/api/utils";
 import { getCurrentDevice } from "visual/utils/export";
 import { makeAttr } from "visual/utils/i18n/attribute";
@@ -36,10 +36,7 @@ const getAccessibility = (
   return accessibility;
 };
 
-const fn: ExportFunction = ($node) => {
-  const node = $node.get(0);
-  if (!node) return;
-
+const fn: ExportFunction = (node) => {
   let needRefreshOnDesktop = false;
 
   node.querySelectorAll(".brz-video-playlist").forEach((playlist) => {
@@ -115,7 +112,9 @@ const fn: ExportFunction = ($node) => {
 
         currentTarget
           .querySelectorAll(".brz-video-playlist-main")
-          .forEach((playlist) => playlist.classList.add("brz-d-none"));
+          .forEach((playlist) => {
+            playlist.classList.add("brz-d-none");
+          });
         currentTarget
           .querySelector(".brz-video-playlist-main__controls")
           ?.classList.add("brz-d-none");

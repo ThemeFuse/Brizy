@@ -1,6 +1,6 @@
 import { HelpSidebarContent } from "@brizy/builder-ui-components";
 import { noop } from "es-toolkit";
-import React, { ReactElement, useCallback, useMemo } from "react";
+import React, { type ReactElement, useCallback, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RightSidebarTabs as Control } from "visual/component/Controls/RightSidebarTabs";
 import { Tab } from "visual/component/Controls/Tabs2/Tab";
@@ -18,7 +18,8 @@ export const HelpSidebar = (): ReactElement => {
   const isRtl = useIsRTL();
 
   const selector = pipe(uiSelector, prop("rightSidebar"));
-  const { alignment, lock, isOpen, activeTab, type, expanded } = useSelector(selector);
+  const { alignment, lock, isOpen, activeTab, type, expanded } =
+    useSelector(selector);
 
   const { ui, urls } = useConfig();
   const dataLinks = useMemo(() => ui?.help?.video ?? [], [ui?.help?.video]);

@@ -2,7 +2,6 @@ import Quill from "quill";
 
 const Parchment = Quill.import("parchment");
 
-
 class ResponsiveTextColorVar extends Parchment.Attributor.Style {
   constructor(
     keyName: string,
@@ -54,4 +53,4 @@ const ColorMobileVar = new ResponsiveTextColorVar(
   "mobile"
 );
 
-export { ColorTabletVar, ColorMobileVar };
+export { ColorMobileVar, ColorTabletVar };

@@ -1,0 +1,2833 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`accessibility layer sets up controls inside the slider and arrows kept in the tab order and follows a move 1`] = `
+{
+  "built": "<div>
+<button class="brz-slick-slider__arrow-prev outside">&lt;</button>
+<div aria-label="Slider A" aria-roledescription="carousel" class="slider slick-initialized slick-slider slick-dotted" id="region-a" role="region">
+<button aria-controls="region-a" aria-disabled="false" aria-label="Previous slide" class="brz-slick-slider__arrow-prev slick-arrow" tabindex="0" type="button">&lt;</button>
+<div class="slick-list draggable">
+<div class="slick-track" style="opacity: 1; width: 7000px; transform: translate3d(-1000px, 0px, 0px);">
+<div aria-hidden="true" class="slick-slide slick-cloned" data-slick-index="-1" id="" style="width: 1000px;">
+<div>
+<div class="item" style="width: 100%; display: inline-block;">
+<p>Slide 2</p>
+<a class="link" data-slider-a-tabindex="" href="#s2" tabindex="-1">Link 2</a>
+</div>
+</div>
+</div>
+<div aria-hidden="false" aria-label="Slide 1 of 3" aria-roledescription="slide" class="slick-slide slick-current slick-active" data-slick-index="0" id="slide-a-0" role="group" style="width: 1000px;">
+<div>
+<div class="item" style="width: 100%; display: inline-block;">
+<p>Slide 0</p>
+<a class="link" href="#s0">Link 0</a>
+</div>
+</div>
+</div>
+<div aria-hidden="true" aria-label="Slide 2 of 3" aria-roledescription="slide" class="slick-slide" data-slick-index="1" id="slide-a-1" role="group" style="width: 1000px;">
+<div>
+<div class="item" style="width: 100%; display: inline-block;">
+<p>Slide 1</p>
+<a class="link" data-slider-a-tabindex="" href="#s1" tabindex="-1">Link 1</a>
+</div>
+</div>
+</div>
+<div aria-hidden="true" aria-label="Slide 3 of 3" aria-roledescription="slide" class="slick-slide" data-slick-index="2" id="slide-a-2" role="group" style="width: 1000px;">
+<div>
+<div class="item" style="width: 100%; display: inline-block;">
+<p>Slide 2</p>
+<a class="link" data-slider-a-tabindex="" href="#s2" tabindex="-1">Link 2</a>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide slick-cloned" data-slick-index="3" id="" style="width: 1000px;">
+<div>
+<div class="item" style="width: 100%; display: inline-block;">
+<p>Slide 0</p>
+<a class="link" data-slider-a-tabindex="" href="#s0" tabindex="-1">Link 0</a>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide slick-cloned" data-slick-index="4" id="" style="width: 1000px;">
+<div>
+<div class="item" style="width: 100%; display: inline-block;">
+<p>Slide 1</p>
+<a class="link" data-slider-a-tabindex="" href="#s1" tabindex="-1">Link 1</a>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide slick-cloned" data-slick-index="5" id="" style="width: 1000px;">
+<div>
+<div class="item" style="width: 100%; display: inline-block;">
+<p>Slide 2</p>
+<a class="link" data-slider-a-tabindex="" href="#s2" tabindex="-1">Link 2</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+<button aria-controls="region-a" aria-disabled="false" aria-label="Next slide" class="brz-slick-slider__arrow-next slick-arrow" tabindex="0" type="button">&gt;</button>
+<ul aria-label="Slide navigation" class="brz-slick-slider__dots">
+<li class="slick-active">
+<button aria-controls="slide-a-0" aria-current="true" aria-label="Current slide, Go to slide 1" type="button">1</button>
+</li>
+<li>
+<button aria-controls="slide-a-1" aria-label="Go to slide 2" type="button">2</button>
+</li>
+<li>
+<button aria-controls="slide-a-2" aria-label="Go to slide 3" type="button">3</button>
+</li>
+</ul>
+</div>
+</div>",
+  "moved": "<div>
+<button class="brz-slick-slider__arrow-prev outside">&lt;</button>
+<div aria-label="Slider A" aria-roledescription="carousel" class="slider slick-initialized slick-slider slick-dotted" id="region-a" role="region">
+<button aria-controls="region-a" aria-disabled="false" aria-label="Previous slide" class="brz-slick-slider__arrow-prev slick-arrow" tabindex="0" type="button">&lt;</button>
+<div class="slick-list draggable">
+<div class="slick-track" style="opacity: 1; width: 7000px; transform: translate3d(-2000px, 0px, 0px);">
+<div aria-hidden="true" class="slick-slide slick-cloned" data-slick-index="-1" id="" style="width: 1000px;">
+<div>
+<div class="item" style="width: 100%; display: inline-block;">
+<p>Slide 2</p>
+<a class="link" data-slider-a-tabindex="" href="#s2" tabindex="-1">Link 2</a>
+</div>
+</div>
+</div>
+<div aria-hidden="true" aria-label="Slide 1 of 3" aria-roledescription="slide" class="slick-slide" data-slick-index="0" id="slide-a-0" role="group" style="width: 1000px;">
+<div>
+<div class="item" style="width: 100%; display: inline-block;">
+<p>Slide 0</p>
+<a class="link" data-slider-a-tabindex="" href="#s0" tabindex="-1">Link 0</a>
+</div>
+</div>
+</div>
+<div aria-hidden="false" aria-label="Slide 2 of 3" aria-roledescription="slide" class="slick-slide slick-current slick-active" data-slick-index="1" id="slide-a-1" role="group" style="width: 1000px;">
+<div>
+<div class="item" style="width: 100%; display: inline-block;">
+<p>Slide 1</p>
+<a class="link" href="#s1">Link 1</a>
+</div>
+</div>
+</div>
+<div aria-hidden="true" aria-label="Slide 3 of 3" aria-roledescription="slide" class="slick-slide" data-slick-index="2" id="slide-a-2" role="group" style="width: 1000px;">
+<div>
+<div class="item" style="width: 100%; display: inline-block;">
+<p>Slide 2</p>
+<a class="link" data-slider-a-tabindex="" href="#s2" tabindex="-1">Link 2</a>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide slick-cloned" data-slick-index="3" id="" style="width: 1000px;">
+<div>
+<div class="item" style="width: 100%; display: inline-block;">
+<p>Slide 0</p>
+<a class="link" data-slider-a-tabindex="" href="#s0" tabindex="-1">Link 0</a>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide slick-cloned" data-slick-index="4" id="" style="width: 1000px;">
+<div>
+<div class="item" style="width: 100%; display: inline-block;">
+<p>Slide 1</p>
+<a class="link" data-slider-a-tabindex="" href="#s1" tabindex="-1">Link 1</a>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide slick-cloned" data-slick-index="5" id="" style="width: 1000px;">
+<div>
+<div class="item" style="width: 100%; display: inline-block;">
+<p>Slide 2</p>
+<a class="link" data-slider-a-tabindex="" href="#s2" tabindex="-1">Link 2</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+<button aria-controls="region-a" aria-disabled="false" aria-label="Next slide" class="brz-slick-slider__arrow-next slick-arrow" tabindex="0" type="button">&gt;</button>
+<ul aria-label="Slide navigation" class="brz-slick-slider__dots">
+<li class="">
+<button aria-controls="slide-a-0" aria-label="Go to slide 1" type="button">1</button>
+</li>
+<li class="slick-active">
+<button aria-controls="slide-a-1" aria-current="true" aria-label="Current slide, Go to slide 2" type="button">2</button>
+</li>
+<li>
+<button aria-controls="slide-a-2" aria-label="Go to slide 3" type="button">3</button>
+</li>
+</ul>
+</div>
+</div>",
+}
+`;
+
+exports[`accessibility layer sets up controls looked up in the parent of the slider and follows a move 1`] = `
+{
+  "built": "<div>
+<button aria-controls="region-b" aria-label="Previous slide" class="brz-slick-slider__arrow-prev outside" type="button">&lt;</button>
+<div aria-label="Slider B" aria-roledescription="carousel" class="slider slick-initialized slick-slider slick-dotted" id="region-b" role="region">
+<button class="brz-slick-slider__arrow-prev slick-arrow">&lt;</button>
+<div class="slick-list draggable">
+<div class="slick-track" style="opacity: 1; width: 7000px; transform: translate3d(-1000px, 0px, 0px);">
+<div aria-hidden="true" class="slick-slide slick-cloned" data-slick-index="-1" id="" style="width: 1000px;">
+<div>
+<div class="item" style="width: 100%; display: inline-block;">
+<p>Slide 2</p>
+<a class="link" data-slider-b-tabindex="" href="#s2" tabindex="-1">Link 2</a>
+</div>
+</div>
+</div>
+<div aria-hidden="false" aria-label="Slide 1 of 3" aria-roledescription="slide" class="slick-slide slick-current slick-active" data-slick-index="0" id="slide-b-0" role="group" style="width: 1000px;">
+<div>
+<div class="item" style="width: 100%; display: inline-block;">
+<p>Slide 0</p>
+<a class="link" href="#s0">Link 0</a>
+</div>
+</div>
+</div>
+<div aria-hidden="true" aria-label="Slide 2 of 3" aria-roledescription="slide" class="slick-slide" data-slick-index="1" id="slide-b-1" role="group" style="width: 1000px;">
+<div>
+<div class="item" style="width: 100%; display: inline-block;">
+<p>Slide 1</p>
+<a class="link" data-slider-b-tabindex="" href="#s1" tabindex="-1">Link 1</a>
+</div>
+</div>
+</div>
+<div aria-hidden="true" aria-label="Slide 3 of 3" aria-roledescription="slide" class="slick-slide" data-slick-index="2" id="slide-b-2" role="group" style="width: 1000px;">
+<div>
+<div class="item" style="width: 100%; display: inline-block;">
+<p>Slide 2</p>
+<a class="link" data-slider-b-tabindex="" href="#s2" tabindex="-1">Link 2</a>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide slick-cloned" data-slick-index="3" id="" style="width: 1000px;">
+<div>
+<div class="item" style="width: 100%; display: inline-block;">
+<p>Slide 0</p>
+<a class="link" data-slider-b-tabindex="" href="#s0" tabindex="-1">Link 0</a>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide slick-cloned" data-slick-index="4" id="" style="width: 1000px;">
+<div>
+<div class="item" style="width: 100%; display: inline-block;">
+<p>Slide 1</p>
+<a class="link" data-slider-b-tabindex="" href="#s1" tabindex="-1">Link 1</a>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide slick-cloned" data-slick-index="5" id="" style="width: 1000px;">
+<div>
+<div class="item" style="width: 100%; display: inline-block;">
+<p>Slide 2</p>
+<a class="link" data-slider-b-tabindex="" href="#s2" tabindex="-1">Link 2</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+<button aria-controls="region-b" aria-label="Next slide" class="brz-slick-slider__arrow-next slick-arrow" type="button">&gt;</button>
+<ul aria-label="Slide navigation" class="brz-slick-slider__dots">
+<li class="slick-active">
+<button aria-controls="slide-b-0" aria-current="true" aria-label="Current slide, Go to slide 1" type="button">1</button>
+</li>
+<li>
+<button aria-controls="slide-b-1" aria-label="Go to slide 2" type="button">2</button>
+</li>
+<li>
+<button aria-controls="slide-b-2" aria-label="Go to slide 3" type="button">3</button>
+</li>
+</ul>
+</div>
+</div>",
+  "moved": "<div>
+<button aria-controls="region-b" aria-label="Previous slide" class="brz-slick-slider__arrow-prev outside" type="button">&lt;</button>
+<div aria-label="Slider B" aria-roledescription="carousel" class="slider slick-initialized slick-slider slick-dotted" id="region-b" role="region">
+<button class="brz-slick-slider__arrow-prev slick-arrow">&lt;</button>
+<div class="slick-list draggable">
+<div class="slick-track" style="opacity: 1; width: 7000px; transform: translate3d(-2000px, 0px, 0px);">
+<div aria-hidden="true" class="slick-slide slick-cloned" data-slick-index="-1" id="" style="width: 1000px;">
+<div>
+<div class="item" style="width: 100%; display: inline-block;">
+<p>Slide 2</p>
+<a class="link" data-slider-b-tabindex="" href="#s2" tabindex="-1">Link 2</a>
+</div>
+</div>
+</div>
+<div aria-hidden="true" aria-label="Slide 1 of 3" aria-roledescription="slide" class="slick-slide" data-slick-index="0" id="slide-b-0" role="group" style="width: 1000px;">
+<div>
+<div class="item" style="width: 100%; display: inline-block;">
+<p>Slide 0</p>
+<a class="link" data-slider-b-tabindex="" href="#s0" tabindex="-1">Link 0</a>
+</div>
+</div>
+</div>
+<div aria-hidden="false" aria-label="Slide 2 of 3" aria-roledescription="slide" class="slick-slide slick-current slick-active" data-slick-index="1" id="slide-b-1" role="group" style="width: 1000px;">
+<div>
+<div class="item" style="width: 100%; display: inline-block;">
+<p>Slide 1</p>
+<a class="link" href="#s1">Link 1</a>
+</div>
+</div>
+</div>
+<div aria-hidden="true" aria-label="Slide 3 of 3" aria-roledescription="slide" class="slick-slide" data-slick-index="2" id="slide-b-2" role="group" style="width: 1000px;">
+<div>
+<div class="item" style="width: 100%; display: inline-block;">
+<p>Slide 2</p>
+<a class="link" data-slider-b-tabindex="" href="#s2" tabindex="-1">Link 2</a>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide slick-cloned" data-slick-index="3" id="" style="width: 1000px;">
+<div>
+<div class="item" style="width: 100%; display: inline-block;">
+<p>Slide 0</p>
+<a class="link" data-slider-b-tabindex="" href="#s0" tabindex="-1">Link 0</a>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide slick-cloned" data-slick-index="4" id="" style="width: 1000px;">
+<div>
+<div class="item" style="width: 100%; display: inline-block;">
+<p>Slide 1</p>
+<a class="link" data-slider-b-tabindex="" href="#s1" tabindex="-1">Link 1</a>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide slick-cloned" data-slick-index="5" id="" style="width: 1000px;">
+<div>
+<div class="item" style="width: 100%; display: inline-block;">
+<p>Slide 2</p>
+<a class="link" data-slider-b-tabindex="" href="#s2" tabindex="-1">Link 2</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+<button aria-controls="region-b" aria-label="Next slide" class="brz-slick-slider__arrow-next slick-arrow" type="button">&gt;</button>
+<ul aria-label="Slide navigation" class="brz-slick-slider__dots">
+<li class="">
+<button aria-controls="slide-b-0" aria-label="Go to slide 1" type="button">1</button>
+</li>
+<li class="slick-active">
+<button aria-controls="slide-b-1" aria-current="true" aria-label="Current slide, Go to slide 2" type="button">2</button>
+</li>
+<li>
+<button aria-controls="slide-b-2" aria-label="Go to slide 3" type="button">3</button>
+</li>
+</ul>
+</div>
+</div>",
+}
+`;
+
+exports[`autoplay advances on its own 1`] = `
+[
+  "0",
+  "1",
+]
+`;
+
+exports[`autoplay holds after pause() 1`] = `
+[
+  "0",
+  "0",
+  "0",
+  "0",
+]
+`;
+
+exports[`autoplay holds while focus is inside 1`] = `
+[
+  "0",
+  "0",
+  "0",
+  "0",
+]
+`;
+
+exports[`autoplay holds while hovered 1`] = `
+[
+  "0",
+  "0",
+  "0",
+  "0",
+]
+`;
+
+exports[`autoplay holds while the page is hidden 1`] = `
+{
+  "afterShown": "1",
+  "whileHidden": "0",
+}
+`;
+
+exports[`autoplay ignores hover when pauseOnHover is off 1`] = `
+[
+  "0",
+  "1",
+]
+`;
+
+exports[`autoplay keeps going 1`] = `
+[
+  "0",
+  "1",
+  "1",
+  "2",
+  "2",
+  "0",
+]
+`;
+
+exports[`autoplay resumes after play() 1`] = `
+[
+  "0",
+  "1",
+]
+`;
+
+exports[`autoplay resumes after the pointer leaves 1`] = `
+[
+  "0",
+  "1",
+]
+`;
+
+exports[`autoplay starts on play() when it was off 1`] = `
+[
+  "0",
+  "1",
+]
+`;
+
+exports[`autoplay turns back at the end without loop 1`] = `
+[
+  "0",
+  "1",
+  "1",
+  "2",
+  "2",
+  "1",
+  "1",
+  "0",
+  "0",
+  "1",
+]
+`;
+
+exports[`building builds a positioned track (no transform) 1`] = `
+"<div class="slider slick-initialized slick-slider slick-dotted">
+<button aria-label="Previous slide" class="arrow arrow-prev slick-arrow" type="button">&lt;</button>
+<div class="slick-list draggable">
+<div class="slick-track" style="opacity: 1; width: 9000px; left: -1000px;">
+<div aria-hidden="true" class="slick-slide slick-cloned" data-slick-index="-1" id="" style="width: 1000px;" tabindex="-1">
+<div>
+<div class="item" style="width: 100%; display: inline-block;">
+<p>Slide 3</p>
+<a class="link" href="#s3" tabindex="-1">Link 3</a>
+</div>
+</div>
+</div>
+<div aria-hidden="false" class="slick-slide slick-current slick-active" data-slick-index="0" id="slick-slide#" role="tabpanel" style="width: 1000px;">
+<div>
+<div class="item" style="width: 100%; display: inline-block;">
+<p>Slide 0</p>
+<a class="link" href="#s0" tabindex="0">Link 0</a>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide" data-slick-index="1" id="slick-slide#" role="tabpanel" style="width: 1000px;" tabindex="-1">
+<div>
+<div class="item" style="width: 100%; display: inline-block;">
+<p>Slide 1</p>
+<a class="link" href="#s1" tabindex="-1">Link 1</a>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide" data-slick-index="2" id="slick-slide#" role="tabpanel" style="width: 1000px;" tabindex="-1">
+<div>
+<div class="item" style="width: 100%; display: inline-block;">
+<p>Slide 2</p>
+<a class="link" href="#s2" tabindex="-1">Link 2</a>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide" data-slick-index="3" id="slick-slide#" role="tabpanel" style="width: 1000px;" tabindex="-1">
+<div>
+<div class="item" style="width: 100%; display: inline-block;">
+<p>Slide 3</p>
+<a class="link" href="#s3" tabindex="-1">Link 3</a>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide slick-cloned" data-slick-index="4" id="" style="width: 1000px;" tabindex="-1">
+<div>
+<div class="item" style="width: 100%; display: inline-block;">
+<p>Slide 0</p>
+<a class="link" href="#s0" tabindex="-1">Link 0</a>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide slick-cloned" data-slick-index="5" id="" style="width: 1000px;" tabindex="-1">
+<div>
+<div class="item" style="width: 100%; display: inline-block;">
+<p>Slide 1</p>
+<a class="link" href="#s1" tabindex="-1">Link 1</a>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide slick-cloned" data-slick-index="6" id="" style="width: 1000px;" tabindex="-1">
+<div>
+<div class="item" style="width: 100%; display: inline-block;">
+<p>Slide 2</p>
+<a class="link" href="#s2" tabindex="-1">Link 2</a>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide slick-cloned" data-slick-index="7" id="" style="width: 1000px;" tabindex="-1">
+<div>
+<div class="item" style="width: 100%; display: inline-block;">
+<p>Slide 3</p>
+<a class="link" href="#s3" tabindex="-1">Link 3</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+<button aria-label="Next slide" class="arrow arrow-next slick-arrow" type="button">&gt;</button>
+<ul class="dots" role="tablist">
+<li class="slick-active" role="presentation">
+<button aria-controls="slick-slide#" aria-label="1 of 4" aria-selected="true" id="slick-slide-control#" role="tab" tabindex="0" type="button">1</button>
+</li>
+<li role="presentation">
+<button aria-controls="slick-slide#" aria-label="2 of 4" id="slick-slide-control#" role="tab" tabindex="-1" type="button">2</button>
+</li>
+<li role="presentation">
+<button aria-controls="slick-slide#" aria-label="3 of 4" id="slick-slide-control#" role="tab" tabindex="-1" type="button">3</button>
+</li>
+<li role="presentation">
+<button aria-controls="slick-slide#" aria-label="4 of 4" id="slick-slide-control#" role="tab" tabindex="-1" type="button">4</button>
+</li>
+</ul>
+</div>"
+`;
+
+exports[`building builds a positioned track (no transform) 2`] = `
+[
+  "setPosition 0 (4)",
+  "init 0 (4)",
+  "setPosition 0 (4)",
+]
+`;
+
+exports[`building builds a single slide 1`] = `
+"<div class="slider slick-initialized slick-slider">
+<div class="slick-list draggable">
+<div class="slick-track" style="opacity: 1; width: 1000px; transform: translate3d(0px, 0px, 0px);">
+<div aria-hidden="false" class="slick-slide slick-current slick-active" data-slick-index="0" style="width: 1000px;">
+<div>
+<div class="item" style="width: 100%; display: inline-block;">
+<p>Slide 0</p>
+<a class="link" href="#s0" tabindex="0">Link 0</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>"
+`;
+
+exports[`building builds a single slide 2`] = `
+[
+  "setPosition 0 (1)",
+  "init 0 (1)",
+  "setPosition 0 (1)",
+]
+`;
+
+exports[`building builds arrows given as false and as empty markup 1`] = `
+"<div class="slider slick-initialized slick-slider slick-dotted">
+<div class="slick-list draggable">
+<div class="slick-track" style="opacity: 1; width: 9000px; transform: translate3d(-1000px, 0px, 0px);">
+<div aria-hidden="true" class="slick-slide slick-cloned" data-slick-index="-1" id="" style="width: 1000px;" tabindex="-1">
+<div>
+<div class="item" style="width: 100%; display: inline-block;">
+<p>Slide 3</p>
+<a class="link" href="#s3" tabindex="-1">Link 3</a>
+</div>
+</div>
+</div>
+<div aria-hidden="false" class="slick-slide slick-current slick-active" data-slick-index="0" id="slick-slide#" role="tabpanel" style="width: 1000px;">
+<div>
+<div class="item" style="width: 100%; display: inline-block;">
+<p>Slide 0</p>
+<a class="link" href="#s0" tabindex="0">Link 0</a>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide" data-slick-index="1" id="slick-slide#" role="tabpanel" style="width: 1000px;" tabindex="-1">
+<div>
+<div class="item" style="width: 100%; display: inline-block;">
+<p>Slide 1</p>
+<a class="link" href="#s1" tabindex="-1">Link 1</a>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide" data-slick-index="2" id="slick-slide#" role="tabpanel" style="width: 1000px;" tabindex="-1">
+<div>
+<div class="item" style="width: 100%; display: inline-block;">
+<p>Slide 2</p>
+<a class="link" href="#s2" tabindex="-1">Link 2</a>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide" data-slick-index="3" id="slick-slide#" role="tabpanel" style="width: 1000px;" tabindex="-1">
+<div>
+<div class="item" style="width: 100%; display: inline-block;">
+<p>Slide 3</p>
+<a class="link" href="#s3" tabindex="-1">Link 3</a>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide slick-cloned" data-slick-index="4" id="" style="width: 1000px;" tabindex="-1">
+<div>
+<div class="item" style="width: 100%; display: inline-block;">
+<p>Slide 0</p>
+<a class="link" href="#s0" tabindex="-1">Link 0</a>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide slick-cloned" data-slick-index="5" id="" style="width: 1000px;" tabindex="-1">
+<div>
+<div class="item" style="width: 100%; display: inline-block;">
+<p>Slide 1</p>
+<a class="link" href="#s1" tabindex="-1">Link 1</a>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide slick-cloned" data-slick-index="6" id="" style="width: 1000px;" tabindex="-1">
+<div>
+<div class="item" style="width: 100%; display: inline-block;">
+<p>Slide 2</p>
+<a class="link" href="#s2" tabindex="-1">Link 2</a>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide slick-cloned" data-slick-index="7" id="" style="width: 1000px;" tabindex="-1">
+<div>
+<div class="item" style="width: 100%; display: inline-block;">
+<p>Slide 3</p>
+<a class="link" href="#s3" tabindex="-1">Link 3</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+<ul class="dots" role="tablist">
+<li class="slick-active" role="presentation">
+<button aria-controls="slick-slide#" aria-label="1 of 4" aria-selected="true" id="slick-slide-control#" role="tab" tabindex="0" type="button">1</button>
+</li>
+<li role="presentation">
+<button aria-controls="slick-slide#" aria-label="2 of 4" id="slick-slide-control#" role="tab" tabindex="-1" type="button">2</button>
+</li>
+<li role="presentation">
+<button aria-controls="slick-slide#" aria-label="3 of 4" id="slick-slide-control#" role="tab" tabindex="-1" type="button">3</button>
+</li>
+<li role="presentation">
+<button aria-controls="slick-slide#" aria-label="4 of 4" id="slick-slide-control#" role="tab" tabindex="-1" type="button">4</button>
+</li>
+</ul>
+</div>"
+`;
+
+exports[`building builds arrows given as false and as empty markup 2`] = `
+[
+  "setPosition 0 (4)",
+  "init 0 (4)",
+  "setPosition 0 (4)",
+]
+`;
+
+exports[`building builds centre mode with variable width 1`] = `
+"<div class="slider slick-initialized slick-slider slick-dotted">
+<button aria-label="Previous slide" class="arrow arrow-prev slick-arrow" type="button">&lt;</button>
+<div class="slick-list draggable" style="padding: 0px 60px;">
+<div class="slick-track" style="opacity: 1; width: 20000px; transform: translate3d(0px, 0px, 0px);">
+<div aria-hidden="true" class="item slick-slide slick-cloned" data-slick-index="-2" id="" tabindex="-1">
+<p>Slide 2</p>
+<a class="link" href="#s2" tabindex="-1">Link 2</a>
+</div>
+<div aria-hidden="true" class="item slick-slide slick-cloned" data-slick-index="-1" id="" tabindex="-1">
+<p>Slide 3</p>
+<a class="link" href="#s3" tabindex="-1">Link 3</a>
+</div>
+<div aria-hidden="false" class="item slick-slide slick-current slick-active slick-center" data-slick-index="0" id="slick-slide#" role="tabpanel">
+<p>Slide 0</p>
+<a class="link" href="#s0" tabindex="0">Link 0</a>
+</div>
+<div aria-hidden="true" class="item slick-slide" data-slick-index="1" id="slick-slide#" role="tabpanel" tabindex="-1">
+<p>Slide 1</p>
+<a class="link" href="#s1" tabindex="-1">Link 1</a>
+</div>
+<div aria-hidden="true" class="item slick-slide" data-slick-index="2" id="slick-slide#" role="tabpanel" tabindex="-1">
+<p>Slide 2</p>
+<a class="link" href="#s2" tabindex="-1">Link 2</a>
+</div>
+<div aria-hidden="true" class="item slick-slide" data-slick-index="3" id="slick-slide#" role="tabpanel" tabindex="-1">
+<p>Slide 3</p>
+<a class="link" href="#s3" tabindex="-1">Link 3</a>
+</div>
+<div aria-hidden="true" class="item slick-slide slick-cloned slick-center" data-slick-index="4" id="" tabindex="-1">
+<p>Slide 0</p>
+<a class="link" href="#s0" tabindex="-1">Link 0</a>
+</div>
+<div aria-hidden="true" class="item slick-slide slick-cloned" data-slick-index="5" id="" tabindex="-1">
+<p>Slide 1</p>
+<a class="link" href="#s1" tabindex="-1">Link 1</a>
+</div>
+<div aria-hidden="true" class="item slick-slide slick-cloned" data-slick-index="6" id="" tabindex="-1">
+<p>Slide 2</p>
+<a class="link" href="#s2" tabindex="-1">Link 2</a>
+</div>
+<div aria-hidden="true" class="item slick-slide slick-cloned" data-slick-index="7" id="" tabindex="-1">
+<p>Slide 3</p>
+<a class="link" href="#s3" tabindex="-1">Link 3</a>
+</div>
+</div>
+</div>
+<button aria-label="Next slide" class="arrow arrow-next slick-arrow" type="button">&gt;</button>
+<ul class="dots" role="tablist">
+<li class="slick-active" role="presentation">
+<button aria-controls="slick-slide#" aria-label="1 of 4" aria-selected="true" id="slick-slide-control#" role="tab" tabindex="0" type="button">1</button>
+</li>
+<li role="presentation">
+<button aria-controls="slick-slide#" aria-label="2 of 4" id="slick-slide-control#" role="tab" tabindex="-1" type="button">2</button>
+</li>
+<li role="presentation">
+<button aria-controls="slick-slide#" aria-label="3 of 4" id="slick-slide-control#" role="tab" tabindex="-1" type="button">3</button>
+</li>
+<li role="presentation">
+<button aria-controls="slick-slide#" aria-label="4 of 4" id="slick-slide-control#" role="tab" tabindex="-1" type="button">4</button>
+</li>
+</ul>
+</div>"
+`;
+
+exports[`building builds centre mode with variable width 2`] = `
+[
+  "setPosition 0 (4)",
+  "init 0 (4)",
+  "setPosition 0 (4)",
+]
+`;
+
+exports[`building builds custom dots 1`] = `
+"<div class="slider slick-initialized slick-slider slick-dotted">
+<button aria-label="Previous slide" class="arrow arrow-prev slick-arrow" type="button">&lt;</button>
+<div class="slick-list draggable">
+<div class="slick-track" style="opacity: 1; width: 9000px; transform: translate3d(-1000px, 0px, 0px);">
+<div aria-hidden="true" class="slick-slide slick-cloned" data-slick-index="-1" id="" style="width: 1000px;" tabindex="-1">
+<div>
+<div class="item" style="width: 100%; display: inline-block;">
+<p>Slide 3</p>
+<a class="link" href="#s3" tabindex="-1">Link 3</a>
+</div>
+</div>
+</div>
+<div aria-hidden="false" class="slick-slide slick-current slick-active" data-slick-index="0" id="slick-slide#" role="tabpanel" style="width: 1000px;">
+<div>
+<div class="item" style="width: 100%; display: inline-block;">
+<p>Slide 0</p>
+<a class="link" href="#s0" tabindex="0">Link 0</a>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide" data-slick-index="1" id="slick-slide#" role="tabpanel" style="width: 1000px;" tabindex="-1">
+<div>
+<div class="item" style="width: 100%; display: inline-block;">
+<p>Slide 1</p>
+<a class="link" href="#s1" tabindex="-1">Link 1</a>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide" data-slick-index="2" id="slick-slide#" role="tabpanel" style="width: 1000px;" tabindex="-1">
+<div>
+<div class="item" style="width: 100%; display: inline-block;">
+<p>Slide 2</p>
+<a class="link" href="#s2" tabindex="-1">Link 2</a>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide" data-slick-index="3" id="slick-slide#" role="tabpanel" style="width: 1000px;" tabindex="-1">
+<div>
+<div class="item" style="width: 100%; display: inline-block;">
+<p>Slide 3</p>
+<a class="link" href="#s3" tabindex="-1">Link 3</a>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide slick-cloned" data-slick-index="4" id="" style="width: 1000px;" tabindex="-1">
+<div>
+<div class="item" style="width: 100%; display: inline-block;">
+<p>Slide 0</p>
+<a class="link" href="#s0" tabindex="-1">Link 0</a>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide slick-cloned" data-slick-index="5" id="" style="width: 1000px;" tabindex="-1">
+<div>
+<div class="item" style="width: 100%; display: inline-block;">
+<p>Slide 1</p>
+<a class="link" href="#s1" tabindex="-1">Link 1</a>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide slick-cloned" data-slick-index="6" id="" style="width: 1000px;" tabindex="-1">
+<div>
+<div class="item" style="width: 100%; display: inline-block;">
+<p>Slide 2</p>
+<a class="link" href="#s2" tabindex="-1">Link 2</a>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide slick-cloned" data-slick-index="7" id="" style="width: 1000px;" tabindex="-1">
+<div>
+<div class="item" style="width: 100%; display: inline-block;">
+<p>Slide 3</p>
+<a class="link" href="#s3" tabindex="-1">Link 3</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+<button aria-label="Next slide" class="arrow arrow-next slick-arrow" type="button">&gt;</button>
+<ul class="dots" role="tablist">
+<li class="slick-active" role="presentation">
+<button aria-controls="slick-slide#" aria-label="1 of 4" aria-selected="true" id="slick-slide-control#" role="tab" tabindex="0">
+<i>0</i>
+</button>
+</li>
+<li role="presentation">
+<button aria-controls="slick-slide#" aria-label="2 of 4" id="slick-slide-control#" role="tab" tabindex="-1">
+<i>1</i>
+</button>
+</li>
+<li role="presentation">
+<button aria-controls="slick-slide#" aria-label="3 of 4" id="slick-slide-control#" role="tab" tabindex="-1">
+<i>2</i>
+</button>
+</li>
+<li role="presentation">
+<button aria-controls="slick-slide#" aria-label="4 of 4" id="slick-slide-control#" role="tab" tabindex="-1">
+<i>3</i>
+</button>
+</li>
+</ul>
+</div>"
+`;
+
+exports[`building builds custom dots 2`] = `
+[
+  "setPosition 0 (4)",
+  "init 0 (4)",
+  "setPosition 0 (4)",
+]
+`;
+
+exports[`building builds fade 1`] = `
+"<div class="slider slick-initialized slick-slider slick-dotted">
+<button aria-label="Previous slide" class="arrow arrow-prev slick-arrow" type="button">&lt;</button>
+<div class="slick-list draggable">
+<div class="slick-track" style="opacity: 1; width: 4000px;">
+<div aria-hidden="false" class="slick-slide slick-current slick-active" data-slick-index="0" id="slick-slide#" role="tabpanel" style="width: 1000px; position: relative; left: 0px; top: 0px; z-index: 999; opacity: 1;">
+<div>
+<div class="item" style="width: 100%; display: inline-block;">
+<p>Slide 0</p>
+<a class="link" href="#s0" tabindex="0">Link 0</a>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide" data-slick-index="1" id="slick-slide#" role="tabpanel" style="width: 1000px; position: relative; left: -1000px; top: 0px; z-index: 998; opacity: 0;" tabindex="-1">
+<div>
+<div class="item" style="width: 100%; display: inline-block;">
+<p>Slide 1</p>
+<a class="link" href="#s1" tabindex="-1">Link 1</a>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide" data-slick-index="2" id="slick-slide#" role="tabpanel" style="width: 1000px; position: relative; left: -2000px; top: 0px; z-index: 998; opacity: 0;" tabindex="-1">
+<div>
+<div class="item" style="width: 100%; display: inline-block;">
+<p>Slide 2</p>
+<a class="link" href="#s2" tabindex="-1">Link 2</a>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide" data-slick-index="3" id="slick-slide#" role="tabpanel" style="width: 1000px; position: relative; left: -3000px; top: 0px; z-index: 998; opacity: 0;" tabindex="-1">
+<div>
+<div class="item" style="width: 100%; display: inline-block;">
+<p>Slide 3</p>
+<a class="link" href="#s3" tabindex="-1">Link 3</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+<button aria-label="Next slide" class="arrow arrow-next slick-arrow" type="button">&gt;</button>
+<ul class="dots" role="tablist">
+<li class="slick-active" role="presentation">
+<button aria-controls="slick-slide#" aria-label="1 of 4" aria-selected="true" id="slick-slide-control#" role="tab" tabindex="0" type="button">1</button>
+</li>
+<li role="presentation">
+<button aria-controls="slick-slide#" aria-label="2 of 4" id="slick-slide-control#" role="tab" tabindex="-1" type="button">2</button>
+</li>
+<li role="presentation">
+<button aria-controls="slick-slide#" aria-label="3 of 4" id="slick-slide-control#" role="tab" tabindex="-1" type="button">3</button>
+</li>
+<li role="presentation">
+<button aria-controls="slick-slide#" aria-label="4 of 4" id="slick-slide-control#" role="tab" tabindex="-1" type="button">4</button>
+</li>
+</ul>
+</div>"
+`;
+
+exports[`building builds fade 2`] = `
+[
+  "setPosition 0 (4)",
+  "init 0 (4)",
+  "setPosition 0 (4)",
+]
+`;
+
+exports[`building builds fewer slides than shown 1`] = `
+"<div class="slider slick-initialized slick-slider">
+<div class="slick-list draggable">
+<div class="slick-track" style="opacity: 1; width: 668px; transform: translate3d(0px, 0px, 0px);">
+<div aria-hidden="false" class="slick-slide slick-current slick-active" data-slick-index="0" style="width: 334px;">
+<div>
+<div class="item" style="width: 100%; display: inline-block;">
+<p>Slide 0</p>
+<a class="link" href="#s0" tabindex="0">Link 0</a>
+</div>
+</div>
+</div>
+<div aria-hidden="false" class="slick-slide slick-active" data-slick-index="1" style="width: 334px;">
+<div>
+<div class="item" style="width: 100%; display: inline-block;">
+<p>Slide 1</p>
+<a class="link" href="#s1" tabindex="0">Link 1</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>"
+`;
+
+exports[`building builds fewer slides than shown 2`] = `
+[
+  "setPosition 0 (2)",
+  "init 0 (2)",
+  "setPosition 0 (2)",
+]
+`;
+
+exports[`building builds no accessibility 1`] = `
+"<div class="slider slick-initialized slick-slider slick-dotted">
+<button aria-label="Previous slide" class="arrow arrow-prev slick-arrow" type="button">&lt;</button>
+<div class="slick-list draggable">
+<div class="slick-track" style="opacity: 1; width: 9000px; transform: translate3d(-1000px, 0px, 0px);">
+<div aria-hidden="true" class="slick-slide slick-cloned" data-slick-index="-1" id="" style="width: 1000px;">
+<div>
+<div class="item" style="width: 100%; display: inline-block;">
+<p>Slide 3</p>
+<a class="link" href="#s3">Link 3</a>
+</div>
+</div>
+</div>
+<div aria-hidden="false" class="slick-slide slick-current slick-active" data-slick-index="0" style="width: 1000px;">
+<div>
+<div class="item" style="width: 100%; display: inline-block;">
+<p>Slide 0</p>
+<a class="link" href="#s0">Link 0</a>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide" data-slick-index="1" style="width: 1000px;">
+<div>
+<div class="item" style="width: 100%; display: inline-block;">
+<p>Slide 1</p>
+<a class="link" href="#s1">Link 1</a>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide" data-slick-index="2" style="width: 1000px;">
+<div>
+<div class="item" style="width: 100%; display: inline-block;">
+<p>Slide 2</p>
+<a class="link" href="#s2">Link 2</a>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide" data-slick-index="3" style="width: 1000px;">
+<div>
+<div class="item" style="width: 100%; display: inline-block;">
+<p>Slide 3</p>
+<a class="link" href="#s3">Link 3</a>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide slick-cloned" data-slick-index="4" id="" style="width: 1000px;">
+<div>
+<div class="item" style="width: 100%; display: inline-block;">
+<p>Slide 0</p>
+<a class="link" href="#s0">Link 0</a>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide slick-cloned" data-slick-index="5" id="" style="width: 1000px;">
+<div>
+<div class="item" style="width: 100%; display: inline-block;">
+<p>Slide 1</p>
+<a class="link" href="#s1">Link 1</a>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide slick-cloned" data-slick-index="6" id="" style="width: 1000px;">
+<div>
+<div class="item" style="width: 100%; display: inline-block;">
+<p>Slide 2</p>
+<a class="link" href="#s2">Link 2</a>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide slick-cloned" data-slick-index="7" id="" style="width: 1000px;">
+<div>
+<div class="item" style="width: 100%; display: inline-block;">
+<p>Slide 3</p>
+<a class="link" href="#s3">Link 3</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+<button aria-label="Next slide" class="arrow arrow-next slick-arrow" type="button">&gt;</button>
+<ul class="dots">
+<li class="slick-active">
+<button type="button">1</button>
+</li>
+<li>
+<button type="button">2</button>
+</li>
+<li>
+<button type="button">3</button>
+</li>
+<li>
+<button type="button">4</button>
+</li>
+</ul>
+</div>"
+`;
+
+exports[`building builds no accessibility 2`] = `
+[
+  "setPosition 0 (4)",
+  "init 0 (4)",
+  "setPosition 0 (4)",
+]
+`;
+
+exports[`building builds no arrows 1`] = `
+"<div class="slider slick-initialized slick-slider slick-dotted">
+<div class="slick-list draggable">
+<div class="slick-track" style="opacity: 1; width: 9000px; transform: translate3d(-1000px, 0px, 0px);">
+<div aria-hidden="true" class="slick-slide slick-cloned" data-slick-index="-1" id="" style="width: 1000px;" tabindex="-1">
+<div>
+<div class="item" style="width: 100%; display: inline-block;">
+<p>Slide 3</p>
+<a class="link" href="#s3" tabindex="-1">Link 3</a>
+</div>
+</div>
+</div>
+<div aria-hidden="false" class="slick-slide slick-current slick-active" data-slick-index="0" id="slick-slide#" role="tabpanel" style="width: 1000px;">
+<div>
+<div class="item" style="width: 100%; display: inline-block;">
+<p>Slide 0</p>
+<a class="link" href="#s0" tabindex="0">Link 0</a>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide" data-slick-index="1" id="slick-slide#" role="tabpanel" style="width: 1000px;" tabindex="-1">
+<div>
+<div class="item" style="width: 100%; display: inline-block;">
+<p>Slide 1</p>
+<a class="link" href="#s1" tabindex="-1">Link 1</a>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide" data-slick-index="2" id="slick-slide#" role="tabpanel" style="width: 1000px;" tabindex="-1">
+<div>
+<div class="item" style="width: 100%; display: inline-block;">
+<p>Slide 2</p>
+<a class="link" href="#s2" tabindex="-1">Link 2</a>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide" data-slick-index="3" id="slick-slide#" role="tabpanel" style="width: 1000px;" tabindex="-1">
+<div>
+<div class="item" style="width: 100%; display: inline-block;">
+<p>Slide 3</p>
+<a class="link" href="#s3" tabindex="-1">Link 3</a>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide slick-cloned" data-slick-index="4" id="" style="width: 1000px;" tabindex="-1">
+<div>
+<div class="item" style="width: 100%; display: inline-block;">
+<p>Slide 0</p>
+<a class="link" href="#s0" tabindex="-1">Link 0</a>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide slick-cloned" data-slick-index="5" id="" style="width: 1000px;" tabindex="-1">
+<div>
+<div class="item" style="width: 100%; display: inline-block;">
+<p>Slide 1</p>
+<a class="link" href="#s1" tabindex="-1">Link 1</a>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide slick-cloned" data-slick-index="6" id="" style="width: 1000px;" tabindex="-1">
+<div>
+<div class="item" style="width: 100%; display: inline-block;">
+<p>Slide 2</p>
+<a class="link" href="#s2" tabindex="-1">Link 2</a>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide slick-cloned" data-slick-index="7" id="" style="width: 1000px;" tabindex="-1">
+<div>
+<div class="item" style="width: 100%; display: inline-block;">
+<p>Slide 3</p>
+<a class="link" href="#s3" tabindex="-1">Link 3</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+<ul class="dots" role="tablist">
+<li class="slick-active" role="presentation">
+<button aria-controls="slick-slide#" aria-label="1 of 4" aria-selected="true" id="slick-slide-control#" role="tab" tabindex="0" type="button">1</button>
+</li>
+<li role="presentation">
+<button aria-controls="slick-slide#" aria-label="2 of 4" id="slick-slide-control#" role="tab" tabindex="-1" type="button">2</button>
+</li>
+<li role="presentation">
+<button aria-controls="slick-slide#" aria-label="3 of 4" id="slick-slide-control#" role="tab" tabindex="-1" type="button">3</button>
+</li>
+<li role="presentation">
+<button aria-controls="slick-slide#" aria-label="4 of 4" id="slick-slide-control#" role="tab" tabindex="-1" type="button">4</button>
+</li>
+</ul>
+</div>"
+`;
+
+exports[`building builds no arrows 2`] = `
+[
+  "setPosition 0 (4)",
+  "init 0 (4)",
+  "setPosition 0 (4)",
+]
+`;
+
+exports[`building builds no dots 1`] = `
+"<div class="slider slick-initialized slick-slider">
+<button aria-label="Previous slide" class="arrow arrow-prev slick-arrow" type="button">&lt;</button>
+<div class="slick-list draggable">
+<div class="slick-track" style="opacity: 1; width: 9000px; transform: translate3d(-1000px, 0px, 0px);">
+<div aria-hidden="true" class="slick-slide slick-cloned" data-slick-index="-1" id="" style="width: 1000px;" tabindex="-1">
+<div>
+<div class="item" style="width: 100%; display: inline-block;">
+<p>Slide 3</p>
+<a class="link" href="#s3" tabindex="-1">Link 3</a>
+</div>
+</div>
+</div>
+<div aria-hidden="false" class="slick-slide slick-current slick-active" data-slick-index="0" style="width: 1000px;">
+<div>
+<div class="item" style="width: 100%; display: inline-block;">
+<p>Slide 0</p>
+<a class="link" href="#s0" tabindex="0">Link 0</a>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide" data-slick-index="1" style="width: 1000px;" tabindex="-1">
+<div>
+<div class="item" style="width: 100%; display: inline-block;">
+<p>Slide 1</p>
+<a class="link" href="#s1" tabindex="-1">Link 1</a>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide" data-slick-index="2" style="width: 1000px;" tabindex="-1">
+<div>
+<div class="item" style="width: 100%; display: inline-block;">
+<p>Slide 2</p>
+<a class="link" href="#s2" tabindex="-1">Link 2</a>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide" data-slick-index="3" style="width: 1000px;" tabindex="-1">
+<div>
+<div class="item" style="width: 100%; display: inline-block;">
+<p>Slide 3</p>
+<a class="link" href="#s3" tabindex="-1">Link 3</a>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide slick-cloned" data-slick-index="4" id="" style="width: 1000px;" tabindex="-1">
+<div>
+<div class="item" style="width: 100%; display: inline-block;">
+<p>Slide 0</p>
+<a class="link" href="#s0" tabindex="-1">Link 0</a>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide slick-cloned" data-slick-index="5" id="" style="width: 1000px;" tabindex="-1">
+<div>
+<div class="item" style="width: 100%; display: inline-block;">
+<p>Slide 1</p>
+<a class="link" href="#s1" tabindex="-1">Link 1</a>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide slick-cloned" data-slick-index="6" id="" style="width: 1000px;" tabindex="-1">
+<div>
+<div class="item" style="width: 100%; display: inline-block;">
+<p>Slide 2</p>
+<a class="link" href="#s2" tabindex="-1">Link 2</a>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide slick-cloned" data-slick-index="7" id="" style="width: 1000px;" tabindex="-1">
+<div>
+<div class="item" style="width: 100%; display: inline-block;">
+<p>Slide 3</p>
+<a class="link" href="#s3" tabindex="-1">Link 3</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+<button aria-label="Next slide" class="arrow arrow-next slick-arrow" type="button">&gt;</button>
+</div>"
+`;
+
+exports[`building builds no dots 2`] = `
+[
+  "setPosition 0 (4)",
+  "init 0 (4)",
+  "setPosition 0 (4)",
+]
+`;
+
+exports[`building builds no loop 1`] = `
+"<div class="slider slick-initialized slick-slider slick-dotted">
+<button aria-disabled="true" aria-label="Previous slide" class="arrow arrow-prev slick-arrow slick-disabled" type="button">&lt;</button>
+<div class="slick-list draggable">
+<div class="slick-track" style="opacity: 1; width: 4000px; transform: translate3d(0px, 0px, 0px);">
+<div aria-hidden="false" class="slick-slide slick-current slick-active" data-slick-index="0" id="slick-slide#" role="tabpanel" style="width: 1000px;">
+<div>
+<div class="item" style="width: 100%; display: inline-block;">
+<p>Slide 0</p>
+<a class="link" href="#s0" tabindex="0">Link 0</a>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide" data-slick-index="1" id="slick-slide#" role="tabpanel" style="width: 1000px;" tabindex="-1">
+<div>
+<div class="item" style="width: 100%; display: inline-block;">
+<p>Slide 1</p>
+<a class="link" href="#s1" tabindex="-1">Link 1</a>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide" data-slick-index="2" id="slick-slide#" role="tabpanel" style="width: 1000px;" tabindex="-1">
+<div>
+<div class="item" style="width: 100%; display: inline-block;">
+<p>Slide 2</p>
+<a class="link" href="#s2" tabindex="-1">Link 2</a>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide" data-slick-index="3" id="slick-slide#" role="tabpanel" style="width: 1000px;" tabindex="-1">
+<div>
+<div class="item" style="width: 100%; display: inline-block;">
+<p>Slide 3</p>
+<a class="link" href="#s3" tabindex="-1">Link 3</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+<button aria-disabled="false" aria-label="Next slide" class="arrow arrow-next slick-arrow" type="button">&gt;</button>
+<ul class="dots" role="tablist">
+<li class="slick-active" role="presentation">
+<button aria-controls="slick-slide#" aria-label="1 of 4" aria-selected="true" id="slick-slide-control#" role="tab" tabindex="0" type="button">1</button>
+</li>
+<li role="presentation">
+<button aria-controls="slick-slide#" aria-label="2 of 4" id="slick-slide-control#" role="tab" tabindex="-1" type="button">2</button>
+</li>
+<li role="presentation">
+<button aria-controls="slick-slide#" aria-label="3 of 4" id="slick-slide-control#" role="tab" tabindex="-1" type="button">3</button>
+</li>
+<li role="presentation">
+<button aria-controls="slick-slide#" aria-label="4 of 4" id="slick-slide-control#" role="tab" tabindex="-1" type="button">4</button>
+</li>
+</ul>
+</div>"
+`;
+
+exports[`building builds no loop 2`] = `
+[
+  "setPosition 0 (4)",
+  "init 0 (4)",
+  "setPosition 0 (4)",
+]
+`;
+
+exports[`building builds right to left 1`] = `
+"<div class="slider slick-initialized slick-slider slick-dotted">
+<button aria-label="Previous slide" class="arrow arrow-prev slick-arrow" type="button">&lt;</button>
+<div class="slick-list draggable">
+<div class="slick-track" style="opacity: 1; width: 9000px; transform: translate3d(1000px, 0px, 0px);">
+<div aria-hidden="true" class="slick-slide slick-cloned" data-slick-index="-1" id="" style="width: 1000px;" tabindex="-1">
+<div>
+<div class="item" style="width: 100%; display: inline-block;">
+<p>Slide 3</p>
+<a class="link" href="#s3" tabindex="-1">Link 3</a>
+</div>
+</div>
+</div>
+<div aria-hidden="false" class="slick-slide slick-current slick-active" data-slick-index="0" id="slick-slide#" role="tabpanel" style="width: 1000px;">
+<div>
+<div class="item" style="width: 100%; display: inline-block;">
+<p>Slide 0</p>
+<a class="link" href="#s0" tabindex="0">Link 0</a>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide" data-slick-index="1" id="slick-slide#" role="tabpanel" style="width: 1000px;" tabindex="-1">
+<div>
+<div class="item" style="width: 100%; display: inline-block;">
+<p>Slide 1</p>
+<a class="link" href="#s1" tabindex="-1">Link 1</a>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide" data-slick-index="2" id="slick-slide#" role="tabpanel" style="width: 1000px;" tabindex="-1">
+<div>
+<div class="item" style="width: 100%; display: inline-block;">
+<p>Slide 2</p>
+<a class="link" href="#s2" tabindex="-1">Link 2</a>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide" data-slick-index="3" id="slick-slide#" role="tabpanel" style="width: 1000px;" tabindex="-1">
+<div>
+<div class="item" style="width: 100%; display: inline-block;">
+<p>Slide 3</p>
+<a class="link" href="#s3" tabindex="-1">Link 3</a>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide slick-cloned" data-slick-index="4" id="" style="width: 1000px;" tabindex="-1">
+<div>
+<div class="item" style="width: 100%; display: inline-block;">
+<p>Slide 0</p>
+<a class="link" href="#s0" tabindex="-1">Link 0</a>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide slick-cloned" data-slick-index="5" id="" style="width: 1000px;" tabindex="-1">
+<div>
+<div class="item" style="width: 100%; display: inline-block;">
+<p>Slide 1</p>
+<a class="link" href="#s1" tabindex="-1">Link 1</a>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide slick-cloned" data-slick-index="6" id="" style="width: 1000px;" tabindex="-1">
+<div>
+<div class="item" style="width: 100%; display: inline-block;">
+<p>Slide 2</p>
+<a class="link" href="#s2" tabindex="-1">Link 2</a>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide slick-cloned" data-slick-index="7" id="" style="width: 1000px;" tabindex="-1">
+<div>
+<div class="item" style="width: 100%; display: inline-block;">
+<p>Slide 3</p>
+<a class="link" href="#s3" tabindex="-1">Link 3</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+<button aria-label="Next slide" class="arrow arrow-next slick-arrow" type="button">&gt;</button>
+<ul class="dots" role="tablist">
+<li class="slick-active" role="presentation">
+<button aria-controls="slick-slide#" aria-label="1 of 4" aria-selected="true" id="slick-slide-control#" role="tab" tabindex="0" type="button">1</button>
+</li>
+<li role="presentation">
+<button aria-controls="slick-slide#" aria-label="2 of 4" id="slick-slide-control#" role="tab" tabindex="-1" type="button">2</button>
+</li>
+<li role="presentation">
+<button aria-controls="slick-slide#" aria-label="3 of 4" id="slick-slide-control#" role="tab" tabindex="-1" type="button">3</button>
+</li>
+<li role="presentation">
+<button aria-controls="slick-slide#" aria-label="4 of 4" id="slick-slide-control#" role="tab" tabindex="-1" type="button">4</button>
+</li>
+</ul>
+</div>"
+`;
+
+exports[`building builds right to left 2`] = `
+[
+  "setPosition 0 (4)",
+  "init 0 (4)",
+  "setPosition 0 (4)",
+]
+`;
+
+exports[`building builds the defaults 1`] = `
+"<div class="slider slick-initialized slick-slider slick-dotted">
+<button aria-label="Previous slide" class="arrow arrow-prev slick-arrow" type="button">&lt;</button>
+<div class="slick-list draggable">
+<div class="slick-track" style="opacity: 1; width: 9000px; transform: translate3d(-1000px, 0px, 0px);">
+<div aria-hidden="true" class="slick-slide slick-cloned" data-slick-index="-1" id="" style="width: 1000px;" tabindex="-1">
+<div>
+<div class="item" style="width: 100%; display: inline-block;">
+<p>Slide 3</p>
+<a class="link" href="#s3" tabindex="-1">Link 3</a>
+</div>
+</div>
+</div>
+<div aria-hidden="false" class="slick-slide slick-current slick-active" data-slick-index="0" id="slick-slide#" role="tabpanel" style="width: 1000px;">
+<div>
+<div class="item" style="width: 100%; display: inline-block;">
+<p>Slide 0</p>
+<a class="link" href="#s0" tabindex="0">Link 0</a>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide" data-slick-index="1" id="slick-slide#" role="tabpanel" style="width: 1000px;" tabindex="-1">
+<div>
+<div class="item" style="width: 100%; display: inline-block;">
+<p>Slide 1</p>
+<a class="link" href="#s1" tabindex="-1">Link 1</a>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide" data-slick-index="2" id="slick-slide#" role="tabpanel" style="width: 1000px;" tabindex="-1">
+<div>
+<div class="item" style="width: 100%; display: inline-block;">
+<p>Slide 2</p>
+<a class="link" href="#s2" tabindex="-1">Link 2</a>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide" data-slick-index="3" id="slick-slide#" role="tabpanel" style="width: 1000px;" tabindex="-1">
+<div>
+<div class="item" style="width: 100%; display: inline-block;">
+<p>Slide 3</p>
+<a class="link" href="#s3" tabindex="-1">Link 3</a>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide slick-cloned" data-slick-index="4" id="" style="width: 1000px;" tabindex="-1">
+<div>
+<div class="item" style="width: 100%; display: inline-block;">
+<p>Slide 0</p>
+<a class="link" href="#s0" tabindex="-1">Link 0</a>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide slick-cloned" data-slick-index="5" id="" style="width: 1000px;" tabindex="-1">
+<div>
+<div class="item" style="width: 100%; display: inline-block;">
+<p>Slide 1</p>
+<a class="link" href="#s1" tabindex="-1">Link 1</a>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide slick-cloned" data-slick-index="6" id="" style="width: 1000px;" tabindex="-1">
+<div>
+<div class="item" style="width: 100%; display: inline-block;">
+<p>Slide 2</p>
+<a class="link" href="#s2" tabindex="-1">Link 2</a>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide slick-cloned" data-slick-index="7" id="" style="width: 1000px;" tabindex="-1">
+<div>
+<div class="item" style="width: 100%; display: inline-block;">
+<p>Slide 3</p>
+<a class="link" href="#s3" tabindex="-1">Link 3</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+<button aria-label="Next slide" class="arrow arrow-next slick-arrow" type="button">&gt;</button>
+<ul class="dots" role="tablist">
+<li class="slick-active" role="presentation">
+<button aria-controls="slick-slide#" aria-label="1 of 4" aria-selected="true" id="slick-slide-control#" role="tab" tabindex="0" type="button">1</button>
+</li>
+<li role="presentation">
+<button aria-controls="slick-slide#" aria-label="2 of 4" id="slick-slide-control#" role="tab" tabindex="-1" type="button">2</button>
+</li>
+<li role="presentation">
+<button aria-controls="slick-slide#" aria-label="3 of 4" id="slick-slide-control#" role="tab" tabindex="-1" type="button">3</button>
+</li>
+<li role="presentation">
+<button aria-controls="slick-slide#" aria-label="4 of 4" id="slick-slide-control#" role="tab" tabindex="-1" type="button">4</button>
+</li>
+</ul>
+</div>"
+`;
+
+exports[`building builds the defaults 2`] = `
+[
+  "setPosition 0 (4)",
+  "init 0 (4)",
+  "setPosition 0 (4)",
+]
+`;
+
+exports[`building builds three per view 1`] = `
+"<div class="slider slick-initialized slick-slider slick-dotted">
+<button aria-label="Previous slide" class="arrow arrow-prev slick-arrow" type="button">&lt;</button>
+<div class="slick-list draggable">
+<div class="slick-track" style="opacity: 1; width: 4342px; transform: translate3d(-1002px, 0px, 0px);">
+<div aria-hidden="true" class="slick-slide slick-cloned" data-slick-index="-3" id="" style="width: 334px;" tabindex="-1">
+<div>
+<div class="item" style="width: 100%; display: inline-block;">
+<p>Slide 2</p>
+<a class="link" href="#s2" tabindex="-1">Link 2</a>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide slick-cloned" data-slick-index="-2" id="" style="width: 334px;" tabindex="-1">
+<div>
+<div class="item" style="width: 100%; display: inline-block;">
+<p>Slide 3</p>
+<a class="link" href="#s3" tabindex="-1">Link 3</a>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide slick-cloned" data-slick-index="-1" id="" style="width: 334px;" tabindex="-1">
+<div>
+<div class="item" style="width: 100%; display: inline-block;">
+<p>Slide 4</p>
+<a class="link" href="#s4" tabindex="-1">Link 4</a>
+</div>
+</div>
+</div>
+<div aria-hidden="false" class="slick-slide slick-current slick-active" data-slick-index="0" id="slick-slide#" role="tabpanel" style="width: 334px;">
+<div>
+<div class="item" style="width: 100%; display: inline-block;">
+<p>Slide 0</p>
+<a class="link" href="#s0" tabindex="0">Link 0</a>
+</div>
+</div>
+</div>
+<div aria-hidden="false" class="slick-slide slick-active" data-slick-index="1" id="slick-slide#" role="tabpanel" style="width: 334px;">
+<div>
+<div class="item" style="width: 100%; display: inline-block;">
+<p>Slide 1</p>
+<a class="link" href="#s1" tabindex="0">Link 1</a>
+</div>
+</div>
+</div>
+<div aria-hidden="false" class="slick-slide slick-active" data-slick-index="2" id="slick-slide#" role="tabpanel" style="width: 334px;">
+<div>
+<div class="item" style="width: 100%; display: inline-block;">
+<p>Slide 2</p>
+<a class="link" href="#s2" tabindex="0">Link 2</a>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide" data-slick-index="3" id="slick-slide#" role="tabpanel" style="width: 334px;" tabindex="-1">
+<div>
+<div class="item" style="width: 100%; display: inline-block;">
+<p>Slide 3</p>
+<a class="link" href="#s3" tabindex="-1">Link 3</a>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide" data-slick-index="4" id="slick-slide#" role="tabpanel" style="width: 334px;" tabindex="-1">
+<div>
+<div class="item" style="width: 100%; display: inline-block;">
+<p>Slide 4</p>
+<a class="link" href="#s4" tabindex="-1">Link 4</a>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide slick-cloned" data-slick-index="5" id="" style="width: 334px;" tabindex="-1">
+<div>
+<div class="item" style="width: 100%; display: inline-block;">
+<p>Slide 0</p>
+<a class="link" href="#s0" tabindex="-1">Link 0</a>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide slick-cloned" data-slick-index="6" id="" style="width: 334px;" tabindex="-1">
+<div>
+<div class="item" style="width: 100%; display: inline-block;">
+<p>Slide 1</p>
+<a class="link" href="#s1" tabindex="-1">Link 1</a>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide slick-cloned" data-slick-index="7" id="" style="width: 334px;" tabindex="-1">
+<div>
+<div class="item" style="width: 100%; display: inline-block;">
+<p>Slide 2</p>
+<a class="link" href="#s2" tabindex="-1">Link 2</a>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide slick-cloned" data-slick-index="8" id="" style="width: 334px;" tabindex="-1">
+<div>
+<div class="item" style="width: 100%; display: inline-block;">
+<p>Slide 3</p>
+<a class="link" href="#s3" tabindex="-1">Link 3</a>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide slick-cloned" data-slick-index="9" id="" style="width: 334px;" tabindex="-1">
+<div>
+<div class="item" style="width: 100%; display: inline-block;">
+<p>Slide 4</p>
+<a class="link" href="#s4" tabindex="-1">Link 4</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+<button aria-label="Next slide" class="arrow arrow-next slick-arrow" type="button">&gt;</button>
+<ul class="dots" role="tablist">
+<li class="slick-active" role="presentation">
+<button aria-controls="slick-slide#" aria-label="1 of 2" aria-selected="true" id="slick-slide-control#" role="tab" tabindex="0" type="button">1</button>
+</li>
+<li role="presentation">
+<button aria-controls="slick-slide#" aria-label="2 of 2" id="slick-slide-control#" role="tab" tabindex="-1" type="button">2</button>
+</li>
+<li role="presentation">
+<button aria-controls="slick-slide#" aria-label="3 of 2" id="slick-slide-control#" role="tab" tabindex="-1" type="button">3</button>
+</li>
+<li role="presentation">
+<button aria-controls="slick-slide#" aria-label="4 of 2" id="slick-slide-control#" role="tab" tabindex="-1" type="button">4</button>
+</li>
+<li role="presentation">
+<button aria-controls="slick-slide#" aria-label="5 of 2" id="slick-slide-control#" role="tab" tabindex="-1" type="button">5</button>
+</li>
+</ul>
+</div>"
+`;
+
+exports[`building builds three per view 2`] = `
+[
+  "setPosition 0 (5)",
+  "init 0 (5)",
+  "setPosition 0 (5)",
+]
+`;
+
+exports[`building builds three per view given as text 1`] = `
+"<div class="slider slick-initialized slick-slider slick-dotted">
+<button aria-label="Previous slide" class="arrow arrow-prev slick-arrow" type="button">&lt;</button>
+<div class="slick-list draggable">
+<div class="slick-track" style="opacity: 1; width: 4342px; transform: translate3d(-1002px, 0px, 0px);">
+<div aria-hidden="true" class="slick-slide slick-cloned" data-slick-index="-3" id="" style="width: 334px;" tabindex="-1">
+<div>
+<div class="item" style="width: 100%; display: inline-block;">
+<p>Slide 2</p>
+<a class="link" href="#s2" tabindex="-1">Link 2</a>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide slick-cloned" data-slick-index="-2" id="" style="width: 334px;" tabindex="-1">
+<div>
+<div class="item" style="width: 100%; display: inline-block;">
+<p>Slide 3</p>
+<a class="link" href="#s3" tabindex="-1">Link 3</a>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide slick-cloned" data-slick-index="-1" id="" style="width: 334px;" tabindex="-1">
+<div>
+<div class="item" style="width: 100%; display: inline-block;">
+<p>Slide 4</p>
+<a class="link" href="#s4" tabindex="-1">Link 4</a>
+</div>
+</div>
+</div>
+<div aria-hidden="false" class="slick-slide slick-current slick-active" data-slick-index="0" id="slick-slide#" role="tabpanel" style="width: 334px;">
+<div>
+<div class="item" style="width: 100%; display: inline-block;">
+<p>Slide 0</p>
+<a class="link" href="#s0" tabindex="0">Link 0</a>
+</div>
+</div>
+</div>
+<div aria-hidden="false" class="slick-slide slick-active" data-slick-index="1" id="slick-slide#" role="tabpanel" style="width: 334px;">
+<div>
+<div class="item" style="width: 100%; display: inline-block;">
+<p>Slide 1</p>
+<a class="link" href="#s1" tabindex="0">Link 1</a>
+</div>
+</div>
+</div>
+<div aria-hidden="false" class="slick-slide slick-active" data-slick-index="2" id="slick-slide#" role="tabpanel" style="width: 334px;">
+<div>
+<div class="item" style="width: 100%; display: inline-block;">
+<p>Slide 2</p>
+<a class="link" href="#s2" tabindex="0">Link 2</a>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide" data-slick-index="3" id="slick-slide#" role="tabpanel" style="width: 334px;" tabindex="-1">
+<div>
+<div class="item" style="width: 100%; display: inline-block;">
+<p>Slide 3</p>
+<a class="link" href="#s3" tabindex="-1">Link 3</a>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide" data-slick-index="4" id="slick-slide#" role="tabpanel" style="width: 334px;" tabindex="-1">
+<div>
+<div class="item" style="width: 100%; display: inline-block;">
+<p>Slide 4</p>
+<a class="link" href="#s4" tabindex="-1">Link 4</a>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide slick-cloned" data-slick-index="5" id="" style="width: 334px;" tabindex="-1">
+<div>
+<div class="item" style="width: 100%; display: inline-block;">
+<p>Slide 0</p>
+<a class="link" href="#s0" tabindex="-1">Link 0</a>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide slick-cloned" data-slick-index="6" id="" style="width: 334px;" tabindex="-1">
+<div>
+<div class="item" style="width: 100%; display: inline-block;">
+<p>Slide 1</p>
+<a class="link" href="#s1" tabindex="-1">Link 1</a>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide slick-cloned" data-slick-index="7" id="" style="width: 334px;" tabindex="-1">
+<div>
+<div class="item" style="width: 100%; display: inline-block;">
+<p>Slide 2</p>
+<a class="link" href="#s2" tabindex="-1">Link 2</a>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide slick-cloned" data-slick-index="8" id="" style="width: 334px;" tabindex="-1">
+<div>
+<div class="item" style="width: 100%; display: inline-block;">
+<p>Slide 3</p>
+<a class="link" href="#s3" tabindex="-1">Link 3</a>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide slick-cloned" data-slick-index="9" id="" style="width: 334px;" tabindex="-1">
+<div>
+<div class="item" style="width: 100%; display: inline-block;">
+<p>Slide 4</p>
+<a class="link" href="#s4" tabindex="-1">Link 4</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+<button aria-label="Next slide" class="arrow arrow-next slick-arrow" type="button">&gt;</button>
+<ul class="dots" role="tablist">
+<li class="slick-active" role="presentation">
+<button aria-controls="slick-slide#" aria-label="1 of 2" aria-selected="true" id="slick-slide-control#" role="tab" tabindex="0" type="button">1</button>
+</li>
+<li role="presentation">
+<button aria-controls="slick-slide#" aria-label="2 of 2" id="slick-slide-control#" role="tab" tabindex="-1" type="button">2</button>
+</li>
+<li role="presentation">
+<button aria-controls="slick-slide#" aria-label="3 of 2" id="slick-slide-control#" role="tab" tabindex="-1" type="button">3</button>
+</li>
+<li role="presentation">
+<button aria-controls="slick-slide#" aria-label="4 of 2" id="slick-slide-control#" role="tab" tabindex="-1" type="button">4</button>
+</li>
+<li role="presentation">
+<button aria-controls="slick-slide#" aria-label="5 of 2" id="slick-slide-control#" role="tab" tabindex="-1" type="button">5</button>
+</li>
+</ul>
+</div>"
+`;
+
+exports[`building builds three per view given as text 2`] = `
+[
+  "setPosition 0 (5)",
+  "init 0 (5)",
+  "setPosition 0 (5)",
+]
+`;
+
+exports[`building builds unwrapped slides (rows 0) 1`] = `
+"<div class="slider slick-initialized slick-slider slick-dotted">
+<button aria-label="Previous slide" class="arrow arrow-prev slick-arrow" type="button">&lt;</button>
+<div class="slick-list draggable">
+<div class="slick-track" style="opacity: 1; width: 9000px; transform: translate3d(-1000px, 0px, 0px);">
+<div aria-hidden="true" class="item slick-slide slick-cloned" data-slick-index="-1" id="" style="width: 1000px;" tabindex="-1">
+<p>Slide 3</p>
+<a class="link" href="#s3" tabindex="-1">Link 3</a>
+</div>
+<div aria-hidden="false" class="item slick-slide slick-current slick-active" data-slick-index="0" id="slick-slide#" role="tabpanel" style="width: 1000px;">
+<p>Slide 0</p>
+<a class="link" href="#s0" tabindex="0">Link 0</a>
+</div>
+<div aria-hidden="true" class="item slick-slide" data-slick-index="1" id="slick-slide#" role="tabpanel" style="width: 1000px;" tabindex="-1">
+<p>Slide 1</p>
+<a class="link" href="#s1" tabindex="-1">Link 1</a>
+</div>
+<div aria-hidden="true" class="item slick-slide" data-slick-index="2" id="slick-slide#" role="tabpanel" style="width: 1000px;" tabindex="-1">
+<p>Slide 2</p>
+<a class="link" href="#s2" tabindex="-1">Link 2</a>
+</div>
+<div aria-hidden="true" class="item slick-slide" data-slick-index="3" id="slick-slide#" role="tabpanel" style="width: 1000px;" tabindex="-1">
+<p>Slide 3</p>
+<a class="link" href="#s3" tabindex="-1">Link 3</a>
+</div>
+<div aria-hidden="true" class="item slick-slide slick-cloned" data-slick-index="4" id="" style="width: 1000px;" tabindex="-1">
+<p>Slide 0</p>
+<a class="link" href="#s0" tabindex="-1">Link 0</a>
+</div>
+<div aria-hidden="true" class="item slick-slide slick-cloned" data-slick-index="5" id="" style="width: 1000px;" tabindex="-1">
+<p>Slide 1</p>
+<a class="link" href="#s1" tabindex="-1">Link 1</a>
+</div>
+<div aria-hidden="true" class="item slick-slide slick-cloned" data-slick-index="6" id="" style="width: 1000px;" tabindex="-1">
+<p>Slide 2</p>
+<a class="link" href="#s2" tabindex="-1">Link 2</a>
+</div>
+<div aria-hidden="true" class="item slick-slide slick-cloned" data-slick-index="7" id="" style="width: 1000px;" tabindex="-1">
+<p>Slide 3</p>
+<a class="link" href="#s3" tabindex="-1">Link 3</a>
+</div>
+</div>
+</div>
+<button aria-label="Next slide" class="arrow arrow-next slick-arrow" type="button">&gt;</button>
+<ul class="dots" role="tablist">
+<li class="slick-active" role="presentation">
+<button aria-controls="slick-slide#" aria-label="1 of 4" aria-selected="true" id="slick-slide-control#" role="tab" tabindex="0" type="button">1</button>
+</li>
+<li role="presentation">
+<button aria-controls="slick-slide#" aria-label="2 of 4" id="slick-slide-control#" role="tab" tabindex="-1" type="button">2</button>
+</li>
+<li role="presentation">
+<button aria-controls="slick-slide#" aria-label="3 of 4" id="slick-slide-control#" role="tab" tabindex="-1" type="button">3</button>
+</li>
+<li role="presentation">
+<button aria-controls="slick-slide#" aria-label="4 of 4" id="slick-slide-control#" role="tab" tabindex="-1" type="button">4</button>
+</li>
+</ul>
+</div>"
+`;
+
+exports[`building builds unwrapped slides (rows 0) 2`] = `
+[
+  "setPosition 0 (4)",
+  "init 0 (4)",
+  "setPosition 0 (4)",
+]
+`;
+
+exports[`building builds vertical 1`] = `
+"<div class="slider slick-initialized slick-slider slick-dotted slick-vertical">
+<button aria-label="Previous slide" class="arrow arrow-prev slick-arrow" type="button">&lt;</button>
+<div class="slick-list draggable" style="height: 400px;">
+<div class="slick-track" style="opacity: 1; height: 3600px; transform: translate3d(0px, -400px, 0px);">
+<div aria-hidden="true" class="slick-slide slick-cloned" data-slick-index="-1" id="" style="width: 1000px;" tabindex="-1">
+<div>
+<div class="item" style="width: 100%; display: inline-block;">
+<p>Slide 3</p>
+<a class="link" href="#s3" tabindex="-1">Link 3</a>
+</div>
+</div>
+</div>
+<div aria-hidden="false" class="slick-slide slick-current slick-active" data-slick-index="0" id="slick-slide#" role="tabpanel" style="width: 1000px;">
+<div>
+<div class="item" style="width: 100%; display: inline-block;">
+<p>Slide 0</p>
+<a class="link" href="#s0" tabindex="0">Link 0</a>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide" data-slick-index="1" id="slick-slide#" role="tabpanel" style="width: 1000px;" tabindex="-1">
+<div>
+<div class="item" style="width: 100%; display: inline-block;">
+<p>Slide 1</p>
+<a class="link" href="#s1" tabindex="-1">Link 1</a>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide" data-slick-index="2" id="slick-slide#" role="tabpanel" style="width: 1000px;" tabindex="-1">
+<div>
+<div class="item" style="width: 100%; display: inline-block;">
+<p>Slide 2</p>
+<a class="link" href="#s2" tabindex="-1">Link 2</a>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide" data-slick-index="3" id="slick-slide#" role="tabpanel" style="width: 1000px;" tabindex="-1">
+<div>
+<div class="item" style="width: 100%; display: inline-block;">
+<p>Slide 3</p>
+<a class="link" href="#s3" tabindex="-1">Link 3</a>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide slick-cloned" data-slick-index="4" id="" style="width: 1000px;" tabindex="-1">
+<div>
+<div class="item" style="width: 100%; display: inline-block;">
+<p>Slide 0</p>
+<a class="link" href="#s0" tabindex="-1">Link 0</a>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide slick-cloned" data-slick-index="5" id="" style="width: 1000px;" tabindex="-1">
+<div>
+<div class="item" style="width: 100%; display: inline-block;">
+<p>Slide 1</p>
+<a class="link" href="#s1" tabindex="-1">Link 1</a>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide slick-cloned" data-slick-index="6" id="" style="width: 1000px;" tabindex="-1">
+<div>
+<div class="item" style="width: 100%; display: inline-block;">
+<p>Slide 2</p>
+<a class="link" href="#s2" tabindex="-1">Link 2</a>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide slick-cloned" data-slick-index="7" id="" style="width: 1000px;" tabindex="-1">
+<div>
+<div class="item" style="width: 100%; display: inline-block;">
+<p>Slide 3</p>
+<a class="link" href="#s3" tabindex="-1">Link 3</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+<button aria-label="Next slide" class="arrow arrow-next slick-arrow" type="button">&gt;</button>
+<ul class="dots" role="tablist">
+<li class="slick-active" role="presentation">
+<button aria-controls="slick-slide#" aria-label="1 of 4" aria-selected="true" id="slick-slide-control#" role="tab" tabindex="0" type="button">1</button>
+</li>
+<li role="presentation">
+<button aria-controls="slick-slide#" aria-label="2 of 4" id="slick-slide-control#" role="tab" tabindex="-1" type="button">2</button>
+</li>
+<li role="presentation">
+<button aria-controls="slick-slide#" aria-label="3 of 4" id="slick-slide-control#" role="tab" tabindex="-1" type="button">3</button>
+</li>
+<li role="presentation">
+<button aria-controls="slick-slide#" aria-label="4 of 4" id="slick-slide-control#" role="tab" tabindex="-1" type="button">4</button>
+</li>
+</ul>
+</div>"
+`;
+
+exports[`building builds vertical 2`] = `
+[
+  "setPosition 0 (4)",
+  "init 0 (4)",
+  "setPosition 0 (4)",
+]
+`;
+
+exports[`building loads lazy images on demand 1`] = `
+{
+  "initial": [
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+  ],
+  "loaded": [
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+  ],
+  "markup": "<div class="slider slick-initialized slick-slider slick-dotted">
+<button aria-label="Previous slide" class="arrow arrow-prev slick-arrow" type="button">&lt;</button>
+<div class="slick-list draggable">
+<div class="slick-track" style="opacity: 1; width: 9000px; transform: translate3d(-1000px, 0px, 0px);">
+<div aria-hidden="true" class="slick-slide slick-cloned" data-slick-index="-1" id="" style="width: 1000px;" tabindex="-1">
+<div>
+<div style="width: 100%; display: inline-block;">
+<img alt="3" class="slick-loading" data-lazy="/img-3.jpg">
+</div>
+</div>
+</div>
+<div aria-hidden="false" class="slick-slide slick-current slick-active" data-slick-index="0" id="slick-slide#" role="tabpanel" style="width: 1000px;">
+<div>
+<div style="width: 100%; display: inline-block;">
+<img alt="0" class="slick-loading" data-lazy="/img-0.jpg">
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide" data-slick-index="1" id="slick-slide#" role="tabpanel" style="width: 1000px;" tabindex="-1">
+<div>
+<div style="width: 100%; display: inline-block;">
+<img alt="1" class="slick-loading" data-lazy="/img-1.jpg">
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide" data-slick-index="2" id="slick-slide#" role="tabpanel" style="width: 1000px;" tabindex="-1">
+<div>
+<div style="width: 100%; display: inline-block;">
+<img alt="2" class="slick-loading" data-lazy="/img-2.jpg">
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide" data-slick-index="3" id="slick-slide#" role="tabpanel" style="width: 1000px;" tabindex="-1">
+<div>
+<div style="width: 100%; display: inline-block;">
+<img alt="3" class="slick-loading" data-lazy="/img-3.jpg">
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide slick-cloned" data-slick-index="4" id="" style="width: 1000px;" tabindex="-1">
+<div>
+<div style="width: 100%; display: inline-block;">
+<img alt="0" class="slick-loading" data-lazy="/img-0.jpg">
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide slick-cloned" data-slick-index="5" id="" style="width: 1000px;" tabindex="-1">
+<div>
+<div style="width: 100%; display: inline-block;">
+<img alt="1" class="slick-loading" data-lazy="/img-1.jpg">
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide slick-cloned" data-slick-index="6" id="" style="width: 1000px;" tabindex="-1">
+<div>
+<div style="width: 100%; display: inline-block;">
+<img alt="2" class="slick-loading" data-lazy="/img-2.jpg">
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide slick-cloned" data-slick-index="7" id="" style="width: 1000px;" tabindex="-1">
+<div>
+<div style="width: 100%; display: inline-block;">
+<img alt="3" class="slick-loading" data-lazy="/img-3.jpg">
+</div>
+</div>
+</div>
+</div>
+</div>
+<button aria-label="Next slide" class="arrow arrow-next slick-arrow" type="button">&gt;</button>
+<ul class="dots" role="tablist">
+<li class="slick-active" role="presentation">
+<button aria-controls="slick-slide#" aria-label="1 of 4" aria-selected="true" id="slick-slide-control#" role="tab" tabindex="0" type="button">1</button>
+</li>
+<li role="presentation">
+<button aria-controls="slick-slide#" aria-label="2 of 4" id="slick-slide-control#" role="tab" tabindex="-1" type="button">2</button>
+</li>
+<li role="presentation">
+<button aria-controls="slick-slide#" aria-label="3 of 4" id="slick-slide-control#" role="tab" tabindex="-1" type="button">3</button>
+</li>
+<li role="presentation">
+<button aria-controls="slick-slide#" aria-label="4 of 4" id="slick-slide-control#" role="tab" tabindex="-1" type="button">4</button>
+</li>
+</ul>
+</div>",
+}
+`;
+
+exports[`events lays out again on a resize within one breakpoint 1`] = `
+{
+  "events": [
+    "setPosition 0 (3)",
+    "setPosition 0 (3)",
+  ],
+  "track": "opacity: 1; width: 5600px; transform: translate3d(-800px, 0px, 0px);",
+}
+`;
+
+exports[`events reports a breakpoint and lays out again when the viewport crosses it 1`] = `
+{
+  "mobile": {
+    "events": [
+      "setPosition 0 (5)",
+      "beforeChange 0→0 (5)",
+      "breakpoint 0 (5)",
+      "setPosition 0 (5)",
+      "setPosition 0 (5)",
+      "afterChange 0 (5)",
+      "setPosition 0 (5)",
+    ],
+    "markup": "<div class="slider slick-initialized slick-slider slick-dotted">
+<button aria-label="Previous slide" class="arrow arrow-prev slick-arrow" type="button">&lt;</button>
+<div class="slick-list draggable">
+<div class="slick-track" style="opacity: 1; width: 7700px; transform: translate3d(-700px, 0px, 0px);">
+<div aria-hidden="true" class="slick-slide slick-cloned" data-slick-index="-1" id="" style="width: 700px;" tabindex="-1">
+<div>
+<div class="item" style="width: 100%; display: inline-block;">
+<p>Slide 4</p>
+<a class="link" href="#s4" tabindex="-1">Link 4</a>
+</div>
+</div>
+</div>
+<div aria-describedby="slick-slide-control#" aria-hidden="false" class="slick-slide slick-current slick-active" data-slick-index="0" id="slick-slide#" role="tabpanel" style="width: 700px;">
+<div>
+<div class="item" style="width: 100%; display: inline-block;">
+<p>Slide 0</p>
+<a class="link" href="#s0" tabindex="0">Link 0</a>
+</div>
+</div>
+</div>
+<div aria-describedby="slick-slide-control#" aria-hidden="true" class="slick-slide" data-slick-index="1" id="slick-slide#" role="tabpanel" style="width: 700px;" tabindex="-1">
+<div>
+<div class="item" style="width: 100%; display: inline-block;">
+<p>Slide 1</p>
+<a class="link" href="#s1" tabindex="-1">Link 1</a>
+</div>
+</div>
+</div>
+<div aria-describedby="slick-slide-control#" aria-hidden="true" class="slick-slide" data-slick-index="2" id="slick-slide#" role="tabpanel" style="width: 700px;" tabindex="-1">
+<div>
+<div class="item" style="width: 100%; display: inline-block;">
+<p>Slide 2</p>
+<a class="link" href="#s2" tabindex="-1">Link 2</a>
+</div>
+</div>
+</div>
+<div aria-describedby="slick-slide-control#" aria-hidden="true" class="slick-slide" data-slick-index="3" id="slick-slide#" role="tabpanel" style="width: 700px;" tabindex="-1">
+<div>
+<div class="item" style="width: 100%; display: inline-block;">
+<p>Slide 3</p>
+<a class="link" href="#s3" tabindex="-1">Link 3</a>
+</div>
+</div>
+</div>
+<div aria-describedby="slick-slide-control#" aria-hidden="true" class="slick-slide" data-slick-index="4" id="slick-slide#" role="tabpanel" style="width: 700px;" tabindex="-1">
+<div>
+<div class="item" style="width: 100%; display: inline-block;">
+<p>Slide 4</p>
+<a class="link" href="#s4" tabindex="-1">Link 4</a>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide slick-cloned" data-slick-index="5" id="" style="width: 700px;" tabindex="-1">
+<div>
+<div class="item" style="width: 100%; display: inline-block;">
+<p>Slide 0</p>
+<a class="link" href="#s0" tabindex="-1">Link 0</a>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide slick-cloned" data-slick-index="6" id="" style="width: 700px;" tabindex="-1">
+<div>
+<div class="item" style="width: 100%; display: inline-block;">
+<p>Slide 1</p>
+<a class="link" href="#s1" tabindex="-1">Link 1</a>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide slick-cloned" data-slick-index="7" id="" style="width: 700px;" tabindex="-1">
+<div>
+<div class="item" style="width: 100%; display: inline-block;">
+<p>Slide 2</p>
+<a class="link" href="#s2" tabindex="-1">Link 2</a>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide slick-cloned" data-slick-index="8" id="" style="width: 700px;" tabindex="-1">
+<div>
+<div class="item" style="width: 100%; display: inline-block;">
+<p>Slide 3</p>
+<a class="link" href="#s3" tabindex="-1">Link 3</a>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide slick-cloned" data-slick-index="9" id="" style="width: 700px;" tabindex="-1">
+<div>
+<div class="item" style="width: 100%; display: inline-block;">
+<p>Slide 4</p>
+<a class="link" href="#s4" tabindex="-1">Link 4</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+<button aria-label="Next slide" class="arrow arrow-next slick-arrow" type="button">&gt;</button>
+<ul class="dots" role="tablist">
+<li class="slick-active" role="presentation">
+<button aria-controls="slick-slide#" aria-label="1 of 5" aria-selected="true" id="slick-slide-control#" role="tab" tabindex="0" type="button">1</button>
+</li>
+<li role="presentation">
+<button aria-controls="slick-slide#" aria-label="2 of 5" id="slick-slide-control#" role="tab" tabindex="-1" type="button">2</button>
+</li>
+<li role="presentation">
+<button aria-controls="slick-slide#" aria-label="3 of 5" id="slick-slide-control#" role="tab" tabindex="-1" type="button">3</button>
+</li>
+<li role="presentation">
+<button aria-controls="slick-slide#" aria-label="4 of 5" id="slick-slide-control#" role="tab" tabindex="-1" type="button">4</button>
+</li>
+<li role="presentation">
+<button aria-controls="slick-slide#" aria-label="5 of 5" id="slick-slide-control#" role="tab" tabindex="-1" type="button">5</button>
+</li>
+</ul>
+</div>",
+  },
+  "tablet": {
+    "events": [
+      "setPosition 0 (5)",
+      "setPosition 0 (5)",
+      "beforeChange 0→0 (5)",
+      "breakpoint 0 (5)",
+      "setPosition 0 (5)",
+      "setPosition 0 (5)",
+      "afterChange 0 (5)",
+      "setPosition 0 (5)",
+    ],
+    "markup": "<div class="slider slick-initialized slick-slider slick-dotted">
+<button aria-label="Previous slide" class="arrow arrow-prev slick-arrow" type="button">&lt;</button>
+<div class="slick-list draggable">
+<div class="slick-track" style="opacity: 1; width: 5400px; transform: translate3d(-900px, 0px, 0px);">
+<div aria-hidden="true" class="slick-slide slick-cloned" data-slick-index="-2" id="" style="width: 450px;" tabindex="-1">
+<div>
+<div class="item" style="width: 100%; display: inline-block;">
+<p>Slide 3</p>
+<a class="link" href="#s3" tabindex="-1">Link 3</a>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide slick-cloned" data-slick-index="-1" id="" style="width: 450px;" tabindex="-1">
+<div>
+<div class="item" style="width: 100%; display: inline-block;">
+<p>Slide 4</p>
+<a class="link" href="#s4" tabindex="-1">Link 4</a>
+</div>
+</div>
+</div>
+<div aria-describedby="slick-slide-control#" aria-hidden="false" class="slick-slide slick-current slick-active" data-slick-index="0" id="slick-slide#" role="tabpanel" style="width: 450px;">
+<div>
+<div class="item" style="width: 100%; display: inline-block;">
+<p>Slide 0</p>
+<a class="link" href="#s0" tabindex="0">Link 0</a>
+</div>
+</div>
+</div>
+<div aria-describedby="slick-slide-control#" aria-hidden="false" class="slick-slide slick-active" data-slick-index="1" id="slick-slide#" role="tabpanel" style="width: 450px;">
+<div>
+<div class="item" style="width: 100%; display: inline-block;">
+<p>Slide 1</p>
+<a class="link" href="#s1" tabindex="0">Link 1</a>
+</div>
+</div>
+</div>
+<div aria-describedby="slick-slide-control#" aria-hidden="true" class="slick-slide" data-slick-index="2" id="slick-slide#" role="tabpanel" style="width: 450px;" tabindex="-1">
+<div>
+<div class="item" style="width: 100%; display: inline-block;">
+<p>Slide 2</p>
+<a class="link" href="#s2" tabindex="-1">Link 2</a>
+</div>
+</div>
+</div>
+<div aria-describedby="slick-slide-control#" aria-hidden="true" class="slick-slide" data-slick-index="3" id="slick-slide#" role="tabpanel" style="width: 450px;" tabindex="-1">
+<div>
+<div class="item" style="width: 100%; display: inline-block;">
+<p>Slide 3</p>
+<a class="link" href="#s3" tabindex="-1">Link 3</a>
+</div>
+</div>
+</div>
+<div aria-describedby="slick-slide-control#" aria-hidden="true" class="slick-slide" data-slick-index="4" id="slick-slide#" role="tabpanel" style="width: 450px;" tabindex="-1">
+<div>
+<div class="item" style="width: 100%; display: inline-block;">
+<p>Slide 4</p>
+<a class="link" href="#s4" tabindex="-1">Link 4</a>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide slick-cloned" data-slick-index="5" id="" style="width: 450px;" tabindex="-1">
+<div>
+<div class="item" style="width: 100%; display: inline-block;">
+<p>Slide 0</p>
+<a class="link" href="#s0" tabindex="-1">Link 0</a>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide slick-cloned" data-slick-index="6" id="" style="width: 450px;" tabindex="-1">
+<div>
+<div class="item" style="width: 100%; display: inline-block;">
+<p>Slide 1</p>
+<a class="link" href="#s1" tabindex="-1">Link 1</a>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide slick-cloned" data-slick-index="7" id="" style="width: 450px;" tabindex="-1">
+<div>
+<div class="item" style="width: 100%; display: inline-block;">
+<p>Slide 2</p>
+<a class="link" href="#s2" tabindex="-1">Link 2</a>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide slick-cloned" data-slick-index="8" id="" style="width: 450px;" tabindex="-1">
+<div>
+<div class="item" style="width: 100%; display: inline-block;">
+<p>Slide 3</p>
+<a class="link" href="#s3" tabindex="-1">Link 3</a>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="slick-slide slick-cloned" data-slick-index="9" id="" style="width: 450px;" tabindex="-1">
+<div>
+<div class="item" style="width: 100%; display: inline-block;">
+<p>Slide 4</p>
+<a class="link" href="#s4" tabindex="-1">Link 4</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+<button aria-label="Next slide" class="arrow arrow-next slick-arrow" type="button">&gt;</button>
+<ul class="dots" role="tablist">
+<li class="slick-active" role="presentation">
+<button aria-controls="slick-slide#" aria-label="1 of 3" aria-selected="true" id="slick-slide-control#" role="tab" tabindex="0" type="button">1</button>
+</li>
+<li role="presentation">
+<button aria-controls="slick-slide#" aria-label="2 of 3" id="slick-slide-control#" role="tab" tabindex="-1" type="button">2</button>
+</li>
+<li role="presentation">
+<button aria-controls="slick-slide#" aria-label="3 of 3" id="slick-slide-control#" role="tab" tabindex="-1" type="button">3</button>
+</li>
+<li role="presentation">
+<button aria-controls="slick-slide#" aria-label="4 of 3" id="slick-slide-control#" role="tab" tabindex="-1" type="button">4</button>
+</li>
+<li role="presentation">
+<button aria-controls="slick-slide#" aria-label="5 of 3" id="slick-slide-control#" role="tab" tabindex="-1" type="button">5</button>
+</li>
+</ul>
+</div>",
+  },
+}
+`;
+
+exports[`events reports the slider state with every event 1`] = `
+[
+  "setPosition 0 (3)",
+  "init 0 (3)",
+  "beforeChange 0→1 (3)",
+  "setPosition 1 (3)",
+  "afterChange 1 (3)",
+  "setPosition 1 (3)",
+  "setPosition 1 (3)",
+]
+`;
+
+exports[`gestures answers ArrowLeft 1`] = `"3"`;
+
+exports[`gestures answers ArrowRight 1`] = `"1"`;
+
+exports[`gestures answers ArrowRight on a dot 1`] = `"1"`;
+
+exports[`gestures answers ArrowRight on an arrow 1`] = `"1"`;
+
+exports[`gestures answers ArrowRight right to left 1`] = `"3"`;
+
+exports[`gestures answers ArrowRight without accessibility 1`] = `"0"`;
+
+exports[`gestures follows a drag in fade 1`] = `
+{
+  "current": "1",
+  "events": [
+    "beforeChange 0→1 (4)",
+    "setPosition 1 (4)",
+    "afterChange 1 (4)",
+    "setPosition 1 (4)",
+  ],
+  "track": "opacity: 1; width: 4000px;",
+}
+`;
+
+exports[`gestures follows a drag on a positioned track 1`] = `
+{
+  "current": "1",
+  "events": [
+    "beforeChange 0→1 (4)",
+    "setPosition 1 (4)",
+    "afterChange 1 (4)",
+    "setPosition 1 (4)",
+  ],
+  "track": "opacity: 1; width: 9000px; left: -2000px;",
+}
+`;
+
+exports[`gestures follows a drag right to left 1`] = `
+{
+  "current": "3",
+  "events": [
+    "beforeChange 0→3 (4)",
+    "setPosition 3 (4)",
+    "afterChange 3 (4)",
+    "setPosition 3 (4)",
+  ],
+  "track": "opacity: 1; width: 9000px; transform: translate3d(4000px, 0px, 0px);",
+}
+`;
+
+exports[`gestures follows a drag without loop at the start 1`] = `
+{
+  "current": "0",
+  "events": [
+    "setPosition 0 (4)",
+    "afterChange 0 (4)",
+    "setPosition 0 (4)",
+  ],
+  "track": "opacity: 1; width: 4000px; transform: translate3d(0px, 0px, 0px);",
+}
+`;
+
+exports[`gestures follows a long mouse drag left 1`] = `
+{
+  "current": "1",
+  "events": [
+    "beforeChange 0→1 (4)",
+    "setPosition 1 (4)",
+    "afterChange 1 (4)",
+    "setPosition 1 (4)",
+  ],
+  "track": "opacity: 1; width: 9000px; transform: translate3d(-2000px, 0px, 0px);",
+}
+`;
+
+exports[`gestures follows a long mouse drag right 1`] = `
+{
+  "current": "3",
+  "events": [
+    "beforeChange 0→3 (4)",
+    "setPosition 3 (4)",
+    "afterChange 3 (4)",
+    "setPosition 3 (4)",
+  ],
+  "track": "opacity: 1; width: 9000px; transform: translate3d(-4000px, 0px, 0px);",
+}
+`;
+
+exports[`gestures follows a long touch swipe 1`] = `
+{
+  "current": "1",
+  "events": [
+    "beforeChange 0→1 (4)",
+    "setPosition 1 (4)",
+    "afterChange 1 (4)",
+    "setPosition 1 (4)",
+  ],
+  "track": "opacity: 1; width: 9000px; transform: translate3d(-2000px, 0px, 0px);",
+}
+`;
+
+exports[`gestures follows a mostly vertical touch swipe 1`] = `
+{
+  "current": "0",
+  "events": [
+    "setPosition 0 (4)",
+  ],
+  "track": "opacity: 1; width: 9000px; transform: translate3d(-1000px, 0px, 0px);",
+}
+`;
+
+exports[`gestures follows a mouse drag when dragging is off 1`] = `
+{
+  "current": "0",
+  "events": [
+    "setPosition 0 (4)",
+  ],
+  "track": "opacity: 1; width: 9000px; transform: translate3d(-1000px, 0px, 0px);",
+}
+`;
+
+exports[`gestures follows a mouse drag when swiping is off 1`] = `
+{
+  "current": "0",
+  "events": [
+    "setPosition 0 (4)",
+  ],
+  "track": "opacity: 1; width: 9000px; transform: translate3d(-1000px, 0px, 0px);",
+}
+`;
+
+exports[`gestures follows a short drag past a low threshold 1`] = `
+{
+  "current": "1",
+  "events": [
+    "beforeChange 0→1 (4)",
+    "setPosition 1 (4)",
+    "afterChange 1 (4)",
+    "setPosition 1 (4)",
+  ],
+  "track": "opacity: 1; width: 9000px; transform: translate3d(-2000px, 0px, 0px);",
+}
+`;
+
+exports[`gestures follows a short mouse drag 1`] = `
+{
+  "current": "0",
+  "events": [
+    "beforeChange 0→0 (4)",
+    "setPosition 0 (4)",
+    "afterChange 0 (4)",
+    "setPosition 0 (4)",
+  ],
+  "track": "opacity: 1; width: 9000px; transform: translate3d(-1000px, 0px, 0px);",
+}
+`;
+
+exports[`gestures follows a touch swipe when dragging is off 1`] = `
+{
+  "current": "1",
+  "events": [
+    "beforeChange 0→1 (4)",
+    "setPosition 1 (4)",
+    "afterChange 1 (4)",
+    "setPosition 1 (4)",
+  ],
+  "track": "opacity: 1; width: 9000px; transform: translate3d(-2000px, 0px, 0px);",
+}
+`;
+
+exports[`gestures goes to a slide further on clicked with focus on select 1`] = `"3"`;
+
+exports[`gestures goes to the next slide clicked with focus on select 1`] = `"1"`;
+
+exports[`gestures takes the gesture over once a drag passes 40px 1`] = `
+[
+  false,
+  false,
+  true,
+  true,
+]
+`;
+
+exports[`moving marks the arrows at the edges of a slider that does not loop 1`] = `
+{
+  "atEnd": [
+    [
+      "arrow arrow-prev slick-arrow",
+      "false",
+      null,
+    ],
+    [
+      "arrow arrow-next slick-arrow slick-disabled",
+      "true",
+      null,
+    ],
+  ],
+  "atStart": [
+    [
+      "arrow arrow-prev slick-arrow slick-disabled",
+      "true",
+      null,
+    ],
+    [
+      "arrow arrow-next slick-arrow",
+      "false",
+      null,
+    ],
+  ],
+}
+`;
+
+exports[`moving moves a positioned track frame by frame 1`] = `
+[
+  "opacity: 1; width: 9000px; left: -1192px;",
+  "opacity: 1; width: 9000px; left: -1384px;",
+  "opacity: 1; width: 9000px; left: -1576px;",
+  "opacity: 1; width: 9000px; left: -1800px;",
+  "opacity: 1; width: 9000px; left: -1992px;",
+]
+`;
+
+exports[`moving moves on centre mode, next 1`] = `
+{
+  "after": "opacity: 1; width: 25000px; left: 0px;",
+  "current": "1",
+  "during": "opacity: 1; width: 25000px; left: 0px;",
+  "events": [
+    "beforeChange 0→1 (5)",
+    "setPosition 1 (5)",
+    "afterChange 1 (5)",
+    "setPosition 1 (5)",
+  ],
+}
+`;
+
+exports[`moving moves on goTo 2 1`] = `
+{
+  "after": "opacity: 1; width: 11000px; transform: translate3d(-3000px, 0px, 0px);",
+  "current": "2",
+  "during": "opacity: 1; width: 11000px; transform: translate3d(-3000px, 0px, 0px); transition: transform 500ms ease;",
+  "events": [
+    "beforeChange 0→2 (5)",
+    "setPosition 2 (5)",
+    "afterChange 2 (5)",
+    "setPosition 2 (5)",
+  ],
+}
+`;
+
+exports[`moving moves on goTo the current slide 1`] = `
+{
+  "after": "opacity: 1; width: 11000px; transform: translate3d(-1000px, 0px, 0px);",
+  "current": "0",
+  "during": "opacity: 1; width: 11000px; transform: translate3d(-1000px, 0px, 0px); transition: transform 500ms ease;",
+  "events": [
+    "beforeChange 0→0 (5)",
+    "setPosition 0 (5)",
+    "afterChange 0 (5)",
+    "setPosition 0 (5)",
+  ],
+}
+`;
+
+exports[`moving moves on next 1`] = `
+{
+  "after": "opacity: 1; width: 11000px; transform: translate3d(-2000px, 0px, 0px);",
+  "current": "1",
+  "during": "opacity: 1; width: 11000px; transform: translate3d(-2000px, 0px, 0px); transition: transform 500ms ease;",
+  "events": [
+    "beforeChange 0→1 (5)",
+    "setPosition 1 (5)",
+    "afterChange 1 (5)",
+    "setPosition 1 (5)",
+  ],
+}
+`;
+
+exports[`moving moves on next in fade 1`] = `
+{
+  "after": "opacity: 1; width: 5000px;",
+  "current": "1",
+  "during": "opacity: 1; width: 5000px;",
+  "events": [
+    "beforeChange 0→1 (5)",
+    "setPosition 1 (5)",
+    "afterChange 1 (5)",
+    "setPosition 1 (5)",
+  ],
+}
+`;
+
+exports[`moving moves on next in fade on a positioned track 1`] = `
+{
+  "after": "opacity: 1; width: 5000px;",
+  "current": "1",
+  "during": "opacity: 1; width: 5000px;",
+  "events": [
+    "beforeChange 0→1 (5)",
+    "setPosition 1 (5)",
+    "afterChange 1 (5)",
+    "setPosition 1 (5)",
+  ],
+}
+`;
+
+exports[`moving moves on next on a positioned track 1`] = `
+{
+  "after": "opacity: 1; width: 11000px; left: -2000px;",
+  "current": "1",
+  "during": "opacity: 1; width: 11000px; left: -1000px;",
+  "events": [
+    "beforeChange 0→1 (5)",
+    "setPosition 1 (5)",
+    "afterChange 1 (5)",
+    "setPosition 1 (5)",
+  ],
+}
+`;
+
+exports[`moving moves on next right to left 1`] = `
+{
+  "after": "opacity: 1; width: 11000px; left: 2000px;",
+  "current": "1",
+  "during": "opacity: 1; width: 11000px; left: 1000px;",
+  "events": [
+    "beforeChange 0→1 (5)",
+    "setPosition 1 (5)",
+    "afterChange 1 (5)",
+    "setPosition 1 (5)",
+  ],
+}
+`;
+
+exports[`moving moves on next twice while animating 1`] = `
+{
+  "after": "opacity: 1; width: 11000px; transform: translate3d(-2000px, 0px, 0px);",
+  "current": "1",
+  "during": "opacity: 1; width: 11000px; transform: translate3d(-2000px, 0px, 0px); transition: transform 500ms ease;",
+  "events": [
+    "beforeChange 0→1 (5)",
+    "setPosition 1 (5)",
+    "afterChange 1 (5)",
+    "setPosition 1 (5)",
+  ],
+}
+`;
+
+exports[`moving moves on next vertically 1`] = `
+{
+  "after": "opacity: 1; height: 4400px; top: -800px;",
+  "current": "1",
+  "during": "opacity: 1; height: 4400px; top: -400px;",
+  "events": [
+    "beforeChange 0→1 (5)",
+    "setPosition 1 (5)",
+    "afterChange 1 (5)",
+    "setPosition 1 (5)",
+  ],
+}
+`;
+
+exports[`moving moves on next without loop 1`] = `
+{
+  "after": "opacity: 1; width: 5000px; transform: translate3d(-1000px, 0px, 0px);",
+  "current": "1",
+  "during": "opacity: 1; width: 5000px; transform: translate3d(-1000px, 0px, 0px); transition: transform 500ms ease;",
+  "events": [
+    "beforeChange 0→1 (5)",
+    "setPosition 1 (5)",
+    "afterChange 1 (5)",
+    "setPosition 1 (5)",
+  ],
+}
+`;
+
+exports[`moving moves on prev from the first slide (through the clone) 1`] = `
+{
+  "after": "opacity: 1; width: 11000px; transform: translate3d(-5000px, 0px, 0px);",
+  "current": "4",
+  "during": "opacity: 1; width: 11000px; transform: translate3d(0px, 0px, 0px); transition: transform 500ms ease;",
+  "events": [
+    "beforeChange 0→4 (5)",
+    "setPosition 4 (5)",
+    "afterChange 4 (5)",
+    "setPosition 4 (5)",
+  ],
+}
+`;
+
+exports[`moving moves on prev on a positioned track 1`] = `
+{
+  "after": "opacity: 1; width: 11000px; left: -5000px;",
+  "current": "4",
+  "during": "opacity: 1; width: 11000px; left: -1000px;",
+  "events": [
+    "beforeChange 0→4 (5)",
+    "setPosition 4 (5)",
+    "afterChange 4 (5)",
+    "setPosition 4 (5)",
+  ],
+}
+`;
+
+exports[`moving moves on prev without loop at the start 1`] = `
+{
+  "after": "opacity: 1; width: 5000px; transform: translate3d(0px, 0px, 0px);",
+  "current": "0",
+  "during": "opacity: 1; width: 5000px; transform: translate3d(0px, 0px, 0px); transition: transform 500ms ease;",
+  "events": [
+    "setPosition 0 (5)",
+    "afterChange 0 (5)",
+    "setPosition 0 (5)",
+  ],
+}
+`;
+
+exports[`moving moves on the next arrow 1`] = `
+{
+  "after": "opacity: 1; width: 11000px; transform: translate3d(-2000px, 0px, 0px);",
+  "current": "1",
+  "during": "opacity: 1; width: 11000px; transform: translate3d(-2000px, 0px, 0px); transition: transform 500ms ease;",
+  "events": [
+    "beforeChange 0→1 (5)",
+    "setPosition 1 (5)",
+    "afterChange 1 (5)",
+    "setPosition 1 (5)",
+  ],
+}
+`;
+
+exports[`moving moves on the third dot 1`] = `
+{
+  "after": "opacity: 1; width: 11000px; transform: translate3d(-3000px, 0px, 0px);",
+  "current": "2",
+  "during": "opacity: 1; width: 11000px; transform: translate3d(-3000px, 0px, 0px); transition: transform 500ms ease;",
+  "events": [
+    "beforeChange 0→2 (5)",
+    "setPosition 2 (5)",
+    "afterChange 2 (5)",
+    "setPosition 2 (5)",
+  ],
+}
+`;
+
+exports[`moving moves on three per view as text, next 1`] = `
+{
+  "after": "opacity: 1; width: 4342px; transform: translate3d(-1336px, 0px, 0px);",
+  "current": "1",
+  "during": "opacity: 1; width: 4342px; transform: translate3d(-1336px, 0px, 0px); transition: transform 500ms ease;",
+  "events": [
+    "beforeChange 0→1 (5)",
+    "setPosition 1 (5)",
+    "afterChange 1 (5)",
+    "setPosition 1 (5)",
+  ],
+}
+`;
+
+exports[`moving moves on three per view, next 1`] = `
+{
+  "after": "opacity: 1; width: 4342px; transform: translate3d(-1336px, 0px, 0px);",
+  "current": "1",
+  "during": "opacity: 1; width: 4342px; transform: translate3d(-1336px, 0px, 0px); transition: transform 500ms ease;",
+  "events": [
+    "beforeChange 0→1 (5)",
+    "setPosition 1 (5)",
+    "afterChange 1 (5)",
+    "setPosition 1 (5)",
+  ],
+}
+`;

@@ -1,6 +1,8 @@
-import { ReactNode } from "react";
-import { ElementModel } from "visual/component/Elements/Types";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
+import type {
+  ArrayItem,
+  ItemProps
+} from "visual/editorComponents/EditorArrayComponent/types";
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import { DESKTOP, MOBILE, TABLET } from "visual/utils/responsiveMode";
 import { backgroundValueGetter } from "./utils";
@@ -11,14 +13,15 @@ class FlipboxItems extends EditorArrayComponent {
   }
 
   getItemProps(
-    itemData: ElementModel,
+    itemData: ArrayItem,
     itemIndex: number,
-    items: ElementModel[]
-  ): ReactNode {
+    items: ArrayItem[]
+  ): ItemProps {
     const props = super.getItemProps(itemData, itemIndex, items);
 
     const type = itemIndex === 0 ? "front" : itemIndex === 1 ? "back" : "front";
 
+    // @ts-expect-error the parent does not type the props it gives to the items
     const get = backgroundValueGetter({ type, v: props.v });
 
     const desktopBackgroundValue = get(DESKTOP);

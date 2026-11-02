@@ -1,16 +1,16 @@
 import { isNothing } from "fp-utilities";
-import {
+import type {
   FromElementModel,
   ToElementModel
 } from "visual/component/Options/Type";
 import { FontFamilyType } from "visual/types/Fonts";
 import { fromStringToScript } from "visual/types/utils";
+import * as FontType from "visual/utils/fonts/familyType";
 import * as SizeSuffix from "visual/utils/fonts/SizeSuffix";
 import * as FontWeight from "visual/utils/fonts/Weight";
-import * as FontType from "visual/utils/fonts/familyType";
 import { mPipe } from "visual/utils/fp";
-import * as Positive from "visual/utils/math/Positive";
 import * as Num from "visual/utils/math/number";
+import * as Positive from "visual/utils/math/Positive";
 import * as Str from "visual/utils/string/specs";
 import {
   isFontFamily,
@@ -19,7 +19,7 @@ import {
   isFontTransform,
   isFullFont
 } from "./types/Patch";
-import { Value } from "./types/Value";
+import type { Value } from "./types/Value";
 
 export const defaultValue: Value = {
   fontFamily: "",
@@ -93,7 +93,7 @@ export const toElementModel: ToElementModel<"typography"> = (v) => {
   const patch: Partial<Value> = {};
 
   if (isFontStyle(v)) {
-    patch["fontStyle"] = v.fontStyle;
+    patch.fontStyle = v.fontStyle;
   }
 
   if (isFullFont(v)) {

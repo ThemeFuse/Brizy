@@ -35,6 +35,20 @@
     height: 100%;
   }
 
+  .brz-columns__transform {
+    position: relative;
+    display: inherit;
+    flex-direction: inherit;
+    justify-content: inherit;
+    height: 100%;
+
+    > .brz-bg {
+      width: auto;
+      height: auto;
+      inset: 0;
+    }
+  }
+
   .brz-column__items {
     flex-direction: column;
     justify-content: inherit;

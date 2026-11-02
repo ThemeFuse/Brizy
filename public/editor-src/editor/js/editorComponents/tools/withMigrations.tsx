@@ -1,18 +1,21 @@
 import { Num } from "@brizy/readers";
-import React, { ReactNode } from "react";
+import React, { type ReactNode } from "react";
 import EditorIcon from "visual/component/EditorIcon";
-import { ElementModel } from "visual/component/Elements/Types";
-import { EditorInstance, Props } from "visual/editorComponents/EditorComponent";
-import { OnChangeMeta } from "visual/editorComponents/EditorComponent/types";
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
-import { RenderType } from "visual/providers/RenderProvider";
+import type { ElementModel } from "visual/component/Elements/Types";
+import type {
+  EditorInstance,
+  Props
+} from "visual/editorComponents/EditorComponent";
+import type { OnChangeMeta } from "visual/editorComponents/EditorComponent/types";
+import type { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import type { RenderType } from "visual/providers/RenderProvider";
 import {
-  Deps,
-  Migration,
+  type Deps,
   findMigrations,
+  type Migration,
   migrate
 } from "visual/utils/migration";
-import { MValue } from "visual/utils/value";
+import type { MValue } from "visual/utils/value";
 
 export type DBMigration<M> = M & {
   _version: number;
@@ -24,7 +27,7 @@ interface DepsGetValue<T> {
 
 export function withMigrations<
   M extends ElementModel,
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  // biome-ignore lint/suspicious/noExplicitAny: migrated from eslint
   D extends DepsGetValue<any>,
   P extends Record<string, unknown> = Record<string, unknown>
 >(
@@ -75,7 +78,7 @@ export function withMigrations<
             })
             .catch((e) => {
               if (process.env.NODE_ENV === "development") {
-                /* eslint-disable-next-line no-console */
+                /* biome-ignore lint/suspicious/noConsole: migrated from eslint */
                 console.log(e);
               }
               throw e;

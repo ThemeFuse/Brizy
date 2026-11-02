@@ -1,3 +1,4 @@
+import { noop } from "es-toolkit";
 import { produce } from "immer";
 import React from "react";
 import { getIn } from "timm";
@@ -5,6 +6,7 @@ import { rolesHOC } from "visual/component/Roles";
 import { symbolsToItems } from "visual/editorComponents/Menu/utils";
 import {
   copiedElementNoRefsSelector,
+  menuDataSelector,
   pageDataNoRefsSelector
 } from "visual/redux/selectors";
 import {
@@ -12,7 +14,6 @@ import {
   getClosestParent,
   mapModels
 } from "visual/utils/models";
-import { useConfig } from "../../providers/ConfigProvider";
 import HotKeysPlugin from "./HotKeysPlugin";
 
 const keyNamesShortKeys = {
@@ -52,7 +53,7 @@ const keyNamesShortKeys = {
 const getShortKeysByShortcuts = (types) => {
   return types.reduce((acc, key) => {
     if (keyNamesShortKeys[key]) {
-      acc = [...acc, ...keyNamesShortKeys[key]];
+      acc.push(...keyNamesShortKeys[key]);
     }
     return acc;
   }, []);
@@ -60,14 +61,14 @@ const getShortKeysByShortcuts = (types) => {
 
 const HotKeysContext = React.createContext({});
 
-class _HotKeys extends React.Component {
+class HotKeys extends React.Component {
   static contextType = HotKeysContext;
 
   contextValue = {
     getParentContextMenuItems: this.getItems
   };
 
-  handleFilterItems(menuData = [], items, state) {
+  handleFilterItems(items, state) {
     // It's hack only for shortcodes. We calculate current active shortcode and return his callback
     if (items.length && items[0].id.startsWith("key-helper")) {
       // this enables toolbar's escape handler to work properly inside SectionPopup.
@@ -87,11 +88,12 @@ class _HotKeys extends React.Component {
       return [];
     }
 
-    const activeElementId = activeEditorComponent.getId();
+    const activeElementId = activeEditorComponent.getHotKeysTargetId();
     const data = pageDataNoRefsSelector(state);
     const copiedElement = copiedElementNoRefsSelector(state);
     const activeElementPath = createFullModelPath(data, [activeElementId]);
     const copiedPath = [...activeElementPath];
+    const menuData = menuDataSelector(state);
 
     const _data = attachMenu(data, menuData);
 
@@ -101,14 +103,14 @@ class _HotKeys extends React.Component {
       const { value: currentActiveContainerValue } = getClosestParent(
         activeElementPath,
         _data,
-        ({ type }) => type === "Wrapper" || type === "Cloneable"
+        (model) => model?.type === "Wrapper" || model?.type === "Cloneable"
       );
 
       if (currentActiveContainerValue && copiedElement.value) {
         const { value: currentCopiedContainerValue } = getClosestParent(
           copiedElement.path,
           attachMenu(copiedElement.value, menuData),
-          ({ type }) => type === "Wrapper" || type === "Cloneable"
+          (model) => model?.type === "Wrapper" || model?.type === "Cloneable"
         );
 
         if (
@@ -130,7 +132,7 @@ class _HotKeys extends React.Component {
       }
     }
 
-    let newPath = [];
+    const newPath = [];
     for (let i = 0; i <= activeElementPath.length; i++) {
       const newValue = getIn(_data, copiedPath);
 
@@ -173,18 +175,16 @@ class _HotKeys extends React.Component {
   }
 
   getItems = () => {
-    /* eslint-disable no-unused-vars */
-    let {
+    const {
       children,
       shortcutsTypes = [],
       keyNames = [],
       ...restProps
     } = this.props;
-    /* eslint-enabled no-unused-vars */
     const { getParentContextMenuItems } = this.context;
     let props = {
-      onKeyUp: () => {},
-      onKeyDown: () => {},
+      onKeyUp: noop,
+      onKeyDown: noop,
       keyNames: [...getShortKeysByShortcuts(shortcutsTypes), ...keyNames],
       ...restProps
     };
@@ -199,7 +199,7 @@ class _HotKeys extends React.Component {
   };
 
   render() {
-    const { children, id, menuData } = this.props;
+    const { children, id } = this.props;
     const items = this.getItems();
 
     return (
@@ -210,18 +210,12 @@ class _HotKeys extends React.Component {
           id={id}
           shouldKeyDownHandle={this.shouldShortCutHandle}
           shouldKeyUpHandle={this.shouldShortCutHandle}
-          filterItems={(...args) => this.handleFilterItems(menuData, ...args)}
+          filterItems={this.handleFilterItems}
         />
       </HotKeysContext.Provider>
     );
   }
 }
-
-export const HotKeys = (props) => {
-  const { menuData } = useConfig();
-
-  return <_HotKeys {...props} menuData={menuData} />;
-};
 
 export default rolesHOC({
   allow: ["admin"],

@@ -78,15 +78,18 @@ describe("getRootClassNames", () => {
           "brz-conditions-popup--static"
         ]
       }
-    ])("adds embedded class when embedded is true ($mode)", ({ mode, expected }) => {
-      expect(
-        getRootClassNames({
-          ...baseConfig,
-          mode,
-          ui: { popupSettings: { embedded: true } }
-        })
-      ).toEqual(expected);
-    });
+    ])(
+      "adds embedded class when embedded is true ($mode)",
+      ({ mode, expected }) => {
+        expect(
+          getRootClassNames({
+            ...baseConfig,
+            mode,
+            ui: { popupSettings: { embedded: true } }
+          })
+        ).toEqual(expected);
+      }
+    );
 
     it.each([Mode.internal_popup, Mode.external_popup])(
       "does not return space-joined class strings (%s)",

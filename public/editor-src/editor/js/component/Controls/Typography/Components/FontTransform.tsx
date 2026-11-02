@@ -1,9 +1,9 @@
-import React, { FC, useCallback, useMemo } from "react";
+import React, { type FC, useCallback, useMemo } from "react";
 import { Toggle } from "visual/component/Controls/Toggle";
 import { ToggleButton } from "visual/component/Controls/ToggleButton";
 import { TextScripts } from "visual/types/Style";
 import { t } from "visual/utils/i18n";
-import { FontScript, FontTransformProps as Props } from "../types/Props";
+import type { FontScript, FontTransformProps as Props } from "../types/Props";
 
 export const FontTransform: FC<Props> = ({
   bold,

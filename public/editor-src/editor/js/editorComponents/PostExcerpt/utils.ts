@@ -1,5 +1,5 @@
 import { makePlaceholder } from "visual/utils/dynamicContent";
-import { DCPlaceholderStartObj } from "visual/utils/dynamicContent/types";
+import type { DCPlaceholderStartObj } from "visual/utils/dynamicContent/types";
 
 type Types =
   | "userEmail"

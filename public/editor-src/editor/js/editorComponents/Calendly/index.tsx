@@ -1,14 +1,18 @@
 import { Calendly as CalendlyComponent } from "@brizy/component/src/Flex/Calendly";
-import React, { ReactNode } from "react";
+import React, { type ReactNode } from "react";
 import BoxResizer from "visual/component/BoxResizer";
-import { Patch, Point, Restrictions } from "visual/component/BoxResizer/types";
+import type {
+  Patch,
+  Point,
+  Restrictions
+} from "visual/component/BoxResizer/types";
 import Placeholder from "visual/component/Placeholder";
 import Toolbar from "visual/component/Toolbar";
 import { Wrapper } from "../tools/Wrapper";
 import { BaseCalendly } from "./Base";
 import * as sidebarConfig from "./sidebar";
 import * as toolbarConfig from "./toolbar";
-import { Value } from "./types";
+import type { Value } from "./types";
 
 const resizerPoints = [
   "centerLeft",

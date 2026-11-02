@@ -1,7 +1,7 @@
 import { getIn, insert, removeAt, setIn } from "timm";
-import { ElementModelType } from "visual/component/Elements/Types";
+import type { ElementModelType } from "visual/component/Elements/Types";
 import * as Num from "visual/utils/math/number";
-import { MValue } from "visual/utils/value";
+import type { MValue } from "visual/utils/value";
 
 export const addIn = (
   object: ElementModelType,

@@ -1,5 +1,5 @@
-import { once } from "es-toolkit";
 import { Num } from "@brizy/readers";
+import { once } from "es-toolkit";
 import { makeUrl } from "visual/utils/api/utils";
 import { makeAttr } from "visual/utils/i18n/attribute";
 import { videoData as getVideoData } from "visual/utils/video";

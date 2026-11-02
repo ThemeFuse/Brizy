@@ -1,33 +1,31 @@
 /**
- * Helper to load and merge ESLint configs
- * Loads @brizy/eslint-config (ESM) and merges with browser compatibility config
+ * The only remaining ESLint use in the repo.
+ *
+ * Linting moved to Biome, but Biome has no equivalent of eslint-plugin-compat,
+ * which gates the production preview bundle against `previewBrowserlist`. So
+ * ESLint survives here as a single-rule browser-compatibility check and nothing
+ * else — it does not lint style, correctness or anything Biome now owns.
+ *
+ * `noInlineConfig` is load-bearing: source files still carry suppression
+ * comments, and ESLint hard-errors on a directive naming a rule it has not
+ * loaded. Ignoring inline config entirely is what keeps this pass independent
+ * of whatever Biome suppressions live in the tree.
  */
 
 const compatPlugin = require("eslint-plugin-compat");
 const tseslint = require("typescript-eslint");
-const globals = require("globals");
 const swcrc = require("../swc.config.all");
 
 async function loadPreviewEslintConfig() {
-  const sharedConfigModule = await import("@brizy/eslint-config");
-  const sharedConfig = sharedConfigModule.default;
-
   return [
-    ...sharedConfig,
-    // Global overrides (browser globals, compat checking)
     {
+      files: ["**/*.{js,jsx,ts,tsx}"],
       languageOptions: {
-        globals: {
-          ...globals.browser,
-          // Custom globals from visual/eslint.config.mjs
-          TARGET: "readonly",
-          IS_EXPORT: "readonly",
-          COMPILER_TYPE: "readonly",
-          AUTHORIZATION_URL: "readonly",
-          __CONFIG__: "readonly",
-          YT: "readonly",
-          getFreeLibs: "readonly",
-          getProLibs: "readonly"
+        parser: tseslint.parser,
+        ecmaVersion: 2022,
+        sourceType: "module",
+        parserOptions: {
+          ecmaFeatures: { jsx: true }
         }
       },
       plugins: {
@@ -39,40 +37,11 @@ async function loadPreviewEslintConfig() {
         polyfills: []
       },
       rules: {
-        // Browser compatibility checking
         "compat/compat": "error"
       },
       linterOptions: {
+        noInlineConfig: true,
         reportUnusedDisableDirectives: "off"
-      }
-    },
-    // JavaScript file overrides (from visual/eslint.config.mjs)
-    {
-      files: ["**/*.{js,jsx}"],
-      rules: {
-        // Allow unused vars with _ prefix (common pattern for unused parameters)
-        "no-unused-vars": [
-          "error",
-          {
-            varsIgnorePattern: "^_",
-            argsIgnorePattern: "^_",
-            caughtErrorsIgnorePattern: "^_"
-          }
-        ]
-      }
-    },
-    // TypeScript/JavaScript file overrides (from visual/eslint.config.mjs)
-    {
-      files: ["**/*.{js,jsx,ts,tsx}"],
-      plugins: {
-        "@typescript-eslint": tseslint.plugin
-      },
-      rules: {
-        // Turn off no-unused-expressions for preview builds
-        // This rule causes issues with legacy jQuery code that uses comma operators
-        // extensively (e.g., jquery.parallax.js uses patterns like: a && b(), c = d)
-        "@typescript-eslint/no-unused-expressions": "off",
-        "no-unused-expressions": "off"
       }
     }
   ];

@@ -1,6 +1,6 @@
-import { ConfigHandler, Base } from "../../types/Props";
-import { Value } from "../../types/Value";
-import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
+import type { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
+import type { Base, ConfigHandler } from "../../types/Props";
+import type { Value } from "../../types/Value";
 
 // Make required choices
 type Common = Required<ConfigHandler> & Base;

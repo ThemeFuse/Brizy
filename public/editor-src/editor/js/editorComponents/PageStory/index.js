@@ -40,9 +40,7 @@ class PageStory extends EditorComponent {
   }
 
   blocksFilter(blocks) {
-    /* eslint-disable no-unused-vars */
     return blocks.filter(([_, block]) => block.type === "StoryItem");
-    /* eslint-enabled no-unused-vars */
   }
 
   handleClose = () => {
@@ -64,7 +62,7 @@ class PageStory extends EditorComponent {
     this.props.onChange(newValue);
   };
 
-  renderForEdit(v) {
+  renderForEdit(_v) {
     const popupsProps = this.makeSubcomponentProps({
       bindWithKey: "items",
       itemProps: () => ({

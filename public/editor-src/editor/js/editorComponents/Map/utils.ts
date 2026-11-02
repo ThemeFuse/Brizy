@@ -3,7 +3,7 @@ import type {
   Patch,
   Point
 } from "visual/component/BoxResizer/types";
-import { ElementModel } from "visual/component/Elements/Types";
+import type { ElementModel } from "visual/component/Elements/Types";
 import type { Value } from "./type";
 
 export const resizerTransformValue = (v: Value): ElementModel => {

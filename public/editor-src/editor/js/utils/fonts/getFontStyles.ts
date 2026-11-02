@@ -2,9 +2,9 @@ import {
   currentStyleSelector,
   extraFontStylesSelector
 } from "visual/redux/selectors";
-import { Store } from "visual/redux/store";
-import { ReduxState } from "visual/redux/types";
-import { FontStyle } from "visual/types/Style";
+import type { Store } from "visual/redux/store";
+import type { ReduxState } from "visual/redux/types";
+import type { FontStyle } from "visual/types/Style";
 
 interface AllFontStyles {
   fontStyles?: ReduxState["currentStyle"]["fontStyles"];

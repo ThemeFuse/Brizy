@@ -1,8 +1,8 @@
-import { ElementModel } from "visual/component/Elements/Types";
+import type { ElementModel } from "visual/component/Elements/Types";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
-import { ResponsiveMode } from "visual/utils/responsiveMode";
-import { ToolbarItemType } from "../ToolbarItemType";
+import type { ResponsiveMode } from "visual/utils/responsiveMode";
+import type { ToolbarItemType } from "../ToolbarItemType";
 
 export function getItems({
   v,

@@ -1,6 +1,6 @@
-import { MRead, Reader } from "visual/utils/types/Type";
-import { Append, Concat } from "visual/utils/types/Monoid";
-import { MValue } from "visual/utils/value";
+import type { Append, Concat } from "visual/utils/types/Monoid";
+import type { MRead, Reader } from "visual/utils/types/Type";
+import type { MValue } from "visual/utils/value";
 
 export type Type = "none" | "inset" | "outset";
 
@@ -12,7 +12,7 @@ export const types: Type[] = ["none", "inset", "outset"];
 /**
  * @deprecated, use fromString
  */
-export const read: Reader<Type> = v =>
+export const read: Reader<Type> = (v) =>
   types.includes(v as Type) ? (v as Type) : undefined;
 
 export const fromString = (s: string): Type | undefined =>
@@ -21,9 +21,9 @@ export const fromString = (s: string): Type | undefined =>
 export const empty: Type = "none";
 
 export const append: Append<Type> = (a, b) => (a === empty ? b : a);
-export const concat: Concat<Type> = as => as.reduce(append, empty);
+export const concat: Concat<Type> = (as) => as.reduce(append, empty);
 
-export const mRead: MRead<Type> = v => read(v) ?? empty;
+export const mRead: MRead<Type> = (v) => read(v) ?? empty;
 
 /**
  * Return undefined if the style is empty, otherwise return the style

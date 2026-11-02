@@ -1,17 +1,17 @@
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
-import { Subscription } from "visual/global/Config/types/shopify/Subscription";
-import {
+import type { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import type { Subscription } from "visual/global/Config/types/shopify/Subscription";
+import type {
   EcwidCategoryPage,
   EcwidProductPage,
   Page,
   PageCollection,
   ShopifyPage
 } from "visual/types/Page";
-import { Language } from "visual/utils/multilanguages";
-import { TemplateType } from "../TemplateType";
-import { ShopifyTemplate } from "../shopify/ShopifyTemplate";
-import { Base, CollectionPage } from "./Base";
-import { XAuthUserToken } from "./XAuth";
+import type { Language } from "visual/utils/multilanguages";
+import type { ShopifyTemplate } from "../shopify/ShopifyTemplate";
+import type { TemplateType } from "../TemplateType";
+import type { Base, CollectionPage } from "./Base";
+import type { XAuthUserToken } from "./XAuth";
 
 //#region CMS
 

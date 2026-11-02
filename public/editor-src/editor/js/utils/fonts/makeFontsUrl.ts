@@ -1,5 +1,5 @@
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
-import { GoogleFont, UploadedFont } from "visual/types/Fonts";
+import type { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import type { GoogleFont, UploadedFont } from "visual/types/Fonts";
 
 export const makeSubsetGoogleFontsUrl = (
   fonts: GoogleFont[],

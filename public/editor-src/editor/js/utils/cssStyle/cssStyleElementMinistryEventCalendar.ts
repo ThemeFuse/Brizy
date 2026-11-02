@@ -1,4 +1,4 @@
-import { WithRenderContext } from "visual/providers/RenderProvider";
+import type { WithRenderContext } from "visual/providers/RenderProvider";
 import {
   cssStyleBgColor,
   cssStyleBgGradient,
@@ -20,7 +20,7 @@ import {
 } from "visual/utils/cssStyle";
 import { read as readNumber } from "visual/utils/reader/number";
 import { read as readString } from "visual/utils/reader/string";
-import { CSSValue } from "visual/utils/style2/types";
+import type { CSSValue } from "visual/utils/style2/types";
 import { defaultValueValue } from "../onChange";
 import {
   cssStyleElementMinistryBrandsButtonsBgColor,

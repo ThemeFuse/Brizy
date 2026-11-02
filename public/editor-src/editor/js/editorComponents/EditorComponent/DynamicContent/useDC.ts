@@ -2,7 +2,7 @@ import { useContext, useEffect, useMemo, useReducer, useRef } from "react";
 import { useConfig } from "visual/providers/ConfigProvider";
 import { isView, useRender } from "visual/providers/RenderProvider";
 import { EditorComponentContext } from "../EditorComponentContext";
-import { DCApiProxy } from "./DCApiProxy";
+import type { DCApiProxy } from "./DCApiProxy";
 import { DCApiProxyInstance } from "./DCApiProxyInstance";
 
 export type State =
@@ -91,6 +91,7 @@ export function useDC(
 
   const isInitial = useMemo(() => currentState !== "initial", [currentState]);
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: migrated from eslint
   useEffect(() => {
     if (
       placeholder === undefined ||
@@ -111,7 +112,6 @@ export function useDC(
     };
 
     // isInitial dependency is not nedded
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [placeholder, IS_VIEW]);
 
   useEffect(() => {

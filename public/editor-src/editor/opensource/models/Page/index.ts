@@ -3,7 +3,7 @@ interface Block {
   value: {
     _id?: string;
     items?: Array<Block>;
-    // eslint-disable-next-line
+    // biome-ignore lint: migrated from eslint
     [key: string]: any;
   };
 }

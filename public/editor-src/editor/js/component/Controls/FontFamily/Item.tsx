@@ -1,8 +1,8 @@
 import classNames from "classnames";
 import React, { useCallback, useMemo } from "react";
 import { useTranslation } from "visual/providers/I18nProvider";
-import { FCC } from "visual/utils/react/types";
-import { FontSizes, FontWithType } from "./types";
+import type { FCC } from "visual/utils/react/types";
+import type { FontSizes, FontWithType } from "./types";
 
 interface Props {
   font: FontWithType;

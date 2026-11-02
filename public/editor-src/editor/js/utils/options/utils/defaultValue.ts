@@ -1,4 +1,4 @@
-import { OptionName, OptionValue } from "visual/component/Options/types";
+import type { OptionName, OptionValue } from "visual/component/Options/types";
 import { defaultValue as addable } from "visual/utils/options/Addable/converters";
 import { defaultValue as advancedSettings } from "visual/utils/options/AdvancedSettings/converters";
 import { defaultValue as ai } from "visual/utils/options/AiText/converters";
@@ -53,8 +53,8 @@ import { defaultValue as stateMode } from "visual/utils/options/StateMode/conver
 import { defaultValue as _switch } from "visual/utils/options/Switch/converters";
 import { defaultValue as symbols } from "visual/utils/options/Symbols/converters";
 import { defaultValue as tabs } from "visual/utils/options/Tabs/converters";
-import { defaultValue as textShadow } from "visual/utils/options/TextShadow/converters";
 import { defaultValue as textarea } from "visual/utils/options/Textarea/converters";
+import { defaultValue as textShadow } from "visual/utils/options/TextShadow/converters";
 import { defaultValue as toggle } from "visual/utils/options/Toggle/converters";
 import { defaultValue as toggleButton } from "visual/utils/options/ToggleButton/converters";
 import { defaultValue as transform } from "visual/utils/options/Transform/converters";

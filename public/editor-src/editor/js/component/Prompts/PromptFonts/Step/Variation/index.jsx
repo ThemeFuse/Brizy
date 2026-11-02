@@ -1,8 +1,8 @@
 import { memoize, omit, without } from "es-toolkit";
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { createFont } from "visual/component/Prompts/PromptFonts/api";
 import { Context } from "visual/component/Prompts/common/GlobalApps/Context";
+import { createFont } from "visual/component/Prompts/PromptFonts/api";
 import { addFonts } from "visual/redux/actions2";
 import { fontsSelector } from "visual/redux/selectors";
 import { pendingRequest } from "visual/utils/api";
@@ -86,8 +86,9 @@ class Variation extends Component {
           value: ttfItalic,
           type: "upload",
           accept: ".ttf",
-          helper:
-            t("The Web Open Font Format (TTF) is a format used in web pages by modern browsers.")
+          helper: t(
+            "The Web Open Font Format (TTF) is a format used in web pages by modern browsers."
+          )
         },
         {
           title: t("EOT File"),
@@ -95,8 +96,9 @@ class Variation extends Component {
           value: eotItalic,
           type: "upload",
           accept: ".eot",
-          helper:
-            t("The Web Open Font Format (EOT) is a format used in web pages by modern browsers.")
+          helper: t(
+            "The Web Open Font Format (EOT) is a format used in web pages by modern browsers."
+          )
         },
         {
           title: t("WOFF File"),
@@ -104,8 +106,9 @@ class Variation extends Component {
           value: woffItalic,
           type: "upload",
           accept: ".woff",
-          helper:
-            t("The Web Open Font Format (WOFF) is a format used in web pages by modern browsers.")
+          helper: t(
+            "The Web Open Font Format (WOFF) is a format used in web pages by modern browsers."
+          )
         },
         {
           title: t("WOFF2 File"),
@@ -113,8 +116,9 @@ class Variation extends Component {
           value: woff2Italic,
           type: "upload",
           accept: ".woff2",
-          helper:
-            t("The Web Open Font Format (WOFF2) is a format used in web pages by modern browsers.")
+          helper: t(
+            "The Web Open Font Format (WOFF2) is a format used in web pages by modern browsers."
+          )
         }
       ];
     }
@@ -127,8 +131,9 @@ class Variation extends Component {
         value: ttf,
         type: "upload",
         accept: ".ttf",
-        helper:
-          t("The Web Open Font Format (TTF) is a format used in web pages by modern browsers.")
+        helper: t(
+          "The Web Open Font Format (TTF) is a format used in web pages by modern browsers."
+        )
       },
       {
         title: t("EOT File"),
@@ -136,8 +141,9 @@ class Variation extends Component {
         value: eot,
         type: "upload",
         accept: ".eot",
-        helper:
-          t("The Web Open Font Format (EOT) is a format used in web pages by modern browsers.")
+        helper: t(
+          "The Web Open Font Format (EOT) is a format used in web pages by modern browsers."
+        )
       },
       {
         title: t("WOFF File"),
@@ -145,8 +151,9 @@ class Variation extends Component {
         value: woff,
         type: "upload",
         accept: ".woff",
-        helper:
-          t("The Web Open Font Format (WOFF) is a format used in web pages by modern browsers.")
+        helper: t(
+          "The Web Open Font Format (WOFF) is a format used in web pages by modern browsers."
+        )
       },
       {
         title: t("WOFF2 File"),
@@ -154,8 +161,9 @@ class Variation extends Component {
         value: woff2,
         type: "upload",
         accept: ".woff2",
-        helper:
-          t("The Web Open Font Format (WOFF2) is a format used in web pages by modern browsers.")
+        helper: t(
+          "The Web Open Font Format (WOFF2) is a format used in web pages by modern browsers."
+        )
       }
     ];
   }
@@ -220,7 +228,7 @@ class Variation extends Component {
       return;
     }
 
-    let weightsMap = new Set([...(data.weights || []), Number(weight)]);
+    const weightsMap = new Set([...(data.weights || []), Number(weight)]);
 
     const newData = Object.assign({}, data, {
       weights: [...weightsMap],

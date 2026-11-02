@@ -1,7 +1,7 @@
 import { t } from "visual/utils/i18n";
-import { Value } from "./types";
-import { GetItems } from "../EditorComponent/types";
+import type { GetItems } from "../EditorComponent/types";
 import { transitionCSS } from "./css";
+import type { Value } from "./types";
 
 const getHtml = () => {
   return `
@@ -89,7 +89,7 @@ export const getItems: GetItems<Value> = () => {
                   ]
                 }
               ]
-            },
+            }
           ]
         }
       ]

@@ -4,11 +4,11 @@ import {
   getKeyModifierSubMenu,
   navigatorKeyModifier
 } from "visual/component/ContextMenu/utils";
-import { ElementModel } from "visual/component/Elements/Types";
+import type { ElementModel } from "visual/component/Elements/Types";
 import { openNavigatorFromContextMenu } from "visual/component/Navigator/utils";
 import { hideToolbar } from "visual/component/Toolbar";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
-import { ContextGetItems } from "visual/editorComponents/EditorComponent/types";
+import type { ContextGetItems } from "visual/editorComponents/EditorComponent/types";
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import { t } from "visual/utils/i18n";
 
@@ -36,7 +36,7 @@ const getItems =
             type: "button",
             title: t("Copy"),
             helperText: ({ isInSubMenu }) =>
-              getKeyModifierSubMenu(isInSubMenu) + " + C",
+              `${getKeyModifierSubMenu(isInSubMenu)} + C`,
             onChange: () => component.copy(itemIndex)
           },
           {
@@ -44,7 +44,7 @@ const getItems =
             type: "button",
             title: t("Paste"),
             helperText: ({ isInSubMenu }) =>
-              getKeyModifierSubMenu(isInSubMenu) + " + V",
+              `${getKeyModifierSubMenu(isInSubMenu)} + V`,
             inactive: !canPaste,
             onChange: () => component.paste(itemIndex)
           },
@@ -53,7 +53,7 @@ const getItems =
             type: "button",
             title: t("Paste Styles"),
             helperText: ({ isInSubMenu }) =>
-              getKeyModifierSubMenu(isInSubMenu) + " + ⇧ + V",
+              `${getKeyModifierSubMenu(isInSubMenu)} + ⇧ + V`,
             inactive: !canPaste,
             onChange: () => component.pasteStyles(itemIndex)
           },
@@ -62,7 +62,7 @@ const getItems =
             type: "button",
             title: t("Duplicate"),
             helperText: ({ isInSubMenu }) =>
-              getKeyModifierSubMenu(isInSubMenu) + " + D",
+              `${getKeyModifierSubMenu(isInSubMenu)} + D`,
             onChange() {
               component.cloneItem(itemIndex);
             }

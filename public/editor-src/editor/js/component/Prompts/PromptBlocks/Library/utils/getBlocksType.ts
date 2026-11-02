@@ -1,8 +1,8 @@
 import { ToastNotification } from "visual/component/Notifications";
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import type { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { t } from "visual/utils/i18n";
-import { BlockCategory } from "../../types";
-import { BLOCK, LAYOUT, LibraryProps, POPUP } from "../types";
+import type { BlockCategory } from "../../types";
+import { BLOCK, LAYOUT, type LibraryProps, POPUP } from "../types";
 
 export const getBlocksType = (
   type: LibraryProps["type"],

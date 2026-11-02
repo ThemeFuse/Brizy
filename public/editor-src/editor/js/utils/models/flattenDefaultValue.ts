@@ -1,19 +1,22 @@
 import { Obj } from "@brizy/readers";
-import {
+import type {
   ElementDefaultValue,
   ElementModel
 } from "visual/component/Elements/Types";
-import { Dictionary } from "visual/types/utils";
+import type { Dictionary } from "visual/types/utils";
 
-interface FlattenDefaultValueFn {
-  (keys: string[]): (defaultValue: ElementDefaultValue) => ElementModel;
-}
+type FlattenDefaultValueFn = (
+  keys: string[]
+) => (defaultValue: ElementDefaultValue) => ElementModel;
 
 export const flattenDefaultValue: FlattenDefaultValueFn = (keys) => {
-  const keysMap: Dictionary<boolean> = keys.reduce((acc, k) => {
-    acc[k] = true;
-    return acc;
-  }, {} as Dictionary<boolean>);
+  const keysMap: Dictionary<boolean> = keys.reduce(
+    (acc, k) => {
+      acc[k] = true;
+      return acc;
+    },
+    {} as Dictionary<boolean>
+  );
 
   return function inner(
     defaultValue: ElementDefaultValue | ElementModel

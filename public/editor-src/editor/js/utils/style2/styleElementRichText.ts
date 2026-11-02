@@ -1,7 +1,7 @@
 import { Num, Str } from "@brizy/readers";
 import { getColor } from "visual/utils/color";
 import { defaultValueValue } from "visual/utils/onChange";
-import { CSSValue } from "./types";
+import type { CSSValue } from "./types";
 import { gradientCssDeclaration } from "./utils";
 
 export function styleElementRichTextGradient({

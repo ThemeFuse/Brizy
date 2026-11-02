@@ -1,5 +1,6 @@
-import React from "react";
 import classnames from "classnames";
+import { noop } from "es-toolkit";
+import React from "react";
 
 export default function Input(props) {
   const {
@@ -7,7 +8,7 @@ export default function Input(props) {
     type = "text",
     placeholder = "",
     value = "",
-    onChange = () => {}
+    onChange = noop
   } = props;
   const classNames = classnames("brz-input", className);
 

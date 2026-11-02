@@ -13,10 +13,15 @@ import React, {
 import { rolesHOC } from "visual/component/Roles";
 import { createProfilerMeasure } from "visual/utils/profilerMeasure";
 import { ContextMenuExtendContext } from "./ContextMenuExtend";
-import { Dropdown } from "./Dropdown";
 import { ContextMenuContext } from "./context";
-import type { ComponentMenuEntry, Item, MenuPosition, Meta } from "./types";
-import type { ContextMenuProviderProps } from "./types";
+import { Dropdown } from "./Dropdown";
+import type {
+  ComponentMenuEntry,
+  ContextMenuProviderProps,
+  Item,
+  MenuPosition,
+  Meta
+} from "./types";
 import { filterItems, mergeItems } from "./utils";
 
 const onRenderContextMenu = createProfilerMeasure();
@@ -219,5 +224,5 @@ export default rolesHOC({
     typeof children === "function" ? children({ ref: null }) : children
 });
 
-export { default as ContextMenuExtend } from "./ContextMenuExtend";
 export { default as ContextMenuDisabled } from "./ContextMenuDisabled";
+export { default as ContextMenuExtend } from "./ContextMenuExtend";

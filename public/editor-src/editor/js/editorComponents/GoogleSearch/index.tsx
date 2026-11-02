@@ -1,8 +1,9 @@
 import React, {
-  ChangeEvent,
-  MouseEvent,
+  type ChangeEvent,
   createElement,
-  createRef
+  createRef,
+  type MouseEvent,
+  type ReactNode
 } from "react";
 import CustomCSS from "visual/component/CustomCSS";
 import { ThemeIcon } from "visual/component/ThemeIcon";
@@ -17,7 +18,7 @@ import { Wrapper } from "../tools/Wrapper";
 import defaultValue from "./defaultValue.json";
 import * as sidebarConfig from "./sidebar";
 import * as toolbarConfig from "./toolbar";
-import { Value } from "./types";
+import type { Value } from "./types";
 import { isValidEngineId } from "./utils";
 
 const CSE_URL = "https://programmablesearchengine.google.com/controlpanel/all";
@@ -179,23 +180,20 @@ class GoogleSearch extends EditorComponent<Value> {
                 {showSetup ? (
                   this.renderSetupGuide()
                 ) : (
-                    <form
-                      className="brz-form brz-google-search-form"
-                      noValidate
-                    >
-                      {searchStyle !== "classic" && this.renderIcon()}
-                      <input
-                        name="search"
-                        ref={this.inputRef}
-                        className="brz-input brz-google-search"
-                        autoComplete="off"
-                        value={label}
-                        onChange={this.handleInputChange}
-                        onClick={this.handleInputClick}
-                        onBlur={this.handleInputBlur}
-                      />
-                      {searchStyle === "classic" && this.renderButton()}
-                    </form>
+                  <form className="brz-form brz-google-search-form" noValidate>
+                    {searchStyle !== "classic" && this.renderIcon()}
+                    <input
+                      name="search"
+                      ref={this.inputRef}
+                      className="brz-input brz-google-search"
+                      autoComplete="off"
+                      value={label}
+                      onChange={this.handleInputChange}
+                      onClick={this.handleInputClick}
+                      onBlur={this.handleInputBlur}
+                    />
+                    {searchStyle === "classic" && this.renderButton()}
+                  </form>
                 )}
                 {showError && (
                   <div className="brz-google-search-setup__error">
@@ -212,7 +210,7 @@ class GoogleSearch extends EditorComponent<Value> {
     );
   }
 
-  renderForView(v: Value): JSX.Element {
+  renderForView(v: Value): ReactNode {
     const { customCSS, label, searchStyle, engineId } = v;
 
     const gname = this.getId();
@@ -227,7 +225,7 @@ class GoogleSearch extends EditorComponent<Value> {
     });
 
     if (!isValidEngineId(engineId)) {
-      return <></>;
+      return null;
     }
 
     const dataAttrs = {
@@ -237,6 +235,7 @@ class GoogleSearch extends EditorComponent<Value> {
 
     return (
       <CustomCSS selectorName={this.getId()} css={customCSS}>
+        {/* biome-ignore lint/complexity/noUselessFragments: CustomCSS runs Children.only on its child, so the two siblings need packing */}
         <>
           <Wrapper
             {...this.makeWrapperProps({

@@ -1,8 +1,8 @@
-import { GetItems } from "visual/editorComponents/EditorComponent/types";
+import type { GetItems } from "visual/editorComponents/EditorComponent/types";
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
 import { t } from "visual/utils/i18n";
 import { getDynamicContentOption } from "visual/utils/options";
-import { Props, Value } from "./type";
+import type { Props, Value } from "./type";
 import { getToolbarTagsChoices } from "./utils";
 
 export const getItems: GetItems<Value, Props> = ({ context }) => {

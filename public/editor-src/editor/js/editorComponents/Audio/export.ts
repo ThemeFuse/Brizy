@@ -3,10 +3,7 @@ import {
   type AudioAccessibilityState
 } from "../accessibility";
 
-export default function ($node: JQuery): void {
-  const node = $node.get(0);
-  if (!node) return;
-
+export default function (node: HTMLElement): void {
   const formatTime = (time: number): string => {
     const min: number = Math.floor(time / 60);
     const sec: number = Math.floor(time % 60);
@@ -244,7 +241,7 @@ export default function ($node: JQuery): void {
       });
 
       audio.addEventListener("ended", () => {
-        playPauseBtnNode && changeIconVisibility(playPauseBtnNode, false);
+        if (playPauseBtnNode) changeIconVisibility(playPauseBtnNode, false);
         syncAccessibilityState();
       });
 
@@ -261,8 +258,9 @@ export default function ($node: JQuery): void {
           } else {
             audio.pause();
           }
-          playPauseBtnNode &&
+          if (playPauseBtnNode) {
             changeIconVisibility(playPauseBtnNode, !audio.paused);
+          }
           syncAccessibilityState();
         } else if (isSliderClick && sliderProgressNode) {
           const offsetProgressPercent = getSliderOffset(

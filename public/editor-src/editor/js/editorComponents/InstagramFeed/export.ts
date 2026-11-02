@@ -1,4 +1,5 @@
-import { ExportFunction } from "visual/types";
+import type { ExportFunction } from "visual/types";
+import { makeAttr } from "visual/utils/i18n/attribute";
 
 const initInstagram = (id: string): void => {
   if (document.getElementById(id)) {
@@ -9,16 +10,14 @@ const initInstagram = (id: string): void => {
   js.setAttribute("id", id);
   js.setAttribute("async", "true");
   js.setAttribute("src", "https://www.instagram.com/embed.js");
+  js.setAttribute(makeAttr("consent"), "marketing");
   js.onload = () => {
     window.Brz.emit("instagram.ready");
   };
   document.body.appendChild(js);
 };
 
-const fn: ExportFunction = ($node) => {
-  const node = $node.get(0);
-  if (!node) return;
-
+const fn: ExportFunction = (node) => {
   const instagramEmbeds = node.querySelector(".brz-instagram-feed");
 
   if (instagramEmbeds) {

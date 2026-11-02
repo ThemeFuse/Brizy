@@ -1,5 +1,5 @@
-import { DCTypes } from "visual/global/Config/types/DynamicContent";
 import { getEnabledLinkOptions } from "visual/global/Config/types/configs/featuresValue";
+import { DCTypes } from "visual/global/Config/types/DynamicContent";
 import { isPopup } from "visual/providers/EditorModeProvider";
 import { getColorToolbar } from "visual/utils/color";
 import { t } from "visual/utils/i18n";

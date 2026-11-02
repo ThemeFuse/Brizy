@@ -1,11 +1,11 @@
 import classnames from "classnames";
-import React, { ReactNode } from "react";
+import React, { type ReactNode } from "react";
 import { ToastNotification } from "visual/component/Notifications";
 import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import type { Model } from "visual/editorComponents/EditorComponent/types";
-import { DynamicContentHelper } from "visual/editorComponents/WordPress/common/DynamicContentHelper";
 import { Wrapper } from "visual/editorComponents/tools/Wrapper";
+import { DynamicContentHelper } from "visual/editorComponents/WordPress/common/DynamicContentHelper";
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import { updateEkklesiaFields } from "visual/utils/api";
 import { attachRefs } from "visual/utils/react";
@@ -88,7 +88,7 @@ export class MinistryBrandsEventLayout extends EditorComponent<Value, Props> {
 
     if (changedKeys) {
       const messages = getEkklesiaMessages();
-      ToastNotification.warn(messages["event_layout"]);
+      ToastNotification.warn(messages.event_layout);
       this.patchValue(changedKeys);
     }
   }
@@ -276,8 +276,7 @@ export class MinistryBrandsEventLayout extends EditorComponent<Value, Props> {
                                                               toolbarExtendDayEvents,
                                                               undefined,
                                                               {
-                                                                allowExtend:
-                                                                  false
+                                                                allowExtend: false
                                                               }
                                                             )}
                                                             selector=".brz-eventLayout--calendar-day li"
@@ -290,8 +289,7 @@ export class MinistryBrandsEventLayout extends EditorComponent<Value, Props> {
                                                                   toolbarImage,
                                                                   sidebarImage,
                                                                   {
-                                                                    allowExtend:
-                                                                      false
+                                                                    allowExtend: false
                                                                   }
                                                                 )}
                                                                 selector=".brz-ministryBrands__item--media"
@@ -304,14 +302,14 @@ export class MinistryBrandsEventLayout extends EditorComponent<Value, Props> {
                                                                       toolbarExtendButtons,
                                                                       sidebarExtendButtons,
                                                                       {
-                                                                        allowExtend:
-                                                                          false
+                                                                        allowExtend: false
                                                                       }
                                                                     )}
                                                                     selector=".brz-ministryBrands__item--meta--button"
                                                                   >
                                                                     {({
-                                                                      ref: buttonRef
+                                                                      ref:
+                                                                        buttonRef
                                                                     }) => (
                                                                       <Wrapper
                                                                         {...this.makeWrapperProps(

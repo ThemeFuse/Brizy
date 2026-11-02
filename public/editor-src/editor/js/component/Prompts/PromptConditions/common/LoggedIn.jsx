@@ -1,3 +1,4 @@
+import { noop } from "es-toolkit";
 import React from "react";
 import Select from "visual/component/Controls/Select";
 import SelectItem from "visual/component/Controls/Select/SelectItem";
@@ -7,7 +8,7 @@ export default function LoggedIn(props) {
   const {
     value: triggerValue = {},
     availableRoles = [],
-    onChange = () => {}
+    onChange = noop
   } = props;
 
   let content = null;

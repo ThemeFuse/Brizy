@@ -1,5 +1,4 @@
-import jQuery from "jquery";
-import React, { ReactElement, RefObject, createRef } from "react";
+import React, { createRef, type ReactElement, type RefObject } from "react";
 
 type FunctionalException = (el: HTMLElement) => boolean;
 
@@ -83,9 +82,8 @@ export default class ClickOutside extends React.Component<Props> {
         }
 
         if (exceptionsCount === 0 && stringExceptions.length > 0) {
-          exceptionsCount += jQuery(el).closest(
-            stringExceptions.join(",")
-          ).length;
+          // A dispatched event can target a document, which has no closest.
+          exceptionsCount += el.closest?.(stringExceptions.join(",")) ? 1 : 0;
         }
       }
 

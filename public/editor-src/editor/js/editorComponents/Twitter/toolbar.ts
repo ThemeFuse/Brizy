@@ -1,12 +1,12 @@
-import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
+import type { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
 import { getDynamicContentOption } from "visual/utils/options";
-import { ResponsiveMode } from "visual/utils/responsiveMode";
-import { State } from "visual/utils/stateMode";
-import { EditorComponentContextValue } from "../EditorComponent/EditorComponentContext";
-import { Value } from "./types";
+import type { ResponsiveMode } from "visual/utils/responsiveMode";
+import type { State } from "visual/utils/stateMode";
+import type { EditorComponentContextValue } from "../EditorComponent/EditorComponentContext";
+import type { Value } from "./types";
 
 export function getItems({
   v,
@@ -70,7 +70,7 @@ export function getItems({
                       value: "mentionButton"
                     }
                   ]
-                },
+                }
               ]
             },
             {

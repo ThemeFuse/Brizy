@@ -1,4 +1,4 @@
-import React, { ComponentProps, JSXElementConstructor } from "react";
+import React, { type ComponentProps, type JSXElementConstructor } from "react";
 import Placeholder from "visual/component/Placeholder";
 import { useDC } from "visual/editorComponents/EditorComponent/DynamicContent/useDC";
 

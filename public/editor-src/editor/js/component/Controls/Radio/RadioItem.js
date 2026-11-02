@@ -101,7 +101,7 @@ export default class RadioItem extends React.Component {
             name: "label",
             value: label
           })}
-          onChange={() => {}}
+          onChange={noop}
         />
         <label className="brz-label" htmlFor={labelId}>
           <ThemeIcon

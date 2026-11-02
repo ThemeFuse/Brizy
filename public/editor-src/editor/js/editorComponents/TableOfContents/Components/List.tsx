@@ -1,6 +1,6 @@
 import classnames from "classnames";
 import { createElement } from "react";
-import { FCC } from "visual/utils/react/types";
+import type { FCC } from "visual/utils/react/types";
 
 interface Props {
   tag: "ol" | "ul";

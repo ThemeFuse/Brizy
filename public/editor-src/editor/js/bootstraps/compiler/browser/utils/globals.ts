@@ -11,9 +11,9 @@ globalThis.ReactDOM = ReactDOM;
 // Methods from ReactDOMServer are included in ReactDOM because ReactDOMServer is marked as external in brizy-local
 // and is not available on the client side.
 
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// biome-ignore lint/suspicious/noTsIgnore: migrated from eslint
 // @ts-ignore - We need to add the methods to ReactDOM to be available on the client side.
 globalThis.ReactDOM.renderToStaticMarkup = ReactDOMServer.renderToStaticMarkup;
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// biome-ignore lint/suspicious/noTsIgnore: migrated from eslint
 // @ts-ignore - We need to add the methods to ReactDOM to be available on the client side.
 globalThis.ReactDOM.renderToString = ReactDOMServer.renderToString;

@@ -1,21 +1,14 @@
 import { noop } from "es-toolkit";
 import {
   globalBlocksAssembledSelector,
-  globalBlocksSelector,
-  pageSelector,
-  projectSelector
+  globalBlocksSelector
 } from "visual/redux/selectors";
-import { PageCommon } from "visual/types/Page";
+import { updateGBRules as updateGBRulesAPI } from "visual/utils/api";
 import { ActionTypes } from "../../actions2";
-import { Data } from "./types";
-import { apiAutoSave, apiOnChange } from "./utils";
+import type { Data } from "./types";
+import { apiAutoSave } from "./utils";
 
-export function handleGlobalBlocks({
-  action,
-  state,
-  store,
-  getConfig
-}: Data): void {
+export function handleGlobalBlocks({ action, state, getConfig }: Data): void {
   const config = getConfig();
 
   switch (action.type) {
@@ -50,25 +43,29 @@ export function handleGlobalBlocks({
     case "UPDATE_GB_RULES": {
       const { id } = action.payload;
       const { syncSuccess = noop, syncFail = noop } = action.meta || {};
-      const globalBlocks = globalBlocksSelector(state);
-      const globalBlock = globalBlocks[id];
-      // @ts-expect-error Type Page is not assignable to type PageCommon
-      const page: PageCommon = pageSelector(state);
-      const project = projectSelector(state);
-      const data = {
-        store,
-        config,
-        needToCompile: {
-          globalBlocks: [globalBlock]
-        },
-        state: {
-          project,
-          page,
-          globalBlocks: Object.values(globalBlocks)
-        }
-      };
+      const globalBlock = globalBlocksSelector(state)[id];
 
-      apiOnChange(data).then(syncSuccess).catch(syncFail);
+      if (!globalBlock) {
+        syncFail({ message: undefined });
+        break;
+      }
+
+      // Rules don't affect the block's compiled HTML, so save only the rules
+      // via the dedicated updateRules handler instead of recompiling the block.
+      // The payload is therefore only { uid, rules, dataVersion, status }; changes
+      // to the block's content and metadata are still persisted by apiAutoSave on
+      // UPDATE_GLOBAL_BLOCK.
+      updateGBRulesAPI(
+        globalBlock.uid,
+        globalBlock.rules,
+        globalBlock.dataVersion,
+        globalBlock.status,
+        config
+      ).then(
+        () => syncSuccess(),
+        (e: unknown) =>
+          syncFail({ message: e instanceof Error ? e.message : String(e) })
+      );
       break;
     }
     case "MAKE_GLOBAL_BLOCK_TO_BLOCK": {

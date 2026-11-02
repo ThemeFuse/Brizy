@@ -3,7 +3,7 @@ import { getForm, getIntegration } from "visual/utils/api";
 import { isPro } from "visual/utils/env";
 import { t } from "visual/utils/i18n";
 import BaseIntegration from "../common/GlobalApps/BaseIntegration";
-import {
+import type {
   AppData,
   BaseIntegrationContext,
   BaseIntegrationProps,

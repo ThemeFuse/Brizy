@@ -1,15 +1,16 @@
 import classNames from "classnames";
-import React, { ReactElement } from "react";
-import {
+import React, { type ReactElement } from "react";
+import type {
   WithClassName,
   WithOnChange,
   WithValue
 } from "visual/types/attributes";
+import type { Literal } from "visual/utils/types/Literal";
 import { HorizontalScrollContainer } from "../HorizontalScrollContainer";
-import * as Tab from "./Tab";
+import type * as Tab from "./Tab";
 import { TabList } from "./TabList";
 
-export type Props<T> = WithClassName &
+export type Props<T extends Literal> = WithClassName &
   WithValue<T> &
   WithOnChange<T> & {
     showSingle: boolean;
@@ -19,7 +20,7 @@ export type Props<T> = WithClassName &
     horizontalScroll?: boolean;
   };
 
-export function Tabs<T>({
+export function Tabs<T extends Literal>({
   className,
   showSingle,
   children,

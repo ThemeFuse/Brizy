@@ -65,7 +65,7 @@ class IconText extends EditorComponent {
     const textAndButtonsProps = this.makeSubcomponentProps({
       bindWithKey: "items",
       sliceStartIndex: TEXT_ITEM_INDEX,
-      itemProps: (itemData, itemIndex) => {
+      itemProps: (_itemData, itemIndex) => {
         let props;
         switch (itemIndex) {
           case TEXT_ITEM_INDEX:

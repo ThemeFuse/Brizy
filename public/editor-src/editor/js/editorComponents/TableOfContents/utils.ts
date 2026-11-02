@@ -1,4 +1,4 @@
-import { MarkerType } from "visual/editorComponents/TableOfContents/types";
+import type { MarkerType } from "visual/editorComponents/TableOfContents/types";
 import * as Arr from "visual/utils/reader/array";
 import * as Json from "visual/utils/reader/json";
 import * as Obj from "visual/utils/reader/object";
@@ -6,7 +6,7 @@ import * as Str from "visual/utils/reader/string";
 import { isValidSelector } from "visual/utils/selector";
 import type { State } from "./types";
 
-const addDotToSelector = (selector: string): string => "." + selector.trim();
+const addDotToSelector = (selector: string): string => `.${selector.trim()}`;
 
 export const getSelectedElements = (
   selectedTags: string,
@@ -25,7 +25,7 @@ export const getSelectedElements = (
       const includeQuery = selectors.reduce((acc, curr, i) => {
         const suffix = i !== selectors.length - 1 ? "," : "";
 
-        return acc + `${curr.trim()} ${tag}:not(.brz-toc-title)${suffix}`;
+        return `${acc}${curr.trim()} ${tag}:not(.brz-toc-title)${suffix}`;
       }, "");
 
       return includeQuery !== "" && isValidSelector(includeQuery)
@@ -33,10 +33,9 @@ export const getSelectedElements = (
         : `${tag}:not(.brz-toc-title)`;
     };
     return selected
-      .map((tag) => [
+      .flatMap((tag) => [
         ...document.querySelectorAll<HTMLElement>(`${query(tag)}`)
       ])
-      .flat()
       .filter((node) => {
         const selector = exclude.split(",").map(addDotToSelector).join(",");
         if (selector !== "" && isValidSelector(selector)) {

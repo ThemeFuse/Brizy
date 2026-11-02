@@ -1,9 +1,14 @@
-import React, { Component, ComponentType, MouseEvent, TouchEvent } from "react";
-import {
+import React, {
+  Component,
+  type ComponentType,
+  type MouseEvent,
+  type TouchEvent
+} from "react";
+import type {
   HSLAChange,
   HSLAwithSource
 } from "visual/component/Controls/ColorPicker2/types";
-import { GlobalMeta } from "visual/component/Options/Type";
+import type { GlobalMeta } from "visual/component/Options/Type";
 import { calculateChange } from "../helpers/alpha";
 import { disableIframeEvents, enableIframeEvents, isInIframe } from "../utils";
 import Checkboard from "./Checkboard";
@@ -62,7 +67,7 @@ export class Alpha extends Component<Props, State> {
     if (this.change) {
       // invert opacity
       this.change.a = 1 - this.change.a;
-      this.props.onChange &&
+      if (this.props.onChange) {
         this.props.onChange(
           {
             ...this.change,
@@ -70,6 +75,7 @@ export class Alpha extends Component<Props, State> {
           },
           { isChanging: !opacityDragEnd }
         );
+      }
     }
   };
 

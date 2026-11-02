@@ -1,4 +1,4 @@
-import { ReduxState } from "../types";
+import type { ReduxState } from "../types";
 
 export const historySelector = (state: ReduxState): ReduxState["history"] =>
   state.history;

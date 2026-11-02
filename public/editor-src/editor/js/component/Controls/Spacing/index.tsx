@@ -1,15 +1,15 @@
 import classNames from "classnames";
-import React, { ReactElement, ReactNode, useMemo } from "react";
+import React, { type ReactElement, type ReactNode, useMemo } from "react";
 import { Group } from "visual/component/Controls/Group";
 import { RadioGroup2 } from "visual/component/Controls/RadioGroup2";
 import { Item } from "visual/component/Controls/RadioGroup2/Item";
-import { GlobalMeta } from "visual/component/Controls/types";
-import { OnChange } from "visual/component/Options/Type";
+import type { GlobalMeta } from "visual/component/Controls/types";
+import type { OnChange } from "visual/component/Options/Type";
 import { OptionWrapper } from "visual/component/OptionWrapper";
-import { WithClassName } from "visual/types/attributes";
-import { Literal } from "visual/utils/types/Literal";
-import { Props as SP, Slider } from "./Slider";
-import { Edge, edges, Type, types } from "./types";
+import type { WithClassName } from "visual/types/attributes";
+import type { Literal } from "visual/utils/types/Literal";
+import { Slider, type Props as SP } from "./Slider";
+import { type Edge, edges, type Type, types } from "./types";
 
 type Edges<E extends Edge> = "all" | E;
 
@@ -50,14 +50,17 @@ export function Spacing<U extends Literal, E extends Edge>({
 }: Props<U, E>): ReactElement {
   const callbacks = useMemo(
     () =>
-      edges.reduce<Callbacks<U>>((acc, e) => {
-        acc[e] = {
-          onValue: onValue.bind(null, e),
-          onUnit: onUnit.bind(null, e)
-        };
+      edges.reduce<Callbacks<U>>(
+        (acc, e) => {
+          acc[e] = {
+            onValue: onValue.bind(null, e),
+            onUnit: onUnit.bind(null, e)
+          };
 
-        return acc;
-      }, {} as Callbacks<U>),
+          return acc;
+        },
+        {} as Callbacks<U>
+      ),
     [onValue, onUnit]
   );
 

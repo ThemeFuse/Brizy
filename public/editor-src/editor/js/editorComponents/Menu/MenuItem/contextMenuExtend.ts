@@ -2,8 +2,8 @@ import {
   copyKeyModifier,
   pasteStylesKeyModifier
 } from "visual/component/ContextMenu/utils";
-import { ElementModel } from "visual/component/Elements/Types";
-import {
+import type { ElementModel } from "visual/component/Elements/Types";
+import type {
   ContextGetItems,
   ContextMenuItem
 } from "visual/editorComponents/EditorComponent/types";

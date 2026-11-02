@@ -1,5 +1,5 @@
 import { FontFamilyType } from "visual/types/Fonts";
-import { FontObject, FontWithType, FontsBlock } from "./types";
+import type { FontObject, FontsBlock, FontWithType } from "./types";
 
 const getFontType = (key: string): FontFamilyType => {
   if (

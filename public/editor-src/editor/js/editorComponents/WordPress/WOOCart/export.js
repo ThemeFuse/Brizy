@@ -1,28 +1,40 @@
-import $ from "jquery";
+import { onBodyClick } from "visual/utils/export/delegate";
 
-function openSidebar() {
-  $(this)
+function openSidebar(cart) {
+  cart
     .closest(".brz-woocart__wrapper")
-    .addClass("brz-woocart__wrapper--opened");
-  $(document.body).addClass("brz-ow-hidden brz-woocart--opened");
+    ?.classList.add("brz-woocart__wrapper--opened");
+  document.body.classList.add("brz-ow-hidden", "brz-woocart--opened");
 }
 
-function closeSidebar() {
-  $(this)
+function closeSidebar(close) {
+  close
     .closest(".brz-woocart__wrapper")
-    .removeClass("brz-woocart__wrapper--opened");
-  $(document.body).removeClass("brz-ow-hidden brz-woocart--opened");
+    ?.classList.remove("brz-woocart__wrapper--opened");
+  document.body.classList.remove("brz-ow-hidden", "brz-woocart--opened");
 }
 
-export default function($node) {
-  $node.find(".brz-woocart__wrapper").each(function() {
-    const $this = $(this);
-    const $cart = $this.find(".brz-woocart");
-    const $close = $this.find(".brz-woocart__sidebar-close");
-    const $backdrop = $this.find(".brz-woocart__background");
+export default function (node) {
+  const wrappers = new Set(node.querySelectorAll(".brz-woocart__wrapper"));
+  const isOwn = (element) =>
+    wrappers.has(element.closest(".brz-woocart__wrapper"));
 
-    $cart.on("click", openSidebar);
-    $close.on("click", closeSidebar);
-    $backdrop.on("click", closeSidebar);
-  });
+  onBodyClick([
+    {
+      selector: ".brz-woocart",
+      handler: (cart) => {
+        if (isOwn(cart)) {
+          openSidebar(cart);
+        }
+      }
+    },
+    {
+      selector: ".brz-woocart__sidebar-close, .brz-woocart__background",
+      handler: (close) => {
+        if (isOwn(close)) {
+          closeSidebar(close);
+        }
+      }
+    }
+  ]);
 }

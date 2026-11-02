@@ -4,7 +4,7 @@ import { placeholderBlockThumbnailUrl } from "visual/utils/blocks";
 import * as Num from "visual/utils/math/number";
 import { Footer } from "./Footer";
 import { Left } from "./Left";
-import { Props, State } from "./type";
+import type { Props, State } from "./type";
 import { detailsBlockClassName } from "./utils";
 
 export const Details = (props: Props) => {
@@ -75,25 +75,23 @@ export const Details = (props: Props) => {
   const activePageSrc = thumbnailSrc ?? placeholderBlockThumbnailUrl(config);
 
   return (
-    <>
-      <div className={detailsBlockClassName}>
-        <Left
-          onBack={onBack}
-          previewPointer={previewPointer}
-          activePageSrc={activePageSrc}
-          thumbnailHeight={thumbnailHeight}
-          ref={thumbnailDetails}
-          title={title}
-        />
+    <div className={detailsBlockClassName}>
+      <Left
+        onBack={onBack}
+        previewPointer={previewPointer}
+        activePageSrc={activePageSrc}
+        thumbnailHeight={thumbnailHeight}
+        ref={thumbnailDetails}
+        title={title}
+      />
 
-        <Footer
-          onReplaceStyling={onReplaceStyling}
-          onImport={onImport}
-          loading={loading}
-          replaceStyle={replaceStyle}
-          hasGlobalStyle={!!globalStyles?.id}
-        />
-      </div>
-    </>
+      <Footer
+        onReplaceStyling={onReplaceStyling}
+        onImport={onImport}
+        loading={loading}
+        replaceStyle={replaceStyle}
+        hasGlobalStyle={!!globalStyles?.id}
+      />
+    </div>
   );
 };

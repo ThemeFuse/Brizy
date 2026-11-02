@@ -1,24 +1,24 @@
-import {
+import type {
   ElementModel,
   ElementModelType
 } from "visual/component/Elements/Types";
-import { Block } from "visual/types/Block";
-import {
+import type { Block } from "visual/types/Block";
+import type {
   AdobeFont,
+  FontFamilyType,
   Fonts,
   GoogleFont,
   SystemFont,
   UploadedFont
 } from "visual/types/Fonts";
-import { FontFamilyType } from "visual/types/Fonts";
-import { GlobalBlock } from "visual/types/GlobalBlock";
-import { FontStyle } from "visual/types/Style";
+import type { GlobalBlock } from "visual/types/GlobalBlock";
+import type { FontStyle } from "visual/types/Style";
 import { findFonts, projectFontsData } from "visual/utils/fonts/transform";
 import * as Str from "visual/utils/reader/string";
 import { modelTraverse, styleTraverse } from "visual/utils/traverse";
 import {
-  Font,
-  FontType,
+  type Font,
+  type FontType,
   getComponentDefaultValue,
   getRichTextFamilies,
   splitFont,
@@ -124,7 +124,7 @@ export const getUsedStylesFonts: GetUsedStylesFonts = (styles) => {
       fontFamily(value: string) {
         fontFamilies.add(
           splitFont({
-            type: fontStyle["fontFamilyType"] ?? "google",
+            type: fontStyle.fontFamilyType ?? "google",
             family: value
           })
         );
@@ -150,9 +150,10 @@ export const getBlocksStylesFonts: GetBlocksStylesFonts = (
   projectFonts_
 ) => {
   const uniqFonts = fonts.reduce((acc, curr) => {
-    return acc.some(({ family }) => family === curr.family)
-      ? acc
-      : [...acc, curr];
+    if (!acc.some(({ family }) => family === curr.family)) {
+      acc.push(curr);
+    }
+    return acc;
   }, [] as Font[]);
 
   // @ts-expect-error: Need transform to ts
@@ -163,26 +164,34 @@ export const getBlocksStylesFonts: GetBlocksStylesFonts = (
     system: SystemFont[];
   } = projectFontsData(projectFonts_);
 
-  return uniqFonts.reduce((acc, curr) => {
-    const { type, family } = curr;
+  // biome-ignore lint/suspicious/useIterableCallbackReturn: the switch is exhaustive over FontModel["type"] and every case returns; adding a defensive default is not possible because tsc rejects it with TS7027 "Unreachable code detected"
+  return uniqFonts.reduce(
+    (acc, curr) => {
+      const { type, family } = curr;
 
-    switch (type) {
-      // find in all project -> fonts
-      case "unknowns": {
-        return Object.entries(projectFonts).find(([type, data]) =>
-          findFonts(data, family, type)
-        )
-          ? acc
-          : ([...acc, curr] as FontModel[]);
+      switch (type) {
+        // find in all project -> fonts
+        case "unknowns": {
+          if (
+            !Object.entries(projectFonts).find(([type, data]) =>
+              findFonts(data, family, type)
+            )
+          ) {
+            acc.push(curr as FontModel);
+          }
+          return acc;
+        }
+        case "google":
+        case "system":
+        case "adobe":
+        case "upload": {
+          if (!findFonts(projectFonts[type], family, type)) {
+            acc.push(curr as FontModel);
+          }
+          return acc;
+        }
       }
-      case "google":
-      case "system":
-      case "adobe":
-      case "upload": {
-        return findFonts(projectFonts[type], family, type)
-          ? acc
-          : ([...acc, curr] as FontModel[]);
-      }
-    }
-  }, [] as Array<FontModel>);
+    },
+    [] as Array<FontModel>
+  );
 };

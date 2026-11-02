@@ -1,4 +1,4 @@
-import React, { JSX, useMemo } from "react";
+import React, { type JSX, useMemo } from "react";
 
 type Props = {
   attr?: React.HTMLAttributes<HTMLImageElement>;

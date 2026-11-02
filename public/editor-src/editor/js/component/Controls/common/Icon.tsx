@@ -1,7 +1,7 @@
 import React, { useCallback } from "react";
 import { FatCheckIcon } from "visual/component/Controls/FatCheckIcon";
-import { OnChange } from "visual/component/Options/Type";
-import { Literal } from "visual/utils/types/Literal";
+import type { OnChange } from "visual/component/Options/Type";
+import type { Literal } from "visual/utils/types/Literal";
 
 export interface Props<T> {
   active: boolean;

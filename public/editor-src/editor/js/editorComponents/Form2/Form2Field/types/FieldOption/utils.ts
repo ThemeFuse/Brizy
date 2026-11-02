@@ -1,8 +1,8 @@
-import { Link } from "visual/utils/models/link";
-import { ConvertedLinkData } from "./type";
-import { ReduxState } from "visual/redux/types";
 import { connect } from "react-redux";
 import { deviceModeSelector } from "visual/redux/selectors";
+import type { ReduxState } from "visual/redux/types";
+import type { Link } from "visual/utils/models/link";
+import type { ConvertedLinkData } from "./type";
 
 export const convertLinkData = (linkData: Link): ConvertedLinkData => {
   const { href, type, target, rel, slide } = linkData;

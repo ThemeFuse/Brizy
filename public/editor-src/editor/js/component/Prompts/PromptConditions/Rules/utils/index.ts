@@ -1,13 +1,13 @@
 import { Str } from "@brizy/readers";
 import classNames from "classnames";
 import { setIn } from "timm";
-import { Refs } from "visual/component/Prompts/PromptConditions/Rules/utils/api";
-import {
+import type { Refs } from "visual/component/Prompts/PromptConditions/Rules/utils/api";
+import type {
   ConditionCollectionType,
   Customer,
   CustomerGroup
 } from "visual/global/Config/types/configs/ConfigCommon";
-import {
+import type {
   CollectionItemRule,
   CollectionTypeRule,
   Rule
@@ -21,8 +21,8 @@ import {
   isCollectionItemRule,
   isCollectionTypeRule
 } from "visual/utils/blocks/guards";
-import { MValue, isT } from "visual/utils/value";
-import { CmsListItem, RuleList, RuleListItem, ValueItems } from "../types";
+import { isT, type MValue } from "visual/utils/value";
+import type { CmsListItem, RuleList, RuleListItem, ValueItems } from "../types";
 
 export function getRulesListIndexByRule(
   rulesList: RuleList[],

@@ -7,9 +7,9 @@ import {
 } from "visual/component/ContextMenu/utils";
 import { openNavigatorFromContextMenu } from "visual/component/Navigator/utils";
 import { hideToolbar } from "visual/component/Toolbar";
-import { ContextMenuItem } from "visual/editorComponents/EditorComponent/types";
+import type { ContextMenuItem } from "visual/editorComponents/EditorComponent/types";
 import { t } from "visual/utils/i18n";
-import { Component, GetItems, Value } from "../types";
+import type { Component, GetItems, Value } from "../types";
 
 export default (itemIndex: number): GetItems => ({
   getItems: getItems(itemIndex)
@@ -32,7 +32,7 @@ const getItems =
             type: "button",
             title: t("Copy"),
             helperText: ({ isInSubMenu }) =>
-              getKeyModifierSubMenu(isInSubMenu) + " + C",
+              `${getKeyModifierSubMenu(isInSubMenu)} + C`,
             onChange: () => component.copy(itemIndex)
           },
           {
@@ -40,7 +40,7 @@ const getItems =
             type: "button",
             title: t("Paste"),
             helperText: ({ isInSubMenu }) =>
-              getKeyModifierSubMenu(isInSubMenu) + " + ⇧ + V",
+              `${getKeyModifierSubMenu(isInSubMenu)} + ⇧ + V`,
             inactive: !canPaste,
             onChange: () => component.paste(itemIndex)
           },

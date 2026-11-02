@@ -16,6 +16,7 @@ import { HamburgerIcon } from "visual/editorComponents/Menu/controls/HamburgerIc
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import UIEvents, { UIEventType } from "visual/global/UIEvents";
 import { isView } from "visual/providers/RenderProvider";
+import { menuDataSelector } from "visual/redux/selectors";
 import { makePlaceholder } from "visual/utils/dynamicContent";
 import { isPro } from "visual/utils/env";
 import { applyFilter } from "visual/utils/filters";
@@ -25,7 +26,7 @@ import { defaultValueKey, defaultValueValue } from "visual/utils/onChange";
 import { attachRefs } from "visual/utils/react";
 import { DESKTOP, MOBILE, TABLET } from "visual/utils/responsiveMode";
 import { encodeToString } from "visual/utils/string";
-import { styleElementMMenu, styleElementMenuMode } from "visual/utils/style2";
+import { styleElementMenuMode, styleElementMMenu } from "visual/utils/style2";
 import { Wrapper } from "../tools/Wrapper";
 import contextMenuConfig from "./contextMenu";
 import { MenuPreviewMock } from "./controls/MenuPreviewMock";
@@ -34,7 +35,7 @@ import defaultValue from "./defaultValue.json";
 import * as sidebarClose from "./sidebarClose";
 import * as sidebarExtend from "./sidebarExtend";
 import * as sidebarExtendParent from "./sidebarExtendParent";
-import { styleMMenu, styleMenu, styleMenuContainer } from "./styles";
+import { styleMenu, styleMenuContainer, styleMMenu } from "./styles";
 import * as toolbarClose from "./toolbarClose";
 import * as toolbarExtend from "./toolbarExtend";
 import * as toolbarExtendParent from "./toolbarExtendParent";
@@ -158,7 +159,7 @@ export default class Menu extends EditorComponent {
   }
 
   getDBValue() {
-    const menusConfig = this.getGlobalConfig().menuData;
+    const menusConfig = menuDataSelector(this.getReduxState());
 
     if (menusConfig.length === 0) {
       return { ...this.props.dbValue, items: [] };
@@ -176,14 +177,20 @@ export default class Menu extends EditorComponent {
     if (this.menuItemsCache === undefined) {
       this.menuItemsCache = {};
     }
-    if (this.menuItemsCache[menuSelected] === undefined) {
-      this.menuItemsCache[menuSelected] = normalizeMenuItems(menuConfig.items);
+
+    const cached = this.menuItemsCache[menuSelected];
+
+    if (cached === undefined || cached.source !== menuConfig.items) {
+      this.menuItemsCache[menuSelected] = {
+        source: menuConfig.items,
+        items: normalizeMenuItems(menuConfig.items)
+      };
     }
 
     return {
       ...this.props.dbValue,
       menuSelected,
-      items: symbolsToItems(this.menuItemsCache[menuSelected], symbols)
+      items: symbolsToItems(this.menuItemsCache[menuSelected].items, symbols)
     };
   }
 
@@ -287,6 +294,7 @@ export default class Menu extends EditorComponent {
       bindWithKey: "items",
       itemProps: {
         menuSelected,
+        parentMenuId: this.getId(),
         mMenu: hasMMenu,
         meta: this.getMeta(v),
         mods: {
@@ -365,6 +373,7 @@ export default class Menu extends EditorComponent {
       bindWithKey: "items",
       itemProps: {
         menuSelected,
+        parentMenuId: this.getId(),
         mods,
         mMenu: hasMMenu,
         meta: this.getMeta(v),
@@ -439,8 +448,8 @@ export default class Menu extends EditorComponent {
   }
 
   renderErrors(v) {
-    const config = this.getGlobalConfig();
-    const { menuData: menusConfig, elements } = config;
+    const { elements } = this.getGlobalConfig();
+    const menusConfig = menuDataSelector(this.getReduxState());
     let errMsg;
     const _isView = isView(this.props.renderContext);
 
@@ -708,7 +717,7 @@ export default class Menu extends EditorComponent {
     // cssStyle generate new classNames
     // when MMenu initialized he added the plugin classNames
     // we need to add the plugin classNames back
-    let classNames = [];
+    const classNames = [];
     const currentClassList = this.mMenu.node.menu.classList;
 
     currentClassList.forEach((className) => {

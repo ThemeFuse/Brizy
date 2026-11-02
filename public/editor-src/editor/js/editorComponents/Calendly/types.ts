@@ -1,6 +1,6 @@
-import { ElementModel } from "visual/component/Elements/Types";
-import { ComponentsMeta } from "visual/editorComponents/EditorComponent/types";
-import { WithClassName } from "visual/types/attributes";
+import type { ElementModel } from "visual/component/Elements/Types";
+import type { ComponentsMeta } from "visual/editorComponents/EditorComponent/types";
+import type { WithClassName } from "visual/types/attributes";
 
 export interface Value extends ElementModel {
   link: string;

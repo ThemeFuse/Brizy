@@ -1,6 +1,6 @@
 import React, {
-  FC,
-  PropsWithChildren,
+  type FC,
+  type PropsWithChildren,
   useCallback,
   useContext,
   useMemo,
@@ -14,10 +14,10 @@ import {
   globalBlocksSelector,
   pageDataNoRefsSelector
 } from "visual/redux/selectors";
-import { ReduxState } from "visual/redux/types";
-import { Block } from "visual/types/Block";
+import type { ReduxState } from "visual/redux/types";
+import type { Block } from "visual/types/Block";
 import { TreeContext } from "./context";
-import { TreeContextType, TreeItems } from "./types";
+import type { TreeContextType, TreeItems } from "./types";
 import {
   checkForGlobalBlockChanges,
   getCurrentWrapperElementId,
@@ -125,7 +125,7 @@ export const TreeContextProvider: FC<PropsWithChildren> = ({ children }) => {
     (id: string) => {
       const state = store.getState();
       const blocksOrder = blocksOrderSelector(state);
-      const blockIndex = blocksOrder.findIndex((blockId) => blockId === id);
+      const blockIndex = blocksOrder.indexOf(id);
 
       // Check if the item is a top-level block
       if (blockIndex !== -1) {

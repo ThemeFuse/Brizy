@@ -5,16 +5,13 @@ import {
   CartApiMock,
   ProductApiMock
 } from "visual/libs/shopify/Stores/types/Api.mock";
-import { ProductHandle } from "visual/libs/shopify/types/Product";
+import type { ProductHandle } from "visual/libs/shopify/types/Product";
 import { makeAttr } from "visual/utils/i18n/attribute";
 import { read } from "visual/utils/math/number";
 import { prop } from "visual/utils/object/get";
 import { readKey } from "visual/utils/reader/object";
 
-export default function ($node: JQuery): void {
-  const node = $node.get(0);
-  if (!node) return;
-
+export default function (node: HTMLElement): void {
   const cartClient = new CartApiMock();
   const productClient = new ProductApiMock();
 

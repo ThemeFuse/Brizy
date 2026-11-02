@@ -1,5 +1,5 @@
 import { isNullish } from "../value";
-import { Reader } from "./types";
+import type { Reader } from "./types";
 
 export const read: Reader<Array<unknown>> = (v) => {
   if (Array.isArray(v)) {

@@ -1,8 +1,8 @@
 import React from "react";
-import { DeviceMode } from "visual/types";
+import type { DeviceMode } from "visual/types";
 import { clamp } from "visual/utils/math";
-import { ToolbarItems, ToolbarItemsProps } from "../ToolbarItems";
 import { setPosition } from "../state";
+import { ToolbarItems, type ToolbarItemsProps } from "../ToolbarItems";
 
 const SIDEBAR_WIDTH = 58;
 
@@ -14,7 +14,8 @@ const SIDEBAR_WIDTH = 58;
 const TOOLBAR_HEIGHT_MAGIC = 300;
 
 export type PortalToolbarPositionerProps = {
-  node?: any; // eslint-disable-line @typescript-eslint/no-explicit-any
+  // biome-ignore lint/suspicious/noExplicitAny: migrated from eslint
+  node?: any;
   offsetTop?: number;
   offsetBottom?: number;
   offsetLeft?: number;
@@ -75,8 +76,8 @@ export class PortalToolbarPositioner extends React.Component<PortalToolbarPositi
       : node.getBoundingClientRect();
 
     // toolbar top + below
-    let toolbarBelow;
-    let toolbarTop;
+    let toolbarBelow: boolean;
+    let toolbarTop: number;
     const windowTop =
       position === "fixed" || customCoordinates ? 0 : window.scrollY;
     const fitsAbove =

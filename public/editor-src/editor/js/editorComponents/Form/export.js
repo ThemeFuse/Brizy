@@ -1,5 +1,6 @@
-import $ from "jquery";
-import { makeDataAttrString } from "visual/utils/i18n/attribute";
+import { delegatedTargets } from "visual/utils/export/delegate";
+import { makeAttr, makeDataAttrString } from "visual/utils/i18n/attribute";
+import { encodeFields, sendRequest, URL_ENCODED } from "../Form2/sendRequest";
 import { getTranslatedResponseMessages } from "../Form2/utils";
 
 const recaptchaSelector =
@@ -13,8 +14,7 @@ const defaultMessages = {
 
 const resMessages = new Map();
 
-export default function ($node) {
-  const root = $node.get(0);
+export default function (root) {
   const versionAttr = makeDataAttrString({
     name: "form-version",
     value: "'1'"
@@ -44,7 +44,11 @@ export default function ($node) {
           }
         ];
 
-        handleSimpleSubmit(formActive, data).then(() => {
+        handleSimpleSubmit(formActive, data).then((result) => {
+          if (result.kind !== "done") {
+            return;
+          }
+
           formActive.classList.remove("brz-forms--pending");
 
           // need reset captchaId
@@ -56,7 +60,7 @@ export default function ($node) {
     };
 
     // render Recaptcha
-    global.brzOnloadRecaptchaCallback = function () {
+    global.brzOnloadRecaptchaCallback = () => {
       recaptcha.forEach((node) => {
         const { sitekey, size, callback } = node.dataset;
         const recaptchaId = global.grecaptcha.render(node, {
@@ -126,7 +130,6 @@ function validateForm(form) {
 }
 
 function initForm(form) {
-  const $form = $(form);
   const formNode = form.querySelector("form");
 
   if (formNode) {
@@ -134,21 +137,32 @@ function initForm(form) {
     resMessages.set(formNode, messages);
   }
 
-  $form.on("blur", "form input, form textarea", function () {
-    validateFormItem(this);
+  form.addEventListener("focusout", (event) => {
+    delegatedTargets(
+      form,
+      event,
+      ":scope form input, :scope form textarea"
+    ).forEach((node) => {
+      validateFormItem(node);
+    });
   });
 
-  $form.on(
-    "click",
-    "form .brz-control__select .brz-control__select-option",
-    function () {
-      const input = $(this)
-        .closest(".brz-control__select")
-        .find("input")
-        .get(0);
-      validateFormItem(input);
+  form.addEventListener("click", (event) => {
+    if (event.button >= 1) {
+      return;
     }
-  );
+
+    delegatedTargets(
+      form,
+      event,
+      ":scope form .brz-control__select .brz-control__select-option"
+    ).forEach((option) => {
+      const input = option
+        .closest(".brz-control__select")
+        .querySelector("input");
+      validateFormItem(input);
+    });
+  });
 
   const recaptcha = form.querySelector(recaptchaSelector);
 
@@ -158,7 +172,11 @@ function initForm(form) {
   // (2) need added the pending form selector .brz-forms--pending
   // (2.1) this class is used in brzFormV1Captcha for find and generate formData
   if (recaptcha) {
-    $form.on("submit", "form", function (event) {
+    form.addEventListener("submit", (event) => {
+      if (delegatedTargets(form, event, ":scope form").length === 0) {
+        return;
+      }
+
       event.preventDefault();
 
       // validate form
@@ -175,7 +193,11 @@ function initForm(form) {
       global.grecaptcha.execute(recaptchaId);
     });
   } else {
-    $form.on("submit", "form", function (event) {
+    form.addEventListener("submit", (event) => {
+      if (delegatedTargets(form, event, ":scope form").length === 0) {
+        return;
+      }
+
       event.preventDefault();
 
       // validate form
@@ -340,16 +362,11 @@ function resetFormValues(form) {
 }
 
 function sendForm(url, formData, cbs) {
-  const { done, error, always } = cbs;
-
-  return $.ajax({
-    type: "POST",
-    url: url,
-    data: formData
-  })
-    .done(done)
-    .fail(error)
-    .always(always);
+  return sendRequest(
+    url ?? "",
+    { body: encodeFields(formData), contentType: URL_ENCODED },
+    cbs
+  );
 }
 
 // Recaptcha
@@ -369,6 +386,7 @@ function loadReCAPTCHA() {
   scriptElement.setAttribute("async", "async");
   scriptElement.setAttribute("defer", "defer");
   scriptElement.setAttribute("id", scriptId);
+  scriptElement.setAttribute(makeAttr("consent"), "necessary");
 
   document.body.append(scriptElement);
 

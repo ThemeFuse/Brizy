@@ -113,9 +113,15 @@ describe("buildMoveFromTo", () => {
           block,
           sourceElement: col1,
           sourceRelativePath: [
-            "value", "items", "0",
-            "value", "items", "0",
-            "value", "items", "0"
+            "value",
+            "items",
+            "0",
+            "value",
+            "items",
+            "0",
+            "value",
+            "items",
+            "0"
           ],
           targetContainer: targetRow,
           targetIndex: 0
@@ -132,7 +138,9 @@ describe("buildMoveFromTo", () => {
         expect(from.containerType).toBe("row");
         expect(fromTo.to.containerType).toBe("row");
         expect(fromTo.to.itemPath).toEqual(["row-2", "items", "0"]);
-        expect((fromTo.to as { containerPath: string[] }).containerPath).toEqual(["row-2", "items"]);
+        expect(
+          (fromTo.to as { containerPath: string[] }).containerPath
+        ).toEqual(["row-2", "items"]);
       }
     },
     {
@@ -148,9 +156,15 @@ describe("buildMoveFromTo", () => {
           block,
           sourceElement: col,
           sourceRelativePath: [
-            "value", "items", "0",
-            "value", "items", "0",
-            "value", "items", "0"
+            "value",
+            "items",
+            "0",
+            "value",
+            "items",
+            "0",
+            "value",
+            "items",
+            "0"
           ],
           targetContainer: targetSectionItem,
           targetIndex: 0
@@ -177,9 +191,15 @@ describe("buildMoveFromTo", () => {
           block,
           sourceElement: col,
           sourceRelativePath: [
-            "value", "items", "0",
-            "value", "items", "0",
-            "value", "items", "0"
+            "value",
+            "items",
+            "0",
+            "value",
+            "items",
+            "0",
+            "value",
+            "items",
+            "0"
           ],
           targetContainer: targetColumn,
           targetIndex: 1
@@ -207,10 +227,18 @@ describe("buildMoveFromTo", () => {
           block,
           sourceElement: richText,
           sourceRelativePath: [
-            "value", "items", "0",
-            "value", "items", "0",
-            "value", "items", "0",
-            "value", "items", "0"
+            "value",
+            "items",
+            "0",
+            "value",
+            "items",
+            "0",
+            "value",
+            "items",
+            "0",
+            "value",
+            "items",
+            "0"
           ],
           targetContainer: targetColumn,
           targetIndex: 0
@@ -284,11 +312,21 @@ describe("buildMoveFromTo", () => {
           block,
           sourceElement: richText,
           sourceRelativePath: [
-            "value", "items", "0",
-            "value", "items", "0",
-            "value", "items", "0",
-            "value", "items", "0",
-            "value", "items", "0"
+            "value",
+            "items",
+            "0",
+            "value",
+            "items",
+            "0",
+            "value",
+            "items",
+            "0",
+            "value",
+            "items",
+            "0",
+            "value",
+            "items",
+            "0"
           ],
           targetContainer: targetColumn,
           targetIndex: 0
@@ -329,11 +367,21 @@ describe("buildMoveFromTo", () => {
           block,
           sourceElement: button,
           sourceRelativePath: [
-            "value", "items", "0",
-            "value", "items", "0",
-            "value", "items", "0",
-            "value", "items", "1",
-            "value", "items", "0"
+            "value",
+            "items",
+            "0",
+            "value",
+            "items",
+            "0",
+            "value",
+            "items",
+            "0",
+            "value",
+            "items",
+            "1",
+            "value",
+            "items",
+            "0"
           ],
           targetContainer: targetColumn,
           targetIndex: 0
@@ -376,11 +424,21 @@ describe("buildMoveFromTo", () => {
           block,
           sourceElement: button1,
           sourceRelativePath: [
-            "value", "items", "0",
-            "value", "items", "0",
-            "value", "items", "0",
-            "value", "items", "0",
-            "value", "items", "0"
+            "value",
+            "items",
+            "0",
+            "value",
+            "items",
+            "0",
+            "value",
+            "items",
+            "0",
+            "value",
+            "items",
+            "0",
+            "value",
+            "items",
+            "0"
           ],
           targetContainer: targetColumn,
           targetIndex: 0
@@ -453,10 +511,18 @@ describe("buildMoveFromTo", () => {
           block,
           sourceElement: richText,
           sourceRelativePath: [
-            "value", "items", "0",
-            "value", "items", "0",
-            "value", "items", "0",
-            "value", "items", "0"
+            "value",
+            "items",
+            "0",
+            "value",
+            "items",
+            "0",
+            "value",
+            "items",
+            "0",
+            "value",
+            "items",
+            "0"
           ],
           targetContainer: targetColumn,
           targetIndex: 1
@@ -464,31 +530,26 @@ describe("buildMoveFromTo", () => {
       },
       assert(fromTo) {
         expect(fromTo.to.itemPath).toEqual(["col-2", "items", "1"]);
-        expect(
-          (fromTo.to as { itemIndex?: number }).itemIndex
-        ).toBe(1);
+        expect((fromTo.to as { itemIndex?: number }).itemIndex).toBe(1);
       }
     }
   ];
 
-  it.each(testCases)(
-    "should $name",
-    ({ setup, assert }) => {
-      const {
-        block,
-        sourceElement,
-        sourceRelativePath,
-        targetContainer,
-        targetIndex
-      } = setup();
-      const fromTo = buildMoveFromTo(
-        block,
-        sourceElement,
-        sourceRelativePath,
-        targetContainer,
-        targetIndex
-      );
-      assert(fromTo);
-    }
-  );
+  it.each(testCases)("should $name", ({ setup, assert }) => {
+    const {
+      block,
+      sourceElement,
+      sourceRelativePath,
+      targetContainer,
+      targetIndex
+    } = setup();
+    const fromTo = buildMoveFromTo(
+      block,
+      sourceElement,
+      sourceRelativePath,
+      targetContainer,
+      targetIndex
+    );
+    assert(fromTo);
+  });
 });

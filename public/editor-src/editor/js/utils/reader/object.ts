@@ -1,7 +1,7 @@
 import { produce } from "immer";
-import { Dictionary } from "visual/types/utils";
+import type { Dictionary } from "visual/types/utils";
 import { isNullish } from "visual/utils/value";
-import { Reader } from "./types";
+import type { Reader } from "./types";
 
 type ObjWithUnknowns<K extends string> = {
   [k in K]: unknown;
@@ -75,7 +75,7 @@ export const readWithValueReader =
 
 export const readKey =
   (key: string) =>
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  // biome-ignore lint/suspicious/noExplicitAny: migrated from eslint
   (obj: Record<string, any>): unknown =>
     hasKey(key, obj) ? obj[key] : undefined;
 

@@ -1,12 +1,12 @@
 import { Str } from "@brizy/readers";
 import { pass } from "fp-utilities";
-import React, { ReactElement, useCallback, useState } from "react";
+import React, { type ReactElement, useCallback, useState } from "react";
 import { PayPal as Control } from "visual/component/Controls/PayPal";
-import { Props as OptionProps } from "visual/component/Options/Type";
+import type { Props as OptionProps } from "visual/component/Options/Type";
 import { useConfig } from "visual/providers/ConfigProvider";
 import { always, pipe } from "visual/utils/fp";
 import { is } from "visual/utils/string/NoEmptyString";
-import { Model } from "./Type";
+import type { Model } from "./Type";
 
 export type Props = OptionProps<Model>;
 

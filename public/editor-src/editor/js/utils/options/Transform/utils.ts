@@ -1,13 +1,13 @@
-import { AnchorPoint } from "visual/component/Controls/Transform/types/AnchorPoint";
-import { Flip } from "visual/component/Controls/Transform/types/Flip";
-import { Offset } from "visual/component/Controls/Transform/types/Offset";
-import { Rotate } from "visual/component/Controls/Transform/types/Rotate";
-import { Scale } from "visual/component/Controls/Transform/types/Scale";
-import { Skew } from "visual/component/Controls/Transform/types/Skew";
-import { Value } from "visual/component/Controls/Transform/types/Value";
-import { FromElementModelGetter } from "visual/component/Options/Type";
+import type { AnchorPoint } from "visual/component/Controls/Transform/types/AnchorPoint";
+import type { Flip } from "visual/component/Controls/Transform/types/Flip";
+import type { Offset } from "visual/component/Controls/Transform/types/Offset";
+import type { Rotate } from "visual/component/Controls/Transform/types/Rotate";
+import type { Scale } from "visual/component/Controls/Transform/types/Scale";
+import type { Skew } from "visual/component/Controls/Transform/types/Skew";
+import type { Value } from "visual/component/Controls/Transform/types/Value";
+import type { FromElementModelGetter } from "visual/component/Options/Type";
 import { capByPrefix } from "visual/utils/string";
-import { MValue } from "visual/utils/value";
+import type { MValue } from "visual/utils/value";
 
 export const wrap =
   (prefix: string) =>

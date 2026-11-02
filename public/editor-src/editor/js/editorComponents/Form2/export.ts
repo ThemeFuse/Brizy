@@ -1,32 +1,38 @@
-import { Num, Str } from "@brizy/readers";
-import $ from "jquery";
-import PerfectScrollbar from "perfect-scrollbar";
-import { Option } from "slim-select";
+import { Num, Obj, Str } from "@brizy/readers";
+import type PerfectScrollbar from "perfect-scrollbar";
+import type { Option } from "slim-select";
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import { getFreeLibs } from "visual/libs";
 import { isIOS } from "visual/utils/devices";
+import { readDataAttr } from "visual/utils/export/dataAttr";
+import { delegatedTargets } from "visual/utils/export/delegate";
 import { makeAttr, makeDataAttrString } from "visual/utils/i18n/attribute";
 import { decodeFromString } from "visual/utils/string";
-import { MValue, isNullish } from "visual/utils/value";
+import { isNullish, type MValue } from "visual/utils/value";
 import { FormAccessibility } from "../accessibility";
-import { PhoneOption } from "./Form2Field/types/type";
+import { popup } from "../SectionPopup2/popup";
+import type { PhoneOption } from "./Form2Field/types/type";
 import { initCalculatedField } from "./initCalculatedField";
 import { initMultiStep } from "./initMultiStep";
 import {
-  AllFormData,
-  DataValue,
-  DoneResponse,
-  Errors,
-  GetFormMessageData,
+  type SendCallbacks,
+  type SendResult,
+  sendRequest
+} from "./sendRequest";
+import {
+  type AllFormData,
+  type DataValue,
+  type Errors,
+  type GetFormMessageData,
   MessageStatus,
-  ResponseMessages
+  type ResponseMessages
 } from "./types";
 import {
   flagsToSelectPhoneOptions,
   getFlagIconClass,
+  getTranslatedResponseMessages,
   isPhoneType
 } from "./utils";
-import { getTranslatedResponseMessages } from "./utils";
 
 let isSubmitEnabled = true;
 const HIDE_SUBMIT_MESSAGE_DELAY_MS = 5000;
@@ -85,13 +91,7 @@ export const showErrorMessage = (form: HTMLFormElement) => {
   }
 };
 
-export default function ($node: JQuery): void {
-  const root = $node.get(0);
-
-  if (!root) {
-    return;
-  }
-
+export default function (root: HTMLElement): void {
   const versionAttr = makeDataAttrString({
     name: "form-version",
     value: "'2'"
@@ -119,7 +119,11 @@ export default function ($node: JQuery): void {
           data: allData.data.concat(recaptchaData)
         };
 
-        handleSubmit(formActive, formData)?.then(() => {
+        handleSubmit(formActive, formData)?.then((result) => {
+          if (result.kind !== "done") {
+            return;
+          }
+
           formActive.classList.remove("brz-forms2--pending");
 
           // need reset captchaId
@@ -134,7 +138,7 @@ export default function ($node: JQuery): void {
     };
 
     // render Recaptcha
-    global.brzOnloadRecaptchaCallback = function () {
+    global.brzOnloadRecaptchaCallback = () => {
       recaptcha.forEach((node) => {
         const { sitekey: _siteKey, size: _size, callback } = node.dataset;
 
@@ -252,6 +256,14 @@ export default function ($node: JQuery): void {
                     next.className = getFlagIconClass(currentFlag.code);
                     currentValueNodeInner.replaceWith(next);
                   }
+
+                  const dialCodeNode = item.querySelector<HTMLElement>(
+                    ".brz-forms2__phone--country-code"
+                  );
+
+                  if (dialCodeNode) {
+                    dialCodeNode.textContent = currentFlag.dialCode;
+                  }
                   input?.setAttribute("data-dial-code", currentFlag.dialCode);
                 }
               }
@@ -329,29 +341,32 @@ export default function ($node: JQuery): void {
   root
     .querySelectorAll<HTMLElement>(".brz-forms2__field-select")
     .forEach((node) => {
-      const $this = $(node);
-      const $select = $this.find(".brz-select");
-      const select = $select.get(0) as HTMLSelectElement | undefined;
+      const select = node.querySelector<HTMLSelectElement>(".brz-select");
+      const { select2, Scrollbars } = getFreeLibs();
 
-      if (!select) {
+      if (!select || !select2) {
         return;
       }
 
       const isMultiple = select.multiple;
-      const placeholder = $select.data("brz-placeholder");
-      const maxItemDropdown = $select.attr("data-brz-max-item-dropdown") ?? "5";
+      const placeholder = readDataAttr(select, "brz-placeholder");
+      const maxItemDropdown =
+        select.getAttribute("data-brz-max-item-dropdown") ?? "5";
       let initialized = false;
 
-      $select.select2({
+      const handle = select2(select, {
         width: "100%",
-        minimumResultsForSearch: Infinity,
-        dropdownParent: $this,
+        minimumResultsForSearch: Number.POSITIVE_INFINITY,
+        dropdownParent: node,
         placeholder,
         templateSelection: (data) => {
           return !placeholder && !initialized
             ? ""
             : (Str.read(data.text) ?? "");
-        }
+        },
+        templateResult: (data) =>
+          typeof data.text === "string" ? data.text : "",
+        dropdownAutoWidth: false
       });
 
       const oldArrow = node.querySelector(".select2-selection__arrow");
@@ -373,50 +388,59 @@ export default function ($node: JQuery): void {
       const formAccessibility = new FormAccessibility({
         selectNode: node,
         select,
-        rootNode: root
+        rootNode: root,
+        select2: handle
       });
 
       formAccessibility.init();
 
       // Custom Scrollbars
-      const { Scrollbars } = getFreeLibs();
-      let scrollbars: PerfectScrollbar | null;
+      let scrollbars: PerfectScrollbar | undefined;
 
-      $select.on("select2:opening", function () {
+      select.addEventListener("select2:opening", () => {
         // waiting appear the dropdown in the dom
-        setTimeout(function () {
-          const $dropdown = $this.find(".select2-dropdown");
-          const itemHeight = parseInt(
-            $dropdown
-              .find(".select2-results__options .select2-results__option")
-              .css("height")
+        setTimeout(() => {
+          const dropdown = node.querySelector<HTMLElement>(".select2-dropdown");
+          const item = dropdown?.querySelector<HTMLElement>(
+            ".select2-results__options .select2-results__option"
           );
+          const itemHeight = item ? parseInt(getItemHeight(item), 10) : NaN;
+          const maxHeight = itemHeight * parseInt(maxItemDropdown, 10);
 
-          $dropdown.css("maxHeight", itemHeight * parseInt(maxItemDropdown));
+          if (dropdown && !Number.isNaN(maxHeight)) {
+            dropdown.style.maxHeight = `${maxHeight}px`;
+          }
 
-          if ($dropdown.length && Scrollbars) {
-            const node = $dropdown.get(0);
-
-            if (node) {
-              scrollbars = new Scrollbars(node);
-            }
+          if (dropdown && Scrollbars) {
+            scrollbars = new Scrollbars(dropdown);
           }
 
           if (isMultiple) {
-            $this.addClass("brz-forms2__field-select--multiple--opened");
+            node.classList.add("brz-forms2__field-select--multiple--opened");
           }
         }, 0);
       });
 
+      // A closing dropdown validates the field, as leaving its hidden search field always did.
+      select.addEventListener("select2:closing", () => {
+        const search = node.querySelector<HTMLFormElement>(
+          ".select2-search--dropdown .select2-search__field"
+        );
+
+        if (search && document.activeElement !== search) {
+          validateFormItem(search);
+        }
+      });
+
       // destroy custom scrollbar when dropdown closed
-      $select.on("select2:close", function () {
+      select.addEventListener("select2:close", () => {
         if (scrollbars) {
           scrollbars.destroy();
-          scrollbars = null;
+          scrollbars = undefined;
         }
 
         if (isMultiple) {
-          $this.removeClass("brz-forms2__field-select--multiple--opened");
+          node.classList.remove("brz-forms2__field-select--multiple--opened");
         }
       });
 
@@ -427,6 +451,35 @@ export default function ($node: JQuery): void {
     disableIOSInputZoom();
   }
 }
+
+// The computed height of a dropdown row, measured the way the max height always was.
+const getItemHeight = (item: HTMLElement): string => {
+  const styles = getComputedStyle(item);
+  const height = styles.height;
+
+  if (/^[+-]?(?:\d*\.|)\d+(?:[eE][+-]?\d+|)(?!px)[a-z%]+$/i.test(height)) {
+    return height;
+  }
+
+  const isAuto =
+    height === "auto" || (!parseFloat(height) && styles.display === "inline");
+
+  if (isAuto && item.getClientRects().length) {
+    if (styles.boxSizing === "border-box") {
+      return `${item.offsetHeight}px`;
+    }
+
+    const edges =
+      (parseFloat(styles.paddingTop) || 0) +
+      (parseFloat(styles.paddingBottom) || 0) +
+      (parseFloat(styles.borderTopWidth) || 0) +
+      (parseFloat(styles.borderBottomWidth) || 0);
+
+    return `${item.offsetHeight - edges}px`;
+  }
+
+  return `${parseFloat(height) || 0}px`;
+};
 
 const updatePattern = (form: HTMLElement): void => {
   const elements = form.querySelectorAll("input[pattern], textarea[pattern]");
@@ -480,7 +533,7 @@ function validateFormItem(node: HTMLFormElement): boolean {
     const _brzMin = Num.read(brzMin);
     const _brzMax = Num.read(brzMax);
 
-    if (Boolean(value) && _brzMin && toNum < _brzMin) {
+    if (value && _brzMin && toNum < _brzMin) {
       const messages = getFormMessage({
         status: MessageStatus.Error,
         form,
@@ -500,7 +553,7 @@ function validateFormItem(node: HTMLFormElement): boolean {
       );
       result = false;
     }
-    if (Boolean(value) && _brzMax && toNum > _brzMax) {
+    if (value && _brzMax && toNum > _brzMax) {
       const messages = getFormMessage({
         status: MessageStatus.Error,
         text: `${
@@ -524,7 +577,8 @@ function validateFormItem(node: HTMLFormElement): boolean {
 
   if (brzType === "FileUpload") {
     const files = node.files;
-    const maxSize = parseInt(Str.read(node.dataset.brzFileMaxSize) ?? "") || 1;
+    const maxSize =
+      parseInt(Str.read(node.dataset.brzFileMaxSize) ?? "", 10) || 1;
     const accepts = node.getAttribute("accept")
       ? node
           ?.getAttribute("accept")
@@ -538,9 +592,8 @@ function validateFormItem(node: HTMLFormElement): boolean {
 
     for (const file of files) {
       const { name, size } = file;
-      /* eslint-disable no-useless-escape */
+      // biome-ignore lint/complexity/noUselessEscapeInRegex: migrated from eslint
       const [ext] = name.match(/\.([^\.]+)$/);
-      /* eslint-enabled no-useless-escape */
 
       isBig = size / MB >= maxSize;
 
@@ -714,7 +767,6 @@ export function validateForm(form: HTMLElement): boolean {
 }
 
 function initForm(form: HTMLElement): void {
-  const $form = $(form);
   const formNode = form.querySelector<HTMLFormElement>("form");
 
   // Correction Form Fields with Checkbox & Radio
@@ -740,8 +792,14 @@ function initForm(form: HTMLElement): void {
 
   updatePattern(form);
 
-  $form.on("blur", "form input, form textarea, form select", function () {
-    validateFormItem(this);
+  form.addEventListener("focusout", (event) => {
+    delegatedTargets<HTMLFormElement>(
+      form,
+      event,
+      ":scope form input, :scope form textarea, :scope form select"
+    ).forEach((node) => {
+      validateFormItem(node);
+    });
   });
 
   const recaptcha = form.querySelector(recaptchaSelector);
@@ -752,7 +810,11 @@ function initForm(form: HTMLElement): void {
   // (2) need added the pending form selector .brz-forms--pending
   // (2.1) this class is used in brzFormV1Captcha for find and generate formData
   if (recaptcha) {
-    $form.on("submit", "form", function (event) {
+    form.addEventListener("submit", (event) => {
+      if (delegatedTargets(form, event, ":scope form").length === 0) {
+        return;
+      }
+
       event.preventDefault();
 
       // validate form
@@ -772,7 +834,11 @@ function initForm(form: HTMLElement): void {
       }
     });
   } else {
-    $form.on("submit", "form", function (event) {
+    form.addEventListener("submit", (event) => {
+      if (delegatedTargets(form, event, ":scope form").length === 0) {
+        return;
+      }
+
       event.preventDefault();
 
       if (isSubmitEnabled) {
@@ -871,9 +937,9 @@ function handleSubmit(form: HTMLElement, allData: AllFormData) {
   }
   formData.append("page_url", window.location.href);
 
-  const handleDone = (data: DoneResponse) => {
+  const handleDone = (data: unknown) => {
     // check status in the data
-    const { success = undefined } = data || {};
+    const success = Obj.read(data)?.success;
 
     if (success === false) {
       handleError();
@@ -995,7 +1061,8 @@ function getFormData(form: HTMLElement): AllFormData {
           }
 
           dataValue.maxSize = parseInt(
-            Str.read(node.dataset.brzFileMaxSize) ?? ""
+            Str.read(node.dataset.brzFileMaxSize) ?? "",
+            10
           );
           dataValue.extensions = Str.read(node.getAttribute("accept")) ?? "";
         }
@@ -1095,17 +1162,14 @@ function scheduleHideFormMessage(form: HTMLElement): void {
 }
 
 function closePopupForm(popupId: string): void {
-  const $elem = $(`#${popupId}`);
+  const elem = document.getElementById(popupId);
 
-  if (!$elem.length) {
+  if (!elem) {
     return;
   }
 
-  if ($elem.hasClass("brz-popup2")) {
-    const popup = $elem.popup();
-    if (popup && typeof popup.close === "function") {
-      popup.close();
-    }
+  if (elem.classList.contains("brz-popup2")) {
+    popup([elem]).close();
   }
 }
 
@@ -1157,24 +1221,9 @@ function resetFormValues(form: HTMLElement): void {
 function sendForm(
   url: string,
   formData: FormData,
-  cbs: {
-    done: (data: DoneResponse) => void;
-    error: VoidFunction;
-    always: VoidFunction;
-  }
-) {
-  const { done, error, always } = cbs;
-
-  return $.ajax({
-    type: "POST",
-    processData: false,
-    contentType: false,
-    url: url,
-    data: formData
-  })
-    .done(done)
-    .fail(error)
-    .always(always);
+  cbs: SendCallbacks
+): Promise<SendResult> {
+  return sendRequest(url, { body: formData, contentType: undefined }, cbs);
 }
 
 // Recaptcha
@@ -1194,6 +1243,7 @@ function loadReCAPTCHA(): MValue<HTMLScriptElement> {
   scriptElement.setAttribute("async", "async");
   scriptElement.setAttribute("defer", "defer");
   scriptElement.setAttribute("id", scriptId);
+  scriptElement.setAttribute(makeAttr("consent"), "necessary");
 
   document.body.append(scriptElement);
 

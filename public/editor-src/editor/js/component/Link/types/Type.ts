@@ -1,4 +1,4 @@
-import { MRead, Reader } from "visual/utils/types/Type";
+import type { MRead, Reader } from "visual/utils/types/Type";
 
 export interface LinkData {
   linkPage: string;

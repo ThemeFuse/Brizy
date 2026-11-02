@@ -1,4 +1,4 @@
-import { ObserverProperty } from "./type";
+import type { ObserverProperty } from "./type";
 
 export const observer: ObserverProperty = {
   events: ["load", "scroll"],
@@ -39,7 +39,9 @@ export const observer: ObserverProperty = {
       requestAnimationFrame(() => {
         this.framePending = false;
 
-        this.listeners.forEach((listener) => listener());
+        this.listeners.forEach((listener) => {
+          listener();
+        });
       });
 
       this.framePending = true;

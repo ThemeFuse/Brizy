@@ -1,12 +1,12 @@
 import { mPipe, optional, parseStrict } from "fp-utilities";
-import { ElementModel } from "visual/component/Elements/Types";
-import * as Positive from "visual/utils/math/Positive";
+import type { ElementModel } from "visual/component/Elements/Types";
 import * as Num from "visual/utils/math/number";
+import * as Positive from "visual/utils/math/Positive";
 import { or } from "visual/utils/reader/readWithParser";
 import * as Str from "visual/utils/string/specs";
-import { IsEqual } from "visual/utils/types/Eq";
-import { Get, call } from "../utils";
-import { LegacyEffectType, fromString } from "./LegacyEffectType";
+import type { IsEqual } from "visual/utils/types/Eq";
+import { call, type Get } from "../utils";
+import { fromString, LegacyEffectType } from "./LegacyEffectType";
 
 export type LegacyModel = {
   name: LegacyEffectType;

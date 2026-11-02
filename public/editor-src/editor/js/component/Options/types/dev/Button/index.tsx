@@ -1,7 +1,7 @@
-import React, { ReactElement } from "react";
+import React, { type ReactElement } from "react";
 import { Button as Control } from "visual/component/Controls/Button";
-import * as Option from "visual/component/Options/Type";
-import { WithConfig } from "visual/types/attributes";
+import type * as Option from "visual/component/Options/Type";
+import type { WithConfig } from "visual/types/attributes";
 
 export interface Config {
   icon: string;

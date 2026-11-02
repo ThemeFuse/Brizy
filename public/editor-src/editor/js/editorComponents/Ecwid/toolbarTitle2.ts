@@ -3,7 +3,7 @@ import { getColorToolbar } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
 import type { ResponsiveMode } from "visual/utils/responsiveMode";
-import { HOVER, NORMAL, State } from "visual/utils/stateMode";
+import { HOVER, NORMAL, type State } from "visual/utils/stateMode";
 import type { EcwidToolbarCSSData, Value } from "./utils/Value";
 
 export const ecwidToolbarTitle2 = (
@@ -41,7 +41,7 @@ export const ecwidToolbarTitle2 = (
             config: {
               fontFamily: device === "desktop"
             },
-            ...data?.["title2Typography"]
+            ...data?.title2Typography
           }
         ]
       },
@@ -63,7 +63,7 @@ export const ecwidToolbarTitle2 = (
             id: "title2Color",
             type: "colorPicker",
             states: [NORMAL, HOVER],
-            ...data?.["title2Color"]
+            ...data?.title2Color
           }
         ]
       },
@@ -76,7 +76,7 @@ export const ecwidToolbarTitle2 = (
           { icon: "nc-text-align-center", title: t("Align"), value: "center" },
           { icon: "nc-text-align-right", title: t("Align"), value: "right" }
         ],
-        ...data?.["title2HorizontalAlign"]
+        ...data?.title2HorizontalAlign
       },
       {
         id: "toolbarSettings",
@@ -93,7 +93,7 @@ export const ecwidToolbarTitle2 = (
               max: 100,
               units: [{ value: "px", title: "px" }]
             },
-            ...data?.["title2Spacing"]
+            ...data?.title2Spacing
           }
         ]
       }

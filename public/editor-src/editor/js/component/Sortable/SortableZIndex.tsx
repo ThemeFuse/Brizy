@@ -1,6 +1,6 @@
-import React, { ReactElement } from "react";
-import { RenderType, isView } from "visual/providers/RenderProvider";
-import { Dictionary } from "visual/types/utils";
+import React, { type ReactElement } from "react";
+import { isView, type RenderType } from "visual/providers/RenderProvider";
+import type { Dictionary } from "visual/types/utils";
 
 export interface Props {
   zIndex: number;

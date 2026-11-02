@@ -1,17 +1,17 @@
-import { escape } from "es-toolkit";
+import { escape as escapeHtml } from "es-toolkit";
 import { mPipe } from "fp-utilities";
 import { Base64 } from "js-base64";
 import * as Str from "visual/utils/reader/string";
 import { isPlaceholderStart } from "./common";
 import {
-  DCPlaceholderEndObj,
-  DCPlaceholderObj,
-  DCPlaceholderStartObj,
+  type DCPlaceholderEndObj,
+  type DCPlaceholderObj,
+  type DCPlaceholderStartObj,
   placeholderEndName,
   placeholderName
 } from "./types";
 
-const _escape = mPipe(Str.read, escape);
+const _escape = mPipe(Str.read, escapeHtml);
 export function placeholderObjToStr(placeholderObj: DCPlaceholderObj): string {
   const { name, content } = placeholderObj;
   const base64 = Base64.encode(content);

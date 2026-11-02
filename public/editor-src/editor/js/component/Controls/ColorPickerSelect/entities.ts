@@ -1,4 +1,4 @@
-import { Literal } from "visual/utils/types/Literal";
+import type { Literal } from "visual/utils/types/Literal";
 
 export type Meta = {
   isChanged: "hex" | "palette" | "opacity" | "select";

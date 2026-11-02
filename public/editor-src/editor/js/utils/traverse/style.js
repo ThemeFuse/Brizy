@@ -1,5 +1,5 @@
 export const styleTraverse = (data, conditions) => {
-  for (let key in data) {
+  for (const key in data) {
     if (!data.hasOwnProperty(key)) {
       continue;
     }

@@ -4,7 +4,7 @@ import { getColorToolbar } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
 import { HOVER, NORMAL } from "visual/utils/stateMode";
-import { EcwidProductColumns, Value } from "./types/Value";
+import { EcwidProductColumns, type Value } from "./types/Value";
 
 export const getItems: GetItems<Value> = ({ v, device, state, component }) => {
   const config = component.getGlobalConfig();

@@ -1,7 +1,7 @@
 import classnames from "classnames";
-import { CheckGroupEdit } from "./types";
-import { FCC } from "visual/utils/react/types";
 import React from "react";
+import type { FCC } from "visual/utils/react/types";
+import type { CheckGroupEdit } from "./types";
 
 export const CheckGroupItemEditor: FCC<CheckGroupEdit> = ({
   active,

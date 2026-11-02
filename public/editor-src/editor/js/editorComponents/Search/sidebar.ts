@@ -1,5 +1,5 @@
 import { t } from "visual/utils/i18n";
-import { ToolbarItemType } from "../ToolbarItemType";
+import type { ToolbarItemType } from "../ToolbarItemType";
 
 export const title = () => t("Search");
 

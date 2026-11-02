@@ -1,7 +1,7 @@
 import type { Config } from "visual/global/Config";
 import {
   EcwidGroups,
-  ElementTypes,
+  type ElementTypes,
   MinistryBrandsGroups,
   ShopifyGroups
 } from "visual/global/Config/types/configs/ElementTypes";

@@ -1,8 +1,8 @@
 import {
-  Orientation,
+  type Orientation,
   VariantStyle
 } from "@brizy/widget/src/Shopify/Variant/types";
-import { WithRenderContext } from "visual/providers/RenderProvider";
+import type { WithRenderContext } from "visual/providers/RenderProvider";
 import { cssStyleBgColor } from "visual/utils/cssStyle/cssStyleBgColor";
 import { cssStyleBorder } from "visual/utils/cssStyle/cssStyleBorder";
 import { cssStyleBorderRadius } from "visual/utils/cssStyle/cssStyleBorderRadius";
@@ -25,8 +25,8 @@ import {
   cssStyleTypography2LineHeight,
   getAllCssStyleTypography
 } from "visual/utils/cssStyle/cssStyleTypography2";
-import { CSSValue } from "visual/utils/style2/types";
-import { MValue } from "../value";
+import type { CSSValue } from "visual/utils/style2/types";
+import type { MValue } from "../value";
 import { cssStyleFlexHorizontalAlign } from "./cssStyleAlign";
 import { cssStyleBgGradient } from "./cssStyleBgGradient";
 import { cssStyleSpacing } from "./cssStyleSpacing";

@@ -1,12 +1,12 @@
 import { Num, Obj } from "@brizy/readers";
 import classnames from "classnames";
 import React, {
+  createRef,
   type FC,
   type MutableRefObject,
   type ReactElement,
   type ReactNode,
-  type RefObject,
-  createRef
+  type RefObject
 } from "react";
 import SlickSlider, { type ResponsiveObject } from "react-slick";
 import { ContextMenuExtend } from "visual/component/ContextMenu";
@@ -18,8 +18,8 @@ import { ThemeIcon } from "visual/component/ThemeIcon";
 import { hideToolbar } from "visual/component/Toolbar";
 import type { PortalToolbarType } from "visual/component/Toolbar/PortalToolbar";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
+import type { ArrayItem } from "visual/editorComponents/EditorArrayComponent/types";
 import { EditorComponentContext } from "visual/editorComponents/EditorComponent/EditorComponentContext";
-import type { Model } from "visual/editorComponents/EditorComponent/types";
 import type {
   Meta,
   ToolbarItemType
@@ -180,10 +180,8 @@ class Items extends EditorArrayComponent {
     return sameNode || acceptsElement;
   };
 
-  addColumn = (itemIndex: number): void => {
-    const v: Model<ElementModel[]> = this.getValue() as unknown as Model<
-      ElementModel[]
-    >;
+  addColumn(itemIndex: number): void {
+    const v = this.getValue();
 
     const lastElement = v[itemIndex - 1];
     const lastElementValue = Obj.readKey("value")(lastElement) ?? {};
@@ -193,7 +191,7 @@ class Items extends EditorArrayComponent {
       value: { ...lastElementValue, items: [] }
     };
     this.insertItem(itemIndex, emptyItemData);
-  };
+  }
 
   getParentRef = (
     node: HTMLElement
@@ -208,7 +206,7 @@ class Items extends EditorArrayComponent {
   getItemProps(
     _: unknown,
     itemIndex: number,
-    items: ReactNode[]
+    items: ArrayItem[]
   ): Record<string, unknown> {
     const { meta, slidesToShow, isDynamicContent } = this.props;
     let { toolbarExtend } = this.props;
@@ -523,7 +521,7 @@ class Items extends EditorArrayComponent {
           const isCustomDots = sliderDots === "custom";
           if (isCustomDots && sliderDotsCustomName) {
             return (
-              <button>
+              <button type="button">
                 <ThemeIcon
                   name={sliderDotsCustomName}
                   type={sliderDotsCustomType}
@@ -533,7 +531,7 @@ class Items extends EditorArrayComponent {
               </button>
             );
           }
-          return <button />;
+          return <button type="button" />;
         }}
         appendDots={(dots) => renderSliderDots(dots, !!stopSlider)}
         nextArrow={
@@ -562,7 +560,7 @@ class Items extends EditorArrayComponent {
     );
   }
 
-  renderForEdit(v: ElementModel[]): ReactElement {
+  renderForEdit(v: ArrayItem[]): ReactElement {
     const { className, isDynamicContent, dynamicData } = this.getProps();
     const context = dynamicData?.context ? dynamicData.context : [];
 

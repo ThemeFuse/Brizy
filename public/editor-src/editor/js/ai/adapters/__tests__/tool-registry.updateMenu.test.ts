@@ -21,10 +21,23 @@ interface UpdateArg {
 const mockUpdateElement = () =>
   jest.fn((_arg: UpdateArg) => ({ success: true, data: {} }));
 
+/**
+ * The Menu is exposed as several small tools that all carry the alias
+ * "updateMenu", so the handler is registered under every one of their names —
+ * "updateMenu" itself is no longer something the LLM can call. These tests
+ * drive it through the derived name that owns the property under test, which
+ * is exactly how a tool call arrives.
+ */
 describe("updateMenu registration", () => {
-  it("is exposed as a tool definition", () => {
-    const names = getBrizyToolDefinitions(t).map((d) => d.name);
-    expect(names).toContain("updateMenu");
+  it("exposes the Menu through tools that all resolve to one handler", () => {
+    const menuTools = getBrizyToolDefinitions(t).filter(
+      (d) => d.alias === "updateMenu"
+    );
+
+    expect(menuTools.length).toBeGreaterThan(1);
+    expect(menuTools.map((d) => d.name)).toContain("updateMenuLayout");
+    // The bare alias is a handler key, not a tool the model can call.
+    expect(menuTools.map((d) => d.name)).not.toContain("updateMenu");
   });
 
   it("has a handler that routes to updateElement with the Menu changes", () => {
@@ -46,9 +59,10 @@ describe("updateMenu registration", () => {
       store
     );
 
-    expect(typeof handlers.updateMenu).toBe("function");
+    expect(typeof handlers.updateMenuLayout).toBe("function");
+    expect(handlers.updateMenuColor).toBe(handlers.updateMenuLayout);
 
-    handlers.updateMenu({
+    handlers.updateMenuLayout({
       elementId: "menu-1",
       verticalMode: "vertical",
       colorHex: "#222222"
@@ -84,7 +98,7 @@ describe("updateMenu registration", () => {
       {} as ISharedStore
     );
 
-    handlers.updateMenu({
+    handlers.updateMenuLayout({
       elementId: "menu-1",
       horizontalAlign: "left",
       colorHex: "#222222"
@@ -126,7 +140,10 @@ describe("updateMenu registration", () => {
       {} as ISharedStore
     );
 
-    handlers.updateMenu({ elementId: "menu-1", menuBgColorHex: "#ff0000" });
+    handlers.updateMenuBackground({
+      elementId: "menu-1",
+      menuBgColorHex: "#ff0000"
+    });
 
     expect(updateElement).toHaveBeenCalledWith(
       expect.objectContaining({
@@ -156,7 +173,10 @@ describe("updateMenu registration", () => {
       {} as ISharedStore
     );
 
-    handlers.updateMenu({ elementId: "menu-1", menuBgColorHex: "#ff0000" });
+    handlers.updateMenuBackground({
+      elementId: "menu-1",
+      menuBgColorHex: "#ff0000"
+    });
 
     const changes = updateElement.mock.calls[0]![0].changes;
     expect(changes).not.toHaveProperty("menuBgColorOpacity");
@@ -171,12 +191,164 @@ describe("updateMenu registration", () => {
       {} as ISharedStore
     );
 
-    handlers.updateMenu({ elementId: "menu-1", fontSize: 20 });
+    handlers.updateMenuTypography({ elementId: "menu-1", fontSize: 20 });
 
     expect(updateElement).toHaveBeenCalledWith(
       expect.objectContaining({
         changes: expect.objectContaining({ fontSize: 20, fontStyle: "" })
       })
+    );
+  });
+});
+
+describe("updateMenu side write atomicity", () => {
+  // horizontalAlign lives on the parent Wrapper, so updateMenu writes to two
+  // elements. Each write is its own dispatch, so one undo cannot restore both.
+  // Mirrors the real repository: an update succeeds only when the declared
+  // elementType matches that element's actual type (page.repository.ts:1024).
+  const harness = (targetType: string) => {
+    const types: Record<string, string> = {
+      "menu-1": "Menu",
+      "btn-1": "Button",
+      "wrap-9": "Wrapper"
+    };
+    const writes: UpdateArg[] = [];
+    const updateElement = jest.fn((arg: UpdateArg) => {
+      writes.push(arg);
+      const actual = types[arg.elementId] ?? targetType;
+
+      return arg.elementType === actual
+        ? { success: true, data: {} }
+        : {
+            success: false,
+            error: `Element "${arg.elementId}" is of type "${actual}", not "${arg.elementType}".`
+          };
+    });
+    const getElementById = jest.fn(() => ({
+      success: true,
+      data: { value: {}, parentId: "wrap-9", parentType: "Wrapper" }
+    }));
+
+    const handlers = createBrizyToolHandlers(
+      { updateElement, getElementById } as unknown as IPageRepository,
+      {} as IProjectRepository,
+      {} as ISharedStore
+    );
+
+    return { handlers, writes };
+  };
+
+  it("does not touch the parent Wrapper when the Menu update is rejected", async () => {
+    // the target is a Button, so the Menu update fails
+    const { handlers, writes } = harness("Button");
+
+    const result = await handlers.updateMenuLayout({
+      elementId: "btn-1",
+      horizontalAlign: "right"
+    });
+
+    expect(result.success).toBe(false);
+    expect(writes.map((w) => w.elementId)).not.toContain("wrap-9");
+  });
+
+  it("writes the alignment to the parent after a successful Menu update", async () => {
+    const { handlers, writes } = harness("Menu");
+
+    const result = await handlers.updateMenuLayout({
+      elementId: "menu-1",
+      horizontalAlign: "right"
+    });
+
+    expect(result.success).toBe(true);
+    expect(writes).toEqual([
+      expect.objectContaining({ elementId: "menu-1", elementType: "Menu" }),
+      expect.objectContaining({
+        elementId: "wrap-9",
+        elementType: "Wrapper",
+        changes: { horizontalAlign: "right" }
+      })
+    ]);
+  });
+
+  it("does not write to the parent when no alignment was requested", () => {
+    const { handlers, writes } = harness("Menu");
+
+    handlers.updateMenuLayout({ elementId: "menu-1", itemPadding: 10 });
+
+    expect(writes.map((w) => w.elementId)).toEqual(["menu-1"]);
+  });
+
+  it("reports a failure when the parent alignment write is rejected", async () => {
+    // The Menu update lands but the Wrapper write does not.
+    const writes: UpdateArg[] = [];
+    const updateElement = jest.fn((arg: UpdateArg) => {
+      writes.push(arg);
+      return arg.elementType === "Menu"
+        ? { success: true, data: {} }
+        : { success: false, error: "Wrapper rejected" };
+    });
+    const getElementById = jest.fn(() => ({
+      success: true,
+      data: { value: {}, parentId: "wrap-9", parentType: "Wrapper" }
+    }));
+
+    const handlers = createBrizyToolHandlers(
+      { updateElement, getElementById } as unknown as IPageRepository,
+      {} as IProjectRepository,
+      {} as ISharedStore
+    );
+
+    const result = await handlers.updateMenuLayout({
+      elementId: "menu-1",
+      horizontalAlign: "right"
+    });
+
+    expect(result.success).toBe(false);
+    expect(result.error).toContain("page alignment");
+  });
+
+  it("reports a failure when the Menu has no parent to align", async () => {
+    const updateElement = jest.fn(() => ({ success: true, data: {} }));
+    const getElementById = jest.fn(() => ({
+      success: true,
+      data: { value: {} }
+    }));
+
+    const handlers = createBrizyToolHandlers(
+      { updateElement, getElementById } as unknown as IPageRepository,
+      {} as IProjectRepository,
+      {} as ISharedStore
+    );
+
+    const result = await handlers.updateMenuLayout({
+      elementId: "menu-1",
+      horizontalAlign: "right"
+    });
+
+    expect(result.success).toBe(false);
+    expect(result.error).toContain("no parent container");
+  });
+});
+
+describe("alias resolution", () => {
+  it("executes the alias as well as the names, but advertises only the names", () => {
+    const updateElement = mockUpdateElement();
+    const handlers = createBrizyToolHandlers(
+      { updateElement } as unknown as IPageRepository,
+      {} as IProjectRepository,
+      {} as ISharedStore
+    );
+
+    // ai-chatbot-api resolves an incoming call to its alias before emitting
+    // it, so its own references survive a concern rename. Both names must
+    // therefore reach the same handler.
+    expect(typeof handlers.updateMenuTypography).toBe("function");
+    expect(handlers.updateMenu).toBe(handlers.updateMenuTypography);
+
+    // The catalog still offers only the split names: the alias is a call the
+    // editor accepts, not a tool the model is shown.
+    expect(getBrizyToolDefinitions(t).map((d) => d.name)).not.toContain(
+      "updateMenu"
     );
   });
 });

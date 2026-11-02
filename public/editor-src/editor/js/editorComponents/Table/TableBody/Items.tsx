@@ -1,17 +1,14 @@
+import type { ElementModel } from "visual/component/Elements/Types";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
-import { ElementModel } from "visual/component/Elements/Types";
-import { NewToolbarConfig } from "visual/editorComponents/EditorComponent/types";
+import type { ArrayItem } from "visual/editorComponents/EditorArrayComponent/types";
+import type { NewToolbarConfig } from "visual/editorComponents/EditorComponent/types";
 
 class TableBodyItems extends EditorArrayComponent {
   static get componentId() {
     return "TableBody.Items";
   }
 
-  getItemProps(
-    itemData: ElementModel,
-    itemIndex: number,
-    items: ElementModel[]
-  ) {
+  getItemProps(itemData: ArrayItem, itemIndex: number, items: ArrayItem[]) {
     const props = super.getItemProps(itemData, itemIndex, items);
 
     const cloneRemoveConfig: NewToolbarConfig<ElementModel> = {

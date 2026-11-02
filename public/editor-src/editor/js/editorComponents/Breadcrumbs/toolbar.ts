@@ -1,9 +1,9 @@
-import { GetItems } from "visual/editorComponents/EditorComponent/types";
+import type { GetItems } from "visual/editorComponents/EditorComponent/types";
 import { getColorToolbar } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
 import { ACTIVE, HOVER, NORMAL } from "visual/utils/stateMode";
-import { Value } from "./types";
+import type { Value } from "./types";
 
 export const getItems: GetItems<Value> = ({ v, device }) => {
   const dvv = (key: string) =>
@@ -83,7 +83,7 @@ export const getItems: GetItems<Value> = ({ v, device }) => {
                 {
                   id: "color",
                   type: "colorPicker",
-                  states: [NORMAL, HOVER, ACTIVE],
+                  states: [NORMAL, HOVER, ACTIVE]
                 }
               ]
             },
@@ -93,7 +93,7 @@ export const getItems: GetItems<Value> = ({ v, device }) => {
               options: [
                 {
                   id: "arrowsColor",
-                  type: "colorPicker",
+                  type: "colorPicker"
                 }
               ]
             }

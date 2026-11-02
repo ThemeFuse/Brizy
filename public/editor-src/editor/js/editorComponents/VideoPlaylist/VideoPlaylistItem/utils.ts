@@ -1,5 +1,5 @@
+import type { Attributes } from "react";
 import { makeDataAttr } from "visual/utils/i18n/attribute";
-import { Attributes } from "react";
 
 interface SidebarProps {
   videoSrc: string;

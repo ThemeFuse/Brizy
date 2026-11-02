@@ -1,11 +1,11 @@
-import React, { ComponentType, ReactElement } from "react";
+import React, { type ComponentType, type ReactElement } from "react";
 import { isWp } from "visual/global/Config";
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import type { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { t } from "visual/utils/i18n";
 import Tabs from "../common/GlobalApps/Tabs";
 import SignIn from "./SignIn";
 import SignUp from "./SignUp";
-import { PromptAuthorizationTabs } from "./types";
+import type { PromptAuthorizationTabs } from "./types";
 
 const getTabs = (): PromptAuthorizationTabs<
   Omit<ComponentType, "children">

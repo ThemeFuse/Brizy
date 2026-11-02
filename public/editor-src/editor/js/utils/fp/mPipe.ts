@@ -1,4 +1,4 @@
-import { MNullish, isNullish } from "visual/utils/value/index";
+import { isNullish, type MNullish } from "visual/utils/value/index";
 
 export function mPipe<T1>(fn0: () => MNullish<T1>): () => T1 | undefined;
 export function mPipe<V0, T1>(

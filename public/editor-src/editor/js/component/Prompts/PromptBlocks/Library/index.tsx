@@ -7,16 +7,20 @@ import { ToastNotification } from "visual/component/Notifications";
 import { currentUserRole } from "visual/component/Roles";
 import { isWp } from "visual/global/Config";
 import { isCloud } from "visual/global/Config/types/configs/Cloud";
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import type { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import {
   authorizedSelector,
   extraFontStylesSelector,
   fontsSelector
 } from "visual/redux/selectors";
-import { ReduxState } from "visual/redux/types";
-import { SavedBlock, SavedLayout } from "visual/types";
-import { isStyle } from "visual/types/utils";
-import { isSavedBlock, isSavedLayout, isSavedPopup } from "visual/types/utils";
+import type { ReduxState } from "visual/redux/types";
+import type { SavedBlock, SavedLayout } from "visual/types";
+import {
+  isSavedBlock,
+  isSavedLayout,
+  isSavedPopup,
+  isStyle
+} from "visual/types/utils";
 import {
   deleteSavedBlock,
   deleteSavedLayout,
@@ -28,12 +32,12 @@ import {
   getSavedPopupById,
   getSavedPopups,
   importSaveBlocks,
-  importSavePopups,
   importSavedLayout,
+  importSavePopups,
   updateSavedBlock,
-  updateSavedLayout
+  updateSavedLayout,
+  updateSavedPopup
 } from "visual/utils/api";
-import { updateSavedPopup } from "visual/utils/api";
 import { blockThumbnailData } from "visual/utils/blocks";
 import { normalizeFonts } from "visual/utils/fonts/normalizeFonts";
 import { normalizeFontStyles } from "visual/utils/fonts/transform";
@@ -47,24 +51,24 @@ import {
 } from "visual/utils/traverse";
 import { getWhiteLabel } from "visual/utils/whiteLabel";
 import { isBlock, isLayout, isPopup } from "../common/utils";
-import { BlockTypes } from "../types";
+import type { BlockTypes } from "../types";
 import Blocks from "./Blocks";
 import { Details } from "./Details";
 import { ShowSuccessError } from "./Notification";
 import {
   BLOCK,
-  BlockData,
-  GetAssets,
+  type BlockData,
+  type GetAssets,
+  isSavedLayoutWithThumbs,
   LAYOUT,
-  LibraryProps,
-  LibraryState,
-  LibraryStateProps,
+  type LibraryProps,
+  type LibraryState,
+  type LibraryStateProps,
+  type Pagination,
   POPUP,
-  Pagination,
-  SavedBlockAPIMetaWithoutSync,
-  SavedLayoutAPIMetaWithoutSync,
-  Thumbs,
-  isSavedLayoutWithThumbs
+  type SavedBlockAPIMetaWithoutSync,
+  type SavedLayoutAPIMetaWithoutSync,
+  type Thumbs
 } from "./types";
 import { getBlocksType } from "./utils/getBlocksType";
 
@@ -559,7 +563,7 @@ class Library extends Component<
       }
     } catch (e) {
       if (process.env.NODE_ENV === "development") {
-        // eslint-disable-next-line no-console
+        // biome-ignore lint/suspicious/noConsole: migrated from eslint
         console.log(e);
       }
 

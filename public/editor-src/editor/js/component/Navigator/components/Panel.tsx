@@ -1,6 +1,12 @@
 import { useDraggable } from "@dnd-kit/core";
 import { CSS } from "@dnd-kit/utilities";
-import React, { FC, RefObject, useCallback, useMemo, useState } from "react";
+import React, {
+  type FC,
+  type RefObject,
+  useCallback,
+  useMemo,
+  useState
+} from "react";
 import EditorIcon from "visual/component/EditorIcon";
 import PointerEvents from "visual/component/PointerEvents";
 import { Resizable } from "visual/component/Resizable";

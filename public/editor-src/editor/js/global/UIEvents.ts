@@ -1,5 +1,6 @@
-import { assignIn } from "es-toolkit/compat";
+// biome-ignore lint/style/useNodejsImportProtocol: browser bundle — "events" resolves to the npm shim, "node:events" is an unhandled scheme in rspack
 import { EventEmitter } from "events";
+import { assignIn } from "es-toolkit/compat";
 
 export { UIEventType } from "./UIEventType";
 

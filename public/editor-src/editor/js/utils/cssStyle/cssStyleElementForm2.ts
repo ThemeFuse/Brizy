@@ -1,9 +1,8 @@
-import { ElementModel } from "visual/component/Elements/Types";
+import type { ElementModel } from "visual/component/Elements/Types";
 import type { StylesProps as Props } from "visual/editorComponents/Form2/Form2Steps/types";
-import { WithRenderContext } from "visual/providers/RenderProvider";
+import type { WithRenderContext } from "visual/providers/RenderProvider";
 import { getColor } from "visual/utils/color";
 import {
-  FlexHorizontalAligns,
   cssStyleBgColor,
   cssStyleBorder,
   cssStyleBorderRadius,
@@ -20,6 +19,7 @@ import {
   cssStyleTypography2FontWeight,
   cssStyleTypography2LetterSpacing,
   cssStyleTypography2LineHeight,
+  FlexHorizontalAligns,
   readHorizontalAlign
 } from "visual/utils/cssStyle";
 import { isStory } from "visual/utils/models";
@@ -38,9 +38,9 @@ import {
   styleTypography2FontSize,
   styleTypography2LineHeight
 } from "visual/utils/style2";
-import { CSSValue } from "visual/utils/style2/types";
-import { IconSizeType, readIconSize } from "visual/utils/types/Type";
-import { MValue } from "visual/utils/value";
+import type { CSSValue } from "visual/utils/style2/types";
+import { type IconSizeType, readIconSize } from "visual/utils/types/Type";
+import type { MValue } from "visual/utils/value";
 
 const getIconSize = (
   iconSize: IconSizeType,

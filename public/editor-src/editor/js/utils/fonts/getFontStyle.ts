@@ -1,4 +1,4 @@
-import { Store } from "visual/redux/store";
+import type { Store } from "visual/redux/store";
 import { getFontStyles } from "./getFontStyles";
 
 interface Data {

@@ -11,7 +11,7 @@ import defaultValue from "./defaultValue.json";
 import { getEmbedAnchorProps } from "./getEmbedProps";
 import { rebuildPinterest } from "./scripts";
 import * as toolbarConfig from "./toolbar";
-import { Value } from "./types";
+import type { Value } from "./types";
 
 export default class Pinterest extends EditorComponent<Value> {
   static get componentId(): ElementTypes.Pinterest {

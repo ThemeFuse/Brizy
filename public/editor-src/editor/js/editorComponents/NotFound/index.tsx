@@ -1,5 +1,5 @@
 import React, { type ReactNode } from "react";
-import { ElementModel } from "visual/component/Elements/Types";
+import type { ElementModel } from "visual/component/Elements/Types";
 import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import type { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";

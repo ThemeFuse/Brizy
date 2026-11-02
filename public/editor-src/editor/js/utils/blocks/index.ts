@@ -5,6 +5,7 @@ export {
   getSurroundedConditions
 } from "./blocksConditions";
 export { blockThumbnailData } from "./blockThumbnailData";
+export { createGlobalBlockSymbol } from "./createGlobalBlockSymbol";
 export { generateBlocksList, getBlocksInPage } from "./generateBlocksList";
 export {
   canUseCondition,
@@ -14,4 +15,3 @@ export {
 } from "./getAllowedGBIds";
 export { isPopup } from "./isPopup";
 export { placeholderBlockThumbnailUrl } from "./placeholderBlockThumbnailUrl";
-export { createGlobalBlockSymbol } from "./createGlobalBlockSymbol";

@@ -1,4 +1,4 @@
-import * as Unit from "visual/utils/math/Unit";
+import type * as Unit from "visual/utils/math/Unit";
 
 export interface Scale {
   scaleX: Unit.Unit;

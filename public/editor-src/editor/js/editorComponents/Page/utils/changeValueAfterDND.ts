@@ -1,14 +1,17 @@
 import { isEqual } from "es-toolkit";
 import { getIn, setIn } from "timm";
-import {
+import type {
   ElementModel,
   ElementModelType
 } from "visual/component/Elements/Types";
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
-import { globalBlocksAssembledSelector } from "visual/redux/selectors";
-import { Store } from "visual/redux/store";
+import type { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import {
+  globalBlocksAssembledSelector,
+  menuDataSelector
+} from "visual/redux/selectors";
+import type { Store } from "visual/redux/store";
 import { setIds } from "visual/utils/models";
-import { MValue } from "visual/utils/value";
+import type { MValue } from "visual/utils/value";
 import { addIn } from "./helpers/addRemove";
 import {
   moveAddableToColumn,
@@ -29,7 +32,7 @@ import {
   gbTransform
 } from "./helpers/normalize";
 import { normalizeFromTo } from "./helpers/path";
-import { FromTo, isAddable, isColumn, isRow, isShortcode } from "./types";
+import { type FromTo, isAddable, isColumn, isRow, isShortcode } from "./types";
 
 function getValue(
   value: ElementModelType,
@@ -184,9 +187,8 @@ export default function changeValueAfterDND(
   store: Store,
   config: ConfigCommon
 ): ElementModelType {
-  const { menuData } = config;
-
   const { getState, dispatch } = store;
+  const menuData = menuDataSelector(getState());
   const globalBlocks = globalBlocksAssembledSelector(getState());
   const oldValueWithoutGB = attachMenu({
     menuData,

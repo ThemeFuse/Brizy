@@ -1,21 +1,24 @@
 import { Num } from "@brizy/readers";
 import { uniqueId } from "es-toolkit/compat";
-import React, { ReactNode, createRef } from "react";
+import React, { createRef, type ReactNode } from "react";
 import CustomCSS from "visual/component/CustomCSS";
 import Toolbar from "visual/component/Toolbar";
-import { valueToEciwdConfig } from "visual/editorComponents/Ecwid/EcwidProduct/utils";
+import {
+  getEcwidThumbClassName,
+  valueToEciwdConfig
+} from "visual/editorComponents/Ecwid/EcwidProduct/utils";
 import EditorComponent, {
-  Props
+  type Props
 } from "visual/editorComponents/EditorComponent";
 import { Wrapper } from "visual/editorComponents/tools/Wrapper";
 import { isEcwidShop } from "visual/global/Config/types/configs/Base";
-import { Cloud, isCloud } from "visual/global/Config/types/configs/Cloud";
+import { type Cloud, isCloud } from "visual/global/Config/types/configs/Cloud";
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
-import { EcwidProductId } from "visual/global/Ecwid/types";
+import type { EcwidProductId } from "visual/global/Ecwid/types";
 import { EcwidService } from "visual/libs/Ecwid";
-import { EcwidConfig, eq } from "visual/libs/Ecwid/types/EcwidConfig";
+import { type EcwidConfig, eq } from "visual/libs/Ecwid/types/EcwidConfig";
 import { pageSelector } from "visual/redux/selectors";
-import { EcwidProductPage } from "visual/types/Page";
+import type { EcwidProductPage } from "visual/types/Page";
 import { makePlaceholder } from "visual/utils/dynamicContent";
 import {
   getEcwidProductId,
@@ -26,8 +29,8 @@ import { makeAttr } from "visual/utils/i18n/attribute";
 import { attachRefs } from "visual/utils/react";
 import * as Str from "visual/utils/reader/string";
 import { encodeToString } from "visual/utils/string";
-import { Literal } from "visual/utils/types/Literal";
-import { MValue } from "visual/utils/value";
+import type { Literal } from "visual/utils/types/Literal";
+import type { MValue } from "visual/utils/value";
 import * as sidebarExtendParent from "../sidebar";
 import * as sidebarButton from "../sidebarButton";
 import * as sidebarDisable from "../sidebarDisable";
@@ -48,8 +51,8 @@ import * as sidebarOptionColor from "./sidebarOptionColor";
 import * as sidebarQty from "./sidebarQty";
 import * as sidebarSelect from "./sidebarSelect";
 import * as sidebarShareButtons from "./sidebarShareButtons";
-import * as sidebarTextField from "./sidebarTextField";
 import * as sidebarTextarea from "./sidebarTextarea";
+import * as sidebarTextField from "./sidebarTextField";
 import * as sidebarThumbs from "./sidebarThumbs";
 import * as sidebarViewFavorites from "./sidebarViewFavorites";
 import { style } from "./styles";
@@ -88,8 +91,8 @@ import * as toolbarShowMore from "./toolbarShowMore";
 import * as toolbarSize from "./toolbarSize";
 import * as toolbarSubtitles from "./toolbarSubtitles";
 import * as toolbarTaxes from "./toolbarTaxes";
-import * as toolbarTextField from "./toolbarTextField";
 import * as toolbarTextarea from "./toolbarTextarea";
+import * as toolbarTextField from "./toolbarTextField";
 import * as toolbarThumbnail from "./toolbarThumbnail";
 import * as toolbarTitle from "./toolbarTitle";
 import * as toolbarTitle2 from "./toolbarTitle2";
@@ -99,7 +102,7 @@ import * as toolbarWholesalePrice from "./toolbarWholesalePrice";
 import * as toolbarWholesaleTableBody from "./toolbarWholesaleTableBody";
 import * as toolbarWholesaleTableHeader from "./toolbarWholesaleTableHeader";
 import * as toolbarWholesaleTitle from "./toolbarWholesaleTitle";
-import { Value } from "./types/Value";
+import type { Value } from "./types/Value";
 
 export class EcwidProduct extends EditorComponent<Value> {
   static defaultValue = defaultValue;
@@ -297,7 +300,10 @@ export class EcwidProduct extends EditorComponent<Value> {
   };
 
   getWrapperClassName() {
-    const { goToCheckoutDisplay, buyDisplay, addMoreDisplay } = this.getValue();
+    const { goToCheckoutDisplay, buyDisplay, addMoreDisplay, thumbStyle } =
+      this.getValue();
+
+    const thumbClassName = getEcwidThumbClassName(thumbStyle);
 
     return this.getCSSClassnames({
       toolbars: [toolbarOptionColor, toolbarQtyMinMax],
@@ -306,6 +312,7 @@ export class EcwidProduct extends EditorComponent<Value> {
       extraClassNames: [
         "brz-ecwid-wrapper",
         "brz-ecwid-product-wrapper",
+        thumbClassName,
         {
           "brz-ecwid-product-wrapper--hide-go-to-checkout":
             goToCheckoutDisplay === "off",
@@ -431,8 +438,10 @@ export class EcwidProduct extends EditorComponent<Value> {
                                                               selectorSearchStrategy="dom-tree"
                                                             >
                                                               {({
-                                                                open: openTextField,
-                                                                ref: textFieldRef
+                                                                open:
+                                                                  openTextField,
+                                                                ref:
+                                                                  textFieldRef
                                                               }) => {
                                                                 return (
                                                                   <Toolbar
@@ -447,8 +456,10 @@ export class EcwidProduct extends EditorComponent<Value> {
                                                                     selectorSearchStrategy="dom-tree"
                                                                   >
                                                                     {({
-                                                                      open: openTextarea,
-                                                                      ref: textareaRef
+                                                                      open:
+                                                                        openTextarea,
+                                                                      ref:
+                                                                        textareaRef
                                                                     }) => {
                                                                       return (
                                                                         <Toolbar
@@ -463,8 +474,10 @@ export class EcwidProduct extends EditorComponent<Value> {
                                                                           selectorSearchStrategy="dom-tree"
                                                                         >
                                                                           {({
-                                                                            open: openSelect,
-                                                                            ref: selectRef
+                                                                            open:
+                                                                              openSelect,
+                                                                            ref:
+                                                                              selectRef
                                                                           }) => {
                                                                             return (
                                                                               <Toolbar
@@ -479,8 +492,10 @@ export class EcwidProduct extends EditorComponent<Value> {
                                                                                 selectorSearchStrategy="dom-tree"
                                                                               >
                                                                                 {({
-                                                                                  open: openDatepicker,
-                                                                                  ref: datePickerRef
+                                                                                  open:
+                                                                                    openDatepicker,
+                                                                                  ref:
+                                                                                    datePickerRef
                                                                                 }) => {
                                                                                   return (
                                                                                     <Toolbar
@@ -495,8 +510,10 @@ export class EcwidProduct extends EditorComponent<Value> {
                                                                                       selectorSearchStrategy="dom-tree"
                                                                                     >
                                                                                       {({
-                                                                                        open: openFiles,
-                                                                                        ref: filesRef
+                                                                                        open:
+                                                                                          openFiles,
+                                                                                        ref:
+                                                                                          filesRef
                                                                                       }) => {
                                                                                         return (
                                                                                           <Toolbar
@@ -508,8 +525,10 @@ export class EcwidProduct extends EditorComponent<Value> {
                                                                                             selectorSearchStrategy="dom-tree"
                                                                                           >
                                                                                             {({
-                                                                                              open: openInStock,
-                                                                                              ref: inStockRef
+                                                                                              open:
+                                                                                                openInStock,
+                                                                                              ref:
+                                                                                                inStockRef
                                                                                             }) => {
                                                                                               return (
                                                                                                 <Toolbar
@@ -521,8 +540,10 @@ export class EcwidProduct extends EditorComponent<Value> {
                                                                                                   selectorSearchStrategy="dom-tree"
                                                                                                 >
                                                                                                   {({
-                                                                                                    open: openWholesaleTitle,
-                                                                                                    ref: wholesaleTitleRef
+                                                                                                    open:
+                                                                                                      openWholesaleTitle,
+                                                                                                    ref:
+                                                                                                      wholesaleTitleRef
                                                                                                   }) => {
                                                                                                     return (
                                                                                                       <Toolbar
@@ -534,8 +555,10 @@ export class EcwidProduct extends EditorComponent<Value> {
                                                                                                         selectorSearchStrategy="dom-tree"
                                                                                                       >
                                                                                                         {({
-                                                                                                          open: openWholesaleTableHeader,
-                                                                                                          ref: wholesaleTableHeaderRef
+                                                                                                          open:
+                                                                                                            openWholesaleTableHeader,
+                                                                                                          ref:
+                                                                                                            wholesaleTableHeaderRef
                                                                                                         }) => {
                                                                                                           return (
                                                                                                             <Toolbar
@@ -547,8 +570,10 @@ export class EcwidProduct extends EditorComponent<Value> {
                                                                                                               selectorSearchStrategy="dom-tree"
                                                                                                             >
                                                                                                               {({
-                                                                                                                open: openWholesaleTableBody,
-                                                                                                                ref: wholesaleTableBodyRef
+                                                                                                                open:
+                                                                                                                  openWholesaleTableBody,
+                                                                                                                ref:
+                                                                                                                  wholesaleTableBodyRef
                                                                                                               }) => {
                                                                                                                 return (
                                                                                                                   <Toolbar
@@ -560,8 +585,10 @@ export class EcwidProduct extends EditorComponent<Value> {
                                                                                                                     selectorSearchStrategy="dom-tree"
                                                                                                                   >
                                                                                                                     {({
-                                                                                                                      open: openDetails,
-                                                                                                                      ref: detailsRef
+                                                                                                                      open:
+                                                                                                                        openDetails,
+                                                                                                                      ref:
+                                                                                                                        detailsRef
                                                                                                                     }) => {
                                                                                                                       return (
                                                                                                                         <Toolbar
@@ -573,8 +600,10 @@ export class EcwidProduct extends EditorComponent<Value> {
                                                                                                                           selectorSearchStrategy="dom-tree"
                                                                                                                         >
                                                                                                                           {({
-                                                                                                                            open: openAttribute,
-                                                                                                                            ref: attributeRef
+                                                                                                                            open:
+                                                                                                                              openAttribute,
+                                                                                                                            ref:
+                                                                                                                              attributeRef
                                                                                                                           }) => {
                                                                                                                             return (
                                                                                                                               <Toolbar
@@ -586,8 +615,10 @@ export class EcwidProduct extends EditorComponent<Value> {
                                                                                                                                 selectorSearchStrategy="dom-tree"
                                                                                                                               >
                                                                                                                                 {({
-                                                                                                                                  open: openDescription,
-                                                                                                                                  ref: descriptionRef
+                                                                                                                                  open:
+                                                                                                                                    openDescription,
+                                                                                                                                  ref:
+                                                                                                                                    descriptionRef
                                                                                                                                 }) => {
                                                                                                                                   return (
                                                                                                                                     <Toolbar
@@ -599,8 +630,10 @@ export class EcwidProduct extends EditorComponent<Value> {
                                                                                                                                       selectorSearchStrategy="dom-tree"
                                                                                                                                     >
                                                                                                                                       {({
-                                                                                                                                        open: openShowMore,
-                                                                                                                                        ref: showMoreRef
+                                                                                                                                        open:
+                                                                                                                                          openShowMore,
+                                                                                                                                        ref:
+                                                                                                                                          showMoreRef
                                                                                                                                       }) => {
                                                                                                                                         return (
                                                                                                                                           <Toolbar
@@ -615,8 +648,10 @@ export class EcwidProduct extends EditorComponent<Value> {
                                                                                                                                             selectorSearchStrategy="dom-tree"
                                                                                                                                           >
                                                                                                                                             {({
-                                                                                                                                              open: openButton,
-                                                                                                                                              ref: buttonRef
+                                                                                                                                              open:
+                                                                                                                                                openButton,
+                                                                                                                                              ref:
+                                                                                                                                                buttonRef
                                                                                                                                             }) => {
                                                                                                                                               return (
                                                                                                                                                 <Toolbar
@@ -631,8 +666,10 @@ export class EcwidProduct extends EditorComponent<Value> {
                                                                                                                                                   selectorSearchStrategy="dom-tree"
                                                                                                                                                 >
                                                                                                                                                   {({
-                                                                                                                                                    open: openCheckout,
-                                                                                                                                                    ref: checkoutRef
+                                                                                                                                                    open:
+                                                                                                                                                      openCheckout,
+                                                                                                                                                    ref:
+                                                                                                                                                      checkoutRef
                                                                                                                                                   }) => {
                                                                                                                                                     return (
                                                                                                                                                       <Toolbar
@@ -647,8 +684,10 @@ export class EcwidProduct extends EditorComponent<Value> {
                                                                                                                                                         selectorSearchStrategy="dom-tree"
                                                                                                                                                       >
                                                                                                                                                         {({
-                                                                                                                                                          open: openAddToBag,
-                                                                                                                                                          ref: addToBagRef
+                                                                                                                                                          open:
+                                                                                                                                                            openAddToBag,
+                                                                                                                                                          ref:
+                                                                                                                                                            addToBagRef
                                                                                                                                                         }) => {
                                                                                                                                                           return (
                                                                                                                                                             <Toolbar
@@ -663,8 +702,10 @@ export class EcwidProduct extends EditorComponent<Value> {
                                                                                                                                                               selectorSearchStrategy="dom-tree"
                                                                                                                                                             >
                                                                                                                                                               {({
-                                                                                                                                                                open: openCheckbox,
-                                                                                                                                                                ref: checkboxRef
+                                                                                                                                                                open:
+                                                                                                                                                                  openCheckbox,
+                                                                                                                                                                ref:
+                                                                                                                                                                  checkboxRef
                                                                                                                                                               }) => {
                                                                                                                                                                 return (
                                                                                                                                                                   <Toolbar
@@ -679,8 +720,10 @@ export class EcwidProduct extends EditorComponent<Value> {
                                                                                                                                                                     selectorSearchStrategy="dom-tree"
                                                                                                                                                                   >
                                                                                                                                                                     {({
-                                                                                                                                                                      open: openFavorite,
-                                                                                                                                                                      ref: favoriteRef
+                                                                                                                                                                      open:
+                                                                                                                                                                        openFavorite,
+                                                                                                                                                                      ref:
+                                                                                                                                                                        favoriteRef
                                                                                                                                                                     }) => {
                                                                                                                                                                       return (
                                                                                                                                                                         <Toolbar
@@ -695,8 +738,10 @@ export class EcwidProduct extends EditorComponent<Value> {
                                                                                                                                                                           selectorSearchStrategy="dom-tree"
                                                                                                                                                                         >
                                                                                                                                                                           {({
-                                                                                                                                                                            open: openFavorited,
-                                                                                                                                                                            ref: favoritedRef
+                                                                                                                                                                            open:
+                                                                                                                                                                              openFavorited,
+                                                                                                                                                                            ref:
+                                                                                                                                                                              favoritedRef
                                                                                                                                                                           }) => {
                                                                                                                                                                             return (
                                                                                                                                                                               <Toolbar
@@ -711,8 +756,10 @@ export class EcwidProduct extends EditorComponent<Value> {
                                                                                                                                                                                 selectorSearchStrategy="dom-tree"
                                                                                                                                                                               >
                                                                                                                                                                                 {({
-                                                                                                                                                                                  open: openViewFavorites,
-                                                                                                                                                                                  ref: viewFavoritesRef
+                                                                                                                                                                                  open:
+                                                                                                                                                                                    openViewFavorites,
+                                                                                                                                                                                  ref:
+                                                                                                                                                                                    viewFavoritesRef
                                                                                                                                                                                 }) => {
                                                                                                                                                                                   return (
                                                                                                                                                                                     <Toolbar
@@ -724,8 +771,10 @@ export class EcwidProduct extends EditorComponent<Value> {
                                                                                                                                                                                       selectorSearchStrategy="dom-tree"
                                                                                                                                                                                     >
                                                                                                                                                                                       {({
-                                                                                                                                                                                        open: openShareTitle,
-                                                                                                                                                                                        ref: shareTitleRef
+                                                                                                                                                                                        open:
+                                                                                                                                                                                          openShareTitle,
+                                                                                                                                                                                        ref:
+                                                                                                                                                                                          shareTitleRef
                                                                                                                                                                                       }) => {
                                                                                                                                                                                         return (
                                                                                                                                                                                           <Toolbar
@@ -740,8 +789,10 @@ export class EcwidProduct extends EditorComponent<Value> {
                                                                                                                                                                                             selectorSearchStrategy="dom-tree"
                                                                                                                                                                                           >
                                                                                                                                                                                             {({
-                                                                                                                                                                                              open: openShareButtons,
-                                                                                                                                                                                              ref: shareButtonsRef
+                                                                                                                                                                                              open:
+                                                                                                                                                                                                openShareButtons,
+                                                                                                                                                                                              ref:
+                                                                                                                                                                                                shareButtonsRef
                                                                                                                                                                                             }) => {
                                                                                                                                                                                               return (
                                                                                                                                                                                                 <Toolbar
@@ -756,8 +807,10 @@ export class EcwidProduct extends EditorComponent<Value> {
                                                                                                                                                                                                   selectorSearchStrategy="dom-tree"
                                                                                                                                                                                                 >
                                                                                                                                                                                                   {({
-                                                                                                                                                                                                    open: openThumbs,
-                                                                                                                                                                                                    ref: thumbsRef
+                                                                                                                                                                                                    open:
+                                                                                                                                                                                                      openThumbs,
+                                                                                                                                                                                                    ref:
+                                                                                                                                                                                                      thumbsRef
                                                                                                                                                                                                   }) => {
                                                                                                                                                                                                     return (
                                                                                                                                                                                                       <Toolbar
@@ -772,8 +825,10 @@ export class EcwidProduct extends EditorComponent<Value> {
                                                                                                                                                                                                         selectorSearchStrategy="dom-tree"
                                                                                                                                                                                                       >
                                                                                                                                                                                                         {({
-                                                                                                                                                                                                          open: openGallery,
-                                                                                                                                                                                                          ref: galleryRef
+                                                                                                                                                                                                          open:
+                                                                                                                                                                                                            openGallery,
+                                                                                                                                                                                                          ref:
+                                                                                                                                                                                                            galleryRef
                                                                                                                                                                                                         }) => {
                                                                                                                                                                                                           return (
                                                                                                                                                                                                             <Toolbar
@@ -785,8 +840,10 @@ export class EcwidProduct extends EditorComponent<Value> {
                                                                                                                                                                                                               selectorSearchStrategy="dom-tree"
                                                                                                                                                                                                             >
                                                                                                                                                                                                               {({
-                                                                                                                                                                                                                open: openWholesalePrice,
-                                                                                                                                                                                                                ref: wholesalePriceRef
+                                                                                                                                                                                                                open:
+                                                                                                                                                                                                                  openWholesalePrice,
+                                                                                                                                                                                                                ref:
+                                                                                                                                                                                                                  wholesalePriceRef
                                                                                                                                                                                                               }) => {
                                                                                                                                                                                                                 return (
                                                                                                                                                                                                                   <Toolbar
@@ -798,8 +855,10 @@ export class EcwidProduct extends EditorComponent<Value> {
                                                                                                                                                                                                                     selectorSearchStrategy="dom-tree"
                                                                                                                                                                                                                   >
                                                                                                                                                                                                                     {({
-                                                                                                                                                                                                                      open: openWholesaleNote,
-                                                                                                                                                                                                                      ref: wholesaleNoteRef
+                                                                                                                                                                                                                      open:
+                                                                                                                                                                                                                        openWholesaleNote,
+                                                                                                                                                                                                                      ref:
+                                                                                                                                                                                                                        wholesaleNoteRef
                                                                                                                                                                                                                     }) => {
                                                                                                                                                                                                                       return (
                                                                                                                                                                                                                         <Toolbar
@@ -811,8 +870,10 @@ export class EcwidProduct extends EditorComponent<Value> {
                                                                                                                                                                                                                           selectorSearchStrategy="dom-tree"
                                                                                                                                                                                                                         >
                                                                                                                                                                                                                           {({
-                                                                                                                                                                                                                            open: openFlagLabel,
-                                                                                                                                                                                                                            ref: flagLabelRef
+                                                                                                                                                                                                                            open:
+                                                                                                                                                                                                                              openFlagLabel,
+                                                                                                                                                                                                                            ref:
+                                                                                                                                                                                                                              flagLabelRef
                                                                                                                                                                                                                           }) => {
                                                                                                                                                                                                                             return (
                                                                                                                                                                                                                               <Toolbar
@@ -824,8 +885,10 @@ export class EcwidProduct extends EditorComponent<Value> {
                                                                                                                                                                                                                                 selectorSearchStrategy="dom-tree"
                                                                                                                                                                                                                               >
                                                                                                                                                                                                                                 {({
-                                                                                                                                                                                                                                  open: openSubtitles,
-                                                                                                                                                                                                                                  ref: subtitlesRef
+                                                                                                                                                                                                                                  open:
+                                                                                                                                                                                                                                    openSubtitles,
+                                                                                                                                                                                                                                  ref:
+                                                                                                                                                                                                                                    subtitlesRef
                                                                                                                                                                                                                                 }) => {
                                                                                                                                                                                                                                   return (
                                                                                                                                                                                                                                     <Toolbar
@@ -837,8 +900,10 @@ export class EcwidProduct extends EditorComponent<Value> {
                                                                                                                                                                                                                                       selectorSearchStrategy="dom-tree"
                                                                                                                                                                                                                                     >
                                                                                                                                                                                                                                       {({
-                                                                                                                                                                                                                                        open: openTitle2,
-                                                                                                                                                                                                                                        ref: title2Ref
+                                                                                                                                                                                                                                        open:
+                                                                                                                                                                                                                                          openTitle2,
+                                                                                                                                                                                                                                        ref:
+                                                                                                                                                                                                                                          title2Ref
                                                                                                                                                                                                                                       }) => {
                                                                                                                                                                                                                                         return (
                                                                                                                                                                                                                                           <Toolbar
@@ -853,8 +918,10 @@ export class EcwidProduct extends EditorComponent<Value> {
                                                                                                                                                                                                                                             selectorSearchStrategy="dom-tree"
                                                                                                                                                                                                                                           >
                                                                                                                                                                                                                                             {({
-                                                                                                                                                                                                                                              open: openGrid,
-                                                                                                                                                                                                                                              ref: gridRef
+                                                                                                                                                                                                                                              open:
+                                                                                                                                                                                                                                                openGrid,
+                                                                                                                                                                                                                                              ref:
+                                                                                                                                                                                                                                                gridRef
                                                                                                                                                                                                                                             }) => {
                                                                                                                                                                                                                                               return (
                                                                                                                                                                                                                                                 <Toolbar
@@ -866,8 +933,10 @@ export class EcwidProduct extends EditorComponent<Value> {
                                                                                                                                                                                                                                                   selectorSearchStrategy="dom-tree"
                                                                                                                                                                                                                                                 >
                                                                                                                                                                                                                                                   {({
-                                                                                                                                                                                                                                                    open: openRelatedTitle,
-                                                                                                                                                                                                                                                    ref: relatedTitleRef
+                                                                                                                                                                                                                                                    open:
+                                                                                                                                                                                                                                                      openRelatedTitle,
+                                                                                                                                                                                                                                                    ref:
+                                                                                                                                                                                                                                                      relatedTitleRef
                                                                                                                                                                                                                                                   }) => {
                                                                                                                                                                                                                                                     return (
                                                                                                                                                                                                                                                       <Toolbar
@@ -879,8 +948,10 @@ export class EcwidProduct extends EditorComponent<Value> {
                                                                                                                                                                                                                                                         selectorSearchStrategy="dom-tree"
                                                                                                                                                                                                                                                       >
                                                                                                                                                                                                                                                         {({
-                                                                                                                                                                                                                                                          open: openGridTitle,
-                                                                                                                                                                                                                                                          ref: gridTitleRef
+                                                                                                                                                                                                                                                          open:
+                                                                                                                                                                                                                                                            openGridTitle,
+                                                                                                                                                                                                                                                          ref:
+                                                                                                                                                                                                                                                            gridTitleRef
                                                                                                                                                                                                                                                         }) => {
                                                                                                                                                                                                                                                           return (
                                                                                                                                                                                                                                                             <Toolbar
@@ -892,8 +963,10 @@ export class EcwidProduct extends EditorComponent<Value> {
                                                                                                                                                                                                                                                               selectorSearchStrategy="dom-tree"
                                                                                                                                                                                                                                                             >
                                                                                                                                                                                                                                                               {({
-                                                                                                                                                                                                                                                                open: openGridSubtitle,
-                                                                                                                                                                                                                                                                ref: gridSubtitleRef
+                                                                                                                                                                                                                                                                open:
+                                                                                                                                                                                                                                                                  openGridSubtitle,
+                                                                                                                                                                                                                                                                ref:
+                                                                                                                                                                                                                                                                  gridSubtitleRef
                                                                                                                                                                                                                                                               }) => {
                                                                                                                                                                                                                                                                 return (
                                                                                                                                                                                                                                                                   <Toolbar
@@ -905,8 +978,10 @@ export class EcwidProduct extends EditorComponent<Value> {
                                                                                                                                                                                                                                                                     selectorSearchStrategy="dom-tree"
                                                                                                                                                                                                                                                                   >
                                                                                                                                                                                                                                                                     {({
-                                                                                                                                                                                                                                                                      open: openGridSKUInner,
-                                                                                                                                                                                                                                                                      ref: gridSKUInnerRef
+                                                                                                                                                                                                                                                                      open:
+                                                                                                                                                                                                                                                                        openGridSKUInner,
+                                                                                                                                                                                                                                                                      ref:
+                                                                                                                                                                                                                                                                        gridSKUInnerRef
                                                                                                                                                                                                                                                                     }) => {
                                                                                                                                                                                                                                                                       return (
                                                                                                                                                                                                                                                                         <Toolbar
@@ -918,8 +993,10 @@ export class EcwidProduct extends EditorComponent<Value> {
                                                                                                                                                                                                                                                                           selectorSearchStrategy="dom-tree"
                                                                                                                                                                                                                                                                         >
                                                                                                                                                                                                                                                                           {({
-                                                                                                                                                                                                                                                                            open: openGridPrice,
-                                                                                                                                                                                                                                                                            ref: gridPriceRef
+                                                                                                                                                                                                                                                                            open:
+                                                                                                                                                                                                                                                                              openGridPrice,
+                                                                                                                                                                                                                                                                            ref:
+                                                                                                                                                                                                                                                                              gridPriceRef
                                                                                                                                                                                                                                                                           }) => {
                                                                                                                                                                                                                                                                             return (
                                                                                                                                                                                                                                                                               <Toolbar
@@ -934,8 +1011,10 @@ export class EcwidProduct extends EditorComponent<Value> {
                                                                                                                                                                                                                                                                                 selectorSearchStrategy="dom-tree"
                                                                                                                                                                                                                                                                               >
                                                                                                                                                                                                                                                                                 {({
-                                                                                                                                                                                                                                                                                  open: openGridBuyNow,
-                                                                                                                                                                                                                                                                                  ref: gridBuyNowRef
+                                                                                                                                                                                                                                                                                  open:
+                                                                                                                                                                                                                                                                                    openGridBuyNow,
+                                                                                                                                                                                                                                                                                  ref:
+                                                                                                                                                                                                                                                                                    gridBuyNowRef
                                                                                                                                                                                                                                                                                 }) => {
                                                                                                                                                                                                                                                                                   return (
                                                                                                                                                                                                                                                                                     <Toolbar
@@ -947,8 +1026,10 @@ export class EcwidProduct extends EditorComponent<Value> {
                                                                                                                                                                                                                                                                                       selectorSearchStrategy="dom-tree"
                                                                                                                                                                                                                                                                                     >
                                                                                                                                                                                                                                                                                       {({
-                                                                                                                                                                                                                                                                                        open: openFooter,
-                                                                                                                                                                                                                                                                                        ref: footerRef
+                                                                                                                                                                                                                                                                                        open:
+                                                                                                                                                                                                                                                                                          openFooter,
+                                                                                                                                                                                                                                                                                        ref:
+                                                                                                                                                                                                                                                                                          footerRef
                                                                                                                                                                                                                                                                                       }) => {
                                                                                                                                                                                                                                                                                         return (
                                                                                                                                                                                                                                                                                           <Toolbar
@@ -963,8 +1044,10 @@ export class EcwidProduct extends EditorComponent<Value> {
                                                                                                                                                                                                                                                                                             selectorSearchStrategy="dom-tree"
                                                                                                                                                                                                                                                                                           >
                                                                                                                                                                                                                                                                                             {({
-                                                                                                                                                                                                                                                                                              open: openOptionColor,
-                                                                                                                                                                                                                                                                                              ref: optionColorRef
+                                                                                                                                                                                                                                                                                              open:
+                                                                                                                                                                                                                                                                                                openOptionColor,
+                                                                                                                                                                                                                                                                                              ref:
+                                                                                                                                                                                                                                                                                                optionColorRef
                                                                                                                                                                                                                                                                                             }) => {
                                                                                                                                                                                                                                                                                               return (
                                                                                                                                                                                                                                                                                                 <CustomCSS
@@ -974,7 +1057,8 @@ export class EcwidProduct extends EditorComponent<Value> {
                                                                                                                                                                                                                                                                                                   }
                                                                                                                                                                                                                                                                                                 >
                                                                                                                                                                                                                                                                                                   {({
-                                                                                                                                                                                                                                                                                                    ref: cssRef
+                                                                                                                                                                                                                                                                                                    ref:
+                                                                                                                                                                                                                                                                                                      cssRef
                                                                                                                                                                                                                                                                                                   }) => (
                                                                                                                                                                                                                                                                                                     <Wrapper
                                                                                                                                                                                                                                                                                                       {...this.makeWrapperProps(

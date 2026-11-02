@@ -1,7 +1,7 @@
 import type { ComponentProps } from "react";
 import UIState from "visual/global/UIState";
-import type { PromptKey, PromptTypes, PromptsMode } from ".";
-import { PromptsOpenProps } from "./types";
+import type { PromptKey, PromptsMode, PromptTypes } from ".";
+import type { PromptsOpenProps } from "./types";
 
 export const Prompt = {
   open<K extends PromptKey>(data: {

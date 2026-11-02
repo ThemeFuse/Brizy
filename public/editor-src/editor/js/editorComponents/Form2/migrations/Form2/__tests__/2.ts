@@ -1,6 +1,6 @@
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
-import { buttonsValueToMigrate, m2 } from "../2";
 import type { Value } from "../../../types";
+import { buttonsValueToMigrate, m2 } from "../2";
 
 describe("Testing form m2 migration", () => {
   test.each<[Partial<Value>, Partial<Value>]>([

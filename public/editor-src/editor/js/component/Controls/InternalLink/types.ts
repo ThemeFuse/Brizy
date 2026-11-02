@@ -1,8 +1,8 @@
-import { ChoiceWithPermalink } from "visual/component/Options/types/dev/InternalLink/types";
-import { MValue } from "visual/utils/value";
-import { ReactNode } from "react";
-import { OnChange, SimpleValue } from "visual/component/Options/Type";
-import { Literal } from "visual/utils/types/Literal";
+import type { ReactNode } from "react";
+import type { OnChange, SimpleValue } from "visual/component/Options/Type";
+import type { ChoiceWithPermalink } from "visual/component/Options/types/dev/InternalLink/types";
+import type { Literal } from "visual/utils/types/Literal";
+import type { MValue } from "visual/utils/value";
 
 export enum Status {
   INITIAL = "initial",

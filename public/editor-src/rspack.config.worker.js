@@ -1,4 +1,4 @@
-const path = require("path");
+const path = require("node:path");
 const rspackEditorConfigFn = require("./rspack.config.editor");
 
 exports.screenshots = (options) => {

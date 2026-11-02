@@ -1,12 +1,12 @@
-import React, { ReactElement } from "react";
+import React, { type ReactElement } from "react";
 import { Select2 } from "visual/component/Controls/Select2";
 import { Item } from "visual/component/Controls/Select2/Item";
 import { OptionLabel } from "visual/component/OptionLabel";
+import type { OnChange } from "visual/component/Options/Type";
 import { OptionWrapper } from "visual/component/OptionWrapper";
-import { OnChange } from "visual/component/Options/Type";
 import { t } from "visual/utils/i18n";
 import {
-  Style,
+  type Style,
   styleTitle
 } from "visual/utils/options/Animation/types/effects/Attention";
 

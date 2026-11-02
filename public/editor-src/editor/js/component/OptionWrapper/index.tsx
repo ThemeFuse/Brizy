@@ -1,7 +1,7 @@
 import classNames from "classnames";
 import React from "react";
 import { t } from "visual/utils/i18n";
-import { FCC } from "visual/utils/react/types";
+import type { FCC } from "visual/utils/react/types";
 import Tooltip from "../Controls/Tooltip";
 import EditorIcon from "../EditorIcon";
 import { ProInfo } from "../ProInfo";

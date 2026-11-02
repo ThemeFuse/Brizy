@@ -1,5 +1,5 @@
 import type { ElementModelType2 } from "visual/component/Elements/Types";
-import { FromTo } from "visual/editorComponents/Page/utils/types";
+import type { FromTo } from "visual/editorComponents/Page/utils/types";
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import type { Block } from "visual/types/Block";
 import {
@@ -76,7 +76,6 @@ export function buildAddableFromTo(
           itemPath
         }
       };
-    case "column":
     default:
       return {
         from,
@@ -223,7 +222,7 @@ function fromShortcode(
 
   const from = {
     itemType: "shortcode" as const,
-    itemIndex: parseInt(fromItemIndex),
+    itemIndex: parseInt(fromItemIndex, 10),
     itemPath: [fromContainerId, "items", fromItemIndex],
     containerPath: [fromContainerId, "items"],
     containerType: fromContainerType

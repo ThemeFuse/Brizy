@@ -1,316 +1,40 @@
-import {
-  addAccordionConfig,
-  updateAccordionConfig
-} from "visual/editorComponents/Accordion/definitions";
-import {
-  addAlertConfig,
-  updateAlertConfig
-} from "visual/editorComponents/Alert/definitions";
-import {
-  addAnimatedHeadlineConfig,
-  updateAnimatedHeadlineConfig
-} from "visual/editorComponents/AnimatedHeadline/definitions";
-import {
-  addAudioConfig,
-  updateAudioConfig
-} from "visual/editorComponents/Audio/definitions";
-import {
-  addBreadcrumbsConfig,
-  updateBreadcrumbsConfig
-} from "visual/editorComponents/Breadcrumbs/definitions";
-import {
-  addButtonConfig,
-  updateButtonConfig
-} from "visual/editorComponents/Button/definitions";
-import {
-  addCalendlyConfig,
-  updateCalendlyConfig
-} from "visual/editorComponents/Calendly/definitions";
-import {
-  addCarouselConfig,
-  updateCarouselConfig
-} from "visual/editorComponents/Carousel/definitions";
-import {
-  addChartConfig,
-  updateChartConfig
-} from "visual/editorComponents/Chart/definitions";
-import { updateCloneableConfig } from "visual/editorComponents/Cloneable/definitions";
-import {
-  addColumnConfig,
-  updateColumnConfig
-} from "visual/editorComponents/Column/definitions";
-import {
-  addCountdownConfig,
-  updateCountdownConfig
-} from "visual/editorComponents/Countdown2/definitions";
-import {
-  addCounterConfig,
-  updateCounterConfig
-} from "visual/editorComponents/Counter/definitions";
-import {
-  addEmbedCodeConfig,
-  updateEmbedCodeConfig
-} from "visual/editorComponents/EmbedCode/definitions";
-import {
-  addFlipboxConfig,
-  updateFlipboxConfig
-} from "visual/editorComponents/Flipbox/definitions";
-import {
-  addFormConfig,
-  addFormFieldConfig,
-  updateFormConfig,
-  updateFormFieldConfig
-} from "visual/editorComponents/Form2/definitions";
-import {
-  addIconConfig,
-  updateIconConfig
-} from "visual/editorComponents/Icon/definitions";
-import {
-  addIconTextConfig,
-  updateIconTextConfig
-} from "visual/editorComponents/IconText/definitions";
-import {
-  addImageConfig,
-  updateImageConfig
-} from "visual/editorComponents/Image/definitions";
-import {
-  addImageComparisonConfig,
-  updateImageComparisonConfig
-} from "visual/editorComponents/ImageComparison/definitions";
-import {
-  addImageGalleryConfig,
-  updateImageGalleryConfig
-} from "visual/editorComponents/ImageGallery/definitions";
-import {
-  addLineConfig,
-  updateLineConfig
-} from "visual/editorComponents/Line/definitions";
-import {
-  addLoginConfig,
-  updateLoginConfig,
-  updateLoginFieldConfig
-} from "visual/editorComponents/Login/definitions";
-import {
-  addLottieConfig,
-  updateLottieConfig
-} from "visual/editorComponents/Lottie/definitions";
-import {
-  addMapConfig,
-  updateMapConfig
-} from "visual/editorComponents/Map/definitions";
-import {
-  addMenuConfig,
-  updateMenuConfig
-} from "visual/editorComponents/Menu/definitions";
-import {
-  addPaypalConfig,
-  updatePaypalConfig
-} from "visual/editorComponents/Paypal/definitions";
-import {
-  addProgressBarConfig,
-  updateProgressBarConfig
-} from "visual/editorComponents/ProgressBar/definitions";
-import { updateProtectedFormConfig } from "visual/editorComponents/ProtectedPage/definitions";
-import {
-  addTextConfig,
-  updateTextConfig
-} from "visual/editorComponents/RichText/definitions";
-import {
-  addRowConfig,
-  updateRowConfig
-} from "visual/editorComponents/Row/definitions";
-import { updateSectionItemConfig } from "visual/editorComponents/Section/SectionItem/definitions";
-import { updateSectionFooterConfig } from "visual/editorComponents/SectionFooter/definitions";
-import {
-  updateSectionHeaderItemConfig,
-  updateSectionHeaderStickyItemConfig
-} from "visual/editorComponents/SectionHeader/sectionHeaderItemDefinitions";
-import {
-  addShapeConfig,
-  updateShapeConfig
-} from "visual/editorComponents/Shape/definitions";
-import { addShareButtonConfig } from "visual/editorComponents/ShareButton/definitions";
-import {
-  addSoundCloudConfig,
-  updateSoundCloudConfig
-} from "visual/editorComponents/SoundCloud/definitions";
-import {
-  addSpacerConfig,
-  updateSpacerConfig
-} from "visual/editorComponents/Spacer/definitions";
-import {
-  addStarRatingConfig,
-  updateStarRatingConfig
-} from "visual/editorComponents/StarRating/definitions";
-import {
-  addSwitcherConfig,
-  updateSwitcherConfig
-} from "visual/editorComponents/Switcher/definitions";
-import {
-  addTableConfig,
-  updateTableAsideConfig,
-  updateTableBodyConfig,
-  updateTableConfig,
-  updateTableHeadConfig
-} from "visual/editorComponents/Table/definitions";
-import {
-  addTableOfContentsConfig,
-  updateTableOfContentsConfig
-} from "visual/editorComponents/TableOfContents/definitions";
-import {
-  addTabsConfig,
-  updateTabsConfig
-} from "visual/editorComponents/Tabs/definitions";
-import {
-  addTimelineConfig,
-  addTimelineItemConfig,
-  updateTimelineConfig,
-  updateTimelineItemConfig
-} from "visual/editorComponents/Timeline/definitions";
-import {
-  addVideoConfig,
-  updateVideoConfig
-} from "visual/editorComponents/Video/definitions";
-import {
-  addVideoPlaylistConfig,
-  updateVideoPlaylistConfig
-} from "visual/editorComponents/VideoPlaylist/definitions";
-import { updateWrapperConfig } from "visual/editorComponents/Wrapper/definitions";
+import { getEditorToolCatalog } from "@brizy/ai-tools";
 import type { ISharedStore } from "visual/plugins/SharedStore";
 import type { Translation } from "visual/utils/i18n/t";
 import type { IPageRepository } from "../application/interfaces/i-page-repository";
 import type { IProjectRepository } from "../application/interfaces/i-project-repository";
 import type { ToolDefinition, ToolHandler } from "../entities/models";
 import { buildHandler } from "./handler-factory";
-import { getInfrastructureDefinitions } from "./infrastructure-definitions";
 import { createInfrastructureHandlers } from "./infrastructure-handlers";
-import type { HandlerDeps, ToolConfig } from "./types";
-
-// ===========================================
-// All component tool configs in order
-// ===========================================
-
-const componentConfigs: ToolConfig[] = [
-  // Add tools
-  addButtonConfig,
-  addImageConfig,
-  addTextConfig,
-  addIconConfig,
-  addSpacerConfig,
-  addLineConfig,
-  addVideoConfig,
-  addAudioConfig,
-  addMapConfig,
-  addFormConfig,
-  addFormFieldConfig,
-  addLoginConfig,
-  addRowConfig,
-  addColumnConfig,
-  addAccordionConfig,
-  addAnimatedHeadlineConfig,
-  addTabsConfig,
-  addCarouselConfig,
-  addImageGalleryConfig,
-  addCountdownConfig,
-  addCounterConfig,
-  addProgressBarConfig,
-  addIconTextConfig,
-  addEmbedCodeConfig,
-  addFlipboxConfig,
-  addStarRatingConfig,
-  addAlertConfig,
-  addMenuConfig,
-  addShareButtonConfig,
-  addSwitcherConfig,
-  addVideoPlaylistConfig,
-  addLottieConfig,
-  addTimelineConfig,
-  addTimelineItemConfig,
-  addTableConfig,
-  addCalendlyConfig,
-  addPaypalConfig,
-  addImageComparisonConfig,
-  addTableOfContentsConfig,
-  addBreadcrumbsConfig,
-  addSoundCloudConfig,
-  addChartConfig,
-  addShapeConfig,
-
-  // Update tools
-  updateTextConfig,
-  updateButtonConfig,
-  updateFormConfig,
-  updateFormFieldConfig,
-  updateLoginConfig,
-  updateLoginFieldConfig,
-  updateImageConfig,
-  updateIconConfig,
-  updateSectionItemConfig,
-  updateSectionHeaderItemConfig,
-  updateSectionHeaderStickyItemConfig,
-  updateSectionFooterConfig,
-  updateRowConfig,
-  updateColumnConfig,
-  updateSpacerConfig,
-  updateVideoConfig,
-  updateAudioConfig,
-  updateMapConfig,
-  updateLineConfig,
-  updateAccordionConfig,
-  updateAnimatedHeadlineConfig,
-  updateTabsConfig,
-  updateCarouselConfig,
-  updateImageGalleryConfig,
-  updateCountdownConfig,
-  updateCounterConfig,
-  updateProgressBarConfig,
-  updateIconTextConfig,
-  updateEmbedCodeConfig,
-  updateFlipboxConfig,
-  updateStarRatingConfig,
-  updateSwitcherConfig,
-  updateAlertConfig,
-  updateVideoPlaylistConfig,
-  updateLottieConfig,
-  updateTimelineConfig,
-  updateTimelineItemConfig,
-  updateTableConfig,
-  updateTableAsideConfig,
-  updateTableHeadConfig,
-  updateTableBodyConfig,
-  updateCloneableConfig,
-  updateWrapperConfig,
-  updateCalendlyConfig,
-  updatePaypalConfig,
-  updateImageComparisonConfig,
-  updateTableOfContentsConfig,
-  updateBreadcrumbsConfig,
-  updateSoundCloudConfig,
-  updateChartConfig,
-  updateMenuConfig,
-  updateProtectedFormConfig,
-  updateShapeConfig
-];
-
-// ===========================================
-// Public API — same signatures as the old files
-// ===========================================
+import { componentConfigs } from "./tool-configs";
+import type { HandlerDeps } from "./types";
 
 /**
- * Get tool definitions for LLM (infrastructure + component), in the same order
- * as before. `t` translates the copy the confirmation prompt shows the user.
+ * Where the catalog meets the editor.
+ *
+ * `@brizy/ai-tools` owns what the LLM sees; this file owns what runs. The two
+ * are joined by `alias`: an element is exposed as many small tools —
+ * `updateButtonBackground`, `updateButtonPadding` — that all carry the alias
+ * `updateButton` and so all resolve to the one handler its config builds.
+ * Splitting an element further therefore costs no handler work at all.
+ *
+ * The catalog advertises only the split names, but the handler map answers to
+ * the alias as well, because `ai-chatbot-api` resolves an incoming call to its
+ * alias before emitting it: that is what keeps its own references — the image
+ * strategy, the prompts, the tool pool — working when a concern split renames
+ * a tool. Both names reach the same handler, so which one arrives is
+ * immaterial to what runs.
+ *
+ * This is safe for the confirmation gate only because every tool carrying
+ * `requiresConfirmation` is its own alias, so the alias a caller emits is the
+ * name `ai-chat` looks up. `packages/ai-tools` holds that as an invariant; if
+ * it ever broke, a gated tool would arrive under a name the catalog does not
+ * know and run unconfirmed.
  */
 export function getBrizyToolDefinitions(t: Translation): ToolDefinition[] {
-  return [
-    ...getInfrastructureDefinitions(t),
-    ...componentConfigs.map((c) => c.definition)
-  ];
+  return [...getEditorToolCatalog(t)];
 }
 
-/**
- * Create tool handlers from page repository.
- * These handlers execute the actual tool operations.
- */
 export function createBrizyToolHandlers(
   pageRepository: IPageRepository,
   projectRepository: IProjectRepository,
@@ -318,18 +42,22 @@ export function createBrizyToolHandlers(
 ): Record<string, ToolHandler> {
   const deps: HandlerDeps = { pageRepository, projectRepository, store };
 
-  // Infrastructure handlers (read, block, generic element tools)
-  const infraHandlers = createInfrastructureHandlers(deps);
-
-  // Component handlers (built from configs via the factory)
-  const componentHandlers: Record<string, ToolHandler> = {};
+  const byAlias = new Map<string, ToolHandler>();
   for (const config of componentConfigs) {
-    const toolName = config.definition.name;
-    componentHandlers[toolName] = buildHandler(config, deps);
+    byAlias.set(config.alias, buildHandler(config, deps));
+  }
+
+  const componentHandlers: Record<string, ToolHandler> = {};
+  for (const tool of getEditorToolCatalog((key) => key)) {
+    const handler = byAlias.get(tool.alias);
+    if (handler !== undefined) {
+      componentHandlers[tool.name] = handler;
+      componentHandlers[tool.alias] = handler;
+    }
   }
 
   return {
-    ...infraHandlers,
+    ...createInfrastructureHandlers(deps),
     ...componentHandlers
   };
 }

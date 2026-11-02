@@ -1,5 +1,5 @@
-import { EmailFields, Done } from "../Step";
 import { BaseApp } from "../../common/GlobalApps/BaseApp";
+import { Done, EmailFields } from "../Step";
 
 class Wordpress extends BaseApp {
   static fields = EmailFields;

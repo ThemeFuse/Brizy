@@ -1,9 +1,9 @@
-import * as Option from "visual/component/Options/Type";
+import type * as Option from "visual/component/Options/Type";
 import { mPipe, pipe } from "visual/utils/fp";
 import { Zero } from "visual/utils/math/Positive";
 import { EffectType } from "./types/EffectType";
 import * as LegacyModel from "./types/LegacyModel";
-import { Value, fromLegacyModel, toLegacyModel } from "./types/Value";
+import { fromLegacyModel, toLegacyModel, type Value } from "./types/Value";
 
 export const defaultValue: Value = {
   type: EffectType.None,

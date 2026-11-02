@@ -1,11 +1,11 @@
 import { mPipe } from "fp-utilities";
-import { ElementModel } from "visual/component/Elements/Types";
+import type { ElementModel } from "visual/component/Elements/Types";
 import { SizeType } from "visual/global/Config/types/configs/common";
-import { Dictionary } from "visual/types/utils";
+import type { Dictionary } from "visual/types/utils";
 import * as Obj from "visual/utils/reader/object";
 import { read } from "visual/utils/reader/string";
-import { MValue } from "visual/utils/value";
-import { MigrationImage } from "./types";
+import type { MValue } from "visual/utils/value";
+import type { MigrationImage } from "./types";
 
 interface DCPlaceholderObj {
   name: string;
@@ -31,9 +31,10 @@ export function placeholderObjFromStr(
   }
 
   const r2 = /(\w+)=("|'|&quot;|&apos;)(.*?)\2/g;
-  let attr: Dictionary<string> | undefined = undefined;
-  let match;
+  let attr: Dictionary<string> | undefined;
+  let match: RegExpExecArray | null;
 
+  // biome-ignore lint/suspicious/noAssignInExpressions: regex exec iteration idiom - matchAll would work here but the rewrite is kept out of this lint PR
   while ((match = r2.exec(attrStr.trim()))) {
     attr = attr ?? {};
     attr[match[1]] = _unescape(match[3]);

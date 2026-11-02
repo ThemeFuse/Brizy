@@ -1,6 +1,6 @@
-import { OptionValue } from "visual/component/Options/types";
-import { Weight } from "visual/utils/fonts/Weight";
-import { Positive } from "visual/utils/math/Positive";
+import type { OptionValue } from "visual/component/Options/types";
+import type { Weight } from "visual/utils/fonts/Weight";
+import type { Positive } from "visual/utils/math/Positive";
 
 export type TypographyValues = Omit<
   OptionValue<"typography">,

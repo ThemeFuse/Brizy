@@ -17,7 +17,7 @@ export const suffixes = Object.values(SizeSuffix);
  *
  * @type {object[]}
  */
-export const getSuffixChoices = suffixes.map(x => ({ title: x, value: x }));
+export const getSuffixChoices = suffixes.map((x) => ({ title: x, value: x }));
 
 /**
  * Default font size suffix value

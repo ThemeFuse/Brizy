@@ -1,8 +1,8 @@
-import { ElementModel } from "visual/component/Elements/Types";
-import { Props as _Props } from "visual/editorComponents/EditorComponent";
-import { Meta } from "visual/editorComponents/SectionHeader/type";
-import { Context } from "visual/utils/elements/posts/types";
-import { ArrowPosition, ArrowStyle } from "../types";
+import type { ElementModel } from "visual/component/Elements/Types";
+import type { Props as _Props } from "visual/editorComponents/EditorComponent";
+import type { Meta } from "visual/editorComponents/SectionHeader/type";
+import type { Context } from "visual/utils/elements/posts/types";
+import type { ArrowPosition, ArrowStyle } from "../types";
 
 export interface OwnProps {
   meta: Meta;

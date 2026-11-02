@@ -1,4 +1,4 @@
-import { Dictionary } from "visual/types/utils";
+import type { Dictionary } from "visual/types/utils";
 
 export interface Base {
   value: string;

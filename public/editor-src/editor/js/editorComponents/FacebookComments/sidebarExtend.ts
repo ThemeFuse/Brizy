@@ -1,6 +1,6 @@
-import { ElementModel } from "visual/component/Elements/Types";
+import type { ElementModel } from "visual/component/Elements/Types";
 import { t } from "visual/utils/i18n";
-import { ToolbarItemType } from "../ToolbarItemType";
+import type { ToolbarItemType } from "../ToolbarItemType";
 
 export const title = ({ v }: { v: ElementModel }): string =>
   v.review === "true" ? t("Review") : t("Comments");

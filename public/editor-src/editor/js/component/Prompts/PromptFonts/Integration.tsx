@@ -1,13 +1,13 @@
 import { produce } from "immer";
-import { ConnectedProps, connect } from "react-redux";
+import { type ConnectedProps, connect } from "react-redux";
 import { fontsSelector } from "visual/redux/selectors";
-import { ReduxState } from "visual/redux/types";
+import type { ReduxState } from "visual/redux/types";
 import { pendingRequest } from "visual/utils/api";
-import BaseIntegration from "../common/GlobalApps/BaseIntegration";
-import { AppData, BaseIntegrationProps } from "../common/GlobalApps/type";
-import * as AppsComponent from "./Apps";
-import { Fonts, StateToProps } from "./types";
 import { isPro } from "visual/utils/env";
+import BaseIntegration from "../common/GlobalApps/BaseIntegration";
+import type { AppData, BaseIntegrationProps } from "../common/GlobalApps/type";
+import * as AppsComponent from "./Apps";
+import type { Fonts, StateToProps } from "./types";
 
 const mapState = (state: ReduxState): StateToProps => ({
   fonts: fontsSelector(state)

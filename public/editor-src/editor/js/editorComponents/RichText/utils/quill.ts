@@ -1,10 +1,10 @@
-import parchment from "parchment";
-import Attributor from "parchment/dist/src/attributor/attributor";
-import ClassAttributor from "parchment/dist/src/attributor/class";
-import StyleAttributor from "parchment/dist/src/attributor/style";
+import type parchment from "parchment";
+import type Attributor from "parchment/dist/src/attributor/attributor";
+import type ClassAttributor from "parchment/dist/src/attributor/class";
+import type StyleAttributor from "parchment/dist/src/attributor/style";
 import Quill from "quill";
-import { GetConfig } from "visual/providers/ConfigProvider/types";
-import { RenderType, isEditor } from "visual/providers/RenderProvider";
+import type { GetConfig } from "visual/providers/ConfigProvider/types";
+import { isEditor, type RenderType } from "visual/providers/RenderProvider";
 import { getBackgroundGradient } from "./formats/BackgroundGradient";
 import { getBackgroundImage } from "./formats/BackgroundImage";
 import BlockColor from "./formats/BlockColor";
@@ -15,8 +15,6 @@ import Link from "./formats/Link";
 import PlainClipboard from "./formats/PlainClipboard";
 import Population from "./formats/Population";
 import Pre from "./formats/Pre";
-import { getTextBackgroundGradient } from "./formats/TextBackgroundGradient";
-import Tooltip from "./formats/Tooltip";
 import {
   BackgroundMobileVar,
   BackgroundTabletVar,
@@ -27,8 +25,10 @@ import {
   getTextBackgroundGradientMobileVar,
   getTextBackgroundGradientTabletVar
 } from "./formats/responsive";
+import { getTextBackgroundGradient } from "./formats/TextBackgroundGradient";
+import Tooltip from "./formats/Tooltip";
 import { blockValues, inlineValues, legacyValues } from "./transforms";
-import { Values } from "./transforms/defaultValues";
+import type { Values } from "./transforms/defaultValues";
 
 type Attributors = ClassAttributor | StyleAttributor | Attributor;
 type P = typeof parchment;

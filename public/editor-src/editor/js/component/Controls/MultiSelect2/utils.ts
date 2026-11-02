@@ -1,11 +1,15 @@
 import { t } from "visual/utils/i18n";
 import { printf } from "visual/utils/string";
-import { MValue } from "visual/utils/value";
-import { MultiSelectItemProps } from "./types";
+import type { Literal } from "visual/utils/types/Literal";
+import type { MValue } from "visual/utils/value";
+import type { MultiSelectItemProps } from "./types";
 
 type ValueTitle = (
   t: (key: string) => string
-) => <T>(items: MultiSelectItemProps<T>[], value: T[]) => MValue<string>;
+) => <T extends Literal>(
+  items: MultiSelectItemProps<T>[],
+  value: T[]
+) => MValue<string>;
 
 export const _valueTitle: ValueTitle =
   (t) =>
@@ -28,7 +32,7 @@ export const _valueTitle: ValueTitle =
 
 export const valueTitle = _valueTitle(t);
 
-export const toggleItemValue = <T>(
+export const toggleItemValue = <T extends Literal>(
   item: MultiSelectItemProps<T>,
   value: T[],
   useAsSimpleSelect?: boolean

@@ -1,8 +1,7 @@
-import { CSSProperties } from "react";
-import { JSX } from "react";
-import { ModelFamilyType } from "visual/utils/fonts/getFontById";
-import { DeviceMode } from "visual/types";
-import { OptionDefinition } from "visual/editorComponents/ToolbarItemType";
+import type { CSSProperties, JSX } from "react";
+import type { OptionDefinition } from "visual/editorComponents/ToolbarItemType";
+import type { DeviceMode } from "visual/types";
+import type { ModelFamilyType } from "visual/utils/fonts/getFontById";
 
 type Switch = "on" | "off";
 

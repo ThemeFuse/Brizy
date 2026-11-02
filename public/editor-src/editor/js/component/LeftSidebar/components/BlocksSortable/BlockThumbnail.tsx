@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 import EditorIcon from "visual/component/EditorIcon";
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
-import { Block } from "visual/types/Block";
+import type { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import type { Block } from "visual/types/Block";
 import { blockThumbnailData } from "visual/utils/blocks";
 import { t } from "visual/utils/i18n";
 import { preloadImage } from "visual/utils/image";
-import { MValue } from "visual/utils/value";
+import type { MValue } from "visual/utils/value";
 
 interface Props {
   blockData: Block;

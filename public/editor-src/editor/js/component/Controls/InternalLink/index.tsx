@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import React, { ReactElement, useCallback, useState } from "react";
+import React, { type ReactElement, useCallback, useState } from "react";
 import { Manager, Popper, Reference } from "react-popper";
 import ClickOutside from "visual/component/ClickOutside";
 import { t } from "visual/utils/i18n";
@@ -7,7 +7,7 @@ import { InternalLinkValue } from "./Components/InternalLinkValue";
 import { SelectDropdown } from "./Components/SelectDropdown";
 import { SelectItem, SelectItemNoResults } from "./Components/SelectItem";
 import { SourceSelect } from "./Components/SourceSelect";
-import { Choice, Props, Status } from "./types";
+import { type Choice, type Props, Status } from "./types";
 import { isValuePopulated, trimTitle } from "./utils";
 
 export const Control = ({
@@ -51,9 +51,9 @@ export const Control = ({
       <SelectItemNoResults />
     ) : (
       <ul className="brz-ul">
-        {items.map((item, index) => (
+        {items.map((item) => (
           <SelectItem
-            key={index}
+            key={item.value}
             title={item.title}
             onClick={() => handleClickItem(item)}
           />

@@ -1,4 +1,4 @@
-import React, { JSX } from "react";
+import React, { type JSX } from "react";
 import { Text } from "visual/component/ContentOptions/types";
 import CustomCSS from "visual/component/CustomCSS";
 import { ThemeIcon } from "visual/component/ThemeIcon";

@@ -1,11 +1,11 @@
 import { mPipe, optional, or, parseStrict } from "fp-utilities";
-import { Block } from "visual/types/Block";
+import type { Block } from "visual/types/Block";
 import { pipe } from "visual/utils/fp";
 import { readWithItemReader } from "visual/utils/reader/array";
 import { read as readNum } from "visual/utils/reader/number";
 import { readKey, read as readObj } from "visual/utils/reader/object";
 import { read as readStr } from "visual/utils/reader/string";
-import { Reader } from "visual/utils/reader/types";
+import type { Reader } from "visual/utils/reader/types";
 import { throwOnNullish } from "visual/utils/value";
 
 const readMeta = parseStrict<Record<string, unknown>, Block["meta"]>({

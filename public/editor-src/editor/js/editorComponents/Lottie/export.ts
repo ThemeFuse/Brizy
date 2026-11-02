@@ -1,3 +1,8 @@
+import {
+  RendererType,
+  TriggerType
+} from "@brizy/component/src/Flex/Lottie/types";
+import { Num, Str } from "@brizy/readers";
 import { getProLibs } from "visual/libs";
 import {
   attachScrollHandler,
@@ -8,11 +13,6 @@ import {
   handleScroll,
   handleScrollDotLottie
 } from "./utils";
-import {
-  RendererType,
-  TriggerType
-} from "@brizy/component/src/Flex/Lottie/types";
-import { Num, Str } from "@brizy/readers";
 
 const observerCallbacks = new Map();
 
@@ -26,16 +26,12 @@ const observer = new IntersectionObserver((entries, observer) => {
   });
 });
 
-export default function ($node: JQuery): void {
+export default function (node: HTMLElement): void {
   const { Lottie, DotLottie } = getProLibs();
 
   if (!Lottie || !DotLottie) {
     return;
   }
-
-  const node = $node.get(0);
-
-  if (!node) return;
 
   node.querySelectorAll<HTMLElement>(".brz-lottie-anim").forEach((node) => {
     const {

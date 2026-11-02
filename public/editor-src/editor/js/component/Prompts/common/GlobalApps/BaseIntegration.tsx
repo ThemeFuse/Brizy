@@ -1,15 +1,20 @@
 import classnames from "classnames";
 import { noop } from "es-toolkit";
 import { produce } from "immer";
-import React, { Component, ElementType, ReactElement, ReactNode } from "react";
+import React, {
+  Component,
+  type ElementType,
+  type ReactElement,
+  type ReactNode
+} from "react";
 import { Alert } from "visual/component/Alert";
 import { isPro } from "visual/utils/env";
 import { Loading } from "../Loading";
 import Steppers from "../Steppers";
-import { BaseAppElementTypes, BaseKey, BaseTypes } from "./BaseApp";
+import type { BaseAppElementTypes, BaseKey, BaseTypes } from "./BaseApp";
 import { Context } from "./Context";
 import AppList from "./StepsView/AppsList";
-import {
+import type {
   AppData,
   BaseIntegrationContext,
   BaseIntegrationProps,
@@ -79,6 +84,7 @@ class BaseIntegration<
 
     if (Array.isArray(data)) {
       return data.reduce((acc, cur) => {
+        // biome-ignore lint/performance/noAccumulatingSpread: the seed is `this.state.connectedApps`, so mutating the accumulator would mutate component state
         return cur.completed ? [...acc, cur.id] : acc;
       }, connectedApps);
     }
@@ -234,22 +240,26 @@ class BaseIntegration<
 
     const showProgress =
       _showProgress && !stages.find((el) => el.type === stage)?.hideProgress;
-    const progress = stages.reduce((acc, cur, index, arr) => {
-      const props: { num: BaseKey; img?: string; text?: string } = {
-        num: cur.type
-      };
-      const firstNormalIndex = arr.findIndex((it) => it.title);
+    const progress = stages.reduce(
+      (acc, cur, index, arr) => {
+        const props: { num: BaseKey; img?: string; text?: string } = {
+          num: cur.type
+        };
+        const firstNormalIndex = arr.findIndex((it) => it.title);
 
-      if (index === firstNormalIndex) {
-        props.img = data[connectedApp].img;
-      } else {
-        props.text = cur.title;
-      }
+        if (index === firstNormalIndex) {
+          props.img = data[connectedApp].img;
+        } else {
+          props.text = cur.title;
+        }
 
-      return cur.title
-        ? [...acc, <Steppers.Stage key={index} {...props} />]
-        : acc;
-    }, [] as Array<ReactElement>);
+        if (cur.title) {
+          acc.push(<Steppers.Stage key={cur.type} {...props} />);
+        }
+        return acc;
+      },
+      [] as Array<ReactElement>
+    );
 
     return (
       <Context.Provider value={this.getContextValue()}>
@@ -258,12 +268,12 @@ class BaseIntegration<
             <Steppers.Progress>{progress}</Steppers.Progress>
           )}
           <Steppers.Steps onClose={this.props.onClose}>
-            {stages.map((step, index) => {
+            {stages.map((step) => {
               const Component = this.getComponent(step.type) as ElementType;
 
               return (
                 <Steppers.Step
-                  key={index}
+                  key={step.type}
                   num={step.type}
                   render={(
                     props: Record<string, unknown>

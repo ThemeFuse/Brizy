@@ -1,12 +1,12 @@
-import {
+import type {
   CropData,
   Data as ImageBaseData,
   ImagePatterns,
   OthersSizeType,
   SizeType
 } from "visual/global/Config/types/configs/common";
-import { Literal } from "visual/utils/types/Literal";
-import { MValue } from "visual/utils/value";
+import type { Literal } from "visual/utils/types/Literal";
+import type { MValue } from "visual/utils/value";
 
 export interface CustomSize extends ImageBaseData {
   sizeType: SizeType.custom;

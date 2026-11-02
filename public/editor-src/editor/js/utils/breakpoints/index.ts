@@ -1,7 +1,7 @@
-import { MValue } from "visual/utils/value";
-import { AllCSSKeys } from "../cssStyle/types";
-import { Device } from "../devices";
-import {
+import type { MValue } from "visual/utils/value";
+import type { AllCSSKeys } from "../cssStyle/types";
+import type { Device } from "../devices";
+import type {
   Breakpoints,
   BreakpointsNames,
   DesktopBreakpoints,
@@ -33,9 +33,9 @@ export const getCurrentBreakpoints = (): {
   tablet: number;
   mobile: number;
 } => ({
-  desktop: desktopBreakpoints["desktop"],
-  tablet: responsiveBreakpoints["tablet"],
-  mobile: responsiveBreakpoints["mobile"]
+  desktop: desktopBreakpoints.desktop,
+  tablet: responsiveBreakpoints.tablet,
+  mobile: responsiveBreakpoints.mobile
 });
 
 export const getBreakpoints = (
@@ -45,11 +45,11 @@ export const getBreakpoints = (
     case "all":
       return getCurrentBreakpoints();
     case "desktop":
-      return { desktop: desktopBreakpoints["desktop"] };
+      return { desktop: desktopBreakpoints.desktop };
     case "responsive":
       return {
-        tablet: responsiveBreakpoints["tablet"],
-        mobile: responsiveBreakpoints["mobile"]
+        tablet: responsiveBreakpoints.tablet,
+        mobile: responsiveBreakpoints.mobile
       };
   }
 };

@@ -1,8 +1,8 @@
 import { mPipe, or } from "fp-utilities";
-import { FromElementModelGetter } from "visual/component/Options/Type";
+import type { FromElementModelGetter } from "visual/component/Options/Type";
 import { pipe } from "visual/utils/fp";
-import * as Unit from "visual/utils/math/Unit";
 import * as Num from "visual/utils/math/number";
+import * as Unit from "visual/utils/math/Unit";
 import { callGetter } from "visual/utils/options/utils/wrap";
 import { capByPrefix } from "visual/utils/string";
 import * as Viewport from "../Viewport";

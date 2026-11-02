@@ -1,12 +1,12 @@
-import * as Hex from "visual/utils/color/Hex";
-import * as Opacity from "visual/utils/cssProps/opacity";
+import type * as Hex from "visual/utils/color/Hex";
+import type * as Opacity from "visual/utils/cssProps/opacity";
 import { _apply, get, set, setter2 } from "visual/utils/model";
 import * as Type from "visual/utils/options/BoxShadow/entities/Type";
-import { Value } from "visual/utils/options/BoxShadow/entities/Value";
+import type { Value } from "visual/utils/options/BoxShadow/entities/Value";
 import * as Palette from "visual/utils/options/ColorPicker/entities/palette";
 import { capitalize } from "visual/utils/string";
-import { getHex, getOpacity, getPalette } from "../ColorPicker/model";
 import * as ColorPicker from "../ColorPicker/model";
+import { getHex, getOpacity, getPalette } from "../ColorPicker/model";
 import { fieldsEnabled, toggleColor, toggleFields, toggleType } from "./utils";
 
 /**

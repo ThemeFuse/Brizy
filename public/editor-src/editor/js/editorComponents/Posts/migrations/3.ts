@@ -1,9 +1,9 @@
 import { produce } from "immer";
-import { ElementModel } from "visual/component/Elements/Types";
-import { Dictionary } from "visual/types/utils";
+import type { ElementModel } from "visual/component/Elements/Types";
+import type { Dictionary } from "visual/types/utils";
 import { createFieldCollectionId } from "visual/utils/elements/posts";
-import { Context } from "visual/utils/elements/posts/types";
-import { Migration } from "visual/utils/migration";
+import type { Context } from "visual/utils/elements/posts/types";
+import type { Migration } from "visual/utils/migration";
 import { objectFromEntries } from "visual/utils/object";
 import * as Obj from "visual/utils/reader/object";
 import * as Str from "visual/utils/reader/string";
@@ -67,7 +67,7 @@ function migrateSymbols(
               });
             } catch (e) {
               if (process.env.NODE_ENV === "development") {
-                // eslint-disable-next-line no-console
+                // biome-ignore lint/suspicious/noConsole: migrated from eslint
                 console.log(e);
               }
             }
@@ -83,7 +83,7 @@ function migrateSymbols(
         }
       } catch (e) {
         if (process.env.NODE_ENV === "development") {
-          // eslint-disable-next-line no-console
+          // biome-ignore lint/suspicious/noConsole: migrated from eslint
           console.log(e);
         }
       }
@@ -102,7 +102,7 @@ export const m3: Migration<GetCollectionTypesInfoResult> = {
       throw new Error(`Posts migration 3 input failed ${v}`);
     }
 
-    let migrated: V3 | undefined = undefined;
+    let migrated: V3 | undefined;
 
     if (collection && Str.is(v.source) && NoEmptyString.is(v.source)) {
       migrated = {

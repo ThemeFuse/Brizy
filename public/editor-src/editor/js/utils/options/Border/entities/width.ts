@@ -1,6 +1,6 @@
-import { Append, Concat } from "visual/utils/types/Monoid";
-import { NewType } from "visual/types/NewType";
+import type { NewType } from "visual/types/NewType";
 import { pass } from "visual/utils/fp";
+import type { Append, Concat } from "visual/utils/types/Monoid";
 
 enum borderWidth {
   borderWidth = "borderWidth"
@@ -20,6 +20,6 @@ export const empty: Width = 0 as Width;
 
 export const append: Append<Width> = (a, b) => (a === empty ? b : a);
 
-export const concat: Concat<Width> = as => as.reduce(append, empty);
+export const concat: Concat<Width> = (as) => as.reduce(append, empty);
 
 export const unsafe = (n: number): Width => n as Width;

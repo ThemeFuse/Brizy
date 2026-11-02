@@ -9,7 +9,7 @@ import { RenderProvider } from "visual/providers/RenderProvider";
 import { StyleProvider } from "visual/providers/StyleProvider";
 import { StyleSheetManager } from "visual/providers/StyleProvider/StyleSheetManager";
 import { I18n } from "visual/utils/i18n";
-import { Props } from "./types";
+import type { Props } from "./types";
 
 export function Providers(props: Props): JSX.Element {
   const { sheet, store, config, children, editorMode, componentTypes } = props;

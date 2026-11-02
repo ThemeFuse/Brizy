@@ -1,11 +1,11 @@
 import classNames from "classnames";
-import React, { ComponentType, ReactElement } from "react";
+import React, { type ComponentType, type ReactElement } from "react";
 import { OptionLabel } from "visual/component/OptionLabel";
 import { OptionWrapper } from "visual/component/OptionWrapper";
-import { ToolbarItemsInstance } from "visual/component/Toolbar/ToolbarItems";
+import type { ToolbarItemsInstance } from "visual/component/Toolbar/ToolbarItems";
 import { inDevelopment } from "visual/editorComponents/EditorComponent/utils";
-import { OptionDefinition } from "visual/editorComponents/ToolbarItemType";
-import { WithClassName } from "visual/types/attributes";
+import type { OptionDefinition } from "visual/editorComponents/ToolbarItemType";
+import type { WithClassName } from "visual/types/attributes";
 import { types } from "./types";
 
 export interface Props extends WithClassName {

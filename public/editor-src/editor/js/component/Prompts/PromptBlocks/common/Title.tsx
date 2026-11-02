@@ -1,6 +1,6 @@
 import React, {
-  ChangeEventHandler,
-  ReactElement,
+  type ChangeEventHandler,
+  type ReactElement,
   useEffect,
   useRef
 } from "react";

@@ -1,6 +1,5 @@
-import { WithRenderContext } from "visual/providers/RenderProvider";
+import type { WithRenderContext } from "visual/providers/RenderProvider";
 import {
-  FlexHorizontalAligns,
   cssStyleBgColor,
   cssStyleBgGradient,
   cssStyleBorder,
@@ -15,13 +14,14 @@ import {
   cssStyleSpacing,
   cssStyleSpacingWithPadding,
   cssStyleTextAlign,
+  FlexHorizontalAligns,
   getAllCssStyleTypography,
   readHorizontalAlign
 } from "visual/utils/cssStyle";
 import { defaultValueValue } from "visual/utils/onChange";
 import { ACTIVE } from "visual/utils/stateMode";
 import { styleAlignHorizontal } from "visual/utils/style2";
-import { CSSValue } from "visual/utils/style2/types";
+import type { CSSValue } from "visual/utils/style2/types";
 import { styleColor } from "../style2/styleColor";
 
 export function cssStyleElementEcwidCartParentBgColor({

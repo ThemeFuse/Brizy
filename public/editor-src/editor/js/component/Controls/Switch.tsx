@@ -1,7 +1,7 @@
 import classNames from "classnames";
-import React, { ReactElement, useCallback } from "react";
+import React, { type ReactElement, useCallback } from "react";
 import EditorIcon from "visual/component/EditorIcon";
-import {
+import type {
   WithClassName,
   WithOnChange,
   WithValue

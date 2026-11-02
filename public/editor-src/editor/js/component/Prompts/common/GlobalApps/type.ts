@@ -1,5 +1,5 @@
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
-import { BaseKey } from "./BaseApp";
+import type { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import type { BaseKey } from "./BaseApp";
 
 export type FormField = {
   label: string;

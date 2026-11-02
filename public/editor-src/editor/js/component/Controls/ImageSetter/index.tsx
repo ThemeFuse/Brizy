@@ -1,16 +1,20 @@
 import classnames from "classnames";
-import React, { ReactElement, ReactNode, ReactText } from "react";
+import React, {
+  type ReactElement,
+  type ReactNode,
+  type ReactText
+} from "react";
 import { noop } from "rxjs";
 import { Select2 } from "visual/component/Controls/Select2";
 import { Item } from "visual/component/Controls/Select2/Item";
 import EditorIcon from "visual/component/EditorIcon";
 import { ToastNotification } from "visual/component/Notifications";
-import { Extensions } from "visual/component/Options/types/dev/ImageUpload/Types";
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import type { Extensions } from "visual/component/Options/types/dev/ImageUpload/Types";
+import type { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import {
-  AddImageData,
-  AddImageExtra,
-  Response,
+  type AddImageData,
+  type AddImageExtra,
+  type Response,
   SizeType
 } from "visual/global/Config/types/configs/common";
 import { getFileFormat } from "visual/utils/customFile/utils";
@@ -18,7 +22,7 @@ import { t } from "visual/utils/i18n";
 import { getImageUrl, preloadImage } from "visual/utils/image";
 import { ImageType } from "visual/utils/image/types";
 import Image from "./Image";
-import { Meta } from "./types";
+import type { Meta } from "./types";
 
 export interface Value {
   src: string;
@@ -214,7 +218,7 @@ export class ImageSetter<T extends ReactText> extends React.Component<
           })
           .catch((e) => {
             this.setState({ loading: false });
-            // eslint-disable-next-line no-console
+            // biome-ignore lint/suspicious/noConsole: migrated from eslint
             console.log(e);
             ToastNotification.error("Failed to upload file");
           });
@@ -240,7 +244,11 @@ export class ImageSetter<T extends ReactText> extends React.Component<
       return;
     }
 
-    onUpload ? onUpload() : this.handleImageChange();
+    if (onUpload) {
+      onUpload();
+    } else {
+      this.handleImageChange();
+    }
   };
 
   renderDraggable(): ReactNode {

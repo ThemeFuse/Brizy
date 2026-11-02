@@ -1,15 +1,15 @@
 import React, {
-  ChangeEventHandler,
-  ReactElement,
-  ReactNode,
+  type ChangeEventHandler,
+  type ReactElement,
+  type ReactNode,
   useCallback
 } from "react";
 import InputPlaceholder from "visual/component/Controls/InputPlaceholder";
 import {
   PromptFrame,
-  Validator
+  type Validator
 } from "visual/component/Prompts/common/PromptFrame";
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import type { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { assetUrl } from "visual/utils/asset";
 import { t } from "visual/utils/i18n";
 

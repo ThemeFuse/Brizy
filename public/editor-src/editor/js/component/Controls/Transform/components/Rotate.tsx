@@ -1,17 +1,17 @@
 import { mPipe } from "fp-utilities";
 import React, { useCallback, useMemo } from "react";
 import { NumberSlider } from "visual/component/Controls/NumberSlider";
-import { Unit, Value } from "visual/component/Controls/NumberUnit/types";
+import type { Unit, Value } from "visual/component/Controls/NumberUnit/types";
 import { Switch } from "visual/component/Controls/Switch";
 import { OptionLabel } from "visual/component/OptionLabel";
 import { OptionWrapper } from "visual/component/OptionWrapper";
 import { t } from "visual/utils/i18n";
 import { sliderSizeClassName } from "visual/utils/options/utils/sliderSizeClassName";
-import { FCC } from "visual/utils/react/types";
+import type { FCC } from "visual/utils/react/types";
 import * as Degree from "../Degree";
-import { OnChange } from "../types";
-import { EffectProps } from "../types/EffectProps";
-import { Rotate as V } from "../types/Rotate";
+import type { OnChange } from "../types";
+import type { EffectProps } from "../types/EffectProps";
+import type { Rotate as V } from "../types/Rotate";
 
 const units: Unit<"°">[] = [
   {

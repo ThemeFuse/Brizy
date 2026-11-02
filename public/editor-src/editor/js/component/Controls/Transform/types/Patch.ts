@@ -1,4 +1,4 @@
-import { Effect, EffectsWithAnchor, EffectValueWithAnchor } from "./Value";
+import type { Effect, EffectsWithAnchor, EffectValueWithAnchor } from "./Value";
 
 export enum Type {
   active = "active",

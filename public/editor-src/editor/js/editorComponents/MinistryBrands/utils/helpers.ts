@@ -1,6 +1,6 @@
 import { checkValue2 } from "visual/utils/checkValue";
 import { t } from "visual/utils/i18n";
-import { MBMetaPrefixKey, Switch } from "./types";
+import { MBMetaPrefixKey, type Switch } from "./types";
 
 export const getAttr = (option: Switch, key: string): string => {
   return option === "on" ? `${key}='1'` : `${key}='0'`;

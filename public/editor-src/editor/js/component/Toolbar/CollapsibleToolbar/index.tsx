@@ -1,25 +1,25 @@
 import classnames from "classnames";
 import { isT } from "fp-utilities";
-import React, { RefObject, forwardRef } from "react";
+import React, { forwardRef, type RefObject } from "react";
 import { connect } from "react-redux";
-import { TransitionState } from "react-transition-state";
+import type { TransitionState } from "react-transition-state";
 import ClickOutside from "visual/component/ClickOutside";
 import HotKeys from "visual/component/HotKeys";
 import { RightSidebarItems } from "visual/component/RightSidebar/RightSidebarItems";
 import { currentUserRole } from "visual/component/Roles";
 import { filterOptions } from "visual/editorComponents/EditorComponent/utils";
-import { OptionDefinition } from "visual/editorComponents/ToolbarItemType";
+import type { OptionDefinition } from "visual/editorComponents/ToolbarItemType";
 import { useConfig } from "visual/providers/ConfigProvider";
-import { ReduxState } from "visual/redux/types";
-import { DeviceMode } from "visual/types";
+import type { ReduxState } from "visual/redux/types";
+import type { DeviceMode } from "visual/types";
 import { targetExceptions } from "../../Options/constants";
-import { ToolbarMonitorHandler, monitor } from "../monitor";
+import { monitor, type ToolbarMonitorHandler } from "../monitor";
 import { setPosition } from "../state";
 import { AnimatedToolbar } from "./components/AnimatedToolbar";
-import { Badge, BadgeProps } from "./components/Badge";
-import { Icon, IconProps } from "./components/Icon";
+import { Badge, type BadgeProps } from "./components/Badge";
+import { Icon, type IconProps } from "./components/Icon";
 import { Toolbar } from "./components/Toolbar";
-import {
+import type {
   CollapsibleToolbarProps,
   CollapsibleToolbarState,
   PropsWithState
@@ -101,9 +101,9 @@ class _CollapsibleToolbar
     const { onBeforeOpen, onOpen } = this.props;
 
     monitor.setActive(this);
-    onBeforeOpen && onBeforeOpen();
+    if (onBeforeOpen) onBeforeOpen();
     this.setState({ opened: true }, () => {
-      onOpen && onOpen();
+      if (onOpen) onOpen();
     });
   }
 
@@ -115,9 +115,9 @@ class _CollapsibleToolbar
     const { onBeforeClose, onClose } = this.props;
 
     monitor.unsetIfActive(this);
-    onBeforeClose && onBeforeClose();
+    if (onBeforeClose) onBeforeClose();
     this.setState({ opened: false }, () => {
-      onClose && onClose();
+      if (onClose) onClose();
     });
   }
 
@@ -206,7 +206,7 @@ const CollapsibleToolbar = forwardRef<_CollapsibleToolbar, FCProps>(
 
 export default connect<
   { device: DeviceMode },
-  // eslint-disable-next-line @typescript-eslint/no-empty-object-type
+  // biome-ignore lint/complexity/noBannedTypes: migrated from eslint
   {},
   CollapsibleToolbarProps,
   ReduxState

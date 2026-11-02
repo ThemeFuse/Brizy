@@ -1,10 +1,10 @@
 import classNames from "classnames";
-import React, { ReactElement } from "react";
+import React, { type ReactElement } from "react";
 import { ToastNotification } from "visual/component/Notifications";
 import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
-import { DynamicContentHelper } from "visual/editorComponents/WordPress/common/DynamicContentHelper";
 import { Wrapper } from "visual/editorComponents/tools/Wrapper";
+import { DynamicContentHelper } from "visual/editorComponents/WordPress/common/DynamicContentHelper";
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import { updateEkklesiaFields } from "visual/utils/api";
 import { attachRefs } from "visual/utils/react";
@@ -19,8 +19,8 @@ import * as toolbarMetaIcons from "../toolbarMetaIcons";
 import * as toolbarMeta from "../toolbarMetaTypography";
 import * as toolbarPagination from "../toolbarPagination";
 import * as toolbarPreview from "../toolbarPreview";
-import * as toolbarTitle from "../toolbarTitle";
 import * as toolbarMetaItemLinkColor from "../toolbars/toolbarMetaItemLinkColor";
+import * as toolbarTitle from "../toolbarTitle";
 import { getEkklesiaMessages } from "../utils/helpers";
 import { MBMetaPrefixKey } from "../utils/types";
 import defaultValue from "./defaultValue.json";
@@ -81,7 +81,7 @@ export class MinistryBrandsGroupLayout extends EditorComponent<Value, Props> {
 
     if (changedKeys) {
       const messages = getEkklesiaMessages();
-      ToastNotification.warn(messages["group_layout"]);
+      ToastNotification.warn(messages.group_layout);
       this.patchValue(changedKeys);
     }
   }
@@ -265,8 +265,7 @@ export class MinistryBrandsGroupLayout extends EditorComponent<Value, Props> {
                                                               toolbarMetaItemLinkColor,
                                                               undefined,
                                                               {
-                                                                allowExtend:
-                                                                  false
+                                                                allowExtend: false
                                                               }
                                                             )}
                                                             selector=".brz-groupLayout--item__content-meta a"
@@ -281,28 +280,28 @@ export class MinistryBrandsGroupLayout extends EditorComponent<Value, Props> {
                                                                     MBMetaPrefixKey.metaResourceLink
                                                                   ),
                                                                   {
-                                                                    allowExtend:
-                                                                      false
+                                                                    allowExtend: false
                                                                   }
                                                                 )}
                                                                 selector=".brz-ministryBrands__item--meta-resourceLink > a"
                                                               >
                                                                 {({
-                                                                  ref: resourceLinkRef2
+                                                                  ref:
+                                                                    resourceLinkRef2
                                                                 }) => (
                                                                   <Toolbar
                                                                     {...this.makeToolbarPropsFromConfig2(
                                                                       toolbarMetaIcons,
                                                                       undefined,
                                                                       {
-                                                                        allowExtend:
-                                                                          false
+                                                                        allowExtend: false
                                                                       }
                                                                     )}
                                                                     selector=".brz-ministryBrands__meta--icons"
                                                                   >
                                                                     {({
-                                                                      ref: iconsRef
+                                                                      ref:
+                                                                        iconsRef
                                                                     }) => (
                                                                       <Wrapper
                                                                         {...this.makeWrapperProps(

@@ -1,11 +1,11 @@
 import classNames from "classnames";
 import { last } from "es-toolkit";
-import React, { ReactElement, useCallback } from "react";
-import { OnChange } from "visual/component/Options/Type";
-import { Position } from "visual/utils/position/Position";
-import { Literal } from "visual/utils/types/Literal";
+import React, { type ReactElement, useCallback } from "react";
+import type { OnChange } from "visual/component/Options/Type";
+import type { Position } from "visual/utils/position/Position";
+import type { Literal } from "visual/utils/types/Literal";
 import { mCompose } from "visual/utils/value";
-import { Props as MP, Select } from "./Select";
+import { type Props as MP, Select } from "./Select";
 
 type Props<T extends Literal> = Omit<MP<T>, "value" | "onChange"> & {
   value: T;

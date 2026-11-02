@@ -1,4 +1,4 @@
-const path = require("path");
+const path = require("node:path");
 
 module.exports = (env = {}) => {
   const BUILD_PATH = env.BUILD_PATH || path.resolve(__dirname, "build");

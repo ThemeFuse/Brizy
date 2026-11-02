@@ -1,10 +1,10 @@
 import { Scrollbar as Component } from "@brizy/builder-ui-components/src/Scrollbar";
-import {
+import type {
   Props,
   ScrollbarRef,
   ScrollbarUpdateValues
 } from "@brizy/builder-ui-components/src/Scrollbar/types";
-import React, { ForwardRefRenderFunction, forwardRef } from "react";
+import React, { type ForwardRefRenderFunction, forwardRef } from "react";
 
 const ScrollbarComponent: ForwardRefRenderFunction<ScrollbarRef, Props> = (
   {

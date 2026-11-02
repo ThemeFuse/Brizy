@@ -1,5 +1,5 @@
 import React from "react";
-import { ElementPatch } from "visual/component/Elements/Types";
+import type { ElementPatch } from "visual/component/Elements/Types";
 import Toolbar from "visual/component/Toolbar";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import EditorComponent from "visual/editorComponents/EditorComponent";
@@ -23,7 +23,7 @@ class Form2Step extends EditorComponent<Value, Props> {
     this.patchValue(patch);
   };
 
-  renderNav(v: Value): React.JSX.Element {
+  renderNav(v: Value): React.ReactNode {
     const { totalCount, active, activeStep, count, onActiveChange } =
       this.props;
 
@@ -36,7 +36,7 @@ class Form2Step extends EditorComponent<Value, Props> {
         // in preview steps can be changed by passing current step
         viewType = ViewType.Icon;
       } else {
-        return <></>;
+        return null;
       }
     }
 
@@ -90,7 +90,7 @@ class Form2Step extends EditorComponent<Value, Props> {
     return <EditorArrayComponent {...itemProps} />;
   }
 
-  renderForEdit(v: Value): React.JSX.Element {
+  renderForEdit(v: Value): React.ReactNode {
     const { renderType } = this.props;
 
     return renderType === "nav" ? this.renderNav(v) : this.renderContent();

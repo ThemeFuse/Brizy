@@ -1,8 +1,8 @@
-import React, { ReactElement, useEffect, useRef, useState } from "react";
+import React, { type ReactElement, useEffect, useRef, useState } from "react";
 import { CodeMirror as Control } from "visual/component/Controls/CodeMirror";
 import { useDebouncedEffect } from "visual/component/hooks";
-import * as Option from "visual/component/Options/Type";
-import {
+import type * as Option from "visual/component/Options/Type";
+import type {
   WithClassName,
   WithConfig,
   WithPlaceholder,
@@ -38,7 +38,7 @@ export const CodeMirror = ({
       }
     },
     1000,
-    [_value]
+    [_value, value, onChange]
   );
 
   useEffect(() => {

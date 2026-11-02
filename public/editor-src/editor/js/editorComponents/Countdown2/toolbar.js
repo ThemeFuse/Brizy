@@ -406,7 +406,7 @@ export function getItems({ v, device, state, context, editorMode }) {
                   id: "messageText",
                   label: t("Message"),
                   type: "inputText",
-                  disabled: dvv("actions") != "showMessage",
+                  disabled: dvv("actions") !== "showMessage",
                   placeholder: t("Message sent"),
                   population: richTextDC,
                   devices: "desktop",

@@ -1,7 +1,7 @@
 import React from "react";
 import { ThemeIcon } from "visual/component/ThemeIcon";
-import { CoverProps as Props } from "../types";
-import { FCC } from "visual/utils/react/types";
+import type { FCC } from "visual/utils/react/types";
+import type { CoverProps as Props } from "../types";
 
 export const Cover: FCC<Props> = ({ attributes, handleCoverIconClick }) => {
   return (

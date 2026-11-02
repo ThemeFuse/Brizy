@@ -1,5 +1,5 @@
-export { pipe } from "./pipe";
 export { mPipe } from "./mPipe";
+export { pipe } from "./pipe";
 
 export function pass<A, B extends A>(
   predicate: (a: A) => a is B
@@ -17,4 +17,7 @@ export function tap<T>(fn: (v: T) => void) {
   };
 }
 
-export const always = <T>(t: T): (() => T) => (): T => t;
+export const always =
+  <T>(t: T): (() => T) =>
+  (): T =>
+    t;

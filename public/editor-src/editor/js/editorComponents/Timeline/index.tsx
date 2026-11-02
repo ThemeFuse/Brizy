@@ -1,11 +1,11 @@
 import classnames from "classnames";
-import React, { ReactNode } from "react";
+import React, { type ReactNode } from "react";
 import CustomCSS from "visual/component/CustomCSS";
-import { ElementModel } from "visual/component/Elements/Types";
+import type { ElementModel } from "visual/component/Elements/Types";
 import EditorComponent, {
-  Props as EProps
+  type Props as EProps
 } from "visual/editorComponents/EditorComponent";
-import { ComponentsMeta } from "visual/editorComponents/EditorComponent/types";
+import type { ComponentsMeta } from "visual/editorComponents/EditorComponent/types";
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import { getContainerW, getMargin } from "visual/utils/meta";
 import { defaultValueValue } from "visual/utils/onChange";
@@ -13,7 +13,7 @@ import * as Num from "visual/utils/reader/number";
 import {
   DESKTOP,
   MOBILE,
-  ResponsiveMode,
+  type ResponsiveMode,
   TABLET
 } from "visual/utils/responsiveMode";
 import { styleMarginType } from "visual/utils/style2";

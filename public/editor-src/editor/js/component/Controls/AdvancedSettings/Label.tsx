@@ -1,6 +1,6 @@
-import React, { JSX } from "react";
+import React, { type JSX } from "react";
 import EditorIcon from "visual/component/EditorIcon";
-import { LabelProps } from "./types";
+import type { LabelProps } from "./types";
 
 export const Label = ({ label, helperContent }: LabelProps): JSX.Element => (
   <div className="brz-ed-option__label">

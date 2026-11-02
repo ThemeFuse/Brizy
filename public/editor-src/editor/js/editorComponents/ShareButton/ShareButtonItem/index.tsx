@@ -1,12 +1,12 @@
 import classnames from "classnames";
-import React, { ReactNode } from "react";
+import React, { type ReactNode } from "react";
 import { TextEditor } from "visual/component/Controls/TextEditor";
 import { ThemeIcon } from "visual/component/ThemeIcon";
 import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import { makeDataAttr } from "visual/utils/i18n/attribute";
-import { ItemValue, View } from "../types";
+import { type ItemValue, View } from "../types";
 import { getNetworkInfo, getView } from "../utils";
 import defaultValue from "./defaultValue.json";
 import * as sidebarExtend from "./sidebarExtend";

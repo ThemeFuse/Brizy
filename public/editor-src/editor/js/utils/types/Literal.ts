@@ -1,7 +1,7 @@
-import { Reader } from "visual/utils/types/Type";
 import { NumberSpec } from "visual/utils/math/number";
-import { String } from "visual/utils/string/specs";
-import { IsEqual } from "visual/utils/types/Eq";
+import { StringSpec } from "visual/utils/string/specs";
+import type { IsEqual } from "visual/utils/types/Eq";
+import type { Reader } from "visual/utils/types/Type";
 
 /**
  * Literal is a value type that allows both string or numeric values
@@ -14,7 +14,7 @@ export const read: Reader<Literal> = (v) => {
     return NumberSpec.read(v);
   }
 
-  return String.read(v);
+  return StringSpec.read(v);
 };
 
 export const eq: IsEqual<Literal> = (a, b) => a === b;

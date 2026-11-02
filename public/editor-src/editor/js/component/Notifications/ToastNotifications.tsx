@@ -1,5 +1,5 @@
 import React from "react";
-import { Slide, ToastOptions, toast } from "react-toastify";
+import { Slide, type ToastOptions, toast } from "react-toastify";
 import { SVGInfo } from "./icons";
 
 function generateOptions(hideAfter = 3): ToastOptions {

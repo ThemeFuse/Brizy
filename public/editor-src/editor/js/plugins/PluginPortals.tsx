@@ -8,8 +8,6 @@ export function PluginPortals(): JSX.Element {
   const floatingPanels = usePluginSlot("floatingPanel");
 
   return (
-    <>
-      {floatingPanels.map((c) => c.component && <c.component key={c.id} />)}
-    </>
+    <>{floatingPanels.map((c) => c.component && <c.component key={c.id} />)}</>
   );
 }

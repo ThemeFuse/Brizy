@@ -1,11 +1,11 @@
 import { keyToDCFallback2Key } from "visual/editorComponents/EditorComponent/DynamicContent/utils";
-import { GetItems } from "visual/editorComponents/EditorComponent/types";
-import { DCTypes } from "visual/global/Config/types/DynamicContent";
+import type { GetItems } from "visual/editorComponents/EditorComponent/types";
 import {
   getEnabledLinkOptions,
   isImagePointerEnabled,
   isImageZoomEnabled
 } from "visual/global/Config/types/configs/featuresValue";
+import { DCTypes } from "visual/global/Config/types/DynamicContent";
 import { isPopup, isStory } from "visual/providers/EditorModeProvider";
 import { getColorToolbar } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
@@ -24,7 +24,7 @@ import { read as readString } from "visual/utils/reader/string";
 import { HOVER, NORMAL } from "visual/utils/stateMode";
 import { toolbarLinkAnchor } from "visual/utils/toolbar";
 import { SizeType } from "../../global/Config/types/configs/common";
-import { Device, GalleryRenderer, Props, V as Value } from "./types";
+import type { Device, GalleryRenderer, Props, V as Value } from "./types";
 import { getImageDCSize } from "./utils";
 
 interface Data {

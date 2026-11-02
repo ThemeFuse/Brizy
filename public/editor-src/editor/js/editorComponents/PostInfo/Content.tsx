@@ -1,9 +1,9 @@
-import React, { ReactElement } from "react";
+import React, { type ReactElement } from "react";
 import { PostInfoEditor, PostInfoPreview } from "visual/component/BrizyBuilder";
 import Placeholder from "visual/component/Placeholder";
 import { useDC } from "visual/editorComponents/EditorComponent/DynamicContent/useDC";
-import { RenderType, isEditor } from "visual/providers/RenderProvider";
-import { Slug } from "./types";
+import { isEditor, type RenderType } from "visual/providers/RenderProvider";
+import type { Slug } from "./types";
 import { getPlaceholder } from "./utils";
 
 export const Content = ({

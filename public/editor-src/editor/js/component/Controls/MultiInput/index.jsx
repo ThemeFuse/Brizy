@@ -96,6 +96,7 @@ class MultiInputOptionType extends React.Component {
 
     const inputs = value.map((v, index) => (
       <div
+        // biome-ignore lint/suspicious/noArrayIndexKey: each input is a fixed slot of the value tuple; the index is the slot
         key={index}
         className="brz-ed-option__multi-input-container"
         onMouseEnter={() => this.handleMouseEnter(index)}

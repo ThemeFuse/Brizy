@@ -19,7 +19,7 @@ import { t } from "visual/utils/i18n";
 import type { ElementModelWithSymbols } from "visual/utils/symbols/types";
 import type { MValue } from "visual/utils/value";
 import { handleComponentSymbolCreate } from "../../utils/symbols";
-import EditorArrayComponent from "../EditorArrayComponent";
+import type EditorArrayComponent from "../EditorArrayComponent";
 
 const getItems =
   (itemIndex: number) => (v: ElementModel, component: EditorArrayComponent) => {

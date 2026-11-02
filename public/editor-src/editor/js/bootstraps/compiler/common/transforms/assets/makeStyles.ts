@@ -1,9 +1,9 @@
 import type { CheerioAPI } from "cheerio";
 import LibsConfig from "visual/bootstraps/libs.json";
-import { Config, isWp } from "visual/global/Config";
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import { type Config, isWp } from "visual/global/Config";
+import type { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { SCSSSheet } from "visual/providers/StyleProvider/SCSSSheet";
-import { ExtraFontData } from "visual/types/Fonts";
+import type { ExtraFontData } from "visual/types/Fonts";
 import { compileAssetProUrl, compileAssetUrl } from "visual/utils/asset";
 import { makePrefetchFonts } from "visual/utils/fonts/makeFontsUrl";
 import { makeDataAttr } from "visual/utils/i18n/attribute";
@@ -11,7 +11,7 @@ import { toHashCode } from "visual/utils/string";
 import { getCustomCSS } from "./getCustomCSS";
 import { getDCColor } from "./getDCColor";
 import { getFontLinks } from "./getProjectFonts";
-import {
+import type {
   Asset,
   AssetAdobe,
   AssetGoogle,

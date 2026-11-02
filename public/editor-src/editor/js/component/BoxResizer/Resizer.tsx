@@ -1,4 +1,4 @@
-import React, { Component, ForwardedRef, RefObject } from "react";
+import React, { Component, type ForwardedRef, type RefObject } from "react";
 import {
   calcMaxHeightBasedOnWidth,
   calcRectangleSide,
@@ -8,7 +8,7 @@ import ClickOutside from "visual/component/ClickOutside";
 import { DraggableDiv } from "visual/component/DraggableDiv";
 import { clamp } from "visual/utils/math";
 import { attachRefs } from "visual/utils/react";
-import {
+import type {
   Patch,
   Point,
   ResizerPassThroughProps,
@@ -36,9 +36,7 @@ interface DragInfo {
   deltaY: number;
 }
 
-interface DragHandler {
-  (dragInfo: DragInfo): void;
-}
+type DragHandler = (dragInfo: DragInfo) => void;
 
 const DEFAULT_POINTS: Point[] = [
   "topCenter",
@@ -198,7 +196,7 @@ export class Resizer extends Component<Props, State> {
         const min = restrictions?.[key]?.min ?? 0;
         let max = restrictions?.[key]?.max ?? Infinity;
 
-        let offset;
+        let offset: number;
         const isSizeChanging = arr.length === 2;
         if (keepAspectRatio && isSizeChanging) {
           const [, dx, , dy] = patchData.flat();

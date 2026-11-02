@@ -1,11 +1,11 @@
 import classnames from "classnames";
 import React from "react";
-import { ElementModel } from "visual/component/Elements/Types";
+import type { ElementModel } from "visual/component/Elements/Types";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import { Multistep } from "./Components/Multistep";
-import Form2StepFieldItems from "./Items";
 import defaultValue from "./defaultValue.json";
+import Form2StepFieldItems from "./Items";
 import * as sidebarExtend from "./sidebarExtend";
 import { style } from "./styles";
 import * as toolbarExtend from "./toolbarExtend";

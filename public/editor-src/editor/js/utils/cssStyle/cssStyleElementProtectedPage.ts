@@ -1,8 +1,8 @@
 import { cssStyleSizeWidth } from "visual/utils/cssStyle";
 import { defaultValueValue } from "visual/utils/onChange";
 import { styleColor } from "visual/utils/style2";
-import { MValue } from "visual/utils/value";
-import { CSSValue } from "../style2/types";
+import type { MValue } from "visual/utils/value";
+import type { CSSValue } from "../style2/types";
 
 type Get = (k: string) => MValue<unknown>;
 

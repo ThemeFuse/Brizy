@@ -1,7 +1,8 @@
-import { ElementModel } from "visual/component/Elements/Types";
+import type { ElementModel } from "visual/component/Elements/Types";
+import { hasTransform } from "visual/component/TransformWrapper/utils";
 import { createOptionId } from "visual/editorComponents/EditorComponent/utils";
 import { isEditor } from "visual/providers/RenderProvider";
-import { DynamicStylesProps } from "visual/types";
+import type { DynamicStylesProps } from "visual/types";
 import { renderStyles } from "visual/utils/cssStyle";
 import type { OutputStyle } from "visual/utils/cssStyle/types";
 import { defaultValueValue } from "visual/utils/onChange";
@@ -10,7 +11,7 @@ import { types as Devices } from "visual/utils/responsiveMode";
 import { NORMAL } from "visual/utils/stateMode";
 
 export function styleRow(data: DynamicStylesProps<ElementModel>): OutputStyle {
-  const { v, contexts } = data;
+  const { v, store, contexts } = data;
 
   const _isEditor = isEditor(contexts.renderContext);
 
@@ -41,6 +42,11 @@ export function styleRow(data: DynamicStylesProps<ElementModel>): OutputStyle {
 
   const hoverContainer =
     hoverName === "none" ? "" : ".brz-hover-animation__container > ";
+  const enabledTransform = hasTransform(v, store);
+  const transformSelector = `${innerDivFromMotion}${hoverContainer}.brz-row__transform`;
+  const innerWrappers = enabledTransform
+    ? `${transformSelector} > `
+    : `${innerDivFromMotion}${hoverContainer}`;
 
   const styles = {
     ".brz &&": {
@@ -52,14 +58,15 @@ export function styleRow(data: DynamicStylesProps<ElementModel>): OutputStyle {
       ]
     },
 
-    [`.brz && > ${innerDivFromMotion}${hoverContainer}.brz-bg`]: {
+    [`.brz && > ${innerWrappers}.brz-bg`]: {
       standart: [
         "cssStyleBorderRadius",
         "cssStyleSizeMaxWidthSize",
-        "cssStyleBlendMode"
+        "cssStyleBlendMode",
+        ...(enabledTransform ? ["cssStyleRowTransformBg"] : [])
       ]
     },
-    [`.brz &&:hover > ${innerDivFromMotion}${hoverContainer}.brz-bg`]: {
+    [`.brz &&:hover > ${innerWrappers}.brz-bg`]: {
       standart: [
         "cssStyleBorder",
         ...(maskShape === "none"
@@ -67,68 +74,70 @@ export function styleRow(data: DynamicStylesProps<ElementModel>): OutputStyle {
           : ["cssStyleMaskDropShadow"])
       ]
     },
-    [`.brz && > ${innerDivFromMotion}${hoverContainer}.brz-bg > .brz-bg-image`]:
-      {
-        standart: [
-          "cssStyleBgSize",
-          "cssStyleBgRepeat",
-          "cssStyleMaskShape",
-          "cssStyleMaskCustomShape",
-          "cssStyleMaskSize",
-          "cssStyleMaskPosition",
-          "cssStyleMaskRepeat"
-        ]
-      },
-    [`.brz &&:hover > ${innerDivFromMotion}${hoverContainer}.brz-bg > .brz-bg-image`]:
-      {
-        standart: [
-          "cssStyleBgImage",
-          "cssStyleFilter",
-          "cssStyleBgImagePosition",
-          "cssStyleBgMediaImage"
-        ]
-      },
-    [`.brz &&:hover > ${innerDivFromMotion}${hoverContainer}.brz-bg > .brz-bg-image:after`]:
-      {
-        standart: ["cssStyleBgImageHover"]
-      },
-    [`.brz && > ${innerDivFromMotion}${hoverContainer}.brz-bg > .brz-bg-color`]:
-      {
-        standart: [
-          "cssStyleMaskShape",
-          "cssStyleMaskCustomShape",
-          "cssStyleMaskSize",
-          "cssStyleMaskPosition",
-          "cssStyleMaskRepeat"
-        ]
-      },
-    [`.brz &&:hover > ${innerDivFromMotion}${hoverContainer}.brz-bg > .brz-bg-color`]:
-      {
-        standart: ["cssStyleBgColor", "cssStyleBgGradient"]
-      },
-    [`.brz && > ${innerDivFromMotion}${hoverContainer}.brz-bg > .brz-bg-map`]: {
+    [`.brz && > ${innerWrappers}.brz-bg > .brz-bg-image`]: {
+      standart: [
+        "cssStyleBgSize",
+        "cssStyleBgRepeat",
+        "cssStyleMaskShape",
+        "cssStyleMaskCustomShape",
+        "cssStyleMaskSize",
+        "cssStyleMaskPosition",
+        "cssStyleMaskRepeat"
+      ]
+    },
+    [`.brz &&:hover > ${innerWrappers}.brz-bg > .brz-bg-image`]: {
+      standart: [
+        "cssStyleBgImage",
+        "cssStyleFilter",
+        "cssStyleBgImagePosition",
+        "cssStyleBgMediaImage"
+      ]
+    },
+    [`.brz &&:hover > ${innerWrappers}.brz-bg > .brz-bg-image:after`]: {
+      standart: ["cssStyleBgImageHover"]
+    },
+    [`.brz && > ${innerWrappers}.brz-bg > .brz-bg-color`]: {
+      standart: [
+        "cssStyleMaskShape",
+        "cssStyleMaskCustomShape",
+        "cssStyleMaskSize",
+        "cssStyleMaskPosition",
+        "cssStyleMaskRepeat"
+      ]
+    },
+    [`.brz &&:hover > ${innerWrappers}.brz-bg > .brz-bg-color`]: {
+      standart: ["cssStyleBgColor", "cssStyleBgGradient"]
+    },
+    [`.brz && > ${innerWrappers}.brz-bg > .brz-bg-map`]: {
       standart: ["cssStyleBgMediaMap"]
     },
-    [`.brz &&:hover > ${innerDivFromMotion}${hoverContainer}.brz-bg > .brz-bg-map`]:
-      {
-        standart: ["cssStyleFilter"]
-      },
-    [`.brz && > ${innerDivFromMotion}${hoverContainer}.brz-bg > .brz-bg-video`]:
-      {
-        standart: ["cssStyleBgMediaVideo"]
-      },
-    [`.brz &&:hover > ${innerDivFromMotion}${hoverContainer}.brz-bg > .brz-bg-video`]:
-      {
-        standart: ["cssStyleFilter"]
-      },
-    [`.brz &&:hover > ${innerDivFromMotion}${hoverContainer}.brz-row`]: {
+    [`.brz &&:hover > ${innerWrappers}.brz-bg > .brz-bg-map`]: {
+      standart: ["cssStyleFilter"]
+    },
+    [`.brz && > ${innerWrappers}.brz-bg > .brz-bg-video`]: {
+      standart: ["cssStyleBgMediaVideo"]
+    },
+    [`.brz &&:hover > ${innerWrappers}.brz-bg > .brz-bg-video`]: {
+      standart: ["cssStyleFilter"]
+    },
+    [`.brz &&:hover > ${innerWrappers}.brz-row`]: {
       standart: ["cssStyleBorderTransparentColor", "cssStyleRowReverseColumn"]
     },
-    [`.brz && > ${innerDivFromMotion}${hoverContainer}.brz-row, .brz && > ${innerDivFromMotion}${hoverContainer}.brz-bg > .brz-bg-video, .brz && > ${innerDivFromMotion}${hoverContainer}.brz-bg, .brz && > ${innerDivFromMotion}${hoverContainer}.brz-bg > .brz-bg-image, .brz && > ${innerDivFromMotion}${hoverContainer}.brz-bg > .brz-bg-color`]:
+    [`.brz && > ${innerWrappers}.brz-row, .brz && > ${innerWrappers}.brz-bg > .brz-bg-video, .brz && > ${innerWrappers}.brz-bg, .brz && > ${innerWrappers}.brz-bg > .brz-bg-image, .brz && > ${innerWrappers}.brz-bg > .brz-bg-color`]:
       {
         standart: ["cssStyleHoverTransition", "cssStylePropertyHoverTransition"]
       }
   };
+
+  if (enabledTransform) {
+    styles[`.brz && > ${transformSelector}`] = {
+      standart: [
+        "cssStyleTransform",
+        "cssStyleDisplayFlex",
+        "cssStyleRowTransformWrapper"
+      ]
+    };
+  }
 
   if (_isEditor) {
     styles[".brz &&"].interval.push(

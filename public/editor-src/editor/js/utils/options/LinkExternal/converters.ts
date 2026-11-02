@@ -1,5 +1,5 @@
-import { Str, pipe } from "@brizy/readers";
-import {
+import { pipe, Str } from "@brizy/readers";
+import type {
   FromElementModel,
   ToElementModel
 } from "visual/component/Options/Type";

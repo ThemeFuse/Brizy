@@ -6,7 +6,7 @@ import {
   styleReverseColumnsRow,
   styleReverseColumnsWrap
 } from "visual/utils/style2";
-import { CSSValue } from "visual/utils/style2/types";
+import type { CSSValue } from "visual/utils/style2/types";
 
 export function cssStyleRowMinHeight({ v, device }: CSSValue): string {
   const minHeightType = styleElementColumnMinHeightType({ v, device });
@@ -44,4 +44,12 @@ export function cssStyleRowReverseColumn({
   return device !== "desktop"
     ? `flex-direction:${flexDirection};flex-wrap:${flexWrap};justify-content:${justifyContent};`
     : "";
+}
+
+export function cssStyleRowTransformWrapper(): string {
+  return "width:100%; min-height:inherit; align-items:inherit; justify-content:inherit;";
+}
+
+export function cssStyleRowTransformBg(): string {
+  return "inset-inline-start:auto;";
 }

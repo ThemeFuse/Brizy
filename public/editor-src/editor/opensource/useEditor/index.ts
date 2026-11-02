@@ -1,8 +1,13 @@
-import { RefCallback, useEffect, useReducer, useRef } from "react";
-import { EditorConfig } from "../models/Config";
+import { type RefCallback, useEffect, useReducer, useRef } from "react";
+import type { EditorConfig } from "../models/Config";
 import { useLoadEditor } from "../useLoadEditor";
 import { reducer } from "./reducer";
-import { ActionKind, BuilderGlobal, Instance, State } from "./types";
+import {
+  ActionKind,
+  type BuilderGlobal,
+  type Instance,
+  type State
+} from "./types";
 
 export const useEditor = <T extends Element>(
   token: string,

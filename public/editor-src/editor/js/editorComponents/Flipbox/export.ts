@@ -3,7 +3,7 @@ import type { DeviceMode } from "visual/types";
 import { getCurrentDevice } from "visual/utils/export";
 import { makeAttr } from "visual/utils/i18n/attribute";
 import { FlipboxAccessibility, focusableSelector } from "../accessibility";
-import { FlipboxType, Trigger } from "./types";
+import { type FlipboxType, Trigger } from "./types";
 import type { ClickEvent } from "./types/types.export";
 import { readTrigger } from "./utils";
 import {
@@ -16,13 +16,7 @@ import {
   setFlipboxState
 } from "./utils.export";
 
-export default function ($node: JQuery): void {
-  const node = $node.get(0);
-
-  if (!node) {
-    return;
-  }
-
+export default function (node: HTMLElement): void {
   let lastDevice: DeviceMode = getCurrentDevice();
 
   node.querySelectorAll<HTMLDivElement>(".brz-flipbox").forEach((item) => {

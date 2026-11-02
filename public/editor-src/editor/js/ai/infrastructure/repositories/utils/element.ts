@@ -11,7 +11,7 @@ import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import { getSampleShortCodes } from "visual/shortcodeComponents/Shortcodes";
 import type { Block } from "visual/types/Block";
 import { setIds } from "visual/utils/models";
-import { MValue } from "visual/utils/value";
+import type { MValue } from "visual/utils/value";
 
 // ===========================================
 // ELEMENT TYPE TO SHORTCODE MAPPING
@@ -79,6 +79,14 @@ const CONTAINER_RESTRICTIONS: Record<
   [ElementTypes.Cloneable]: {
     allowOnly: [ElementTypes.Button, ElementTypes.Icon]
   },
+  // CONTAINER_REDIRECTS resolves these to items[0], so emptying one bricks the
+  // block: every later add is rejected, including the repair.
+  [ElementTypes.Section]: {
+    minChildren: 1
+  },
+  [ElementTypes.SectionHeader]: {
+    minChildren: 1
+  },
   [ElementTypes.Wrapper]: {
     forbidden: [
       ElementTypes.Wrapper,
@@ -98,7 +106,10 @@ const CONTAINER_RESTRICTIONS: Record<
   },
   [ElementTypes.Row]: {
     allowOnly: [ElementTypes.Column],
-    maxChildren: 6
+    maxChildren: 6,
+    // An empty Row is a dead end: the Step 2 redirect answers every later add
+    // with "Row has no columns", including the Column that would repair it.
+    minChildren: 1
   },
   [ElementTypes.Switcher]: {
     allowOnly: [ElementTypes.SwitcherTab]
@@ -116,6 +127,15 @@ const CONTAINER_RESTRICTIONS: Record<
     // prev Button, next Button] (see Form2/index.tsx render* slices). Removing
     // any of them silently reassigns the roles of the rest, so allow none.
     minChildren: 5
+  },
+  [ElementTypes.ResetPassword]: {
+    // Positional like Form2 — [new password, confirm, submit Button], read as
+    // items[0,2) and items[2,3) (ResetPassword/index.jsx renderResetPasswordFields
+    // /renderButton). Removing the button empties the second slice; duplicating
+    // a field pushes a field into it. Fixed at three.
+    allowOnly: [ElementTypes.ResetPasswordField, ElementTypes.Button],
+    minChildren: 3,
+    maxChildren: 3
   },
   [ElementTypes.Form2Fields]: {
     allowOnly: [ElementTypes.Form2Field],
@@ -151,6 +171,18 @@ const REQUIRED_PARENT: Record<string, string> = {
   // every page, so without this a Shape lands in a Column as a position:fixed
   // box. Slides are the only StoryItems, so this is also the story-mode check.
   [ElementTypes.StoryShape]: ElementTypes.StoryItem
+};
+
+/**
+ * Where a minChildren rejection should send the caller instead. Emptying one of
+ * these containers is almost always a request to delete the container itself,
+ * so the error names the route out rather than leaving the caller stuck.
+ */
+const MIN_CHILDREN_HINTS: Record<string, string> = {
+  [ElementTypes.Section]: " To delete the whole block, use removeBlock.",
+  [ElementTypes.SectionHeader]: " To delete the whole block, use removeBlock.",
+  [ElementTypes.Row]:
+    " To remove the last column, remove the Row itself with removeElement."
 };
 
 /**
@@ -275,48 +307,11 @@ export function correctContainerForElement(
     currentPath = [...currentPath, ...FIRST_ITEM_PATH];
   }
 
-  // Step 3: Check element restrictions for the final container
-  const finalRestriction = CONTAINER_RESTRICTIONS[current.type];
+  // Steps 3-4: element restrictions and required-parent check.
+  const accepted = canContainerAccept(current, elementType);
 
-  if (finalRestriction) {
-    // Check whitelist (allowOnly)
-    if (
-      finalRestriction.allowOnly &&
-      !finalRestriction.allowOnly.includes(elementType)
-    ) {
-      return {
-        success: false,
-        error: `${current.type} only accepts: ${finalRestriction.allowOnly.join(", ")}. Cannot add ${elementType}.`
-      };
-    }
-
-    // Check blacklist (forbidden)
-    if (finalRestriction.forbidden?.includes(elementType)) {
-      return {
-        success: false,
-        error: `${elementType} cannot be nested inside ${current.type}.`
-      };
-    }
-
-    // Check maxChildren limit
-    if (finalRestriction.maxChildren !== undefined) {
-      const currentChildren = current.value?.items?.length ?? 0;
-      if (currentChildren >= finalRestriction.maxChildren) {
-        return {
-          success: false,
-          error: `${current.type} can have maximum ${finalRestriction.maxChildren} children. Currently has ${currentChildren}.`
-        };
-      }
-    }
-  }
-
-  // Step 4: Check if element requires a specific parent type
-  const requiredParent = REQUIRED_PARENT[elementType];
-  if (requiredParent && current.type !== requiredParent) {
-    return {
-      success: false,
-      error: `${elementType} can ONLY be added inside a ${requiredParent}. The provided container is a ${current.type}. Use searchElements({type:'${requiredParent}'}) to find the correct container ID.`
-    };
+  if (!accepted.success) {
+    return accepted;
   }
 
   return {
@@ -324,6 +319,63 @@ export function correctContainerForElement(
     container: current,
     path: currentPath
   };
+}
+
+export type ContainerAcceptResult =
+  | { success: true }
+  | { success: false; error: string };
+
+/**
+ * Can this container hold a new child of `elementType`?
+ *
+ * Shared by all three insertion paths: addElement and moveElement reach it
+ * through correctContainerForElement, duplicateElement calls it directly.
+ */
+export function canContainerAccept(
+  container: ElementModelType2,
+  elementType: string
+): ContainerAcceptResult {
+  const restriction = CONTAINER_RESTRICTIONS[container.type];
+
+  if (restriction) {
+    // Check whitelist (allowOnly)
+    if (restriction.allowOnly && !restriction.allowOnly.includes(elementType)) {
+      return {
+        success: false,
+        error: `${container.type} only accepts: ${restriction.allowOnly.join(", ")}. Cannot add ${elementType}.`
+      };
+    }
+
+    // Check blacklist (forbidden)
+    if (restriction.forbidden?.includes(elementType)) {
+      return {
+        success: false,
+        error: `${elementType} cannot be nested inside ${container.type}.`
+      };
+    }
+
+    // Check maxChildren limit
+    if (restriction.maxChildren !== undefined) {
+      const currentChildren = container.value?.items?.length ?? 0;
+      if (currentChildren >= restriction.maxChildren) {
+        return {
+          success: false,
+          error: `${container.type} can have maximum ${restriction.maxChildren} children. Currently has ${currentChildren}.`
+        };
+      }
+    }
+  }
+
+  // Elements that can only live under a specific parent type
+  const requiredParent = REQUIRED_PARENT[elementType];
+  if (requiredParent && container.type !== requiredParent) {
+    return {
+      success: false,
+      error: `${elementType} can ONLY be added inside a ${requiredParent}. The provided container is a ${container.type}. Use searchElements({type:'${requiredParent}'}) to find the correct container ID.`
+    };
+  }
+
+  return { success: true };
 }
 
 // ===========================================
@@ -361,11 +413,13 @@ export function removeElementFromBlock(
   // Check minChildren before removal
   const parentPath = relativePath.slice(0, -3);
 
-  if (parentPath.length > 0) {
-    const parentBeforeRemoval = getIn(
-      block,
-      parentPath
-    ) as MValue<ElementModelType2>;
+  {
+    // An empty parentPath means the element is a direct child of the block, so
+    // the block itself is the parent (the Section/SectionHeader case).
+    const parentBeforeRemoval =
+      parentPath.length > 0
+        ? (getIn(block, parentPath) as MValue<ElementModelType2>)
+        : (block as MValue<ElementModelType2>);
 
     if (parentBeforeRemoval) {
       const restriction = CONTAINER_RESTRICTIONS[parentBeforeRemoval.type];
@@ -376,7 +430,7 @@ export function removeElementFromBlock(
         if (currentChildren <= restriction.minChildren) {
           return {
             success: false,
-            error: `${parentBeforeRemoval.type} must have at least ${restriction.minChildren} child${restriction.minChildren === 1 ? "" : "ren"}. Currently has ${currentChildren}.`
+            error: `${parentBeforeRemoval.type} must have at least ${restriction.minChildren} child${restriction.minChildren === 1 ? "" : "ren"}. Currently has ${currentChildren}.${MIN_CHILDREN_HINTS[parentBeforeRemoval.type] ?? ""}`
           };
         }
       }
@@ -477,7 +531,7 @@ export function duplicateElementInBlock(
   insertAfter: boolean
 ): MValue<DuplicateElementInBlockResult> {
   const parentPath = relativePath.slice(0, -3);
-  const elementIndex = parseInt(relativePath[relativePath.length - 1]);
+  const elementIndex = parseInt(relativePath[relativePath.length - 1], 10);
 
   let cloneTargetPath: string[] = relativePath;
   let cloneTargetIndex: number = elementIndex;
@@ -494,7 +548,7 @@ export function duplicateElementInBlock(
       } else {
         // Clone the whole Wrapper/Wrapper2 (structural unit)
         cloneTargetPath = parentPath;
-        cloneTargetIndex = parseInt(parentPath[parentPath.length - 1]);
+        cloneTargetIndex = parseInt(parentPath[parentPath.length - 1], 10);
         const grandparentPath = parentPath.slice(0, -3);
         itemsParentPath = [...grandparentPath, ...toItems];
       }
@@ -750,7 +804,7 @@ export function updateColumnInRow(
       if (parentRow && isRowElement(parentRow.type)) {
         const columns =
           (parentRow.value?.items as ElementModelType[] | undefined) || [];
-        const columnIndex = parseInt(relativePath[relativePath.length - 1]);
+        const columnIndex = parseInt(relativePath[relativePath.length - 1], 10);
 
         const result = redistributeColumnWidths(
           columns,
@@ -803,7 +857,28 @@ function redistributeColumnWidths(
 ): RedistributeResult {
   const siblingCount = columns.length - 1;
 
-  if (siblingCount <= 0) return { success: true, columns: undefined };
+  if (columns.length === 0) return { success: true, columns: undefined };
+
+  // A lone column always spans the full row: with no siblings to take the
+  // remainder, any other width cannot apply, and reporting success would let
+  // the agent tell the user the width changed.
+  if (siblingCount === 0) {
+    if (targetWidth !== ROW_WIDTH) {
+      return {
+        success: false,
+        error: `A single column always spans the full row, so its width stays ${ROW_WIDTH}% and ${targetWidth}% was not applied. Do not call it again: tell the user the width cannot change while the column is alone in its row.`
+      };
+    }
+
+    return {
+      success: true,
+      columns: columns.map((col, i) =>
+        i === targetIndex
+          ? (setIn(col, ["value", "width"], ROW_WIDTH) as ElementModelType)
+          : col
+      )
+    };
+  }
 
   // Validate target column width
   if (targetWidth < MIN_COLUMN_WIDTH_PERCENT) {

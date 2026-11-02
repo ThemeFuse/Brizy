@@ -1,17 +1,17 @@
-import React, { ReactElement, useCallback } from "react";
+import React, { type ReactElement, useCallback } from "react";
 import {
-  Props as RadioGroup2Props,
-  RadioGroup2
+  RadioGroup2,
+  type Props as RadioGroup2Props
 } from "visual/component/Controls/RadioGroup2";
 import { Item } from "visual/component/Controls/RadioGroup2/Item";
-import {
+import type {
   Props as OptionProps,
   SimpleValue
 } from "visual/component/Options/Type";
-import { WithClassName } from "visual/types/attributes";
+import type { WithClassName } from "visual/types/attributes";
+import type { Literal } from "visual/utils/types/Literal";
 import * as L from "visual/utils/types/Literal";
-import { Literal } from "visual/utils/types/Literal";
-import { Choice } from "./Choice";
+import type { Choice } from "./Choice";
 
 export type Props = OptionProps<SimpleValue<Literal>> &
   WithClassName & {
@@ -33,10 +33,10 @@ export const RadioGroup = ({
     <>
       {label}
       <RadioGroup2<Literal> onChange={_onChange}>
-        {choices.map(({ value: v, icon, title }, i) => (
+        {choices.map(({ value: v, icon, title }) => (
           <Item
             title={title ?? ""}
-            key={i}
+            key={v}
             icon={icon}
             value={v}
             active={L.eq(v, value)}

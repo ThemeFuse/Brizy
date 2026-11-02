@@ -1,13 +1,18 @@
 import { type DebouncedFunction, debounce } from "es-toolkit";
-import React, { Component, ComponentType, MouseEvent, TouchEvent } from "react";
-import {
+import React, {
+  Component,
+  type ComponentType,
+  type MouseEvent,
+  type TouchEvent
+} from "react";
+import type {
   ChangeFunction,
   HSLAChange,
   HSVAChange,
   OnSwatchHover
 } from "visual/component/Controls/ColorPicker2/types";
-import { GlobalMeta } from "visual/component/Controls/types";
-import { Props as PickerProps } from "../Brizy";
+import type { GlobalMeta } from "visual/component/Controls/types";
+import type { Props as PickerProps } from "../Brizy";
 import color from "../helpers/color";
 
 import HSVA = tinycolor.ColorFormats.HSVA;
@@ -35,7 +40,9 @@ export interface State {
   prevColor: Props["color"];
 }
 
-export const ColorWrap = (Picker: ComponentType<PickerProps>): ComponentType<Props> => {
+export const ColorWrap = (
+  Picker: ComponentType<PickerProps>
+): ComponentType<Props> => {
   class ColorPicker extends Component<Props, State> {
     private debounce: DebouncedFunction<
       (
@@ -84,11 +91,12 @@ export const ColorWrap = (Picker: ComponentType<PickerProps>): ComponentType<Pro
           data.hsv || this.state.hsv
         );
         this.setState(colors);
-        this.props.onChangeComplete &&
+        if (this.props.onChangeComplete) {
           // @ts-expect-error no HSV or HSL here
           this.debounce(this.props.onChangeComplete, colors, meta);
+        }
 
-        this.props.onChange &&
+        if (this.props.onChange) {
           this.props.onChange(
             // @ts-expect-error no HSV or HSL here
             {
@@ -97,6 +105,7 @@ export const ColorWrap = (Picker: ComponentType<PickerProps>): ComponentType<Pro
             },
             meta
           );
+        }
       }
     };
 
@@ -113,7 +122,7 @@ export const ColorWrap = (Picker: ComponentType<PickerProps>): ComponentType<Pro
         );
         this.setState(colors);
         // @ts-expect-error to HSV or HSL
-        this.props.onSwatchHover && this.props.onSwatchHover(colors, event);
+        if (this.props.onSwatchHover) this.props.onSwatchHover(colors, event);
       }
     };
 

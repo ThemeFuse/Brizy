@@ -2,18 +2,18 @@ import classnames from "classnames";
 import { noop } from "es-toolkit";
 import { isT, match } from "fp-utilities";
 import React, {
-  CSSProperties,
   Component,
-  ComponentType,
-  PropsWithChildren,
-  ReactElement
+  type ComponentType,
+  type CSSProperties,
+  type PropsWithChildren,
+  type ReactElement
 } from "react";
 import EditorIcon from "visual/component/EditorIcon";
 import { Scrollbar } from "visual/component/Scrollbar";
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import type { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { assetUrl } from "visual/utils/asset";
 import { t } from "visual/utils/i18n";
-import { MValue } from "visual/utils/value";
+import type { MValue } from "visual/utils/value";
 import { Button } from "../../common/Button";
 import DataFilter from "../common/DataFilter";
 import { Footer } from "../common/Footer";
@@ -24,13 +24,13 @@ import ThumbnailGrid from "../common/ThumbnailGrid";
 import { isBlock, isLayout, isPopup } from "../common/utils";
 import {
   ALL_CAT,
-  BlockCategory,
-  BlockTypes,
+  type BlockCategory,
+  type BlockTypes,
   UNCATEGORISED_CAT
 } from "../types";
 import CloudConnect from "./CloudConnect";
 import { Filter } from "./Filter";
-import { BlockData } from "./types";
+import type { BlockData } from "./types";
 
 export interface Props {
   activeType?: BlockCategory;
@@ -178,9 +178,12 @@ class Blocks extends Component<Props> {
 
     filteredItems
       .filter((item) => item.type === this.currentFilter.type)
-      .map((item) => item.tags?.split(","))
-      .flat()
-      .forEach((tag) => tag && tags.add(tag));
+      .flatMap((item) => item.tags?.split(","))
+      .forEach((tag) => {
+        if (tag) {
+          tags.add(tag);
+        }
+      });
 
     return [...tags].map((t) => ({
       item: t,
@@ -191,11 +194,10 @@ class Blocks extends Component<Props> {
 
   getTypesCounters = (): Counters => {
     const { items, types } = this.props;
-    const blocks = Object.values(items)
-      .filter(isT)
-      .flatMap((i) => i);
-    const counters: Counters = types.reduce((acc, { id }) => {
-      return { ...acc, [id]: 0 };
+    const blocks = Object.values(items).filter(isT).flat();
+    const counters: Counters = types.reduce<Counters>((acc, { id }) => {
+      acc[id] = 0;
+      return acc;
     }, {});
 
     blocks.forEach(({ type }) => {
@@ -415,9 +417,7 @@ class Blocks extends Component<Props> {
       onSuccessSync,
       config
     } = this.props;
-    const data = Object.values(items)
-      .filter(isT)
-      .flatMap((i) => i);
+    const data = Object.values(items).filter(isT).flat();
 
     return (
       <DataFilter<BlockData, BlocksFilter>

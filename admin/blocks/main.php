@@ -252,13 +252,23 @@ class Brizy_Admin_Blocks_Main
     {
 
         $resultBlocks = array();
-        $allBlocks = get_posts(array(
-            'post_type' => [self::CP_GLOBAL],
-            'numberposts' => -1,
-            'post_status' => 'publish',
-        ));
-        $ruleManager = new Brizy_Admin_Rules_Manager();
-        $ruleSets = [];
+	    $args         = array(
+		    'post_type'   => [ self::CP_GLOBAL ],
+		    'numberposts' => - 1,
+		    'post_status' => 'publish',
+	    );
+
+	    if ( !Brizy_Admin_Blocks_CookieBanner::isCookieBannerEnabled() ) {
+			$args['meta_query'][] = array(
+				'key'     => 'brizy_post_uid',
+				'value'   => Brizy_Admin_Blocks_CookieBanner::UID_PREFIX,
+				'compare' => 'NOT LIKE',
+			);
+		}
+
+	    $allBlocks    = get_posts( $args );
+        $ruleManager  = new Brizy_Admin_Rules_Manager();
+        $ruleSets     = [];
         foreach ($allBlocks as $aBlock) {
             $ruleSets[$aBlock->ID] = $ruleManager->getRuleSet($aBlock->ID);
         }

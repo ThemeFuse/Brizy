@@ -14,8 +14,11 @@ import { Chart } from "@brizy/builder-icons/src/Icons/Chart";
 import { Close } from "@brizy/builder-icons/src/Icons/Close";
 import { Collapse } from "@brizy/builder-icons/src/Icons/Collapse";
 import { Contract } from "@brizy/builder-icons/src/Icons/Contract";
+import { CookieBanner } from "@brizy/builder-icons/src/Icons/CookieBanner";
+import { CookieBannerBadge } from "@brizy/builder-icons/src/Icons/CookieBannerBadge";
 import { EditMenuItem } from "@brizy/builder-icons/src/Icons/EditMenuItem";
 import { Expand } from "@brizy/builder-icons/src/Icons/Expand";
+import { HorisontalThumb } from "@brizy/builder-icons/src/Icons/HorisontalThumb";
 import { InstagramFeed } from "@brizy/builder-icons/src/Icons/InstagramFeed";
 import { LinkedinFeed } from "@brizy/builder-icons/src/Icons/LinkedinFeed";
 import { MinistryBrandsArticleFeatured } from "@brizy/builder-icons/src/Icons/MinistryBrandsArticleFeatured";
@@ -38,7 +41,6 @@ import { ShopifyVariantStyleImage } from "@brizy/builder-icons/src/Icons/Shopify
 import { ShopifyVariantStyleRadio } from "@brizy/builder-icons/src/Icons/ShopifyVariantStyleRadio";
 import { ShopifyVariantStyleSelect } from "@brizy/builder-icons/src/Icons/ShopifyVariantStyleSelect";
 import { ShopifyVendor } from "@brizy/builder-icons/src/Icons/ShopifyVendor";
-import { HorisontalThumb } from "@brizy/builder-icons/src/Icons/HorisontalThumb";
 import { VerticalThumb } from "@brizy/builder-icons/src/Icons/VerticalThumb";
 import { MinistryBrandsArticleDetail } from "@brizy/ui-icons/es/icons/MinistryBrandsArticleDetail";
 import { MinistryBrandsArticleLayout } from "@brizy/ui-icons/es/icons/MinistryBrandsArticleLayout";
@@ -58,7 +60,7 @@ import { MinistryBrandsSermonLayout } from "@brizy/ui-icons/es/icons/MinistryBra
 import { MinistryBrandsSermonList } from "@brizy/ui-icons/es/icons/MinistryBrandsSermonList";
 import { MinistryBrandsStaffList } from "@brizy/ui-icons/es/icons/MinistryBrandsStaffList";
 import { StarShapes } from "@brizy/ui-icons/es/icons/StarShapes";
-import React, { CSSProperties, MouseEvent } from "react";
+import React, { type CSSProperties, type MouseEvent } from "react";
 
 const Icons = {
   "t2-article-layout": MinistryBrandsArticleLayout,
@@ -120,7 +122,9 @@ const Icons = {
   "t2-expand": Expand,
   "t2-contract": Contract,
   "t2-horisontal-thumb": HorisontalThumb,
-  "t2-vertical-thumb": VerticalThumb
+  "t2-vertical-thumb": VerticalThumb,
+  "t2-cookie-banner": CookieBanner,
+  "t2-cookie-banner-badge": CookieBannerBadge
 };
 
 export type IconNames = keyof typeof Icons;

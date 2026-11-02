@@ -1,12 +1,12 @@
-import {
+import type {
   ElementDefaultValue,
   ElementModel
 } from "visual/component/Elements/Types";
-import { Model } from "visual/editorComponents/EditorComponent/types";
+import type { Model } from "visual/editorComponents/EditorComponent/types";
 import EditorComponents from "visual/global/Editor";
 import { rulesSelector } from "visual/redux/selectors";
-import { ReduxState } from "visual/redux/types";
-import { MValue } from "visual/utils/value";
+import type { ReduxState } from "visual/redux/types";
+import type { MValue } from "visual/utils/value";
 
 export type FontType = "google" | "adobe" | "upload" | "system" | "unknowns";
 

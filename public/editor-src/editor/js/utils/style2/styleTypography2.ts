@@ -1,16 +1,16 @@
 import { Str } from "@brizy/readers";
-import { WithRenderContext } from "visual/providers/RenderProvider";
-import { FontFamilyType } from "visual/types/Fonts";
-import { DESKTOP, Device } from "visual/utils/devices";
+import type { WithRenderContext } from "visual/providers/RenderProvider";
+import type { FontFamilyType } from "visual/types/Fonts";
 import { getFontCssStyle } from "visual/utils/fonts/getFontCssStyle";
 import { defaultValueKey, defaultValueValue } from "visual/utils/onChange";
 import { getOptionFontByGlobal } from "visual/utils/options";
 import { getDetailsModelFontFamily } from "visual/utils/options/getDetailsModelFontFamily";
 import { read as readStr } from "visual/utils/reader/string";
+import { DESKTOP, type ResponsiveMode } from "visual/utils/responsiveMode";
 import { NORMAL } from "visual/utils/stateMode";
 import { capByPrefix } from "visual/utils/string";
-import { MValue, isNullish } from "visual/utils/value";
-import { CSSValue } from "./types";
+import { isNullish, type MValue } from "visual/utils/value";
+import type { CSSValue } from "./types";
 import { isCustomFontStyle } from "./utils";
 
 export function styleTypography2FontFamily({
@@ -25,9 +25,9 @@ export function styleTypography2FontFamily({
   if (!store) {
     throw Error("Missing Store");
   }
-  const dvv = (key: string, deviceMode?: Device) =>
+  const dvv = (key: string, deviceMode?: ResponsiveMode) =>
     defaultValueValue({ v, key, device: deviceMode ?? device, state });
-  const dvk = (key: string, deviceMode?: Device) =>
+  const dvk = (key: string, deviceMode?: ResponsiveMode) =>
     defaultValueKey({ key, device: deviceMode ?? device, state: NORMAL });
 
   const fontFamilyKey = dvk(capByPrefix(prefix, "fontFamily"));

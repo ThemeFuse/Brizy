@@ -1,6 +1,6 @@
 import React from "react";
 import Options from "visual/component/Options";
-import { OptionDefinition } from "visual/editorComponents/ToolbarItemType";
+import type { OptionDefinition } from "visual/editorComponents/ToolbarItemType";
 
 interface Props {
   items: OptionDefinition[];

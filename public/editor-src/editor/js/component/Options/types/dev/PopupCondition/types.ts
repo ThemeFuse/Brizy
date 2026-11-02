@@ -1,6 +1,6 @@
-import { Literal } from "visual/utils/types/Literal";
-import { MValue } from "visual/utils/value";
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import type { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import type { Literal } from "visual/utils/types/Literal";
+import type { MValue } from "visual/utils/value";
 
 export interface Props {
   className: string;

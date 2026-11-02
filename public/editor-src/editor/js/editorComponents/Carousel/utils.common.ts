@@ -1,10 +1,10 @@
 import { setIn } from "timm";
-import { ElementModel } from "visual/component/Elements/Types";
+import type { ElementModel } from "visual/component/Elements/Types";
 import { readSymbol } from "visual/utils/elements/posts";
 import * as Num from "visual/utils/reader/number";
 import * as Obj from "visual/utils/reader/object";
 import * as Str from "visual/utils/reader/string";
-import { VDecoded, Value } from "./types";
+import type { Value, VDecoded } from "./types";
 
 export const TYPE = "posts";
 
@@ -29,7 +29,8 @@ export const normalizeCarouselColumns = (columns: ElementModel[]) => {
 };
 
 export function decodeV(v: Value): VDecoded {
-  const { source, querySource, offset, orderBy, order, symbols, count, field } = v;
+  const { source, querySource, offset, orderBy, order, symbols, count, field } =
+    v;
 
   return {
     type: TYPE,

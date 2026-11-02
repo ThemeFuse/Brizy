@@ -1,5 +1,5 @@
-import { Actions } from "./actions";
-import { Choices } from "./types";
+import type { Actions } from "./actions";
+import type { Choices } from "./types";
 
 export interface State {
   choices: Choices;

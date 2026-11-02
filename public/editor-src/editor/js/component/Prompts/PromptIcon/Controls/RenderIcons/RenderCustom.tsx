@@ -1,13 +1,13 @@
 import { noop } from "es-toolkit";
 import React, { useMemo } from "react";
 import { PromiseComponent } from "visual/component/PromiseComponent";
-import { TypeId } from "visual/config/icons/Type";
 import { getTypeIcons } from "visual/config/icons/icons";
+import { TypeId } from "visual/config/icons/Type";
 import { useConfig } from "visual/providers/ConfigProvider";
-import { FCC } from "visual/utils/react/types";
+import type { FCC } from "visual/utils/react/types";
 import { CustomIcon } from "../CustomIcon";
 import { normalizeCustomIcons } from "../CustomIcon/utils";
-import { CustomIconProps as Props } from "./types";
+import type { CustomIconProps as Props } from "./types";
 
 export const RenderCustom: FCC<Props> = ({ name, onIconClick }) => {
   const config = useConfig();

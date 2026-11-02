@@ -1,7 +1,8 @@
-import $ from "jquery";
+import { onBodyClick } from "visual/utils/export/delegate";
 import { makeAttr, makeDataAttrString } from "visual/utils/i18n/attribute";
 import { uuid } from "visual/utils/uuid";
 import { SectionPopup2Accessibility } from "../accessibility";
+import { popup } from "./popup";
 import "./popupsPlugin";
 
 // do not close popup is element with some of this className was clicked
@@ -9,69 +10,27 @@ const clickInsideExceptions = ["brz-map__cover"];
 const clickOutsideAttr = makeAttr("click_outside_to_close");
 const oldClickOutsideAttr = "data-click_outside_to_close";
 
-$.fn.popup = function () {
-  const $this = $(this);
+// exact attribute match over the document; the value may not be a CSS identifier
+const findByAttr = (name, value) => {
+  const attrName = makeAttr(name);
 
-  return {
-    show() {
-      const scrollPage = $this.attr(makeAttr("scroll_page"));
-      const showAfter = $this.attr(makeAttr("show-close-button-after"));
-      const clickedOutSideToClose =
-        $this.attr(clickOutsideAttr) ?? $this.attr(oldClickOutsideAttr);
-
-      if (!clickedOutSideToClose) {
-        $this.addClass("brz-pointer-events-none");
-        $this
-          .find(".brz-popup2__inner > .brz-container__wrap")
-          .addClass("brz-pointer-events-auto");
-      }
-
-      if (showAfter) {
-        setTimeout(
-          () => {
-            $this.find(".brz-popup2__close").removeClass("brz-hidden");
-          },
-          Number(showAfter) * 1000
-        );
-      }
-
-      $this.addClass("brz-popup2--opened");
-
-      if (!scrollPage) {
-        $("html").addClass("brz-ow-hidden");
-      } else {
-        $("html").removeClass("brz-ow-hidden");
-      }
-
-      $this.addClass("brz-popup2--was-shown");
-      $(document).trigger("brz.popup.show", [$this.get(0)]);
-      window.Brz.emit("elements.popup.open", $this.get(0));
-    },
-    close() {
-      $this.removeClass("brz-popup2--opened");
-      $("html").removeClass("brz-ow-hidden");
-
-      // trigger an event so that other components could listen
-      $(document).trigger("brz.popup.close", [$this.get(0)]);
-      window.Brz.emit("elements.popup.close", $this.get(0));
-    }
-  };
+  return Array.from(document.querySelectorAll(`[${attrName}]`)).filter(
+    (node) => node.getAttribute(attrName) === value
+  );
 };
 
-export default function ($node) {
-  const root = $node.get(0);
+export default function (node) {
+  const root = node;
 
   // append the popup to body to avoid problems with z-index
   const rootBody = root.ownerDocument.body;
 
   // Accessibility: dialog semantics + ESC to close (when allowed)
-  root
-    .querySelectorAll(".brz-popup2")
-    .forEach((popup) => {
-      if (popup instanceof HTMLElement) {
-        new SectionPopup2Accessibility(popup).init();
-      }
-    });
+  root.querySelectorAll(".brz-popup2").forEach((popup) => {
+    if (popup instanceof HTMLElement) {
+      new SectionPopup2Accessibility(popup).init();
+    }
+  });
 
   root
     .querySelectorAll(makeDataAttrString({ name: "link-type", value: "popup" }))
@@ -113,68 +72,97 @@ export default function ($node) {
       }
     });
 
-  $node
-    .find(makeDataAttrString({ name: "link-type", value: "'popup'" }))
-    .on("click", function (e) {
-      e.preventDefault();
+  const linkSelector = makeDataAttrString({
+    name: "link-type",
+    value: "'popup'"
+  });
+  const links = new Set(root.querySelectorAll(linkSelector));
+  const popupSelector = ".brz-popup2, .brz-popup";
+  const popupClicks = new Map();
 
-      const popupId = this.getAttribute("href").slice(1); // without the `#`
+  onBodyClick([
+    {
+      selector: linkSelector,
+      handler: (link, e) => {
+        if (!links.has(link)) {
+          return;
+        }
 
-      if (popupId) {
-        const $elem = $(makeDataAttrString({ name: "popup", value: popupId }));
-        if ($elem.hasClass("brz-popup2")) {
-          const popup = $elem.popup();
-          popup.show();
+        e.preventDefault();
+
+        const popupId = link.getAttribute("href").slice(1); // without the `#`
+
+        if (popupId) {
+          const elems = findByAttr("popup", popupId);
+          if (elems.some((elem) => elem.classList.contains("brz-popup2"))) {
+            popup(elems).show();
+          }
         }
       }
-    });
+    },
+    {
+      selector: popupSelector,
+      handler: (nearest, e) => {
+        // every popup around the click, innermost first
+        for (
+          let element = nearest;
+          element;
+          element = element.parentElement?.closest(popupSelector)
+        ) {
+          popupClicks.get(element)?.(e);
+        }
+      }
+    }
+  ]);
 
   // Excluded embedded popups(.brz-conditions-popup--static)
-  const $conditionalPopups = $node
-    .find(".brz-conditions-popup:not(.brz-conditions-popup--static)")
-    .filter((_, node) => node.innerHTML && node.innerHTML.trim() !== "");
+  const conditionalPopups = Array.from(
+    root.querySelectorAll(
+      ".brz-conditions-popup:not(.brz-conditions-popup--static)"
+    )
+  ).filter((node) => node.innerHTML && node.innerHTML.trim() !== "");
 
   // Popups with Triggers
-  $conditionalPopups.each(function () {
-    const $this = $(this);
-    const data = _parsePopupData($this);
-    const $popup = $this.children(".brz-popup2");
-    const popup = $popup.popup();
+  conditionalPopups.forEach((node) => {
+    const data = _parsePopupData(node);
+    const instance = popup(
+      Array.from(node.children).filter((child) =>
+        child.classList.contains("brz-popup2")
+      )
+    );
 
     window.brzPopup(
       Object.assign({}, data, {
         show: function () {
           this.show();
-        }.bind(popup),
+        }.bind(instance),
         hide: function () {
           this.close();
-        }.bind(popup)
+        }.bind(instance)
       })
     );
   });
 
-  $node.find(".brz-popup2, .brz-popup").each(function () {
-    const $this = $(this);
-    $this.on("click", function (e) {
+  root.querySelectorAll(popupSelector).forEach((node) => {
+    popupClicks.set(node, (e) => {
       const canClosePopup = !clickInsideExceptions.some((className) =>
         e.target.classList.contains(className)
       );
 
       if (canClosePopup) {
         const clickedOutSideToClose =
-          $this.attr(clickOutsideAttr) ?? $this.attr(oldClickOutsideAttr);
+          node.getAttribute(clickOutsideAttr) ??
+          node.getAttribute(oldClickOutsideAttr);
 
-        const clickedOutSideContent =
-          $(e.target).closest(".brz-container").length === 0;
-        const clickedTheCross = $(e.target).closest(
-          ".brz-popup2__close"
-        ).length;
-        const clickedTheCrossAction = $(e.target).closest(
+        const clickedOutSideContent = !e.target.closest(".brz-container");
+        const clickedTheCross = e.target.closest(".brz-popup2__close");
+        const clickedTheCrossAction = e.target.closest(
           ".brz-popup2__action-close"
-        ).length;
+        );
 
-        const clickedFormEvent =
-          $(e.target).closest(".select2-selection__choice").length > 0;
+        const clickedFormEvent = !!e.target.closest(
+          ".select2-selection__choice"
+        );
 
         if (
           clickedTheCrossAction ||
@@ -182,7 +170,7 @@ export default function ($node) {
           (!clickedFormEvent && clickedOutSideContent && clickedOutSideToClose)
         ) {
           e.preventDefault();
-          $this.popup().close();
+          popup([node]).close();
         }
       }
     });
@@ -190,43 +178,45 @@ export default function ($node) {
 
   // closes a popup when an anchor link is clicked inside it
   window.Brz.on("elements.anchor.startScrolled", (anchor) => {
-    const $closestPopup = $(anchor).closest(".brz-popup2");
+    const closestPopup =
+      anchor instanceof Element ? anchor.closest(".brz-popup2") : null;
 
-    if ($closestPopup.length > 0) {
-      const popup = $closestPopup.popup();
-      popup.close();
+    if (closestPopup) {
+      popup([closestPopup]).close();
     }
   });
 }
 
-function _parsePopupData($popup) {
-  const triggerOnce = $popup.attr(makeAttr("trigger_once"));
-  const popup = $popup.find(".brz-popup2");
+function _parsePopupData(node) {
+  const attr = (name) => node.getAttribute(name) ?? undefined;
+  const triggerOnce = attr(makeAttr("trigger_once"));
+  const popup = node.querySelector(".brz-popup2");
 
   // custom-id is for the old popups that haven't been updated
   const popupId =
-    popup?.attr(makeAttr("once-id")) ?? popup?.attr(makeAttr("custom-id"));
+    popup?.getAttribute(makeAttr("once-id")) ??
+    popup?.getAttribute(makeAttr("custom-id")) ??
+    undefined;
 
-  const pageLoad =
-    $popup.attr(makeAttr("page_load")) ?? $popup.attr("data-page_load");
-  const click = $popup.attr(makeAttr("click"));
-  const inactivity = $popup.attr(makeAttr("inactivity"));
-  const exitIntent = $popup.attr(makeAttr("exit_intent"));
-  const scrolling = _parseData($popup.attr(makeAttr("scrolling")));
+  const pageLoad = attr(makeAttr("page_load")) ?? attr("data-page_load");
+  const click = attr(makeAttr("click"));
+  const inactivity = attr(makeAttr("inactivity"));
+  const exitIntent = attr(makeAttr("exit_intent"));
+  const scrolling = _parseData(attr(makeAttr("scrolling")));
 
-  const showing = _parseData($popup.attr(makeAttr("showing")));
-  const loggedIn = _parseData($popup.attr(makeAttr("logged_in")));
-  const referrer = _parseData($popup.attr(makeAttr("referrer")));
-  const devices = _parseData($popup.attr(makeAttr("devices")));
+  const showing = _parseData(attr(makeAttr("showing")));
+  const loggedIn = _parseData(attr(makeAttr("logged_in")));
+  const referrer = _parseData(attr(makeAttr("referrer")));
+  const devices = _parseData(attr(makeAttr("devices")));
 
-  const currentUrl = _parseData($popup.attr(makeAttr("current_url")));
-  const currentDate = _parseData($popup.attr(makeAttr("current_date")));
-  const lastVisitDate = _parseData($popup.attr(makeAttr("last_visit_date")));
-  const timeFrom = _parseData($popup.attr(makeAttr("time_from")));
-  const cookie = _parseData($popup.attr(makeAttr("cookie")));
-  const os = _parseData($popup.attr(makeAttr("os")));
-  const otherPopups = _parseData($popup.attr(makeAttr("other_popups")));
-  const specificPopup = _parseData($popup.attr(makeAttr("specific_popup")));
+  const currentUrl = _parseData(attr(makeAttr("current_url")));
+  const currentDate = _parseData(attr(makeAttr("current_date")));
+  const lastVisitDate = _parseData(attr(makeAttr("last_visit_date")));
+  const timeFrom = _parseData(attr(makeAttr("time_from")));
+  const cookie = _parseData(attr(makeAttr("cookie")));
+  const os = _parseData(attr(makeAttr("os")));
+  const otherPopups = _parseData(attr(makeAttr("other_popups")));
+  const specificPopup = _parseData(attr(makeAttr("specific_popup")));
 
   return {
     pageLoad: pageLoad,

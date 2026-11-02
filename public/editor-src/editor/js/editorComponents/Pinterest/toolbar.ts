@@ -1,7 +1,7 @@
 import type { GetItems } from "visual/editorComponents/EditorComponent/types";
 import { t } from "visual/utils/i18n";
 import { buttonSizeCss, contentAlignCss } from "./css";
-import { AddonType, Value } from "./types";
+import { AddonType, type Value } from "./types";
 
 export const getItems: GetItems<Value> = ({ v }) => {
   const { addonType } = v;

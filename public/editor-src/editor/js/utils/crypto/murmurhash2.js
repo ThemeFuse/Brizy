@@ -4,8 +4,8 @@ export function murmurhash2(str) {
 
 // murmurhash2 via https://gist.github.com/raycmorgan/588423
 function doHash(str, seed) {
-  let m = 0x5bd1e995;
-  let r = 24;
+  const m = 0x5bd1e995;
+  const r = 24;
   let h = seed ^ str.length;
   let length = str.length;
   let currentIndex = 0;
@@ -65,8 +65,8 @@ function UInt16(str, pos) {
 function Umul32(n, m) {
   n = n | 0;
   m = m | 0;
-  let nlo = n & 0xffff;
-  let nhi = n >>> 16;
-  let res = (nlo * m + (((nhi * m) & 0xffff) << 16)) | 0;
+  const nlo = n & 0xffff;
+  const nhi = n >>> 16;
+  const res = (nlo * m + (((nhi * m) & 0xffff) << 16)) | 0;
   return res;
 }

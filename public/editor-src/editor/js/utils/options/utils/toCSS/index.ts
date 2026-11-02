@@ -1,5 +1,5 @@
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
-import { CSSStyleFn } from "visual/utils/cssStyle/types";
+import type { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import type { CSSStyleFn } from "visual/utils/cssStyle/types";
 import { css as cssStyleBackgroundColor } from "visual/utils/options/BackgroundColor/css";
 import { css as cssStyleBorder } from "visual/utils/options/Border/css";
 import { css as cssStyleBoxShadow } from "visual/utils/options/BoxShadow/css";
@@ -10,13 +10,13 @@ import { css as cssStyleMargin } from "visual/utils/options/Margin/css";
 import { css as cssStylePadding } from "visual/utils/options/Padding/css";
 import { css as cssStyleTextShadow } from "visual/utils/options/TextShadow/css";
 import { css as cssStyleTypography } from "visual/utils/options/Typography/css";
-import {
+import type {
   OptionNameWithStyles,
   ToCSSData
 } from "visual/utils/options/utils/toCSS/types";
 import * as Obj from "visual/utils/reader/object";
 import * as Str from "visual/utils/reader/string";
-import { MValue } from "visual/utils/value";
+import type { MValue } from "visual/utils/value";
 
 export const fns = {
   border: cssStyleBorder,

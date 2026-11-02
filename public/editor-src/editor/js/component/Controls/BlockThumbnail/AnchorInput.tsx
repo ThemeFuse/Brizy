@@ -1,7 +1,12 @@
-import React, { ChangeEvent, JSX, useCallback, useState } from "react";
+import React, {
+  type ChangeEvent,
+  type JSX,
+  useCallback,
+  useState
+} from "react";
 import EditorIcon from "visual/component/EditorIcon";
 import { t } from "visual/utils/i18n";
-import { AnchorInputProps } from "./types";
+import type { AnchorInputProps } from "./types";
 
 export const AnchorInput = ({
   value,
@@ -17,7 +22,7 @@ export const AnchorInput = ({
       setInput(newValue);
       onChange(newValue);
     },
-    [setInput, onChange]
+    [onChange]
   );
 
   const handleContainerClick = useCallback<React.MouseEventHandler>((e) => {

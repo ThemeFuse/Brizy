@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import Steps, { Step } from "./Steps";
 import Progress, { Stage } from "./Progress";
+import Steps, { Step } from "./Steps";
 
 class Steppers extends Component {
   static defaultProps = {
@@ -15,7 +15,7 @@ class Steppers extends Component {
   render() {
     const { stage, apps, children } = this.props;
 
-    return React.Children.map(children, child => {
+    return React.Children.map(children, (child) => {
       return child && React.cloneElement(child, { stage, apps });
     });
   }

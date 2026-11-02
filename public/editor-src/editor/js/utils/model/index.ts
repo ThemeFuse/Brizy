@@ -1,6 +1,11 @@
 import { toArray } from "visual/utils/array";
 import { toObject } from "visual/utils/object";
-import { MValue, ToValue, isNullish, onUndefined } from "visual/utils/value";
+import {
+  isNullish,
+  type MValue,
+  onUndefined,
+  type ToValue
+} from "visual/utils/value";
 
 export type Getter<V, M> = (m: M, orElse?: V) => MValue<V>;
 export type Getter2<V, M> = (m: M) => V;
@@ -49,9 +54,10 @@ export function set<K extends keyof M, M>(key: K, value: M[K], m: M): M {
  * @deprecated use apply
  */
 
-// eslint-disable-next-line
+// biome-ignore lint: migrated from eslint
 export function _apply<M>(fs: any, m: M): M {
   // @ts-expect-error Type 'unknown' is not assignable to type 'M'.
+  // biome-ignore lint/complexity/useOptionalChain: `fs` is `any`, so `f` may be a falsy non-function; `f && f(...)` yields `m` there but `f?.(...)` THROWS ("f is not a function"). `apply` below is safe to convert because its `Setter` type guarantees a function
   return toArray(fs).reduce((m, [f, ...args]) => (f && f(...args, m)) || m, m);
 }
 
@@ -66,7 +72,7 @@ export function _apply<M>(fs: any, m: M): M {
  * @return {M}
  */
 export function apply<V, M>(fs: Array<[Setter<V, M>, V]>, m: M): M {
-  return fs.reduce((m, [f, a]) => (f && f(a, m)) || m, m);
+  return fs.reduce((m, [f, a]) => f?.(a, m) || m, m);
 }
 
 /**

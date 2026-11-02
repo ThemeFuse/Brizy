@@ -1,6 +1,6 @@
-import { Append, Concat } from "visual/utils/types/Monoid";
-import { MRead, Reader } from "visual/utils/types/Type";
-import { IsEqual } from "visual/utils/types/Eq";
+import type { IsEqual } from "visual/utils/types/Eq";
+import type { Append, Concat } from "visual/utils/types/Monoid";
+import type { MRead, Reader } from "visual/utils/types/Type";
 
 export const DESKTOP = "desktop";
 export const TABLET = "tablet";
@@ -15,7 +15,7 @@ export const types: ResponsiveMode[] = ["desktop", "tablet", "mobile"];
  *  - if it is, return the value
  *  - otherwise, return undefined
  */
-export const read: Reader<ResponsiveMode> = v =>
+export const read: Reader<ResponsiveMode> = (v) =>
   types.includes(v as ResponsiveMode) ? (v as ResponsiveMode) : undefined;
 
 /**
@@ -37,14 +37,14 @@ export const append: Append<ResponsiveMode> = (a, b) => (a === empty ? b : a);
 /**
  * Reduce array of modes to the first none default mode
  */
-export const concat: Concat<ResponsiveMode> = as => as.reduce(append, empty);
+export const concat: Concat<ResponsiveMode> = (as) => as.reduce(append, empty);
 
 /**
  * Takes a value and checks if is a valid responsive mode.
  *  - if it is, return the value
  *  - otherwise, return default responsive mode
  */
-export const mRead: MRead<ResponsiveMode> = v => read(v) ?? empty;
+export const mRead: MRead<ResponsiveMode> = (v) => read(v) ?? empty;
 
 /**
  * Return default responsive mode

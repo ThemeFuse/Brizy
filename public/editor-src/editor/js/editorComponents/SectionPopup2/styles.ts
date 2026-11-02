@@ -1,7 +1,7 @@
-import { DynamicStylesProps } from "visual/types";
+import type { DynamicStylesProps } from "visual/types";
 import { renderStyles } from "visual/utils/cssStyle";
-import { OutputStyle, Styles } from "visual/utils/cssStyle/types";
-import { Value } from "./toolbarClose";
+import type { OutputStyle, Styles } from "visual/utils/cssStyle/types";
+import type { Value } from "./toolbarClose";
 
 export function style(data: DynamicStylesProps<Value>): OutputStyle {
   const { maskShape = "none" } = data.v;

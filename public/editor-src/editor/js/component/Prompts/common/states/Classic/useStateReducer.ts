@@ -1,10 +1,10 @@
 import { useEffect, useMemo, useReducer } from "react";
-import { Subscription, from, of } from "rxjs";
+import { from, of, type Subscription } from "rxjs";
 import { catchError, delay, map, mapTo } from "rxjs/operators";
 import { Tabs } from "visual/component/Prompts/common/PromptPage/types";
 import * as Actions from "./types/Actions";
-import { Reducer } from "./types/Reducer";
-import { St, State, loading } from "./types/State";
+import type { Reducer } from "./types/Reducer";
+import { loading, type St, type State } from "./types/State";
 
 export const useStateReducer = <
   Invalid extends St,

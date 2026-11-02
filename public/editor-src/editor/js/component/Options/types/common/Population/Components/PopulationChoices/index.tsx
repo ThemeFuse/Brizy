@@ -1,6 +1,7 @@
 import classNames from "classnames";
 import React, {
-  ReactElement,
+  type ReactElement,
+  type ReactNode,
   useCallback,
   useEffect,
   useMemo,
@@ -12,25 +13,25 @@ import Options from "visual/component/Options";
 import { useConfig } from "visual/providers/ConfigProvider";
 import { getDynamicContentPlaceholders } from "visual/utils/api";
 import { t } from "visual/utils/i18n";
+import { optionsToChoices } from "visual/utils/options/getDynamicContentChoices";
 import {
   configChoicesToSelectItemChoices,
   findDCChoiceByPlaceholder
 } from "visual/utils/options/Population/utils";
-import { optionsToChoices } from "visual/utils/options/getDynamicContentChoices";
-import { FCP } from "visual/utils/react/types";
+import type { FCP } from "visual/utils/react/types";
 import * as Obj from "visual/utils/reader/object";
 import * as Str from "visual/utils/reader/string";
 import { auto, isAuto } from "visual/utils/string/specs";
-import { PopulationMethod } from "../../types/PopulationMethod";
+import type { PopulationMethod } from "../../types/PopulationMethod";
 import Input from "../Input";
 import { Loading } from "../Loading";
 import { PopulationSelect } from "../Select";
-import { Props } from "./types";
+import type { Props } from "./types";
 
 const EMPTY = "";
 
 export const PopulationChoices: FCP<Props, ReactElement> = (props) => {
-  let input;
+  let input: ReactNode;
   const {
     type,
     iconOnly,

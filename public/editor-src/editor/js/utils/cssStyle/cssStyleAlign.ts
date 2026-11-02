@@ -2,8 +2,8 @@ import {
   styleAlignFlexVerticalAlign,
   styleAlignHorizontal
 } from "visual/utils/style2";
-import { Reader } from "../reader/types";
-import { CSSValue } from "../style2/types";
+import type { Reader } from "../reader/types";
+import type { CSSValue } from "../style2/types";
 import { rtlAlign } from "./utils";
 
 interface HorizontalAlign {

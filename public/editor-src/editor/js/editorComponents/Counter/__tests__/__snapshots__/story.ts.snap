@@ -1,0 +1,10 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`a Counter in a Story counts from start to end over its duration 1`] = `
+[
+  "24",
+  "49",
+  "74",
+  "100",
+]
+`;

@@ -1,0 +1,22 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`the search of a multiple select keeps a group with the children that match 1`] = `
+"<span class="select2-results">
+<ul class="select2-results__options" role="listbox" aria-multiselectable="true" id="select2-iiii-results" aria-expanded="true" aria-hidden="false">
+<li class="select2-results__option" role="group" aria-label="Warm" data-select2-id="9">
+<strong class="select2-results__group">Warm</strong>
+<ul class="select2-results__options select2-results__options--nested">
+<li class="select2-results__option select2-results__option--highlighted" id="select2-iiii-result-iiii-orange" role="option" aria-selected="false" data-select2-id="select2-iiii-result-iiii-orange">Orange</li>
+</ul>
+</li>
+</ul>
+</span>"
+`;
+
+exports[`the search of a multiple select says so when nothing matches 1`] = `
+"<span class="select2-results">
+<ul class="select2-results__options" role="listbox" aria-multiselectable="true" id="select2-iiii-results" aria-expanded="true" aria-hidden="false">
+<li role="alert" aria-live="assertive" class="select2-results__option select2-results__message">No results found</li>
+</ul>
+</span>"
+`;

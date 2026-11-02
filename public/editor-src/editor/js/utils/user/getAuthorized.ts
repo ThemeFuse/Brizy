@@ -1,5 +1,5 @@
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
-import { Authorized } from "visual/types";
+import type { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import type { Authorized } from "visual/types";
 
 const storageAuthorizedKey = "brz-authorized";
 

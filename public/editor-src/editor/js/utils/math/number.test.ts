@@ -1,7 +1,7 @@
-import { testReader } from "visual/utils/types/Type.test";
 import { read } from "visual/utils/math/number";
+import { testReader } from "visual/utils/types/Type.test";
 
-describe("Testing NumberSpec Type implementation", function() {
+describe("Testing NumberSpec Type implementation", function () {
   testReader(
     read,
     [-1, 0, 1, -1.1, 0.1, 1.1, "-1", "0", "1", "-1.1", "0.1", "1.1"],

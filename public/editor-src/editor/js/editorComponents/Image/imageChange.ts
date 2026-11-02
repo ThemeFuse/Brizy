@@ -1,21 +1,22 @@
 import { Obj, pipe } from "@brizy/readers";
 import { mPipe, optional, pass } from "fp-utilities";
-import { ElementModel } from "visual/component/Elements/Types";
-import { EditorComponentContextValue } from "visual/editorComponents/EditorComponent/EditorComponentContext";
-import { ImageDataSize } from "visual/global/Config/types/ImageSize";
+import type { ElementModel } from "visual/component/Elements/Types";
+import type { EditorComponentContextValue } from "visual/editorComponents/EditorComponent/EditorComponentContext";
 import { SizeType } from "visual/global/Config/types/configs/common";
-import { DeviceMode } from "visual/types";
+import type { ImageDataSize } from "visual/global/Config/types/ImageSize";
+import type { DeviceMode } from "visual/types";
 import { isGIFExtension, isSVGExtension } from "visual/utils/image/utils";
-import * as Math from "visual/utils/math";
+import { clamp, roundTo } from "visual/utils/math";
 import * as Num from "visual/utils/math/number";
 import { prop } from "visual/utils/object/get";
 import { defaultValueKey, defaultValueValue } from "visual/utils/onChange";
 import { readWithParser } from "visual/utils/reader/readWithParser";
 import { is as isNoEmptyString } from "visual/utils/string/NoEmptyString";
 import * as Str from "visual/utils/string/specs";
-import { MValue, onNullish } from "visual/utils/value";
-import { Unit, isUnit } from "./types";
-import {
+import type { KnownKeys } from "visual/utils/types/KnownKeys";
+import { type MValue, onNullish } from "visual/utils/value";
+import { isUnit, type Unit } from "./types";
+import type {
   HoverImagePatch,
   ImageDCPatch,
   ImagePatch,
@@ -63,6 +64,7 @@ type HoverPatch = {
 };
 
 export interface Value extends Size {
+  [k: string]: unknown;
   imageExtension: string;
   size: number;
   widthSuffix: Unit;
@@ -146,7 +148,10 @@ export interface ElementModelToValue extends ElementModel {
   imageHeight: MValue<unknown>;
 }
 
-export const elementModelToValue = readWithParser<ElementModelToValue, Value>({
+export const elementModelToValue = readWithParser<
+  ElementModelToValue,
+  KnownKeys<Value>
+>({
   imageWidth: mPipe(prop("imageWidth"), Num.read),
   imageHeight: mPipe(prop("imageHeight"), Num.read),
   height: mPipe(prop("height"), Num.read),
@@ -215,15 +220,11 @@ export const patchOnImageChange = (
 
   if (v.widthSuffix === "%") {
     const w = v.width || 100;
-    newCW = Math.clamp(
-      (wrapperSizes.width * w) / newWrapperSizes.width,
-      0,
-      100
-    );
+    newCW = clamp((wrapperSizes.width * w) / newWrapperSizes.width, 0, 100);
   } else {
     if (isSvgOrGif) {
-      const resize = Math.roundTo((v.width / cW) * 100, 2);
-      newCW = Math.clamp(resize, 0, 100);
+      const resize = roundTo((v.width / cW) * 100, 2);
+      newCW = clamp(resize, 0, 100);
       newWidthSuffix = "%";
     }
   }
@@ -244,11 +245,7 @@ export const patchOnImageChange = (
   } else {
     if (v.heightSuffix === "%") {
       const h = v.height || 100;
-      newCH = Math.clamp(
-        (wrapperSizes.height * h) / newWrapperSizes.height,
-        0,
-        100
-      );
+      newCH = clamp((wrapperSizes.height * h) / newWrapperSizes.height, 0, 100);
     }
   }
 
@@ -258,8 +255,8 @@ export const patchOnImageChange = (
     imageSrc: src,
     imageExtension: extension,
     alt,
-    width: Math.roundTo(newCW, 2),
-    height: Math.roundTo(newCH, 2),
+    width: roundTo(newCW, 2),
+    height: roundTo(newCH, 2),
     widthSuffix: newWidthSuffix,
     heightSuffix: newHeightSuffix,
     mobileHeight: newMobileHeight,
@@ -311,7 +308,7 @@ export const patchOnHoverImageChange = (
 
   return {
     hoverImageSrc: Str.read(hoverImageSrc) ?? "",
-    hoverHeight: Math.roundTo(newHoverCH, 2)
+    hoverHeight: roundTo(newHoverCH, 2)
   };
 };
 
@@ -327,8 +324,8 @@ export const patchOnSizeTypeChange = (
   const size = getImageSize(type, imageSizes);
 
   if (isPredefinedSize(size)) {
-    const resize = Math.roundTo((size.width / cW) * 100, 2);
-    patchSize.size = Math.clamp(resize, 0, 100);
+    const resize = roundTo((size.width / cW) * 100, 2);
+    patchSize.size = clamp(resize, 0, 100);
   }
 
   if (isOriginalSize(size)) {
@@ -376,11 +373,11 @@ export const patchOnDCChange = (
   const size = getImageSize(dcSize, imageSizes);
 
   if (isPredefinedSize(size)) {
-    const resize = Math.roundTo((size.width / cW) * 100, 2);
+    const resize = roundTo((size.width / cW) * 100, 2);
 
     return {
       sizeType: dcSize,
-      size: Math.clamp(resize, 0, 100)
+      size: clamp(resize, 0, 100)
     };
   }
 
@@ -397,14 +394,10 @@ const normalizeDimension = (
 ): number => {
   switch (suffix) {
     case "%": {
-      return Math.clamp(Math.roundTo((size / containerSize) * 100, 2), 0, 100);
+      return clamp(roundTo((size / containerSize) * 100, 2), 0, 100);
     }
     case "px": {
-      return Math.clamp(
-        Math.roundTo((size / 100) * containerSize, 2),
-        0,
-        containerSize
-      );
+      return clamp(roundTo((size / 100) * containerSize, 2), 0, containerSize);
     }
   }
 };

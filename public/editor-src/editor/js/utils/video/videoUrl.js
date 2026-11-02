@@ -23,7 +23,7 @@ const getYouTubeOptions = (
     videoMuted
   }
 ) => {
-  let options = {
+  const options = {
     autoplay: Number(autoplay),
     controls: Number(controls),
     start: Number(start),

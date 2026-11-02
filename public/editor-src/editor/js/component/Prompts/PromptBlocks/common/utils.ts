@@ -1,4 +1,4 @@
-import { BlockTypes } from "../types";
+import type { BlockTypes } from "../types";
 
 export const isBlock = (type: BlockTypes): type is "BLOCK" => type === "BLOCK";
 export const isPopup = (type: BlockTypes): type is "POPUP" => type === "POPUP";

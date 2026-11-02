@@ -1,4 +1,4 @@
-import { Choices } from "./types";
+import type { Choices } from "./types";
 
 //#region Init
 

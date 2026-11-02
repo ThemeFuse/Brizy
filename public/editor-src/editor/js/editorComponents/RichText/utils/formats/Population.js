@@ -1,12 +1,13 @@
 import Quill from "quill";
 
-let Inline = Quill.import("blots/inline");
+const Inline = Quill.import("blots/inline");
 
 class Population extends Inline {
   static className = "text-population";
   static create(value) {
+    // biome-ignore lint/complexity/noThisInStatic: parchment's ShadowBlot.create stamps the blot's marker class via `this.className`; calling Inline.create rebinds `this` to Quill's Inline, which has none, so `text-population` is never applied and the span is unwrapped on reparse
     const node = super.create(value);
-    this.setValue(value, node);
+    Population.setValue(value, node);
     return node;
   }
 
@@ -34,9 +35,11 @@ class Population extends Inline {
     if (name !== this.statics.blotName) {
       super.format(name, value);
     } else {
-      value
-        ? this.constructor.setValue(value, this.domNode)
-        : this.constructor.removeValue(this.domNode);
+      if (value) {
+        this.constructor.setValue(value, this.domNode);
+      } else {
+        this.constructor.removeValue(this.domNode);
+      }
     }
   }
 }

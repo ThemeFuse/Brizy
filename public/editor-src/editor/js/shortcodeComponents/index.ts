@@ -1,12 +1,12 @@
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import type { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
-import { Shortcode, ShortcodeComponents } from "visual/types";
+import type { Shortcode, ShortcodeComponents } from "visual/types";
 import { isLeftSidebarAddElements } from "visual/types/utils";
 import { isPro } from "visual/utils/env";
 import {
-  ShortCodesKeywords,
   getProShortCodes,
-  getSampleShortCodes
+  getSampleShortCodes,
+  ShortCodesKeywords
 } from "./Shortcodes";
 import { getThirdPartyShortcodesData } from "./utils";
 

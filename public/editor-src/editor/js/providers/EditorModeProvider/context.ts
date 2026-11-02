@@ -49,7 +49,7 @@ export function isStory(v: string): v is "internal_story" | "external_story" {
 function throwErrorIfNotContext(v: string): void {
   const env = process.env.NODE_ENV;
   if (!isEditorModeContext(v) && (env === "development" || env === "test")) {
-    throw new Error("EDITOR MODE context has wrong value:" + v);
+    throw new Error(`EDITOR MODE context has wrong value:${v}`);
   }
 }
 

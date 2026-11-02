@@ -1,6 +1,6 @@
 import * as S from "visual/utils/string/specs";
 import * as L from "visual/utils/types/Literal";
-import { Reader } from "visual/utils/types/Type";
+import type { Reader } from "visual/utils/types/Type";
 
 export type Choice = {
   title?: string;
@@ -8,7 +8,7 @@ export type Choice = {
   value: L.Literal;
 };
 
-export const read: Reader<Choice> = v => {
+export const read: Reader<Choice> = (v) => {
   if (typeof v !== "object") {
     return undefined;
   }

@@ -14,7 +14,7 @@ export default (itemIndex) => ({
   getItems: getItems(itemIndex)
 });
 
-const getItems = (itemIndex) => (v, component) => {
+const getItems = (itemIndex) => (_v, component) => {
   const copiedElement = component.getCurrentCopiedElement();
 
   return [

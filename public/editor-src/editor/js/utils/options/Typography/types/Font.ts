@@ -1,5 +1,5 @@
-import { FontFamilyType } from "visual/types/Fonts";
-import { Weight } from "visual/utils/fonts/Weight";
+import type { FontFamilyType } from "visual/types/Fonts";
+import type { Weight } from "visual/utils/fonts/Weight";
 
 export interface Font {
   id: string;

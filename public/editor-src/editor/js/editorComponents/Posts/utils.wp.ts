@@ -1,11 +1,11 @@
 import {
-  CURRENT_CONTEXT_TYPE,
   archiveQuery,
+  CURRENT_CONTEXT_TYPE,
   postsQuery
 } from "visual/utils/elements/posts/index.wp";
-import { WPQuery, WPTagsQuery } from "visual/utils/elements/posts/types";
+import type { WPQuery, WPTagsQuery } from "visual/utils/elements/posts/types";
 import * as Str from "visual/utils/string";
-import { V } from "./types";
+import type { V } from "./types";
 import { decodeV } from "./utils.common";
 
 export function getLoopAttributes(v: V): WPQuery {
@@ -34,8 +34,8 @@ export function getLoopAttributes(v: V): WPQuery {
 
 export function getLoopTagsAttributes(v: V): WPTagsQuery | undefined {
   const { tagsSource, filterStyle, type, allTag } = v;
-  const tax = Str.toString(tagsSource);
-  const tag = Str.toString(allTag) ?? "";
+  const tax = Str.asString(tagsSource);
+  const tag = Str.asString(allTag) ?? "";
 
   if (!tax || (type !== "posts" && type !== "products")) {
     return undefined;

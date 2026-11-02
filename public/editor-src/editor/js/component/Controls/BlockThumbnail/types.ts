@@ -1,6 +1,6 @@
-import { JSX } from "react";
-import { ElementModelType2 } from "visual/component/Elements/Types";
-import { Block } from "visual/types/Block";
+import type { JSX } from "react";
+import type { ElementModelType2 } from "visual/component/Elements/Types";
+import type { Block } from "visual/types/Block";
 
 export interface ThumbnailImage {
   blockData: Block;

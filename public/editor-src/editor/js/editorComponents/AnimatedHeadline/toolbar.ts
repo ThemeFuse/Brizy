@@ -8,18 +8,18 @@ import {
   parseAnimationStyle,
   parseEffectType
 } from "visual/component/AnimatedHeadline/utils";
-import { ElementProps } from "visual/component/Elements/Types";
+import type { ElementProps } from "visual/component/Elements/Types";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
 import { HOVER, NORMAL } from "visual/utils/stateMode";
-import { GetItems } from "../EditorComponent/types";
+import type { GetItems } from "../EditorComponent/types";
 import {
   alignContentCSS,
   shapeDurationCSS,
   shapeStrokeCSS,
   shapeWidthCSS
 } from "./css";
-import { Value } from "./types";
+import type { Value } from "./types";
 
 export const getItems: GetItems<Value, ElementProps> = ({
   v,

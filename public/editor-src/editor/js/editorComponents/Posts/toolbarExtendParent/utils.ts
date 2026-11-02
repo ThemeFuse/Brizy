@@ -1,4 +1,4 @@
-import { DeviceMode, V } from "visual/types";
+import type { DeviceMode, V } from "visual/types";
 import * as Str from "visual/utils/reader/string";
 import { DESKTOP, MOBILE, TABLET } from "visual/utils/responsiveMode";
 
@@ -8,7 +8,7 @@ export const disableNavigation = (v: V): boolean => {
   const lvl1OptionId = `symbol_${source}_incBy`;
   const lv1OptionValue = Str.read(v[lvl1OptionId]) ?? "{}";
 
-  let value = undefined;
+  let value: unknown;
 
   try {
     const parsedValue = JSON.parse(lv1OptionValue);
@@ -18,7 +18,7 @@ export const disableNavigation = (v: V): boolean => {
     }
   } catch (e) {
     if (process.env.NODE_ENV === "development") {
-      // eslint-disable-next-line no-console
+      // biome-ignore lint/suspicious/noConsole: migrated from eslint
       console.log(e);
     }
   }

@@ -1,13 +1,13 @@
 import { mPipe, or, parseStrict } from "fp-utilities";
-import {
+import type {
   FromElementModel,
   FromElementModelGetter,
   ToElementModel
 } from "visual/component/Options/Type";
-import { Value } from "visual/component/Options/types/dev/Filters/types/Value";
+import type { Value } from "visual/component/Options/types/dev/Filters/types/Value";
 import { always } from "visual/utils/fp";
-import * as Positive from "visual/utils/math/Positive";
 import * as Num from "visual/utils/math/number";
+import * as Positive from "visual/utils/math/Positive";
 import { callGetter } from "../utils/wrap";
 
 export const defaultValue: Value = {

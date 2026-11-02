@@ -1,7 +1,10 @@
-import { ElementModel } from "visual/component/Elements/Types";
+import type { ElementModel } from "visual/component/Elements/Types";
 import type { GetItems } from "visual/editorComponents/EditorComponent/types";
-import { DCGroup, DCTypes } from "visual/global/Config/types/DynamicContent";
 import { getEnabledLinkOptions } from "visual/global/Config/types/configs/featuresValue";
+import {
+  type DCGroup,
+  DCTypes
+} from "visual/global/Config/types/DynamicContent";
 import { isPopup } from "visual/providers/EditorModeProvider";
 import { getColorToolbar } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
@@ -10,8 +13,8 @@ import {
   getDynamicContentChoices,
   getDynamicContentOption
 } from "visual/utils/options";
-import { popupToOldModel } from "visual/utils/options/PromptAddPopup/utils";
 import { isChoice } from "visual/utils/options/getDynamicContentChoices";
+import { popupToOldModel } from "visual/utils/options/PromptAddPopup/utils";
 import { HOVER, NORMAL } from "visual/utils/stateMode";
 
 export const getItems: GetItems<ElementModel> = ({

@@ -1,5 +1,5 @@
-import { ElementModel } from "visual/component/Elements/Types";
-import { GetItems } from "visual/editorComponents/EditorComponent/types";
+import type { ElementModel } from "visual/component/Elements/Types";
+import type { GetItems } from "visual/editorComponents/EditorComponent/types";
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
 import { getColorToolbar } from "visual/utils/color";
 import { t } from "visual/utils/i18n";

@@ -1,6 +1,6 @@
-import { NewType } from "visual/types/NewType";
+import type { NewType } from "visual/types/NewType";
 import { mPipe, pass } from "visual/utils/fp";
-import { Append } from "visual/utils/types/Monoid";
+import type { Append } from "visual/utils/types/Monoid";
 
 enum blur {
   blur = "blur"

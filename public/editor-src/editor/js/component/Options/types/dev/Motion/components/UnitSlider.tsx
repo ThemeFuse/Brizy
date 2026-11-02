@@ -1,14 +1,14 @@
-import React, { ReactElement, useCallback } from "react";
+import React, { type ReactElement, useCallback } from "react";
 import {
-  Meta,
-  Props as NSProps,
+  type Meta,
+  type Props as NSProps,
   NumberSlider
 } from "visual/component/Controls/NumberSlider";
-import { OptionLabel } from "visual/component/OptionLabel";
-import { OptionWrapper } from "visual/component/OptionWrapper";
-import { OnChange } from "visual/component/Options/Type";
-import { Size } from "visual/component/Options/types/types";
 import { useThrottleOnChange } from "visual/component/hooks";
+import { OptionLabel } from "visual/component/OptionLabel";
+import type { OnChange } from "visual/component/Options/Type";
+import type { Size } from "visual/component/Options/types/types";
+import { OptionWrapper } from "visual/component/OptionWrapper";
 import { mPipe } from "visual/utils/fp";
 import * as Unit from "visual/utils/math/Unit";
 import { sliderSizeClassName } from "visual/utils/options/utils/sliderSizeClassName";

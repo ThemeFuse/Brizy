@@ -1,6 +1,6 @@
-import { ElementModel } from "visual/component/Elements/Types";
-import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import type { ElementModel } from "visual/component/Elements/Types";
+import type { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
+import type { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { tagsFilterLoad } from "visual/utils/elements/posts/index.wp";
 import { t } from "visual/utils/i18n";
 import { decodeV } from "../utils.common";

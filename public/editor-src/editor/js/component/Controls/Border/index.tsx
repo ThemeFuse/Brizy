@@ -1,23 +1,23 @@
 import classNames from "classnames";
 import React, { useCallback } from "react";
-import { PaletteObject } from "visual/component/Controls/ColorPalette/entities/PaletteObject";
+import type { PaletteObject } from "visual/component/Controls/ColorPalette/entities/PaletteObject";
 import { ColorPickerSelect } from "visual/component/Controls/ColorPickerSelect";
-import {
+import type {
   Meta,
   Value
 } from "visual/component/Controls/ColorPickerSelect/entities";
 import { ColorPickerInputs } from "visual/component/Controls/ColorPicketInputs";
 import { Item } from "visual/component/Controls/Select2/Item";
 import EditorIcon from "visual/component/EditorIcon";
-import { OnChange } from "visual/component/Options/Type";
-import { WithClassName } from "visual/types/attributes";
+import type { OnChange } from "visual/component/Options/Type";
+import type { WithClassName } from "visual/types/attributes";
 import { t } from "visual/utils/i18n/t";
-import * as BorderStyle from "visual/utils/options/Border/entities/style";
-import * as BorderWidthType from "visual/utils/options/Border/entities/widthType";
-import * as Palette from "visual/utils/options/ColorPicker/entities/palette";
+import type * as BorderStyle from "visual/utils/options/Border/entities/style";
+import type * as BorderWidthType from "visual/utils/options/Border/entities/widthType";
+import type * as Palette from "visual/utils/options/ColorPicker/entities/palette";
 import { mApply } from "visual/utils/value";
-import { Width } from "./Width";
 import { toggleType } from "./utils";
+import { Width } from "./Width";
 
 type Style = BorderStyle.Style;
 
@@ -154,7 +154,11 @@ export const Border = ({
           </div>
         )}
         {widthTypes.length < 2 ? null : (
-          <button className={buttonClassName} onClick={onTypeChange}>
+          <button
+            type="button"
+            className={buttonClassName}
+            onClick={onTypeChange}
+          >
             <EditorIcon icon={"nc-combined-shape"} className="brz-icon" />
           </button>
         )}

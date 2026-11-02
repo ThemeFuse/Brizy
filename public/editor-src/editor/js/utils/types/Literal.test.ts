@@ -1,8 +1,8 @@
+import { testEq } from "visual/utils/types/Eq.test";
 import { testReader } from "visual/utils/types/Type.test";
 import { eq, Literal, read } from "./Literal";
-import { testEq } from "visual/utils/types/Eq.test";
 
-describe("Testing Value Type integration", function() {
+describe("Testing Value Type integration", function () {
   test("If value type is number, return number", () => {
     expect(read(2)).toBe(2);
   });

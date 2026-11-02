@@ -1,12 +1,12 @@
 import { hasInfiniteAnimation } from "visual/component/HoverAnimation/utils";
-import { GetItems } from "visual/editorComponents/EditorComponent/types";
+import type { GetItems } from "visual/editorComponents/EditorComponent/types";
 import { t } from "visual/utils/i18n";
 import { isStory } from "visual/utils/models";
 import { defaultValueValue } from "visual/utils/onChange";
 import { hoverEffects } from "visual/utils/options/Animation/utils";
 import { read as readString } from "visual/utils/string/specs";
 import { discountedPriceSelector, priceSelector } from "./css";
-import { Value } from "./types";
+import type { Value } from "./types";
 
 export const getItems: GetItems<Value> = ({ v, device, state, component }) => {
   const IS_STORY = isStory(component.getGlobalConfig());

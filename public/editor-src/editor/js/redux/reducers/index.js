@@ -18,6 +18,7 @@ import { extraFontStyles } from "./extraFontStyles";
 import { extraStyles } from "./extraStyles";
 import { fonts } from "./fonts";
 import { globalBlocks } from "./globalBlocks";
+import { menuData } from "./menuData";
 import { page } from "./page";
 import { project } from "./project";
 import { screenshots } from "./screenshots";
@@ -41,6 +42,7 @@ export default historyReducerEnhancer(
       globalBlocks,
       changedGBIds,
       page,
+      menuData,
       blocksOrder,
       project,
       styles,

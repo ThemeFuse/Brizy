@@ -1,5 +1,5 @@
-import { Response } from "../common";
-import { Choice } from "./CollectionTypes";
+import type { Response } from "../common";
+import type { Choice } from "./CollectionTypes";
 
 export interface CollectionItems {
   getCollectionItemsIds: {

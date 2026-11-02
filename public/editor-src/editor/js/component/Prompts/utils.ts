@@ -1,22 +1,22 @@
 import { Arr, Str } from "@brizy/readers";
-import { RulesState as PageArticleRulesState } from "visual/component/Prompts/PromptPageArticle/types";
 import {
+  getTabs,
+  readLayout,
+  Tabs,
+  type ThemeLayout
+} from "visual/component/Prompts/common/PromptPage/types";
+import type { RulesState as PageArticleRulesState } from "visual/component/Prompts/PromptPageArticle/types";
+import type {
   Item,
   RulesState as PageRulesState,
   Valid
 } from "visual/component/Prompts/PromptPageRules/types";
-import {
-  Tabs,
-  ThemeLayout,
-  getTabs,
-  readLayout
-} from "visual/component/Prompts/common/PromptPage/types";
-import { Shopify } from "visual/global/Config/types/configs/Cloud";
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import type { Shopify } from "visual/global/Config/types/configs/Cloud";
+import type { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { ShopifyTemplate } from "visual/global/Config/types/shopify/ShopifyTemplate";
 import { Layout } from "visual/types/Layout";
 import { t } from "visual/utils/i18n";
-import { MValue } from "visual/utils/value";
+import type { MValue } from "visual/utils/value";
 
 export const getChoices = (templates: Shopify["templates"]): ThemeLayout[] =>
   templates.reduce<ThemeLayout[]>((acc, { id, title }) => {

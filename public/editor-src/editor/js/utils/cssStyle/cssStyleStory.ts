@@ -1,6 +1,6 @@
-import { CSSValue } from "../style2/types";
 import * as Num from "visual/utils/reader/number";
 import * as Str from "visual/utils/reader/string";
+import type { CSSValue } from "../style2/types";
 
 export function cssStyleStoryProgress({ v }: CSSValue): string {
   const { sliderAutoPlay, sliderAutoPlaySpeed, sliderAutoPlaySpeedSuffix } = v;
@@ -12,8 +12,9 @@ export function cssStyleStoryProgress({ v }: CSSValue): string {
 
   // 0.3 is transition time between slides
   // using +0.3 we avoid the pause at the end of slide
-  return `animation:storyProgress ${Number(speed) +
-    0.3}${suffix} linear forwards;`;
+  return `animation:storyProgress ${
+    Number(speed) + 0.3
+  }${suffix} linear forwards;`;
 }
 
 // this func in needed because first slide don't lose time for transition when is not looped

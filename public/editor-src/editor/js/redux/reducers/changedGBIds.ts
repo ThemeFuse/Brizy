@@ -1,6 +1,6 @@
-import { ActionTypes, ReduxAction } from "../actions2";
+import { ActionTypes, type ReduxAction } from "../actions2";
 import { globalBlocksInPageSelector, globalBlocksSelector } from "../selectors";
-import { ReduxState } from "../types";
+import type { ReduxState } from "../types";
 
 type ChangedGBIds = ReduxState["changedGBIds"];
 

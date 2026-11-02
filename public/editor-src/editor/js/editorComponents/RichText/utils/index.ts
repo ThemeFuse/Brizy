@@ -3,16 +3,16 @@ import type { Cheerio, CheerioAPI } from "cheerio";
 import type { AnyNode } from "domhandler";
 import { once } from "es-toolkit";
 import { mPipe, optional, parseStrict, pass } from "fp-utilities";
-import { JSX } from "react";
-import { ElementModelType2 } from "visual/component/Elements/Types";
+import type { JSX } from "react";
+import type { ElementModelType2 } from "visual/component/Elements/Types";
 import {
-  DCGroupCloud,
-  DCGroups,
+  type DCGroupCloud,
+  type DCGroups,
   DCTypes,
-  Display
+  type Display
 } from "visual/global/Config/types/DynamicContent";
-import { RenderType, isEditor } from "visual/providers/RenderProvider";
-import { ReduxState } from "visual/redux/types";
+import { isEditor, type RenderType } from "visual/providers/RenderProvider";
+import type { ReduxState } from "visual/redux/types";
 import { explodePlaceholder } from "visual/utils/dynamicContent";
 import type { DCPlaceholderStartObj } from "visual/utils/dynamicContent/types";
 import { pipe } from "visual/utils/fp";
@@ -28,8 +28,8 @@ import {
   parseFromString
 } from "visual/utils/string";
 import {
-  MValue,
   isNullish,
+  type MValue,
   onNullish,
   throwOnNullish
 } from "visual/utils/value";
@@ -37,55 +37,68 @@ import type { QuillFormat, TooltipFormat } from "../types";
 import { fromFormatsToTextTransform } from "./dependencies";
 import { classNamesToV } from "./transforms";
 
-type JQueryType = typeof $;
 type CheerioModule = { load: CheerioAPI["load"] };
-type DOMLib = JQueryType | CheerioModule;
 
-function isJQueryLib(lib: DOMLib): lib is JQueryType {
-  return (lib as JQueryType).fn !== undefined;
-}
-
-type JQueryMapCallback = (arg: JQuery<HTMLElement>) => void;
+type EditorMapCallback = (elem: Element) => void;
 type CheerioMapCallback = (arg: Cheerio<AnyNode>) => void;
 
-function quillUtils(renderContext: RenderType) {
-  const $doc = isEditor(renderContext)
-    ? // eslint-disable-next-line @typescript-eslint/no-require-imports
-      (require("jquery") as JQueryType)
-    : // eslint-disable-next-line @typescript-eslint/no-require-imports
-      (require("cheerio") as CheerioModule);
-
-  function mapElements(
-    html: string,
-    fn: JQueryMapCallback | CheerioMapCallback
-  ): string {
-    const selector = `:header, p, pre, li, div:not(.brz-temp-div), span[data-tooltip], span[${makeAttr("tooltip")}]`;
-
-    if (isJQueryLib($doc)) {
-      const $dom = $doc;
-      const $wrapper = $dom(`<div class="brz-temp-div">${html}</div>`);
-      const nodes = $wrapper.find(selector);
-      const jqFn = fn as JQueryMapCallback;
-
-      nodes.each((_, elem) => {
-        jqFn($dom(elem));
-      });
-
-      return $wrapper.html() ?? "";
+export type QuillUtils =
+  | {
+      context: "editor";
+      mapElements: (html: string, fn: EditorMapCallback) => string;
     }
+  | {
+      context: "view";
+      mapElements: (html: string, fn: CheerioMapCallback) => string;
+    };
 
-    const $dom = $doc.load(html);
-    const nodes = $dom(selector);
-    const cheerioFn = fn as CheerioMapCallback;
+// Every tag jQuery's `:header` matches.
+const HEADERS = "h0, h1, h2, h3, h4, h5, h6, h7, h8, h9";
 
-    nodes.each((_, elem) => {
-      cheerioFn($dom(elem));
-    });
+const getLinesSelector = (headers: string): string =>
+  `${headers}, p, pre, li, div:not(.brz-temp-div), span[data-tooltip], span[${makeAttr("tooltip")}]`;
 
-    return $dom.html();
+function quillUtils(renderContext: RenderType): QuillUtils {
+  if (isEditor(renderContext)) {
+    const selector = getLinesSelector(HEADERS);
+
+    return {
+      context: "editor",
+      mapElements: (html, fn) => {
+        const container = document.createElement("div");
+
+        container.innerHTML = `<div class="brz-temp-div">${html}</div>`;
+
+        const nodes = Array.from(container.children).flatMap((root) =>
+          Array.from(root.querySelectorAll(selector))
+        );
+
+        nodes.forEach((elem) => {
+          fn(elem);
+        });
+
+        return container.firstElementChild?.innerHTML ?? "";
+      }
+    };
   }
 
-  return { mapElements };
+  // biome-ignore lint/style/noCommonJs: environment branch — cheerio only exists in the view; a static import would bundle it into the editor build too
+  const cheerio = require("cheerio") as CheerioModule;
+  const selector = getLinesSelector(":header");
+
+  return {
+    context: "view",
+    mapElements: (html, fn) => {
+      const $dom = cheerio.load(html);
+      const nodes = $dom(selector);
+
+      nodes.each((_, elem) => {
+        fn($dom(elem));
+      });
+
+      return $dom.html();
+    }
+  };
 }
 
 const GetQuillUtils = once((renderContext: RenderType) =>
@@ -108,7 +121,7 @@ const rgbaTohex = (rgba = "rgba(0, 0, 0, 1)") => {
     : parsedRgba;
 
   function toHexadecimal(number: string) {
-    return ("0" + parseInt(number, 10).toString(16)).slice(-2);
+    return `0${parseInt(number, 10).toString(16)}`.slice(-2);
   }
 };
 
@@ -157,9 +170,9 @@ const getColorValues = (str: string, regex: RegExp) => {
     return {
       hex: result.hex ?? "#000000",
       opacity: result.opacity ?? 1,
-      vertical: parseInt(vertical ?? 5),
-      horizontal: parseInt(horizontal ?? 5),
-      blur: parseInt(blur ?? 5),
+      vertical: parseInt(vertical ?? 5, 10),
+      horizontal: parseInt(horizontal ?? 5, 10),
+      blur: parseInt(blur ?? 5, 10),
       palette: cssVar
     };
   }
@@ -190,16 +203,16 @@ export const parseShadow = (str = "") => {
   const [, rgba, shadow] = str.split(", rgb")[0].match(/^(rgb.*\)) (.*)/) || [];
 
   const hexColor = rgba && rgbaTohex(rgba);
-  if (rgba && shadow && !!hexColor) {
+  if (rgba && shadow && hexColor) {
     const { hex, opacity } = hexColor;
     const [horizontal, vertical, blur] = shadow.split(" ");
 
     return {
       textShadowColorHex: hex,
-      textShadowColorOpacity: !isNaN(parseFloat(opacity)) ? opacity : 1,
-      textShadowVertical: parseInt(vertical),
-      textShadowHorizontal: parseInt(horizontal),
-      textShadowBlur: parseInt(blur)
+      textShadowColorOpacity: !Number.isNaN(parseFloat(opacity)) ? opacity : 1,
+      textShadowVertical: parseInt(vertical, 10),
+      textShadowHorizontal: parseInt(horizontal, 10),
+      textShadowBlur: parseInt(blur, 10)
     };
   }
 
@@ -265,18 +278,23 @@ export const parseColor = (color = "", opacity: string | number) => {
   };
 };
 
-const getTagName = ($elem: JQuery<HTMLElement>) => {
-  const preElem = $elem.closest("pre");
-  const preTagName = preElem.prop("tagName")
-    ? preElem.prop("tagName").toLowerCase()
-    : null;
+const getTagName = (elem: HTMLElement) => {
+  const preElem = elem.closest("pre");
+  const preTagName = preElem ? preElem.tagName.toLowerCase() : null;
 
-  const headerElem = $elem.closest("p, h1, h2, h3, h4, h5, h6");
-  const headerTagName = headerElem.prop("tagName")
-    ? headerElem.prop("tagName").toLowerCase()
-    : null;
+  const headerElem = elem.closest("p, h1, h2, h3, h4, h5, h6");
+  const headerTagName = headerElem ? headerElem.tagName.toLowerCase() : null;
 
   return preTagName || headerTagName;
+};
+
+// The computed value, or the inline one for a detached element.
+const getCss = (elem: HTMLElement, name: "color" | "opacity"): string => {
+  const view = elem.ownerDocument.defaultView;
+  const styles = (view?.opener ? view : window).getComputedStyle(elem);
+  const value = styles.getPropertyValue(name) || styles[name];
+
+  return value === "" && !elem.isConnected ? elem.style[name] : value;
 };
 
 // to think how to get rid of this function
@@ -331,12 +349,11 @@ const getPopulationColorFormat = ({
     const populationColorPalette = value.colorPalette;
     const prefix = capByPrefix("paragraphColor", key);
 
-    return {
-      ...acc,
+    return Object.assign(acc, {
       [`${prefix}Hex`]: populationColorHex,
       [`${prefix}Opacity`]: populationColorOpacity,
       [`${prefix}Palette`]: populationColorPalette
-    };
+    });
   }, {});
 };
 
@@ -394,7 +411,7 @@ export const getTextBackground = (
 // population
 const getPopulation = (
   value: QuillFormat["population"],
-  $elem: JQuery<HTMLElement>,
+  elem: HTMLElement,
   dcGroups: MValue<DCGroups | DCGroupCloud>
 ) => {
   if (isNullish(value)) {
@@ -408,7 +425,7 @@ const getPopulation = (
   if (population?.content && typeof richTextDCChoices !== "undefined") {
     return {
       population: population.content,
-      label: $elem.closest("[data-population]").text()?.trim(),
+      label: (elem.closest("[data-population]")?.textContent ?? "").trim(),
       display:
         findDCChoiceByPlaceholder({
           choices: richTextDCChoices,
@@ -496,20 +513,20 @@ const getTooltipFormat = (value = "{}"): TooltipFormat => {
 };
 
 export const getFormats = (
-  $elem: JQuery<HTMLElement>,
+  elem: HTMLElement,
   format: QuillFormat = {},
   dcGroups: MValue<DCGroups | DCGroupCloud>
 ) => {
   const v = classNamesToV(
-    $elem
-      .closest("p, :header, pre, li, div.brz-tp__dc-block")
-      .attr("class")
+    elem
+      .closest(`p, ${HEADERS}, pre, li, div.brz-tp__dc-block`)
+      ?.getAttribute("class")
       ?.split(" ") ?? []
   );
   format = flatFormats(format);
 
-  const cssColor = $elem.css("color");
-  const cssOpacity = $elem.css("opacity");
+  const cssColor = getCss(elem, "color");
+  const cssOpacity = getCss(elem, "opacity") || "1";
 
   const populationColor = format.populationColor
     ? {
@@ -648,11 +665,11 @@ export const getFormats = (
     ...getTooltipFormat(format.tooltip),
 
     list: format.list ?? "",
-    population: getPopulation(format.population, $elem, dcGroups),
+    population: getPopulation(format.population, elem, dcGroups),
     prepopulation: format.prepopulation
-      ? $elem.closest(".brz-pre-population-visible").text()
+      ? (elem.closest(".brz-pre-population-visible")?.textContent ?? "")
       : null,
-    tagName: getTagName($elem),
+    tagName: getTagName(elem),
     tabletBackgroundGradient: format.tabletBackgroundGradient ?? null,
     mobileBackgroundGradient: format.mobileBackgroundGradient ?? null,
     tabletTextBackgroundGradient: format.tabletTextBackgroundGradient ?? null,

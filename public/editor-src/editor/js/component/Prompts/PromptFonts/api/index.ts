@@ -1,5 +1,5 @@
 import { uploadFont } from "visual/utils/api";
-import { CreateFont } from "../api/types";
+import type { CreateFont } from "../api/types";
 import { getFontVariations, normalizeFonts } from "./utils";
 
 export const createFont = async ({ id, name, files, config }: CreateFont) => {

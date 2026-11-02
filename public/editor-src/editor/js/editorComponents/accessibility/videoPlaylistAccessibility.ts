@@ -44,7 +44,8 @@ const SELECTORS = {
   progressSlider: ".brz-video-custom-controls .brz-video-custom-slider",
   volumeSlider: ".brz-video-custom-volume-controls",
   progressBar: ".brz-video-custom-controls .brz-video-custom-progress",
-  volumeProgressBar: ".brz-video-custom-volume-controls .brz-video-custom-progress",
+  volumeProgressBar:
+    ".brz-video-custom-volume-controls .brz-video-custom-progress",
   itemText: ".brz-video-playlist-title-video .brz-span"
 } as const;
 const PLAYLIST_LABEL = "Video playlist";
@@ -126,7 +127,9 @@ export class VideoPlaylistAccessibility {
       SELECTORS.playPauseButton,
       SELECTORS.muteButton,
       SELECTORS.fullscreenButton
-    ].forEach((selector) => this.prepareButton(this.q(selector)));
+    ].forEach((selector) => {
+      this.prepareButton(this.q(selector));
+    });
 
     const controlsGroup = this.q(SELECTORS.controlsGroup);
 
@@ -147,19 +150,22 @@ export class VideoPlaylistAccessibility {
     }
 
     if (this.currentVideo) {
-      VIDEO_EVENTS.forEach((eventName) =>
+      VIDEO_EVENTS.forEach((eventName) => {
         this.currentVideo?.removeEventListener(
           eventName,
           this.handleVideoStateChange
-        )
-      );
+        );
+      });
     }
 
     this.currentVideo = nextVideo;
 
-    VIDEO_EVENTS.forEach((eventName) =>
-      this.currentVideo?.addEventListener(eventName, this.handleVideoStateChange)
-    );
+    VIDEO_EVENTS.forEach((eventName) => {
+      this.currentVideo?.addEventListener(
+        eventName,
+        this.handleVideoStateChange
+      );
+    });
   }
 
   private prepareButton(button: HTMLElement | null): void {
@@ -199,7 +205,10 @@ export class VideoPlaylistAccessibility {
 
   private syncPanels(): void {
     this.qa(SELECTORS.panel).forEach((panel, index) => {
-      panel.setAttribute("id", `brz-video-playlist-panel-${this.instanceId}-${index}`);
+      panel.setAttribute(
+        "id",
+        `brz-video-playlist-panel-${this.instanceId}-${index}`
+      );
 
       if (!panel.classList.contains("brz-video-playlist-main__placeholder")) {
         panel.setAttribute("role", "group");
@@ -268,21 +277,21 @@ export class VideoPlaylistAccessibility {
         label: isFullscreen ? "Exit fullscreen" : "Enter fullscreen",
         pressed: isFullscreen,
         disabled:
-          !hasPlayableVideo || !Number.isFinite(duration) || Number(duration) <= 0
+          !hasPlayableVideo ||
+          !Number.isFinite(duration) ||
+          Number(duration) <= 0
       }
     ];
 
-    buttonConfigs.forEach(
-      ({ selector, toggleIcons, ...options }) => {
-        const button = this.q(selector);
+    buttonConfigs.forEach(({ selector, toggleIcons, ...options }) => {
+      const button = this.q(selector);
 
-        this.updateButton(button, options);
+      this.updateButton(button, options);
 
-        if (toggleIcons !== undefined) {
-          this.syncToggleIcons(button, toggleIcons);
-        }
+      if (toggleIcons !== undefined) {
+        this.syncToggleIcons(button, toggleIcons);
       }
-    );
+    });
   }
 
   private syncSliders(state: PlayerState): void {
@@ -545,7 +554,8 @@ export class VideoPlaylistAccessibility {
     const currentTime = video?.currentTime ?? 0;
     const volume = video ? (video.muted ? 0 : video.volume * 100) : 0;
     const hasPlayableVideo = !!video?.src;
-    const hasDuration = hasPlayableVideo && Number.isFinite(duration) && duration > 0;
+    const hasDuration =
+      hasPlayableVideo && Number.isFinite(duration) && duration > 0;
 
     return {
       activeIndex,
@@ -576,13 +586,12 @@ export class VideoPlaylistAccessibility {
   }
 
   private getItemLabel(item: HTMLElement | undefined, index: number): string {
-    const label =
-      item
-        ? this.qa(SELECTORS.itemText, item)
-            .map((part) => part.textContent?.trim() ?? "")
-            .filter(Boolean)
-            .join(" ") || item.textContent?.replace(/\s+/g, " ").trim()
-        : "";
+    const label = item
+      ? this.qa(SELECTORS.itemText, item)
+          .map((part) => part.textContent?.trim() ?? "")
+          .filter(Boolean)
+          .join(" ") || item.textContent?.replace(/\s+/g, " ").trim()
+      : "";
 
     return label || `Video ${index + 1}`;
   }

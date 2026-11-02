@@ -1,4 +1,4 @@
-import React, { Component, ReactElement } from "react";
+import React, { Component, type ReactElement } from "react";
 import { Context } from "../../common/GlobalApps/Context";
 import { Done as ViewDone } from "../../common/GlobalApps/StepsView";
 

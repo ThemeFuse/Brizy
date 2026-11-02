@@ -1,5 +1,4 @@
-import $ from "jquery";
-import React, { ReactNode, RefObject, createRef } from "react";
+import React, { createRef, type ReactNode, type RefObject } from "react";
 
 type Position = Record<"x" | "y", number>;
 const getClientOffset = (event: MouseEvent): Position => ({
@@ -65,10 +64,13 @@ export class Draggable<R extends HTMLElement> extends React.Component<
 
   handleMouseDown = (e: MouseEvent): void => {
     const exceptions = this.props.exceptions ?? [];
+    // The node can live in the parent document, with its own Element.
+    const view = this.elRef.current?.ownerDocument.defaultView;
     if (
       exceptions.length &&
-      e.target &&
-      $(e.target).closest(exceptions.join(", ")).length
+      view &&
+      e.target instanceof view.Element &&
+      e.target.closest(exceptions.join(", "))
     ) {
       return;
     }

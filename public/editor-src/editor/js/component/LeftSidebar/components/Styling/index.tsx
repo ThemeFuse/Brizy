@@ -1,6 +1,6 @@
 import { isEqual } from "es-toolkit";
-import React, { JSX } from "react";
-import { ConnectedProps, connect } from "react-redux";
+import React, { type JSX } from "react";
+import { type ConnectedProps, connect } from "react-redux";
 import { LabelWithButton } from "visual/component/Controls/LeftSidebar/Styling/LabelWithButton";
 import { ToastNotification } from "visual/component/Notifications";
 import Options from "visual/component/Options";
@@ -27,14 +27,14 @@ import {
   extraStylesSelector,
   stylesSelector
 } from "visual/redux/selectors";
-import { ReduxState } from "visual/redux/types";
-import { FontStyles, Palette, Style } from "visual/types/Style";
+import type { ReduxState } from "visual/redux/types";
+import type { FontStyles, Palette, Style } from "visual/types/Style";
 import { isExtraFontStyle } from "visual/types/utils";
 import { getGlobalColors, getGlobalTypography } from "visual/utils/api";
 import { brizyToBranding } from "visual/utils/branding";
 import { t } from "visual/utils/i18n";
 import { uuid } from "visual/utils/uuid";
-import { Action, OwnProps, State, StateProps } from "./types";
+import type { Action, OwnProps, State, StateProps } from "./types";
 
 const mapStateToProps = (state: ReduxState): StateProps => ({
   styles: stylesSelector(state),
@@ -120,8 +120,11 @@ class _DrawerComponent extends React.Component<Props, State> {
   handleRegenerateColors = async () => {
     try {
       this.setState({ loadingColor: true });
-      const { styles, config, getRegenerateColors,currentStyle } = this.props;
-      const colorPalette = await getGlobalColors(config, currentStyle.colorPalette);
+      const { styles, config, getRegenerateColors, currentStyle } = this.props;
+      const colorPalette = await getGlobalColors(
+        config,
+        currentStyle.colorPalette
+      );
 
       const style = this.getRegeneratedStyle(styles);
 
@@ -137,9 +140,13 @@ class _DrawerComponent extends React.Component<Props, State> {
   handleRegenerateTypography = async () => {
     try {
       this.setState({ loadingTypography: true });
-      const { styles, config, getRegenerateTypography,currentStyle } = this.props;
+      const { styles, config, getRegenerateTypography, currentStyle } =
+        this.props;
 
-      const fontStyles = await getGlobalTypography(config, currentStyle.fontStyles);
+      const fontStyles = await getGlobalTypography(
+        config,
+        currentStyle.fontStyles
+      );
 
       const style = this.getRegeneratedStyle(styles);
 

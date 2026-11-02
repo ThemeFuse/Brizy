@@ -1,13 +1,13 @@
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
-import {
+import type { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import type {
   AdobeFont,
   GoogleFont,
   SystemFont,
   UploadedFont
 } from "visual/types/Fonts";
-import { GlobalBlock } from "visual/types/GlobalBlock";
-import { PageCommon } from "visual/types/Page";
-import { Project } from "visual/types/Project";
+import type { GlobalBlock } from "visual/types/GlobalBlock";
+import type { PageCommon } from "visual/types/Page";
+import type { Project } from "visual/types/Project";
 
 //#region GetCompileHTML
 

@@ -1,2 +1,2 @@
+export { handleLinkChange, patchOnDCChange } from "./linkChange";
 export { fromLinkElementModel } from "./linkPatch";
-export { patchOnDCChange, handleLinkChange } from "./linkChange";

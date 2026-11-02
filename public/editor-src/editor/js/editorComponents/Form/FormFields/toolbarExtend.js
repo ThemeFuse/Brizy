@@ -85,7 +85,7 @@ export function getItems({ v, device }) {
               options: [
                 {
                   id: "bgColor",
-                  type: "colorPicker",
+                  type: "colorPicker"
                 }
               ]
             },
@@ -95,7 +95,7 @@ export function getItems({ v, device }) {
               options: [
                 {
                   id: "color",
-                  type: "colorPicker",
+                  type: "colorPicker"
                 }
               ]
             },
@@ -105,7 +105,7 @@ export function getItems({ v, device }) {
               options: [
                 {
                   id: "border",
-                  type: "border",
+                  type: "border"
                 }
               ]
             }

@@ -1,6 +1,6 @@
 import { Layout } from "visual/types/Layout";
 import { t } from "visual/utils/i18n";
-import { MValue } from "visual/utils/value";
+import type { MValue } from "visual/utils/value";
 
 export const readLayout = (id: unknown): MValue<Layout> => {
   switch (id) {

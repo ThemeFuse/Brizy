@@ -1,4 +1,4 @@
-import { AnimationOptions } from "./types";
+import type { AnimationOptions } from "./types";
 
 export function getAnimations(keyframe: string): AnimationOptions | undefined {
   const animations: Record<string, AnimationOptions> = {

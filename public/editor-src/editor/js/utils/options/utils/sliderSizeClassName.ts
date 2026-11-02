@@ -1,4 +1,4 @@
-import { Size } from "visual/component/Options/types/types";
+import type { Size } from "visual/component/Options/types/types";
 
 export const sliderSizeClassName = (size?: Size) => {
   switch (size) {

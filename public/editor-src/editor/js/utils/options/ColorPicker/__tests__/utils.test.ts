@@ -3,8 +3,8 @@ import { Black } from "visual/utils/color/Hex";
 import { COLOR3 } from "visual/utils/color/Palette";
 import * as Opacity from "visual/utils/cssProps/opacity";
 import { testModelToggle } from "visual/utils/model/utilities.test";
-import { Value } from "visual/utils/options/ColorPicker/entities/Value";
 import * as Palette from "visual/utils/options/ColorPicker/entities/palette";
+import { Value } from "visual/utils/options/ColorPicker/entities/Value";
 import * as Color from "../model";
 import { setOpacity, toggleColor } from "../utils";
 

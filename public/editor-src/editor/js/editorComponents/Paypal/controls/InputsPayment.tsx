@@ -1,9 +1,9 @@
 import React from "react";
 import type { FCC } from "visual/utils/react/types";
-import { PaypalPaymenType, Value } from "../types";
-import { InputCheckout, Props as CheckoutProps } from "./InputCheckout";
-import { InputDonation, Props as DonationProps } from "./InputDonation";
-import { InputSubscribe, Props as SubscribeProps } from "./InputSubscribe";
+import { PaypalPaymenType, type Value } from "../types";
+import { type Props as CheckoutProps, InputCheckout } from "./InputCheckout";
+import { type Props as DonationProps, InputDonation } from "./InputDonation";
+import { InputSubscribe, type Props as SubscribeProps } from "./InputSubscribe";
 
 type Props = CheckoutProps &
   SubscribeProps &

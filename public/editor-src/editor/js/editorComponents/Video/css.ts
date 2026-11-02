@@ -1,10 +1,10 @@
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import type { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import {
-  SizeType,
-  isSizeType
+  isSizeType,
+  type SizeType
 } from "visual/global/Config/types/configs/common";
 import { getColor } from "visual/utils/color";
-import {
+import type {
   OptionStyle,
   OptionStyleData,
   OutputOptionStyle,
@@ -12,7 +12,7 @@ import {
 } from "visual/utils/cssStyle/types";
 import { getImageUrl } from "visual/utils/image";
 import { read as readString } from "visual/utils/reader/string";
-import { BgPaddingFlags } from "./types";
+import type { BgPaddingFlags } from "./types";
 import { getRatio, isRatio } from "./utils";
 
 export const ratioCSS: OptionStyle<"select"> = ({

@@ -1,8 +1,7 @@
 import classNames from "classnames";
-import React from "react";
-import { ReactElement } from "react";
+import React, { type ReactElement } from "react";
 import { t } from "visual/utils/i18n";
-import { SelectItemProps } from "./types";
+import type { SelectItemProps } from "./types";
 
 export const SelectItem = ({
   title,

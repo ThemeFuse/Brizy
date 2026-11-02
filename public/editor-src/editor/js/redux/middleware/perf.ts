@@ -1,4 +1,4 @@
-import { Middleware, isAction } from "redux";
+import { isAction, type Middleware } from "redux";
 import UIEvents, { UIEventType } from "visual/global/UIEvents";
 
 export interface ActionPerfInfo {
@@ -19,7 +19,7 @@ export const perfMiddleware: Middleware = () => (next) => (action) => {
   const info: ActionPerfInfo = {
     type: action.type,
     duration,
-    timestamp: Date.now(),
+    timestamp: Date.now()
   };
 
   UIEvents.emit(UIEventType.ReduxActionPerf, info);

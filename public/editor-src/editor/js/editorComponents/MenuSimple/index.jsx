@@ -6,6 +6,7 @@ import EditorComponent from "visual/editorComponents/EditorComponent";
 import { DynamicContent } from "visual/editorComponents/EditorComponent/DynamicContent/DynamicContent";
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import { isEditor } from "visual/providers/RenderProvider";
+import { menuDataSelector } from "visual/redux/selectors";
 import { makePlaceholder } from "visual/utils/dynamicContent";
 import { t } from "visual/utils/i18n";
 import { DCMenuProxyInstance } from "./DC/DCMenuProxyInstance";
@@ -32,7 +33,7 @@ export default class MenuSimple extends EditorComponent {
 
   getDBValue() {
     const dbValue = super.getDBValue();
-    const menusConfig = this.getGlobalConfig().menuData;
+    const menusConfig = menuDataSelector(this.getReduxState());
 
     return dbValue.menuName || menusConfig.length === 0
       ? dbValue
@@ -43,8 +44,8 @@ export default class MenuSimple extends EditorComponent {
   }
 
   renderErrors(v) {
-    const config = this.getGlobalConfig();
-    const { menuData: menusConfig, elements } = config;
+    const { elements } = this.getGlobalConfig();
+    const menusConfig = menuDataSelector(this.getReduxState());
     let errMsg;
 
     if (menusConfig.length === 0 && isEditor(this.props.renderContext)) {
@@ -92,7 +93,9 @@ export default class MenuSimple extends EditorComponent {
     }
 
     const { menuName, tabletToggleMenu, mobileToggleMenu } = v;
-    const toolbarConfig = toolbarConfigFn(this.getGlobalConfig().menuData);
+    const toolbarConfig = toolbarConfigFn(
+      menuDataSelector(this.getReduxState())
+    );
     const placeholder = makePlaceholder({
       content: "{{ brizy_dc_simple_menu }}",
       attr: { menuId: menuName }

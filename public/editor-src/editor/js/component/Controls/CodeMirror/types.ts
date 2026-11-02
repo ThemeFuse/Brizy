@@ -1,5 +1,5 @@
-import { SimpleValue } from "visual/component/Options/Type";
-import {
+import type { SimpleValue } from "visual/component/Options/Type";
+import type {
   WithClassName,
   WithOnChange,
   WithPlaceholder,

@@ -35,7 +35,12 @@ const block = {
 describe("collectElements display text", () => {
   it("uses a field's label instead of its merged searchable text", () => {
     const candidates: InternalSearchResult[] = [];
-    collectElements(block, ["block-1"], { type: "Form2Field" }, candidates);
+    collectElements(
+      block,
+      ["block-1"],
+      { type: "Form2Field", typeRegex: undefined, textRegex: undefined },
+      candidates
+    );
 
     const [result] = toSearchResults(candidates, 20);
 
@@ -48,7 +53,11 @@ describe("collectElements display text", () => {
     collectElements(
       block,
       ["block-1"],
-      { type: "Form2Field", textRegex: "Choose File" },
+      {
+        type: "Form2Field",
+        typeRegex: undefined,
+        textRegex: /Choose File/i
+      },
       candidates
     );
 

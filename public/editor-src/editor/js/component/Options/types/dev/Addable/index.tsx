@@ -1,4 +1,4 @@
-import { DragEndEvent } from "@dnd-kit/core";
+import type { DragEndEvent } from "@dnd-kit/core";
 import classNames from "classnames";
 import React, { useCallback, useEffect, useReducer, useRef } from "react";
 import EditorIcon from "visual/component/EditorIcon";
@@ -8,7 +8,7 @@ import { uuid } from "visual/utils/uuid";
 import { NoAddableItems } from "./components/NoItems";
 import { Sidebar } from "./components/Sidebar";
 import { Sortable } from "./components/Sortable";
-import { ActiveGroup, AddableActions, Component } from "./types";
+import { type ActiveGroup, AddableActions, type Component } from "./types";
 import { getGroupsOrder, getSidebarAlignment } from "./utils";
 
 export const Addable: Component = (props) => {
@@ -31,11 +31,12 @@ export const Addable: Component = (props) => {
   const optionGroupTitle = config?.optionGroupTitle ?? t("Widget");
   const container = window?.parent?.document.body;
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: migrated from eslint
   useEffect(() => {
-    state.optionGroups !== optionGroups &&
+    if (state.optionGroups !== optionGroups) {
       onChange({ value: getGroupsOrder(state.optionGroups) });
+    }
     // Only when groups from state was changed,
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [onChange, state.optionGroups]);
 
   useEffect(() => {

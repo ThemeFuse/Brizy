@@ -2,13 +2,13 @@ import Quill from "quill";
 import { makeAttr } from "visual/utils/i18n/attribute";
 import { encodeToString, parseFromString } from "visual/utils/string";
 import { uuid } from "visual/utils/uuid";
-import { TooltipFormat } from "../../types";
+import type { TooltipFormat } from "../../types";
 
 const Inline = Quill.import("blots/inline");
 
 class TooltipBlot extends Inline {
   static create(value: string) {
-    const node = super.create(value);
+    const node = Inline.create(value);
 
     const parsed = parseFromString<TooltipFormat>(value ?? "{}") ?? {};
 
@@ -16,7 +16,7 @@ class TooltipBlot extends Inline {
       parsed.tooltipId = uuid();
     }
 
-    this.setAttributes(node, encodeToString(parsed));
+    TooltipBlot.setAttributes(node, encodeToString(parsed));
     return node;
   }
 

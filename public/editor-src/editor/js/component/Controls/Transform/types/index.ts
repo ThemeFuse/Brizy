@@ -1,5 +1,5 @@
-import { WithClassName } from "visual/types/attributes";
-import {
+import type { WithClassName } from "visual/types/attributes";
+import type {
   Effect,
   EffectsWithAnchor,
   EffectValueWithAnchor,

@@ -32,10 +32,6 @@ export interface Errors {
   phoneInvalidCharsError?: string;
 }
 
-export interface DoneResponse {
-  success?: boolean;
-}
-
 export interface DataValue {
   name: string;
   required: boolean;

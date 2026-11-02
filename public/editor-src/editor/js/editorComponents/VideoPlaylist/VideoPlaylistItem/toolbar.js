@@ -1,6 +1,6 @@
+import { isBackgroundPointerEnabled } from "visual/global/Config/types/configs/featuresValue";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
-import { isBackgroundPointerEnabled } from "visual/global/Config/types/configs/featuresValue";
 
 export function getItems({ v, device, component }) {
   const config = component.getGlobalConfig();

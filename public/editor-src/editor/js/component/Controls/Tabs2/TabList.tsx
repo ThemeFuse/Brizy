@@ -1,10 +1,11 @@
 import classNames from "classnames";
-import React, { ReactElement } from "react";
+import React, { type ReactElement } from "react";
 import EditorIcon from "visual/component/EditorIcon";
-import { WithClassName, WithOnChange } from "visual/types/attributes";
-import { Props as TabProps } from "./Tab";
+import type { WithClassName, WithOnChange } from "visual/types/attributes";
+import type { Literal } from "visual/utils/types/Literal";
+import type { Props as TabProps } from "./Tab";
 
-export type Props<T> = WithClassName &
+export type Props<T extends Literal> = WithClassName &
   WithOnChange<T> & {
     active: T;
     align: "start" | "center" | "end";
@@ -12,7 +13,7 @@ export type Props<T> = WithClassName &
     children: ReactElement<TabProps<T>>[];
   };
 
-export function TabList<T>({
+export function TabList<T extends Literal>({
   className,
   active,
   onChange,
@@ -26,7 +27,7 @@ export function TabList<T>({
     `brz-ed-control__tabs__${position}`,
     className
   );
-  const items = children.map((child, index) => {
+  const items = children.map((child) => {
     const { icon, value, title, label } = child.props;
     const className = classNames("brz-li brz-ed-control__tab", {
       "brz-ed-control__tab__icon": icon,
@@ -35,7 +36,7 @@ export function TabList<T>({
 
     return (
       <li
-        key={index}
+        key={value}
         title={title ?? label}
         className={className}
         onClick={(): void => onChange(value)}

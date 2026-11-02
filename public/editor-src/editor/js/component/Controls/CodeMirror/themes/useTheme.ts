@@ -1,4 +1,4 @@
-import { ThemeList } from "../types";
+import type { ThemeList } from "../types";
 import { defaultTheme } from "./default";
 import { ideaTheme } from "./idea";
 

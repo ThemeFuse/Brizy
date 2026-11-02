@@ -1,7 +1,7 @@
 import classNames from "classnames";
 import { Range as RCRange } from "rc-slider";
-import React, { CSSProperties, ReactNode } from "react";
-import { WithClassName, WithOnChange } from "visual/types/attributes";
+import React, { type CSSProperties, type ReactNode } from "react";
+import type { WithClassName, WithOnChange } from "visual/types/attributes";
 
 export type Props = WithClassName &
   WithOnChange<number[]> & {

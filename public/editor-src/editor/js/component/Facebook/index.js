@@ -1,11 +1,30 @@
 import React, { useContext } from "react";
-import * as FacebookApi from "react-facebook";
+import {
+  EmbeddedPost,
+  EmbeddedVideo,
+  FacebookContext,
+  FacebookProvider,
+  Like,
+  Page
+} from "react-facebook";
 import { isEditor } from "visual/providers/RenderProvider";
 
-let isFacebookReady = false;
+const isFacebookReady = false;
+
+// The `type` prop names one of these. `react-facebook` exports no `Group`,
+// so FacebookGroup resolves to undefined here exactly as it did when this
+// was a namespace lookup. `__proto__: null` keeps that true for every other
+// unknown `type` too: no inherited Object.prototype member can answer instead.
+const components = {
+  __proto__: null,
+  EmbeddedPost,
+  EmbeddedVideo,
+  Like,
+  Page
+};
 
 const FacebookWrapper = ({ children }) => {
-  const data = useContext(FacebookApi.FacebookContext);
+  const data = useContext(FacebookContext);
   const { isReady } = data;
 
   if (isReady && window.FB && !isFacebookReady) {
@@ -24,15 +43,14 @@ class Facebook extends React.Component {
 
   renderForEdit() {
     const { appId, type, data } = this.props;
-    const Component = FacebookApi[type];
-    const Provider = FacebookApi.FacebookProvider;
+    const Component = components[type];
 
     return (
-      <Provider appId={appId}>
+      <FacebookProvider appId={appId}>
         <FacebookWrapper>
           <Component {...data} />
         </FacebookWrapper>
-      </Provider>
+      </FacebookProvider>
     );
   }
 

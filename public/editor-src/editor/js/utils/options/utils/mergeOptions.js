@@ -43,12 +43,12 @@ function sortOptions(options) {
   if (!options || typeof options[Symbol.iterator] !== "function")
     return options;
 
-  for (let option of options) {
+  for (const option of options) {
     let property = "options";
 
-    if (option["columns"]) property = "columns";
+    if (option.columns) property = "columns";
 
-    if (option["tabs"]) property = "tabs";
+    if (option.tabs) property = "tabs";
 
     if (option[property]) option[property] = sortOptions(option[property]);
   }

@@ -1,4 +1,5 @@
 import classnames from "classnames";
+import { noop } from "es-toolkit";
 import React, { Component } from "react";
 import EditorIcon from "visual/component/EditorIcon";
 import Fixed from "visual/component/Prompts/Fixed";
@@ -9,8 +10,8 @@ import items from "./items";
 export default class PromptConditions extends Component {
   static defaultProps = {
     options: [],
-    onChange: () => {},
-    onClose: () => {}
+    onChange: noop,
+    onClose: noop
   };
 
   state = {
@@ -77,7 +78,6 @@ export default class PromptConditions extends Component {
     const { activeTab } = this.state;
     const Item = items[activeTab];
 
-    // eslint-disable-next-line no-unused-vars
     const { type, icon, label, title, ...itemProps } = options.find(
       ({ type }) => type === activeTab
     );

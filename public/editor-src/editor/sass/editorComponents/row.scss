@@ -39,6 +39,19 @@
       inset-inline-start: auto;
     }
 
+    .brz-row__transform {
+      position: relative;
+      width: 100%;
+      min-height: inherit;
+      display: inherit;
+      align-items: inherit;
+      justify-content: inherit;
+
+      > .brz-bg {
+        inset-inline-start: auto;
+      }
+    }
+
     .brz-wrapper__scrollmotion {
       width: 100%;
       max-width: 100%;

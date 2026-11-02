@@ -1,5 +1,5 @@
-import { NonEmptyArray } from "visual/utils/array/types";
-import {
+import type { NonEmptyArray } from "visual/utils/array/types";
+import type {
   DirtyParser,
   PureParser
 } from "visual/utils/reader/readWithParser/index";
@@ -24,13 +24,13 @@ export type ParseFunction<A, B> = Pure<A, B> | Dirty<A, B>;
 /**
  * @internal
  */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+// biome-ignore lint/suspicious/noExplicitAny: migrated from eslint
 export type Simple<P extends ParseFunction<any, any>> = P;
 
 /**
  * @internal
  */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+// biome-ignore lint/suspicious/noExplicitAny: migrated from eslint
 export type Optional<P extends Simple<any>> = {
   __type: "optional";
   fn: P;
@@ -39,7 +39,7 @@ export type Optional<P extends Simple<any>> = {
 /**
  * @internal
  */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+// biome-ignore lint/suspicious/noExplicitAny: migrated from eslint
 export type Strict<P extends Simple<any>> = {
   __type: "strict";
   fn: P;
@@ -48,13 +48,13 @@ export type Strict<P extends Simple<any>> = {
 /**
  * @internal
  */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+// biome-ignore lint/suspicious/noExplicitAny: migrated from eslint
 export type Def<P extends Simple<any>> = Optional<P> | Strict<P>;
 
 /**
  * @internal
  */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+// biome-ignore lint/suspicious/noExplicitAny: migrated from eslint
 export type All<P extends Simple<any>> = Def<P> | P;
 // endregion
 
@@ -88,7 +88,7 @@ export const call = <A, B>(
 /**
  * @internal
  */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+// biome-ignore lint/suspicious/noExplicitAny: migrated from eslint
 export type Parser<A, B extends Record<any, any> | undefined> =
   | PureParser<A, B>
   | DirtyParser<A, B>;
@@ -96,26 +96,28 @@ export type Parser<A, B extends Record<any, any> | undefined> =
 /**
  * @internal
  */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export type ParserSource<P extends Parser<any, any>> = P extends Parser<
-  infer T,
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  any
->
-  ? T
-  : never;
+// biome-ignore lint/suspicious/noExplicitAny: migrated from eslint
+export type ParserSource<P extends Parser<any, any>> =
+  P extends Parser<
+    infer T,
+    // biome-ignore lint/suspicious/noExplicitAny: migrated from eslint
+    any
+  >
+    ? T
+    : never;
 
 /**
  * @internal
  */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export type ParserTarget<P extends Parser<any, any>> = P extends Parser<
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  any,
-  infer T
->
-  ? T
-  : never;
+// biome-ignore lint/suspicious/noExplicitAny: migrated from eslint
+export type ParserTarget<P extends Parser<any, any>> =
+  P extends Parser<
+    // biome-ignore lint/suspicious/noExplicitAny: migrated from eslint
+    any,
+    infer T
+  >
+    ? T
+    : never;
 // endregion
 
 // region _parse
@@ -123,7 +125,7 @@ export type ParserTarget<P extends Parser<any, any>> = P extends Parser<
 /**
  * @internal
  */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+// biome-ignore lint/suspicious/noExplicitAny: migrated from eslint
 export function _parse<P extends PureParser<any, any>>(
   parsers: P,
   object: ParserSource<P>
@@ -131,7 +133,7 @@ export function _parse<P extends PureParser<any, any>>(
 /**
  * @internal
  */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+// biome-ignore lint/suspicious/noExplicitAny: migrated from eslint
 export function _parse<P extends DirtyParser<any, any>>(
   parsers: P,
   object: ParserSource<P>
@@ -139,7 +141,7 @@ export function _parse<P extends DirtyParser<any, any>>(
 /**
  * @internal
  */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+// biome-ignore lint/suspicious/noExplicitAny: migrated from eslint
 export function _parse<P extends Parser<any, any>>(
   parsers: P,
   object: ParserSource<P>

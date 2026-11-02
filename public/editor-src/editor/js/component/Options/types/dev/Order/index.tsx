@@ -1,9 +1,9 @@
 import classNames from "classnames";
-import React, { ReactElement, useCallback } from "react";
+import React, { type ReactElement, useCallback } from "react";
 import EditorIcon from "visual/component/EditorIcon";
-import * as Option from "visual/component/Options/Type";
-import { WithClassName, WithConfig } from "visual/types/attributes";
-import { Align } from "./types";
+import type * as Option from "visual/component/Options/Type";
+import type { WithClassName, WithConfig } from "visual/types/attributes";
+import type { Align } from "./types";
 import {
   firstArrow,
   firstText,

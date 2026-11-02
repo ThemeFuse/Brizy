@@ -1,14 +1,14 @@
-import { EditorMode } from "../../types/mode";
-import { Api } from "../Api";
-import { Elements } from "../Elements";
-import { Extension } from "../Extension";
-import { Integrations } from "../Integrations";
-import { Menu } from "../Menu";
-import { Page } from "../Page";
-import { Project } from "../Project";
-import { UI } from "../UI";
-import { OnAutoSave } from "../common/OnAutoSave";
-import { OnSave } from "../common/OnSave";
+import type { EditorMode } from "../../types/mode";
+import type { Api } from "../Api";
+import type { OnAutoSave } from "../common/OnAutoSave";
+import type { OnSave } from "../common/OnSave";
+import type { Elements } from "../Elements";
+import type { Extension } from "../Extension";
+import type { Integrations } from "../Integrations";
+import type { Menu } from "../Menu";
+import type { Page } from "../Page";
+import type { Project } from "../Project";
+import type { UI } from "../UI";
 
 export interface EditorConfig {
   //#region Base

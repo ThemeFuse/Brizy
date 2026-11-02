@@ -1,5 +1,5 @@
 import { Num } from "@brizy/readers";
-import { GetItems } from "visual/editorComponents/EditorComponent/types";
+import type { GetItems } from "visual/editorComponents/EditorComponent/types";
 import { DCTypes } from "visual/global/Config/types/DynamicContent";
 import { isStory } from "visual/providers/EditorModeProvider";
 import { getColorToolbar } from "visual/utils/color";
@@ -25,7 +25,7 @@ import {
   styledLineHeightCSS,
   widthCSS
 } from "./css";
-import { Props, Value } from "./types";
+import type { Props, Value } from "./types";
 import { isDefaultLineType, isTypeWithoutWeight } from "./utils";
 
 const getColorLabel = (style: string) => {

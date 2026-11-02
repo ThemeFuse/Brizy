@@ -1,5 +1,5 @@
-import { ElementModel } from "visual/component/Elements/Types";
-import { Value } from "./types/Value";
+import type { ElementModel } from "visual/component/Elements/Types";
+import type { Value } from "./types/Value";
 
 export const resizerRestrictions = {
   size: {

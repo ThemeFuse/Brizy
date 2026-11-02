@@ -6,7 +6,7 @@ import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
 import { HOVER, NORMAL } from "visual/utils/stateMode";
 import * as Str from "visual/utils/string/specs";
-import { Props, Value } from "./types";
+import type { Props, Value } from "./types";
 
 export const getItems: GetItems<Value, Props> = ({ v, device }) => {
   const dvv = (key: string) => defaultValueValue({ v, key, device });

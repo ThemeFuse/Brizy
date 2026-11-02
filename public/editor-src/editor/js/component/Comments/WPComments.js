@@ -176,6 +176,7 @@ class WPComments extends Component {
             <div className="brz-comments">
               {comments.map((item, key) => (
                 <div
+                  // biome-ignore lint/suspicious/noArrayIndexKey: editor-only mock rendered from a fixed placeholder array, never reordered
                   key={key}
                   className={`${commentType} even depth-2 brz-comments brz-comments__skin-${skin} brz-parent`}
                 >

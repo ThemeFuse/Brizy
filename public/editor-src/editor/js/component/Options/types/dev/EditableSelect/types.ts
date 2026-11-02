@@ -1,8 +1,8 @@
-import {
+import type {
   Props as OptionProps,
   SimpleValue
 } from "visual/component/Options/Type";
-import { Literal } from "visual/utils/types/Literal";
+import type { Literal } from "visual/utils/types/Literal";
 
 export type ElementModelValue = SimpleValue<Literal>;
 

@@ -4,7 +4,7 @@ import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
 import { hoverEffects } from "visual/utils/options/Animation/utils";
 import { read as readString } from "visual/utils/string/specs";
-import { GetItems } from "../EditorComponent/types";
+import type { GetItems } from "../EditorComponent/types";
 import { bgPaddingCSS, transitionCSS } from "./css";
 import type { Value } from "./types";
 

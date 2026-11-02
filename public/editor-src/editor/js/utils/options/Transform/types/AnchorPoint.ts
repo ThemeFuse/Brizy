@@ -1,6 +1,6 @@
 import { or, parseStrict, pass } from "fp-utilities";
-import { AnchorPoint } from "visual/component/Controls/Transform/types/AnchorPoint";
-import { FromElementModelGetter } from "visual/component/Options/Type";
+import type { AnchorPoint } from "visual/component/Controls/Transform/types/AnchorPoint";
+import type { FromElementModelGetter } from "visual/component/Options/Type";
 import { always, mPipe } from "visual/utils/fp";
 import { callGetter } from "visual/utils/options/utils/wrap";
 

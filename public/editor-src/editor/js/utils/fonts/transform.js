@@ -16,7 +16,7 @@ const normalizeWeights = (weights) => {
       // Parse numeric weights
       value = parseInt(weight, 10);
       // Skip invalid numeric values
-      if (isNaN(value)) {
+      if (Number.isNaN(value)) {
         continue;
       }
     }
@@ -47,7 +47,7 @@ const normalizeAdobeWeights = (weights) => {
 
   for (const weight of weights) {
     const value = ADOBE_WEIGHTS[weight];
-    if (!isNaN(value)) result.add(value);
+    if (!Number.isNaN(Number(value))) result.add(value);
   }
 
   return Array.from(result).sort((a, b) => a - b);
@@ -69,13 +69,17 @@ export const projectFontsData = (projectFonts) => {
 
     switch (type) {
       case "adobe":
-        return { ...acc, adobe: data };
+        acc.adobe = data;
+        return acc;
       case "upload":
-        return { ...acc, upload: data };
+        acc.upload = data;
+        return acc;
       case "system":
-        return { ...acc, system: data };
+        acc.system = data;
+        return acc;
       default:
-        return { ...acc, google: [...(acc.google || []), ...data] };
+        acc.google = [...(acc.google || []), ...data];
+        return acc;
     }
   }, {});
 };
@@ -154,7 +158,7 @@ export const normalizeStyles = (styles) => {
 
 export const normalizeFontStyles = (fontStyles) => {
   return produce(fontStyles, (draft) => {
-    draft.map((style) => {
+    draft.forEach((style) => {
       if (!style.fontSizeSuffix) {
         style.fontSizeSuffix = "px";
       }

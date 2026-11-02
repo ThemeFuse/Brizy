@@ -1,7 +1,7 @@
-import { ElementModel } from "visual/component/Elements/Types";
+import type { ElementModel } from "visual/component/Elements/Types";
 import { makePlaceholder } from "visual/utils/dynamicContent";
 import * as Str from "visual/utils/string/specs";
-import { MValue } from "visual/utils/value";
+import type { MValue } from "visual/utils/value";
 
 export interface CssId extends ElementModel {
   customID: unknown;

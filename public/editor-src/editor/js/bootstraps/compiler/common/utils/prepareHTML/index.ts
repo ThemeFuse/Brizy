@@ -1,13 +1,13 @@
-import {
+import type {
   ConfigCommon,
   PublishedGlobalBlock,
   PublishedPage,
   PublishedProject
 } from "visual/global/Config/types/configs/ConfigCommon";
-import { Store } from "visual/redux/store";
-import { GlobalBlock } from "visual/types/GlobalBlock";
-import { Page } from "visual/types/Page";
-import { Project } from "visual/types/Project";
+import type { Store } from "visual/redux/store";
+import type { GlobalBlock } from "visual/types/GlobalBlock";
+import type { Page } from "visual/types/Page";
+import type { Project } from "visual/types/Project";
 import { prepareGlobalBlocks } from "./prepareGlobalBlocks";
 import { preparePage } from "./preparePage";
 import { prepareProject } from "./prepareProject";

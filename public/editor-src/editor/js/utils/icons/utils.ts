@@ -1,7 +1,7 @@
 import { Obj, Str } from "@brizy/readers";
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import type { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { mPipe } from "visual/utils/fp";
-import { CustomIconOptions } from "visual/utils/icons/types";
+import type { CustomIconOptions } from "visual/utils/icons/types";
 import { getPlaceholders } from "../placeholders";
 
 export const makeCustomIconUrl = (options: CustomIconOptions): string => {

@@ -1,3 +1,4 @@
+// biome-ignore lint/style/useNodejsImportProtocol: browser bundle — "events" resolves to the npm shim, "node:events" is an unhandled scheme in rspack
 import { EventEmitter } from "events";
 
 const _state: { [key: string]: unknown } = {};

@@ -4,7 +4,7 @@ import {
   cssStyleSpacing
 } from "visual/utils/cssStyle";
 import { defaultValueValue } from "../onChange";
-import { CSSValue } from "../style2/types";
+import type { CSSValue } from "../style2/types";
 
 export function cssStyleElementPostInfoColorIcons({
   v,

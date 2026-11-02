@@ -1,4 +1,4 @@
-import { TextScripts } from "visual/types/Style";
+import type { TextScripts } from "visual/types/Style";
 
 type Boundaries = Partial<{
   min: number;

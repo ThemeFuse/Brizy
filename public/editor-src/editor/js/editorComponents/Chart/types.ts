@@ -1,9 +1,9 @@
-import { Arr, Num, Obj, Str, pipe } from "@brizy/readers";
-import { ChartData as ChartDataType } from "chart.js";
+import { Arr, Num, Obj, pipe, Str } from "@brizy/readers";
+import type { ChartData as ChartDataType } from "chart.js";
 import { mPipe, parseStrict } from "fp-utilities";
-import { ElementModel } from "visual/component/Elements/Types";
-import { ComponentsMeta } from "visual/editorComponents/EditorComponent/types";
-import { WithClassName } from "visual/types/attributes";
+import type { ElementModel } from "visual/component/Elements/Types";
+import type { ComponentsMeta } from "visual/editorComponents/EditorComponent/types";
+import type { WithClassName } from "visual/types/attributes";
 import { onNullish } from "visual/utils/value";
 
 export enum ChartType {

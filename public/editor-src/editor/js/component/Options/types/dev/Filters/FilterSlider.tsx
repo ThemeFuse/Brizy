@@ -1,6 +1,6 @@
-import React, { ReactElement } from "react";
+import { noop } from "es-toolkit";
+import React, { type ReactElement } from "react";
 import { Slider } from "visual/component/Controls/Spacing/Slider";
-import { empty } from "visual/utils/options/Filters/utils";
 import { MAX } from "visual/utils/options/Filters/utils";
 
 export interface Props {
@@ -27,7 +27,7 @@ export const FilterSlider = ({
       value={value}
       unit="%"
       onValue={onChange}
-      onUnit={empty}
+      onUnit={noop}
       units={units}
       step={1}
       min={0}

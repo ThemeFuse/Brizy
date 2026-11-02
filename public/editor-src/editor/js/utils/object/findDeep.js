@@ -1,11 +1,11 @@
 export const findDeep = (obj, cb, path = []) => {
-  let r = cb(obj);
+  const r = cb(obj);
 
   if (r) {
     return { obj, path };
   }
 
-  for (let key in obj) {
+  for (const key in obj) {
     if (!obj.hasOwnProperty(key)) continue;
 
     if (typeof obj[key] === "object" && obj[key] !== null) {

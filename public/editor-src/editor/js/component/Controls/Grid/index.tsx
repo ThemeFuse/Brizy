@@ -1,7 +1,7 @@
 import classNames from "classnames";
-import React, { CSSProperties, ReactElement } from "react";
-import { WithClassName } from "visual/types/attributes";
-import { Props as ColProps } from "./Column";
+import React, { type CSSProperties, type ReactElement } from "react";
+import type { WithClassName } from "visual/types/attributes";
+import type { Props as ColProps } from "./Column";
 
 interface Props extends WithClassName {
   grid: Array<"auto" | number>;

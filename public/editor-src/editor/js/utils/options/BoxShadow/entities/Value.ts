@@ -1,8 +1,8 @@
-import { Hex } from "visual/utils/color/Hex";
-import { Blur } from "visual/utils/cssProps/Blur";
-import { Opacity } from "visual/utils/cssProps/opacity";
-import { Palette } from "visual/utils/options/ColorPicker/entities/palette";
-import { Type } from "./Type";
+import type { Hex } from "visual/utils/color/Hex";
+import type { Blur } from "visual/utils/cssProps/Blur";
+import type { Opacity } from "visual/utils/cssProps/opacity";
+import type { Palette } from "visual/utils/options/ColorPicker/entities/palette";
+import type { Type } from "./Type";
 
 export interface Value {
   type: Type;

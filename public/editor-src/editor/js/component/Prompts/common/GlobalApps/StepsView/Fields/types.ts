@@ -1,5 +1,5 @@
-import { ReactElement } from "react";
-import { FormField } from "../../type";
+import type { ReactElement } from "react";
+import type { FormField } from "../../type";
 
 export type HelperFn = (f: FormField[]) => ReactElement;
 

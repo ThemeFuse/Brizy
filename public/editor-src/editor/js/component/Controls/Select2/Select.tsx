@@ -1,11 +1,16 @@
 import { initial, uniq } from "es-toolkit";
-import React, { KeyboardEvent, ReactElement, useEffect, useState } from "react";
-import { OnChange } from "visual/component/Options/Type";
-import { WithClassName, WithSize } from "visual/types/attributes";
-import { Position } from "visual/utils/position/Position";
-import { Literal } from "visual/utils/types/Literal";
+import React, {
+  type KeyboardEvent,
+  type ReactElement,
+  useEffect,
+  useState
+} from "react";
+import type { OnChange } from "visual/component/Options/Type";
+import type { WithClassName, WithSize } from "visual/types/attributes";
+import type { Position } from "visual/utils/position/Position";
+import type { Literal } from "visual/utils/types/Literal";
 import { Component } from "./Component";
-import { Props as ItemProps } from "./Item";
+import type { Props as ItemProps } from "./Item";
 import { SelectItem } from "./SelectItem";
 import { Tag } from "./Tag";
 import { arrowFn } from "./utils";

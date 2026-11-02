@@ -48,7 +48,7 @@ import {
 } from "@/types/DefaultTemplate";
 import { ConfigDCItem } from "@/types/DynamicContent";
 import { UploadFont } from "@/types/Fonts";
-import { GlobalBlock } from "@/types/GlobalBlocks";
+import { GlobalBlock, GlobalBlockRules } from "@/types/GlobalBlocks";
 import { IconUploadData } from "@/types/Icon";
 import { Page } from "@/types/Page";
 import { Rule } from "@/types/PopupConditions";
@@ -1550,6 +1550,47 @@ export const updateGlobalBlocks = async (
     return d.data;
   } catch {
     throw new Error(t("Failed to update Global blocks"));
+  }
+};
+
+export const updateGlobalBlockRules = async ({
+  uid,
+  rules,
+  status
+}: GlobalBlockRules): Promise<void> => {
+  const config = getConfig();
+
+  if (!config) {
+    throw new Error(t("Invalid __BRZ_PLUGIN_ENV__"));
+  }
+
+  const { url, hash, actions, editorVersion } = config;
+  const _url = makeUrl(url, {
+    hash,
+    action: actions.updateGlobalBlocks,
+    version: editorVersion
+  });
+  // Fields left out (data, compiled, meta, title, tags) stay as they are on the server
+  const dataEncode = makeFormEncode({
+    uid: [uid],
+    status: [status],
+    rules: [JSON.stringify(rules)],
+    position: [""],
+    dependencies: [""],
+    is_autosave: "0"
+  });
+  const body = new URLSearchParams(dataEncode);
+
+  try {
+    const d = await persistentRequest<Array<GlobalBlock>>(_url, {
+      method: "POST",
+      body
+    });
+    if (!d.ok) {
+      throw new Error(t("Failed to update Global Block rules"));
+    }
+  } catch {
+    throw new Error(t("Failed to update Global Block rules"));
   }
 };
 

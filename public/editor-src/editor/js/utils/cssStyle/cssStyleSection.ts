@@ -1,4 +1,7 @@
-import { WithRenderContext, isEditor } from "visual/providers/RenderProvider";
+import {
+  isEditor,
+  type WithRenderContext
+} from "visual/providers/RenderProvider";
 import { cssStyleColor, cssStylePadding } from "visual/utils/cssStyle";
 import { defaultValueValue } from "visual/utils/onChange";
 import { DESKTOP, MOBILE, TABLET } from "visual/utils/responsiveMode";
@@ -6,7 +9,7 @@ import {
   styleMarginUngrouped,
   styleMarginUngroupedSuffix
 } from "visual/utils/style2";
-import { CSSValue } from "visual/utils/style2/types";
+import type { CSSValue } from "visual/utils/style2/types";
 import { checkValue } from "../checkValue";
 
 const validation = (k: string) => k !== undefined;
@@ -135,8 +138,8 @@ export function cssStyleSectionToolbarOffset({
   const dvv = (key: string) => defaultValueValue({ v, key, device, state });
   const marginType = dvv("marginType");
 
-  let marginTop;
-  let marginTopSuffix;
+  let marginTop: number;
+  let marginTopSuffix: string;
 
   if (marginType === "grouped") {
     marginTop = dvv("margin");
@@ -156,6 +159,9 @@ export function cssStyleSectionToolbarOffset({
     });
   }
 
+  // @ts-expect-error validation() is declared (k: string) but is really a defined-check; marginTop
+  // is a number here. Kept as-is: the implicit `any` used to hide the mismatch and narrowing the
+  // helper would touch its other call site, which does pass a string.
   if (!validation(marginTop)) {
     return "";
   } else if (marginTop < 0) {
@@ -181,7 +187,7 @@ export function cssStyleSectionHeightStyle({ v, device }: CSSValue): string {
   const dvv = (key: string) => defaultValueValue({ v, key, device });
   const minHeightType = dvv("fullHeight");
 
-  const minHeight = 
+  const minHeight =
     minHeightType === "custom"
       ? `${dvv("sectionHeight")}${dvv("sectionHeightSuffix")}`
       : minHeightType === "on"

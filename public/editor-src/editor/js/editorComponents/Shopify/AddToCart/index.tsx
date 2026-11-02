@@ -1,8 +1,8 @@
 import classnames from "classnames";
-import React, { ReactNode } from "react";
+import React, { type ReactNode } from "react";
 import { Text } from "visual/component/ContentOptions/types";
 import CustomCSS from "visual/component/CustomCSS";
-import { ElementModel } from "visual/component/Elements/Types";
+import type { ElementModel } from "visual/component/Elements/Types";
 import { ThemeIcon } from "visual/component/ThemeIcon";
 import PortalToolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";

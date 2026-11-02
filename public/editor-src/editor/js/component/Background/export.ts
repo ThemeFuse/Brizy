@@ -1,12 +1,19 @@
 import { debounce } from "es-toolkit";
-import $ from "jquery";
 import { getFreeLibs } from "visual/libs";
-import { ExportFunction } from "visual/types";
+import type { ExportFunction } from "visual/types";
 import { getCurrentDevice } from "visual/utils/export";
 import { makeAttr } from "visual/utils/i18n/attribute";
 import { read as readNumber } from "visual/utils/reader/number";
-import "./lib/jquery.background-video";
-import "./lib/jquery.parallax";
+import {
+  initBackgroundVideo,
+  pauseBackgroundVideo,
+  playBackgroundVideo,
+  reinitBackgroundVideo,
+  resizeBackgroundVideo,
+  typeChangeBackgroundVideo
+} from "./lib/backgroundVideo";
+import { readVideoSettings } from "./lib/dataset";
+import { destroyParallax, initParallax, pauseParallax } from "./lib/parallax";
 import { Effect, Transition } from "./type";
 import {
   getSlideType,
@@ -14,30 +21,52 @@ import {
   readTransition
 } from "./utils/common";
 
-const fn: ExportFunction = ($node) => {
-  const $parallax = $node.find(".brz-bg-image-parallax");
+const parallaxOptions = {
+  bgClass: "brz-bg-image-parallax",
+  wheelIgnoreClass: []
+};
 
-  if ($parallax.length > 0) {
-    const $parallaxContainers = $parallax.closest(".brz-bg");
+const fn: ExportFunction = (root) => {
+  const parallax = root.querySelectorAll<HTMLElement>(".brz-bg-image-parallax");
+
+  if (parallax.length > 0) {
+    // One container can hold several parallax images; jQuery deduplicated the `closest` set and
+    // the paused/destroy calls below still have to run once per container.
+    const parallaxContainers = new Set<HTMLElement>();
+
+    for (const image of parallax) {
+      const container = image.closest<HTMLElement>(".brz-bg");
+
+      if (container) {
+        parallaxContainers.add(container);
+      }
+    }
+
     const initialDeviceMode = getCurrentDevice();
 
     if (initialDeviceMode === "desktop") {
-      $parallaxContainers.brzParallax({
-        bgClass: "brz-bg-image-parallax"
-      });
+      for (const container of parallaxContainers) {
+        initParallax(container, parallaxOptions);
+      }
     }
 
-    $(window).on("resize", function () {
+    window.addEventListener("resize", () => {
       const device = getCurrentDevice();
 
-      if (device === "desktop") {
-        $parallaxContainers.brzParallax({
-          bgClass: "brz-bg-image-parallax"
-        });
-      } else {
-        $parallaxContainers.brzParallax("destroy");
+      for (const container of parallaxContainers) {
+        if (device === "desktop") {
+          initParallax(container, parallaxOptions);
+        } else {
+          destroyParallax(container);
+        }
       }
     });
+
+    const pauseAll = (paused: boolean): void => {
+      for (const container of parallaxContainers) {
+        pauseParallax(container, paused);
+      }
+    };
 
     // when some of element popup, mmenu opened
     // wee need stop parallax
@@ -53,9 +82,9 @@ const fn: ExportFunction = ($node) => {
             return;
           }
 
-          $parallaxContainers.brzParallax("paused", true);
+          pauseAll(true);
         } else {
-          $parallaxContainers.brzParallax("paused", true);
+          pauseAll(true);
         }
       });
     });
@@ -73,67 +102,58 @@ const fn: ExportFunction = ($node) => {
             return;
           }
 
-          $parallaxContainers.brzParallax("paused", false);
+          pauseAll(false);
         } else {
-          $parallaxContainers.brzParallax("paused", false);
+          pauseAll(false);
         }
       });
     });
   }
 
-  $node.find(".brz-bg-video").each(function () {
-    const $this = $(this);
-    const { type, loop, start } = $this.data();
+  for (const video of root.querySelectorAll<HTMLElement>(".brz-bg-video")) {
+    const settings = readVideoSettings(video);
 
-    $this.backgroundVideo({ type, loop, start });
+    initBackgroundVideo(video, settings);
 
-    $(window).on(
+    window.addEventListener(
       "resize",
       debounce(() => {
-        $this.backgroundVideo("resize");
+        resizeBackgroundVideo(video);
       }, 100)
     );
 
     window.Brz.on("elements.lottie.loaded", (node: HTMLElement) => {
-      const parent = $this.get(0)?.parentElement?.parentElement?.parentElement;
+      const parent = video.parentElement?.parentElement?.parentElement;
 
-      if (parent && parent.contains(node)) {
-        $this.backgroundVideo("resize");
+      if (parent?.contains(node)) {
+        resizeBackgroundVideo(video);
       }
     });
 
     window.Brz.on("elements.story.init", (element: HTMLElement) => {
-      const node = $this.get(0);
-      if (node && element.contains(node)) {
-        $this.backgroundVideo("typeChange", { type, loop, start });
+      if (element.contains(video)) {
+        typeChangeBackgroundVideo(video, settings);
       }
     });
 
     window.Brz.on(
       "elements.slick.ready",
       ({ slick, wrapper }: { slick: HTMLElement; wrapper?: HTMLElement }) => {
-        const video = $this.get(0);
+        resizeBackgroundVideo(video);
 
-        if (video) {
-          $this.backgroundVideo("resize");
-          const isSectionSlick = !!slick.querySelector(".brz-section__content");
+        const isSectionSlick = !!slick.querySelector(".brz-section__content");
 
-          if (slick.contains(video) && !isSectionSlick) {
-            $this.backgroundVideo("reinit", {
-              type,
-              loop,
-              start
-            });
-          }
+        if (slick.contains(video) && !isSectionSlick) {
+          reinitBackgroundVideo(video, settings);
+        }
 
-          // Pause background videos inside the current slick slider, excluding the active slide
-          if (
-            isSectionSlick &&
-            !slick.contains(video) &&
-            wrapper?.contains(video)
-          ) {
-            $this.backgroundVideo("pause");
-          }
+        // Pause background videos inside the current slick slider, excluding the active slide
+        if (
+          isSectionSlick &&
+          !slick.contains(video) &&
+          wrapper?.contains(video)
+        ) {
+          pauseBackgroundVideo(video);
         }
       }
     );
@@ -141,25 +161,24 @@ const fn: ExportFunction = ($node) => {
     window.Brz.on(
       "elements.section.slide.change",
       ({ node, slick }: { node: HTMLElement; slick: HTMLElement }) => {
-        const video = $this.get(0);
-
-        if (!video || !node.contains(video)) {
+        if (!node.contains(video)) {
           return;
         }
 
-        const method = video && slick.contains(video) ? "play" : "pause";
-        $this.backgroundVideo(method);
+        if (slick.contains(video)) {
+          playBackgroundVideo(video);
+        } else {
+          pauseBackgroundVideo(video);
+        }
       }
     );
-  });
+  }
 
   // slideshow
   const { Swiper, EffectFade, Autoplay } = getFreeLibs();
 
-  const node = $node.get(0);
-
-  if (Swiper && EffectFade && Autoplay && node) {
-    node
+  if (Swiper && EffectFade && Autoplay) {
+    root
       .querySelectorAll<HTMLDivElement>(".brz-bg-slideshow")
       .forEach((item) => {
         const totalItems =

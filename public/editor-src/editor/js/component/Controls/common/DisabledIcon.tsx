@@ -1,6 +1,6 @@
 import React from "react";
 import { FatCheckIcon } from "visual/component/Controls/FatCheckIcon";
-import { FCC } from "visual/utils/react/types";
+import type { FCC } from "visual/utils/react/types";
 
 export interface Props {
   icon: string;

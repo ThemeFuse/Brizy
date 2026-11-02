@@ -5,12 +5,13 @@ import CustomCSS from "visual/component/CustomCSS";
 import Placeholder from "visual/component/Placeholder";
 import { Wrapper } from "../tools/Wrapper";
 import { BaseEmbedCode } from "./Base";
+import { applyConsentGating } from "./consentGating";
 import { style } from "./styles";
 import type { Value } from "./types";
 
 export default class EmbedCode extends BaseEmbedCode {
   renderForView(v: Value, vs: Value, vd: Value) {
-    const { code } = v;
+    const code = applyConsentGating(v.code, v.consentCategory);
 
     const className = classNames(
       "brz-embed-code",

@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { type FC } from "react";
 import RadioItemComponent from "visual/component/Controls/Radio/RadioItem";
 import { Tooltip } from "visual/component/Controls/Tooltip";
 import EditorIcon from "visual/component/EditorIcon";

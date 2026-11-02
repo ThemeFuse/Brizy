@@ -1,7 +1,7 @@
 import { debounce, noop } from "es-toolkit";
-import React, { ChangeEvent } from "react";
-import { Props } from "visual/component/Options/Type";
-import { WithClassName } from "visual/types/attributes";
+import React, { type ChangeEvent } from "react";
+import type { Props } from "visual/component/Options/Type";
+import type { WithClassName } from "visual/types/attributes";
 import {
   correctNumber,
   formatInputValue,

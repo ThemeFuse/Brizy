@@ -1,9 +1,14 @@
 import { noop } from "es-toolkit";
 import { match } from "fp-utilities";
-import React, { ChangeEvent, Component, ReactElement, ReactNode } from "react";
+import React, {
+  type ChangeEvent,
+  Component,
+  type ReactElement,
+  type ReactNode
+} from "react";
 import { Alert } from "visual/component/Alert";
 import ReactSelect from "visual/component/Controls/ReactSelect";
-import { SingleValue } from "visual/component/Controls/ReactSelect/types";
+import type { SingleValue } from "visual/component/Controls/ReactSelect/types";
 import Select from "visual/component/Controls/Select";
 import SelectItem from "visual/component/Controls/Select/SelectItem";
 import { Switch } from "visual/component/Controls/Switch";
@@ -13,15 +18,15 @@ import { Scrollbar } from "visual/component/Scrollbar";
 import { t } from "visual/utils/i18n";
 import { Button } from "../../../Button";
 import {
-  InputData,
-  Props,
-  SearchData,
-  SelectData,
-  SwitchData,
+  type InputData,
   isInput,
   isSearch,
   isSelect,
-  isSwitch
+  isSwitch,
+  type Props,
+  type SearchData,
+  type SelectData,
+  type SwitchData
 } from "./types";
 
 export class Fields extends Component<Props> {
@@ -65,8 +70,8 @@ export class Fields extends Component<Props> {
   }
 
   renderSelect = ({ name, value, choices }: SelectData): ReactElement => {
-    const options = choices.map(({ title, name }, index) => (
-      <SelectItem key={`${name}-${index}`} value={name}>
+    const options = choices.map(({ title, name }) => (
+      <SelectItem key={name} value={name}>
         {title}
       </SelectItem>
     ));
@@ -126,7 +131,7 @@ export class Fields extends Component<Props> {
     choices
   }: SearchData): ReactElement => {
     const nValue: string[] | string | undefined | null =
-      Boolean(value) && multiple ? value?.split(",") : value;
+      value && multiple ? value?.split(",") : value;
 
     // because of this Select is using for one/multiple items at the same time, I need to check
     // if the value is an array of strings (in case of multiple items) or object (single item)
@@ -183,12 +188,12 @@ export class Fields extends Component<Props> {
   }
 
   renderOptions(): ReactElement {
-    const options = this.props.data.map((option, index) => {
+    const options = this.props.data.map((option) => {
       const { title, required, helper } = option;
 
       return (
         <div
-          key={index}
+          key={title}
           className="brz-ed-popup-integrations-step__fields-option"
         >
           <div className="brz-d-xs-flex brz-align-items-xs-center">

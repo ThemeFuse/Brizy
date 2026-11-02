@@ -1,15 +1,15 @@
 import React, {
-  ReactElement,
-  ReactNode,
-  Ref,
+  type ReactElement,
+  type ReactNode,
+  type Ref,
   useCallback,
   useState
 } from "react";
 import { Draggable as Drag } from "visual/component/Draggable";
-import { WithOnChange } from "visual/types/attributes";
-import { HAlign } from "visual/utils/position/HAlign";
-import { VAlign } from "visual/utils/position/VAlign";
-import { Value } from "./entities/Value";
+import type { WithOnChange } from "visual/types/attributes";
+import type { HAlign } from "visual/utils/position/HAlign";
+import type { VAlign } from "visual/utils/position/VAlign";
+import type { Value } from "./entities/Value";
 
 type Delta = { deltaX: number; deltaY: number };
 type Props = WithOnChange<Value> & {
@@ -65,7 +65,7 @@ export const Draggable = ({
     const { x, y } = getValue();
 
     if (v.x !== x || v.y !== y) {
-      onStart && onStart({ x, y });
+      if (onStart) onStart({ x, y });
       setValue({ x, y });
     }
   }, [getValue, onStart, v]);
@@ -74,7 +74,7 @@ export const Draggable = ({
     const { x, y } = getValue();
 
     if (v.x !== x || v.y !== y) {
-      onEnd && onEnd({ x, y });
+      if (onEnd) onEnd({ x, y });
     }
   }, [getValue, onEnd, v]);
 

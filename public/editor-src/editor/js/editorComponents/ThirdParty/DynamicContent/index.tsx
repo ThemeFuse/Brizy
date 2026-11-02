@@ -1,8 +1,8 @@
-import React, { ReactElement, memo, useMemo } from "react";
+import React, { memo, type ReactElement, useMemo } from "react";
 import { DynamicContentHelper } from "visual/editorComponents/WordPress/common/DynamicContentHelper";
 import { useTranslation } from "visual/providers/I18nProvider";
 import { makePlaceholder } from "visual/utils/dynamicContent";
-import { DynamicContentProps as Props } from "../types";
+import type { DynamicContentProps as Props } from "../types";
 
 const DynamicContentComponent = (props: Props): ReactElement => {
   const {
@@ -41,4 +41,5 @@ const DynamicContentComponent = (props: Props): ReactElement => {
 };
 
 const DynamicContent = memo(DynamicContentComponent);
+
 export { DynamicContent };

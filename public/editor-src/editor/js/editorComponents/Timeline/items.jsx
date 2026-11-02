@@ -29,15 +29,15 @@ export default class TimelineItems extends EditorArrayComponent {
             disabled: items.length < 2,
             config: {
               align:
-                this.props.itemProps.verticalMode == "off"
+                this.props.itemProps.verticalMode === "off"
                   ? "horizontal"
                   : "vertical",
               disable:
                 itemIndex === 0
                   ? "prev"
                   : itemIndex === items.length - 1
-                  ? "next"
-                  : undefined,
+                    ? "next"
+                    : undefined,
               onChange: (v) => {
                 switch (v) {
                   case "prev":

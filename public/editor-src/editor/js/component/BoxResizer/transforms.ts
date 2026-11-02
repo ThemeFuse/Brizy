@@ -1,13 +1,13 @@
 import { Num, Str } from "@brizy/readers";
-import { DeviceMode } from "visual/types";
+import type { DeviceMode } from "visual/types";
 import { roundTo } from "visual/utils/math";
 import { capitalize } from "visual/utils/string";
-import { MValue } from "visual/utils/value";
-import {
+import type { MValue } from "visual/utils/value";
+import type {
   Aligns,
   DimensionSuffix,
-  DimensionSuffixVariants,
   DimensionSuffixs,
+  DimensionSuffixVariants,
   Meta,
   Restriction,
   RestrictionMapping,
@@ -22,11 +22,11 @@ import {
   ValueMapping
 } from "./types";
 import {
-  RESTRICTIONS,
   calcOffsetX,
   calcOffsetXBySize,
   calcOffsetY,
-  calcOffsetYBySize
+  calcOffsetYBySize,
+  RESTRICTIONS
 } from "./utils";
 
 const normalizeKeyForCurrentDeviceMode = (
@@ -104,58 +104,67 @@ export const resizerTransformPatch: TransformPatch = (
 ) => {
   const keys = Object.keys(patch) as (keyof Restriction)[];
 
-  return keys.reduce((acc, key) => {
-    const normalizedKey = normalizeKeyForCurrentDeviceMode(key, device);
+  return keys.reduce(
+    (acc, key) => {
+      const normalizedKey = normalizeKeyForCurrentDeviceMode(key, device);
 
-    const normalizedHeightKey = normalizeKeyForCurrentDeviceMode(
-      "height",
-      device
-    );
-    const normalizedHeightSuffixKey = normalizeKeyForCurrentDeviceMode(
-      "heightSuffix",
-      device
-    );
-
-    const normalizedKeySuffix = normalizeKeyForCurrentDeviceMode(
-      `${key}Suffix` as keyof DimensionSuffix,
-      device
-    );
-    const keySuffix = `${key}Suffix` as keyof DimensionSuffix;
-
-    if (
-      value[normalizedKeySuffix] === undefined &&
-      value[keySuffix] === undefined
-    ) {
-      console.error(
-        `${normalizedKeySuffix} wasn't found in BoxResizer's value`
+      const normalizedHeightKey = normalizeKeyForCurrentDeviceMode(
+        "height",
+        device
       );
-    }
+      const normalizedHeightSuffixKey = normalizeKeyForCurrentDeviceMode(
+        "heightSuffix",
+        device
+      );
 
-    acc[normalizedKey] = patch[key];
+      const normalizedKeySuffix = normalizeKeyForCurrentDeviceMode(
+        `${key}Suffix` as keyof DimensionSuffix,
+        device
+      );
+      const keySuffix = `${key}Suffix` as keyof DimensionSuffix;
 
-    const heightSuffixIsPercent =
-      value[normalizedHeightSuffixKey] &&
-      value[normalizedHeightSuffixKey] === "%";
-
-    const startWidth = startValue.width as number;
-    const startHeight = startValue.height as number;
-
-    if (heightSuffixIsPercent && patch.width) {
-      // width is changing
-      if (keys.length === 1 && key === "width") {
-        const newHeight = (startHeight * startWidth) / 100;
-
-        acc[normalizedHeightKey] = roundTo((newHeight / patch.width) * 100, 2);
-      } else if (keys.length === 2 && key === "height") {
-        const patchHeight = patch.height as number;
-        const newHeight = (startWidth / patch.width) * 100;
-
-        acc[normalizedHeightKey] = roundTo((newHeight * patchHeight) / 100, 2);
+      if (
+        value[normalizedKeySuffix] === undefined &&
+        value[keySuffix] === undefined
+      ) {
+        console.error(
+          `${normalizedKeySuffix} wasn't found in BoxResizer's value`
+        );
       }
-    }
 
-    return acc;
-  }, {} as Partial<RestrictionsMapping>);
+      acc[normalizedKey] = patch[key];
+
+      const heightSuffixIsPercent =
+        value[normalizedHeightSuffixKey] &&
+        value[normalizedHeightSuffixKey] === "%";
+
+      const startWidth = startValue.width as number;
+      const startHeight = startValue.height as number;
+
+      if (heightSuffixIsPercent && patch.width) {
+        // width is changing
+        if (keys.length === 1 && key === "width") {
+          const newHeight = (startHeight * startWidth) / 100;
+
+          acc[normalizedHeightKey] = roundTo(
+            (newHeight / patch.width) * 100,
+            2
+          );
+        } else if (keys.length === 2 && key === "height") {
+          const patchHeight = patch.height as number;
+          const newHeight = (startWidth / patch.width) * 100;
+
+          acc[normalizedHeightKey] = roundTo(
+            (newHeight * patchHeight) / 100,
+            2
+          );
+        }
+      }
+
+      return acc;
+    },
+    {} as Partial<RestrictionsMapping>
+  );
 };
 
 export const resizerTransformStory: TransformStory = (transformV, sourceV) => {

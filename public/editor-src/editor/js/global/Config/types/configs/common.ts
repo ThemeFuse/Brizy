@@ -1,7 +1,7 @@
-import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
-import { NewType } from "visual/types/NewType";
+import type { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
+import type { NewType } from "visual/types/NewType";
 import { checkValue2 } from "visual/utils/checkValue";
-import { ImageType } from "visual/utils/image/types";
+import type { ImageType } from "visual/utils/image/types";
 
 export type Response<R> = (r: R) => void;
 

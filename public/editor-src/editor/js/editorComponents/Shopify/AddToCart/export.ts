@@ -1,13 +1,9 @@
 import { add as addToCart } from "visual/libs/shopify/AjaxApi/Cart";
-import { ProductHandle } from "visual/libs/shopify/types/Product";
+import type { ProductHandle } from "visual/libs/shopify/types/Product";
 import { makeAttr } from "visual/utils/i18n/attribute";
 import { getAddToCartData, handleSpinner } from "./utils";
 
-export default function ($node: JQuery): void {
-  const node = $node.get(0);
-
-  if (!node) return;
-
+export default function (node: HTMLElement): void {
   node
     .querySelectorAll<HTMLButtonElement>(".brz-shopify-add-to-cart")
     .forEach((item) => {

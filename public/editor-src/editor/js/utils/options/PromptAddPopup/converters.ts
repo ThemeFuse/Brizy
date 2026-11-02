@@ -1,5 +1,5 @@
 import { or } from "fp-utilities";
-import * as Option from "visual/component/Options/Type";
+import type * as Option from "visual/component/Options/Type";
 import type { Value } from "visual/component/Options/types/dev/PromptAddPopup/types";
 import { pipe } from "visual/utils/fp";
 import { read as readString } from "visual/utils/reader/string";

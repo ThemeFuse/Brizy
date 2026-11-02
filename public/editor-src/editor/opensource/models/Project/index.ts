@@ -1,5 +1,5 @@
-import { Fonts } from "./Fonts";
-import { ExtraFontStyle, Style } from "./Style";
+import type { Fonts } from "./Fonts";
+import type { ExtraFontStyle, Style } from "./Style";
 
 export interface Project {
   selectedKit: string;

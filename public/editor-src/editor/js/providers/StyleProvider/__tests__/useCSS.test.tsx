@@ -1,7 +1,7 @@
 import { render } from "@testing-library/react";
 import React, { ReactNode } from "react";
-import { Sheet } from "../Sheet";
 import { SheetContext } from "../context";
+import { Sheet } from "../Sheet";
 import { useCSS } from "../useCSS";
 
 const DEFAULT_STYLE = "{{WRAPPER}}{display:block;}";

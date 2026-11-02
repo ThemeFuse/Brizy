@@ -1,27 +1,27 @@
 import { match } from "fp-utilities";
-import React, { Component, JSX, ReactElement } from "react";
-import { ConnectedProps, connect } from "react-redux";
+import React, { Component, type JSX, type ReactElement } from "react";
+import { type ConnectedProps, connect } from "react-redux";
 import HotKeys from "visual/component/HotKeys";
 import { ToastNotification } from "visual/component/Notifications";
-import Prompts, { PromptsProps } from "visual/component/Prompts";
+import Prompts, { type PromptsProps } from "visual/component/Prompts";
 import {
   canSyncPage,
   getPromptPageArticleHeadTitle,
   getPromptPageRulesHeadTitle
 } from "visual/component/Prompts/utils";
 import {
-  Shopify,
-  isCMS,
   isCloud,
+  isCMS,
   isShopify,
-  isShopifyPage
+  isShopifyPage,
+  type Shopify
 } from "visual/global/Config/types/configs/Cloud";
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import type { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { isWp } from "visual/global/Config/types/configs/WP";
 import { getShopifyTemplate } from "visual/global/Config/types/shopify/ShopifyTemplate";
 import { useConfig } from "visual/providers/ConfigProvider";
 import {
-  EditorMode,
+  type EditorMode,
   EditorModeContext,
   isPopup,
   isStory
@@ -39,9 +39,9 @@ import {
   pageSelector,
   storeWasChangedSelector
 } from "visual/redux/selectors";
-import { ReduxState, StoreChanged } from "visual/redux/types";
-import { SavedLayout } from "visual/types";
-import { Style } from "visual/types/Style";
+import { type ReduxState, StoreChanged } from "visual/redux/types";
+import type { SavedLayout } from "visual/types";
+import type { Style } from "visual/types/Style";
 import {
   createBlockScreenshot,
   createSavedLayout,
@@ -53,23 +53,23 @@ import {
   shopifySyncRules,
   shopifyUnpublishPage
 } from "visual/utils/api";
-import { SelectedItem } from "visual/utils/api/types";
+import type { SelectedItem } from "visual/utils/api/types";
 import { ErrorCodes } from "visual/utils/errors";
 import { t } from "visual/utils/i18n";
 import { makeBzelmAttr } from "visual/utils/i18n/attribute";
 import { isNumber } from "visual/utils/math";
 import { browserSupports, makeNodeScreenshot } from "visual/utils/screenshots";
 import { uuid } from "visual/utils/uuid";
-import { MValue } from "visual/utils/value";
+import type { MValue } from "visual/utils/value";
 import { BottomPanelItem } from "../Item";
-import { Controls, Props as ControlsProps } from "./Control";
+import { Controls, type Props as ControlsProps } from "./Control";
 import {
-  Mode,
   getButtonLabel,
   getMode,
   getTooltipPageIcon,
   getTooltipPageTitle,
-  isTemplateOrRulesMode
+  isTemplateOrRulesMode,
+  type Mode
 } from "./utils";
 
 type Page = ReduxState["page"];
@@ -407,7 +407,7 @@ class _PublishButton extends Component<Props, State> {
 
     this.setState({ [loading]: true });
 
-    return (this[loading] = this.props
+    this[loading] = this.props
       .updatePageStatus({
         status: "publish",
         editorMode: editorMode,
@@ -425,7 +425,8 @@ class _PublishButton extends Component<Props, State> {
         ToastNotification.error(t("Could not publish or save page"));
         this.setState({ [loading]: false });
         this[loading] = undefined;
-      }));
+      });
+    return this[loading];
   }
 
   handleDraft(loading: LoadingType, editorMode: EditorMode): Promise<void> {
@@ -453,7 +454,7 @@ class _PublishButton extends Component<Props, State> {
       this.setState({ [loading]: true });
     }
 
-    return (this[loading] = this.props
+    this[loading] = this.props
       .updatePageStatus({
         status: "draft",
         editorMode: editorMode,
@@ -471,7 +472,8 @@ class _PublishButton extends Component<Props, State> {
         ToastNotification.error(t("Could not switch to draft"));
         this.setState({ [loading]: false });
         this[loading] = undefined;
-      }));
+      });
+    return this[loading];
   }
 
   handleScheduled(loading: LoadingType, editorMode: EditorMode): Promise<void> {
@@ -499,7 +501,7 @@ class _PublishButton extends Component<Props, State> {
       this.setState({ [loading]: true });
     }
 
-    return (this[loading] = this.props
+    this[loading] = this.props
       .updatePageStatus({
         status: "future",
         editorMode: editorMode,
@@ -517,7 +519,8 @@ class _PublishButton extends Component<Props, State> {
         ToastNotification.error(t("Could not save scheduled"));
         this.setState({ [loading]: false });
         this[loading] = undefined;
-      }));
+      });
+    return this[loading];
   }
 
   handleSavePage = async (): Promise<void> => {
@@ -580,7 +583,7 @@ class _PublishButton extends Component<Props, State> {
       globalStyles: {
         ...currentStyle,
         id: layoutId,
-        title: currentStyle.title + "-" + layoutId.slice(0, 4)
+        title: `${currentStyle.title}-${layoutId.slice(0, 4)}`
       }
     };
     await createSavedLayout(data, config).catch((e) => {
@@ -875,12 +878,15 @@ class _PublishButton extends Component<Props, State> {
                 onClick={(): void => {
                   switch (this.props.page.status) {
                     case "publish":
-                      return this.publish("updateLoading", mode);
+                      this.publish("updateLoading", mode);
+                      break;
                     case "future":
-                      return this.scheduled("updateLoading", mode);
+                      this.scheduled("updateLoading", mode);
+                      break;
                     case "draft":
                     case "private":
-                      return this.draft("updateLoading", mode);
+                      this.draft("updateLoading", mode);
+                      break;
                   }
                 }}
                 status={this.props.page.status}

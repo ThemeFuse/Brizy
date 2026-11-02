@@ -1,14 +1,14 @@
 import classnames from "classnames";
-import React, { ReactElement, ReactNode } from "react";
+import React, { type ReactElement, type ReactNode } from "react";
 import BoxResizer from "visual/component/BoxResizer";
 import type { Point } from "visual/component/BoxResizer/types";
 import { TextEditor } from "visual/component/Controls/TextEditor";
 import CustomCSS from "visual/component/CustomCSS";
-import { ElementModel } from "visual/component/Elements/Types";
+import type { ElementModel } from "visual/component/Elements/Types";
 import Toolbar from "visual/component/Toolbar";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import EditorComponent, {
-  Props as EProps
+  type Props as EProps
 } from "visual/editorComponents/EditorComponent";
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import { makeDataAttr } from "visual/utils/i18n/attribute";
@@ -49,7 +49,7 @@ export default class ProtectedPage extends EditorComponent<Value, Props> {
   }
 
   handleResizerChange = (patch: Partial<ElementModel>): void => {
-    return this.patchValue(patch);
+    this.patchValue(patch);
   };
 
   componentDidMount(): void {

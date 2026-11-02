@@ -1,5 +1,5 @@
 import { useLayoutEffect as reactUseLayoutEffect, useEffect } from "react";
-import { PopulationVars, Value } from "../type";
+import type { PopulationVars, Value } from "../type";
 
 // React currently throws a warning when using useLayoutEffect on the server.
 // To get around it, we can conditionally useEffect on the server (no-op) and

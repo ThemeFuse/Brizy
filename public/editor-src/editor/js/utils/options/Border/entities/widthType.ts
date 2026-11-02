@@ -1,6 +1,6 @@
-import { MRead, Reader } from "visual/utils/types/Type";
-import { Append, Concat } from "visual/utils/types/Monoid";
 import { pass } from "visual/utils/fp";
+import type { Append, Concat } from "visual/utils/types/Monoid";
+import type { MRead, Reader } from "visual/utils/types/Type";
 
 export type WidthType = "grouped" | "ungrouped";
 
@@ -18,7 +18,7 @@ export const fromString = pass(is);
  *
  *  @deprecated, use fromString
  */
-export const read: Reader<WidthType> = v =>
+export const read: Reader<WidthType> = (v) =>
   types.includes(v as WidthType) ? (v as WidthType) : undefined;
 
 /**
@@ -28,7 +28,7 @@ export const empty = GROUPED;
 
 export const append: Append<WidthType> = (a, b) => (a === empty ? b : a);
 
-export const concat: Concat<WidthType> = as => as.reduce(append, empty);
+export const concat: Concat<WidthType> = (as) => as.reduce(append, empty);
 
 /**
  * Convert a value to valid border width type instance
@@ -36,4 +36,4 @@ export const concat: Concat<WidthType> = as => as.reduce(append, empty);
  *
  *  @deprecated, use fromString
  */
-export const mRead: MRead<WidthType> = v => read(v) ?? empty;
+export const mRead: MRead<WidthType> = (v) => read(v) ?? empty;

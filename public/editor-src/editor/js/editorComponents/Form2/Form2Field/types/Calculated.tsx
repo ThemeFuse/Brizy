@@ -1,8 +1,8 @@
 import { Num } from "@brizy/readers";
 import classnames from "classnames";
-import React, { ReactElement } from "react";
+import React, { type ReactElement } from "react";
 import { Text } from "visual/component/ContentOptions/types";
-import { ElementModel } from "visual/component/Elements/Types";
+import type { ElementModel } from "visual/component/Elements/Types";
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import { makeAttr } from "visual/utils/i18n/attribute";
 import { encodeToString } from "visual/utils/string";

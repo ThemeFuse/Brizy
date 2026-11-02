@@ -110,7 +110,7 @@ export default class Form extends EditorComponent {
     const { _id, messageSuccess, messageError, messageRedirect, customCSS } = v;
     const { action, recaptcha } = config?.integrations?.form ?? {};
     const projectId = config?.project?.id ?? "";
-    const recaptchaSiteKey = recaptcha && recaptcha.siteKey;
+    const recaptchaSiteKey = recaptcha?.siteKey;
 
     const _className = classnames(
       "brz-forms",

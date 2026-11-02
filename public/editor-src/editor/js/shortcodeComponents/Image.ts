@@ -1,7 +1,7 @@
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import type { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import { SizeType } from "visual/global/Config/types/configs/common";
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import { t } from "visual/utils/i18n";
-import { SizeType } from "visual/global/Config/types/configs/common";
 
 export default function (config: ConfigCommon) {
   return {

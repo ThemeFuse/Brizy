@@ -6,8 +6,7 @@ import Background from "visual/component/Background";
 import ContainerBorder from "visual/component/ContainerBorder";
 import CustomCSS from "visual/component/CustomCSS";
 import PaddingResizer from "visual/component/PaddingResizer";
-import { Roles } from "visual/component/Roles";
-import { currentUserRole } from "visual/component/Roles";
+import { currentUserRole, Roles } from "visual/component/Roles";
 import { CollapsibleToolbar, ToolbarExtend } from "visual/component/Toolbar";
 import {
   minWInBoxedPage,

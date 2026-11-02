@@ -1,8 +1,8 @@
-import { DCTypes } from "visual/global/Config/types/DynamicContent";
 import {
   getEnabledLinkOptions,
   isBackgroundPointerEnabled
 } from "visual/global/Config/types/configs/featuresValue";
+import { DCTypes } from "visual/global/Config/types/DynamicContent";
 import { isPopup } from "visual/providers/EditorModeProvider";
 import { getColorToolbar } from "visual/utils/color";
 import { BgRepeat, BgSize } from "visual/utils/containers/types";

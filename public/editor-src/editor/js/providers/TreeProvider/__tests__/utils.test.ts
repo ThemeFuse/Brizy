@@ -1,16 +1,16 @@
 import type { ElementModelType2 } from "visual/component/Elements/Types";
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import type { Block } from "visual/types/Block";
-import { makeBlock } from "../utils";
 import {
   CUSTOM_ID_TYPES,
-  WRAPPER_TYPES,
   getCurrentWrapperElementId,
+  makeBlock,
   removeBlockWithWrapper,
   setHiddenElement,
   supportsCustomId,
   supportsShowOnDevice,
-  updateBlockTitle
+  updateBlockTitle,
+  WRAPPER_TYPES
 } from "../utils";
 
 describe("Navigator context/utils", () => {

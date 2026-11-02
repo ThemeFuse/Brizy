@@ -8,7 +8,7 @@ export const addContentEventListener = ({
   wrapper: HTMLElement;
 }) => {
   const items =
-    type == "list"
+    type === "list"
       ? Array.from(
           wrapper.querySelectorAll<HTMLElement>(".brz-eventLayout--list-item")
         )

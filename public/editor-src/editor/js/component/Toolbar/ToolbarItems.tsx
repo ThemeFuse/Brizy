@@ -1,5 +1,5 @@
-import React, { ReactElement } from "react";
-import { OptionDefinition } from "visual/editorComponents/ToolbarItemType";
+import React, { type ReactElement } from "react";
+import type { OptionDefinition } from "visual/editorComponents/ToolbarItemType";
 import { ToolbarItem } from "./ToolbarItem";
 
 export type ToolbarItemsItems = OptionDefinition[];

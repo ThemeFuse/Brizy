@@ -1,6 +1,6 @@
 import { hasSizing } from "./utils";
 
-describe("Testing 'hasSizing' function", function() {
+describe("Testing 'hasSizing' function", function () {
   test("if width and height values are numbers, return true", () => {
     expect(hasSizing({ width: 40, height: 50 }, "desktop", "normal")).toBe(
       true

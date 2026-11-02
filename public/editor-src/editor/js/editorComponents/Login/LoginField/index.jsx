@@ -185,14 +185,16 @@ class LoginField extends EditorComponent {
                       value={this.getPlaceholder(v)}
                       required
                       onChange={(e) => {
-                        showLabel === "on"
-                          ? this.patchValue({
-                              placeholder: e.target.value
-                            })
-                          : this.patchValue({
-                              label: e.target.value,
-                              placeholder: e.target.value
-                            });
+                        if (showLabel === "on") {
+                          this.patchValue({
+                            placeholder: e.target.value
+                          });
+                        } else {
+                          this.patchValue({
+                            label: e.target.value,
+                            placeholder: e.target.value
+                          });
+                        }
                       }}
                     />
                   </div>

@@ -1,8 +1,8 @@
-import { MouseEvent as ReactMouseEvent } from "react";
-import { EcwidConfig } from "visual/libs/Ecwid/types/EcwidConfig";
+import type { MouseEvent as ReactMouseEvent } from "react";
+import type { EcwidConfig } from "visual/libs/Ecwid/types/EcwidConfig";
 import { onOffToBool } from "visual/utils/boolean";
 import { containsNode } from "visual/utils/ecwid";
-import { Value } from "./types";
+import type { Value } from "./types";
 
 interface Data {
   selector: string;

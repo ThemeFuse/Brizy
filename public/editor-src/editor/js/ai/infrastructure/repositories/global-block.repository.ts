@@ -4,20 +4,24 @@ import {
   deleteGlobalBlock as deleteGlobalBlockAction,
   makeNormalToGlobalBlock
 } from "visual/redux/actions2";
-import { globalBlocksAssembled2Selector } from "visual/redux/selectors";
+import {
+  extraFontStylesSelector,
+  globalBlocksAssembled2Selector,
+  pageSelector
+} from "visual/redux/selectors";
 import type { TypedDispatch } from "visual/redux/store";
 import type { ReduxState } from "visual/redux/types";
-import type { Block } from "visual/types/Block";
 import type {
   GlobalBlockNormal,
   GlobalBlockPosition
 } from "visual/types/GlobalBlock";
-import { BlockTypeRule, type Rule } from "visual/types/Rule";
+import { BlockTypeRule, type CollectionTypeRule } from "visual/types/Rule";
 import { isGlobalPopup } from "visual/types/utils";
 import {
   createGlobalBlock as createGlobalBlockApi,
   deleteGlobalBlock as deleteGlobalBlockApi
 } from "visual/utils/api";
+import { getCurrentRule } from "visual/utils/blocks";
 import { uuid } from "visual/utils/uuid";
 import type {
   GlobalBlockSummary,
@@ -26,19 +30,7 @@ import type {
 } from "../../application/interfaces/i-global-block-repository";
 import { log } from "../../utils/logger";
 import { topInsertIndex } from "./utils";
-
-/**
- * Rule matching every page.
- *
- * Must carry ONLY `type`: `isAllRule` identifies an "all pages" rule by the
- * ABSENCE of `appliedFor` / `entityType` / `entityValues` (see
- * `utils/blocks/guards.ts`). Spelling those keys out here makes the rule match
- * no branch of `editorRuleToApiRule`, which then serialises it as `null` and the
- * backend rejects the whole block with a 400. `stringifyGlobalBlock` expands
- * this into the `{type, appliedFor: null, entityType: "", entityValues: []}`
- * shape the API expects.
- */
-const ALL_PAGES_RULE: Rule = { type: BlockTypeRule.include };
+import { parseBackendBlockData } from "./utils/block";
 
 /**
  * The Redux and REST half of global blocks.
@@ -80,37 +72,44 @@ class GlobalBlockRepository implements IGlobalBlockRepository {
       positionIndex
     );
 
-    // Build the GlobalBlockNormal, mirroring the "make it global" UI flow.
-    const value = (blockData.value ?? {}) as Record<string, unknown>;
-    const _id = typeof value._id === "string" && value._id ? value._id : uuid();
+    const block = parseBackendBlockData(blockData);
+    const uid = uuid(32);
+    const state = this.getState();
+    const page = pageSelector(state);
 
-    const data = {
-      ...blockData,
-      value: { ...value, _id },
+    const data: GlobalBlockNormal["data"] = {
+      ...block,
+      value: { ...block.value, _id: uid },
+      ...(block.deleted !== undefined && { deleted: false }),
       editorVersion: this.config.editorVersion
-    } as unknown as GlobalBlockNormal["data"];
+    };
 
     const gbPosition: GlobalBlockPosition =
       position === "top"
         ? { align: "top", top: positionIndex, bottom: 0 }
         : { align: "bottom", top: 0, bottom: positionIndex };
 
+    const { group, type } = getCurrentRule(page, this.config);
+    const allOfType: CollectionTypeRule = {
+      type: BlockTypeRule.include,
+      appliedFor: group,
+      entityType: type
+    };
+
     const globalBlock: GlobalBlockNormal = {
-      uid: _id,
+      uid,
       data,
       status: "publish",
-      meta: { type: "normal", extraFontStyles: [] },
-      rules: [ALL_PAGES_RULE],
+      meta: {
+        type: "normal",
+        extraFontStyles: extraFontStylesSelector(state)
+      },
+      rules: [allOfType],
       position: gbPosition,
       dataVersion: 0,
       dependencies: []
     };
 
-    // Persist first — the config handler may be absent on non-CMS platforms.
-    // The underlying request resolves for any non-5xx response, so a rejected
-    // call can still land here carrying an error body instead of a block.
-    // Check the same signal the convert-to-global UI flow checks before
-    // treating it as saved.
     const persisted = await createGlobalBlockApi(globalBlock, this.config);
 
     if (!persisted?.data) {
@@ -119,23 +118,21 @@ class GlobalBlockRepository implements IGlobalBlockRepository {
       );
     }
 
-    // Live sync in the current session, same as the "make it global" UI flow.
-    // Not `addGlobalBlock`: it only re-rules a global block the project already
-    // has, so a freshly created one appears only after a reload.
-    const state = this.getState();
+    const current = this.getState();
     const insertIndex =
       position === "top"
-        ? topInsertIndex(state.blocksOrder, state.globalBlocks)
-        : state.blocksOrder.length;
+        ? topInsertIndex(current.blocksOrder, current.globalBlocks)
+        : current.blocksOrder.length;
 
+    this.dispatch(addBlock({ block, fonts: [] }, { insertIndex }));
     this.dispatch(
-      addBlock({ block: data as Block, fonts: [] }, { insertIndex })
-    );
-    this.dispatch(
-      makeNormalToGlobalBlock({ block: globalBlock, fromBlockId: _id })
+      makeNormalToGlobalBlock({
+        block: globalBlock,
+        fromBlockId: block.value._id
+      })
     );
 
-    return { uid: _id };
+    return { uid };
   }
 
   async delete(uid: string): Promise<void> {

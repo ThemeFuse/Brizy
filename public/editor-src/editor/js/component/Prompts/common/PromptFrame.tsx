@@ -1,19 +1,19 @@
 import { noop } from "es-toolkit";
 import React, {
-  ReactElement,
-  ReactNode,
+  type ReactElement,
+  type ReactNode,
   useEffect,
   useMemo,
   useReducer
 } from "react";
-import { Subscription, forkJoin, of } from "rxjs";
+import { forkJoin, of, type Subscription } from "rxjs";
 import { catchError, mapTo, switchMap } from "rxjs/operators";
 import { Button } from "visual/component/Controls/Button";
 import EditorIcon from "visual/component/EditorIcon";
 import { Tabs } from "visual/component/Prompts/Tabs";
 import { pendingRequest } from "visual/utils/api";
 import { t } from "visual/utils/i18n";
-import { MValue } from "visual/utils/value";
+import type { MValue } from "visual/utils/value";
 import { PromptView } from "./PromptView";
 
 enum State {
@@ -116,7 +116,7 @@ export const PromptFrame = ({
     }
 
     return () => subscription?.unsubscribe();
-  }, [onSave, isSaving, validator, value, onSave$]);
+  }, [isSaving, validator, value, onSave$]);
 
   useEffect(() => {
     if (isCanceling) {

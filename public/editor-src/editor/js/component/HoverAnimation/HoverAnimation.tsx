@@ -1,11 +1,17 @@
 import classNames from "classnames";
-import React, { MouseEvent, useEffect, useMemo, useRef, useState } from "react";
+import React, {
+  type MouseEvent,
+  useEffect,
+  useMemo,
+  useRef,
+  useState
+} from "react";
 import UIEvents, { UIEventType } from "visual/global/UIEvents";
-import { FCC } from "visual/utils/react/types";
-import { ResponsiveMode } from "visual/utils/responsiveMode";
-import { Hover } from "./Hover";
+import type { FCC } from "visual/utils/react/types";
+import type { ResponsiveMode } from "visual/utils/responsiveMode";
 import { getAnimations } from "./animations";
-import { AnimationEmmitterInfo, HoverTarget } from "./types";
+import { Hover } from "./Hover";
+import type { AnimationEmmitterInfo, HoverTarget } from "./types";
 import {
   getHoverTarget,
   isMultiAnimation,

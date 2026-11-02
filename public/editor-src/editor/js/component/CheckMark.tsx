@@ -1,7 +1,7 @@
 import classNames from "classnames";
-import React, { MouseEventHandler, ReactElement } from "react";
+import React, { type MouseEventHandler, type ReactElement } from "react";
 import EditorIcon from "visual/component/EditorIcon";
-import { WithClassName } from "visual/types/attributes";
+import type { WithClassName } from "visual/types/attributes";
 
 export interface Props extends WithClassName {
   checked: boolean;

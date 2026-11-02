@@ -1,6 +1,6 @@
-import React, { ReactElement } from "react";
-import * as Option from "visual/component/Options/Type";
-import { WithConfig } from "visual/types/attributes";
+import React, { type ReactElement } from "react";
+import type * as Option from "visual/component/Options/Type";
+import type { WithConfig } from "visual/types/attributes";
 
 export type Config = {
   html: string;

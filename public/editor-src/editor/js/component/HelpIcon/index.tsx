@@ -1,5 +1,5 @@
 import { HelpVideo } from "@brizy/builder-ui-components";
-import React, { ReactElement } from "react";
+import React, { type ReactElement } from "react";
 import EditorIcon from "visual/component/EditorIcon";
 import { t } from "visual/utils/i18n";
 

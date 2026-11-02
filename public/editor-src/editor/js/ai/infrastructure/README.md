@@ -51,8 +51,8 @@ Pure functions extracted from repositories. Each file is domain-specific.
 | `duplicateElementInBlock` | Clones element within a block                  |
 | `removeElementFromBlock`  | Removes element and returns updated block      |
 | `updateColumnInRow`       | Redistributes column widths on change          |
-| `getNestedValue`          | Deep property access by dot path               |
-| `isRowElement`, `isColumnElement`, `isWrappersTypeElement` | Type guards |
+| `getNestedValue`          | Deep property access by an array path (`string[]`), not dot notation               |
+| `isRowElement`, `isColumnElement`, `isWrappersTypeElement` | Boolean checks against element type (no TS type-predicate return) |
 | `getShortcodeKey`         | Gets shortcode key for element type            |
 
 ### `richtext.ts`
@@ -68,23 +68,24 @@ Pure functions extracted from repositories. Each file is domain-specific.
 ### `project.ts`
 | Function / Schema       | Purpose                                          |
 |-------------------------|--------------------------------------------------|
-| `addStyleSchema`        | Zod schema for addStyle validation               |
-| `updateStyleSchema`     | Zod schema for updateProjectStyle validation     |
+| `updateStyleSchema`     | Zod schema for updateProjectStyle validation (whole palette, every device's font keys) |
+| `updateColorPaletteSchema` | Zod schema for updateColorPalette validation (1-8 slots, strict) |
+| `updateFontStyleSchema`, `updateFontStyleTabletSchema`, `updateFontStyleMobileSchema` | Zod schemas for the per-device font style tools (strict: another device's key is refused) |
 | `toStyleSummary`        | `Style` → `StyleSummary` (id + title)            |
-| `toFontStyleSummary`    | `FontStyle` → `FontStyleSummary` (desktop only)  |
+| `toFontStyleSummary`    | `FontStyle` → `FontStyleSummary` (per device)    |
 | `toStyleDetail`         | `Style` → `StyleDetail` (palette + font styles)  |
 | `toFontSummaries`       | `Fonts` → `FontSummary[]` via `fontTransform`    |
 | `mergeStyleUpdate`      | Applies partial style update (merges font styles by id) |
-| `buildNewStyle`         | Creates new style from partial params + current  |
+| `mergePaletteUpdate`    | Sets the hex of the palette slots sent, by id    |
 | `duplicateCurrentStyle` | Clones current style with new UUID               |
 
 ### `search.ts`
 | Function           | Purpose                                              |
 |--------------------|------------------------------------------------------|
 | `collectElements`  | Recursively collects all elements from a block tree  |
-| `searchInElement`  | Matches single element against search criteria       |
+| `searchInElement`  | Recursively collects and fuzzy-filters elements within an element's subtree (deprecated)       |
 | `applyFuzzySearch` | Fuzzy text matching on search candidates             |
-| `toSearchResults`  | Converts internal results to `SearchElementsResult`  |
+| `toSearchResults`  | Converts internal results to `SearchResultItem[]`  |
 
 ### Tests (`utils/__tests__/`)
 - `dnd.test.ts` — DND from/to construction

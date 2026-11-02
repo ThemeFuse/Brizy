@@ -1,10 +1,10 @@
-import React, { ReactElement } from "react";
-import { OnChange } from "visual/component/Options/Type";
-import { t } from "visual/utils/i18n";
+import React, { type ReactElement } from "react";
 import { Select2 } from "visual/component/Controls/Select2";
 import { Item } from "visual/component/Controls/Select2/Item";
-import { OptionWrapper } from "visual/component/OptionWrapper";
 import { OptionLabel } from "visual/component/OptionLabel";
+import type { OnChange } from "visual/component/Options/Type";
+import { OptionWrapper } from "visual/component/OptionWrapper";
+import { t } from "visual/utils/i18n";
 
 export interface Props<T extends number | string> {
   directions: Array<[T, string]>;

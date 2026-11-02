@@ -1,12 +1,12 @@
 import classnames from "classnames";
-import React, { ReactNode } from "react";
+import React, { type ReactNode } from "react";
 import { createPortal } from "react-dom";
 import { ToastNotification } from "visual/component/Notifications";
 import { ThemeIcon } from "visual/component/ThemeIcon";
 import Toolbar from "visual/component/Toolbar";
 import EditorComponent from "visual/editorComponents/EditorComponent";
-import { DynamicContentHelper } from "visual/editorComponents/WordPress/common/DynamicContentHelper";
 import { Wrapper } from "visual/editorComponents/tools/Wrapper";
+import { DynamicContentHelper } from "visual/editorComponents/WordPress/common/DynamicContentHelper";
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import { updateEkklesiaFields } from "visual/utils/api";
 import { attachRefs } from "visual/utils/react";
@@ -38,7 +38,7 @@ import * as toolbarPagination from "./toolbarPagination";
 import * as toolbarSubscribeToCalendar from "./toolbarSubscribeToCalendar";
 import * as toolbarTitle from "./toolbarTitle";
 import * as toolbarWeekdays from "./toolbarWeekdays";
-import { Props, Value } from "./types";
+import type { Props, Value } from "./types";
 import { getPlaceholder } from "./utils/dynamicContent";
 
 export class MinistryBrandsEventCalendar extends EditorComponent<Value, Props> {
@@ -75,7 +75,7 @@ export class MinistryBrandsEventCalendar extends EditorComponent<Value, Props> {
     });
     if (changedKeys) {
       const messages = getEkklesiaMessages();
-      ToastNotification.warn(messages["event_calendar"]);
+      ToastNotification.warn(messages.event_calendar);
       this.patchValue(changedKeys);
     }
   }
@@ -299,8 +299,7 @@ export class MinistryBrandsEventCalendar extends EditorComponent<Value, Props> {
                                                               toolbarWeekdays,
                                                               undefined,
                                                               {
-                                                                allowExtend:
-                                                                  false
+                                                                allowExtend: false
                                                               }
                                                             )}
                                                             selector=".brz-eventCalendar-row-weekdays"
@@ -313,14 +312,14 @@ export class MinistryBrandsEventCalendar extends EditorComponent<Value, Props> {
                                                                   toolbarArrow,
                                                                   undefined,
                                                                   {
-                                                                    allowExtend:
-                                                                      false
+                                                                    allowExtend: false
                                                                   }
                                                                 )}
                                                                 selector=".brz-eventCalendar-pagination a"
                                                               >
                                                                 {({
-                                                                  ref: paginationARef
+                                                                  ref:
+                                                                    paginationARef
                                                                 }) => (
                                                                   <Toolbar
                                                                     {...this.makeToolbarPropsFromConfig2(
@@ -330,63 +329,64 @@ export class MinistryBrandsEventCalendar extends EditorComponent<Value, Props> {
                                                                     selector=".brz-eventCalendar-day-number span"
                                                                   >
                                                                     {({
-                                                                      ref: dayNumberRef
+                                                                      ref:
+                                                                        dayNumberRef
                                                                     }) => (
                                                                       <Toolbar
                                                                         {...this.makeToolbarPropsFromConfig2(
                                                                           toolbarEmpty,
                                                                           undefined,
                                                                           {
-                                                                            allowExtend:
-                                                                              false
+                                                                            allowExtend: false
                                                                           }
                                                                         )}
                                                                         selector=".brz-eventCalendar-day-np"
                                                                       >
                                                                         {({
-                                                                          ref: dayRef
+                                                                          ref:
+                                                                            dayRef
                                                                         }) => (
                                                                           <Toolbar
                                                                             {...this.makeToolbarPropsFromConfig2(
                                                                               toolbarTitle,
                                                                               undefined,
                                                                               {
-                                                                                allowExtend:
-                                                                                  false
+                                                                                allowExtend: false
                                                                               }
                                                                             )}
                                                                             selector=".brz-eventCalendar-links"
                                                                           >
                                                                             {({
-                                                                              ref: linksRef
+                                                                              ref:
+                                                                                linksRef
                                                                             }) => (
                                                                               <Toolbar
                                                                                 {...this.makeToolbarPropsFromConfig2(
                                                                                   toolbarEventStartTime,
                                                                                   undefined,
                                                                                   {
-                                                                                    allowExtend:
-                                                                                      false
+                                                                                    allowExtend: false
                                                                                   }
                                                                                 )}
                                                                                 selector=".brz-eventCalendar-links .brz-eventCalendar__event-start-time"
                                                                               >
                                                                                 {({
-                                                                                  ref: startTimeRef
+                                                                                  ref:
+                                                                                    startTimeRef
                                                                                 }) => (
                                                                                   <Toolbar
                                                                                     {...this.makeToolbarPropsFromConfig2(
                                                                                       toolbarSubscribeToCalendar,
                                                                                       sidebarSubscribeToCalendar,
                                                                                       {
-                                                                                        allowExtend:
-                                                                                          false
+                                                                                        allowExtend: false
                                                                                       }
                                                                                     )}
                                                                                     selector=".brz-eventCalendar__subscribe"
                                                                                   >
                                                                                     {({
-                                                                                      ref: subscribeRef
+                                                                                      ref:
+                                                                                        subscribeRef
                                                                                     }) => (
                                                                                       <Wrapper
                                                                                         {...this.makeWrapperProps(

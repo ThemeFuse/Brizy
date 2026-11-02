@@ -8,8 +8,8 @@ export type { Integrations as EditorIntegrations } from "./models/Integrations";
 export type { Menu as EditorMenu } from "./models/Menu";
 export type { Page as EditorPage } from "./models/Page";
 export type { Project as EditorProject } from "./models/Project";
-export type { UI as EditorUI } from "./models/UI";
 export type { ThirdPartyComponents as EditorThirdPartyComponents } from "./models/ThirdPartyComponents";
+export type { UI as EditorUI } from "./models/UI";
 export type { Preview } from "./types/preview";
 
 //#endregion

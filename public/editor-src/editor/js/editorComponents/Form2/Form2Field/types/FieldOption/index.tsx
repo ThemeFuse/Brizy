@@ -11,11 +11,11 @@ import { shouldRenderPopup } from "visual/editorComponents/tools/Popup";
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import { isEditor } from "visual/providers/RenderProvider";
 import { blocksDataSelector } from "visual/redux/selectors";
-import { Block } from "visual/types/Block";
+import type { Block } from "visual/types/Block";
 import { t } from "visual/utils/i18n";
 import { getLinkData } from "visual/utils/models/link";
 import { handleLinkChange } from "visual/utils/patch/Link";
-import { PatchValue } from "visual/utils/patch/Link/types";
+import type { PatchValue } from "visual/utils/patch/Link/types";
 import { DESKTOP } from "visual/utils/responsiveMode";
 import { FormInput } from "../../type";
 import { CheckboxIcon } from "./Components/CheckboxIcon";
@@ -24,8 +24,8 @@ import RadioItem from "./Components/RadioItem";
 import SelectItem from "./Components/SelectItem";
 import defaultValue from "./defaultValue.json";
 import * as toolbar from "./toolbar";
-import { Props, Value } from "./type";
-import { Form2OptionConnector, convertLinkData } from "./utils";
+import type { Props, Value } from "./type";
+import { convertLinkData, Form2OptionConnector } from "./utils";
 
 class Form2FieldOption extends EditorComponent<Value, Props> {
   static defaultValue = defaultValue;

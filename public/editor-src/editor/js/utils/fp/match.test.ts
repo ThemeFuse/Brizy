@@ -13,9 +13,9 @@ describe("Testing 'match' function", () => {
   type ABC = A | B | C;
 
   const abcId: (v: ABC) => A["a"] | B["b"] | C["c"] = match(
-    [isA, v => v.a],
-    [isB, v => v.b],
-    [isC, v => v.c]
+    [isA, (v) => v.a],
+    [isB, (v) => v.b],
+    [isC, (v) => v.c]
   );
 
   test("On matchC({a: 'test'}), should return 'test'", () => {

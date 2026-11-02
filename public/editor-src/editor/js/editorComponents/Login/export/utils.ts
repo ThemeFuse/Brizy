@@ -1,7 +1,7 @@
 import { makeAttr } from "visual/utils/i18n/attribute";
 import {
-  ElementType,
   clearAlerts,
+  ElementType,
   getValidateInputs,
   getValidateRegisterInputs,
   parseCustomerGroups

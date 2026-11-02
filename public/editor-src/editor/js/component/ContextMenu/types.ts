@@ -1,7 +1,8 @@
 import type { MutableRefObject, ReactNode } from "react";
 import type { ContextMenuItem } from "visual/editorComponents/EditorComponent/types";
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+// biome-ignore lint/suspicious/noExplicitAny: migrated from eslint
+// biome-ignore lint/suspicious/noConfusingVoidType: `void` lets a predicate fall through without returning; `boolean | undefined` would force every implementer to return explicitly
 type ItemDisabledFn = (item: any, meta: any) => boolean | void;
 
 export interface Item {

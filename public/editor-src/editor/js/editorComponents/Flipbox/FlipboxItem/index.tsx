@@ -1,4 +1,4 @@
-import React, { createRef, JSX } from "react";
+import React, { createRef, type JSX } from "react";
 import Background from "visual/component/Background";
 import EditorComponent from "visual/editorComponents/EditorComponent";
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
@@ -6,7 +6,7 @@ import { Trigger } from "../types";
 import { Content } from "./Content";
 import defaultValue from "./defaultValue.json";
 import Items from "./Items";
-import { Props, Value } from "./types";
+import type { Props, Value } from "./types";
 
 class FlipboxItem extends EditorComponent<Value, Props> {
   static get componentId(): ElementTypes.FlipboxItem {

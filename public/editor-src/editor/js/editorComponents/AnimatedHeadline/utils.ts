@@ -1,8 +1,8 @@
 import {
   AnimationStyle,
-  Settings
+  type Settings
 } from "visual/component/AnimatedHeadline/types";
-import { Value } from "./types";
+import type { Value } from "./types";
 
 export const getAnimationOptions = (v: Value): Settings => {
   const {

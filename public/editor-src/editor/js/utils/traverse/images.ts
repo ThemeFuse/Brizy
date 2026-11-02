@@ -1,4 +1,4 @@
-import { Block } from "visual/types/Block";
+import type { Block } from "visual/types/Block";
 import { modelTraverse } from "visual/utils/traverse";
 import { getComponentDefaultValue } from "./common";
 

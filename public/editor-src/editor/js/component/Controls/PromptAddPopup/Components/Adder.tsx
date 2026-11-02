@@ -1,6 +1,6 @@
 import React from "react";
 import EditorIcon from "visual/component/EditorIcon";
-import { FCC } from "visual/utils/react/types";
+import type { FCC } from "visual/utils/react/types";
 
 interface Props {
   onClick?: VoidFunction;

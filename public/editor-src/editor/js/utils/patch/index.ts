@@ -1,7 +1,7 @@
 import { Obj } from "@brizy/readers";
 import { toArray } from "visual/utils/array";
-import { Getter } from "visual/utils/model";
-import { MValue } from "visual/utils/value";
+import type { Getter } from "visual/utils/model";
+import type { MValue } from "visual/utils/value";
 
 export type Patcher<V, M extends P, P> = (v: V, m: M) => MValue<P>;
 

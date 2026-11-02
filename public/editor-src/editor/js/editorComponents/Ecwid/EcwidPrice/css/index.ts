@@ -1,5 +1,5 @@
 import { PriceStyle } from "@brizy/widget/src/Shopify/Price/types";
-import { OptionStyle } from "visual/utils/cssStyle/types";
+import type { OptionStyle } from "visual/utils/cssStyle/types";
 import { priceSelector } from "./selectors";
 
 export * from "./selectors";

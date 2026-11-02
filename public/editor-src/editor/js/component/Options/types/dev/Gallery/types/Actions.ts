@@ -1,5 +1,5 @@
-import { Item } from "./Item";
-import { UploadData } from "./UploadData";
+import type { Item } from "./Item";
+import type { UploadData } from "./UploadData";
 
 // region Add
 export interface Add {

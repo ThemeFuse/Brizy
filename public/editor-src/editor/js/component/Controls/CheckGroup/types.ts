@@ -1,5 +1,5 @@
-import { ReactNode } from "react";
-import { SimpleValue } from "visual/component/Options/Type";
+import type { ReactNode } from "react";
+import type { SimpleValue } from "visual/component/Options/Type";
 
 interface Common {
   value: string;
@@ -59,6 +59,6 @@ export interface Change {
 }
 
 export interface CheckGroupLabelProps {
-  label: JSX.Element;
+  label: ReactNode;
   helperContent: string;
 }

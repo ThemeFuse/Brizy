@@ -1,7 +1,7 @@
 import { intersection, uniq } from "es-toolkit";
 import { toHashCode } from "visual/utils/string";
-import { MValue } from "visual/utils/value";
-import {
+import type { MValue } from "visual/utils/value";
+import type {
   Asset,
   AssetCode,
   AssetFile,

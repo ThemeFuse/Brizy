@@ -1,3 +1,4 @@
+import { noop } from "es-toolkit";
 import React from "react";
 import Select from "visual/component/Controls/Select";
 import SelectItem from "visual/component/Controls/Select/SelectItem";
@@ -16,7 +17,7 @@ const OS = {
 };
 
 export default function OperatingSystem(props) {
-  const { value: triggerValue = "", onChange = () => {} } = props;
+  const { value: triggerValue = "", onChange = noop } = props;
 
   return (
     <React.Fragment>

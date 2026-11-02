@@ -2,16 +2,16 @@ import classNames from "classnames";
 import React from "react";
 import AutoCorrectingInput from "visual/component/Controls/AutoCorrectingInput";
 import {
-  Props as CSProps,
-  ColorPickerSelect
+  ColorPickerSelect,
+  type Props as CSProps
 } from "visual/component/Controls/ColorPickerSelect";
 import { ColorPickerInputs } from "visual/component/Controls/ColorPicketInputs";
 import { Select2 } from "visual/component/Controls/Select2";
 import { Item } from "visual/component/Controls/Select2/Item";
 import { t } from "visual/utils/i18n";
+import type { GradientType, Type } from "./entities";
 import { GradientRange } from "./GradientRange";
-import { GradientType, Type } from "./entities";
-import { Props } from "./types";
+import type { Props } from "./types";
 import { fromColorMeta, renderColorPickerItems } from "./utils";
 
 export const Gradient = ({

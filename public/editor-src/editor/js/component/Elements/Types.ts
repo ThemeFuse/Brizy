@@ -1,5 +1,5 @@
 import type { ComponentsMeta } from "visual/editorComponents/EditorComponent/types";
-import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
+import type { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 
 export type ElementModel = {
   _id?: string;

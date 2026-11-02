@@ -25,10 +25,10 @@ const [
 ] = buildQueries(queryAllByClassName, getMultipleError, getMissingError);
 
 export {
-  queryByClassName,
-  queryAllByClassName,
-  getByClassName,
-  getAllByClassName,
   findAllByClassName,
-  findByClassName
+  findByClassName,
+  getAllByClassName,
+  getByClassName,
+  queryAllByClassName,
+  queryByClassName
 };

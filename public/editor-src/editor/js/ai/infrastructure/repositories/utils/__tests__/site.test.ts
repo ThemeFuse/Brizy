@@ -1,31 +1,8 @@
-import type { MenuData } from "visual/global/Config/types/configs/ConfigCommon";
 import type { GlobalBlockPosition } from "visual/types/GlobalBlock";
-import { removeMenuData, topInsertIndex } from "../site";
+import { topInsertIndex } from "../site";
 
 const gb = (align: "top" | "bottom"): { position: GlobalBlockPosition } => ({
   position: { align, top: 0, bottom: 0 }
-});
-
-describe("removeMenuData", () => {
-  const entry = (id: string): MenuData => ({ id, name: id, items: [] });
-
-  it("removes the matching entry in place and reports it", () => {
-    const config = { menuData: [entry("a"), entry("b")] };
-
-    expect(removeMenuData(config, "a")).toBe(true);
-    expect(config.menuData).toEqual([entry("b")]);
-  });
-
-  it("leaves the list alone when nothing matches", () => {
-    const config = { menuData: [entry("a")] };
-
-    expect(removeMenuData(config, "/menus/9")).toBe(false);
-    expect(config.menuData).toHaveLength(1);
-  });
-
-  it("is a no-op when the config carries no menuData", () => {
-    expect(removeMenuData({}, "a")).toBe(false);
-  });
 });
 
 describe("topInsertIndex", () => {

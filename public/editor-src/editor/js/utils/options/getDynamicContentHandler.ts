@@ -1,7 +1,7 @@
-import { Handler } from "visual/component/Options/types/common/Population/types/Handler";
-import { DCGroup } from "visual/global/Config/types/DynamicContent";
-import { MValue } from "visual/utils/value";
-import { TypeChoices } from "./types";
+import type { Handler } from "visual/component/Options/types/common/Population/types/Handler";
+import type { DCGroup } from "visual/global/Config/types/DynamicContent";
+import type { MValue } from "visual/utils/value";
+import type { TypeChoices } from "./types";
 
 export const getDynamicContentHandler = (
   options: DCGroup<"wp"> | DCGroup<"cloud">,

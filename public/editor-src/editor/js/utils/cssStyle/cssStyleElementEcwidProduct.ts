@@ -3,10 +3,9 @@ import {
   EcwidProductColumns,
   EcwidProductThumb
 } from "visual/editorComponents/Ecwid/EcwidProduct/types/Value";
-import { WithRenderContext } from "visual/providers/RenderProvider";
+import type { WithRenderContext } from "visual/providers/RenderProvider";
 import { checkValue } from "visual/utils/checkValue";
 import {
-  FlexHorizontalAligns,
   cssStyleBgColor,
   cssStyleBgColorHex,
   cssStyleBgGradient,
@@ -30,6 +29,7 @@ import {
   cssStyleSpacing,
   cssStyleSpacingWithPadding,
   cssStyleTextAlign,
+  FlexHorizontalAligns,
   getAllCssStyleTypography,
   readHorizontalAlign
 } from "visual/utils/cssStyle";
@@ -40,7 +40,7 @@ import {
   styleColor,
   styleSizeCustom
 } from "visual/utils/style2";
-import { CSSValue } from "visual/utils/style2/types";
+import type { CSSValue } from "visual/utils/style2/types";
 import { ACTIVE } from "../stateMode";
 import {
   cssStyleSizeMinHeightPx,
@@ -440,11 +440,11 @@ export function cssStyleElementEcwidProductCheckboxPadding({
 
   switch (size) {
     case "small":
-      return "padding: 16${customSizeSuffix};";
+      return `padding: 16${customSizeSuffix};`;
     case "medium":
-      return "padding: 24${customSizeSuffix};";
+      return `padding: 24${customSizeSuffix};`;
     case "large":
-      return "padding: 32${customSizeSuffix};";
+      return `padding: 32${customSizeSuffix};`;
     case "custom":
       return `padding: ${customSize}${customSizeSuffix};`;
   }

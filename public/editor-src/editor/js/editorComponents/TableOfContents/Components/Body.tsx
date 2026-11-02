@@ -1,5 +1,5 @@
 import classnames from "classnames";
-import React, { ReactNode, forwardRef } from "react";
+import React, { forwardRef, type ReactNode } from "react";
 
 interface Props {
   underline?: boolean;

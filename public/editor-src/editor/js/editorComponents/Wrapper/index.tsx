@@ -1,21 +1,21 @@
 import classNames from "classnames";
 import React, {
-  HTMLAttributes,
-  ReactElement,
-  ReactNode,
-  Ref,
-  RefObject,
-  createRef
+  createRef,
+  type HTMLAttributes,
+  type MutableRefObject,
+  type ReactElement,
+  type ReactNode,
+  type Ref,
+  type RefObject
 } from "react";
-import { MutableRefObject } from "react";
 import Animation from "visual/component/Animation";
 import ContainerBorder from "visual/component/ContainerBorder";
 import ContextMenu, { ContextMenuExtend } from "visual/component/ContextMenu";
-import { ElementModel } from "visual/component/Elements/Types";
+import type { ElementModel } from "visual/component/Elements/Types";
 import { HoverAnimation } from "visual/component/HoverAnimation/HoverAnimation";
 import { getHoverAnimationOptions } from "visual/component/HoverAnimation/utils";
 import { ProBlocked } from "visual/component/ProBlocked";
-import { Roles, currentUserRole } from "visual/component/Roles";
+import { currentUserRole, Roles } from "visual/component/Roles";
 import { ScrollMotion } from "visual/component/ScrollMotions";
 import { makeOptionValueToMotion } from "visual/component/ScrollMotions/utils";
 import { SortableElement } from "visual/component/Sortable/SortableElement";
@@ -23,20 +23,23 @@ import SortableHandle from "visual/component/Sortable/SortableHandle";
 import Toolbar, {
   ToolbarExtend as _ToolbarExtend
 } from "visual/component/Toolbar";
-import { PortalToolbarType } from "visual/component/Toolbar/PortalToolbar";
+import type { PortalToolbarType } from "visual/component/Toolbar/PortalToolbar";
 import { TransformWrapper } from "visual/component/TransformWrapper";
 import EditorArrayComponent from "visual/editorComponents/EditorArrayComponent";
 import EditorComponent, {
-  Props as EDProps
+  type Props as EDProps
 } from "visual/editorComponents/EditorComponent";
-import {
+import type {
   ProElementTitle,
   ToolbarExtend
 } from "visual/editorComponents/EditorComponent/types";
 import { getProTitle } from "visual/editorComponents/EditorComponent/utils";
-import { Meta, ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
+import type {
+  Meta,
+  ToolbarItemType
+} from "visual/editorComponents/ToolbarItemType";
 import { Draggable } from "visual/editorComponents/tools/Draggable";
-import { Value as DraggableV } from "visual/editorComponents/tools/Draggable/entities/Value";
+import type { Value as DraggableV } from "visual/editorComponents/tools/Draggable/entities/Value";
 import { getContainerSizes } from "visual/editorComponents/tools/Draggable/utils";
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import { symbolsSelector } from "visual/redux/selectors";
@@ -58,8 +61,8 @@ import * as State from "visual/utils/stateMode";
 import * as NoEmptyString from "visual/utils/string/NoEmptyString";
 import * as Attr from "visual/utils/string/parseCustomAttributes";
 import * as Str from "visual/utils/string/specs";
-import { Literal } from "visual/utils/types/Literal";
-import { MValue } from "visual/utils/value";
+import type { Literal } from "visual/utils/types/Literal";
+import type { MValue } from "visual/utils/value";
 import { getAnimations } from "../../component/HoverAnimation/animations";
 import contextMenuConfig from "./contextMenu";
 import contextMenuConfigPro from "./contextMenuPro";
@@ -74,7 +77,7 @@ import * as sidebarExtendConfig from "./sidebarExtend";
 import { styleAnimation, styleWrapper } from "./styles";
 import * as toolbarConfig from "./toolbar";
 import * as toolbarExtendConfig from "./toolbarExtend";
-import { Component, Props, Static, Value } from "./types";
+import type { Component, Props, Static, Value } from "./types";
 
 export default class Wrapper extends EditorComponent<Value, Props> {
   static defaultValue = defaultValue;
@@ -257,7 +260,7 @@ export default class Wrapper extends EditorComponent<Value, Props> {
     const elementId = innerElement?.value._id ?? "";
     const elementType = innerElement?.type ?? "";
 
-    if (proTitleElement && proTitleElement.title) {
+    if (proTitleElement?.title) {
       const content = (
         <ProBlocked
           text={proTitleElement.title}
@@ -354,7 +357,11 @@ export default class Wrapper extends EditorComponent<Value, Props> {
     const store = this.getReduxStore();
 
     const content = (
-      <TransformWrapper<Value> v={v} needWrapper={needWrapper}>
+      <TransformWrapper<Value>
+        v={v}
+        className="brz-wrapper-transform"
+        needWrapper={needWrapper}
+      >
         <ScrollMotion
           className="brz-wrapper__scrollmotion"
           options={makeOptionValueToMotion({
@@ -536,7 +543,7 @@ export default class Wrapper extends EditorComponent<Value, Props> {
     };
 
     const content = (
-      <TransformWrapper<Value> v={v}>
+      <TransformWrapper<Value> v={v} className="brz-wrapper-transform">
         <ScrollMotion
           options={makeOptionValueToMotion({
             v,

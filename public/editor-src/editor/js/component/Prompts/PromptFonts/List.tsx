@@ -1,5 +1,11 @@
 import classNames from "classnames";
-import React, { JSX, MouseEvent, useCallback, useMemo, useState } from "react";
+import React, {
+  type JSX,
+  type MouseEvent,
+  useCallback,
+  useMemo,
+  useState
+} from "react";
 import { useDispatch, useSelector } from "react-redux";
 import EditorIcon from "visual/component/EditorIcon";
 import { Scrollbar } from "visual/component/Scrollbar";
@@ -9,15 +15,15 @@ import {
   defaultFontSelector,
   unDeletedFontsSelector
 } from "visual/redux/selectors";
-import { TypedDispatch } from "visual/redux/store";
-import { Font, UploadedFont } from "visual/types/Fonts";
+import type { TypedDispatch } from "visual/redux/store";
+import type { Font, UploadedFont } from "visual/types/Fonts";
 import { deleteFont as apiDeleteFont, pendingRequest } from "visual/utils/api";
 import { fontTransform } from "visual/utils/fonts/transform";
 import { FONT_INITIAL } from "visual/utils/fonts/utils";
 import { t } from "visual/utils/i18n";
 import { Circle } from "./Circle";
 import { Tooltip } from "./Tooltip";
-import { FontTypes } from "./types";
+import type { FontTypes } from "./types";
 import { sortFonts } from "./utils";
 
 export const List = (): JSX.Element => {

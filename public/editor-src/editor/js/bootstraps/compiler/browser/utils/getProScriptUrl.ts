@@ -1,6 +1,6 @@
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import type { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { assetProUrl } from "visual/utils/asset/assetProUrl";
-import { MValue } from "visual/utils/value";
+import type { MValue } from "visual/utils/value";
 
 export function getProScriptUrl(config: ConfigCommon): MValue<string> {
   const pro = config.pro;

@@ -1,10 +1,7 @@
 import { getFreeLibs } from "visual/libs";
-import { ExportFunction } from "visual/types";
+import type { ExportFunction } from "visual/types";
 
-export const fn: ExportFunction = ($node) => {
-  const node = $node.get(0);
-  if (!node) return;
-
+export const fn: ExportFunction = (node) => {
   const { initEkklesiaPopups } = getFreeLibs();
 
   if (typeof initEkklesiaPopups === "function") {

@@ -1,10 +1,10 @@
-import { ElementProps } from "visual/component/Elements/Types";
-import { Active } from "../../type";
 import React from "react";
-import { MValue } from "visual/utils/value";
-import * as LinkTarget from "visual/component/Link/types/Target";
-import { StoryAnchorAttribute } from "visual/component/Link/types/Slide";
-import * as LinkType from "visual/component/Link/types/Type";
+import type { ElementProps } from "visual/component/Elements/Types";
+import type { StoryAnchorAttribute } from "visual/component/Link/types/Slide";
+import type * as LinkTarget from "visual/component/Link/types/Target";
+import type * as LinkType from "visual/component/Link/types/Type";
+import type { MValue } from "visual/utils/value";
+import type { Active } from "../../type";
 
 type CheckboxActive = (active: Record<string, boolean>) => React.JSX.Element;
 

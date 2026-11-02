@@ -1,9 +1,10 @@
+import { noop } from "es-toolkit";
 export function debounceAdvanced({
   fn,
   wait = 1000,
   memoizeArgs = [],
-  onFirstCall = () => {},
-  onAfterFnCall = () => {}
+  onFirstCall = noop,
+  onAfterFnCall = noop
 }) {
   let memoizedArgs;
   let tid;

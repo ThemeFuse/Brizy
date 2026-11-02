@@ -1,12 +1,12 @@
 import { getCurrentDevice } from "visual/utils/export";
 import { makeAttr } from "visual/utils/i18n/attribute";
-import {
+import type { FlipboxType } from "./types";
+import type {
   ChangeFlipboxState,
   IncreaseFlipboxHeight,
   ResetFlipboxState,
   ToggleActive
 } from "./types/types.export";
-import { FlipboxType } from "./types";
 import { getHeight } from "./utils";
 
 export const animationClassName = "brz-flipbox-back-active";

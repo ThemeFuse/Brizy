@@ -1,8 +1,8 @@
-import { Slug } from "./types";
 import { makePlaceholder } from "visual/utils/dynamicContent";
-import { read as jsonRead } from "visual/utils/reader/json";
 import { mPipe } from "visual/utils/fp";
 import { readWithItemReader } from "visual/utils/reader/array";
+import { read as jsonRead } from "visual/utils/reader/json";
+import { Slug } from "./types";
 
 const getPostInfoPlaceholderBySlug = (slug: Slug): string => {
   switch (slug) {
@@ -20,12 +20,10 @@ export const getPlaceholder = (
 ): {
   [key: string]: string;
 } =>
-  postElements.reduce((acc, slug) => {
+  postElements.reduce<{ [key: string]: string }>((acc, slug) => {
     const placeholder = getPostInfoPlaceholderBySlug(slug);
-    return {
-      ...acc,
-      [slug]: makePlaceholder({ content: placeholder })
-    };
+    acc[slug] = makePlaceholder({ content: placeholder });
+    return acc;
   }, {});
 
 const readSlug = (slug: unknown): Slug | undefined => {

@@ -1,23 +1,20 @@
+import { LoginAccessibility } from "../../accessibility";
 import { getData, getFetchUrl, validateInputs } from "./utils";
 import {
-  ElementType,
   addAlerts,
+  ElementType,
   getElementType,
   getErrorMessages,
   handleSubmit,
   loginDisplay
 } from "./utils.common";
-import { LoginAccessibility } from "../../accessibility";
 
 const cloudHeaders = { "Content-Type": "application/json" };
 const fetchHeaders = new Headers(cloudHeaders);
 
 let isSubmitEnabled = true;
 
-export default function ($node: JQuery): void {
-  const node = $node.get(0);
-  if (!node) return;
-
+export default function (node: HTMLElement): void {
   node.querySelectorAll(".brz-login").forEach((element) => {
     loginDisplay(element);
     if (element instanceof HTMLElement) {

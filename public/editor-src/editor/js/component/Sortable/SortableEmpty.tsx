@@ -1,7 +1,7 @@
 import { isEqual } from "es-toolkit";
 import React, {
-  ElementType,
-  ReactElement,
+  type ElementType,
+  type ReactElement,
   useCallback,
   useEffect,
   useRef
@@ -12,12 +12,12 @@ import { hideToolbar } from "visual/component/Toolbar";
 import { LeftSidebarOptionsIds } from "visual/global/Config/types/configs/ConfigCommon";
 import UIEvents, { UIEventType } from "visual/global/UIEvents";
 import { renderHOC } from "visual/providers/RenderProvider/renderHOC";
-import { ReduxAction, updateUI } from "visual/redux/actions2";
+import { type ReduxAction, updateUI } from "visual/redux/actions2";
 import { deviceModeSelector } from "visual/redux/selectors";
-import { ReduxState } from "visual/redux/types";
+import type { ReduxState } from "visual/redux/types";
 import { makeAttr, makeDataAttr } from "visual/utils/i18n/attribute";
 import SortablePlugin from "./plugin";
-import { SortablePluginOptions } from "./plugin/types";
+import type { SortablePluginOptions } from "./plugin/types";
 
 type SortType =
   | "section"

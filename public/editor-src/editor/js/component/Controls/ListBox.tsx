@@ -1,8 +1,8 @@
 import classnames from "classnames";
-import React, { Component, RefObject, createRef } from "react";
+import React, { Component, createRef, type RefObject } from "react";
 import { t } from "visual/utils/i18n";
 import { isOptgroup } from "visual/utils/options/Population/utils";
-import { Scrollbar, ScrollbarRef } from "../Scrollbar";
+import { Scrollbar, type ScrollbarRef } from "../Scrollbar";
 
 type Props = {
   className: string;
@@ -105,10 +105,10 @@ class ListBox extends Component<Props, State> {
   };
 
   renderList(choices: Props["choices"], active: string | null) {
-    return choices.map((choice, index) => {
+    return choices.map((choice) => {
       if (isOptgroup(choice)) {
         return (
-          <div key={index} className="brz-ed-listbox__optgroup">
+          <div key={choice.title} className="brz-ed-listbox__optgroup">
             <div className="brz-ed-listbox__optgroup-label">{choice.title}</div>
             {this.renderList(choice.optgroup, active)}
           </div>
@@ -122,7 +122,7 @@ class ListBox extends Component<Props, State> {
 
       return (
         <div
-          key={index}
+          key={value}
           title={title}
           className={className}
           onClick={() => this.props.onChange(value)}

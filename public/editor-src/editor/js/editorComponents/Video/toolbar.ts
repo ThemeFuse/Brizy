@@ -1,7 +1,7 @@
 import { Str } from "@brizy/readers";
 import type { GetItems } from "visual/editorComponents/EditorComponent/types";
-import { DCTypes } from "visual/global/Config/types/DynamicContent";
 import { isBackgroundPointerEnabled } from "visual/global/Config/types/configs/featuresValue";
+import { DCTypes } from "visual/global/Config/types/DynamicContent";
 import { isStory } from "visual/providers/EditorModeProvider";
 import { getColorToolbar } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
@@ -31,7 +31,7 @@ import {
   sizeCSS,
   sliderBgColorCSS
 } from "./css";
-import { Ratio, Value } from "./types";
+import { Ratio, type Value } from "./types";
 import { typesChoice } from "./utils";
 
 // @ts-expect-error: "advancedSettings" missing in new option-types

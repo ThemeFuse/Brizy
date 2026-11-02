@@ -11,8 +11,8 @@ import {
   styleElementSwitcherSize,
   styleElementSwitcherSpacing
 } from "visual/utils/style2";
-import { Reader } from "visual/utils/types/Type";
-import { CSSValue } from "../style2/types";
+import type { Reader } from "visual/utils/types/Type";
+import type { CSSValue } from "../style2/types";
 
 type IconPositionType = "left" | "top" | "bottom" | "right";
 

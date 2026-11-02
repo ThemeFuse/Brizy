@@ -1,5 +1,5 @@
-import { SectionPopup2Instances } from "visual/editorComponents/SectionPopup2/instances";
 import { SectionPopupInstances } from "visual/editorComponents/SectionPopup/instances";
+import { SectionPopup2Instances } from "visual/editorComponents/SectionPopup2/instances";
 
 export const getOpenedPopupId = (): string => {
   let id = "";
@@ -21,5 +21,5 @@ export const openPopupById = (id: string): void => {
     ...SectionPopup2Instances
   ]).get(id);
 
-  popup && popup.open();
+  if (popup) popup.open();
 };

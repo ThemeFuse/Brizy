@@ -1,7 +1,7 @@
 import { OptionValue } from "visual/component/Options/types";
 import {
-  Hex,
   Black as blackHex,
+  Hex,
   fromString as readHex
 } from "visual/utils/color/Hex";
 import {

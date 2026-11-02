@@ -9,7 +9,7 @@ import {
 import { defaultValueValue } from "visual/utils/onChange";
 import { checkValue } from "../checkValue";
 import { styleBgColor } from "../style2";
-import { CSSValue } from "../style2/types";
+import type { CSSValue } from "../style2/types";
 
 type Size = "small" | "medium" | "large" | "custom";
 type ClosePosition = "topLeft" | "topRight" | "bottomLeft" | "bottomRight";

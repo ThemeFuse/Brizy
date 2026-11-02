@@ -1,4 +1,4 @@
-import { OptionStyle } from "visual/utils/cssStyle/types";
+import type { OptionStyle } from "visual/utils/cssStyle/types";
 
 export const calendlySelector = "{{WRAPPER}}:hover .calendly-inline-widget";
 

@@ -14,7 +14,7 @@ const getMMenuClassNames = (node) => {
 
   // when MMenu initialized he added the plugin classNames
   // we need to put back the plugin classNames
-  let classNames = [];
+  const classNames = [];
   const currentClassList = node.classList;
 
   currentClassList.forEach((className) => {

@@ -1,9 +1,9 @@
 import { match } from "fp-utilities";
-import { Dictionary } from "visual/types/utils";
+import type { Dictionary } from "visual/types/utils";
 import * as Num from "visual/utils/reader/number";
 import * as Obj from "visual/utils/reader/object";
 import * as Str from "visual/utils/reader/string";
-import { ResponseWithBody } from "./types";
+import type { ResponseWithBody } from "./types";
 
 export const parseJSON = <T>(
   response: Response

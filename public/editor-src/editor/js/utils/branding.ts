@@ -1,4 +1,4 @@
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import type { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 
 // replaces branded text for white labeling purposes
 export const brizyToBranding = (s: string, config: ConfigCommon): string => {
@@ -10,5 +10,5 @@ export const brizyToBranding = (s: string, config: ConfigCommon): string => {
 
   const brandingName = branding.name;
 
-  return s.replace(new RegExp("brizy", "ig"), brandingName);
+  return s.replace(/brizy/gi, brandingName);
 };

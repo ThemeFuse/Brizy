@@ -1,5 +1,5 @@
-const path = require("path");
-const fs = require("fs");
+const path = require("node:path");
+const fs = require("node:fs");
 const rspack = require("@rspack/core");
 const { RsdoctorRspackPlugin } = require("@rsdoctor/rspack-plugin");
 const { omit } = require("timm");
@@ -54,7 +54,7 @@ class TypeScriptDeclarationPlugin {
       "TypeScriptDeclarationPlugin",
       async () => {
         try {
-          const { spawn } = require("child_process");
+          const { spawn } = require("node:child_process");
           const { include, compilerOptions } = this.options;
 
           // Create a temporary tsconfig for declaration generation
@@ -92,7 +92,7 @@ class TypeScriptDeclarationPlugin {
               }
 
               if (code !== 0) {
-                //eslint-disable-next-line no-console
+                // biome-ignore lint/suspicious/noConsole: migrated from eslint
                 console.warn(
                   `TypeScript declaration generation exited with code ${code}`
                 );
@@ -136,7 +136,7 @@ const packageJSON = {
     }
   },
   peerDependencies: {
-    react: rootPackage.dependencies["react"],
+    react: rootPackage.dependencies.react,
     "react-dom": rootPackage.dependencies["react-dom"]
   }
 };
@@ -410,12 +410,12 @@ module.exports = (env, argv) => {
   };
   const previewConfig = rspackPreviewConfig({
     ...options,
-    ANALYZE: env["analyze_module_preview"] ?? false
+    ANALYZE: env.analyze_module_preview ?? false
   });
   const editorConfig = rspackEditorConfig({
     ...options,
-    BUILD_VERSION: env["version"] ?? "dev",
-    ANALYZE: env["analyze_module_editor"] ?? false
+    BUILD_VERSION: env.version ?? "dev",
+    ANALYZE: env.analyze_module_editor ?? false
   });
 
   return [previewConfig, editorConfig];

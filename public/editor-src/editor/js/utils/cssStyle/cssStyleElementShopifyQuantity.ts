@@ -11,7 +11,7 @@ import { defaultValueValue } from "visual/utils/onChange";
 import * as Str from "visual/utils/reader/string";
 import { capByPrefix } from "visual/utils/string";
 import { styleBgColor, styleBgGradient } from "visual/utils/style2";
-import { CSSValue } from "../style2/types";
+import type { CSSValue } from "../style2/types";
 import { cssStyleColor } from "./cssStyleColor";
 
 export function cssStyleElementShopifyQuantityButtonWidth({

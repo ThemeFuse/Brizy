@@ -1,7 +1,7 @@
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
-import { ReduxState } from "visual/redux/types";
-import { Block } from "visual/types/Block";
-import { GlobalBlockPosition } from "visual/types/GlobalBlock";
+import type { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import type { ReduxState } from "visual/redux/types";
+import type { Block } from "visual/types/Block";
+import type { GlobalBlockPosition } from "visual/types/GlobalBlock";
 import { isGlobalBlock } from "visual/types/utils";
 import { isPopup, isStory } from "visual/utils/models";
 import { getAllowedGBIds } from "./getAllowedGBIds";
@@ -40,7 +40,10 @@ export const generateBlocksList = (data: Data): string[] => {
 
   const withoutPopups = Object.entries(globalBlocks)
     .filter(([, block]) => isGlobalBlock(block))
-    .reduce((blocks, [uid, data]) => ({ ...blocks, [uid]: data }), {});
+    .reduce<ReduxState["globalBlocks"]>((blocks, [uid, data]) => {
+      blocks[uid] = data;
+      return blocks;
+    }, {});
   const allowedGBIds = getAllowedGBIds({
     pageBlocksIds,
     globalBlocks: withoutPopups,

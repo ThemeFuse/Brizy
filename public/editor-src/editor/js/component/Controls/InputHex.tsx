@@ -1,12 +1,12 @@
 import classNames from "classnames";
 import React, { useEffect, useState } from "react";
 import { useDebouncedEffect } from "visual/component/hooks";
-import {
+import type {
   WithClassName,
   WithOnChange,
   WithValue
 } from "visual/types/attributes";
-import { fromString, Hex } from "visual/utils/color/Hex";
+import { fromString, type Hex } from "visual/utils/color/Hex";
 import { mApply } from "visual/utils/value";
 import { Input } from "./Input";
 
@@ -31,7 +31,7 @@ export const InputHex = ({
       }
     },
     1000,
-    [_value]
+    [_value, value, onChange]
   );
 
   useEffect(() => {

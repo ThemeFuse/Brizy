@@ -1,29 +1,29 @@
 import classNames from "classnames";
 import React, { useCallback } from "react";
-import {
+import type {
   Meta,
   TypeObject,
   Value
 } from "visual/component/Controls/BoxShadow/types";
 import { getModifiedField } from "visual/component/Controls/BoxShadow/utils";
 import { ColorPickerSelect } from "visual/component/Controls/ColorPickerSelect";
-import {
+import type {
   Meta as CMeta,
   Value as CValue
 } from "visual/component/Controls/ColorPickerSelect/entities";
 import {
   ColorPickerInputs,
-  Props as ColorPickerInputsProps
+  type Props as ColorPickerInputsProps
 } from "visual/component/Controls/ColorPicketInputs";
 import MultiInputOptionType from "visual/component/Controls/MultiInput";
 import { Item } from "visual/component/Controls/Select2/Item";
-import {
+import type {
   WithClassName,
   WithOnChange2,
   WithValue
 } from "visual/types/attributes";
-import * as Palette from "visual/utils/options/ColorPicker/entities/palette";
-import { PaletteObject } from "../ColorPalette/entities/PaletteObject";
+import type * as Palette from "visual/utils/options/ColorPicker/entities/palette";
+import type { PaletteObject } from "../ColorPalette/entities/PaletteObject";
 
 export interface Props
   extends WithClassName,

@@ -2,7 +2,7 @@ import classnames from "classnames";
 import { noop } from "es-toolkit";
 import { produce } from "immer";
 import React, { Component } from "react";
-import { ConnectedProps, connect } from "react-redux";
+import { type ConnectedProps, connect } from "react-redux";
 import { Alert } from "visual/component/Alert";
 import InputPlaceholder from "visual/component/Controls/InputPlaceholder";
 import { Spacer } from "visual/component/Controls/Spacer";
@@ -19,7 +19,7 @@ import {
 } from "visual/utils/api";
 import { t } from "visual/utils/i18n";
 import { setAuthorized } from "visual/utils/user/getAuthorized";
-import { AuthorizationField, SignAuthorizationProps } from "./types";
+import type { AuthorizationField, SignAuthorizationProps } from "./types";
 
 interface SignInState {
   loading: boolean;
@@ -88,7 +88,7 @@ class SignIn extends Component<SingInProps, SignInState> {
       loading: false
     });
 
-    onLoading && onLoading(false);
+    if (onLoading) onLoading(false);
   }
 
   handleChange = <T extends SignInState["formData"], K extends keyof T>(
@@ -136,7 +136,7 @@ class SignIn extends Component<SingInProps, SignInState> {
             if (checkCompatibilityAfter) {
               checkCompatibility(config).then((r) => {
                 if (!r.success) {
-                  // eslint-disable-next-line no-console
+                  // biome-ignore lint/suspicious/noConsole: migrated from eslint
                   console.warn("Something went wrong", r);
                 } else {
                   if (r?.isSyncAllowed) {
@@ -184,8 +184,8 @@ class SignIn extends Component<SingInProps, SignInState> {
 
     updateAuthorization("pending");
     setAuthorized("pending");
-    onSkip && onSkip();
-    onClose && onClose();
+    if (onSkip) onSkip();
+    if (onClose) onClose();
   };
 
   handleRecover = async (): Promise<void> => {
@@ -283,10 +283,10 @@ class SignIn extends Component<SingInProps, SignInState> {
           <div className="brz-ed-popup-integrations__connect-body">
             {notice && this.renderNotice()}
 
-            {fields.map(({ title, name, required, type = "text" }, index) => {
+            {fields.map(({ title, name, required, type = "text" }) => {
               return (
                 <InputPlaceholder
-                  key={index}
+                  key={name}
                   title={title}
                   type={type}
                   value={`${this.state.formData[name] ?? ""}`}

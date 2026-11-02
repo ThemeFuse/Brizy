@@ -1,6 +1,5 @@
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
-import { UploadedFont } from "visual/types/Fonts";
-import { FontFamilyType } from "visual/types/Fonts";
+import type { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import type { FontFamilyType, UploadedFont } from "visual/types/Fonts";
 import { getUploadedFonts } from "visual/utils/api";
 import { getGoogleFonts } from "visual/utils/fonts/getGoogleFonts";
 import { uuid } from "visual/utils/uuid";
@@ -33,7 +32,7 @@ export const normalizeFonts = async ({ newFonts, config }: Data) => {
   try {
     uploadedFonts = await getUploadedFonts(config, uploadedFontsIds);
   } catch (e) {
-    // eslint-disable-next-line no-console
+    // biome-ignore lint/suspicious/noConsole: migrated from eslint
     console.log(e);
   }
 
@@ -83,7 +82,8 @@ export const normalizeFonts = async ({ newFonts, config }: Data) => {
   return Object.values([...fonts]).reduce(
     (acc, curr) => {
       const [type, fonts] = curr;
-      return [...acc, { type, fonts }];
+      acc.push({ type, fonts });
+      return acc;
     },
     [] as Array<{ type: Types; fonts: Array<FontModel & { brizyId: string }> }>
   );

@@ -1,5 +1,9 @@
 import cn from "classnames";
-import React, { HTMLAttributes, ReactElement, forwardRef } from "react";
+import React, {
+  forwardRef,
+  type HTMLAttributes,
+  type ReactElement
+} from "react";
 import {
   makeEndPlaceholder,
   makeStartPlaceholder

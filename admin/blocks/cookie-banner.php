@@ -67,10 +67,12 @@ class Brizy_Admin_Blocks_CookieBanner {
 	/**
 	 * Shows the banner on every Brizy-rendered page: the block is created when missing, published, given the include-all rule set and the option is turned on. Never throws.
 	 *
-	 * @return bool false when a step threw, true otherwise
+	 * @return bool false when a step failed, true otherwise
 	 */
 	public function enable(): bool {
 		try {
+			Brizy_Editor_Storage_Common::instance()->set( 'cookie-banner-enabled', true );
+
 			// always look up first: the duplicate check in createEntity() does not see trash
 			$block = $this->findBlock();
 
@@ -80,11 +82,9 @@ class Brizy_Admin_Blocks_CookieBanner {
 
 			$postId = $block->getWpPostId();
 
-			$this->setBlockStatus( $postId, 'publish' );
-
-			$this->applyRules( $postId, $this->includeAllRules() );
-
-			Brizy_Editor_Storage_Common::instance()->set( 'cookie-banner-enabled', true );
+			if ( ! $this->applyRules( $postId, $this->includeAllRules() ) ) {
+				return false;
+			}
 
 			return true;
 
@@ -96,16 +96,10 @@ class Brizy_Admin_Blocks_CookieBanner {
 	/**
 	 * Hides the banner by moving the block to draft, which drops it from the published global blocks; the block keeps its content and is never deleted. With no banner block there is nothing to hide. Never throws.
 	 *
-	 * @return bool false when a step threw, true otherwise
+	 * @return bool false when a step failed, true otherwise
 	 */
 	public function disable(): bool {
 		try {
-			$block = $this->findBlock();
-
-			if ( $block ) {
-				$this->setBlockStatus( $block->getWpPostId(), 'draft' );
-			}
-
 			Brizy_Editor_Storage_Common::instance()->set( 'cookie-banner-enabled', false );
 
 			return true;
@@ -152,7 +146,7 @@ class Brizy_Admin_Blocks_CookieBanner {
 		$block   = $this->blockManager->createEntity( $payload['uid'], $payload['status'] );
 
 		if ( ! $block instanceof Brizy_Editor_Block ) {
-			return false;
+			throw new Exception( 'Unable to create the cookie banner block' );
 		}
 
 		$block->setTitle( $payload['title'] );
@@ -205,7 +199,7 @@ class Brizy_Admin_Blocks_CookieBanner {
 		return [
 			'uid'          => $uid,
 			'title'        => 'Cookie Banner',
-			'status'       => 'publish',
+			'status'       => 'draft',
 			'position'     => [
 				'align'  => 'bottom',
 				'top'    => 0,

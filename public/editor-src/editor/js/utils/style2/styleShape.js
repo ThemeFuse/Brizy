@@ -1,13 +1,13 @@
-import { defaultValueValue } from "visual/utils/onChange";
 import { hexToRgba } from "visual/utils/color";
 import { svgToUri } from "visual/utils/icons";
+import { defaultValueValue } from "visual/utils/onChange";
 
 export function styleShapeTopType({ v, device, state }) {
   return defaultValueValue({ v, key: "shapeTopType", device, state });
 }
 
 export function styleShapeTopSvg({ v, device, state }) {
-  const dvv = key => defaultValueValue({ v, key, device, state });
+  const dvv = (key) => defaultValueValue({ v, key, device, state });
 
   const shapeTopColorHex = dvv("shapeTopColorHex");
   const shapeTopColorOpacity = dvv("shapeTopColorOpacity");
@@ -40,7 +40,7 @@ export function styleShapeBottomType({ v, device, state }) {
 }
 
 export function styleShapeBottomSvg({ v, device, state }) {
-  const dvv = key => defaultValueValue({ v, key, device, state });
+  const dvv = (key) => defaultValueValue({ v, key, device, state });
 
   const shapeBottomColorHex = dvv("shapeBottomColorHex");
   const shapeBottomColorOpacity = dvv("shapeBottomColorOpacity");

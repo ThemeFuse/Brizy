@@ -1,4 +1,4 @@
-import { Block } from "visual/types/Block";
+import type { Block } from "visual/types/Block";
 import { findDeep } from "visual/utils/object";
 
 export const getBlockData = (blocks: Block[], id: string): Block | null => {

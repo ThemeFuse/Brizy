@@ -12,21 +12,67 @@ export interface InternalSearchResult extends SearchResultItem {
 }
 
 /**
- * Safely create a RegExp from a string pattern
- * Returns null if the pattern is invalid
- */
-/**
  * Max allowed regex pattern length to prevent ReDoS from complex patterns
  */
 const MAX_REGEX_LENGTH = 200;
 
-function safeRegex(pattern: string, flags = "i"): RegExp | null {
-  if (pattern.length > MAX_REGEX_LENGTH) return null;
+/**
+ * Safely create a RegExp from a string pattern.
+ * Returns undefined if the pattern is too long or does not compile.
+ */
+function safeRegex(pattern: string, flags = "i"): RegExp | undefined {
+  if (pattern.length > MAX_REGEX_LENGTH) return undefined;
   try {
     return new RegExp(pattern, flags);
   } catch {
-    return null;
+    return undefined;
   }
+}
+
+/**
+ * The filters a search runs with, compiled once up front.
+ */
+export interface SearchFilters {
+  type: string | undefined;
+  typeRegex: RegExp | undefined;
+  textRegex: RegExp | undefined;
+}
+
+export type CompileSearchFiltersResult =
+  | { success: true; filters: SearchFilters }
+  | { success: false; error: string };
+
+/**
+ * Compile the regex filters once, before walking the tree. An uncompilable
+ * pattern is an error rather than a silently disabled filter, and `new RegExp`
+ * stays out of the per-element path.
+ */
+export function compileSearchFilters(
+  params: SearchElementsParams
+): CompileSearchFiltersResult {
+  const invalid = (name: string, pattern: string): string =>
+    `Invalid ${name}: "${pattern}" is not a valid regular expression (max ${MAX_REGEX_LENGTH} characters).`;
+
+  let typeRegex: RegExp | undefined;
+  if (params.typeRegex) {
+    typeRegex = safeRegex(params.typeRegex);
+    if (!typeRegex) {
+      return { success: false, error: invalid("typeRegex", params.typeRegex) };
+    }
+  }
+
+  let textRegex: RegExp | undefined;
+  if (params.textRegex) {
+    textRegex = safeRegex(params.textRegex);
+    if (!textRegex) {
+      return { success: false, error: invalid("textRegex", params.textRegex) };
+    }
+  }
+
+  return {
+    success: true,
+    filters: { type: params.type, typeRegex, textRegex }
+  };
 }
 
 /**
@@ -34,19 +80,16 @@ function safeRegex(pattern: string, flags = "i"): RegExp | null {
  */
 function matchesTypeFilter(
   elementType: string,
-  params: SearchElementsParams
+  filters: SearchFilters
 ): boolean {
   // Exact type match
-  if (params.type && elementType !== params.type) {
+  if (filters.type && elementType !== filters.type) {
     return false;
   }
 
   // Regex type match
-  if (params.typeRegex) {
-    const regex = safeRegex(params.typeRegex);
-    if (regex && !regex.test(elementType)) {
-      return false;
-    }
+  if (filters.typeRegex && !filters.typeRegex.test(elementType)) {
+    return false;
   }
 
   return true;
@@ -57,15 +100,11 @@ function matchesTypeFilter(
  */
 function matchesTextRegex(
   text: string | undefined,
-  params: SearchElementsParams
+  filters: SearchFilters
 ): boolean {
   // Regex text match only - fuzzy search is handled separately
-  if (params.textRegex) {
-    const textStr = typeof text === "string" ? text : "";
-    const regex = safeRegex(params.textRegex);
-    if (regex && !regex.test(textStr)) {
-      return false;
-    }
+  if (filters.textRegex) {
+    return filters.textRegex.test(typeof text === "string" ? text : "");
   }
 
   return true;
@@ -104,7 +143,7 @@ function extractSearchableText(element: Block): string {
 export function collectElements(
   element: Block,
   path: string[],
-  params: SearchElementsParams,
+  filters: SearchFilters,
   results: InternalSearchResult[],
   parentId?: string
 ): void {
@@ -122,10 +161,10 @@ export function collectElements(
   const displayTextStr = typeof displayText === "string" ? displayText : "";
 
   // Check type filter (exact or regex)
-  const matchesType = matchesTypeFilter(element.type, params);
+  const matchesType = matchesTypeFilter(element.type, filters);
 
   // Check text regex filter (not fuzzy - that's applied later)
-  const matchesRegex = matchesTextRegex(searchText, params);
+  const matchesRegex = matchesTextRegex(searchText, filters);
 
   if (matchesType && matchesRegex) {
     results.push({
@@ -146,7 +185,7 @@ export function collectElements(
         collectElements(
           item,
           [...path, "value", "items", String(index)],
-          params,
+          filters,
           results,
           element.value?._id
         );
@@ -191,30 +230,4 @@ export function toSearchResults(
   }
 
   return results;
-}
-
-/**
- * Searches for elements recursively within an element
- * @deprecated Use collectElements + applyFuzzySearch + toSearchResults for proper fuzzy search across blocks
- */
-export function searchInElement(
-  element: Block,
-  path: string[],
-  params: SearchElementsParams,
-  results: SearchResultItem[],
-  limit: number,
-  parentId?: string
-): void {
-  // Collect all matching elements (type + regex filters)
-  const candidates: InternalSearchResult[] = [];
-  collectElements(element, path, params, candidates, parentId);
-
-  // Apply fuzzy search if containsText is provided
-  const filtered = params.containsText
-    ? applyFuzzySearch(candidates, params.containsText)
-    : candidates;
-
-  // Add to results up to limit
-  const converted = toSearchResults(filtered, limit - results.length);
-  results.push(...converted);
 }

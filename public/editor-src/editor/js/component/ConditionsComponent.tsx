@@ -1,14 +1,14 @@
-import React, { ReactElement } from "react";
+import React, { type ReactElement } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Dispatch } from "redux";
+import type { Dispatch } from "redux";
 import Prompts from "visual/component/Prompts";
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import type { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { useConfig } from "visual/providers/ConfigProvider";
 import { updatePopupRules } from "visual/redux/actions";
 import { updateGBRules } from "visual/redux/actions2";
 import { globalBlocksSelector } from "visual/redux/selectors";
-import { GlobalBlock } from "visual/types/GlobalBlock";
-import { Rule } from "visual/types/Rule";
+import type { GlobalBlock } from "visual/types/GlobalBlock";
+import type { Rule } from "visual/types/Rule";
 import { getRulesList } from "visual/utils/api";
 import { t } from "visual/utils/i18n";
 import { isExternalPopup } from "visual/utils/models";
@@ -18,8 +18,11 @@ type ChangeCallbackData = {
     rules: GlobalBlock["rules"];
   };
   meta: {
-    syncSuccess: (s?: void) => void;
-    syncFail: (e?: void) => void;
+    syncSuccess: () => void;
+    // The middleware wires these to `.then`/`.catch`, so the rejection reason
+    // reaches syncFail unvalidated — PromptConditions/Rules parses it before
+    // toasting a `message`.
+    syncFail: (e: unknown) => void;
   };
 };
 

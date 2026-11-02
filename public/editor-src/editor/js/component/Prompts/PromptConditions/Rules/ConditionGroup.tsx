@@ -3,21 +3,21 @@ import React from "react";
 import { SelectItem } from "visual/component/Controls/InternalLink/Components/SelectItem";
 import { Select2 } from "visual/component/Controls/Select2";
 import { Item } from "visual/component/Controls/Select2/Item";
-import { CollectionItemRule, Rule } from "visual/types/Rule";
+import type { CollectionItemRule, Rule } from "visual/types/Rule";
 import {
   isCollectionItemRule,
   isCollectionTypeRule
 } from "visual/utils/blocks/guards";
 import { t } from "visual/utils/i18n";
-import { MValue } from "visual/utils/value";
+import type { MValue } from "visual/utils/value";
 import { ControlTypeOptions } from "../common/ControlTypeOptions";
 import { LegacyRuleList } from "../common/LegacyRuleList";
 import { ListItems } from "../common/ListItems";
 import {
-  RuleList,
-  RuleListItem,
-  ValueItems,
-  isLegacyRuleListItem
+  isLegacyRuleListItem,
+  type RuleList,
+  type RuleListItem,
+  type ValueItems
 } from "./types";
 import { getRulesListIndexByRule } from "./utils";
 import { getValue } from "./utils/index";
@@ -95,10 +95,13 @@ class ConditionGroup extends React.Component<ConditionGroupProps> {
       />
     );
 
-    const newItems = items.map((item, index) =>
+    // `value` alone is not unique: useRuleList pushes the same collection twice
+    // (CUSTOMER_TYPE as both "specific" and "reference"), and two reference
+    // fields can target the same collection. `title` is what tells them apart.
+    const newItems = items.map((item) =>
       isLegacyRuleListItem(item) ? (
         <LegacyRuleList
-          key={index}
+          key={`${item.title}-${item.value}`}
           item={item}
           onClick={(v) => {
             onTypeChange(v);
@@ -108,7 +111,7 @@ class ConditionGroup extends React.Component<ConditionGroupProps> {
         />
       ) : (
         <ListItems
-          key={index}
+          key={`${item.title}-${item.value}`}
           item={item}
           onClick={(v) => {
             onTypeChange(v);
@@ -143,7 +146,7 @@ class ConditionGroup extends React.Component<ConditionGroupProps> {
       return;
     }
 
-    if (currentRuleList && currentRuleList.items) {
+    if (currentRuleList?.items) {
       const _filteredItems = currentRuleList.items.map((item) => ({
         ...item,
         items: item.items?.filter((nestedItem) =>
@@ -224,14 +227,12 @@ class ConditionGroup extends React.Component<ConditionGroupProps> {
     }
 
     const typeOptionItems =
-      filteredItems ??
-      (currentRuleList && currentRuleList.items ? currentRuleList.items : []);
-    const hasRulesListItems = currentRuleList && currentRuleList.items;
+      filteredItems ?? (currentRuleList?.items ? currentRuleList.items : []);
+    const hasRulesListItems = currentRuleList?.items;
 
     if (
       isCollectionItemRule(rule) &&
-      currentRuleList &&
-      currentRuleList.items &&
+      currentRuleList?.items &&
       currentRuleList.items.length > 0
     ) {
       _value = getValue(currentRuleList.items, rule);

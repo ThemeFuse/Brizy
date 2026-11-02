@@ -1,7 +1,7 @@
-import { type Dispatch, Middleware } from "redux";
+import type { Dispatch, Middleware } from "redux";
 import { errorSelector } from "visual/redux/selectors";
 import { IRREPARABLE_ERRORS } from "visual/utils/errors";
-import { ReduxAction } from "../actions2";
+import type { ReduxAction } from "../actions2";
 import type { ReduxState } from "../types";
 
 export const errorMiddleware: Middleware<

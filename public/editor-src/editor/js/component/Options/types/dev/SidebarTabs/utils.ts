@@ -1,4 +1,4 @@
-import { Align } from "visual/component/Controls/RightSidebarTabs/types";
+import type { Align } from "visual/component/Controls/RightSidebarTabs/types";
 
 export const nextAlign = (a: Align): Align => {
   switch (a) {

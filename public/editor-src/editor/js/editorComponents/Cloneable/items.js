@@ -30,7 +30,7 @@ class Items extends EditorArrayComponent {
     motion: undefined
   };
 
-  getItemProps(itemData, itemIndex, items) {
+  getItemProps(_itemData, itemIndex, items) {
     const cloneRemoveConfig = {
       getItems: () => [
         {

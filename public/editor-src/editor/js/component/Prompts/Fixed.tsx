@@ -12,7 +12,7 @@ type FixedProps = {
 };
 
 const Fixed = (props: FixedProps): JSX.Element => {
-  const { className:_className, opened = false, children, onClose } = props;
+  const { className: _className, opened = false, children, onClose } = props;
   const [{ status, isMounted }, toggle] = useTransitionState({
     timeout: 150,
     mountOnEnter: true,

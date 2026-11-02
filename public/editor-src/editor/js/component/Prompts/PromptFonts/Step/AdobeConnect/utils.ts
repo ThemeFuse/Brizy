@@ -5,6 +5,10 @@ export const getApiKeys = () => [
 ];
 
 export const getDefaultValue = () =>
-  getApiKeys().reduce((acc, { name }) => ({ ...acc, [name]: "" }), {
-    typekit: ""
-  });
+  getApiKeys().reduce<Record<string, string>>(
+    (acc, { name }) => {
+      acc[name] = "";
+      return acc;
+    },
+    { typekit: "" }
+  );

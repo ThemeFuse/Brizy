@@ -1,5 +1,5 @@
 import { DESKTOP, MOBILE, TABLET } from "visual/utils/responsiveMode";
-import { Settings } from "./types";
+import type { Settings } from "./types";
 
 export const getParentMegaMenuUid = (target: Element): undefined | string =>
   target

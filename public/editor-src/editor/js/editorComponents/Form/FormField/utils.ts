@@ -1,8 +1,8 @@
-import { ComponentItem } from "./type";
-import * as types from "./types/index";
+import type { ComponentItem } from "./type";
+import { components } from "./types/index";
 
 export const getTypeChoices = () =>
-  Object.values<ComponentItem>(types).map((item) => ({
+  Object.values<ComponentItem>(components).map((item) => ({
     title: item.componentTitle,
     value: item.componentType
   }));

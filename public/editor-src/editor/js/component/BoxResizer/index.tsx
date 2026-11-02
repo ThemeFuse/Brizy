@@ -1,12 +1,12 @@
-import React, { ReactElement, forwardRef, useCallback } from "react";
+import React, { forwardRef, type ReactElement, useCallback } from "react";
 import { useStore } from "react-redux";
 import { rolesHOC } from "visual/component/Roles";
 import { hideToolbar, showLastHiddenToolbar } from "visual/component/Toolbar";
 import { isStory, useEditorMode } from "visual/providers/EditorModeProvider";
 import { renderHOC } from "visual/providers/RenderProvider/renderHOC";
-import { ReduxAction } from "visual/redux/actions2";
+import type { ReduxAction } from "visual/redux/actions2";
 import { deviceModeSelector } from "visual/redux/selectors";
-import { ReduxState } from "visual/redux/types";
+import type { ReduxState } from "visual/redux/types";
 import { Resizer } from "./Resizer";
 import {
   resizerTransformPatch,
@@ -16,7 +16,7 @@ import {
   transformRestrictions,
   transformValue
 } from "./transforms";
-import {
+import type {
   Meta,
   Patch,
   ResizerPassThroughProps,

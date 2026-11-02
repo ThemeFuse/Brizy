@@ -1,6 +1,6 @@
 import { Base64 } from "js-base64";
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
-import { MValue } from "visual/utils/value";
+import type { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import type { MValue } from "visual/utils/value";
 
 export const projectClassName = (config: ConfigCommon): MValue<string> => {
   const projectId = config.projectData?.id;

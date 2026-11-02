@@ -13,27 +13,26 @@ export const handleSubmitSuccess = (form: Element, node: Element): void => {
   handleRedirect(node);
 };
 
-export const handleSubmitResponse = (
-  form: Element,
-  node: Element
-): ((response: Response) => void) => (response: Response): void => {
-  if (response.ok) {
-    response
-      .json()
-      .then(data => {
-        if (data.success) {
-          handleSubmitSuccess(form, node);
-        } else {
-          addAlerts(form, data.errors || [], "error");
-        }
-      })
-      .catch((err: string) => {
-        addAlerts(form, [err], "error");
-      });
-  } else {
-    addAlerts(form, [`An error has occured. ${response.status}`], "error");
-  }
-};
+export const handleSubmitResponse =
+  (form: Element, node: Element): ((response: Response) => void) =>
+  (response: Response): void => {
+    if (response.ok) {
+      response
+        .json()
+        .then((data) => {
+          if (data.success) {
+            handleSubmitSuccess(form, node);
+          } else {
+            addAlerts(form, data.errors || [], "error");
+          }
+        })
+        .catch((err: string) => {
+          addAlerts(form, [err], "error");
+        });
+    } else {
+      addAlerts(form, [`An error has occured. ${response.status}`], "error");
+    }
+  };
 
 export const handleSubmit = (
   url: string,
@@ -49,7 +48,7 @@ export const handleSubmit = (
     headers: fetchHeaders
   })
     .then(handleSubmitResponse(form, element))
-    .catch(err => {
+    .catch((err) => {
       addAlerts(form, [err], "error");
     });
 };
@@ -69,7 +68,7 @@ export const getData = (form: Element): string => {
 
   const data: Record<string, unknown> = {};
 
-  inputs.forEach(item => {
+  inputs.forEach((item) => {
     const { name, value } = item;
 
     data[name] = value;
@@ -90,7 +89,7 @@ export const validateInputs = (
   const inputs = getInputs(form);
   const { passLengthError, passMatchError, emptyFieldsError } = errorMessages;
 
-  inputs.forEach(input => {
+  inputs.forEach((input) => {
     input.classList.remove("brz-reset-psw__field-empty");
 
     if (input.required && input.value === "") {
@@ -99,7 +98,7 @@ export const validateInputs = (
   });
 
   const inputEmpty = [...inputs].some(
-    input => input.required && input.value === ""
+    (input) => input.required && input.value === ""
   );
 
   if (inputEmpty) {
@@ -113,7 +112,7 @@ export const validateInputs = (
   }
 
   if (inputs[0].value !== inputs[1].value) {
-    inputs.forEach(item => {
+    inputs.forEach((item) => {
       item.classList.add("brz-reset-psw__field-empty");
     });
 

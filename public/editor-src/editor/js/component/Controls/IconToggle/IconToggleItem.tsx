@@ -1,6 +1,6 @@
-import React, { ReactElement } from "react";
+import React, { type ReactElement } from "react";
 import { EditorIcon } from "visual/component/EditorIcon";
-import { WithClassName, WithValue } from "visual/types/attributes";
+import type { WithClassName, WithValue } from "visual/types/attributes";
 
 export type Props<T> = WithClassName &
   WithValue<T> & {

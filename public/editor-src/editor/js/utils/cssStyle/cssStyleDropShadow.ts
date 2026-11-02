@@ -1,12 +1,12 @@
 import { Num, Str } from "@brizy/readers";
-import { ElementModel } from "visual/component/Elements/Types";
+import type { ElementModel } from "visual/component/Elements/Types";
 import { getColor } from "visual/utils/color";
-import { State } from "visual/utils/stateMode";
+import type { State } from "visual/utils/stateMode";
 import { styleState } from "visual/utils/style";
 import { isNullish } from "visual/utils/value";
 import { defaultValueValue } from "../onChange";
 import { capByPrefix } from "../string";
-import { CSSValue } from "../style2/types";
+import type { CSSValue } from "../style2/types";
 
 const getState = (v: ElementModel, state: State) =>
   styleState({ v, state }) === "hover" ? "hover" : state;

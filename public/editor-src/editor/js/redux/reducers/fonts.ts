@@ -1,6 +1,6 @@
 import { produce } from "immer";
-import { ActionTypes, ReduxAction } from "../actions2";
-import { ReduxState } from "../types";
+import { ActionTypes, type ReduxAction } from "../actions2";
+import type { ReduxState } from "../types";
 
 type Fonts = ReduxState["fonts"];
 type RFonts = (s: Fonts, a: ReduxAction) => Fonts;

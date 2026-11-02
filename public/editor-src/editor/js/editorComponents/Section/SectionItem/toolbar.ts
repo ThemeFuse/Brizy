@@ -1,7 +1,7 @@
 import { KenEffect, Transition } from "visual/component/Background/type";
 import type { GetItems } from "visual/editorComponents/EditorComponent/types";
-import { DCTypes } from "visual/global/Config/types/DynamicContent";
 import { isBackgroundPointerEnabled } from "visual/global/Config/types/configs/featuresValue";
+import { DCTypes } from "visual/global/Config/types/DynamicContent";
 import { isPopup } from "visual/providers/EditorModeProvider";
 import { getColorToolbar } from "visual/utils/color";
 import { BgPosition, BgRepeat, BgSize } from "visual/utils/containers/types";
@@ -20,7 +20,7 @@ import { popupToOldModel } from "visual/utils/options/PromptAddPopup/utils";
 import { read as readArr } from "visual/utils/reader/array";
 import { read as jsonRead } from "visual/utils/reader/json";
 import { read as readString } from "visual/utils/reader/string";
-import { HOVER, NORMAL, State } from "visual/utils/stateMode";
+import { HOVER, NORMAL, type State } from "visual/utils/stateMode";
 import { toolbarLinkAnchor } from "visual/utils/toolbar";
 import { getMaxContainerSuffix, getMinContainerSuffix } from "../utils";
 

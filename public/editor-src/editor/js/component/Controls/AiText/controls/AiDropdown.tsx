@@ -1,13 +1,13 @@
 import { IconsName } from "@brizy/ui/es/EditorIcon/types";
-import { Spacing } from "@brizy/ui/es/Space/utils";
-import React, { ReactElement, useCallback, useRef, useState } from "react";
+import type { Spacing } from "@brizy/ui/es/Space/utils";
+import React, { type ReactElement, useCallback, useRef, useState } from "react";
 import { Button } from "visual/component/Brizy-ui/Button";
 import { Dropdown } from "visual/component/Brizy-ui/Dropdown";
 import { EditorIcon } from "visual/component/Brizy-ui/EditorIcon";
 import { Space } from "visual/component/Brizy-ui/Space";
 import { TypographyText } from "visual/component/Brizy-ui/Typography";
 import { dropdownOffset, iconSpacing } from "../constants";
-import { DropdownButtonData } from "../types";
+import type { DropdownButtonData } from "../types";
 import { DropdownContent } from "./DropdownContent";
 
 const editorIconSpacing: Spacing = [0, 0, 0, 8];

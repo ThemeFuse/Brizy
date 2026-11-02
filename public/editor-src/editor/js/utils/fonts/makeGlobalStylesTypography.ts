@@ -1,6 +1,6 @@
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
-import { Store } from "visual/redux/store";
-import { FontStyle } from "visual/types/Style";
+import type { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import type { Store } from "visual/redux/store";
+import type { FontStyle } from "visual/types/Style";
 import {
   FONT_INITIAL,
   makeGlobalStylesTextTransform
@@ -9,7 +9,7 @@ import { isExternalPopup } from "visual/utils/models/modes";
 import {
   DESKTOP,
   MOBILE,
-  ResponsiveMode,
+  type ResponsiveMode,
   TABLET
 } from "visual/utils/responsiveMode";
 import { uidByConfig } from "visual/utils/uuid";

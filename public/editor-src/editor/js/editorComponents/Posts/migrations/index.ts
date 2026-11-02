@@ -1,5 +1,5 @@
-import { Context } from "visual/utils/elements/posts/types";
-import { Migration } from "visual/utils/migration";
+import type { Context } from "visual/utils/elements/posts/types";
+import type { Migration } from "visual/utils/migration";
 import { m2 } from "./2";
 import { m3 } from "./3";
 

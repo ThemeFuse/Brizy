@@ -1,12 +1,12 @@
+import { Str } from "@brizy/readers";
 import classNames from "classnames";
-import React, { ReactElement } from "react";
+import React, { type ReactNode } from "react";
 import {
-  Props as TooltipProps,
-  Tooltip
+  Tooltip,
+  type Props as TooltipProps
 } from "visual/component/Controls/Tooltip";
 import EditorIcon from "visual/component/EditorIcon";
-import { HelperPlacement } from "visual/types/attributes";
-import { Str } from "@brizy/readers";
+import type { HelperPlacement } from "visual/types/attributes";
 
 export interface Props {
   label?: string;
@@ -20,7 +20,7 @@ export const OptionLabel = ({
   icon,
   helper,
   helperPlacement
-}: Props): ReactElement => {
+}: Props): ReactNode => {
   const labelLength = label?.length ?? 0;
   const labelClassName = classNames("brz-ed-option__label__text", {
     "brz-ed-option__label__text--small": labelLength < 13
@@ -54,7 +54,5 @@ export const OptionLabel = ({
         </div>
       )}
     </div>
-  ) : (
-    <></>
-  );
+  ) : null;
 };

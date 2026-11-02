@@ -1,6 +1,6 @@
-import { defaultValueValue } from "../onChange";
-import { CSSValue } from "../style2/types";
 import { Str } from "@brizy/readers";
+import { defaultValueValue } from "../onChange";
+import type { CSSValue } from "../style2/types";
 
 export const cssStyleElementEmbedCodeOverflow = ({
   v,

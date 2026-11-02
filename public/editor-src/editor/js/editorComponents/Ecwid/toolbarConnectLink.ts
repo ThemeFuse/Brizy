@@ -1,10 +1,10 @@
-import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
+import type { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
 import { getColorToolbar } from "visual/utils/color";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
-import { ResponsiveMode } from "visual/utils/responsiveMode";
-import { HOVER, NORMAL, State } from "visual/utils/stateMode";
-import { Value } from "./utils/Value";
+import type { ResponsiveMode } from "visual/utils/responsiveMode";
+import { HOVER, NORMAL, type State } from "visual/utils/stateMode";
+import type { Value } from "./utils/Value";
 
 export function getItems({
   v,

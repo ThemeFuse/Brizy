@@ -1,6 +1,6 @@
 import { Str } from "@brizy/readers";
-import { Config, isWp } from "visual/global/Config";
-import { ReduxState } from "visual/redux/types";
+import { type Config, isWp } from "visual/global/Config";
+import type { ReduxState } from "visual/redux/types";
 
 export const areStatesEqual = (
   state: ReduxState,
@@ -12,7 +12,10 @@ export const areStatesEqual = (
     state.globalBlocks === prevState.globalBlocks &&
     state.fonts === prevState.fonts &&
     state.project.data.font === prevState.project.data.font &&
-    state.symbols === prevState.symbols
+    state.symbols === prevState.symbols &&
+    // A menu created or deleted mid-session (site tools) has to repaint the
+    // Menu elements and the menu dropdown in their toolbars.
+    state.menuData === prevState.menuData
   );
 };
 

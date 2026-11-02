@@ -1,19 +1,19 @@
 import { identity } from "es-toolkit";
 import React, { useCallback, useMemo } from "react";
-import { Group } from "visual/component/Controls/Group";
 import { Icon } from "visual/component/Controls/common/Icon";
+import { Group } from "visual/component/Controls/Group";
 import { FatIconsGrid } from "visual/component/FatIconsGrid";
+import type * as Option from "visual/component/Options/Type";
+import type { OnChange } from "visual/component/Options/Type";
 import { OptionWrapper } from "visual/component/OptionWrapper";
-import * as Option from "visual/component/Options/Type";
-import { OnChange } from "visual/component/Options/Type";
-import { WithClassName } from "visual/types/attributes";
-import { Config } from "visual/utils/options/Motion/types/Config";
+import type { WithClassName } from "visual/types/attributes";
+import type { Config } from "visual/utils/options/Motion/types/Config";
 import * as Patch from "visual/utils/options/Motion/types/Patch";
 import {
-  Effect,
-  EffectValue,
-  Value,
-  effects
+  type Effect,
+  type EffectValue,
+  effects,
+  type Value
 } from "visual/utils/options/Motion/types/Value";
 import { effectIcon, effectTitle } from "visual/utils/options/Motion/utils";
 import { effectOptions } from "./utils";

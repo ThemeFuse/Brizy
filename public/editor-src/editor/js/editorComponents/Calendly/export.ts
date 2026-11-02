@@ -1,4 +1,5 @@
-import { ExportFunction } from "visual/types";
+import type { ExportFunction } from "visual/types";
+import { makeAttr } from "visual/utils/i18n/attribute";
 
 const initCalendly = (doc: Document, id: string): void => {
   if (doc.getElementById(id)) {
@@ -12,13 +13,11 @@ const initCalendly = (doc: Document, id: string): void => {
     "src",
     "https://assets.calendly.com/assets/external/widget.js"
   );
+  js.setAttribute(makeAttr("consent"), "preferences");
   doc.body.appendChild(js);
 };
 
-const fn: ExportFunction = ($node) => {
-  const node = $node.get(0);
-  if (!node) return;
-
+const fn: ExportFunction = (node) => {
   const callendlyes = node.querySelectorAll(".brz-calendly");
 
   if (callendlyes.length) {

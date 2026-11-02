@@ -1,4 +1,4 @@
-import React, { PropsWithChildren } from "react";
+import React, { type PropsWithChildren } from "react";
 import EditorIcon from "visual/component/EditorIcon";
 
 type Props = PropsWithChildren<{ onRemove: () => void }>;

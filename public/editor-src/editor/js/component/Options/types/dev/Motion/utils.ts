@@ -1,6 +1,9 @@
-import { JSXElementConstructor } from "react";
-import { EffectProps } from "visual/utils/options/Motion/types/EffectProps";
-import { Effect, EffectValue } from "visual/utils/options/Motion/types/Value";
+import type { JSXElementConstructor } from "react";
+import type { EffectProps } from "visual/utils/options/Motion/types/EffectProps";
+import type {
+  Effect,
+  EffectValue
+} from "visual/utils/options/Motion/types/Value";
 import { Blur } from "./components/Blur";
 import { Horizontal } from "./components/Horizontal";
 import { MouseTrack } from "./components/MouseTrack";

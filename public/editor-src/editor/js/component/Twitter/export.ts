@@ -1,4 +1,5 @@
-import { ExportFunction } from "visual/types";
+import type { ExportFunction } from "visual/types";
+import { makeAttr } from "visual/utils/i18n/attribute";
 
 const initTwitter = (doc: Document, id: string): Window["twttr"] => {
   const t: Window["twttr"] = (window.twttr || {}) as Window["twttr"];
@@ -10,15 +11,13 @@ const initTwitter = (doc: Document, id: string): Window["twttr"] => {
   const js = doc.createElement("script");
   js.setAttribute("id", id);
   js.setAttribute("src", "https://platform.twitter.com/widgets.js");
+  js.setAttribute(makeAttr("consent"), "marketing");
   doc.body.appendChild(js);
 
   return t;
 };
 
-const fn: ExportFunction = ($node) => {
-  const node = $node.get(0);
-  if (!node) return;
-
+const fn: ExportFunction = (node) => {
   const twitterLaunch = [
     ...node.querySelectorAll<HTMLDivElement>(".brz-twitter")
   ];

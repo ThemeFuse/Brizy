@@ -1,6 +1,6 @@
 import { Obj } from "@brizy/readers";
 import { capByPrefix } from "visual/utils/string";
-import { MValue } from "visual/utils/value";
+import type { MValue } from "visual/utils/value";
 
 export enum Type {
   active = "active",
@@ -13,10 +13,12 @@ interface Value extends Record<string, unknown> {
   type?: Type;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-type RecordType<T extends Record<any, any>> = T extends Record<any, infer V> ? V : never;
+// biome-ignore-start lint/suspicious/noExplicitAny: migrated from eslint
+type RecordType<T extends Record<any, any>> =
+  T extends Record<any, infer V> ? V : never;
+// biome-ignore-end lint/suspicious/noExplicitAny: migrated from eslint
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+// biome-ignore lint/suspicious/noExplicitAny: migrated from eslint
 export const prefixKeys = <T extends Record<any, any>>(
   prefix: string,
   v: T
@@ -102,13 +104,10 @@ export const getPatchType = (
 export const getEnabledEffects = (
   patch: Record<string, unknown>
 ): Record<string, boolean> =>
-  Object.entries(patch).reduce((acc, [key, value]) => {
+  Object.entries(patch).reduce<Record<string, boolean>>((acc, [key, value]) => {
     // here is enough to check if the value is an object, because if the effect is not enabled, the value will be undefined
     if (Obj.isObject(value) && Obj.length(value)) {
-      return {
-        ...acc,
-        [capByPrefix(key, "enabled")]: true
-      };
+      acc[capByPrefix(key, "enabled")] = true;
     }
     return acc;
   }, {});

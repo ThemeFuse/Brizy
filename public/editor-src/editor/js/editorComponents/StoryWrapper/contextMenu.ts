@@ -1,14 +1,14 @@
 import { Obj } from "@brizy/readers";
 import { get } from "es-toolkit/compat";
-import { ElementModelType2 } from "visual/component/Elements/Types";
-import EditorComponent from "visual/editorComponents/EditorComponent";
+import type { ElementModelType2 } from "visual/component/Elements/Types";
+import type EditorComponent from "visual/editorComponents/EditorComponent";
 import { readElementType } from "visual/global/Config/types/configs/ElementTypes";
 import { symbolsSelector } from "visual/redux/selectors";
 import { getFlatShortcodes } from "visual/shortcodeComponents/utils";
 import { t } from "visual/utils/i18n";
 import { handleComponentSymbolCreate } from "visual/utils/symbols";
-import { ElementModelWithSymbols } from "visual/utils/symbols/types";
-import { MValue } from "visual/utils/value";
+import type { ElementModelWithSymbols } from "visual/utils/symbols/types";
+import type { MValue } from "visual/utils/value";
 import type { Value } from "./index";
 
 const getTranslationsMap = (): Record<string, string> => ({

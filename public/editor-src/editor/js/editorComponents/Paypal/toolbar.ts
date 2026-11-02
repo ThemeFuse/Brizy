@@ -6,8 +6,8 @@ import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
 import { getDynamicContentOption } from "visual/utils/options";
 import { HOVER, NORMAL } from "visual/utils/stateMode";
-import { GetItems } from "../EditorComponent/types";
-import { BillingCycle, Currency, PaypalPaymenType, Value } from "./types";
+import type { GetItems } from "../EditorComponent/types";
+import { BillingCycle, Currency, PaypalPaymenType, type Value } from "./types";
 import { getSubscriptionRange, parseBillingCycleDuration } from "./utils";
 
 const rangeConfig = {

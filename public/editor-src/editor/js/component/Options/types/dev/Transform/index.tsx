@@ -1,16 +1,19 @@
 import { identity } from "es-toolkit";
 import React, { useCallback, useMemo } from "react";
 import { Transform as Control } from "visual/component/Controls/Transform";
-import { Config } from "visual/component/Controls/Transform/types/Config";
-import { Patch as PatchType } from "visual/component/Controls/Transform/types/Patch";
-import {
+import type { Config } from "visual/component/Controls/Transform/types/Config";
+import type { Patch as PatchType } from "visual/component/Controls/Transform/types/Patch";
+import type {
   Effect,
-  EffectValueWithAnchor,
   EffectsWithAnchor,
+  EffectValueWithAnchor,
   Value
 } from "visual/component/Controls/Transform/types/Value";
-import { OnChange, Props as OptionProps } from "visual/component/Options/Type";
-import { WithClassName } from "visual/types/attributes";
+import type {
+  OnChange,
+  Props as OptionProps
+} from "visual/component/Options/Type";
+import type { WithClassName } from "visual/types/attributes";
 import { pipe } from "visual/utils/fp";
 import * as Patch from "visual/utils/options/Transform/types/Patch";
 

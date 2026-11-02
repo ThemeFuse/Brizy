@@ -6,8 +6,8 @@ import { defaultValueValue } from "visual/utils/onChange";
 import { getDynamicContentOption } from "visual/utils/options";
 import { hoverEffects } from "visual/utils/options/Animation/utils";
 import { read as readString } from "visual/utils/string/specs";
-import { GetItems } from "../EditorComponent/types";
-import { Props, Value } from "./types";
+import type { GetItems } from "../EditorComponent/types";
+import type { Props, Value } from "./types";
 
 export const title = () => t("Icon");
 

@@ -3,11 +3,7 @@ import * as Str from "visual/utils/reader/string";
 import { TargetUrl } from "./types";
 import { getNetworkInfo, getNetworkType } from "./utils";
 
-export default function ($node: JQuery): void {
-  const node = $node.get(0);
-
-  if (!node) return;
-
+export default function (node: HTMLElement): void {
   node.querySelectorAll(".brz-shareButton__item").forEach((item) => {
     const network = getNetworkType(item.getAttribute(makeAttr("network")));
     const href = Str.read(item.getAttribute(makeAttr("href"))) ?? "";

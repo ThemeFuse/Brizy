@@ -1,8 +1,8 @@
-import React, { JSX } from "react";
+import React, { type JSX } from "react";
 import { Tooltip } from "visual/component/Controls/Tooltip";
 import EditorIcon from "visual/component/EditorIcon";
 import { t } from "visual/utils/i18n";
-import { Description as DescriptionProps } from "./types";
+import type { Description as DescriptionProps } from "./types";
 
 export const Description = ({ children }: DescriptionProps): JSX.Element => (
   <div className="brz-ed-popup-common__confirmation">

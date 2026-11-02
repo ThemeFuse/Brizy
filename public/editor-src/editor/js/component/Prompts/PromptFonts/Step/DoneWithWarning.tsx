@@ -2,7 +2,7 @@ import React from "react";
 import EditorIcon from "visual/component/EditorIcon";
 import { Button } from "visual/component/Prompts/common/Button";
 import { t } from "visual/utils/i18n";
-import { FCC } from "visual/utils/react/types";
+import type { FCC } from "visual/utils/react/types";
 
 interface Props {
   onDone: VoidFunction;

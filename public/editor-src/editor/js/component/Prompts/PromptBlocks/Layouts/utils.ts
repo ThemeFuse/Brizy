@@ -1,8 +1,8 @@
 import { Arr, Obj } from "@brizy/readers";
 import { mPipe } from "fp-utilities";
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
-import { CustomTemplatePage } from "visual/global/Config/types/configs/blocks/PredefinedBlocks";
-import { Filter, LayoutData } from "./types";
+import type { CustomTemplatePage } from "visual/global/Config/types/configs/blocks/PredefinedBlocks";
+import type { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import type { Filter, LayoutData } from "./types";
 
 export const getPageId = (data: LayoutData) =>
   mPipe(

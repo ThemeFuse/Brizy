@@ -1,6 +1,6 @@
-import React, { ChangeEvent, ReactElement, useCallback } from "react";
-import { t } from "visual/utils/i18n";
+import React, { type ChangeEvent, type ReactElement, useCallback } from "react";
 import { Field } from "visual/component/Prompts/common/PromptPage/Field";
+import { t } from "visual/utils/i18n";
 
 interface Props {
   value: string;

@@ -1,9 +1,9 @@
-import { Value as BgValue } from "visual/component/Controls/BackgroundColor/entities";
+import type { Value as BgValue } from "visual/component/Controls/BackgroundColor/entities";
 import { inRange } from "visual/utils/math/";
 import * as Num from "visual/utils/math/number";
-import { Value } from "visual/utils/options/BackgroundColor/entities/Value";
-import { Value as Color } from "visual/utils/options/ColorPicker/entities/Value";
-import { Reader } from "visual/utils/types/Type";
+import type { Value } from "visual/utils/options/BackgroundColor/entities/Value";
+import type { Value as Color } from "visual/utils/options/ColorPicker/entities/Value";
+import type { Reader } from "visual/utils/types/Type";
 import { mApply } from "visual/utils/value";
 
 export const toBgControlValue = (v: Value): BgValue => {

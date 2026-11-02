@@ -1,7 +1,7 @@
 import classnames from "classnames";
 import React, {
-  CSSProperties,
-  Ref,
+  type CSSProperties,
+  type Ref,
   useCallback,
   useRef,
   useState
@@ -11,21 +11,24 @@ import { FontStyle } from "visual/component/Controls/FontStyleEditor";
 import { FontStyleItem } from "visual/component/Controls/FontStyleEditor/FontStyle";
 import { Label } from "visual/component/Controls/LeftSidebar/Styling/Label";
 import { optionValueToModel } from "visual/component/Options/types/dev/FontStyleEditor/utils";
-import { ScrollbarRef } from "visual/component/Scrollbar";
-import { OptionDefinition } from "visual/editorComponents/ToolbarItemType";
-import { ReduxAction } from "visual/redux/actions2";
+import type { ScrollbarRef } from "visual/component/Scrollbar";
+import type { OptionDefinition } from "visual/editorComponents/ToolbarItemType";
+import type { ReduxAction } from "visual/redux/actions2";
 import { deviceModeSelector } from "visual/redux/selectors";
-import { ReduxState } from "visual/redux/types";
-import { DeviceMode } from "visual/types";
-import { ModelFamilyType, getFontById } from "visual/utils/fonts/getFontById";
+import type { ReduxState } from "visual/redux/types";
+import type { DeviceMode } from "visual/types";
+import {
+  getFontById,
+  type ModelFamilyType
+} from "visual/utils/fonts/getFontById";
 import { t } from "visual/utils/i18n";
 import { defaultValueValue } from "visual/utils/onChange";
-import { FCC } from "visual/utils/react/types";
+import type { FCC } from "visual/utils/react/types";
 import { DESKTOP } from "visual/utils/responsiveMode";
 import { NORMAL } from "visual/utils/stateMode";
 import { printf } from "visual/utils/string";
 import { uuid } from "visual/utils/uuid";
-import {
+import type {
   FontStyleEditorData,
   FontStyleEditorItem,
   ModelType,
@@ -98,7 +101,7 @@ export const FontStyleEditor: FCC<Props> = ({ value, label, onChange }) => {
         brzNewItem: false
       }));
     },
-    [extraFontStyles, fontStyles, onChange, setItem]
+    [extraFontStyles, fontStyles, onChange]
   );
 
   const handleAnimationEnd = useCallback(
@@ -115,7 +118,7 @@ export const FontStyleEditor: FCC<Props> = ({ value, label, onChange }) => {
         }));
       }
     },
-    [item.animationCounter, item.numItems, setItem]
+    [item.animationCounter, item.numItems]
   );
 
   const handleAddNew = useCallback(() => {
@@ -144,7 +147,7 @@ export const FontStyleEditor: FCC<Props> = ({ value, label, onChange }) => {
     );
 
     getAllItems.forEach((element, index) => {
-      const endAnimation = element.addEventListener(
+      element.addEventListener(
         "animationend",
         handleAnimationEnd as EventListener
       );
@@ -154,13 +157,9 @@ export const FontStyleEditor: FCC<Props> = ({ value, label, onChange }) => {
       if (index === 0) {
         requestAnimationFrame(() => {
           element.classList.add(animateClassName);
-          /* eslint-disable-next-line @typescript-eslint/no-unused-expressions */
-          endAnimation;
         });
       } else {
         element.classList.add(animateClassName);
-        /* eslint-disable-next-line @typescript-eslint/no-unused-expressions */
-        endAnimation;
       }
     });
 

@@ -1,14 +1,14 @@
 import { produce } from "immer";
-import { BlockHtmlWithId, PublishedBlockHtml } from "visual/types/Block";
+import type { BlockHtmlWithId, PublishedBlockHtml } from "visual/types/Block";
 import { generateBlocksList } from "visual/utils/blocks";
 import { getModelPopups } from "visual/utils/blocks/getModelPopups";
 import { DELETE_GLOBAL_BLOCK } from "../actions";
-import { ActionTypes, ReduxAction } from "../actions2";
+import { ActionTypes, type ReduxAction } from "../actions2";
 import {
   blocksOrderSelector,
   globalBlocksAssembledSelector
 } from "../selectors";
-import { ReduxState } from "../types";
+import type { ReduxState } from "../types";
 
 type BlocksHtml = ReduxState["blocksHtml"];
 type RBlocksHtml = (s: BlocksHtml, a: ReduxAction, f: ReduxState) => BlocksHtml;
@@ -43,16 +43,16 @@ export const blocksHtml: RBlocksHtml = (
   switch (action.type) {
     case "HYDRATE": {
       const { page, globalBlocks, config } = action.payload;
-      const gbBlocks = Object.values(globalBlocks)
-        .map((b) => b.blocks || [])
-        .flat();
+      const gbBlocks = Object.values(globalBlocks).flatMap(
+        (b) => b.blocks || []
+      );
 
       const blocks = getBlockHtml([...(page.blocks || []), ...gbBlocks]);
       const items = page.data?.items || [];
       // it needs only for legacy models, when _id & globalBlock differed
       // only legacyBlocks have globalBlockId
       const pageBlocksIds: string[] = items.map(
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        // biome-ignore lint/suspicious/noExplicitAny: migrated from eslint
         (item: any) => item.value.globalBlockId || item.value._id
       );
 

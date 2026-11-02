@@ -1,6 +1,6 @@
 import { KenEffect } from "visual/component/Background/type";
 import { defaultValueValue } from "visual/utils/onChange";
-import { CSSValue } from "../style2/types";
+import type { CSSValue } from "../style2/types";
 
 export const cssStyleBgMediaSlideshow = ({ v, device }: CSSValue): string => {
   const display =

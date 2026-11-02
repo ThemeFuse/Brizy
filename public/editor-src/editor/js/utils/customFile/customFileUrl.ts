@@ -1,5 +1,5 @@
-import { WP } from "visual/global/Config";
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import type { WP } from "visual/global/Config";
+import type { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { getFileFormat } from "./utils";
 
 export const splitFile = (file: string): string[] => file.split("|||");

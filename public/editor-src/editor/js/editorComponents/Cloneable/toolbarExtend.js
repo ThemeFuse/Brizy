@@ -1,6 +1,6 @@
 import { t } from "visual/utils/i18n";
-import { capitalize } from "visual/utils/string";
 import { Toggle } from "visual/utils/options/utils/Type";
+import { capitalize } from "visual/utils/string";
 
 export function getItems({ v, device }) {
   const deviceCapitalize = capitalize(device);

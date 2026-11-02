@@ -3,12 +3,12 @@ import { from, of } from "rxjs";
 import { catchError, map, tap } from "rxjs/operators";
 import { setIn } from "timm";
 import { isEcwidShop } from "visual/global/Config/types/configs/Base";
-import { isCMS, isCloud } from "visual/global/Config/types/configs/Cloud";
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import { isCloud, isCMS } from "visual/global/Config/types/configs/Cloud";
+import type { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { Categories } from "visual/libs/EcwidSdk/categories";
 import { Products } from "visual/libs/EcwidSdk/products";
 import { useConfig } from "visual/providers/ConfigProvider";
-import {
+import type {
   CollectionItemRule,
   CollectionTypeRule,
   Rule
@@ -33,7 +33,7 @@ import {
 } from "visual/utils/ecwid";
 import { isOneOf } from "visual/utils/fp/isOneOf";
 import { t } from "visual/utils/i18n";
-import { CmsListItem, RuleList, RuleListItem } from "./types";
+import type { CmsListItem, RuleList, RuleListItem } from "./types";
 import {
   convertCustomerGroupIdToValue,
   convertCustomerIdToValue,
@@ -45,12 +45,12 @@ import {
   hasEntityValues,
   mergeCollectionGroups
 } from "./utils";
-import { Refs as RefsById } from "./utils/api";
+import type { Refs as RefsById } from "./utils/api";
 
 export default function useRuleList(
   rules: Rule[],
-  // @ts-expect-error: This type used right now only in WP
-  type: "popup" | "block" //eslint-disable-line @typescript-eslint/no-unused-vars
+  // used right now only in WP
+  _type: "popup" | "block"
 ): [boolean, RuleList[]] {
   const [collectionRuleList, setCollectionRuleList] = useState<RuleList[]>([]);
   const [customerRuleList, setCustomerRuleList] = useState<RuleList[]>([]);

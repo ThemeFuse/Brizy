@@ -1,7 +1,9 @@
-import { Props as OptionProps } from "visual/component/Options/Type";
-import { SimpleValue } from "visual/component/Options/Type";
-import { WithConfig } from "visual/types/attributes";
-import { ElementModelType2 } from "visual/component/Elements/Types";
+import type { ElementModelType2 } from "visual/component/Elements/Types";
+import type {
+  Props as OptionProps,
+  SimpleValue
+} from "visual/component/Options/Type";
+import type { WithConfig } from "visual/types/attributes";
 
 interface GlobalBlockData extends PreloadThumbnailProps {
   _id: string;

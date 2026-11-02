@@ -1,5 +1,5 @@
 import { noop } from "es-toolkit";
-import React, { ReactNode } from "react";
+import React, { type ReactNode } from "react";
 import { TextEditor } from "visual/component/Controls/TextEditor";
 import CustomCSS from "visual/component/CustomCSS";
 import { getChartItems } from "visual/editorComponents/Chart/utils";
@@ -16,7 +16,7 @@ import defaultValue from "./defaultValue.json";
 import * as sidebarConfig from "./sidebar";
 import * as toolbarConfig from "./toolbar";
 import * as toolbarTitleConfig from "./toolbarTitle";
-import { ChartType, Props, Value } from "./types";
+import { ChartType, type Props, type Value } from "./types";
 
 class Chart extends EditorComponent<Value, Props> {
   static defaultValue = defaultValue;

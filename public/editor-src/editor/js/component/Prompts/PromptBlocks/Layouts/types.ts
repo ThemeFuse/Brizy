@@ -1,10 +1,10 @@
-import {
+import type {
   CustomTemplatePage,
   LayoutsWithThumbs,
   StoriesWithThumbs
 } from "visual/global/Config/types/configs/blocks/PredefinedBlocks";
-import { Style } from "visual/types/Style";
-import { Literal } from "visual/utils/types/Literal";
+import type { Style } from "visual/types/Style";
+import type { Literal } from "visual/utils/types/Literal";
 
 export interface Filter {
   category: string;

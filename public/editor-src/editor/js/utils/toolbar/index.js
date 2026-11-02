@@ -1,16 +1,14 @@
 // Anchor and URL
-export { toolbarLinkAnchor } from "./toolbarLink";
 
 // Disabled
 export {
-  toolbarDisabledShowOnResponsive,
-  toolbarDisabledShowOnTablet,
-  toolbarDisabledShowOnMobile,
+  toolbarDisabledMargin,
   toolbarDisabledPadding,
-  toolbarDisabledMargin
+  toolbarDisabledShowOnMobile,
+  toolbarDisabledShowOnResponsive,
+  toolbarDisabledShowOnTablet
 } from "./toolbarDisabled";
-
+export { toolbarElementForm2Apps } from "./toolbarElementForm2";
 // Element Section
 export { getInstanceParentId } from "./toolbarElementSection";
-
-export { toolbarElementForm2Apps } from "./toolbarElementForm2";
+export { toolbarLinkAnchor } from "./toolbarLink";

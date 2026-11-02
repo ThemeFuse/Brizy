@@ -1,6 +1,9 @@
 import classNames from "classnames";
 import React, { useEffect } from "react";
-import { TransitionState, useTransitionState } from "react-transition-state";
+import {
+  type TransitionState,
+  useTransitionState
+} from "react-transition-state";
 import EditorIcon from "visual/component/EditorIcon";
 
 const transitionProps = {

@@ -62,7 +62,7 @@ class VideoPlaylistItem extends EditorComponent {
 
   getImageHref(v) {
     const { video } = v;
-    const linkType = video && video.includes("youtube.com") ? "long" : "short";
+    const linkType = video?.includes("youtube.com") ? "long" : "short";
 
     switch (linkType) {
       case "long":

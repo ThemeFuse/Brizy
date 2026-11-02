@@ -1,5 +1,5 @@
-import { MValue } from "visual/utils/value";
-import { Value } from "visual/component/Controls/BoxShadow/types";
+import type { Value } from "visual/component/Controls/BoxShadow/types";
+import type { MValue } from "visual/utils/value";
 
 export const getModifiedField = (
   [b1, s1, v1, h1]: number[],
@@ -8,10 +8,10 @@ export const getModifiedField = (
   return b1 !== b2
     ? "blur"
     : s1 !== s2
-    ? "spread"
-    : v1 !== v2
-    ? "vertical"
-    : h1 !== h2
-    ? "horizontal"
-    : undefined;
+      ? "spread"
+      : v1 !== v2
+        ? "vertical"
+        : h1 !== h2
+          ? "horizontal"
+          : undefined;
 };

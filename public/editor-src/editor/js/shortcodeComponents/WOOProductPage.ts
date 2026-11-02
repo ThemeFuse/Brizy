@@ -1,6 +1,6 @@
 import { isWp } from "visual/global/Config";
+import type { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { t } from "visual/utils/i18n";
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 
 export default function (config: ConfigCommon) {
   return {

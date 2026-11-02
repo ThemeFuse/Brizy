@@ -1,6 +1,6 @@
 import { EmbedCode as EmbedCodeComponent } from "@brizy/component/src/Flex/EmbedCode";
 import classNames from "classnames";
-import React, { JSX, createRef } from "react";
+import React, { createRef, type JSX } from "react";
 import BoxResizer from "visual/component/BoxResizer";
 import type {
   Patch as BoxResizerPatch,
@@ -9,8 +9,8 @@ import type {
 import CustomCSS from "visual/component/CustomCSS";
 import Placeholder from "visual/component/Placeholder";
 import Toolbar from "visual/component/Toolbar";
-import { subscribeToEmbedCodeConsent } from "visual/utils/elements/embedCode/consentStore";
 import { shouldRunEmbedCodeInEditor } from "visual/utils/elements/embedCode";
+import { subscribeToEmbedCodeConsent } from "visual/utils/elements/embedCode/consentStore";
 import { attachRefs } from "visual/utils/react";
 import type { MValue } from "visual/utils/value";
 import { Wrapper } from "../tools/Wrapper";

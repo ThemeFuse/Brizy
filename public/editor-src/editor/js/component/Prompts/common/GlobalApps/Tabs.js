@@ -4,8 +4,8 @@ import { noop } from "es-toolkit";
 import React, { Component } from "react";
 import EditorIcon from "visual/component/EditorIcon";
 import HelpIcon from "visual/component/HelpIcon";
-import Fixed from "visual/component/Prompts/Fixed";
 import { getUrlVideoId } from "visual/component/Prompts/common/GlobalApps/utils";
+import Fixed from "visual/component/Prompts/Fixed";
 
 class Tabs extends Component {
   constructor(props) {

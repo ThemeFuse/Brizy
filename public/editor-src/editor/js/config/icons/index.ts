@@ -1,7 +1,7 @@
-import { Category } from "visual/config/icons/Categories";
-import { Type, TypeId } from "visual/config/icons/Type";
+import type { Category } from "visual/config/icons/Categories";
 import { getCategories as faCats } from "visual/config/icons/categories/fa";
 import { getCategories as ncCats } from "visual/config/icons/categories/nc";
+import { type Type, TypeId } from "visual/config/icons/Type";
 import { types as freeTypes } from "visual/config/icons/types/free";
 import { types as proTypes } from "visual/config/icons/types/pro";
 

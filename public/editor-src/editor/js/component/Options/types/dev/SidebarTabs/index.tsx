@@ -1,25 +1,20 @@
-import React, { ReactElement, useCallback } from "react";
+import React, { type ReactElement, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RightSidebarTabs as Control } from "visual/component/Controls/RightSidebarTabs";
 import { Tab } from "visual/component/Controls/Tabs2/Tab";
 import { getCurrentTooltip } from "visual/component/Controls/Tooltip";
 import Options from "visual/component/Options";
-import { Props as OptionProps } from "visual/component/Options/Type";
-import { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
+import type { Props as OptionProps } from "visual/component/Options/Type";
+import type { ToolbarItemType } from "visual/editorComponents/ToolbarItemType";
 import { usePro } from "visual/global/hooks";
 import { useConfig } from "visual/providers/ConfigProvider";
 import { updateUI } from "visual/redux/actions2";
 import { uiSelector } from "visual/redux/selectors";
-import { WithClassName, WithId } from "visual/types/attributes";
+import type { WithClassName, WithId } from "visual/types/attributes";
 import { always, pipe } from "visual/utils/fp";
 import { prop } from "visual/utils/object/get";
-import { Literal } from "visual/utils/types/Literal";
+import type { Literal } from "visual/utils/types/Literal";
 import { nextAlign } from "./utils";
-
-export interface Tab {
-  id: string;
-  title: string;
-}
 
 type OptionTab = {
   title?: string;

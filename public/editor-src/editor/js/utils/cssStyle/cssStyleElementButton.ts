@@ -14,7 +14,7 @@ import { defaultValueValue } from "visual/utils/onChange";
 import { capByPrefix } from "visual/utils/string";
 import { HOVER, NORMAL } from "../stateMode";
 import { styleBgBlendGradient, styleColor } from "../style2";
-import { CSSValue } from "../style2/types";
+import type { CSSValue } from "../style2/types";
 
 export function cssStyleElementButtonIconPosition({
   v,

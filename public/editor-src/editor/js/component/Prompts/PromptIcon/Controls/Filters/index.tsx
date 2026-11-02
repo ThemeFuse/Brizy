@@ -1,11 +1,11 @@
 import classNames from "classnames";
-import React, { ChangeEvent, useCallback } from "react";
+import React, { type ChangeEvent, useCallback } from "react";
 import Select from "visual/component/Controls/Select";
 import SelectItem from "visual/component/Controls/Select/SelectItem";
 import EditorIcon from "visual/component/EditorIcon";
 import { t } from "visual/utils/i18n";
-import { FCC } from "visual/utils/react/types";
-import { Props } from "./types";
+import type { FCC } from "visual/utils/react/types";
+import type { Props } from "./types";
 
 export const Filters: FCC<Props> = ({
   categoryId,

@@ -1,39 +1,43 @@
-import React, { ReactElement, useCallback, useMemo } from "react";
+import React, { type ReactElement, useCallback, useMemo } from "react";
 import { useDispatch, useSelector, useStore } from "react-redux";
 import { Typography as Control } from "visual/component/Controls/Typography";
-import * as Option from "visual/component/Options/Type";
+import type * as Option from "visual/component/Options/Type";
 import Prompts from "visual/component/Prompts";
 import { currentUserRole } from "visual/component/Roles";
 import { LeftSidebarOptionsIds } from "visual/global/Config/types/configs/ConfigCommon";
 import { useConfig } from "visual/providers/ConfigProvider";
 import { isStory, useEditorMode } from "visual/providers/EditorModeProvider";
-import { ReduxAction, setDeviceMode, updateUI } from "visual/redux/actions2";
+import {
+  type ReduxAction,
+  setDeviceMode,
+  updateUI
+} from "visual/redux/actions2";
 import {
   deviceModeSelector,
   unDeletedFontsSelector
 } from "visual/redux/selectors";
-import { ReduxState } from "visual/redux/types";
-import { DeviceMode } from "visual/types";
-import { WithClassName, WithConfig } from "visual/types/attributes";
+import type { ReduxState } from "visual/redux/types";
+import type { DeviceMode } from "visual/types";
+import type { WithClassName, WithConfig } from "visual/types/attributes";
 import { DESKTOP } from "visual/utils/devices";
-import * as SizeSuffix from "visual/utils/fonts/SizeSuffix";
-import * as FontWeight from "visual/utils/fonts/Weight";
 import { getFontStyles } from "visual/utils/fonts/getFontStyles";
 import {
-  getWeightChoices,
   decodeWeight,
-  encodeWeight
+  encodeWeight,
+  getWeightChoices
 } from "visual/utils/fonts/getFontWeight";
+import * as SizeSuffix from "visual/utils/fonts/SizeSuffix";
 import { fontTransform } from "visual/utils/fonts/transform";
+import * as FontWeight from "visual/utils/fonts/Weight";
 import { mPipe } from "visual/utils/fp";
 import { t } from "visual/utils/i18n";
 import { getValue } from "visual/utils/options/Typography/componentUtils";
-import { Config } from "visual/utils/options/Typography/types/Config";
-import { Font } from "visual/utils/options/Typography/types/Font";
-import { FontObject } from "visual/utils/options/Typography/types/FontObject";
-import { FontsBlock } from "visual/utils/options/Typography/types/FontsBlocks";
+import type { Config } from "visual/utils/options/Typography/types/Config";
+import type { Font } from "visual/utils/options/Typography/types/Font";
+import type { FontObject } from "visual/utils/options/Typography/types/FontObject";
+import type { FontsBlock } from "visual/utils/options/Typography/types/FontsBlocks";
 import * as Patch from "visual/utils/options/Typography/types/Patch";
-import { Value } from "visual/utils/options/Typography/types/Value";
+import type { Value } from "visual/utils/options/Typography/types/Value";
 import {
   createScriptChoices,
   readScripts
@@ -136,12 +140,16 @@ export const Typography = ({
               : FontWeight.empty,
             fontFamilyType: type
           });
-          return withFontFamily
-            ? onChange(Patch.fullFont({ ..._value, ...patch }))
-            : onChange(patch);
+          if (withFontFamily) {
+            onChange(Patch.fullFont({ ..._value, ...patch }));
+          } else {
+            onChange(patch);
+          }
+          break;
         }
         case "fontStyle": {
-          return onChange(Patch.fontStyle(v as string));
+          onChange(Patch.fontStyle(v as string));
+          break;
         }
         case "fontSize":
         case "letterSpacing":
@@ -161,7 +169,8 @@ export const Typography = ({
                 [meta.isChanged]:
                   v as Patch.FontSettings[keyof Patch.FontSettings]
               });
-          return onChange(value);
+          onChange(value);
+          break;
         }
         case "fontWeight": {
           // Decode italic weight if encoded
@@ -177,7 +186,8 @@ export const Typography = ({
                 fontWeight: weight,
                 italic: isItalic
               });
-          return onChange(value);
+          onChange(value);
+          break;
         }
         case "bold":
         case "italic":
@@ -204,7 +214,8 @@ export const Typography = ({
                 [meta.isChanged]: v
               });
 
-          return onChange(value);
+          onChange(value);
+          break;
         }
       }
     },
@@ -282,7 +293,8 @@ export const Typography = ({
       ? openFontsUploader
       : undefined;
 
-  const shouldSortFonts = globalConfig.ui?.features?.typography?.shouldSortFonts ?? true;
+  const shouldSortFonts =
+    globalConfig.ui?.features?.typography?.shouldSortFonts ?? true;
 
   return (
     <Control

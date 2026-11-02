@@ -1,5 +1,5 @@
 // region ImagePatch
-import { ImageType } from "visual/utils/image/types";
+import type { ImageType } from "visual/utils/image/types";
 
 export type ImageDataPatch = {
   src: string;

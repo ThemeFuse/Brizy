@@ -1,9 +1,9 @@
 import { noop } from "es-toolkit";
-import { GetItems } from "visual/editorComponents/EditorComponent/types";
+import type { GetItems } from "visual/editorComponents/EditorComponent/types";
 import { t } from "visual/utils/i18n";
 import { HOVER, NORMAL } from "visual/utils/stateMode";
 import { titleAlignCSS } from "./css";
-import { Props, Value } from "./types";
+import type { Props, Value } from "./types";
 
 export const getItems: GetItems<Value, Props> = ({ device }) => {
   return [

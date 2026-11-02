@@ -1,5 +1,5 @@
-import { Append, Concat } from "visual/utils/types/Monoid";
-import { Reader } from "visual/utils/types/Type";
+import type { Append, Concat } from "visual/utils/types/Monoid";
+import type { Reader } from "visual/utils/types/Type";
 
 export type Type = "none" | "solid" | "gradient" | "animated-gradient";
 

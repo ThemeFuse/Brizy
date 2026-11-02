@@ -1,4 +1,4 @@
-import { MValue } from "@brizy/builder-ui-components/src/utils/value";
+import type { MValue } from "@brizy/builder-ui-components/src/utils/value";
 import classnames from "classnames";
 import React from "react";
 import Animation from "visual/component/Animation";
@@ -27,13 +27,13 @@ import { fromElementModel } from "visual/utils/options/Margin/converters";
 import { handleLinkChange } from "visual/utils/patch/Link";
 import * as State from "visual/utils/stateMode";
 import { parseCustomAttributes } from "visual/utils/string/parseCustomAttributes";
-import { Literal } from "visual/utils/types/Literal";
-import SectionItems from "./Items";
+import type { Literal } from "visual/utils/types/Literal";
 import defaultValue from "./defaultValue.json";
+import SectionItems from "./Items";
 import * as sidebarExtendConfig from "./sidebarExtend";
 import { styleAnimation, styleSection } from "./styles";
 import * as toolbarExtendConfig from "./toolbarExtend";
-import { Meta, Patch, Props, Value } from "./type";
+import type { Meta, Patch, Props, Value } from "./type";
 import { getV } from "./utils";
 
 export default class Section extends EditorComponent<Value, Props> {

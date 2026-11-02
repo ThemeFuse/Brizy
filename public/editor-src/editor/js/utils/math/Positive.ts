@@ -1,4 +1,4 @@
-import { NewType } from "visual/types/NewType";
+import type { NewType } from "visual/types/NewType";
 import { pass } from "visual/utils/fp";
 
 export enum positive {

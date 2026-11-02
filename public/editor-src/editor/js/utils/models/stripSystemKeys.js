@@ -29,7 +29,7 @@ const stripSystemKeysCb = (key, value, obj, finalKeys) => {
 };
 
 export function stripSystemKeys(componentValue, { exclude = [] } = {}) {
-  const finalKeys = systemKeys.filter(key => !exclude.includes(key));
+  const finalKeys = systemKeys.filter((key) => !exclude.includes(key));
 
   const clonedValue = JSON.parse(JSON.stringify(componentValue));
 

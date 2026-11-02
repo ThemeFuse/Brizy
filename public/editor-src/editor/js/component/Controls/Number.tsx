@@ -2,7 +2,7 @@ import classNames from "classnames";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import NumberControl from "visual/component/Controls/AutoCorrectingInput";
 import EditorIcon from "visual/component/EditorIcon";
-import { WithClassName, WithSize } from "visual/types/attributes";
+import type { WithClassName, WithSize } from "visual/types/attributes";
 
 type Action = "increase" | "decrease" | "none";
 
@@ -31,15 +31,9 @@ export const NumberComponent = ({
   const [action, setAction] = useState<Action>("none");
   const baseClass = "brz-ed-control__number";
   const _className = classNames(baseClass, `${baseClass}--${size}`, className);
-  const clear = useCallback((): void => setAction("none"), [setAction]);
-  const handleIncrease = useCallback(
-    (): void => setAction("increase"),
-    [setAction]
-  );
-  const handleDecrease = useCallback(
-    (): void => setAction("decrease"),
-    [setAction]
-  );
+  const clear = useCallback((): void => setAction("none"), []);
+  const handleIncrease = useCallback((): void => setAction("increase"), []);
+  const handleDecrease = useCallback((): void => setAction("decrease"), []);
   const handleOnChange = useCallback(
     (n: number): void => {
       if (n !== value) {
@@ -52,15 +46,15 @@ export const NumberComponent = ({
   useEffect((): undefined => {
     switch (action) {
       case "increase":
-        ref.current && clearInterval(ref.current);
+        if (ref.current) clearInterval(ref.current);
         ref.current = setInterval(onIncrease, 150);
         return undefined;
       case "decrease":
-        ref.current && clearInterval(ref.current);
+        if (ref.current) clearInterval(ref.current);
         ref.current = setInterval(onDecrease, 150);
         return undefined;
       case "none": {
-        ref.current && clearInterval(ref.current);
+        if (ref.current) clearInterval(ref.current);
         return undefined;
       }
     }

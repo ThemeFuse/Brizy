@@ -1,13 +1,14 @@
-import { MValue } from "@brizy/readers/dist/value";
+import type { MValue } from "@brizy/readers/dist/value";
 import { getIn, setIn } from "timm";
-import { ElementModelType2 } from "visual/component/Elements/Types";
-import { TypeId } from "visual/config/icons/Type";
+import type { ElementModelType2 } from "visual/component/Elements/Types";
 import { getTypeIcons } from "visual/config/icons/icons";
+import { TypeId } from "visual/config/icons/Type";
 import changeValueAfterDND from "visual/editorComponents/Page/utils/changeValueAfterDND";
 import {
   type ConfigCommon,
   Mode
 } from "visual/global/Config/types/configs/ConfigCommon";
+import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import {
   addBlock as addBlockAction,
   fetchPageSuccess,
@@ -18,6 +19,7 @@ import {
   updateBlockData,
   updatePageStatus
 } from "visual/redux/actions2";
+import { currentStyleSelector, menuDataSelector } from "visual/redux/selectors";
 import type { Store, TypedDispatch } from "visual/redux/store";
 import type { ReduxState } from "visual/redux/types";
 import type { Block } from "visual/types/Block";
@@ -28,8 +30,8 @@ import type {
   AddElementParams,
   DuplicateElementParams,
   GetAvailableIconsParams,
-  IPageRepository,
   InsertTemplateParams,
+  IPageRepository,
   MoveElementParams,
   RemoveElementParams,
   SearchElementsParams,
@@ -55,20 +57,24 @@ import type {
   UpdateElementResult
 } from "../../entities/models";
 import { log } from "../../utils/logger";
+import type { InternalSearchResult } from "./utils";
 import {
-  type InternalSearchResult,
   applyFuzzySearch,
   applyRichTextUpdates,
   buildAddableFromTo,
   buildElementSummary,
   buildMoveFromTo,
+  canContainerAccept,
   cloneBlockWithNewIds,
   collectElements,
+  compileSearchFilters,
+  containsFindText,
   correctContainerForElement,
   createDefaultBlock,
   createDefaultElement,
   duplicateElementInBlock,
   getNestedValue,
+  isWrappersTypeElement,
   mapToDndContainerType,
   parseBackendBlockData,
   removeElementFromBlock,
@@ -439,13 +445,21 @@ export class PageRepository implements IPageRepository {
         ? [params.blockId].filter((id) => blocksData[id])
         : blocksOrder;
 
+      // Step 0: Compile the regex filters once. An uncompilable or over-long
+      // pattern used to be dropped silently, so a filtered query came back with
+      // the whole page and reported success.
+      const compiled = compileSearchFilters(params);
+      if (!compiled.success) {
+        return { success: false, error: compiled.error };
+      }
+
       // Step 1: Collect all candidates from all blocks (applies type + regex filters)
       const candidates: InternalSearchResult[] = [];
       for (const blockId of blocksToSearch) {
         const block = blocksData[blockId];
         if (!block) continue;
 
-        collectElements(block, [blockId], params, candidates);
+        collectElements(block, [blockId], compiled.filters, candidates);
       }
 
       // Step 2: Apply fuzzy search if containsText is provided
@@ -567,6 +581,29 @@ export class PageRepository implements IPageRepository {
 
       log.repository("addElement updatedBlock %o", updatedBlock);
 
+      const elementId = newElement.value._id as string;
+
+      // changeValueAfterDND returns its input untouched when the insert path
+      // cannot be resolved (a container that cannot hold children). Compare the
+      // container's child count rather than searching for the new id: ids come
+      // from setIds, and a missing id would match the tree root.
+      const resolvedContainerId = container.value?._id;
+      const { obj: containerAfter } = findDeep(
+        updatedBlock,
+        ({ value }: ElementModelType2) =>
+          value?._id !== undefined && value._id === resolvedContainerId
+      );
+      const itemsAfter =
+        (containerAfter as MValue<ElementModelType2>)?.value?.items?.length ??
+        0;
+
+      if (itemsAfter <= items.length) {
+        return {
+          success: false,
+          error: `Could not add ${elementType} to "${params.containerId}" — a ${containerType} cannot contain child elements. Use searchElements({type:'Column'}) to find a container to add into.`
+        };
+      }
+
       // Dispatch update action
       this.dispatch(
         updateBlockData({
@@ -575,7 +612,6 @@ export class PageRepository implements IPageRepository {
         })
       );
 
-      const elementId = newElement.value._id as string;
       // When is simple element like Text, Image, elementId is wrapper
       const childElementId = getIn(newElement, [
         "value",
@@ -663,7 +699,7 @@ export class PageRepository implements IPageRepository {
         })
       );
 
-      const removedAt = parseInt(finalPath[finalPath.length - 1]) || 0;
+      const removedAt = parseInt(finalPath[finalPath.length - 1], 10) || 0;
 
       // Resolve the actual immediate parent container ID from finalPath
       // finalPath follows the pattern: ...parentSegments / "value" / "items" / index
@@ -731,6 +767,37 @@ export class PageRepository implements IPageRepository {
 
       // Get relative path within the block (remove blockId prefix)
       const relativePath = path.slice(1);
+
+      // duplicateElementInBlock clones a whole Wrapper/Wrapper2 into the
+      // grandparent (Cloneable is the exception — it holds several items), so
+      // check the container that actually receives the clone and the type
+      // actually cloned. No redirect: the container is known, not chosen.
+      const parentPath = path.slice(0, -3);
+      const parent =
+        parentPath.length > 0
+          ? (getIn(blocksData, parentPath) as MValue<ElementModelType2>)
+          : undefined;
+
+      const clonesWholeWrapper =
+        parent !== undefined &&
+        isWrappersTypeElement(parent.type) &&
+        parent.type !== ElementTypes.Cloneable;
+
+      const cloneContainer = clonesWholeWrapper
+        ? (getIn(
+            blocksData,
+            parentPath.slice(0, -3)
+          ) as MValue<ElementModelType2>)
+        : parent;
+      const clonedType = clonesWholeWrapper && parent ? parent.type : obj.type;
+
+      if (cloneContainer) {
+        const accepted = canContainerAccept(cloneContainer, clonedType);
+
+        if (!accepted.success) {
+          return { success: false, error: accepted.error };
+        }
+      }
 
       // Duplicate the element within the block
       const result = duplicateElementInBlock(
@@ -806,6 +873,13 @@ export class PageRepository implements IPageRepository {
       const sourceBlock = blocksData[sourceBlockId];
       const sourceRelativePath = sourcePath.slice(1);
 
+      // Read before the move; the parent is 3 segments up.
+      const sourceParent = getIn(
+        blocksData,
+        sourcePath.slice(0, -3)
+      ) as MValue<ElementModelType2>;
+      const fromContainerId = sourceParent?.value?._id ?? "";
+
       // 2. Find the target container
       const { obj: targetContainer, path: targetPath } = findDeep(
         blocksData,
@@ -819,9 +893,26 @@ export class PageRepository implements IPageRepository {
         };
       }
 
+      // 3. Reject a move into the element itself or its own subtree: the type
+      // table permits Row-into-Column, and changeValueAfterDND would remove the
+      // subtree, then reinsert it at a path that no longer exists. Both paths
+      // come from the same findDeep, so containment is a path-prefix test.
+      const movesIntoOwnSubtree =
+        targetPath.length > sourcePath.length &&
+        sourcePath.every(
+          (segment: string, i: number) => targetPath[i] === segment
+        );
+
+      if (targetContainerId === elementId || movesIntoOwnSubtree) {
+        return {
+          success: false,
+          error: `Cannot move "${elementId}" into itself or into one of its own descendants. Choose a container outside "${elementId}".`
+        };
+      }
+
       const targetBlockId = targetPath[0];
 
-      // 3. Validate and correct the target container
+      // 4. Validate and correct the target container
       const correctionResult = correctContainerForElement(
         targetContainer,
         targetPath,
@@ -837,7 +928,7 @@ export class PageRepository implements IPageRepository {
 
       const { container: correctedContainer } = correctionResult;
 
-      // 4. Calculate target index
+      // 5. Calculate target index
       const targetItems = correctedContainer.value?.items || [];
       const targetIndex = params.targetIndex ?? targetItems.length;
       const clampedIndex = Math.max(
@@ -845,7 +936,7 @@ export class PageRepository implements IPageRepository {
         Math.min(targetIndex, targetItems.length)
       );
 
-      // 5. Build UID-based FromTo (same logic for same-block and cross-block)
+      // 6. Build UID-based FromTo (same logic for same-block and cross-block)
       const fromTo = buildMoveFromTo(
         sourceBlock,
         sourceObj,
@@ -861,6 +952,30 @@ export class PageRepository implements IPageRepository {
         dispatch: this.dispatch
       } as Store;
 
+      const correctedContainerId = correctedContainer.value?._id;
+
+      // The element exists in the tree either way, so presence proves nothing:
+      // the oracle is parentage. Checked before any dispatch.
+      const landedInTarget = (tree: ElementModelType2 | Block): boolean => {
+        const { obj: container } = findDeep(
+          tree,
+          ({ value }: ElementModelType2) =>
+            value?._id !== undefined && value._id === correctedContainerId
+        );
+
+        const items = (container as MValue<ElementModelType2>)?.value?.items;
+
+        return (
+          Array.isArray(items) &&
+          items.some((item) => item?.value?._id === elementId)
+        );
+      };
+
+      const moveFailed = (): BrizyToolResult<MoveElementResult> => ({
+        success: false,
+        error: `Could not move "${elementId}" into "${targetContainerId}" — a ${correctedContainer.type} cannot contain child elements. Use searchElements({type:'Column'}) to find a container to move into.`
+      });
+
       if (sourceBlockId === targetBlockId) {
         // Same-block: pass single block to changeValueAfterDND
         const updatedBlock = changeValueAfterDND(
@@ -869,6 +984,10 @@ export class PageRepository implements IPageRepository {
           store,
           this.config
         );
+
+        if (!landedInTarget(updatedBlock as Block)) {
+          return moveFailed();
+        }
 
         this.dispatch(
           updateBlockData({
@@ -895,6 +1014,10 @@ export class PageRepository implements IPageRepository {
           this.config
         );
 
+        if (!landedInTarget(updatedCombined as ElementModelType2)) {
+          return moveFailed();
+        }
+
         // Extract updated blocks from the combined result
         const updatedItems =
           (updatedCombined as ElementModelType2).value?.items || [];
@@ -912,8 +1035,6 @@ export class PageRepository implements IPageRepository {
           })
         );
       }
-
-      const fromContainerId = correctedContainer.value._id || "";
 
       return {
         success: true,
@@ -1134,8 +1255,25 @@ export class PageRepository implements IPageRepository {
       // Get current HTML content
       const currentHtml = obj.value?.text || "";
 
-      // Apply updates to the HTML
-      const updatedHtml = applyRichTextUpdates(currentHtml, properties);
+      // A find that matches nothing must fail, or the agent tells the user
+      // the text was replaced when nothing changed.
+      if (
+        properties.findText &&
+        properties.replaceWith !== undefined &&
+        !containsFindText(currentHtml, properties.findText)
+      ) {
+        return {
+          success: false,
+          error: `Text "${properties.findText}" was not found in element "${elementId}"; nothing was changed. Do not call it again and do not replace the whole text instead: tell the user the text is not there.`
+        };
+      }
+
+      // Presets are passed so detaching from one carries its values over.
+      const updatedHtml = applyRichTextUpdates(
+        currentHtml,
+        properties,
+        currentStyleSelector(state).fontStyles
+      );
 
       // Create updated element value
       const updatedValue: Record<string, unknown> = {
@@ -1264,7 +1402,7 @@ export class PageRepository implements IPageRepository {
   }
 
   getAvailableMenus(): BrizyToolResult<GetAvailableMenusResult> {
-    const menus = (this.config.menuData ?? []).map((menu) => ({
+    const menus = menuDataSelector(this.getState()).map((menu) => ({
       id: menu.id,
       name: menu.name,
       itemCount: menu.items.length

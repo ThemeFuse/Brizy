@@ -11,7 +11,7 @@ function getItems() {
       type: "group",
       title: t("Switcher"),
       icon: "nc-switcher",
-      disabled: (item, meta) => meta.isInSubMenu,
+      disabled: (_item, meta) => meta.isInSubMenu,
       items: []
     }
   ];

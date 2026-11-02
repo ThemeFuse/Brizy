@@ -1,14 +1,14 @@
-import { Hex } from "visual/utils/color/Hex";
-import { Opacity } from "visual/utils/cssProps/opacity";
-import { Getter, Setter, setter } from "visual/utils/model";
+import type { Hex } from "visual/utils/color/Hex";
+import type { Opacity } from "visual/utils/cssProps/opacity";
+import { type Getter, type Setter, setter } from "visual/utils/model";
 import * as Palette from "visual/utils/options/ColorPicker/entities/palette";
 import { mCompose } from "visual/utils/value";
 import * as Color from "../ColorPicker/model";
 import { toggleColor } from "../ColorPicker/utils";
-import { GradientActivePointer } from "./entities/GradientActivePointer";
-import { GradientType } from "./entities/GradientType";
+import type { GradientActivePointer } from "./entities/GradientActivePointer";
+import type { GradientType } from "./entities/GradientType";
 import * as Type from "./entities/Type";
-import { Value } from "./entities/Value";
+import type { Value } from "./entities/Value";
 import { colorToGradient, gradientToColor, readPercent } from "./utils";
 
 export const getType: Getter<Type.Type, Value> = (m) => m.type;

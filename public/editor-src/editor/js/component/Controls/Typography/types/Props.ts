@@ -1,16 +1,16 @@
-import { JSX } from "react";
-import { Choice } from "visual/component/Controls/Toggle/types";
-import { OnChange } from "visual/component/Options/Type";
-import { VariationFont } from "visual/types/Fonts";
-import { FontTransform, TextScripts } from "visual/types/Style";
-import { WithValue } from "visual/types/attributes";
-import { Font, FontFamily } from "./FontFamily";
-import { FontLetterSpacing } from "./FontLetterSpacing";
-import { FontLineHeight } from "./FontLineHeight";
-import { FontSize } from "./FontSize";
-import { FontStyle, FontStyle as FontStyleType } from "./FontStyle";
-import { FontWeight } from "./FontWeight";
-import { Value } from "./Value";
+import type { JSX } from "react";
+import type { Choice } from "visual/component/Controls/Toggle/types";
+import type { OnChange } from "visual/component/Options/Type";
+import type { WithValue } from "visual/types/attributes";
+import type { VariationFont } from "visual/types/Fonts";
+import type { FontTransform, TextScripts } from "visual/types/Style";
+import type { Font, FontFamily } from "./FontFamily";
+import type { FontLetterSpacing } from "./FontLetterSpacing";
+import type { FontLineHeight } from "./FontLineHeight";
+import type { FontSize } from "./FontSize";
+import type { FontStyle, FontStyle as FontStyleType } from "./FontStyle";
+import type { FontWeight } from "./FontWeight";
+import type { Value } from "./Value";
 
 type changeValue = Value[keyof Value] | Font;
 type changeMeta = {

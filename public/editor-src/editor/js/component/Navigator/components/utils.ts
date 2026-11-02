@@ -1,11 +1,11 @@
 import { Num, Obj, Str } from "@brizy/readers";
 import { getTranslationsMap } from "visual/editorComponents/Wrapper/contextMenu";
-import { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
+import type { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
-import { TreeItem, TreeItems } from "visual/providers/TreeProvider/types";
+import type { TreeItem, TreeItems } from "visual/providers/TreeProvider/types";
 import { supportsShowOnDevice } from "visual/providers/TreeProvider/utils";
 import { getSampleShortCodes } from "visual/shortcodeComponents/Shortcodes";
-import { Block } from "visual/types/Block";
+import type { Block } from "visual/types/Block";
 import { t } from "visual/utils/i18n";
 import { SECTION_TYPES } from "./Tree/utils";
 
@@ -237,7 +237,7 @@ export const buildTree = (
         SECTION_TYPES.has(type) && globalBlocksKeys.includes(id);
 
       if (isGlobalBlock) {
-        title = title + " " + t("(Global Block)");
+        title = `${title} ${t("(Global Block)")}`;
       }
 
       const currentShortcode = Obj.readKey(_type)(shortcodes);
@@ -382,7 +382,7 @@ export function mapCollapsed(
     if (typeof item.collapsed !== "undefined") {
       acc.set(item.id, item.collapsed);
     }
-    if (item.children && item.children.length) {
+    if (item.children?.length) {
       mapCollapsed(item.children, acc);
     }
   }

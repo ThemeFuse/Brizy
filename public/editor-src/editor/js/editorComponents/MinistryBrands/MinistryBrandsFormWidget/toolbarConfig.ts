@@ -1,7 +1,7 @@
-import { GetItems } from "visual/editorComponents/EditorComponent/types";
+import type { GetItems } from "visual/editorComponents/EditorComponent/types";
 import { getEkklesiaChoiches } from "visual/utils/api";
 import { t } from "visual/utils/i18n";
-import { Props, Value } from "./types";
+import type { Props, Value } from "./types";
 
 export const getItems: GetItems<Value, Props> = ({ component }) => {
   const config = component.getGlobalConfig();

@@ -1,5 +1,5 @@
-import { ReduxState } from "../types";
-import { ReduxAction } from "../actions2";
+import type { ReduxAction } from "../actions2";
+import type { ReduxState } from "../types";
 
 type Authorized = ReduxState["authorized"];
 type RAuthorized = (s: Authorized, a: ReduxAction) => Authorized;

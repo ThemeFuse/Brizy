@@ -1,18 +1,18 @@
 import classnames from "classnames";
 import { noop } from "es-toolkit";
-import React, { Fragment, JSX, useCallback } from "react";
-import Placeholder from "visual/component/Placeholder";
+import React, { Fragment, type JSX, useCallback } from "react";
 import { withLink } from "visual/component/hooks/withLink";
+import Placeholder from "visual/component/Placeholder";
 import { useConfig } from "visual/providers/ConfigProvider";
 import { isEditor } from "visual/providers/RenderProvider";
 import { useCSS } from "visual/providers/StyleProvider/useCSS";
-import { MValue } from "visual/utils/value";
+import type { MValue } from "visual/utils/value";
 import OriginalImage from "../../Image/Image/OriginalImage";
-import Population from "./Population";
 import SimpleImage from "../../Image/Image/SimpleImage";
 import { isAbleToRenderOriginal, showOriginalImage } from "../../Image/utils";
 import { stylePicture } from "../styles";
-import { ImageContent } from "../types";
+import type { ImageContent } from "../types";
+import Population from "./Population";
 
 const SLIDER_POSITION = 50;
 
@@ -137,21 +137,23 @@ const Content = (props: ImageContent): JSX.Element => {
             [`brz-image-comparison__slider-wrapper--${sliderType}`]: sliderType
           })}
         >
-          {!_isEditor && <input
-            type="range"
-            min={0}
-            max={100}
-            defaultValue={SLIDER_POSITION}
-            readOnly={_isEditor}
-            disabled={_isEditor}
-            onChange={noop}
-            className={classnames("brz-image-comparison__range", {
-              "brz-image-comparison__range--editor": _isEditor,
-              [`brz-image-comparison__range--${sliderType}`]: sliderType
-            })}
-            aria-label="Image comparison slider"
-            aria-orientation={isVertical ? "vertical" : "horizontal"}
-          />}
+          {!_isEditor && (
+            <input
+              type="range"
+              min={0}
+              max={100}
+              defaultValue={SLIDER_POSITION}
+              readOnly={_isEditor}
+              disabled={_isEditor}
+              onChange={noop}
+              className={classnames("brz-image-comparison__range", {
+                "brz-image-comparison__range--editor": _isEditor,
+                [`brz-image-comparison__range--${sliderType}`]: sliderType
+              })}
+              aria-label="Image comparison slider"
+              aria-orientation={isVertical ? "vertical" : "horizontal"}
+            />
+          )}
 
           {/* Background image (after/hover image) - rendered first so it's behind */}
           <picture
@@ -183,7 +185,11 @@ const Content = (props: ImageContent): JSX.Element => {
             className={classnames("brz-image-comparison__slider", {
               [`brz-image-comparison__slider--${sliderType}`]: sliderType
             })}
-            style={isVertical ? { top: `${SLIDER_POSITION}%` } : { left: `${SLIDER_POSITION}%` }}
+            style={
+              isVertical
+                ? { top: `${SLIDER_POSITION}%` }
+                : { left: `${SLIDER_POSITION}%` }
+            }
           >
             <span className="brz-image-comparison__thumb">
               <svg
