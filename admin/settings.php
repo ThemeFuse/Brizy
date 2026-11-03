@@ -52,7 +52,7 @@ class Brizy_Admin_Settings {
         add_action( 'current_screen', array( $this, 'action_validate_form_submit' ) );
         add_action( 'brizy_settings_role_capability_row', array( $this, 'role_capability_select_row' ) );
         add_action( 'brizy_settings_post_type_row', array( $this, 'post_type_row' ) );
-        if ( ! current_user_can( 'manage_options' ) ) {
+        if ( current_user_can( 'manage_options' ) ) {
             add_action( 'brizy_settings_submit', array( $this, 'settings_submit' ) );
             add_action( 'brizy_settings_render_tabs', array( $this, 'render_tabs' ) );
             add_action( 'brizy_settings_render_content', array( $this, 'render_tab_content' ) );
