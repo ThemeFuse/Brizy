@@ -18,6 +18,10 @@ if (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && stripos($_SERVER['HTTP_X_FORWAR
 }
 define('BRIZY_DEVELOPMENT', false );
 define('BRIZY_LOG', false );
+// Google Maps Embed API key. Empty in the repo: the release build injects it (jenkins/google-map-key-update.sh), local dev can define it in wp-config.php.
+if (!defined('BRIZY_GOOGLE_MAP_API_KEY')) {
+    define('BRIZY_GOOGLE_MAP_API_KEY', '');
+}
 define('BRIZY_VERSION', '2.8.25');
 define('BRIZY_MINIMUM_PRO_VERSION', '2.4.15');
 define('BRIZY_MINIMUM_COMPILER_VERSION', '353-wp');
