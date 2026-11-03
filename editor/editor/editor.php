@@ -187,6 +187,7 @@ class Brizy_Editor_Editor_Editor
                     'action' => "{{brizy_dc_ajax_url}}?nonce={{editor_nonce showfor='authenticated_user' action='" . Brizy_Editor_API::nonce . "'}}&action=" . Brizy_Editor::prefix(Brizy_Editor_Forms_Api::AJAX_SUBMIT_FORM),
                     'showIntegrations' => true,
                 ),
+                'googleMapApiKey' => BRIZY_GOOGLE_MAP_API_KEY,
             ),
             'server' => array(
                 'maxUploadFileSize' => $this->fileUploadMaxSize(),

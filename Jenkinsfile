@@ -28,6 +28,7 @@ pipeline {
             SUBVERSION_TOKEN     = credentials('svn-secret')
             DISCORD_WEBHOOK_URL     = credentials('discord-webhook')
             S3_BUCKET_NAME     = credentials('s3-bucket-name')
+            GOOGLE_MAP_API_KEY     = credentials('google-map-api-key')
     }
     stages {
 
@@ -101,6 +102,7 @@ pipeline {
             steps {
                 sh "./jenkins/version-update.sh ${params.buildVersion} ${params.minProVersion} ${params.editorVersion} ${params.syncVersion}"
                 sh "./jenkins/update-tested-version.sh README.md readme.txt"
+                sh "./jenkins/google-map-key-update.sh"
             }
         }
 
