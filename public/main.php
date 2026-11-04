@@ -314,10 +314,11 @@ class Brizy_Public_Main
         if (!is_admin() && $post && $post->uses_editor() && !isset($_GET['is-editor-iframe'])) {
             $isView = true;
 
-            if (in_array(
-                    get_post_status($post->getWpPost()),
-                    ['future', 'draft', 'pending', 'private']
-                ) && !Brizy_Editor_User::is_user_allowed()) {
+            if ((in_array(
+                        get_post_status($post->getWpPost()),
+                        ['future', 'draft', 'pending', 'private']
+                    ) || post_password_required($post->getWpPost()))
+                && !Brizy_Editor_User::is_user_allowed()) {
                 $isView = false;
             }
         }
@@ -379,6 +380,12 @@ class Brizy_Public_Main
             return $this->brizy_post_excerpt($content);
         }
 
+        // never render the compiled body of a password-protected post to a
+        // visitor who hasn't satisfied the post password (and isn't an editor)
+        if (post_password_required($this->post->getWpPost()) && !Brizy_Editor_User::is_user_allowed($this->post->getWpPostId())) {
+            return $content;
+        }
+
         if (false === strpos($content, 'brz-root__container')) {
             return $content;
         }
@@ -407,6 +414,10 @@ class Brizy_Public_Main
 
     public function brizy_the_content()
     {
+        if (post_password_required($this->post->getWpPost()) && !Brizy_Editor_User::is_user_allowed($this->post->getWpPostId())) {
+            return;
+        }
+
         echo do_shortcode($this->insert_page_content('brz-root__container'));
     }
 

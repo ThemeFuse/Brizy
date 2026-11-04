@@ -1,0 +1,23 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(gh pr:*)",
+      "Bash(find:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(find /home/alex/Projects/bitblox-docker/wordpress/www/wp-content/plugins/brizy -type f \\\\\\(-name *.bundle.js -o -name *editor*.js -o -name *main*.js \\\\\\))",
+      "Bash(git diff:*)",
+      "Read(//tmp/**)",
+      "Bash(xxd)",
+      "Bash(/home/alex/.claude/plugins/local/cavekit-marketplace/ck/scripts/bp-config.sh summary:*)",
+      "Bash(/home/alex/.claude/plugins/local/cavekit-marketplace/ck/scripts/bp-config.sh model:*)",
+      "Bash(/home/alex/.claude/plugins/local/cavekit-marketplace/ck/scripts/bp-config.sh caveman-active:*)",
+      "Bash(awk -F: '{print $3}')"
+    ],
+    "deny": [],
+    "ask": []
+  },
+  "enabledMcpjsonServers": [
+    "codegraph"
+  ]
+}

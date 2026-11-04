@@ -441,6 +441,10 @@ class Brizy_Editor
             return $pid;
         }
 
+        if (!is_admin() && !Brizy_Editor_User::is_user_allowed()) {
+            return null;
+        }
+
         if (isset($_REQUEST[Brizy_Editor::prefix('_post')])) {
             $pid = absint($_REQUEST[Brizy_Editor::prefix('_post')]);
         } elseif (isset($_REQUEST['post'])) {
