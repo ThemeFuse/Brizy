@@ -2,14 +2,14 @@
 # This file is distributed under the GPLv3.
 msgid ""
 msgstr ""
-"Project-Id-Version: Brizy 2.8.25\n"
+"Project-Id-Version: Brizy 2.8.26\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/workspace\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-11-02T09:59:29+00:00\n"
+"POT-Creation-Date: 2026-11-11T16:51:11+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: brizy\n"
@@ -1091,25 +1091,25 @@ msgstr ""
 msgid " Template"
 msgstr ""
 
-#: editor.php:624
+#: editor.php:646
 #: public/editor-build/prod/texts.php:1883
 msgid "Thumbnail"
 msgstr ""
 
-#: editor.php:625
+#: editor.php:647
 #: public/editor-build/prod/texts.php:1086
 msgid "Medium"
 msgstr ""
 
-#: editor.php:626
+#: editor.php:648
 msgid "Large"
 msgstr ""
 
-#: editor.php:627
+#: editor.php:649
 msgid "Full Size"
 msgstr ""
 
-#: editor.php:638
+#: editor.php:660
 msgid "Original"
 msgstr ""
 
