@@ -1,6 +1,7 @@
 import { z } from "zod";
 import { makeAttr } from "visual/utils/i18n/attribute";
 import {
+  drainMicrotasks,
   initFree,
   loadFreeRuntime,
   mountRoot,
@@ -103,8 +104,10 @@ function contentWindowOf(iframe: Element): Window {
   return windowSchema.parse(iframeSchema.parse(iframe).contentWindow);
 }
 
-function tick(): Promise<void> {
-  return new Promise((resolve) => setTimeout(resolve, 0));
+// The suite runs on fake timers: the export's zero-delay insert runs, then its promises settle.
+async function tick(): Promise<void> {
+  jest.advanceTimersByTime(1);
+  await drainMicrotasks(20);
 }
 
 async function initPage(content: string): Promise<HTMLElement> {
@@ -144,6 +147,7 @@ beforeEach(async () => {
   ]) {
     window.Brz.on(id, () => emitted.push(id));
   }
+  jest.useFakeTimers();
 });
 
 afterEach(() => {

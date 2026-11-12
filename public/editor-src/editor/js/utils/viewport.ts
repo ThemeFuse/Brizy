@@ -8,6 +8,10 @@ export const isElementInViewport = (
   return top >= -elementHeight && bottom <= innerHeight + elementHeight;
 };
 
+// A section is on screen when at least half of what the screen can show of it
+// is visible: half its height when it fits the screen, half the screen when it
+// is taller. Ids come largest visible area first, because the AI chat reads the
+// first id as "this section".
 export const getVisibleSectionIds = (
   document: Document,
   innerHeight: number
@@ -15,19 +19,21 @@ export const getVisibleSectionIds = (
   const sections = document.querySelectorAll<HTMLElement>(
     ".brz-section, .brz-footer"
   );
-  const ids: string[] = [];
+  const visibleSections: Array<{ id: string; visible: number }> = [];
 
   for (const el of sections) {
     const rect = el.getBoundingClientRect();
-    if (rect.height <= 0) continue;
+    if (rect.height <= 0 || !el.id) continue;
 
     const visible = Math.min(rect.bottom, innerHeight) - Math.max(rect.top, 0);
-    if (visible / rect.height >= 0.5 && el.id) {
-      ids.push(el.id);
+    if (visible >= Math.min(rect.height, innerHeight) / 2) {
+      visibleSections.push({ id: el.id, visible });
     }
   }
 
-  return ids;
+  return visibleSections
+    .sort((a, b) => b.visible - a.visible)
+    .map(({ id }) => id);
 };
 
 export const getClosestSections = (

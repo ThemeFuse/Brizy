@@ -1,6 +1,7 @@
 import { z } from "zod";
 import * as group8 from "visual/libs/group-8";
 import {
+  drainMicrotasks,
   initPro,
   loadProRuntime,
   mountRoot,
@@ -51,10 +52,10 @@ function query(root: HTMLElement, selector: string): HTMLElement {
   return z.instanceof(HTMLElement).parse(root.querySelector(selector));
 }
 
-function nextFrame(): Promise<void> {
-  return new Promise((resolve) => {
-    requestAnimationFrame(() => resolve());
-  });
+// The suite runs on fake timers, so a frame passes synchronously.
+async function nextFrame(): Promise<void> {
+  jest.advanceTimersByTime(16);
+  await drainMicrotasks(20);
 }
 
 function setScrollY(value: number): void {
@@ -118,10 +119,12 @@ afterAll(() => {
 });
 
 beforeEach(() => {
+  jest.useFakeTimers();
   setScrollY(0);
 });
 
 afterEach(() => {
+  jest.useRealTimers();
   recorded.length = 0;
   document.body.innerHTML = "";
 });

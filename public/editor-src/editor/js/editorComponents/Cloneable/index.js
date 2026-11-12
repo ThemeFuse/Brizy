@@ -33,6 +33,7 @@ import * as sidebarConfig from "./sidebar";
 import { style, styleAnimation, styleContainer } from "./styles";
 import * as toolbarConfig from "./toolbar";
 import * as toolbarExtendConfig from "./toolbarExtend";
+import { readItemTypes } from "./utils";
 
 export default class Cloneable extends EditorComponent {
   static defaultProps = {
@@ -275,6 +276,7 @@ export default class Cloneable extends EditorComponent {
                           renderButtonWrapper={this.renderToolbar}
                           elementId={this.getId()}
                           elementType={this.getComponentId()}
+                          elementItemTypes={readItemTypes(v)}
                         >
                           {({
                             ref: containerBorderRef,
@@ -366,6 +368,7 @@ export default class Cloneable extends EditorComponent {
                       borderStyle="dotted"
                       elementId={this.getId()}
                       elementType={this.getComponentId()}
+                      elementItemTypes={readItemTypes(v)}
                     >
                       {this.renderContent(v, vs, vd)}
                     </ContainerBorder>

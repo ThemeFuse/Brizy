@@ -1,6 +1,7 @@
 // Test-only helpers: jsdom has no layout and focuses hidden elements, so sizes are stubbed and keys go to an explicit target.
 
 import { z } from "zod";
+import { drainMicrotasks } from "../../../../../jest-utils/exportRuntime";
 
 const elementSchema = z.instanceof(HTMLElement);
 const selectSchema = z.instanceof(HTMLSelectElement);
@@ -144,14 +145,16 @@ export function type(input: HTMLInputElement, value: string): void {
   input.dispatchEvent(new Event("input", { bubbles: true }));
 }
 
-export const nextFrame = (): Promise<void> =>
-  new Promise((resolve) => {
-    window.requestAnimationFrame(() => resolve());
-  });
+// The suites run on fake timers (see suite.ts): a frame and a few timer turns pass synchronously.
+export const nextFrame = async (): Promise<void> => {
+  jest.advanceTimersByTime(16);
+  await drainMicrotasks(20);
+};
 
 export const nextTimers = async (): Promise<void> => {
   for (let turn = 0; turn < 3; turn++) {
-    await new Promise((resolve) => setTimeout(resolve, 2));
+    jest.advanceTimersByTime(2);
+    await drainMicrotasks(20);
   }
 };
 

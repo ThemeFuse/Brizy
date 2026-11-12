@@ -2,11 +2,11 @@ import { isT } from "fp-utilities";
 import React, { Component, type ReactElement } from "react";
 import type { ConfigCommon } from "visual/global/Config/types/configs/ConfigCommon";
 import { pendingRequest, updateSmtpIntegration } from "visual/utils/api";
-import { pipe } from "visual/utils/fp";
 import { t } from "visual/utils/i18n";
 import * as Str from "visual/utils/string/specs";
 import { Fields } from "../../../common/GlobalApps/StepsView/Fields";
 import type { AppData, FormField } from "../../../common/GlobalApps/type";
+import { withEncryption } from "./encryption";
 import { readApiKey } from "./utils";
 
 export type ApiKeys = Record<string, unknown>;
@@ -51,11 +51,6 @@ class Smtp extends Component<Props, State> {
     }, {});
   }
 
-  getValue(v: unknown): unknown {
-    const { apiKeyValue } = this.state;
-    return pipe((obj: ApiKeys) => obj[v as string])(apiKeyValue);
-  }
-
   handleChange = (type: string, value: unknown): void => {
     this.setState(({ apiKeyValue }) => ({
       apiKeyValue: {
@@ -75,7 +70,7 @@ class Smtp extends Component<Props, State> {
       onChange,
       onChangeNext
     } = this.props;
-    const { apiKeyValue } = this.state;
+    const apiKeyValue = withEncryption(this.state.apiKeyValue);
 
     if (!appData) {
       this.setState({
@@ -138,9 +133,10 @@ class Smtp extends Component<Props, State> {
   render(): ReactElement {
     const { app, apiKeys, formId, formFields } = this.props;
     const { error, prevLoading, nextLoading } = this.state;
+    const values = withEncryption(this.state.apiKeyValue);
     const data = apiKeys
       .map((option) =>
-        readApiKey({ ...option, value: this.getValue(option.name) })
+        readApiKey({ ...option, value: values[Str.read(option.name) ?? ""] })
       )
       .filter(isT);
 

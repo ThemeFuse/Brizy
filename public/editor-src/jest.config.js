@@ -17,6 +17,8 @@ const swcConfig = {
 
 module.exports = {
   testEnvironment: "jsdom",
+  // A worker past this after a suite is restarted, so workers do not grow until CI runs out of memory.
+  workerIdleMemoryLimit: "800MB",
   moduleDirectories: ["node_modules", "jest-utils", "__dirname"],
   moduleNameMapper: {
     "^visual/(.*)$": "<rootDir>/editor/js/$1",

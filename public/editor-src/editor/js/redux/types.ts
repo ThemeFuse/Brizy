@@ -39,6 +39,7 @@ export type SidebarAlign = "left" | "right";
 export interface ActiveElementMeta {
   id: string;
   type: string;
+  itemTypes: string[] | undefined;
 }
 
 // WARNING: this is a work in progress.

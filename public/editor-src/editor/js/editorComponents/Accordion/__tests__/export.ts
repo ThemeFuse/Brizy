@@ -1,6 +1,7 @@
 import { z } from "zod";
 import { makeAttr } from "visual/utils/i18n/attribute";
 import {
+  drainMicrotasks,
   initFree,
   loadFreeRuntime,
   mountRoot,
@@ -85,8 +86,10 @@ function finishAnimations(): void {
   }
 }
 
-function nextFrame(): Promise<void> {
-  return new Promise((resolve) => requestAnimationFrame(() => resolve()));
+// The suite runs on fake timers, so a frame passes synchronously.
+async function nextFrame(): Promise<void> {
+  jest.advanceTimersByTime(16);
+  await drainMicrotasks(20);
 }
 
 interface ChangedEvent {
@@ -126,6 +129,10 @@ afterAll(() => {
   unbindChanged();
   Reflect.deleteProperty(Element.prototype, "animate");
   jest.restoreAllMocks();
+});
+
+beforeEach(() => {
+  jest.useFakeTimers();
 });
 
 afterEach(() => {

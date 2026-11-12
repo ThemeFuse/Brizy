@@ -34,54 +34,6 @@ const _systemFont = {
   }
 };
 
-// window.aiChatConfig = {
-//   ...(window.aiChatConfig || {}),
-//   apiBaseUrl: "http://localhost:8000/api/v1"
-// };
-
-// // LOCAL TEST ONLY — remove before commit. Makes an AI chat job "fail":
-// //   localStorage.aiChatTestFailure = "credits" | "busy" | "generic" | "silent"
-// //   localStorage.aiChatTestFailAfter = "3"  (job reads before it fails)
-// const aiChatTestFailures: Record<string, string | undefined> = {
-//   credits:
-//     'AI credits limit reached. <a href="https://www.brizy.io/pricing-cloud">Upgrade plan</a> or <a href="https://www.brizy.io/account/buynow/aF7ioThxGrk5">Buy Credits</a>',
-//   busy: "The service is busy right now. Please try again in a moment.",
-//   generic: "Oops, something went wrong... Please, try again later.",
-//   silent: undefined
-// };
-// const aiChatRealFetch = window.fetch.bind(window);
-// const aiChatJobReads = new Map<string, number>();
-
-// window.fetch = async (input, init) => {
-//   const mode = window.localStorage.getItem("aiChatTestFailure");
-//   const url = input instanceof Request ? input.url : String(input);
-//   const isJobRead =
-//     /\/jobs\/[^/?]+$/.test(url) && (init?.method ?? "GET") === "GET";
-
-//   if (!mode || !(mode in aiChatTestFailures) || !isJobRead) {
-//     return aiChatRealFetch(input, init);
-//   }
-
-//   const reads = (aiChatJobReads.get(url) ?? 0) + 1;
-//   aiChatJobReads.set(url, reads);
-//   const failAfter =
-//     Number(window.localStorage.getItem("aiChatTestFailAfter")) || 3;
-
-//   if (reads < failAfter) {
-//     return aiChatRealFetch(input, init);
-//   }
-
-//   // Stop the real job, so the session is free for Retry.
-//   await aiChatRealFetch(`${url}/cancel`, { method: "POST" }).catch(
-//     () => undefined
-//   );
-
-//   return new Response(
-//     JSON.stringify({ status: "failed", error: aiChatTestFailures[mode] }),
-//     { status: 200, headers: { "Content-Type": "application/json" } }
-//   );
-// };
-
 (async function main() {
   try {
     if (!appDiv) {

@@ -2,35 +2,43 @@ import { getVisibleSectionIds } from "./viewport";
 
 const INNER_HEIGHT = 1000;
 
-interface FakeSectionOpts {
+interface FakeSection {
   id: string;
-  className?: string;
+  className: string;
   top: number;
   height: number;
 }
 
-const makeSection = ({
+const section = (id: string, top: number, height: number): FakeSection => ({
   id,
-  className = "brz-section",
+  className: "brz-section",
   top,
   height
-}: FakeSectionOpts): HTMLElement => {
+});
+
+const footer = (id: string, top: number, height: number): FakeSection => ({
+  id,
+  className: "brz-footer",
+  top,
+  height
+});
+
+const mount = ({ id, className, top, height }: FakeSection): void => {
   const el = document.createElement("div");
   el.id = id;
   el.className = className;
-  el.getBoundingClientRect = () =>
-    ({
-      top,
-      bottom: top + height,
-      height,
-      left: 0,
-      right: 0,
-      width: 0,
-      x: 0,
-      y: top,
-      toJSON: () => ({})
-    }) as DOMRect;
-  return el;
+  el.getBoundingClientRect = () => ({
+    top,
+    bottom: top + height,
+    height,
+    left: 0,
+    right: 0,
+    width: 0,
+    x: 0,
+    y: top,
+    toJSON: () => ({})
+  });
+  document.body.appendChild(el);
 };
 
 describe("getVisibleSectionIds", () => {
@@ -38,68 +46,80 @@ describe("getVisibleSectionIds", () => {
     document.body.innerHTML = "";
   });
 
-  const mount = (els: HTMLElement[]): void => {
-    els.forEach((el) => document.body.appendChild(el));
-  };
+  it.each([
+    {
+      case: "a fully visible section",
+      sections: [section("s1", 100, 400)],
+      out: ["s1"]
+    },
+    {
+      // 300 of 800px on screen
+      case: "a section with less than half of it on screen",
+      sections: [section("s1", 700, 800)],
+      out: []
+    },
+    {
+      // 400 of 800px on screen
+      case: "a section with exactly half of it on screen",
+      sections: [section("s1", 600, 800)],
+      out: ["s1"]
+    },
+    {
+      case: "a visible footer",
+      sections: [footer("footer", 100, 200)],
+      out: ["footer"]
+    },
+    {
+      case: "a section taller than 2x the screen that fills it",
+      sections: [section("tall", -700, 2400)],
+      out: ["tall"]
+    },
+    {
+      // 500 of 3000px on screen = half the screen
+      case: "a tall section covering exactly half the screen",
+      sections: [section("tall", 500, 3000)],
+      out: ["tall"]
+    },
+    {
+      // 400 of 3000px on screen
+      case: "a tall section covering less than half the screen",
+      sections: [section("tall", 600, 3000)],
+      out: []
+    },
+    {
+      // short: 100px visible, tall: 900px visible
+      case: "a tall section below a short visible one",
+      sections: [section("short", 0, 100), section("tall", 100, 2500)],
+      out: ["tall", "short"]
+    },
+    {
+      // s2: 100 of 500px on screen
+      case: "a mix, largest visible area first",
+      sections: [
+        section("header", 0, 80),
+        section("s1", 90, 400),
+        section("s2", -400, 500),
+        footer("footer", 500, 300)
+      ],
+      out: ["s1", "footer", "header"]
+    },
+    {
+      case: "equal visible areas, in DOM order",
+      sections: [section("a", 0, 400), section("b", 400, 400)],
+      out: ["a", "b"]
+    },
+    {
+      case: "zero-height and id-less elements",
+      sections: [
+        section("", 0, 400),
+        section("zero", 0, 0),
+        section("s1", 0, 400)
+      ],
+      out: ["s1"]
+    }
+  ])("handles $case", ({ sections, out }) => {
+    sections.forEach(mount);
 
-  test("includes a fully visible section", () => {
-    mount([makeSection({ id: "s1", top: 100, height: 400 })]);
-    expect(getVisibleSectionIds(document, INNER_HEIGHT)).toEqual(["s1"]);
-  });
-
-  test("excludes a section with less than 50% visible", () => {
-    // 800px tall, starting at 700 -> only 300px (37.5%) visible
-    mount([makeSection({ id: "s1", top: 700, height: 800 })]);
-    expect(getVisibleSectionIds(document, INNER_HEIGHT)).toEqual([]);
-  });
-
-  test("includes a section with exactly 50% visible", () => {
-    // 800px tall, starting at 600 -> 400px (50%) visible
-    mount([makeSection({ id: "s1", top: 600, height: 800 })]);
-    expect(getVisibleSectionIds(document, INNER_HEIGHT)).toEqual(["s1"]);
-  });
-
-  test("includes a majority-visible footer (.brz-footer)", () => {
-    mount([
-      makeSection({
-        id: "footer",
-        className: "brz-footer",
-        top: 100,
-        height: 200
-      })
-    ]);
-    expect(getVisibleSectionIds(document, INNER_HEIGHT)).toEqual(["footer"]);
-  });
-
-  test("returns only the majority-visible ids in DOM order", () => {
-    mount([
-      makeSection({
-        id: "header",
-        className: "brz-section",
-        top: 0,
-        height: 80
-      }),
-      makeSection({ id: "s1", top: 90, height: 400 }),
-      // partly above viewport: 500 tall from -400 -> 100px visible (20%)
-      makeSection({ id: "s2", top: -400, height: 500 }),
-      makeSection({
-        id: "footer",
-        className: "brz-footer",
-        top: 500,
-        height: 300
-      })
-    ]);
-    expect(getVisibleSectionIds(document, INNER_HEIGHT)).toEqual([
-      "header",
-      "s1",
-      "footer"
-    ]);
-  });
-
-  test("skips zero-height and id-less elements", () => {
-    const noId = makeSection({ id: "", top: 0, height: 400 });
-    const zero = makeSection({ id: "zero", top: 0, height: 0 });
-    mount([noId, zero, makeSection({ id: "s1", top: 0, height: 400 })]);
-    expect(getVisibleSectionIds(document, INNER_HEIGHT)).toEqual(["s1"]);
+    expect(getVisibleSectionIds(document, INNER_HEIGHT)).toEqual(out);
   });
 });

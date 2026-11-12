@@ -179,9 +179,12 @@ const invoke = (
   handleGlobalBlocks(data);
 };
 
-// Flush microtasks + one macrotask so the .then/.catch on updateGBRules runs.
-const tick = (): Promise<void> =>
-  new Promise((resolve) => setTimeout(resolve, 0));
+// Settles the .then/.catch on updateGBRules without leaving the microtask chain.
+const tick = async (): Promise<void> => {
+  for (let turn = 0; turn < 10; turn++) {
+    await Promise.resolve();
+  }
+};
 
 // isCloud(config) reads the global TARGET, so force a Cloud target to exercise
 // the Cloud editor->wire conversion (which keeps `mode`).

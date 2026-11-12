@@ -8,6 +8,14 @@ const fakePromise = () => {
   });
 };
 
+// Moves the fake clock, then lets the worker's promise chains settle.
+const advance = async (ms: number): Promise<void> => {
+  jest.advanceTimersByTime(ms);
+  for (let turn = 0; turn < 10; turn++) {
+    await Promise.resolve();
+  }
+};
+
 describe("QueueWorker", () => {
   let queue: Queue<string>;
   let worker: QueueWorker<string>;
@@ -65,6 +73,7 @@ describe("QueueWorker", () => {
   });
 
   test("should process multiple tasks up to concurrency limit", async () => {
+    jest.useFakeTimers();
     let resolve1: (value: string) => void;
 
     const task1 = jest.fn().mockImplementation(
@@ -88,10 +97,11 @@ describe("QueueWorker", () => {
 
     // @ts-expect-error: Variable resolve1 is used before being assigned.
     resolve1("result1");
-    await fakePromise();
+    await advance(100);
 
     expect(task3).toHaveBeenCalled();
 
+    await advance(100);
     await worker.waitAllTask();
 
     expect(queue.getAll().length).toBe(0);

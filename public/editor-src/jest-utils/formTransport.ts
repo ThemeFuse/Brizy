@@ -1,6 +1,7 @@
 // The network as a form submit sees it; the only file that knows which API the forms send with.
 
 import { z } from "zod";
+import { drainMicrotasks } from "./exportRuntime";
 
 export type TransportReply =
   | {
@@ -100,9 +101,7 @@ export function stubTransport(reply: TransportReply): Transport {
   };
 }
 
-// The reply arrives on a later turn; a few turns drain everything it sets off.
+// The stubbed reply settles in microtasks; draining them settles everything it sets off.
 export async function settleTransport(): Promise<void> {
-  for (let turn = 0; turn < 4; turn++) {
-    await new Promise((resolve) => setTimeout(resolve, 0));
-  }
+  await drainMicrotasks(100);
 }

@@ -3,6 +3,8 @@ import T from "prop-types";
 import React from "react";
 import { ReactReduxContext } from "react-redux";
 import ClickOutside from "visual/component/ClickOutside";
+import { readItemTypes } from "visual/editorComponents/Cloneable/utils";
+import { ElementTypes } from "visual/global/Config/types/configs/ElementTypes";
 import { setActiveElementMeta } from "visual/redux/actions2";
 import {
   activeElementMetaSelector,
@@ -27,6 +29,7 @@ export default class ContainerBorder extends React.Component {
     hiddenInResponsive: T.bool,
     elementId: T.string,
     elementType: T.string,
+    elementItemTypes: T.arrayOf(T.string),
     children: T.func
   };
 
@@ -132,10 +135,16 @@ export default class ContainerBorder extends React.Component {
         return;
       }
 
+      const type = activeEditorComponent.getComponentId();
+
       store.dispatch(
         setActiveElementMeta({
           id: elementId,
-          type: activeEditorComponent.getComponentId()
+          type,
+          itemTypes:
+            type === ElementTypes.Cloneable
+              ? readItemTypes(activeEditorComponent.getValue())
+              : undefined
         })
       );
       return;
@@ -143,7 +152,11 @@ export default class ContainerBorder extends React.Component {
 
     if (elementId && elementType && activeElement?.id !== elementId) {
       store.dispatch(
-        setActiveElementMeta({ id: elementId, type: elementType })
+        setActiveElementMeta({
+          id: elementId,
+          type: elementType,
+          itemTypes: this.props.elementItemTypes
+        })
       );
     }
   };

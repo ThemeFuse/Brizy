@@ -56,12 +56,17 @@ function installManifest(path: string, source: ManifestSource): void {
   }
 }
 
-// Every step of a dispatch (dynamic imports, the async listeners) settles in
-// microtasks, so a few macrotask turns drain it completely.
-export async function flushRuntime(): Promise<void> {
-  for (let turn = 0; turn < 3; turn++) {
-    await new Promise((resolve) => setTimeout(resolve, 0));
+/** Settles promise chains without leaving the test's microtask chain. */
+export async function drainMicrotasks(turns: number): Promise<void> {
+  for (let turn = 0; turn < turns; turn++) {
+    await Promise.resolve();
   }
+}
+
+// Every step of a dispatch (dynamic imports, the async listeners) settles in
+// microtasks, so draining them settles it without a macrotask turn.
+export async function flushRuntime(): Promise<void> {
+  await drainMicrotasks(100);
 }
 
 export function nextInitComplete(): Promise<void> {
@@ -85,8 +90,20 @@ function initialInitComplete(): Promise<void> {
 export async function loadFreeRuntime(free: ManifestSource): Promise<void> {
   jest.resetModules();
   installManifest(FREE_MANIFEST, free);
-  await import("visual/bootstraps/preview");
-  await initialInitComplete();
+  // The bootstrap's first frame runs on a nextTick, not a real frame: after jsdom's own
+  // window `load` (also a nextTick), as on a page, and without leaving the macrotask.
+  const frame = jest
+    .spyOn(window, "requestAnimationFrame")
+    .mockImplementation((callback: FrameRequestCallback) => {
+      process.nextTick(() => callback(0));
+      return 0;
+    });
+  try {
+    await import("visual/bootstraps/preview");
+    await initialInitComplete();
+  } finally {
+    frame.mockRestore();
+  }
 }
 
 export async function loadProRuntime(

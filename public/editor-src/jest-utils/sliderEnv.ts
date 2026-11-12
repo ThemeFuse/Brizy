@@ -1,10 +1,11 @@
-import { loadProRuntime, silenceConsole } from "./exportRuntime";
+import {
+  drainMicrotasks,
+  loadProRuntime,
+  silenceConsole
+} from "./exportRuntime";
 import { publishLibGroup } from "./libGroups";
 
 // Test environment for the published-page sliders: jsdom layout and observer stubs.
-
-// A suite's first mount loads the export modules; a busy CI runner needs more than the default 5s.
-jest.setTimeout(30000);
 
 export interface Layout {
   viewportWidth: number;
@@ -235,7 +236,7 @@ export async function installSliderEnvironment(): Promise<void> {
     value: ControlledIntersectionObserverEntry
   });
 
-  await new Promise((resolve) => setTimeout(resolve, 0));
+  await Promise.resolve();
 }
 
 /** Loads the bootstraps and publishes the slider lib group on `window.BrizyLibs`. */
@@ -251,13 +252,6 @@ export async function loadSliderRuntime(extraLibs: object): Promise<void> {
   installEmitRecorder();
 }
 
-/** Settles the promise chains of a dispatch without waiting on timers. */
-async function drainMicrotasks(): Promise<void> {
-  for (let turn = 0; turn < 20; turn++) {
-    await Promise.resolve();
-  }
-}
-
 /** Mounts `html` and dispatches it the way a published page does. */
 export async function mountPage(html: string): Promise<HTMLElement> {
   const root = document.createElement("div");
@@ -266,10 +260,11 @@ export async function mountPage(html: string): Promise<HTMLElement> {
   document.body.append(root);
 
   window.Brz.emit("init.pro.dom", root);
-  await drainMicrotasks();
-  await jest.advanceTimersByTimeAsync(16);
+  await drainMicrotasks(20);
+  jest.advanceTimersByTime(16);
+  await drainMicrotasks(20);
   window.Brz.emit("init.dom", root);
-  await drainMicrotasks();
+  await drainMicrotasks(20);
 
   return root;
 }

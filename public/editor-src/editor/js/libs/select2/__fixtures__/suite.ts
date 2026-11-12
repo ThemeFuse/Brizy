@@ -26,6 +26,7 @@ import {
 
 export function useSelect2Env(): void {
   beforeEach(async () => {
+    jest.useFakeTimers();
     clearPage();
     fixRandom();
     await freshSelect2();
@@ -35,12 +36,14 @@ export function useSelect2Env(): void {
     releaseSelect2();
     jest.restoreAllMocks();
     clearPage();
+    jest.useRealTimers();
   });
 }
 
 // For the call-site suites: a page with the `group-1` bundle loaded.
 export function useGroup1Env(): void {
   beforeEach(async () => {
+    jest.useFakeTimers();
     clearPage();
     fixRandom();
     stubScrollIntoView();
@@ -51,6 +54,7 @@ export function useGroup1Env(): void {
     pressOutside();
     jest.restoreAllMocks();
     clearPage();
+    jest.useRealTimers();
   });
 }
 

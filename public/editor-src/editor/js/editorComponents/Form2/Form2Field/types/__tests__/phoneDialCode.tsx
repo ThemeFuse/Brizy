@@ -14,7 +14,7 @@ jest.mock("visual/component/Toolbar", () => ({
   }): unknown => children({ ref: () => undefined })
 }));
 jest.mock("visual/component/SlimSelect", () => ({
-  SlimSelect: (): null => null
+  SlimSelect: React.forwardRef((): null => null)
 }));
 jest.mock("visual/component/ThemeIcon", () => ({
   ThemeIcon: ({ name }: { name: string }): ReactElement => (

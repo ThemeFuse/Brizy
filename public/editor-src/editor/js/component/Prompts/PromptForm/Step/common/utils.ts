@@ -1,4 +1,5 @@
 import { match, mPipe, optional, parse, pass } from "fp-utilities";
+import type { z } from "zod";
 import type {
   AllData,
   HelperFn,
@@ -13,8 +14,17 @@ import { pipe } from "visual/utils/fp";
 import { prop } from "visual/utils/object/get";
 import { readWithParser } from "visual/utils/reader/readWithParser";
 import * as Str from "visual/utils/string/specs";
+import { searchValueSchema, textValueSchema } from "./schemas";
 
 type RecordNever = Record<string, never>;
+
+// A value that fits none of the schema's shapes reads as undefined, which drops the field.
+const readValue =
+  <T>(schema: z.ZodType<T, z.ZodTypeDef, unknown>) =>
+  (v: unknown): T | undefined => {
+    const result = schema.safeParse(v);
+    return result.success ? result.data : undefined;
+  };
 
 const isStringOrNull = (v: unknown): boolean => {
   if (typeof v === "string") {
@@ -34,10 +44,7 @@ const readInput = readWithParser<Record<string, unknown>, InputData>({
   type: (r) => {
     return r.type === "input" || r.type === undefined ? "input" : undefined;
   },
-  value: pipe(
-    prop("value"),
-    pass((v): v is string | null => isStringOrNull(v))
-  ),
+  value: pipe(prop("value"), readValue(textValueSchema)),
   title: mPipe(prop("title"), Str.read),
   name: mPipe(prop("name"), Str.read),
   required: optional(pipe(prop("required"), pass(Bool.is))),
@@ -52,10 +59,7 @@ const readInput = readWithParser<Record<string, unknown>, InputData>({
 const readSelect = parse<Record<string, unknown>, SelectData>({
   type: (r) => (r.type === "select" ? "select" : undefined),
   choices: mPipe(prop("choices"), (v) => Arr.toArray(v)),
-  value: pipe(
-    prop("value"),
-    pass((v): v is string | null => typeof v === "string" || v === null)
-  ),
+  value: pipe(prop("value"), readValue(textValueSchema)),
   title: mPipe(prop("title"), Str.read),
   name: mPipe(prop("name"), Str.read),
   required: optional(pipe(prop("required"), pass(Bool.is))),
@@ -84,10 +88,7 @@ const readSwitch = parse<Record<string, unknown>, SwitchData>({
 const readSearch = parse<Record<string, unknown>, SearchData>({
   type: (r) => (r.type === "search" ? "search" : undefined),
   choices: mPipe(prop("choices"), (v) => Arr.toArray(v)),
-  value: pipe(
-    prop("value"),
-    pass((v): v is string | null => isStringOrNull(v))
-  ),
+  value: pipe(prop("value"), readValue(searchValueSchema)),
   title: mPipe(prop("title"), Str.read),
   name: mPipe(prop("name"), Str.read),
   required: optional(pipe(prop("required"), pass(Bool.is))),

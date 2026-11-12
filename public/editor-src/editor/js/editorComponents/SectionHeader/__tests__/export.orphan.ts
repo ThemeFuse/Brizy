@@ -1,6 +1,7 @@
 import { z } from "zod";
 import * as group8 from "visual/libs/group-8";
 import {
+  drainMicrotasks,
   initPro,
   loadProRuntime,
   mountRoot,
@@ -13,21 +14,18 @@ import { publishLibGroup } from "../../../../../jest-utils/libGroups";
 const errors: unknown[] = [];
 const shown: unknown[] = [];
 
-function onError(event: ErrorEvent): void {
-  // A handled error does not reach Jest as an uncaught exception.
-  event.preventDefault();
-  errors.push(event.error);
-}
-
-function nextFrame(): Promise<void> {
-  return new Promise((resolve) => {
-    requestAnimationFrame(() => resolve());
-  });
+// A frame passes on fake timers; what it throws is collected instead of reaching Jest.
+async function nextFrame(): Promise<void> {
+  try {
+    jest.advanceTimersByTime(16);
+  } catch (error) {
+    errors.push(error);
+  }
+  await drainMicrotasks(20);
 }
 
 beforeAll(async () => {
   silenceConsole();
-  window.addEventListener("error", onError);
   await loadProRuntime({ kind: "real" }, { kind: "real" });
   publishLibGroup("BrizyLibs", group8);
   window.Brz.on("elements.headerSticky.show", (payload: unknown) => {
@@ -39,8 +37,15 @@ beforeAll(async () => {
 });
 
 afterAll(() => {
-  window.removeEventListener("error", onError);
   jest.restoreAllMocks();
+});
+
+beforeEach(() => {
+  jest.useFakeTimers();
+});
+
+afterEach(() => {
+  jest.useRealTimers();
 });
 
 describe("an animated header bar without a header around it", () => {

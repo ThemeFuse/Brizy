@@ -56,10 +56,6 @@ afterAll(() => {
   jest.restoreAllMocks();
 });
 
-// One dispatch loads every export module and its dependencies; on a cold
-// transform cache (CI) that alone takes longer than Jest's 5 s default.
-const LOAD_ALL_EXPORTS_TIMEOUT = 60_000;
-
 describe.each(variants)("the free $case manifest", ({ loaders }) => {
   const report = createContractReport();
 
@@ -71,7 +67,7 @@ describe.each(variants)("the free $case manifest", ({ loaders }) => {
     });
     await initFree([mountRoot("<div></div>")]);
     await flushRuntime();
-  }, LOAD_ALL_EXPORTS_TIMEOUT);
+  });
 
   afterAll(() => {
     document.body.innerHTML = "";

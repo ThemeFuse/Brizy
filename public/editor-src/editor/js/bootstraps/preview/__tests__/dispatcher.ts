@@ -204,7 +204,7 @@ describe("init.dom dispatch", () => {
     const complete = nextInitComplete().then(() => order.push("complete"));
 
     window.Brz.emit("init.dom", root);
-    await new Promise((resolve) => setTimeout(resolve, 0));
+    await flushRuntime();
     const beforeRelease = [...order];
     releaseSlowChunk();
     await complete;
