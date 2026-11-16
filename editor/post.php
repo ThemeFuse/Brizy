@@ -389,6 +389,24 @@ class Brizy_Editor_Post extends Brizy_Editor_Entity
     }
 
     /**
+     * Excerpt built from the content rendered for the current user, the same way wp_trim_excerpt does it.
+     *
+     * @return string
+     */
+    public function getExcerptForCurrentUser()
+    {
+        // brizy_content keeps the WordPress shortcodes, they are expanded only when the page is viewed
+        $text = strip_shortcodes($this->renderCompiledContentForCurrentUser());
+        // keep the words of adjacent elements apart
+        $text = wp_strip_all_tags(str_replace('<', ' <', $text));
+
+        $excerptLength = (int)apply_filters('excerpt_length', 55);
+        $excerptMore = apply_filters('excerpt_more', ' [&hellip;]');
+
+        return wp_trim_words($text, $excerptLength, $excerptMore);
+    }
+
+    /**
      * post_content is a public copy (REST, search, feeds, excerpts), so user dependent
      * placeholders (display_by_roles, current user fields, nonces) must be resolved
      * as a logged-out visitor and never as the user that saves the page.

@@ -72,7 +72,13 @@ class Brizy_Admin_PanelPostContent {
 			return $excerpt;
 		}
 
-		return $this->trim_excerpt( $this->render_for_current_user_safe( $post ) );
+		try {
+			return Brizy_Editor_Post::get( $post )->getExcerptForCurrentUser();
+		} catch ( Exception $e ) {
+			Brizy_Logger::instance()->exception( $e );
+
+			return '';
+		}
 	}
 
 	/**
@@ -89,19 +95,6 @@ class Brizy_Admin_PanelPostContent {
 			// fail closed: never fall back to the stored copy
 			return '';
 		}
-	}
-
-	/**
-	 * @param string $html
-	 *
-	 * @return string
-	 */
-	private function trim_excerpt( $html ) {
-		$excerptLength = (int) apply_filters( 'excerpt_length', 55 );
-		$excerptMore   = apply_filters( 'excerpt_more', ' [&hellip;]' );
-
-		// keep the words of adjacent elements apart
-		return wp_trim_words( wp_strip_all_tags( str_replace( '<', ' <', $html ) ), $excerptLength, $excerptMore );
 	}
 
 	/**
