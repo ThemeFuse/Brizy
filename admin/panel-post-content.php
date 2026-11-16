@@ -15,6 +15,119 @@ class Brizy_Admin_PanelPostContent {
 	protected function __construct() {
 		add_action( 'rest_request_before_callbacks', [ $this, 'rest_request_before_callbacks' ] );
 		add_filter( 'content_edit_pre',              [ $this, 'content_edit_pre' ], 10, 2 );
+		// runs before Brizy_Public_Main::insert_page_content and Brizy_Admin_Templates::filterPageContent (-12000)
+		add_filter( 'the_content',                   [ $this, 'the_content' ], -12001 );
+		// runs before wp_trim_excerpt (10) builds the excerpt from the stored post_content
+		add_filter( 'get_the_excerpt',               [ $this, 'get_the_excerpt' ], 9, 2 );
+	}
+
+	/**
+	 * Search results, archives, feeds and posts loops print the stored post_content of a brizy post,
+	 * which may contain content resolved for another user (pages saved before the fix).
+	 * Replace it with the compiled html rendered for the current user.
+	 *
+	 * The post viewed on its own page is rendered by Brizy_Public_Main and is skipped here.
+	 *
+	 * @param string $content
+	 *
+	 * @return string
+	 */
+	public function the_content( $content ) {
+
+		$post = get_post();
+
+		if ( ! $post instanceof WP_Post || ! $this->is_stored_brizy_content( $content, $post ) ) {
+			return $content;
+		}
+
+		if ( is_singular() && get_queried_object_id() === $post->ID && ! wp_doing_ajax() ) {
+			return $content;
+		}
+
+		if ( post_password_required( $post ) ) {
+			return '';
+		}
+
+		return $this->render_for_current_user_safe( $post );
+	}
+
+	/**
+	 * When the post has no manual excerpt, WordPress builds it from the stored post_content.
+	 * Build it from the content rendered for the current user instead.
+	 *
+	 * @param string $excerpt
+	 * @param WP_Post|null $post
+	 *
+	 * @return string
+	 */
+	public function get_the_excerpt( $excerpt, $post = null ) {
+
+		$post = get_post( $post );
+
+		if ( '' !== trim( (string) $excerpt ) || ! $post instanceof WP_Post || ! Brizy_Editor_Entity::isBrizyEnabled( $post->ID ) ) {
+			return $excerpt;
+		}
+
+		if ( post_password_required( $post ) ) {
+			return $excerpt;
+		}
+
+		return $this->trim_excerpt( $this->render_for_current_user_safe( $post ) );
+	}
+
+	/**
+	 * @param WP_Post $post
+	 *
+	 * @return string
+	 */
+	private function render_for_current_user_safe( $post ) {
+		try {
+			return Brizy_Editor_Post::get( $post )->renderCompiledContentForCurrentUser();
+		} catch ( Exception $e ) {
+			Brizy_Logger::instance()->exception( $e );
+
+			// fail closed: never fall back to the stored copy
+			return '';
+		}
+	}
+
+	/**
+	 * @param string $html
+	 *
+	 * @return string
+	 */
+	private function trim_excerpt( $html ) {
+		$excerptLength = (int) apply_filters( 'excerpt_length', 55 );
+		$excerptMore   = apply_filters( 'excerpt_more', ' [&hellip;]' );
+
+		// keep the words of adjacent elements apart
+		return wp_trim_words( wp_strip_all_tags( str_replace( '<', ' <', $html ) ), $excerptLength, $excerptMore );
+	}
+
+	/**
+	 * Is $content the stored post_content of a brizy post (and not a template or an already rendered content)?
+	 * The stored copy ends with a unique version marker added on save.
+	 *
+	 * @param string $content
+	 * @param WP_Post $post
+	 *
+	 * @return bool
+	 */
+	private function is_stored_brizy_content( $content, $post ) {
+
+		if ( ! is_string( $content ) || false === strpos( $content, 'brz-root__container' ) ) {
+			return false;
+		}
+
+		if ( ! Brizy_Editor_Entity::isBrizyEnabled( $post->ID ) ) {
+			return false;
+		}
+
+		if ( preg_match( '/<!-- version:\d+ -->/', $post->post_content, $marker ) ) {
+			return false !== strpos( $content, $marker[0] );
+		}
+
+		return trim( $content ) === trim( $post->post_content );
 	}
 
 	public function rest_request_before_callbacks( $response ){
@@ -76,25 +189,14 @@ class Brizy_Admin_PanelPostContent {
 			return;
 		}
 
-		try {
-			$html = Brizy_Editor_Post::get( $post )->getCompiledHtml();
-			$html = $html ? apply_filters( 'brizy_content', $html, Brizy_Editor_Project::get(), $post, 'body' ) : '';
-		} catch ( Exception $e ) {
-			Brizy_Logger::instance()->exception( $e );
-			// fail closed: never fall back to the stored copy
-			$html = '';
-		}
+		$html = $this->render_for_current_user_safe( $post );
 
 		if ( $hasContent ) {
 			$response->data['content']['rendered'] = $html;
 		}
 
 		if ( $hasExcerpt && '' === trim( $post->post_excerpt ) ) {
-			$excerptLength = (int) apply_filters( 'excerpt_length', 55 );
-			$excerptMore   = apply_filters( 'excerpt_more', ' [&hellip;]' );
-			$excerpt       = wp_trim_words( wp_strip_all_tags( $html ), $excerptLength, $excerptMore );
-
-			$response->data['excerpt']['rendered'] = wpautop( $excerpt );
+			$response->data['excerpt']['rendered'] = wpautop( $this->trim_excerpt( $html ) );
 		}
 	}
 

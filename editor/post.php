@@ -331,6 +331,55 @@ class Brizy_Editor_Post extends Brizy_Editor_Entity
     }
 
     /**
+     * Renders the compiled html for the current user, the same way the page body is rendered on the frontend.
+     * Used to replace the stored post_content (that may hold content resolved for another user)
+     * wherever the post is displayed outside its own page: REST, search results, archives, feeds, excerpts.
+     *
+     * Global blocks are excluded as in the stored copy.
+     * The result is cached per post and user for the current request.
+     *
+     * @return string
+     */
+    public function renderCompiledContentForCurrentUser()
+    {
+        static $cache = [];
+        static $rendering = [];
+
+        $postId = $this->getWpPostId();
+        $key = $postId . ':' . get_current_user_id();
+
+        if (isset($cache[$key])) {
+            return $cache[$key];
+        }
+
+        // the post content may list itself (posts loops, excerpts), avoid infinite recursion
+        if (isset($rendering[$postId])) {
+            return '';
+        }
+
+        $rendering[$postId] = true;
+
+        try {
+            $content = $this->getCompiledHtml();
+
+            if ($content) {
+                $content = preg_replace('/\{\{\s*brizy_dc_global_blocks.*?\}\}/', '', $content);
+                $content = preg_replace('/\{\{\s*brizy_dc_global_block.*?\}\}/', '', $content);
+                $content = apply_filters('brizy_content', $content, Brizy_Editor_Project::get(), $this->getWpPost(), 'body');
+            }
+
+            return $cache[$key] = (string)$content;
+        } catch (Exception $e) {
+            Brizy_Logger::instance()->exception($e);
+
+            // fail closed: never fall back to the stored copy
+            return '';
+        } finally {
+            unset($rendering[$postId]);
+        }
+    }
+
+    /**
      * post_content is a public copy (REST, search, feeds, excerpts), so user dependent
      * placeholders (display_by_roles, current user fields, nonces) must be resolved
      * as a logged-out visitor and never as the user that saves the page.
