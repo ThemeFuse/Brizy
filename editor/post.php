@@ -321,13 +321,24 @@ class Brizy_Editor_Post extends Brizy_Editor_Entity
             return $post->post_content;
 
         }
-        $content = $this->getCompiledHtml();
-        $content = preg_replace('/\{\{\s*brizy_dc_global_blocks.*?\}\}/', '', $content);
-        $content = preg_replace('/\{\{\s*brizy_dc_global_block.*?\}\}/', '', $content);
+        $content = $this->getCompiledHtmlWithoutGlobalBlocks();
         $content = $this->renderAsAnonymousVisitor($content, $post);
         $content = strpos($content, 'brz-root__container') ? preg_replace('/<!-- version:\d+ -->/', '', $content) : $emptyContent;
 
         return $content . $versionTime;
+    }
+
+    /**
+     * The compiled html without the global blocks (headers, footers, etc. are not part of the post content).
+     *
+     * @return string
+     */
+    private function getCompiledHtmlWithoutGlobalBlocks()
+    {
+        $content = $this->getCompiledHtml();
+        $content = preg_replace('/\{\{\s*brizy_dc_global_blocks.*?\}\}/', '', $content);
+
+        return preg_replace('/\{\{\s*brizy_dc_global_block.*?\}\}/', '', $content);
     }
 
     /**
@@ -360,11 +371,9 @@ class Brizy_Editor_Post extends Brizy_Editor_Entity
         $rendering[$postId] = true;
 
         try {
-            $content = $this->getCompiledHtml();
+            $content = $this->getCompiledHtmlWithoutGlobalBlocks();
 
             if ($content) {
-                $content = preg_replace('/\{\{\s*brizy_dc_global_blocks.*?\}\}/', '', $content);
-                $content = preg_replace('/\{\{\s*brizy_dc_global_block.*?\}\}/', '', $content);
                 $content = apply_filters('brizy_content', $content, Brizy_Editor_Project::get(), $this->getWpPost(), 'body');
             }
 

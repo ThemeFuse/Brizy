@@ -157,47 +157,10 @@ class Brizy_Admin_PanelPostContent {
 			$response->data['content']['raw'] = $this->get_compiled_html( $post->ID, $response->data['content']['raw'] );
 		}
 
-		$this->render_for_current_user( $response, $post );
+		// content.rendered and excerpt.rendered are built through the_content and get_the_excerpt,
+		// which render the brizy content for the requesting user (see the_content and get_the_excerpt above)
 
 		return $response;
-	}
-
-	/**
-	 * The stored post_content may contain content resolved for another user (pages saved before the fix),
-	 * so content.rendered and excerpt.rendered are rebuilt from the compiled html for the requesting user,
-	 * the same way the page is rendered on the frontend.
-	 *
-	 * @param WP_REST_Response $response
-	 * @param WP_Post $post
-	 */
-	private function render_for_current_user( $response, $post ) {
-
-		$hasContent = isset( $response->data['content']['rendered'] );
-		$hasExcerpt = isset( $response->data['excerpt']['rendered'] );
-
-		if ( ! $hasContent && ! $hasExcerpt ) {
-			return;
-		}
-
-		// WordPress already emptied the fields when the password is required and was not provided.
-		// The REST password override is removed before this filter runs, so read the response state first.
-		$locked = $hasContent
-			? ! empty( $response->data['content']['protected'] ) && '' === $response->data['content']['rendered']
-			: post_password_required( $post );
-
-		if ( $locked ) {
-			return;
-		}
-
-		$html = $this->render_for_current_user_safe( $post );
-
-		if ( $hasContent ) {
-			$response->data['content']['rendered'] = $html;
-		}
-
-		if ( $hasExcerpt && '' === trim( $post->post_excerpt ) ) {
-			$response->data['excerpt']['rendered'] = wpautop( $this->trim_excerpt( $html ) );
-		}
 	}
 
 	/**
