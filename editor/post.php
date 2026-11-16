@@ -324,10 +324,32 @@ class Brizy_Editor_Post extends Brizy_Editor_Entity
         $content = $this->getCompiledHtml();
         $content = preg_replace('/\{\{\s*brizy_dc_global_blocks.*?\}\}/', '', $content);
         $content = preg_replace('/\{\{\s*brizy_dc_global_block.*?\}\}/', '', $content);
-        $content = apply_filters('brizy_content', $content, Brizy_Editor_Project::get(), $post);
+        $content = $this->renderAsAnonymousVisitor($content, $post);
         $content = strpos($content, 'brz-root__container') ? preg_replace('/<!-- version:\d+ -->/', '', $content) : $emptyContent;
 
         return $content . $versionTime;
+    }
+
+    /**
+     * post_content is a public copy (REST, search, feeds, excerpts), so user dependent
+     * placeholders (display_by_roles, current user fields, nonces) must be resolved
+     * as a logged-out visitor and never as the user that saves the page.
+     *
+     * @param string $content
+     * @param WP_Post $post
+     *
+     * @return string
+     */
+    private function renderAsAnonymousVisitor($content, $post)
+    {
+        $userId = get_current_user_id();
+        wp_set_current_user(0);
+
+        try {
+            return apply_filters('brizy_content', $content, Brizy_Editor_Project::get(), $post);
+        } finally {
+            wp_set_current_user($userId);
+        }
     }
 
     /**

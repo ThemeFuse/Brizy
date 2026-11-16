@@ -22,23 +22,80 @@ class Brizy_Admin_PanelPostContent {
 		$postsTypes = Brizy_Editor::get()->supported_post_types();
 
 		foreach( $postsTypes as $postType ) {
-			add_action( "rest_prepare_{$postType}", [ $this, 'reset_prepare_post' ] );
+			add_filter( "rest_prepare_{$postType}", [ $this, 'reset_prepare_post' ], 10, 2 );
 		}
 
 		return $response;
 	}
 
-	public function reset_prepare_post( $response ) {
+	/**
+	 * @param WP_REST_Response $response
+	 * @param WP_Post $post
+	 *
+	 * @return WP_REST_Response
+	 */
+	public function reset_prepare_post( $response, $post ) {
 
-		global $post;
-
-		if ( ! isset( $response->data['content']['raw'] ) ) {
+		if ( ! $post instanceof WP_Post || ! Brizy_Editor_Entity::isBrizyEnabled( $post->ID ) ) {
 			return $response;
 		}
 
-		$response->data['content']['raw'] = $this->get_compiled_html( $post->ID, $response->data['content']['raw'] );
+		if ( isset( $response->data['content']['raw'] ) ) {
+			$response->data['content']['raw'] = $this->get_compiled_html( $post->ID, $response->data['content']['raw'] );
+		}
+
+		$this->render_for_current_user( $response, $post );
 
 		return $response;
+	}
+
+	/**
+	 * The stored post_content may contain content resolved for another user (pages saved before the fix),
+	 * so content.rendered and excerpt.rendered are rebuilt from the compiled html for the requesting user,
+	 * the same way the page is rendered on the frontend.
+	 *
+	 * @param WP_REST_Response $response
+	 * @param WP_Post $post
+	 */
+	private function render_for_current_user( $response, $post ) {
+
+		$hasContent = isset( $response->data['content']['rendered'] );
+		$hasExcerpt = isset( $response->data['excerpt']['rendered'] );
+
+		if ( ! $hasContent && ! $hasExcerpt ) {
+			return;
+		}
+
+		// WordPress already emptied the fields when the password is required and was not provided.
+		// The REST password override is removed before this filter runs, so read the response state first.
+		$locked = $hasContent
+			? ! empty( $response->data['content']['protected'] ) && '' === $response->data['content']['rendered']
+			: post_password_required( $post );
+
+		if ( $locked ) {
+			return;
+		}
+
+		try {
+			$html = Brizy_Editor_Post::get( $post )->getCompiledHtml();
+			$html = $html ? apply_filters( 'brizy_content', $html, Brizy_Editor_Project::get(), $post, 'body' ) : '';
+		} catch ( Exception $e ) {
+			Brizy_Logger::instance()->exception( $e );
+			// fail closed: never fall back to the stored copy
+			$html = '';
+		}
+
+		if ( $hasContent ) {
+			$response->data['content']['rendered'] = $html;
+		}
+
+		if ( $hasExcerpt && '' === trim( $post->post_excerpt ) ) {
+			$excerptLength = (int) apply_filters( 'excerpt_length', 55 );
+			$excerptMore   = apply_filters( 'excerpt_more', ' [&hellip;]' );
+			$excerpt       = wp_trim_words( wp_strip_all_tags( $html ), $excerptLength, $excerptMore );
+
+			$response->data['excerpt']['rendered'] = wpautop( $excerpt );
+		}
 	}
 
 	/**
