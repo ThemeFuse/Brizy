@@ -199,7 +199,7 @@ class Brizy_Admin_Blocks_CookieBanner {
 		return [
 			'uid'          => $uid,
 			'title'        => 'Cookie Banner',
-			'status'       => 'draft',
+			'status'       => 'publish',
 			'position'     => [
 				'align'  => 'bottom',
 				'top'    => 0,
