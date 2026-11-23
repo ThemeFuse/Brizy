@@ -40,7 +40,7 @@ class Brizy_Admin_Cloud_PopupBridge extends Brizy_Admin_Cloud_AbstractBridge
         }
 
         $bridge = new Brizy_Admin_Cloud_MediaUploadsBridge($this->client);
-        foreach ($media->uploads as $uid) {
+        foreach (isset($media->uploads) ? $media->uploads : [] as $uid) {
             try {
                 $bridge->export($uid);
             } catch (Exception $e) {

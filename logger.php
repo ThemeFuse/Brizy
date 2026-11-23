@@ -88,10 +88,50 @@ class Brizy_Logger {
 		$wpdb->insert( "{$wpdb->prefix}brizy_logs", array(
 			'type'       => $type,
 			'message'    => $message,
-			'context'    => serialize( $context ),
+			'context'    => $this->serializeContext( $context ),
 			'session_id' => session_id(),
 			'date'       => current_time( 'mysql', 1 )
 		), array( '%s', '%s', '%s', '%s', '%s' ) );
+	}
+
+	/**
+	 * Logging must never break the request: exceptions are stored as plain data (their trace may
+	 * hold closures or whole entities) and anything else that cannot be serialized is dropped.
+	 *
+	 * @param array $context
+	 *
+	 * @return string
+	 */
+	private function serializeContext( $context ) {
+		try {
+			return serialize( $this->normalizeContext( $context ) );
+		} catch ( \Throwable $e ) {
+			return serialize( array( 'context_error' => 'Unable to serialize the log context: ' . $e->getMessage() ) );
+		}
+	}
+
+	/**
+	 * @param mixed $value
+	 *
+	 * @return mixed
+	 */
+	private function normalizeContext( $value ) {
+		if ( $value instanceof \Throwable ) {
+			return array(
+				'class'   => get_class( $value ),
+				'message' => $value->getMessage(),
+				'code'    => $value->getCode(),
+				'file'    => $value->getFile(),
+				'line'    => $value->getLine(),
+				'trace'   => $value->getTraceAsString(),
+			);
+		}
+
+		if ( is_array( $value ) ) {
+			return array_map( array( $this, 'normalizeContext' ), $value );
+		}
+
+		return $value;
 	}
 
 	/**

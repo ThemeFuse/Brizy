@@ -25,6 +25,10 @@ class Brizy_Admin_Cloud_Cron {
 
 		$this->setClient( $client );
 
+		// WP-Cron runs without a user, so Brizy_Admin_Layouts_Main is not initialized and layouts
+		// would be rejected as an unsupported post type. Same callback, so it is registered once.
+		add_filter( 'brizy_supported_post_types', array( 'Brizy_Admin_Layouts_Main', 'populateSupportedPosts' ) );
+
 		add_action( self::BRIZY_CLOUD_CRON_KEY, array( $this, 'syncBlocksAction' ) );
 		add_action( self::BRIZY_CLOUD_CRON_KEY, array( $this, 'syncLayoutsAction' ) );
 

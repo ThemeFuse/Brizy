@@ -26,7 +26,7 @@ class Brizy_Admin_Layouts_Main {
 
 	public function initialize() {
 		add_action( 'wp_loaded', array( $this, 'initializeActions' ) );
-		add_filter( 'brizy_supported_post_types', array( $this, 'populateSupportedPosts' ) );
+		add_filter( 'brizy_supported_post_types', array( self::class, 'populateSupportedPosts' ) );
 	}
 
 	static public function registerCustomPosts() {
@@ -59,7 +59,7 @@ class Brizy_Admin_Layouts_Main {
 	 *
 	 * @return array
 	 */
-	public function populateSupportedPosts( $types ) {
+	public static function populateSupportedPosts( $types ) {
 		$types[] = self::CP_LAYOUT;
 
 		return $types;
