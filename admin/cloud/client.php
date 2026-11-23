@@ -121,6 +121,7 @@ class Brizy_Admin_Cloud_Client extends WP_Http
      * @param $filePath
      *
      * @return bool
+     * @throws Brizy_Admin_Cloud_UploadException
      */
     public function createScreenshot($screenUid, $filePath)
     {
@@ -130,7 +131,9 @@ class Brizy_Admin_Cloud_Client extends WP_Http
         );
         $response = $this->http->post(Brizy_Config::CLOUD_ENDPOINT . Brizy_Config::CLOUD_SCREENSHOTS, array(
             'headers' => $this->getHeaders(),
-            'body' => $data
+            'body' => $data,
+            // the default of 5 seconds is too short for a base64 encoded image
+            'timeout' => 30
         ));
 
         $code = wp_remote_retrieve_response_code($response);
@@ -139,7 +142,7 @@ class Brizy_Admin_Cloud_Client extends WP_Http
             return true;
         }
 
-        return false;
+        throw new Brizy_Admin_Cloud_UploadException('Screenshot upload failed', (int)$code);
     }
 
     private function getHeaders($aditional = null)
@@ -306,6 +309,50 @@ class Brizy_Admin_Cloud_Client extends WP_Http
         return $value;
     }
 
+    /**
+     * @param array|null $entities The result of a lookup by uid, null when the lookup failed.
+     *
+     * @return object|null
+     * @throws Brizy_Admin_Cloud_UploadException
+     */
+    private function findOneByUid($entities)
+    {
+        // Without the answer it is not known if the entity has to be created or updated. Creating
+        // it blindly would be rejected for an existing uid, so the upload is tried again later.
+        if (!is_array($entities)) {
+            throw new Brizy_Admin_Cloud_UploadException('Unable to look up the entity in cloud');
+        }
+
+        return array_pop($entities);
+    }
+
+    /**
+     * Builds the exception for a rejected upload and refreshes the cached cloud editor versions.
+     *
+     * When the versions were stale the request was sent with the wrong version headers, so the
+     * rejection says nothing about the entity and the upload has to be tried again.
+     *
+     * @param string $message
+     * @param int $status
+     *
+     * @return Brizy_Admin_Cloud_UploadException
+     */
+    private function createUploadException($message, $status)
+    {
+        $cachedVersions = get_transient('brizy_cloud_editor_versions');
+        $staleVersions = false;
+
+        try {
+            $freshVersions = $this->getCloudEditorVersions(true);
+            // without cached versions there is nothing to compare, the rejection stands
+            $staleVersions = is_array($cachedVersions) && $cachedVersions != $freshVersions;
+        } catch (Exception $e) {
+            // the refresh is best effort, the status of the rejected upload must not be lost
+        }
+
+        return new Brizy_Admin_Cloud_UploadException($message, (int)$status, $staleVersions);
+    }
+
     public function getContainers()
     {
         return $this->getCloudEntity(Brizy_Config::CLOUD_ENDPOINT . Brizy_Config::CLOUD_CONTAINERS, []);
@@ -363,9 +410,7 @@ class Brizy_Admin_Cloud_Client extends WP_Http
      */
     public function getBlockByUid($uid)
     {
-        $blocks = $this->getBlocks(['uid' => $uid]);
-
-        return array_pop($blocks);
+        return $this->findOneByUid($this->getBlocks(['uid' => $uid]));
     }
 
     /**
@@ -425,10 +470,8 @@ class Brizy_Admin_Cloud_Client extends WP_Http
         $code = wp_remote_retrieve_response_code($response);
 
         if ($code >= 400) {
-            // update cloud editor versions
-            $this->getCloudEditorVersions(true);
             Brizy_Logger::instance()->critical('Cloud api exception', [$response]);
-            throw new Exception(wp_remote_retrieve_response_message($response));
+            throw $this->createUploadException(wp_remote_retrieve_response_message($response), $code);
         }
 
         return json_decode(wp_remote_retrieve_body($response));
@@ -563,9 +606,7 @@ class Brizy_Admin_Cloud_Client extends WP_Http
      */
     public function getLayoutByUid($uid)
     {
-        $layouts = $this->getLayouts(['uid' => $uid]);
-
-        return array_pop($layouts);
+        return $this->findOneByUid($this->getLayouts(['uid' => $uid]));
     }
 
     /**
@@ -625,9 +666,8 @@ class Brizy_Admin_Cloud_Client extends WP_Http
         $code = wp_remote_retrieve_response_code($response);
 
         if ($code >= 400) {
-            $this->getCloudEditorVersions(true);
             Brizy_Logger::instance()->critical('Cloud api exception', [$response]);
-            throw new Exception('Invalid code return by cloud api');
+            throw $this->createUploadException('Invalid code return by cloud api', $code);
         }
 
         return json_decode(wp_remote_retrieve_body($response));

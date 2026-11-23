@@ -25,7 +25,8 @@ class CloudApiCest {
 
 		$I->sendAjaxGetRequest( 'wp-admin/admin-ajax.php?' . build_query( [
 				'action'  => 'brizy-cloud-sync',
-				'version' => BRIZY_EDITOR_VERSION
+				'version' => BRIZY_EDITOR_VERSION,
+				'hash'    => wp_create_nonce( Brizy_Admin_Cloud_Api::nonce )
 			] ) );
 
 		$I->seeResponseCodeIsSuccessful();
@@ -50,7 +51,8 @@ class CloudApiCest {
 
 		$I->sendAjaxGetRequest( 'wp-admin/admin-ajax.php?' . build_query( [
 				'action'  => 'brizy-cloud-sync',
-				'version' => BRIZY_EDITOR_VERSION
+				'version' => BRIZY_EDITOR_VERSION,
+				'hash'    => wp_create_nonce( Brizy_Admin_Cloud_Api::nonce )
 			] ) );
 
 		$I->seeResponseCodeIs( 400 );
@@ -69,7 +71,8 @@ class CloudApiCest {
 
 		$I->sendAjaxGetRequest( 'wp-admin/admin-ajax.php?' . build_query( [
 				'action'  => 'brizy-cloud-signout',
-				'version' => BRIZY_EDITOR_VERSION
+				'version' => BRIZY_EDITOR_VERSION,
+				'hash'    => wp_create_nonce( Brizy_Admin_Cloud_Api::nonce )
 			] ) );
 
 
@@ -101,7 +104,8 @@ class CloudApiCest {
 
 		$I->sendAjaxGetRequest( 'wp-admin/admin-ajax.php?' . build_query( [
 				'action'  => 'brizy-cloud-sync-allowed',
-				'version' => BRIZY_EDITOR_VERSION
+				'version' => BRIZY_EDITOR_VERSION,
+				'hash'    => wp_create_nonce( Brizy_Admin_Cloud_Api::nonce )
 			] ) );
 
 		$I->seeResponseCodeIsSuccessful();

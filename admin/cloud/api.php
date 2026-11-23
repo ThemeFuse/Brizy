@@ -174,15 +174,20 @@ class Brizy_Admin_Cloud_Api extends Brizy_Admin_AbstractApi {
 	}
 
 	public function actionSync() {
+
+		$this->verifyAuthorization( self::nonce );
+
 		try {
 
 			if ( ! $this->project->getCloudToken() ) {
 				$this->error( 400, 'Unauthorized' );
 			}
 
-			$merged = array_merge( $this->syncLayouts(0, true ), $this->syncBlocks(0, true ) );
+			// A sync requested by the user does not wait for the retry delay of a failed upload, and
+			// a failing layout or block does not stop the ones after it.
+			$merged = array_merge( $this->syncLayouts( 0, false, true ), $this->syncBlocks( 0, false, true ) );
 
-			return $this->success( [ 'synchronized' => count( $merged ) ] );
+			return $this->success( array_merge( [ 'synchronized' => count( $merged ) ], $this->getUnsynchronizedSummary() ) );
 		} catch ( Exception $e ) {
 			Brizy_Logger::instance()->critical( 'Sync failed', [ $e ] );
 			$this->error( 500, 'Sync failed' );
@@ -191,6 +196,8 @@ class Brizy_Admin_Cloud_Api extends Brizy_Admin_AbstractApi {
 	}
 
 	public function actionSyncAllowed() {
+
+		$this->verifyAuthorization( self::nonce );
 
 		try {
 			$versions                  = $this->getClient()->getCloudEditorVersions();

@@ -130,7 +130,7 @@ class BrizyAdminCloudClientTest extends \Codeception\TestCase\WPTestCase {
 					'attachment' => base64_encode( file_get_contents( codecept_data_dir( 'images/cat.jpeg' ) ) )
 				]
 			] )
-		)->shouldBeCalled();
+		)->willReturn( [ 'response' => [ 'code' => 200 ] ] )->shouldBeCalled();
 
 		$client->createScreenshot( $uid, codecept_data_dir( 'images/cat.jpeg' ) );
 	}
@@ -392,6 +392,10 @@ class BrizyAdminCloudClientTest extends \Codeception\TestCase\WPTestCase {
 			'body'    => $cloudBlockData
 		] ) )->shouldBeCalled();
 
+
+		// the lookup by uid finds nothing, so the entity is created
+		$httpObserver->get( Argument::containingString( 'uid=SOME_UID' ), Argument::any() )
+		             ->willReturn( [ 'response' => [ 'code' => 200 ], 'body' => '[]' ] );
 
 		$client->createOrUpdateBlock( $block );
 	}
@@ -778,6 +782,10 @@ class BrizyAdminCloudClientTest extends \Codeception\TestCase\WPTestCase {
 			'body'    => $cloudBlockData
 		] ) )->shouldBeCalled();
 
+
+		// the lookup by uid finds nothing, so the entity is created
+		$httpObserver->get( Argument::containingString( 'uid=SOME_UID' ), Argument::any() )
+		             ->willReturn( [ 'response' => [ 'code' => 200 ], 'body' => '[]' ] );
 
 		$client->createOrUpdateLayout( $layout );
 	}

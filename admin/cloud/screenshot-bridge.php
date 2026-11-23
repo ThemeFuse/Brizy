@@ -20,8 +20,23 @@ class Brizy_Admin_Cloud_ScreenshotBridge extends Brizy_Admin_Cloud_AbstractBridg
 		$manager    = new Brizy_Editor_Screenshot_Manager( new  Brizy_Editor_UrlBuilder( $this->client->getBrizyProject() ) );
 		$screenPath = $manager->getScreenshot( $screenUid );
 
-		if ( $screenPath ) {
+		$postId    = $block->getWpPostId();
+		$accountId = $this->getCurrentCloudAccountId();
+
+		if ( ! $screenPath || Brizy_Admin_Cloud_SyncState::isScreenshotRejected( $postId, $accountId ) ) {
+			return;
+		}
+
+		try {
 			$this->client->createScreenshot( $screenUid, $screenPath );
+		} catch ( Brizy_Admin_Cloud_UploadException $e ) {
+			// A screenshot never stops the upload of the entity itself.
+			if ( $e->isFinal() ) {
+				// Rejected (e.g. 409, the uid is already in the cloud): it is not sent again.
+				Brizy_Admin_Cloud_SyncState::recordScreenshotRejected( $postId, $accountId );
+			} else {
+				Brizy_Logger::instance()->warning( 'Failed to export screenshot: ' . $e->getMessage(), [ 'postId' => $postId, $e ] );
+			}
 		}
 	}
 
