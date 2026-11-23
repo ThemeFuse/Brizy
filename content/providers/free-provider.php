@@ -424,6 +424,19 @@ class Brizy_Content_Providers_FreeProvider extends Brizy_Content_Providers_Abstr
             // if !empty excerpt
             return $post->post_excerpt;
         }
+        if ( post_password_required( $post ) ) {
+            return '';
+        }
+        if ( Brizy_Editor_Entity::isBrizyEnabled( $post->ID ) ) {
+            // the stored post_content may contain content resolved for another user
+            try {
+                return Brizy_Editor_Post::get( $post )->getExcerptForCurrentUser();
+            } catch ( Exception $e ) {
+                Brizy_Logger::instance()->exception( $e );
+
+                return '';
+            }
+        }
         $the_excerpt    = strip_tags( strip_shortcodes( $post->post_content ) ); // Strips tags and shortcodes
         $excerpt_length = 50; // Sets excerpt length by word count, default in WP is 55
         $words          = explode( ' ', $the_excerpt, $excerpt_length + 1 );

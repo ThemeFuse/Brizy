@@ -321,13 +321,111 @@ class Brizy_Editor_Post extends Brizy_Editor_Entity
             return $post->post_content;
 
         }
-        $content = $this->getCompiledHtml();
-        $content = preg_replace('/\{\{\s*brizy_dc_global_blocks.*?\}\}/', '', $content);
-        $content = preg_replace('/\{\{\s*brizy_dc_global_block.*?\}\}/', '', $content);
-        $content = apply_filters('brizy_content', $content, Brizy_Editor_Project::get(), $post);
+        $content = $this->getCompiledHtmlWithoutGlobalBlocks();
+        $content = $this->renderAsAnonymousVisitor($content, $post);
         $content = strpos($content, 'brz-root__container') ? preg_replace('/<!-- version:\d+ -->/', '', $content) : $emptyContent;
 
         return $content . $versionTime;
+    }
+
+    /**
+     * The compiled html without the global blocks (headers, footers, etc. are not part of the post content).
+     *
+     * @return string
+     */
+    private function getCompiledHtmlWithoutGlobalBlocks()
+    {
+        $content = $this->getCompiledHtml();
+        $content = preg_replace('/\{\{\s*brizy_dc_global_blocks.*?\}\}/', '', $content);
+
+        return preg_replace('/\{\{\s*brizy_dc_global_block.*?\}\}/', '', $content);
+    }
+
+    /**
+     * Renders the compiled html for the current user, the same way the page body is rendered on the frontend.
+     * Used to replace the stored post_content (that may hold content resolved for another user)
+     * wherever the post is displayed outside its own page: REST, search results, archives, feeds, excerpts.
+     *
+     * Global blocks are excluded as in the stored copy.
+     * The result is cached per post and user for the current request.
+     *
+     * @return string
+     */
+    public function renderCompiledContentForCurrentUser()
+    {
+        static $cache = [];
+        static $rendering = [];
+
+        $postId = $this->getWpPostId();
+        $key = $postId . ':' . get_current_user_id();
+
+        if (isset($cache[$key])) {
+            return $cache[$key];
+        }
+
+        // the post content may list itself (posts loops, excerpts), avoid infinite recursion
+        if (isset($rendering[$postId])) {
+            return '';
+        }
+
+        $rendering[$postId] = true;
+
+        try {
+            $content = $this->getCompiledHtmlWithoutGlobalBlocks();
+
+            if ($content) {
+                $content = apply_filters('brizy_content', $content, Brizy_Editor_Project::get(), $this->getWpPost(), 'body');
+            }
+
+            return $cache[$key] = (string)$content;
+        } catch (Exception $e) {
+            Brizy_Logger::instance()->exception($e);
+
+            // fail closed: never fall back to the stored copy
+            return '';
+        } finally {
+            unset($rendering[$postId]);
+        }
+    }
+
+    /**
+     * Excerpt built from the content rendered for the current user, the same way wp_trim_excerpt does it.
+     *
+     * @return string
+     */
+    public function getExcerptForCurrentUser()
+    {
+        // brizy_content keeps the WordPress shortcodes, they are expanded only when the page is viewed
+        $text = strip_shortcodes($this->renderCompiledContentForCurrentUser());
+        // keep the words of adjacent elements apart
+        $text = wp_strip_all_tags(str_replace('<', ' <', $text));
+
+        $excerptLength = (int)apply_filters('excerpt_length', 55);
+        $excerptMore = apply_filters('excerpt_more', ' [&hellip;]');
+
+        return wp_trim_words($text, $excerptLength, $excerptMore);
+    }
+
+    /**
+     * post_content is a public copy (REST, search, feeds, excerpts), so user dependent
+     * placeholders (display_by_roles, current user fields, nonces) must be resolved
+     * as a logged-out visitor and never as the user that saves the page.
+     *
+     * @param string $content
+     * @param WP_Post $post
+     *
+     * @return string
+     */
+    private function renderAsAnonymousVisitor($content, $post)
+    {
+        $userId = get_current_user_id();
+        wp_set_current_user(0);
+
+        try {
+            return apply_filters('brizy_content', $content, Brizy_Editor_Project::get(), $post);
+        } finally {
+            wp_set_current_user($userId);
+        }
     }
 
     /**
