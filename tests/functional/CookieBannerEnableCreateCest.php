@@ -109,6 +109,27 @@ class CookieBannerEnableCreateCest {
 	/**
 	 * @param FunctionalTester $I
 	 */
+	public function testCreatedBlockHasTheCompiledDataWithTheSiteUid( FunctionalTester $I ) {
+		// a user without unfiltered_html must still get the inline consent script stored
+		wp_set_current_user( $I->haveUserInDatabase( 'cookie-banner-author', 'author' ) );
+
+		$block    = $this->enableAndLoadTheBlock( $I );
+		$uid      = 'brz-cookie-banner-' . get_current_blog_id();
+		$sections = $block->getCompiledSectionManager()->getSections();
+
+		$I->assertCount( 1, $sections );
+		$I->assertSame( $uid, $sections[0]['id'] );
+		$I->assertTrue( strpos( $sections[0]['html'], 'id="' . $uid . '"' ) !== false, 'The compiled html should carry the site uid' );
+		$I->assertTrue( strpos( $sections[0]['html'], '{{uid}}' ) === false, 'No uid placeholder may be left' );
+		$I->assertSame( 'consentBlocker', $sections[0]['assets']['freeScripts']['generic'][0]['name'] );
+		$I->assertTrue( strpos( $sections[0]['assets']['freeScripts']['generic'][0]['content']['content'], 'brz-consent' ) !== false, 'The consent script should be stored unsanitized' );
+		$I->assertSame( BRIZY_EDITOR_VERSION, $block->get_compiler_version() );
+		$I->assertFalse( (bool) get_post_meta( $block->getWpPostId(), Brizy_Editor_Post::BRIZY_POST_NEEDS_COMPILE_KEY, true ) );
+	}
+
+	/**
+	 * @param FunctionalTester $I
+	 */
 	public function testCreatedBlockHasTheIncludeAllRuleSet( FunctionalTester $I ) {
 		$block = $this->enableAndLoadTheBlock( $I );
 		$rules = ( new Brizy_Admin_Rules_Manager() )->getRules( $block->getWpPostId() );
