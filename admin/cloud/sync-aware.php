@@ -104,41 +104,52 @@ trait Brizy_Admin_Cloud_SyncAware {
 	}
 
 	protected function getLayoutsForSync( $limit = 0 ) {
-		global $wpdb;
-
-		$savedBlockType = Brizy_Admin_Layouts_Main::CP_LAYOUT;
-
-		$limitQuery = "";
-		if ( $limit !== 0 ) {
-			$limitQuery = " LIMIT " . ( (int) $limit );
-		}
-
-		$postIds = $wpdb->get_results(
-			"SELECT ID FROM {$wpdb->posts} p 
-					WHERE p.post_type='{$savedBlockType}'
-					{$limitQuery}" );
-
-		return $postIds;
+		return $this->getPostsForSync( Brizy_Admin_Layouts_Main::CP_LAYOUT, $limit );
 	}
 
-
 	protected function getBlocksForSync( $limit = 0 ) {
+		return $this->getPostsForSync( Brizy_Admin_Blocks_Main::CP_SAVED, $limit );
+	}
+
+	/**
+	 * Returns the posts that still have to be exported to the current cloud account.
+	 *
+	 * Posts that are not synchronizable or are already synchronized are left out, otherwise a
+	 * limited run would look at the same rows forever. A limited run picks random candidates
+	 * so that a post that keeps failing does not block the rest.
+	 *
+	 * @param string $postType
+	 * @param int $limit
+	 *
+	 * @return object[] Objects with the ID property.
+	 */
+	private function getPostsForSync( $postType, $limit = 0 ) {
 		global $wpdb;
 
-		$savedBlockType = Brizy_Admin_Blocks_Main::CP_SAVED;
-
-		$limitQuery = "";
-		if ( $limit !== 0 ) {
-			$limitQuery = " LIMIT " . ( (int) $limit );
-		}
-
-		$postIds = $wpdb->get_results(
-			"SELECT ID FROM {$wpdb->posts} p 
-					WHERE p.post_type='{$savedBlockType}'
-					{$limitQuery}
-					"
+		$ids = $wpdb->get_col(
+			$wpdb->prepare(
+				"SELECT DISTINCT p.ID FROM {$wpdb->posts} p
+					JOIN {$wpdb->postmeta} pm ON pm.post_id = p.ID AND pm.meta_key = 'brizy-media'
+					WHERE p.post_type = %s
+					ORDER BY p.ID",
+				$postType
+			)
 		);
 
-		return $postIds;
+		$cloudAccountId = $this->getClient()->getBrizyProject()->getCloudAccountId();
+		$posts          = array();
+		foreach ( $ids as $id ) {
+			$synchronizedWith = get_post_meta( $id, 'brizy-cloud-synchronised-with', true );
+			if ( ! is_array( $synchronizedWith ) || ! isset( $synchronizedWith[ $cloudAccountId ] ) ) {
+				$posts[] = (object) array( 'ID' => (int) $id );
+			}
+		}
+
+		if ( $limit !== 0 ) {
+			shuffle( $posts );
+			$posts = array_slice( $posts, 0, (int) $limit );
+		}
+
+		return $posts;
 	}
 }
